@@ -3,7 +3,7 @@
 class BitBlox_WP_API_Auth {
 
 	public static function base_url() {
-		return 'http://api.bitblox.dev/users';
+		return 'https://test-de12d4.bitblox.site/api/public/users';
 	}
 
 	public static function sign_up_url() {
@@ -44,7 +44,8 @@ class BitBlox_WP_API_Auth {
 			array(
 				'body' => array(
 					'refresh_token' => $refresh_token
-				)
+				),
+				'sslverify' => false
 			)
 		)->get_body();
 
@@ -62,10 +63,11 @@ class BitBlox_WP_API_Auth {
 	protected static function auth_call( $url, $email, $password ) {
 		return BitBlox_WP_API_Http::post( $url,
 			array(
-				'body' => array(
+				'body'      => array(
 					'email'    => $email,
 					'password' => $password
-				)
+				),
+				'sslverify' => false
 			)
 		);
 	}
