@@ -1,13 +1,13 @@
 <?php
 
 class BitBlox_WP_Editor {
-	/**
-	 * @var BitBlox_WP_Post
-	 */
-	private $post;
 
-	public function __construct( BitBlox_WP_Post $post ) {
-		$this->set_post( $post );
+	private $post_id;
+	private $project_id;
+
+	public function __construct( $post_id, $project_id ) {
+		$this->post_id    = $post_id;
+		$this->project_id = $project_id;
 	}
 
 	public function load() {
@@ -15,16 +15,8 @@ class BitBlox_WP_Editor {
 		add_action( 'wp_enqueue_scripts', array( $this, '_action_register_static' ) );
 	}
 
-	protected function set_post( BitBlox_WP_Post $post ) {
-		$this->post = $post;
-	}
-
-	protected function get_post() {
-		return $this->post;
-	}
-
 	protected function get_id() {
-		return $this->get_post()->get_id();
+		return $this->post_id;
 	}
 
 	protected function register_static() {
@@ -167,11 +159,11 @@ class BitBlox_WP_Editor {
 				'origin'  => 'testblox.info',
 				'primary' => 'testblox.info',
 			),
-			'project'         => $this->get_post()->get_project()->get_id(),
+			'project'         => $this->project_id,
 			'projectLanguage' => array(
-				'id'      => $this->project_id(),
+				'id'      => 7,
 				'variant' => array(
-					'id'   => $this->project_id(),
+					'id'   => 7,
 					'name' => 'A',
 				),
 			),
@@ -202,10 +194,6 @@ class BitBlox_WP_Editor {
 				)
 			)
 		);
-	}
-
-	protected function project_id() {
-		return 7;
 	}
 
 	public function static_url() {

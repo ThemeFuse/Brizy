@@ -8,14 +8,46 @@ class BitBlox_WP_User {
 	 */
 	private $token;
 
+	/**
+	 * @return BitBlox_WP_User
+	 */
 	public static function get() {
 		try {
-			$token = BitBlox_WP_Storage::instance()->get( 'access-token' );
+			return new BitBlox_WP_User( BitBlox_WP_Storage::instance()->get( 'access-token' ) );
 		} catch ( BitBlox_WP_Exception_Not_Found $exception ) {
-			$token = self::create_user();
+			return self::create_user();
 		}
+	}
+
+	/**
+	 * @param $email
+	 * @param $password
+	 *
+	 * @return BitBlox_WP_API_Http_Response
+	 */
+	public static function sign_up( $email, $password ) {
+		return BitBlox_WP_API_Auth::create_user( $email, $password );
+	}
+
+	/**
+	 * @param $email
+	 * @param $password
+	 *
+	 * @return BitBlox_WP_User
+	 */
+	public static function login( $email, $password ) {
+		$token = BitBlox_WP_Storage::instance()
+		                           ->set( 'access-token', BitBlox_WP_API_Auth::auth( $email, $password ) )
+		                           ->get( 'access-token' );
 
 		return new BitBlox_WP_User( $token );
+	}
+
+	/**
+	 * @return void
+	 */
+	public static function logout() {
+		BitBlox_WP_Storage::instance()->delete( 'access-token' );
 	}
 
 	public function get_projects() {
@@ -107,16 +139,16 @@ class BitBlox_WP_User {
 		return $response['name'];
 	}
 
+	/**
+	 * @return BitBlox_WP_User
+	 */
 	protected static function create_user() {
 		$email = self::random_email();
 		$pass  = self::random_password();
 
-		BitBlox_WP_API_Auth::create_user( $email, $pass );
+		self::sign_up( $email, $pass );
 
-		return BitBlox_WP_Storage
-			::instance()
-			->set( 'access-token', BitBlox_WP_API_Auth::auth( $email, $pass ) )
-			->get( 'access-token' );
+		return self::login( $email, $pass );
 	}
 
 	protected static function random_email() {

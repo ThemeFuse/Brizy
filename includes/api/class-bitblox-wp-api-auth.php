@@ -56,10 +56,25 @@ class BitBlox_WP_API_Auth {
 		);
 	}
 
+	/**
+	 * @param $email
+	 * @param $password
+	 *
+	 * @return BitBlox_WP_API_Http_Response
+	 */
 	public static function create_user( $email, $password ) {
 		return self::auth_call( self::sign_up_url(), $email, $password )->get_body();
 	}
 
+	/**
+	 * @param $url
+	 * @param $email
+	 * @param $password
+	 *
+	 * @return BitBlox_WP_API_Http_Response
+	 *
+	 * @throws BitBlox_WP_API_Exception_Http_Response
+	 */
 	protected static function auth_call( $url, $email, $password ) {
 		return BitBlox_WP_API_Http::post( $url,
 			array(

@@ -12,9 +12,13 @@ class BitBlox_WP_Public {
 		}
 	}
 
+	public static function render( $view, array $args = array() ) {
+		BitBlox_WP_View::render( self::path( "views/$view" ), $args );
+	}
+
 	protected function __construct() {
-		add_action( 'admin_bar_menu', array( $this, '_action_add_update_button' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( $this, '_action_register_static' ) );
+		add_action( 'wp', array( $this, '_action_update_on_preview' ) );
 		add_action( 'wp_ajax__bitblox_wp_public_update_page', array( $this, '_action_request' ) );
 		add_filter( 'template_include', array( $this, '_filter_load_editor' ) );
 	}
@@ -32,27 +36,6 @@ class BitBlox_WP_Public {
 		}
 
 		return implode( DIRECTORY_SEPARATOR, array( dirname( __FILE__ ), 'views', 'template.php' ) );
-	}
-
-	/**
-	 * @internal
-	 *
-	 * @param WP_Admin_Bar $wp_admin_bar
-	 */
-	public function _action_add_update_button( $wp_admin_bar ) {
-		if ( ! bitblox_wp_is_edit_page() ) {
-			return;
-		}
-
-		$args = array(
-			'id'    => 'bitblox-wp-public-update',
-			'title' => __( 'Update' ),
-			'href'  => '#',
-			'meta'  => array(
-				'class' => 'bitblox-wp-public-update-button',
-			)
-		);
-		$wp_admin_bar->add_node( $args );
 	}
 
 	/**
@@ -84,25 +67,21 @@ class BitBlox_WP_Public {
 
 	/**
 	 * @internal
-	 */
-	public function _action_request() {
-		if ( ! isset( $_POST['id'] ) ) {
-			wp_send_json_error( array(
-				'code'    => 'invalid_request',
-				'message' => __( 'Invalid request', bitblox_wp()->get_domain() ),
-			) );
+	 **/
+	public function _action_update_on_preview() {
+		if ( ! is_preview() ) {
+			return;
 		}
 
 		try {
-			BitBlox_WP_Post::get( $_POST['id'] )->update_html();
-		} catch ( BitBlox_WP_Exception $exception ) {
-			wp_send_json_error( array(
-				'code'    => $exception->getCode(),
-				'message' => $exception->getMessage(),
-			) );
+			$post = BitBlox_WP_Post::get( get_the_ID() );
+			$post->update_html();
+		} catch ( Exception $exception ) {
 
-			return;
 		}
-		wp_send_json_success();
+	}
+
+	protected static function path( $rel ) {
+		return dirname( __FILE__ ) . "/$rel";
 	}
 }
