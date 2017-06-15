@@ -1,0 +1,7 @@
+<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
+<polyline data-cap="butt" data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" points="17,15.5 17,7 10,7 &#10;&#9;10,16.5 " stroke-linejoin="miter" stroke-linecap="butt"/>
+<rect x="2" y="1" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" width="20" height="22" stroke-linejoin="miter"/>
+<circle data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" cx="8.5" cy="16.5" r="1.5" stroke-linejoin="miter"/>
+<circle data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" cx="15.5" cy="15.5" r="1.5" stroke-linejoin="miter"/>
+<circle data-color="color-2" data-stroke="none" fill="none" cx="8.5" cy="16.5" r="1.5" stroke-linejoin="miter" stroke-linecap="square"/>
+<circle data-color="color-2" data-stroke="none" fill="none" cx="15.5" cy="15.5" r="1.5" stroke-linejoin="miter" stroke-linecap="square"/></g></svg>

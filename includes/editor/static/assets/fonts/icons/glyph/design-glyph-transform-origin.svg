@@ -1,0 +1,12 @@
+<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g >
+<path fill="currentColor" d="M22,22H2V2h20V22z M4,20h16V4H4V20z"/>
+<circle fill="currentColor" cx="12" cy="3" r="3"/>
+<circle fill="currentColor" cx="21" cy="3" r="3"/>
+<circle fill="currentColor" cx="3" cy="3" r="3"/>
+<circle fill="currentColor" cx="21" cy="12" r="3"/>
+<circle fill="currentColor" cx="3" cy="12" r="3"/>
+<circle data-color="color-2" fill="currentColor" cx="12" cy="12" r="3"/>
+<circle fill="currentColor" cx="12" cy="21" r="3"/>
+<circle fill="currentColor" cx="21" cy="21" r="3"/>
+<circle fill="currentColor" cx="3" cy="21" r="3"/>
+</g></svg>

@@ -1,0 +1,5 @@
+<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
+<path data-cap="butt" data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M17,22v-9c0-3.314-2.686-6-6-6H2&#10;&#9;" stroke-linejoin="miter" stroke-linecap="butt"/>
+<polyline fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" points="12,17 17,22 &#10;&#9;22,17 " stroke-linejoin="miter"/>
+<polyline fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" points="7,2 2,7 7,12 " stroke-linejoin="miter"/>
+</g></svg>

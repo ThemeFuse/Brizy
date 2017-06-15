@@ -1,0 +1,4 @@
+<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
+<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M14,23h-4c-1.1,0-2-0.9-2-2&#10;&#9;V3c0-1.1,0.9-2,2-2h4c1.1,0,2,0.9,2,2v18C16,22.1,15.1,23,14,23z" stroke-linejoin="miter"/>
+<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M1,14v-4c0-1.1,0.9-2,2-2&#10;&#9;h18c1.1,0,2,0.9,2,2v4c0,1.1-0.9,2-2,2H3C1.9,16,1,15.1,1,14z" stroke-linejoin="miter"/>
+</g></svg>

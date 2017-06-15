@@ -1,0 +1,12 @@
+<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
+<line data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" x1="9" y1="9" x2="10" y2="9" stroke-linejoin="miter"/>
+<line data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" x1="14" y1="9" x2="15" y2="9" stroke-linejoin="miter"/>
+<line fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" x1="7" y1="1" x2="7" y2="4" stroke-linejoin="miter"/>
+<line fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" x1="17" y1="1" x2="17" y2="4" stroke-linejoin="miter"/>
+<polyline data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" points="18.97516,13.26392 18,4 6,4 &#10;&#9;5.02484,13.26392 " stroke-linejoin="miter" stroke-linecap="butt"/>
+<path data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M6,4H1c0,2.20911,1.79083,4,4,4&#10;&#9;h0.57898" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M18,4h5c0,2.20911-1.79083,4-4,4h-0.57898&#10;&#9;" stroke-linejoin="miter" stroke-linecap="butt"/>
+<circle fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" cx="9" cy="18" r="1" stroke-linejoin="miter"/>
+<circle fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" cx="15" cy="18" r="1" stroke-linejoin="miter"/>
+<path data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M18,13H6&#10;&#9;c-1.10457,0-2,0.89543-2,2v3c0,2.76142,2.23858,5,5,5h6c2.76142,0,5-2.23858,5-5v-3C20,13.89543,19.10457,13,18,13z" stroke-linejoin="miter"/>
+</g></svg>

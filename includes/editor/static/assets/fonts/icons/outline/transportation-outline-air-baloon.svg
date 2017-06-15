@@ -1,0 +1,7 @@
+<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
+<line data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" x1="12" y1="1" x2="12" y2="17" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M12,1c-6.4,3.2-2,16-2,16" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M12,1c6.4,3.2,2,16,2,16" stroke-linejoin="miter" stroke-linecap="butt"/>
+<rect data-color="color-2" x="10" y="20" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" width="4" height="3" stroke-linejoin="miter"/>
+<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M19,8c0-3.9-3.1-7-7-7&#10;&#9;S5,4.1,5,8c0,2.8,4,9,4,9h6C15,17,19,10.8,19,8z" stroke-linejoin="miter"/>
+</g></svg>

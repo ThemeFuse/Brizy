@@ -1,0 +1,8 @@
+<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
+<polyline data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" points="6,5 7,1 15,1 16,5 " stroke-linejoin="miter" stroke-linecap="butt"/>
+<polyline data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" points="16,19 15,23 7,23 6,19 " stroke-linejoin="miter" stroke-linecap="butt"/>
+<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M17,19H5&#10;&#9;c-0.552,0-1-0.448-1-1V6c0-0.552,0.448-1,1-1h12c0.552,0,1,0.448,1,1v12C18,18.552,17.552,19,17,19z" stroke-linejoin="miter"/>
+<rect x="18" y="10" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" width="2" height="4" stroke-linejoin="miter"/>
+<polyline data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" points="&#10;&#9;9,10 7,12 9,14 " stroke-linejoin="miter"/>
+<polyline data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" points="&#10;&#9;13,10 15,12 13,14 " stroke-linejoin="miter"/>
+</g></svg>
