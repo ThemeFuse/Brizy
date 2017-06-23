@@ -1,7 +1,0 @@
-<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
-<path data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M11,11.6c0,0.7,0,1.5,0,2.4&#10;&#9;c0,5-2.7,8.4-5.7,8c-3-0.4-4.6-5-3.9-10S5.1,4,8,4c0.8,0,1.6,0.3,2,1" stroke-linejoin="miter" stroke-linecap="butt"/>
-<path data-cap="butt" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M13,11.6c0,0.7,0,1.5,0,2.4&#10;&#9;c0,5,2.7,8.4,5.7,8c3-0.4,4.6-5,3.9-10S18.9,4,16,4c-0.8,0-1.6,0.3-2,1" stroke-linejoin="miter" stroke-linecap="butt"/>
-<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M18,9c-2.2,0-4-1.8-4-4V1" stroke-linejoin="miter"/>
-<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M6,13L6,13&#10;&#9;c3.8-1.9,8.2-1.9,12,0l0,0" stroke-linejoin="miter"/>
-<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M10,1v4c0,2.2-1.8,4-4,4h0" stroke-linejoin="miter"/>
-</g></svg>

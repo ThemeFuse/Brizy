@@ -108,11 +108,20 @@ class BitBlox_WP_Post {
 			->update_project( $project, $this->get_title(), $this->get_json() )
 			->get_html( $project );
 
+		$dom = new BitBlox_WP_DOM( $html['html'] );
+		$this->store_scripts( $dom->get_scripts() );
+		$this->store_styles( array_merge( $dom->get_links() ) );
+		$this->store_inline_styles( $dom->get_styles() );
+
 		wp_update_post( array(
 			'ID'           => $this->get_id(),
-			'post_content' => $html['html'],
+			'post_content' => $dom
+				->get_body()
+				->strip_tags( array( 'script' ) )
+				->get_content(),
 		) );
-		$this->storage()->delete( 'rebuild' );
+
+		//$this->storage()->delete( 'rebuild' );
 
 		return $this;
 	}
@@ -149,11 +158,103 @@ class BitBlox_WP_Post {
 		}
 	}
 
+	public function get_globals() {
+		return $this->storage()->get( 'globals' );
+	}
+
+	public function set_globals( array $data ) {
+		$this->storage()->set( 'globals', $data );
+
+		return $this;
+	}
+
+	public function storage() {
+		return BitBlox_WP_Post_Storage::instance( $this->get_id() );
+	}
+
+	/**
+	 * @return BitBlox_WP_Static_Script[]
+	 */
+	public function get_scripts() {
+		try {
+			return $this->storage()->get( 'scripts' );
+		} catch ( Exception $exception ) {
+			return array();
+		}
+	}
+
+	/**
+	 * @return BitBlox_WP_Static_Style[]
+	 */
+	public function get_styles() {
+		try {
+			return $this
+				->storage()
+				->get( 'styles' );
+		} catch ( Exception $exception ) {
+			return array();
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_inline_styles() {
+		try {
+			return $this
+				->storage()
+				->get( 'inline-styles' );
+		} catch ( Exception $exception ) {
+			return array();
+		}
+	}
+
 	protected function set_id( $id ) {
 		$this->id = $id;
 	}
 
-	protected function storage() {
-		return BitBlox_WP_Post_Storage::instance( $this->get_id() );
+	protected function store_scripts( $list ) {
+		$new = array();
+
+		foreach ( $list as $item ) {
+			$new[] = new BitBlox_WP_Static_Script( "bitblox-wp-{$this->get_id()}", $item );
+		}
+
+		$this->storage()->set( 'scripts', $this->store_static( $new ) );
+	}
+
+	protected function store_styles( $list ) {
+		$new = array();
+
+		foreach ( $list as $item ) {
+			$new[] = new BitBlox_WP_Static_Style( "bitblox-wp-{$this->get_id()}", $item );
+		}
+
+		$this->storage()->set( 'styles', $this->store_static( $new ) );
+	}
+
+	protected function store_inline_styles( $list ) {
+		$this->storage()->set( 'inline-styles', $list );
+	}
+
+	/**
+	 * @param BitBlox_WP_Static[] $list
+	 *
+	 * @return array
+	 */
+	public function store_static( array $list ) {
+		$new = array();
+
+		foreach ( $list as $item ) {
+			try {
+				$new[] = BitBlox_WP_Static_Storage::get( $item )
+				                                  ->store()
+				                                  ->get_resource();
+			} catch ( Exception $exception ) {
+				continue;
+			}
+		}
+
+		return $new;
 	}
 }

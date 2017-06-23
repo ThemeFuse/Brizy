@@ -22,6 +22,12 @@ function _bitblox_wp_autoload( $class ) {
 		case 'BitBlox_WP' :
 			include_once 'includes/class-bitblox-wp.php';
 			break;
+		case 'BitBlox_WP_DOM' :
+			include_once 'includes/helpers/class-bitblox-wp-dom.php';
+			break;
+		case 'BitBlox_WP_DOM_Tag' :
+			include_once 'includes/helpers/class-bitblox-wp-dom-tag.php';
+			break;
 		case 'BitBlox_WP_View' :
 			include_once 'includes/class-bitblox-wp-view.php';
 			break;
@@ -79,6 +85,7 @@ function _bitblox_wp_autoload( $class ) {
 
 spl_autoload_register( '_bitblox_wp_autoload' );
 
+include_once 'includes/static-resources/autoload.php';
 include_once 'includes/api/autoload.php';
 include_once 'includes/functions.php';
 
@@ -86,6 +93,7 @@ if ( is_admin() ) {
 	include_once 'admin/autoload.php';
 }
 
+include_once 'shortcodes/autoload.php';
 include_once 'public/autoload.php';
 
 BitBlox_WP_Editor_API::init();

@@ -18,6 +18,8 @@ class BitBlox_WP_Public {
 
 	protected function __construct() {
 		add_action( 'wp_enqueue_scripts', array( $this, '_action_register_static' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, '_action_register_page_static' ) );
+		add_action( 'wp_print_scripts', array( $this, '_action_register_page_inline_static' ) );
 		add_action( 'wp', array( $this, '_action_update_on_preview' ) );
 		add_action( 'wp_ajax__bitblox_wp_public_update_page', array( $this, '_action_request' ) );
 		add_filter( 'template_include', array( $this, '_filter_load_editor' ) );
@@ -78,6 +80,42 @@ class BitBlox_WP_Public {
 			$post->update_html();
 		} catch ( Exception $exception ) {
 
+		}
+	}
+
+	/**
+	 * @internal
+	 **/
+	public function _action_register_page_static() {
+		try {
+			$post = BitBlox_WP_Post::get( get_the_ID() );
+		} catch ( Exception $exception ) {
+			return;
+		}
+
+		foreach ( $post->get_scripts() as $script ) {
+			$script->enqueue();
+		}
+		foreach ( $post->get_styles() as $style ) {
+			$style->enqueue();
+		}
+	}
+
+	/**
+	 * @internal
+	 **/
+	public function _action_register_page_inline_static() {
+		try {
+			$post = BitBlox_WP_Post::get( get_the_ID() );
+		} catch ( Exception $exception ) {
+			return;
+		}
+
+		foreach ( $post->get_inline_styles() as $style ) { ?>
+            <style type="text/css" rel="stylesheet">
+                <?php echo $style ?>
+            </style>
+			<?php
 		}
 	}
 

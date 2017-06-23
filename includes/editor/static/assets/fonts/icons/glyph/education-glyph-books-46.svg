@@ -1,8 +1,0 @@
-<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g >
-<path data-color="color-2" fill="currentColor" d="M19,2h-3v6h3c0.6,0,1-0.4,1-1V3C20,2.4,19.6,2,19,2z"/>
-<path data-color="color-2" fill="currentColor" d="M23,9h-3v6h3c0.6,0,1-0.4,1-1v-4C24,9.4,23.6,9,23,9z"/>
-<path data-color="color-2" fill="currentColor" d="M19,16h-3v6h3c0.6,0,1-0.4,1-1v-4C20,16.4,19.6,16,19,16z"/>
-<path fill="currentColor" d="M1,2C0.4,2,0,2.4,0,3v4c0,0.6,0.4,1,1,1h13V2H1z M9,6H4V4h5V6z"/>
-<path fill="currentColor" d="M5,9c-0.6,0-1,0.4-1,1v4c0,0.6,0.4,1,1,1h13V9H5z M13,13H8v-2h5V13z"/>
-<path fill="currentColor" d="M1,16c-0.6,0-1,0.4-1,1v4c0,0.6,0.4,1,1,1h13v-6H1z M9,20H4v-2h5V20z"/>
-</g></svg>

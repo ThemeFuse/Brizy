@@ -182,15 +182,22 @@ class BitBlox_WP_Editor {
 				'template' => null
 			),
 			'wp'              => array(
-				'page' => $this->get_id(),
-				'api'  => array(
-					'hash'       => wp_create_nonce( BitBlox_WP_Editor_API::nonce ),
-					'url'        => admin_url( 'admin-ajax.php' ),
-					'globals'    => BitBlox_WP_Editor_API::AJAX_GLOBALS,
-					'media'      => BitBlox_WP_Editor_API::AJAX_MEDIA,
-					'ping'       => BitBlox_WP_Editor_API::AJAX_PING,
-					'getPage'    => BitBlox_WP_Editor_API::AJAX_GET,
-					'updatePage' => BitBlox_WP_Editor_API::AJAX_UPDATE,
+				'page'       => $this->get_id(),
+				'api'        => array(
+					'hash'        => wp_create_nonce( BitBlox_WP_Editor_API::nonce ),
+					'url'         => admin_url( 'admin-ajax.php' ),
+					'globals'     => array(
+						'set' => BitBlox_WP_Editor_API::AJAX_SET_GLOBALS,
+						'get' => BitBlox_WP_Editor_API::AJAX_GET_GLOBALS,
+					),
+					'media'       => BitBlox_WP_Editor_API::AJAX_MEDIA,
+					'ping'        => BitBlox_WP_Editor_API::AJAX_PING,
+					'getPage'     => BitBlox_WP_Editor_API::AJAX_GET,
+					'updatePage'  => BitBlox_WP_Editor_API::AJAX_UPDATE,
+					'getSidebars' => BitBlox_WP_Editor_API::AJAX_SIDEBARS,
+				),
+				'shortcodes' => array(
+					'sidebar' => BITBLOX_WP_SHORTCODES_PREFIX . 'sidebar'
 				)
 			)
 		);

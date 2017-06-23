@@ -1,8 +1,0 @@
-<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
-<line data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" x1="3" y1="21" x2="3" y2="19" stroke-linejoin="miter"/>
-<line data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" x1="21" y1="21" x2="21" y2="19" stroke-linejoin="miter"/>
-<polygon fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" points="23,19 23,10 19,10 &#10;&#9;19,14 5,14 5,10 1,10 1,19 " stroke-linejoin="miter"/>
-<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M15,11" stroke-linejoin="miter"/>
-<polyline fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" points="3,10 3,3 21,3 &#10;&#9;21,10 " stroke-linejoin="miter"/>
-<line fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" x1="12" y1="14" x2="12" y2="3" stroke-linejoin="miter"/>
-</g></svg>

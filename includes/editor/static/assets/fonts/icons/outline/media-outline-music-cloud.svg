@@ -1,8 +1,0 @@
-<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
-<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M14,2&#10;&#9;c-4.665,0-8.501,3.55-8.954,8.096C2.741,10.542,1,12.565,1,15c0,2.761,2.239,5,5,5h8c4.971,0,9-4.029,9-9C23,6.029,18.971,2,14,2z" stroke-linejoin="miter"/>
-<polyline data-cap="butt" data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-miterlimit="10" points="11,14.5 11,8 17,8 &#10;&#9;17,14.5 " stroke-linejoin="miter" stroke-linecap="butt"/>
-<circle data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" cx="9.5" cy="14.5" r="1.5" stroke-linejoin="miter"/>
-<circle data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" cx="15.5" cy="14.5" r="1.5" stroke-linejoin="miter"/>
-<circle data-color="color-2" data-stroke="none" fill="none" cx="9.5" cy="14.5" r="1.5" stroke-linejoin="miter" stroke-linecap="square"/>
-<circle data-color="color-2" data-stroke="none" fill="none" cx="15.5" cy="14.5" r="1.5" stroke-linejoin="miter" stroke-linecap="square"/>
-</g></svg>

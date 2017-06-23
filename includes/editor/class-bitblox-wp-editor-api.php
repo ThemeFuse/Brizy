@@ -6,8 +6,10 @@ class BitBlox_WP_Editor_API {
 	const AJAX_PING = 'bitblox_wp_editor_ping';
 	const AJAX_GET = 'bitblox_wp_editor_get_items';
 	const AJAX_UPDATE = 'bitblox_wp_update_item';
-	const AJAX_GLOBALS = 'bitblox_wp_globals';
+	const AJAX_GET_GLOBALS = 'bitblox_wp_get_globals';
+	const AJAX_SET_GLOBALS = 'bitblox_wp_set_globals';
 	const AJAX_MEDIA = 'bitblox_wp_media';
+	const AJAX_SIDEBARS = 'bitblox_wp_sidebars';
 
 	public static function init() {
 		static $instance;
@@ -19,10 +21,12 @@ class BitBlox_WP_Editor_API {
 
 	protected function __construct() {
 		add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_items' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 		add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GLOBALS, array( $this, 'globals' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_GLOBALS, array( $this, 'get_globals' ) );
+		add_action( 'wp_ajax_' . self::AJAX_SET_GLOBALS, array( $this, 'set_globals' ) );
 		add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
+		add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 	}
 
 	/**
@@ -41,21 +45,34 @@ class BitBlox_WP_Editor_API {
 	/**
 	 * @internal
 	 **/
-	public function globals() {
+	public function get_globals() {
 		try {
 			$this->authorize();
-			$this->success( array(
-					'created' => time(),
-					'globals' => '{"project":{},"language":{}}',
-					'id'      => 7,
-					'name'    => "proj7",
-					'updated' => "2016-11-01T08:35:17-0400",
-					'user'    => array(
-						'id'    => 2,
-						'email' => null
-					),
-				)
-			);
+			$id   = $this->param( 'id' );
+			$post = BitBlox_WP_Post::get( $id );
+
+			try {
+				$this->success( $post->get_globals() );
+			} catch ( BitBlox_WP_Exception_Not_Found $exception ) {
+				$this->success( $this->default_globals() );
+			}
+
+		} catch ( Exception $exception ) {
+			$this->error( $exception->getCode(), $exception->getMessage() );
+			exit;
+		}
+	}
+
+	/**
+	 * @internal
+	 */
+	public function set_globals() {
+		try {
+			$this->authorize();
+			$post = BitBlox_WP_Post::get( $this->param( 'id' ) );
+
+			$post->set_globals( $this->param( 'data' ) );
+			$this->success( $post->get_globals() );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -65,7 +82,7 @@ class BitBlox_WP_Editor_API {
 	/**
 	 * @internal
 	 **/
-	public function get_items() {
+	public function get_item() {
 		try {
 			$this->authorize();
 			$id   = $this->param( 'id' );
@@ -111,6 +128,22 @@ class BitBlox_WP_Editor_API {
 		}
 	}
 
+	public function get_sidebars() {
+		global $wp_registered_sidebars;
+
+		$items = array();
+
+		foreach ( $wp_registered_sidebars as $sidebar ) {
+			$item    = array(
+				'id'    => $sidebar['id'],
+				'title' => $sidebar['name'],
+			);
+			$items[] = $item;
+		}
+
+		$this->success( $items );
+	}
+
 	/**
 	 * @internal
 	 **/
@@ -142,13 +175,26 @@ class BitBlox_WP_Editor_API {
 		wp_send_json( $data );
 	}
 
+	protected function static_url() {
+		return bitblox_wp()->get_url( '/includes/editor/static' );
+	}
+
+	protected function default_globals() {
+		return array(
+			'created' => time(),
+			'globals' => '{"project":{},"language":{}}',
+			'id'      => 7,
+			'name'    => "proj7",
+			'user'    => array(
+				'id'    => 2,
+				'email' => null
+			),
+		);
+	}
+
 	private function authorize() {
 		if ( ! wp_verify_nonce( $_POST['hash'], self::nonce ) ) {
 			throw new BitBlox_WP_Exception_Access_Denied();
 		}
-	}
-
-	protected function static_url() {
-		return bitblox_wp()->get_url( '/includes/editor/static' );
 	}
 }

@@ -1,5 +1,0 @@
-<svg id="nc_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"><g  transform="translate(0, 0)">
-<polygon fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" points="22,18 16,11 8,11 &#10;&#9;2,18 2,23 22,23 " stroke-linejoin="miter"/>
-<path fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" d="M4,1C2.343,1,1,2.343,1,4v0&#10;&#9;v4h6V5h10v3h6V4v0c0-1.657-1.343-3-3-3H4z" stroke-linejoin="miter"/>
-<circle data-color="color-2" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="square" stroke-miterlimit="10" cx="12" cy="17" r="2" stroke-linejoin="miter"/>
-</g></svg>
