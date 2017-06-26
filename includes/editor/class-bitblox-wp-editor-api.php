@@ -10,6 +10,7 @@ class BitBlox_WP_Editor_API {
 	const AJAX_SET_GLOBALS = 'bitblox_wp_set_globals';
 	const AJAX_MEDIA = 'bitblox_wp_media';
 	const AJAX_SIDEBARS = 'bitblox_wp_sidebars';
+	const AJAX_BUILD = 'bitblox_wp_build';
 
 	public static function init() {
 		static $instance;
@@ -27,6 +28,7 @@ class BitBlox_WP_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_SET_GLOBALS, array( $this, 'set_globals' ) );
 		add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
+		add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
 	}
 
 	/**
@@ -88,15 +90,7 @@ class BitBlox_WP_Editor_API {
 			$id   = $this->param( 'id' );
 			$post = new BitBlox_WP_Post( $id );
 
-			$this->success( array(
-				array(
-					'title'    => get_the_title( $post->get_id() ),
-					'slug'     => sanitize_title( get_the_title( $post->get_id() ) ),
-					'data'     => $post->get_json(),
-					'id'       => $post->get_id(),
-					'is_index' => true,
-				)
-			) );
+			$this->success( array( $this->create_post_arr( $post ) ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -108,21 +102,44 @@ class BitBlox_WP_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$this->authorize();
 			$id      = $this->param( 'id' );
-			$content = $this->param( 'content' );
+			$content = $this->param( 'data' );
 
 			$post = new BitBlox_WP_Post( $id );
 
+			try {
+				wp_update_post( array(
+					'ID'         => $id,
+					'post_title' => $this->param( 'title' )
+				) );
+			} catch ( Exception $exception ) {
+
+			}
+
+			try {
+				update_post_meta( $id, '_wp_page_template', $this->param( 'template' ) );
+			} catch ( Exception $exception ) {
+
+			}
+
 			$post->set_json( stripslashes( $content ) );
 
-			$this->success( array(
-				'title'    => get_the_title( get_the_title( $post->get_id() ) ),
-				'id'       => $post->get_id(),
-				'is_index' => true,
-				'slug'     => sanitize_title( get_the_title( $post->get_id() ) ),
-				'data'     => json_encode( array( 'title' => $post->get_title(), 'index' => true ) )
-			) );
+			$this->success( $this->create_post_arr( $post ) );
+		} catch ( Exception $exception ) {
+			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
+
+	/**
+	 * @internal
+	 */
+	public function build_content() {
+		try {
+			$id   = $this->param( 'id' );
+			$post = new BitBlox_WP_Post( $id );
+			$post->update_html();
+
+			$this->success( $this->create_post_arr( $post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -196,5 +213,18 @@ class BitBlox_WP_Editor_API {
 		if ( ! wp_verify_nonce( $_POST['hash'], self::nonce ) ) {
 			throw new BitBlox_WP_Exception_Access_Denied();
 		}
+	}
+
+	protected function create_post_arr( BitBlox_WP_Post $post ) {
+		return array(
+			'title'    => get_the_title( $post->get_id() ),
+			'slug'     => sanitize_title( get_the_title( $post->get_id() ) ),
+			'data'     => $post->get_json(),
+			'id'       => $post->get_id(),
+			'is_index' => true,
+			'template' => get_page_template_slug( $post->get_id() ),
+			'status'   => get_post_status( $post->get_id() ),
+			'url'      => get_the_permalink( $post->get_id() )
+		);
 	}
 }

@@ -174,7 +174,7 @@ class BitBlox_WP_Editor {
 				'image'       => 'http://static.bitblox.xyz/storage/media',
 				'integration' => 'http://integration.bitblox.site',
 				'origin'      => 'http://testblox.info',
-				'primary'     => 'http://testblox.info',
+				'primary'     => bitblox_wp()->get_url( '/includes/editor/static' ),
 			),
 			'user'            => $this->get_id(),
 			'versions'        => array(
@@ -183,18 +183,20 @@ class BitBlox_WP_Editor {
 			),
 			'wp'              => array(
 				'page'       => $this->get_id(),
+				'templates'  => $this->get_templates(),
 				'api'        => array(
-					'hash'        => wp_create_nonce( BitBlox_WP_Editor_API::nonce ),
-					'url'         => admin_url( 'admin-ajax.php' ),
-					'globals'     => array(
+					'hash'         => wp_create_nonce( BitBlox_WP_Editor_API::nonce ),
+					'url'          => admin_url( 'admin-ajax.php' ),
+					'globals'      => array(
 						'set' => BitBlox_WP_Editor_API::AJAX_SET_GLOBALS,
 						'get' => BitBlox_WP_Editor_API::AJAX_GET_GLOBALS,
 					),
-					'media'       => BitBlox_WP_Editor_API::AJAX_MEDIA,
-					'ping'        => BitBlox_WP_Editor_API::AJAX_PING,
-					'getPage'     => BitBlox_WP_Editor_API::AJAX_GET,
-					'updatePage'  => BitBlox_WP_Editor_API::AJAX_UPDATE,
-					'getSidebars' => BitBlox_WP_Editor_API::AJAX_SIDEBARS,
+					'media'        => BitBlox_WP_Editor_API::AJAX_MEDIA,
+					'ping'         => BitBlox_WP_Editor_API::AJAX_PING,
+					'getPage'      => BitBlox_WP_Editor_API::AJAX_GET,
+					'updatePage'   => BitBlox_WP_Editor_API::AJAX_UPDATE,
+					'getSidebars'  => BitBlox_WP_Editor_API::AJAX_SIDEBARS,
+					'buildContent' => BitBlox_WP_Editor_API::AJAX_BUILD,
 				),
 				'shortcodes' => array(
 					'sidebar' => BITBLOX_WP_SHORTCODES_PREFIX . 'sidebar'
@@ -214,5 +216,24 @@ class BitBlox_WP_Editor {
 		wp_enqueue_media();
 		wp_enqueue_style( bitblox_wp()->get_slug() . '-editor' );
 		wp_enqueue_script( bitblox_wp()->get_slug() . '-editor' );
+	}
+
+	protected function get_templates() {
+		$templates = wp_get_theme()->get_page_templates();
+		$list      = array(
+			array(
+				'id'    => '',
+				'title' => __( 'Default' )
+			)
+		);
+
+		foreach ( $templates as $key => $title ) {
+			$list[] = array(
+				'id'    => $key,
+				'title' => $title
+			);
+		}
+
+		return $list;
 	}
 }

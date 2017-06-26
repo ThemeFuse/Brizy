@@ -11,6 +11,10 @@ class BitBlox_WP_Flash {
 	private static $notices = array();
 
 	public static function _init() {
+		if ( defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+
 		static $initialised = false;
 
 		if ( $initialised ) {

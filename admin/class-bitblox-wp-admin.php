@@ -13,6 +13,10 @@ class BitBlox_WP_Admin {
 	}
 
 	protected function __construct() {
+		if ( defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+
 		add_action( 'post_submitbox_minor_actions', array( $this, '_action_bitblox_add_edit_button' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, '_action_register_static' ) );
 		add_action( 'wp_ajax__bitblox_wp_admin_editor', array( $this, '_action_request' ) );
