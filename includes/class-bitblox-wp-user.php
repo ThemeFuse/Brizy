@@ -109,6 +109,24 @@ class BitBlox_WP_User {
 		}
 	}
 
+	public function get_html_dev( BitBlox_WP_Post $post ) {
+		$editor = new BitBlox_WP_Editor( $post->get_id(), $post->get_project()->get_id() );
+		$res    = wp_remote_post(
+			'http://bitblox-compiler.dev/',
+			array(
+				'body'    => array(
+					'pages'   => json_encode( array( BitBlox_WP_Editor_API::create_post_arr( $post ) ) ),
+					'globals' => json_encode( $post->get_globals() ),
+					'config'  => $editor->config(),
+					'env'     => 'WP'
+				),
+				'timeout' => 60
+			)
+		);
+
+		return array( 'html' => trim( $res['body'] ) );
+	}
+
 	public function get_media_id( BitBlox_WP_Project $project, $att_id ) {
 		try {
 			$projects = BitBlox_WP_Post_Storage::instance( $att_id )->get( 'projects' );

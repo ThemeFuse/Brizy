@@ -51,14 +51,7 @@ class BitBlox_WP_Editor_API {
 		try {
 			$this->authorize();
 			$id   = $this->param( 'id' );
-			$post = BitBlox_WP_Post::get( $id );
-
-			try {
-				$this->success( $post->get_globals() );
-			} catch ( BitBlox_WP_Exception_Not_Found $exception ) {
-				$this->success( $this->default_globals() );
-			}
-
+			$this->success( BitBlox_WP_Post::get( $id )->get_globals() );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -90,7 +83,7 @@ class BitBlox_WP_Editor_API {
 			$id   = $this->param( 'id' );
 			$post = new BitBlox_WP_Post( $id );
 
-			$this->success( array( $this->create_post_arr( $post ) ) );
+			$this->success( array( self::create_post_arr( $post ) ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -124,7 +117,7 @@ class BitBlox_WP_Editor_API {
 
 			$post->set_json( stripslashes( $content ) );
 
-			$this->success( $this->create_post_arr( $post ) );
+			$this->success( self::create_post_arr( $post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -139,7 +132,7 @@ class BitBlox_WP_Editor_API {
 			$post = new BitBlox_WP_Post( $id );
 			$post->update_html();
 
-			$this->success( $this->create_post_arr( $post ) );
+			$this->success( self::create_post_arr( $post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -196,26 +189,13 @@ class BitBlox_WP_Editor_API {
 		return bitblox_wp()->get_url( '/includes/editor/static' );
 	}
 
-	protected function default_globals() {
-		return array(
-			'created' => time(),
-			'globals' => '{"project":{},"language":{}}',
-			'id'      => 7,
-			'name'    => "proj7",
-			'user'    => array(
-				'id'    => 2,
-				'email' => null
-			),
-		);
-	}
-
 	private function authorize() {
 		if ( ! wp_verify_nonce( $_POST['hash'], self::nonce ) ) {
 			throw new BitBlox_WP_Exception_Access_Denied();
 		}
 	}
 
-	protected function create_post_arr( BitBlox_WP_Post $post ) {
+	public static function create_post_arr( BitBlox_WP_Post $post ) {
 		return array(
 			'title'    => get_the_title( $post->get_id() ),
 			'slug'     => sanitize_title( get_the_title( $post->get_id() ) ),

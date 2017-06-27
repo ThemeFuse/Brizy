@@ -103,10 +103,11 @@ class BitBlox_WP_Post {
 
 		$project = $this->get_project();
 
+		//TODO: Switch back to remote version
 		$html = BitBlox_WP_User
 			::get()
 			->update_project( $project, $this->get_title(), $this->get_json() )
-			->get_html( $project );
+			->get_html_dev( $this );
 
 		$dom = new BitBlox_WP_DOM( $html['html'] );
 		$this->store_scripts( $dom->get_scripts() );
@@ -121,7 +122,7 @@ class BitBlox_WP_Post {
 				->get_content(),
 		) );
 
-		//$this->storage()->delete( 'rebuild' );
+		$this->storage()->delete( 'rebuild' );
 
 		return $this;
 	}
@@ -159,7 +160,11 @@ class BitBlox_WP_Post {
 	}
 
 	public function get_globals() {
-		return $this->storage()->get( 'globals' );
+		try {
+			return $this->storage()->get( 'globals' );
+		} catch ( Exception $exception ) {
+			return $this->default_globals();
+		}
 	}
 
 	public function set_globals( array $data ) {
@@ -217,7 +222,8 @@ class BitBlox_WP_Post {
 		$new = array();
 
 		foreach ( $list as $item ) {
-			$new[] = new BitBlox_WP_Static_Script( "bitblox-wp-{$this->get_id()}", $item );
+			$id    = implode( '-', array( $this->get_id(), basename( $item ) ) );
+			$new[] = new BitBlox_WP_Static_Script( "bitblox-wp-$id", $item );
 		}
 
 		$this->storage()->set( 'scripts', $this->store_static( $new ) );
@@ -227,7 +233,8 @@ class BitBlox_WP_Post {
 		$new = array();
 
 		foreach ( $list as $item ) {
-			$new[] = new BitBlox_WP_Static_Style( "bitblox-wp-{$this->get_id()}", $item );
+			$id    = implode( '-', array( $this->get_id(), basename( $item ) ) );
+			$new[] = new BitBlox_WP_Static_Style( "bitblox-wp-$id", $item );
 		}
 
 		$this->storage()->set( 'styles', $this->store_static( $new ) );
@@ -256,5 +263,18 @@ class BitBlox_WP_Post {
 		}
 
 		return $new;
+	}
+
+	protected function default_globals() {
+		return array(
+			'created' => strtotime( $this->get_post()->post_date ),
+			'globals' => '{"project":{},"language":{}}',
+			'id'      => $this->get_id(),
+			'name'    => "proj{$this->get_id()}",
+			'user'    => array(
+				'id'    => 1,
+				'email' => null
+			),
+		);
 	}
 }

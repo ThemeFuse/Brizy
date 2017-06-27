@@ -93,6 +93,8 @@ class BitBlox_WP_Public {
 			return;
 		}
 
+		wp_localize_script( 'jquery', '__SHORTCODES_CONFIG__', array() );
+
 		foreach ( $post->get_scripts() as $script ) {
 			$script->enqueue();
 		}
