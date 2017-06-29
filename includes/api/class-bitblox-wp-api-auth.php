@@ -40,9 +40,9 @@ class BitBlox_WP_API_Auth {
 	 * @return BitBlox_WP_API_Access_Token
 	 */
 	public static function refresh_token( $refresh_token ) {
-		$response = BitBlox_WP_API_Http::post( self::refresh_url(),
+		$response = BitBlox_WP_Http::post( self::refresh_url(),
 			array(
-				'body' => array(
+				'body'      => array(
 					'refresh_token' => $refresh_token
 				),
 				'sslverify' => false
@@ -60,7 +60,7 @@ class BitBlox_WP_API_Auth {
 	 * @param $email
 	 * @param $password
 	 *
-	 * @return BitBlox_WP_API_Http_Response
+	 * @return BitBlox_WP_Http_Response
 	 */
 	public static function create_user( $email, $password ) {
 		return self::auth_call( self::sign_up_url(), $email, $password )->get_body();
@@ -71,12 +71,12 @@ class BitBlox_WP_API_Auth {
 	 * @param $email
 	 * @param $password
 	 *
-	 * @return BitBlox_WP_API_Http_Response
+	 * @return BitBlox_WP_Http_Response
 	 *
-	 * @throws BitBlox_WP_API_Exception_Http_Response
+	 * @throws BitBlox_WP_Http_Response_Exception
 	 */
 	protected static function auth_call( $url, $email, $password ) {
-		return BitBlox_WP_API_Http::post( $url,
+		return BitBlox_WP_Http::post( $url,
 			array(
 				'body'      => array(
 					'email'    => $email,

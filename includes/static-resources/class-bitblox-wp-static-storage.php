@@ -3,14 +3,18 @@
 }
 
 class BitBlox_WP_Static_Storage {
+	private $uploads;
 	private $res;
+
+	const DIR = 'static';
 
 	public static function get( BitBlox_WP_Static $resource ) {
 		return new self( $resource );
 	}
 
 	protected function __construct( BitBlox_WP_Static $resource ) {
-		$this->res = $resource;
+		$this->uploads = new BitBlox_WP_Uploads_Dir();
+		$this->res     = $resource;
 	}
 
 	public function get_resource() {
@@ -22,33 +26,11 @@ class BitBlox_WP_Static_Storage {
 	}
 
 	public function get_uri() {
-		return $this->get_uploads_url() . '/' . bitblox_wp()->get_slug();
+		return BitBlox_WP_Uploads_Dir::get_uri( self::DIR );
 	}
 
 	public function get_path() {
-		return $this->get_uploads_path() . DIRECTORY_SEPARATOR . bitblox_wp()->get_slug();
-	}
-
-	private function get_uploads_url() {
-		static $uri;
-
-		if ( ! $uri ) {
-			$uploads = wp_upload_dir();
-			$uri     = $uploads['baseurl'];
-		}
-
-		return $uri;
-	}
-
-	private function get_uploads_path() {
-		static $uri;
-
-		if ( ! $uri ) {
-			$uploads = wp_upload_dir();
-			$uri     = $uploads['basedir'];
-		}
-
-		return $uri;
+		return BitBlox_WP_Uploads_Dir::get_path( self::DIR );
 	}
 
 	protected function store_resource() {
@@ -117,12 +99,7 @@ class BitBlox_WP_Static_Storage {
 		static $checked = false;
 
 		if ( ! $checked ) {
-			if ( ! file_exists( $this->get_path() ) && ! mkdir( $this->get_path() ) ) {
-				throw new BitBlox_WP_Exception_Access_Denied(
-					'Cannot create static directory. Please check permissions'
-				);
-			}
-
+			BitBlox_WP_Uploads_Dir::add_dir( self::DIR );
 			$checked = true;
 		}
 

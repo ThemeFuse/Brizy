@@ -79,7 +79,7 @@ class BitBlox_WP_API_Client {
 	}
 
 	protected function request( $route, $body = null, $method = 'GET' ) {
-		return BitBlox_WP_API_Http::request(
+		return BitBlox_WP_Http::request(
 			$this->url( $route ),
 			array(
 				'headers' => $this->get_headers(),

@@ -23,6 +23,7 @@ class BitBlox_WP_Public {
 		add_action( 'wp', array( $this, '_action_update_on_preview' ) );
 		add_action( 'wp_ajax__bitblox_wp_public_update_page', array( $this, '_action_request' ) );
 		add_filter( 'template_include', array( $this, '_filter_load_editor' ) );
+		add_filter( 'the_content', array( $this, '_filter_parse_content_for_images' ) );
 	}
 
 	/**
@@ -119,6 +120,38 @@ class BitBlox_WP_Public {
             </style>
 			<?php
 		}
+	}
+
+	/**
+	 * @internal
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 **/
+	public function _filter_parse_content_for_images( $content ) {
+		try {
+			$post         = BitBlox_WP_Post::get( get_the_ID() );
+			$post_content = $post->get_post()->post_content;
+		} catch ( Exception $exception ) {
+			return $content;
+		}
+		$pattern = '/(https?:\/\/static.bitblox.xyz\/storage\/media[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
+		preg_match( $pattern, $post_content, $matches );
+
+		if ( empty( $matches ) ) {
+			return $content;
+		}
+
+		$image = $matches[0];
+		$new   = BitBlox_WP_Media_Upload::upload( $image );
+
+		wp_update_post( array(
+			'ID'           => $post->get_id(),
+			'post_content' => str_replace( $image, $new->get_url(), $post_content ),
+		) );
+
+		return str_replace( $image, $new->get_url(), $content );
 	}
 
 	protected static function path( $rel ) {

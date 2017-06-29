@@ -1,6 +1,6 @@
 <?php
 
-class BitBlox_WP_API_Http_Response {
+class BitBlox_WP_Http_Response {
 
 	private $response;
 

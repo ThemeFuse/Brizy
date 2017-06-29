@@ -23,7 +23,7 @@ class BitBlox_WP_User {
 	 * @param $email
 	 * @param $password
 	 *
-	 * @return BitBlox_WP_API_Http_Response
+	 * @return BitBlox_WP_Http_Response
 	 */
 	public static function sign_up( $email, $password ) {
 		return BitBlox_WP_API_Auth::create_user( $email, $password );
@@ -53,7 +53,7 @@ class BitBlox_WP_User {
 	public function get_projects() {
 		try {
 			return $this->get_client()->get_projects();
-		} catch ( BitBlox_WP_API_Exception_Http_Response_Unauthorized $exception ) {
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
 			$this->refresh_token();
 
 			return $this->get_client()->get_projects();
@@ -68,7 +68,7 @@ class BitBlox_WP_User {
 	public function get_project( $id = null ) {
 		try {
 			return $this->_get_project( $id );
-		} catch ( BitBlox_WP_API_Exception_Http_Response_Unauthorized $exception ) {
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
 			$this->refresh_token();
 
 			return $this->_get_project( $id );
@@ -78,7 +78,7 @@ class BitBlox_WP_User {
 	public function delete_project( BitBlox_WP_Project $project ) {
 		try {
 			return $this->_delete_project( $project );
-		} catch ( BitBlox_WP_API_Exception_Http_Response_Unauthorized $exception ) {
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
 			$this->refresh_token();
 
 			return $this->_delete_project( $project );
@@ -91,7 +91,7 @@ class BitBlox_WP_User {
 		                           ->set_content( $content );
 		try {
 			$this->_update_project( $project, $page );
-		} catch ( BitBlox_WP_API_Exception_Http_Response_Unauthorized $exception ) {
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
 			$this->refresh_token();
 			$this->_update_project( $project, $page );
 		}
@@ -102,7 +102,7 @@ class BitBlox_WP_User {
 	public function get_html( BitBlox_WP_Project $project ) {
 		try {
 			return $this->get_client()->get_page_html( $project->get_id(), $project->get_page_id() );
-		} catch ( BitBlox_WP_API_Exception_Http_Response_Unauthorized $exception ) {
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
 			$this->refresh_token();
 
 			return $this->get_client()->get_page_html( $project->get_id(), $project->get_page_id() );
@@ -143,7 +143,7 @@ class BitBlox_WP_User {
 			$response = $this
 				->get_client()
 				->add_media( $project->get_id(), $this->image_to_base64( $att_id ) );
-		} catch ( BitBlox_WP_API_Exception_Http_Response_Unauthorized $exception ) {
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
 			$this->refresh_token();
 
 			$response = $this
@@ -218,12 +218,12 @@ class BitBlox_WP_User {
 			try {
 				$pages = $this->get_client()->get_pages( $project['id'] );
 				$page  = $pages[0];
-			} catch ( BitBlox_WP_API_Exception_Http_Response_Not_Found $exception ) {
+			} catch ( BitBlox_WP_Http_Response_Exception_Not_Found $exception ) {
 				$page = $this->get_client()->create_page( $project['id'], new BitBlox_WP_API_Page() );
 			}
 
 			return new BitBlox_WP_Project( $project['id'], $page['id'] );
-		} catch ( BitBlox_WP_API_Exception_Http_Response_Not_Found $exception ) {
+		} catch ( BitBlox_WP_Http_Response_Exception_Not_Found $exception ) {
 			return $this->create_page();
 		}
 	}

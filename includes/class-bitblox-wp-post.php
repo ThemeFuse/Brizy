@@ -17,10 +17,6 @@ class BitBlox_WP_Post {
 			);
 		}
 
-		if ( ! $this->can_edit() ) {
-			throw new BitBlox_WP_Exception_Access_Denied( 'Current user cannot edit page' );
-		}
-
 		$this->set_id( $id );
 	}
 
@@ -53,6 +49,10 @@ class BitBlox_WP_Post {
 	}
 
 	public function set_project( BitBlox_WP_Project $project ) {
+		if ( ! $this->can_edit() ) {
+			throw new BitBlox_WP_Exception_Access_Denied( 'Current user cannot edit page' );
+		}
+
 		$this->storage()->set( 'project', $project );
 
 		return $this;
@@ -97,6 +97,10 @@ class BitBlox_WP_Post {
 
 	public function update_html() {
 
+		if ( ! $this->can_edit() ) {
+			throw new BitBlox_WP_Exception_Access_Denied( 'Current user cannot edit page' );
+		}
+
 		if ( ! $this->requires_update() ) {
 			return $this;
 		}
@@ -140,12 +144,20 @@ class BitBlox_WP_Post {
 	}
 
 	public function enable_editor() {
+		if ( ! $this->can_edit() ) {
+			throw new BitBlox_WP_Exception_Access_Denied( 'Current user cannot edit page' );
+		}
+
 		$this->storage()->set( BitBlox_WP_Constants::USES_BITBLOX, 1 );
 
 		return $this;
 	}
 
 	public function disable_editor() {
+		if ( ! $this->can_edit() ) {
+			throw new BitBlox_WP_Exception_Access_Denied( 'Current user cannot edit page' );
+		}
+
 		$this->storage()->delete( BitBlox_WP_Constants::USES_BITBLOX );
 
 		return $this;
@@ -168,6 +180,10 @@ class BitBlox_WP_Post {
 	}
 
 	public function set_globals( array $data ) {
+		if ( ! $this->can_edit() ) {
+			throw new BitBlox_WP_Exception_Access_Denied( 'Current user cannot edit page' );
+		}
+
 		$this->storage()->set( 'globals', $data );
 
 		return $this;
@@ -219,6 +235,7 @@ class BitBlox_WP_Post {
 	}
 
 	protected function store_scripts( $list ) {
+
 		$new = array();
 
 		foreach ( $list as $item ) {
