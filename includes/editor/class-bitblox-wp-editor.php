@@ -21,47 +21,33 @@ class BitBlox_WP_Editor {
 
 	protected function register_static() {
 
+		$url = 'http://bitblox.dev';
+
 		wp_register_style(
 			bitblox_wp()->get_slug() . '-wireframes',
-			$this->static_url() . '/visual/wireframes.css',
-			array(),
-			bitblox_wp()->get_version()
+			$url . '/visual/wireframes.css',
+			array()
 		);
 		wp_register_style(
 			bitblox_wp()->get_slug() . '-main',
-			$this->static_url() . '/assets/css/main.css',
-			array(),
-			bitblox_wp()->get_version()
+			$url . '/assets/css/main.css',
+			array()
 		);
-		wp_register_style(
-			bitblox_wp()->get_slug() . '-group-default',
-			$this->static_url() . '/assets/css/skins/group-styles/group-default.css',
-			array(),
-			bitblox_wp()->get_version()
-		);
-		wp_register_style(
-			bitblox_wp()->get_slug() . '-font-awesome',
-			'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
-			array(),
-			'4.5.0'
-		);
+
 		wp_register_style(
 			bitblox_wp()->get_slug() . '-editor',
-			$this->static_url() . '/visual/editor.css',
+			$url . '/visual/editor.css',
 			array(
 				bitblox_wp()->get_slug() . '-wireframes',
-				bitblox_wp()->get_slug() . '-main',
-				bitblox_wp()->get_slug() . '-group-default',
-				bitblox_wp()->get_slug() . '-font-awesome'
-			),
-			bitblox_wp()->get_version()
+				bitblox_wp()->get_slug() . '-main'
+			)
 		);
 
 		wp_register_script(
 			bitblox_wp()->get_slug() . '-typekit',
 			'//use.typekit.net/ueo0lzq.js',
 			array(),
-			bitblox_wp()->get_version(),
+			false,
 			true
 		);
 		wp_register_script(
@@ -83,35 +69,35 @@ class BitBlox_WP_Editor {
 			bitblox_wp()->get_slug() . '-wireframes-editor',
 			$this->static_url() . '/visual/wireframes.editor.js',
 			array(),
-			bitblox_wp()->get_version(),
+			false,
 			true
 		);
 		wp_register_script(
 			bitblox_wp()->get_slug() . '-editor-vendor',
-			$this->static_url() . '/visual/editor.vendor.js',
+			$url . '/visual/editor.vendor.js',
 			array(),
-			bitblox_wp()->get_version(),
+			false,
 			true
 		);
 		wp_register_script(
 			bitblox_wp()->get_slug() . '-shortcodes-config',
-			$this->static_url() . '/assets/js/shortcodes-config.js',
+			$url . '/assets/js/shortcodes-config.js',
 			array(),
-			bitblox_wp()->get_version(),
+			false,
 			true
 		);
 		wp_register_script(
 			bitblox_wp()->get_slug() . '-editor',
-			$this->static_url() . '/visual/editor.dev.js',
+			$url . '/visual/editor.dev.js',
 			array(
 				bitblox_wp()->get_slug() . '-typekit',
 				bitblox_wp()->get_slug() . '-react',
-				bitblox_wp()->get_slug() . '-wireframes-editor',
+				//bitblox_wp()->get_slug() . '-wireframes-editor',
 				bitblox_wp()->get_slug() . '-editor-vendor',
 				bitblox_wp()->get_slug() . '-shortcodes-config',
 				'media-upload'
 			),
-			bitblox_wp()->get_version(),
+			false,
 			true
 		);
 
@@ -120,7 +106,11 @@ class BitBlox_WP_Editor {
 			'__VISUAL_CONFIG__',
 			$this->config()
 		);
-		wp_localize_script( bitblox_wp()->get_slug() . '-editor-vendor', '__SHORTCODES_CONFIG__', array() );
+		wp_localize_script(
+			bitblox_wp()->get_slug() . '-editor-vendor',
+			'__SHORTCODES_CONFIG__',
+			array()
+		);
 	}
 
 	public function config() {
@@ -174,7 +164,7 @@ class BitBlox_WP_Editor {
 				'image'       => 'http://static.bitblox.xyz/storage/media',
 				'integration' => 'http://integration.bitblox.site',
 				'origin'      => 'http://testblox.info',
-				'primary'     => bitblox_wp()->get_url( '/includes/editor/static' ),
+				'primary'     => 'http://bitblox.dev',
 			),
 			'user'            => $this->get_id(),
 			'versions'        => array(

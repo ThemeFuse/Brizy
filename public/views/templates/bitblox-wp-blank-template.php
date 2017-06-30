@@ -8,7 +8,7 @@
 	<title><?php wp_title() ?></title>
 	<?php wp_head() ?>
 </head>
-<body>
+<body class="bbm">
 <?php while ( have_posts() ) : the_post() ?>
 	<?php the_content() ?>
 <?php endwhile ?>

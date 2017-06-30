@@ -13,4 +13,3 @@ function _action_bitblox_delete_scripts_and_styles( $id ) {
 }
 
 add_action( 'bitblox_wp_delete_post', '_action_bitblox_delete_scripts_and_styles' );
-add_action( 'bitblox_wp_post_before_update', '_action_bitblox_delete_scripts_and_styles' );
