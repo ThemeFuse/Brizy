@@ -25,11 +25,11 @@ class BitBlox_WP_Static_Storage {
 		return $this->store_resource();
 	}
 
-	public function get_uri() {
+	public static function get_uri() {
 		return BitBlox_WP_Uploads_Dir::get_uri( self::DIR );
 	}
 
-	public function get_path() {
+	public static function get_path() {
 		return BitBlox_WP_Uploads_Dir::get_path( self::DIR );
 	}
 
@@ -38,7 +38,7 @@ class BitBlox_WP_Static_Storage {
 			return $this;
 		}
 
-		$this->create_base_dir();
+		self::create_base_dir();
 
 		$content = file_get_contents( $this->get_resource()->get_url() );
 
@@ -75,8 +75,8 @@ class BitBlox_WP_Static_Storage {
 		return true;
 	}
 
-	protected function resource_url( BitBlox_WP_Static $res ) {
-		return $this->get_uri()
+	public static function resource_url( BitBlox_WP_Static $res ) {
+		return self::get_uri()
 		       . '/'
 		       . $res->get_id()
 		       . '-'
@@ -85,8 +85,8 @@ class BitBlox_WP_Static_Storage {
 		       . $res->get_type();
 	}
 
-	protected function resource_path( BitBlox_WP_Static $res ) {
-		return $this->get_path()
+	public static function resource_path( BitBlox_WP_Static $res ) {
+		return self::get_path()
 		       . DIRECTORY_SEPARATOR
 		       . $res->get_id()
 		       . '-'
@@ -95,14 +95,12 @@ class BitBlox_WP_Static_Storage {
 		       . $res->get_type();
 	}
 
-	protected function create_base_dir() {
+	protected static function create_base_dir() {
 		static $checked = false;
 
 		if ( ! $checked ) {
 			BitBlox_WP_Uploads_Dir::add_dir( self::DIR );
 			$checked = true;
 		}
-
-		return $this;
 	}
 }

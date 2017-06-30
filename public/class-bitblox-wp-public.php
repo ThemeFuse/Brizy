@@ -23,7 +23,7 @@ class BitBlox_WP_Public {
 		add_action( 'wp', array( $this, '_action_update_on_preview' ) );
 		add_action( 'wp_ajax__bitblox_wp_public_update_page', array( $this, '_action_request' ) );
 		add_filter( 'template_include', array( $this, '_filter_load_editor' ) );
-		//add_filter( 'the_content', array( $this, '_filter_parse_content_for_images' ) );
+		add_filter( 'the_content', array( $this, '_filter_parse_content_for_images' ) );
 		add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
 
 		foreach ( bitblox_wp()->supported_post_types() as $type ) {

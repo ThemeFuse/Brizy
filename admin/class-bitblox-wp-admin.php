@@ -135,6 +135,8 @@ class BitBlox_WP_Admin {
 			if ( $post->has_project() ) {
 				BitBlox_WP_User::get()->delete_project( $post->get_project() );
 			}
+
+			do_action( 'bitblox_wp_delete_post', $id );
 		} catch ( Exception $exception ) {
 		}
 	}

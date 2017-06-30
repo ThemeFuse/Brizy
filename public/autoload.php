@@ -12,4 +12,6 @@ function _bitblox_wp_public_autoload( $class ) {
 
 spl_autoload_register( '_bitblox_wp_public_autoload' );
 
+include_once dirname( __FILE__ ) . '/hooks.php';
+
 BitBlox_WP_Public::_init();

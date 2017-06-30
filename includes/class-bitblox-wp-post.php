@@ -107,6 +107,8 @@ class BitBlox_WP_Post {
 
 		$project = $this->get_project();
 
+		do_action( 'bitblox_wp_post_before_update', $this->get_id() );
+
 		//TODO: Switch back to remote version
 		$html = BitBlox_WP_User
 			::get()
@@ -127,6 +129,8 @@ class BitBlox_WP_Post {
 		) );
 
 		$this->storage()->delete( 'rebuild' );
+
+		do_action( 'bitblox_wp_post_after_update', $this->get_id() );
 
 		return $this;
 	}

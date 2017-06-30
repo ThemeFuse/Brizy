@@ -21,7 +21,7 @@ class BitBlox_WP_Http {
 				$response = new BitBlox_WP_Http_Response( self::client()->post( $url, $options ) );
 				break;
 			default:
-				$response = new BitBlox_WP_Http_Response( self::cwlient()->get( $url, $options ) );
+				$response = new BitBlox_WP_Http_Response( self::client()->get( $url, $options ) );
 		}
 
 		if ( $response->is_ok() ) {
