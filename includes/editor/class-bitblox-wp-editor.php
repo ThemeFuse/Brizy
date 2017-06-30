@@ -116,6 +116,7 @@ class BitBlox_WP_Editor {
 	public function config() {
 		return array(
 			'env'             => 'WP',
+			'rootElement'     => '#' . bitblox_wp()->get_slug() . '-root-element',
 			'editorOptions'   => array(
 				'isLegacy'    => false,
 				'isMultipage' => false,

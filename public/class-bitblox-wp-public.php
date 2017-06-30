@@ -22,7 +22,7 @@ class BitBlox_WP_Public {
 		add_action( 'wp_print_scripts', array( $this, '_action_register_page_inline_static' ) );
 		add_action( 'wp', array( $this, '_action_update_on_preview' ) );
 		add_action( 'wp_ajax__bitblox_wp_public_update_page', array( $this, '_action_request' ) );
-		add_filter( 'template_include', array( $this, '_filter_load_editor' ) );
+		add_filter( 'the_content', array( $this, '_action_load_editor' ) );
 		add_filter( 'the_content', array( $this, '_filter_parse_content_for_images' ) );
 		add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
 
@@ -38,12 +38,26 @@ class BitBlox_WP_Public {
 	 *
 	 * @internal
 	 */
-	function _filter_load_editor( $template ) {
+	function _action_load_editor( $content ) {
 		if ( ! is_user_logged_in() || is_admin() || ! bitblox_wp_is_edit_page() ) {
-			return $template;
+			return $content;
 		}
 
-		return implode( DIRECTORY_SEPARATOR, array( dirname( __FILE__ ), 'views', 'template.php' ) );
+		try {
+			$post   = new BitBlox_WP_Post( get_the_ID() );
+			$editor = new BitBlox_WP_Editor( $post->get_id(), $post->get_project()->get_id() );
+			$editor->load();
+			BitBlox_WP_Public::render( 'editor' );
+		} catch ( Exception $exception ) {
+			$message = __(
+				'Unable to load editor. Please check out your internet connection.',
+				bitblox_wp()->get_domain()
+			);
+
+			return BitBlox_WP_View::get( 'error', array( 'message' => $message ) );
+		}
+
+		return BitBlox_WP_View::get( self::path( 'views/template' ) );
 	}
 
 	/**
