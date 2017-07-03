@@ -15,5 +15,7 @@ function _bitblox_wp_admin_autoload( $class ) {
 
 spl_autoload_register( '_bitblox_wp_admin_autoload' );
 
-BitBlox_WP_Admin::_init();
-BitBlox_WP_Flash::_init();
+if ( is_admin() ) {
+	BitBlox_WP_Admin::_init();
+	BitBlox_WP_Flash::_init();
+}

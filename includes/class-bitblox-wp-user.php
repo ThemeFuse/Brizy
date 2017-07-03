@@ -10,8 +10,16 @@ class BitBlox_WP_User {
 
 	/**
 	 * @return BitBlox_WP_User
+	 * @throws BitBlox_WP_Exception_Service_Unavailable
 	 */
 	public static function get() {
+
+		if ( self::is_locked() ) {
+			throw new BitBlox_WP_Exception_Service_Unavailable(
+				'User is in maintenance mode'
+			);
+		}
+
 		try {
 			return new BitBlox_WP_User( BitBlox_WP_Storage::instance()->get( 'access-token' ) );
 		} catch ( BitBlox_WP_Exception_Not_Found $exception ) {
@@ -24,9 +32,20 @@ class BitBlox_WP_User {
 	 * @param $password
 	 *
 	 * @return BitBlox_WP_Http_Response
+	 * @throws Exception
 	 */
 	public static function sign_up( $email, $password ) {
-		return BitBlox_WP_API_Auth::create_user( $email, $password );
+		try {
+			self::lock_access();
+			$user = BitBlox_WP_API_Auth::create_user( $email, $password );
+		} catch ( Exception $exception ) {
+			self::unlock_access();
+			throw $exception;
+		}
+
+		self::unlock_access();
+
+		return $user;
 	}
 
 	/**
@@ -34,11 +53,20 @@ class BitBlox_WP_User {
 	 * @param $password
 	 *
 	 * @return BitBlox_WP_User
+	 * @throws Exception
 	 */
 	public static function login( $email, $password ) {
-		$token = BitBlox_WP_Storage::instance()
-		                           ->set( 'access-token', BitBlox_WP_API_Auth::auth( $email, $password ) )
-		                           ->get( 'access-token' );
+		try {
+			self::lock_access();
+			$token = BitBlox_WP_Storage::instance()
+			                           ->set( 'access-token', BitBlox_WP_API_Auth::auth( $email, $password ) )
+			                           ->get( 'access-token' );
+		} catch ( Exception $exception ) {
+			self::unlock_access();
+			throw $exception;
+		}
+
+		self::unlock_access();
 
 		return new BitBlox_WP_User( $token );
 	}
@@ -189,12 +217,21 @@ class BitBlox_WP_User {
 		return new BitBlox_WP_API_Client( $this->get_token() );
 	}
 
-	protected function refresh_token() {
-		$token = BitBlox_WP_Storage
-			::instance()
-			->set( 'access-token', BitBlox_WP_API_Auth::refresh_token( $this->get_token()->refresh_token() ) )
-			->get( 'access-token' );
+	public function refresh_token() {
+		try {
+			self::lock_access();
+			$refresh   = $this->get_token()->refresh_token();
+			$storage   = BitBlox_WP_Storage::instance();
+			$new_token = BitBlox_WP_API_Auth::refresh_token( $refresh );
+			$token     = $storage
+				->set( 'access-token', $new_token )
+				->get( 'access-token' );
+		} catch ( Exception $exception ) {
+			self::unlock_access();
+			throw $exception;
+		}
 
+		self::unlock_access();
 		$this->token = $token;
 
 		return $this;
@@ -251,5 +288,21 @@ class BitBlox_WP_User {
 		$data = file_get_contents( $path );
 
 		return base64_encode( $data );
+	}
+
+	protected static function lock_access() {
+		set_transient( self::lock_key(), 1, 30 );
+	}
+
+	protected static function unlock_access() {
+		delete_transient( self::lock_key() );
+	}
+
+	protected static function lock_key() {
+		return bitblox_wp()->get_slug() . '-user-maintenance-enabled';
+	}
+
+	protected static function is_locked() {
+		return (bool) get_transient( self::lock_key() );
 	}
 }

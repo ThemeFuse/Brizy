@@ -115,7 +115,10 @@ class BitBlox_WP_Admin {
 		} catch ( Exception $exception ) {
 			BitBlox_WP_Flash::add_notice(
 				'get-project',
-				'<strong>BitBloxWP</strong>: ' . __( 'Unable to update page content', bitblox_wp()->get_domain() ),
+				'<strong>BitBloxWP</strong>: ' . __(
+					'Unable to update page content. Please try later',
+					bitblox_wp()->get_domain()
+				),
 				BitBlox_WP_Flash::ERROR
 			);
 		}
