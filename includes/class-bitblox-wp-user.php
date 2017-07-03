@@ -137,7 +137,7 @@ class BitBlox_WP_User {
 		}
 	}
 
-	public function get_html_dev( BitBlox_WP_Post $post ) {
+	public function get_html_dev( BitBlox_WP_Page $post ) {
 		$editor = new BitBlox_WP_Editor( $post->get_id(), $post->get_project()->get_id() );
 		$res    = wp_remote_post(
 			'http://bitblox-compiler.dev/',

@@ -51,7 +51,7 @@ class BitBlox_WP_Editor_API {
 		try {
 			$this->authorize();
 			$id   = $this->param( 'id' );
-			$this->success( BitBlox_WP_Post::get( $id )->get_globals() );
+			$this->success( BitBlox_WP_Page::get( $id )->get_globals() );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -64,7 +64,7 @@ class BitBlox_WP_Editor_API {
 	public function set_globals() {
 		try {
 			$this->authorize();
-			$post = BitBlox_WP_Post::get( $this->param( 'id' ) );
+			$post = BitBlox_WP_Page::get( $this->param( 'id' ) );
 
 			$post->set_globals( $this->param( 'data' ) );
 			$this->success( $post->get_globals() );
@@ -81,7 +81,7 @@ class BitBlox_WP_Editor_API {
 		try {
 			$this->authorize();
 			$id   = $this->param( 'id' );
-			$post = new BitBlox_WP_Post( $id );
+			$post = new BitBlox_WP_Page( $id );
 
 			$this->success( array( self::create_post_arr( $post ) ) );
 		} catch ( Exception $exception ) {
@@ -98,7 +98,7 @@ class BitBlox_WP_Editor_API {
 			$id      = $this->param( 'id' );
 			$content = $this->param( 'data' );
 
-			$post = new BitBlox_WP_Post( $id );
+			$post = new BitBlox_WP_Page( $id );
 
 			try {
 				wp_update_post( array(
@@ -129,7 +129,7 @@ class BitBlox_WP_Editor_API {
 	public function build_content() {
 		try {
 			$id   = $this->param( 'id' );
-			$post = new BitBlox_WP_Post( $id );
+			$post = new BitBlox_WP_Page( $id );
 			$post->update_html();
 
 			$this->success( self::create_post_arr( $post ) );
@@ -160,7 +160,7 @@ class BitBlox_WP_Editor_API {
 	public function media() {
 		try {
 			$this->authorize();
-			$project       = BitBlox_WP_Post::get( $this->param( 'id' ) )->get_project();
+			$project       = BitBlox_WP_Page::get( $this->param( 'id' ) )->get_project();
 			$attachment_id = $this->param( 'attachmentId' );
 
 			$this->success( BitBlox_WP_User::get()->get_media_id( $project, $attachment_id ) );
@@ -195,7 +195,7 @@ class BitBlox_WP_Editor_API {
 		}
 	}
 
-	public static function create_post_arr( BitBlox_WP_Post $post ) {
+	public static function create_post_arr( BitBlox_WP_Page $post ) {
 		return array(
 			'title'    => get_the_title( $post->get_id() ),
 			'slug'     => sanitize_title( get_the_title( $post->get_id() ) ),

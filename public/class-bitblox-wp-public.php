@@ -44,7 +44,7 @@ class BitBlox_WP_Public {
 		}
 
 		try {
-			$post   = new BitBlox_WP_Post( get_the_ID() );
+			$post   = new BitBlox_WP_Page( get_the_ID() );
 			$editor = new BitBlox_WP_Editor( $post->get_id(), $post->get_project()->get_id() );
 			$editor->load();
 			BitBlox_WP_Public::render( 'editor' );
@@ -96,7 +96,7 @@ class BitBlox_WP_Public {
 		}
 
 		try {
-			$post = BitBlox_WP_Post::get( get_the_ID() );
+			$post = BitBlox_WP_Page::get( get_the_ID() );
 			$post->update_html();
 		} catch ( Exception $exception ) {
 
@@ -108,7 +108,7 @@ class BitBlox_WP_Public {
 	 **/
 	public function _action_register_page_static() {
 		try {
-			$post = BitBlox_WP_Post::get( get_the_ID() );
+			$post = BitBlox_WP_Page::get( get_the_ID() );
 		} catch ( Exception $exception ) {
 			return;
 		}
@@ -128,7 +128,7 @@ class BitBlox_WP_Public {
 	 **/
 	public function _action_register_page_inline_static() {
 		try {
-			$post = BitBlox_WP_Post::get( get_the_ID() );
+			$post = BitBlox_WP_Page::get( get_the_ID() );
 		} catch ( Exception $exception ) {
 			return;
 		}
@@ -150,7 +150,7 @@ class BitBlox_WP_Public {
 	 **/
 	public function _filter_parse_content_for_images( $content ) {
 		try {
-			$post         = BitBlox_WP_Post::get( get_the_ID() );
+			$post         = BitBlox_WP_Page::get( get_the_ID() );
 			$post_content = $post->get_post()->post_content;
 		} catch ( Exception $exception ) {
 			return $content;

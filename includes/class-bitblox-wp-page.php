@@ -2,7 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-class BitBlox_WP_Post {
+class BitBlox_WP_Page {
 
 	private $id;
 
@@ -59,8 +59,6 @@ class BitBlox_WP_Post {
 	}
 
 	public function can_edit() {
-		return true;
-
 		return current_user_can( 'edit_pages' );
 	}
 
@@ -109,11 +107,17 @@ class BitBlox_WP_Post {
 
 		do_action( 'bitblox_wp_post_before_update', $this->get_id() );
 
+		try {
+			BitBlox_WP_User::get()->update_project( $project, $this->get_title(), $this->get_json() );
+		} catch ( BitBlox_WP_Http_Response_Exception_Not_Found $exception ) {
+			//Create new project in case the previous one is lost or switched to new user
+			//TODO: Change this in a smarter way
+			$this->set_project( BitBlox_WP_User::get()->get_project() );
+			BitBlox_WP_User::get()->update_project( $project, $this->get_title(), $this->get_json() );
+		}
+
 		//TODO: Switch back to remote version
-		$html = BitBlox_WP_User
-			::get()
-			->update_project( $project, $this->get_title(), $this->get_json() )
-			->get_html_dev( $this );
+		$html = BitBlox_WP_User::get()->get_html_dev( $this );
 
 		$dom = new BitBlox_WP_DOM( $html['html'] );
 		$this->store_scripts( $dom->get_scripts() );

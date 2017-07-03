@@ -22,8 +22,8 @@ function _bitblox_wp_includes_autoload( $class ) {
 		case 'BitBlox_WP_View' :
 			include_once 'class-bitblox-wp-view.php';
 			break;
-		case 'BitBlox_WP_Post' :
-			include_once 'class-bitblox-wp-post.php';
+		case 'BitBlox_WP_Page' :
+			include_once 'class-bitblox-wp-page.php';
 			break;
 		case 'BitBlox_WP_User' :
 			include_once 'class-bitblox-wp-user.php';

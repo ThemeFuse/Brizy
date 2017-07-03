@@ -19,10 +19,12 @@ class BitBlox_WP_Admin {
 			return;
 		}
 
-		add_action( 'post_submitbox_minor_actions', array( $this, '_action_bitblox_add_edit_button' ) );
+		//add_action( 'post_submitbox_minor_actions', array( $this, '_action_bitblox_add_edit_button' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, '_action_register_static' ) );
 		add_action( 'post_updated', array( $this, '_action_update_post_content' ) );
 		add_action( 'before_delete_post', array( $this, '_action_delete_page' ) );
+		add_action( 'media_buttons', array( $this, '_action_media_buttons' ) );
+		add_filter( 'page_row_actions', array( $this, '_filter_add_bitblox_edit_n_row_actions' ), 10, 2 );
 	}
 
 	public static function render( $view, array $args = array() ) {
@@ -40,7 +42,7 @@ class BitBlox_WP_Admin {
 	 */
 	public function _action_bitblox_add_edit_button( $post ) {
 		try {
-			$post = new BitBlox_WP_Post( $post->ID );
+			$post = new BitBlox_WP_Page( $post->ID );
 			echo self::render( 'button', array( 'id' => $post->get_id() ) );
 		} catch ( Exception $exception ) {
 
@@ -79,7 +81,7 @@ class BitBlox_WP_Admin {
 		}
 
 		try {
-			$post = new BitBlox_WP_Post( $p->ID );
+			$post = new BitBlox_WP_Page( $p->ID );
 
 			if ( $p->post_status == 'auto-draft' ) {
 				$p->post_status = 'draft';
@@ -107,7 +109,7 @@ class BitBlox_WP_Admin {
 		remove_action( 'post_updated', array( $this, '_action_update_post_content' ) );
 
 		try {
-			BitBlox_WP_Post::get( $id )->update_html();
+			BitBlox_WP_Page::get( $id )->update_html();
 		} catch ( BitBlox_WP_Exception_Unsupported_Post_Type $exception ) {
 			add_action( 'post_updated', array( $this, '_action_update_post_content' ) );
 
@@ -133,7 +135,7 @@ class BitBlox_WP_Admin {
 	 **/
 	public function _action_delete_page( $id ) {
 		try {
-			$post = BitBlox_WP_Post::get( $id );
+			$post = BitBlox_WP_Page::get( $id );
 
 			if ( $post->has_project() ) {
 				BitBlox_WP_User::get()->delete_project( $post->get_project() );
@@ -142,5 +144,45 @@ class BitBlox_WP_Admin {
 			do_action( 'bitblox_wp_delete_post', $id );
 		} catch ( Exception $exception ) {
 		}
+	}
+
+	/**
+	 * @internal
+	 **/
+	public function _action_media_buttons() {
+		try {
+			$post = new BitBlox_WP_Page( get_the_ID() );
+			if ( $post->can_edit() ) {
+				echo self::render( 'button', array( 'id' => $post->get_id() ) );
+			}
+		} catch ( Exception $exception ) {
+
+		}
+	}
+
+	/**
+	 * @internal
+	 *
+	 * @param array $actions
+	 * @param WP_Post $post
+	 *
+	 * @return array
+	 **/
+	public function _filter_add_bitblox_edit_n_row_actions( $actions, $post ) {
+		try {
+			$p = BitBlox_WP_Page::get( $post->ID );
+		} catch ( Exception $exception ) {
+			return $actions;
+		}
+
+		if ( ! $p->can_edit() ) {
+			return $actions;
+		}
+
+		$actions['bitblox-edit'] = "<a href='{$p->edit_url()}'>"
+		                           . __( 'Edit with BitBlox', bitblox_wp()->get_domain() )
+		                           . "</a>";
+
+		return $actions;
 	}
 }

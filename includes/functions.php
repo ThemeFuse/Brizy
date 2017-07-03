@@ -9,7 +9,7 @@ function bitblox_wp() {
 
 function bitblox_wp_is_edit_page() {
 	try {
-		$post = new BitBlox_WP_Post( get_the_ID() );
+		$post = new BitBlox_WP_Page( get_the_ID() );
 
 		return $post->uses_editor()
 		       && current_user_can( 'edit_pages' )

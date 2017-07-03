@@ -3,8 +3,6 @@
 }
 
 /**
- * @var string $action
- * @var string $nonce
  * @var int $id
  */
 
