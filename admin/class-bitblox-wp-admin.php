@@ -14,7 +14,8 @@ class BitBlox_WP_Admin {
 
 	protected function __construct() {
 		if ( defined( 'DOING_AJAX' ) ) {
-			add_action( 'wp_ajax__bitblox_wp_admin_editor', array( $this, '_action_request' ) );
+			add_action( 'wp_ajax__bitblox_wp_admin_editor_enable', array( $this, '_action_request_enable' ) );
+			add_action( 'wp_ajax__bitblox_wp_admin_editor_disable', array( $this, '_action_request_disable' ) );
 
 			return;
 		}
@@ -25,14 +26,15 @@ class BitBlox_WP_Admin {
 		add_action( 'before_delete_post', array( $this, '_action_delete_page' ) );
 		add_action( 'media_buttons', array( $this, '_action_media_buttons' ) );
 		add_filter( 'page_row_actions', array( $this, '_filter_add_bitblox_edit_row_actions' ), 10, 2 );
+		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
+		add_filter( 'the_editor', array( $this, '_filter_add_bitblox_edit_button' ), 10, 2 );
 	}
 
 	public static function render( $view, array $args = array() ) {
-		ob_start();
-		extract( $args );
-		include "views/$view.php";
-
-		return ob_get_clean();
+		return BitBlox_WP_View::get(
+			implode( DIRECTORY_SEPARATOR, array( dirname( __FILE__ ), 'views', $view ) ),
+			$args
+		);
 	}
 
 	/**
@@ -53,10 +55,24 @@ class BitBlox_WP_Admin {
 	 * @internal
 	 */
 	public function _action_register_static() {
+		if ( ! ( $id = get_the_ID() ) ) {
+			return;
+		}
+
+		try {
+			BitBlox_WP_Post::get( $id );
+		} catch ( Exception $x ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			bitblox_wp()->get_slug() . '-admin-js',
+			bitblox_wp()->get_url( '/admin/static/css/style.css' )
+		);
 		wp_enqueue_script(
 			bitblox_wp()->get_slug() . '-admin-js',
 			bitblox_wp()->get_url( '/admin/static/js/script.js' ),
-			array( 'jquery' ),
+			array( 'jquery', 'underscore' ),
 			bitblox_wp()->get_version(),
 			true
 		);
@@ -65,13 +81,17 @@ class BitBlox_WP_Admin {
 			bitblox_wp()->get_slug() . '-admin-js',
 			'BitBlox_WP_Admin_Data',
 			array(
-				'url'    => admin_url( 'admin-ajax.php' ),
-				'action' => '_bitblox_wp_admin_editor'
+				'url'     => admin_url( 'admin-ajax.php' ),
+				'id'      => get_the_ID(),
+				'actions' => array(
+					'enable'  => '_bitblox_wp_admin_editor_enable',
+					'disable' => '_bitblox_wp_admin_editor_disable',
+				)
 			)
 		);
 	}
 
-	public function _action_request() {
+	public function _action_request_enable() {
 		if ( ! isset( $_POST['id'] ) || ! ( $p = get_post( $_POST['id'] ) ) ) {
 			wp_send_json_error( array(
 				'code'    => 'invalid_request',
@@ -91,6 +111,26 @@ class BitBlox_WP_Admin {
 			wp_send_json_success( array(
 				'redirect' => $post->enable_editor()->edit_url()
 			) );
+		} catch ( BitBlox_WP_Exception $exception ) {
+			wp_send_json_error( array(
+				'code'    => $exception->getCode(),
+				'message' => $exception->getMessage(),
+			) );
+		}
+	}
+
+	public function _action_request_disable() {
+		if ( ! isset( $_POST['id'] ) || ! ( $p = get_post( $_POST['id'] ) ) ) {
+			wp_send_json_error( array(
+				'code'    => 'invalid_request',
+				'message' => __( 'Invalid post', bitblox_wp()->get_domain() ),
+			) );
+			exit();
+		}
+
+		try {
+			BitBlox_WP_Post::get( $p->ID )->disable_editor();
+			wp_send_json_success();
 		} catch ( BitBlox_WP_Exception $exception ) {
 			wp_send_json_error( array(
 				'code'    => $exception->getCode(),
@@ -157,7 +197,7 @@ class BitBlox_WP_Admin {
 		try {
 			$post = BitBlox_WP_Post::get( get_the_ID() );
 			if ( $post->can_edit() ) {
-				echo self::render( 'button', array( 'id' => $post->ID() ) );
+				echo self::render( 'button', array( 'id' => $post->ID(), ) );
 			}
 		} catch ( Exception $exception ) {
 
@@ -191,5 +231,47 @@ class BitBlox_WP_Admin {
 		                           . "</a>";
 
 		return $actions;
+	}
+
+	/**
+	 * @internal
+	 *
+	 * @param string $body
+	 *
+	 * @return string
+	 **/
+	public function _filter_add_body_class( $body ) {
+		if ( ! ( $id = get_the_ID() ) ) {
+			return $body;
+		}
+
+		try {
+			$post = BitBlox_WP_Post::get( $id );
+		} catch ( Exception $x ) {
+			return $body;
+		}
+
+		return $body . ( $post->uses_editor() ? 'bitblox-editor-enabled' : '' );
+	}
+
+	/**
+	 * @internal
+	 *
+	 * @param string $data
+	 *
+	 * @return string
+	 **/
+	public function _filter_add_bitblox_edit_button( $data ) {
+		if ( ! ( $id = get_the_ID() ) ) {
+			return;
+		}
+
+		try {
+			$post = BitBlox_WP_Post::get( $id );
+		} catch ( Exception $x ) {
+			return;
+		}
+
+		return $data . self::render( 'editor', array( 'url' => $post->edit_url() ) );
 	}
 }

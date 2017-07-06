@@ -1,24 +1,43 @@
-function bitblox_wp_redirect (id) {
+jQuery(document).ready(function ($) {
   var xhr = false
+  var id = BitBlox_WP_Admin_Data.id
   var url = BitBlox_WP_Admin_Data.url
-  var action = BitBlox_WP_Admin_Data.action
-
-  if (xhr) {
-    return
+  var actions = BitBlox_WP_Admin_Data.actions
+  var enableButton = $('#bitblox-wp-admin-enable')
+  var disableButton = $('#bitblox-wp-admin-disable')
+  var hideEditor = function () {
+    $('body').addClass('bitblox-editor-enabled')
   }
+  var showEditor = function () {
+    $('body').removeClass('bitblox-editor-enabled')
+  }
+  var request = (function () {
+    if (xhr) {
+      return
+    }
 
-  xhr = true
-  jQuery.post(url, {
-    action: action,
-    id: id
+    return function (action, done) {
+      xhr = true
+      $.post(url, {
+        action: action,
+        id: id
+      })
+       .done(done)
+       .always(function () {
+         xhr = false
+       })
+    }
+  })()
+
+  enableButton.on('click', function (e) {
+    e.preventDefault()
+    request(actions.enable, function (response) {
+      hideEditor()
+      location.href = response.data.redirect
+    })
   })
-        .done(function (response) {
-          location.href = response.data.redirect
-        })
-        .fail(function (response) {
-
-        })
-        .always(function () {
-          xhr = false
-        })
-}
+  disableButton.on('click', function (e) {
+    e.preventDefault()
+    request(actions.disable, showEditor)
+  })
+})
