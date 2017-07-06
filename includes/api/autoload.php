@@ -22,7 +22,9 @@ function _bitblox_wp_api_autoload( $class ) {
 		case 'BitBlox_WP_API_Exception' :
 			include_once 'exception/class-bitblox-wp-api-exception.php';
 			break;
-
+		case 'BitBlox_WP_API_Project' :
+			include_once 'class-bitblox-wp-api-project.php';
+			break;
 	}
 }
 

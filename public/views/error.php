@@ -9,4 +9,7 @@
 $back = '<a href="#" onclick="window.history.back()">'
         . __( 'Go back', bitblox_wp()->get_domain() )
         . '</a>';
-_default_wp_die_handler( $message . '<br>' . $back );
+?>
+
+<h3><?php echo $message; ?></h3>
+<p><?php echo $back; ?></p>

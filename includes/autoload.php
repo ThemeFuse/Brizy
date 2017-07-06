@@ -22,9 +22,6 @@ function _bitblox_wp_includes_autoload( $class ) {
 		case 'BitBlox_WP_View' :
 			include_once 'class-bitblox-wp-view.php';
 			break;
-		case 'BitBlox_WP_Page' :
-			include_once 'class-bitblox-wp-page.php';
-			break;
 		case 'BitBlox_WP_User' :
 			include_once 'class-bitblox-wp-user.php';
 			break;
@@ -72,6 +69,12 @@ function _bitblox_wp_includes_autoload( $class ) {
 			break;
 		case 'BitBlox_WP_Project' :
 			include_once 'class-bitblox-wp-project.php';
+			break;
+		case 'BitBlox_WP_Project_Html' :
+			include_once 'class-bitblox-wp-project-html.php';
+			break;
+		case 'BitBlox_WP_Post' :
+			include_once 'class-bitblox-wp-post.php';
 			break;
 
 	}

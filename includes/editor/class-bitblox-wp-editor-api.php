@@ -50,8 +50,8 @@ class BitBlox_WP_Editor_API {
 	public function get_globals() {
 		try {
 			$this->authorize();
-			$id   = $this->param( 'id' );
-			$this->success( BitBlox_WP_Page::get( $id )->get_globals() );
+			$id = $this->param( 'id' );
+			$this->success( self::create_post_globals( BitBlox_WP_Post::get( $id ) ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -64,10 +64,11 @@ class BitBlox_WP_Editor_API {
 	public function set_globals() {
 		try {
 			$this->authorize();
-			$post = BitBlox_WP_Page::get( $this->param( 'id' ) );
+			$post = BitBlox_WP_Post::get( $this->param( 'id' ) );
+			$data = $this->param( 'data' );
 
-			$post->set_globals( $this->param( 'data' ) );
-			$this->success( $post->get_globals() );
+			$post->set_globals( stripslashes( $data['globals'] ) );
+			$this->success( self::create_post_globals( $post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -81,7 +82,7 @@ class BitBlox_WP_Editor_API {
 		try {
 			$this->authorize();
 			$id   = $this->param( 'id' );
-			$post = new BitBlox_WP_Page( $id );
+			$post = BitBlox_WP_Post::get( $id );
 
 			$this->success( array( self::create_post_arr( $post ) ) );
 		} catch ( Exception $exception ) {
@@ -98,7 +99,7 @@ class BitBlox_WP_Editor_API {
 			$id      = $this->param( 'id' );
 			$content = $this->param( 'data' );
 
-			$post = new BitBlox_WP_Page( $id );
+			$post = BitBlox_WP_Post::get( $id );
 
 			try {
 				wp_update_post( array(
@@ -115,7 +116,7 @@ class BitBlox_WP_Editor_API {
 
 			}
 
-			$post->set_json( stripslashes( $content ) );
+			$post->set_draft( stripslashes( $content ) );
 
 			$this->success( self::create_post_arr( $post ) );
 		} catch ( Exception $exception ) {
@@ -129,7 +130,7 @@ class BitBlox_WP_Editor_API {
 	public function build_content() {
 		try {
 			$id   = $this->param( 'id' );
-			$post = new BitBlox_WP_Page( $id );
+			$post = BitBlox_WP_Post::get( $id );
 			$post->update_html();
 
 			$this->success( self::create_post_arr( $post ) );
@@ -160,10 +161,16 @@ class BitBlox_WP_Editor_API {
 	public function media() {
 		try {
 			$this->authorize();
-			$project       = BitBlox_WP_Page::get( $this->param( 'id' ) )->get_project();
+			$project       = BitBlox_WP_Post::get( $this->param( 'id' ) );
 			$attachment_id = $this->param( 'attachmentId' );
 
-			$this->success( BitBlox_WP_User::get()->get_media_id( $project, $attachment_id ) );
+			$this->success( BitBlox_WP_User::get()->get_media_id(
+				new BitBlox_WP_API_Project(
+					$project->get_id(),
+					$project->get_page_id()
+				),
+				$attachment_id
+			) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -195,16 +202,30 @@ class BitBlox_WP_Editor_API {
 		}
 	}
 
-	public static function create_post_arr( BitBlox_WP_Page $post ) {
+	public static function create_post_arr( BitBlox_WP_Post $post ) {
 		return array(
-			'title'    => get_the_title( $post->get_id() ),
-			'slug'     => sanitize_title( get_the_title( $post->get_id() ) ),
-			'data'     => $post->get_json(),
-			'id'       => $post->get_id(),
+			'title'    => get_the_title( $post->ID() ),
+			'slug'     => sanitize_title( get_the_title( $post->ID() ) ),
+			'data'     => $post->get_draft(),
+			'id'       => $post->ID(),
 			'is_index' => true,
-			'template' => get_page_template_slug( $post->get_id() ),
-			'status'   => get_post_status( $post->get_id() ),
-			'url'      => get_the_permalink( $post->get_id() )
+			'template' => get_page_template_slug( $post->ID() ),
+			'status'   => get_post_status( $post->ID() ),
+			'url'      => get_the_permalink( $post->ID() )
+		);
+	}
+
+	public static function create_post_globals( BitBlox_WP_Post $post ) {
+		return array(
+			'createdAt' => $post->get_wp_post()->post_date,
+			'updatedAt' => $post->get_wp_post()->post_date,
+			'id'        => $post->ID(),
+			'name'      => $post->get_wp_post()->post_name,
+			'globals'   => $post->get_globals(),
+			'user'      => array(
+				'email' => null,
+				'id'    => null,
+			),
 		);
 	}
 }

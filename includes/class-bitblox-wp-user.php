@@ -91,7 +91,7 @@ class BitBlox_WP_User {
 	/**
 	 * @param null $id
 	 *
-	 * @return BitBlox_WP_Project
+	 * @return BitBlox_WP_API_Project
 	 */
 	public function get_project( $id = null ) {
 		try {
@@ -103,7 +103,27 @@ class BitBlox_WP_User {
 		}
 	}
 
-	public function delete_project( BitBlox_WP_Project $project ) {
+	public function get_page_data( BitBlox_WP_API_Project $project ) {
+		try {
+			return $this->_get_page_data( $project );
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
+			$this->refresh_token();
+
+			return $this->_get_page_data( $project );
+		}
+	}
+
+	public function create_project() {
+		try {
+			return $this->_create_project();
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
+			$this->refresh_token();
+
+			return $this->_create_project();
+		}
+	}
+
+	public function delete_project( BitBlox_WP_API_Project $project ) {
 		try {
 			return $this->_delete_project( $project );
 		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
@@ -113,21 +133,32 @@ class BitBlox_WP_User {
 		}
 	}
 
-	public function update_project( BitBlox_WP_Project $project, $title, $content ) {
+	public function update_page( BitBlox_WP_API_Project $project, $title, $content ) {
 		$page = BitBlox_WP_API_Page::get()
 		                           ->set_title( $title )
 		                           ->set_content( $content );
 		try {
-			$this->_update_project( $project, $page );
+			$this->_update_page( $project, $page );
 		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
 			$this->refresh_token();
-			$this->_update_project( $project, $page );
+			$this->_update_page( $project, $page );
 		}
 
 		return $this;
 	}
 
-	public function get_html( BitBlox_WP_Project $project ) {
+	public function update_project_globals( BitBlox_WP_API_Project $project ) {
+		try {
+			$this->_update_project( $project );
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
+			$this->refresh_token();
+			$this->_update_project( $project );
+		}
+
+		return $this;
+	}
+
+	public function get_html( BitBlox_WP_API_Project $project ) {
 		try {
 			return $this->get_client()->get_page_html( $project->get_id(), $project->get_page_id() );
 		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
@@ -137,14 +168,14 @@ class BitBlox_WP_User {
 		}
 	}
 
-	public function get_html_dev( BitBlox_WP_Page $post ) {
-		$editor = new BitBlox_WP_Editor( $post->get_id(), $post->get_project()->get_id() );
+	public function get_html_dev( BitBlox_WP_Post $post ) {
+		$editor = new BitBlox_WP_Editor( $post->ID(), $post->get_id() );
 		$res    = wp_remote_post(
 			'http://bitblox-compiler.dev/',
 			array(
 				'body'    => array(
 					'pages'   => json_encode( array( BitBlox_WP_Editor_API::create_post_arr( $post ) ) ),
-					'globals' => json_encode( $post->get_globals() ),
+					'globals' => $post->get_globals(),
 					'config'  => $editor->config(),
 					'env'     => 'WP'
 				),
@@ -155,7 +186,7 @@ class BitBlox_WP_User {
 		return array( 'html' => trim( $res['body'] ) );
 	}
 
-	public function get_media_id( BitBlox_WP_Project $project, $att_id ) {
+	public function get_media_id( BitBlox_WP_API_Project $project, $att_id ) {
 		try {
 			$projects = BitBlox_WP_Post_Storage::instance( $att_id )->get( 'projects' );
 		} catch ( BitBlox_WP_Exception_Not_Found $exception ) {
@@ -237,35 +268,38 @@ class BitBlox_WP_User {
 		return $this;
 	}
 
-	protected function create_page() {
-		$project = $this->get_client()->create_project();
-		$page    = $this->get_client()->create_page( $project['id'], new BitBlox_WP_API_Page() );
-
-		return new BitBlox_WP_Project( $project['id'], $page['id'] );
+	protected function _get_page_data( BitBlox_WP_API_Project $project ) {
+		return $this->get_client()->get_page( $project->get_id(), $project->get_page_id() );
 	}
 
 	/**
 	 * @param $id
 	 *
-	 * @return BitBlox_WP_Project
+	 * @return BitBlox_WP_API_Project
 	 */
 	protected function _get_project( $id ) {
-		try {
-			$project = $this->get_client()->get_project( $id );
-			try {
-				$pages = $this->get_client()->get_pages( $project['id'] );
-				$page  = $pages[0];
-			} catch ( BitBlox_WP_Http_Response_Exception_Not_Found $exception ) {
-				$page = $this->get_client()->create_page( $project['id'], new BitBlox_WP_API_Page() );
-			}
+		$project = $this->get_client()->get_project( $id );
+		$pages   = $this->get_client()->get_pages( $project['id'] );
+		$page    = $pages[0];
 
-			return new BitBlox_WP_Project( $project['id'], $page['id'] );
-		} catch ( BitBlox_WP_Http_Response_Exception_Not_Found $exception ) {
-			return $this->create_page();
-		}
+		return new BitBlox_WP_API_Project( $project['id'], $page['id'], $project['globals'] );
 	}
 
-	protected function _update_project( BitBlox_WP_Project $project, BitBlox_WP_API_Page $content ) {
+	protected function _create_project() {
+		$project = $this->get_client()->create_project();
+		$page    = $this->get_client()->create_page( $project['id'], new BitBlox_WP_API_Page() );
+
+		return new BitBlox_WP_API_Project( $project['id'], $page['id'], $project['globals'] );
+	}
+
+	protected function _update_project( BitBlox_WP_API_Project $project ) {
+		return $this->get_client()->update_project(
+			$project,
+			array( 'globals' => $project->get_globals() )
+		);
+	}
+
+	protected function _update_page( BitBlox_WP_API_Project $project, BitBlox_WP_API_Page $content ) {
 		return $this->get_client()
 		            ->update_page(
 			            $project->get_id(),
@@ -274,7 +308,7 @@ class BitBlox_WP_User {
 		            );
 	}
 
-	protected function _delete_project( BitBlox_WP_Project $project ) {
+	protected function _delete_project( BitBlox_WP_API_Project $project ) {
 		return $this->get_client()->delete_project( $project->get_id() );
 	}
 

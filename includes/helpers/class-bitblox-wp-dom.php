@@ -19,30 +19,11 @@ class BitBlox_WP_DOM extends BitBlox_WP_DOM_Tag {
 		return $tags[0];
 	}
 
-	public function get_styles() {
-		$tags = $this->get_tags( '/(<style(.*?)<\/style>)/is' );
-		$list = array();
-
-		foreach ( $tags as $tag ) {
-			$list[] = $tag->get_content();
-		}
-
-		return $list;
-	}
-
-	public function get_scripts() {
-		return $this->get_attributes_list( $this->get_tags( '/(<script(.*?)<\/script>)/is' ), 'src' );
-	}
-
-	public function get_links() {
-		return $this->get_attributes_list( $this->get_tags( '/(<link[^>]+>)/is' ), 'href' );
-	}
-
 	protected function get_html() {
 		return $this->get_tag();
 	}
 
-	private function get_attributes_list( array $tags, $attr ) {
+	public function get_attributes( array $tags, $attr ) {
 		$list = array();
 
 		foreach ( $tags as $tag ) {
