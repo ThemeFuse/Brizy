@@ -95,6 +95,10 @@ class BitBlox_WP_Public {
 			return;
 		}
 
+		wp_enqueue_style(
+			bitblox_wp()->get_slug() . '-public-editor-style',
+			bitblox_wp()->get_url( '/public/static/css/style.css' )
+		);
 		wp_enqueue_script(
 			bitblox_wp()->get_slug() . '-public-js',
 			bitblox_wp()->get_url( '/public/static/js/script.js' ),
