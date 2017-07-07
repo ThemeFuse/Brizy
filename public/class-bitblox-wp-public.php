@@ -19,8 +19,8 @@ class BitBlox_WP_Public {
 	}
 
 	protected function __construct() {
-		if ( is_user_logged_in() ) {
-			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_static' ) );
+		if ( ! is_admin() && is_user_logged_in() ) {
+			add_action( 'wp', array( $this, '_action_register_static' ) );
 			add_action( 'wp_ajax__bitblox_wp_public_update_page', array( $this, '_action_request' ) );
 			add_filter( 'the_content', array( $this, '_action_load_editor' ) );
 			add_action( 'wp', array( $this, '_action_update_on_preview' ) );
@@ -44,16 +44,6 @@ class BitBlox_WP_Public {
 		if ( ! is_user_logged_in() || is_admin() || ! bitblox_wp_is_edit_page() ) {
 			return $content;
 		}
-
-		try {
-			$post = BitBlox_WP_Post::get( get_the_ID() );
-		} catch ( Exception $exception ) {
-			return $content;
-		}
-
-		$editor = new BitBlox_WP_Editor( $post );
-		$editor->load();
-		BitBlox_WP_Public::render( 'editor' );
 
 		return BitBlox_WP_View::get( self::path( 'views/template' ) );
 	}
@@ -112,6 +102,14 @@ class BitBlox_WP_Public {
 				'id'     => get_the_ID(),
 			)
 		);
+
+		try {
+			BitBlox_WP_Editor::get( BitBlox_WP_Post::get( get_the_ID() ) )->load();
+		} catch ( Exception $exception ) {
+			return;
+		}
+
+
 	}
 
 	/**
@@ -164,7 +162,7 @@ class BitBlox_WP_Public {
 	 * @internal
 	 **/
 	public function _action_register_page_static() {
-		if ( is_preview() ) {
+		if ( is_preview() || bitblox_wp_is_edit_page() ) {
 			return;
 		}
 		try {
@@ -190,7 +188,7 @@ class BitBlox_WP_Public {
 	 * @internal
 	 **/
 	public function _action_register_page_inline_static() {
-		if ( is_preview() ) {
+		if ( is_preview() || bitblox_wp_is_edit_page() ) {
 			return;
 		}
 		try {
@@ -218,7 +216,7 @@ class BitBlox_WP_Public {
 	 * @return string
 	 **/
 	public function _filter_parse_content_for_images( $content ) {
-		if ( is_preview() ) {
+		if ( is_preview() || bitblox_wp_is_edit_page() ) {
 			return $content;
 		}
 

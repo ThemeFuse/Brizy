@@ -6,6 +6,10 @@ class BitBlox_WP_Editor {
 	 */
 	private $post;
 
+	public static function get( BitBlox_WP_Post $post ) {
+		return new self( $post );
+	}
+
 	public function __construct( BitBlox_WP_Post $post ) {
 		$this->post = $post;
 	}
