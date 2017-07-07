@@ -190,26 +190,21 @@ class BitBlox_WP_Post extends BitBlox_WP_Project {
 		return $new;
 	}
 
-	public function get_published_html() {
-		$html = BitBlox_WP_User::get()->get_html_dev( $this );
-
-		return new BitBlox_WP_Project_Html( $html['html'] );
-	}
-
-	public function get_draft_html() {
+	//TODO: Remove on production as need to use `get_html_dev` instead from BitBlox_WP_Project
+	public function get_html() {
 		$html = BitBlox_WP_User::get()->get_html_dev( $this );
 
 		return new BitBlox_WP_Project_Html( $html['html'] );
 	}
 
 	public function update_html() {
-		$this->store_scripts( $this->get_published_html()->get_scripts() );
-		$this->store_styles( $this->get_published_html()->get_links() );
-		$this->store_inline_styles( $this->get_published_html()->get_styles() );
+		$this->store_scripts( $this->get_html()->get_scripts() );
+		$this->store_styles( $this->get_html()->get_links() );
+		$this->store_inline_styles( $this->get_html()->get_styles() );
 
 		wp_update_post( array(
 			'ID'           => $this->ID(),
-			'post_content' => $this->get_published_html()->get_content(),
+			'post_content' => $this->get_html()->get_content(),
 		) );
 	}
 

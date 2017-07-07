@@ -127,7 +127,7 @@ class BitBlox_WP_Public {
 			return;
 		}
 
-		$html = $p->get_draft_html();
+		$html = $p->get_html();
 
 		$post->post_content = $html->get_content();
 

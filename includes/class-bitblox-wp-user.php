@@ -123,6 +123,17 @@ class BitBlox_WP_User {
 		}
 	}
 
+	public function publish_project( BitBlox_WP_API_Project $project ) {
+		try {
+			$this->get_client()->publish_project( $project->get_id() );
+		} catch ( BitBlox_WP_Http_Response_Exception_Unauthorized $exception ) {
+			$this->refresh_token();
+			$this->get_client()->publish_project( $project->get_id() );
+		}
+
+		return $this;
+	}
+
 	public function delete_project( BitBlox_WP_API_Project $project ) {
 		try {
 			return $this->_delete_project( $project );

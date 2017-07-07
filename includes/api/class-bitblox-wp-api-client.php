@@ -24,6 +24,10 @@ class BitBlox_WP_API_Client {
 		return $this->put( "projects/{$project->get_id()}", $data )->get_body();
 	}
 
+	public function publish_project( $id ) {
+		return $this->put( "projects/{$id}/publish" )->get_body();
+	}
+
 	public function delete_project( $id ) {
 		return $this->delete( "projects/$id" )->get_body();
 	}

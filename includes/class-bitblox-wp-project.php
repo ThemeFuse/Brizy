@@ -11,8 +11,7 @@ class BitBlox_WP_Project {
 	private $draft;
 	private $published;
 	private $globals;
-	private $published_html;
-	private $draft_html;
+	private $html;
 
 	public static function create() {
 		$project = BitBlox_WP_User::get()->create_project();
@@ -111,22 +110,16 @@ class BitBlox_WP_Project {
 		return $this;
 	}
 
-	public function get_draft_html() {
-		if ( ! $this->draft_html ) {
-			$html             = BitBlox_WP_User::get()->get_html( $this->get_api_project() );
-			$this->draft_html = $html['html'];
+	public function get_html() {
+		if ( ! $this->html ) {
+			$html = BitBlox_WP_User::get()
+			                       ->publish_project( $this->get_api_project() )
+			                       ->get_html( $this->get_api_project() );
+
+			$this->html = $html['html'];
 		}
 
-		return new BitBlox_WP_Project_Html( $this->draft_html );
-	}
-
-	public function get_published_html() {
-		if ( ! $this->published_html ) {
-			$html                 = BitBlox_WP_User::get()->get_html( $this->get_api_project() );
-			$this->published_html = $html['html'];
-		}
-
-		return new BitBlox_WP_Project_Html( $this->published_html );
+		return new BitBlox_WP_Project_Html( $this->html );
 	}
 
 	private function get_api_project() {
