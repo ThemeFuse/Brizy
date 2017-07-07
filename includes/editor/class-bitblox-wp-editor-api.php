@@ -102,16 +102,13 @@ class BitBlox_WP_Editor_API {
 			$post = BitBlox_WP_Post::get( $id );
 
 			try {
-				wp_update_post( array(
-					'ID'         => $id,
-					'post_title' => $this->param( 'title' )
-				) );
+				$post->set_title( $this->param( 'title' ) );
 			} catch ( Exception $exception ) {
 
 			}
 
 			try {
-				update_post_meta( $id, '_wp_page_template', $this->param( 'template' ) );
+				$post->set_template( $this->param( 'template' ) );
 			} catch ( Exception $exception ) {
 
 			}

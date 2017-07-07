@@ -12,12 +12,13 @@ jQuery(document).ready(function ($) {
     $('body').removeClass('bitblox-editor-enabled')
   }
   var request = (function () {
-    if (xhr) {
-      return
-    }
-
+    var xhr = false
     return function (action, done) {
+      if (xhr) {
+        return
+      }
       xhr = true
+
       $.post(url, {
         action: action,
         id: id

@@ -1,13 +1,13 @@
 <?php
 
 class BitBlox_WP_Editor {
+	/**
+	 * @var BitBlox_WP_Post
+	 */
+	private $post;
 
-	private $post_id;
-	private $project_id;
-
-	public function __construct( $post_id, $project_id ) {
-		$this->post_id    = $post_id;
-		$this->project_id = $project_id;
+	public function __construct( BitBlox_WP_Post $post ) {
+		$this->post = $post;
 	}
 
 	public function load() {
@@ -15,8 +15,8 @@ class BitBlox_WP_Editor {
 		add_action( 'wp_enqueue_scripts', array( $this, '_action_register_static' ) );
 	}
 
-	protected function get_id() {
-		return $this->post_id;
+	protected function get_post() {
+		return $this->post;
 	}
 
 	protected function register_static() {
@@ -121,28 +121,6 @@ class BitBlox_WP_Editor {
 				'isLegacy'    => false,
 				'isMultipage' => false,
 				'isVariant'   => false,
-				// 'mode'                    => 'regular',
-				// 'synchronizeButton'       => null,
-				// 'synchronizeButton'       => array(
-				//     'appSlug'             => 'shopify-remote-editor',
-				//     'url'                 => 'http://example.com',
-				// ),
-			),
-			'encryptedData'   => array(
-				'activecampaign'        => 'uQjAX0ErchXRhooruOmrrvXxMtAuiQeyP7HV+YBmPzk=',
-				'antispam'              => '+GaVPrxiME72oCPxznnOv2f1P7UXPaWpaLaSTav6PoU==',
-				'aweber'                => 'i9tl49nro2405x+PXCwHfM9MwMg1KCCF7gpQ/pKl9fg=',
-				'campaignmonitor'       => 'yk+vH+K5QxRyOIABMy/FJRtdfu9/Ky5M4yd9kuC30Qw=',
-				'constantcontact'       => 'P2S7eiZyAbCpV3gKZWr4HU4mwEH3i3jjhExboX8I7rs=',
-				'editor'                => '............................................',
-				'getresponse'           => 'DW2juku51q0tOaZDPzcL5gH+cfFh6QygWlhAaWH+6kU=',
-				'integrations'          => 'Lw15T1DBKZLF2cVJKiUOd8LIBoTW5+FCmd0Zt/xX5g4=',
-				'mailchimp'             => 'nJopCChf28JaJgQ2VxNLMiZX2zSyY2r8qrza/Rjkthk=',
-				'mandrill'              => 'Go9vLArTvl6+4wvE3yXX6oe/ZUKj+6mctQkLDsRbk4M=',
-				'metrics'               => 'vaAeEh1enpyJxOktgePsrEJ9GzJzQ0+8IysxAp3nGzk=',
-				'salesforce'            => 'iaQiLLvGARvjKoKLJgh1bhgybacARW1n9dWXKf5krUQ=',
-				'shopify-remote-editor' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=',
-				'spreadsheet'           => 'qskb56Y7tHRyWiXkI85XqpHFIgzzoolLe1kK1VPCqAk=',
 			),
 			'hosts'           => array(
 				'api'     => 'api.testblox.info',
@@ -150,7 +128,7 @@ class BitBlox_WP_Editor {
 				'origin'  => 'testblox.info',
 				'primary' => 'testblox.info',
 			),
-			'project'         => $this->project_id,
+			'project'         => $this->get_post()->get_id(),
 			'projectLanguage' => array(
 				'id'      => 7,
 				'variant' => array(
@@ -167,14 +145,14 @@ class BitBlox_WP_Editor {
 				'origin'      => 'http://testblox.info',
 				'primary'     => 'http://bitblox.dev',
 			),
-			'user'            => $this->get_id(),
+			'user'            => $this->get_post()->get_id(),
 			'versions'        => array(
 				'editor'   => '4.3.0',
 				'template' => null
 			),
 			'wp'              => array(
-				'page'       => $this->get_id(),
-				'templates'  => $this->get_templates(),
+				'page'       => $this->get_post()->ID(),
+				'templates'  => $this->get_post()->get_templates(),
 				'api'        => array(
 					'hash'         => wp_create_nonce( BitBlox_WP_Editor_API::nonce ),
 					'url'          => admin_url( 'admin-ajax.php' ),
@@ -207,24 +185,5 @@ class BitBlox_WP_Editor {
 		wp_enqueue_media();
 		wp_enqueue_style( bitblox_wp()->get_slug() . '-editor' );
 		wp_enqueue_script( bitblox_wp()->get_slug() . '-editor' );
-	}
-
-	protected function get_templates() {
-		$templates = wp_get_theme()->get_page_templates();
-		$list      = array(
-			array(
-				'id'    => '',
-				'title' => __( 'Default' )
-			)
-		);
-
-		foreach ( $templates as $key => $title ) {
-			$list[] = array(
-				'id'    => $key,
-				'title' => $title
-			);
-		}
-
-		return $list;
 	}
 }

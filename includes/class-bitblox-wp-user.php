@@ -169,7 +169,7 @@ class BitBlox_WP_User {
 	}
 
 	public function get_html_dev( BitBlox_WP_Post $post ) {
-		$editor = new BitBlox_WP_Editor( $post->ID(), $post->get_id() );
+		$editor = new BitBlox_WP_Editor( $post );
 		$res    = wp_remote_post(
 			'http://bitblox-compiler.dev/',
 			array(

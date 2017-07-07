@@ -31,10 +31,6 @@ class BitBlox_WP_Public {
 		add_action( 'wp_print_scripts', array( $this, '_action_register_page_inline_static' ) );
 		add_filter( 'the_content', array( $this, '_filter_parse_content_for_images' ) );
 		add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
-
-		foreach ( bitblox_wp()->supported_post_types() as $type ) {
-			add_filter( "theme_{$type}_templates", array( $this, '_filter_register_page_templates' ) );
-		}
 	}
 
 	/**
@@ -55,7 +51,7 @@ class BitBlox_WP_Public {
 			return $content;
 		}
 
-		$editor = new BitBlox_WP_Editor( $post->ID(), $post->get_id() );
+		$editor = new BitBlox_WP_Editor( $post );
 		$editor->load();
 		BitBlox_WP_Public::render( 'editor' );
 
@@ -253,20 +249,6 @@ class BitBlox_WP_Public {
 		) );
 
 		return str_replace( $image, $new->get_url(), $content );
-	}
-
-	/**
-	 * @internal
-	 *
-	 * @param array $templates
-	 *
-	 * @return array
-	 **/
-	public function _filter_register_page_templates( $templates ) {
-		return array_merge( $templates,
-			array(
-				'bitblox-wp-blank-template.php' => __( 'Blank', bitblox_wp()->get_domain() )
-			) );
 	}
 
 	/**
