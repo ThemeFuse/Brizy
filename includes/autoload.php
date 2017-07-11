@@ -7,7 +7,7 @@
  */
 function _brizy_includes_autoload( $class ) {
 	switch ( $class ) {
-		case 'BitBlox_WP' :
+		case 'Brizy_WP' :
 			include_once 'class-brizy.php';
 			break;
 		case 'Brizy_Uploads_Dir' :

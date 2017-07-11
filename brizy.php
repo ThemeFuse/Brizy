@@ -19,4 +19,14 @@ include_once 'shortcodes/autoload.php';
 include_once 'public/autoload.php';
 include_once 'admin/autoload.php';
 
+function _action_brizy_load_text_domain() {
+	load_plugin_textdomain(
+		'brizy',
+		false,
+		dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'languages'
+	);
+}
+
+add_action( 'after_setup_theme', '_action_brizy_load_text_domain' );
+
 Brizy_Editor_API::init();

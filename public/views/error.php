@@ -7,7 +7,7 @@
  */
 
 $back = '<a href="#" onclick="window.history.back()">'
-        . __( 'Go back', brizy()->get_domain() )
+        . __( 'Go back', 'brizy' )
         . '</a>';
 ?>
 

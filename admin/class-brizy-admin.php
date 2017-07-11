@@ -76,7 +76,7 @@ class Brizy_Admin {
 		if ( ! isset( $_POST['id'] ) || ! ( $p = get_post( $_POST['id'] ) ) ) {
 			wp_send_json_error( array(
 				'code'    => 'invalid_request',
-				'message' => __( 'Invalid post', brizy()->get_domain() ),
+				'message' => __( 'Invalid post', 'brizy' ),
 			) );
 			exit();
 		}
@@ -118,7 +118,7 @@ class Brizy_Admin {
 		if ( ! isset( $_POST['id'] ) || ! ( $p = get_post( $_POST['id'] ) ) ) {
 			wp_send_json_error( array(
 				'code'    => 'invalid_request',
-				'message' => __( 'Invalid post', brizy()->get_domain() ),
+				'message' => __( 'Invalid post', 'brizy' ),
 			) );
 			exit();
 		}
@@ -174,9 +174,15 @@ class Brizy_Admin {
 			return $actions;
 		}
 
-		$actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
-		                           . __( 'Edit with BitBlox', brizy()->get_domain() )
-		                           . "</a>";
+		try {
+			$p = Brizy_Post::get( $post->ID );
+
+			$actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
+			                         . __( 'Edit with Brizy', 'brizy' )
+			                         . "</a>";
+		} catch ( Exception $exception ) {
+
+		}
 
 		return $actions;
 	}

@@ -44,7 +44,7 @@ class Brizy_Admin_Settings {
 		add_submenu_page(
 			'options-general.php',
 			brizy()->get_name(),
-			brizy()->get_name() . ' ' . __( 'settings' ),
+			brizy()->get_name() . ' ' . __( 'settings', 'brizy' ),
 			'manage_options',
 			self::menu_slug(),
 			array( $this, 'render' )

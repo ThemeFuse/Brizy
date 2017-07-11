@@ -1,6 +1,6 @@
 <?php
 
-class BitBlox_WP {
+class Brizy_WP {
 
 	private static $settings_key = 'post-types';
 
@@ -41,7 +41,7 @@ class BitBlox_WP {
 	}
 
 	public function get_name() {
-		return 'Bitblox WP';
+		return 'Brizy';
 	}
 
 	/**

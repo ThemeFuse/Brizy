@@ -6,7 +6,7 @@ class Brizy_Post extends Brizy_Project {
 	public static function get( $id ) {
 		if ( ! in_array( ( $type = get_post_type( $id ) ), brizy()->supported_post_types() ) ) {
 			throw new Brizy_Exception_Unsupported_Post_Type(
-				"Bitblox editor doesn't support '$type' post type"
+				"Brizy editor doesn't support '$type' post type"
 			);
 		}
 
@@ -16,7 +16,7 @@ class Brizy_Post extends Brizy_Project {
 	public static function create( $id = - 1 ) {
 		if ( ! in_array( ( $type = get_post_type( $id ) ), brizy()->supported_post_types() ) ) {
 			throw new Brizy_Exception_Unsupported_Post_Type(
-				"Bitblox editor doesn't support '$type' post type"
+				"Brizy editor doesn't support '$type' post type"
 			);
 		}
 

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @return BitBlox_WP
+ * @return Brizy_WP
  */
 function brizy() {
-	return BitBlox_WP::get();
+	return Brizy_WP::get();
 }
 
 function brizy_is_edit_page() {
