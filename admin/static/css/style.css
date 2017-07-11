@@ -1,25 +1,25 @@
-.bitblox-editor-enabled #insert-media-button,
-.bitblox-editor-enabled #wp-content-editor-tools .wp-editor-tabs,
-.bitblox-editor-enabled #wp-content-editor-container .quicktags-toolbar,
-.bitblox-editor-enabled #wp-content-editor-container .wp-editor-area {
+.brizy-editor-enabled #insert-media-button,
+.brizy-editor-enabled #wp-content-editor-tools .wp-editor-tabs,
+.brizy-editor-enabled #wp-content-editor-container .quicktags-toolbar,
+.brizy-editor-enabled #wp-content-editor-container .wp-editor-area {
 	display: none;
 }
 
-#bitblox-wp-admin-enable,
-#bitblox-wp-admin-disable {
+#brizy-admin-enable,
+#brizy-admin-disable {
 	float: left;
 }
 
-#bitblox-wp-admin-disable,
-.bitblox-editor-enabled #bitblox-wp-admin-enable {
+#brizy-admin-disable,
+.brizy-editor-enabled #brizy-admin-enable {
 	display: none;
 }
 
-.bitblox-editor-enabled #bitblox-wp-admin-disable {
+.brizy-editor-enabled #brizy-admin-disable {
 	display: block;
 }
 
-.bitblox-wp-editor {
+.brizy-editor {
 	padding: 10% 0;
 	display: none;
 	background: #fff;
@@ -27,10 +27,10 @@
 	justify-content: center;
 }
 
-.bitblox-editor-enabled .bitblox-wp-editor {
+.brizy-editor-enabled .brizy-editor {
 	display: flex;
 }
 
-.bitblox-wp-editor .button {
+.brizy-editor .button {
 	transform: scale(1.7);
 }

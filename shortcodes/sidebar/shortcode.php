@@ -2,7 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-function bitblox_wp_shortcode_sidebar( $atts ) {
+function brizy_shortcode_sidebar( $atts ) {
 	$id = isset( $atts['id'] ) ? $atts['id'] : null;
 
 	if ( $id ) {
@@ -15,4 +15,4 @@ function bitblox_wp_shortcode_sidebar( $atts ) {
 	return '';
 }
 
-add_shortcode( BITBLOX_WP_SHORTCODES_PREFIX . 'sidebar', 'bitblox_wp_shortcode_sidebar' );
+add_shortcode( BRIZY_SHORTCODES_PREFIX . 'sidebar', 'brizy_shortcode_sidebar' );

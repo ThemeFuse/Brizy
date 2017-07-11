@@ -7,7 +7,7 @@
  */
 
 $back = '<a href="#" onclick="window.history.back()">'
-        . __( 'Go back', bitblox_wp()->get_domain() )
+        . __( 'Go back', brizy()->get_domain() )
         . '</a>';
 ?>
 

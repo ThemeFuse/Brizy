@@ -1,10 +1,10 @@
 (function ($) {
-  $('body').on('click', '.bitblox-wp-public-update-button', function (e) {
+  $('body').on('click', '.brizy-public-update-button', function (e) {
     e.preventDefault()
     var xhr = false
-    var url = BitBlox_WP_Public_Data.url
-    var action = BitBlox_WP_Public_Data.action
-    var id = BitBlox_WP_Public_Data.id
+    var url = Brizy_Public_Data.url
+    var action = Brizy_Public_Data.action
+    var id = Brizy_Public_Data.id
 
     if (xhr) {
       return

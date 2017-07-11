@@ -5,82 +5,82 @@
 /**
  * @param string $class
  */
-function _bitblox_wp_includes_autoload( $class ) {
+function _brizy_includes_autoload( $class ) {
 	switch ( $class ) {
 		case 'BitBlox_WP' :
-			include_once 'class-bitblox-wp.php';
+			include_once 'class-brizy.php';
 			break;
-		case 'BitBlox_WP_Uploads_Dir' :
-			include_once 'class-bitblox-wp-uploads-dir.php';
+		case 'Brizy_Uploads_Dir' :
+			include_once 'class-brizy-uploads-dir.php';
 			break;
-		case 'BitBlox_WP_DOM' :
-			include_once 'helpers/class-bitblox-wp-dom.php';
+		case 'Brizy_DOM' :
+			include_once 'helpers/class-brizy-dom.php';
 			break;
-		case 'BitBlox_WP_DOM_Tag' :
-			include_once 'helpers/class-bitblox-wp-dom-tag.php';
+		case 'Brizy_DOM_Tag' :
+			include_once 'helpers/class-brizy-dom-tag.php';
 			break;
-		case 'BitBlox_WP_View' :
-			include_once 'class-bitblox-wp-view.php';
+		case 'Brizy_View' :
+			include_once 'class-brizy-view.php';
 			break;
-		case 'BitBlox_WP_User' :
-			include_once 'class-bitblox-wp-user.php';
+		case 'Brizy_User' :
+			include_once 'class-brizy-user.php';
 			break;
-		case 'BitBlox_WP_Editor' :
-			include_once 'editor/class-bitblox-wp-editor.php';
+		case 'Brizy_Editor' :
+			include_once 'editor/class-brizy-editor.php';
 			break;
-		case 'BitBlox_WP_Editor_API' :
-			include_once 'editor/class-bitblox-wp-editor-api.php';
+		case 'Brizy_Editor_API' :
+			include_once 'editor/class-brizy-editor-api.php';
 			break;
-		case 'BitBlox_WP_Constants' :
-			include_once 'class-bitblox-wp-constants.php';
+		case 'Brizy_Constants' :
+			include_once 'class-brizy-constants.php';
 			break;
-		case 'BitBlox_WP_Exception' :
-			include_once 'exception/class-bitblox-wp-exception.php';
+		case 'Brizy_Exception' :
+			include_once 'exception/class-brizy-exception.php';
 			break;
-		case 'BitBlox_WP_Exception_Access_Denied' :
-			include_once 'exception/class-bitblox-wp-exception-access-denied.php';
+		case 'Brizy_Exception_Access_Denied' :
+			include_once 'exception/class-brizy-exception-access-denied.php';
 			break;
-		case 'BitBlox_WP_Exception_Service_Unavailable' :
-			include_once 'exception/class-bitblox-wp-exception-service-unavailable.php';
+		case 'Brizy_Exception_Service_Unavailable' :
+			include_once 'exception/class-brizy-exception-service-unavailable.php';
 			break;
-		case 'BitBlox_WP_Exception_Invalid_Content' :
-			include_once 'exception/class-bitblox-wp-exception-invalid-content.php';
+		case 'Brizy_Exception_Invalid_Content' :
+			include_once 'exception/class-brizy-exception-invalid-content.php';
 			break;
-		case 'BitBlox_WP_Exception_Not_Found' :
-			include_once 'exception/class-bitblox-wp-exception-not-found.php';
+		case 'Brizy_Exception_Not_Found' :
+			include_once 'exception/class-brizy-exception-not-found.php';
 			break;
-		case 'BitBlox_WP_Exception_Not_BitBlox_Page' :
-			include_once 'exception/class-bitblox-wp-exception-not-bitblox-page.php';
+		case 'Brizy_Exception_Not_Brizy_Page' :
+			include_once 'exception/class-brizy-exception-not-brizy-page.php';
 			break;
-		case 'BitBlox_WP_Exception_Unsupported_Post_Type' :
-			include_once 'exception/class-bitblox-wp-exception-unsupported-post-type.php';
+		case 'Brizy_Exception_Unsupported_Post_Type' :
+			include_once 'exception/class-brizy-exception-unsupported-post-type.php';
 			break;
-		case 'BitBlox_WP_Post_Storage' :
-			include_once 'storage/class-bitblox-wp-post-storage.php';
+		case 'Brizy_Post_Storage' :
+			include_once 'storage/class-brizy-post-storage.php';
 			break;
-		case 'BitBlox_WP_Storage' :
-			include_once 'storage/class-bitblox-wp-storage.php';
+		case 'Brizy_Storage' :
+			include_once 'storage/class-brizy-storage.php';
 			break;
-		case 'BitBlox_WP_Storage_Model' :
-			include_once 'storage/class-bitblox-wp-storage-model.php';
+		case 'Brizy_Storage_Model' :
+			include_once 'storage/class-brizy-storage-model.php';
 			break;
-		case 'BitBlox_WP_Dump' :
-			include_once 'dev/class-bitblox-wp-dump.php';
+		case 'Brizy_Dump' :
+			include_once 'dev/class-brizy-dump.php';
 			break;
-		case 'BitBlox_WP_Project' :
-			include_once 'class-bitblox-wp-project.php';
+		case 'Brizy_Project' :
+			include_once 'class-brizy-project.php';
 			break;
-		case 'BitBlox_WP_Project_Html' :
-			include_once 'class-bitblox-wp-project-html.php';
+		case 'Brizy_Project_Html' :
+			include_once 'class-brizy-project-html.php';
 			break;
-		case 'BitBlox_WP_Post' :
-			include_once 'class-bitblox-wp-post.php';
+		case 'Brizy_Post' :
+			include_once 'class-brizy-post.php';
 			break;
 
 	}
 }
 
-spl_autoload_register( '_bitblox_wp_includes_autoload' );
+spl_autoload_register( '_brizy_includes_autoload' );
 
 include_once 'static-resources/autoload.php';
 include_once 'api/autoload.php';

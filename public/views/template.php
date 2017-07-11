@@ -3,6 +3,6 @@
 }
 
 ?>
-<div id="<?php echo bitblox_wp()->get_slug() . '-root-element'; ?>" class="bbm wp-env">
+<div id="<?php echo brizy()->get_slug() . '-root-element'; ?>" class="bbm wp-env">
     <div class="spinner"></div>
 </div>

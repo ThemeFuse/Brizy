@@ -1,20 +1,20 @@
-#bitblox-wp-root-element {
+#brizy-root-element {
 	position: relative;
 	min-height: 400px;
 	background: #f3f3f3;
 }
 
-#bitblox-wp-root-element > .spinner {
+#brizy-root-element > .spinner {
 	display: none;
 }
 
-#bitblox-wp-root-element > .spinner:first-child:last-child {
+#brizy-root-element > .spinner:first-child:last-child {
 	display: block;
 }
 
-#bitblox-wp-root-element > .spinner,
-#bitblox-wp-root-element > .spinner:after,
-#bitblox-wp-root-element > .spinner:before {
+#brizy-root-element > .spinner,
+#brizy-root-element > .spinner:after,
+#brizy-root-element > .spinner:before {
 	content: "";
 	position: absolute;
 	top: 50%;
@@ -24,7 +24,7 @@
 	animation: spin 1s linear infinite
 }
 
-#bitblox-wp-root-element > .spinner {
+#brizy-root-element > .spinner {
 	width: 100px;
 	height: 100px;
 	margin: -50px 0 0 -50px;
@@ -32,7 +32,7 @@
 	animation-duration: 2.5s
 }
 
-#bitblox-wp-root-element > .spinner:after {
+#brizy-root-element > .spinner:after {
 	width: 80px;
 	height: 80px;
 	margin: -40px 0 0 -40px;
@@ -40,7 +40,7 @@
 	animation-duration: 2s
 }
 
-#bitblox-wp-root-element > .spinner:before {
+#brizy-root-element > .spinner:before {
 	width: 60px;
 	height: 60px;
 	margin: -30px 0 0 -30px;

@@ -1,15 +1,15 @@
 jQuery(document).ready(function ($) {
   var xhr = false
-  var id = BitBlox_WP_Admin_Data.id
-  var url = BitBlox_WP_Admin_Data.url
-  var actions = BitBlox_WP_Admin_Data.actions
-  var enableButton = $('#bitblox-wp-admin-enable')
-  var disableButton = $('#bitblox-wp-admin-disable')
+  var id = Brizy_Admin_Data.id
+  var url = Brizy_Admin_Data.url
+  var actions = Brizy_Admin_Data.actions
+  var enableButton = $('#brizy-admin-enable')
+  var disableButton = $('#brizy-admin-disable')
   var hideEditor = function () {
-    $('body').addClass('bitblox-editor-enabled')
+    $('body').addClass('brizy-editor-enabled')
   }
   var showEditor = function () {
-    $('body').removeClass('bitblox-editor-enabled')
+    $('body').removeClass('brizy-editor-enabled')
   }
   var request = (function () {
     var xhr = false
