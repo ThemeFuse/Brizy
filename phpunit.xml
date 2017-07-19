@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.5/phpunit.xsd"
+        backupGlobals="false"
+        colors="true"
+        processIsolation = "true"
+        stopOnFailure = "false"
+        bootstrap="../../../wp-load.php"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="ABSPATH" value="./"/>
+    </php>
+    <testsuites>
+        <testsuite name="Brizy Test Suite">
+            <directory suffix=".php">tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+

@@ -1,0 +1,16 @@
+{
+  "name": "ThemeFuse/Brizy",
+  "description": "A free drag & drop framework that comes with a bunch of built in extensions that will help you develop premium themes fast & easy.",
+  "minimum-stability": "stable",
+  "license": "GPL2+",
+  "authors": [
+    {
+      "name": "ThemeFuse"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^6.2",
+    "phpunit/php-invoker": "^1.1",
+    "phpunit/dbunit": "^3.0"
+  }
+}
