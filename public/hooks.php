@@ -3,7 +3,7 @@
 }
 
 function _action_brizy_delete_scripts_and_styles( $id ) {
-	$path = Brizy_Static_Storage::get_path()
+	$path = Brizy_Editor_Resources_StaticStorage::get_path()
 	        . DIRECTORY_SEPARATOR
 	        . brizy()->get_slug()
 	        . "-$id*";
@@ -39,3 +39,5 @@ foreach ( brizy()->supported_post_types() as $type ) {
 	add_filter( "brizy:$type:templates", '_filter_brizy_public_page_templates' );
 	add_filter( "theme_{$type}_templates", '_filter_brizy_public_register_page_templates' );
 }
+
+add_action( 'after_setup_theme', array( 'Brizy_Public_Main', '_init' ) );
