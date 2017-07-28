@@ -50,8 +50,13 @@ class Brizy_Editor_API {
 	public function get_globals() {
 		try {
 			$this->authorize();
-			$id = $this->param( 'id' );
-			$this->success( self::create_post_globals( Brizy_Editor_Post::get( $id ) ) );
+			$id      = $this->param( 'id' );
+			$project = Brizy_Editor_Project::get();
+			$post    = Brizy_Editor_Post::get( $id );
+
+			$data = self::create_post_globals( $project, $post );
+
+			$this->success( $data );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -64,11 +69,20 @@ class Brizy_Editor_API {
 	public function set_globals() {
 		try {
 			$this->authorize();
-			$post = Brizy_Editor_Post::get( $this->param( 'id' ) );
+
+			$id      = $this->param( 'id' );
+			$project = Brizy_Editor_Project::get();
+			$post    = Brizy_Editor_Post::get( $id );
+
 			$data = $this->param( 'data' );
 
-			$post->set_globals( stripslashes( $data['globals'] ) );
-			$this->success( self::create_post_globals( $post ) );
+			$project->set_globals( stripslashes( $data['globals'] ) );
+
+			$project->save();
+
+			Brizy_Editor_User::get()->update_project_globals( $project->get_api_project() );
+
+			$this->success( self::create_post_globals( $project, $post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -84,7 +98,8 @@ class Brizy_Editor_API {
 			$id   = $this->param( 'id' );
 			$post = Brizy_Editor_Post::get( $id );
 
-			$this->success( array( self::create_post_arr( $post ) ) );
+			$post_arr = self::create_post_arr( $post );
+			$this->success( array( $post_arr ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -98,22 +113,16 @@ class Brizy_Editor_API {
 		try {
 			$id      = $this->param( 'id' );
 			$content = $this->param( 'data' );
+			$title   = $this->param( 'title' );
+
 
 			$post = Brizy_Editor_Post::get( $id );
 
-			try {
-				$post->set_title( $this->param( 'title' ) );
-			} catch ( Exception $exception ) {
+			$post->set_title( $title );
+			$post->set_template( $this->param( 'template' ) );
+			$post->set_data( $content );
 
-			}
-
-			try {
-				$post->set_template( $this->param( 'template' ) );
-			} catch ( Exception $exception ) {
-
-			}
-
-			$post->set_draft( stripslashes( $content ) );
+			$post->save();
 
 			$this->success( self::create_post_arr( $post ) );
 		} catch ( Exception $exception ) {
@@ -128,7 +137,9 @@ class Brizy_Editor_API {
 		try {
 			$id   = $this->param( 'id' );
 			$post = Brizy_Editor_Post::get( $id );
-			$post->update_html();
+
+			$post->compile_page()
+			     ->save();
 
 			$this->success( self::create_post_arr( $post ) );
 		} catch ( Exception $exception ) {
@@ -200,27 +211,31 @@ class Brizy_Editor_API {
 	}
 
 	public static function create_post_arr( Brizy_Editor_Post $post ) {
+
+		$p_id      = (int) $post->get_id();
+		$the_title = get_the_title( $p_id );
+
 		return array(
-			'title'    => get_the_title( $post->ID() ),
-			'slug'     => sanitize_title( get_the_title( $post->ID() ) ),
-			'data'     => $post->get_draft(),
-			'id'       => $post->ID(),
-			'is_index' => true,
-			'template' => get_page_template_slug( $post->ID() ),
-			'status'   => get_post_status( $post->ID() ),
-			'url'      => get_the_permalink( $post->ID() )
+			'title'    => $the_title,
+			'slug'     => sanitize_title( $the_title ),
+			'data'     => $post->get_data(),
+			'id'       => $p_id,
+			'is_index' => $post->get_api_page()->is_index(),
+			'template' => get_page_template_slug( $p_id ),
+			'status'   => get_post_status( $p_id ),
+			'url'      => get_the_permalink( $p_id )
 		);
 	}
 
-	public static function create_post_globals( Brizy_Editor_Post $post ) {
+	public static function create_post_globals( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		$wp_post = $post->get_wp_post();
 
 		return array(
+			'id'        => $project->get_id(),
+			'name'      => $wp_post->post_name,
+			'globals'   => $project->get_globals(),
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
-			'id'        => $post->ID(),
-			'name'      => $wp_post->post_name,
-			'globals'   => $post->get_globals(),
 			'user'      => array(
 				'email' => null,
 				'id'    => null,

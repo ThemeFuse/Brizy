@@ -2,14 +2,40 @@
 
 class Brizy_Editor_API_Page {
 
+	/**
+	 * @var array
+	 */
+	private $data;
+
+	/**
+	 * @param array $data
+	 *
+	 * @return Brizy_Editor_API_Page
+	 */
 	public static function get( array $data = array() ) {
 		return new self( $data );
 	}
 
-	private $data = array( 'title' => 'Default title' );
 
-	public function __construct( array $data = array() ) {
-		$this->data = array_merge( $this->data, $data );
+	/**
+	 * Brizy_Editor_API_Page constructor.
+	 *
+	 * @param array $data
+	 */
+	public function __construct( $data = array() ) {
+
+		$default    = array( 'title' => 'Default title', 'data' => "{\"container\":[],\"popups\":[]}" );
+		$this->data = array_merge( $default, $data );
+	}
+
+	public function get_id() {
+		return isset( $this->data['id'] ) ? $this->data['id'] : '';
+	}
+
+	public function set_id( $title ) {
+		$this->data['title'] = $title;
+
+		return $this;
 	}
 
 	public function get_title() {
@@ -58,7 +84,25 @@ class Brizy_Editor_API_Page {
 		return isset( $this->data['is_index'] ) ? (bool) $this->data['is_index'] : true;
 	}
 
-	public function export() {
-		return $this->data;
+	public function set_is_index( $is_index ) {
+		$this->data['is_index'] = $is_index;
+
+		return $this;
 	}
+
+	public function export() {
+
+		return array_diff_key( $this->data, array( 'id' => 0 ) );
+	}
+
+//
+//	public function get_published() {
+//		return isset( $this->data['published'] ) ? $this->data['published'] : null;
+//	}
+//
+//	public function set_published( $published ) {
+//		$this->data['published'] = $published;
+//
+//		return $this;
+//	}
 }

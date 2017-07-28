@@ -3,13 +3,14 @@
 }
 
 class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
+	
 	/**
 	 * @param $id
 	 *
 	 * @return Brizy_Editor_Storage_Post
 	 */
 	public static function instance( $id ) {
-		return new Brizy_Editor_Storage_Post( $id );
+		return new self( $id );
 	}
 
 	private $id;

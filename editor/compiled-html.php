@@ -41,26 +41,6 @@ class Brizy_Editor_CompiledHtml {
 	}
 
 
-//	public function get_scripts() {
-//
-//		$script_tags = $this->dom->get_tags( '/(<script(.*?)<\/script>)/is' );
-//		$tags        = array();
-//
-//		if ( is_array( $script_tags ) ) {
-//			foreach ( $script_tags as $tag ) {
-//				$ignore = $tag->get_attr( 'ignore' );
-//
-//				if ( $ignore == 1 ) {
-//					continue;
-//				}
-//
-//				$tags[] = $tag;
-//			}
-//		}
-//
-//		return $this->dom->get_attributes( $tags, 'src' );
-//	}
-
 	public function get_links_tags() {
 		$link_tags = $this->dom->get_head()->get_links();
 

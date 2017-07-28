@@ -73,6 +73,8 @@ class Brizy_Admin_Main {
 	 * @internal
 	 */
 	public function _action_request_enable() {
+
+
 		if ( ! isset( $_POST['id'] ) || ! ( $p = get_post( $_POST['id'] ) ) ) {
 			wp_send_json_error( array(
 				'code'    => 'invalid_request',
@@ -81,6 +83,26 @@ class Brizy_Admin_Main {
 			exit();
 		}
 
+		$mark_the_page_as_index = false;
+
+		// obtain the project
+		try {
+			$project = Brizy_Editor_Project::get();
+		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
+
+			try {
+				$project = Brizy_Editor_Project::create();
+
+				$mark_the_page_as_index = true;
+			} catch ( Exception $e ) {
+				/**
+				 * @todo: Show flash error message
+				 */
+				return;
+			}
+		}
+
+		// obtain the post
 		try {
 			$post = Brizy_Editor_Post::get( $p->ID );
 
@@ -89,11 +111,15 @@ class Brizy_Admin_Main {
 				wp_update_post( $p );
 			}
 
-			wp_send_json_success( array(
-				'redirect' => $post->enable_editor()->edit_url()
-			) );
+			// redirect
+			wp_send_json_success( array( 'redirect' => $post->enable_editor()->edit_url() ) );
+
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
-			$post = Brizy_Editor_Post::create( $p->ID );
+
+			$post = Brizy_Editor_Post::create( $project, $p );
+
+			$post->set_is_index( $mark_the_page_as_index );
+			$post->save();
 
 			if ( $p->post_status == 'auto-draft' ) {
 				$p->post_status = 'draft';
@@ -141,11 +167,11 @@ class Brizy_Admin_Main {
 	 **/
 	public function _action_delete_page( $id ) {
 		try {
-			$post = Brizy_Editor_Post::get( $id );
-			Brizy_Editor_User::get()->delete_project( new Brizy_Editor_API_Project(
-				$post->get_id(),
-				$post->get_page_id()
-			) );
+
+			$project = Brizy_Editor_Project::get();
+			$post    = Brizy_Editor_Post::get( $id );
+
+			Brizy_Editor_User::get()->delete_page( $project->get_api_project(), $post->get_api_page() );
 
 			do_action( 'brizy_delete_post', $id );
 		} catch ( Exception $exception ) {

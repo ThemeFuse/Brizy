@@ -61,7 +61,6 @@ class Brizy_Editor_Helper_DomTag {
 	 */
 	public function get_content() {
 
-
 		$res = preg_match( "/\/>$/i", $this->get_tag() );
 
 		if ( $res === 1 ) {

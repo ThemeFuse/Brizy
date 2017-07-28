@@ -2,22 +2,6 @@
 
 class Brizy_Editor_API_Auth {
 
-	public static function base_url() {
-		return 'https://test-de12d4.bitblox.site/api/public/users';
-	}
-
-	public static function sign_up_url() {
-		return implode( '/', array( self::base_url(), 'create' ) );
-	}
-
-	public static function auth_url() {
-		return implode( '/', array( self::base_url(), 'auth' ) );
-	}
-
-	public static function refresh_url() {
-		return implode( '/', array( self::base_url(), 'refresh' ) );
-	}
-
 	/**
 	 * @param $email
 	 * @param $password
@@ -25,7 +9,7 @@ class Brizy_Editor_API_Auth {
 	 * @return Brizy_Editor_API_AccessToken
 	 */
 	public static function auth( $email, $password ) {
-		$response = self::auth_call( self::auth_url(), $email, $password )->get_body();
+		$response = self::auth_call( Brizy_Editor_Api_Config::auth_url(), $email, $password )->get_response_body();
 
 		return new Brizy_Editor_API_AccessToken(
 			$response['access_token'],
@@ -40,14 +24,14 @@ class Brizy_Editor_API_Auth {
 	 * @return Brizy_Editor_API_AccessToken
 	 */
 	public static function refresh_token( $refresh_token ) {
-		$response = Brizy_Editor_Http_Client::post( self::refresh_url(),
+		$response = Brizy_Editor_Http_Client::post( Brizy_Editor_Api_Config::refresh_url(),
 			array(
 				'body'      => array(
 					'refresh_token' => $refresh_token
 				),
 				'sslverify' => false
 			)
-		)->get_body();
+		)->get_response_body();
 
 		return new Brizy_Editor_API_AccessToken(
 			$response['access_token'],
@@ -63,7 +47,7 @@ class Brizy_Editor_API_Auth {
 	 * @return Brizy_Editor_Http_Response
 	 */
 	public static function create_user( $email, $password ) {
-		return self::auth_call( self::sign_up_url(), $email, $password )->get_body();
+		return self::auth_call( Brizy_Editor_Api_Config::sign_up_url(), $email, $password )->get_response_body();
 	}
 
 	/**

@@ -2,105 +2,139 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_Post extends Brizy_Editor_Project {
+class Brizy_Editor_Post /* extends Brizy_Editor_Project */
+{
 
-	private $id;
+	const BRIZY_POST = 'brizy-post';
 
 	/**
-	 * @param $id
+	 * @var Brizy_Editor_API_Page
+	 */
+	private $api_page;
+
+
+	/**
+	 * @var int
+	 */
+	private $wp_post_id;
+
+	/**
+	 * @var string
+	 */
+	private $draft;
+
+	/**
+	 * @var string
+	 */
+	private $compiled_html_body;
+
+	/**
+	 * @param $wp_post_id
 	 *
 	 * @return Brizy_Editor_Post
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
-	public static function get( $id ) {
-		if ( ! in_array( ( $type = get_post_type( $id ) ), brizy()->supported_post_types() ) ) {
+	public static function get( $wp_post_id ) {
+		if ( ! in_array( ( $type = get_post_type( $wp_post_id ) ), brizy()->supported_post_types() ) ) {
 			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
 				"Brizy editor doesn't support '$type' post type"
 			);
 		}
 
-		$project = self::get_storage( $id )->get( 'brizy-project' );
+		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $wp_post_id );
 
-		return new self( $id, $project );
+		return $brizy_editor_storage_post->get( self::BRIZY_POST );
 	}
 
 	/**
-	 * @param int $id
-	 *
-	 * @return Brizy_Editor_Post
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
-	 */
-	public static function create( $id = - 1 ) {
-		if ( ! in_array( ( $type = get_post_type( $id ) ), brizy()->supported_post_types() ) ) {
-			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
-				"Brizy editor doesn't support '$type' post type"
-			);
-		}
-
-		self::get_storage( $id )->set( 'brizy-project', parent::create() );
-
-		return self::get( $id );
-	}
-
-	/**
-	 * Brizy_Post constructor.
-	 *
-	 * @param $id
 	 * @param Brizy_Editor_Project $project
+	 * @param WP_Post $post
+	 *
+	 * @return Brizy_Editor_Post
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
-	protected function __construct( $id, $project ) {
-		$this->id = $id;
+	public static function create( $project, $post ) {
+		if ( ! in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() ) ) {
+			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
+				"Brizy editor doesn't support '$type' post type"
+			);
+		}
 
-		parent::__construct( $project->get_id(), $project->get_page_id() );
+		$api_page = Brizy_Editor_API_Page::get()
+		                             ->set_title( $post->post_title );
+
+		$api_page = Brizy_Editor_User::get()->create_page( $project, $api_page );
+
+		$post = new self( $api_page, $post->ID );
+
+		return $post;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function save() {
+
+		try {
+			$this->storage()->set( self::BRIZY_POST, $this );
+
+			wp_update_post( array(
+				'ID'           => $this->get_id(),
+				'post_content' => $this->get_compiled_html_body()
+			) );
+
+
+			$project = Brizy_Editor_Project::get();
+
+			Brizy_Editor_User::get()->update_page( $project->get_api_project(), $this->api_page );
+
+		} catch ( Exception $exception ) {
+			return false;
+		}
+	}
+
+	/**
+	 * Brizy_Editor_Post constructor.
+	 *
+	 * @param $api_page
+	 * @param $wp_post_id
+	 */
+	protected function __construct( $api_page, $wp_post_id ) {
+		$this->api_page   = $api_page;
+		$this->wp_post_id = (int) $wp_post_id;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function ID() {
-		return $this->id;
+	public function get_id() {
+		return $this->wp_post_id;
 	}
 
-	/**
-	 * @return array|null|WP_Post
-	 */
-	public function get_wp_post() {
-		return get_post( $this->ID() );
+	public function get_compiled_html_body() {
+		return $this->compiled_html_body;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_title() {
-		return get_the_title( $this->ID() );
-	}
-
-
-	/**
-	 * @param $data
-	 *
-	 * @return $this
-	 * @throws Brizy_Editor_Exceptions_AccessDenied
-	 */
-	public function set_title( $data ) {
-
-		if ( ! $this->can_edit() ) {
-			throw new Brizy_Editor_Exceptions_AccessDenied();
-		}
-
-		wp_update_post( array(
-			'ID'         => $this->ID(),
-			'post_title' => $data
-		) );
+	public function set_compiled_html_body( $html ) {
+		$this->compiled_html_body = $html;
 
 		return $this;
 	}
 
-	/**
-	 * @return Brizy_Editor_Storage_Post
-	 */
-	public function storage() {
-		return self::get_storage( $this->ID() );
+	public function get_title() {
+		return $this->api_page->get_title();
+	}
+
+	public function set_title( $title ) {
+		$this->api_page->set_title( $title );
+
+		return $this;
+	}
+
+	public function set_is_index( $index ) {
+		$this->api_page->set_is_index( $index );
+
+		return $this;
 	}
 
 	/**
@@ -125,28 +159,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Project {
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function uses_editor() {
-
-		try {
-			return (bool) $this->storage()->get( Brizy_Editor_Constants::USES_BRIZY );
-		} catch ( Exception $exception ) {
-			return false;
-		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public function edit_url() {
-		return add_query_arg(
-			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
-			get_permalink( $this->ID() )
-		);
-	}
-
-	/**
 	 * @return $this
 	 * @throws Brizy_Editor_Exceptions_AccessDenied
 	 */
@@ -161,160 +173,83 @@ class Brizy_Editor_Post extends Brizy_Editor_Project {
 	}
 
 	/**
-	 * @return Brizy_Editor_Resources_StaticScript[]
+	 * @return Brizy_Editor_Storage_Post
 	 */
-	public function get_scripts() {
-		try {
-			return $this->storage()->get( 'scripts' );
-		} catch ( Exception $exception ) {
-			return array();
-		}
+	public function storage() {
+
+		return Brizy_Editor_Storage_Post::instance( $this->wp_post_id );
 	}
 
 	/**
-	 * @return Brizy_Editor_Resources_StaticStyle[]
+	 * @return array|null|WP_Post
 	 */
-//	public function get_styles() {
-//		try {
-//			return $this
-//				->storage()
-//				->get( 'styles' );
-//		} catch ( Exception $exception ) {
-//			return array();
-//		}
-//	}
+	public function get_wp_post() {
+		return get_post( $this->get_id() );
+	}
+
 
 	/**
-	 * @return Brizy_Editor_Resources_StaticStyle[]
+	 * @return bool
 	 */
-	public function get_styles() {
+	public function uses_editor() {
+
 		try {
-
-			$links = $this->storage()->get( 'head_links' );
-
-			$static_styles = array();
-
-			if ( is_array( $links ) ) {
-				foreach ( $links as $link ) {
-					if ( isset( $link['rel'] ) && $link['rel'] == 'stylesheet' ) {
-						$static_styles[] = new Brizy_Editor_Resources_StaticStyle( basename( $link['href'] ), $link['href'] );
-					}
-				}
-			}
-
-			return $static_styles;
-
+			return (bool) $this->storage()->get( Brizy_Editor_Constants::USES_BRIZY );
 		} catch ( Exception $exception ) {
-			return array();
+			return false;
 		}
 	}
 
-	public function get_links_tags() {
-		try {
-
-			$links = $this->storage()->get( 'head_links' );
-
-			$link_tags = array();
-
-			if ( is_array( $links ) ) {
-				foreach ( $links as $link ) {
-					if ( isset( $link['rel'] ) && $link['rel'] != 'stylesheet' ) {
-						$link_tags[] = $link;
-					}
-				}
-			}
-
-			return $link_tags;
-
-		} catch ( Exception $exception ) {
-			return array();
-		}
-	}
 
 	/**
-	 * @return array
+	 * @return string
 	 */
-	public function get_inline_styles() {
-		try {
-			return $this
-				->storage()
-				->get( 'inline-styles' );
-		} catch ( Exception $exception ) {
-			return array();
-		}
+	public function edit_url() {
+		return add_query_arg(
+			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+			get_permalink( $this->get_id() )
+		);
 	}
 
 	/**
-	 * @param Brizy_Editor_Resources_Static[] $list
+	 * @return Brizy_Editor_API_Page
+	 */
+	public function get_api_page() {
+		return $this->api_page;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function get_data() {
+
+		return stripslashes( $this->api_page->get_content() );
+	}
+
+	/**
+	 * @param $data
 	 *
-	 * @return array
+	 * @return $this
 	 */
-	public function store_static( array $list ) {
-		$new = array();
+	public function set_data( $data ) {
 
-		foreach ( $list as $item ) {
-			try {
-				$new[] = Brizy_Editor_Resources_StaticStorage::get( $item )
-				                                             ->store()
-				                                             ->get_resource();
-			} catch ( Exception $exception ) {
-				continue;
-			}
-		}
+		$this->api_page->set_content( $data );
 
-		return $new;
+		return $this;
 	}
 
-	//TODO: Remove on production as need to use `get_html_dev` instead from Brizy_Project
-	public function get_html() {
-		$html = Brizy_Editor_User::get()->get_html_dev( $this );
 
-		return new Brizy_Editor_CompiledHtml( $html['html'] );
-	}
+	public function compile_page() {
 
-	public function update_html() {
-		$brizy_editor_page_html = $this->get_html();
+		$brizy_editor_page_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 
 		$this->store_head_scripts( $brizy_editor_page_html->get_head_scripts() );
 		$this->store_footer_scripts( $brizy_editor_page_html->get_footer_scripts() );
 		$this->store_links( $brizy_editor_page_html->get_links_tags() );
 		$this->store_inline_styles( $brizy_editor_page_html->get_styles() );
 
-		wp_update_post( array(
-			'ID'           => $this->ID(),
-			'post_content' => $brizy_editor_page_html->get_body(),
-		) );
-	}
+		$this->compiled_html_body = $brizy_editor_page_html->get_body();
 
-	/**
-	 * @return array
-	 */
-	public function get_templates() {
-		$type = get_post_type( $this->ID() );
-		$list = array(
-			array(
-				'id'    => '',
-				'title' => __( 'Default' )
-			)
-		);
-
-		return apply_filters( "brizy:$type:templates", $list );
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_template() {
-		return get_post_meta( $this->ID(), '_wp_page_template', true );
-	}
-
-	/**
-	 * @param string $template
-	 *
-	 * @return $this
-	 */
-	public function set_template( $template ) {
-		update_post_meta( $this->ID(), '_wp_page_template', $template );
 
 		return $this;
 	}
@@ -329,7 +264,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Project {
 		$new = array();
 
 		foreach ( $list as $item ) {
-			$id    = implode( '-', array( $this->ID(), basename( $item ) ) );
+			$id    = implode( '-', array( $this->get_id(), basename( $item ) ) );
 			$new[] = new Brizy_Editor_Resources_StaticScript( "brizy-$id", $item, array(), null, $in_footer );
 		}
 
@@ -373,7 +308,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Project {
 
 		foreach ( $link_tags as $link_tag ) {
 			$uri   = $link_tag->get_attr( 'href' );
-			$id    = implode( '-', array( $this->ID(), basename( $uri ) ) );
+			$id    = implode( '-', array( $this->get_id(), basename( $uri ) ) );
 			$new[] = new Brizy_Editor_Resources_StaticStyle( "brizy-$id", $uri );
 		}
 
@@ -405,7 +340,256 @@ class Brizy_Editor_Post extends Brizy_Editor_Project {
 		return $this;
 	}
 
-	protected static function get_storage( $id ) {
-		return Brizy_Editor_Storage_Post::instance( $id );
+	public function get_links_tags() {
+		try {
+
+			$links = $this->storage()->get( 'head_links' );
+
+			$link_tags = array();
+
+			if ( is_array( $links ) ) {
+				foreach ( $links as $link ) {
+					if ( isset( $link['rel'] ) && $link['rel'] != 'stylesheet' ) {
+						$link_tags[] = $link;
+					}
+				}
+			}
+
+			return $link_tags;
+
+		} catch ( Exception $exception ) {
+			return array();
+		}
 	}
+
+	/**
+	 * @return Brizy_Editor_Resources_StaticStyle[]
+	 */
+	public function get_styles() {
+		try {
+
+			$links = $this->storage()->get( 'head_links' );
+
+			$static_styles = array();
+
+			if ( is_array( $links ) ) {
+				foreach ( $links as $link ) {
+					if ( isset( $link['rel'] ) && $link['rel'] == 'stylesheet' ) {
+						$static_styles[] = new Brizy_Editor_Resources_StaticStyle( basename( $link['href'] ), $link['href'] );
+					}
+				}
+			}
+
+			return $static_styles;
+
+		} catch ( Exception $exception ) {
+			return array();
+		}
+	}
+
+
+	public function get_head_scripts() {
+		try {
+
+			$links = $this->storage()->get( 'head_scripts' );
+
+			$script_tags = array();
+
+			if ( is_array( $links ) ) {
+				foreach ( $links as $link ) {
+					$script_tags[] = $link;
+				}
+			}
+
+		} catch ( Exception $exception ) {
+			return array();
+		}
+
+		return $script_tags;
+	}
+
+
+	public function get_footer_scripts() {
+		try {
+
+			$links = $this->storage()->get( 'footer_scripts' );
+
+			$script_tags = array();
+
+			if ( is_array( $links ) ) {
+				foreach ( $links as $link ) {
+					$script_tags[] = $link;
+				}
+			}
+
+		} catch ( Exception $exception ) {
+			return array();
+		}
+
+		return $script_tags;
+	}
+
+//
+//	/**
+//	 * @return bool
+//	 */
+//	public function is_draft() {
+//		return (bool) $this->api_page->get_published();
+//	}
+//
+//	/**
+//	 * @param $published
+//	 *
+//	 * @return $this
+//	 */
+//	public function set_is_draft( $published ) {
+//		$this->api_page->set_published( (bool) $published );
+//
+//		return $this;
+//	}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//	/**
+//	 * @return string
+//	 */
+//	public function get_title() {
+//		return get_the_title( $this->get_id() );
+//	}
+//
+//
+//	/**
+//	 * @param $data
+//	 *
+//	 * @return $this
+//	 * @throws Brizy_Editor_Exceptions_AccessDenied
+//	 */
+//	public function set_title( $data ) {
+//
+//		if ( ! $this->can_edit() ) {
+//			throw new Brizy_Editor_Exceptions_AccessDenied();
+//		}
+//
+//		wp_update_post( array(
+//			'ID'         => $this->get_id(),
+//			'post_title' => $data
+//		) );
+//
+//		return $this;
+//	}
+
+
+	/**
+	 * @return $this
+	 * @throws Brizy_Editor_Exceptions_AccessDenied
+	 */
+//	public function disable_editor() {
+//		if ( ! $this->can_edit() ) {
+//			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
+//		}
+//
+//		$this->storage()->delete( Brizy_Editor_Constants::USES_BRIZY );
+//
+//		return $this;
+//	}
+
+	/**
+	 * @return Brizy_Editor_Resources_StaticScript[]
+	 */
+	public function get_scripts() {
+		try {
+			return $this->storage()->get( 'scripts' );
+		} catch ( Exception $exception ) {
+			return array();
+		}
+	}
+
+	/**
+	 * @return Brizy_Editor_Resources_StaticStyle[]
+	 */
+//	public function get_styles() {
+//		try {
+//			return $this
+//				->storage()
+//				->get( 'styles' );
+//		} catch ( Exception $exception ) {
+//			return array();
+//		}
+//	}
+
+
+	/**
+	 * @return array
+	 */
+	public function get_inline_styles() {
+		try {
+			return $this
+				->storage()
+				->get( 'inline-styles' );
+		} catch ( Exception $exception ) {
+			return array();
+		}
+	}
+
+	/**
+	 * @param Brizy_Editor_Resources_Static[] $list
+	 *
+	 * @return array
+	 */
+	public function store_static( array $list ) {
+		$new = array();
+
+		foreach ( $list as $item ) {
+			try {
+				$new[] = Brizy_Editor_Resources_StaticStorage::get( $item )
+				                                             ->store()
+				                                             ->get_resource();
+			} catch ( Exception $exception ) {
+				continue;
+			}
+		}
+
+		return $new;
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function get_templates() {
+		$type = get_post_type( $this->get_id() );
+		$list = array(
+			array(
+				'id'    => '',
+				'title' => __( 'Default' )
+			)
+		);
+
+		return apply_filters( "brizy:$type:templates", $list );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_template() {
+		return get_post_meta( $this->get_id(), '_wp_page_template', true );
+	}
+
+	/**
+	 * @param string $template
+	 *
+	 * @return $this
+	 */
+	public function set_template( $template ) {
+		update_post_meta( $this->get_id(), '_wp_page_template', $template );
+
+		return $this;
+	}
+
+
 }

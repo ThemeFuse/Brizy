@@ -6,12 +6,18 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private $post;
 
-	public static function get( Brizy_Editor_Post $post ) {
-		return new self( $post );
+	/**
+	 * @var Brizy_Editor_Project
+	 */
+	private $project;
+
+	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
+		return new self( $project, $post );
 	}
 
-	public function __construct( Brizy_Editor_Post $post ) {
-		$this->post = $post;
+	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
+		$this->post    = $post;
+		$this->project = $project;
 	}
 
 	public function load() {
@@ -26,7 +32,7 @@ class Brizy_Editor_Editor_Editor {
 	protected function register_static() {
 
 		$config = $this->config();
-		$url = $config['urls']['primary'];
+		$url    = $config['urls']['primary'];
 
 		wp_register_style(
 			brizy()->get_slug() . '-wireframes',
@@ -133,7 +139,7 @@ class Brizy_Editor_Editor_Editor {
 				'origin'  => 'testblox.info',
 				'primary' => 'testblox.info',
 			),
-			'project'         => $this->get_post()->get_id(),
+			'project'         => $this->project->get_id(),
 			'projectLanguage' => array(
 				'id'      => 7,
 				'variant' => array(
@@ -150,14 +156,14 @@ class Brizy_Editor_Editor_Editor {
 				'origin'      => 'http://testblox.info',
 				'primary'     => 'http://bitblox.dev',
 			),
-			'user'            => $this->get_post()->get_id(),
+			'user'            => $this->project->get_id(),
 			'versions'        => array(
 				'editor'   => '4.3.0',
 				'template' => null
 			),
 			'wp'              => array(
-				'page'       => $this->get_post()->ID(),
-				'templates'  => $this->get_post()->get_templates(),
+				'page'       => $this->post->get_id(),
+				'templates'  => $this->post->get_templates(),
 				'api'        => array(
 					'hash'         => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'          => admin_url( 'admin-ajax.php' ),

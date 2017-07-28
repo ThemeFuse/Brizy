@@ -10,7 +10,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 		$tags = $this->get_tags( '/(<head(.*?)<\/head>)/is' );
 
 		if ( empty( $tags ) ) {
-			throw new Brizy_Editor_Exceptions_NotFound( 'Body tag cannot be found' );
+			return new Brizy_Editor_Helper_DomTag('');
 		}
 
 		return $tags[0];
@@ -25,7 +25,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 		$tags = $this->get_tags( '/(<body(.*?)<\/body>)/is' );
 
 		if ( empty( $tags ) ) {
-			throw new Brizy_Editor_Exceptions_NotFound( 'Body tag cannot be found' );
+			return new Brizy_Editor_Helper_DomTag('');
 		}
 
 		return $tags[0];

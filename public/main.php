@@ -21,7 +21,7 @@ class Brizy_Public_Main {
 	protected function __construct() {
 		if ( ! is_admin() && is_user_logged_in() ) {
 			add_action( 'wp', array( $this, '_action_register_static' ) );
-			add_action( 'wp_ajax__brizy_public_update_page', array( $this, '_action_request' ) );
+			//add_action( 'wp_ajax__brizy_public_update_page', array( $this, '_action_request' ) );
 			add_filter( 'the_content', array( $this, '_action_load_editor' ) );
 			add_action( 'wp', array( $this, '_action_update_on_preview' ) );
 			add_action( 'admin_bar_menu', array( $this, '_action_add_admin_bar_update_button' ), 9999 );
@@ -105,7 +105,7 @@ class Brizy_Public_Main {
 		);
 
 		try {
-			Brizy_Editor_Editor_Editor::get( Brizy_Editor_Post::get( get_the_ID() ) )->load();
+			Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), Brizy_Editor_Post::get( get_the_ID() ) )->load();
 		} catch ( Exception $exception ) {
 			return;
 		}
@@ -114,25 +114,35 @@ class Brizy_Public_Main {
 	}
 
 	/**
+     * The problem here is that the post content intended to be shown  it is already passed
+     * by wp and what we do here will be available in next preview.
+     *
+     * Compiling the page on every get_item request is not an option as it will add too much load on compiler
+     *
 	 * @internal
 	 **/
 	public function _action_update_on_preview() {
 		global $post;
+
 		if ( ! is_preview() ) {
 			return;
 		}
 
 		try {
-			$p = Brizy_Editor_Post::get( get_the_ID() );
+			$brizy_post = Brizy_Editor_Post::get( get_the_ID() );
 		} catch ( Exception $exception ) {
 			return;
 		}
 
-		$html = $p->get_html();
+		$brizy_post->compile_page()->save();
 
-		$post->post_content = $html->get_body()->get_content();
+		wp_update_post( array(
+			'ID'           => $brizy_post->get_id(),
+			'post_content' => $brizy_post->get_compiled_html_body(),
+		) );
 
-		foreach ( $html->get_links_tags() as $item ) {
+
+		foreach ( $brizy_post->get_styles() as $item ) {
 			wp_enqueue_style(
 				uniqid( 'brizy-post-preview' ),
 				$item
@@ -141,13 +151,20 @@ class Brizy_Public_Main {
 
 		$tmp = 'jquery';
 		wp_localize_script( 'jquery', '__SHORTCODES_CONFIG__', array() );
-		foreach ( $html->get_scripts() as $item ) {
+
+		foreach ( $brizy_post->get_head_scripts() as $item ) {
+			$id = uniqid( 'brizy-post-preview' );
+			wp_enqueue_script( $id, $item, array( $tmp ), false, false );
+			$tmp = $id;
+		}
+
+		foreach ( $brizy_post->get_footer_scripts() as $item ) {
 			$id = uniqid( 'brizy-post-preview' );
 			wp_enqueue_script( $id, $item, array( $tmp ), false, true );
 			$tmp = $id;
 		}
 
-		$this->inline_styles = $html->get_styles();
+		$this->inline_styles = $brizy_post->get_inline_styles();
 	}
 
 	/**
@@ -239,7 +256,7 @@ class Brizy_Public_Main {
 					$attrs[] = "{$attr}=\"{$value}\"";
 				}
 
-				$attrs = implode(' ',$attrs);
+				$attrs = implode( ' ', $attrs );
 
 				echo "<link {$attrs}/>";
 
@@ -275,7 +292,7 @@ class Brizy_Public_Main {
 		}
 		//$pattern = '/(https?:\/\/static.bitblox.xyz\/storage\/media[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
 
-        $pattern = '/(https?:\/\/bitblox.dev\/assets\/[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
+		$pattern = '/(https?:\/\/bitblox.dev\/assets\/[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
 		preg_match( $pattern, $post_content, $matches );
 
 		if ( empty( $matches ) ) {
@@ -285,10 +302,10 @@ class Brizy_Public_Main {
 		$image = $matches[0];
 		$new   = Brizy_Editor_Asset_MediaUpload::upload( $image );
 
-		wp_update_post( array(
-			'ID'           => $p->ID(),
-			'post_content' => str_replace( $image, $new->get_url(), $post_content ),
-		) );
+		$compiled_html_body = str_replace( $image, $new->get_url(), $post_content );
+
+		$p->set_compiled_html_body( $compiled_html_body )
+		  ->save();
 
 		return str_replace( $image, $new->get_url(), $content );
 	}

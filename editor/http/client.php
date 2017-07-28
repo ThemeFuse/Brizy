@@ -8,21 +8,24 @@ class Brizy_Editor_Http_Client {
 	 * @param string $method
 	 *
 	 * @return Brizy_Editor_Http_Response
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public static function request( $url, array $options = array(), $method = 'GET' ) {
-		switch ( strtoupper( $method ) ) {
-			case 'PUT' :
-				$options['method'] = 'PUT';
 
-				$response = new Brizy_Editor_Http_Response( self::client()->request( $url, $options ) );
-				break;
-			case 'POST' :
-				$response = new Brizy_Editor_Http_Response( self::client()->post( $url, $options ) );
-				break;
-			default:
-				$response = new Brizy_Editor_Http_Response( self::client()->get( $url, $options ) );
+		$http = new WP_Http();
+
+		$options['method'] = $method;
+
+		$wp_response = $http->request( $url, $options );
+
+		if ( is_wp_error( $wp_response ) ) {
+			throw new Brizy_Editor_Http_Exceptions_ResponseException( $wp_response->get_error_message() );
 		}
+
+		$response = new Brizy_Editor_Http_Response( $wp_response );
 
 		if ( $response->is_ok() ) {
 			return $response;
@@ -38,6 +41,7 @@ class Brizy_Editor_Http_Client {
 			default :
 				throw new Brizy_Editor_Http_Exceptions_ResponseException( $response );
 		}
+
 	}
 
 	/**
@@ -58,12 +62,5 @@ class Brizy_Editor_Http_Client {
 	 */
 	public static function post( $url, $options ) {
 		return self::request( $url, $options, 'POST' );
-	}
-
-	/**
-	 * @return WP_Http
-	 */
-	protected static function client() {
-		return new WP_Http();
 	}
 }

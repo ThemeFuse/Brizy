@@ -18,10 +18,9 @@ class Brizy_Editor_Http_Response {
 	}
 
 	/**
-	 * @return mixed
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return array|mixed|object
 	 */
-	public function get_body() {
+	public function get_response_body() {
 		return json_decode( wp_remote_retrieve_body( $this->response ), true );
 	}
 
