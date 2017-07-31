@@ -99,7 +99,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	 * @param $api_page
 	 * @param $wp_post_id
 	 */
-	protected function __construct( $api_page, $wp_post_id ) {
+	public function __construct( $api_page, $wp_post_id ) {
 		$this->api_page   = $api_page;
 		$this->wp_post_id = (int) $wp_post_id;
 	}
@@ -246,7 +246,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 		$this->store_head_scripts( $brizy_editor_page_html->get_head_scripts() );
 		$this->store_footer_scripts( $brizy_editor_page_html->get_footer_scripts() );
 		$this->store_links( $brizy_editor_page_html->get_links_tags() );
-		$this->store_inline_styles( $brizy_editor_page_html->get_styles() );
+		$this->store_inline_styles( $brizy_editor_page_html->get_inline_styles() );
 
 		$this->compiled_html_body = $brizy_editor_page_html->get_body();
 
@@ -501,13 +501,13 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	/**
 	 * @return Brizy_Editor_Resources_StaticScript[]
 	 */
-	public function get_scripts() {
-		try {
-			return $this->storage()->get( 'scripts' );
-		} catch ( Exception $exception ) {
-			return array();
-		}
-	}
+//	public function get_scripts() {
+//		try {
+//			return $this->storage()->get( 'scripts' );
+//		} catch ( Exception $exception ) {
+//			return array();
+//		}
+//	}
 
 	/**
 	 * @return Brizy_Editor_Resources_StaticStyle[]

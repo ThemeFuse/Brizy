@@ -13,10 +13,6 @@ class Brizy_Editor_Storage_Common extends Brizy_Editor_Storage_Abstract {
 		return $instance ? $instance : $instance = new Brizy_Editor_Storage_Common();
 	}
 
-	protected function __construct() {
-
-	}
-
 	/**
 	 * @return array
 	 */

@@ -6,16 +6,25 @@
         colors="true"
         processIsolation = "true"
         stopOnFailure = "false"
-        bootstrap="../../../wp-load.php"
+        bootstrap = "autoloader.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
-        <ini name="ABSPATH" value="./"/>
+        <const name="ABSPATH" value="../../../"/>
+        <const name="WP_CONTENT_DIR" value="../../../wp-content"/>
     </php>
+
     <testsuites>
-        <testsuite name="Brizy Test Suite">
-            <directory suffix=".php">tests</directory>
+        <testsuite name="unit">
+            <directory suffix="Test.php">tests/unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory suffix="Test.php">tests/integration</directory>
         </testsuite>
     </testsuites>
+
+    <listeners>
+        <listener class="TestListener" file="tests/TestListener.php"></listener>
+    </listeners>
 </phpunit>
 

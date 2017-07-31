@@ -20,32 +20,27 @@ class Brizy_Editor_Editor_Editor {
 		$this->project = $project;
 	}
 
-	public function load() {
-		$this->register_static();
-		add_action( 'wp_enqueue_scripts', array( $this, '_action_register_static' ) );
-	}
-
 	protected function get_post() {
 		return $this->post;
 	}
 
-	protected function register_static() {
+	public function enqueue_editor_assets() {
 
 		$config = $this->config();
 		$url    = $config['urls']['primary'];
 
-		wp_register_style(
+		wp_enqueue_style(
 			brizy()->get_slug() . '-wireframes',
 			$url . '/visual/wireframes.css',
 			array()
 		);
-		wp_register_style(
+		wp_enqueue_style(
 			brizy()->get_slug() . '-main',
 			$url . '/assets/css/main.css',
 			array()
 		);
 
-		wp_register_style(
+		wp_enqueue_style(
 			brizy()->get_slug() . '-editor',
 			$url . '/visual/editor.css',
 			array(
@@ -54,14 +49,14 @@ class Brizy_Editor_Editor_Editor {
 			)
 		);
 
-		wp_register_script(
+		wp_enqueue_script(
 			brizy()->get_slug() . '-typekit',
 			'//use.typekit.net/ueo0lzq.js',
 			array(),
 			false,
 			true
 		);
-		wp_register_script(
+		wp_enqueue_script(
 			brizy()->get_slug() . '-jquery',
 			$this->static_url() . '/jquery.js',
 			array( 'jquery' ),
@@ -69,35 +64,35 @@ class Brizy_Editor_Editor_Editor {
 			true
 		);
 
-		wp_register_script(
+		wp_enqueue_script(
 			brizy()->get_slug() . '-react',
 			'https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.js',
 			array( brizy()->get_slug() . '-jquery', 'underscore' ),
 			'0.12.2',
 			true
 		);
-		wp_register_script(
+		wp_enqueue_script(
 			brizy()->get_slug() . '-wireframes-editor',
-			$this->static_url() . '/visual/wireframes.editor.js',
+			$url. '/visual/wireframes.editor.js',
 			array(),
 			false,
 			true
 		);
-		wp_register_script(
+		wp_enqueue_script(
 			brizy()->get_slug() . '-editor-vendor',
 			$url . '/visual/editor.vendor.js',
 			array(),
 			false,
 			true
 		);
-		wp_register_script(
+		wp_enqueue_script(
 			brizy()->get_slug() . '-shortcodes-config',
 			$url . '/assets/js/shortcodes-config.js',
 			array(),
 			false,
 			true
 		);
-		wp_register_script(
+		wp_enqueue_script(
 			brizy()->get_slug() . '-editor',
 			$url . '/visual/editor.dev.js',
 			array(
@@ -134,10 +129,10 @@ class Brizy_Editor_Editor_Editor {
 				'isVariant'   => false,
 			),
 			'hosts'           => array(
-				'api'     => 'api.testblox.info',
-				'base'    => 'www.testblox.info',
-				'origin'  => 'testblox.info',
-				'primary' => 'testblox.info',
+				'api'     => Brizy_Config::EDITOR_HOST_API ,
+				'base'    => Brizy_Config::EDITOR_HOST_BASE ,
+				'origin'  => Brizy_Config::EDITOR_HOST_ORIGIN ,
+				'primary' => Brizy_Config::EDITOR_HOST_PRIMARY ,
 			),
 			'project'         => $this->project->get_id(),
 			'projectLanguage' => array(
@@ -150,11 +145,11 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'urls'            => array(
 				'api'         => home_url( '/wp-json/v1' ),
-				'base'        => 'http://www.testblox.info',
-				'image'       => 'http://static.bitblox.xyz/storage/media',
-				'integration' => 'http://integration.bitblox.site',
-				'origin'      => 'http://testblox.info',
-				'primary'     => 'http://bitblox.dev',
+				'base'        => Brizy_Config::EDITOR_BASE_URL,
+				'integration' => Brizy_Config::EDITOR_INTEGRATION_URL,
+				'image'       => Brizy_Config::EDITOR_IMAGE_URL,
+				'origin'      => Brizy_Config::EDITOR_ORIGIN_URL,
+				'primary'     => Brizy_Config::EDITOR_PRIMARY_URL,
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
@@ -189,12 +184,12 @@ class Brizy_Editor_Editor_Editor {
 		return brizy()->get_url( '/editor/editor/static' );
 	}
 
-	/**
-	 * @internal
-	 **/
-	public function _action_register_static() {
-		wp_enqueue_media();
-		wp_enqueue_style( brizy()->get_slug() . '-editor' );
-		wp_enqueue_script( brizy()->get_slug() . '-editor' );
-	}
+//	/**
+//	 * @internal
+//	 **/
+//	public function _action_register_static() {
+//		//wp_enqueue_media();
+//		//wp_enqueue_style( brizy()->get_slug() . '-editor' );
+//		//wp_enqueue_script( brizy()->get_slug() . '-editor' );
+//	}
 }

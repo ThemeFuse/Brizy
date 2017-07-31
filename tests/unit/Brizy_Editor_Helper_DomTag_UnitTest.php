@@ -8,7 +8,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class Brizy_Editor_Helper_DomTagTest extends TestCase {
+class Brizy_Editor_Helper_DomTag_UnitTest extends TestCase {
 	const VALID_TEST_HTML = '<!DOCTYPE html>
 		<html lang="en">
 		<head>

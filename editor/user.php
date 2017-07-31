@@ -97,20 +97,21 @@ class Brizy_Editor_User {
 //		}
 //	}
 
-	/**
-	 * @param null $id
-	 *
-	 * @return Brizy_Editor_API_Project
-	 */
-	public function get_project( $id = null ) {
-		try {
-			return $this->_get_project( $id );
-		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-			$this->refresh_token();
 
-			return $this->_get_project( $id );
-		}
-	}
+//	/**
+//	 * @param null $id
+//	 *
+//	 * @return Brizy_Editor_API_Project
+//	 */
+//	public function get_project( $id = null ) {
+//		try {
+//			return $this->_get_project( $id );
+//		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
+//			$this->refresh_token();
+//
+//			return $this->_get_project( $id );
+//		}
+//	}
 
 	public function get_page_data( Brizy_Editor_API_Project $project ) {
 		try {
@@ -214,6 +215,7 @@ class Brizy_Editor_User {
 	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		$editor           = new Brizy_Editor_Editor_Editor($project, $post );
 		$post_arr         = Brizy_Editor_API::create_post_arr( $post );
+
 		$remote_post_data = array(
 			'body'    => array(
 				'pages'   => json_encode( array( $post_arr ) ),
@@ -223,10 +225,13 @@ class Brizy_Editor_User {
 			),
 			'timeout' => 60
 		);
+
 		$res              = wp_remote_post(
-			'http://bitblox-compiler.dev/',
+			Brizy_Config::COMPILER_URL,
 			$remote_post_data
 		);
+
+		//return new Brizy_Editor_CompiledHtml( '<body>[gallery][brizy_sidebar id="sidebar-1"]</body>' );
 
 		if ( is_wp_error( $res ) || wp_remote_retrieve_response_code( $res ) !== 200 ) {
 
@@ -236,32 +241,34 @@ class Brizy_Editor_User {
 		return new Brizy_Editor_CompiledHtml( trim( $res['body'] ) );
 	}
 
-	public function get_media_id( Brizy_Editor_API_Project $project, $att_id ) {
+	public function get_media_id( Brizy_Editor_Project $project, $attachment_id ) {
 		try {
-			$projects = Brizy_Editor_Storage_Post::instance( $att_id )->get( 'projects' );
+			$projects = Brizy_Editor_Storage_Post::instance( $attachment_id )->get( 'projects' );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
 			$projects = array();
 		}
 
-		if ( isset( $projects[ $project->get_id() ] ) ) {
-			return $projects[ $project->get_id() ];
+		$project_id = $project->get_id();
+
+		if ( isset( $projects[ $project_id ] ) ) {
+			return $projects[ $project_id ];
 		}
 
 
 		try {
 			$response = $this
 				->get_client()
-				->add_media( $project->get_id(), $this->image_to_base64( $att_id ) );
+				->add_media( $project_id, $this->image_to_base64( $attachment_id ) );
 		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
 			$this->refresh_token();
 
 			$response = $this
 				->get_client()
-				->add_media( $project->get_id(), $this->image_to_base64( $att_id ) );
+				->add_media( $project_id, $this->image_to_base64( $attachment_id ) );
 		}
 
-		$projects[ $project->get_id() ] = $response['name'];
-		Brizy_Editor_Storage_Post::instance( $att_id )->set( 'projects', $projects );
+		$projects[ $project_id ] = $response['name'];
+		Brizy_Editor_Storage_Post::instance( $attachment_id )->set( 'projects', $projects );
 
 		return $response['name'];
 	}
@@ -319,18 +326,18 @@ class Brizy_Editor_User {
 	}
 
 
-	/**
-	 * @param $id
-	 *
-	 * @return Brizy_Editor_API_Project
-	 */
-	protected function _get_project( $id ) {
-		$project = $this->get_client()->get_project( $id );
-		$pages   = $this->get_client()->get_pages( $project['id'] );
-		$page    = $pages[0];
-
-		return new Brizy_Editor_API_Project( $project['id'], $page['id'], $project['globals'] );
-	}
+//	/**
+//	 * @param $id
+//	 *
+//	 * @return Brizy_Editor_API_Project
+//	 */
+//	protected function _get_project( $id ) {
+//		$project = $this->get_client()->get_project( $id );
+//		$pages   = $this->get_client()->get_pages( $project['id'] );
+//		$page    = $pages[0];
+//
+//		return new Brizy_Editor_API_Project( $project['id'], $page['id'], $project['globals'] );
+//	}
 
 	/**
 	 * @return Brizy_Editor_API_Project

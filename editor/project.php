@@ -11,12 +11,6 @@ class Brizy_Editor_Project {
 	 */
 	private $api_project;
 
-	//private $title;
-	//private $draft;
-	//private $published;
-	//private $globals;
-	//private $html;
-
 	/**
 	 * @return Brizy_Editor_Project
 	 */
@@ -41,9 +35,9 @@ class Brizy_Editor_Project {
 	/**
 	 * Brizy_Editor_Project constructor.
 	 *
-	 * @param $api_project
+	 * @param Brizy_Editor_API_Project $api_project
 	 */
-	protected function __construct( $api_project ) {
+	public function __construct( $api_project ) {
 		$this->api_project = $api_project;
 	}
 

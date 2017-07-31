@@ -12,15 +12,63 @@ class Brizy_Editor_API {
 	const AJAX_SIDEBARS = 'brizy_sidebars';
 	const AJAX_BUILD = 'brizy_build';
 
-	public static function init() {
-		static $instance;
 
-		if ( ! $instance ) {
-			$instance = new self();
-		}
+	static private $instance;
+
+	/**
+	 * @var Brizy_Editor_Project
+	 */
+	private $project;
+
+	/**
+	 * @var Brizy_Editor_Post
+	 */
+	private $post;
+
+	/**
+	 * @return Brizy_Editor_Project
+	 */
+	public function get_project() {
+		return $this->project;
 	}
 
-	protected function __construct() {
+	/**
+	 * @return Brizy_Editor_Post
+	 */
+	public function get_post() {
+		return $this->post;
+	}
+
+
+	/**
+	 * @param Brizy_Editor_Project $project
+	 * @param Brizy_Editor_Post $post
+	 *
+	 * @return Brizy_Editor_API
+	 */
+	public static function instance( $project, $post ) {
+
+		if ( ! self::$instance ) {
+			self::$instance = new self( $project, $post );
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * Brizy_Editor_API constructor.
+	 *
+	 * @param Brizy_Editor_Project $project
+	 * @param Brizy_Editor_Post $post
+	 */
+	protected function __construct( $project, $post ) {
+
+		$this->project = $project;
+		$this->post    = $post;
+	}
+
+	public function initialize()
+	{
 		add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 		add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
@@ -50,11 +98,8 @@ class Brizy_Editor_API {
 	public function get_globals() {
 		try {
 			$this->authorize();
-			$id      = $this->param( 'id' );
-			$project = Brizy_Editor_Project::get();
-			$post    = Brizy_Editor_Post::get( $id );
 
-			$data = self::create_post_globals( $project, $post );
+			$data = self::create_post_globals( $this->project, $this->post );
 
 			$this->success( $data );
 		} catch ( Exception $exception ) {
@@ -70,19 +115,14 @@ class Brizy_Editor_API {
 		try {
 			$this->authorize();
 
-			$id      = $this->param( 'id' );
-			$project = Brizy_Editor_Project::get();
-			$post    = Brizy_Editor_Post::get( $id );
-
 			$data = $this->param( 'data' );
 
-			$project->set_globals( stripslashes( $data['globals'] ) );
+			$this->project->set_globals( stripslashes( $data['globals'] ) );
+			$this->project->save();
 
-			$project->save();
+			Brizy_Editor_User::get()->update_project_globals( $this->project->get_api_project() );
 
-			Brizy_Editor_User::get()->update_project_globals( $project->get_api_project() );
-
-			$this->success( self::create_post_globals( $project, $post ) );
+			$this->success( self::create_post_globals( $this->project, $this->post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -95,10 +135,9 @@ class Brizy_Editor_API {
 	public function get_item() {
 		try {
 			$this->authorize();
-			$id   = $this->param( 'id' );
-			$post = Brizy_Editor_Post::get( $id );
 
-			$post_arr = self::create_post_arr( $post );
+			$post_arr = self::create_post_arr( $this->post );
+
 			$this->success( array( $post_arr ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
@@ -111,20 +150,16 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$id      = $this->param( 'id' );
 			$content = $this->param( 'data' );
 			$title   = $this->param( 'title' );
 
+			$this->post
+				->set_title( $title )
+				->set_template( $this->param( 'template' ) )
+				->set_data( $content )
+				->save();
 
-			$post = Brizy_Editor_Post::get( $id );
-
-			$post->set_title( $title );
-			$post->set_template( $this->param( 'template' ) );
-			$post->set_data( $content );
-
-			$post->save();
-
-			$this->success( self::create_post_arr( $post ) );
+			$this->success( self::create_post_arr( $this->post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -135,13 +170,12 @@ class Brizy_Editor_API {
 	 */
 	public function build_content() {
 		try {
-			$id   = $this->param( 'id' );
-			$post = Brizy_Editor_Post::get( $id );
 
-			$post->compile_page()
-			     ->save();
+			$this->post
+				->compile_page()
+				->save();
 
-			$this->success( self::create_post_arr( $post ) );
+			$this->success( self::create_post_arr( $this->post ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -169,14 +203,11 @@ class Brizy_Editor_API {
 	public function media() {
 		try {
 			$this->authorize();
-			$project       = Brizy_Editor_Post::get( $this->param( 'id' ) );
+
 			$attachment_id = $this->param( 'attachmentId' );
 
 			$this->success( Brizy_Editor_User::get()->get_media_id(
-				new Brizy_Editor_API_Project(
-					$project->get_id(),
-					$project->get_page_id()
-				),
+				$this->project,
 				$attachment_id
 			) );
 		} catch ( Exception $exception ) {
@@ -227,6 +258,14 @@ class Brizy_Editor_API {
 		);
 	}
 
+	/**
+	 * @todo: Check where this is used and make this an instance method
+	 *
+	 * @param Brizy_Editor_Project $project
+	 * @param Brizy_Editor_Post $post
+	 *
+	 * @return array
+	 */
 	public static function create_post_globals( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		$wp_post = $post->get_wp_post();
 

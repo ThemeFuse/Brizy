@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ASimpleTest
  */
-class Brizy_Editor_ProjectHtmlTest extends TestCase {
+class Brizy_Editor_ProjectHtml_UnitTest extends TestCase {
 
 	const VALID_TEST_HTML = '<!DOCTYPE html>
 		<html lang="en">
@@ -89,7 +89,7 @@ class Brizy_Editor_ProjectHtmlTest extends TestCase {
 	public function test_get_links( Brizy_Editor_CompiledHtml $ph ) {
 		$links = $ph->get_links_tags();
 
-		$srcs = [];
+		$srcs = array();
 
 		foreach( $links as $link )
 		{
@@ -153,7 +153,7 @@ class Brizy_Editor_ProjectHtmlTest extends TestCase {
 	 * @param Brizy_Editor_CompiledHtml $ph
 	 */
 	public function test_get_styles( Brizy_Editor_CompiledHtml $ph ) {
-		$styles = $ph->get_styles();
+		$styles = $ph->get_inline_styles();
 
 		$error_should_contain = 'The <get_styles> method should contain the styles from enqueue regions only';
 		$this->assertContains( '.include1{}', $styles, $error_should_contain );

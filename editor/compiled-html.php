@@ -40,17 +40,13 @@ class Brizy_Editor_CompiledHtml {
 		return $this->dom->get_attributes( $script_tags, 'src' );
 	}
 
-
 	public function get_links_tags() {
 		$link_tags = $this->dom->get_head()->get_links();
 
 		return $link_tags;
-
-		return $this->dom->get_attributes( $link_tags, 'href' );
 	}
 
-
-	public function get_styles() {
+	public function get_inline_styles() {
 		$style_tags = $this->dom->get_styles();
 		$list       = array();
 
