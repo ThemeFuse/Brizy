@@ -3,57 +3,105 @@
 }
 
 class Brizy_Admin_Flash {
+
+	const BRIZY_NOTICE_TRANSIENT_KEY = 'brizy-admin-notices';
+
+
+	/**
+	 * @var Brizy_Admin_Flash
+	 */
+	private static $instance;
+
 	const INFO = 'info';
 	const WARNING = 'waring';
 	const SUCCESS = 'success';
 	const ERROR = 'error';
 
-	private static $notices = array();
+	/**
+	 * @var array
+	 */
+	private $notices = array();
 
-	public static function _init() {
-		if ( defined( 'DOING_AJAX' ) ) {
-			return;
+	public static function instance() {
+
+		if ( self::$instance ) {
+			return self::$instance;
 		}
 
-		static $initialised = false;
+		self::$instance = new self();
 
-		if ( $initialised ) {
-			return;
-		}
-
-		self::load_notices();
-		add_action( 'wp_loaded', array( 'Brizy_Admin_Flash', '_action_render_notices' ) );
-		add_action( 'admin_notices', array( 'Brizy_Admin_Flash', '_action_render_notices' ) );
-		add_action( 'shutdown', array( 'Brizy_Admin_Flash', '_action_store_notices' ) );
-		$initialised = true;
+		return self::$instance;
 	}
 
-	public static function add_notice( $code, $message, $type = self::INFO ) {
-		self::$notices[ $code ] = array(
+	public function initialize() {
+
+		add_action( 'wp_loaded', array( $this, '_action_render_notices' ) );
+		add_action( 'admin_notices', array( $this, '_action_render_notices' ) );
+		add_action( 'shutdown', array( $this, '_action_store_notices' ) );
+
+		$this->load_notices();
+	}
+
+	public function _action_render_notices() {
+		foreach ( $this->notices as $notice ) {
+			echo Brizy_Admin_Main::render( 'notice', $notice );
+		}
+
+		$this->notices = array();
+	}
+
+	public function _action_store_notices() {
+		if ( ! empty( $this->notices ) ) {
+			set_transient( self::BRIZY_NOTICE_TRANSIENT_KEY, $this->notices, 120 );
+		}
+	}
+
+	protected function load_notices() {
+		$notices = get_transient( self::BRIZY_NOTICE_TRANSIENT_KEY );
+		if ( $notices ) {
+			$this->notices = $notices;
+			delete_transient( self::BRIZY_NOTICE_TRANSIENT_KEY );
+		}
+	}
+
+
+	public function add( $message, $type ) {
+		$this->notices[ md5( $message ) ] = array(
 			'message' => $message,
 			'type'    => $type,
 		);
 	}
 
-	public static function _action_render_notices() {
-		foreach ( self::$notices as $notice ) {
-			echo Brizy_Admin_Main::render( 'notice', $notice );
-		}
 
-		self::$notices = array();
+	public function add_info( $message ) {
+		$this->add( $message, self::INFO );
 	}
 
-	public static function _action_store_notices() {
-		if ( ! empty( self::$notices ) ) {
-			set_transient( 'brizy-admin-notices', self::$notices, 120 );
-		}
+	public function add_warning( $message ) {
+		$this->add( $message, self::WARNING );
 	}
 
-	protected static function load_notices() {
-		$notices = get_transient( 'brizy-admin-notices' );
-		if ( $notices ) {
-			self::$notices = $notices;
-			delete_transient( 'brizy-admin-notices' );
+	public function add_success( $message ) {
+		$this->add( $message, self::SUCCESS );
+	}
+
+	public function add_error( $message ) {
+		$this->add( $message, self::ERROR );
+	}
+
+	public function count() {
+		return count( $this->notices );
+	}
+
+	public function has( $hash ) {
+		return isset( $this->notices[ $hash ] );
+	}
+
+	public function get( $hash ) {
+		if ( $this->has( $hash ) ) {
+			return $this->notices[ $hash ];
 		}
+
+		return null;
 	}
 }

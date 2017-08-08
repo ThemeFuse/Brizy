@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
     $('body').addClass('brizy-editor-enabled')
   }
   var showEditor = function () {
-    $('body').removeClass('brizy-editor-enabled')
+    //$('body').removeClass('brizy-editor-enabled')
   }
   var request = (function () {
     var xhr = false
@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
   enableButton.on('click', function (e) {
     e.preventDefault()
     request(actions.enable, function (response) {
-      hideEditor()
+      //hideEditor()
       location.href = response.data.redirect
     })
   })

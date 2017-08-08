@@ -61,7 +61,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 		}
 
 		$api_page = Brizy_Editor_API_Page::get()
-		                             ->set_title( $post->post_title );
+		                                 ->set_title( $post->post_title );
 
 		$api_page = Brizy_Editor_User::get()->create_page( $project, $api_page );
 
@@ -135,6 +135,10 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 		$this->api_page->set_is_index( $index );
 
 		return $this;
+	}
+
+	public function is_index( ) {
+		return $this->api_page->is_index();
 	}
 
 	/**
@@ -541,16 +545,18 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	 *
 	 * @return array
 	 */
-	public function store_static( array $list ) {
+	public function store_static( $list ) {
 		$new = array();
 
-		foreach ( $list as $item ) {
-			try {
-				$new[] = Brizy_Editor_Resources_StaticStorage::get( $item )
-				                                             ->store()
-				                                             ->get_resource();
-			} catch ( Exception $exception ) {
-				continue;
+		if ( is_array( $list ) ) {
+			foreach ( $list as $item ) {
+				try {
+					$new[] = Brizy_Editor_Resources_StaticStorage::get( $item )
+					                                             ->store()
+					                                             ->get_resource();
+				} catch ( Exception $exception ) {
+					continue;
+				}
 			}
 		}
 

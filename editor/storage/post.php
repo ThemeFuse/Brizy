@@ -3,7 +3,9 @@
 }
 
 class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
-	
+
+	const META_KEY = 'brizy';
+
 	/**
 	 * @param $id
 	 *
@@ -42,6 +44,6 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	}
 
 	protected function key() {
-		return 'brizy';
+		return self::META_KEY;
 	}
 }

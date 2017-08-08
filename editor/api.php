@@ -138,9 +138,11 @@ class Brizy_Editor_API {
 
 			$post_arr = self::create_post_arr( $this->post );
 
+			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
+
 			$this->success( array( $post_arr ) );
 		} catch ( Exception $exception ) {
-			$this->error( $exception->getCode(), $exception->getMessage() );
+			$this->error( 500, $exception->getMessage() );
 			exit;
 		}
 	}
@@ -266,13 +268,13 @@ class Brizy_Editor_API {
 	 *
 	 * @return array
 	 */
-	public static function create_post_globals( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
+	public static function create_post_globals( $project, $post ) {
 		$wp_post = $post->get_wp_post();
 
 		return array(
 			'id'        => $project->get_id(),
 			'name'      => $wp_post->post_name,
-			'globals'   => $project->get_globals(),
+			'globals'   => (object)$project->get_globals(),
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
 			'user'      => array(

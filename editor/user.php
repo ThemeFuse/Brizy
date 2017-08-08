@@ -123,6 +123,16 @@ class Brizy_Editor_User {
 		}
 	}
 
+	public function get_pages_data( Brizy_Editor_API_Project $project ) {
+		try {
+			return $this->_get_pages_data( $project );
+		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
+			$this->refresh_token();
+
+			return $this->_get_pages_data( $project );
+		}
+	}
+
 	public function create_project() {
 		try {
 			return $this->_create_project();
@@ -172,11 +182,11 @@ class Brizy_Editor_User {
 
 	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
 		try {
-			return $this->_delete_page( $project,$page );
+			return $this->_delete_page( $project, $page );
 		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
 			$this->refresh_token();
 
-			return $this->_delete_page( $project,$page );
+			return $this->_delete_page( $project, $page );
 		}
 	}
 
@@ -213,20 +223,20 @@ class Brizy_Editor_User {
 	}
 
 	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
-		$editor           = new Brizy_Editor_Editor_Editor($project, $post );
-		$post_arr         = Brizy_Editor_API::create_post_arr( $post );
+		$editor   = new Brizy_Editor_Editor_Editor( $project, $post );
+		$post_arr = Brizy_Editor_API::create_post_arr( $post );
 
 		$remote_post_data = array(
 			'body'    => array(
 				'pages'   => json_encode( array( $post_arr ) ),
-				'globals' => $project->get_globals()?$project->get_globals():array(),
+				'globals' => $project->get_globals() ? $project->get_globals() : array(),
 				'config'  => $editor->config(),
 				'env'     => 'WP'
 			),
 			'timeout' => 60
 		);
 
-		$res              = wp_remote_post(
+		$res = wp_remote_post(
 			Brizy_Config::COMPILER_URL,
 			$remote_post_data
 		);
@@ -235,7 +245,7 @@ class Brizy_Editor_User {
 
 		if ( is_wp_error( $res ) || wp_remote_retrieve_response_code( $res ) !== 200 ) {
 
-			throw new Brizy_Editor_Http_Exceptions_ResponseException( new Brizy_Editor_Http_Response($res) );
+			throw new Brizy_Editor_Http_Exceptions_ResponseException( new Brizy_Editor_Http_Response( $res ) );
 		}
 
 		return new Brizy_Editor_CompiledHtml( trim( $res['body'] ) );
@@ -325,6 +335,10 @@ class Brizy_Editor_User {
 		return $this->get_client()->get_page( $project->get_id(), $project->get_page_id() );
 	}
 
+	protected function _get_pages_data( Brizy_Editor_API_Project $project ) {
+		return $this->get_client()->get_pages( $project->get_id() );
+	}
+
 
 //	/**
 //	 * @param $id
@@ -381,7 +395,7 @@ class Brizy_Editor_User {
 		return $this->get_client()->delete_project( $project->get_id() );
 	}
 
-	protected function _delete_page( Brizy_Editor_API_Project $project ,Brizy_Editor_API_Page $page ) {
+	protected function _delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
 		return $this->get_client()->delete_page( $project->get_id(), $page->get_id() );
 	}
 

@@ -48,6 +48,7 @@ class Brizy_Editor_API_Client {
 		return $this->get( "projects/$project_id/pages/$page_id" )->get_response_body();
 	}
 
+
 	public function get_page_html( $project_id, $page_id ) {
 		return $this->get( "projects/$project_id/pages/$page_id/html" )->get_response_body();
 	}
@@ -61,7 +62,7 @@ class Brizy_Editor_API_Client {
 	}
 
 	public function delete_page( $project_id, $page_id ) {
-		return $this->put( "projects/$project_id/pages/$page_id" )->get_response_body();
+		return $this->delete( "projects/$project_id/pages/$page_id" )->get_response_body();
 	}
 
 	public function add_media( $project_id, $base64 ) {

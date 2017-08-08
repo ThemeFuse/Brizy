@@ -117,6 +117,8 @@ class Brizy_Editor_Editor_Editor {
 			'__SHORTCODES_CONFIG__',
 			array()
 		);
+
+		wp_enqueue_media();
 	}
 
 	public function config() {

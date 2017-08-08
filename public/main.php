@@ -16,28 +16,19 @@ class Brizy_Public_Main {
 
 	public function initialize_wordpress_editor() {
 
-		if ( $this->is_editing_page_wothout_editor() ) {
+		if ( $this->is_editing_page_without_editor() ) {
 			add_action( 'admin_bar_menu', array( $this, '_action_add_admin_bar_update_button' ), 9999 );
 		}
 	}
 
 	public function initialize_front_end() {
+
 		add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
 
-		if ( is_preview() ) {
+		$is_preview = is_preview() && ! $this->is_editing_page_with_editor();
+
+		if ( $is_preview ) {
 			$this->compile_page_before_preview();
-		}
-
-		if ( $this->is_view_page() ) {
-			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_page_static_assets' ) );
-			add_action( 'wp_print_scripts', array( $this, '_action_register_page_inline_static' ) );
-			add_action( 'wp_head', array( $this, '_action_register_other_meta_tags' ) );
-
-			if ( ! is_preview() ) {
-				add_filter( 'the_content', array( $this, '_filter_parse_content_for_images' ) );
-			} else {
-				add_filter( 'the_content', array( $this, '_filter_parse_content_for_preview' ) );
-			}
 		}
 
 		// add the actions for the case when the user edits the page with the editor
@@ -45,27 +36,57 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_editor_static_assets' ) );
 			add_filter( 'the_content', array( $this, '_action_load_editor' ) );
 			add_filter( 'show_admin_bar', '__return_false' );
+		} elseif ( $this->is_view_page() ) {
+			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_page_static_assets' ) );
+			add_action( 'wp_print_scripts', array( $this, '_action_register_page_inline_static' ) );
+			add_action( 'wp_head', array( $this, '_action_register_other_meta_tags' ) );
+
+			if ( ! $is_preview ) {
+				add_filter( 'the_content', array( $this, '_filter_parse_content_for_images' ) );
+			} else {
+				add_filter( 'the_content', array( $this, '_filter_content_for_preview' ) );
+			}
 		}
 	}
 
+	/**
+	 * @param $view
+	 * @param array $args
+	 */
 	public static function render( $view, array $args = array() ) {
 		Brizy_Editor_View::render( self::path( "views/$view" ), $args );
 	}
 
+	/**
+	 * Brizy_Public_Main constructor.
+	 *
+	 * @param $project
+	 * @param $post
+	 */
 	public function __construct( $project, $post ) {
 
 		$this->project = $project;
 		$this->post    = $post;
 	}
 
+
+	/**
+	 * @return bool
+	 */
 	public function is_editing_page_with_editor() {
 		return ! is_admin() && current_user_can( 'edit_pages' ) && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
 	}
 
-	public function is_editing_page_wothout_editor() {
+	/**
+	 * @return bool
+	 */
+	public function is_editing_page_without_editor() {
 		return is_admin() && current_user_can( 'edit_pages' ) && $_REQUEST['post'] == $this->post->get_id();
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function is_view_page() {
 		return ! is_admin() && $this->post->uses_editor();
 	}
@@ -95,7 +116,6 @@ class Brizy_Public_Main {
 				'target' => '_blank'
 			)
 		) );
-
 
 		$status = get_post_status( $this->post->get_id() );
 		if ( in_array( $status, array( 'publish', 'future', 'private' ) ) ) {
@@ -142,8 +162,6 @@ class Brizy_Public_Main {
 		} catch ( Exception $exception ) {
 			return;
 		}
-
-
 	}
 
 	/**
@@ -189,9 +207,7 @@ class Brizy_Public_Main {
 		}
 	}
 
-	/**
-	 * @internal
-	 **/
+
 	public function _action_register_page_inline_static() {
 
 		$inline_styles = $this->post->get_inline_styles();
@@ -235,11 +251,16 @@ class Brizy_Public_Main {
 	 *
 	 * @return string
 	 **/
-	public function _filter_parse_content_for_preview( $content ) {
+	public function _filter_content_for_preview( $content ) {
 
 		return $this->post->get_compiled_html_body();
 	}
 
+	/**
+	 * @param string $content
+	 *
+	 * @return mixed
+	 */
 	public function _filter_parse_content_for_images( $content ) {
 		$post_content = $this->post->get_wp_post()->post_content;
 
@@ -275,6 +296,11 @@ class Brizy_Public_Main {
 			: $template;
 	}
 
+	/**
+	 * @param string $rel
+	 *
+	 * @return string
+	 */
 	protected static function path( $rel ) {
 		return dirname( __FILE__ ) . "/$rel";
 	}
