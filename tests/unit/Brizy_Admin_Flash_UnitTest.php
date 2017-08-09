@@ -14,11 +14,17 @@ class Brizy_Admin_Flash_UnitTest extends TestCase {
 
 	public function test_api_actions() {
 
+		remove_all_actions( 'wp_loaded' );
+		remove_all_actions( 'admin_notices' );
+		remove_all_actions( 'shutdown' );
+
 		$instance = Brizy_Admin_Flash::instance();
 
 		$instance->initialize();
 
-		$this->assertTrue( has_action( 'wp_loaded', 'It should register wordpress action: ' . 'wp_ajax_' . Brizy_Editor_API::AJAX_BUILD ) );
+		$this->assertTrue( has_action( 'wp_loaded', 'It should register wp_loaded callbask.') );
+		$this->assertTrue( has_action( 'admin_notices', 'It should register admin_notices callbask.' ) );
+		$this->assertTrue( has_action( 'shutdown', 'It should register shutdown callbask.' ) );
 	}
 
 	public function test_add() {
