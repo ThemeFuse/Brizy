@@ -174,6 +174,8 @@ class Brizy_Editor_Editor_Editor {
 					'updatePage'   => Brizy_Editor_API::AJAX_UPDATE,
 					'getSidebars'  => Brizy_Editor_API::AJAX_SIDEBARS,
 					'buildContent' => Brizy_Editor_API::AJAX_BUILD,
+					'sidebarContent' => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
+					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
 				),
 				'shortcodes' => array(
 					'sidebar' => BRIZY_SHORTCODES_PREFIX . 'sidebar'

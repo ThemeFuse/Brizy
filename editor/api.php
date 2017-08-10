@@ -11,6 +11,8 @@ class Brizy_Editor_API {
 	const AJAX_MEDIA = 'Brizy_Editor_Asset_Media';
 	const AJAX_SIDEBARS = 'brizy_sidebars';
 	const AJAX_BUILD = 'brizy_build';
+	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
+	const AJAX_SHORTCODE_CONTENT = 'brizy_shortcode_content';
 
 
 	static private $instance;
@@ -67,8 +69,7 @@ class Brizy_Editor_API {
 		$this->post    = $post;
 	}
 
-	public function initialize()
-	{
+	public function initialize() {
 		add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 		add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
@@ -77,6 +78,8 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 		add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
+		add_action( 'wp_ajax_' . self::AJAX_SIDEBAR_CONTENT, array( $this, 'sidebar_content' ) );
+		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 	}
 
 	/**
@@ -183,6 +186,49 @@ class Brizy_Editor_API {
 		}
 	}
 
+	public function sidebar_content() {
+		try {
+
+			if ( isset( $_REQUEST['sidebarId'] ) ) {
+				$sidebar_id = $_REQUEST['sidebarId'];
+			} else {
+				throw new Exception( 'Invalid sidebar id provided', 500 );
+			}
+
+			ob_start();
+
+			dynamic_sidebar( $sidebar_id );
+
+			$sidebar_html = ob_get_clean();
+
+			$this->success( array(
+				'sidebarId'      => $sidebar_id,
+				'sidebarContent' => $sidebar_html
+			) );
+		} catch ( Exception $exception ) {
+			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
+
+	public function shortcode_content() {
+		try {
+
+			if ( isset( $_REQUEST['shortcode'] ) ) {
+				$shortcode = $_REQUEST['shortcode'];
+			} else {
+				throw new Exception( 'Shortcode string not provided.', 500 );
+			}
+
+			$shortcode = do_shortcode( $shortcode );
+
+			$this->success( array(
+				'shortcode' => $shortcode
+			) );
+		} catch ( Exception $exception ) {
+			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
+
 	public function get_sidebars() {
 		global $wp_registered_sidebars;
 
@@ -274,7 +320,7 @@ class Brizy_Editor_API {
 		return array(
 			'id'        => $project->get_id(),
 			'name'      => $wp_post->post_name,
-			'globals'   => (object)$project->get_globals(),
+			'globals'   => (object) $project->get_globals(),
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
 			'user'      => array(
