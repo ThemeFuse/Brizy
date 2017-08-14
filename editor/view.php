@@ -16,8 +16,7 @@ class Brizy_Editor_View {
 
 	public static function get( $path, array $args = array() ) {
 		ob_start();
-		self::render( $path, $args );
-
+			self::render( $path, $args );
 		return ob_get_clean();
 	}
 }

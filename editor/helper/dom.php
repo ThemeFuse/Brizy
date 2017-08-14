@@ -28,7 +28,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 			return new Brizy_Editor_Helper_DomTag('');
 		}
 
-		return $tags[0];
+		return $tags[0]->fix_shortcode_attributes();
 	}
 
 

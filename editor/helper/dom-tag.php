@@ -71,6 +71,7 @@ class Brizy_Editor_Helper_DomTag {
 		preg_match( "/^<[^>]+>(.*)<\/[^>]+>$/is", $content, $res );
 
 		if ( isset( $res[1] ) ) {
+
 			return $res[1];
 		}
 
@@ -89,6 +90,17 @@ class Brizy_Editor_Helper_DomTag {
 
 		return $this;
 	}
+
+	public function fix_shortcode_attributes()
+	{
+		if($string = preg_replace( "/\&quot;/",'"', $this->html_tag ))
+		{
+			$this->html_tag = $string;
+		}
+
+		return $this;
+	}
+
 
 	/**
 	 * @param $pattern

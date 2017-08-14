@@ -241,14 +241,14 @@ class Brizy_Editor_User {
 			$remote_post_data
 		);
 
-		//return new Brizy_Editor_CompiledHtml( '<body>[gallery][brizy_sidebar id="sidebar-1"]</body>' );
-
 		if ( is_wp_error( $res ) || wp_remote_retrieve_response_code( $res ) !== 200 ) {
 
 			throw new Brizy_Editor_Http_Exceptions_ResponseException( new Brizy_Editor_Http_Response( $res ) );
 		}
 
-		return new Brizy_Editor_CompiledHtml( trim( $res['body'] ) );
+		$content = trim( $res['body'] );
+
+		return new Brizy_Editor_CompiledHtml( $content );
 	}
 
 	public function get_media_id( Brizy_Editor_Project $project, $attachment_id ) {

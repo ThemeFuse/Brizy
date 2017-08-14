@@ -214,11 +214,10 @@ class Brizy_Editor_API {
 		try {
 
 			if ( isset( $_REQUEST['shortcode'] ) ) {
-				$shortcode = $_REQUEST['shortcode'];
+				$shortcode = stripslashes($_REQUEST['shortcode']);
 			} else {
 				throw new Exception( 'Shortcode string not provided.', 500 );
 			}
-
 			$shortcode = do_shortcode( $shortcode );
 
 			$this->success( array(

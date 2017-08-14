@@ -34,7 +34,7 @@ class Brizy_Public_Main {
 		// add the actions for the case when the user edits the page with the editor
 		if ( $this->is_editing_page_with_editor() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_editor_static_assets' ) );
-			add_filter( 'the_content', array( $this, '_action_load_editor' ) );
+			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100);
 			add_filter( 'show_admin_bar', '__return_false' );
 		} elseif ( $this->is_view_page() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_page_static_assets' ) );
@@ -81,7 +81,7 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_editing_page_without_editor() {
-		return is_admin() && current_user_can( 'edit_pages' ) && $_REQUEST['post'] == $this->post->get_id();
+		return is_admin() && current_user_can( 'edit_pages' ) && ( isset( $_REQUEST['post'] ) && $_REQUEST['post'] == $this->post->get_id() );
 	}
 
 	/**
@@ -98,8 +98,12 @@ class Brizy_Public_Main {
 	 *
 	 * @internal
 	 */
-	function _action_load_editor( $content ) {
-		return Brizy_Editor_View::get( self::path( 'views/template' ) );
+	function _filter_the_content( $content ) {
+		if ( is_singular() && is_main_query() ) {
+			return Brizy_Editor_View::get( self::path( 'views/template' ) );
+		}
+
+		return $content;
 	}
 
 	/**
@@ -160,7 +164,6 @@ class Brizy_Public_Main {
 		try {
 			Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), Brizy_Editor_Post::get( get_the_ID() ) )->enqueue_editor_assets();
 		} catch ( Exception $exception ) {
-			return;
 		}
 	}
 

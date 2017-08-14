@@ -8,7 +8,6 @@ function brizy_shortcode_sidebar( $atts ) {
 	if ( $id ) {
 		ob_start();
 		dynamic_sidebar( $id );
-
 		return ob_get_clean();
 	}
 

@@ -188,12 +188,4 @@ class Brizy_Editor_Editor_Editor {
 		return brizy()->get_url( '/editor/editor/static' );
 	}
 
-//	/**
-//	 * @internal
-//	 **/
-//	public function _action_register_static() {
-//		//wp_enqueue_media();
-//		//wp_enqueue_style( brizy()->get_slug() . '-editor' );
-//		//wp_enqueue_script( brizy()->get_slug() . '-editor' );
-//	}
 }
