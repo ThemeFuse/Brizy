@@ -254,7 +254,6 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 		$this->compiled_html_body = $brizy_editor_page_html->get_body();
 
-
 		return $this;
 	}
 

@@ -28,13 +28,15 @@ class Brizy_Editor_API_Client {
 		return $this->get( "projects/$id" )->get_response_body();
 	}
 
-	public function update_project( Brizy_Editor_API_Project $project, array $data ) {
-		return $this->put( "projects/{$project->get_id()}", $data )->get_response_body();
+	public function update_project( Brizy_Editor_API_Project $project) {
+
+		return $this->put( "projects/{$project->get_id()}", $project->get_data() )->get_response_body();
 	}
 
 	public function publish_project( $id ) {
 		return $this->put( "projects/{$id}/publish" )->get_response_body();
 	}
+
 
 	public function delete_project( $id ) {
 		return $this->delete( "projects/$id" )->get_response_body();

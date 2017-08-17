@@ -133,6 +133,9 @@ class Brizy_Editor_User {
 		}
 	}
 
+	/**
+	 * @return Brizy_Editor_API_Project
+	 */
 	public function create_project() {
 		try {
 			return $this->_create_project();
@@ -201,7 +204,7 @@ class Brizy_Editor_User {
 		return $this;
 	}
 
-	public function update_project_globals( Brizy_Editor_API_Project $project ) {
+	public function update_project( Brizy_Editor_API_Project $project ) {
 		try {
 			$this->_update_project( $project );
 		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
@@ -376,10 +379,8 @@ class Brizy_Editor_User {
 	}
 
 	protected function _update_project( Brizy_Editor_API_Project $project ) {
-		return $this->get_client()->update_project(
-			$project,
-			array( 'globals' => $project->get_globals() )
-		);
+
+		return $this->get_client()->update_project( $project );
 	}
 
 	protected function _update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {

@@ -123,7 +123,7 @@ class Brizy_Editor_API {
 			$this->project->set_globals( stripslashes( $data['globals'] ) );
 			$this->project->save();
 
-			Brizy_Editor_User::get()->update_project_globals( $this->project->get_api_project() );
+			Brizy_Editor_User::get()->update_project( $this->project->get_api_project() );
 
 			$this->success( self::create_post_globals( $this->project, $this->post ) );
 		} catch ( Exception $exception ) {

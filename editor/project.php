@@ -27,6 +27,10 @@ class Brizy_Editor_Project {
 		$api_project = Brizy_Editor_User::get()->create_project();
 
 		$project = new self( $api_project );
+		$project->set_meta_key( 'worpdress_url', get_site_url() );
+		$project->set_meta_key( 'worpdress_site_name', get_bloginfo( 'name' ) );
+		$project->set_meta_key( 'worpdress_version', get_bloginfo( 'version' ) );
+		$project->set_meta_key( 'worpdress_description', get_bloginfo( 'description' ) );
 		$project->save();
 
 		return $project;
@@ -84,6 +88,15 @@ class Brizy_Editor_Project {
 	 */
 	public function get_api_project() {
 		return $this->api_project;
+	}
+
+	public function set_meta_key( $key, $value ) {
+
+		if ( is_null( $key ) ) {
+			throw new InvalidArgumentException( 'Hte key parameter should not be null' );
+		}
+
+		$this->get_api_project()->set_meta_key( $key, $value );
 	}
 
 

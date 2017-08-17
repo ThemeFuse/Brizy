@@ -95,14 +95,4 @@ class Brizy_Editor_API_Page {
 		return array_diff_key( $this->data, array( 'id' => 0 ) );
 	}
 
-//
-//	public function get_published() {
-//		return isset( $this->data['published'] ) ? $this->data['published'] : null;
-//	}
-//
-//	public function set_published( $published ) {
-//		$this->data['published'] = $published;
-//
-//		return $this;
-//	}
 }

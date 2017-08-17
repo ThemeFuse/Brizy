@@ -11,6 +11,10 @@ class Brizy_Editor_API_Project {
 		$this->data = array_merge( $defaults, $data );
 	}
 
+	public function get_data() {
+		return $this->data;
+	}
+
 	public function get_id() {
 		return $this->data['id'];
 	}
@@ -31,37 +35,13 @@ class Brizy_Editor_API_Project {
 		return array( 'data' );
 	}
 
-//	private $id;
-//	private $page_id;
-//	private $globals;
-//
-//	public function __construct( $id, $page_id, $globals = null ) {
-//		$this->id      = $id;
-//		$this->page_id = $page_id;
-//		$this->set_globals( $globals );
-//	}
-//
-//	public function get_id() {
-//		return $this->id;
-//	}
-//
-//	public function get_page_id() {
-//		return $this->page_id;
-//	}
-//
-//	public function get_globals() {
-//		return $this->globals;
-//	}
-//
-//	public function set_globals( $globals ) {
-//		$test = json_decode( $globals );
-//
-//		if ( $test === null ) {
-//			$globals = '{"project":{},"language":{}}';
-//		}
-//
-//		$this->globals = $globals;
-//
-//		return $this;
-//	}
+	public function set_meta_key( $key, $value ) {
+
+		if ( is_null( $key ) ) {
+			throw new InvalidArgumentException( 'Hte key parameter should not be null' );
+		}
+
+		//$this->data['meta_data'][ $key ] = $value;
+	}
+
 }

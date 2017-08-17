@@ -73,7 +73,7 @@ class Brizy_Editor_Editor_Editor {
 		);
 		wp_enqueue_script(
 			brizy()->get_slug() . '-wireframes-editor',
-			$url. '/visual/wireframes.editor.js',
+			$url . '/visual/wireframes.editor.js',
 			array(),
 			false,
 			true
@@ -131,10 +131,10 @@ class Brizy_Editor_Editor_Editor {
 				'isVariant'   => false,
 			),
 			'hosts'           => array(
-				'api'     => Brizy_Config::EDITOR_HOST_API ,
-				'base'    => Brizy_Config::EDITOR_HOST_BASE ,
-				'origin'  => Brizy_Config::EDITOR_HOST_ORIGIN ,
-				'primary' => Brizy_Config::EDITOR_HOST_PRIMARY ,
+				'api'     => Brizy_Config::EDITOR_HOST_API,
+				'base'    => Brizy_Config::EDITOR_HOST_BASE,
+				'origin'  => Brizy_Config::EDITOR_HOST_ORIGIN,
+				'primary' => Brizy_Config::EDITOR_HOST_PRIMARY,
 			),
 			'project'         => $this->project->get_id(),
 			'projectLanguage' => array(
@@ -159,22 +159,23 @@ class Brizy_Editor_Editor_Editor {
 				'template' => null
 			),
 			'wp'              => array(
+				'permalink'  => get_permalink( $this->post->get_id() ),
 				'page'       => $this->post->get_id(),
 				'templates'  => $this->post->get_templates(),
 				'api'        => array(
-					'hash'         => wp_create_nonce( Brizy_Editor_API::nonce ),
-					'url'          => admin_url( 'admin-ajax.php' ),
-					'globals'      => array(
+					'hash'             => wp_create_nonce( Brizy_Editor_API::nonce ),
+					'url'              => admin_url( 'admin-ajax.php' ),
+					'globals'          => array(
 						'set' => Brizy_Editor_API::AJAX_SET_GLOBALS,
 						'get' => Brizy_Editor_API::AJAX_GET_GLOBALS,
 					),
-					'media'        => Brizy_Editor_API::AJAX_MEDIA,
-					'ping'         => Brizy_Editor_API::AJAX_PING,
-					'getPage'      => Brizy_Editor_API::AJAX_GET,
-					'updatePage'   => Brizy_Editor_API::AJAX_UPDATE,
-					'getSidebars'  => Brizy_Editor_API::AJAX_SIDEBARS,
-					'buildContent' => Brizy_Editor_API::AJAX_BUILD,
-					'sidebarContent' => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
+					'media'            => Brizy_Editor_API::AJAX_MEDIA,
+					'ping'             => Brizy_Editor_API::AJAX_PING,
+					'getPage'          => Brizy_Editor_API::AJAX_GET,
+					'updatePage'       => Brizy_Editor_API::AJAX_UPDATE,
+					'getSidebars'      => Brizy_Editor_API::AJAX_SIDEBARS,
+					'buildContent'     => Brizy_Editor_API::AJAX_BUILD,
+					'sidebarContent'   => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
 					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
 				),
 				'shortcodes' => array(
