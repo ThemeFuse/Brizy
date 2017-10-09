@@ -1,5 +1,7 @@
 <?php
 
+include_once "vendor/autoload.php";
+
 /**.
  * @param $class_name
  */

@@ -14,6 +14,12 @@ class Brizy_Public_Main {
 	 */
 	private $post;
 
+
+	/**
+	 * @var Twig_Template
+	 */
+	private $twig_template;
+
 	public function initialize_wordpress_editor() {
 
 		if ( $this->is_editing_page_without_editor() ) {
@@ -33,8 +39,9 @@ class Brizy_Public_Main {
 
 		// add the actions for the case when the user edits the page with the editor
 		if ( $this->is_editing_page_with_editor() ) {
-			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_editor_static_assets' ) );
-			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100);
+			//add_action( 'wp_enqueue_scripts', array( $this, '_action_register_editor_static_assets' ) );
+			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
+			add_action( 'wp_head', array( $this, '_editor_head' ) );
 			add_filter( 'show_admin_bar', '__return_false' );
 		} elseif ( $this->is_view_page() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_register_page_static_assets' ) );
@@ -100,11 +107,21 @@ class Brizy_Public_Main {
 	 */
 	function _filter_the_content( $content ) {
 		if ( is_singular() && is_main_query() ) {
-			return Brizy_Editor_View::get( self::path( 'views/template' ) );
+
+			$template = $this->getEditorTwigTemplate();
+
+			return $template->renderBlock( 'editor_content', array( 'editorData' => $this->getConfigObject() ) );
 		}
 
 		return $content;
 	}
+
+	function _editor_head() {
+		$template = $this->getEditorTwigTemplate();
+
+		echo  $template->renderBlock( 'header_content', array( 'editorData' => $this->getConfigObject() ) );
+	}
+
 
 	/**
 	 * @internal
@@ -304,7 +321,34 @@ class Brizy_Public_Main {
 	 *
 	 * @return string
 	 */
-	protected static function path( $rel ) {
+	public static function path( $rel ) {
 		return dirname( __FILE__ ) . "/$rel";
+	}
+
+	private function getEditorTwigTemplate() {
+
+		if ( $this->twig_template ) {
+			return $this->twig_template;
+		}
+
+		$template_path = Brizy_Config::EDITOR_PRIMARY_URL . "/editor.html.twig";
+
+		$loader = new Twig_Loader_Array( [
+			'editor' => file_get_contents( $template_path )
+		] );
+
+
+		$twig     = new Twig_Environment( $loader, array() );
+		$template = $twig->load( 'editor' );
+
+		return $this->twig_template = $template;
+	}
+
+	private function getConfigObject() {
+		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
+		$config_json   = json_encode( $editor->config() );
+		$config_object = json_decode( $config_json );
+
+		return $config_object;
 	}
 }

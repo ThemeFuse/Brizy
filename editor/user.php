@@ -46,7 +46,8 @@ class Brizy_Editor_User {
 	public static function sign_up( $email, $password ) {
 		try {
 			self::lock_access();
-			$user = Brizy_Editor_API_Auth::create_user( $email, $password );
+			$auth_api = new Brizy_Editor_API_Auth( Brizy_Editor_Api_Config::AUTH_GATEWAY_URI );
+			$user     = $auth_api->create_user( $email, $password );
 		} catch ( Exception $exception ) {
 			self::unlock_access();
 			throw $exception;
@@ -67,8 +68,12 @@ class Brizy_Editor_User {
 	public static function login( $email, $password ) {
 		try {
 			self::lock_access();
+
+			$auth_api = new Brizy_Editor_API_Auth( Brizy_Editor_Api_Config::AUTH_GATEWAY_URI );
+			$atoken   = $auth_api->auth( $email, $password );
+
 			$token = Brizy_Editor_Storage_Common::instance()
-			                                    ->set( 'access-token', Brizy_Editor_API_Auth::auth( $email, $password ) )
+			                                    ->set( 'access-token', $atoken )
 			                                    ->get( 'access-token' );
 		} catch ( Exception $exception ) {
 			self::unlock_access();
@@ -87,52 +92,6 @@ class Brizy_Editor_User {
 		Brizy_Editor_Storage_Common::instance()->delete( 'access-token' );
 	}
 
-//	public function get_projects() {
-//		try {
-//			return $this->get_client()->get_projects();
-//		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-//			$this->refresh_token();
-//
-//			return $this->get_client()->get_projects();
-//		}
-//	}
-
-
-//	/**
-//	 * @param null $id
-//	 *
-//	 * @return Brizy_Editor_API_Project
-//	 */
-//	public function get_project( $id = null ) {
-//		try {
-//			return $this->_get_project( $id );
-//		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-//			$this->refresh_token();
-//
-//			return $this->_get_project( $id );
-//		}
-//	}
-
-	public function get_page_data( Brizy_Editor_API_Project $project ) {
-		try {
-			return $this->_get_page_data( $project );
-		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-			$this->refresh_token();
-
-			return $this->_get_page_data( $project );
-		}
-	}
-
-	public function get_pages_data( Brizy_Editor_API_Project $project ) {
-		try {
-			return $this->_get_pages_data( $project );
-		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-			$this->refresh_token();
-
-			return $this->_get_pages_data( $project );
-		}
-	}
-
 	/**
 	 * @return Brizy_Editor_API_Project
 	 */
@@ -144,6 +103,87 @@ class Brizy_Editor_User {
 
 			return $this->_create_project();
 		}
+	}
+
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return $this
+	 */
+	public function publish_project( Brizy_Editor_API_Project $project ) {
+		try {
+			$this->get_client()->publish_project( $project->get_id() );
+		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
+			$this->refresh_token();
+			$this->get_client()->publish_project( $project->get_id() );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 */
+	public function delete_project( Brizy_Editor_API_Project $project ) {
+		try {
+			return $this->_delete_project( $project );
+		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
+			$this->refresh_token();
+
+			return $this->_delete_project( $project );
+		}
+	}
+
+
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 */
+	public function get_page_data( Brizy_Editor_API_Project $project ) {
+		try {
+			return $this->_get_page_data( $project );
+		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
+			$this->refresh_token();
+
+			return $this->_get_page_data( $project );
+		}
+	}
+
+	/***
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 */
+	public function get_pages_data( Brizy_Editor_API_Project $project ) {
+		try {
+			return $this->_get_pages_data( $project );
+		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
+			$this->refresh_token();
+
+			return $this->_get_pages_data( $project );
+		}
+	}
+
+
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 */
+	protected function _get_page_data( Brizy_Editor_API_Project $project ) {
+		return $this->get_client()->get_page( $project->get_id(), $project->get_page_id() );
+	}
+
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 */
+	protected function _get_pages_data( Brizy_Editor_API_Project $project ) {
+		return $this->get_client()->get_pages( $project->get_id() );
 	}
 
 	/**
@@ -162,26 +202,6 @@ class Brizy_Editor_User {
 		}
 	}
 
-	public function publish_project( Brizy_Editor_API_Project $project ) {
-		try {
-			$this->get_client()->publish_project( $project->get_id() );
-		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-			$this->refresh_token();
-			$this->get_client()->publish_project( $project->get_id() );
-		}
-
-		return $this;
-	}
-
-	public function delete_project( Brizy_Editor_API_Project $project ) {
-		try {
-			return $this->_delete_project( $project );
-		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-			$this->refresh_token();
-
-			return $this->_delete_project( $project );
-		}
-	}
 
 	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
 		try {
@@ -214,6 +234,7 @@ class Brizy_Editor_User {
 
 		return $this;
 	}
+
 
 	public function get_html( Brizy_Editor_API_Project $project ) {
 		try {
@@ -319,7 +340,8 @@ class Brizy_Editor_User {
 			self::lock_access();
 			$refresh   = $this->get_token()->refresh_token();
 			$storage   = Brizy_Editor_Storage_Common::instance();
-			$new_token = Brizy_Editor_API_Auth::refresh_token( $refresh );
+			$auth_api  = new Brizy_Editor_API_Auth( Brizy_Editor_Api_Config::AUTH_GATEWAY_URI );
+			$new_token = $auth_api->refresh_token( $refresh );
 			$token     = $storage
 				->set( 'access-token', $new_token )
 				->get( 'access-token' );
@@ -334,13 +356,7 @@ class Brizy_Editor_User {
 		return $this;
 	}
 
-	protected function _get_page_data( Brizy_Editor_API_Project $project ) {
-		return $this->get_client()->get_page( $project->get_id(), $project->get_page_id() );
-	}
 
-	protected function _get_pages_data( Brizy_Editor_API_Project $project ) {
-		return $this->get_client()->get_pages( $project->get_id() );
-	}
 
 
 //	/**

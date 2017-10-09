@@ -13,6 +13,7 @@ class Brizy_Editor_API {
 	const AJAX_BUILD = 'brizy_build';
 	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
 	const AJAX_SHORTCODE_CONTENT = 'brizy_shortcode_content';
+	const AJAX_SHORTCODE_LIST = 'brizy_shortcode_list';
 
 
 	static private $instance;
@@ -80,6 +81,7 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SIDEBAR_CONTENT, array( $this, 'sidebar_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
+		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
 	}
 
 	/**
@@ -214,7 +216,7 @@ class Brizy_Editor_API {
 		try {
 
 			if ( isset( $_REQUEST['shortcode'] ) ) {
-				$shortcode = stripslashes($_REQUEST['shortcode']);
+				$shortcode = stripslashes( $_REQUEST['shortcode'] );
 			} else {
 				throw new Exception( 'Shortcode string not provided.', 500 );
 			}
@@ -223,6 +225,15 @@ class Brizy_Editor_API {
 			$this->success( array(
 				'shortcode' => $shortcode
 			) );
+		} catch ( Exception $exception ) {
+			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
+
+	public function shortcode_list() {
+		try {
+			global $shortcode_tags;
+			$this->success( array_keys( $shortcode_tags ) );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}

@@ -2,7 +2,6 @@
 	die( 'Direct access forbidden.' );
 }
 ?>
-
 <html>
 <head>
     <title><?php wp_title() ?></title>

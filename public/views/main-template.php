@@ -4,5 +4,7 @@
 
 ?>
 <div id="<?php echo brizy()->get_slug() . '-root-element'; ?>" class="bbm wp-env">
-    <div class="spinner"></div>
+    <div id="page" class="visual-page">
+        <?php echo Brizy_Editor_View::get( Brizy_Public_Main::path( 'views/main-template' ) ); ?>
+    </div>
 </div>

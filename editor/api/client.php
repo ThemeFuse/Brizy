@@ -71,7 +71,6 @@ class Brizy_Editor_API_Client {
 		return $this->post( "projects/$project_id/media", array( 'attachment' => $base64 ) )->get_response_body();
 	}
 
-
 	protected function get_headers() {
 		return array(
 			'Authorization' => 'Bearer ' . $this->access_token->access_token()
@@ -99,6 +98,7 @@ class Brizy_Editor_API_Client {
 	}
 
 	protected function request( $route, $body = null, $method = 'GET' ) {
+
 		return Brizy_Editor_Http_Client::request(
 			$this->url( $route ),
 			array(
@@ -108,5 +108,9 @@ class Brizy_Editor_API_Client {
 			),
 			$method
 		);
+
+
 	}
+
+
 }

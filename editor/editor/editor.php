@@ -27,7 +27,7 @@ class Brizy_Editor_Editor_Editor {
 	public function enqueue_editor_assets() {
 
 		$config = $this->config();
-		$url    = $config['urls']['primary'];
+		echo $url    = $config['urls']['primary'];
 
 		wp_enqueue_style(
 			brizy()->get_slug() . '-wireframes',
@@ -39,6 +39,7 @@ class Brizy_Editor_Editor_Editor {
 			$url . '/assets/css/main.css',
 			array()
 		);
+
 
 		wp_enqueue_style(
 			brizy()->get_slug() . '-editor',
@@ -177,6 +178,7 @@ class Brizy_Editor_Editor_Editor {
 					'buildContent'     => Brizy_Editor_API::AJAX_BUILD,
 					'sidebarContent'   => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
 					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+					'shortcodeList' => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
 				),
 				'shortcodes' => array(
 					'sidebar' => BRIZY_SHORTCODES_PREFIX . 'sidebar'
