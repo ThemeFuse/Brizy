@@ -2,50 +2,49 @@
 
 class Brizy_Editor_API_Auth {
 
+	/**
+	 * @var string
+	 */
 	private $gateway_url;
 
-	public function __construct($gateway_url) {
-		$this->gateway_url = $gateway_url;
-	}
+	/**
+	 * @var string
+	 */
+	private $client_id;
 
-	public function sign_up_url() {
-		return implode( '/', array( $this->gateway_url, 'create' ) );
+	/**
+	 * @var string
+	 */
+	private $secret;
+
+	public function __construct( $gateway_url, $client_id, $secret ) {
+		$this->gateway_url = $gateway_url;
+		$this->client_id   = $client_id;
+		$this->secret      = $secret;
 	}
 
 	public function auth_url() {
-		return implode( '/', array( $this->gateway_url, 'auth' ) );
+		return $this->gateway_url . '/oauth/token';
 	}
 
 	public function refresh_url() {
-		return implode( '/', array( $this->gateway_url, 'refresh' ) );
+		return $this->gateway_url . '/oauth/refresh';
 	}
 
 	/**
 	 * @param $email
-	 * @param $password
 	 *
 	 * @return Brizy_Editor_API_AccessToken
 	 */
-	public function auth( $email, $password ) {
-		$response = $this->auth_call( $this->auth_url(), $email, $password )->get_response_body();
+	public function getToken( $email ) {
 
-		return new Brizy_Editor_API_AccessToken(
-			$response['access_token'],
-			$response['refresh_token'],
-			$response['expires_in'] + time()
-		);
-	}
-
-	/**
-	 * @param $refresh_token
-	 *
-	 * @return Brizy_Editor_API_AccessToken
-	 */
-	public function refresh_token( $refresh_token ) {
-		$response = Brizy_Editor_Http_Client::post( $this->refresh_url(),
+		$response = Brizy_Editor_Http_Client::post( $this->auth_url(),
 			array(
 				'body'      => array(
-					'refresh_token' => $refresh_token
+					'client_id'     => $this->client_id,
+					'client_secret' => $this->secret,
+					'email'         => $email,
+					'grant_type'      => 'https://visual.dev/api/extended_client_credentials'
 				),
 				'sslverify' => false
 			)
@@ -59,33 +58,30 @@ class Brizy_Editor_API_Auth {
 	}
 
 	/**
-	 * @param $email
-	 * @param $password
+	 * @param $refresh_token
 	 *
-	 * @return Brizy_Editor_Http_Response
+	 * @return Brizy_Editor_API_AccessToken
+	 * @throws Exception
 	 */
-	public function create_user( $email, $password ) {
-		return $this->auth_call( $this->sign_up_url(), $email, $password )->get_response_body();
-	}
+	public function refresh_token( $refresh_token ) {
 
-	/**
-	 * @param $url
-	 * @param $email
-	 * @param $password
-	 *
-	 * @return Brizy_Editor_Http_Response
-	 *
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 */
-	protected function auth_call( $url, $email, $password ) {
-		return Brizy_Editor_Http_Client::post( $url,
+		throw new \Exception('Use getToken.');
+
+		$response = Brizy_Editor_Http_Client::post( $this->refresh_url(),
 			array(
 				'body'      => array(
-					'email'    => $email,
-					'password' => $password
+					'refresh_token' => $refresh_token,
+					'grant_type' => 'refresh_token'
 				),
 				'sslverify' => false
 			)
+		)->get_response_body();
+
+		return new Brizy_Editor_API_AccessToken(
+			$response['access_token'],
+			$response['refresh_token'],
+			$response['expires_in'] + time()
 		);
 	}
+
 }

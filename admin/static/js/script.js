@@ -21,7 +21,8 @@ jQuery(document).ready(function ($) {
             }
             xhr = true;
 
-            $.post(url, {
+
+            return $.post(url, {
                 action: action,
                 id: id
             })
@@ -34,9 +35,13 @@ jQuery(document).ready(function ($) {
 
     enableButton.on('click', function (e) {
         e.preventDefault();
+        var buttonContent = enableButton.html();
+        enableButton.html('Redirecting...');
         request(actions.enable, function (response) {
             hideEditor();
             location.href = response.data.redirect;
+        }).always(function(){
+            enableButton.html(buttonContent);
         });
     });
 

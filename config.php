@@ -23,4 +23,13 @@ class Brizy_Config {
 	const EDITOR_HOST_ORIGIN = 'testblox.info';
 	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
+	const GATEWAY_URI = 'http://api.bitblox.xyz';
+
+	const BRIZY_ID = '69_1oecueu4a5s04k48wgwkok4s84cwwcsc488o44kss8c4s44wkg';
+	const BRIZY_KEY = '7neyrf2rm000s0sooc4ok4kk4sk8k0o0w08ksooww0cgok4kc';
+	const BRIZY_EMAIL = 'admin@admin.com';
+
+	// we will not use password grant_type.. so we will delete this very soon :)
+	const BRIZY_PASSWORD = 'admin';
+
 }

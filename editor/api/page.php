@@ -24,7 +24,7 @@ class Brizy_Editor_API_Page {
 	 */
 	public function __construct( $data = array() ) {
 
-		$default    = array( 'title' => 'Default title', 'data' => "{\"container\":[],\"popups\":[]}" );
+		$default    = array( 'title' => 'Default title', 'data' => '{}' );
 		$this->data = array_merge( $default, $data );
 	}
 

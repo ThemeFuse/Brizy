@@ -24,10 +24,14 @@ class Brizy_Editor_Editor_Editor {
 		return $this->post;
 	}
 
+	/**
+	 * @internal
+	 * @deprecated not used any more.. the assets are loaded from twig template
+	 */
 	public function enqueue_editor_assets() {
 
 		$config = $this->config();
-		echo $url    = $config['urls']['primary'];
+		$url    = $config['urls']['primary'];
 
 		wp_enqueue_style(
 			brizy()->get_slug() . '-wireframes',
@@ -153,10 +157,11 @@ class Brizy_Editor_Editor_Editor {
 				'image'       => Brizy_Config::EDITOR_IMAGE_URL,
 				'origin'      => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'     => Brizy_Config::EDITOR_PRIMARY_URL,
+				'static'     => 'http://localhost:3000/static',
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
-				'editor'   => '4.3.0',
+				'editor'   => null, // null for development.
 				'template' => null
 			),
 			'wp'              => array(

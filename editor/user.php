@@ -9,12 +9,37 @@ class Brizy_Editor_User {
 	private $token;
 
 	/**
+	 * @var Brizy_Editor_Storage_Common
+	 */
+	private $common_storage;
+
+
+	/**
+	 * @var Brizy_Editor_Storage_Common
+	 */
+	private $platform_user_email;
+
+	/**
 	 * Brizy_Editor_User constructor.
 	 *
-	 * @param $token
+	 * @param $common_storage
+	 *
+	 * @throws Brizy_Editor_Exceptions_Exception
 	 */
-	protected function __construct( $token ) {
-		$this->token = $token;
+	protected function __construct( $common_storage ) {
+		$this->common_storage      = $common_storage;
+		$this->token               = $common_storage->get( 'access-token' );
+
+		if(!$this->token)
+			throw new Brizy_Editor_Exceptions_Exception('Token  not found');
+
+		$this->platform_user_email = $common_storage->get( 'platform_user_email' );
+
+		 if($this->token->expired())
+		 {
+			 self::auth( $this->platform_user_email );
+			 $this->token               = $common_storage->get( 'access-token' );
+		 }
 	}
 
 	/**
@@ -30,10 +55,34 @@ class Brizy_Editor_User {
 		}
 
 		try {
-			return new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance()->get( 'access-token' ) );
+			return new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
 			return self::create_user();
 		}
+	}
+
+	/**
+	 * @return Brizy_Editor_User
+	 */
+	protected static function create_user() {
+		$email = self::random_email();
+
+		$platform = new Brizy_Editor_API_Platform( Brizy_Config::BRIZY_ID, Brizy_Config::BRIZY_KEY, Brizy_Config::BRIZY_EMAIL, Brizy_Config::BRIZY_PASSWORD );
+		$user     = $platform->createUser( $email );
+
+		//self::sign_up( $email, $pass );
+
+		return self::login( $email );
+	}
+
+	protected static function random_email() {
+		$uniqid = uniqid( 'brizy-' );
+
+		return $uniqid . '@brizy.io';
+	}
+
+	protected static function random_password() {
+		return uniqid();
 	}
 
 	/**
@@ -43,34 +92,40 @@ class Brizy_Editor_User {
 	 * @return Brizy_Editor_Http_Response
 	 * @throws Exception
 	 */
-	public static function sign_up( $email, $password ) {
-		try {
-			self::lock_access();
-			$auth_api = new Brizy_Editor_API_Auth( Brizy_Editor_Api_Config::AUTH_GATEWAY_URI );
-			$user     = $auth_api->create_user( $email, $password );
-		} catch ( Exception $exception ) {
-			self::unlock_access();
-			throw $exception;
-		}
-
-		self::unlock_access();
-
-		return $user;
-	}
+//	public static function sign_up( $email, $password ) {
+//		try {
+//			self::lock_access();
+//			$auth_api = new Brizy_Editor_API_Auth( Brizy_Editor_Api_Config::AUTH_GATEWAY_URI );
+//			$user     = $auth_api->create_user( $email, $password );
+//		} catch ( Exception $exception ) {
+//			self::unlock_access();
+//			throw $exception;
+//		}
+//
+//		self::unlock_access();
+//
+//		return $user;
+//	}
 
 	/**
 	 * @param $email
-	 * @param $password
 	 *
 	 * @return Brizy_Editor_User
 	 * @throws Exception
 	 */
-	public static function login( $email, $password ) {
+	public static function login( $email ) {
+
+		self::auth($email);
+		return self::get(Brizy_Editor_Storage_Common::instance());
+	}
+
+	public static function auth($email)
+	{
 		try {
 			self::lock_access();
 
-			$auth_api = new Brizy_Editor_API_Auth( Brizy_Editor_Api_Config::AUTH_GATEWAY_URI );
-			$atoken   = $auth_api->auth( $email, $password );
+			$auth_api = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, Brizy_Config::BRIZY_ID, Brizy_Config::BRIZY_KEY );
+			$atoken   = $auth_api->getToken( $email );
 
 			$token = Brizy_Editor_Storage_Common::instance()
 			                                    ->set( 'access-token', $atoken )
@@ -81,9 +136,8 @@ class Brizy_Editor_User {
 		}
 
 		self::unlock_access();
-
-		return new Brizy_Editor_User( $token );
 	}
+
 
 	/**
 	 * @return void
@@ -196,7 +250,7 @@ class Brizy_Editor_User {
 		try {
 			return $this->_create_page( $project, $page );
 		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-			$this->refresh_token();
+			$this->login( $this->platform_user_email );
 
 			return $this->_create_page( $project, $page );
 		}
@@ -307,26 +361,6 @@ class Brizy_Editor_User {
 		return $response['name'];
 	}
 
-	/**
-	 * @return Brizy_Editor_User
-	 */
-	protected static function create_user() {
-		$email = self::random_email();
-		$pass  = self::random_password();
-
-		self::sign_up( $email, $pass );
-
-		return self::login( $email, $pass );
-	}
-
-	protected static function random_email() {
-		return uniqid( 'brizy-' ) . '@test.com';
-	}
-
-	protected static function random_password() {
-		return uniqid();
-	}
-
 	protected function get_token() {
 		return $this->token;
 	}
@@ -340,7 +374,7 @@ class Brizy_Editor_User {
 			self::lock_access();
 			$refresh   = $this->get_token()->refresh_token();
 			$storage   = Brizy_Editor_Storage_Common::instance();
-			$auth_api  = new Brizy_Editor_API_Auth( Brizy_Editor_Api_Config::AUTH_GATEWAY_URI );
+			$auth_api  = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, Brizy_Config::BRIZY_ID, Brizy_Config::BRIZY_KEY );
 			$new_token = $auth_api->refresh_token( $refresh );
 			$token     = $storage
 				->set( 'access-token', $new_token )

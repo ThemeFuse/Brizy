@@ -40,6 +40,7 @@ class Brizy_Public_Main {
 		// add the actions for the case when the user edits the page with the editor
 		if ( $this->is_editing_page_with_editor() ) {
 			//add_action( 'wp_enqueue_scripts', array( $this, '_action_register_editor_static_assets' ) );
+			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
 			add_action( 'wp_head', array( $this, '_editor_head' ) );
 			add_filter( 'show_admin_bar', '__return_false' );
@@ -110,16 +111,28 @@ class Brizy_Public_Main {
 
 			$template = $this->getEditorTwigTemplate();
 
-			return $template->renderBlock( 'editor_content', array( 'editorData' => $this->getConfigObject() ) );
+			$config_object = $this->getConfigObject();
+
+			$context = array( 'editorData' => $config_object );
+
+			if(WP_DEBUG)
+			    $context['DEBUG'] = true;
+
+			return $template->renderBlock( 'editor_content', $context );
 		}
 
 		return $content;
 	}
 
 	function _editor_head() {
+
 		$template = $this->getEditorTwigTemplate();
 
-		echo  $template->renderBlock( 'header_content', array( 'editorData' => $this->getConfigObject() ) );
+		$context = array( 'editorData' => $this->getConfigObject() );
+		if(WP_DEBUG)
+			$context['DEBUG'] = true;
+
+		echo  $template->renderBlock( 'header_content', $context );
 	}
 
 
@@ -153,6 +166,7 @@ class Brizy_Public_Main {
 
 	/**
 	 * @internal
+     * @deprecated not used any more.. the assets are loaded from twig template
 	 */
 	public function _action_register_editor_static_assets() {
 

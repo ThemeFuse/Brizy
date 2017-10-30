@@ -78,7 +78,7 @@ class Brizy_Editor_API_Client {
 	}
 
 	protected function url( $suffix ) {
-		return implode( '/', array( Brizy_Editor_Api_Config::GATEWAY_URI, 'v1', $suffix ) );
+		return implode( '/', array( Brizy_Config::GATEWAY_URI, 'v1', $suffix ) );
 	}
 
 	protected function get( $route, $body = null ) {
