@@ -13,7 +13,7 @@ class Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public static function request( $url, array $options = array(), $method = 'GET' ) {
+	public function request( $url, array $options = array(), $method = 'GET' ) {
 
 		$http = new WP_Http();
 
@@ -50,8 +50,8 @@ class Brizy_Editor_Http_Client {
 	 *
 	 * @return Brizy_Editor_Http_Response
 	 */
-	public static function get( $url, array $options = array() ) {
-		return self::request( $url, $options, 'GET' );
+	public function get( $url, array $options = array() ) {
+		return $this->request( $url, $options, 'GET' );
 	}
 
 	/**
@@ -60,7 +60,27 @@ class Brizy_Editor_Http_Client {
 	 *
 	 * @return Brizy_Editor_Http_Response
 	 */
-	public static function post( $url, $options ) {
-		return self::request( $url, $options, 'POST' );
+	public function post( $url, $options ) {
+		return $this->request( $url, ['body'=>$options], 'POST' );
+	}
+
+	/**
+	 * @param $route
+	 * @param null $options
+	 *
+	 * @return Brizy_Editor_Http_Response
+	 */
+	public function put( $route, $options = null ) {
+		return $this->request( $route, $options, 'PUT' );
+	}
+
+	/***
+	 * @param $route
+	 * @param null $options
+	 *
+	 * @return Brizy_Editor_Http_Response
+	 */
+	public function delete( $route, $options = null ) {
+		return $this->request( $route, $options, 'DELETE' );
 	}
 }

@@ -9,7 +9,10 @@
 class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'http://bitblox.local';
-	const COMPILER_URL = 'http://bitblox-compiler.local';
+	const EDITOR_STATIC_URL = 'http://bitblox.local/static';
+	const ASSET_STATIC_URL = 'http://brizy.local/brizy-proxy';
+	const COMPILER_URL = 'http://api.bitblox.xyz';
+	const BRIZY_WP_ASSET_PATH = 'uploads/brizy/pages/%s/';
 
 	const ASSETS_PATTERN = '/(https?:\/\/bitblox.local\/assets\/[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
 
@@ -31,5 +34,7 @@ class Brizy_Config {
 
 	// we will not use password grant_type.. so we will delete this very soon :)
 	const BRIZY_PASSWORD = 'admin';
+
+
 
 }

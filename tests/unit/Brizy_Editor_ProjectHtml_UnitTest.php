@@ -91,9 +91,8 @@ class Brizy_Editor_ProjectHtml_UnitTest extends TestCase {
 
 		$srcs = array();
 
-		foreach( $links as $link )
-		{
-			$srcs[] = $link->get_attr('href');
+		foreach ( $links as $link ) {
+			$srcs[] = $link->get_attr( 'href' );
 		}
 
 		$error_should_contain = 'The <get_links> method should contain the links from enqueue regions only';
@@ -102,7 +101,6 @@ class Brizy_Editor_ProjectHtml_UnitTest extends TestCase {
 
 		$this->assertContains( '/svg1.svg', $srcs, $error_should_contain );
 		$this->assertContains( '/svg2.svg', $srcs, $error_should_contain );
-
 
 		$error_should_not_contain = 'The <get_links> method should ignore the links outside enqueue regions';
 		$this->assertNotContains( '/ignore1.css', $srcs, $error_should_not_contain );
@@ -180,7 +178,6 @@ class Brizy_Editor_ProjectHtml_UnitTest extends TestCase {
 
 		$this->assertNotEmpty( $content, "The <get_content> method should return the html content" );
 
-
 		$test_ph = new Brizy_Editor_CompiledHtml( $content );
 
 		// test if the scripts are removed
@@ -195,6 +192,5 @@ class Brizy_Editor_ProjectHtml_UnitTest extends TestCase {
 		$error_should_not_contain = 'The <get_content> method should strip all enqueue regions.';
 		$this->assertNotContains( '/footer_include1.js', $scripts, $error_should_not_contain );
 		$this->assertNotContains( '/footer_include2.js', $scripts, $error_should_not_contain );
-
 	}
 }

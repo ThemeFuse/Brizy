@@ -51,7 +51,7 @@ class Brizy_Editor_API {
 	 */
 	public static function instance( $project, $post ) {
 
-		if ( ! self::$instance ) {
+		if ( !self::$instance ) {
 			self::$instance = new self( $project, $post );
 		}
 
@@ -78,7 +78,7 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_SET_GLOBALS, array( $this, 'set_globals' ) );
 		add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
-		add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
+		//add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SIDEBAR_CONTENT, array( $this, 'sidebar_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
@@ -164,6 +164,7 @@ class Brizy_Editor_API {
 				->set_title( $title )
 				->set_template( $this->param( 'template' ) )
 				->set_data( $content )
+				->set_needs_compile(true)
 				->save();
 
 			$this->success( self::create_post_arr( $this->post ) );
@@ -172,21 +173,21 @@ class Brizy_Editor_API {
 		}
 	}
 
-	/**
-	 * @internal
-	 */
-	public function build_content() {
-		try {
-
-			$this->post
-				->compile_page()
-				->save();
-
-			$this->success( self::create_post_arr( $this->post ) );
-		} catch ( Exception $exception ) {
-			$this->error( $exception->getCode(), $exception->getMessage() );
-		}
-	}
+//	/**
+//	 * @internal
+//	 */
+//	public function build_content() {
+//		try {
+//
+//			$this->post
+//				->compile_page()
+//				->save();
+//
+//			$this->success( self::create_post_arr( $this->post ) );
+//		} catch ( Exception $exception ) {
+//			$this->error( $exception->getCode(), $exception->getMessage() );
+//		}
+//	}
 
 	public function sidebar_content() {
 		try {

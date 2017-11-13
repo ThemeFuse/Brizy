@@ -20,7 +20,6 @@ include_once 'shortcodes/load.php';
 include_once 'public/hooks.php';
 include_once 'admin/load.php';
 
-
 function _action_brizy_load_text_domain() {
 	load_plugin_textdomain(
 		'brizy',
@@ -30,4 +29,3 @@ function _action_brizy_load_text_domain() {
 }
 
 add_action( 'after_setup_theme', '_action_brizy_load_text_domain' );
-

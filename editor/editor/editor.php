@@ -11,10 +11,22 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private $project;
 
+	/**
+	 * @param Brizy_Editor_Project $project
+	 * @param Brizy_Editor_Post $post
+	 *
+	 * @return Brizy_Editor_Editor_Editor
+	 */
 	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		return new self( $project, $post );
 	}
 
+	/**
+	 * Brizy_Editor_Editor_Editor constructor.
+	 *
+	 * @param Brizy_Editor_Project $project
+	 * @param Brizy_Editor_Post $post
+	 */
 	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		$this->post    = $post;
 		$this->project = $project;
@@ -25,107 +37,8 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	/**
-	 * @internal
-	 * @deprecated not used any more.. the assets are loaded from twig template
+	 * @return array
 	 */
-	public function enqueue_editor_assets() {
-
-		$config = $this->config();
-		$url    = $config['urls']['primary'];
-
-		wp_enqueue_style(
-			brizy()->get_slug() . '-wireframes',
-			$url . '/visual/wireframes.css',
-			array()
-		);
-		wp_enqueue_style(
-			brizy()->get_slug() . '-main',
-			$url . '/assets/css/main.css',
-			array()
-		);
-
-
-		wp_enqueue_style(
-			brizy()->get_slug() . '-editor',
-			$url . '/visual/editor.css',
-			array(
-				brizy()->get_slug() . '-wireframes',
-				brizy()->get_slug() . '-main'
-			)
-		);
-
-		wp_enqueue_script(
-			brizy()->get_slug() . '-typekit',
-			'//use.typekit.net/ueo0lzq.js',
-			array(),
-			false,
-			true
-		);
-		wp_enqueue_script(
-			brizy()->get_slug() . '-jquery',
-			$this->static_url() . '/jquery.js',
-			array( 'jquery' ),
-			brizy()->get_version(),
-			true
-		);
-
-		wp_enqueue_script(
-			brizy()->get_slug() . '-react',
-			'https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.js',
-			array( brizy()->get_slug() . '-jquery', 'underscore' ),
-			'0.12.2',
-			true
-		);
-		wp_enqueue_script(
-			brizy()->get_slug() . '-wireframes-editor',
-			$url . '/visual/wireframes.editor.js',
-			array(),
-			false,
-			true
-		);
-		wp_enqueue_script(
-			brizy()->get_slug() . '-editor-vendor',
-			$url . '/visual/editor.vendor.js',
-			array(),
-			false,
-			true
-		);
-		wp_enqueue_script(
-			brizy()->get_slug() . '-shortcodes-config',
-			$url . '/assets/js/shortcodes-config.js',
-			array(),
-			false,
-			true
-		);
-		wp_enqueue_script(
-			brizy()->get_slug() . '-editor',
-			$url . '/visual/editor.dev.js',
-			array(
-				brizy()->get_slug() . '-typekit',
-				brizy()->get_slug() . '-react',
-				//brizy()->get_slug() . '-wireframes-editor',
-				brizy()->get_slug() . '-editor-vendor',
-				brizy()->get_slug() . '-shortcodes-config',
-				'media-upload'
-			),
-			false,
-			true
-		);
-
-		wp_localize_script(
-			brizy()->get_slug() . '-editor-vendor',
-			'__VISUAL_CONFIG__',
-			$this->config()
-		);
-		wp_localize_script(
-			brizy()->get_slug() . '-editor-vendor',
-			'__SHORTCODES_CONFIG__',
-			array()
-		);
-
-		wp_enqueue_media();
-	}
-
 	public function config() {
 		return array(
 			'env'             => 'WP',
@@ -156,8 +69,8 @@ class Brizy_Editor_Editor_Editor {
 				'integration' => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'       => Brizy_Config::EDITOR_IMAGE_URL,
 				'origin'      => Brizy_Config::EDITOR_ORIGIN_URL,
-				'primary'     => Brizy_Config::EDITOR_PRIMARY_URL,
-				'static'     => 'http://localhost:3000/static',
+				'primary'     => Brizy_Config::EDITOR_STATIC_URL,
+				'static'      => Brizy_Config::ASSET_STATIC_URL,
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
@@ -183,7 +96,7 @@ class Brizy_Editor_Editor_Editor {
 					'buildContent'     => Brizy_Editor_API::AJAX_BUILD,
 					'sidebarContent'   => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
 					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
-					'shortcodeList' => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
+					'shortcodeList'    => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
 				),
 				'shortcodes' => array(
 					'sidebar' => BRIZY_SHORTCODES_PREFIX . 'sidebar'
@@ -195,5 +108,4 @@ class Brizy_Editor_Editor_Editor {
 	public function static_url() {
 		return brizy()->get_url( '/editor/editor/static' );
 	}
-
 }

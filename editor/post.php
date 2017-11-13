@@ -12,7 +12,6 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	 */
 	private $api_page;
 
-
 	/**
 	 * @var int
 	 */
@@ -21,12 +20,27 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	/**
 	 * @var string
 	 */
-	private $draft;
+	private $compiled_html_body;
 
 	/**
 	 * @var string
 	 */
-	private $compiled_html_body;
+	private $compiled_html_head;
+
+	/**
+	 * @var bool
+	 */
+	private $needs_compile;
+
+	/**
+	 * @var bool
+	 */
+	private $store_assets;
+
+	/**
+	 * @var array
+	 */
+	public $assets = [];
 
 	/**
 	 * @param $wp_post_id
@@ -43,7 +57,9 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $wp_post_id );
 
-		return $brizy_editor_storage_post->get( self::BRIZY_POST );
+		$post = $brizy_editor_storage_post->get( self::BRIZY_POST );
+
+		return $post;
 	}
 
 	/**
@@ -83,7 +99,6 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 				'post_content' => $this->get_compiled_html_body()
 			) );
 
-
 			$project = Brizy_Editor_Project::get();
 
 			Brizy_Editor_User::get()->update_page( $project->get_api_project(), $this->api_page );
@@ -115,6 +130,10 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 		return $this->compiled_html_body;
 	}
 
+	public function get_compiled_html_head() {
+		return $this->compiled_html_head;
+	}
+
 	public function set_compiled_html_body( $html ) {
 		$this->compiled_html_body = $html;
 
@@ -137,7 +156,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 		return $this;
 	}
 
-	public function is_index( ) {
+	public function is_index() {
 		return $this->api_page->is_index();
 	}
 
@@ -245,20 +264,88 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 	public function compile_page() {
 
-		$brizy_editor_page_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
+		if ( $this->needs_compile ) {
+			$html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
 
-		$this->store_head_scripts( $brizy_editor_page_html->get_head_scripts() );
-		$this->store_footer_scripts( $brizy_editor_page_html->get_footer_scripts() );
-		$this->store_links( $brizy_editor_page_html->get_links_tags() );
-		$this->store_inline_styles( $brizy_editor_page_html->get_inline_styles() );
+			$compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
 
-		$this->compiled_html_body = $brizy_editor_page_html->get_body();
+			$this->compiled_html_head = $compiled_html->get_head();
+			$this->compiled_html_body = $compiled_html->get_body();
+
+			$this->invalidate_assets();
+
+			$this->needs_compile = false;
+		}
+
+		$this->setStoreAssets(true);
+
+		return $this;
+
+//		$brizy_editor_page_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
+//
+//		$this->store_head_scripts( $brizy_editor_page_html->get_head_scripts() );
+//		$this->store_footer_scripts( $brizy_editor_page_html->get_footer_scripts() );
+//		$this->store_links( $brizy_editor_page_html->get_links_tags() );
+//		$this->store_inline_styles( $brizy_editor_page_html->get_inline_styles() );
+//
+//		$this->compiled_html_body = $brizy_editor_page_html->get_body();
+//
+//		return $this;
+	}
+
+
+	public function store_asset( $asset_source, $asset_path ) {
+
+		try {
+			// check destination dir
+			$dir_path = dirname( rtrim( ABSPATH, '/' ) . $asset_path );
+			if ( ! file_exists( $dir_path ) ) {
+				mkdir( $dir_path, 0777, true );
+			}
+			$full_asset_path = rtrim( ABSPATH, '/' ) . $asset_path;
+
+			$fasset_dest = fopen( $full_asset_path, 'w' );
+			if ( ! $fasset_dest ) {
+				throw new Exception( 'Invalid file destination.' );
+			}
+
+			$fasset_src = fopen( $asset_source . $asset_path, 'r' );
+			if ( ! $fasset_src ) {
+				throw new Exception( 'Invalid asset source.' );
+			}
+
+			$buffer_length = 2048; // we can tune this later;
+
+			while ( ! feof( $fasset_src ) ) {
+				$buffer = fread( $fasset_src, $buffer_length );
+				fwrite( $fasset_dest, $buffer );
+			}
+
+			fclose( $fasset_src );
+			fclose( $fasset_dest );
+
+			$this->assets[] = $asset_path;
+		} catch ( \Exception $e ) {
+			$t = 0;
+		}
 
 		return $this;
 	}
 
+	public function invalidate_assets() {
+		foreach ( $this->assets as $asset_path ) {
+			$path = rtrim( ABSPATH, '/' ) . $asset_path;
+			@unlink( $path );
+		}
+
+		$this->assets = [];
+	}
+
+
 	/**
+	 * @param $key
 	 * @param $list
+	 * @param $in_footer
 	 *
 	 * @return $this
 	 */
@@ -432,6 +519,31 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 		return $script_tags;
 	}
 
+	public function set_needs_compile( $v ) {
+		$this->needs_compile = (bool) $v;
+
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStoreAssets() {
+		return $this->store_assets;
+	}
+
+	/**
+	 * @param bool $store_assets
+	 *
+	 * @return Brizy_Editor_Post
+	 */
+	public function setStoreAssets( $store_assets ) {
+		$this->store_assets = $store_assets;
+
+		return $this;
+	}
+
+
 //
 //	/**
 //	 * @return bool
@@ -595,6 +707,4 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 		return $this;
 	}
-
-
 }

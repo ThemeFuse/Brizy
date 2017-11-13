@@ -5,12 +5,11 @@
 <html>
 <head>
     <title><?php wp_title() ?></title>
-	<?php wp_head() ?>
+	<?php do_action('wp_head') ?>
 </head>
-<body class="bbm">
+<body class="brz-ed brz">
 <?php while ( have_posts() ) : the_post() ?>
 	<?php the_content() ?>
 <?php endwhile ?>
-<?php wp_footer() ?>
 </body>
 </html>

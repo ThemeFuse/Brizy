@@ -82,7 +82,7 @@ class Brizy_Editor_API_Platform {
 	 *
 	 * @return array|mixed|object
 	 */
-	public function createUser( $email, $password ) {
+	public function createUser( $email, $password=null ) {
 		$token = $this->getToken();
 
 		$response = Brizy_Editor_Http_Client::post( $this->sign_up_url(), array(

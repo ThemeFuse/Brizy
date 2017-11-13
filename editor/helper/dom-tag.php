@@ -144,6 +144,8 @@ class Brizy_Editor_Helper_DomTag {
 
 
 	/**
+	 * @param $rel_value
+	 *
 	 * @return array
 	 */
 	public function get_links_by_rel($rel_value) {

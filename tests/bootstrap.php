@@ -4,23 +4,32 @@
  *
  * @package Brizy
  */
+define( 'PLUGIN_DIR', __DIR__ . "/../" );
+define( 'TEST_DIR', __DIR__ );
+define( 'ABSPATH', __DIR__ . "/../../../../" );
+define( 'WP_USE_THEMES', false );
 
-$_tests_dir = getenv( 'WP_TESTS_DIR' );
-if ( ! $_tests_dir ) {
-	$_tests_dir = '/tmp/wordpress-tests-lib';
+error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR );
+
+if ( file_exists( ABSPATH . 'wp-config.test.php' ) ) {
+
+	/** The config file resides in ABSPATH */
+	require_once( ABSPATH . 'wp-config.test.php' );
+
+} elseif ( @file_exists( dirname( ABSPATH ) . '/wp-config.php' ) && ! @file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+
+	/** The config file resides one level above ABSPATH but is not part of another install */
+	require_once( dirname( ABSPATH ) . '/wp-config.test.php' );
+
 }
 
-// Give access to tests_add_filter() function.
-require_once $_tests_dir . '/includes/functions.php';
+// A config file doesn't exist
 
-/**
- * Manually load the plugin being tested.
- */
-function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/brizy.php';
-}
+require_once( ABSPATH . WPINC . '/load.php' );
 
-tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+// Standardize $_SERVER variables across setups.
+wp_fix_server_vars();
 
-// Start up the WP testing environment.
-require $_tests_dir . '/includes/bootstrap.php';
+require_once( ABSPATH . WPINC . '/functions.php' );
+
+include_once PLUGIN_DIR . '/autoloader.php';

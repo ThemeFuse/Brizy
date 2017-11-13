@@ -26,6 +26,7 @@ class Brizy_Admin_Main {
 		add_filter( 'page_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
 		add_filter( 'the_editor', array( $this, '_filter_add_brizy_edit_button' ), 10, 2 );
+
 	}
 
 	public static function render( $view, array $args = array() ) {
@@ -169,6 +170,7 @@ class Brizy_Admin_Main {
 				wp_send_json_success( array(
 					'redirect' => $post->enable_editor()->edit_url()
 				) );
+
 			} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
 
 				Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );

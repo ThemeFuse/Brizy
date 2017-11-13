@@ -24,8 +24,16 @@ class Brizy_Editor_CompiledHtml {
 		return $this->strip_regions()->dom->get_content();
 	}
 
-	public function get_body() {
-		return $this->dom->get_body()->get_content();
+	public function get_body($include_parent_tags = false) {
+
+		if($include_parent_tags)
+			return $this->dom->get_body()->get_tag();
+		else
+			return $this->dom->get_body()->get_content();
+	}
+
+	public function get_head() {
+		return $this->dom->get_head()->get_content();
 	}
 
 	public function get_head_scripts() {
@@ -61,4 +69,8 @@ class Brizy_Editor_CompiledHtml {
 		return $list;
 	}
 
+	public function get_assets()
+	{
+
+	}
 }

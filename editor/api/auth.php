@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_API_Auth {
+class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client{
 
 	/**
 	 * @var string
@@ -38,7 +38,7 @@ class Brizy_Editor_API_Auth {
 	 */
 	public function getToken( $email ) {
 
-		$response = Brizy_Editor_Http_Client::post( $this->auth_url(),
+		$response = $this->post( $this->auth_url(),
 			array(
 				'body'      => array(
 					'client_id'     => $this->client_id,
@@ -67,7 +67,7 @@ class Brizy_Editor_API_Auth {
 
 		throw new \Exception('Use getToken.');
 
-		$response = Brizy_Editor_Http_Client::post( $this->refresh_url(),
+		$response = $this->post( $this->refresh_url(),
 			array(
 				'body'      => array(
 					'refresh_token' => $refresh_token,

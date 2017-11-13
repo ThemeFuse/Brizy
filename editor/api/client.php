@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_API_Client {
+class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 	/**
 	 * @var Brizy_Editor_API_AccessToken
@@ -16,27 +16,16 @@ class Brizy_Editor_API_Client {
 		$this->access_token = $token;
 	}
 
-	public function get_projects() {
-		return $this->get( 'projects' )->get_response_body();
-	}
 
 	public function create_project() {
-		return $this->post( 'projects' )->get_response_body();
+		return $this->post( 'projects',[] )->get_response_body();
 	}
 
-	public function get_project( $id ) {
-		return $this->get( "projects/$id" )->get_response_body();
-	}
 
-	public function update_project( Brizy_Editor_API_Project $project) {
+	public function update_project( Brizy_Editor_API_Project $project ) {
 
 		return $this->put( "projects/{$project->get_id()}", $project->get_data() )->get_response_body();
 	}
-
-	public function publish_project( $id ) {
-		return $this->put( "projects/{$id}/publish" )->get_response_body();
-	}
-
 
 	public function delete_project( $id ) {
 		return $this->delete( "projects/$id" )->get_response_body();
@@ -51,16 +40,20 @@ class Brizy_Editor_API_Client {
 	}
 
 
-	public function get_page_html( $project_id, $page_id ) {
-		return $this->get( "projects/$project_id/pages/$page_id/html" )->get_response_body();
-	}
-
 	public function create_page( $project_id, Brizy_Editor_API_Page $page ) {
 		return $this->post( "projects/$project_id/pages", $page->export() )->get_response_body();
 	}
 
 	public function update_page( $project_id, $page_id, Brizy_Editor_API_Page $page ) {
 		return $this->put( "projects/$project_id/pages/$page_id", $page->export() )->get_response_body();
+	}
+
+	public function compile_page( $project_id, $page_id, $config ) {
+
+		/**
+		 * @todo: pass the config to the compiler to compile the html with the right urls.
+		 */
+		return $this->get( "projects/$project_id/pages/$page_id/html" )->get_response_body();
 	}
 
 	public function delete_page( $project_id, $page_id ) {
@@ -81,36 +74,38 @@ class Brizy_Editor_API_Client {
 		return implode( '/', array( Brizy_Config::GATEWAY_URI, 'v1', $suffix ) );
 	}
 
-	protected function get( $route, $body = null ) {
-		return $this->request( $route, $body );
-	}
+	public function request( $url, array $options = array(), $method = 'GET' ) {
 
-	protected function post( $route, $body = null ) {
-		return $this->request( $route, $body, 'POST' );
-	}
+		if ( ! isset( $options['headers'] ) ) {
+			$options['headers'] = [];
+		}
 
-	protected function delete( $route, $body = null ) {
-		return $this->request( $route, $body, 'DELETE' );
-	}
+		$options['headers'] = array_merge( $options['headers'], $this->get_headers() );
 
-	protected function put( $route, $body = null ) {
-		return $this->request( $route, $body, 'PUT' );
-	}
-
-	protected function request( $route, $body = null, $method = 'GET' ) {
-
-		return Brizy_Editor_Http_Client::request(
-			$this->url( $route ),
-			array(
-				'headers' => $this->get_headers(),
-				'body'    => $body,
-				'timeout' => 30
-			),
+		return parent::request(
+			$this->url( $url ),
+			$options,
 			$method
 		);
-
-
 	}
 
+
+
+	/*	public function get_projects() {
+return $this->get( 'projects' )->get_response_body();
+}*/
+
+
+	/*	public function get_project( $id ) {
+			return $this->get( "projects/$id" )->get_response_body();
+		}*/
+
+//	public function publish_project( $id ) {
+//		return $this->put( "projects/{$id}/publish" )->get_response_body();
+//	}
+
+//	public function get_page_html( $project_id, $page_id ) {
+//		return $this->get( "projects/$project_id/pages/$page_id/html" )->get_response_body();
+//	}
 
 }
