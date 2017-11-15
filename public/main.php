@@ -40,6 +40,11 @@ class Brizy_Public_Main {
 
 	public function initialize_front_end() {
 
+		if(Brizy_Editor::is_user_allowed())
+		{
+			add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
+		}
+
 		$is_preview = is_preview() && ! $this->is_editing_page_with_editor();
 
 		if ( $is_preview ) {
@@ -196,6 +201,20 @@ class Brizy_Public_Main {
 		return $this->post->get_compiled_html_body();
 	}
 
+	/**
+	 * @internal
+	 *
+	 * @param string $template
+	 *
+	 * @return string
+	 **/
+	public function _filter_template_include_load_blank_template( $template ) {
+		$post_template = get_post_meta( get_the_ID(), '_wp_page_template', true );
+
+		return $post_template === 'brizy-blank-template.php'
+			? self::path( 'views/templates/brizy-blank-template.php' )
+			: $template;
+	}
 
 	/**
 	 * @param string $rel
