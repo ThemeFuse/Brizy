@@ -21,9 +21,12 @@ function brizy_initialize_Brizy_Public_Api() {
 		return;
 	}
 
-	$api_instance = Brizy_Editor_API::instance( $project, $post );
+	if(Brizy_Editor::is_user_allowed())
+	{
+		$api_instance = Brizy_Editor_API::instance( $project, $post );
+		$api_instance->initialize();
+	}
 
-	$api_instance->initialize();
 }
 
 

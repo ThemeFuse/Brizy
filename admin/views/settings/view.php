@@ -33,6 +33,29 @@
                     </fieldset>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">Exclude roles</th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span>Date Format</span></legend>
+						<?php
+						foreach ( $roles as $role ) {
+							?>
+                            <label>
+                                <input type="checkbox"
+                                       name="exclude-roles[]"
+                                       value="<?php echo $role['id']; ?>"
+									<?php echo $role['selected'] ? 'checked' : ''; ?>
+                                >
+								<?php echo $role['name']; ?>
+                            </label>
+                            <br>
+							<?php
+						}
+						?>
+                    </fieldset>
+                </td>
+            </tr>
             </tbody>
         </table>
         <p class="submit">

@@ -97,6 +97,7 @@ class Brizy_Editor_Editor_Editor {
 					'sidebarContent'   => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
 					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
 					'shortcodeList'    => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
+					'getTemplates'     => Brizy_Editor_API::AJAX_GET_TEMPLATES,
 				),
 				'shortcodes' => array(
 					'sidebar' => BRIZY_SHORTCODES_PREFIX . 'sidebar'

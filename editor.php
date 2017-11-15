@@ -4,12 +4,34 @@
  */
 class Brizy_Editor {
 
+	private static $is_allowed_for_current_user;
+
 	private static $settings_key = 'post-types';
 
 	private static $instance;
 
 	public static function get() {
 		return self::$instance ? self::$instance : self::$instance = new self();
+	}
+
+	public static function is_user_allowed() {
+
+		if(is_null(self::$is_allowed_for_current_user))
+		{
+			$user = wp_get_current_user();
+
+			$excluded_roles = array();
+
+			try {
+				$excluded_roles = Brizy_Editor_Storage_Common::instance()->get( 'exclude-roles' );
+			} catch ( Exception $e ) {
+
+			}
+
+			self::$is_allowed_for_current_user = count( array_intersect( $excluded_roles, (array) $user->roles ) ) == 0;
+		}
+
+		return self::$is_allowed_for_current_user;
 	}
 
 	private function __construct() {
@@ -45,6 +67,7 @@ class Brizy_Editor {
 	public function get_name() {
 		return 'Brizy';
 	}
+
 
 	/**
 	 * @internal

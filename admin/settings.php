@@ -4,19 +4,25 @@
 
 class Brizy_Admin_Settings {
 
+	private $role_list;
+
 	public static function menu_slug() {
 		return brizy()->get_slug() . '-settings';
 	}
 
 	public static function _init() {
+
 		static $instance;
 
 		return $instance ? $instance : $instance = new self();
 	}
 
 	private function __construct() {
+
 		add_action( 'admin_menu', array( $this, '_action_register_settings_page' ) );
 		add_action( 'current_screen', array( $this, '_action_validate_form_submit' ) );
+		$this->role_list = $this->get_role_list();
+
 	}
 
 	public function is_settings_page() {
@@ -29,7 +35,10 @@ class Brizy_Admin_Settings {
 	public function render() {
 		echo Brizy_Admin_Main::render(
 			'settings/view',
-			array( 'types' => array_map( array( $this, 'is_selected' ), $this->list_post_types() ) )
+			array(
+				'types' => array_map( array( $this, 'is_selected' ), $this->list_post_types() ),
+				'roles' => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() )
+			)
 		);
 	}
 
@@ -41,14 +50,10 @@ class Brizy_Admin_Settings {
 	 * @internal
 	 */
 	function _action_register_settings_page() {
-		add_submenu_page(
-			'options-general.php',
-			brizy()->get_name(),
-			brizy()->get_name() . ' ' . __( 'settings', 'brizy' ),
-			'manage_options',
+		add_menu_page( brizy()->get_name(),
+			brizy()->get_name(), 'manage_options',
 			self::menu_slug(),
-			array( $this, 'render' )
-		);
+			array( $this, 'render' ) );
 	}
 
 	/**
@@ -57,12 +62,12 @@ class Brizy_Admin_Settings {
 	public function _action_validate_form_submit() {
 		if ( ! isset( $_POST['_wpnonce'] )
 		     || ! wp_verify_nonce( $_POST['_wpnonce'] )
-		     || ! isset( $_POST['post-types'] )
 		) {
 			return;
 		}
 
 		Brizy_Editor_Storage_Common::instance()->set( 'post-types', (array) $_POST['post-types'] );
+		Brizy_Editor_Storage_Common::instance()->set( 'exclude-roles', (array) $_POST['exclude-roles'] );
 		wp_redirect( $this->get_url() );
 	}
 
@@ -74,6 +79,26 @@ class Brizy_Admin_Settings {
 
 		return array_map( array( $this, 'to_type' ), $types );
 	}
+
+	private function get_role_list() {
+		$roles = wp_roles()->roles;
+
+		unset( $roles['administrator'] );
+
+		foreach ( $roles as $key => $role ) {
+			$roles[ $key ]['id'] = $key;
+		}
+
+		return $roles;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function list_wp_roles() {
+		return $this->role_list;
+	}
+
 
 	private function to_type( WP_Post_Type $type ) {
 		return array(
@@ -93,5 +118,16 @@ class Brizy_Admin_Settings {
 		$type['selected'] = in_array( $type['type'], brizy()->supported_post_types() );
 
 		return $type;
+	}
+
+	private function is_role_selected( $role ) {
+		try {
+			$selected_roles = Brizy_Editor_Storage_Common::instance()->get( 'exclude-roles' );
+		} catch ( Exception $e ) {
+			$selected_roles = array();
+		}
+		$role['selected'] = in_array( $role['id'], $selected_roles );
+
+		return $role;
 	}
 }

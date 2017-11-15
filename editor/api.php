@@ -14,6 +14,7 @@ class Brizy_Editor_API {
 	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
 	const AJAX_SHORTCODE_CONTENT = 'brizy_shortcode_content';
 	const AJAX_SHORTCODE_LIST = 'brizy_shortcode_list';
+	const AJAX_GET_TEMPLATES = 'brizy_get_templates';
 
 
 	static private $instance;
@@ -51,7 +52,7 @@ class Brizy_Editor_API {
 	 */
 	public static function instance( $project, $post ) {
 
-		if ( !self::$instance ) {
+		if ( ! self::$instance ) {
 			self::$instance = new self( $project, $post );
 		}
 
@@ -71,6 +72,7 @@ class Brizy_Editor_API {
 	}
 
 	public function initialize() {
+
 		add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 		add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
@@ -82,6 +84,7 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_SIDEBAR_CONTENT, array( $this, 'sidebar_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
 	}
 
 	/**
@@ -157,14 +160,24 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$content = $this->param( 'data' );
-			$title   = $this->param( 'title' );
+			$content  = $this->param( 'data' );
+			$title    = $this->param( 'title' );
+			$template = $this->param( 'template' );
+
+			if ( $title ) {
+				$this->post->set_title( $title );
+			}
+
+			if ( $template ) {
+				$this->post->set_template( $template );
+			}
+
+			if ( $content ) {
+				$this->post->set_data( $content );
+			}
 
 			$this->post
-				->set_title( $title )
-				->set_template( $this->param( 'template' ) )
-				->set_data( $content )
-				->set_needs_compile(true)
+				->set_needs_compile( true )
 				->save();
 
 			$this->success( self::create_post_arr( $this->post ) );
@@ -235,6 +248,23 @@ class Brizy_Editor_API {
 		try {
 			global $shortcode_tags;
 			$this->success( array_keys( $shortcode_tags ) );
+		} catch ( Exception $exception ) {
+			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
+
+	public function template_list() {
+		try {
+			$templates = get_page_templates();
+
+			$response = [
+				(object) [ "name" => 'Default', 'value' => 'default' ]
+			];
+			foreach ( $templates as $name => $path ) {
+				$response[] = (object) [ "name" => $name, 'value' => $path ];
+			}
+
+			$this->success( $response );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}

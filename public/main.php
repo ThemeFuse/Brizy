@@ -40,8 +40,6 @@ class Brizy_Public_Main {
 
 	public function initialize_front_end() {
 
-		add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
-
 		$is_preview = is_preview() && ! $this->is_editing_page_with_editor();
 
 		if ( $is_preview ) {
@@ -49,7 +47,7 @@ class Brizy_Public_Main {
 		}
 
 		// add the actions for the case when the user edits the page with the editor
-		if ( $this->is_editing_page_with_editor() ) {
+		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
 			add_action( 'wp_head', array( $this, '_editor_head' ) );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
@@ -198,20 +196,6 @@ class Brizy_Public_Main {
 		return $this->post->get_compiled_html_body();
 	}
 
-	/**
-	 * @internal
-	 *
-	 * @param string $template
-	 *
-	 * @return string
-	 **/
-	public function _filter_template_include_load_blank_template( $template ) {
-		$post_template = get_post_meta( get_the_ID(), '_wp_page_template', true );
-
-		return $post_template === 'brizy-blank-template.php'
-			? self::path( 'views/templates/brizy-blank-template.php' )
-			: $template;
-	}
 
 	/**
 	 * @param string $rel

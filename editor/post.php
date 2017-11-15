@@ -300,7 +300,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 			// check destination dir
 			$dir_path = dirname( rtrim( ABSPATH, '/' ) . $asset_path );
 			if ( ! file_exists( $dir_path ) ) {
-				mkdir( $dir_path, 0777, true );
+				mkdir( $dir_path, 0744, true );
 			}
 			$full_asset_path = rtrim( ABSPATH, '/' ) . $asset_path;
 
