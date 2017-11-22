@@ -361,7 +361,7 @@ class Brizy_Editor_API {
 		return array(
 			'id'        => $project->get_id(),
 			'name'      => $wp_post->post_name,
-			'globals'   => (object) $project->get_globals(),
+			'globals'   => $project->get_globals(),
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
 			'user'      => array(

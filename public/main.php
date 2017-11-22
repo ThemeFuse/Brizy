@@ -106,6 +106,8 @@ class Brizy_Public_Main {
 
 			$config_object = $this->getConfigObject();
 
+			$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL.DIRECTORY_SEPARATOR.$this->project->get_template_version();
+
 			$context = array( 'editorData' => $config_object );
 
 			if ( WP_DEBUG ) {
@@ -124,7 +126,11 @@ class Brizy_Public_Main {
 
 		$template = $this->getEditorTwigTemplate();
 
-		$context = array( 'editorData' => $this->getConfigObject() );
+		$config_object = $this->getConfigObject();
+		$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL.DIRECTORY_SEPARATOR.$this->project->get_template_version();
+
+		$context       = array( 'editorData' => $config_object );
+
 		if ( WP_DEBUG ) {
 			$context['DEBUG'] = true;
 		}
@@ -231,7 +237,7 @@ class Brizy_Public_Main {
 			return $this->twig_template;
 		}
 
-		$template_path = Brizy_Config::EDITOR_STATIC_URL . "/editor.html.twig";
+		$template_path       = $this->project->get_asset_url() . "/editor.html.twig";
 
 		$loader = new Twig_Loader_Array( [
 			'editor' => file_get_contents( $template_path )
@@ -246,7 +252,7 @@ class Brizy_Public_Main {
 
 	private function getConfigObject() {
 		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
-		$config_json   = json_encode( $editor->config() );
+		$config_json   = json_encode( $editor->config(),JSON_UNESCAPED_SLASHES );
 		$config_object = json_decode( $config_json );
 
 		return $config_object;

@@ -70,7 +70,7 @@ class Brizy_Editor_Editor_Editor {
 				'image'       => Brizy_Config::EDITOR_IMAGE_URL,
 				'origin'      => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'     => Brizy_Config::EDITOR_STATIC_URL,
-				'static'      => Brizy_Config::ASSET_STATIC_URL,
+				'static'      => Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL.DIRECTORY_SEPARATOR.$this->get_post()->get_id(),
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
@@ -109,4 +109,47 @@ class Brizy_Editor_Editor_Editor {
 	public function static_url() {
 		return brizy()->get_url( '/editor/editor/static' );
 	}
+
+	public function store_asset( $asset_source, $asset_path ) {
+
+		try {
+			// check destination dir
+			$dir_path = dirname( rtrim(ABSPATH,'/') . $asset_path );
+			if ( ! file_exists( $dir_path ) ) {
+				mkdir( $dir_path, 0777, true );
+			}
+			$full_asset_path = rtrim(ABSPATH,'/') . $asset_path;
+
+			$fasset_dest = fopen( $full_asset_path, 'w' );
+			if ( ! $fasset_dest ) {
+				throw new Exception( 'Invalid file destination.' );
+			}
+
+			$fasset_src = fopen( $asset_source, 'r' );
+			if ( ! $fasset_src ) {
+				throw new Exception( 'Invalid asset source.' );
+			}
+
+			$buffer_length = 2048; // we can tune this later;
+
+			while ( ! feof( $fasset_src ) ) {
+				$buffer = fread( $fasset_src, $buffer_length );
+				fwrite( $fasset_dest, $buffer );
+			}
+
+			fclose( $fasset_src );
+			fclose( $fasset_dest );
+
+		} catch ( \Exception $e ) {
+			$t = 0;
+			return false;
+		}
+
+		return true;
+	}
+
+	public function get_asset_url() {
+		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
+	}
+
 }

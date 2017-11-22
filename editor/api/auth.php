@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client{
+class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 
 	/**
 	 * @var string

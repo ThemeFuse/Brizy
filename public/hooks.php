@@ -64,7 +64,6 @@ function initialize_front_end_Brizy_Public_Main() {
 	} catch ( Exception $e ) {
 		return;
 	}
-
 }
 
 function initialize_admin_edit_Brizy_Public_Main() {

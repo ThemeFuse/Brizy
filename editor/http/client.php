@@ -18,6 +18,7 @@ class Brizy_Editor_Http_Client {
 		$http = new WP_Http();
 
 		$options['method'] = $method;
+		$options['body']   = stripslashes_deep( $options['body'] );
 
 		$wp_response = $http->request( $url, $options );
 
@@ -61,7 +62,7 @@ class Brizy_Editor_Http_Client {
 	 * @return Brizy_Editor_Http_Response
 	 */
 	public function post( $url, $options ) {
-		return $this->request( $url, ['body'=>$options], 'POST' );
+		return $this->request( $url, $options, 'POST' );
 	}
 
 	/**

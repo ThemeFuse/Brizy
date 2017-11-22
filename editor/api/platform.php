@@ -6,7 +6,7 @@
  * Time: 2:14 PM
  */
 
-class Brizy_Editor_API_Platform {
+class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 
 	/**
 	 * @var string
@@ -56,14 +56,14 @@ class Brizy_Editor_API_Platform {
 	 * @return Brizy_Editor_API_AccessToken
 	 */
 	private function getToken() {
-		$response = Brizy_Editor_Http_Client::post( $this->auth_url(), array(
+		$response = $this->post( $this->auth_url(), array(
 			'body' => array(
 				'client_id'     => $this->client_id,
 				'client_secret' => $this->secret,
 				'email'         => $this->email,
 				'password'      => $this->password,
-				'grant_type'    => 'password'
-			) // here we will have the grand_typ that can only create users.
+				'grant_type'    => 'https://visual.dev/api/limited_client_credentials'
+			)
 		) );
 
 		$response_array = $response->get_response_body();
@@ -85,7 +85,7 @@ class Brizy_Editor_API_Platform {
 	public function createUser( $email, $password=null ) {
 		$token = $this->getToken();
 
-		$response = Brizy_Editor_Http_Client::post( $this->sign_up_url(), array(
+		$response = $this->post( $this->sign_up_url(), array(
 				'headers'   => array(
 					'Authorization' => 'Bearer ' . $token->access_token()
 				),

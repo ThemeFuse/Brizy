@@ -16,7 +16,6 @@ class Brizy_Editor_Project {
 	 */
 	public static function get() {
 		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
-
 		return $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
 	}
 
@@ -88,6 +87,28 @@ class Brizy_Editor_Project {
 	 */
 	public function get_api_project() {
 		return $this->api_project;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_template_slug() {
+		return $this->get_api_project()->get_template_slug();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_template_version() {
+		return $this->get_api_project()->get_template_version();
+	}
+
+	public function get_asset_url() {
+		return sprintf( Brizy_Config::BRIZY_S3_ASSET_URL, $this->get_template_slug(), $this->get_template_version() );
+	}
+
+	public function get_asset_path() {
+		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH,  $this->get_template_version() );
 	}
 
 	public function set_meta_key( $key, $value ) {

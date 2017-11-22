@@ -8,11 +8,22 @@
 
 class Brizy_Config {
 
-	const EDITOR_PRIMARY_URL = 'http://bitblox.local';
-	const EDITOR_STATIC_URL = 'http://bitblox.local/static';
-	const ASSET_STATIC_URL = 'http://brizy.local/brizy-proxy';
-	const COMPILER_URL = 'http://api.bitblox.xyz';
+	const EDITOR_PRIMARY_URL = 'http://api.brizy.io';
+	const COMPILER_URL = 'http://api.brizy.io';
+	const EDITOR_STATIC_URL = 'http://api.brizy.io/static';
+	//const EDITOR_STATIC_URL = 'http://bitblox.local/static';
+
 	const BRIZY_WP_ASSET_PATH = 'uploads/brizy/pages/%s/';
+
+	const LOCAL_PAGE_ASSET_STATIC_URL = '/wp-content/uploads/brizy/pages';
+	const BRIZY_WP_PAGE_ASSET_PATH = 'wp-content/uploads/brizy/pages/%s';
+
+	const LOCAL_EDITOR_ASSET_STATIC_URL = '/wp-content/uploads/brizy/editor';
+	const BRIZY_WP_EDITOR_ASSET_PATH = self::LOCAL_EDITOR_ASSET_STATIC_URL.'/%s';
+
+
+	const BRIZY_S3_ASSET_URL = 'https://s3.amazonaws.com/bitblox-test/%s/%s';
+	//const BRIZY_S3_ASSET_URL = 'http://bitblox.local/static';
 
 	const ASSETS_PATTERN = '/(https?:\/\/bitblox.local\/assets\/[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
 
@@ -26,15 +37,13 @@ class Brizy_Config {
 	const EDITOR_HOST_ORIGIN = 'testblox.info';
 	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
-	const GATEWAY_URI = 'http://api.bitblox.xyz';
+	const GATEWAY_URI = 'http://api.brizy.io';
 
-	const BRIZY_ID = '69_1oecueu4a5s04k48wgwkok4s84cwwcsc488o44kss8c4s44wkg';
-	const BRIZY_KEY = '7neyrf2rm000s0sooc4ok4kk4sk8k0o0w08ksooww0cgok4kc';
+	const BRIZY_ID = '1_19e6979gnz40s84w48gs8sgk0sgw488ows80okoww0cw4oc0co';
+	const BRIZY_KEY = '3jqp89myle4goo4sg88w0ccw4s4kgw8ckkkko0sgkg0osc8s0c';
 	const BRIZY_EMAIL = 'admin@admin.com';
-
-	// we will not use password grant_type.. so we will delete this very soon :)
 	const BRIZY_PASSWORD = 'admin';
-
-
-
 }
+
+
+

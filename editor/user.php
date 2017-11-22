@@ -301,39 +301,14 @@ class Brizy_Editor_User {
 //	}
 
 	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
-		$editor   = new Brizy_Editor_Editor_Editor( $project, $post );
-		$post_arr = Brizy_Editor_API::create_post_arr( $post );
-
 		$api_project = $project->get_api_project();
 		$api_page = $post->get_api_page();
 
-//		$remote_post_data = array(
-//			'body'    => array(
-//				'pages'   => json_encode( array( $post_arr ) ),
-//				'globals' => $project->get_globals() ? $project->get_globals() : array(),
-//				'config'  => $editor->config(),
-//				'env'     => 'WP'
-//			),
-//			'timeout' => 60
-//		);
-
-
 		$config = Brizy_Editor_Editor_Editor::get( $project , $post  )->config();
-
 
 		$res      = $this->get_client()->compile_page( $api_project->get_id(), $api_page->get_id(), $config );
 
-//		$res = wp_remote_post(
-//			Brizy_Config::COMPILER_URL."/v1/projects/{$projid}/pages/{$pageid}/html",
-//			$remote_post_data
-//		);
-
-		if ( is_wp_error( $res ) || wp_remote_retrieve_response_code( $res ) !== 200 ) {
-
-			throw new Brizy_Editor_Http_Exceptions_ResponseException( new Brizy_Editor_Http_Response( $res ) );
-		}
-
-		$content = trim( $res['body'] );
+		$content = trim( $res['html'] );
 
 		return new Brizy_Editor_CompiledHtml( $content );
 	}

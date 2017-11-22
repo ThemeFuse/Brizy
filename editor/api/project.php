@@ -28,8 +28,23 @@ class Brizy_Editor_API_Project {
 	}
 
 	public function set_globals( $globals ) {
-		return $this->data['globals'] = json_encode( $globals );
+		return $this->data['globals'] = json_encode( $globals, JSON_UNESCAPED_SLASHES );
 	}
+
+	/**
+	 * @return string
+	 */
+	public function get_template_slug() {
+		return $this->get_data()['template']['slug'];
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_template_version() {
+		return $this->get_data()['version'];
+	}
+
 
 	public function __sleep() {
 		return array( 'data' );

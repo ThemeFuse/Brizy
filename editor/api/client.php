@@ -18,7 +18,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 
 	public function create_project() {
-		return $this->post( 'projects',[] )->get_response_body();
+		return $this->post( 'projects', [] )->get_response_body();
 	}
 
 
@@ -41,11 +41,11 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 
 	public function create_page( $project_id, Brizy_Editor_API_Page $page ) {
-		return $this->post( "projects/$project_id/pages", $page->export() )->get_response_body();
+		return $this->post( "projects/$project_id/pages", [ 'body' => $page->export() ] )->get_response_body();
 	}
 
 	public function update_page( $project_id, $page_id, Brizy_Editor_API_Page $page ) {
-		return $this->put( "projects/$project_id/pages/$page_id", $page->export() )->get_response_body();
+		return $this->put( "projects/$project_id/pages/$page_id", [ 'body' => $page->export() ] )->get_response_body();
 	}
 
 	public function compile_page( $project_id, $page_id, $config ) {
@@ -53,7 +53,15 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		/**
 		 * @todo: pass the config to the compiler to compile the html with the right urls.
 		 */
-		return $this->get( "projects/$project_id/pages/$page_id/html" )->get_response_body();
+		$urls = array(
+			'urls' => json_encode( array(
+				'primary' => $config['urls']['primary'],
+				'base'    => $config['urls']['base'],
+				'static'  => $config['urls']['static']
+			), JSON_UNESCAPED_SLASHES )
+		);
+
+		return $this->post( "projects/$project_id/pages/$page_id/htmls", array( 'body' => $urls ) )->get_response_body();
 	}
 
 	public function delete_page( $project_id, $page_id ) {
@@ -88,24 +96,4 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 			$method
 		);
 	}
-
-
-
-	/*	public function get_projects() {
-return $this->get( 'projects' )->get_response_body();
-}*/
-
-
-	/*	public function get_project( $id ) {
-			return $this->get( "projects/$id" )->get_response_body();
-		}*/
-
-//	public function publish_project( $id ) {
-//		return $this->put( "projects/{$id}/publish" )->get_response_body();
-//	}
-
-//	public function get_page_html( $project_id, $page_id ) {
-//		return $this->get( "projects/$project_id/pages/$page_id/html" )->get_response_body();
-//	}
-
 }

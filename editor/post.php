@@ -264,10 +264,12 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 	public function compile_page() {
 
-		if ( $this->needs_compile ) {
-			$html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
+		if ( $this->needs_compile || true ) {
 
-			$compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
+			//$html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
+			//$compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
+
+			$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 
 			$this->compiled_html_head = $compiled_html->get_head();
 			$this->compiled_html_body = $compiled_html->get_body();
@@ -280,17 +282,6 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 		$this->setStoreAssets(true);
 
 		return $this;
-
-//		$brizy_editor_page_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
-//
-//		$this->store_head_scripts( $brizy_editor_page_html->get_head_scripts() );
-//		$this->store_footer_scripts( $brizy_editor_page_html->get_footer_scripts() );
-//		$this->store_links( $brizy_editor_page_html->get_links_tags() );
-//		$this->store_inline_styles( $brizy_editor_page_html->get_inline_styles() );
-//
-//		$this->compiled_html_body = $brizy_editor_page_html->get_body();
-//
-//		return $this;
 	}
 
 
@@ -298,18 +289,18 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 		try {
 			// check destination dir
-			$dir_path = dirname( rtrim( ABSPATH, '/' ) . $asset_path );
+			$dir_path = dirname( ABSPATH . $asset_path );
 			if ( ! file_exists( $dir_path ) ) {
-				mkdir( $dir_path, 0744, true );
+				mkdir( $dir_path, 0777, true );
 			}
-			$full_asset_path = rtrim( ABSPATH, '/' ) . $asset_path;
+			$full_asset_path = ABSPATH . $asset_path;
 
 			$fasset_dest = fopen( $full_asset_path, 'w' );
 			if ( ! $fasset_dest ) {
 				throw new Exception( 'Invalid file destination.' );
 			}
 
-			$fasset_src = fopen( $asset_source . $asset_path, 'r' );
+			$fasset_src = fopen( $asset_source , 'r' );
 			if ( ! $fasset_src ) {
 				throw new Exception( 'Invalid asset source.' );
 			}
@@ -327,10 +318,12 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 			$this->assets[] = $asset_path;
 		} catch ( \Exception $e ) {
 			$t = 0;
-		}
 
-		return $this;
+			return false;
+		}
+		return true;
 	}
+
 
 	public function invalidate_assets() {
 		foreach ( $this->assets as $asset_path ) {
