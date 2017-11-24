@@ -68,7 +68,6 @@ class Brizy_Editor {
 		return 'Brizy';
 	}
 
-
 	/**
 	 * @internal
 	 *

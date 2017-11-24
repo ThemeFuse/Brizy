@@ -28,9 +28,7 @@ class Brizy_Admin_Flash {
 			return self::$instance;
 		}
 
-		self::$instance = new self();
-
-		return self::$instance;
+		return self::$instance = new self();
 	}
 
 	public function initialize() {

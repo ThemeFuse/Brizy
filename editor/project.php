@@ -2,7 +2,12 @@
 	die( 'Direct access forbidden.' );
 }
 
+include_once  ABSPATH. "wp-admin/includes/class-wp-filesystem-base.php";
+include_once  ABSPATH. "wp-admin/includes/class-wp-filesystem-direct.php";
+
 class Brizy_Editor_Project {
+
+	private static $instance = null;
 
 	const BRIZY_PROJECT = 'brizy-project';
 
@@ -12,11 +17,23 @@ class Brizy_Editor_Project {
 	private $api_project;
 
 	/**
+	 * @var bool
+	 */
+	private $store_assets = true;
+
+	/**
 	 * @return Brizy_Editor_Project
 	 */
 	public static function get() {
+
+		if(self::$instance)
+			return self::$instance;
+
 		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
-		return $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
+
+		self::$instance = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
+
+		return self::$instance;
 	}
 
 	/**
@@ -103,12 +120,23 @@ class Brizy_Editor_Project {
 		return $this->get_api_project()->get_template_version();
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return $this
+	 */
+	public function set_template_version( $version ) {
+		$this->get_api_project()->set_template_version( $version );
+
+		return $this;
+	}
+
 	public function get_asset_url() {
 		return sprintf( Brizy_Config::BRIZY_S3_ASSET_URL, $this->get_template_slug(), $this->get_template_version() );
 	}
 
 	public function get_asset_path() {
-		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH,  $this->get_template_version() );
+		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->get_template_version() );
 	}
 
 	public function set_meta_key( $key, $value ) {
@@ -120,6 +148,33 @@ class Brizy_Editor_Project {
 		$this->get_api_project()->set_meta_key( $key, $value );
 	}
 
+	public function invalidateAssetsFor( $version ) {
+
+		$dir_path = sprintf( rtrim( ABSPATH, DIRECTORY_SEPARATOR ) . Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $version );
+
+		$fs = new WP_Filesystem_Direct(null);
+		$fs->rmdir( $dir_path, true );
+
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStoreAssets() {
+		return $this->store_assets;
+	}
+
+	/**
+	 * @param bool $store_assets
+	 *
+	 * @return Brizy_Editor_Project
+	 */
+	public function setStoreAssets(  $store_assets ) {
+		$this->store_assets = $store_assets;
+
+		return $this;
+	}
 
 	/**
 	 * @return self

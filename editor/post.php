@@ -266,8 +266,8 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 		if ( $this->needs_compile || true ) {
 
-			//$html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
-			//$compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
+			// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
+			// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
 
 			$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 
@@ -535,6 +535,8 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 		return $this;
 	}
+
+
 
 
 //

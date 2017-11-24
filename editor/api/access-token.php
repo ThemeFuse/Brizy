@@ -8,26 +8,24 @@ class Brizy_Editor_API_AccessToken {
 	private $token;
 
 	/**
+	 * @var string $token
+	 */
+	private $refresh_token;
+
+	/**
 	 * @var int $token
 	 */
 	private $expires;
-
-	/**
-	 * @var string $token
-	 */
-	private $refresh;
 
 	/**
 	 * Brizy_API_Access_Token constructor.
 	 *
 	 * @param string $token
 	 * @param int $expires
-	 * @param string $refresh
 	 */
-	public function __construct( $token, $refresh, $expires ) {
+	public function __construct( $token, $expires ) {
 		$this->token   = $token;
 		$this->expires = (int) $expires;
-		$this->refresh = $refresh;
 	}
 
 	public function access_token() {
@@ -38,18 +36,33 @@ class Brizy_Editor_API_AccessToken {
 		return $this->expires;
 	}
 
-	public function refresh_token() {
-		return $this->refresh;
-	}
-
 	public function expired() {
 		return time() >= $this->get_expires();
 	}
 
+	/**
+	 * @return string
+	 */
+	public function get_refresh_token() {
+		return $this->refresh_token;
+	}
+
+	/**
+	 * @param $refresh_token
+	 *
+	 * @return $this
+	 */
+	public function set_refresh_token( $refresh_token ) {
+		$this->refresh_token = $refresh_token;
+
+		return $this;
+	}
+
+
+
 	public function export() {
 		return array(
 			'access_token'  => $this->access_token(),
-			'refresh_token' => $this->refresh_token(),
 			'expires'       => $this->get_expires(),
 		);
 	}

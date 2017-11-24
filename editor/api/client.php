@@ -21,6 +21,10 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		return $this->post( 'projects', [] )->get_response_body();
 	}
 
+	public function get_project( Brizy_Editor_API_Project $project ) {
+
+		return $this->get( "projects/{$project->get_id()}", [] )->get_response_body();
+	}
 
 	public function update_project( Brizy_Editor_API_Project $project ) {
 

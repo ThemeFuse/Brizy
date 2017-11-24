@@ -29,6 +29,7 @@ class Brizy_Admin_Main {
 		add_action( 'before_delete_post', array( $this, '_action_delete_page' ) );
 		add_action( 'media_buttons', array( $this, '_action_add_enable_disable_buttons' ) );
 		add_filter( 'page_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
+		add_filter( 'post_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
 		add_filter( 'the_editor', array( $this, '_filter_add_brizy_edit_button' ), 10, 2 );
 	}
@@ -277,6 +278,7 @@ class Brizy_Admin_Main {
 	 * @return array
 	 **/
 	public function _filter_add_brizy_edit_row_actions( $actions, $post ) {
+
 		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) ) {
 			return $actions;
 		}

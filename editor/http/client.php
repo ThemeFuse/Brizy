@@ -18,7 +18,10 @@ class Brizy_Editor_Http_Client {
 		$http = new WP_Http();
 
 		$options['method'] = $method;
-		$options['body']   = stripslashes_deep( $options['body'] );
+
+		if ( isset( $options['body'] ) ) {
+			$options['body'] = stripslashes_deep( $options['body'] );
+		}
 
 		$wp_response = $http->request( $url, $options );
 

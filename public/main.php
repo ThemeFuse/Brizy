@@ -40,26 +40,24 @@ class Brizy_Public_Main {
 
 	public function initialize_front_end() {
 
-		if(Brizy_Editor::is_user_allowed())
-		{
+		if ( Brizy_Editor::is_user_allowed() ) {
 			add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
-		}
-
-		$is_preview = is_preview() && ! $this->is_editing_page_with_editor();
-
-		if ( $is_preview ) {
-			$this->compile_page_before_preview();
 		}
 
 		// add the actions for the case when the user edits the page with the editor
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
+
+			add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
+			$this->check_project_version();
+
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
 			add_action( 'wp_head', array( $this, '_editor_head' ) );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
 			add_filter( 'show_admin_bar', '__return_false' );
+
 		} elseif ( $this->is_view_page() ) {
 
-            // compile page before showing..
+			// compile page before showing..
 			$this->post
 				->compile_page()
 				->save();
@@ -106,7 +104,7 @@ class Brizy_Public_Main {
 
 			$config_object = $this->getConfigObject();
 
-			$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL.DIRECTORY_SEPARATOR.$this->project->get_template_version();
+			$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL . DIRECTORY_SEPARATOR . $this->project->get_template_version();
 
 			$context = array( 'editorData' => $config_object );
 
@@ -126,10 +124,10 @@ class Brizy_Public_Main {
 
 		$template = $this->getEditorTwigTemplate();
 
-		$config_object = $this->getConfigObject();
-		$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL.DIRECTORY_SEPARATOR.$this->project->get_template_version();
+		$config_object               = $this->getConfigObject();
+		$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL . DIRECTORY_SEPARATOR . $this->project->get_template_version();
 
-		$context       = array( 'editorData' => $config_object );
+		$context = array( 'editorData' => $config_object );
 
 		if ( WP_DEBUG ) {
 			$context['DEBUG'] = true;
@@ -137,6 +135,15 @@ class Brizy_Public_Main {
 
 		$render_block = $template->renderBlock( 'header_content', $context );
 		echo $render_block;
+	}
+
+
+	function _invalidate_editor_assets($new_version, $old_version) {
+		$project      = Brizy_Editor_Project::get();
+		$project
+			->invalidateAssetsFor( $old_version )
+			->set_template_version( $new_version )
+			->save();
 	}
 
 
@@ -168,29 +175,11 @@ class Brizy_Public_Main {
 		}
 	}
 
-	/**
-	 * The problem here is that the post content intended to be shown it is already passed
-	 * by wp and what we do here will be available in next preview.
-	 *
-	 * Compiling the page on every get_item request is not an option as it will add too much load on compiler
-	 *
-	 * @internal
-	 **/
-	public function compile_page_before_preview() {
-
-		$this->post->compile_page()->save();
-
-		wp_update_post( array(
-			'ID'           => $this->post->get_id(),
-			'post_content' => $this->post->get_compiled_html_body(),
-		) );
-	}
-
 
 	/**
 	 *  Show the compiled page head content
 	 */
-	public function insert_page_head( ) {
+	public function insert_page_head() {
 
 		$compiled_html_head = $this->post->get_compiled_html_head();
 		echo $compiled_html_head;
@@ -237,7 +226,7 @@ class Brizy_Public_Main {
 			return $this->twig_template;
 		}
 
-		$template_path       = $this->project->get_asset_url() . "/editor.html.twig";
+		$template_path = $this->project->get_asset_url() . "/editor.html.twig";
 
 		$loader = new Twig_Loader_Array( [
 			'editor' => file_get_contents( $template_path )
@@ -252,9 +241,19 @@ class Brizy_Public_Main {
 
 	private function getConfigObject() {
 		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
-		$config_json   = json_encode( $editor->config(),JSON_UNESCAPED_SLASHES );
+		$config_json   = json_encode( $editor->config(), JSON_UNESCAPED_SLASHES );
 		$config_object = json_decode( $config_json );
 
 		return $config_object;
+	}
+
+	private function check_project_version() {
+		$project      = Brizy_Editor_Project::get();
+		$api_project  = $project->get_api_project();
+		$project_data = Brizy_Editor_User::get()->get_project( $api_project );
+
+		if ( $project_data['version'] != $project->get_template_version() ) {
+			do_action('brizy:project:version_changed', $project_data['version'], $project->get_template_version());
+		}
 	}
 }

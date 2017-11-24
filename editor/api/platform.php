@@ -68,11 +68,16 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 
 		$response_array = $response->get_response_body();
 
-		return new Brizy_Editor_API_AccessToken(
+		$brizy_editor_API_access_token = new Brizy_Editor_API_AccessToken(
 			$response_array['access_token'],
-			$response_array['refresh_token'],
 			time() + $response_array['expires_in']
 		);
+
+
+		if(isset($response_array['refresh_token']))
+			$brizy_editor_API_access_token->set_refresh_token( $response_array['refresh_token'] );
+
+		return $brizy_editor_API_access_token;
 	}
 
 

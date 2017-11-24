@@ -45,6 +45,16 @@ class Brizy_Editor_API_Project {
 		return $this->get_data()['version'];
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return $this
+	 */
+	public function set_template_version( $version ) {
+		$this->data['version'] = $version;
+
+		return $this;
+	}
 
 	public function __sleep() {
 		return array( 'data' );
@@ -56,7 +66,7 @@ class Brizy_Editor_API_Project {
 			throw new InvalidArgumentException( 'Hte key parameter should not be null' );
 		}
 
-		//$this->data['meta_data'][ $key ] = $value;
+		$this->data['meta_data'][ $key ] = $value;
 	}
 
 }

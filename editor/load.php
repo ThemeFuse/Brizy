@@ -35,7 +35,7 @@ add_action( 'parse_request', 'front_end_proxy_handler', - 1000 );
 
 function editor_proxy_handler() {
 
-	if ( strpos( $_SERVER["REQUEST_URI"], Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL ) !== false  && isset( $_SERVER['HTTP_REFERER'] ) ) {
+	if ( strpos( $_SERVER["REQUEST_URI"], Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL ) !== false && isset( $_SERVER['HTTP_REFERER'] ) ) {
 
 		$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
 
@@ -49,7 +49,7 @@ function editor_proxy_handler() {
 		session_write_close();
 		$LOCAL_EDITOR_ASSET_STATIC_URL = $project->get_asset_path();
 
-		$parts                         = explode( $LOCAL_EDITOR_ASSET_STATIC_URL, $_SERVER["REQUEST_URI"] );
+		$parts = explode( $LOCAL_EDITOR_ASSET_STATIC_URL, $_SERVER["REQUEST_URI"] );
 		if ( ! $parts[1] ) {
 			return;
 		}
@@ -62,9 +62,45 @@ function editor_proxy_handler() {
 
 		$path = $editor->get_asset_url() . $asset_path;
 
-		$editor->store_asset( $url, $path );
+		//if ( $res = $project->isStoreAssets() ) {
 
-		wp_redirect( $path, 302 );
+			$editor->store_asset( $url, $path );
+
+			//$project->setStoreAssets( ! $res );
+			//$project->save();
+
+			wp_redirect( $path, 302 );
+			exit;
+		//}
+
+		// send the url content
+
+		$response = wp_remote_get( $url );
+
+		if ( $response instanceof WP_Error ) {
+			return;
+		}
+
+		/**
+		 * @var WP_HTTP_Requests_Response $http_response
+		 */
+		$http_response = $response['http_response'];
+
+		$headers = $http_response->get_headers()->getAll();
+
+		unset( $headers['server'] );
+		unset( $headers['content-encoding'] );
+		unset( $headers['cache-control'] );
+
+		foreach ( $headers as $key => $val ) {
+			if ( is_array( $val ) ) {
+				$val = implode( ', ', $val );
+			}
+
+			header( "{$key}: {$val}" );
+		}
+
+		echo $http_response->get_data();
 		exit;
 	}
 }
@@ -94,7 +130,6 @@ function front_end_proxy_handler( $query ) {
 			return;
 		}
 
-
 		$template_asset_path = $parts[1];
 
 		$asset_path = sprintf( Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH . $template_asset_path, $post->get_id() );
@@ -111,7 +146,7 @@ function front_end_proxy_handler( $query ) {
 			$post->save();
 
 			// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-			wp_redirect( DIRECTORY_SEPARATOR.$asset_path, 302 );
+			wp_redirect( DIRECTORY_SEPARATOR . $asset_path, 302 );
 			exit;
 		}
 
