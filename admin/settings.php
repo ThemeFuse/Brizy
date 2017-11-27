@@ -148,7 +148,7 @@ class Brizy_Admin_Settings {
 		try {
 			$type['selected'] = in_array( $type['type'], Brizy_Editor_Storage_Common::instance()->get( 'post-types' ) );
 		} catch ( Exception $e ) {
-			$type['selected'] = false;
+			$type['selected'] = true;
 		}
 
 		return $type;

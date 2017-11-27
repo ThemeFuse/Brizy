@@ -40,7 +40,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	/**
 	 * @var array
 	 */
-	public $assets = [];
+	public $assets = array();
 
 	/**
 	 * @param $wp_post_id
