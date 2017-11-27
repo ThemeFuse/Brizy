@@ -18,12 +18,12 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 
 	public function create_project() {
-		return $this->post( 'projects', [] )->get_response_body();
+		return $this->post( 'projects', array() )->get_response_body();
 	}
 
 	public function get_project( Brizy_Editor_API_Project $project ) {
 
-		return $this->get( "projects/{$project->get_id()}", [] )->get_response_body();
+		return $this->get( "projects/{$project->get_id()}", array() )->get_response_body();
 	}
 
 	public function update_project( Brizy_Editor_API_Project $project ) {
@@ -89,7 +89,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	public function request( $url, array $options = array(), $method = 'GET' ) {
 
 		if ( ! isset( $options['headers'] ) ) {
-			$options['headers'] = [];
+			$options['headers'] = array();
 		}
 
 		$options['headers'] = array_merge( $options['headers'], $this->get_headers() );

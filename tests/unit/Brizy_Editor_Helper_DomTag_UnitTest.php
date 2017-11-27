@@ -102,7 +102,7 @@ class Brizy_Editor_Helper_DomTag_UnitTest extends TestCase {
 
 		$this->assertCount( 2, $links,'It should contain two prefetch links' );
 
-		$srcs = [];
+		$srcs = array();
 
 		foreach( $links as $link )
 		{

@@ -331,7 +331,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 			@unlink( $path );
 		}
 
-		$this->assets = [];
+		$this->assets = array();
 	}
 
 
