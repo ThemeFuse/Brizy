@@ -2,11 +2,11 @@
 
 /**
  * Plugin Name: Brizy
- * Plugin URI: http://brizy.io/
+ * Plugin URI: https://brizy.io/
  * Description: A free drag & drop framework that comes with a bunch of built in extensions that will help you develop premium themes fast & easy.
  * Version: 0.9.0
- * Author: ThemeFuse
- * Author URI: http://themefuse.com
+ * Author: Brizy.io
+ * Author URI: https://brizy.io/
  * License: GPL2+
  * Text Domain: brizy
  * Domain Path: /languages
