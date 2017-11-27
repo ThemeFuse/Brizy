@@ -6,7 +6,7 @@ class Brizy_Editor_Http_Exceptions_ResponseException extends Brizy_Editor_API_Ex
 	 */
 	private $response;
 
-	public function __construct( Brizy_Editor_Http_Response $response, Throwable $previous = null ) {
+	public function __construct( $response, $previous = null ) {
 		$this->response = $response;
 		parent::__construct( $response->get_message(), $response->get_status_code(), $previous );
 	}
