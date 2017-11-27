@@ -70,7 +70,7 @@ class Brizy_Admin_Settings {
 		}
 
 		$post_types = isset( $_POST['post-types'] ) ? $_POST['post-types'] : array();
-		$roles = isset( $_POST['exclude-roles'] ) ? $_POST['exclude-roles'] : array();
+		$roles      = isset( $_POST['exclude-roles'] ) ? $_POST['exclude-roles'] : array();
 
 		Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
 		Brizy_Editor_Storage_Common::instance()->set( 'exclude-roles', $roles );
@@ -144,7 +144,12 @@ class Brizy_Admin_Settings {
 	}
 
 	private function is_selected( $type ) {
-		$type['selected'] = in_array( $type['type'], Brizy_Editor_Storage_Common::instance()->get( 'post-types') );
+
+		try {
+			$type['selected'] = in_array( $type['type'], Brizy_Editor_Storage_Common::instance()->get( 'post-types' ) );
+		} catch ( Exception $e ) {
+			$type['selected'] = false;
+		}
 
 		return $type;
 	}
