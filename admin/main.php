@@ -147,6 +147,14 @@ class Brizy_Admin_Main {
 				) );
 			}
 		}
+		catch(Exception $exception)
+		{
+			wp_send_json_error( array(
+				'code'     => $exception->getCode(),
+				'message'  => $exception->getMessage(),
+				'redirect' => $_SERVER['HTTP_REFERER']
+			) );
+		}
 
 		// obtain the post
 		try {
