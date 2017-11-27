@@ -2,17 +2,20 @@
 
 /**
  * Plugin Name: Brizy
- * Plugin URI: https://brizy.io/
  * Description: A free drag & drop framework that comes with a bunch of built in extensions that will help you develop premium themes fast & easy.
- * Version: 0.9.0
+ * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * License: GPL2+
+ * Version: 0.9.0
  * Text Domain: brizy
+ * License: GPL2+
  * Domain Path: /languages
  */
 
 define( 'BRIZY_VERSION', '0.1.0' );
+define( 'BRIZY_FILE', __FILE__ );
+define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
+
 
 include_once 'autoloader.php';
 include_once 'editor/load.php';

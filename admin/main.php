@@ -32,6 +32,13 @@ class Brizy_Admin_Main {
 		add_filter( 'post_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
 		add_filter( 'the_editor', array( $this, '_filter_add_brizy_edit_button' ), 10, 2 );
+		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array($this, 'plugin_action_links') );
+	}
+
+	public function plugin_action_links( $links ) {
+		$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ), __( 'Settings', 'brizy' ) );
+		array_unshift( $links, $settings_link );
+		return $links;
 	}
 
 	public static function render( $view, array $args = array() ) {
