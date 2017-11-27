@@ -15,10 +15,9 @@
         <table class="form-table">
             <tbody>
             <tr>
-                <th scope="row">Post types</th>
+                <th scope="row"><?php echo __( 'Post Types' );?></th>
                 <td>
                     <fieldset>
-                        <legend class="screen-reader-text"><span>Date Format</span></legend>
 						<?php foreach ( $types as $type ) : ?>
                             <label>
                                 <input type="checkbox"
@@ -34,10 +33,9 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">Exclude roles</th>
+                <th scope="row"><?php echo __( 'Exclude Roles' );?></th>
                 <td>
                     <fieldset>
-                        <legend class="screen-reader-text"><span>Date Format</span></legend>
 						<?php
 						foreach ( $roles as $role ) {
 							?>

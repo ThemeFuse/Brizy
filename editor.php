@@ -61,7 +61,7 @@ class Brizy_Editor {
 	}
 
 	public function supported_post_types() {
-		return apply_filters( 'brizy:post_types', array( 'page' ) );
+		return apply_filters( 'brizy:post_types', array( 'page', 'post' ) );
 	}
 
 	public function get_name() {
