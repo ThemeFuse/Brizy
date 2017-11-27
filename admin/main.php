@@ -166,7 +166,8 @@ class Brizy_Admin_Main {
 			// redirect
 			wp_send_json_success( array( 'redirect' => $post->enable_editor()->edit_url() ) );
 
-		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
+		}
+		catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
 
 			try {
 				$post = Brizy_Editor_Post::create( $project, $p );
@@ -193,6 +194,14 @@ class Brizy_Admin_Main {
 					'redirect' => $_SERVER['HTTP_REFERER']
 				) );
 			}
+		}
+		catch(Exception $exception)
+		{
+			wp_send_json_error( array(
+				'code'     => $exception->getCode(),
+				'message'  => $exception->getMessage(),
+				'redirect' => $_SERVER['HTTP_REFERER']
+			) );
 		}
 	}
 
