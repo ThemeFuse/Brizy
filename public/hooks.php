@@ -31,7 +31,7 @@ function _filter_brizy_public_page_templates( $templates ) {
 function _filter_brizy_public_register_page_templates( $templates ) {
 	return array_merge( $templates,
 		array(
-			'brizy-blank-template.php' => __( 'Blank', 'brizy' )
+			'brizy-blank-template.php' => __( 'Brizy Template', 'brizy' )
 		) );
 }
 
