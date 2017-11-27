@@ -26,7 +26,7 @@ class Brizy_Editor_Http_Client {
 		$wp_response = $http->request( $url, $options );
 
 		if ( is_wp_error( $wp_response ) ) {
-			throw new Brizy_Editor_Http_Exceptions_ResponseException( $wp_response );
+			throw new Brizy_Editor_API_Exceptions_Exception( $wp_response->get_error_message() );
 		}
 
 		$response = new Brizy_Editor_Http_Response( $wp_response );
