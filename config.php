@@ -19,7 +19,7 @@ class Brizy_Config {
 	const BRIZY_WP_PAGE_ASSET_PATH = 'wp-content/uploads/brizy/pages/%s';
 
 	const LOCAL_EDITOR_ASSET_STATIC_URL = '/wp-content/uploads/brizy/editor';
-	const BRIZY_WP_EDITOR_ASSET_PATH = self::LOCAL_EDITOR_ASSET_STATIC_URL.'/%s';
+	const BRIZY_WP_EDITOR_ASSET_PATH = '/wp-content/uploads/brizy/editor/%s';
 
 
 	const BRIZY_S3_ASSET_URL = 'https://s3.amazonaws.com/bitblox-test/%s/%s';

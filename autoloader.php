@@ -27,7 +27,7 @@ function _brizy_autoload( $class_name ) {
 		$file_name = $matches[1][0];
 	}
 
-	$include_path = $abs_path . DIRECTORY_SEPARATOR . '../' . DIRECTORY_SEPARATOR . strtolower( $path . DIRECTORY_SEPARATOR . $file_name . ".php" );
+	$include_path = $abs_path . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . strtolower( $path . DIRECTORY_SEPARATOR . $file_name . ".php" );
 
 	include_once $include_path;
 }
