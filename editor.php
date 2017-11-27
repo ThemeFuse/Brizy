@@ -39,13 +39,12 @@ class Brizy_Editor {
 	}
 
 	public function get_path( $rel = '/' ) {
-		$s = DIRECTORY_SEPARATOR;
 
-		return rtrim( plugin_dir_path( dirname( __FILE__ ) . '../' ), $s ) . $s . ltrim( $rel, $s );
+		return BRIZY_PLUGIN_BASE . DIRECTORY_SEPARATOR . ltrim( $rel, DIRECTORY_SEPARATOR );
 	}
 
 	public function get_url( $rel = '' ) {
-		return rtrim( plugin_dir_url( 'brizy/brizy.php' ), '/' ) . '/' . ltrim( $rel, '/' );
+		return BRIZY_PLUGIN_URL . DIRECTORY_SEPARATOR . ltrim( $rel, DIRECTORY_SEPARATOR );
 	}
 
 	public function get_domain() {
@@ -68,23 +67,6 @@ class Brizy_Editor {
 		return 'Brizy';
 	}
 
-	/**
-	 * @internal
-	 *
-	 * @param array $types
-	 *
-	 * @return array
-	 **/
-//	public function _filter_brizy_supported_port_types( $types ) {
-//
-//		$saved = $this->get_post_types();
-//
-//		if ( $saved === null ) {
-//			return $types;
-//		}
-//
-//		return $saved;
-//	}
 
 	protected function get_post_types() {
 		try {

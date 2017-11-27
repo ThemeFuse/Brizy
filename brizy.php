@@ -15,6 +15,7 @@
 define( 'BRIZY_VERSION', '0.1.0' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
+define( 'BRIZY_PLUGIN_URL', plugin_dir_url( BRIZY_FILE ) );
 
 
 include_once 'autoloader.php';
