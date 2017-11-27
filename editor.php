@@ -35,7 +35,7 @@ class Brizy_Editor {
 	}
 
 	private function __construct() {
-		add_filter( 'brizy:post_types', array( $this, '_filter_brizy_supported_port_types' ) );
+		//add_filter( 'brizy:post_types', array( $this, '_filter_brizy_supported_port_types' ) );
 	}
 
 	public function get_path( $rel = '/' ) {
@@ -75,16 +75,16 @@ class Brizy_Editor {
 	 *
 	 * @return array
 	 **/
-	public function _filter_brizy_supported_port_types( $types ) {
-
-		$saved = $this->get_post_types();
-
-		if ( $saved === null ) {
-			return $types;
-		}
-
-		return $saved;
-	}
+//	public function _filter_brizy_supported_port_types( $types ) {
+//
+//		$saved = $this->get_post_types();
+//
+//		if ( $saved === null ) {
+//			return $types;
+//		}
+//
+//		return $saved;
+//	}
 
 	protected function get_post_types() {
 		try {

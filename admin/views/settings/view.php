@@ -8,7 +8,7 @@
 
 ?>
 <div class="wrap">
-    <h1><?php echo brizy()->get_name() . ' ' . __( 'settings' ); ?></h1>
+    <h1><?php echo brizy()->get_name() ?></h1>
 
     <form method="post" novalidate="novalidate">
 		<?php wp_nonce_field() ?>

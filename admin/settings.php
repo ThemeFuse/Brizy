@@ -60,21 +60,47 @@ class Brizy_Admin_Settings {
 	 * @internal
 	 **/
 	public function _action_validate_form_submit() {
-		if ( ! isset( $_POST['_wpnonce'] )
-		     || ! wp_verify_nonce( $_POST['_wpnonce'] )
-		) {
+
+		if ( count( $_POST ) == 0 ) {
 			return;
 		}
 
-		Brizy_Editor_Storage_Common::instance()->set( 'post-types', (array) $_POST['post-types'] );
-		Brizy_Editor_Storage_Common::instance()->set( 'exclude-roles', (array) $_POST['exclude-roles'] );
-		wp_redirect( $this->get_url() );
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'] ) ) {
+			return;
+		}
+
+		$post_types = isset( $_POST['post-types'] ) ? $_POST['post-types'] : array();
+		$roles = isset( $_POST['exclude-roles'] ) ? $_POST['exclude-roles'] : array();
+
+		Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
+		Brizy_Editor_Storage_Common::instance()->set( 'exclude-roles', $roles );
+
+		add_action( 'admin_notices', array( $this, 'success_notice' ) );
+
+		//wp_redirect( $this->get_url() );
+	}
+
+	public function success_notice() {
+		?>
+        <div class="notice notice-success is-dismissible">
+            <p><?php _e( 'Settings saved.', 'brizy' ); ?></p>
+        </div>
+		<?php
+	}
+
+
+	public function error_notice() {
+		?>
+        <div class="notice error is-dismissible">
+            <p><?php _e( 'An error occurred, please try again later.!', 'brizy' ); ?></p>
+        </div>
+		<?php
 	}
 
 	protected function list_post_types() {
 		$get_post_types = get_post_types( array( 'public' => true ), 'objects' );
 
-		$types          = array_filter(
+		$types = array_filter(
 			$get_post_types,
 			array( $this, 'filter_types' )
 		);
@@ -118,7 +144,7 @@ class Brizy_Admin_Settings {
 	}
 
 	private function is_selected( $type ) {
-		$type['selected'] = in_array( $type['type'], brizy()->supported_post_types() );
+		$type['selected'] = in_array( $type['type'], Brizy_Editor_Storage_Common::instance()->get( 'post-types') );
 
 		return $type;
 	}
