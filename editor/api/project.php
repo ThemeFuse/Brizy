@@ -35,14 +35,18 @@ class Brizy_Editor_API_Project {
 	 * @return string
 	 */
 	public function get_template_slug() {
-		return $this->get_data()['template']['slug'];
+		$data = $this->get_data();
+
+		return $data['template']['slug'];
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_template_version() {
-		return $this->get_data()['version'];
+		$data = $this->get_data();
+
+		return $data['version'];
 	}
 
 	/**
