@@ -146,7 +146,7 @@ function front_end_proxy_handler( $query ) {
 			$post->save();
 
 			// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-			wp_redirect( get_site_url().DIRECTORY_SEPARATOR . $asset_path, 302 );
+			wp_redirect( wp_guess_url().DIRECTORY_SEPARATOR . $asset_path, 302 );
 			exit;
 		}
 
