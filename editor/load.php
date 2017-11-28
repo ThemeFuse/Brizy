@@ -36,6 +36,7 @@ add_action( 'parse_request', 'front_end_proxy_handler', - 1000 );
 function editor_proxy_handler() {
 
 	if ( strpos( $_SERVER["REQUEST_URI"], Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL ) !== false && isset( $_SERVER['HTTP_REFERER'] ) ) {
+		session_write_close();
 
 		$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
 
@@ -62,7 +63,17 @@ function editor_proxy_handler() {
 
 		$path = $LOCAL_EDITOR_ASSET_STATIC_URL . $asset_path;
 
-		if ( $res = $project->isStoreAssets() ) {
+		$file_exists = file_exists( rtrim( ABSPATH, '/' ) . $path );
+
+		if ( $file_exists ) {
+			$asset_url = $editor->get_asset_url() . $asset_path;
+
+			wp_redirect( $asset_url, 302 );
+			exit;
+		}
+
+
+		if ( $res = $project->isStoreAssets() && ! $file_exists ) {
 
 			$editor->store_asset( $url, $path );
 
@@ -75,7 +86,6 @@ function editor_proxy_handler() {
 			exit;
 		}
 
-		session_write_close();
 
 		// send the url content
 
@@ -96,7 +106,7 @@ function editor_proxy_handler() {
 		unset( $headers['content-encoding'] );
 		unset( $headers['cache-control'] );
 
-		$headers['content-type'] = get_mime($url,1);
+		$headers['content-type'] = get_mime( $url, 1 );
 
 		foreach ( $headers as $key => $val ) {
 			if ( is_array( $val ) ) {
@@ -105,7 +115,6 @@ function editor_proxy_handler() {
 
 			header( "{$key}: {$val}" );
 		}
-
 
 
 		echo $http_response->get_data();
@@ -154,7 +163,7 @@ function front_end_proxy_handler( $query ) {
 			$post->save();
 
 			// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-			wp_redirect( wp_guess_url(). '/' . $asset_path, 302 );
+			wp_redirect( wp_guess_url() . '/' . $asset_path, 302 );
 			exit;
 		}
 
@@ -165,87 +174,89 @@ function front_end_proxy_handler( $query ) {
 }
 
 
-function get_mime ($filename,$mode=0) {
+function get_mime( $filename, $mode = 0 ) {
 
 	// mode 0 = full check
 	// mode 1 = extension check only
 
 	$mime_types = array(
 
-		'txt' => 'text/plain',
-		'htm' => 'text/html',
+		'txt'  => 'text/plain',
+		'htm'  => 'text/html',
 		'html' => 'text/html',
-		'php' => 'text/html',
-		'css' => 'text/css',
-		'js' => 'application/javascript',
+		'php'  => 'text/html',
+		'css'  => 'text/css',
+		'js'   => 'application/javascript',
 		'json' => 'application/json',
-		'xml' => 'application/xml',
-		'swf' => 'application/x-shockwave-flash',
-		'flv' => 'video/x-flv',
+		'xml'  => 'application/xml',
+		'swf'  => 'application/x-shockwave-flash',
+		'flv'  => 'video/x-flv',
 
 		// images
-		'png' => 'image/png',
-		'jpe' => 'image/jpeg',
+		'png'  => 'image/png',
+		'jpe'  => 'image/jpeg',
 		'jpeg' => 'image/jpeg',
-		'jpg' => 'image/jpeg',
-		'gif' => 'image/gif',
-		'bmp' => 'image/bmp',
-		'ico' => 'image/vnd.microsoft.icon',
+		'jpg'  => 'image/jpeg',
+		'gif'  => 'image/gif',
+		'bmp'  => 'image/bmp',
+		'ico'  => 'image/vnd.microsoft.icon',
 		'tiff' => 'image/tiff',
-		'tif' => 'image/tiff',
-		'svg' => 'image/svg+xml',
+		'tif'  => 'image/tiff',
+		'svg'  => 'image/svg+xml',
 		'svgz' => 'image/svg+xml',
 
 		// archives
-		'zip' => 'application/zip',
-		'rar' => 'application/x-rar-compressed',
-		'exe' => 'application/x-msdownload',
-		'msi' => 'application/x-msdownload',
-		'cab' => 'application/vnd.ms-cab-compressed',
+		'zip'  => 'application/zip',
+		'rar'  => 'application/x-rar-compressed',
+		'exe'  => 'application/x-msdownload',
+		'msi'  => 'application/x-msdownload',
+		'cab'  => 'application/vnd.ms-cab-compressed',
 
 		// audio/video
-		'mp3' => 'audio/mpeg',
-		'qt' => 'video/quicktime',
-		'mov' => 'video/quicktime',
+		'mp3'  => 'audio/mpeg',
+		'qt'   => 'video/quicktime',
+		'mov'  => 'video/quicktime',
 
 		// adobe
-		'pdf' => 'application/pdf',
-		'psd' => 'image/vnd.adobe.photoshop',
-		'ai' => 'application/postscript',
-		'eps' => 'application/postscript',
-		'ps' => 'application/postscript',
+		'pdf'  => 'application/pdf',
+		'psd'  => 'image/vnd.adobe.photoshop',
+		'ai'   => 'application/postscript',
+		'eps'  => 'application/postscript',
+		'ps'   => 'application/postscript',
 
 		// ms office
-		'doc' => 'application/msword',
-		'rtf' => 'application/rtf',
-		'xls' => 'application/vnd.ms-excel',
-		'ppt' => 'application/vnd.ms-powerpoint',
+		'doc'  => 'application/msword',
+		'rtf'  => 'application/rtf',
+		'xls'  => 'application/vnd.ms-excel',
+		'ppt'  => 'application/vnd.ms-powerpoint',
 		'docx' => 'application/msword',
 		'xlsx' => 'application/vnd.ms-excel',
 		'pptx' => 'application/vnd.ms-powerpoint',
 
 
 		// open office
-		'odt' => 'application/vnd.oasis.opendocument.text',
-		'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+		'odt'  => 'application/vnd.oasis.opendocument.text',
+		'ods'  => 'application/vnd.oasis.opendocument.spreadsheet',
 	);
 
 	$array = explode( '.', $filename );
 	$str   = end( $array );
 	$ext   = strtolower( $str );
 
-	if(function_exists('mime_content_type')&&$mode==0){
-		$mimetype = mime_content_type($filename);
+	if ( function_exists( 'mime_content_type' ) && $mode == 0 ) {
+		$mimetype = mime_content_type( $filename );
+
 		return $mimetype;
 
-	}elseif(function_exists('finfo_open')&&$mode==0){
-		$finfo = finfo_open(FILEINFO_MIME);
-		$mimetype = finfo_file($finfo, $filename);
-		finfo_close($finfo);
+	} elseif ( function_exists( 'finfo_open' ) && $mode == 0 ) {
+		$finfo    = finfo_open( FILEINFO_MIME );
+		$mimetype = finfo_file( $finfo, $filename );
+		finfo_close( $finfo );
+
 		return $mimetype;
-	}elseif(array_key_exists($ext, $mime_types)){
-		return $mime_types[$ext];
-	}else {
+	} elseif ( array_key_exists( $ext, $mime_types ) ) {
+		return $mime_types[ $ext ];
+	} else {
 		return 'application/octet-stream';
 	}
 
