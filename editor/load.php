@@ -62,16 +62,16 @@ function editor_proxy_handler() {
 
 		$path = $editor->get_asset_url() . $asset_path;
 
-		//if ( $res = $project->isStoreAssets() ) {
+		if ( $res = $project->isStoreAssets() ) {
 
 			$editor->store_asset( $url, $path );
 
-			//$project->setStoreAssets( ! $res );
-			//$project->save();
+			$project->setStoreAssets( ! $res );
+			$project->save();
 
 			wp_redirect( $path, 302 );
 			exit;
-		//}
+		}
 
 		// send the url content
 
@@ -146,7 +146,7 @@ function front_end_proxy_handler( $query ) {
 			$post->save();
 
 			// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-			wp_redirect( DIRECTORY_SEPARATOR . $asset_path, 302 );
+			wp_redirect( get_site_url().DIRECTORY_SEPARATOR . $asset_path, 302 );
 			exit;
 		}
 

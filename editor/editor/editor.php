@@ -149,7 +149,7 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	public function get_asset_url() {
-		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
+		return sprintf( get_site_url().Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
 	}
 
 }
