@@ -137,7 +137,6 @@ class Brizy_Public_Main {
 
 		$render_block = $template->renderBlock( 'header_content', $context );
 		echo $render_block;
-		?><link rel="prefetch" href="/brizy/wp-content/uploads/brizy/editor/9.0.0/visual/editor.css"><?php
 	}
 
 
