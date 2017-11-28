@@ -140,7 +140,7 @@ class Brizy_Editor_Editor_Editor {
 			fclose( $fasset_src );
 			fclose( $fasset_dest );
 
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			$t = 0;
 			return false;
 		}
