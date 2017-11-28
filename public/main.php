@@ -56,6 +56,7 @@ class Brizy_Public_Main {
 			add_action( 'wp_head', array( $this, '_editor_head'), 0 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
 			add_filter( 'show_admin_bar', '__return_false' );
+			add_filter( 'body_class', array($this, '_body_class_editor') );
 
 		} elseif ( $this->is_view_page() ) {
 
@@ -65,11 +66,25 @@ class Brizy_Public_Main {
 				->save();
 
 			// insert the compiled head and content
+			add_filter( 'body_class', array($this, '_body_class_frontend') );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
 		}
 	}
 
+
+	public function _body_class_frontend($classes) {
+
+		$classes[] = 'brz';
+		return $classes;
+	}
+
+	public function _body_class_editor($classes) {
+
+		$classes[] = 'brz';
+		$classes[] = 'brz-ed';
+		return $classes;
+	}
 
 	/**
 	 * @return bool
