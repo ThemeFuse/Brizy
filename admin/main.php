@@ -87,7 +87,7 @@ class Brizy_Admin_Main {
 		$posts = get_posts( array(
 			'meta_key'    => Brizy_Editor_Storage_Post::META_KEY,
 			'post_type'   => brizy()->supported_post_types(),
-			'post_status' => 'any',
+			'post_status' => 'any',get_site_url()
 		) );
 
 		return $posts;

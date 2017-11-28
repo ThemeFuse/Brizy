@@ -104,7 +104,7 @@ class Brizy_Public_Main {
 
 			$config_object = $this->getConfigObject();
 
-			$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL . DIRECTORY_SEPARATOR . $this->project->get_template_version();
+			$config_object->urls->static = wp_guess_url().Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL . DIRECTORY_SEPARATOR . $this->project->get_template_version();
 
 			$context = array( 'editorData' => $config_object );
 
@@ -125,7 +125,7 @@ class Brizy_Public_Main {
 		$template = $this->getEditorTwigTemplate();
 
 		$config_object               = $this->getConfigObject();
-		$config_object->urls->static = Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL . DIRECTORY_SEPARATOR . $this->project->get_template_version();
+		$config_object->urls->static = wp_guess_url().Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL . DIRECTORY_SEPARATOR . $this->project->get_template_version();
 
 		$context = array( 'editorData' => $config_object );
 
