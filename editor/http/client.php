@@ -8,6 +8,7 @@ class Brizy_Editor_Http_Client {
 	 * @param string $method
 	 *
 	 * @return Brizy_Editor_Http_Response
+	 * @throws Brizy_Editor_API_Exceptions_Exception
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound

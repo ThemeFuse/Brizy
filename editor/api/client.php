@@ -45,11 +45,11 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 
 	public function create_page( $project_id, Brizy_Editor_API_Page $page ) {
-		return $this->post( "projects/$project_id/pages", [ 'body' => $page->export() ] )->get_response_body();
+		return $this->post( "projects/$project_id/pages", array( 'body' => $page->export() ) )->get_response_body();
 	}
 
 	public function update_page( $project_id, $page_id, Brizy_Editor_API_Page $page ) {
-		return $this->put( "projects/$project_id/pages/$page_id", [ 'body' => $page->export() ] )->get_response_body();
+		return $this->put( "projects/$project_id/pages/$page_id",array(  'body' => $page->export() ) )->get_response_body();
 	}
 
 	public function compile_page( $project_id, $page_id, $config ) {
