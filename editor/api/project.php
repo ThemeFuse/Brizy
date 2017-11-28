@@ -28,7 +28,7 @@ class Brizy_Editor_API_Project {
 	}
 
 	public function set_globals( $globals ) {
-		return $this->data['globals'] = json_encode( $globals, JSON_UNESCAPED_SLASHES );
+		return $this->data['globals'] = json_encode( $globals );
 	}
 
 	/**

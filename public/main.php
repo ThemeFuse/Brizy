@@ -241,7 +241,7 @@ class Brizy_Public_Main {
 
 	private function getConfigObject() {
 		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
-		$config_json   = json_encode( $editor->config(), JSON_UNESCAPED_SLASHES );
+		$config_json   = json_encode( $editor->config() );
 		$config_object = json_decode( $config_json );
 
 		return $config_object;

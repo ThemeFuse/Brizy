@@ -62,7 +62,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 				'primary' => $config['urls']['primary'],
 				'base'    => $config['urls']['base'],
 				'static'  => $config['urls']['static']
-			), JSON_UNESCAPED_SLASHES )
+			) )
 		);
 
 		return $this->post( "projects/$project_id/pages/$page_id/htmls", array( 'body' => $urls ) )->get_response_body();
