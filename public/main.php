@@ -50,6 +50,8 @@ class Brizy_Public_Main {
 			add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
 			$this->check_project_version();
 
+			$this->project->setStoreAssets(true)->save();
+
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
 			add_action( 'wp_head', array( $this, '_editor_head' ) );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );

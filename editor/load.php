@@ -60,7 +60,7 @@ function editor_proxy_handler() {
 
 		$editor = Brizy_Editor_Editor_Editor::get( $project, $post );
 
-		$path = $editor->get_asset_url() . $asset_path;
+		$path = $LOCAL_EDITOR_ASSET_STATIC_URL . $asset_path;
 
 		if ( $res = $project->isStoreAssets() ) {
 
@@ -69,7 +69,9 @@ function editor_proxy_handler() {
 			$project->setStoreAssets( ! $res );
 			$project->save();
 
-			wp_redirect( $path, 302 );
+			$asset_url = $editor->get_asset_url() . $asset_path;
+
+			wp_redirect( $asset_url, 302 );
 			exit;
 		}
 
