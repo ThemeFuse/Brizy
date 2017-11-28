@@ -70,7 +70,7 @@ class Brizy_Editor_Editor_Editor {
 				'image'       => Brizy_Config::EDITOR_IMAGE_URL,
 				'origin'      => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'     => Brizy_Config::EDITOR_STATIC_URL,
-				'static'      => Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL.'/'.$this->get_post()->get_id(),
+				'static'      =>  get_site_url().Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL.'/'.$this->get_post()->get_id(),
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
