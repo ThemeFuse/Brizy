@@ -88,37 +88,7 @@ function editor_proxy_handler() {
 
 
 		// send the url content
-
-		$response = wp_remote_get( $url );
-
-		if ( $response instanceof WP_Error ) {
-			return;
-		}
-
-		/**
-		 * @var WP_HTTP_Requests_Response $http_response
-		 */
-		$http_response = $response['http_response'];
-
-		$headers = $http_response->get_headers()->getAll();
-
-		unset( $headers['server'] );
-		unset( $headers['content-encoding'] );
-		unset( $headers['cache-control'] );
-
-		$headers['content-type'] = get_mime( $url, 1 );
-
-		foreach ( $headers as $key => $val ) {
-			if ( is_array( $val ) ) {
-				$val = implode( ', ', $val );
-			}
-
-			header( "{$key}: {$val}" );
-		}
-
-
-		echo $http_response->get_data();
-		exit;
+		send_file_content($url);
 	}
 }
 
@@ -138,6 +108,7 @@ function front_end_proxy_handler( $query ) {
 
 		$project = Brizy_Editor_Project::get();
 		$post    = Brizy_Editor_Post::get( $pid );
+		$editor = Brizy_Editor_Editor_Editor::get( $project, $post );
 
 		$str_splitter = sprintf( Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH, $post->get_id() );
 
@@ -157,19 +128,32 @@ function front_end_proxy_handler( $query ) {
 
 		$full_url = $project->get_asset_url() . $template_asset_path;
 
+		$file_exists = file_exists( rtrim( ABSPATH, '/' ) . $asset_path );
+
+		if ( $file_exists ) {
+			$asset_url = $editor->get_asset_url() . $asset_path;
+
+			wp_redirect( $asset_url, 302 );
+			exit;
+		}
+
+
 		if ( $post->isStoreAssets() ) {
 			$res = $post->store_asset( $full_url, $asset_path );
 			$post->setStoreAssets( ! $res );
 			$post->save();
 
 			// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-			wp_redirect( wp_guess_url() . '/' . $asset_path, 302 );
+			wp_redirect( get_site_url() . '/' . $asset_path, 302 );
 			exit;
 		}
 
+
+		send_file_content($full_url);
+
 		// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-		wp_redirect( $full_url, 302 );
-		exit;
+		//wp_redirect( $full_url, 302 );
+		//exit;
 	}
 }
 
@@ -260,4 +244,40 @@ function get_mime( $filename, $mode = 0 ) {
 		return 'application/octet-stream';
 	}
 
+}
+
+function send_file_content($url)
+{
+// send the url content
+
+	$response = wp_remote_get( $url );
+
+	if ( $response instanceof WP_Error ) {
+		return;
+	}
+
+	/**
+	 * @var WP_HTTP_Requests_Response $http_response
+	 */
+	$http_response = $response['http_response'];
+
+	$headers = $http_response->get_headers()->getAll();
+
+	unset( $headers['server'] );
+	unset( $headers['content-encoding'] );
+	unset( $headers['cache-control'] );
+
+	$headers['content-type'] = get_mime( $url, 1 );
+
+	foreach ( $headers as $key => $val ) {
+		if ( is_array( $val ) ) {
+			$val = implode( ', ', $val );
+		}
+
+		header( "{$key}: {$val}" );
+	}
+
+
+	echo $http_response->get_data();
+	exit;
 }
