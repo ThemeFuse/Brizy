@@ -228,9 +228,9 @@ class Brizy_Public_Main {
 
 		$template_path = $this->project->get_asset_url() . "/editor.html.twig";
 
-		$loader = new Twig_Loader_Array( [
+		$loader = new Twig_Loader_Array( array(
 			'editor' => file_get_contents( $template_path )
-		] );
+		) );
 
 
 		$twig     = new Twig_Environment( $loader, array() );

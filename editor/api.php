@@ -257,11 +257,12 @@ class Brizy_Editor_API {
 		try {
 			$templates = get_page_templates();
 
-			$response = [
-				(object) [ "name" => 'Default', 'value' => 'default' ]
-			];
+			$response = array(
+				(object) array( "name" => 'Default', 'value' => 'default' )
+			);
+
 			foreach ( $templates as $name => $path ) {
-				$response[] = (object) [ "name" => $name, 'value' => $path ];
+				$response[] = (object) array( "name" => $name, 'value' => $path );
 			}
 
 			$this->success( $response );

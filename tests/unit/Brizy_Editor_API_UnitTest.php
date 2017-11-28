@@ -30,7 +30,7 @@ class Brizy_Editor_API_UnitTest extends TestCase {
 		$instance = Brizy_Editor_API::instance( $project, $post );
 		$instance->initialize();
 
-		$actions = [
+		$actions = array(
 			'wp_ajax_' . Brizy_Editor_API::AJAX_PING,
 			'wp_ajax_' . Brizy_Editor_API::AJAX_GET,
 			'wp_ajax_' . Brizy_Editor_API::AJAX_UPDATE,
@@ -42,7 +42,7 @@ class Brizy_Editor_API_UnitTest extends TestCase {
 			'wp_ajax_' . Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
 			'wp_ajax_' . Brizy_Editor_API::AJAX_SHORTCODE_LIST,
 			'wp_ajax_' . Brizy_Editor_API::AJAX_GET_TEMPLATES,
-		];
+		);
 
 
 		foreach ( $actions as $action ) {
