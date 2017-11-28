@@ -46,7 +46,7 @@ function editor_proxy_handler() {
 		$project = Brizy_Editor_Project::get();
 		$post    = Brizy_Editor_Post::get( $pid );
 
-		session_write_close();
+
 		$LOCAL_EDITOR_ASSET_STATIC_URL = $project->get_asset_path();
 
 		$parts = explode( $LOCAL_EDITOR_ASSET_STATIC_URL, $_SERVER["REQUEST_URI"] );
@@ -74,6 +74,8 @@ function editor_proxy_handler() {
 			wp_redirect( $asset_url, 302 );
 			exit;
 		}
+
+		session_write_close();
 
 		// send the url content
 

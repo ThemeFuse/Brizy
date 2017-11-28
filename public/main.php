@@ -53,7 +53,7 @@ class Brizy_Public_Main {
 			$this->project->setStoreAssets(true)->save();
 
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
-			add_action( 'wp_head', array( $this, '_editor_head' ) );
+			add_action( 'wp_head', array( $this, '_editor_head'), 0 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
 			add_filter( 'show_admin_bar', '__return_false' );
 
@@ -137,6 +137,7 @@ class Brizy_Public_Main {
 
 		$render_block = $template->renderBlock( 'header_content', $context );
 		echo $render_block;
+		?><link rel="prefetch" href="/brizy/wp-content/uploads/brizy/editor/9.0.0/visual/editor.css"><?php
 	}
 
 
