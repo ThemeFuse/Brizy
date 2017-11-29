@@ -350,7 +350,7 @@ class Brizy_Admin_Main {
 			return $data;
 		}
 
-		return $data . self::render( 'editor',
+		return  self::render( 'editor',
 				array(
 					'url' => add_query_arg(
 						array( Brizy_Editor_Constants::EDIT_KEY => '' ),
