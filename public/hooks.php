@@ -40,8 +40,6 @@ foreach ( brizy()->supported_post_types() as $type ) {
 	add_filter( "theme_{$type}_templates", '_filter_brizy_public_register_page_templates' );
 }
 
-
-
 function initialize_front_end_Brizy_Public_Main() {
 
 	try {

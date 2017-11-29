@@ -64,13 +64,14 @@ class Brizy_Editor_Editor_Editor {
 			),
 			'serverTimestamp' => time(),
 			'urls'            => array(
-				'api'         => home_url( '/wp-json/v1' ),
-				'base'        => Brizy_Config::EDITOR_BASE_URL,
-				'integration' => Brizy_Config::EDITOR_INTEGRATION_URL,
-				'image'       => Brizy_Config::EDITOR_IMAGE_URL,
-				'origin'      => Brizy_Config::EDITOR_ORIGIN_URL,
-				'primary'     => Brizy_Config::EDITOR_STATIC_URL,
-				'static'      =>  brizy()->get_asset_url(Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL.'/'.$this->get_post()->get_id()),
+				'api'           => home_url( '/wp-json/v1' ),
+				'base'          => Brizy_Config::EDITOR_BASE_URL,
+				'integration'   => Brizy_Config::EDITOR_INTEGRATION_URL,
+				'image'         => Brizy_Config::EDITOR_IMAGE_URL,
+				'origin'        => Brizy_Config::EDITOR_ORIGIN_URL,
+				'primary'       => Brizy_Config::EDITOR_STATIC_URL,
+				'static'        => brizy()->get_asset_url( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL . '/' . $this->get_post()->get_id() ),
+				'change_template_url' => admin_url( 'admin-post.php?post='.$this->get_post()->get_id().'&action=_brizy_change_template' )
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
@@ -107,7 +108,6 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-
 	public function static_url() {
 		return brizy()->get_url( '/editor/editor/static' );
 	}
@@ -116,11 +116,11 @@ class Brizy_Editor_Editor_Editor {
 
 		try {
 			// check destination dir
-			$dir_path = dirname( rtrim(ABSPATH,'/') . $asset_path );
+			$dir_path = dirname( rtrim( ABSPATH, '/' ) . $asset_path );
 			if ( ! file_exists( $dir_path ) ) {
 				mkdir( $dir_path, 0777, true );
 			}
-			$full_asset_path = rtrim(ABSPATH,'/') . $asset_path;
+			$full_asset_path = rtrim( ABSPATH, '/' ) . $asset_path;
 
 			$fasset_dest = fopen( $full_asset_path, 'w' );
 			if ( ! $fasset_dest ) {
@@ -144,6 +144,7 @@ class Brizy_Editor_Editor_Editor {
 
 		} catch ( Exception $e ) {
 			$t = 0;
+
 			return false;
 		}
 
@@ -151,7 +152,7 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	public function get_asset_url() {
-		return get_site_url().sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
+		return get_site_url() . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
 	}
 
 }

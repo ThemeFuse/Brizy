@@ -21,6 +21,7 @@ class Brizy_Admin_Main {
 
 		add_action( 'admin_post__brizy_admin_editor_enable', array( $this, '_action_request_enable' ) );
 		add_action( 'admin_post__brizy_admin_editor_disable', array( $this, '_action_request_disable' ) );
+		add_action( 'admin_post__brizy_change_template', array( $this, '_action_change_template' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, '_action_register_static' ) );
 		add_action( 'before_delete_post', array( $this, '_action_delete_page' ) );
@@ -217,6 +218,23 @@ class Brizy_Admin_Main {
 		wp_redirect( $_SERVER['HTTP_REFERER'] );
 	}
 
+	public function _action_change_template() {
+		if ( !isset( $_REQUEST['post'] ) || !isset($_REQUEST['template']) || ! ( $p = get_post( $_REQUEST['post'] ) ) ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
+			exit();
+		}
+
+		try {
+			Brizy_Editor_Post::get( $p->ID )->set_template( $_REQUEST['template'] );
+
+			wp_redirect($_SERVER['HTTP_REFERER']);
+
+		} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Unable to disabled the editor. Please try again later.' );
+		}
+	}
+
 	/**
 	 * @internal
 	 *
@@ -275,9 +293,10 @@ class Brizy_Admin_Main {
 				$is_using_brizy = false;
 			}
 
-			echo self::render( 'button', array( 'id'             => get_the_ID(),
-			                                    'post'           => $p,
-			                                    'is_using_brizy' => $is_using_brizy
+			echo self::render( 'button', array(
+				'id'             => get_the_ID(),
+				'post'           => $p,
+				'is_using_brizy' => $is_using_brizy
 			) );
 		}
 	}
@@ -347,7 +366,9 @@ class Brizy_Admin_Main {
 			$is_using_brizy = false;
 		}
 
-		if(!$is_using_brizy) return $data;
+		if ( ! $is_using_brizy ) {
+			return $data;
+		}
 
 		return self::render( 'editor',
 			array(
