@@ -19,12 +19,9 @@ class Brizy_Admin_Main {
 			return;
 		}
 
-		if ( defined( 'DOING_AJAX' ) ) {
-			add_action( 'wp_ajax__brizy_admin_editor_enable', array( $this, '_action_request_enable' ) );
-			add_action( 'wp_ajax__brizy_admin_editor_disable', array( $this, '_action_request_disable' ) );
+		add_action( 'admin_post__brizy_admin_editor_enable', array( $this, '_action_request_enable' ) );
+		add_action( 'admin_post__brizy_admin_editor_disable', array( $this, '_action_request_disable' ) );
 
-			return;
-		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, '_action_register_static' ) );
 		add_action( 'before_delete_post', array( $this, '_action_delete_page' ) );
@@ -118,12 +115,9 @@ class Brizy_Admin_Main {
 	 */
 	public function _action_request_enable() {
 
-
-		if ( ! isset( $_POST['id'] ) || ! ( $p = get_post( $_POST['id'] ) ) ) {
-			wp_send_json_error( array(
-				'code'    => 'invalid_request',
-				'message' => __( 'Invalid post', 'brizy' ),
-			) );
+		if ( ! isset( $_REQUEST['post'] ) || ! ( $p = get_post( $_REQUEST['post'] ) ) ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
 			exit();
 		}
 
@@ -145,16 +139,13 @@ class Brizy_Admin_Main {
 
 				Brizy_Admin_Flash::instance()->add_error( 'Unable to create the project. Please try again later.' );
 
-				wp_send_json_error( array(
-					'redirect' => $_SERVER['HTTP_REFERER']
-				) );
+				wp_redirect( $_SERVER['HTTP_REFERER'] );
 			}
 		} catch ( Exception $exception ) {
-			wp_send_json_error( array(
-				'code'     => $exception->getCode(),
-				'message'  => $exception->getMessage(),
-				'redirect' => $_SERVER['HTTP_REFERER']
-			) );
+
+			Brizy_Admin_Flash::instance()->add_error( 'Unable to create the project. Please try again later.' );
+
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
 
 		$post = null;
@@ -181,18 +172,13 @@ class Brizy_Admin_Main {
 
 				Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );
 
-				wp_send_json_error( array(
-					'code'     => $exception->getCode(),
-					'message'  => $exception->getMessage(),
-					'redirect' => $_SERVER['HTTP_REFERER']
-				) );
+				wp_redirect( $_SERVER['HTTP_REFERER'] );
 			}
 		} catch ( Exception $exception ) {
-			wp_send_json_error( array(
-				'code'     => $exception->getCode(),
-				'message'  => $exception->getMessage(),
-				'redirect' => $_SERVER['HTTP_REFERER']
-			) );
+
+			Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );
+
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
 
 		if ( $p->post_status == 'auto-draft' ) {
@@ -201,39 +187,31 @@ class Brizy_Admin_Main {
 		}
 
 		if ( $p->post_title == __( 'Auto Draft' ) ) {
-			$count = $this->get_brizy_auto_draft_count();
-			$p->post_title = 'Brizy #'.($count+1);
+			$count         = $this->get_brizy_auto_draft_count();
+			$p->post_title = 'Brizy #' . ( $count + 1 );
 			wp_update_post( $p );
 		}
 
 		// redirect
-		wp_send_json_success( array( 'redirect' => $post->enable_editor()->edit_url() ) );
+		wp_redirect( $post->enable_editor()->edit_url() );
 	}
 
 	/**
 	 * @internal
 	 */
 	public function _action_request_disable() {
-		if ( ! isset( $_POST['id'] ) || ! ( $p = get_post( $_POST['id'] ) ) ) {
-			wp_send_json_error( array(
-				'code'    => 'invalid_request',
-				'message' => __( 'Invalid post', 'brizy' ),
-			) );
+		if ( ! isset( $_REQUEST['post'] ) || ! ( $p = get_post( $_REQUEST['post'] ) ) ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
 			exit();
 		}
 
 		try {
 			Brizy_Editor_Post::get( $p->ID )->disable_editor();
-			wp_send_json_success();
 		} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
-
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to disabled the editor. Please try again later.' );
-
-			wp_send_json_error( array(
-				'redirect' => $_SERVER['HTTP_REFERER']
-			) );
-
 		}
+		wp_redirect( $_SERVER['HTTP_REFERER'] );
 	}
 
 	/**
@@ -286,7 +264,18 @@ class Brizy_Admin_Main {
 	 **/
 	public function _action_add_enable_disable_buttons() {
 		if ( in_array( get_post_type(), brizy()->supported_post_types() ) ) {
-			echo self::render( 'button', array( 'id' => get_the_ID(), ) );
+			$p = get_post();
+
+			try {
+				$is_using_brizy = Brizy_Editor_Post::get( $p->ID )->uses_editor();
+			} catch ( Exception $e ) {
+				$is_using_brizy = false;
+			}
+
+			echo self::render( 'button', array( 'id'             => get_the_ID(),
+			                                    'post'           => $p,
+			                                    'is_using_brizy' => $is_using_brizy
+			) );
 		}
 	}
 
@@ -341,7 +330,7 @@ class Brizy_Admin_Main {
 	/**
 	 * @internal
 	 *
-	 * @param string $data
+	 * @param string $data200
 	 *
 	 * @return string
 	 **/
@@ -350,13 +339,13 @@ class Brizy_Admin_Main {
 			return $data;
 		}
 
-		return  self::render( 'editor',
-				array(
-					'url' => add_query_arg(
-						array( Brizy_Editor_Constants::EDIT_KEY => '' ),
-						get_permalink( get_the_ID() )
-					)
-				) );
+		return self::render( 'editor',
+			array(
+				'url' => add_query_arg(
+					array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+					get_permalink( get_the_ID() )
+				)
+			) );
 	}
 
 
@@ -364,8 +353,9 @@ class Brizy_Admin_Main {
 		global $wpdb;
 		$results = $wpdb->get_results( 'SELECT count(*) as count FROM wp_posts WHERE post_title LIKE "Brizy #%"' );
 
-		if(count($results))
+		if ( count( $results ) ) {
 			return $results[0]->count;
+		}
 
 		return 0;
 	}

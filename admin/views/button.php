@@ -3,15 +3,16 @@
 }
 
 /**
- * @var int $id
+ * @var int $id;
+ * @var Brizy_Editor_Post $post;
  */
 
+$state = $is_using_brizy?'disable':'enable';
+$label = $is_using_brizy?'Back to WordPress':'Edit with Brizy';
+
 ?>
-<button class="preview button button-primary"
-        type="button"
-        id="<?php echo brizy()->get_slug(); ?>-admin-enable"
-><?php _e( 'Edit with Brizy', 'brizy' ); ?></button>
-<button class="preview button button-primary"
-        type="button"
-        id="<?php echo brizy()->get_slug(); ?>-admin-disable"
-><?php _e( 'Back to WordPress', 'brizy' ); ?></button>
+
+<a class="preview button button-primary" type="button"
+   href="<?php echo esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_'.$state.'&post=' . $post->ID ) ); ?>">
+	<?php _e( $label, 'brizy' ); ?>
+</a>
