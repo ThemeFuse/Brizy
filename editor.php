@@ -67,6 +67,18 @@ class Brizy_Editor {
 		return 'Brizy';
 	}
 
+	public function get_asset_url($path = '') {
+
+		$structure = get_option('permalink_structure');
+		$prefix = '';
+		if(!$structure || strpos(trim(strtolower($structure)),'index.php')!==false)
+			$prefix = '/index.php';
+
+		$val = path_join(get_site_url(),$prefix.$path);
+
+		return get_site_url().$prefix.$path;
+
+	}
 
 	protected function get_post_types() {
 		try {
