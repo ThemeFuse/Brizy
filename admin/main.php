@@ -22,14 +22,18 @@ class Brizy_Admin_Main {
 		add_action( 'admin_post__brizy_admin_editor_enable', array( $this, '_action_request_enable' ) );
 		add_action( 'admin_post__brizy_admin_editor_disable', array( $this, '_action_request_disable' ) );
 
-
 		add_action( 'admin_enqueue_scripts', array( $this, '_action_register_static' ) );
 		add_action( 'before_delete_post', array( $this, '_action_delete_page' ) );
-		add_action( 'media_buttons', array( $this, '_action_add_enable_disable_buttons' ) );
+
+		add_action( 'edit_form_after_title', array( $this, '_action_add_enable_disable_buttons' ) );
+
 		add_filter( 'page_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'post_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
-		add_filter( 'the_editor', array( $this, '_filter_add_brizy_edit_button' ), 10, 2 );
+
+		add_filter( 'the_editor', array( $this, '_add_fake_editor' ), 10, 2 );
+		add_filter( 'admin_head', array( $this, '_remove_editor_for_brizy_posts' ), 10, 2 );
+
 		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
 	}
 
@@ -328,16 +332,23 @@ class Brizy_Admin_Main {
 	}
 
 	/**
-	 * @internal
-	 *
-	 * @param string $data200
+	 * @param $data
 	 *
 	 * @return string
-	 **/
-	public function _filter_add_brizy_edit_button( $data ) {
+	 */
+	public function _add_fake_editor( $data ) {
 		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) ) {
 			return $data;
 		}
+
+		try {
+			$wp_post_id     = get_post();
+			$is_using_brizy = Brizy_Editor_Post::get( $wp_post_id->ID )->uses_editor();
+		} catch ( Exception $e ) {
+			$is_using_brizy = false;
+		}
+
+		if(!$is_using_brizy) return $data;
 
 		return self::render( 'editor',
 			array(
@@ -346,6 +357,31 @@ class Brizy_Admin_Main {
 					get_permalink( get_the_ID() )
 				)
 			) );
+	}
+
+	/**
+	 * @param $data
+	 *
+	 * @return mixed
+	 */
+	public function _remove_editor_for_brizy_posts( $data ) {
+		$post_type = get_post_type();
+		if ( ! in_array( $post_type, brizy()->supported_post_types() ) ) {
+			return $data;
+		}
+		if( is_admin() ) {
+
+			try {
+				$wp_post_id     = get_post();
+				$is_using_brizy = Brizy_Editor_Post::get( $wp_post_id->ID )->uses_editor();
+			} catch ( Exception $e ) {
+				$is_using_brizy = false;
+			}
+
+			if($is_using_brizy) {
+				//remove_post_type_support($post_type, 'editor');
+			}
+		}
 	}
 
 

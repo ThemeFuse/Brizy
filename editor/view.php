@@ -11,7 +11,7 @@ class Brizy_Editor_View {
 		}
 
 		extract( $args );
-		include_once $file;
+		include $file;
 	}
 
 	public static function get( $path, array $args = array() ) {
