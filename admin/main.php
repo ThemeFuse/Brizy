@@ -32,7 +32,6 @@ class Brizy_Admin_Main {
 		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
 
 		add_filter( 'the_editor', array( $this, '_add_fake_editor' ), 10, 2 );
-		add_filter( 'admin_head', array( $this, '_remove_editor_for_brizy_posts' ), 10, 2 );
 
 		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
 	}
@@ -358,32 +357,6 @@ class Brizy_Admin_Main {
 				)
 			) );
 	}
-
-	/**
-	 * @param $data
-	 *
-	 * @return mixed
-	 */
-	public function _remove_editor_for_brizy_posts( $data ) {
-		$post_type = get_post_type();
-		if ( ! in_array( $post_type, brizy()->supported_post_types() ) ) {
-			return $data;
-		}
-		if( is_admin() ) {
-
-			try {
-				$wp_post_id     = get_post();
-				$is_using_brizy = Brizy_Editor_Post::get( $wp_post_id->ID )->uses_editor();
-			} catch ( Exception $e ) {
-				$is_using_brizy = false;
-			}
-
-			if($is_using_brizy) {
-				//remove_post_type_support($post_type, 'editor');
-			}
-		}
-	}
-
 
 	private function get_brizy_auto_draft_count() {
 		global $wpdb;
