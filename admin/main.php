@@ -5,7 +5,6 @@
 class Brizy_Admin_Main {
 
 
-
 	public static function _init() {
 		static $instance;
 
@@ -16,9 +15,11 @@ class Brizy_Admin_Main {
 
 	protected function __construct() {
 
-		if(!Brizy_Editor::is_user_allowed()) return;
+		if ( ! Brizy_Editor::is_user_allowed() ) {
+			return;
+		}
 
-		if ( defined( 'DOING_AJAX' )  ) {
+		if ( defined( 'DOING_AJAX' ) ) {
 			add_action( 'wp_ajax__brizy_admin_editor_enable', array( $this, '_action_request_enable' ) );
 			add_action( 'wp_ajax__brizy_admin_editor_disable', array( $this, '_action_request_disable' ) );
 
@@ -32,12 +33,13 @@ class Brizy_Admin_Main {
 		add_filter( 'post_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
 		add_filter( 'the_editor', array( $this, '_filter_add_brizy_edit_button' ), 10, 2 );
-		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array($this, 'plugin_action_links') );
+		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
 	}
 
 	public function plugin_action_links( $links ) {
 		$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ), __( 'Settings', 'brizy' ) );
 		array_unshift( $links, $settings_link );
+
 		return $links;
 	}
 
@@ -87,7 +89,8 @@ class Brizy_Admin_Main {
 		$posts = get_posts( array(
 			'meta_key'    => Brizy_Editor_Storage_Post::META_KEY,
 			'post_type'   => brizy()->supported_post_types(),
-			'post_status' => 'any',get_site_url()
+			'post_status' => 'any',
+			get_site_url()
 		) );
 
 		return $posts;
@@ -146,9 +149,7 @@ class Brizy_Admin_Main {
 					'redirect' => $_SERVER['HTTP_REFERER']
 				) );
 			}
-		}
-		catch(Exception $exception)
-		{
+		} catch ( Exception $exception ) {
 			wp_send_json_error( array(
 				'code'     => $exception->getCode(),
 				'message'  => $exception->getMessage(),
@@ -156,41 +157,25 @@ class Brizy_Admin_Main {
 			) );
 		}
 
+		$post = null;
+
 		// obtain the post
 		try {
 
 			$post = Brizy_Editor_Post::get( $p->ID );
-
-			if ( $p->post_status == 'auto-draft' ) {
-				$p->post_status = 'draft';
-				wp_update_post( $p );
-			}
 
 			if ( $mark_the_page_as_index ) {
 				$post->set_is_index( $mark_the_page_as_index );
 				$post->save();
 			}
 
-			// redirect
-			wp_send_json_success( array( 'redirect' => $post->enable_editor()->edit_url() ) );
-
-		}
-		catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
+		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
 
 			try {
 				$post = Brizy_Editor_Post::create( $project, $p );
 
 				$post->set_is_index( $mark_the_page_as_index );
 				$post->save();
-
-				if ( $p->post_status == 'auto-draft' ) {
-					$p->post_status = 'draft';
-					wp_update_post( $p );
-				}
-
-				wp_send_json_success( array(
-					'redirect' => $post->enable_editor()->edit_url()
-				) );
 
 			} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
 
@@ -202,15 +187,27 @@ class Brizy_Admin_Main {
 					'redirect' => $_SERVER['HTTP_REFERER']
 				) );
 			}
-		}
-		catch(Exception $exception)
-		{
+		} catch ( Exception $exception ) {
 			wp_send_json_error( array(
 				'code'     => $exception->getCode(),
 				'message'  => $exception->getMessage(),
 				'redirect' => $_SERVER['HTTP_REFERER']
 			) );
 		}
+
+		if ( $p->post_status == 'auto-draft' ) {
+			$p->post_status = 'draft';
+			wp_update_post( $p );
+		}
+
+		if ( $p->post_title == __( 'Auto Draft' ) ) {
+			$count = $this->get_brizy_auto_draft_count();
+			$p->post_title = 'Brizy #'.($count+1);
+			wp_update_post( $p );
+		}
+
+		// redirect
+		wp_send_json_success( array( 'redirect' => $post->enable_editor()->edit_url() ) );
 	}
 
 	/**
@@ -361,4 +358,16 @@ class Brizy_Admin_Main {
 					)
 				) );
 	}
+
+
+	private function get_brizy_auto_draft_count() {
+		global $wpdb;
+		$results = $wpdb->get_results( 'SELECT count(*) as count FROM wp_posts WHERE post_title LIKE "Brizy #%"' );
+
+		if(count($results))
+			return $results[0]->count;
+
+		return 0;
+	}
+
 }
