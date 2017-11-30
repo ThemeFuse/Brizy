@@ -72,8 +72,7 @@ function editor_proxy_handler() {
 			exit;
 		}
 
-
-		if ( $res = $project->isStoreAssets() && ! $file_exists ) {
+		if ( !BRIZY_DEBUG && $res = $project->isStoreAssets() && ! $file_exists ) {
 
 			$editor->store_asset( $url, $path );
 
@@ -85,7 +84,6 @@ function editor_proxy_handler() {
 			wp_redirect( $asset_url, 302 );
 			exit;
 		}
-
 
 		// send the url content
 		send_file_content($url);
@@ -137,8 +135,7 @@ function front_end_proxy_handler( $query ) {
 			exit;
 		}
 
-
-		if ( $post->isStoreAssets() ) {
+		if ( !BRIZY_DEBUG && $post->isStoreAssets() ) {
 			$res = $post->store_asset( $full_url, $asset_path );
 			$post->setStoreAssets( ! $res );
 			$post->save();
