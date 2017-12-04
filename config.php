@@ -41,6 +41,3 @@ class Brizy_Config {
 	const BRIZY_EMAIL = 'admin@admin.com';
 	const BRIZY_PASSWORD = 'admin';
 }
-
-
-

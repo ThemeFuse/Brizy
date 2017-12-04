@@ -1,8 +1,7 @@
 <?php
-
 /**
  * Plugin Name: Brizy
- * Description: A free drag & drop framework that comes with a bunch of built in extensions that will help you develop premium themes fast & easy.
+ * Description: A free drag & drop front-end page builder to help you create WordPress pages lightning fast. It's easy with Brizy.
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
