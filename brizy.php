@@ -12,7 +12,7 @@
  * Domain Path: /languages
  */
 
-define( 'BRIZY_DEBUG', false );
+define( 'BRIZY_ENV', 'dev' ); // dev/ | prod
 define( 'BRIZY_VERSION', '0.1.0' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );

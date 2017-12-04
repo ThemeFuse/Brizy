@@ -72,7 +72,7 @@ function editor_proxy_handler() {
 			exit;
 		}
 
-		if ( !BRIZY_DEBUG && $res = $project->isStoreAssets() && ! $file_exists ) {
+		if ( BRIZY_ENV != 'dev' && $res = $project->isStoreAssets() && ! $file_exists ) {
 
 			$editor->store_asset( $url, $path );
 
@@ -135,7 +135,7 @@ function front_end_proxy_handler( $query ) {
 			exit;
 		}
 
-		if ( !BRIZY_DEBUG && $post->isStoreAssets() ) {
+		if ( BRIZY_ENV != 'dev' && $post->isStoreAssets() ) {
 			$res = $post->store_asset( $full_url, $asset_path );
 			$post->setStoreAssets( ! $res );
 			$post->save();
