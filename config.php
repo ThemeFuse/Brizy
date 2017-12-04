@@ -10,7 +10,7 @@ class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'http://api.brizy.io';
 	const COMPILER_URL = 'http://api.brizy.io';
-	const EDITOR_STATIC_URL = BRIZY_ENV == 'dev'?'http://editor:3000/static':'http://api.brizy.io/static';
+	const EDITOR_STATIC_URL = (BRIZY_ENV == 'dev')?'http://editor:3000/static':'http://api.brizy.io/static';
 
 	const BRIZY_WP_ASSET_PATH = 'uploads/brizy/pages/%s/';
 
@@ -20,7 +20,7 @@ class Brizy_Config {
 	const LOCAL_EDITOR_ASSET_STATIC_URL = '/wp-content/uploads/brizy/editor';
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/wp-content/uploads/brizy/editor/%s';
 
-	const BRIZY_S3_ASSET_URL = BRIZY_ENV == 'dev'?'http://editor:3000/static':'https://s3.amazonaws.com/bitblox-test/%s/%s';
+	const BRIZY_S3_ASSET_URL = (BRIZY_ENV == 'dev')?'http://editor:3000/static':'https://s3.amazonaws.com/bitblox-test/%s/%s';
 
 	const ASSETS_PATTERN = '/(https?:\/\/bitblox.local\/assets\/[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
 
