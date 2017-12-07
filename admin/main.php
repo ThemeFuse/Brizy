@@ -361,7 +361,7 @@ class Brizy_Admin_Main {
 		return self::render( 'editor',
 			array(
 				'url' => add_query_arg(
-					array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+					array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
 					get_permalink( get_the_ID() )
 				)
 			) );

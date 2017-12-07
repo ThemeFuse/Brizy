@@ -18,7 +18,7 @@ define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', plugin_dir_url( BRIZY_FILE ) );
 
 
-include_once 'autoloader.php';
+include_once 'autoload.php';
 include_once 'editor/load.php';
 include_once 'shortcodes/load.php';
 include_once 'public/hooks.php';

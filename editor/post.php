@@ -229,7 +229,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	 */
 	public function edit_url() {
 		return add_query_arg(
-			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+			array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
 			get_permalink( $this->get_id() )
 		);
 	}
@@ -264,7 +264,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 	public function compile_page() {
 
-		if ( $this->needs_compile ) {
+		if ( $this->needs_compile  ) {
 
 			// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
 			// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
@@ -277,11 +277,13 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 			$this->invalidate_assets();
 
 			$this->needs_compile = false;
+
+			return true;
 		}
 
 		$this->setStoreAssets(true);
 
-		return $this;
+		return false;
 	}
 
 

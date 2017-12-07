@@ -13,7 +13,7 @@ function brizy_is_edit_page() {
 
 		return $post->uses_editor()
 		       && current_user_can( 'edit_pages' )
-		       && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] );
+		       && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] );
 	} catch ( Exception $exception ) {
 		return false;
 	}

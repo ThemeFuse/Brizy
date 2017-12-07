@@ -38,6 +38,11 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 	 */
 	public function getToken( $email ) {
 
+		session_start();
+
+		if(isset($_SESSION[md5($this->client_id.$this->secret)]))
+			return $_SESSION[md5($this->client_id.$this->secret)];
+
 		$response = $this->post( $this->auth_url(),
 			array(
 				'body'      => array(
@@ -58,7 +63,7 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 			$brizy_editor_API_access_token->set_refresh_token( $response['refresh_token'] );
 		}
 
-		return $brizy_editor_API_access_token;
+		return $_SESSION[md5($this->client_id.$this->secret)] = $brizy_editor_API_access_token;
 	}
 
 

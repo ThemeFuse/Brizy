@@ -40,23 +40,22 @@ class Brizy_Public_Main {
 
 	public function initialize_front_end() {
 
-		if ( Brizy_Editor::is_user_allowed() ) {
-			add_filter( 'template_include', array( $this, '_filter_template_include_load_blank_template' ), 1 );
-		}
-
 		// add the actions for the case when the user edits the page with the editor
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
+			// iframe
+			add_action( 'template_include', array( $this, 'template_include' ), 10000 );
+		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
+			// main page
 
 			add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
 			$this->check_project_version();
-
-			$this->project->setStoreAssets(true)->save();
+			$this->project->setStoreAssets( true )->save();
 
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
-			add_action( 'wp_head', array( $this, '_editor_head'), 0 );
+			add_action( 'wp_head', array( $this, '_editor_head' ), 0 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
 			add_filter( 'show_admin_bar', '__return_false' );
-			add_filter( 'body_class', array($this, '_body_class_editor') );
+			add_filter( 'body_class', array( $this, '_body_class_editor' ) );
 
 		} elseif ( $this->is_view_page() ) {
 
@@ -71,24 +70,45 @@ class Brizy_Public_Main {
 			}
 
 			// insert the compiled head and content
-			add_filter( 'body_class', array($this, '_body_class_frontend') );
+			add_filter( 'body_class', array( $this, '_body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
 
 		}
 	}
 
+	public function template_include( $template ) {
+		$empty_template_path = self::path( 'views/empty.php' );
+		$template_path       = self::path( 'page.html.twig' );
+		$template            = $this->getEditorTwigTemplate( $template_path );
 
-	public function _body_class_frontend($classes) {
+		$config_object = $this->getConfigObject();
+
+		$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
+
+		$context = array( 'editorData' => $config_object );
+
+		if ( WP_DEBUG ) {
+			$context['DEBUG'] = true;
+		}
+
+		echo $template->render( $context );
+
+		return $empty_template_path;
+	}
+
+	public function _body_class_frontend( $classes ) {
 
 		$classes[] = 'brz';
+
 		return $classes;
 	}
 
-	public function _body_class_editor($classes) {
+	public function _body_class_editor( $classes ) {
 
 		$classes[] = 'brz';
 		$classes[] = 'brz-ed';
+
 		return $classes;
 	}
 
@@ -97,6 +117,13 @@ class Brizy_Public_Main {
 	 */
 	public function is_editing_page_with_editor() {
 		return ! is_admin() && current_user_can( 'edit_pages' ) && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_editing_page_with_editor_on_iframe() {
+		return ! is_admin() && current_user_can( 'edit_pages' ) && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && $this->post->uses_editor();
 	}
 
 	/**
@@ -127,7 +154,7 @@ class Brizy_Public_Main {
 
 			$config_object = $this->getConfigObject();
 
-			$config_object->urls->static = brizy()->get_asset_url(sprintf(Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH , $this->project->get_template_version()));
+			$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
 			$context = array( 'editorData' => $config_object );
 
@@ -148,9 +175,9 @@ class Brizy_Public_Main {
 		$template = $this->getEditorTwigTemplate();
 
 		$config_object               = $this->getConfigObject();
-		$site_url1 = site_url();
-		$site_url2 = site_url();
-		$config_object->urls->static = brizy()->get_asset_url(sprintf(Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH , $this->project->get_template_version()));
+		$site_url1                   = site_url();
+		$site_url2                   = site_url();
+		$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
 		$context = array( 'editorData' => $config_object );
 
@@ -163,8 +190,8 @@ class Brizy_Public_Main {
 	}
 
 
-	function _invalidate_editor_assets($new_version, $old_version) {
-		$project      = Brizy_Editor_Project::get();
+	function _invalidate_editor_assets( $new_version, $old_version ) {
+		$project = Brizy_Editor_Project::get();
 		$project
 			->invalidateAssetsFor( $old_version )
 			->set_template_version( $new_version )
@@ -228,13 +255,13 @@ class Brizy_Public_Main {
 	 *
 	 * @return string
 	 **/
-	public function _filter_template_include_load_blank_template( $template ) {
-		$post_template = get_post_meta( get_the_ID(), '_wp_page_template', true );
-
-		return $post_template === 'brizy-blank-template.php'
-			? self::path( 'views/templates/brizy-blank-template.php' )
-			: $template;
-	}
+//	public function _filter_template_include_load_blank_template( $template ) {
+//		$post_template = get_post_meta( get_the_ID(), '_wp_page_template', true );
+//
+//		return $post_template === 'brizy-blank-template.php'
+//			? self::path( 'views/templates/brizy-blank-template.php' )
+//			: $template;
+//	}
 
 	/**
 	 * @param string $rel
@@ -245,13 +272,15 @@ class Brizy_Public_Main {
 		return dirname( __FILE__ ) . "/$rel";
 	}
 
-	private function getEditorTwigTemplate() {
+	private function getEditorTwigTemplate( $template_path = null ) {
 
 		if ( $this->twig_template ) {
 			return $this->twig_template;
 		}
 
-		$template_path = $this->project->get_asset_url() . "/editor.html.twig";
+		if ( ! $template_path ) {
+			$template_path = $this->project->get_asset_url() . "/editor.html.twig";
+		}
 
 		$loader = new Twig_Loader_Array( array(
 			'editor' => file_get_contents( $template_path )
@@ -278,7 +307,7 @@ class Brizy_Public_Main {
 		$project_data = Brizy_Editor_User::get()->get_project( $api_project );
 
 		if ( $project_data['version'] != $project->get_template_version() ) {
-			do_action('brizy:project:version_changed', $project_data['version'], $project->get_template_version());
+			do_action( 'brizy:project:version_changed', $project_data['version'], $project->get_template_version() );
 		}
 	}
 }
