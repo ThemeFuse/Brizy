@@ -35,8 +35,8 @@ class Brizy_Config {
 
 	const GATEWAY_URI = 'http://api.brizy.io';
 
-	const BRIZY_ID = '1_19e6979gnz40s84w48gs8sgk0sgw488ows80okoww0cw4oc0co';
-	const BRIZY_KEY = '3jqp89myle4goo4sg88w0ccw4s4kgw8ckkkko0sgkg0osc8s0c';
+	const BRIZY_ID = '2_5to57xuihv48c4s400sk0wgwcw0gg4s4ggwccos4g4c4444occ';
+	const BRIZY_KEY = '3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s';
 	const BRIZY_EMAIL = 'admin@admin.com';
 	const BRIZY_PASSWORD = 'admin';
 
