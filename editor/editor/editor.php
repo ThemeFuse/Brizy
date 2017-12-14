@@ -108,8 +108,8 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	public function static_url() {
-		return brizy()->get_url( '/editor/editor/static' );
+	public function get_asset_url() {
+		return get_site_url() . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
 	}
 
 	public function store_asset( $asset_source, $asset_path ) {
@@ -117,6 +117,7 @@ class Brizy_Editor_Editor_Editor {
 		try {
 			// check destination dir
 			$dir_path = dirname( rtrim( ABSPATH, '/' ) . $asset_path );
+
 			if ( ! file_exists( $dir_path ) ) {
 				mkdir( $dir_path, 0777, true );
 			}
@@ -150,9 +151,4 @@ class Brizy_Editor_Editor_Editor {
 
 		return true;
 	}
-
-	public function get_asset_url() {
-		return get_site_url() . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
-	}
-
 }

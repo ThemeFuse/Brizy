@@ -70,6 +70,7 @@ class Brizy_Editor_User {
 
 	/**
 	 * @return Brizy_Editor_User
+	 * @throws Exception
 	 */
 	protected function create_user() {
 		$this->platform_user_email = $this->random_email();
@@ -94,7 +95,8 @@ class Brizy_Editor_User {
 	/**
 	 * @param $email
 	 *
-	 * @return Brizy_Editor_User
+	 * @return $this
+	 * @throws Exception
 	 */
 	public function login( $email ) {
 		$this->auth( $email );

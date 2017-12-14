@@ -9,6 +9,9 @@ class ComposerStaticInitaaaca7473999d8103aab4f1877d8a19f
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
+            'phpmock\\phpunit\\' => 16,
+            'phpmock\\integration\\' => 20,
+            'phpmock\\' => 8,
             'phpDocumentor\\Reflection\\' => 25,
         ),
         'W' => 
@@ -31,6 +34,19 @@ class ComposerStaticInitaaaca7473999d8103aab4f1877d8a19f
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpmock\\phpunit\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-mock/php-mock-phpunit/classes',
+        ),
+        'phpmock\\integration\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-mock/php-mock-integration/classes',
+        ),
+        'phpmock\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-mock/php-mock/classes',
+            1 => __DIR__ . '/..' . '/php-mock/php-mock/tests',
+        ),
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',

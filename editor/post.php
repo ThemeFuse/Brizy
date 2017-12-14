@@ -45,7 +45,8 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	/**
 	 * @param $wp_post_id
 	 *
-	 * @return Brizy_Editor_Post
+	 * @return mixed
+	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
 	public static function get( $wp_post_id ) {
@@ -63,10 +64,11 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	}
 
 	/**
-	 * @param Brizy_Editor_Project $project
-	 * @param WP_Post $post
+	 * @param $project
+	 * @param $post
 	 *
 	 * @return Brizy_Editor_Post
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
 	public static function create( $project, $post ) {

@@ -16,11 +16,9 @@ if ( file_exists( ABSPATH . 'wp-config.test.php' ) ) {
 	/** The config file resides in ABSPATH */
 	require_once( ABSPATH . 'wp-config.test.php' );
 
-} elseif ( @file_exists( dirname( ABSPATH ) . '/wp-config.php' ) && ! @file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+} else {
 
-	/** The config file resides one level above ABSPATH but is not part of another install */
-	require_once( dirname( ABSPATH ) . '/wp-config.test.php' );
-
+	throw new Exception('Create the test config. File name: wp-config.test.php');
 }
 
 // A config file doesn't exist
@@ -32,4 +30,4 @@ wp_fix_server_vars();
 
 require_once( ABSPATH . WPINC . '/functions.php' );
 
-include_once PLUGIN_DIR . '/autoloader.php';
+include_once PLUGIN_DIR . '/autoload.php';
