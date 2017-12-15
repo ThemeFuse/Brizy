@@ -25,9 +25,7 @@ class Brizy_Editor_User {
 	/**
 	 * Brizy_Editor_User constructor.
 	 *
-	 * @param Brizy_Editor_Storage_Common $common_storage
-	 *
-	 * @throws Brizy_Editor_Exceptions_Exception
+	 * @param $common_storage
 	 */
 	protected function __construct( $common_storage ) {
 
@@ -37,13 +35,15 @@ class Brizy_Editor_User {
 			$this->token               = $this->common_storage->get( 'access-token' );
 			$this->platform_user_email = $this->common_storage->get( 'platform_user_email' );
 
-			if ( $this->token->expired() || true ) {
+			if ( $this->token->expired() ) {
 				$this->auth( $this->platform_user_email );
 				$this->token = $this->common_storage->get( 'access-token' );
 			}
-		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
+		}
+		catch ( Brizy_Editor_Exceptions_NotFound $e ) {
 			$this->create_user();
 		}
+
 	}
 
 	/**
