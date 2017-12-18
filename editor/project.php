@@ -22,31 +22,39 @@ class Brizy_Editor_Project {
 	private $store_assets = true;
 
 	/**
-	 * @return Brizy_Editor_Project
+	 * @return Brizy_Editor_Project|mixed|null
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 */
 	public static function get() {
 
 		if(self::$instance)
 			return self::$instance;
 
-		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
 
+		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
 		self::$instance = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
+
+		if(self::$instance && !isset($_SESSION['brizy_project_stored']))
+		{
+			$api_project = Brizy_Editor_User::get()->get_project( self::$instance->get_api_project() );
+			self::$instance = new self($api_project);
+			self::$instance->save();
+
+			$_SESSION['brizy_project_stored'] = true;
+		}
 
 		return self::$instance;
 	}
 
 	/**
 	 * @return Brizy_Editor_Project
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 */
 	public static function create() {
 		$api_project = Brizy_Editor_User::get()->create_project();
 
 		$project = new self( $api_project );
-		$project->set_meta_key( 'worpdress_url', get_site_url() );
-		$project->set_meta_key( 'worpdress_site_name', get_bloginfo( 'name' ) );
-		$project->set_meta_key( 'worpdress_version', get_bloginfo( 'version' ) );
-		$project->set_meta_key( 'worpdress_description', get_bloginfo( 'description' ) );
 		$project->save();
 
 		return $project;
@@ -180,6 +188,11 @@ class Brizy_Editor_Project {
 	 * @return self
 	 */
 	public function save() {
+
+		$this->set_meta_key( 'worpdress_url', get_site_url() );
+		$this->set_meta_key( 'worpdress_site_name', get_bloginfo( 'name' ) );
+		$this->set_meta_key( 'worpdress_version', get_bloginfo( 'version' ) );
+		$this->set_meta_key( 'worpdress_description', get_bloginfo( 'description' ) );
 
 		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
 		$brizy_editor_storage_common->set( self::BRIZY_PROJECT, $this );
