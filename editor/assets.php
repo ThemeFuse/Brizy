@@ -20,13 +20,19 @@ class Brizy_Editor_Assets {
 	private $post;
 
 
-	public function __construct() {
+	/**
+	 * Brizy_Editor_Assets constructor.
+	 *
+	 * @param Brizy_Editor_Project $project
+	 * @param Brizy_Editor_Post $post
+	 */
+	public function __construct( $project, $post ) {
 
+		$this->post    = $post;
+		$this->project = $project;
+		
 		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-
 			try {
-				$this->initializeProject();
-				$this->initializePost();
 
 				if ( ! $this->post ) {
 					return;
@@ -42,25 +48,6 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 		}
-	}
-
-
-	private function initializeProject() {
-		$this->project = Brizy_Editor_Project::get();
-	}
-
-	/**
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
-	 */
-	private function initializePost() {
-		$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
-
-		if ( ! $pid ) {
-			return;
-		}
-
-		$this->post = Brizy_Editor_Post::get( $pid );
 	}
 
 
@@ -115,7 +102,7 @@ class Brizy_Editor_Assets {
 	}
 
 
-	function handle_front_end_edirtor_assets( $query ) {
+	function handle_front_end_editor_assets( $query ) {
 
 		$str_splitter = Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL;
 

@@ -43,29 +43,13 @@ class Brizy_Editor_API {
 		return $this->post;
 	}
 
-
-	/**
-	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_Post $post
-	 *
-	 * @return Brizy_Editor_API
-	 */
-	public static function instance( $project, $post ) {
-
-		if ( ! self::$instance ) {
-			self::$instance = new self( $project, $post );
-		}
-
-		return self::$instance;
-	}
-
 	/**
 	 * Brizy_Editor_API constructor.
 	 *
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	protected function __construct( $project, $post ) {
+	public function __construct( $project, $post ) {
 
 		$this->project = $project;
 		$this->post    = $post;

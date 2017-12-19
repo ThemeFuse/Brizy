@@ -22,17 +22,34 @@ function brizy_initialize_Brizy_Public_Api() {
 	}
 
 	if ( Brizy_Editor::is_user_allowed() ) {
-		$api_instance = Brizy_Editor_API::instance( $project, $post );
+		$api_instance = new Brizy_Editor_API( $project, $post );
 		$api_instance->initialize();
 	}
 }
 
-add_action( 'parse_request', 'handler_proxy_requests', -1000 );
+add_action( 'wp_loaded', 'handler_proxy_requests' );
 
-function handler_proxy_requests($query) {
-	$asset_editor = new Brizy_Editor_Assets();
-	$asset_editor->handle_editor_assets($query);
-	$asset_editor->handle_front_end_edirtor_assets($query);
+function handler_proxy_requests( $query ) {
+
+	$pid  = url_to_postid( $_SERVER['HTTP_REFERER'] );
+	$post = null;
+	try {
+
+		$project = Brizy_Editor_Project::get();
+
+		if ( $pid ) {
+			$post = Brizy_Editor_Post::get( $pid );
+		} else {
+			throw new Exception( 'Unknown post id.' );
+		}
+
+	} catch ( Exception $e ) {
+		return;
+	}
+
+	$asset_editor = new Brizy_Editor_Assets( $project, $post );
+	$asset_editor->handle_editor_assets( $query );
+	$asset_editor->handle_front_end_editor_assets( $query );
 	$asset_editor->handle_media_proxy_handler($query);
 }
 

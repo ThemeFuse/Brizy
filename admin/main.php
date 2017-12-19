@@ -126,7 +126,8 @@ class Brizy_Admin_Main {
 		}
 
 		$mark_the_page_as_index = false;
-
+		$project = null;
+		$post = null;
 		// obtain the project
 		try {
 			$project = Brizy_Editor_Project::get();
@@ -139,8 +140,6 @@ class Brizy_Admin_Main {
 
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
-
-		$post = null;
 
 		// obtain the post
 		try {
@@ -155,12 +154,13 @@ class Brizy_Admin_Main {
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
 
 			try {
+
 				$post = Brizy_Editor_Post::create( $project, $p );
 
 				$post->set_is_index( $mark_the_page_as_index );
 				$post->save();
 
-			} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
+			} catch ( Exception $exception ) {
 
 				Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );
 
