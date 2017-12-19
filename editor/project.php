@@ -38,7 +38,7 @@ class Brizy_Editor_Project {
 		if(self::$instance && !isset($_SESSION['brizy_project_stored']))
 		{
 			$api_project = Brizy_Editor_User::get()->get_project( self::$instance->get_api_project() );
-			self::$instance = new self($api_project);
+			self::$instance = new self(new Brizy_Editor_API_Project($api_project));
 			self::$instance->save();
 
 			$_SESSION['brizy_project_stored'] = true;
