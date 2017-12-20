@@ -31,6 +31,7 @@ function brizy_initialize_Brizy_Public_Api() {
 
 add_action( 'parse_request', 'editor_proxy_handler', - 1000 );
 add_action( 'parse_request', 'front_end_proxy_handler', - 1000 );
+add_action( 'parse_request', 'media_proxy_handler', - 1000 );
 
 
 function editor_proxy_handler() {
@@ -125,6 +126,70 @@ function front_end_proxy_handler( $query ) {
 		}
 
 		$full_url = $project->get_asset_url() . $template_asset_path;
+
+		$file_exists = file_exists( rtrim( ABSPATH, '/' ) . $asset_path );
+
+		if ( $file_exists ) {
+			$asset_url = $editor->get_asset_url() . $asset_path;
+
+			wp_redirect( $asset_url, 302 );
+			exit;
+		}
+
+		if ( BRIZY_ENV != 'dev' && $post->isStoreAssets() ) {
+			$res = $post->store_asset( $full_url, $asset_path );
+			$post->setStoreAssets( ! $res );
+			$post->save();
+
+			// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
+			wp_redirect( get_site_url() . '/' . $asset_path, 302 );
+			exit;
+		}
+
+
+		send_file_content($full_url);
+
+		// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
+		//wp_redirect( $full_url, 302 );
+		//exit;
+	}
+}
+
+
+function media_proxy_handler( $query ) {
+
+	//http://localhost/index.php/wp-content/uploads/brizy/pages/11/332/editor/5000x*xR/d8462f8d808403c68deac84e05d69baa0d53d231.jpeg
+
+	$str_splitter = Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL;
+
+	if ( strpos( $query->request, ltrim( $str_splitter, '/' ) ) !== false && isset( $_SERVER['HTTP_REFERER'] ) ) {
+		session_write_close();
+
+		$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
+
+		if ( ! $pid ) {
+			return;
+		}
+
+		$project = Brizy_Editor_Project::get();
+		$post    = Brizy_Editor_Post::get( $pid );
+		$editor = Brizy_Editor_Editor_Editor::get( $project, $post );
+
+		$parts = explode( $str_splitter, $_SERVER["REQUEST_URI"] );
+
+		if ( ! $parts[1] ) {
+			return;
+		}
+
+		$template_asset_path = $parts[1];
+
+		$asset_path = Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL . $template_asset_path;
+
+		if ( ! $post->uses_editor() ) {
+			return;
+		}
+
+		$full_url = Brizy_Config::MEDIA_IMAGE_URL . $template_asset_path;
 
 		$file_exists = file_exists( rtrim( ABSPATH, '/' ) . $asset_path );
 

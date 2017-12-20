@@ -13,6 +13,7 @@ class Brizy_Config {
 
 	const BRIZY_WP_ASSET_PATH = 'uploads/brizy/pages/%s/';
 
+	const LOCAL_PAGE_MEDIA_STATIC_URL = '/wp-content/uploads/brizy/media';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/wp-content/uploads/brizy/pages';
 	const BRIZY_WP_PAGE_ASSET_PATH = 'wp-content/uploads/brizy/pages/%s';
 
@@ -25,7 +26,9 @@ class Brizy_Config {
 
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
-	const EDITOR_IMAGE_URL = 'http://static.bitblox.xyz/storage/media';
+	const MEDIA_IMAGE_PATH = '/storage/media';
+	//const MEDIA_IMAGE_URL = 'https://static.bitblox.me/storage/media';
+	const MEDIA_IMAGE_URL = 'https://platform-admin.brizy.io/storage/media';
 	const EDITOR_ORIGIN_URL = 'http://testblox.info';
 
 	const EDITOR_HOST_API = 'api.testblox.info';
