@@ -296,7 +296,8 @@ class Brizy_Editor_API {
 
 			$attachment_id = $this->param( 'attachmentId' );
 
-			$this->success( Brizy_Editor_User::get()->get_media_id(
+			$brizy_editor_user = Brizy_Editor_User::get();
+			$this->success( $brizy_editor_user->get_media_id(
 				$this->project,
 				$attachment_id
 			) );

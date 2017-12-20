@@ -4,6 +4,8 @@
 
 class Brizy_Editor_User {
 
+	const BRIZY_ATTACHMENT_HASH_KEY = 'brizy_attachment_hash';
+
 	private static $instance;
 
 	/**
@@ -39,8 +41,7 @@ class Brizy_Editor_User {
 				$this->auth( $this->platform_user_email );
 				$this->token = $this->common_storage->get( 'access-token' );
 			}
-		}
-		catch ( Brizy_Editor_Exceptions_NotFound $e ) {
+		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
 			$this->create_user();
 		}
 
@@ -83,6 +84,7 @@ class Brizy_Editor_User {
 
 	protected function random_email() {
 		$uniqid = uniqid( 'brizy-' );
+
 		return $uniqid . '@brizy.io';
 	}
 
@@ -180,35 +182,23 @@ class Brizy_Editor_User {
 	}
 
 	public function get_media_id( Brizy_Editor_Project $project, $attachment_id ) {
+
+		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $attachment_id );
+		$hash_name = null;
 		try {
-			$projects = Brizy_Editor_Storage_Post::instance( $attachment_id )->get( 'projects' );
+			$hash_name =  $brizy_editor_storage_post->get( self::BRIZY_ATTACHMENT_HASH_KEY );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
-			$projects = array();
-		}
-
-		$project_id = $project->get_id();
-
-		if ( isset( $projects[ $project_id ] ) ) {
-			return $projects[ $project_id ];
-		}
-
-
-		try {
-			$response = $this
-				->get_client()
-				->add_media( $project_id, $this->image_to_base64( $attachment_id ) );
-		} catch ( Brizy_Editor_Http_Exceptions_ResponseUnauthorized $exception ) {
-			$this->refresh_token();
 
 			$response = $this
 				->get_client()
-				->add_media( $project_id, $this->image_to_base64( $attachment_id ) );
+				->add_media( $project->get_id(), $this->image_to_base64( $attachment_id ) );
+
+			$brizy_editor_storage_post->set(self::BRIZY_ATTACHMENT_HASH_KEY, $response['name']);
+
+			$hash_name = $response['name'];
 		}
 
-		$projects[ $project_id ] = $response['name'];
-		Brizy_Editor_Storage_Post::instance( $attachment_id )->set( 'projects', $projects );
-
-		return $response['name'];
+		return $hash_name;
 	}
 
 	protected function get_token() {
