@@ -54,6 +54,11 @@ class Brizy_Editor_Http_Client {
 	 * @param array $options
 	 *
 	 * @return Brizy_Editor_Http_Response
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function get( $url, array $options = array() ) {
 		return $this->request( $url, $options, 'GET' );
@@ -64,6 +69,11 @@ class Brizy_Editor_Http_Client {
 	 * @param $options
 	 *
 	 * @return Brizy_Editor_Http_Response
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function post( $url, $options ) {
 		return $this->request( $url, $options, 'POST' );
@@ -74,16 +84,26 @@ class Brizy_Editor_Http_Client {
 	 * @param null $options
 	 *
 	 * @return Brizy_Editor_Http_Response
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function put( $route, $options = null ) {
 		return $this->request( $route, $options, 'PUT' );
 	}
 
-	/***
+	/**
 	 * @param $route
 	 * @param null $options
 	 *
 	 * @return Brizy_Editor_Http_Response
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function delete( $route, $options = null ) {
 		return $this->request( $route, $options, 'DELETE' );

@@ -9,7 +9,7 @@
 class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'http://api.brizy.io';
-	const COMPILER_URL = 'http://api.brizy.io';
+	//const COMPILER_URL = 'http://api.brizy.iox';
 
 	const BRIZY_WP_ASSET_PATH = 'uploads/brizy/pages/%s/';
 
@@ -22,7 +22,7 @@ class Brizy_Config {
 
 	//const BRIZY_S3_ASSET_URL = BRIZY_ENV == 'dev'?'http://editor:3000/static':'https://s3.amazonaws.com/bitblox-test/%s/%s';
 
-	const ASSETS_PATTERN = '/(https?:\/\/bitblox.local\/assets\/[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
+	//const ASSETS_PATTERN = '/(https?:\/\/bitblox.local\/assets\/[a-z|0-9|\/|\*|\.]+\.[png|gif|bmp|jpg|jpeg]+)/i';
 
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';

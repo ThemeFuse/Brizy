@@ -49,7 +49,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	}
 
 	public function update_page( $project_id, $page_id, Brizy_Editor_API_Page $page ) {
-		return $this->put( "projects/$project_id/pages/$page_id",array(  'body' => $page->export() ) )->get_response_body();
+		return $this->put( "projects/$project_id/pages/$page_id", array( 'body' => $page->export() ) )->get_response_body();
 	}
 
 	public function compile_page( $project_id, $page_id, $config ) {
@@ -61,7 +61,8 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 			'urls' => json_encode( array(
 				'primary' => $config['urls']['primary'],
 				'base'    => $config['urls']['base'],
-				'static'  => $config['urls']['static']
+				'static'  => $config['urls']['static'],
+				'image'   => $config['urls']['image']
 			) )
 		);
 
@@ -73,7 +74,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	}
 
 	public function add_media( $project_id, $base64 ) {
-		return $this->post( "projects/$project_id/media", array( 'body'=>array('attachment' => $base64) ) )->get_response_body();
+		return $this->post( "projects/$project_id/media", array( 'body' => array( 'attachment' => $base64 ) ) )->get_response_body();
 	}
 
 	protected function get_headers() {
