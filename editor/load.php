@@ -87,7 +87,7 @@ function editor_proxy_handler() {
 		}
 
 		// send the url content
-		send_file_content($url);
+		send_file_content( $url );
 	}
 }
 
@@ -107,7 +107,7 @@ function front_end_proxy_handler( $query ) {
 
 		$project = Brizy_Editor_Project::get();
 		$post    = Brizy_Editor_Post::get( $pid );
-		$editor = Brizy_Editor_Editor_Editor::get( $project, $post );
+		$editor  = Brizy_Editor_Editor_Editor::get( $project, $post );
 
 		$str_splitter = sprintf( Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH, $post->get_id() );
 
@@ -147,7 +147,7 @@ function front_end_proxy_handler( $query ) {
 		}
 
 
-		send_file_content($full_url);
+		send_file_content( $full_url );
 
 		// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
 		//wp_redirect( $full_url, 302 );
@@ -173,7 +173,7 @@ function media_proxy_handler( $query ) {
 
 		$project = Brizy_Editor_Project::get();
 		$post    = Brizy_Editor_Post::get( $pid );
-		$editor = Brizy_Editor_Editor_Editor::get( $project, $post );
+		$editor  = Brizy_Editor_Editor_Editor::get( $project, $post );
 
 		$parts = explode( $str_splitter, $_SERVER["REQUEST_URI"] );
 
@@ -211,7 +211,7 @@ function media_proxy_handler( $query ) {
 		}
 
 
-		send_file_content($full_url);
+		send_file_content( $full_url );
 
 		// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
 		//wp_redirect( $full_url, 302 );
@@ -308,8 +308,7 @@ function get_mime( $filename, $mode = 0 ) {
 
 }
 
-function send_file_content($url)
-{
+function send_file_content( $url ) {
 // send the url content
 
 	$response = wp_remote_get( $url );
@@ -322,6 +321,15 @@ function send_file_content($url)
 	 * @var WP_HTTP_Requests_Response $http_response
 	 */
 	$http_response = $response['http_response'];
+
+	if ( ! $http_response->get_response_object()->success ) {
+		header( ' 500 Internal Server Error', true, 500 );
+		exit;
+	}
+
+	if ( BRIZY_ENV == 'dev' ) {
+		header( 'BRIZY-SOURCE: ' . $url );
+	}
 
 	$headers = $http_response->get_headers()->getAll();
 
