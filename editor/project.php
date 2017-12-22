@@ -2,12 +2,12 @@
 	die( 'Direct access forbidden.' );
 }
 
-include_once  ABSPATH. "wp-admin/includes/class-wp-filesystem-base.php";
-include_once  ABSPATH. "wp-admin/includes/class-wp-filesystem-direct.php";
+include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
+include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
 
 class Brizy_Editor_Project {
 
-	private static $instance = null;
+	static private $instance = null;
 
 	const BRIZY_PROJECT = 'brizy-project';
 
@@ -23,24 +23,26 @@ class Brizy_Editor_Project {
 
 	/**
 	 * @return Brizy_Editor_Project|mixed|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 */
 	public static function get() {
 
-		if(self::$instance)
+		if ( self::$instance ) {
 			return self::$instance;
+		}
 
+		try {
+			$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
+			self::$instance              = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
+		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
+			self::$instance = Brizy_Editor_Project::create();
+			$_SESSION['brizy_project_stored'] = true;
+		}
 
-		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
-		self::$instance = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
-
-		if(self::$instance && !isset($_SESSION['brizy_project_stored']))
-		{
-			$api_project = Brizy_Editor_User::get()->get_project( self::$instance->get_api_project() );
-			self::$instance = new self(new Brizy_Editor_API_Project($api_project));
+		if ( self::$instance && ! isset( $_SESSION['brizy_project_stored'] ) ) {
+			$api_project    = Brizy_Editor_User::get()->get_project( self::$instance->get_api_project() );
+			self::$instance = new self( new Brizy_Editor_API_Project( $api_project ) );
 			self::$instance->save();
-
 			$_SESSION['brizy_project_stored'] = true;
 		}
 
@@ -160,7 +162,7 @@ class Brizy_Editor_Project {
 
 		$dir_path = sprintf( rtrim( ABSPATH, DIRECTORY_SEPARATOR ) . Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $version );
 
-		$fs = new WP_Filesystem_Direct(null);
+		$fs = new WP_Filesystem_Direct( null );
 		$fs->rmdir( $dir_path, true );
 
 		return $this;
@@ -178,7 +180,7 @@ class Brizy_Editor_Project {
 	 *
 	 * @return Brizy_Editor_Project
 	 */
-	public function setStoreAssets(  $store_assets ) {
+	public function setStoreAssets( $store_assets ) {
 		$this->store_assets = $store_assets;
 
 		return $this;

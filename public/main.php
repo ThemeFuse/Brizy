@@ -60,15 +60,21 @@ class Brizy_Public_Main {
 
 		} elseif ( $this->is_view_page() ) {
 
-			// compile page before showing..
-			$this->post
-				->compile_page()
-				->save();
+			try{
+				// compile page before showing..
+				$this->post
+					->compile_page()
+					->save();
+			}
+			catch (Exception $e) {
+				// handle this 
+			}
 
 			// insert the compiled head and content
 			add_filter( 'body_class', array($this, '_body_class_frontend') );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
+
 		}
 	}
 

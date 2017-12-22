@@ -133,19 +133,7 @@ class Brizy_Admin_Main {
 
 			$mark_the_page_as_index = ! $this->has_brizy_index_page();
 
-		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-
-			try {
-				$project = Brizy_Editor_Project::create();
-
-				$mark_the_page_as_index = true;
-			} catch ( Exception $e ) {
-
-				Brizy_Admin_Flash::instance()->add_error( 'Unable to create the project. Please try again later.' );
-
-				wp_redirect( $_SERVER['HTTP_REFERER'] );
-			}
-		} catch ( Exception $exception ) {
+		}  catch ( Exception $exception ) {
 
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to create the project. Please try again later.' );
 

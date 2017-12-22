@@ -37,7 +37,7 @@ add_action( 'parse_request', 'media_proxy_handler', - 1000 );
 function editor_proxy_handler() {
 
 	if ( strpos( $_SERVER["REQUEST_URI"], Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL ) !== false && isset( $_SERVER['HTTP_REFERER'] ) ) {
-		session_write_close();
+
 
 		$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
 
@@ -45,9 +45,17 @@ function editor_proxy_handler() {
 			return;
 		}
 
-		$project = Brizy_Editor_Project::get();
-		$post    = Brizy_Editor_Post::get( $pid );
+		try {
+			$project = Brizy_Editor_Project::get();
+			$post    = Brizy_Editor_Post::get( $pid );
+		}
+		catch (Exception $e) {
+			header( ' 500 Internal Server Error', true, 500 );
+			exit;
+		}
 
+
+		session_write_close();
 
 		$LOCAL_EDITOR_ASSET_STATIC_URL = $project->get_asset_path();
 
@@ -97,7 +105,7 @@ function front_end_proxy_handler( $query ) {
 	$str_splitter = Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL;
 
 	if ( strpos( $query->request, ltrim( $str_splitter, '/' ) ) !== false && isset( $_SERVER['HTTP_REFERER'] ) ) {
-		session_write_close();
+
 
 		$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
 
@@ -105,9 +113,17 @@ function front_end_proxy_handler( $query ) {
 			return;
 		}
 
-		$project = Brizy_Editor_Project::get();
-		$post    = Brizy_Editor_Post::get( $pid );
-		$editor  = Brizy_Editor_Editor_Editor::get( $project, $post );
+		try {
+			$project = Brizy_Editor_Project::get();
+			$post    = Brizy_Editor_Post::get( $pid );
+			$editor  = Brizy_Editor_Editor_Editor::get( $project, $post );
+		}
+		catch (Exception $e) {
+			header( ' 500 Internal Server Error', true, 500 );
+			exit;
+		}
+
+		session_write_close();
 
 		$str_splitter = sprintf( Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH, $post->get_id() );
 
@@ -163,7 +179,6 @@ function media_proxy_handler( $query ) {
 	$str_splitter = Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL;
 
 	if ( strpos( $query->request, ltrim( $str_splitter, '/' ) ) !== false && isset( $_SERVER['HTTP_REFERER'] ) ) {
-		session_write_close();
 
 		$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
 
@@ -171,10 +186,17 @@ function media_proxy_handler( $query ) {
 			return;
 		}
 
-		$project = Brizy_Editor_Project::get();
-		$post    = Brizy_Editor_Post::get( $pid );
-		$editor  = Brizy_Editor_Editor_Editor::get( $project, $post );
+		try {
+			$project = Brizy_Editor_Project::get();
+			$post    = Brizy_Editor_Post::get( $pid );
+			$editor  = Brizy_Editor_Editor_Editor::get( $project, $post );
+		}
+		catch (Exception $e) {
+			header( ' 500 Internal Server Error', true, 500 );
+			exit;
+		}
 
+		session_write_close();
 		$parts = explode( $str_splitter, $_SERVER["REQUEST_URI"] );
 
 		if ( ! $parts[1] ) {

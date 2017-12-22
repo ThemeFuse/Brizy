@@ -18,7 +18,18 @@ function brizy_load_admin() {
 		wp_redirect( $_SERVER['HTTP_REFERER'] );
 		exit;
 	}
+}
 
+add_action('wp_logout', 'brizy_session_end');
+add_action('wp_login', 'brizy_session_end');
+add_action('init', 'brizy_session_start', 1);
 
+function brizy_session_start() {
+	if(!session_id()) {
+		session_start();
+	}
+}
 
+function brizy_session_end() {
+	session_destroy ();
 }

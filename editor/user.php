@@ -28,6 +28,8 @@ class Brizy_Editor_User {
 	 * Brizy_Editor_User constructor.
 	 *
 	 * @param $common_storage
+	 *
+	 * @throws Exception
 	 */
 	protected function __construct( $common_storage ) {
 
