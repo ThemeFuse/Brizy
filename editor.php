@@ -40,7 +40,7 @@ class Brizy_Editor {
 
 	public function get_path( $rel = '/' ) {
 
-		return BRIZY_PLUGIN_BASE . DIRECTORY_SEPARATOR . ltrim( $rel, DIRECTORY_SEPARATOR );
+		return BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . ltrim( $rel, DIRECTORY_SEPARATOR );
 	}
 
 	public function get_url( $rel = '' ) {

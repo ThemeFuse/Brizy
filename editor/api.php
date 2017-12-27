@@ -146,14 +146,14 @@ class Brizy_Editor_API {
 		try {
 			$content  = $this->param( 'data' );
 			$title    = $this->param( 'title' );
-			$template = $this->param( 'template' );
+			$atemplate = $this->param( 'template' );
 
 			if ( $title ) {
 				$this->post->set_title( $title );
 			}
 
-			if ( $template ) {
-				$this->post->set_template( $template );
+			if ( $atemplate ) {
+				$this->post->set_template( $atemplate );
 			}
 
 			if ( $content ) {

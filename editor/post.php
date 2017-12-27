@@ -45,7 +45,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	/**
 	 * @param $wp_post_id
 	 *
-	 * @return mixed
+	 * @return Brizy_Editor_Post
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
@@ -231,6 +231,16 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	 */
 	public function edit_url() {
 		return add_query_arg(
+			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+			get_permalink( $this->get_id() )
+		);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function edit_url_iframe() {
+		return add_query_arg(
 			array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
 			get_permalink( $this->get_id() )
 		);
@@ -266,7 +276,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 	public function compile_page() {
 
-		if ( $this->needs_compile  ) {
+		if ( $this->needs_compile ) {
 
 			// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
 			// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
@@ -283,7 +293,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 			return true;
 		}
 
-		$this->setStoreAssets(true);
+		$this->setStoreAssets( true );
 
 		return false;
 	}
@@ -304,7 +314,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 				throw new Exception( 'Invalid file destination.' );
 			}
 
-			$fasset_src = fopen( $asset_source , 'r' );
+			$fasset_src = fopen( $asset_source, 'r' );
 			if ( ! $fasset_src ) {
 				throw new Exception( 'Invalid asset source.' );
 			}
@@ -325,6 +335,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 			return false;
 		}
+
 		return true;
 	}
 
@@ -697,12 +708,18 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	}
 
 	/**
-	 * @param string $template
+	 * @param string $atemplate
 	 *
 	 * @return $this
 	 */
-	public function set_template( $template ) {
-		update_post_meta( $this->get_id(), '_wp_page_template', $template );
+	public function set_template( $atemplate ) {
+
+		if ( $atemplate == '' ) {
+			delete_post_meta( $this->get_id(), '_wp_page_template' );
+		} else {
+			update_post_meta( $this->get_id(), '_wp_page_template', $atemplate );
+		}
+
 
 		return $this;
 	}

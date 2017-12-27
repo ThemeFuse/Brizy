@@ -1,0 +1,21 @@
+{% set staticUrl = editorData.urls.static %}
+{% spaceless %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="//use.typekit.net/ueo0lzq.js"></script>
+        <script>try {
+                Typekit.load();
+            } catch (e) {
+            }</script>
+        <link href="{{ staticUrl }}/visual/editor.css" rel="stylesheet">
+    </head>
+    <body class="brz brz-ed">
+        <div id="page" class="brz-ed-page">
+            <iframe id="brizy-iframe" class=6"mode-desktop" src="{{ iframe_url }}"></iframe>
+        </div>
+    </body>
+    </html>
+{% endspaceless %}

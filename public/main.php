@@ -52,20 +52,19 @@ class Brizy_Public_Main {
 			$this->project->setStoreAssets( true )->save();
 
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
-			add_action( 'wp_head', array( $this, 'editor_head' ), 0 );
+			//add_action( 'wp_head', array( $this, 'editor_head' ), 0 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
 			add_filter( 'show_admin_bar', '__return_false' );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 
 		} elseif ( $this->is_view_page() ) {
 
-			try{
+			try {
 				// compile page before showing..
 				$this->post
 					->compile_page()
 					->save();
-			}
-			catch (Exception $e) {
+			} catch ( Exception $e ) {
 				// handle this 
 			}
 
@@ -77,24 +76,24 @@ class Brizy_Public_Main {
 		}
 	}
 
-	public function template_include( $template ) {
-		$template_path       = self::path( 'page.html.twig' );
-		$template            = $this->getEditorTwigTemplate( $template_path );
+	public function template_include( $atemplate ) {
+		$template_path = self::path( 'views/page.html.twig' );
+		$twig_template = $this->getTwigTemplate( $template_path );
 
 		$config_object = $this->getConfigObject();
 
 		$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
-		$iframe_url = add_query_arg(
+		$iframe_url                  = add_query_arg(
 			array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
 			get_permalink( $this->post->get_wp_post()->ID )
 		);
-		$context = array( 'editorData' => $config_object,'iframe_url'=>$iframe_url );
+		$context                     = array( 'editorData' => $config_object, 'iframe_url' => $iframe_url );
 
 		if ( WP_DEBUG ) {
 			$context['DEBUG'] = true;
 		}
 
-		echo $template->render( $context );
+		echo $twig_template->render( $context );
 
 		return self::path( 'views/empty.php' );
 	}
@@ -152,7 +151,9 @@ class Brizy_Public_Main {
 	function _filter_the_content( $content ) {
 		if ( is_singular() && is_main_query() ) {
 
-			$template = $this->getEditorTwigTemplate();
+			$template_path = self::path( 'views/editor.html.twig' );
+
+			$twig_template = $this->getTwigTemplate( $template_path );
 
 			$config_object = $this->getConfigObject();
 
@@ -164,7 +165,7 @@ class Brizy_Public_Main {
 				$context['DEBUG'] = true;
 			}
 
-			$render_block = $template->renderBlock( 'editor_content', $context );
+			$render_block = $twig_template->render( $context );
 
 			return $render_block;
 		}
@@ -174,7 +175,7 @@ class Brizy_Public_Main {
 
 	function editor_head() {
 
-		$template = $this->getEditorTwigTemplate();
+		$twig_template = $this->getTwigTemplate();
 
 		$config_object               = $this->getConfigObject();
 		$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
@@ -185,7 +186,7 @@ class Brizy_Public_Main {
 			$context['DEBUG'] = true;
 		}
 
-		$render_block = $template->renderBlock( 'header_content', $context );
+		$render_block = $twig_template->renderBlock( 'header_content', $context );
 		echo $render_block;
 	}
 
@@ -258,14 +259,10 @@ class Brizy_Public_Main {
 		return dirname( __FILE__ ) . "/$rel";
 	}
 
-	private function getEditorTwigTemplate( $template_path = null ) {
+	private function getTwigTemplate( $template_path = null ) {
 
-		if ( $this->twig_template ) {
-			return $this->twig_template;
-		}
-
-		if ( ! $template_path ) {
-			$template_path = $this->project->get_asset_url() . "/editor.html.twig";
+		if ( $this->twig_template[ $template_path ] ) {
+			return $this->twig_template[ $template_path ];
 		}
 
 		$loader = new Twig_Loader_Array( array(
@@ -274,9 +271,9 @@ class Brizy_Public_Main {
 
 
 		$twig     = new Twig_Environment( $loader, array() );
-		$template = $twig->load( 'editor' );
+		$twig_template = $twig->load( 'editor' );
 
-		return $this->twig_template = $template;
+		return $this->twig_template[ $template_path ] = $twig_template;
 	}
 
 	private function getConfigObject() {

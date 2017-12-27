@@ -35,9 +35,23 @@ function _filter_brizy_public_register_page_templates( $templates ) {
 		) );
 }
 
+function _catch_templates( $template ) {
+
+	global $post;
+
+	$template_path = get_post_meta( $post->ID, '_wp_page_template', true );
+
+	if ( basename($template_path)=='brizy-blank-template.php' ) {
+		return Brizy_Editor::get()->get_path( '/public/views/templates/brizy-blank-template.php' );
+	}
+
+	return $template;
+}
+
 foreach ( brizy()->supported_post_types() as $type ) {
 	add_filter( "brizy:$type:templates", '_filter_brizy_public_page_templates' );
 	add_filter( "theme_{$type}_templates", '_filter_brizy_public_register_page_templates' );
+	add_filter( "{$type}_template", '_catch_templates' );
 }
 
 function initialize_front_end_Brizy_Public_Main() {

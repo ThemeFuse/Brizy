@@ -30,7 +30,7 @@ class Brizy_Editor_Assets {
 
 		$this->post    = $post;
 		$this->project = $project;
-		
+
 		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			try {
 
@@ -40,9 +40,9 @@ class Brizy_Editor_Assets {
 
 				add_action( 'parse_request', array( $this, 'handle_editor_assets' ), - 1000 );
 
-				add_action( 'parse_request', array( $this, 'handle_front_end_edirtor_assets' ), - 1000 );
+				add_action( 'parse_request', array( $this, 'handle_front_end_editor_assets' ), - 1000 );
 
-				add_action( 'parse_request', 'handle_media_proxy_handler', - 1000 );
+				add_action( 'parse_request', array( $this, 'handle_media_proxy_handler' ), - 1000 );
 			} catch ( Exception $e ) {
 				header( ' 500 Internal Server Error', true, 500 );
 				exit;
@@ -50,7 +50,9 @@ class Brizy_Editor_Assets {
 		}
 	}
 
-
+	/**
+	 * @param $query
+	 */
 	function handle_editor_assets( $query ) {
 
 		if ( strpos( $_SERVER["REQUEST_URI"], Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL ) === false ) {
@@ -101,7 +103,9 @@ class Brizy_Editor_Assets {
 		$this->send_file_content( $url );
 	}
 
-
+	/**
+	 * @param $query
+	 */
 	function handle_front_end_editor_assets( $query ) {
 
 		$str_splitter = Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL;
@@ -152,7 +156,10 @@ class Brizy_Editor_Assets {
 		}
 	}
 
-	function handle_media_proxy_handler($query) {
+	/**
+	 * @param $query
+	 */
+	function handle_media_proxy_handler( $query ) {
 		$str_splitter = Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL;
 
 		if ( strpos( $query->request, ltrim( $str_splitter, '/' ) ) !== false && isset( $_SERVER['HTTP_REFERER'] ) ) {
@@ -201,6 +208,12 @@ class Brizy_Editor_Assets {
 		}
 	}
 
+	/**
+	 * @param $filename
+	 * @param int $mode
+	 *
+	 * @return mixed|string
+	 */
 	private function get_mime( $filename, $mode = 0 ) {
 
 		// mode 0 = full check
@@ -289,6 +302,9 @@ class Brizy_Editor_Assets {
 
 	}
 
+	/**
+	 * @param $url
+	 */
 	private function send_file_content( $url ) {
 // send the url content
 

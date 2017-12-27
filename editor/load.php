@@ -31,6 +31,8 @@ add_action( 'wp_loaded', 'handler_proxy_requests' );
 
 function handler_proxy_requests( $query ) {
 
+	if(!isset($_SERVER['HTTP_REFERER'])) return;
+
 	$pid  = url_to_postid( $_SERVER['HTTP_REFERER'] );
 	$post = null;
 	try {
@@ -48,9 +50,6 @@ function handler_proxy_requests( $query ) {
 	}
 
 	$asset_editor = new Brizy_Editor_Assets( $project, $post );
-	$asset_editor->handle_editor_assets( $query );
-	$asset_editor->handle_front_end_editor_assets( $query );
-	$asset_editor->handle_media_proxy_handler($query);
 }
 
 

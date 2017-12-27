@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * Template Name: Blank Template
+ */
+
+?>
 <?php if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access forbidden.' );
 }

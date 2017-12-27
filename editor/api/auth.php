@@ -35,10 +35,13 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 	 * @param $email
 	 *
 	 * @return Brizy_Editor_API_AccessToken
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function getToken( $email ) {
-
-		session_start();
 
 		if(isset($_SESSION[md5($this->client_id.$this->secret)]))
 		{
