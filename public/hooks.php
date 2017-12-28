@@ -48,12 +48,6 @@ function _catch_templates( $template ) {
 	return $template;
 }
 
-foreach ( brizy()->supported_post_types() as $type ) {
-	add_filter( "brizy:$type:templates", '_filter_brizy_public_page_templates' );
-	add_filter( "theme_{$type}_templates", '_filter_brizy_public_register_page_templates' );
-	add_filter( "{$type}_template", '_catch_templates' );
-}
-
 function initialize_front_end_Brizy_Public_Main() {
 
 	try {
@@ -104,3 +98,9 @@ function initialize_admin_edit_Brizy_Public_Main() {
 
 add_action( 'wp', 'initialize_front_end_Brizy_Public_Main' );
 add_action( 'wp_loaded', 'initialize_admin_edit_Brizy_Public_Main' );
+
+foreach ( brizy()->supported_post_types() as $type ) {
+	add_filter( "brizy:$type:templates", '_filter_brizy_public_page_templates' );
+	add_filter( "theme_{$type}_templates", '_filter_brizy_public_register_page_templates' );
+	add_filter( "{$type}_template", '_catch_templates' );
+}

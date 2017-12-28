@@ -1,6 +1,6 @@
 {% set staticUrl = editorData.urls.static %}
 {% spaceless %}
-    <div id="brizy-root"></div>
+    <div id="brz-root"></div>
     <script src="{{ staticUrl }}/visual/brizy-init.js"></script>
     <script>
         var config = JSON.parse("{{ editorData | json_encode | e("js") }}");
