@@ -10,25 +10,12 @@ use PHPUnit\Framework\TestCase;
 
 class Brizy_Editor_API_UnitTest extends TestCase {
 
-	public function test_singleton() {
-		$project = new Brizy_Editor_Project( null );
-		$post    = new Brizy_Editor_Post( null, null ); //new Brizy_Editor_Post( (object)array(), 1 );
-
-		$api             = Brizy_Editor_API::instance( $project, $post );
-		$second_instance = Brizy_Editor_API::instance( null, null );
-
-		$this->assertEquals( $api, $second_instance, 'It should return the same instance every time.' );
-
-		$this->assertEquals( $api->get_project(), $second_instance->get_project(), 'It should return the project from initialize' );
-		$this->assertEquals( $api->get_post(), $second_instance->get_post(), 'It should return the post from initialize' );
-	}
 
 	public function test_api_actions() {
 		$project = new Brizy_Editor_Project( (object) array() );
 		$post    = new Brizy_Editor_Post( (object) array(), 1 );
 
-		$instance = Brizy_Editor_API::instance( $project, $post );
-		$instance->initialize();
+		$instance = new Brizy_Editor_API( $project, $post );
 
 		$actions = array(
 			'wp_ajax_' . Brizy_Editor_API::AJAX_PING,

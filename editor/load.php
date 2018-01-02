@@ -23,7 +23,6 @@ function brizy_initialize_Brizy_Public_Api() {
 
 	if ( Brizy_Editor::is_user_allowed() ) {
 		$api_instance = new Brizy_Editor_API( $project, $post );
-		$api_instance->initialize();
 	}
 }
 

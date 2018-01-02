@@ -53,9 +53,11 @@ class Brizy_Editor_API {
 
 		$this->project = $project;
 		$this->post    = $post;
+
+		$this->initialize();
 	}
 
-	public function initialize() {
+	private function initialize() {
 
 		add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
