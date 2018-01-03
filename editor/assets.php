@@ -86,7 +86,7 @@ class Brizy_Editor_Assets {
 			exit;
 		}
 
-		if ( BRIZY_ENV != 'dev' && $res = $this->project->isStoreAssets() && ! $file_exists ) {
+		if ( !BRIZY_DEBUG && $res = $this->project->isStoreAssets() && ! $file_exists ) {
 
 			$editor->store_asset( $url, $path );
 
@@ -142,7 +142,7 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 
-			if ( BRIZY_ENV != 'dev' && $this->post->isStoreAssets() ) {
+			if ( !BRIZY_DEBUG && $this->post->isStoreAssets() ) {
 				$res = $this->post->store_asset( $full_url, $asset_path );
 				$this->post->setStoreAssets( ! $res );
 				$this->post->save();
@@ -194,7 +194,7 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 
-			if ( BRIZY_ENV != 'dev' && $this->post->isStoreAssets() ) {
+			if ( !BRIZY_DEBUG && $this->post->isStoreAssets() ) {
 				$res = $this->post->store_asset( $full_url, $asset_path );
 				$this->post->setStoreAssets( ! $res );
 				$this->post->save();

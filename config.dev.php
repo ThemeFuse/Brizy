@@ -10,8 +10,8 @@ class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'http://api.brizy.io';
 
-	const BRIZY_S3_ASSET_URL = 'https://s3.amazonaws.com/bitblox-test/%s/%s';
-	const EDITOR_STATIC_URL = 'http://api.brizy.io/static';
+	const BRIZY_S3_ASSET_URL = 'http://editor:3000/static';
+	const EDITOR_STATIC_URL = 'http://editor:3000/static';
 
 
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/wp-content/uploads/brizy/media';
@@ -38,5 +38,4 @@ class Brizy_Config {
 	const BRIZY_KEY = '3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s';
 	const BRIZY_EMAIL = 'admin@admin.com';
 	const BRIZY_PASSWORD = 'admin';
-
 }

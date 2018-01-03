@@ -48,8 +48,8 @@ class Brizy_Public_Main {
 			// main page
 
 			add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
+
 			$this->check_project_version();
-			$this->project->setStoreAssets( true )->save();
 
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
 			//add_action( 'wp_head', array( $this, 'editor_head' ), 0 );
@@ -192,10 +192,10 @@ class Brizy_Public_Main {
 
 
 	function _invalidate_editor_assets( $new_version, $old_version ) {
-		$project = Brizy_Editor_Project::get();
-		$project
+		$this->project
 			->invalidateAssetsFor( $old_version )
 			->set_template_version( $new_version )
+			->setStoreAssets(true)
 			->save();
 	}
 
@@ -285,12 +285,17 @@ class Brizy_Public_Main {
 	}
 
 	private function check_project_version() {
-		$project      = Brizy_Editor_Project::get();
-		$api_project  = $project->get_api_project();
-		$project_data = Brizy_Editor_User::get()->get_project( $api_project );
+		//$project      = Brizy_Editor_Project::get();
+		try{
+			$api_project  = $this->project->get_api_project();
+			$project_data = Brizy_Editor_User::get()->get_project( $api_project );
 
-		if ( $project_data['version'] != $project->get_template_version() ) {
-			do_action( 'brizy:project:version_changed', $project_data['version'], $project->get_template_version() );
+			if ( $project_data['version'] != $this->project->get_template_version() ) {
+				do_action( 'brizy:project:version_changed', $project_data['version'], $this->project->get_template_version() );
+			}
+		}
+		catch (Exception $e) {
+			return;
 		}
 	}
 }

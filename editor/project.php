@@ -142,7 +142,7 @@ class Brizy_Editor_Project {
 	}
 
 	public function get_asset_url() {
-		return sprintf( Brizy_Config::BRIZY_S3_ASSET_URL(), $this->get_template_slug(), $this->get_template_version() );
+		return sprintf( Brizy_Config::BRIZY_S3_ASSET_URL, $this->get_template_slug(), $this->get_template_version() );
 	}
 
 	public function get_asset_path() {
