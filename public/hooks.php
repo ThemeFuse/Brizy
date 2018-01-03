@@ -68,7 +68,7 @@ function initialize_front_end_Brizy_Public_Main() {
 		$main->initialize_front_end();
 
 	} catch ( Exception $e ) {
-		throw new Exception( $e->getMessage(), 500 );
+
 	}
 }
 
