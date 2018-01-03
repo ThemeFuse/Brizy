@@ -93,6 +93,7 @@ function initialize_admin_edit_Brizy_Public_Main() {
 		$main->initialize_wordpress_editor();
 
 	} catch ( Exception $e ) {
+
 	}
 }
 
