@@ -90,7 +90,7 @@ class Brizy_Editor_Assets {
 
 			$editor->store_asset( $url, $path );
 
-			$this->project->setStoreAssets( ! $res );
+			$this->project->setStoreAssets( false );
 			$this->project->save();
 
 			$asset_url = $editor->get_asset_url() . $asset_path;
@@ -306,9 +306,8 @@ class Brizy_Editor_Assets {
 	 * @param $url
 	 */
 	private function send_file_content( $url ) {
-// send the url content
 
-		$response = wp_remote_get( $url );
+		$response = wp_remote_get( $url, array('timeout'=>10) );
 
 		if ( $response instanceof WP_Error ) {
 			return;
