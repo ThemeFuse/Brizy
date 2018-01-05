@@ -61,9 +61,8 @@ class Brizy_Public_Main {
 
 			try {
 				// compile page before showing..
-				$this->post
-					->compile_page()
-					->save();
+				$this->post->compile_page();
+				$this->post->save();
 			} catch ( Exception $e ) {
 				// handle this 
 			}
