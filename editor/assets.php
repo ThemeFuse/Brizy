@@ -43,6 +43,7 @@ class Brizy_Editor_Assets {
 				add_action( 'parse_request', array( $this, 'handle_front_end_editor_assets' ), - 1000 );
 
 				add_action( 'parse_request', array( $this, 'handle_media_proxy_handler' ), - 1000 );
+
 			} catch ( Exception $e ) {
 				header( ' 500 Internal Server Error', true, 500 );
 				exit;
