@@ -1,4 +1,6 @@
-<?php if ( ! defined( 'ABSPATH' ) ) {
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access forbidden.' );
 }
 
@@ -67,7 +69,7 @@ class Brizy_Admin_Main {
                 dropdown.insertAdjacentHTML('afterbegin', '<a href="' + url + '">Brizy</a>');
             });
         </script>
-		<?
+		<?php
 	}
 
 	public function plugin_action_links( $links ) {
@@ -461,5 +463,4 @@ class Brizy_Admin_Main {
 
 		exit;
 	}
-
 }
