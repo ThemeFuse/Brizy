@@ -74,7 +74,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	}
 
 	public function add_media( $project_id, $base64 ) {
-		return $this->post( "projects/$project_id/media", array( 'body' => array( 'attachment' => $base64 ) ) )->get_response_body();
+		return $this->post( "projects/$project_id/media", array('timeout'=>30, 'body' => array( 'attachment' => $base64 ) ) )->get_response_body();
 	}
 
 	protected function get_headers() {

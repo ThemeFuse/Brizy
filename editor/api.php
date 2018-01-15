@@ -301,7 +301,7 @@ class Brizy_Editor_API {
 	}
 
 	protected function error( $code, $message ) {
-		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
+		wp_send_json_error( array( 'code' => $code, 'message' => $message ), 500 );
 	}
 
 	protected function success( $data ) {

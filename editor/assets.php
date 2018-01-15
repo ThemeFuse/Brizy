@@ -308,10 +308,12 @@ class Brizy_Editor_Assets {
 	 */
 	private function send_file_content( $url ) {
 
-		$response = wp_remote_get( $url, array('timeout'=>10) );
+		$response = wp_remote_get( $url, array('timeout'=>30) );
 
-		if ( $response instanceof WP_Error ) {
-			return;
+		if ( $response instanceof WP_Error || $response['response']['code']!=200) {
+
+			header( ' 500 Internal Server Error', true, 500 );
+			exit;
 		}
 
 		/**
@@ -334,7 +336,6 @@ class Brizy_Editor_Assets {
 
 			header( "{$key}: {$val}" );
 		}
-
 
 		echo $http_response->get_data();
 		exit;
