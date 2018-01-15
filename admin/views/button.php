@@ -23,7 +23,7 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
         } else {
             ?>
 	        <?php echo _e( $label, 'brizy' ); ?> <img src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?>" class="brizy-logo" />
-	        <?
+	        <?php
         }
         ?>
     </a>
