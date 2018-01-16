@@ -87,7 +87,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		return implode( '/', array( Brizy_Config::GATEWAY_URI, 'v1', $suffix ) );
 	}
 
-	public function request( $url, array $options = array(), $method = 'GET' ) {
+	public function request( $url, $options = array(), $method = 'GET' ) {
 
 		if ( ! isset( $options['headers'] ) ) {
 			$options['headers'] = array();

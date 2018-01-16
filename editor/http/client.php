@@ -14,7 +14,7 @@ class Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function request( $url, array $options = array(), $method = 'GET' ) {
+	public function request( $url, $options = array(), $method = 'GET' ) {
 
 		$http = new WP_Http();
 
@@ -60,7 +60,7 @@ class Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function get( $url, array $options = array() ) {
+	public function get( $url, $options = array() ) {
 		return $this->request( $url, $options, 'GET' );
 	}
 
