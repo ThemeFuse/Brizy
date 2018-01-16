@@ -83,6 +83,13 @@ class Brizy_Editor_Assets {
 		if ( $file_exists ) {
 			$asset_url = $editor->get_asset_url() . $asset_path;
 
+			// add cache headers for this request
+			header_remove( 'Expires' );
+			header_remove( 'Cache-Control' );
+			header_remove( 'Pragma' );
+
+			header( 'Cache-Control: max-age=600' );
+
 			wp_redirect( $asset_url, 302 );
 			exit;
 		}
@@ -139,6 +146,13 @@ class Brizy_Editor_Assets {
 			if ( $file_exists ) {
 				$asset_url = $editor->get_asset_url() . $asset_path;
 
+				// add cache headers for this request
+				header_remove( 'Expires' );
+				header_remove( 'Cache-Control' );
+				header_remove( 'Pragma' );
+
+				header( 'Cache-Control: max-age=600' );
+
 				wp_redirect( $asset_url, 302 );
 				exit;
 			}
@@ -190,6 +204,13 @@ class Brizy_Editor_Assets {
 
 			if ( $file_exists ) {
 				$asset_url = $editor->get_asset_url() . $asset_path;
+
+				// add cache headers for this request
+				header_remove( 'Expires' );
+				header_remove( 'Cache-Control' );
+				header_remove( 'Pragma' );
+
+				header( 'Cache-Control: max-age=600' );
 
 				wp_redirect( $asset_url, 302 );
 				exit;
