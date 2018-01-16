@@ -20,6 +20,11 @@ class Brizy_Editor {
 		{
 			$user = wp_get_current_user();
 
+			if($user->ID==0) {
+				self::$is_allowed_for_current_user = false;
+				return self::$is_allowed_for_current_user;
+			};
+
 			$excluded_roles = array();
 
 			try {

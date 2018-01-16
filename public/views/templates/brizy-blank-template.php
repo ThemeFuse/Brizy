@@ -1,14 +1,13 @@
 <?php
-
 /**
  * Template Name: Blank Template
  */
-
 ?>
 <?php if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access forbidden.' );
 }
 ?>
+<!DOCTYPE html>
 <html>
 <head>
     <title><?php wp_title() ?></title>

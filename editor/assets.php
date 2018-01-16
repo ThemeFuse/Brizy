@@ -87,7 +87,7 @@ class Brizy_Editor_Assets {
 			exit;
 		}
 
-		if ( !BRIZY_DEBUG && $res = $this->project->isStoreAssets() && ! $file_exists ) {
+		if ( ! BRIZY_DEBUG && $res = $this->project->isStoreAssets() && ! $file_exists ) {
 
 			$editor->store_asset( $url, $path );
 
@@ -143,7 +143,7 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 
-			if ( !BRIZY_DEBUG && $this->post->isStoreAssets() ) {
+			if ( ! BRIZY_DEBUG && $this->post->isStoreAssets() ) {
 				$res = $this->post->store_asset( $full_url, $asset_path );
 				$this->post->setStoreAssets( ! $res );
 				$this->post->save();
@@ -195,7 +195,7 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 
-			if ( !BRIZY_DEBUG && $this->post->isStoreAssets() ) {
+			if ( ! BRIZY_DEBUG && $this->post->isStoreAssets() ) {
 				$res = $this->post->store_asset( $full_url, $asset_path );
 				$this->post->setStoreAssets( ! $res );
 				$this->post->save();
@@ -308,17 +308,23 @@ class Brizy_Editor_Assets {
 	 */
 	private function send_file_content( $url ) {
 
-		$response = wp_remote_get( $url, array('timeout'=>30) );
+		$response = wp_remote_get( $url, array( 'timeout' => 30 ) );
 
-		if ( $response instanceof WP_Error || $response['response']['code']!=200) {
+		if ( $response instanceof WP_Error ) {
 
 			header( ' 500 Internal Server Error', true, 500 );
 			exit;
 		}
 
-		header_remove('Expires');
-		header_remove('Cache-Control');
-		header_remove('Pragma');
+		if ( $response['response']['code'] != 200 ) {
+
+			header( $response['response']['message'], true, $response['response']['code'] );
+			exit;
+		}
+
+		header_remove( 'Expires' );
+		header_remove( 'Cache-Control' );
+		header_remove( 'Pragma' );
 
 		/**
 		 * @var WP_HTTP_Requests_Response $http_response
@@ -333,7 +339,7 @@ class Brizy_Editor_Assets {
 
 		$headers['content-type'] = $this->get_mime( $url, 1 );
 
-		
+
 		foreach ( $headers as $key => $val ) {
 			if ( is_array( $val ) ) {
 				$val = implode( ', ', $val );
