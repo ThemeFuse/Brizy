@@ -17,7 +17,7 @@ class Brizy_Editor_Editor_Editor {
 	 *
 	 * @return Brizy_Editor_Editor_Editor
 	 */
-	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
+	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
 		return new self( $project, $post );
 	}
 
@@ -27,17 +27,24 @@ class Brizy_Editor_Editor_Editor {
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
+	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
 		$this->post    = $post;
 		$this->project = $project;
 	}
 
 	protected function get_post() {
+
+		if ( ! ( $this->post instanceof Brizy_Editor_Post ) ) {
+			$class = get_class( $this );
+			throw new Exception( "The class {$class} must be initialize with all parameters" );
+		}
+
 		return $this->post;
 	}
 
 	/**
 	 * @return array
+	 * @throws Exception
 	 */
 	public function config() {
 		return array(
@@ -64,14 +71,16 @@ class Brizy_Editor_Editor_Editor {
 			),
 			'serverTimestamp' => time(),
 			'urls'            => array(
-				'api'           => home_url( '/wp-json/v1' ),
-				'base'          => Brizy_Config::EDITOR_BASE_URL,
-				'integration'   => Brizy_Config::EDITOR_INTEGRATION_URL,
-				'image'         => brizy()->get_asset_url( Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL  ),  // proxy
-				'origin'        => Brizy_Config::EDITOR_ORIGIN_URL,
-				'primary'       => Brizy_Config::EDITOR_STATIC_URL,
-				'static'        => brizy()->get_asset_url( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL . '/' . $this->get_post()->get_id() ),  // proxy
-				'change_template_url' => admin_url( 'admin-post.php?post='.$this->get_post()->get_id().'&action=_brizy_change_template' )
+				'api'                 => home_url( '/wp-json/v1' ),
+				'base'                => Brizy_Config::EDITOR_BASE_URL,
+				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
+				'image'               => brizy()->get_asset_url( Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL ),
+				// proxy
+				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
+				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
+				'static'              => brizy()->get_asset_url( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL . '/' . $this->get_post()->get_id() ),
+				// proxy
+				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' )
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
@@ -114,6 +123,7 @@ class Brizy_Editor_Editor_Editor {
 
 	public function store_asset( $asset_source, $asset_path ) {
 
+		$full_asset_path = null;
 		try {
 			// check destination dir
 			$dir_path = dirname( rtrim( ABSPATH, '/' ) . $asset_path );
@@ -145,6 +155,10 @@ class Brizy_Editor_Editor_Editor {
 
 		} catch ( Exception $e ) {
 			$t = 0;
+
+			// clean up
+			if($full_asset_path)
+				@unlink($full_asset_path);
 
 			return false;
 		}

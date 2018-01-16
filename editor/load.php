@@ -30,22 +30,16 @@ add_action( 'wp_loaded', 'handler_proxy_requests' );
 
 function handler_proxy_requests( $query ) {
 
-	if(!isset($_SERVER['HTTP_REFERER'])) return;
-
-	$pid  = url_to_postid( $_SERVER['HTTP_REFERER'] );
-	$post = null;
-	try {
-
-		$project = Brizy_Editor_Project::get();
-
-		if ( $pid ) {
-			$post = Brizy_Editor_Post::get( $pid );
-		} else {
-			throw new Exception( 'Unknown post id.' );
-		}
-
-	} catch ( Exception $e ) {
+	if ( ! isset( $_SERVER['HTTP_REFERER'] ) ) {
 		return;
+	}
+
+	$pid     = url_to_postid( $_SERVER['HTTP_REFERER'] );
+	$post    = null;
+	$project = Brizy_Editor_Project::get();
+
+	if ( $pid ) {
+		$post = Brizy_Editor_Post::get( $pid );
 	}
 
 	$asset_editor = new Brizy_Editor_Assets( $project, $post );
