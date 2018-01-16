@@ -316,6 +316,10 @@ class Brizy_Editor_Assets {
 			exit;
 		}
 
+		header_remove('Expires');
+		header_remove('Cache-Control');
+		header_remove('Pragma');
+
 		/**
 		 * @var WP_HTTP_Requests_Response $http_response
 		 */
@@ -325,10 +329,11 @@ class Brizy_Editor_Assets {
 
 		unset( $headers['server'] );
 		unset( $headers['content-encoding'] );
-		unset( $headers['cache-control'] );
+		unset( $headers['expires'] );
 
 		$headers['content-type'] = $this->get_mime( $url, 1 );
 
+		
 		foreach ( $headers as $key => $val ) {
 			if ( is_array( $val ) ) {
 				$val = implode( ', ', $val );
