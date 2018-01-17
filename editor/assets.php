@@ -92,7 +92,7 @@ class Brizy_Editor_Assets {
 			exit;
 		}
 
-		if ( ! BRIZY_DEBUG && $res = $this->project->isStoreAssets() && ! $file_exists ) {
+		//if ( ! BRIZY_DEBUG && $res = $this->project->isStoreAssets() && ! $file_exists ) {
 
 			$editor->store_asset( $url, $path );
 
@@ -101,9 +101,9 @@ class Brizy_Editor_Assets {
 
 			$asset_url = $editor->get_asset_url() . $asset_path;
 
-			wp_redirect( $asset_url, 302 );
-			exit;
-		}
+			//wp_redirect( $asset_url, 302 );
+			//exit;
+		//}
 
 		// send the url content
 		$this->send_file_content( $url );
@@ -155,15 +155,15 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 
-			if ( ! BRIZY_DEBUG && $this->post->isStoreAssets() ) {
+			//if ( ! BRIZY_DEBUG && $this->post->isStoreAssets() ) {
 				$res = $this->post->store_asset( $full_url, $asset_path );
 				$this->post->setStoreAssets( ! $res );
 				$this->post->save();
 
 				// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-				wp_redirect( get_site_url() . '/' . $asset_path, 302 );
-				exit;
-			}
+				//wp_redirect( get_site_url() . '/' . $asset_path, 302 );
+				//exit;
+			//}
 
 			$this->send_file_content( $full_url );
 		}
@@ -214,15 +214,15 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 
-			if ( ! BRIZY_DEBUG && $this->post->isStoreAssets() ) {
+			//if ( ! BRIZY_DEBUG && $this->post->isStoreAssets() ) {
 				$res = $this->post->store_asset( $full_url, $asset_path );
 				$this->post->setStoreAssets( ! $res );
 				$this->post->save();
 
 				// we found a file that is loaded from remote server.. we shuold 302 redirect it to the right address
-				wp_redirect( get_site_url() . '/' . $asset_path, 302 );
-				exit;
-			}
+				//wp_redirect( get_site_url() . '/' . $asset_path, 302 );
+				//exit;
+			//}
 
 			$this->send_file_content( $full_url );
 		}
