@@ -25,7 +25,7 @@ class Brizy_Config {
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
 	const MEDIA_IMAGE_PATH = '/storage/media';
-	const MEDIA_IMAGE_URL = 'https://platform-admin.brizy.io/storage/media';
+	const MEDIA_IMAGE_URL = 'https://app.brizy.io/storage/media';
 	const EDITOR_ORIGIN_URL = 'http://testblox.info';
 
 	const EDITOR_HOST_API = 'api.testblox.info';
