@@ -30,15 +30,15 @@ add_action( 'wp_loaded', 'handler_proxy_requests' );
 
 function handler_proxy_requests( $query ) {
 
-	if ( ! isset( $_SERVER['HTTP_REFERER'] ) ) {
-		return;
-	}
-
-	$pid     = url_to_postid( $_SERVER['HTTP_REFERER'] );
 	$post    = null;
 	$project = Brizy_Editor_Project::get();
 
-	if ( $pid ) {
+    $pid  = brizy_get_current_post_id();
+
+    if(!$pid && $_SERVER['HTTP_REFERER'])
+        $pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
+
+	if ( $pid  ) {
 		$post = Brizy_Editor_Post::get( $pid );
 	}
 
