@@ -121,7 +121,7 @@ class Brizy_Editor_Assets
     {
         $str_splitter = Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL;
 
-        if (strpos($query->request, ltrim($str_splitter, '/')) !== false) {
+        if (strpos($_SERVER['REQUEST_URI'], ltrim($str_splitter, '/')) !== false) {
             session_write_close();
 
             $editor = Brizy_Editor_Editor_Editor::get($this->project, $this->post);
@@ -175,7 +175,7 @@ class Brizy_Editor_Assets
     {
         $str_splitter = Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL;
 
-        if (strpos($query->request, ltrim($str_splitter, '/')) !== false) {
+        if (strpos($_SERVER['REQUEST_URI'], ltrim($str_splitter, '/')) !== false) {
 
 
             session_write_close();
