@@ -10,7 +10,7 @@ class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'http://api.brizy.io';
 
-	const BRIZY_S3_ASSET_URL = 'https://s3.amazonaws.com/bitblox-test/%s/%s';
+	const BRIZY_S3_ASSET_URL = 'http://static.brizy.io/%s/%s';
 	const EDITOR_STATIC_URL = 'http://api.brizy.io/static';
 
 
