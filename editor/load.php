@@ -7,22 +7,28 @@ include_once 'functions.php';
 add_action( 'wp_loaded', 'brizy_initialize_Brizy_Public_Api' );
 
 function brizy_initialize_Brizy_Public_Api() {
-	$pid  = brizy_get_current_post_id();
-	$post = null;
+
 	try {
+		$pid  = brizy_get_current_post_id();
+		$post = null;
+		try {
 
-		$project = Brizy_Editor_Project::get();
+			$project = Brizy_Editor_Project::get();
 
-		if ( $pid ) {
-			$post = Brizy_Editor_Post::get( $pid );
+			if ( $pid ) {
+				$post = Brizy_Editor_Post::get( $pid );
+			}
+
+		} catch ( Exception $e ) {
+			return;
+		}
+
+		if ( Brizy_Editor::is_user_allowed() ) {
+			$api_instance = new Brizy_Editor_API( $project, $post );
 		}
 
 	} catch ( Exception $e ) {
-		return;
-	}
-
-	if ( Brizy_Editor::is_user_allowed() ) {
-		$api_instance = new Brizy_Editor_API( $project, $post );
+		// do nothing if there is an exception
 	}
 }
 
@@ -30,19 +36,24 @@ add_action( 'wp_loaded', 'handler_proxy_requests' );
 
 function handler_proxy_requests( $query ) {
 
-	$post    = null;
-	$project = Brizy_Editor_Project::get();
+	try {
+		$post    = null;
+		$project = Brizy_Editor_Project::get();
 
-    $pid  = brizy_get_current_post_id();
+		$pid = brizy_get_current_post_id();
 
-    if(!$pid && $_SERVER['HTTP_REFERER'])
-        $pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
+		if ( ! $pid && $_SERVER['HTTP_REFERER'] ) {
+			$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
+		}
 
-	if ( $pid  ) {
-		$post = Brizy_Editor_Post::get( $pid );
+		if ( $pid ) {
+			$post = Brizy_Editor_Post::get( $pid );
+		}
+
+		$asset_editor = new Brizy_Editor_Assets( $project, $post );
+	} catch ( Exception $e ) {
+		// do nothing if there is an exception
 	}
-
-	$asset_editor = new Brizy_Editor_Assets( $project, $post );
 }
 
 
