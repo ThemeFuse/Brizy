@@ -15,6 +15,7 @@ class Brizy_Editor_API {
 	const AJAX_SHORTCODE_CONTENT = 'brizy_shortcode_content';
 	const AJAX_SHORTCODE_LIST = 'brizy_shortcode_list';
 	const AJAX_GET_TEMPLATES = 'brizy_get_templates';
+	const AJAX_GET_INTERNAL_LINKS = 'brizy_get_internal_links';
 
 
 	static private $instance;
@@ -71,6 +72,7 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
 	}
 
 	/**
@@ -146,8 +148,8 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$content  = $this->param( 'data' );
-			$title    = $this->param( 'title' );
+			$content   = $this->param( 'data' );
+			$title     = $this->param( 'title' );
 			$atemplate = $this->param( 'template' );
 
 			if ( $title ) {
@@ -257,6 +259,18 @@ class Brizy_Editor_API {
 		}
 	}
 
+	public function get_internal_links() {
+
+		$search_term = $this->param( 'filter_term' );
+
+		$links = array();
+		$links = array_merge( $links, $this->get_post_link_list( $search_term ) );
+		$links = array_merge( $links, $this->get_term_link_list( $search_term ) );
+
+		return wp_send_json( [ 'filter_term' => $search_term, 'links' => $links ], 200 );
+	}
+
+
 	public function get_sidebars() {
 		global $wp_registered_sidebars;
 
@@ -357,5 +371,106 @@ class Brizy_Editor_API {
 				'id'    => null,
 			),
 		);
+	}
+
+	/**
+	 * Return an array of terms
+	 *
+	 * Ex: ['label'=>'Term name',
+	 *      'url'=>'term url',
+	 *      'taxonomy'=>'taxonomy name']
+	 *
+	 * @return array
+	 */
+	private function get_term_link_list( $search_term ) {
+
+		$links = array();
+
+		$args = array();
+
+		if($search_term) {
+			$args['name__like'] = $search_term;
+		}
+
+		$terms = get_terms($args);
+
+		foreach ( $terms as $term ) {
+			$links[] = (object) array(
+				'label'    => $term->name,
+				'url'      => get_term_link( $term ),
+				'taxonomy' => $term->taxonomy
+			);
+		}
+
+		return $links;
+	}
+
+	/**
+	 * @param $search_term
+	 *
+	 * @return array
+	 */
+	private function get_post_link_list( $search_term ) {
+
+		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
+
+		$post_query = array(
+			'post_type'      => 'any',
+			'posts_per_page' => - 1,
+			'post_status'    => 'publish',
+			'orderby'        => 'post_title',
+			'order'          => 'ASC'
+		);
+
+		if ( $search_term ) {
+			$post_query['post_title_term'] = $search_term;
+		}
+
+		$posts = new WP_Query( $post_query );
+
+		$links = array();
+
+		foreach ( $posts->posts as $post ) {
+			$permalink = null;
+			switch ( $post->post_type ) {
+				case 'revision':
+				case 'nav_menu_item':
+					continue;
+				case 'page':
+					$permalink = get_page_link( $post->ID );
+					break;
+				case 'post':
+					$permalink = get_permalink( $post->ID );
+					break;
+				case 'attachment':
+					$permalink = get_attachment_link( $post->ID );
+					break;
+				default:
+					$permalink = get_post_permalink( $post->ID );
+					break;
+			}
+
+			$label = get_the_title( $post );
+
+			$links[] = (object) array( 'label' => $label, 'url' => $permalink, 'post_type' => $post->post_type );
+		}
+
+		remove_filter( 'posts_where', 'brizy_post_title_filter', 10, 2 );
+
+		return $links;
+	}
+
+	public function brizy_post_title_filter( $where, &$wp_query ) {
+
+		global $wpdb;
+
+		if ( $term = $wp_query->get( 'post_title_term' ) ) {
+			$search_term = $wpdb->esc_like( $term );
+			$search_term = ' \'%' . $search_term . '%\'';
+
+			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE ' . $search_term;
+		}
+
+		return $where;
 	}
 }

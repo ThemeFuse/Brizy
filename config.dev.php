@@ -10,8 +10,8 @@ class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'http://api.brizy.io';
 
-	const BRIZY_S3_ASSET_URL = 'http://brizy.local:3000/static';
-	const EDITOR_STATIC_URL = 'http://brizy.local:3000/static';
+	const BRIZY_S3_ASSET_URL = 'http://editor:3000/static';
+	const EDITOR_STATIC_URL = 'http://editor:3000/static';
 
 
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/wp-content/uploads/brizy/media';

@@ -108,6 +108,7 @@ class Brizy_Editor_Editor_Editor {
 					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
 					'shortcodeList'    => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
 					'getTemplates'     => Brizy_Editor_API::AJAX_GET_TEMPLATES,
+					'getInternalLinks'     => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
 				),
 				'shortcodes' => array(
 					'sidebar' => BRIZY_SHORTCODES_PREFIX . 'sidebar'
