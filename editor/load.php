@@ -42,7 +42,7 @@ function handler_proxy_requests( $query ) {
 
 		$pid = brizy_get_current_post_id();
 
-		if ( ! $pid && $_SERVER['HTTP_REFERER'] ) {
+		if ( ! $pid && isset($_SERVER['HTTP_REFERER']) ) {
 			$pid = url_to_postid( $_SERVER['HTTP_REFERER'] );
 		}
 

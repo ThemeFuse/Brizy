@@ -31,7 +31,7 @@ function _filter_brizy_public_page_templates( $templates ) {
 function _filter_brizy_public_register_page_templates( $templates ) {
 	return array_merge( $templates,
 		array(
-			'brizy-blank-template.php' => __( 'Brizy Template', 'brizy' )
+			Brizy_Config::BRIZY_TEMPLTAE_FILE_NAME => __( 'Brizy Template', 'brizy' )
 		) );
 }
 
@@ -41,7 +41,7 @@ function _catch_templates( $template ) {
 
 	$template_path = get_post_meta( $post->ID, '_wp_page_template', true );
 
-	if ( basename($template_path)=='brizy-blank-template.php' ) {
+	if ( basename($template_path)==Brizy_Config::BRIZY_TEMPLTAE_FILE_NAME ) {
 		return Brizy_Editor::get()->get_path( '/public/views/templates/brizy-blank-template.php' );
 	}
 
