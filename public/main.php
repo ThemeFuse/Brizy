@@ -50,8 +50,8 @@ class Brizy_Public_Main {
 			add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
 
 			$this->check_project_version();
-
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
+			wp_enqueue_script( 'wp-api' );
 			//add_action( 'wp_head', array( $this, 'editor_head' ), 0 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), 100 );
 			add_filter( 'show_admin_bar', '__return_false' );

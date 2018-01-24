@@ -16,6 +16,7 @@ class Brizy_Editor_API {
 	const AJAX_SHORTCODE_LIST = 'brizy_shortcode_list';
 	const AJAX_GET_TEMPLATES = 'brizy_get_templates';
 	const AJAX_GET_INTERNAL_LINKS = 'brizy_get_internal_links';
+	const AJAX_GET_WOOCOMERCE_INSTALL_STATUS = 'brizy_woocomerce_install_status';
 
 
 	static private $instance;
@@ -73,6 +74,10 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_WOOCOMERCE_INSTALL_STATUS, array(
+			$this,
+			'get_woocomerce_install_status'
+		) );
 	}
 
 	/**
@@ -388,11 +393,11 @@ class Brizy_Editor_API {
 
 		$args = array();
 
-		if($search_term) {
+		if ( $search_term ) {
 			$args['name__like'] = $search_term;
 		}
 
-		$terms = get_terms($args);
+		$terms = get_terms( $args );
 
 		foreach ( $terms as $term ) {
 			$links[] = (object) array(
@@ -472,5 +477,9 @@ class Brizy_Editor_API {
 		}
 
 		return $where;
+	}
+
+	public function get_woocomerce_install_status() {
+		return wp_send_json( [ 'installed' => function_exists( 'wc' ) ] );
 	}
 }
