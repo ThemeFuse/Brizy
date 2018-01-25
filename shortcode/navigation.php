@@ -6,7 +6,7 @@
  * Time: 5:14 PM
  */
 
-class Brizy_Shortcode_Posts extends Brizy_Shortcode_AbstractShortcode {
+class Brizy_Shortcode_Navigation extends Brizy_Shortcode_AbstractShortcode {
 
 	/**
 	 * Get shortcode name
@@ -14,7 +14,7 @@ class Brizy_Shortcode_Posts extends Brizy_Shortcode_AbstractShortcode {
 	 * @return string
 	 */
 	public function getName() {
-		return 'posts';
+		return 'navigation';
 	}
 
 	/**
@@ -24,11 +24,8 @@ class Brizy_Shortcode_Posts extends Brizy_Shortcode_AbstractShortcode {
 	 * @return mixed|string
 	 */
 	public function render( $atts, $content=null ) {
-		ob_start();
-
-		echo "To be implemented";
-
-		return ob_get_clean();
+		extract(shortcode_atts(array( 'name' => null, ), $atts));
+		return wp_nav_menu( array( 'menu' => $name, 'echo' => false ) );
 	}
 
 }

@@ -16,7 +16,7 @@ class Brizy_Editor_API {
 	const AJAX_SHORTCODE_LIST = 'brizy_shortcode_list';
 	const AJAX_GET_TEMPLATES = 'brizy_get_templates';
 	const AJAX_GET_INTERNAL_LINKS = 'brizy_get_internal_links';
-	const AJAX_GET_WOOCOMERCE_INSTALL_STATUS = 'brizy_woocomerce_install_status';
+	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 
 
 	static private $instance;
@@ -74,10 +74,7 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_WOOCOMERCE_INSTALL_STATUS, array(
-			$this,
-			'get_woocomerce_install_status'
-		) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 	}
 
 	/**
@@ -479,7 +476,9 @@ class Brizy_Editor_API {
 		return $where;
 	}
 
-	public function get_woocomerce_install_status() {
-		return wp_send_json( [ 'installed' => function_exists( 'wc' ) ] );
+
+	public function get_menu_list() {
+		return wp_send_json( wp_get_nav_menus(), 200 );
 	}
+
 }

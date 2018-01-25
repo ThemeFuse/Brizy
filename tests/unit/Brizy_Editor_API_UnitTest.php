@@ -30,7 +30,6 @@ class Brizy_Editor_API_UnitTest extends TestCase {
 			'wp_ajax_' . Brizy_Editor_API::AJAX_SHORTCODE_LIST,
 			'wp_ajax_' . Brizy_Editor_API::AJAX_GET_TEMPLATES,
 			'wp_ajax_' . Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
-			'wp_ajax_' . Brizy_Editor_API::AJAX_GET_WOOCOMERCE_INSTALL_STATUS,
 		);
 
 

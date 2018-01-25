@@ -18,11 +18,12 @@ class Brizy_Shortcode_Sidebar extends Brizy_Shortcode_AbstractShortcode {
 	}
 
 	/**
-	 * @param array $atts
+	 * @param $atts
+	 * @param null $content
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
-	public function render( $atts ) {
+	public function render( $atts, $content = null ) {
 		$id = isset( $atts['id'] ) ? $atts['id'] : null;
 
 		if ( $id ) {

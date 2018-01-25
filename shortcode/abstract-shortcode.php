@@ -19,10 +19,11 @@ abstract class Brizy_Shortcode_AbstractShortcode {
 
 	/**
 	 * @param $atts
+	 * @param null $content
 	 *
-	 * @return string
+	 * @return mixed
 	 */
-	abstract public function render($atts);
+	abstract public function render($atts, $content=null);
 
 	/**
 	 * Brizy_AbstractSidebar constructor.

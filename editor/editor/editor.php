@@ -92,25 +92,29 @@ class Brizy_Editor_Editor_Editor {
 				'page'      => $this->post->get_id(),
 				'templates' => $this->post->get_templates(),
 				'api'       => array(
-					'hash'                  => wp_create_nonce( Brizy_Editor_API::nonce ),
-					'url'                   => admin_url( 'admin-ajax.php' ),
-					'globals'               => array(
+					'hash'             => wp_create_nonce( Brizy_Editor_API::nonce ),
+					'url'              => admin_url( 'admin-ajax.php' ),
+					'globals'          => array(
 						'set' => Brizy_Editor_API::AJAX_SET_GLOBALS,
 						'get' => Brizy_Editor_API::AJAX_GET_GLOBALS,
 					),
-					'media'                 => Brizy_Editor_API::AJAX_MEDIA,
-					'ping'                  => Brizy_Editor_API::AJAX_PING,
-					'getPage'               => Brizy_Editor_API::AJAX_GET,
-					'updatePage'            => Brizy_Editor_API::AJAX_UPDATE,
-					'getSidebars'           => Brizy_Editor_API::AJAX_SIDEBARS,
-					'buildContent'          => Brizy_Editor_API::AJAX_BUILD,
-					'sidebarContent'        => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
-					'shortcodeContent'      => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
-					'shortcodeList'         => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
-					'getTemplates'          => Brizy_Editor_API::AJAX_GET_TEMPLATES,
-					'getInternalLinks'      => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
-					'isWoocomerceInstalled' => Brizy_Editor_API::AJAX_GET_WOOCOMERCE_INSTALL_STATUS,
+					'media'            => Brizy_Editor_API::AJAX_MEDIA,
+					'ping'             => Brizy_Editor_API::AJAX_PING,
+					'getPage'          => Brizy_Editor_API::AJAX_GET,
+					'updatePage'       => Brizy_Editor_API::AJAX_UPDATE,
+					'getSidebars'      => Brizy_Editor_API::AJAX_SIDEBARS,
+					'buildContent'     => Brizy_Editor_API::AJAX_BUILD,
+					'sidebarContent'   => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
+					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+					'shortcodeList'    => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
+					'getTemplates'     => Brizy_Editor_API::AJAX_GET_TEMPLATES,
+					'getInternalLinks' => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
+					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
 				),
+				'plugins'   => array(
+					'woocommerce' => $this->get_woocomerce_plugin_info()
+				),
+				//'menus' =>  wp_get_nav_menus()
 //				'shortcodes' => array(
 //					'sidebar' => 'brizy_sidebar'
 //				)
@@ -167,5 +171,13 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		return true;
+	}
+
+	private function get_woocomerce_plugin_info() {
+		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {
+			return array( 'version' => WooCommerce::instance()->version );
+		}
+
+		return null;
 	}
 }
