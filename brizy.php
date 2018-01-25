@@ -21,7 +21,7 @@ define( 'BRIZY_PLUGIN_URL', plugin_dir_url( BRIZY_FILE ) );
 
 include_once 'autoload.php';
 include_once 'editor/load.php';
-include_once 'shortcodes/load.php';
+include_once 'shortcode/load.php';
 include_once 'public/hooks.php';
 include_once 'admin/load.php';
 

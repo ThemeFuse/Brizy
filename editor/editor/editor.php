@@ -88,32 +88,32 @@ class Brizy_Editor_Editor_Editor {
 				'template' => null
 			),
 			'wp'              => array(
-				'permalink'  => get_permalink( $this->post->get_id() ),
-				'page'       => $this->post->get_id(),
-				'templates'  => $this->post->get_templates(),
-				'api'        => array(
-					'hash'                 => wp_create_nonce( Brizy_Editor_API::nonce ),
-					'url'                  => admin_url( 'admin-ajax.php' ),
-					'globals'              => array(
+				'permalink' => get_permalink( $this->post->get_id() ),
+				'page'      => $this->post->get_id(),
+				'templates' => $this->post->get_templates(),
+				'api'       => array(
+					'hash'                  => wp_create_nonce( Brizy_Editor_API::nonce ),
+					'url'                   => admin_url( 'admin-ajax.php' ),
+					'globals'               => array(
 						'set' => Brizy_Editor_API::AJAX_SET_GLOBALS,
 						'get' => Brizy_Editor_API::AJAX_GET_GLOBALS,
 					),
-					'media'                => Brizy_Editor_API::AJAX_MEDIA,
-					'ping'                 => Brizy_Editor_API::AJAX_PING,
-					'getPage'              => Brizy_Editor_API::AJAX_GET,
-					'updatePage'           => Brizy_Editor_API::AJAX_UPDATE,
-					'getSidebars'          => Brizy_Editor_API::AJAX_SIDEBARS,
-					'buildContent'         => Brizy_Editor_API::AJAX_BUILD,
-					'sidebarContent'       => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
-					'shortcodeContent'     => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
-					'shortcodeList'        => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
-					'getTemplates'         => Brizy_Editor_API::AJAX_GET_TEMPLATES,
-					'getInternalLinks'     => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
+					'media'                 => Brizy_Editor_API::AJAX_MEDIA,
+					'ping'                  => Brizy_Editor_API::AJAX_PING,
+					'getPage'               => Brizy_Editor_API::AJAX_GET,
+					'updatePage'            => Brizy_Editor_API::AJAX_UPDATE,
+					'getSidebars'           => Brizy_Editor_API::AJAX_SIDEBARS,
+					'buildContent'          => Brizy_Editor_API::AJAX_BUILD,
+					'sidebarContent'        => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
+					'shortcodeContent'      => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+					'shortcodeList'         => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
+					'getTemplates'          => Brizy_Editor_API::AJAX_GET_TEMPLATES,
+					'getInternalLinks'      => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
 					'isWoocomerceInstalled' => Brizy_Editor_API::AJAX_GET_WOOCOMERCE_INSTALL_STATUS,
 				),
-				'shortcodes' => array(
-					'sidebar' => BRIZY_SHORTCODES_PREFIX . 'sidebar'
-				)
+//				'shortcodes' => array(
+//					'sidebar' => 'brizy_sidebar'
+//				)
 			)
 		);
 	}
