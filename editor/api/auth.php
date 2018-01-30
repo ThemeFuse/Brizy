@@ -49,6 +49,8 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 
 			if(!$token->expired())
 				return $_SESSION[md5($this->client_id.$this->secret)];
+			else
+				$this->clearTokenCache();
 		}
 
 		$response = $this->post( $this->auth_url(),

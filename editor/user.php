@@ -52,6 +52,7 @@ class Brizy_Editor_User {
 	/**
 	 * @return Brizy_Editor_User
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
+	 * @throws Exception
 	 */
 	public static function get() {
 
