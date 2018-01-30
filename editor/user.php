@@ -109,6 +109,7 @@ class Brizy_Editor_User {
 			self::lock_access();
 
 			$auth_api    = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, Brizy_Config::BRIZY_ID, Brizy_Config::BRIZY_KEY );
+			$auth_api->clearTokenCache();
 			$this->token = $auth_api->getToken( $email );
 			$this->common_storage->set( 'access-token', $this->token );
 

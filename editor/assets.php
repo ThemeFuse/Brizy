@@ -142,7 +142,7 @@ class Brizy_Editor_Assets
                 return;
             }
 
-            $full_url = $this->project->get_asset_url().DIRECTORY_SEPARATOR.$template_asset_path;
+            $full_url = $this->project->get_asset_url().$template_asset_path;
 
             $file_exists = file_exists(rtrim(ABSPATH, '/').$asset_path);
 

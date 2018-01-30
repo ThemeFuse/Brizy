@@ -58,12 +58,10 @@ class Brizy_Editor_API_AccessToken {
 		return $this;
 	}
 
-
-
 	public function export() {
 		return array(
-			'access_token'  => $this->access_token(),
-			'expires'       => $this->get_expires(),
+			'access_token' => $this->access_token(),
+			'expires'      => $this->get_expires(),
 		);
 	}
 }

@@ -74,5 +74,10 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 		return $_SESSION[md5($this->client_id.$this->secret)] = $brizy_editor_API_access_token;
 	}
 
+	public function clearTokenCache() {
+
+		unset($_SESSION[md5($this->client_id.$this->secret)]);
+	}
+
 
 }

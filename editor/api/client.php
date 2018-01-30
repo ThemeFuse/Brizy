@@ -81,6 +81,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		return array(
 			'Authorization' => 'Bearer ' . $this->access_token->access_token()
 		);
+
 	}
 
 	protected function url( $suffix ) {

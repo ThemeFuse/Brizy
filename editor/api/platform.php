@@ -54,6 +54,11 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 
 	/**
 	 * @return Brizy_Editor_API_AccessToken
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	private function getToken() {
 		$response = $this->post( $this->auth_url(), array(
@@ -83,9 +88,14 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 
 	/**
 	 * @param $email
-	 * @param $password
+	 * @param null $password
 	 *
 	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function createUser( $email, $password=null ) {
 		$token = $this->getToken();
