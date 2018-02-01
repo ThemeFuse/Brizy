@@ -8,7 +8,7 @@
 
 class Brizy_Config {
 
-	const EDITOR_PRIMARY_URL = 'http://api.brizy.io';
+	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
 	const BRIZY_S3_ASSET_URL = 'http://editor:3000/static';
 	const EDITOR_STATIC_URL = 'http://editor:3000/static';
@@ -35,7 +35,7 @@ class Brizy_Config {
 	const EDITOR_HOST_ORIGIN = 'testblox.info';
 	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
-	const GATEWAY_URI = 'http://api.brizy.io';
+	const GATEWAY_URI = 'https://api.brizy.io';
 	const BRIZY_ID = '2_5to57xuihv48c4s400sk0wgwcw0gg4s4ggwccos4g4c4444occ';
 	const BRIZY_KEY = '3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s';
 	const BRIZY_EMAIL = 'admin@admin.com';

@@ -27,8 +27,16 @@ class Brizy_Editor_API_Project {
 		return json_decode( $this->data['globals'] );
 	}
 
+	public function get_globals_as_json() {
+		return $this->data['globals'];
+	}
+
 	public function set_globals( $globals ) {
 		return $this->data['globals'] = json_encode( $globals );
+	}
+
+	public function set_globals_as_json( $globals ) {
+		return $this->data['globals'] = $globals;
 	}
 
 	/**

@@ -109,6 +109,12 @@ class Brizy_Editor_Project {
 		return $this;
 	}
 
+	public function set_globals_as_json( $globals ) {
+		$this->api_project->set_globals_as_json( $globals );
+
+		return $this;
+	}
+
 	/**
 	 * @return Brizy_Editor_API_Project
 	 */

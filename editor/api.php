@@ -96,7 +96,8 @@ class Brizy_Editor_API {
 	public function get_globals() {
 		try {
 			$this->authorize();
-
+			//$this->project->set_globals( array('project'=>(object)array(),'language'=>(object)array()) );
+			//$this->project->save();
 			$data = self::create_post_globals( $this->project, $this->post );
 
 			$this->success( $data );
@@ -113,9 +114,8 @@ class Brizy_Editor_API {
 		try {
 			$this->authorize();
 
-			$data = $this->param( 'data' );
-
-			$this->project->set_globals( stripslashes( $data['globals'] ) );
+			$data = $this->param( 'globals' );
+			$this->project->set_globals_as_json( stripslashes( $data ) );
 			$this->project->save();
 
 			Brizy_Editor_User::get()->update_project( $this->project->get_api_project() );
