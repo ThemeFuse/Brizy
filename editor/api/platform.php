@@ -46,6 +46,9 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 	 * @param string $password
 	 */
 	public function __construct( $client_id, $secret, $email, $password ) {
+
+		parent::__construct();
+
 		$this->client_id = $client_id;
 		$this->secret    = $secret;
 		$this->email     = $email;

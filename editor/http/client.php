@@ -3,6 +3,26 @@
 class Brizy_Editor_Http_Client {
 
 	/**
+	 * @var WP_Http
+	 */
+	private $http;
+
+
+	/**
+	 * Brizy_Editor_Http_Client constructor.
+	 *
+	 * @param null $http
+	 */
+	public function __construct( $http = null ) {
+
+		if ( is_null( $http ) ) {
+			$this->http = new WP_Http();
+		} else {
+			$this->http = $http;
+		}
+	}
+
+	/**
 	 * @param $url
 	 * @param array $options
 	 * @param string $method
@@ -16,15 +36,9 @@ class Brizy_Editor_Http_Client {
 	 */
 	public function request( $url, $options = array(), $method = 'GET' ) {
 
-		$http = new WP_Http();
-
 		$options['method'] = $method;
 
-//		if ( isset( $options['body'] ) ) {
-//			$options['body'] = stripslashes_deep( $options['body'] );
-//		}
-
-		$wp_response = $http->request( $url, $options );
+		$wp_response = $this->getHttp()->request( $url, $options );
 
 		if ( is_wp_error( $wp_response ) ) {
 			throw new Brizy_Editor_API_Exceptions_Exception( $wp_response->get_error_message() );
@@ -107,5 +121,12 @@ class Brizy_Editor_Http_Client {
 	 */
 	public function delete( $route, $options = null ) {
 		return $this->request( $route, $options, 'DELETE' );
+	}
+
+	/**
+	 * @return WP_Http
+	 */
+	public function getHttp() {
+		return $this->http;
 	}
 }

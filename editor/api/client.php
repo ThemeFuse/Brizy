@@ -13,6 +13,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @param $token
 	 */
 	public function __construct( $token ) {
+		parent::__construct();
 		$this->access_token = $token;
 	}
 

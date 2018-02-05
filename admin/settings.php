@@ -37,7 +37,8 @@ class Brizy_Admin_Settings {
 			'settings/view',
 			array(
 				'types' => array_map( array( $this, 'is_selected' ), $this->list_post_types() ),
-				'roles' => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() )
+				'roles' => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() ),
+                'project' => Brizy_Editor_Project::get()
 			)
 		);
 	}

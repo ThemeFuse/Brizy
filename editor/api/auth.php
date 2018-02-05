@@ -18,6 +18,7 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 	private $secret;
 
 	public function __construct( $gateway_url, $client_id, $secret ) {
+		parent::__construct();
 		$this->gateway_url = $gateway_url;
 		$this->client_id   = $client_id;
 		$this->secret      = $secret;

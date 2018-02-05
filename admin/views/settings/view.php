@@ -54,8 +54,31 @@
                     </fieldset>
                 </td>
             </tr>
+
+
+            <?php
+            if(BRIZY_DEBUG) {
+	            /**
+	             * @var Brizy_Editor_Project $project
+	             */
+                ?>
+                <tr>
+                    <th scope="row"><?php echo __( 'Debug Data' );?></th>
+                    <td>
+                        <code>
+                            <?php var_dump($project->get_api_project()); ?>
+                        </code>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+
             </tbody>
         </table>
+
+
+
         <p class="submit">
             <button type="submit"
                     id="submit"
