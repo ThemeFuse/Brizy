@@ -89,7 +89,7 @@ class Brizy_Editor_Editor_Editor {
 			),
 			'wp'              => array(
 				'permalink' => get_permalink( $this->post->get_id() ),
-				'page'      => $this->post->get_api_page()->get_id(),
+				'page'      => $this->post->get_id(),
 				'templates' => $this->post->get_templates(),
 				'api'       => array(
 					'hash'             => wp_create_nonce( Brizy_Editor_API::nonce ),
