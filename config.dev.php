@@ -36,7 +36,7 @@ class Brizy_Config {
 	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
 	const GATEWAY_URI = 'https://api.brizy.io';
-	const COMPILER_URI = 'https://editor:3000/projects/%s/pages/%s/htmls/%s';
+	const COMPILER_URI = 'http://editor:3000/projects/%s/pages/%s/htmls/%s';
 
 
 	const BRIZY_ID = '2_5to57xuihv48c4s400sk0wgwcw0gg4s4ggwccos4g4c4444occ';
