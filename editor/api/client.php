@@ -43,7 +43,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		return $this->get( "projects/$project_id/pages/$page_id" )->get_response_body();
 	}
 
-
 	public function create_page( $project_id, Brizy_Editor_API_Page $page ) {
 		return $this->post( "projects/$project_id/pages", array( 'body' => $page->export() ) )->get_response_body();
 	}
@@ -56,6 +55,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		$urls = array(
 			'urls' => json_encode( array(
+				'api'     => $this->url( '' ),
 				'primary' => $config['urls']['primary'],
 				'base'    => $config['urls']['base'],
 				'static'  => $config['urls']['static'],
@@ -63,7 +63,9 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 			) )
 		);
 
-		return $this->post( "projects/$project_id/pages/$page_id/htmls", array( 'body' => $urls ) )->get_response_body();
+		$compile_url = sprintf( Brizy_Config::COMPILER_URI, $project_id, $page_id, $this->access_token->access_token() );
+
+		return parent::request( $compile_url, array( 'body' => $urls ), 'POST' )->get_response_body();
 	}
 
 	public function delete_page( $project_id, $page_id ) {
@@ -81,25 +83,26 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		return array(
 			'Authorization' => 'Bearer ' . $this->access_token->access_token()
 		);
-
 	}
 
 	protected function url( $suffix ) {
-		return implode( '/', array( Brizy_Config::GATEWAY_URI, 'v1', $suffix ) );
+		return Brizy_Config::GATEWAY_URI . DIRECTORY_SEPARATOR . 'v1' . DIRECTORY_SEPARATOR . $suffix;
 	}
 
 	public function request( $url, $options = array(), $method = 'GET' ) {
-
-		if ( ! isset( $options['headers'] ) ) {
-			$options['headers'] = array();
-		}
-
-		$options['headers'] = array_merge( $options['headers'], $this->get_headers() );
-
 		return parent::request(
 			$this->url( $url ),
 			$options,
 			$method
 		);
+	}
+
+	protected function prepare_options( $options ) {
+
+		$options = parent::prepare_options( $options );
+
+		$options['headers'] = array_merge( $options['headers'], $this->get_headers() );
+
+		return $options;
 	}
 }

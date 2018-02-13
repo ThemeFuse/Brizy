@@ -38,6 +38,8 @@ class Brizy_Editor_Http_Client {
 
 		$options['method'] = $method;
 
+		$options = $this->prepare_options( $options );
+
 		$wp_response = $this->getHttp()->request( $url, $options );
 
 		if ( is_wp_error( $wp_response ) ) {
@@ -128,5 +130,17 @@ class Brizy_Editor_Http_Client {
 	 */
 	public function getHttp() {
 		return $this->http;
+	}
+
+	protected function prepare_options( $options ) {
+
+		if(!is_array($options))
+			$options = [];
+
+		if ( ! isset( $options['headers'] ) ) {
+			$options['headers'] = array();
+		}
+
+		return $options;
 	}
 }
