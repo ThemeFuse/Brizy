@@ -62,7 +62,6 @@ class Brizy_Editor_Http_Client {
 			default :
 				throw new Brizy_Editor_Http_Exceptions_ResponseException( $response );
 		}
-
 	}
 
 	/**
@@ -132,6 +131,11 @@ class Brizy_Editor_Http_Client {
 		return $this->http;
 	}
 
+	/**
+	 * @param $options
+	 *
+	 * @return array
+	 */
 	protected function prepare_options( $options ) {
 
 		if(!is_array($options))

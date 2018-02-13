@@ -17,40 +17,133 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		$this->access_token = $token;
 	}
 
-
+	/**
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function create_project() {
 		return $this->post( 'projects', array() )->get_response_body();
 	}
 
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function get_project( Brizy_Editor_API_Project $project ) {
 
 		return $this->get( "projects/{$project->get_id()}", array() )->get_response_body();
 	}
 
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
 		return $this->put( "projects/{$project->get_id()}", array( 'body' => array( 'globals' => $project->get_globals_as_json() ) ) )->get_response_body();
 	}
 
+	/**
+	 * @param $id
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function delete_project( $id ) {
 		return $this->delete( "projects/$id" )->get_response_body();
 	}
 
+	/**
+	 * @param $project_id
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function get_pages( $project_id ) {
 		return $this->get( "projects/$project_id/pages" )->get_response_body();
 	}
 
+	/**
+	 * @param $project_id
+	 * @param $page_id
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function get_page( $project_id, $page_id ) {
 		return $this->get( "projects/$project_id/pages/$page_id" )->get_response_body();
 	}
 
+	/**
+	 * @param $project_id
+	 * @param Brizy_Editor_API_Page $page
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function create_page( $project_id, Brizy_Editor_API_Page $page ) {
 		return $this->post( "projects/$project_id/pages", array( 'body' => $page->export() ) )->get_response_body();
 	}
 
+	/**
+	 * @param $project_id
+	 * @param $page_id
+	 * @param Brizy_Editor_API_Page $page
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function update_page( $project_id, $page_id, Brizy_Editor_API_Page $page ) {
 		return $this->put( "projects/$project_id/pages/$page_id", array( 'body' => $page->export() ) )->get_response_body();
 	}
 
+	/**
+	 * @param $project_id
+	 * @param $page_id
+	 * @param $config
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function compile_page( $project_id, $page_id, $config ) {
 
 		$urls = array(
@@ -68,10 +161,32 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		return parent::request( $compile_url, array( 'body' => $urls ), 'POST' )->get_response_body();
 	}
 
+	/**
+	 * @param $project_id
+	 * @param $page_id
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function delete_page( $project_id, $page_id ) {
 		return $this->delete( "projects/$project_id/pages/$page_id" )->get_response_body();
 	}
 
+	/**
+	 * @param $project_id
+	 * @param $base64
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function add_media( $project_id, $base64 ) {
 		return $this->post( "projects/$project_id/media", array(
 			'timeout' => 30,
@@ -79,16 +194,38 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		) )->get_response_body();
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function get_headers() {
 		return array(
 			'Authorization' => 'Bearer ' . $this->access_token->access_token()
 		);
 	}
 
+	/**
+	 * @param $suffix
+	 *
+	 * @return string
+	 */
 	protected function url( $suffix ) {
-		return Brizy_Config::GATEWAY_URI . DIRECTORY_SEPARATOR . 'v1' . DIRECTORY_SEPARATOR . $suffix;
+		$implode = rtrim(implode( DIRECTORY_SEPARATOR, [ Brizy_Config::GATEWAY_URI, 'v1', $suffix ] ),"/");
+
+		return $implode;
 	}
 
+	/**
+	 * @param $url
+	 * @param array $options
+	 * @param string $method
+	 *
+	 * @return Brizy_Editor_Http_Response
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function request( $url, $options = array(), $method = 'GET' ) {
 		return parent::request(
 			$this->url( $url ),
@@ -97,6 +234,11 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		);
 	}
 
+	/**
+	 * @param $options
+	 *
+	 * @return array
+	 */
 	protected function prepare_options( $options ) {
 
 		$options = parent::prepare_options( $options );
