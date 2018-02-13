@@ -17,7 +17,7 @@ class Brizy_Config {
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/wp-content/uploads/brizy/media';
 
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/wp-content/uploads/brizy/pages';
-	const BRIZY_WP_PAGE_ASSET_PATH = 'wp-content/uploads/brizy/pages/';
+	const BRIZY_WP_PAGE_ASSET_PATH = 'wp-content/uploads/brizy/pages/%s';
 
 	const LOCAL_EDITOR_ASSET_STATIC_URL = '/wp-content/uploads/brizy/editor';
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/wp-content/uploads/brizy/editor/%s';
