@@ -150,7 +150,8 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$content   = stripslashes_deep($this->param( 'data' ));
+			$_POST = array_map( 'stripslashes_deep', $_POST );
+			$content   = $this->param( 'data' );
 			$title     = $this->param( 'title' );
 			$atemplate = $this->param( 'template' );
 
