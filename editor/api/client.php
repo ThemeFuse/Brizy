@@ -54,9 +54,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 	public function compile_page( $project_id, $page_id, $config ) {
 
-		/**
-		 * @todo: pass the config to the compiler to compile the html with the right urls.
-		 */
 		$urls = array(
 			'urls' => json_encode( array(
 				'primary' => $config['urls']['primary'],
