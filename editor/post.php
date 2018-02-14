@@ -276,7 +276,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 	public function compile_page() {
 
-		if ( $this->needs_compile || true) {
+		if ( $this->needs_compile || BRIZY_DEBUG ) {
 
 			// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
 			// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
