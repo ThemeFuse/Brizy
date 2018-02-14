@@ -99,7 +99,12 @@ class Brizy_Editor_Assets
 
 
         if (!BRIZY_DEBUG) {
-            $editor->store_asset($url, $path);
+            if(!$editor->store_asset($url, $path)) {
+            	global $wp_query;
+	            $wp_query->set_404();
+	            status_header(404);
+	            exit;
+            }
         }
         //$this->project->setStoreAssets( false );
         //$this->project->save();
@@ -161,7 +166,12 @@ class Brizy_Editor_Assets
             }
 
             if (!BRIZY_DEBUG) {
-                $this->post->store_asset($full_url, $asset_path);
+	            if(!$editor->store_asset($full_url, $asset_path)) {
+		            global $wp_query;
+		            $wp_query->set_404();
+		            status_header(404);
+		            exit;
+	            }
             }
 
             $this->send_file_content($full_url, $asset_path);
@@ -215,7 +225,12 @@ class Brizy_Editor_Assets
             }
 
             if (!BRIZY_DEBUG) {
-                $this->post->store_asset($full_url, $asset_path);
+	            if(!$editor->store_asset($full_url, $asset_path)) {
+		            global $wp_query;
+		            $wp_query->set_404();
+		            status_header(404);
+		            exit;
+	            }
             }
 
             $this->send_file_content($full_url, $asset_path);
