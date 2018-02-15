@@ -274,6 +274,11 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	}
 
 
+	/**
+	 * @return bool
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
+	 * @throws Exception
+	 */
 	public function compile_page() {
 
 		if ( $this->needs_compile || BRIZY_DEBUG ) {
