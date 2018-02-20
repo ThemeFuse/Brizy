@@ -60,6 +60,7 @@ class Brizy_Public_Main {
 		} elseif ( $this->is_view_page() ) {
 
 			try {
+				$this->disable_cache();
 				// compile page before showing..
 				$this->post->compile_page();
 				$this->post->save();
@@ -290,7 +291,6 @@ class Brizy_Public_Main {
 	}
 
 	private function check_project_version() {
-		//$project      = Brizy_Editor_Project::get();
 		try{
 			$api_project  = $this->project->get_api_project();
 			$project_data = Brizy_Editor_User::get()->get_project( $api_project );
@@ -302,5 +302,30 @@ class Brizy_Public_Main {
 		catch (Exception $e) {
 			return;
 		}
+	}
+
+	private function disable_cache() {
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+
+		if ( ! defined( 'DONOTCACHEDB' ) ) {
+			define( 'DONOTCACHEDB', true );
+		}
+
+		if ( ! defined( 'DONOTMINIFY' ) ) {
+			define( 'DONOTMINIFY', true );
+		}
+
+		if ( ! defined( 'DONOTCDN' ) ) {
+			define( 'DONOTCDN', true );
+		}
+
+		if ( ! defined( 'DONOTCACHCEOBJECT' ) ) {
+			define( 'DONOTCACHCEOBJECT', true );
+		}
+
+		// Set the headers to prevent caching for the different browsers.
+		nocache_headers();
 	}
 }

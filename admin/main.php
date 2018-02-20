@@ -13,6 +13,8 @@ class Brizy_Admin_Main {
 		if ( ! $instance ) {
 			$instance = new self();
 		}
+
+
 	}
 
 	protected function __construct() {
@@ -20,6 +22,7 @@ class Brizy_Admin_Main {
 		if ( ! Brizy_Editor::is_user_allowed() ) {
 			return;
 		}
+		add_action( 'admin_head', array($this,'hide_editor') );
 
 		add_action( 'admin_action_brizy_new_post', array( $this, 'admin_action_new_post' ) );
 
@@ -36,12 +39,30 @@ class Brizy_Admin_Main {
 		add_filter( 'post_row_actions', array( $this, '_filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, '_filter_add_body_class' ), 10, 2 );
 
-		add_filter( 'the_editor', array( $this, '_add_fake_editor' ), 10, 2 );
+		//add_filter( 'the_editor', array( $this, '_add_fake_editor' ), 10, 2 );
 
 		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
 
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'admin_print_scripts-edit.php', [ $this, 'add_edit_button_to_gutenberg' ], 12 );
+		}
+	}
+
+	public function hide_editor() {
+
+		if ( in_array( get_post_type(), brizy()->supported_post_types() ) ) {
+			$p = get_post();
+
+			try {
+				$is_using_brizy = Brizy_Editor_Post::get( $p->ID )->uses_editor();
+			} catch ( Exception $e ) {
+				$is_using_brizy = false;
+			}
+
+			if(	$is_using_brizy	)
+            {
+	            remove_post_type_support( 'page', 'editor' );
+            }
 		}
 	}
 
@@ -265,7 +286,11 @@ class Brizy_Admin_Main {
 			echo self::render( 'button', array(
 				'id'             => get_the_ID(),
 				'post'           => $p,
-				'is_using_brizy' => $is_using_brizy
+				'is_using_brizy' => $is_using_brizy,
+				'url'            => add_query_arg(
+					array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+					get_permalink( get_the_ID() )
+				)
 			) );
 		}
 	}
