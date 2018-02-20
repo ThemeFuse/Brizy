@@ -47,6 +47,9 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	public function config() {
+
+		$local_page_asset_static_url = sprintf(Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $this->project->get_template_version());
+
 		return array(
 			'env'             => 'WP',
 			'rootElement'     => '#' . brizy()->get_slug() . '-root-element',
@@ -78,7 +81,7 @@ class Brizy_Editor_Editor_Editor {
 				// proxy
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
-				'static'              => brizy()->get_asset_url( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL . '/' . $this->get_post()->get_id() ),
+				'static'              => brizy()->get_asset_url( $local_page_asset_static_url . '/' . $this->get_post()->get_id() ),
 				// proxy
 				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' )
 			),

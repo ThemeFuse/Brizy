@@ -124,14 +124,14 @@ class Brizy_Editor_Assets
      */
     function handle_front_end_editor_assets($query)
     {
-        $str_splitter = Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL;
+        $str_splitter = sprintf(Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $this->project->get_template_version() );
 
         if (strpos($_SERVER['REQUEST_URI'], ltrim($str_splitter, '/')) !== false) {
             session_write_close();
 
             $editor = Brizy_Editor_Editor_Editor::get($this->project, $this->post);
 
-            $str_splitter = sprintf(Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH, $this->post->get_id());
+            $str_splitter = sprintf(Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH, $this->project->get_template_version(), $this->post->get_id());
 
             $parts = explode($str_splitter, $_SERVER["REQUEST_URI"]);
 
@@ -141,7 +141,7 @@ class Brizy_Editor_Assets
 
             $template_asset_path = $parts[1];
 
-            $asset_path = sprintf(Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH.$template_asset_path, $this->post->get_id());
+            $asset_path = sprintf(Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH.$template_asset_path, $this->project->get_template_version(), $this->post->get_id());
 
             if (!$this->post->uses_editor()) {
                 return;
