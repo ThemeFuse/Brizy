@@ -46,6 +46,11 @@ class Brizy_Editor_Assets
             add_action('parse_request', array($this, 'handle_media_proxy_handler'), -1000);
 
         } catch (Exception $e) {
+
+	        if (WP_DEBUG) {
+		        var_dump($e);
+	        }
+
             header(' 500 Internal Server Error', true, 500);
             exit;
         }
@@ -346,6 +351,10 @@ class Brizy_Editor_Assets
             $response = wp_remote_get($url, array('timeout' => 30));
 
             if ($response instanceof WP_Error) {
+
+            	if (WP_DEBUG) {
+            		var_dump($response);
+	            }
 
                 header(' 500 Internal Server Error', true, 500);
                 exit;

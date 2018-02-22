@@ -79,10 +79,9 @@ class Brizy_Editor {
 		if(!$structure || strpos(trim(strtolower($structure)),'index.php')!==false)
 			$prefix = '/index.php';
 
-		$val = path_join(get_site_url(),$prefix.$path);
+		//$val = path_join(get_site_url(),$prefix.$path);
 
 		return get_site_url().$prefix.$path;
-
 	}
 
 	protected function get_post_types() {
