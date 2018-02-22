@@ -65,14 +65,16 @@ class Brizy_Public_Main {
 				$this->post->compile_page();
 				$this->post->save();
 			} catch ( Exception $e ) {
-				// handle this 
+				// handle this
+				if(defined('BRIZY_DUMP_EXCEPTION')) {
+					var_dump($e);
+				}
 			}
 
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
-
 		}
 	}
 
@@ -91,7 +93,7 @@ class Brizy_Public_Main {
 
 		$context                     = array( 'editorData' => $config_object, 'iframe_url' => $iframe_url );
 
-		if ( WP_DEBUG ) {
+		if ( defined('BRIZY_DUMP_EXCEPTION') ) {
 			$context['DEBUG'] = true;
 		}
 

@@ -43,14 +43,13 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	/**
-	 * @return array
 	 * @throws Exception
 	 */
 	public function config() {
 
 		$local_page_asset_static_url = sprintf(Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $this->project->get_template_version());
 
-		return array(
+		$config =  array(
 			'env'             => 'WP',
 			'rootElement'     => '#' . brizy()->get_slug() . '-root-element',
 			'editorOptions'   => array(
@@ -123,6 +122,8 @@ class Brizy_Editor_Editor_Editor {
 //				)
 			)
 		);
+
+		return $config;
 	}
 
 

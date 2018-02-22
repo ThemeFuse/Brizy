@@ -11,12 +11,15 @@
  * Domain Path: /languages
  */
 
-define( 'BRIZY_DEBUG', false ); // dev/ | prod
+define( 'BRIZY_DEVELOPMENT', false ); // dev/ | prod
 define( 'BRIZY_VERSION', '0.1.0' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', plugin_dir_url( BRIZY_FILE ) );
+
+//define( 'BRIZY_DUMP_EXCEPTION', true );
+
 
 include_once 'autoload.php';
 include_once 'editor/load.php';

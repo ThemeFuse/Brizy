@@ -57,7 +57,7 @@
 
 
             <?php
-            if(BRIZY_DEBUG) {
+            if(BRIZY_DEVELOPMENT) {
 	            /**
 	             * @var Brizy_Editor_Project $project
 	             */

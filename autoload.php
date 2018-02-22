@@ -29,7 +29,7 @@ function _brizy_autoload( $class_name ) {
 
 	$include_path = $abs_path . DIRECTORY_SEPARATOR . ( $path ? $path . DIRECTORY_SEPARATOR : "" ) . $file_name;
 
-	if ( BRIZY_DEBUG && file_exists( $include_path . ".dev.php" ) ) {
+	if ( BRIZY_DEVELOPMENT && file_exists( $include_path . ".dev.php" ) ) {
 		$include_path .= ".dev.php";
 	} else {
 		$include_path .= ".php";

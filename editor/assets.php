@@ -47,7 +47,7 @@ class Brizy_Editor_Assets
 
         } catch (Exception $e) {
 
-	        if (WP_DEBUG) {
+	        if (defined('BRIZY_DUMP_EXCEPTION')) {
 		        var_dump($e);
 	        }
 
@@ -100,10 +100,10 @@ class Brizy_Editor_Assets
             exit;
         }
 
-        //if ( ! BRIZY_DEBUG && $res = $this->project->isStoreAssets() && ! $file_exists ) {
+        //if ( ! BRIZY_DEVELOPMENT && $res = $this->project->isStoreAssets() && ! $file_exists ) {
 
 
-        if (!BRIZY_DEBUG) {
+        if (!BRIZY_DEVELOPMENT) {
             if(!$editor->store_asset($url, $path)) {
             	global $wp_query;
 	            $wp_query->set_404();
@@ -170,7 +170,7 @@ class Brizy_Editor_Assets
                 exit;
             }
 
-            if (!BRIZY_DEBUG) {
+            if (!BRIZY_DEVELOPMENT) {
 	            if(!$editor->store_asset($full_url, $asset_path)) {
 		            global $wp_query;
 		            $wp_query->set_404();
@@ -213,10 +213,11 @@ class Brizy_Editor_Assets
 
             $full_url = Brizy_Config::MEDIA_IMAGE_URL.$template_asset_path;
 
-            $file_exists = file_exists(rtrim(ABSPATH, '/').$asset_path);
+	        $local_file_name = rtrim( ABSPATH, '/' ) . $asset_path;
+	        $file_exists     = file_exists( $local_file_name );
 
             if ($file_exists) {
-                $asset_url = $editor->get_asset_url().$asset_path;
+                $asset_url = $editor->get_asset_url().$template_asset_path;
 
                 // add cache headers for this request
                 header_remove('Expires');
@@ -229,7 +230,7 @@ class Brizy_Editor_Assets
                 exit;
             }
 
-            if (!BRIZY_DEBUG) {
+            if (!BRIZY_DEVELOPMENT) {
 	            if(!$editor->store_asset($full_url, $asset_path)) {
 		            global $wp_query;
 		            $wp_query->set_404();
@@ -352,7 +353,7 @@ class Brizy_Editor_Assets
 
             if ($response instanceof WP_Error) {
 
-            	if (WP_DEBUG) {
+            	if (defined('BRIZY_DUMP_EXCEPTION')) {
             		var_dump($response);
 	            }
 
