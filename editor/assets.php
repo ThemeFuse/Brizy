@@ -157,7 +157,7 @@ class Brizy_Editor_Assets
             $file_exists = file_exists(rtrim(ABSPATH, '/').$asset_path);
 
             if ($file_exists) {
-                $asset_url = $editor->get_asset_url().$asset_path;
+                $asset_url = get_site_url().$asset_path;
 
                 // add cache headers for this request
                 header_remove('Expires');
@@ -223,7 +223,6 @@ class Brizy_Editor_Assets
                 header_remove('Expires');
                 header_remove('Cache-Control');
                 header_remove('Pragma');
-
                 header('Cache-Control: max-age=600');
 
                 wp_redirect($asset_url, 302);
