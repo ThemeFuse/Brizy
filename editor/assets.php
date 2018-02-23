@@ -217,7 +217,7 @@ class Brizy_Editor_Assets
 	        $file_exists     = file_exists( $local_file_name );
 
             if ($file_exists) {
-                $asset_url = $editor->get_asset_url().$template_asset_path;
+                $asset_url = get_site_url().$asset_path;
 
                 // add cache headers for this request
                 header_remove('Expires');
