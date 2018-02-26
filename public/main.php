@@ -110,9 +110,10 @@ class Brizy_Public_Main {
 	}
 
 	public function toolbar_link( $wp_admin_bar ) {
+		$type = $this->post->get_wp_post()->post_type;
 		$args = array(
 			'id'    => 'brizy_Edit_page_link',
-			'title' => __( 'Edit with Brizy' ),
+			'title' => __( "Edit {$type} with Brizy" ),
 			'href'  => $this->post->edit_url(),
 			'meta'  => array()
 		);
