@@ -66,8 +66,8 @@ class Brizy_Public_Main {
 				$this->post->save();
 			} catch ( Exception $e ) {
 				// handle this
-				if(defined('BRIZY_DUMP_EXCEPTION')) {
-					var_dump($e);
+				if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+					var_dump( $e );
 				}
 			}
 
@@ -75,7 +75,48 @@ class Brizy_Public_Main {
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
+
+			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 		}
+	}
+
+
+	/**
+	 * @internal
+	 */
+	function _action_add_admin_bar_update_button() {
+		global $wp_admin_bar;
+
+		$wp_admin_bar->add_menu( array(
+			'id'    => brizy()->get_slug() . '-post-preview-url',
+			'title' => __( 'Preview' ),
+			'href'  => get_preview_post_link(),
+			'meta'  => array(
+				'target' => '_blank'
+			)
+		) );
+
+		$status = get_post_status( $this->post->get_id() );
+		if ( in_array( $status, array( 'publish', 'future', 'private' ) ) ) {
+			$wp_admin_bar->add_menu( array(
+				'id'    => brizy()->get_slug() . '-post-view-url',
+				'title' => __( 'View' ),
+				'href'  => get_permalink(),
+				'meta'  => array(
+					'target' => '_blank'
+				)
+			) );
+		}
+	}
+
+	public function toolbar_link( $wp_admin_bar ) {
+		$args = array(
+			'id'    => 'brizy_Edit_page_link',
+			'title' => __( 'Edit with Brizy' ),
+			'href'  => $this->post->edit_url(),
+			'meta'  => array()
+		);
+		$wp_admin_bar->add_node( $args );
 	}
 
 	public function template_include( $atemplate ) {
@@ -86,20 +127,20 @@ class Brizy_Public_Main {
 
 		$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
-		$iframe_url                  = add_query_arg(
+		$iframe_url = add_query_arg(
 			array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
 			get_permalink( $this->post->get_wp_post()->ID )
 		);
 
-		$context                     = array( 'editorData' => $config_object, 'iframe_url' => $iframe_url );
+		$context = array( 'editorData' => $config_object, 'iframe_url' => $iframe_url );
 
-		if ( defined('BRIZY_DUMP_EXCEPTION') ) {
+		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
 			$context['DEBUG'] = true;
 		}
 
 
 		// make the next request to store one asset
-		$this->project->setStoreAssets(true)->save();
+		$this->project->setStoreAssets( true )->save();
 
 		echo $twig_template->render( $context );
 
@@ -203,37 +244,8 @@ class Brizy_Public_Main {
 		$this->project
 			->invalidateAssetsFor( $old_version )
 			->set_template_version( $new_version )
-			->setStoreAssets(true)
+			->setStoreAssets( true )
 			->save();
-	}
-
-
-	/**
-	 * @internal
-	 */
-	function _action_add_admin_bar_update_button() {
-		global $wp_admin_bar;
-
-		$wp_admin_bar->add_menu( array(
-			'id'    => brizy()->get_slug() . '-post-preview-url',
-			'title' => __( 'Preview' ),
-			'href'  => get_preview_post_link(),
-			'meta'  => array(
-				'target' => '_blank'
-			)
-		) );
-
-		$status = get_post_status( $this->post->get_id() );
-		if ( in_array( $status, array( 'publish', 'future', 'private' ) ) ) {
-			$wp_admin_bar->add_menu( array(
-				'id'    => brizy()->get_slug() . '-post-view-url',
-				'title' => __( 'View' ),
-				'href'  => get_permalink(),
-				'meta'  => array(
-					'target' => '_blank'
-				)
-			) );
-		}
 	}
 
 
@@ -278,7 +290,7 @@ class Brizy_Public_Main {
 		) );
 
 
-		$twig     = new Twig_Environment( $loader, array() );
+		$twig          = new Twig_Environment( $loader, array() );
 		$twig_template = $twig->load( 'editor' );
 
 		return $this->twig_template[ $template_path ] = $twig_template;
@@ -293,15 +305,14 @@ class Brizy_Public_Main {
 	}
 
 	private function check_project_version() {
-		try{
+		try {
 			$api_project  = $this->project->get_api_project();
 			$project_data = Brizy_Editor_User::get()->get_project( $api_project );
 
 			if ( $project_data['version'] != $this->project->get_template_version() ) {
 				do_action( 'brizy:project:version_changed', $project_data['version'], $this->project->get_template_version() );
 			}
-		}
-		catch (Exception $e) {
+		} catch ( Exception $e ) {
 			return;
 		}
 	}
