@@ -35,7 +35,7 @@ class Brizy_Editor_Project {
 			$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
 			self::$instance              = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			self::$instance = Brizy_Editor_Project::create();
+			self::$instance                   = Brizy_Editor_Project::create();
 			$_SESSION['brizy_project_stored'] = true;
 		}
 
@@ -98,6 +98,7 @@ class Brizy_Editor_Project {
 		return $this->api_project->get_globals();
 	}
 
+
 	/**
 	 * @param $globals
 	 *
@@ -111,6 +112,26 @@ class Brizy_Editor_Project {
 
 	public function set_globals_as_json( $globals ) {
 		$this->api_project->set_globals_as_json( $globals );
+
+		// when the globals is updated all pages needs to be compiled.
+		// se will update the flag for all pages edited with brizy
+
+		$posts = get_posts( array(
+			'orderby' => null,
+			'numberposts' => - 1,
+			'post_type'=>'any',
+			'post_status'=>'any',
+			'meta_key'    => Brizy_Editor_Constants::BRIZY
+		) );
+
+		foreach ( (array) $posts as $post ) {
+			$brizy_post = Brizy_Editor_Post::get( $post->ID );
+
+			if ( $brizy_post->uses_editor() ) {
+				$brizy_post->set_needs_compile( true );
+				$brizy_post->save();
+			}
+		}
 
 		return $this;
 	}
