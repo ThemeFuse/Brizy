@@ -209,7 +209,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @return string
 	 */
 	protected function url( $suffix ) {
-		$implode = rtrim(implode( DIRECTORY_SEPARATOR, [ Brizy_Config::GATEWAY_URI, 'v1', $suffix ] ),"/");
+		$implode = rtrim(implode( "/", [ Brizy_Config::GATEWAY_URI, 'v1', $suffix ] ),"/");
 
 		return $implode;
 	}
