@@ -435,6 +435,10 @@ class Brizy_Admin_Main {
 
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to create the project. Please try again later.' );
 
+			if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+				var_dump( $exception );
+			}
+
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
 
@@ -461,11 +465,19 @@ class Brizy_Admin_Main {
 
 				Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );
 
+				if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+					var_dump( $exception );
+				}
+
 				wp_redirect( $_SERVER['HTTP_REFERER'] );
 			}
 		} catch ( Exception $exception ) {
 
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );
+
+			if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+				var_dump( $exception );
+			}
 
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
