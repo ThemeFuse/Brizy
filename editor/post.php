@@ -70,6 +70,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	 * @return Brizy_Editor_Post
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+	 * @throws Exception
 	 */
 	public static function create( $project, $post ) {
 		if ( ! in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() ) ) {

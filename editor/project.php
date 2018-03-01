@@ -24,6 +24,7 @@ class Brizy_Editor_Project {
 	/**
 	 * @return Brizy_Editor_Project|mixed|null
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
+	 * @throws Exception
 	 */
 	public static function get() {
 
@@ -52,6 +53,7 @@ class Brizy_Editor_Project {
 	/**
 	 * @return Brizy_Editor_Project
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
+	 * @throws Exception
 	 */
 	public static function create() {
 		$api_project = Brizy_Editor_User::get()->create_project();
@@ -125,6 +127,9 @@ class Brizy_Editor_Project {
 		) );
 
 		foreach ( (array) $posts as $post ) {
+
+			if(!in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() )) continue;
+
 			$brizy_post = Brizy_Editor_Post::get( $post->ID );
 
 			if ( $brizy_post->uses_editor() ) {
