@@ -28,6 +28,7 @@ class Brizy_Shortcode_Sidebar extends Brizy_Shortcode_AbstractShortcode {
 
 		if ( $id ) {
 			ob_start();
+
 			dynamic_sidebar( $id );
 
 			return ob_get_clean();

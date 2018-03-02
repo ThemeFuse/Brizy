@@ -9,6 +9,8 @@
 abstract class Brizy_Shortcode_AbstractShortcode {
 
 	const BRIZY_SHORTCODES_PREFIX = 'brizy_';
+	const BRIZY_SHORTCODES_ACTION_PREFIX = 'brizy_shortcode_';
+	const BRIZY_SHORTCODES_FILTER_PREFIX = 'brizy_shortcode_filter_';
 
 	/**
 	 * Get shortcode name
@@ -23,16 +25,52 @@ abstract class Brizy_Shortcode_AbstractShortcode {
 	 *
 	 * @return mixed
 	 */
-	abstract public function render($atts, $content=null);
+	abstract public function render( $atts, $content = null );
+
+	final public function masterRender( $atts, $content = null ) {
+		ob_start();
+
+		do_action( $this->getBeforeActionName() );
+
+		echo apply_filters( $this->getFilterName(), $this->render( $atts, $content ) );
+
+		do_action( $this->getAfterActionName() );
+
+		return ob_get_clean();
+	}
 
 	/**
 	 * Brizy_AbstractSidebar constructor.
 	 */
 	public function __construct() {
-		add_shortcode( $this->getShortCodeId(), array( $this, 'render' ) );
+		add_shortcode( $this->getShortCodeId(), array( $this, 'masterRender' ) );
 	}
 
+	/**
+	 * @return string
+	 */
 	private function getShortCodeId() {
-		return self::BRIZY_SHORTCODES_PREFIX.$this->getName();
+		return self::BRIZY_SHORTCODES_PREFIX . $this->getName();
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getBeforeActionName() {
+		return self::BRIZY_SHORTCODES_ACTION_PREFIX . 'before_' . $this->getName();
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getAfterActionName() {
+		return self::BRIZY_SHORTCODES_ACTION_PREFIX . 'before_' . $this->getName();
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getFilterName() {
+		return self::BRIZY_SHORTCODES_FILTER_PREFIX . $this->getName();
 	}
 }
