@@ -6,6 +6,12 @@
  * Time: 2:35 PM
  */
 
+function microtime_float() {
+	list( $usec, $sec ) = explode( " ", microtime() );
+
+	return ( (float) $usec + (float) $sec );
+}
+
 class Brizy_Editor_Assets {
 
 
@@ -204,8 +210,7 @@ class Brizy_Editor_Assets {
 			}
 
 			if ( ! BRIZY_DEVELOPMENT ) {
-				$time_start = microtime();
-
+				$time_start = microtime_float();
 
 				if ( ! $editor->store_asset( $full_url, $asset_path ) ) {
 					global $wp_query;
@@ -214,7 +219,7 @@ class Brizy_Editor_Assets {
 					exit;
 				}
 
-				$time = microtime() - $time_start;
+				$time = microtime_float() - $time_start;
 
 				header( "X-S3-request-time: {$time}s" );
 			}
@@ -324,35 +329,37 @@ class Brizy_Editor_Assets {
 		$full_asset_path = ABSPATH . ltrim( $asset_path, '/' );
 
 		if ( file_exists( $full_asset_path ) ) {
-			$this->asset_redirect_to( $asset_url );
-			exit;
-		}
+			$content = file_get_contents( $full_asset_path );
+			//$this->asset_redirect_to( $asset_url );
+			//exit;
+		} else {
 
-		$response = wp_remote_get( $url, array( 'timeout' => 30 ) );
+			$response = wp_remote_get( $url, array( 'timeout' => 30 ) );
 
-		if ( $response instanceof WP_Error ) {
+			if ( $response instanceof WP_Error ) {
 
-			if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-				var_dump( $response );
+				if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+					var_dump( $response );
+				}
+
+				header( ' 500 Internal Server Error', true, 500 );
+				exit;
 			}
 
-			header( ' 500 Internal Server Error', true, 500 );
-			exit;
+			if ( $response['response']['code'] != 200 ) {
+
+				header( $response['response']['message'], true, $response['response']['code'] );
+				exit;
+			}
+
+			/**
+			 * @var WP_HTTP_Requests_Response $http_response
+			 */
+			$http_response = $response['http_response'];
+
+			$content = $http_response->get_data();
+
 		}
-
-		if ( $response['response']['code'] != 200 ) {
-
-			header( $response['response']['message'], true, $response['response']['code'] );
-			exit;
-		}
-
-		/**
-		 * @var WP_HTTP_Requests_Response $http_response
-		 */
-		$http_response = $response['http_response'];
-
-		$content = $http_response->get_data();
-
 
 		header_remove( 'Expires' );
 		header_remove( 'Cache-Control' );

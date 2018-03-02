@@ -141,7 +141,10 @@ class Brizy_Editor_Editor_Editor {
 			if ( ! file_exists( $dir_path ) ) {
 				mkdir( $dir_path, 0777, true );
 			}
+
 			$full_asset_path = rtrim( ABSPATH, '/' ) . $asset_path;
+
+			//file_put_contents( $full_asset_path, file_get_contents($asset_source) );
 
 			$fasset_dest = fopen( $full_asset_path, 'w' );
 			if ( ! $fasset_dest ) {
@@ -153,7 +156,7 @@ class Brizy_Editor_Editor_Editor {
 				throw new Exception( 'Invalid asset source.' );
 			}
 
-			$buffer_length = 2048; // we can tune this later;
+			$buffer_length = 40960; // we can tune this later;
 
 			while ( ! feof( $fasset_src ) ) {
 				$buffer = fread( $fasset_src, $buffer_length );
