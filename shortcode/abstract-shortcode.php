@@ -64,7 +64,7 @@ abstract class Brizy_Shortcode_AbstractShortcode {
 	 * @return string
 	 */
 	private function getAfterActionName() {
-		return self::BRIZY_SHORTCODES_ACTION_PREFIX . 'before_' . $this->getName();
+		return self::BRIZY_SHORTCODES_ACTION_PREFIX . 'after_' . $this->getName();
 	}
 
 	/**
