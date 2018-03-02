@@ -59,6 +59,8 @@ class Brizy_Public_Main {
 
 		} elseif ( $this->is_view_page() ) {
 
+			if(post_password_required($this->post->get_wp_post())) return;
+
 			try {
 				$this->disable_cache();
 				// compile page before showing..
