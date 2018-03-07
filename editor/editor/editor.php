@@ -47,6 +47,8 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
+		global $wp_registered_sidebars;
+
 		$local_page_asset_static_url = sprintf(Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $this->project->get_template_version());
 
 		$config =  array(
@@ -116,6 +118,7 @@ class Brizy_Editor_Editor_Editor {
 				'plugins'   => array(
 					'woocommerce' => $this->get_woocomerce_plugin_info()
 				),
+				'hasSidebars' => !!count($wp_registered_sidebars)
 				//'menus' =>  wp_get_nav_menus()
 //				'shortcodes' => array(
 //					'sidebar' => 'brizy_sidebar'
