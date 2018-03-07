@@ -118,7 +118,7 @@ class Brizy_Editor_Editor_Editor {
 				'plugins'   => array(
 					'woocommerce' => $this->get_woocomerce_plugin_info()
 				),
-				'hasSidebars' => !!count($wp_registered_sidebars)
+				'hasSidebars' => count($wp_registered_sidebars)>0
 				//'menus' =>  wp_get_nav_menus()
 //				'shortcodes' => array(
 //					'sidebar' => 'brizy_sidebar'
