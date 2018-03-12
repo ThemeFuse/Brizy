@@ -110,17 +110,9 @@ class Brizy_Editor_Assets {
 				exit;
 			}
 		}
-		//$this->project->setStoreAssets( false );
-		//$this->project->save();
-
-		//$asset_url = $editor->get_asset_url().$asset_path;
-
-		//wp_redirect( $asset_url, 302 );
-		//exit;
-		//}
 
 		// send the url content
-		$this->send_file_content( $url, $local_file_name );
+		$this->send_file_content( $url );
 	}
 
 	/**
@@ -176,7 +168,7 @@ class Brizy_Editor_Assets {
 			}
 		}
 
-		$this->send_file_content( $full_url, $local_file_name );
+		$this->send_file_content( $full_url );
 	}
 
 	/**
@@ -235,7 +227,7 @@ class Brizy_Editor_Assets {
 				header( "X-S3-request-time: {$time}s" );
 			}
 
-			$this->send_file_content( $full_url, $local_file_name );
+			$this->send_file_content( $full_url );
 		}
 	}
 
@@ -335,9 +327,11 @@ class Brizy_Editor_Assets {
 
 	/**
 	 * @param $url
-	 * @param $asset_path
 	 */
-	private function send_file_content( $url, $asset_path ) {
+	private function send_file_content( $url ) {
+
+		header( "location: {$url}" );
+		exit;
 
 		$response = wp_remote_get( $url, array( 'timeout' => 30 ) );
 
