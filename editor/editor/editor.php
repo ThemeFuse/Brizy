@@ -131,25 +131,26 @@ class Brizy_Editor_Editor_Editor {
 
 
 	public function get_asset_url() {
-		return get_site_url() . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
+
+		$upload_dir_info = wp_upload_dir(null, true);
+		return $upload_dir_info['baseurl'].sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
 	}
 
 	public function store_asset( $asset_source, $asset_path ) {
-
 		$full_asset_path = null;
 		try {
 			// check destination dir
-			$dir_path = dirname( rtrim( ABSPATH, '/' ) . $asset_path );
+			$dir_path = dirname(  $asset_path );
 
 			if ( ! file_exists( $dir_path ) ) {
 				mkdir( $dir_path, 0777, true );
 			}
 
-			$full_asset_path = rtrim( ABSPATH, '/' ) . $asset_path;
+			$full_asset_path = $asset_path;
 
 			//file_put_contents( $full_asset_path, file_get_contents($asset_source) );
 
-			$fasset_dest = fopen( $full_asset_path, 'w' );
+			$fasset_dest = fopen( $asset_path, 'w' );
 			if ( ! $fasset_dest ) {
 				throw new Exception( 'Invalid file destination.' );
 			}

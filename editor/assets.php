@@ -69,6 +69,8 @@ class Brizy_Editor_Assets {
 			return;
 		}
 
+		$upload_dir_info = wp_upload_dir(null, true);
+
 		session_write_close();
 
 
@@ -87,7 +89,9 @@ class Brizy_Editor_Assets {
 
 		$path = $local_editor_asset_static_url . $asset_path;
 
-		$file_exists = file_exists( rtrim( ABSPATH, '/' ) . $path );
+		$local_file_name = $upload_dir_info['basedir'] . $path;
+
+		$file_exists = file_exists( $local_file_name );
 
 		$asset_url = $editor->get_asset_url() . $asset_path;
 
@@ -99,7 +103,7 @@ class Brizy_Editor_Assets {
 		//if ( ! BRIZY_DEVELOPMENT && $res = $this->project->isStoreAssets() && ! $file_exists ) {
 
 		if ( ! BRIZY_DEVELOPMENT ) {
-			if ( ! $editor->store_asset( $url, $path ) ) {
+			if ( ! $editor->store_asset( $url, $local_file_name ) ) {
 				global $wp_query;
 				$wp_query->set_404();
 				status_header( 404 );
@@ -116,7 +120,7 @@ class Brizy_Editor_Assets {
 		//}
 
 		// send the url content
-		$this->send_file_content( $url, $path, $asset_url );
+		$this->send_file_content( $url, $local_file_name );
 	}
 
 	/**
@@ -127,6 +131,8 @@ class Brizy_Editor_Assets {
 
 		if ( strpos( $_SERVER['REQUEST_URI'], ltrim( $str_splitter, '/' ) ) !== false ) {
 			session_write_close();
+
+			$upload_dir_info = wp_upload_dir(null, true);
 
 			$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
 
@@ -146,19 +152,22 @@ class Brizy_Editor_Assets {
 				return;
 			}
 
-			$full_url = $this->project->get_asset_url() . $template_asset_path;
+			$local_file_name = $upload_dir_info['basedir'] . $asset_path;
 
-			$file_exists = file_exists( rtrim( ABSPATH, '/' ) . $asset_path );
+			$file_exists = file_exists( $local_file_name );
 
-			$asset_url = get_site_url() . $asset_path;
+			$asset_url = $upload_dir_info['baseurl'] . $asset_path;
 
 			if ( $file_exists ) {
 				$this->asset_redirect_to( $asset_url );
 				exit;
 			}
 
+			$full_url = $this->project->get_asset_url() . $template_asset_path;
+
 			if ( ! BRIZY_DEVELOPMENT ) {
-				if ( ! $editor->store_asset( $full_url, $asset_path ) ) {
+
+				if ( ! $editor->store_asset( $full_url, $local_file_name ) ) {
 					global $wp_query;
 					$wp_query->set_404();
 					status_header( 404 );
@@ -166,7 +175,7 @@ class Brizy_Editor_Assets {
 				}
 			}
 
-			$this->send_file_content( $full_url, $asset_path, $asset_url );
+			$this->send_file_content( $full_url, $local_file_name );
 		}
 	}
 
@@ -180,6 +189,8 @@ class Brizy_Editor_Assets {
 
 
 			session_write_close();
+
+			$upload_dir_info = wp_upload_dir(null, true);
 
 			$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
 
@@ -199,10 +210,10 @@ class Brizy_Editor_Assets {
 
 			$full_url = Brizy_Config::MEDIA_IMAGE_URL . $template_asset_path;
 
-			$local_file_name = rtrim( ABSPATH, '/' ) . $asset_path;
+			$local_file_name = $upload_dir_info['basedir'] . $asset_path;
 			$file_exists     = file_exists( $local_file_name );
 
-			$asset_url = get_site_url() . $asset_path;
+			$asset_url = $upload_dir_info['baseurl'] . $asset_path;
 
 			if ( $file_exists ) {
 				$this->asset_redirect_to( $asset_url );
@@ -212,7 +223,7 @@ class Brizy_Editor_Assets {
 			if ( ! BRIZY_DEVELOPMENT ) {
 				$time_start = microtime_float();
 
-				if ( ! $editor->store_asset( $full_url, $asset_path ) ) {
+				if ( ! $editor->store_asset( $full_url, $local_file_name ) ) {
 					global $wp_query;
 					$wp_query->set_404();
 					status_header( 404 );
@@ -224,7 +235,7 @@ class Brizy_Editor_Assets {
 				header( "X-S3-request-time: {$time}s" );
 			}
 
-			$this->send_file_content( $full_url, $asset_path, $asset_url );
+			$this->send_file_content( $full_url, $local_file_name );
 		}
 	}
 
@@ -324,15 +335,17 @@ class Brizy_Editor_Assets {
 
 	/**
 	 * @param $url
+	 * @param $asset_path
 	 */
-	private function send_file_content( $url, $asset_path, $asset_url ) {
-		$full_asset_path = ABSPATH . ltrim( $asset_path, '/' );
+	private function send_file_content( $url, $asset_path ) {
 
-		if ( file_exists( $full_asset_path ) ) {
-			$content = file_get_contents( $full_asset_path );
-			//$this->asset_redirect_to( $asset_url );
-			//exit;
-		} else {
+		$upload_dir_info = wp_upload_dir(null, true);
+
+//		if ( file_exists( $asset_path ) ) {
+//			$content = file_get_contents( $asset_path );
+//			//$this->asset_redirect_to( $asset_url );
+//			//exit;
+//		} else {
 
 			$response = wp_remote_get( $url, array( 'timeout' => 30 ) );
 
@@ -356,10 +369,8 @@ class Brizy_Editor_Assets {
 			 * @var WP_HTTP_Requests_Response $http_response
 			 */
 			$http_response = $response['http_response'];
-
 			$content = $http_response->get_data();
-
-		}
+//		}
 
 		header_remove( 'Expires' );
 		header_remove( 'Cache-Control' );

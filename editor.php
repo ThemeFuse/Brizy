@@ -74,6 +74,8 @@ class Brizy_Editor {
 
 	public function get_asset_url($path = '') {
 
+		$upload_dir_info = wp_upload_dir(null, true);
+
 		$structure = get_option('permalink_structure');
 		$prefix = '';
 		if(!$structure || strpos(trim(strtolower($structure)),'index.php')!==false)
@@ -81,7 +83,11 @@ class Brizy_Editor {
 
 		//$val = path_join(get_site_url(),$prefix.$path);
 
-		return get_site_url().$prefix.$path;
+		$baseurl = parse_url($upload_dir_info['baseurl']);
+
+		$str = get_site_url(). $prefix . $baseurl['path'] . $path;
+
+		return $str;
 	}
 
 	protected function get_post_types() {

@@ -5,7 +5,6 @@
  * Date: 8/1/17
  * Time: 10:26 AM
  */
-
 class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
@@ -14,13 +13,13 @@ class Brizy_Config {
 	const EDITOR_STATIC_URL = 'https://api.brizy.io/static';
 
 
-	const LOCAL_PAGE_MEDIA_STATIC_URL = '/wp-content/uploads/brizy/media';
+	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
+	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/pages/%s';
 
-	const LOCAL_PAGE_ASSET_STATIC_URL = '/wp-content/uploads/brizy/pages/%s';
-	const BRIZY_WP_PAGE_ASSET_PATH = '/wp-content/uploads/brizy/pages/%s/%s';
+	const BRIZY_WP_PAGE_ASSET_PATH = '/brizy/pages/%s/%s';
+	const LOCAL_EDITOR_ASSET_STATIC_URL = '/brizy/editor';
 
-	const LOCAL_EDITOR_ASSET_STATIC_URL = '/wp-content/uploads/brizy/editor';
-	const BRIZY_WP_EDITOR_ASSET_PATH = '/wp-content/uploads/brizy/editor/%s';
+	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor/%s';
 
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
