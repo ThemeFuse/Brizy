@@ -330,9 +330,6 @@ class Brizy_Editor_Assets {
 	 */
 	private function send_file_content( $url ) {
 
-		header( "location: {$url}" );
-		exit;
-
 		$response = wp_remote_get( $url, array( 'timeout' => 30 ) );
 
 		if ( $response instanceof WP_Error ) {
