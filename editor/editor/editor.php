@@ -137,6 +137,7 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	public function store_asset( $asset_source, $asset_path ) {
+
 		$full_asset_path = null;
 		try {
 			// check destination dir

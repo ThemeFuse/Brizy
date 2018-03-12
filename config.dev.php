@@ -5,7 +5,6 @@
  * Date: 8/1/17
  * Time: 10:26 AM
  */
-
 class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
@@ -15,6 +14,7 @@ class Brizy_Config {
 
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 
+	const LOCAL_PAGE_ASSET_SPLITTER = "/\/brizy\/pages\/(.[^\/]*)\/(.[^\/]*)/";
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/pages/%s';
 	const BRIZY_WP_PAGE_ASSET_PATH = '/brizy/pages/%s/%s';
 
