@@ -33,7 +33,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row"><?php echo __( 'Exclude Roles' );?></th>
+                <th scope="row"><?php echo __( 'Exclude for roles' );?></th>
                 <td>
                     <fieldset>
 						<?php
@@ -54,26 +54,6 @@
                     </fieldset>
                 </td>
             </tr>
-
-
-            <?php
-            if(BRIZY_DEVELOPMENT) {
-	            /**
-	             * @var Brizy_Editor_Project $project
-	             */
-                ?>
-                <tr>
-                    <th scope="row"><?php echo __( 'Debug Data' );?></th>
-                    <td>
-                        <code>
-                            <?php var_dump($project->get_api_project()); ?>
-                        </code>
-                    </td>
-                </tr>
-                <?php
-            }
-            ?>
-
             </tbody>
         </table>
 

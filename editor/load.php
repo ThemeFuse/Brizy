@@ -29,12 +29,15 @@ function brizy_initialize_Brizy_Public_Api() {
 
 	} catch ( Exception $e ) {
 		// do nothing if there is an exception
+		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+			var_dump( $e );
+		}
 	}
 }
 
-add_action( 'wp_loaded', 'handler_proxy_requests' );
+add_action( 'wp_loaded', 'briozy_handler_proxy_requests' );
 
-function handler_proxy_requests( $query ) {
+function briozy_handler_proxy_requests( $query ) {
 
 	try {
 		$post    = null;
@@ -53,6 +56,9 @@ function handler_proxy_requests( $query ) {
 		$asset_editor = new Brizy_Editor_Assets( $project, $post );
 	} catch ( Exception $e ) {
 		// do nothing if there is an exception
+		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+			var_dump( $e );
+		}
 	}
 }
 

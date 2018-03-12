@@ -38,12 +38,8 @@ class Brizy_Config {
 	const GATEWAY_URI = 'https://api.brizy.io';
 	const COMPILER_URI = 'https://api.brizy.io/v1/projects/%s/pages/%s/htmls';
 
+	const BRIZY_REGISTRATION_CREDENTIALS = 'https://app.brizy.io/wordpress/credentials';
 
-	const BRIZY_ID = '2_5to57xuihv48c4s400sk0wgwcw0gg4s4ggwccos4g4c4444occ';
-	const BRIZY_KEY = '3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s';
-	const BRIZY_EMAIL = 'admin@admin.com';
-	const BRIZY_PASSWORD = 'admin';
-
-	const BRIZY_TEMPLTAE_FILE_NAME = 'brizy-blank-template.php';
+	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 
 }

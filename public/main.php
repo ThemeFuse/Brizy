@@ -141,7 +141,6 @@ class Brizy_Public_Main {
 			$context['DEBUG'] = true;
 		}
 
-
 		// make the next request to store one asset
 		$this->project->setStoreAssets( true )->save();
 
@@ -183,7 +182,7 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_editing_page_without_editor() {
-		return is_admin() && current_user_can( 'edit_pages' ) && ( isset( $_REQUEST['post'] ) && $_REQUEST['post'] == $this->post->get_id() );
+		return current_user_can( 'edit_pages' ) && ( isset( $_REQUEST['post'] ) && $_REQUEST['post'] == $this->post->get_id() );
 	}
 
 	/**

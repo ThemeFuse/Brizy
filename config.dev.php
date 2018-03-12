@@ -13,7 +13,6 @@ class Brizy_Config {
 	const BRIZY_S3_ASSET_URL = 'http://editor:3000/static';
 	const EDITOR_STATIC_URL = 'http://editor:3000/static';
 
-
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/wp-content/uploads/brizy/media';
 
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/wp-content/uploads/brizy/pages/%s';
@@ -38,11 +37,7 @@ class Brizy_Config {
 	const GATEWAY_URI = 'https://api.brizy.io';
 	const COMPILER_URI = 'http://editor:3000/projects/%s/pages/%s/htmls/%s';
 
+	const BRIZY_REGISTRATION_CREDENTIALS = 'https://app.brizy.io/wordpress/credentials';
 
-	const BRIZY_ID = '2_5to57xuihv48c4s400sk0wgwcw0gg4s4ggwccos4g4c4444occ';
-	const BRIZY_KEY = '3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s';
-	const BRIZY_EMAIL = 'admin@admin.com';
-	const BRIZY_PASSWORD = 'admin';
-
-	const BRIZY_TEMPLTAE_FILE_NAME = 'brizy-blank-template.php';
+	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 }

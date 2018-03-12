@@ -6,7 +6,6 @@ class Brizy_Admin_Flash {
 
 	const BRIZY_NOTICE_TRANSIENT_KEY = 'brizy-admin-notices';
 
-
 	/**
 	 * @var Brizy_Admin_Flash
 	 */

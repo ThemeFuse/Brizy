@@ -5,7 +5,7 @@ include_once "vendor/autoload.php";
 /**.
  * @param $class_name
  */
-function _brizy_autoload( $class_name ) {
+function brizy_autoload( $class_name ) {
 
 	$class_parts = explode( '_', $class_name );
 	$last_part   = end( $class_parts );
@@ -38,4 +38,4 @@ function _brizy_autoload( $class_name ) {
 	include_once $include_path;
 }
 
-spl_autoload_register( '_brizy_autoload' );
+spl_autoload_register( 'brizy_autoload' );

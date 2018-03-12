@@ -76,10 +76,7 @@ class Brizy_Editor_User {
 	protected function create_user() {
 		$this->platform_user_email = $this->random_email();
 
-		$platform = new Brizy_Editor_API_Platform(
-			Brizy_Config::BRIZY_ID,
-			Brizy_Config::BRIZY_KEY, Brizy_Config::BRIZY_EMAIL,
-			Brizy_Config::BRIZY_PASSWORD );
+		$platform = new Brizy_Editor_API_Platform();
 
 		$platform->createUser( $this->platform_user_email );
 
@@ -105,11 +102,18 @@ class Brizy_Editor_User {
 		return $this;
 	}
 
+	/**
+	 * @param $email
+	 *
+	 * @throws Exception
+	 */
 	public function auth( $email ) {
 		try {
 			self::lock_access();
 
-			$auth_api    = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, Brizy_Config::BRIZY_ID, Brizy_Config::BRIZY_KEY );
+			$credentials = Brizy_Editor_API_Platform::getCredentials();
+
+			$auth_api = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, $credentials->client_id, $credentials->client_secret );
 			$auth_api->clearTokenCache();
 			$this->token = $auth_api->getToken( $email );
 			$this->common_storage->set( 'access-token', $this->token );
@@ -132,6 +136,11 @@ class Brizy_Editor_User {
 
 	/**
 	 * @return Brizy_Editor_API_Project
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function create_project() {
 		$project_data = $this->get_client()->create_project();
@@ -140,10 +149,15 @@ class Brizy_Editor_User {
 	}
 
 	/**
-	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_API_Page $page
+	 * @param $project
+	 * @param $page
 	 *
 	 * @return Brizy_Editor_API_Page
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function create_page( $project, $page ) {
 		$page_response = $this->get_client()->create_page( $project->get_id(), $page );
@@ -153,10 +167,32 @@ class Brizy_Editor_User {
 	}
 
 
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 * @param Brizy_Editor_API_Page $page
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized.
+	 */
 	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
 		return $this->get_client()->delete_page( $project->get_id(), $page->get_id() );
 	}
 
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 * @param Brizy_Editor_API_Page $page
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
 		return $this->get_client()
 		            ->update_page(
@@ -166,14 +202,47 @@ class Brizy_Editor_User {
 		            );
 	}
 
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
 		return $this->get_client()->update_project( $project );
 	}
 
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function get_project( Brizy_Editor_API_Project $project ) {
 		return $this->get_client()->get_project( $project );
 	}
 
+
+	/**
+	 * @param Brizy_Editor_Project $project
+	 * @param Brizy_Editor_Post $post
+	 *
+	 * @return Brizy_Editor_CompiledHtml
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 * @throws Exception
+	 */
 	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		$api_project = $project->get_api_project();
 		$api_page    = $post->get_api_page();
@@ -187,19 +256,31 @@ class Brizy_Editor_User {
 		return new Brizy_Editor_CompiledHtml( $content );
 	}
 
+	/**
+	 * @param Brizy_Editor_Project $project
+	 * @param $attachment_id
+	 *
+	 * @return mixed|null
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function get_media_id( Brizy_Editor_Project $project, $attachment_id ) {
 
 		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $attachment_id );
-		$hash_name = null;
+		$hash_name                 = null;
 		try {
-			$hash_name =  $brizy_editor_storage_post->get( self::BRIZY_ATTACHMENT_HASH_KEY );
+			$hash_name = $brizy_editor_storage_post->get( self::BRIZY_ATTACHMENT_HASH_KEY );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
 
 			$response = $this
 				->get_client()
 				->add_media( $project->get_id(), $this->image_to_base64( $attachment_id ) );
 
-			$brizy_editor_storage_post->set(self::BRIZY_ATTACHMENT_HASH_KEY, $response['name']);
+			$brizy_editor_storage_post->set( self::BRIZY_ATTACHMENT_HASH_KEY, $response['name'] );
 
 			$hash_name = $response['name'];
 		}

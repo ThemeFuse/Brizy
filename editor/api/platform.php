@@ -6,7 +6,7 @@
  * Time: 2:14 PM
  */
 
-class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
+class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 
 	/**
 	 * @var string
@@ -23,11 +23,6 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 	 */
 	private $email;
 
-	/**
-	 * @var string
-	 */
-	private $password;
-
 
 	private function sign_up_url() {
 		return Brizy_Config::GATEWAY_URI . '/v1/users';
@@ -39,20 +34,16 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 
 	/**
 	 * Brizy_Editor_API_Platform constructor.
-	 *
-	 * @param string $client_id
-	 * @param string $secret
-	 * @param string $email
-	 * @param string $password
 	 */
-	public function __construct( $client_id, $secret, $email, $password ) {
+	public function __construct() {
 
 		parent::__construct();
 
-		$this->client_id = $client_id;
-		$this->secret    = $secret;
-		$this->email     = $email;
-		$this->password  = $password;
+		$credentials = self::getCredentials();
+
+		$this->client_id = $credentials->client_id;
+		$this->secret    = $credentials->client_secret;
+		$this->email     = $credentials->email;
 	}
 
 	/**
@@ -69,7 +60,6 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 				'client_id'     => $this->client_id,
 				'client_secret' => $this->secret,
 				'email'         => $this->email,
-				'password'      => $this->password,
 				'grant_type'    => 'https://visual.dev/api/limited_client_credentials'
 			)
 		) );
@@ -82,16 +72,41 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 		);
 
 
-		if(isset($response_array['refresh_token']))
+		if ( isset( $response_array['refresh_token'] ) ) {
 			$brizy_editor_API_access_token->set_refresh_token( $response_array['refresh_token'] );
+		}
 
 		return $brizy_editor_API_access_token;
 	}
 
 
 	/**
+	 * @return array|mixed|null|object
+	 * @throws Exception
+	 */
+	static public function getCredentials() {
+
+		$credentials = null;
+
+		try {
+			$credentials = Brizy_Editor_Storage_Common::instance()->get( 'platform_credentials' );
+		} catch ( Exception $e ) {
+			$http        = new WP_Http();
+			$wp_response = new Brizy_Editor_Http_Response( $http->get( Brizy_Config::BRIZY_REGISTRATION_CREDENTIALS ) );
+
+			if ( $wp_response->is_ok() ) {
+				$credentials =  $wp_response->get_response_body();
+			} else {
+				throw new Exception( 'unable to obtain the platform credentials' );
+			}
+		}
+
+		return (object)$credentials;
+
+	}
+
+	/**
 	 * @param $email
-	 * @param null $password
 	 *
 	 * @return array|mixed|object
 	 * @throws Brizy_Editor_API_Exceptions_Exception
@@ -100,7 +115,7 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function createUser( $email, $password=null ) {
+	public function createUser( $email ) {
 		$token = $this->getToken();
 
 		$response = $this->post( $this->sign_up_url(), array(
@@ -108,15 +123,13 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client{
 					'Authorization' => 'Bearer ' . $token->access_token()
 				),
 				'body'      => array(
-					'email'    => $email,
-					//'password' => $password
+					'email' => $email,
 				),
 				'sslverify' => false
 			)
 		);
 
-		if($response->is_ok())
-		{
+		if ( $response->is_ok() ) {
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
 		}
 
