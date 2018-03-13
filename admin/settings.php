@@ -50,7 +50,9 @@ class Brizy_Admin_Settings {
 		add_menu_page( brizy()->get_name(),
 			brizy()->get_name(), 'manage_options',
 			self::menu_slug(),
-			array( $this, 'render' ) );
+			array( $this, 'render' ),
+			plugins_url( '/static/img/brizy-logo.svg', __FILE__ )
+		);
 	}
 
 	/**
