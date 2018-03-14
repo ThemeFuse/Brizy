@@ -41,13 +41,15 @@ class Brizy_Editor_Assets {
 
 			add_action( 'parse_request', array( $this, 'handle_editor_assets' ), - 1000 );
 
+			add_action( 'parse_request', array( $this, 'handle_media_proxy_handler' ), - 1000 );
+
 			if ( ! $this->post ) {
 				return;
 			}
 
 			add_action( 'parse_request', array( $this, 'handle_front_end_editor_assets' ), - 1000 );
 
-			add_action( 'parse_request', array( $this, 'handle_media_proxy_handler' ), - 1000 );
+
 
 		} catch ( Exception $e ) {
 
@@ -103,12 +105,18 @@ class Brizy_Editor_Assets {
 		//if ( ! BRIZY_DEVELOPMENT && $res = $this->project->isStoreAssets() && ! $file_exists ) {
 
 		if ( ! BRIZY_DEVELOPMENT ) {
+			$time_start = microtime_float();
+
 			if ( ! $editor->store_asset( $url, $local_file_name ) ) {
 				global $wp_query;
 				$wp_query->set_404();
 				status_header( 404 );
 				exit;
 			}
+
+			$time = microtime_float() - $time_start;
+			header( "X-request-time: {$time}s" );
+
 		}
 
 		// send the url content
@@ -159,13 +167,16 @@ class Brizy_Editor_Assets {
 		$full_url = $this->project->get_asset_url() . $template_asset_path;
 
 		if ( ! BRIZY_DEVELOPMENT ) {
-
+			$time_start = microtime_float();
 			if ( ! $editor->store_asset( $full_url, $local_file_name ) ) {
 				global $wp_query;
 				$wp_query->set_404();
 				status_header( 404 );
 				exit;
 			}
+			$time = microtime_float() - $time_start;
+			header( "X-request-time: {$time}s" );
+
 		}
 
 		$this->send_file_content( $full_url );
@@ -184,8 +195,6 @@ class Brizy_Editor_Assets {
 
 			$upload_dir_info = wp_upload_dir( null, true );
 
-			$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
-
 			$parts = explode( $str_splitter, $_SERVER["REQUEST_URI"] );
 
 			if ( ! $parts[1] ) {
@@ -195,10 +204,6 @@ class Brizy_Editor_Assets {
 			$template_asset_path = $parts[1];
 
 			$asset_path = Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL . $template_asset_path;
-
-			if ( ! $this->post->uses_editor() ) {
-				return;
-			}
 
 			$full_url = Brizy_Config::MEDIA_IMAGE_URL . $template_asset_path;
 
@@ -215,6 +220,7 @@ class Brizy_Editor_Assets {
 			if ( ! BRIZY_DEVELOPMENT ) {
 				$time_start = microtime_float();
 
+				$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
 				if ( ! $editor->store_asset( $full_url, $local_file_name ) ) {
 					global $wp_query;
 					$wp_query->set_404();
@@ -224,7 +230,7 @@ class Brizy_Editor_Assets {
 
 				$time = microtime_float() - $time_start;
 
-				header( "X-S3-request-time: {$time}s" );
+				header( "X-request-time: {$time}s" );
 			}
 
 			$this->send_file_content( $full_url );
