@@ -31,7 +31,7 @@ abstract class Brizy_Editor_Storage_Abstract {
 			return $storage[ $key ];
 		}
 
-		throw new Brizy_Editor_Exceptions_NotFound();
+		throw new Brizy_Editor_Exceptions_NotFound($key);
 	}
 
 	public function delete( $key ) {
