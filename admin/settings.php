@@ -51,7 +51,8 @@ class Brizy_Admin_Settings {
 			brizy()->get_name(), 'manage_options',
 			self::menu_slug(),
 			array( $this, 'render' ),
-			plugins_url( '/static/img/brizy-logo.svg', __FILE__ )
+			plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
+			81
 		);
 	}
 
