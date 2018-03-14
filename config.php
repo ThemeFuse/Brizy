@@ -23,6 +23,7 @@ class Brizy_Config {
 
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
+	const EDITOR_ASSETS_URL = "public/static";
 
 	const MEDIA_IMAGE_PATH = '/storage/media';
 	const MEDIA_IMAGE_URL = 'https://app.brizy.io/storage/media';

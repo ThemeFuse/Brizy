@@ -49,9 +49,7 @@ class Brizy_Editor_Editor_Editor {
 
 		global $wp_registered_sidebars;
 
-		$local_page_asset_static_url = sprintf(Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $this->project->get_template_version());
-
-		$config =  array(
+		$config = array(
 			'env'             => 'WP',
 			'rootElement'     => '#' . brizy()->get_slug() . '-root-element',
 			'editorOptions'   => array(
@@ -78,12 +76,11 @@ class Brizy_Editor_Editor_Editor {
 				'api'                 => home_url( '/wp-json/v1' ),
 				'base'                => Brizy_Config::EDITOR_BASE_URL,
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
-				'image'               => brizy()->get_asset_url( Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL ),
-				// proxy
+				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
+				'assets'              => BRIZY_PLUGIN_URL.Brizy_Config::EDITOR_ASSETS_URL,
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
-				'static'              => brizy()->get_asset_url( $local_page_asset_static_url . '/' . $this->get_post()->get_id() ),
-				// proxy
+				'static'              => $this->project->get_asset_url(),
 				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' )
 			),
 			'user'            => $this->project->get_id(),
@@ -92,10 +89,10 @@ class Brizy_Editor_Editor_Editor {
 				'template' => null
 			),
 			'wp'              => array(
-				'permalink' => get_permalink( $this->post->get_id() ),
-				'page'      => $this->post->get_id(),
-				'templates' => $this->post->get_templates(),
-				'api'       => array(
+				'permalink'   => get_permalink( $this->post->get_id() ),
+				'page'        => $this->post->get_id(),
+				'templates'   => $this->post->get_templates(),
+				'api'         => array(
 					'hash'             => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'              => admin_url( 'admin-ajax.php' ),
 					'globals'          => array(
@@ -115,10 +112,10 @@ class Brizy_Editor_Editor_Editor {
 					'getInternalLinks' => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
 					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
 				),
-				'plugins'   => array(
+				'plugins'     => array(
 					'woocommerce' => $this->get_woocomerce_plugin_info()
 				),
-				'hasSidebars' => count($wp_registered_sidebars)>0
+				'hasSidebars' => count( $wp_registered_sidebars ) > 0
 				//'menus' =>  wp_get_nav_menus()
 //				'shortcodes' => array(
 //					'sidebar' => 'brizy_sidebar'
@@ -132,8 +129,9 @@ class Brizy_Editor_Editor_Editor {
 
 	public function get_asset_url() {
 
-		$upload_dir_info = wp_upload_dir(null, true);
-		return $upload_dir_info['baseurl'].sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
+		$upload_dir_info = wp_upload_dir( null, true );
+
+		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
 	}
 
 	public function store_asset( $asset_source, $asset_path ) {
@@ -141,7 +139,7 @@ class Brizy_Editor_Editor_Editor {
 		$full_asset_path = null;
 		try {
 			// check destination dir
-			$dir_path = dirname(  $asset_path );
+			$dir_path = dirname( $asset_path );
 
 			if ( ! file_exists( $dir_path ) ) {
 				mkdir( $dir_path, 0777, true );

@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
  * Date: 8/1/17
  * Time: 10:26 AM
  */
+
 class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
-	const BRIZY_S3_ASSET_URL = 'http://editor:3000/static';
-	const EDITOR_STATIC_URL = 'http://editor:3000/static';
+	const BRIZY_S3_ASSET_URL = 'http://bitblox.local/static';
+	const EDITOR_STATIC_URL = 'http://bitblox.local/static';
 
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 
@@ -23,6 +25,7 @@ class Brizy_Config {
 
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
+	const EDITOR_ASSETS_URL = "public/static";
 
 	const MEDIA_IMAGE_PATH = '/storage/media';
 	const MEDIA_IMAGE_URL = 'https://app.brizy.io/storage/media';

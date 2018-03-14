@@ -18,7 +18,7 @@ define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', plugin_dir_url( BRIZY_FILE ) );
 
-//define( 'BRIZY_DUMP_EXCEPTION', true );
+define( 'BRIZY_DUMP_EXCEPTION', true );
 
 include_once 'autoload.php';
 include_once 'editor/load.php';
