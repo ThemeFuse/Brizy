@@ -127,7 +127,6 @@ class Brizy_Editor_Assets {
 	 * @param $query
 	 */
 	function handle_front_end_editor_assets( $query ) {
-		$str_splitter = rtrim( sprintf( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, "" ), '/' );
 
 		$parts = preg_split( Brizy_Config::LOCAL_PAGE_ASSET_SPLITTER, $_SERVER['REQUEST_URI'] );
 		preg_match( Brizy_Config::LOCAL_PAGE_ASSET_SPLITTER, $_SERVER['REQUEST_URI'], $matches );

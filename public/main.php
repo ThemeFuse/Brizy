@@ -62,7 +62,7 @@ class Brizy_Public_Main {
 			if(post_password_required($this->post->get_wp_post())) return;
 
 			try {
-				$this->disable_cache();
+				$this->remove_sent_cache_headers();
 				// compile page before showing..
 				$this->post->compile_page();
 				$this->post->save();
@@ -319,7 +319,7 @@ class Brizy_Public_Main {
 		}
 	}
 
-	private function disable_cache() {
+	private function remove_sent_cache_headers() {
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
 			define( 'DONOTCACHEPAGE', true );
 		}
