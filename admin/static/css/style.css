@@ -2,105 +2,106 @@
 .brizy-editor-enabled #wp-content-editor-tools .wp-editor-tabs,
 .brizy-editor-enabled #wp-content-editor-container .quicktags-toolbar,
 .brizy-editor-enabled #wp-content-editor-container .wp-editor-area {
-	display: none;
+  display: none;
 }
 
 #brizy-admin-enable,
 #brizy-admin-disable {
-	float: left;
+  float: left;
 }
 
 #brizy-admin-disable,
 .brizy-editor-enabled #brizy-admin-enable {
-	display: none;
+  display: none;
 }
 
 .brizy-editor-enabled #brizy-admin-disable {
-	display: block;
+  display: block;
 }
 
 .brizy-editor {
-	padding: 10% 0;
-	display: none;
-	background: #fff;
-	align-items: center;
-	justify-content: center;
+  padding: 10% 0;
+  display: none;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
 }
 
 .brizy-editor-enabled .brizy-editor {
-	display: flex;
+  display: flex;
 }
 
 .brizy-logo {
-	max-height: 22px;
-	margin-left: 11px;
-	transform: translateY(2px);
+  max-height: 22px;
+  margin-left: 11px;
+  transform: translateY(2px);
 }
 
 .brizy-button--arrow {
-	max-height: 14px;
-	margin-right: 11px;
+  max-height: 14px;
+  margin-right: 11px;
 }
 
 .brizy-buttons {
-	height: 50px;
-	text-align: left;
-	margin-top: 10px;
+  height: 50px;
+  text-align: left;
+  margin-top: 10px;
 }
 
 .brizy-button {
-	padding: 11px 27px 12px;
-	border-style: solid;
-	border-width: 1px;
-	border-bottom: 0;
+  padding: 11px 27px 12px;
+  border-style: solid;
+  border-width: 1px;
+  border-bottom: 0;
   border-radius: 3px;
-	background-color: #ea7a25;
-	box-shadow: 0px 2px 0px 0px #c3651d;
-	text-shadow: none;
+  background-color: #d62c64;
+  box-shadow: 0px 2px 0px 0px #981e46;
+  text-shadow: none;
   font-size: 15px;
   font-family: "Open Sans", sans-serif;
-	color: #fff;
+  color: #fff;
   font-style: italic;
-	line-height: 1;
-	height: auto;
-	display: inline-flex;
-	align-items: center;
-	text-decoration: none;
+  line-height: 1;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 200ms linear;
 }
 .brizy-button--default {
-	padding: 15px 30px 15px 24px;
-	font-size: 14px;
-	color: #444;
-	border-color: #e5e5e5;
-	background-color: #fff;
-	box-shadow: 0px 2px 0px 0px #e3e3e3;
+  padding: 15px 30px 15px 24px;
+  font-size: 14px;
+  color: #444;
+  border-color: #e5e5e5;
+  background-color: #fff;
+  box-shadow: 0px 2px 0px 0px #e3e3e3;
 }
 .brizy-button--primary {
-	color: #fff;
-	border-color: #d26715;
-	background-color: #ea7a25;
-	box-shadow: 0px 2px 0px 0px #c3651d;
+  color: #fff;
+  border-color: #d62c64;
+  background-color: #d62c64;
+  box-shadow: 0px 2px 0px 0px #981e46;
 }
 .brizy-button:hover,
 .brizy-button:focus,
 .brizy-button:active {
-	transform: none;
+  transform: none;
 }
 
 .brizy-button--primary:hover,
 .brizy-button--primary:focus,
 .brizy-button--primary:active {
-	color: #fff;
-	border-color: #d26715;
-	background-color: #ea7a25;
-	box-shadow: 0px 2px 0px 0px #c3651d;
+  color: #fff;
+  background-color: #e2356e;
+  border-color: #d62c64;
+  box-shadow: 0px 2px 0px 0px #981e46;
 }
 
 .brizy-button--default:hover,
 .brizy-button--default:focus,
 .brizy-button--default:active {
-	color: #444;
-	border-color: #e5e5e5;
-	background-color: #fff;
-	box-shadow: 0px 2px 0px 0px #e3e3e3;
+  color: #444;
+  border-color: #e5e5e5;
+  background-color: #fff;
+  box-shadow: 0px 2px 0px 0px #e3e3e3;
 }
