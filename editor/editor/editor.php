@@ -80,7 +80,7 @@ class Brizy_Editor_Editor_Editor {
 				'assets'              => BRIZY_PLUGIN_URL.Brizy_Config::EDITOR_ASSETS_URL,
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
-				'static'              => $this->project->get_asset_url(),
+				'static'              => $this->project->get_fe_asset_url(),
 				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' )
 			),
 			'user'            => $this->project->get_id(),
@@ -147,8 +147,6 @@ class Brizy_Editor_Editor_Editor {
 
 			$full_asset_path = $asset_path;
 
-			//file_put_contents( $full_asset_path, file_get_contents($asset_source) );
-
 			$fasset_dest = fopen( $asset_path, 'w' );
 			if ( ! $fasset_dest ) {
 				throw new Exception( 'Invalid file destination.' );
@@ -159,7 +157,7 @@ class Brizy_Editor_Editor_Editor {
 				throw new Exception( 'Invalid asset source.' );
 			}
 
-			$buffer_length = 40960; // we can tune this later;
+			$buffer_length = 81920; // we can tune this later;
 
 			while ( ! feof( $fasset_src ) ) {
 				$buffer = fread( $fasset_src, $buffer_length );

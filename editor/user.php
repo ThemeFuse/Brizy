@@ -249,7 +249,7 @@ class Brizy_Editor_User {
 
 		$config = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
 
-		$res = $this->get_client()->compile_page( $api_project->get_id(), $api_page->get_id(), $config );
+		$res = $this->get_client()->compile_page( $api_project, $api_page, $config );
 
 		$content = trim( $res['html'] );
 

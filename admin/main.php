@@ -50,7 +50,8 @@ class Brizy_Admin_Main {
 
 	public function hide_editor() {
 
-		if ( in_array( get_post_type(), brizy()->supported_post_types() ) ) {
+		$post_type = get_post_type();
+		if ( in_array( $post_type, brizy()->supported_post_types() ) ) {
 			$p = get_post();
 
 			try {
@@ -61,7 +62,7 @@ class Brizy_Admin_Main {
 
 			if(	$is_using_brizy	)
             {
-	            remove_post_type_support( 'page', 'editor' );
+	            remove_post_type_support( $post_type, 'editor' );
             }
 		}
 	}
@@ -78,8 +79,6 @@ class Brizy_Admin_Main {
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function () {
                 var dropdown = document.querySelector('#split-page-title-action .dropdown');
-
-                console.log(dropdown);
 
                 if (!dropdown) {
                     return;

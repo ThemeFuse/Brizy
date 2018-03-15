@@ -35,7 +35,7 @@ function brizy_initialize_Brizy_Public_Api() {
 	}
 }
 
-//add_action( 'wp_loaded', 'briozy_handler_proxy_requests' );
+add_action( 'wp_loaded', 'briozy_handler_proxy_requests' );
 
 function briozy_handler_proxy_requests( $query ) {
 

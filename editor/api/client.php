@@ -133,8 +133,8 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	}
 
 	/**
-	 * @param $project_id
-	 * @param $page_id
+	 * @param Brizy_Editor_API_Project $project
+	 * @param Brizy_Editor_API_Page $page
 	 * @param $config
 	 *
 	 * @return array|mixed|object
@@ -144,19 +144,22 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function compile_page( $project_id, $page_id, $config ) {
+	public function compile_page( $project, $page, $config ) {
+
+		$upload_dir = wp_upload_dir(null,true);
 
 		$urls = array(
 			'urls' => json_encode( array(
 				'api'     => $this->url( '' ),
 				'primary' => $config['urls']['primary'],
 				'base'    => $config['urls']['base'],
-				'static'  => $config['urls']['static'],
-				'image'   => $config['urls']['image']
+				'static'  => $upload_dir['baseurl'].sprintf(Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $project->get_template_version()),
+				'assets'  => $config['urls']['assets'],
+				'image'   => $upload_dir['baseurl'].Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL
 			) )
 		);
 
-		$compile_url = sprintf( Brizy_Config::COMPILER_URI, $project_id, $page_id, $this->access_token->access_token() );
+		$compile_url = sprintf( Brizy_Config::COMPILER_URI, $project->get_id(), $page->get_id(), $this->access_token->access_token() );
 
 		return parent::request( $compile_url, array( 'body' => $urls ), 'POST' )->get_response_body();
 	}

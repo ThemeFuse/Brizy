@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -9,6 +10,7 @@ class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
+	const FE_S3_ASSET_URL = 'https://static.brizy.io/%s/%s';
 	const BRIZY_S3_ASSET_URL = 'https://static.brizy.io/%s/%s';
 	const EDITOR_STATIC_URL = 'https://api.brizy.io/static';
 
@@ -18,8 +20,11 @@ class Brizy_Config {
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/pages/%s';
 	const BRIZY_WP_PAGE_ASSET_PATH = '/brizy/pages/%s/%s';
 
+
 	const LOCAL_EDITOR_ASSET_STATIC_URL = '/brizy/editor';
+	const LOCAL_EDITOR_ASSET_SPLITTER = "/\/brizy\/editor\/(.[^\/]*)\/(.[^\/]*)/";
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor/%s';
+
 
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';

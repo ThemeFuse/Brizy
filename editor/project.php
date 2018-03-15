@@ -119,16 +119,18 @@ class Brizy_Editor_Project {
 		// se will update the flag for all pages edited with brizy
 
 		$posts = get_posts( array(
-			'orderby' => null,
+			'orderby'     => null,
 			'numberposts' => - 1,
-			'post_type'=>'any',
-			'post_status'=>'any',
+			'post_type'   => 'any',
+			'post_status' => 'any',
 			'meta_key'    => Brizy_Editor_Constants::BRIZY
 		) );
 
 		foreach ( (array) $posts as $post ) {
 
-			if(!in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() )) continue;
+			if ( ! in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() ) ) {
+				continue;
+			}
 
 			$brizy_post = Brizy_Editor_Post::get( $post->ID );
 
@@ -173,12 +175,36 @@ class Brizy_Editor_Project {
 		return $this;
 	}
 
-	public function get_asset_url() {
-		return sprintf( Brizy_Config::BRIZY_S3_ASSET_URL, $this->get_template_slug(), $this->get_template_version() );
+	public function get_fe_asset_url( $template_version = null, $template_slug = null ) {
+
+		if ( is_null( $template_slug ) ) {
+			$template_slug = $this->get_template_slug();
+		}
+		if ( is_null( $template_version ) ) {
+			$template_version = $this->get_template_version();
+		}
+
+		return sprintf( Brizy_Config::FE_S3_ASSET_URL, $template_slug, $template_version );
 	}
 
-	public function get_asset_path() {
-		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->get_template_version() );
+	public function get_asset_url( $template_version = null, $template_slug = null ) {
+
+		if ( is_null( $template_slug ) ) {
+			$template_slug = $this->get_template_slug();
+		}
+		if ( is_null( $template_version ) ) {
+			$template_version = $this->get_template_version();
+		}
+
+		return sprintf( Brizy_Config::BRIZY_S3_ASSET_URL, $template_slug, $template_version );
+	}
+
+	public function get_asset_path( $template_version = null ) {
+		if ( is_null( $template_version ) ) {
+			$template_version = $this->get_template_version();
+		}
+
+		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
 	}
 
 	public function set_meta_key( $key, $value ) {

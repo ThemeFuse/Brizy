@@ -6,13 +6,14 @@
  * Date: 8/1/17
  * Time: 10:26 AM
  */
-
 class Brizy_Config {
 
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
-	const BRIZY_S3_ASSET_URL = 'http://bitblox.local/static';
-	const EDITOR_STATIC_URL = 'http://bitblox.local/static';
+	const FE_S3_ASSET_URL = 'http://bitblox.local/static';
+
+	const BRIZY_S3_ASSET_URL = 'http://editor:3000/static';
+	const EDITOR_STATIC_URL = 'http://editor:3000/static';
 
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 
@@ -21,6 +22,7 @@ class Brizy_Config {
 	const BRIZY_WP_PAGE_ASSET_PATH = '/brizy/pages/%s/%s';
 
 	const LOCAL_EDITOR_ASSET_STATIC_URL = '/brizy/editor';
+	const LOCAL_EDITOR_ASSET_SPLITTER = "/\/brizy\/editor\/(.[^\/]*)\/(.[^\/]*)/";
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor/%s';
 
 	const EDITOR_BASE_URL = 'http://www.testblox.info';
