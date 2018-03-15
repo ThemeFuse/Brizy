@@ -11,7 +11,7 @@
 <html>
 <head>
     <title><?php wp_title() ?></title>
-	<?php do_action('wp_head') ?>
+	<?php wp_head(); ?>
 </head>
 <body class="brz-ed brz">
 <?php while ( have_posts() ) : the_post() ?>
