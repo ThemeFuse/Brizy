@@ -253,16 +253,18 @@ class Brizy_Admin_Main {
 				}
 			}
 
-			$post->disable_editor();
+			//$post->disable_editor();
 
 			Brizy_Editor_User::get()->delete_page( $project->get_api_project(), $post->get_api_page() );
 
-			do_action( 'brizy_delete_post', $id );
+			do_action( +
+            'brizy_delete_post', $id );
 
 		} catch ( Brizy_Editor_Exceptions_UnsupportedPostType $exception ) {
 			return;
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
+			return;
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 			exit;
 		}
