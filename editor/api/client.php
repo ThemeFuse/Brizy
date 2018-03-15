@@ -146,7 +146,17 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function compile_page( $project, $page, $config ) {
 
+		global $wp_rewrite;
+
+		$site_url = get_site_url();
+
 		$upload_dir = wp_upload_dir(null,true);
+
+		if($wp_rewrite->permalink_structure=="")
+		{
+			$upload_dir['url'] = str_replace($site_url,$site_url."/index.php",$upload_dir['url']);
+			$upload_dir['baseurl'] = str_replace($site_url,$site_url."/index.php",$upload_dir['baseurl']);
+		}
 
 		$urls = array(
 			'urls' => json_encode( array(
