@@ -231,8 +231,11 @@ class Brizy_Admin_Main {
 	public function action_delete_page( $id ) {
 
 		try {
-			$project = Brizy_Editor_Project::get();
+		    if( !in_array( get_post_type($id), brizy()->supported_post_types() ) ) return;
+
+		    $project = Brizy_Editor_Project::get();
 			$post    = Brizy_Editor_Post::get( $id );
+
 
 			if ( ! $post->uses_editor() ) {
 				return;
@@ -257,8 +260,7 @@ class Brizy_Admin_Main {
 
 			Brizy_Editor_User::get()->delete_page( $project->get_api_project(), $post->get_api_page() );
 
-			do_action( +
-            'brizy_delete_post', $id );
+			do_action( 'brizy_delete_post', $id );
 
 		} catch ( Brizy_Editor_Exceptions_UnsupportedPostType $exception ) {
 			return;
