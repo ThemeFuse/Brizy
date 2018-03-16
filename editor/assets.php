@@ -14,7 +14,6 @@ function microtime_float() {
 
 class Brizy_Editor_Assets {
 
-
 	/**
 	 * @var Brizy_Editor_Project
 	 */
@@ -90,7 +89,7 @@ class Brizy_Editor_Assets {
 
 		$url = $this->project->get_asset_url($template_version) . $parts[1];
 
-		$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
+
 
 		$path = $local_editor_asset_static_url . $asset_path;
 
@@ -98,6 +97,8 @@ class Brizy_Editor_Assets {
 
 		$file_exists = file_exists( $local_file_name );
 
+
+		$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
 		$asset_url = $editor->get_asset_url($template_version) . $asset_path;
 
 		if ( $file_exists ) {
@@ -110,7 +111,7 @@ class Brizy_Editor_Assets {
 		if ( ! BRIZY_DEVELOPMENT ) {
 			$time_start = microtime_float();
 
-			if ( ! $editor->store_asset( $url, $local_file_name ) ) {
+			if ( ! Brizy_Editor_Editor_Editor::store_asset( $url, $local_file_name ) ) {
 				global $wp_query;
 				$wp_query->set_404();
 				status_header( 404 );
@@ -145,7 +146,7 @@ class Brizy_Editor_Assets {
 
 		$upload_dir_info = wp_upload_dir( null, true );
 
-		$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
+
 
 		$template_asset_path = $parts[1];
 
@@ -170,7 +171,7 @@ class Brizy_Editor_Assets {
 
 		if ( ! BRIZY_DEVELOPMENT ) {
 			$time_start = microtime_float();
-			if ( ! $editor->store_asset( $full_url, $local_file_name ) ) {
+			if ( ! Brizy_Editor_Editor_Editor::store_asset( $full_url, $local_file_name ) ) {
 				global $wp_query;
 				$wp_query->set_404();
 				status_header( 404 );
@@ -222,8 +223,7 @@ class Brizy_Editor_Assets {
 			if ( ! BRIZY_DEVELOPMENT ) {
 				$time_start = microtime_float();
 
-				$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
-				if ( ! $editor->store_asset( $full_url, $local_file_name ) ) {
+				if ( ! Brizy_Editor_Editor_Editor::store_asset( $full_url, $local_file_name ) ) {
 					global $wp_query;
 					$wp_query->set_404();
 					status_header( 404 );

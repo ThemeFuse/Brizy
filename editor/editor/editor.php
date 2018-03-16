@@ -127,14 +127,17 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	public function get_asset_url() {
+	public function get_asset_url($template_version=null) {
 
 		$upload_dir_info = wp_upload_dir( null, true );
 
-		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() );
+		if(is_null($template_version))
+			$template_version =  $this->project->get_template_version();
+
+		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
 	}
 
-	public function store_asset( $asset_source, $asset_path ) {
+	static public function store_asset( $asset_source, $asset_path ) {
 
 		$full_asset_path = null;
 		try {

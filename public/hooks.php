@@ -49,7 +49,6 @@ function brizy_catch_templates( $template ) {
 }
 
 function brizy_initialize_front_end_Brizy_Public_Main() {
-	if(!is_user_logged_in()) return;
 	try {
 		$pid = brizy_get_current_post_id();
 
