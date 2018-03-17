@@ -152,7 +152,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 	}
 
 	public function set_compiled_html_body( $html ) {
-		$this->compiled_html_body = $html;
+		$this->compiled_html_body = $this->strip_tags_content($html,'<title><meta>', true);
 
 		return $this;
 	}
@@ -304,7 +304,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 			$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 
 			$this->compiled_html_head = $compiled_html->get_head();
-			$this->compiled_html_body = $compiled_html->get_body();
+			$this->set_compiled_html_body($compiled_html->get_head().$compiled_html->get_body());
 
 			$this->invalidate_assets();
 
@@ -571,8 +571,24 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 		return $this;
 	}
 
+	function strip_tags_content($text, $tags = '', $invert = FALSE) {
 
+		preg_match_all('/<(.+?)[\s]*\/?[\s]*>/si', trim($tags), $tags);
+		$tags = array_unique($tags[1]);
 
+		if(is_array($tags) AND count($tags) > 0) {
+			if($invert == FALSE) {
+				return preg_replace('@<(?!(?:'. implode('|', $tags) .')\b)(\w+)\b.*?>(.*?</\1>)?@si', '', $text);
+			}
+			else {
+				return preg_replace('@<('. implode('|', $tags) .')\b.*?>(.*?</\1>)?@si', '', $text);
+			}
+		}
+		elseif($invert == FALSE) {
+			return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
+		}
+		return $text;
+	}
 
 //
 //	/**

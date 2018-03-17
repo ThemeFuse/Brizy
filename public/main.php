@@ -256,7 +256,11 @@ class Brizy_Public_Main {
 	public function insert_page_head() {
 
 		$compiled_html_head = $this->post->get_compiled_html_head();
-		echo $compiled_html_head;
+		?>
+		<!-- BRIZY HEAD -->
+			<?php //echo $compiled_html_head; ?>
+		<!-- END BRIZY HEAD -->
+		<?php
 	}
 
 	/** @internal
