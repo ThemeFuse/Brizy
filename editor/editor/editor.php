@@ -77,7 +77,7 @@ class Brizy_Editor_Editor_Editor {
 				'base'                => Brizy_Config::EDITOR_BASE_URL,
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
-				'assets'              => BRIZY_PLUGIN_URL.Brizy_Config::EDITOR_ASSETS_URL,
+				'assets'              => BRIZY_PLUGIN_URL . Brizy_Config::EDITOR_ASSETS_URL,
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
 				'static'              => $this->project->get_fe_asset_url(),
@@ -127,12 +127,13 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	public function get_asset_url($template_version=null) {
+	public function get_asset_url( $template_version = null ) {
 
 		$upload_dir_info = wp_upload_dir( null, true );
 
-		if(is_null($template_version))
-			$template_version =  $this->project->get_template_version();
+		if ( is_null( $template_version ) ) {
+			$template_version = $this->project->get_template_version();
+		}
 
 		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
 	}

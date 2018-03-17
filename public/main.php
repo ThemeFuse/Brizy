@@ -61,18 +61,6 @@ class Brizy_Public_Main {
 
 			if(post_password_required($this->post->get_wp_post())) return;
 
-			try {
-				$this->remove_sent_cache_headers();
-				// compile page before showing..
-				$this->post->compile_page();
-				$this->post->save();
-			} catch ( Exception $e ) {
-				// handle this
-				if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-					var_dump( $e );
-				}
-			}
-
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
@@ -271,7 +259,22 @@ class Brizy_Public_Main {
 	 **/
 	public function insert_page_content( $content ) {
 
-		return $this->post->get_compiled_html_body();
+	    if( is_preview() ) {
+		    try {
+			    // compile page before showing..
+			    $this->post->compile_page();
+
+			    return $this->post->get_compiled_html_body();
+
+		    } catch ( Exception $e ) {
+			    // handle this
+			    if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+				    var_dump( $e );
+			    }
+		    }
+	    }
+
+		return $content;
 	}
 
 

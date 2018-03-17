@@ -22,7 +22,7 @@ class Brizy_Admin_Main {
 		if ( ! Brizy_Editor::is_user_allowed() ) {
 			return;
 		}
-		add_action( 'admin_head', array($this,'hide_editor') );
+		add_action( 'admin_head', array( $this, 'hide_editor' ) );
 
 		add_action( 'admin_action_brizy_new_post', array( $this, 'admin_action_new_post' ) );
 
@@ -38,6 +38,7 @@ class Brizy_Admin_Main {
 		add_filter( 'page_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'post_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, 'filter_add_body_class' ), 10, 2 );
+		add_filter( 'save_post', array( $this, 'compile_post' ), 10, 2 );
 
 		//add_filter( 'the_editor', array( $this, '_add_fake_editor' ), 10, 2 );
 
@@ -45,6 +46,31 @@ class Brizy_Admin_Main {
 
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'admin_print_scripts-edit.php', [ $this, 'add_edit_button_to_gutenberg' ], 12 );
+		}
+	}
+
+	public function compile_post( $post_id, $post ) {
+		try {
+			$post_type = $post->post_type;
+
+			if ( !in_array( $post_type, brizy()->supported_post_types() ) ) return;
+
+			$b_post  = Brizy_Editor_Post::get( $post_id );
+
+			if ( ! $b_post->uses_editor() ) {
+				return;
+			}
+
+			$b_post->compile_page();
+			$b_post->save();
+
+			remove_action( 'save_post', array( $this, 'compile_post' ) );
+			wp_update_post( array( 'ID' => $post_id, 'post_content' => $b_post->get_compiled_html_body() ) );
+			add_action( 'save_post', array( $this, 'compile_post' ), 10, 2 );
+
+			// compile
+		} catch ( Exception $e ) {
+			return;
 		}
 	}
 
@@ -60,10 +86,9 @@ class Brizy_Admin_Main {
 				$is_using_brizy = false;
 			}
 
-			if(	$is_using_brizy	)
-            {
-	            remove_post_type_support( $post_type, 'editor' );
-            }
+			if ( $is_using_brizy ) {
+				remove_post_type_support( $post_type, 'editor' );
+			}
 		}
 	}
 
@@ -231,9 +256,11 @@ class Brizy_Admin_Main {
 	public function action_delete_page( $id ) {
 
 		try {
-		    if( !in_array( get_post_type($id), brizy()->supported_post_types() ) ) return;
+			if ( ! in_array( get_post_type( $id ), brizy()->supported_post_types() ) ) {
+				return;
+			}
 
-		    $project = Brizy_Editor_Project::get();
+			$project = Brizy_Editor_Project::get();
 			$post    = Brizy_Editor_Post::get( $id );
 
 
@@ -266,6 +293,7 @@ class Brizy_Admin_Main {
 			return;
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
+
 			return;
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 			exit;
@@ -313,12 +341,11 @@ class Brizy_Admin_Main {
 
 		try {
 			$p = Brizy_Editor_Post::get( $post->ID );
-			if($p->uses_editor())
-            {
-	            $actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
-	                                     . __( 'Edit with Brizy', 'brizy' )
-	                                     . "</a>";
-            }
+			if ( $p->uses_editor() ) {
+				$actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
+				                         . __( 'Edit with Brizy', 'brizy' )
+				                         . "</a>";
+			}
 		} catch ( Exception $exception ) {
 
 		}

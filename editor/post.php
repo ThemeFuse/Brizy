@@ -2,8 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_Post extends Brizy_Admin_Serializable
-{
+class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	const BRIZY_POST = 'brizy-post';
 
@@ -49,7 +48,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 	public function serialize() {
 		$get_object_vars = get_object_vars( $this );
 
-		unset($get_object_vars['wp_post_id']);
+		unset( $get_object_vars['wp_post_id'] );
 
 		return serialize( $get_object_vars );
 	}
@@ -111,11 +110,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 		try {
 			$this->storage()->set( self::BRIZY_POST, $this );
 
-			wp_update_post( array(
-				'ID'           => $this->get_id(),
-				'post_content' => $this->get_compiled_html_body()
-			) );
-
 			$project = Brizy_Editor_Project::get();
 
 			Brizy_Editor_User::get()->update_page( $project->get_api_project(), $this->api_page );
@@ -152,7 +146,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 	}
 
 	public function set_compiled_html_body( $html ) {
-		$this->compiled_html_body = $this->strip_tags_content($html,'<title><meta>', true);
+		$this->compiled_html_body = $this->strip_tags_content( $html, '<title><meta>', true );
 
 		return $this;
 	}
@@ -296,26 +290,19 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 	 */
 	public function compile_page() {
 
-		if ( $this->needs_compile || BRIZY_DEVELOPMENT ) {
+		// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
+		// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
 
-			// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
-			// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
+		$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 
-			$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
+		$this->compiled_html_head = $compiled_html->get_head();
+		$this->set_compiled_html_body( $compiled_html->get_head() . $compiled_html->get_body() );
 
-			$this->compiled_html_head = $compiled_html->get_head();
-			$this->set_compiled_html_body($compiled_html->get_head().$compiled_html->get_body());
-
-			$this->invalidate_assets();
-
-			$this->needs_compile = false;
-
-			return true;
-		}
+		$this->invalidate_assets();
 
 		$this->setStoreAssets( true );
 
-		return false;
+		return true;
 	}
 
 
@@ -571,22 +558,21 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable
 		return $this;
 	}
 
-	function strip_tags_content($text, $tags = '', $invert = FALSE) {
+	function strip_tags_content( $text, $tags = '', $invert = false ) {
 
-		preg_match_all('/<(.+?)[\s]*\/?[\s]*>/si', trim($tags), $tags);
-		$tags = array_unique($tags[1]);
+		preg_match_all( '/<(.+?)[\s]*\/?[\s]*>/si', trim( $tags ), $tags );
+		$tags = array_unique( $tags[1] );
 
-		if(is_array($tags) AND count($tags) > 0) {
-			if($invert == FALSE) {
-				return preg_replace('@<(?!(?:'. implode('|', $tags) .')\b)(\w+)\b.*?>(.*?</\1>)?@si', '', $text);
+		if ( is_array( $tags ) AND count( $tags ) > 0 ) {
+			if ( $invert == false ) {
+				return preg_replace( '@<(?!(?:' . implode( '|', $tags ) . ')\b)(\w+)\b.*?>(.*?</\1>)?@si', '', $text );
+			} else {
+				return preg_replace( '@<(' . implode( '|', $tags ) . ')\b.*?>(.*?</\1>)?@si', '', $text );
 			}
-			else {
-				return preg_replace('@<('. implode('|', $tags) .')\b.*?>(.*?</\1>)?@si', '', $text);
-			}
+		} elseif ( $invert == false ) {
+			return preg_replace( '@<(\w+)\b.*?>.*?</\1>@si', '', $text );
 		}
-		elseif($invert == FALSE) {
-			return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
-		}
+
 		return $text;
 	}
 
