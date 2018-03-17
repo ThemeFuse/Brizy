@@ -54,10 +54,6 @@ function brizy_handler_proxy_requests( $query ) {
 				$post = Brizy_Editor_Post::get( $pid );
 			} catch (Exception $e) {
 				// do nothing if there is an exception
-				if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-					var_dump( $e );
-				}
-
 				$post = null;
 			}
 		}

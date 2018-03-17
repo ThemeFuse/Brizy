@@ -77,7 +77,6 @@ class Brizy_Public_Main {
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
-
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 		}
 	}

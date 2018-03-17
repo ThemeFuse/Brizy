@@ -313,10 +313,12 @@ class Brizy_Admin_Main {
 
 		try {
 			$p = Brizy_Editor_Post::get( $post->ID );
-
-			$actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
-			                         . __( 'Edit with Brizy', 'brizy' )
-			                         . "</a>";
+			if($p->uses_editor())
+            {
+	            $actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
+	                                     . __( 'Edit with Brizy', 'brizy' )
+	                                     . "</a>";
+            }
 		} catch ( Exception $exception ) {
 
 		}

@@ -5,7 +5,7 @@
 include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
 include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
 
-class Brizy_Editor_Project {
+class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 	static private $instance = null;
 
@@ -14,12 +14,12 @@ class Brizy_Editor_Project {
 	/**
 	 * @var Brizy_Editor_API_Project
 	 */
-	private $api_project;
+	protected $api_project;
 
 	/**
 	 * @var bool
 	 */
-	private $store_assets = true;
+	protected $store_assets = true;
 
 	/**
 	 * @return Brizy_Editor_Project|mixed|null

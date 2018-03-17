@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_API_Page {
+class Brizy_Editor_API_Page extends Brizy_Admin_Serializable{
 
 	/**
 	 * @var array
@@ -16,6 +16,13 @@ class Brizy_Editor_API_Page {
 		return new self( $data );
 	}
 
+	public function serialize() {
+		return serialize( $this->data );
+	}
+
+	public function unserialize( $data ) {
+		$this->data = unserialize($data);
+	}
 
 	/**
 	 * Brizy_Editor_API_Page constructor.

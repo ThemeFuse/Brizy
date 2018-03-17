@@ -2,13 +2,21 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_API_Project {
+class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 
 	private $data;
 
 	public function __construct( $data ) {
 		$defaults   = array( 'title' => '', 'globals' => array() );
 		$this->data = array_merge( $defaults, $data );
+	}
+
+	public function serialize() {
+		return serialize( $this->data );
+	}
+
+	public function unserialize( $data ) {
+		$this->data = unserialize($data);
 	}
 
 	public function get_data() {

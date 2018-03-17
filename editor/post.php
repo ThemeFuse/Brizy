@@ -2,7 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_Post /* extends Brizy_Editor_Project */
+class Brizy_Editor_Post extends Brizy_Admin_Serializable
 {
 
 	const BRIZY_POST = 'brizy-post';
@@ -10,37 +10,49 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	/**
 	 * @var Brizy_Editor_API_Page
 	 */
-	private $api_page;
+	protected $api_page;
 
 	/**
 	 * @var int
 	 */
-	private $wp_post_id;
+	protected $wp_post_id;
 
 	/**
 	 * @var string
 	 */
-	private $compiled_html_body;
+	protected $compiled_html_body;
 
 	/**
 	 * @var string
 	 */
-	private $compiled_html_head;
+	protected $compiled_html_head;
 
 	/**
 	 * @var bool
 	 */
-	private $needs_compile;
+	protected $needs_compile;
 
 	/**
 	 * @var bool
 	 */
-	private $store_assets;
+	protected $store_assets;
 
 	/**
 	 * @var array
 	 */
-	public $assets = array();
+	protected $assets = array();
+
+
+	/**
+	 * @return string
+	 */
+	public function serialize() {
+		$get_object_vars = get_object_vars( $this );
+
+		unset($get_object_vars['wp_post_id']);
+
+		return serialize( $get_object_vars );
+	}
 
 	/**
 	 * @param $wp_post_id
@@ -52,13 +64,15 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	public static function get( $wp_post_id ) {
 		if ( ! in_array( ( $type = get_post_type( $wp_post_id ) ), brizy()->supported_post_types() ) ) {
 			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
-				"Brizy editor doesn't support '$type' post type"
+				"Brizy editor doesn't support '{$type}' post type"
 			);
 		}
 
 		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $wp_post_id );
 
 		$post = $brizy_editor_storage_post->get( self::BRIZY_POST );
+
+		$post->wp_post_id = $wp_post_id;
 
 		return $post;
 	}
@@ -282,7 +296,7 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 	 */
 	public function compile_page() {
 
-		if ( $this->needs_compile || BRIZY_DEVELOPMENT  ) {
+		if ( $this->needs_compile || BRIZY_DEVELOPMENT ) {
 
 			// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
 			// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
@@ -729,4 +743,6 @@ class Brizy_Editor_Post /* extends Brizy_Editor_Project */
 
 		return $this;
 	}
+
+
 }
