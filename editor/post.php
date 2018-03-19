@@ -146,7 +146,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	public function set_compiled_html_body( $html ) {
-		$this->compiled_html_body = $this->strip_tags_content( $html, '<title><meta>', true );
+		$this->compiled_html_body = $html;
 
 		return $this;
 	}

@@ -246,7 +246,7 @@ class Brizy_Public_Main {
 		$compiled_html_head = $this->post->get_compiled_html_head();
 		?>
 		<!-- BRIZY HEAD -->
-			<?php //echo $compiled_html_head; ?>
+			<?php echo $compiled_html_head; ?>
 		<!-- END BRIZY HEAD -->
 		<?php
 	}
