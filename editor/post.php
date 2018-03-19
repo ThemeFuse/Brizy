@@ -296,7 +296,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 
 		$this->compiled_html_head = $compiled_html->get_head();
-		$this->set_compiled_html_body( $compiled_html->get_head() . $compiled_html->get_body() );
+		$this->set_compiled_html_body(  $compiled_html->get_body() );
 
 		$this->invalidate_assets();
 

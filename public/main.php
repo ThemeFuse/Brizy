@@ -259,7 +259,7 @@ class Brizy_Public_Main {
 	 **/
 	public function insert_page_content( $content ) {
 
-	    if( is_preview() ) {
+	    if( is_preview() || isset($_GET['preview'])) {
 		    try {
 			    // compile page before showing..
 			    $this->post->compile_page();
