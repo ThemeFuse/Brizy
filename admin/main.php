@@ -38,7 +38,7 @@ class Brizy_Admin_Main {
 		add_filter( 'page_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'post_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, 'filter_add_body_class' ), 10, 2 );
-		add_filter( 'save_post', array( $this, 'compile_post' ), 10, 2 );
+		add_filter( 'save_post', array( $this, 'compile_post_action' ), 10, 2 );
 
 		//add_filter( 'the_editor', array( $this, '_add_fake_editor' ), 10, 2 );
 
@@ -49,7 +49,7 @@ class Brizy_Admin_Main {
 		}
 	}
 
-	public function compile_post( $post_id, $post ) {
+	public function compile_post_action( $post_id, $post ) {
 		try {
 			$post_type = $post->post_type;
 
@@ -64,9 +64,9 @@ class Brizy_Admin_Main {
 			$b_post->compile_page();
 			$b_post->save();
 
-			remove_action( 'save_post', array( $this, 'compile_post' ) );
+			remove_action( 'save_post', array( $this, 'compile_post_action' ) );
 			wp_update_post( array( 'ID' => $post_id, 'post_content' => $b_post->get_compiled_html_body() ) );
-			add_action( 'save_post', array( $this, 'compile_post' ), 10, 2 );
+			add_action( 'save_post', array( $this, 'compile_post_action' ), 10, 2 );
 
 			// compile
 		} catch ( Exception $e ) {

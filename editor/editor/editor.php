@@ -81,6 +81,9 @@ class Brizy_Editor_Editor_Editor {
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
 				'static'              => $this->project->get_fe_asset_url(),
+				'previewUrl'         => get_preview_post_link( $this->post->get_wp_post() ),
+				'pluginSettings'         => get_preview_post_link( $this->post->get_wp_post() ),
+				'backToWordpress'         => get_preview_post_link( $this->post->get_wp_post() ),
 				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' )
 			),
 			'user'            => $this->project->get_id(),
@@ -111,6 +114,7 @@ class Brizy_Editor_Editor_Editor {
 					'getTemplates'     => Brizy_Editor_API::AJAX_GET_TEMPLATES,
 					'getInternalLinks' => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
 					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
+					'savePage'         => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
 				),
 				'plugins'     => array(
 					'woocommerce' => $this->get_woocomerce_plugin_info()

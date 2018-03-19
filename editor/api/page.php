@@ -60,7 +60,7 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable{
 	}
 
 	public function set_content( $content ) {
-		$this->data['data'] = $content;
+		$this->data['data'] = stripslashes($content);
 
 		return $this;
 	}

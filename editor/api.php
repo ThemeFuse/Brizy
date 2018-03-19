@@ -17,6 +17,7 @@ class Brizy_Editor_API {
 	const AJAX_GET_TEMPLATES = 'brizy_get_templates';
 	const AJAX_GET_INTERNAL_LINKS = 'brizy_get_internal_links';
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
+	const AJAX_SAVE_TRIGGER = 'brizy_save_trigger';
 
 
 	static private $instance;
@@ -75,6 +76,33 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
+		add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
+	}
+
+	public function save_trigger() {
+		try {
+			$post_id = (int)$this->param('post');
+			$post = Brizy_Editor_Post::get($post_id);
+			$wp_post = $post->get_wp_post();
+
+			if(!$post->uses_editor()) return;
+
+			$post->compile_page();
+			$post->save();
+
+			remove_action( 'save_post', array( $this, 'compile_post_action' ) );
+			wp_update_post( array( 'ID' => $post_id, 'post_content' => $post->get_compiled_html_body() ) );
+			wp_publish_post( $post_id );
+			add_action( 'save_post', array( $this, 'compile_post_action' ), 10, 2 );
+
+			//wp_update_post($wp_post);
+			//wp_publish_post( $post_id );
+
+		}
+		catch ( Exception $exception ) {
+			$this->error( 500, "Invalid post id" );
+			exit;
+		}
 	}
 
 	/**
@@ -230,7 +258,7 @@ class Brizy_Editor_API {
 			$this->success( array(
 				'shortcode' => $shortcode
 			) );
-		} catch ( Exception $exception ) {
+		} catch ( Exception $exception ) {http://brizy.local/wp-admin/admin-ajax.php?post=13
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -310,8 +338,8 @@ class Brizy_Editor_API {
 	}
 
 	protected function param( $name ) {
-		if ( isset( $_POST[ $name ] ) ) {
-			return $_POST[ $name ];
+		if ( isset( $_REQUEST[ $name ] ) ) {
+			return $_REQUEST[ $name ];
 		}
 
 		throw new Brizy_Editor_Exceptions_NotFound( "Parameter '$name' is missing", 400 );
