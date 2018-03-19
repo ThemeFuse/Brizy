@@ -124,7 +124,7 @@ class Brizy_Public_Main {
 
 		$context = array( 'editorData' => $config_object, 'iframe_url' => $iframe_url );
 
-		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
 			$context['DEBUG'] = true;
 		}
 
