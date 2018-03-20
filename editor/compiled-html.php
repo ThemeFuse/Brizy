@@ -69,8 +69,4 @@ class Brizy_Editor_CompiledHtml {
 		return $list;
 	}
 
-	public function get_assets()
-	{
-
-	}
 }

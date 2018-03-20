@@ -48,8 +48,6 @@ class Brizy_Editor_Assets {
 
 			add_action( 'parse_request', array( $this, 'handle_front_end_editor_assets' ), - 1000 );
 
-
-
 		} catch ( Exception $e ) {
 
 			if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {

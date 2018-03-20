@@ -148,25 +148,33 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		global $wp_rewrite;
 
-		$site_url = get_site_url();
+		$urls = array(
+			'api'     => $this->url( '' ),
+			'primary' => $config['urls']['primary'],
+			'base'    => $config['urls']['base'],
+			'static'  => $config['urls']['static'],
+			'assets'  => $config['urls']['assets'],
+			'image'   => $config['urls']['image'],
+		);
 
-		$upload_dir = wp_upload_dir(null,true);
+		if ( !is_preview() ) {
 
-		if($wp_rewrite->permalink_structure=="")
-		{
-			$upload_dir['url'] = str_replace($site_url,$site_url."/index.php",$upload_dir['url']);
-			$upload_dir['baseurl'] = str_replace($site_url,$site_url."/index.php",$upload_dir['baseurl']);
+			$site_url = get_site_url();
+
+			$upload_dir = wp_upload_dir( null, true );
+
+			if ( $wp_rewrite->permalink_structure == "" ) {
+				$upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $upload_dir['url'] );
+				$upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $upload_dir['baseurl'] );
+			}
+
+			$urls['static'] = $upload_dir['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $project->get_template_version() );
+			$urls['image']  = $upload_dir['baseurl'] . Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL;
+			//$urls['assets']  =
 		}
 
 		$urls = array(
-			'urls' => json_encode( array(
-				'api'     => $this->url( '' ),
-				'primary' => $config['urls']['primary'],
-				'base'    => $config['urls']['base'],
-				'static'  => $upload_dir['baseurl'].sprintf(Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $project->get_template_version()),
-				'assets'  => $config['urls']['assets'],
-				'image'   => $upload_dir['baseurl'].Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL
-			) )
+			'urls' => json_encode( $urls )
 		);
 
 		$compile_url = sprintf( Brizy_Config::COMPILER_URI, $project->get_id(), $page->get_id(), $this->access_token->access_token() );
@@ -222,7 +230,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @return string
 	 */
 	protected function url( $suffix ) {
-		$implode = rtrim(implode( "/", [ Brizy_Config::GATEWAY_URI, 'v1', $suffix ] ),"/");
+		$implode = rtrim( implode( "/", [ Brizy_Config::GATEWAY_URI, 'v1', $suffix ] ), "/" );
 
 		return $implode;
 	}
