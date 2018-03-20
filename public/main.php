@@ -197,7 +197,7 @@ class Brizy_Public_Main {
 
 			$config_object = $this->getConfigObject();
 
-			$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
+			//$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
 			$context = array( 'editorData' => $config_object );
 
