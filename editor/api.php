@@ -83,7 +83,6 @@ class Brizy_Editor_API {
 		try {
 			$post_id = (int)$this->param('post');
 			$post = Brizy_Editor_Post::get($post_id);
-			$wp_post = $post->get_wp_post();
 
 			if(!$post->uses_editor()) return;
 

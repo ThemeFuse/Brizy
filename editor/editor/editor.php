@@ -48,6 +48,7 @@ class Brizy_Editor_Editor_Editor {
 	public function config() {
 
 		global $wp_registered_sidebars;
+		$wp_post_id = $this->post->get_wp_post()->ID;
 
 		$config = array(
 			'env'             => 'WP',
@@ -81,10 +82,10 @@ class Brizy_Editor_Editor_Editor {
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
 				'static'              => $this->project->get_fe_asset_url(),
-				'previewUrl'          => get_preview_post_link( $this->post->get_wp_post() ),
+				'previewUrl'          => get_preview_post_link( $this->post->get_wp_post(), ['preview_id'=>$wp_post_id, 'preview_nonce'=>wp_create_nonce('post_preview_'.$wp_post_id) ] ),
 				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug()),
 				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' ),
-				'backToWordpress'     => get_edit_post_link( $this->post->get_wp_post()->ID, null )
+				'backToWordpress'     => get_edit_post_link( $wp_post_id, null )
 			),
 			'user'            => $this->project->get_id(),
 			'versions'        => array(
