@@ -61,6 +61,8 @@ class Brizy_Public_Main {
 
 			if(post_password_required($this->post->get_wp_post())) return;
 
+			$this->compilePage();
+
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
@@ -195,7 +197,7 @@ class Brizy_Public_Main {
 
 			$config_object = $this->getConfigObject();
 
-//			$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
+			$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
 			$context = array( 'editorData' => $config_object );
 
@@ -258,23 +260,7 @@ class Brizy_Public_Main {
 	 * @return string
 	 **/
 	public function insert_page_content( $content ) {
-
-	    if( is_preview() || isset($_GET['preview'])) {
-		    try {
-			    // compile page before showing..
-			    $this->post->compile_page();
-
-			    return $this->post->get_compiled_html_body();
-
-		    } catch ( Exception $e ) {
-			    // handle this
-			    if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-				    var_dump( $e );
-			    }
-		    }
-	    }
-
-		return $content;
+		return $this->post->get_compiled_html_body();
 	}
 
 
@@ -348,5 +334,18 @@ class Brizy_Public_Main {
 
 		// Set the headers to prevent caching for the different browsers.
 		nocache_headers();
+	}
+
+	private function compilePage() {
+		if ( is_preview() || isset( $_GET['preview'] ) ) {
+			try {
+				$this->post->compile_page();
+			} catch ( Exception $e ) {
+				// handle this
+				if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
+					var_dump( $e );
+				}
+			}
+		}
 	}
 }
