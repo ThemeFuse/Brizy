@@ -8,6 +8,9 @@
 
 class Brizy_Admin_Widget extends Brizy_Admin_AbstractWidget {
 
+	/**
+	 * @throws Exception
+	 */
 	public static function _init() {
 		static $instance;
 
@@ -16,62 +19,47 @@ class Brizy_Admin_Widget extends Brizy_Admin_AbstractWidget {
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getId() {
 		return 'dashboard';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getName() {
 		return Brizy_Editor::get()->get_name() . " Overview";
 	}
 
 	public function render() {
-		$this->renderNews();
-		$this->renderBrizyPosts();
+		echo Brizy_Admin_View::render( 'dashboard', array(
+			'news'  => $this->renderNews(),
+			'posts' => $this->renderBrizyPosts()
+		) );
 	}
 
+	/**
+	 * @return string
+	 */
 	private function renderNews() {
-
+		return Brizy_Admin_View::render( 'dashboard-news', array() );
 	}
 
+	/**
+	 * @return string
+	 */
 	private function renderBrizyPosts() {
 		$query = array(
-			'post_type'  => 'any',
-			'meta_query' => 'brizy'
+			'post_type'   => Brizy_Admi,
+			'meta_query'  => 'brizy',
+			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
 		);
 
 		$posts = get_posts( $query );
 
-		?>
-        <h3><b>Latest created posts</b></h3>
-        <ul>
-			<?php
-			foreach ( $posts as $apost ) {
-
-				try {
-					$brizy_post = Brizy_Editor_Post::get( $apost );
-
-					if(!$brizy_post->uses_editor()) continue;
-
-					$link = add_query_arg(
-						array( Brizy_Editor_Constants::EDIT_KEY => '' ),
-						get_permalink( $apost )
-					);
-
-					?>
-                    <li>
-                        <a href="<?php echo $link; ?>">
-							<?php echo get_the_title( $apost ) ?>
-                        </a>
-                    </li>
-					<?php
-				} catch ( Exception $e ) {
-			        // ignore
-				}
-
-			}
-			?>
-        </ul>
-		<?php
+		return Brizy_Admin_View::render( 'dashboard-posts', array( 'posts' => $posts ) );
 	}
 
 }

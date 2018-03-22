@@ -26,7 +26,7 @@ abstract class Brizy_Admin_AbstractWidget {
 	 * @return string
 	 * @throws Exception
 	 */
-	public function internalGetId() {
+	private function internalGetId() {
 		$id = $this->getId();
 
 		if ( empty( $id ) ) {
@@ -35,6 +35,4 @@ abstract class Brizy_Admin_AbstractWidget {
 
 		return Brizy_Editor::get()->get_slug() . '_' . $id;
 	}
-
-
 }

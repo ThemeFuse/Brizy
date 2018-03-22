@@ -149,13 +149,6 @@ class Brizy_Admin_Main {
 		return $links;
 	}
 
-	public static function render( $view, array $args = array() ) {
-		return Brizy_Editor_View::get(
-			implode( DIRECTORY_SEPARATOR, array( dirname( __FILE__ ), 'views', $view ) ),
-			$args
-		);
-	}
-
 	/**
 	 * @internal
 	 */
@@ -338,7 +331,7 @@ class Brizy_Admin_Main {
 				$is_using_brizy = false;
 			}
 
-			echo self::render( 'button', array(
+			echo Brizy_Admin_View::render( 'button', array(
 				'id'             => get_the_ID(),
 				'post'           => $p,
 				'is_using_brizy' => $is_using_brizy,
@@ -420,7 +413,7 @@ class Brizy_Admin_Main {
 			return $data;
 		}
 
-		return self::render( 'editor',
+		return Brizy_Admin_View::render( 'editor',
 			array(
 				'url' => add_query_arg(
 					array( Brizy_Editor_Constants::EDIT_KEY => '' ),
