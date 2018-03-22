@@ -42,20 +42,45 @@ class Brizy_Admin_Main {
 
 		//add_filter( 'the_editor', array( $this, '_add_fake_editor' ), 10, 2 );
 
-		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
+		if ( current_user_can( 'edit_posts' ) ) {
+			add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
+			add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
+		}
 
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'admin_print_scripts-edit.php', [ $this, 'add_edit_button_to_gutenberg' ], 12 );
 		}
 	}
 
+	/**
+	 * @param array $post_states
+	 * @param WP_Post $post
+	 *
+	 * @return mixed
+	 */
+	public function display_post_states( $post_states, $post ) {
+		try {
+			$b_post = Brizy_Editor_Post::get( $post->ID );
+
+			if ( $b_post->uses_editor() ) {
+				$post_states['brizy'] = 'Brizy';
+			}
+		} catch ( Exception $e ) {
+			// ignore this.
+		}
+
+		return $post_states;
+	}
+
 	public function compile_post_action( $post_id, $post ) {
 		try {
 			$post_type = $post->post_type;
 
-			if ( !in_array( $post_type, brizy()->supported_post_types() ) ) return;
+			if ( ! in_array( $post_type, brizy()->supported_post_types() ) ) {
+				return;
+			}
 
-			$b_post  = Brizy_Editor_Post::get( $post_id );
+			$b_post = Brizy_Editor_Post::get( $post_id );
 
 			if ( ! $b_post->uses_editor() ) {
 				return;
