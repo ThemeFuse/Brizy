@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_API_Page extends Brizy_Admin_Serializable{
+class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 
 	/**
 	 * @var array
@@ -21,7 +21,7 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable{
 	}
 
 	public function unserialize( $data ) {
-		$this->data = unserialize($data);
+		$this->data = unserialize( $data );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable{
 	}
 
 	public function set_content( $content ) {
-		$this->data['data'] = stripslashes($content);
+		$this->data['data'] = stripslashes( $content );
 
 		return $this;
 	}
@@ -97,9 +97,9 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable{
 		return $this;
 	}
 
-	public function export() {
+	public function getSaveData() {
 
-		return array_diff_key( $this->data, array( 'id' => 0 ) );
+		return array_diff_key( array_merge( $this->data, array( /*'signature' => Brizy_Signature::get()*/ ) ), array( 'id' => 0 ) );
 	}
 
 }

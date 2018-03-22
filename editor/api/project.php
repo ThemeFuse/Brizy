@@ -28,7 +28,7 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 	}
 
 	public function set_id( $id ) {
-		return $this->data['id'] = (int) $id;
+		return $this->data['id'] = $id;
 	}
 
 	public function get_globals() {
@@ -89,4 +89,10 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 		$this->data['meta_data'][ $key ] = $value;
 	}
 
+	public function getSaveData() {
+		return array(
+			'globals'=>$this->get_globals_as_json(),
+			//'signature'=>Brizy_Signature::get()
+		);
+	}
 }

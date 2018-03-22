@@ -55,7 +55,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 * @throws Exception
 	 */
-	public static function create() {
+	private static function create() {
 		$api_project = Brizy_Editor_User::get()->create_project();
 
 		$project = new self( $api_project );

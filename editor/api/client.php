@@ -26,7 +26,8 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function create_project() {
-		return $this->post( 'projects', array() )->get_response_body();
+		$project = new Brizy_Editor_API_Project(array());
+		return $this->post( 'projects',array('body'=> $project->getSaveData() ) )->get_response_body();
 	}
 
 	/**
@@ -41,7 +42,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function get_project( Brizy_Editor_API_Project $project ) {
 
-		return $this->get( "projects/{$project->get_id()}", array() )->get_response_body();
+		return $this->get( "projects/{$project->get_id()}?=signature=".Brizy_Signature::get() )->get_response_body();
 	}
 
 	/**
@@ -55,7 +56,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
-		return $this->put( "projects/{$project->get_id()}", array( 'body' => array( 'globals' => $project->get_globals_as_json() ) ) )->get_response_body();
+		return $this->put( "projects/{$project->get_id()}", array( 'body' => $project->getSaveData()) )->get_response_body();
 	}
 
 	/**
@@ -83,7 +84,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function get_pages( $project_id ) {
-		return $this->get( "projects/$project_id/pages" )->get_response_body();
+		return $this->get( "projects/$project_id/pages?=signature=".Brizy_Signature::get() )->get_response_body();
 	}
 
 	/**
@@ -113,7 +114,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function create_page( $project_id, Brizy_Editor_API_Page $page ) {
-		return $this->post( "projects/$project_id/pages", array( 'body' => $page->export() ) )->get_response_body();
+		return $this->post( "projects/$project_id/pages", array( 'body' => $page->getSaveData() ) )->get_response_body();
 	}
 
 	/**
@@ -129,7 +130,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_page( $project_id, $page_id, Brizy_Editor_API_Page $page ) {
-		return $this->put( "projects/$project_id/pages/$page_id", array( 'body' => $page->export() ) )->get_response_body();
+		return $this->put( "projects/$project_id/pages/$page_id", array( 'body' => $page->getSaveData() ) )->get_response_body();
 	}
 
 	/**

@@ -471,6 +471,8 @@ class Brizy_Admin_Main {
 			}
 
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
+
+			exit;
 		}
 
 		// obtain the post
