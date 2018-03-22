@@ -48,8 +48,15 @@ class Brizy_Admin_Main {
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'admin_print_scripts-edit.php', [ $this, 'add_edit_button_to_gutenberg' ], 12 );
 		}
+	}
 
 
+	public function action_edit_form_after_title() {
+        ?><div style="display: none;"><?php
+	}
+
+	public function action_edit_form_after_editor() {
+		?></div><?php
 	}
 
 	/**
@@ -112,7 +119,11 @@ class Brizy_Admin_Main {
 			}
 
 			if ( $is_using_brizy ) {
-				remove_post_type_support( $post_type, 'editor' );
+				//remove_post_type_support( $post_type, 'editor' );
+
+				// hide the default editor
+				add_action( 'edit_form_after_title', array( $this, 'action_edit_form_after_title' ), 2000 );
+				add_action( 'edit_form_after_editor', array( $this, 'action_edit_form_after_editor' ), - 2000 );
 			}
 		}
 	}

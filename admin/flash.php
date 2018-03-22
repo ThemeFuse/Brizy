@@ -41,7 +41,7 @@ class Brizy_Admin_Flash {
 
 	public function _action_render_notices() {
 		foreach ( $this->notices as $notice ) {
-			echo Brizy_Admin_Main::render( 'notice', $notice );
+			echo Brizy_Admin_View::render( 'notice', $notice );
 		}
 
 		$this->notices = array();
