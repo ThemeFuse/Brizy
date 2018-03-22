@@ -260,6 +260,10 @@ class Brizy_Public_Main {
 	 * @return string
 	 **/
 	public function insert_page_content( $content ) {
+		$wp_scripts = wp_scripts();
+
+		// the compiled page comes with his jquery version.
+		$wp_scripts->remove('jquery');
 		return $this->post->get_compiled_html_body();
 	}
 
