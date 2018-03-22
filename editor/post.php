@@ -54,13 +54,20 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @param $wp_post_id
+	 * @param $apost
 	 *
-	 * @return Brizy_Editor_Post
+	 * @return mixed
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
-	public static function get( $wp_post_id ) {
+	public static function get( $apost ) {
+
+		$wp_post_id = $apost;
+
+		if ( $apost instanceof WP_Post ) {
+			$wp_post_id = $apost->ID;
+		}
+
 		if ( ! in_array( ( $type = get_post_type( $wp_post_id ) ), brizy()->supported_post_types() ) ) {
 			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
 				"Brizy editor doesn't support '{$type}' post type"
@@ -147,12 +154,14 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	public function set_compiled_html_body( $html ) {
 		$this->compiled_html_body = $html;
+
 		return $this;
 	}
 
 	public function set_compiled_html_head( $html ) {
 		// remove all title and meta tags.
 		$this->compiled_html_head = $this->strip_tags_content( $html, '<title><meta>', true );
+
 		return $this;
 	}
 

@@ -13,8 +13,6 @@ class Brizy_Admin_Main {
 		if ( ! $instance ) {
 			$instance = new self();
 		}
-
-
 	}
 
 	protected function __construct() {
