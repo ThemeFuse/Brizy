@@ -50,6 +50,8 @@ class Brizy_Admin_Main {
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'admin_print_scripts-edit.php', [ $this, 'add_edit_button_to_gutenberg' ], 12 );
 		}
+
+
 	}
 
 	/**
@@ -63,7 +65,7 @@ class Brizy_Admin_Main {
 			$b_post = Brizy_Editor_Post::get( $post->ID );
 
 			if ( $b_post->uses_editor() ) {
-				$post_states['brizy'] = 'Brizy';
+				$post_states['brizy'] = __( Brizy_Editor::get()->get_name() );
 			}
 		} catch ( Exception $e ) {
 			// ignore this.
