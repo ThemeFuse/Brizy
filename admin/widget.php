@@ -52,7 +52,7 @@ class Brizy_Admin_Widget extends Brizy_Admin_AbstractWidget {
 	 */
 	private function renderBrizyPosts() {
 		$query = array(
-			'post_type'   => Brizy_Admi,
+			'post_type'   => brizy()->supported_post_types(),
 			'meta_query'  => 'brizy',
 			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
 		);

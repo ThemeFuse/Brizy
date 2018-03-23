@@ -445,7 +445,7 @@ class Brizy_Editor_API {
 		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
 
 		$post_query = array(
-			'post_type'      => 'any',
+			'post_type'      => brizy()->supported_post_types(),
 			'posts_per_page' => - 1,
 			'post_status'    => 'publish',
 			'orderby'        => 'post_title',
