@@ -37,7 +37,7 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 	 *
 	 * @return Brizy_Editor_API_AccessToken
 	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest 
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
