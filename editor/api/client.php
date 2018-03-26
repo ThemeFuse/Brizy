@@ -171,7 +171,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 			$urls['static'] = $upload_dir['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $project->get_template_version() );
 			$urls['image']  = $upload_dir['baseurl'] . Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL;
-
 		}
 
 		$urls = array(

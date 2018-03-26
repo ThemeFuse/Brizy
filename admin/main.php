@@ -6,13 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Brizy_Admin_Main {
 
-
 	public static function _init() {
 		static $instance;
 
 		if ( ! $instance ) {
 			$instance = new self();
 		}
+
+		return $instance;
 	}
 
 	protected function __construct() {

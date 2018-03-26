@@ -13,7 +13,7 @@ class Brizy_Editor_Helper_DomTag {
 	 * @param string $tag
 	 */
 	public function __construct( $tag ) {
-		$this->html_tag = trim( $tag );
+		$this->html_tag = Brizy_SiteUrlReplacer::hideSiteUrl(trim($tag));
 	}
 
 	/**
@@ -26,8 +26,7 @@ class Brizy_Editor_Helper_DomTag {
 	/**
 	 * @param $name
 	 *
-	 * @return string
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return null
 	 */
 	public function get_attr( $name ) {
 		preg_match( "/$name\s*=\s*\"([^\"]*)\"/i", $this->get_tag(), $res );
@@ -39,18 +38,19 @@ class Brizy_Editor_Helper_DomTag {
 		return null;
 	}
 
-	public function get_attrs()
-	{
+	/**
+	 * @return array
+	 */
+	public function get_attrs() {
 		$res = array();
 		preg_match_all( "/(\S+)=(?:\"(.[^\"]*)\")/", $this->get_tag(), $res );
 
-		$l = count($res[0]);
+		$l = count( $res[0] );
 
 		$attrs = array();
 
-		for($i=0;$i<$l;$i++)
-		{
-			$attrs[ $res[1][$i] ] = $res[2][$i];
+		for ( $i = 0; $i < $l; $i ++ ) {
+			$attrs[ $res[1][ $i ] ] = $res[2][ $i ];
 		}
 
 		return $attrs;
@@ -68,6 +68,7 @@ class Brizy_Editor_Helper_DomTag {
 		}
 
 		$content = $this->get_tag();
+
 		preg_match( "/^<[^>]+>(.*)<\/[^>]+>$/is", $content, $res );
 
 		if ( isset( $res[1] ) ) {
@@ -81,20 +82,18 @@ class Brizy_Editor_Helper_DomTag {
 	/**
 	 * @return $this
 	 */
-	public function strip_regions( ) {
+	public function strip_regions() {
 		$string = $this->get_tag();
 
-		$string = preg_replace( "/(<\!--\s*Enqueue\s+Start\s*-->(?:(?:(?!<\!--Enqueue\s+End-->).)*)<\!--\s*Enqueue\s+End\s*-->)/is",'', $string );
+		$string = preg_replace( "/(<\!--\s*Enqueue\s+Start\s*-->(?:(?:(?!<\!--Enqueue\s+End-->).)*)<\!--\s*Enqueue\s+End\s*-->)/is", '', $string );
 
 		$this->html_tag = $string;
 
 		return $this;
 	}
 
-	public function fix_shortcode_attributes()
-	{
-		if($string = preg_replace( "/\&quot;/",'"', $this->html_tag ))
-		{
+	public function fix_shortcode_attributes() {
+		if ( $string = preg_replace( "/\&quot;/", '"', $this->html_tag ) ) {
 			$this->html_tag = $string;
 		}
 
@@ -148,7 +147,7 @@ class Brizy_Editor_Helper_DomTag {
 	 *
 	 * @return array
 	 */
-	public function get_links_by_rel($rel_value) {
+	public function get_links_by_rel( $rel_value ) {
 
 		$regions = $this->get_regions();
 		$links   = array();
@@ -167,7 +166,6 @@ class Brizy_Editor_Helper_DomTag {
 
 		return $links;
 	}
-
 
 
 	/**
@@ -228,4 +226,5 @@ class Brizy_Editor_Helper_DomTag {
 
 		return $regions;
 	}
+
 }

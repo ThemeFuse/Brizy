@@ -59,7 +59,9 @@ class Brizy_Public_Main {
 
 		} elseif ( $this->is_view_page() ) {
 
-			if(post_password_required($this->post->get_wp_post())) return;
+			if ( post_password_required( $this->post->get_wp_post() ) ) {
+				return;
+			}
 
 			$this->compilePage();
 
@@ -246,10 +248,11 @@ class Brizy_Public_Main {
 	public function insert_page_head() {
 
 		$compiled_html_head = $this->post->get_compiled_html_head();
+		$compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_head );
 		?>
-		<!-- BRIZY HEAD -->
-			<?php echo $compiled_html_head; ?>
-		<!-- END BRIZY HEAD -->
+        <!-- BRIZY HEAD -->
+		<?php echo $compiled_html_head; ?>
+        <!-- END BRIZY HEAD -->
 		<?php
 	}
 
@@ -263,8 +266,10 @@ class Brizy_Public_Main {
 		$wp_scripts = wp_scripts();
 
 		// the compiled page comes with his jquery version.
-		$wp_scripts->remove('jquery');
-		return $this->post->get_compiled_html_body();
+		$wp_scripts->remove( 'jquery' );
+		$compiled_html_body = $this->post->get_compiled_html_body();
+
+		return Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
 	}
 
 

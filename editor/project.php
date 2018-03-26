@@ -12,7 +12,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	/**
 	 * @var Brizy_Editor_Project
 	 */
-	static private $instance = null;
+	static protected $instance = null;
 
 	/**
 	 * @var Brizy_Editor_API_Project

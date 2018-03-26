@@ -6,7 +6,7 @@
  * Time: 11:18 AM
  */
 
-class Brizy_Admin_Widget extends Brizy_Admin_AbstractWidget {
+class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 	/**
 	 * @throws Exception

@@ -47,8 +47,15 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		global $wp_registered_sidebars;
+		global $wp_registered_sidebars, $wp_rewrite;
+		$site_url = get_site_url();
 		$wp_post_id = $this->post->get_wp_post()->ID;
+		$upload_dir = wp_upload_dir( null, true );
+
+		if ( $wp_rewrite->permalink_structure == "" ) {
+			$upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $upload_dir['url'] );
+			$upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $upload_dir['baseurl'] );
+		}
 
 		$config = array(
 			'env'             => 'WP',
@@ -78,7 +85,7 @@ class Brizy_Editor_Editor_Editor {
 				'base'                => Brizy_Config::EDITOR_BASE_URL,
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
-				'assets'              => BRIZY_PLUGIN_URL . Brizy_Config::EDITOR_ASSETS_URL,
+				'assets'              => $upload_dir['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ),
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
 				'static'              => $this->project->get_fe_asset_url(),

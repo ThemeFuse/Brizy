@@ -8,6 +8,7 @@
  */
 class Brizy_Config {
 
+	const HOME_URL_PLACEHOLDER = '{@brizy_home_url_placeholder@}';
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
 	const FE_S3_ASSET_URL = 'https://static.brizy.io/%s/%s';

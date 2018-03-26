@@ -23,7 +23,7 @@ function brizy_load_admin() {
 add_action( 'wp_dashboard_setup', 'example_add_dashboard_widgets' );
 function example_add_dashboard_widgets() {
 	try {
-		Brizy_Admin_Widget::_init();
+		Brizy_Admin_DashboardWidget::_init();
 	} catch ( Exception $e ) {
 		// ignore this exceptions for now.
 	}

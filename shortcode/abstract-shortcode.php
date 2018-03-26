@@ -40,7 +40,7 @@ abstract class Brizy_Shortcode_AbstractShortcode {
 	}
 
 	/**
-	 * Brizy_AbstractSidebar constructor.
+	 * Brizy_Shortcode_AbstractShortcode constructor.
 	 */
 	public function __construct() {
 		add_shortcode( $this->getShortCodeId(), array( $this, 'masterRender' ) );
