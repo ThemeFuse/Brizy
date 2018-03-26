@@ -97,9 +97,15 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 		return $this;
 	}
 
-	public function getSaveData() {
+	public function getSaveData( $method = null ) {
 
-		return array_diff_key( array_merge( $this->data, array( 'signature' => Brizy_Signature::get() ) ), array( 'id' => 0 ) );
+		$data = $this->data;
+
+		if ( $method != 'PUT' ) {
+			$data = array_merge( $this->data, array( 'signature' => Brizy_Signature::get() ) );
+		}
+
+		return array_diff_key( $data, array( 'id' => 0 ) );
 	}
 
 }
