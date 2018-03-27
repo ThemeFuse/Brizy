@@ -12,8 +12,6 @@ class Brizy_Config {
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
 	const FE_S3_ASSET_URL = 'https://static.brizy.io/%s/%s';
-	const BRIZY_S3_ASSET_URL = 'https://static.brizy.io/%s/%s';
-	const EDITOR_STATIC_URL = 'https://api.brizy.io/static';
 
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 

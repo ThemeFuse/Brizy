@@ -72,9 +72,9 @@ class Brizy_Editor {
 		return 'Brizy';
 	}
 
-	public function get_asset_url($path = '') {
-		return Brizy_Config::EDITOR_STATIC_URL.$path;
-	}
+//	public function get_asset_url($path = '') {
+//		return Brizy_Config::EDITOR_STATIC_URL.$path;
+//	}
 
 	protected function get_post_types() {
 		try {

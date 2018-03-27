@@ -16,10 +16,16 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 		return new self( $data );
 	}
 
+	/**
+	 * @return string
+	 */
 	public function serialize() {
 		return serialize( $this->data );
 	}
 
+	/**
+	 * @param $data
+	 */
 	public function unserialize( $data ) {
 		$this->data = unserialize( $data );
 	}
@@ -39,8 +45,8 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 		return isset( $this->data['id'] ) ? $this->data['id'] : '';
 	}
 
-	public function set_id( $title ) {
-		$this->data['title'] = $title;
+	public function set_id( $id ) {
+		$this->data['id'] = $id;
 
 		return $this;
 	}
@@ -97,13 +103,9 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 		return $this;
 	}
 
-	public function getSaveData( $method = null ) {
+	public function getSaveData() {
 
 		$data = $this->data;
-
-		if ( $method != 'PUT' ) {
-			$data = array_merge( $this->data, array( 'signature' => Brizy_Signature::get() ) );
-		}
 
 		return array_diff_key( $data, array( 'id' => 0 ) );
 	}

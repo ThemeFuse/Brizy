@@ -12,6 +12,11 @@ class Brizy_Editor_Editor_Editor {
 	private $project;
 
 	/**
+	 * @var Brizy_Editor_UrlBuilder
+	 */
+	private $urlBuilder;
+
+	/**
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 *
@@ -28,8 +33,9 @@ class Brizy_Editor_Editor_Editor {
 	 * @param Brizy_Editor_Post $post
 	 */
 	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
-		$this->post    = $post;
-		$this->project = $project;
+		$this->post       = $post;
+		$this->project    = $project;
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post );
 	}
 
 	protected function get_post() {
@@ -47,15 +53,9 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		global $wp_registered_sidebars, $wp_rewrite;
-		$site_url = get_site_url();
-		$wp_post_id = $this->post->get_wp_post()->ID;
-		$upload_dir = wp_upload_dir( null, true );
+		global $wp_registered_sidebars;
 
-		if ( $wp_rewrite->permalink_structure == "" ) {
-			$upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $upload_dir['url'] );
-			$upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $upload_dir['baseurl'] );
-		}
+		$wp_post_id = $this->post->get_wp_post()->ID;
 
 		$config = array(
 			'env'             => 'WP',
@@ -85,12 +85,15 @@ class Brizy_Editor_Editor_Editor {
 				'base'                => Brizy_Config::EDITOR_BASE_URL,
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
-				'assets'              => $upload_dir['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ),
+				'assets'              => $this->urlBuilder->upload_url( $this->urlBuilder->editor_asset_path() ),
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
-				'primary'             => Brizy_Config::EDITOR_STATIC_URL,
-				'static'              => $this->project->get_fe_asset_url(),
-				'previewUrl'          => get_preview_post_link( $this->post->get_wp_post(), ['preview_id'=>$wp_post_id, 'preview_nonce'=>wp_create_nonce('post_preview_'.$wp_post_id) ] ),
-				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug()),
+				//'primary'             => Brizy_Config::EDITOR_STATIC_URL,
+				'static'              => $this->urlBuilder->external_asset_url(),
+				'previewUrl'          => get_preview_post_link( $this->post->get_wp_post(), [
+					'preview_id'    => $wp_post_id,
+					'preview_nonce' => wp_create_nonce( 'post_preview_' . $wp_post_id )
+				] ),
+				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' ),
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null )
 			),

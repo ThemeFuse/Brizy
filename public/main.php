@@ -20,6 +20,11 @@ class Brizy_Public_Main {
 	private $twig_template;
 
 	/**
+	 * @var Brizy_Editor_UrlBuilder
+	 */
+	private $url_builder;
+
+	/**
 	 * Brizy_Public_Main constructor.
 	 *
 	 * @param $project
@@ -27,8 +32,9 @@ class Brizy_Public_Main {
 	 */
 	public function __construct( $project, $post ) {
 
-		$this->project = $project;
-		$this->post    = $post;
+		$this->project     = $project;
+		$this->post        = $post;
+		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
 	}
 
 	public function initialize_wordpress_editor() {
@@ -220,7 +226,7 @@ class Brizy_Public_Main {
 		$twig_template = $this->getTwigTemplate();
 
 		$config_object               = $this->getConfigObject();
-		$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
+		//$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
 		$context = array( 'editorData' => $config_object );
 

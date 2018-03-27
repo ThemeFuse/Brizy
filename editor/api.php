@@ -81,10 +81,12 @@ class Brizy_Editor_API {
 
 	public function save_trigger() {
 		try {
-			$post_id = (int)$this->param('post');
-			$post = Brizy_Editor_Post::get($post_id);
+			$post_id = (int) $this->param( 'post' );
+			$post    = Brizy_Editor_Post::get( $post_id );
 
-			if(!$post->uses_editor()) return;
+			if ( ! $post->uses_editor() ) {
+				return;
+			}
 
 			$post->compile_page();
 			$post->save();
@@ -97,8 +99,7 @@ class Brizy_Editor_API {
 			//wp_update_post($wp_post);
 			//wp_publish_post( $post_id );
 
-		}
-		catch ( Exception $exception ) {
+		} catch ( Exception $exception ) {
 			$this->error( 500, "Invalid post id" );
 			exit;
 		}
@@ -123,9 +124,7 @@ class Brizy_Editor_API {
 	public function get_globals() {
 		try {
 			$this->authorize();
-			//$this->project->set_globals( array('project'=>(object)array(),'language'=>(object)array()) );
-			//$this->project->save();
-			$data = self::create_post_globals( $this->project, $this->post );
+			$data = $this->create_post_globals();
 
 			$this->success( $data );
 		} catch ( Exception $exception ) {
@@ -147,7 +146,7 @@ class Brizy_Editor_API {
 
 			Brizy_Editor_User::get()->update_project( $this->project->get_api_project() );
 
-			$this->success( self::create_post_globals( $this->project, $this->post ) );
+			$this->success( $this->create_post_globals() );
 		} catch ( Exception $exception ) {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
@@ -177,7 +176,7 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$_POST = array_map( 'stripslashes_deep', $_POST );
+			$_POST     = array_map( 'stripslashes_deep', $_POST );
 			$content   = $this->param( 'data' );
 			$title     = $this->param( 'title' );
 			$atemplate = $this->param( 'template' );
@@ -191,7 +190,7 @@ class Brizy_Editor_API {
 			}
 
 			if ( $content ) {
-				$this->post->set_data( $content );
+				$this->post->set_content( $content );
 			}
 
 			$this->post
@@ -257,7 +256,8 @@ class Brizy_Editor_API {
 			$this->success( array(
 				'shortcode' => $shortcode
 			) );
-		} catch ( Exception $exception ) {http://brizy.local/wp-admin/admin-ajax.php?post=13
+		} catch ( Exception $exception ) {
+			http://brizy.local/wp-admin/admin-ajax.php?post=13
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -299,7 +299,6 @@ class Brizy_Editor_API {
 
 		return wp_send_json( [ 'filter_term' => $search_term, 'links' => $links ], 200 );
 	}
-
 
 	public function get_sidebars() {
 		global $wp_registered_sidebars;
@@ -370,7 +369,7 @@ class Brizy_Editor_API {
 		return array(
 			'title'    => $the_title,
 			'slug'     => sanitize_title( $the_title ),
-			'data'     => $post->get_data(),
+			'data'     => $post->get_content(),
 			'id'       => $p_id,
 			'is_index' => $post->get_api_page()->is_index(),
 			'template' => get_page_template_slug( $p_id ),
@@ -380,20 +379,15 @@ class Brizy_Editor_API {
 	}
 
 	/**
-	 * @todo: Check where this is used and make this an instance method
-	 *
-	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_Post $post
-	 *
 	 * @return array
 	 */
-	public static function create_post_globals( $project, $post ) {
-		$wp_post = $post->get_wp_post();
+	public function create_post_globals() {
+		$wp_post = $this->post->get_wp_post();
 
 		return array(
-			'id'        => $project->get_id(),
+			'id'        => $this->project->get_id(),
+			'globals'   => $this->project->get_globals(),
 			'name'      => $wp_post->post_name,
-			'globals'   => $project->get_globals(),
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
 			'user'      => array(

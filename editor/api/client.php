@@ -147,8 +147,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function compile_page( $project, $page, $config ) {
 
-		global $wp_rewrite;
-
 		$urls = array(
 			'api'     => $this->url( '' ),
 			'primary' => $config['urls']['primary'],
@@ -157,21 +155,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 			'assets'  => $config['urls']['assets'],
 			'image'   => $config['urls']['image'],
 		);
-
-		if ( !is_preview()  ) {
-
-			$site_url = get_site_url();
-
-			$upload_dir = wp_upload_dir( null, true );
-
-			if ( $wp_rewrite->permalink_structure == "" ) {
-				$upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $upload_dir['url'] );
-				$upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $upload_dir['baseurl'] );
-			}
-
-			$urls['static'] = $upload_dir['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $project->get_template_version() );
-			$urls['image']  = $upload_dir['baseurl'] . Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL;
-		}
 
 		$urls = array(
 			'urls' => json_encode( $urls )

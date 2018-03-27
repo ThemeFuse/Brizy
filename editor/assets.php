@@ -24,6 +24,11 @@ class Brizy_Editor_Assets {
 	 */
 	private $post;
 
+	/**
+	 * @var Brizy_Editor_UrlBuilder
+	 */
+	private $urlBuilder;
+
 
 	/**
 	 * Brizy_Editor_Assets constructor.
@@ -33,8 +38,9 @@ class Brizy_Editor_Assets {
 	 */
 	public function __construct( $project, $post = null ) {
 
-		$this->post    = $post;
-		$this->project = $project;
+		$this->post       = $post;
+		$this->project    = $project;
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post );
 
 		try {
 
@@ -72,33 +78,26 @@ class Brizy_Editor_Assets {
 
 		$template_version = $matches[1];
 
-		$upload_dir_info = wp_upload_dir( null, true );
-
 		session_write_close();
 
-		$local_editor_asset_static_url = $this->project->get_asset_path($template_version);
+		$local_editor_asset_static_url = $this->urlBuilder->editor_asset_path( null, $template_version );
 
 		$parts = explode( $local_editor_asset_static_url, $_SERVER["REQUEST_URI"] );
+
 		if ( ! $parts[1] ) {
 			return;
 		}
 
 		$asset_path = $parts[1];
 
-		$url = $this->project->get_asset_url($template_version) . $parts[1];
+		$url               = $this->urlBuilder->external_asset_url( $parts[1], $template_version );
+		$path              = $this->urlBuilder->editor_asset_path( $asset_path, $template_version );
+		$local_file_name   = $this->urlBuilder->upload_path( $path );
+		$editor_asset_path = $this->urlBuilder->editor_asset_path( $asset_path );
+		$asset_url         = $this->urlBuilder->upload_url( $editor_asset_path );
 
-
-
-		$path = $local_editor_asset_static_url . $asset_path;
-
-		$local_file_name = $upload_dir_info['basedir'] . $path;
 
 		$file_exists = file_exists( $local_file_name );
-
-
-		$editor = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
-		$asset_url = $editor->get_asset_url($template_version) . $asset_path;
-
 		if ( $file_exists ) {
 			$this->asset_redirect_to( $asset_url );
 			exit;
@@ -137,35 +136,28 @@ class Brizy_Editor_Assets {
 			return;
 		}
 
-		$template_version = $matches[1];
-		$post_id = (int)$matches[2];
-
-		session_write_close();
-
-		$upload_dir_info = wp_upload_dir( null, true );
-
-
-
-		$template_asset_path = $parts[1];
-
-		$asset_path = sprintf( Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH . $template_asset_path, $template_version, $post_id );
-
 		if ( ! $this->post->uses_editor() ) {
 			return;
 		}
 
-		$local_file_name = $upload_dir_info['basedir'] . $asset_path;
+		session_write_close();
+
+		$template_version = $matches[1];
+		$post_id          = (int) $matches[2];
+
+		$template_asset_path = $parts[1];
+
+		$asset_path      = $this->urlBuilder->page_asset_path( $template_asset_path, $template_version, $post_id );
+		$local_file_name = $this->urlBuilder->upload_path( $asset_path );
+		$asset_url       = $this->urlBuilder->upload_url( $asset_path );
+		$full_url        = $this->urlBuilder->external_asset_url( $template_asset_path, $template_version );
 
 		$file_exists = file_exists( $local_file_name );
-
-		$asset_url = $upload_dir_info['baseurl'] . $asset_path;
 
 		if ( $file_exists ) {
 			$this->asset_redirect_to( $asset_url );
 			exit;
 		}
-
-		$full_url = $this->project->get_asset_url($template_version) . $template_asset_path;
 
 		if ( ! BRIZY_DEVELOPMENT ) {
 			$time_start = microtime_float();
@@ -194,8 +186,6 @@ class Brizy_Editor_Assets {
 
 			session_write_close();
 
-			$upload_dir_info = wp_upload_dir( null, true );
-
 			$parts = explode( $str_splitter, $_SERVER["REQUEST_URI"] );
 
 			if ( ! $parts[1] ) {
@@ -204,14 +194,12 @@ class Brizy_Editor_Assets {
 
 			$template_asset_path = $parts[1];
 
-			$asset_path = Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL . $template_asset_path;
+			$asset_path      = $this->urlBuilder->media_asset_path( $template_asset_path );
+			$full_url        = $this->urlBuilder->external_media_url( $template_asset_path );
+			$local_file_name = $this->urlBuilder->upload_path( $asset_path );
+			$asset_url       = $this->urlBuilder->upload_url( $asset_path );
 
-			$full_url = Brizy_Config::MEDIA_IMAGE_URL . $template_asset_path;
-
-			$local_file_name = $upload_dir_info['basedir'] . $asset_path;
-			$file_exists     = file_exists( $local_file_name );
-
-			$asset_url = $upload_dir_info['baseurl'] . $asset_path;
+			$file_exists = file_exists( $local_file_name );
 
 			if ( $file_exists ) {
 				$this->asset_redirect_to( $asset_url );

@@ -246,8 +246,14 @@ class Brizy_Editor_User {
 	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		$api_project = $project->get_api_project();
 		$api_page    = $post->get_api_page();
+		$url_builder = new Brizy_Editor_UrlBuilder($project,$post);
 
 		$config = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
+
+		if ( !is_preview()  ) {
+			$config['urls']['static'] = $url_builder->upload_url( $url_builder->editor_asset_path() );
+			$config['urls']['image']  = $url_builder->upload_url( $url_builder->media_asset_path() );
+		}
 
 		$res = $this->get_client()->compile_page( $api_project, $api_page, $config );
 
