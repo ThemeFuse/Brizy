@@ -33,7 +33,7 @@ class Brizy_Admin_Settings {
 	 * @internal
 	 */
 	public function render() {
-		echo Brizy_Admin_Main::render(
+		echo Brizy_Admin_View::render(
 			'settings/view',
 			array(
 				'types'   => array_map( array( $this, 'is_selected' ), $this->list_post_types() ),
