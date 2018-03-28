@@ -6,6 +6,8 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 
 	const META_KEY = 'brizy';
 
+	protected $id;
+
 	/**
 	 * @param $id
 	 *
@@ -15,10 +17,8 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 		return new self( $id );
 	}
 
-	private $id;
-
 	protected function __construct( $id ) {
-		$this->id = $id;
+		$this->id = (int)$id;
 	}
 
 	protected function get_id() {

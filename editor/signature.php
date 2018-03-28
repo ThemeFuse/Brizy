@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Signature {
+class Brizy_Editor_Signature {
 
 	static private function getSignatureParts() {
 		return array(

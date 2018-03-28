@@ -95,18 +95,28 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 			$wp_response = new Brizy_Editor_Http_Response( $http->get( Brizy_Config::BRIZY_REGISTRATION_CREDENTIALS ) );
 
 			if ( $wp_response->is_ok() ) {
-				$credentials =  $wp_response->get_response_body();
+				$credentials = $wp_response->get_response_body();
 			} else {
 				throw new Exception( 'unable to obtain the platform credentials' );
 			}
 		}
 
-		return (object)$credentials;
+		return (object) $credentials;
 
 	}
 
+
 	/**
-	 * @param $email
+	 * @return string
+	 */
+	protected function random_email() {
+		$uniqid = uniqid( 'brizy-' );
+
+		return $uniqid . '@brizy.io';
+	}
+
+	/**
+	 * @param null $clone_id
 	 *
 	 * @return array|mixed|object
 	 * @throws Brizy_Editor_API_Exceptions_Exception
@@ -115,24 +125,43 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function createUser( $email ) {
+	public function createUser($clone_id = null) {
+
+		$email = $this->random_email();
+
 		$token = $this->getToken();
 
-		$response = $this->post( $this->sign_up_url(), array(
-				'headers'   => array(
-					'Authorization' => 'Bearer ' . $token->access_token()
-				),
-				'body'      => array(
-					'email' => $email,
-				),
-				'sslverify' => false
-			)
+		$options  = array(
+			'headers'   => array(
+				'Authorization' => 'Bearer ' . $token->access_token()
+			),
+			'body'      => array(
+				'email' => $email,
+				'signature' => Brizy_Editor_Signature::get()
+			),
+			'sslverify' => false
 		);
 
-		if ( $response->is_ok() ) {
-			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
+		if($clone_id)
+		{
+			$options['body']['resource_id_clonable'] = $clone_id;
 		}
 
-		return $response->get_response_body();
+
+		$response = $this->post( $this->sign_up_url(), $options);
+
+		$user = $response->get_response_body();
+
+		if ( $response->is_ok() ) {
+
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_id', $user['id'] );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_signature', Brizy_Editor_Signature::get() );
+		}
+
+		return $user;
 	}
+
+
+
 }

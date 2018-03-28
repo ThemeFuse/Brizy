@@ -20,9 +20,26 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	protected $api_project;
 
 	/**
+	 * Signature of the plugin at the creation moment.
+	 *
+	 * @var string
+	 */
+	protected $creation_signature;
+
+	/**
 	 * @var bool
 	 */
 	protected $store_assets = true;
+
+
+	/**
+	 * Brizy_Editor_Project constructor.
+	 *
+	 * @param $api_project
+	 */
+	protected function __construct( $api_project ) {
+		$this->api_project = $api_project;
+	}
 
 	/**
 	 * @return Brizy_Editor_Project|mixed|null
@@ -31,23 +48,27 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 */
 	public static function get() {
 
-		if ( self::$instance ) {
+		if ( isset( self::$instance ) ) {
 			return self::$instance;
 		}
 
 		try {
 			$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
 			self::$instance              = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
+			//self::$instance->api_project = new Brizy_Editor_API_Project( self::$instance->api_project );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
 			self::$instance                   = Brizy_Editor_Project::create();
 			$_SESSION['brizy_project_stored'] = true;
+		} catch ( Exception $e ) {
+			$t = 0;
 		}
 
-		if ( self::$instance && ! isset( $_SESSION['brizy_project_stored'] ) ) {
-			$api_project    = Brizy_Editor_User::get()->get_project( self::$instance->get_api_project() );
-			self::$instance = new self( new Brizy_Editor_API_Project( $api_project ) );
-			self::$instance->save();
-			$_SESSION['brizy_project_stored'] = true;
+		try {
+			self::$instance->checkSignature();
+		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
+			self::$instance->cloneProject();
+		} catch ( Exception $e ) {
+			throw new Exception( 'Unable to check the signature.' );
 		}
 
 		return self::$instance;
@@ -61,21 +82,37 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	private static function create() {
 		$api_project = Brizy_Editor_User::get()->create_project();
 
-		$project = new self( $api_project );
+		$project                     = new self( $api_project );
+		$project->creation_signature = Brizy_Editor_Signature::get();
 		$project->save();
 
 		return $project;
 	}
 
 	/**
-	 * Brizy_Editor_Project constructor.
-	 *
-	 * @param Brizy_Editor_API_Project $api_project
+	 * @return Brizy_Editor_Project
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
+	 * @throws Exception
 	 */
-	public function __construct( $api_project ) {
-		$this->api_project = $api_project;
+	private static function cloneProject() {
+		$api_project = Brizy_Editor_User::get()->create_project( self::$instance->get_id() );
+
+		$project                     = new self( $api_project );
+		$project->creation_signature = Brizy_Editor_Signature::get();
+		$project->save();
+
+		return $project;
 	}
 
+
+	/**
+	 * @throws Brizy_Editor_Exceptions_SignatureMismatch
+	 */
+	public function checkSignature() {
+		if ( Brizy_Editor_Signature::get() != $this->creation_signature ) {
+			throw new Brizy_Editor_Exceptions_SignatureMismatch( 'Clone project required.' );
+		}
+	}
 
 	/**
 	 * @return mixed

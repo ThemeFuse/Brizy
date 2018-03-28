@@ -6,6 +6,10 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	const BRIZY_POST = 'brizy-post';
 
+	const BRIZY_POST_SIGNATURE_KEY = 'brizy-post-signature';
+	const BRIZY_POST_HASH_KEY = 'brizy-post-hash';
+
+
 	/**
 	 * @var Brizy_Editor_API_Page
 	 */
@@ -56,7 +60,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	/**
 	 * @param $apost
 	 *
-	 * @return mixed
+	 * @return Post
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
@@ -99,10 +103,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			);
 		}
 
-		$api_page = Brizy_Editor_API_Page::get()
-		                                 ->set_title( $post->post_title );
+		$api_page_obj = Brizy_Editor_API_Page::get()->set_title( $post->post_title );
 
-		$api_page = Brizy_Editor_User::get()->create_page( $project, $api_page );
+		$api_page = Brizy_Editor_User::get()->create_page( $project, $api_page_obj );
 
 		$post = new self( $api_page, $post->ID );
 
@@ -115,11 +118,18 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function save() {
 
 		try {
-			$this->storage()->set( self::BRIZY_POST, $this );
+			// store the signature only once
+			if ( ! ( $signature = get_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, true ) ) ) {
+				update_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
+				update_post_meta( $this->wp_post_id, self::BRIZY_POST_HASH_KEY, $this->get_api_page()->get_id() );
+			}
 
+			$this->storage()->set( self::BRIZY_POST, $this );
 			$project = Brizy_Editor_Project::get();
 
-			Brizy_Editor_User::get()->update_page( $project->get_api_project(), $this->api_page );
+			$brizy_editor_user = Brizy_Editor_User::get();
+			$api_project       = $project->get_api_project();
+			$brizy_editor_user->update_page( $api_project, $this->api_page );
 
 		} catch ( Exception $exception ) {
 			return false;
@@ -227,6 +237,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		return Brizy_Editor_Storage_Post::instance( $this->wp_post_id );
 	}
+
 
 	/**
 	 * @return array|null|WP_Post
@@ -442,6 +453,40 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 
 		return $this;
+	}
+
+	public static function get_posts_with_foreign_signature() {
+		$query = array(
+			'numberposts' => - 1,
+			'post_type'   => brizy()->supported_post_types(),
+			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' ),
+			'meta_query'  => array(
+				array(
+					'key'     => self::BRIZY_POST_SIGNATURE_KEY,
+					'value'   => Brizy_Editor_Signature::get(),
+					'compare' => '!='
+				)
+			)
+		);
+
+		return get_posts( $query );
+	}
+
+	public static function get_post_by_foreign_hash( $hash ) {
+		$query = array(
+			'numberposts' => 1,
+			'post_type'   => brizy()->supported_post_types(),
+			'meta_query'  => array(
+				array(
+					'key'   => self::BRIZY_POST_HASH_KEY,
+					'value' => $hash,
+				)
+			)
+		);
+
+		$posts = get_posts( $query );
+
+		return count( $posts ) ? $posts[0] : null;
 	}
 
 }

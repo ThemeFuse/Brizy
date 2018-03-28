@@ -17,7 +17,13 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		$this->access_token = $token;
 	}
 
+	public function getUser() {
+		return $this->post( 'users/me', array() )->get_response_body();
+	}
+
 	/**
+	 * @param null $clone_from_id
+	 *
 	 * @return array|mixed|object
 	 * @throws Brizy_Editor_API_Exceptions_Exception
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
@@ -25,9 +31,26 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function create_project() {
-		$project = new Brizy_Editor_API_Project(array());
-		return $this->post( 'projects',array('body'=> $project->getSaveData() ) )->get_response_body();
+	public function create_project( $clone_from_id = null ) {
+
+		$project   = new Brizy_Editor_API_Project( array() );
+		$save_data = $project->getSaveData();
+
+		if ( $clone_from_id ) {
+			$save_data['resource_id_clonable'] = $clone_from_id;
+		}
+
+		return $this->post( 'projects', array( 'body' => $save_data ) )->get_response_body();
+	}
+
+	public function clone_pages( $page_ids, $project_target ) {
+
+		return $this->post( 'pages/clones', array(
+			'body' => array(
+				'project' => $project_target,
+				'pages'   => $page_ids
+			)
+		) )->get_response_body();
 	}
 
 	/**
@@ -42,7 +65,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function get_project( Brizy_Editor_API_Project $project ) {
 
-		return $this->get( "projects/{$project->get_id()}?=signature=".Brizy_Signature::get() )->get_response_body();
+		return $this->get( "projects/{$project->get_id()}?=signature=" . Brizy_Editor_Signature::get() )->get_response_body();
 	}
 
 	/**
@@ -56,7 +79,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
-		return $this->put( "projects/{$project->get_id()}", array( 'body' => $project->getSaveData()) )->get_response_body();
+		return $this->put( "projects/{$project->get_id()}", array( 'body' => $project->getSaveData() ) )->get_response_body();
 	}
 
 	/**
@@ -84,7 +107,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function get_pages( $project_id ) {
-		return $this->get( "projects/$project_id/pages?=signature=".Brizy_Signature::get() )->get_response_body();
+		return $this->get( "projects/$project_id/pages?=signature=" . Brizy_Editor_Signature::get() )->get_response_body();
 	}
 
 	/**
@@ -130,7 +153,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_page( $project_id, $page_id, Brizy_Editor_API_Page $page ) {
-		return $this->put( "projects/$project_id/pages/$page_id", array( 'body' => $page->getSaveData('PUT') ) )->get_response_body();
+		return $this->put( "projects/$project_id/pages/$page_id", array( 'body' => $page->getSaveData( 'PUT' ) ) )->get_response_body();
 	}
 
 	/**

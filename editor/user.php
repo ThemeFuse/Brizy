@@ -2,7 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_User {
+class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 
 	const BRIZY_ATTACHMENT_HASH_KEY = 'brizy_attachment_hash';
 
@@ -18,36 +18,21 @@ class Brizy_Editor_User {
 	 */
 	private $common_storage;
 
+	/**
+	 * @var string
+	 */
+	private $platform_user_id;
 
 	/**
-	 * @var Brizy_Editor_Storage_Common
+	 * @var string
 	 */
 	private $platform_user_email;
 
 	/**
-	 * Brizy_Editor_User constructor.
-	 *
-	 * @param $common_storage
-	 *
-	 * @throws Exception
+	 * @var string
 	 */
-	protected function __construct( $common_storage ) {
+	private $platform_user_signature;
 
-		$this->common_storage = $common_storage;
-
-		try {
-			$this->token               = $this->common_storage->get( 'access-token' );
-			$this->platform_user_email = $this->common_storage->get( 'platform_user_email' );
-
-			if ( $this->token->expired() ) {
-				$this->auth( $this->platform_user_email );
-				$this->token = $this->common_storage->get( 'access-token' );
-			}
-		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			$this->create_user();
-		}
-
-	}
 
 	/**
 	 * @return Brizy_Editor_User
@@ -65,24 +50,79 @@ class Brizy_Editor_User {
 				'User is in maintenance mode'
 			);
 		}
+		$user = null;
+		try {
+			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
+			$user->checkSignature();
+		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
+			self::clone_user( $user );
+			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
+		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
+			self::create_user();
+			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
+		}
 
-		return self::$instance = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
+		return self::$instance = $user;
 	}
 
 	/**
-	 * @return Brizy_Editor_User
+	 * Brizy_Editor_User constructor.
+	 *
+	 * @param $common_storage
+	 *
 	 * @throws Exception
 	 */
-	protected function create_user() {
-		$this->platform_user_email = $this->random_email();
+	protected function __construct( $common_storage ) {
 
-		$platform = new Brizy_Editor_API_Platform();
+		$this->common_storage = $common_storage;
 
-		$platform->createUser( $this->platform_user_email );
+		$this->platform_user_id        = $this->common_storage->get( 'platform_user_id' );
+		$this->platform_user_email     = $this->common_storage->get( 'platform_user_email' );
+		$this->platform_user_signature = $this->common_storage->get( 'platform_user_signature' );
+		$this->token                   = $this->common_storage->get( 'access-token', false );
 
-		return $this->login( $this->platform_user_email );
+		if ( ! $this->token || $this->token->expired() ) {
+			$this->auth();
+			$this->token = $this->common_storage->get( 'access-token' );
+		}
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	static protected function clone_user( Brizy_Editor_User $user ) {
+		// we create a new user for now
+		$platform = new Brizy_Editor_API_Platform();
+		$platform->createUser( $user->getPlatformUserId() );
+	}
+
+	/**
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
+	static protected function create_user() {
+
+		$platform = new Brizy_Editor_API_Platform();
+		$platform->createUser();
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function checkSignature() {
+		if ( Brizy_Editor_Signature::get() != $this->platform_user_signature ) {
+			// clone required
+			throw new Brizy_Editor_Exceptions_SignatureMismatch( 'Clone user required. Not implemented yet.' );
+		}
+	}
+
+
+	/**
+	 * @return string
+	 */
 	protected function random_email() {
 		$uniqid = uniqid( 'brizy-' );
 
@@ -91,23 +131,19 @@ class Brizy_Editor_User {
 
 
 	/**
-	 * @param $email
-	 *
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function login( $email ) {
-		$this->auth( $email );
+	public function login() {
+		$this->auth();
 
 		return $this;
 	}
 
 	/**
-	 * @param $email
-	 *
 	 * @throws Exception
 	 */
-	public function auth( $email ) {
+	public function auth() {
 		try {
 			self::lock_access();
 
@@ -115,7 +151,7 @@ class Brizy_Editor_User {
 
 			$auth_api = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, $credentials->client_id, $credentials->client_secret );
 			$auth_api->clearTokenCache();
-			$this->token = $auth_api->getToken( $email );
+			$this->token = $auth_api->getToken( $this->platform_user_email );
 			$this->common_storage->set( 'access-token', $this->token );
 
 		} catch ( Exception $exception ) {
@@ -134,18 +170,59 @@ class Brizy_Editor_User {
 		Brizy_Editor_Storage_Common::instance()->delete( 'access-token' );
 	}
 
+	public function getCurrentUser() {
+		return $this->get_client()->getUser();
+	}
+
 	/**
+	 * @param null $from_project_id
+	 *
 	 * @return Brizy_Editor_API_Project
 	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function create_project() {
-		$project_data = $this->get_client()->create_project();
+	public function create_project( $from_project_id = null ) {
+		$project_data = $this->get_client()->create_project( $from_project_id );
+
+		if ( $from_project_id ) {
+
+			foreach ( $project_data['languages'] as $language ) {
+				$pages = $language['pages'];
+				if ( is_array( $pages ) && count( $pages ) > 0 ) {
+					foreach ( $pages as $page ) {
+						// get wordpress post by old brizy hash
+
+						$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $page['cloned_from'] );
+
+						if ( ! $wp_post ) {
+							continue;
+						}
+
+						$old_page = Brizy_Editor_Post::get( $wp_post );
+						$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $page ), $wp_post->ID );
+
+						$new_post->set_compiled_html_body( $old_page->get_compiled_html_body() );
+						$new_post->set_compiled_html_head( $old_page->get_compiled_html_head() );
+
+						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
+
+						$new_post->save();
+
+					}
+				}
+			}
+		}
 
 		return new Brizy_Editor_API_Project( $project_data );
+	}
+
+	public function clone_pages( $page_ids, $project_target ) {
+		return $this->get_client()->clone_pages( $page_ids, $project_target );
 	}
 
 	/**
@@ -194,6 +271,8 @@ class Brizy_Editor_User {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
+		$t = 0;
+
 		return $this->get_client()
 		            ->update_page(
 			            $project->get_id(),
@@ -246,11 +325,11 @@ class Brizy_Editor_User {
 	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 		$api_project = $project->get_api_project();
 		$api_page    = $post->get_api_page();
-		$url_builder = new Brizy_Editor_UrlBuilder($project,$post);
+		$url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
 
 		$config = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
 
-		if ( !is_preview()  ) {
+		if ( ! is_preview() ) {
 			$config['urls']['static'] = $url_builder->upload_url( $url_builder->editor_asset_path() );
 			$config['urls']['image']  = $url_builder->upload_url( $url_builder->media_asset_path() );
 		}
@@ -329,4 +408,27 @@ class Brizy_Editor_User {
 	protected static function is_locked() {
 		return (bool) get_transient( self::lock_key() );
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getPlatformUserId() {
+		return $this->platform_user_id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPlatformUserEmail() {
+		return $this->platform_user_email;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPlatformUserSignature() {
+		return $this->platform_user_signature;
+	}
+
+
 }
