@@ -65,10 +65,8 @@ class Brizy_Editor_Assets {
 		}
 	}
 
-	/**
-	 * @param $query
-	 */
-	function handle_editor_assets( $query ) {
+
+	function handle_editor_assets() {
 
 		if ( strpos( $_SERVER["REQUEST_URI"], Brizy_Config::LOCAL_EDITOR_ASSET_STATIC_URL ) === false ) {
 			return;
@@ -378,6 +376,14 @@ class Brizy_Editor_Assets {
 		header_remove( 'Cache-Control' );
 		header_remove( 'Pragma' );
 		header( 'Cache-Control: max-age=600' );
+
+
+		global $wp_rewrite;
+
+		if ( $wp_rewrite->permalink_structure == "" ) {
+
+			$asset_url = str_ireplace( '/index.php', '', $asset_url );
+		}
 
 		wp_redirect( $asset_url, 302 );
 	}
