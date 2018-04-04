@@ -24,16 +24,21 @@ class Brizy_Editor_UrlBuilder {
 	 * @param Brizy_Editor_Post|null $post
 	 */
 	public function __construct( Brizy_Editor_Project $project = null, Brizy_Editor_Post $post = null ) {
+
+		global $wp_rewrite;
+
 		$this->project    = $project;
 		$this->post       = $post;
 		$this->upload_dir = wp_upload_dir( null, true );
+
+		if ( $wp_rewrite->permalink_structure == "" ) {
+			$site_url = get_site_url();
+			$this->upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['url'] );
+			$this->upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['baseurl'] );
+		}
+
+
 	}
-
-//if ( $wp_rewrite->permalink_structure == "" ) {
-//$upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $upload_dir['url'] );
-//$upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $upload_dir['baseurl'] );
-//}
-
 
 	/**
 	 * @param $path
