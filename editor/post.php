@@ -45,7 +45,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	protected $assets = array();
 
-
 	/**
 	 * @return string
 	 */
@@ -60,7 +59,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	/**
 	 * @param $apost
 	 *
-	 * @return Post
+	 * @return Brizy_Editor_Post
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
@@ -455,6 +454,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return $this;
 	}
 
+
 	public static function get_posts_with_foreign_signature() {
 		$query = array(
 			'numberposts' => - 1,
@@ -472,21 +472,41 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return get_posts( $query );
 	}
 
-	public static function get_post_by_foreign_hash( $hash ) {
+	public static function get_posts_by_foreign_hash( $hash ) {
 		$query = array(
-			'numberposts' => 1,
+			'numberposts' => - 1,
 			'post_type'   => brizy()->supported_post_types(),
-			'meta_query'  => array(
-				array(
-					'key'   => self::BRIZY_POST_HASH_KEY,
-					'value' => $hash,
-				)
-			)
+			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' ),
+			'orderby'     => 'ID',
+			'order'       => 'ASC',
+			'meta_key'    => self::BRIZY_POST_HASH_KEY,
+			'meta_value'  => $hash,
 		);
 
-		$posts = get_posts( $query );
+		return get_posts( $query );
+	}
+
+	public static function get_post_by_foreign_hash( $hash ) {
+
+		$posts = self::get_posts_by_foreign_hash( $hash );
 
 		return count( $posts ) ? $posts[0] : null;
+	}
+
+	public static function get_duplicate_brizy_posts() {
+		global $wpdb;
+
+		$meta_options = $wpdb->get_results( "SELECT meta_value FROM brizy.wp_postmeta WHERE meta_key LIKE 'brizy-post-hash' GROUP BY meta_value HAVING count(*)>1", ARRAY_A );
+
+		$posts = array();
+
+		foreach ( $meta_options as $post_hash ) {
+			$posts_by_foreign_hash             = self::get_posts_by_foreign_hash( $post_hash['meta_value'] );
+			$posts[ $post_hash['meta_value'] ] = $posts_by_foreign_hash;
+		}
+
+		return $posts;
+
 	}
 
 }

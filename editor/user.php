@@ -73,7 +73,6 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Exception
 	 */
 	protected function __construct( $common_storage ) {
-
 		$this->common_storage = $common_storage;
 
 		$this->platform_user_id        = $this->common_storage->get( 'platform_user_id' );
@@ -210,6 +209,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 						$new_post->set_compiled_html_head( $old_page->get_compiled_html_head() );
 
 						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
+						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
 
 						$new_post->save();
 

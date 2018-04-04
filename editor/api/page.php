@@ -107,7 +107,7 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 
 		$data = $this->data;
 
-		return array_diff_key( $data, array( 'id' => 0 ) );
+		return array_diff_key( $data, array( 'id' => 0, 'cloned_from' => null ) );
 	}
 
 }
