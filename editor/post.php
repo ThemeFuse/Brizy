@@ -496,7 +496,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public static function get_duplicate_brizy_posts() {
 		global $wpdb;
 
-		$meta_options = $wpdb->get_results( "SELECT meta_value FROM brizy.wp_postmeta WHERE meta_key LIKE 'brizy-post-hash' GROUP BY meta_value HAVING count(*)>1", ARRAY_A );
+		$meta_options = $wpdb->get_results( "SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key LIKE 'brizy-post-hash' GROUP BY meta_value HAVING count(*)>1", ARRAY_A );
 
 		$posts = array();
 

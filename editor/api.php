@@ -251,10 +251,10 @@ class Brizy_Editor_API {
 			} else {
 				throw new Exception( 'Shortcode string not provided.', 500 );
 			}
-			$shortcode = do_shortcode( $shortcode );
+			$shortcode_content = do_shortcode( $shortcode );
 
 			$this->success( array(
-				'shortcode' => $shortcode
+				'shortcode' => $shortcode_content
 			) );
 		} catch ( Exception $exception ) {
 			http://brizy.local/wp-admin/admin-ajax.php?post=13

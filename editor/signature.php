@@ -21,7 +21,7 @@ class Brizy_Editor_Signature {
 	static private function getSignatureParts() {
 		return array(
 			get_option( 'siteurl' ),
-			WP_SITEURL,
+			defined('WP_SITEURL')?WP_SITEURL:'',
 			dirname( __FILE__ )
 		);
 	}
