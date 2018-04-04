@@ -18,6 +18,7 @@ class Brizy_Editor_API {
 	const AJAX_GET_INTERNAL_LINKS = 'brizy_get_internal_links';
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 	const AJAX_SAVE_TRIGGER = 'brizy_save_trigger';
+	const AJAX_GET_TERMS = 'brizy_get_terms';
 
 
 	static private $instance;
@@ -77,6 +78,7 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
 	}
 
 	public function save_trigger() {
@@ -297,7 +299,7 @@ class Brizy_Editor_API {
 		$links = array_merge( $links, $this->get_post_link_list( $search_term ) );
 		$links = array_merge( $links, $this->get_term_link_list( $search_term ) );
 
-		return wp_send_json( [ 'filter_term' => $search_term, 'links' => $links ], 200 );
+		wp_send_json( [ 'filter_term' => $search_term, 'links' => $links ], 200 );
 	}
 
 	public function get_sidebars() {
@@ -500,7 +502,14 @@ class Brizy_Editor_API {
 
 
 	public function get_menu_list() {
-		return wp_send_json( wp_get_nav_menus(), 200 );
+		wp_send_json( wp_get_nav_menus(), 200 );
+	}
+
+	public function get_terms() {
+
+		$taxonomy = $this->param( 'taxonomy' );
+
+		wp_send_json( get_terms( array( 'taxonomy' => $taxonomy ) ) );
 	}
 
 }
