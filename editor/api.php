@@ -509,7 +509,7 @@ class Brizy_Editor_API {
 
 		$taxonomy = $this->param( 'taxonomy' );
 
-		$terms = get_terms( array( 'taxonomy' => $taxonomy ) );
+		$terms = (array)get_terms( array( 'taxonomy' => $taxonomy ) );
 
 		wp_send_json( $terms );
 	}
