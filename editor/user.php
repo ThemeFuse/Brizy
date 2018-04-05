@@ -57,6 +57,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
 			self::clone_user( $user );
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
+			$user->auth();
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
 			self::create_user();
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
@@ -93,6 +94,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		// we create a new user for now
 		$platform = new Brizy_Editor_API_Platform();
 		$platform->createUser( $user->getPlatformUserId() );
+
 	}
 
 	/**

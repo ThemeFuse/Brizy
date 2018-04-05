@@ -67,15 +67,15 @@ function brizy_check_for_duplicates() {
 	try {
 		$post = null;
 
+		// clone user for any eventuality
+		$user    = Brizy_Editor_User::get();
+		$project = Brizy_Editor_Project::get();
+
 		$posts = Brizy_Editor_Post::get_duplicate_brizy_posts();
 		$count = count( $posts );
 		if ( $count == 0 ) {
 			return;
 		}
-
-		// clone user for any eventuality
-		$user    = Brizy_Editor_User::get();
-		$project = Brizy_Editor_Project::get();
 
 		foreach ( $posts as $hash => $apost ) {
 
