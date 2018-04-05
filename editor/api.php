@@ -83,7 +83,7 @@ class Brizy_Editor_API {
 
 	public function save_trigger() {
 		try {
-			$post_id = (int) $this->param( 'post' );
+			$post_id = $this->param( 'post' );
 			$post    = Brizy_Editor_Post::get( $post_id );
 
 			if ( ! $post->uses_editor() ) {
@@ -509,7 +509,7 @@ class Brizy_Editor_API {
 
 		$taxonomy = $this->param( 'taxonomy' );
 
-		$terms = get_terms( array( 'taxonomy' => $taxonomy ) );
+		$terms = get_terms( array( 'taxonomy' => get_object_vars($taxonomy) ) );
 
 		wp_send_json( $terms );
 	}
