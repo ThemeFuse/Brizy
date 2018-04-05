@@ -272,7 +272,7 @@ class Brizy_Public_Main {
 		$wp_scripts = wp_scripts();
 
 		// the compiled page comes with his jquery version.
-		$wp_scripts->remove( 'jquery' );
+		//$wp_scripts->remove( 'jquery' );
 		$compiled_html_body = $this->post->get_compiled_html_body();
 
 		return Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
