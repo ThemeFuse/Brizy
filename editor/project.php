@@ -66,7 +66,9 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		try {
 			self::$instance->checkSignature();
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
+			$user    = Brizy_Editor_User::get(); //  here we clone the user
 			self::$instance = self::$instance->create(self::$instance->get_id());
+
 		} catch ( Exception $e ) {
 			throw new Exception( 'Unable to check the signature.' );
 		}
@@ -95,8 +97,45 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		$project->creation_signature = Brizy_Editor_Signature::get();
 		$project->save();
 
+		self::$instance = $project;
+
+		if ( $clone_from ) {
+
+			$project_data = $project->get_api_project()->get_data();
+
+			foreach ( $project_data['languages'] as $language ) {
+				$pages = $language['pages'];
+				if ( is_array( $pages ) && count( $pages ) > 0 ) {
+					foreach ( $pages as $page ) {
+						// get wordpress post by old brizy hash
+
+						$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $page['cloned_from'] );
+
+						if ( ! $wp_post ) {
+							continue;
+						}
+
+						$old_page = Brizy_Editor_Post::get( $wp_post );
+						$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $page ), $wp_post->ID );
+
+						$new_post->set_compiled_html_body( $old_page->get_compiled_html_body() );
+						$new_post->set_compiled_html_head( $old_page->get_compiled_html_head() );
+
+						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
+						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
+
+						$new_post->save();
+
+					}
+				}
+			}
+		}
+
+
 		return $project;
 	}
+
+
 
 	/**
 	 * @throws Brizy_Editor_Exceptions_SignatureMismatch

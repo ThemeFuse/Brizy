@@ -178,8 +178,6 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 *
 	 * @return Brizy_Editor_API_Project
 	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
@@ -187,36 +185,6 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 */
 	public function create_project( $from_project_id = null ) {
 		$project_data = $this->get_client()->create_project( $from_project_id );
-
-		if ( $from_project_id ) {
-
-			foreach ( $project_data['languages'] as $language ) {
-				$pages = $language['pages'];
-				if ( is_array( $pages ) && count( $pages ) > 0 ) {
-					foreach ( $pages as $page ) {
-						// get wordpress post by old brizy hash
-
-						$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $page['cloned_from'] );
-
-						if ( ! $wp_post ) {
-							continue;
-						}
-
-						$old_page = Brizy_Editor_Post::get( $wp_post );
-						$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $page ), $wp_post->ID );
-
-						$new_post->set_compiled_html_body( $old_page->get_compiled_html_body() );
-						$new_post->set_compiled_html_head( $old_page->get_compiled_html_head() );
-
-						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
-						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
-
-						$new_post->save();
-
-					}
-				}
-			}
-		}
 
 		return new Brizy_Editor_API_Project( $project_data );
 	}

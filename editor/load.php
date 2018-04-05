@@ -11,14 +11,14 @@ function brizy_check_for_new_imports() {
 	try {
 		$post = null;
 
+		$project = Brizy_Editor_Project::get();
+
+
 		$posts = Brizy_Editor_Post::get_posts_with_foreign_signature();
 		if ( count( $posts ) == 0 ) {
 			return;
 		}
 
-		// clone user for any eventuality
-		$user    = Brizy_Editor_User::get();
-		$project = Brizy_Editor_Project::get();
 
 		$t = 0;
 
@@ -35,8 +35,8 @@ function brizy_check_for_new_imports() {
 
 		if ( is_array( $pages ) && count( $pages ) ) {
 			foreach ( $pages as $i => $api_page ) {
-				$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $api_page ), $posts[ $i ]->ID );
 				$old_page = Brizy_Editor_Post::get( $posts[ $i ] );
+				$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $api_page ), $posts[ $i ]->ID );
 
 				$new_post->set_compiled_html_body( $old_page->get_compiled_html_body() );
 				$new_post->set_compiled_html_head( $old_page->get_compiled_html_head() );
