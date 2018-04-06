@@ -513,9 +513,7 @@ class Brizy_Editor_API {
 
 		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 
-		echo json_encode($terms);
-
-		exit;
+		wp_send_json(array_values($terms));
 	}
 
 }
