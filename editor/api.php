@@ -509,7 +509,7 @@ class Brizy_Editor_API {
 
 		$taxonomy = $this->param( 'taxonomy' );
 
-		$terms = (array)get_terms( array( 'taxonomy' => $taxonomy ) );
+		$terms = (array)get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
 
 		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 
