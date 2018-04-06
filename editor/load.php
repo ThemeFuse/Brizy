@@ -28,15 +28,16 @@ function brizy_check_for_new_imports() {
 		$editor_pages = array();
 
 		foreach ( (array) $posts as $apost ) {
-			$editor_pages[] = $api_page = Brizy_Editor_Post::get( $apost )->get_api_page();
-			$page_ids[]     = $api_page->get_id();
+			$editor_pages[  ] = $api_page = Brizy_Editor_Post::get( $apost )->get_api_page();
+			$page_ids[]                          = $api_page->get_id();
 		}
 
 		$pages = Brizy_Editor_User::get()->clone_pages( $page_ids, $project->get_id() );
 
 		if ( is_array( $pages ) && count( $pages ) ) {
 			foreach ( $pages as $i => $api_page ) {
-				$old_page = Brizy_Editor_Post::get( $posts[ $i ] );
+				$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $api_page['cloned_from'] );
+				$old_page = Brizy_Editor_Post::get( $wp_post );
 				$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $api_page ), $posts[ $i ]->ID );
 
 				$new_post->set_compiled_html_body( $old_page->get_compiled_html_body() );
@@ -59,7 +60,6 @@ function brizy_check_for_new_imports() {
 		}
 	}
 }
-
 
 
 add_action( 'init', 'brizy_check_for_duplicates' );
@@ -88,9 +88,11 @@ function brizy_check_for_duplicates() {
 
 			for ( $i = 1; $i < $count; $i ++ ) {
 
-				$cloned_pages = Brizy_Editor_User::get()->clone_pages( array($from_hash), $project->get_id() );
+				$cloned_pages = Brizy_Editor_User::get()->clone_pages( array( $from_hash ), $project->get_id() );
 
-				if(count($cloned_pages)!=1) continue;
+				if ( count( $cloned_pages ) != 1 ) {
+					continue;
+				}
 
 				$cloned_page = $cloned_pages[0];
 
@@ -106,7 +108,6 @@ function brizy_check_for_duplicates() {
 
 			}
 		}
-
 
 
 	} catch ( Exception $e ) {
