@@ -8,11 +8,10 @@ class Brizy_Editor_Signature {
 	 * @return string
 	 */
 	static public function cleanTerm( $term ) {
-		return $term;
 		return trim( str_ireplace(
 			array( 'http://', '\\', '/' ),
 			array( '' ),
-			$term."9939"
+			$term
 		) );
 	}
 

@@ -66,7 +66,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		try {
 			self::$instance->checkSignature();
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
-			$user    = Brizy_Editor_User::get(); //  here we clone the user
 			self::$instance = self::create(self::$instance->get_id());
 
 		} catch ( Exception $e ) {
