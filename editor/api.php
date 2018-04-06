@@ -511,7 +511,11 @@ class Brizy_Editor_API {
 
 		$terms = (array)get_terms( array( 'taxonomy' => $taxonomy ) );
 
-		wp_send_json( $terms );
+		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+
+		echo json_encode($terms);
+
+		exit;
 	}
 
 }
