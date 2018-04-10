@@ -35,7 +35,7 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 	public function render() {
 		echo Brizy_Admin_View::render( 'dashboard', array(
-			'news'  => $this->renderNews(),
+			//'news'  => $this->renderNews(),
 			'posts' => $this->renderBrizyPosts()
 		) );
 	}
@@ -54,7 +54,9 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 		$query = array(
 			'post_type'   => brizy()->supported_post_types(),
 			'meta_query'  => 'brizy',
-			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
+			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' ),
+			'order'=>'DESC',
+			'order_by'=>'ID'
 		);
 
 		$posts = get_posts( $query );
