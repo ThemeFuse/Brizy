@@ -38,13 +38,13 @@ function brizy_check_for_new_imports() {
 			foreach ( $pages as $i => $api_page ) {
 				$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $api_page['cloned_from'] );
 				$old_page = Brizy_Editor_Post::get( $wp_post );
-				$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $api_page ), $posts[ $i ]->ID );
+				$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $api_page ), $wp_post->ID );
 
 				$new_post->set_compiled_html_body( $old_page->get_compiled_html_body() );
 				$new_post->set_compiled_html_head( $old_page->get_compiled_html_head() );
 
-				update_post_meta( $posts[ $i ]->ID, Brizy_Editor_Post::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
-				update_post_meta( $posts[ $i ]->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
+				update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
+				update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
 
 				$new_post->save();
 			}
@@ -105,11 +105,8 @@ function brizy_check_for_duplicates() {
 				update_post_meta( $apost[ $i ]->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
 
 				$new_post->save();
-
 			}
 		}
-
-
 	} catch ( Exception $e ) {
 
 		Brizy_Admin_Flash::instance()->add_error( $e->getMessage() );

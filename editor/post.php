@@ -73,7 +73,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		if ( ! in_array( ( $type = get_post_type( $wp_post_id ) ), brizy()->supported_post_types() ) ) {
 			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
-				"Brizy editor doesn't support '{$type}' post type"
+				"Brizy editor doesn't support '{$type}' post type 1"
 			);
 		}
 
@@ -98,7 +98,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public static function create( $project, $post ) {
 		if ( ! in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() ) ) {
 			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
-				"Brizy editor doesn't support '$type' post type"
+				"Brizy editor doesn't support '$type' post type 2"
 			);
 		}
 
