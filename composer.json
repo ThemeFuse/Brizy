@@ -1,11 +1,11 @@
 {
-  "name": "ThemeFuse/Brizy",
+  "name": "Brizy",
   "description": "A free drag & drop framework that comes with a bunch of built in extensions that will help you develop premium themes fast & easy.",
   "minimum-stability": "stable",
   "license": "GPL2+",
   "authors": [
     {
-      "name": "ThemeFuse"
+      "name": "Brizy.io"
     }
   ],
   "require-dev": {

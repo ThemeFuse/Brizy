@@ -3,8 +3,8 @@
  * Plugin Name: Brizy
  * Description: A free drag & drop front-end page builder to help you create WordPress pages lightning fast. It's easy with Brizy.
  * Plugin URI: https://brizy.io/
- * Author: ThemeFuse
- * Author URI: https://themefuse.com/
+ * Author: Brizy.io
+ * Author URI: https://brizy.io/
  * Version: 0.1.0
  * Text Domain: brizy
  * License: GPL2+

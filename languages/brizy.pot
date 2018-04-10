@@ -64,9 +64,9 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "ThemeFuse"
+msgid "Brizy.io"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://themefuse.com"
+msgid "https://brizy.io"
 msgstr ""
