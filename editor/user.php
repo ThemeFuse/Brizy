@@ -199,7 +199,16 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	public function clone_pages( $page_ids, $project_target ) {
 		Brizy_Logger::instance()->notice( 'Clone pages', array( 'pages' => $page_ids, 'project' => $project_target ) );
 
-		return $this->get_client()->clone_pages( $page_ids, $project_target );
+		$clone_pages = $this->get_client()->clone_pages( $page_ids, $project_target );
+
+		// debug logs
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			foreach ( (array) $clone_pages as $clone ) {
+				Brizy_Logger::instance()->debug( sprintf( "Cloned page [%s] in to page [%s]", $clone['cloned_from'], $clone['id'] ) );
+			}
+		}
+
+		return $clone_pages;
 	}
 
 	/**

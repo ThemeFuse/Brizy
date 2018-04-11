@@ -111,18 +111,24 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return $post;
 	}
 
+	public function save_locally() {
+		// store the signature only once
+		if ( ! ( $signature = get_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, true ) ) ) {
+			update_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
+			update_post_meta( $this->wp_post_id, self::BRIZY_POST_HASH_KEY, $this->get_api_page()->get_id() );
+		}
+		$this->storage()->set( self::BRIZY_POST, $this );
+	}
+
 	/**
 	 * @return bool
 	 */
 	public function save() {
 
 		try {
-			// store the signature only once
-			if ( ! ( $signature = get_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, true ) ) ) {
-				update_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
-				update_post_meta( $this->wp_post_id, self::BRIZY_POST_HASH_KEY, $this->get_api_page()->get_id() );
-			}
-			$this->storage()->set( self::BRIZY_POST, $this );
+
+			$this->save_locally();
+
 			$brizy_editor_user = Brizy_Editor_User::get();
 			$project           = Brizy_Editor_Project::get();
 			$api_project       = $project->get_api_project();

@@ -114,7 +114,15 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 				Brizy_Logger::instance()->notice( 'New pages from cloned project', array( $pages ) );
 
 				if ( is_array( $pages ) && count( $pages ) > 0 ) {
-					foreach ( $pages as $page ) {
+
+					// debug logs
+					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+						foreach ( (array) $pages as $aclone ) {
+							Brizy_Logger::instance()->debug( sprintf( "Cloned page [%s] to page [%s]", $aclone['cloned_from'], $aclone['id'] ) );
+						}
+					}
+
+					foreach ( (array) $pages as $page ) {
 						// get wordpress post by old brizy hash
 
 						$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $page['cloned_from'] );

@@ -56,7 +56,7 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 */
 	private function getToken() {
 
-		Brizy_Logger::instance()->notice('Getting token to crete the user');
+		Brizy_Logger::instance()->notice('Getting token to create the user');
 
 		$response = $this->post( $this->auth_url(), array(
 			'body' => array(
