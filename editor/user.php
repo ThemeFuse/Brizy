@@ -74,6 +74,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Exception
 	 */
 	protected function __construct( $common_storage ) {
+
 		$this->common_storage = $common_storage;
 
 		$this->platform_user_id        = $this->common_storage->get( 'platform_user_id' );
@@ -82,6 +83,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		$this->token                   = $this->common_storage->get( 'access-token', false );
 
 		if ( ! $this->token || $this->token->expired() ) {
+			Brizy_Logger::instance()->debug( 'Token expired or not found' );
 			$this->auth();
 			$this->token = $this->common_storage->get( 'access-token' );
 		}
@@ -156,6 +158,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 			$this->common_storage->set( 'access-token', $this->token );
 
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
 			self::unlock_access();
 			throw $exception;
 		}
@@ -186,12 +189,16 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function create_project( $from_project_id = null ) {
+		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $from_project_id ) );
+
 		$project_data = $this->get_client()->create_project( $from_project_id );
 
 		return new Brizy_Editor_API_Project( $project_data );
 	}
 
 	public function clone_pages( $page_ids, $project_target ) {
+		Brizy_Logger::instance()->notice( 'Clone pages', array( 'pages' => $page_ids, 'project' => $project_target ) );
+
 		return $this->get_client()->clone_pages( $page_ids, $project_target );
 	}
 
@@ -207,6 +214,8 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function create_page( $project, $page ) {
+
+		Brizy_Logger::instance()->notice( 'Create page', array( $project, $page ) );
 		$page_response = $this->get_client()->create_page( $project->get_id(), $page );
 
 		return new Brizy_Editor_API_Page( $page_response );
@@ -226,6 +235,8 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized.
 	 */
 	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
+		Brizy_Logger::instance()->notice( 'Delete page', array( $project, $page ) );
+
 		return $this->get_client()->delete_page( $project->get_id(), $page->get_id() );
 	}
 
@@ -241,7 +252,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
-		$t = 0;
+		Brizy_Logger::instance()->notice( 'Update page', array( $project, $page ) );
 
 		return $this->get_client()
 		            ->update_page(
@@ -262,6 +273,8 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
+		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
+
 		return $this->get_client()->update_project( $project );
 	}
 

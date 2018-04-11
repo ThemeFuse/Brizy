@@ -102,6 +102,7 @@ class Brizy_Editor_API {
 			//wp_publish_post( $post_id );
 
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( 500, "Invalid post id" );
 			exit;
 		}
@@ -115,6 +116,7 @@ class Brizy_Editor_API {
 			$this->authorize();
 			$this->success( array() );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
 		}
@@ -130,6 +132,7 @@ class Brizy_Editor_API {
 
 			$this->success( $data );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
 		}
@@ -150,6 +153,7 @@ class Brizy_Editor_API {
 
 			$this->success( $this->create_post_globals() );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
 		}
@@ -168,6 +172,7 @@ class Brizy_Editor_API {
 
 			$this->success( array( $post_arr ) );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( 500, $exception->getMessage() );
 			exit;
 		}
@@ -201,6 +206,7 @@ class Brizy_Editor_API {
 
 			$this->success( self::create_post_arr( $this->post ) );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -241,6 +247,7 @@ class Brizy_Editor_API {
 				'sidebarContent' => $sidebar_html
 			) );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -259,6 +266,7 @@ class Brizy_Editor_API {
 				'shortcode' => $shortcode_content
 			) );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			http://brizy.local/wp-admin/admin-ajax.php?post=13
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -269,6 +277,7 @@ class Brizy_Editor_API {
 			global $shortcode_tags;
 			$this->success( array_keys( $shortcode_tags ) );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -287,6 +296,7 @@ class Brizy_Editor_API {
 
 			$this->success( $response );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -333,6 +343,7 @@ class Brizy_Editor_API {
 				$attachment_id
 			) );
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception($exception);
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}

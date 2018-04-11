@@ -20,6 +20,12 @@ define( 'BRIZY_PLUGIN_URL', plugin_dir_url( BRIZY_FILE ) );
 
 //define( 'BRIZY_DUMP_EXCEPTION', true );
 
+function brizy_install() {
+	Brizy_Logger::install();
+}
+
+register_activation_hook( __FILE__, 'brizy_install' );
+
 include_once 'autoload.php';
 include_once 'editor/load.php';
 include_once 'shortcode/load.php';
@@ -35,3 +41,4 @@ function brizy_load_text_domain() {
 }
 
 add_action( 'after_setup_theme', 'brizy_load_text_domain' );
+

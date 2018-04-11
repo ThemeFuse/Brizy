@@ -60,15 +60,17 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 			self::$instance                   = Brizy_Editor_Project::create();
 			$_SESSION['brizy_project_stored'] = true;
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->exception( $e );
 			$t = 0;
 		}
 
 		try {
 			self::$instance->checkSignature();
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
-			self::$instance = self::create(self::$instance->get_id());
+			self::$instance = self::create( self::$instance->get_id() );
 
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->exception( $e );
 			throw new Exception( 'Unable to check the signature.' );
 		}
 
@@ -90,7 +92,9 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 * @throws Exception
 	 */
 	private static function create( $clone_from = null ) {
-		$api_project = Brizy_Editor_User::get()->create_project( $clone_from );
+
+		$brizy_editor_user = Brizy_Editor_User::get();
+		$api_project       = $brizy_editor_user->create_project( $clone_from );
 
 		$project                     = new self( $api_project );
 		$project->creation_signature = Brizy_Editor_Signature::get();
@@ -102,8 +106,13 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 			$project_data = $project->get_api_project()->get_data();
 
+			Brizy_Logger::instance()->notice( 'Clone all project data' );
+
 			foreach ( $project_data['languages'] as $language ) {
 				$pages = $language['pages'];
+
+				Brizy_Logger::instance()->notice( 'New pages from cloned project', array( $pages ) );
+
 				if ( is_array( $pages ) && count( $pages ) > 0 ) {
 					foreach ( $pages as $page ) {
 						// get wordpress post by old brizy hash
@@ -133,7 +142,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 		return $project;
 	}
-
 
 
 	/**
@@ -289,8 +297,11 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 	public function invalidateAssetsFor( $version ) {
 
+		Brizy_Logger::instance()->notice( 'Invalidate assets for version ' . $version, array( $version ) );
+
 		$dir_path = sprintf( rtrim( ABSPATH, DIRECTORY_SEPARATOR ) . Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $version );
 
+		Brizy_Logger::instance()->notice( 'Remove directory ' . $dir_path, array( $dir_path ) );
 		$fs = new WP_Filesystem_Direct( null );
 		$fs->rmdir( $dir_path, true );
 
@@ -319,6 +330,8 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 * @return self
 	 */
 	public function save() {
+
+		Brizy_Logger::instance()->notice( 'Save project', array( $this ) );
 
 		$this->set_meta_key( 'worpdress_url', get_site_url() );
 		$this->set_meta_key( 'worpdress_site_name', get_bloginfo( 'name' ) );

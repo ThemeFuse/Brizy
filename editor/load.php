@@ -13,13 +13,12 @@ function brizy_check_for_new_imports() {
 
 		$project = Brizy_Editor_Project::get();
 
-		//8xnVaLkB1EQzpjWPGZ7X4gKk9Gaj05dovreD23Jy9RYMwOlq6A
-
 		$posts = Brizy_Editor_Post::get_posts_with_foreign_signature();
 		if ( count( $posts ) == 0 ) {
 			return;
 		}
 
+		Brizy_Logger::instance()->notice( 'New imported posts found', array( $posts ) );
 
 		$t = 0;
 
@@ -28,15 +27,15 @@ function brizy_check_for_new_imports() {
 		$editor_pages = array();
 
 		foreach ( (array) $posts as $apost ) {
-			$editor_pages[  ] = $api_page = Brizy_Editor_Post::get( $apost )->get_api_page();
-			$page_ids[]                          = $api_page->get_id();
+			$editor_pages[] = $api_page = Brizy_Editor_Post::get( $apost )->get_api_page();
+			$page_ids[]     = $api_page->get_id();
 		}
 
 		$pages = Brizy_Editor_User::get()->clone_pages( $page_ids, $project->get_id() );
 
 		if ( is_array( $pages ) && count( $pages ) ) {
 			foreach ( $pages as $i => $api_page ) {
-				$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $api_page['cloned_from'] );
+				$wp_post  = Brizy_Editor_Post::get_post_by_foreign_hash( $api_page['cloned_from'] );
 				$old_page = Brizy_Editor_Post::get( $wp_post );
 				$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $api_page ), $wp_post->ID );
 
@@ -51,6 +50,8 @@ function brizy_check_for_new_imports() {
 		}
 
 	} catch ( Exception $e ) {
+
+		Brizy_Logger::instance()->exception( $e );
 
 		Brizy_Admin_Flash::instance()->add_error( $e->getMessage() );
 
@@ -67,7 +68,6 @@ add_action( 'init', 'brizy_check_for_duplicates' );
 function brizy_check_for_duplicates() {
 	try {
 		$post = null;
-
 		// clone user for any eventuality
 		$user    = Brizy_Editor_User::get();
 		$project = Brizy_Editor_Project::get();
@@ -77,6 +77,8 @@ function brizy_check_for_duplicates() {
 		if ( $count == 0 ) {
 			return;
 		}
+
+		Brizy_Logger::instance()->notice( 'New duplicate posts found', array( $posts ) );
 
 		foreach ( $posts as $hash => $apost ) {
 
@@ -108,6 +110,8 @@ function brizy_check_for_duplicates() {
 			}
 		}
 	} catch ( Exception $e ) {
+
+		Brizy_Logger::instance()->exception( $e );
 
 		Brizy_Admin_Flash::instance()->add_error( $e->getMessage() );
 
@@ -146,6 +150,9 @@ function brizy_initialize_Brizy_Public_Api() {
 		}
 
 	} catch ( Exception $e ) {
+
+		Brizy_Logger::instance()->exception( $e );
+
 		// do nothing if there is an exception
 		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
 			var_dump( $e );
@@ -177,7 +184,11 @@ function brizy_handler_proxy_requests( $query ) {
 		}
 
 		$asset_editor = new Brizy_Editor_Assets( $project, $post );
+
 	} catch ( Exception $e ) {
+
+		Brizy_Logger::instance()->exception( $e );
+
 		// do nothing if there is an exception
 		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
 			var_dump( $e );

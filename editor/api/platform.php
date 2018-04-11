@@ -55,6 +55,9 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	private function getToken() {
+
+		Brizy_Logger::instance()->notice('Getting token to crete the user');
+
 		$response = $this->post( $this->auth_url(), array(
 			'body' => array(
 				'client_id'     => $this->client_id,
@@ -91,12 +94,17 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 		try {
 			$credentials = Brizy_Editor_Storage_Common::instance()->get( 'platform_credentials' );
 		} catch ( Exception $e ) {
+
+			Brizy_Logger::instance()->debug( 'Obtain credentials' );
+
 			$http        = new WP_Http();
 			$wp_response = new Brizy_Editor_Http_Response( $http->get( Brizy_Config::BRIZY_REGISTRATION_CREDENTIALS ) );
 
 			if ( $wp_response->is_ok() ) {
 				$credentials = $wp_response->get_response_body();
+				Brizy_Editor_Storage_Common::instance()->set( 'platform_credentials', $credentials );
 			} else {
+				Brizy_Logger::instance()->critical( 'Enable to obtain the platform credentials', array( $wp_response ) );
 				throw new Exception( 'unable to obtain the platform credentials' );
 			}
 		}
@@ -125,30 +133,30 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function createUser($clone_id = null) {
+	public function createUser( $clone_id = null ) {
+
+		Brizy_Logger::instance()->notice( 'Create user', array( 'clone_id' => $clone_id ) );
 
 		$email = $this->random_email();
 
 		$token = $this->getToken();
 
-		$options  = array(
+		$options = array(
 			'headers'   => array(
 				'Authorization' => 'Bearer ' . $token->access_token()
 			),
 			'body'      => array(
-				'email' => $email,
+				'email'     => $email,
 				'signature' => Brizy_Editor_Signature::get()
 			),
 			'sslverify' => false
 		);
 
-		if($clone_id)
-		{
+		if ( $clone_id ) {
 			$options['body']['resource_id_clonable'] = $clone_id;
 		}
 
-
-		$response = $this->post( $this->sign_up_url(), $options);
+		$response = $this->post( $this->sign_up_url(), $options );
 
 		$user = $response->get_response_body();
 
@@ -161,7 +169,6 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 
 		return $user;
 	}
-
 
 
 }

@@ -42,6 +42,12 @@ class Brizy_Editor_Http_Client {
 
 		$wp_response = $this->getHttp()->request( $url, $options );
 
+		Brizy_Logger::instance()->notice( "{$method} request to {$url}",
+			array(
+				'options'  => $options,
+				'response' => $wp_response
+			) );
+
 		if ( is_wp_error( $wp_response ) ) {
 			throw new Brizy_Editor_API_Exceptions_Exception( $wp_response->get_error_message() );
 		}
