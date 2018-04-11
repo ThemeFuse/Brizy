@@ -10,7 +10,13 @@ class Brizy_Editor_Storage_Common extends Brizy_Editor_Storage_Abstract {
 	public static function instance() {
 		static $instance;
 
-		return $instance ? $instance : $instance = new Brizy_Editor_Storage_Common();
+		if ( ! $instance ) {
+			$instance = new self();
+		}
+
+		Brizy_Logger::instance()->debug('Common storage value ->', array( $instance->get_storage() ));
+
+		return $instance;
 	}
 
 	/**

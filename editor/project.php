@@ -141,7 +141,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
 
 						$new_post->save();
-
 					}
 				}
 			}

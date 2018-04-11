@@ -74,6 +74,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Exception
 	 */
 	protected function __construct( $common_storage ) {
+		Brizy_Logger::instance()->debug( 'New user instance with storage', array( $common_storage ) );
 
 		$this->common_storage = $common_storage;
 
@@ -116,10 +117,19 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Exception
 	 */
 	public function checkSignature() {
+		Brizy_Logger::instance()->debug( 'Checking user signature' );
+
 		if ( Brizy_Editor_Signature::get() != $this->platform_user_signature ) {
+
+			Brizy_Logger::instance()->debug( 'User signature mismatch', array(
+				Brizy_Editor_Signature::get(),
+				$this->platform_user_signature
+			) );
 			// clone required
 			throw new Brizy_Editor_Exceptions_SignatureMismatch( 'Clone user required. Not implemented yet.' );
 		}
+
+		Brizy_Logger::instance()->debug( 'User signature match' );
 	}
 
 

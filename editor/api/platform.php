@@ -135,7 +135,7 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 */
 	public function createUser( $clone_id = null ) {
 
-		Brizy_Logger::instance()->notice( 'Create user', array( 'clone_id' => $clone_id ) );
+		Brizy_Logger::instance()->notice( 'Create new user', array( 'clone_id' => $clone_id ) );
 
 		$email = $this->random_email();
 
@@ -162,9 +162,14 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 
 		if ( $response->is_ok() ) {
 
+			Brizy_Logger::instance()->notice( 'New user created', array( $user ) );
+
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_id', $user['id'] );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_signature', Brizy_Editor_Signature::get() );
+		}
+		else {
+			Brizy_Logger::instance()->error( 'Failed to create user', array( $response ) );
 		}
 
 		return $user;

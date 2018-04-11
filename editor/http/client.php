@@ -43,6 +43,7 @@ class Brizy_Editor_Http_Client {
 		$wp_response = $this->getHttp()->request( $url, $options );
 
 		Brizy_Logger::instance()->notice( "{$method} request to {$url}",
+		
 			array(
 				'options'  => $options,
 				'response' => $wp_response
