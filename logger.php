@@ -68,12 +68,14 @@ class Brizy_Logger {
 			'type'       => $type,
 			'message'    => $message,
 			'context'    => serialize( $context ),
-			'session_id' => session_id()
+			'session_id' => session_id(),
+			'date'       => current_time( 'mysql', 1 )
 		), array(
 			'%s',
 			'%s',
 			'%s',
 			'%s',
+			'%s'
 		) );
 	}
 
