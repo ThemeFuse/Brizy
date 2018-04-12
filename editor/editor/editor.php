@@ -129,7 +129,8 @@ class Brizy_Editor_Editor_Editor {
 					'getTerms'         => Brizy_Editor_API::AJAX_GET_TERMS,
 				),
 				'plugins'     => array(
-					'woocommerce' => $this->get_woocomerce_plugin_info()
+					'dummy' => true,
+					'woocommerce' => $this->get_woocomerce_plugin_info(),
 				),
 				'hasSidebars' => count( $wp_registered_sidebars ) > 0
 				//'menus' =>  wp_get_nav_menus()

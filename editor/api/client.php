@@ -170,22 +170,22 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function compile_page( $project, $page, $config ) {
 
-		$urls = array(
-			'api'     => $this->url( '' ),
-			//'primary' => $config['urls']['primary'],
-			'base'    => $config['urls']['base'],
-			'static'  => $config['urls']['static'],
-			'assets'  => $config['urls']['assets'],
-			'image'   => $config['urls']['image'],
-		);
-
-		$urls = array(
-			'urls' => json_encode( $urls )
-		);
-
 		$compile_url = sprintf( Brizy_Config::COMPILER_URI, $project->get_id(), $page->get_id(), $this->access_token->access_token() );
+		$body = array(
+			'editor_data' => array(
+				'urls' => array(
+					'api'     => $this->url( '' ),
+					//'primary' => $config['urls']['primary'],
+					'base'    => $config['urls']['base'],
+					'static'  => $config['urls']['static'],
+					'assets'  => $config['urls']['assets'],
+					'image'   => $config['urls']['image'],
+				),
+				'wp' => $config['wp']
+			)
+		);
 
-		return parent::request( $compile_url, array( 'body' => $urls ), 'POST' )->get_response_body();
+		return parent::request( $compile_url, array( 'body' => $body ), 'POST' )->get_response_body();
 	}
 
 	/**
