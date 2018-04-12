@@ -16,7 +16,7 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 	}
 
 	public function unserialize( $data ) {
-		$this->data = unserialize($data);
+		$this->data = unserialize( $data );
 	}
 
 	public function get_data() {
@@ -89,10 +89,16 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 		$this->data['meta_data'][ $key ] = $value;
 	}
 
-	public function getSaveData() {
-		return array(
-			'globals'=>$this->get_globals_as_json(),
-			//'signature'=>Brizy_Editor_Signature::get()
+	public function getSaveData( $method = 'POST' ) {
+		$data = array(
+			'globals' => $this->get_globals_as_json(),
+
 		);
+
+		if ( $method == 'POST' ) {
+			$data['signature'] = Brizy_Editor_Signature::get();
+		}
+
+		return $data;
 	}
 }

@@ -23,7 +23,6 @@ class Brizy_Editor_Storage_Common extends Brizy_Editor_Storage_Abstract {
 	protected function get_storage() {
 
 		$get_option = (array) get_option( $this->key(), array() );
-		Brizy_Logger::instance()->debug('Common storage value ->', array( $get_option ));
 		return $get_option;
 	}
 

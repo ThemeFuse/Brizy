@@ -63,6 +63,11 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		}
 
+		if ( ! $user->token || $user->token->expired() ) {
+			$user->auth();
+			$user->token = $user->common_storage->get( 'access-token' );
+		}
+
 		return self::$instance = $user;
 	}
 
@@ -74,7 +79,6 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Exception
 	 */
 	protected function __construct( $common_storage ) {
-		Brizy_Logger::instance()->debug( 'New user instance with storage', array( $common_storage ) );
 
 		$this->common_storage = $common_storage;
 
@@ -83,11 +87,9 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		$this->platform_user_signature = $this->common_storage->get( 'platform_user_signature' );
 		$this->token                   = $this->common_storage->get( 'access-token', false );
 
-		if ( ! $this->token || $this->token->expired() ) {
-			Brizy_Logger::instance()->debug( 'Token expired or not found' );
-			$this->auth();
-			$this->token = $this->common_storage->get( 'access-token' );
-		}
+		Brizy_Logger::instance()->debug( 'New user instance with storage', array( $this ) );
+
+
 	}
 
 	/**
@@ -159,7 +161,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	public function auth() {
 		try {
 			//self::lock_access();
-
+			Brizy_Logger::instance()->debug( 'Obtain new user token' );
 			$credentials = Brizy_Editor_API_Platform::getCredentials();
 
 			$auth_api = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, $credentials->client_id, $credentials->client_secret );

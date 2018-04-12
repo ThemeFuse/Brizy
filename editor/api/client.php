@@ -79,7 +79,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
-		return $this->put( "projects/{$project->get_id()}", array( 'body' => $project->getSaveData() ) )->get_response_body();
+		return $this->put( "projects/{$project->get_id()}", array( 'body' => $project->getSaveData('PUT') ) )->get_response_body();
 	}
 
 	/**
