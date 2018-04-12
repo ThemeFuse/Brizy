@@ -55,6 +55,8 @@ class Brizy_Editor_Http_Client {
 
 		$response = new Brizy_Editor_Http_Response( $wp_response );
 
+		Brizy_Logger::instance()->debug( "Request {{$url}} status ".$response->get_status_code() );
+
 		if ( $response->is_ok() ) {
 			return $response;
 		}

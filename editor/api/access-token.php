@@ -64,4 +64,22 @@ class Brizy_Editor_API_AccessToken extends Brizy_Admin_Serializable {
 			'expires'      => $this->get_expires(),
 		);
 	}
+
+
+	public function serialize() {
+		return serialize( array(
+			'token'         => $this->token,
+			'refresh_token' => $this->refresh_token,
+			'expires'       => $this->expires,
+		) );
+	}
+
+	public function unserialize( $data ) {
+
+		$vars = unserialize( $data );
+
+		foreach ( $vars as $prop => $value ) {
+			$this->$prop = $value;
+		}
+	}
 }
