@@ -8,7 +8,6 @@
 ?>
 <div class="wrap">
     <h1><?php echo brizy()->get_name() ?></h1>
-
     <form method="post" novalidate="novalidate">
 		<?php wp_nonce_field() ?>
         <table class="form-table">
@@ -55,6 +54,8 @@
             </tr>
             </tbody>
         </table>
+
+
 
         <p class="submit">
             <button type="submit"

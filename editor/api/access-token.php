@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_API_AccessToken {
+class Brizy_Editor_API_AccessToken extends Brizy_Admin_Serializable {
 
 	/**
 	 * @var string $token

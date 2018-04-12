@@ -96,7 +96,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 		$brizy_editor_user = Brizy_Editor_User::get();
 
-		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $clone_from ) );
 		$api_project       = $brizy_editor_user->create_project( $clone_from );
 
 		$project                     = new self( $api_project );
@@ -312,6 +311,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		$dir_path = sprintf( rtrim( ABSPATH, DIRECTORY_SEPARATOR ) . Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $version );
 
 		Brizy_Logger::instance()->notice( 'Remove directory ' . $dir_path, array( $dir_path ) );
+		
 		$fs = new WP_Filesystem_Direct( null );
 		$fs->rmdir( $dir_path, true );
 

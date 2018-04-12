@@ -13,10 +13,8 @@
         <pre>
         <?php
         $data = get_option( 'brizy' );
-
         print_r($data);
         ?>
         </pre>
     </fieldset>
-
 </div>

@@ -325,6 +325,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Exception
 	 */
 	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
+
 		$api_project = $project->get_api_project();
 		$api_page    = $post->get_api_page();
 		$url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
