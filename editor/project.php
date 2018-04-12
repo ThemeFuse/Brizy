@@ -94,8 +94,9 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 */
 	private static function create( $clone_from = null ) {
 
-		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $clone_from ) );
 		$brizy_editor_user = Brizy_Editor_User::get();
+
+		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $clone_from ) );
 		$api_project       = $brizy_editor_user->create_project( $clone_from );
 
 		$project                     = new self( $api_project );

@@ -21,8 +21,8 @@ class Brizy_Admin_Settings {
 
 		add_action( 'admin_menu', array( $this, 'action_register_settings_page' ) );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
-		$this->role_list = $this->get_role_list();
 
+		$this->role_list = $this->get_role_list();
 	}
 
 	public function is_settings_page() {
@@ -40,6 +40,12 @@ class Brizy_Admin_Settings {
 				'roles'   => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() ),
 				'project' => Brizy_Editor_Project::get()
 			)
+		);
+
+
+		echo Brizy_Admin_View::render(
+			'settings/debug',
+			array()
 		);
 	}
 

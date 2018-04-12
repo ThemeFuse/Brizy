@@ -22,7 +22,7 @@ class Brizy_Editor_Signature {
 		return array(
 			get_option( 'siteurl' ),
 			defined('WP_SITEURL')?WP_SITEURL:'',
-			dirname( __FILE__ )."adfsdasd"
+			dirname( __FILE__ )."adfsdaasyccsd"
 		);
 	}
 

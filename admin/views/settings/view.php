@@ -5,7 +5,6 @@
 /**
  * @var array $types
  */
-
 ?>
 <div class="wrap">
     <h1><?php echo brizy()->get_name() ?></h1>
@@ -56,8 +55,6 @@
             </tr>
             </tbody>
         </table>
-
-
 
         <p class="submit">
             <button type="submit"
