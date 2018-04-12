@@ -67,6 +67,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		try {
 			self::$instance->checkSignature();
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
+			Brizy_Logger::instance()->notice( "Project signature mismatch" );
 			self::$instance = self::create( self::$instance->get_id() );
 
 		} catch ( Exception $e ) {
@@ -93,6 +94,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 */
 	private static function create( $clone_from = null ) {
 
+		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $clone_from ) );
 		$brizy_editor_user = Brizy_Editor_User::get();
 		$api_project       = $brizy_editor_user->create_project( $clone_from );
 

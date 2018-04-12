@@ -2,7 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
+class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor_SignatureInterface {
 
 	const BRIZY_ATTACHMENT_HASH_KEY = 'brizy_attachment_hash';
 
@@ -88,8 +88,6 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		$this->token                   = $this->common_storage->get( 'access-token', false );
 
 		Brizy_Logger::instance()->debug( 'New user instance with storage', array( $this ) );
-
-
 	}
 
 	/**
