@@ -201,7 +201,7 @@ class Brizy_Editor_API {
 			}
 
 			$this->post
-				->set_needs_compile( true )
+				->setNeedsCompile( true )
 				->save();
 
 			$this->success( self::create_post_arr( $this->post ) );

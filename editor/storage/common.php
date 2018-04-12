@@ -14,8 +14,6 @@ class Brizy_Editor_Storage_Common extends Brizy_Editor_Storage_Abstract {
 			$instance = new self();
 		}
 
-		Brizy_Logger::instance()->debug('Common storage value ->', array( $instance->get_storage() ));
-
 		return $instance;
 	}
 
@@ -23,7 +21,10 @@ class Brizy_Editor_Storage_Common extends Brizy_Editor_Storage_Abstract {
 	 * @return array
 	 */
 	protected function get_storage() {
-		return (array) get_option( $this->key(), array() );
+
+		$get_option = (array) get_option( $this->key(), array() );
+		Brizy_Logger::instance()->debug('Common storage value ->', array( $get_option ));
+		return $get_option;
 	}
 
 	/**

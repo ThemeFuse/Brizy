@@ -333,6 +333,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$this->invalidate_assets();
 
 		$this->setStoreAssets( true );
+		$this->setNeedsCompile( false );
 
 		return true;
 	}
@@ -388,10 +389,14 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$this->assets = array();
 	}
 
-	public function set_needs_compile( $v ) {
+	public function setNeedsCompile( $v ) {
 		$this->needs_compile = (bool) $v;
 
 		return $this;
+	}
+
+	public function getNeedsCompile() {
+		return $this->needs_compile;
 	}
 
 	/**

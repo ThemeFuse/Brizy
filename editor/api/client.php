@@ -65,7 +65,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function get_project( Brizy_Editor_API_Project $project ) {
 
-		return $this->get( "projects/{$project->get_id()}?=signature=" . Brizy_Editor_Signature::get() )->get_response_body();
+		return $this->get( "projects/{$project->get_id()}" )->get_response_body();
 	}
 
 	/**

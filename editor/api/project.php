@@ -92,7 +92,7 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 	public function getSaveData() {
 		return array(
 			'globals'=>$this->get_globals_as_json(),
-			'signature'=>Brizy_Editor_Signature::get()
+			//'signature'=>Brizy_Editor_Signature::get()
 		);
 	}
 }

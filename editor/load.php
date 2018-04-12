@@ -10,7 +10,7 @@ add_action( 'init', 'brizy_check_for_new_imports' );
 function brizy_check_for_new_imports() {
 	try {
 		$post = null;
-
+		Brizy_Logger::instance()->debug( 'Check for new imported posts' );
 		$project = Brizy_Editor_Project::get();
 
 		$posts = Brizy_Editor_Post::get_posts_with_foreign_signature();
@@ -76,6 +76,9 @@ add_action( 'init', 'brizy_check_for_duplicates' );
 
 function brizy_check_for_duplicates() {
 	try {
+
+		Brizy_Logger::instance()->debug( 'Check for new duplicated posts' );
+
 		$post = null;
 		// clone user for any eventuality
 		$user    = Brizy_Editor_User::get();

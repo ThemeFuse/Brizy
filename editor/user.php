@@ -158,7 +158,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 */
 	public function auth() {
 		try {
-			self::lock_access();
+			//self::lock_access();
 
 			$credentials = Brizy_Editor_API_Platform::getCredentials();
 
@@ -169,11 +169,11 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
-			self::unlock_access();
+			//self::unlock_access();
 			throw $exception;
 		}
 
-		self::unlock_access();
+		//self::unlock_access();
 	}
 
 

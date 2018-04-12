@@ -135,11 +135,11 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 */
 	public function createUser( $clone_id = null ) {
 
-		Brizy_Logger::instance()->notice( 'Create new user', array( 'clone_id' => $clone_id ) );
-
 		$email = $this->random_email();
 
 		$token = $this->getToken();
+
+		Brizy_Logger::instance()->notice( 'Create new user', array( 'clone_id' => $clone_id ) );
 
 		$options = array(
 			'headers'   => array(
