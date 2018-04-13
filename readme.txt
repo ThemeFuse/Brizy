@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-an
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -85,12 +85,13 @@ The progress you're making while building your page is always backed up in the c
 
 == Screenshots ==
 
-1. **Add Elements** Add Elements
-2. **Add Blocks** Add Blocks
-3. **Smart text** Smart text
+1. **Add Elements**
+2. **Add Blocks**
+3. **Smart text**
 
 == Changelog ==
 
+= 0.2.2 - 2018-04-13 =
 = 0.2.1 - 2018-04-13 =
 = 0.1.0 - 2018-04-12 =
 * First release
