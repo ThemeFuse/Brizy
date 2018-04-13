@@ -61,6 +61,16 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 		return $this;
 	}
 
+	public function get_status() {
+		return isset( $this->data['status'] ) ? $this->data['status'] : '';
+	}
+
+	public function set_status( $status ) {
+		//$this->data['status'] = $status;
+
+		return $this;
+	}
+
 	public function get_content() {
 		return isset( $this->data['data'] ) ? $this->data['data'] : '';
 	}

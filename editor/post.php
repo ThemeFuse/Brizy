@@ -126,13 +126,12 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function save() {
 
 		try {
-
-			$this->save_locally();
-
 			$brizy_editor_user = Brizy_Editor_User::get();
 			$project           = Brizy_Editor_Project::get();
 			$api_project       = $project->get_api_project();
-			$brizy_editor_user->update_page( $api_project, $this->api_page );
+			$updated_page      = $brizy_editor_user->update_page( $api_project, $this->api_page );
+			$this->api_page    = new Brizy_Editor_API_Page( $updated_page );
+			$this->save_locally();
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -186,6 +185,12 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	public function set_title( $title ) {
 		$this->api_page->set_title( $title );
+
+		return $this;
+	}
+
+	public function set_status( $status ) {
+		$this->api_page->set_status( $status );
 
 		return $this;
 	}

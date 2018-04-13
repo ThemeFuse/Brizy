@@ -273,12 +273,13 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
 		Brizy_Logger::instance()->notice( 'Update page', array( $project, $page ) );
 
-		return $this->get_client()
-		            ->update_page(
-			            $project->get_id(),
-			            $page->get_id(),
-			            $page
-		            );
+		$updated_page = $this->get_client()
+		                     ->update_page(
+			                     $project->get_id(),
+			                     $page->get_id(),
+			                     $page
+		                     );
+		return $updated_page;
 	}
 
 	/**
@@ -290,11 +291,16 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 * @throws Exception
 	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
 		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
 
-		return $this->get_client()->update_project( $project );
+		$updated_project = $this->get_client()->update_project( $project );
+
+		Brizy_Editor_Project::get()->updateProjectData( new Brizy_Editor_API_Project( $updated_project ) );
+
+		return $updated_project;
 	}
 
 	/**

@@ -53,11 +53,11 @@ class Brizy_Admin_Main {
 
 
 	public function action_edit_form_after_title() {
-        ?><div style="display: none;"><?php
+		echo '<div style="display: none;">';
 	}
 
 	public function action_edit_form_after_editor() {
-		?></div><?php
+		echo '<div/>';
 	}
 
 	/**
@@ -94,6 +94,7 @@ class Brizy_Admin_Main {
 				return;
 			}
 
+			$b_post->set_status( $post->post_status );
 			$b_post->compile_page();
 			$b_post->save();
 
@@ -279,10 +280,17 @@ class Brizy_Admin_Main {
 	}
 
 	/**
-	 * @internal
+	 * @param $id
 	 *
-	 * @param int $id
-	 **/
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 * @throws Exception
+	 */
 	public function action_delete_page( $id ) {
 
 		try {
@@ -313,21 +321,16 @@ class Brizy_Admin_Main {
 				}
 			}
 
-			//$post->disable_editor();
+			$post->set_status( Brizy_Editor_PostStatus::STATUS_TRASH );
 
-			Brizy_Editor_User::get()->delete_page( $project->get_api_project(), $post->get_api_page() );
+			Brizy_Editor_User::get()->update_page( $project->get_api_project(), $post->get_api_page() );
 
 			do_action( 'brizy_delete_post', $id );
 
 		} catch ( Brizy_Editor_Exceptions_UnsupportedPostType $exception ) {
 			return;
-		} catch ( Exception $exception ) {
-			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
-
-			return;
-			wp_redirect( $_SERVER['HTTP_REFERER'] );
-			exit;
 		}
+
 	}
 
 	/**

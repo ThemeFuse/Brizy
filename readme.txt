@@ -14,6 +14,8 @@ More details on: https://brizy.io
 
 == Description ==
 
+https://vimeo.com/263343966
+
 Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is the most user-friendly visual page builder in town! No designer or developer skills required. The only tools you'll need to master are clicks and drags.
 
 Built on the popular cloud service provided by [BitBlox.me](https://www.bitblox.me/) (developed by [ThemeFuse](https://themefuse.com/)), Brizy is a new and innovative way of building WordPress pages visually. 
@@ -83,7 +85,12 @@ The progress you're making while building your page is always backed up in the c
 
 == Screenshots ==
 
+1. **Add Elements** Add Elements
+2. **Add Blocks** Add Blocks
+3. **Smart text** Smart text
+
 == Changelog ==
 
-= 0.1.0 - 2018-03-20 =
+= 0.2.1 - 2018-04-13 =
+= 0.1.0 - 2018-04-12 =
 * First release
