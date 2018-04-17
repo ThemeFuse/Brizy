@@ -251,7 +251,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized.
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
 		Brizy_Logger::instance()->notice( 'Delete page', array( $project, $page ) );

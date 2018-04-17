@@ -43,6 +43,17 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		return $this->post( 'projects', array( 'body' => $save_data ) )->get_response_body();
 	}
 
+	/**
+	 * @param $page_ids
+	 * @param $project_target
+	 *
+	 * @return array|mixed|object
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
 	public function clone_pages( $page_ids, $project_target ) {
 
 		return $this->post( 'pages/clones', array(
