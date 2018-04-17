@@ -52,14 +52,6 @@ class Brizy_Admin_Main {
 	}
 
 
-	public function action_edit_form_after_title() {
-		echo '<div style="display: none;">';
-	}
-
-	public function action_edit_form_after_editor() {
-		echo '<div/>';
-	}
-
 	/**
 	 * @param array $post_states
 	 * @param WP_Post $post
@@ -124,8 +116,7 @@ class Brizy_Admin_Main {
 				//remove_post_type_support( $post_type, 'editor' );
 
 				// hide the default editor
-				add_action( 'edit_form_after_title', array( $this, 'action_edit_form_after_title' ), 2000 );
-				add_action( 'edit_form_after_editor', array( $this, 'action_edit_form_after_editor' ), - 2000 );
+				add_filter('the_editor',function($editor_html){ return "<div style='display: none'>{$editor_html}</div>"; });
 			}
 		}
 	}
