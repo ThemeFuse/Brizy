@@ -8,46 +8,79 @@ Stable tag: 0.2.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Creating WordPress pages should be fast & easy. Brizy is the most user-friendly visual page builder in town! No designer or developer skills required. The only tools you'll need to master are clicks and drags.
+Creating WordPress pages should be fast & easy. Brizy is a new and innovative way of building WordPress pages visually. No designer or developer skills required. The only tools you'll need to master are clicks and drags.
 
 More details on: https://brizy.io 
+
 
 == Description ==
 
 https://vimeo.com/263343966
 
-Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is the most user-friendly visual page builder in town! No designer or developer skills required. The only tools you'll need to master are clicks and drags.
+Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is a new and innovative way of building WordPress pages visually. No designer or developer skills required. The only tools you'll need to master are clicks and drags.
 
-Built on the popular cloud service provided by [BitBlox.me](https://www.bitblox.me/) (developed by [ThemeFuse](https://themefuse.com/)), Brizy is a new and innovative way of building WordPress pages visually. 
-
-All you need to do to start using the visual builder is to install the WordPress plugin. It will automatically connect to the cloud (via API) and let you create and edit your WordPress pages directly in the front end. It’s free and doesn’t require anything to connect. 
+All you need to do to start using the visual builder is to install the WordPress plugin. It will automatically connect to the cloud (via API) and let you create and edit your WordPress pages directly in the front end.
 
 
 == Highlights ==
 
+![Clutter free](https://brizy.io/wp-content/uploads/2018/04/Clutter-free.gif)
+
 = Smart & clutter free =
 Most page builders crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. We show only what's needed, front & centre, close to the element you're editing.
 
-= Intuitive Drag & Drop =
+![Drag & Drop](https://brizy.io/wp-content/uploads/2018/04/Drag-Drop.gif)
+
+= Intuitive drag & drop =
 Moving content elements, columns or rows is a breeze with our intuitive Drag & Drop feature. Just grab and drag them to the desired position and everything will instantly fall into place.
 
-= Design Elements =
+![Design Elements](https://brizy.io/wp-content/uploads/2018/04/Design-Elements.gif)
+
+= Design elements =
 Text, buttons, images, icons, video, maps and many more are ready to help you create your page design in a snap.
+
+![Pre-made blocks](https://brizy.io/wp-content/uploads/2018/04/Pre-made-blocks.gif)
 
 = Over 150 pre-made blocks =
 Blocks are pre-made designs that you can add to your page, ready to be customised. This will enable you to create the main structure of your page in a matter of minutes, while also ensuring that it looks awesome.
 
+![Icons](https://brizy.io/wp-content/uploads/2018/04/Icons.gif)
+
 = Over 4000 icons included =
 Available in both Outline and Glyph versions, even the most demanding icon needs are covered. Quickly find the icons you're after by filtering through categories or searching by keywords.
 
-= Undo / Redo =
-Don't worry if you make a mistake or delete something that you shouldn't have. With Undo you can get everything back.
+![Global styling](https://brizy.io/wp-content/uploads/2018/04/Global-styling.gif)
 
 = Global styling =
 Ever wanted to change all the similar colors in your web page with a single click? With Brizy, you can! Not only that, but you can change all texts that share the same properties in one go, as well.
 
+![Mobile friendly](https://brizy.io/wp-content/uploads/2018/04/Mobile-friendly.gif)
+
 = Mobile Friendly =
 Switch instantly to Mobile View mode, where you can make changes that will only apply to this type of devices. This gives you the power to differentiate your page design and optimise for smaller screens.
+
+![Text Editor](https://brizy.io/wp-content/uploads/2018/04/Text-Editor.gif)
+
+= Smart text editor =
+Just click and type to edit all the texts in-place. Changing colors, fonts, alignments right there on the spot allows you to have a perfect representation of how the design will look like in the end.
+
+![Images](https://brizy.io/wp-content/uploads/2018/04/Images.gif)
+
+= Images done right =
+Take full control over your website images by harnessing our powerful and easy-to-use options. Upload, focus, zoom and resize are all done effortlessly, in a matter of seconds.
+
+![Content adjustments](https://brizy.io/wp-content/uploads/2018/04/Content-adjustments.gif)
+
+= Content adjustments =
+Just a couple of clicks are needed to make content adjustments in width, height and alignment. All done with intuitive options, placed where they should be.
+
+![Resize columns](https://brizy.io/wp-content/uploads/2018/04/Resize-columns.gif)
+
+= Resize columns =
+Resize columns by dragging the handle that appears in between, with percentage values displayed up top. The content inside will automatically adapt to the new size.
+
+= Undo / Redo =
+Don't worry if you make a mistake or delete something that you shouldn't have. With Undo you can get everything back.
 
 = Cloud auto-save =
 The progress you're making while building your page is always backed up in the cloud, so you'll never lose your work.
@@ -85,9 +118,17 @@ The progress you're making while building your page is always backed up in the c
 
 == Screenshots ==
 
-1. **Add Elements**
-2. **Add Blocks**
-3. **Smart text**
+1. **Add elements to create your own design**
+2. **Add over 150 premade blocks**
+3. **The interface shows only what's needed for the task at hand**
+4. **You'll know where your elements will drop when you drag them**
+5. **Smart text editor**
+6. **Try different fonts and colors across your pages in a matter of seconds**
+7. **What you edit in mobile view will be applied only on mobile devices**
+8. **Brizy comes with a library of over 4000 icons separated in 27 categories**
+9. **Image focus, zoom and resize are all done effortlessly**
+10. **Adjust content to your liking**
+11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
 
