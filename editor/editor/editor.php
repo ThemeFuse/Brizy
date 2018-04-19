@@ -162,53 +162,6 @@ class Brizy_Editor_Editor_Editor {
 		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
 	}
 
-	static public function store_asset( $asset_source, $asset_path ) {
-
-		$full_asset_path = null;
-		try {
-			// check destination dir
-			$dir_path = dirname( $asset_path );
-
-			if ( ! file_exists( $dir_path ) ) {
-				mkdir( $dir_path, 0777, true );
-			}
-
-			$full_asset_path = $asset_path;
-
-			$fasset_dest = fopen( $asset_path, 'w' );
-			if ( ! $fasset_dest ) {
-				throw new Exception( 'Invalid file destination.' );
-			}
-
-			$fasset_src = fopen( $asset_source, 'r' );
-			if ( ! $fasset_src ) {
-				throw new Exception( 'Invalid asset source.' );
-			}
-
-			$buffer_length = 81920; // we can tune this later;
-
-			while ( ! feof( $fasset_src ) ) {
-				$buffer = fread( $fasset_src, $buffer_length );
-				fwrite( $fasset_dest, $buffer );
-			}
-
-			fclose( $fasset_src );
-			fclose( $fasset_dest );
-
-		} catch ( Exception $e ) {
-			$t = 0;
-
-			// clean up
-			if ( $full_asset_path ) {
-				@unlink( $full_asset_path );
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private function get_woocomerce_plugin_info() {
 		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {
 			return array( 'version' => WooCommerce::instance()->version );

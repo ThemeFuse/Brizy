@@ -9,64 +9,109 @@ class Brizy_Editor_CompiledHtml {
 	 */
 	private $dom;
 
-	public function __construct( $html ) {
+	/**
+	 * @var Brizy_Editor_Asset_ProcessorInterface[]
+	 */
+	private $asset_processors = [];
 
+	/**
+	 * Brizy_Editor_CompiledHtml constructor.
+	 *
+	 * @param $html
+	 */
+	public function __construct( $html ) {
 		$this->dom = new Brizy_Editor_Helper_Dom( $html );
 	}
 
-	public function strip_regions() {
-		$this->dom->strip_regions();
-
-		return $this;
+	/**
+	 * @param Brizy_Editor_Asset_ProcessorInterface[] $asset_processors
+	 */
+	public function setAssetProcessors( $asset_processors ) {
+		$this->asset_processors = $asset_processors;
 	}
 
+
+	/**
+	 * @return string
+	 */
 	public function get_content() {
-		return $this->strip_regions()->dom->get_content();
+		$content = $this->dom->get_content();
+
+		$content = $this->apply_asset_processors( $content );
+
+		return $content;
 	}
 
-	public function get_body($include_parent_tags = false) {
+	/**
+	 * @return string
+	 */
+	public function get_body() {
 
-		if($include_parent_tags)
-			return $this->dom->get_body()->get_tag();
-		else
-			return $this->dom->get_body()->get_content();
+		$body_tag = $this->dom->get_body();
+
+		$content = $body_tag->get_content();
+
+		$content = $this->apply_asset_processors( $content );
+
+		return $content;
 	}
 
-	public function get_head() {
-		return $this->dom->get_head()->get_content();
+	/**
+	 * @param bool $include_parent_tag
+	 *
+	 * @return string
+	 */
+	public function get_head( $include_parent_tag = false ) {
+
+		$head_tag = $this->dom->get_head();
+
+		$content = $head_tag->get_content();
+
+		$content = $this->apply_asset_processors( $content );
+
+		return $content;
 	}
 
-	public function get_head_scripts() {
-		$script_tags = $this->dom->get_head()->get_scripts();
+	private function apply_asset_processors( $content ) {
 
-		return $this->dom->get_attributes( $script_tags, 'src' );
-	}
-
-	public function get_footer_scripts() {
-		$script_tags = $this->dom->get_body()->get_scripts();
-
-		return $this->dom->get_attributes( $script_tags, 'src' );
-	}
-
-	public function get_links_tags() {
-		$link_tags = $this->dom->get_head()->get_links();
-
-		return $link_tags;
-	}
-
-	public function get_inline_styles() {
-		$style_tags = $this->dom->get_styles();
-		$list       = array();
-
-		if ( is_array( $style_tags ) ) {
-			foreach ( $style_tags as $tag ) {
-
-				$content = $tag->get_content();
-				$list[]  = $content;
-			}
+		foreach ( $this->asset_processors as $processor ) {
+			$content = $processor->process( $content );
 		}
 
-		return $list;
+		return $content;
 	}
+
+//	public function get_head_scripts() {
+//		$script_tags = $this->dom->get_head()->get_scripts();
+//
+//		return $this->dom->get_attributes( $script_tags, 'src' );
+//	}
+//
+//	public function get_footer_scripts() {
+//		$script_tags = $this->dom->get_body()->get_scripts();
+//
+//		return $this->dom->get_attributes( $script_tags, 'src' );
+//	}
+//
+//	public function get_links_tags() {
+//		$link_tags = $this->dom->get_head()->get_links();
+//
+//		return $link_tags;
+//	}
+//
+//	public function get_inline_styles() {
+//		$style_tags = $this->dom->get_styles();
+//		$list       = array();
+//
+//		if ( is_array( $style_tags ) ) {
+//			foreach ( $style_tags as $tag ) {
+//
+//				$content = $tag->get_content();
+//				$list[]  = $content;
+//			}
+//		}
+//
+//		return $list;
+//	}
 
 }

@@ -13,7 +13,8 @@ class Brizy_Editor_Helper_DomTag {
 	 * @param string $tag
 	 */
 	public function __construct( $tag ) {
-		$this->html_tag = Brizy_SiteUrlReplacer::hideSiteUrl(trim($tag));
+		$this->html_tag = trim( $tag ); ;
+		$this->fix_shortcode_attributes();
 	}
 
 	/**
@@ -82,16 +83,6 @@ class Brizy_Editor_Helper_DomTag {
 	/**
 	 * @return $this
 	 */
-	public function strip_regions() {
-		$string = $this->get_tag();
-
-		$string = preg_replace( "/(<\!--\s*Enqueue\s+Start\s*-->(?:(?:(?!<\!--Enqueue\s+End-->).)*)<\!--\s*Enqueue\s+End\s*-->)/is", '', $string );
-
-		$this->html_tag = $string;
-
-		return $this;
-	}
-
 	public function fix_shortcode_attributes() {
 		if ( $string = preg_replace( "/\&quot;/", '"', $this->html_tag ) ) {
 			$this->html_tag = $string;
@@ -119,112 +110,38 @@ class Brizy_Editor_Helper_DomTag {
 	}
 
 	/**
-	 * @return array
+	 * @return Brizy_Editor_Helper_DomTag[]
 	 */
 	public function get_links() {
 
-		$regions = $this->get_regions();
-		$links   = array();
-
-		if ( is_array( $regions ) ) {
-			foreach ( $regions as $region ) {
-				/**
-				 * @var Brizy_Editor_Helper_DomTag $region ;
-				 */
-				$region_links = $region->get_tags( '/(<link[^>]+>)/is' );
-
-				$links = array_merge( $links, $region_links );
-
-			}
-		}
-
-		return $links;
+		return $this->get_tags( '/(<link[^>]+>)/is' );
 	}
 
 
 	/**
 	 * @param $rel_value
 	 *
-	 * @return array
+	 * @return Brizy_Editor_Helper_DomTag[]
 	 */
 	public function get_links_by_rel( $rel_value ) {
 
-		$regions = $this->get_regions();
-		$links   = array();
-
-		if ( is_array( $regions ) ) {
-			foreach ( $regions as $region ) {
-				/**
-				 * @var Brizy_Editor_Helper_DomTag $region ;
-				 */
-				$region_links = $region->get_tags( "/(<link\s+(?=[^>]*rel=\"{$rel_value}\").[^>]*>)/is" );
-
-				$links = array_merge( $links, $region_links );
-
-			}
-		}
-
-		return $links;
+		return $this->get_tags( "/(<link\s+(?=[^>]*rel=\"{$rel_value}\").[^>]*>)/is" );
 	}
 
 
 	/**
-	 * @return array
+	 * @return Brizy_Editor_Helper_DomTag[]
 	 */
 	public function get_scripts() {
-
-		$regions = $this->get_regions();
-
-		$scripts = array();
-
-		if ( is_array( $regions ) ) {
-			foreach ( $regions as $region ) {
-				/**
-				 * @var Brizy_Editor_Helper_DomTag $region ;
-				 */
-				$region_scripts = $region->get_tags( '/(<script(.*?)<\/script>)/is' );
-
-				$scripts = array_merge( $scripts, $region_scripts );
-
-			}
-		}
-
-		return $scripts;
-
+		return $this->get_tags( '/(<script(.*?)<\/script>)/is' );
 	}
 
+	/**
+	 * @return Brizy_Editor_Helper_DomTag[]
+	 */
 	public function get_styles() {
-		$regions = $this->get_regions();
-		$styles  = array();
-
-		if ( is_array( $regions ) ) {
-			foreach ( $regions as $region ) {
-				/**
-				 * @var Brizy_Editor_Helper_DomTag $region ;
-				 */
-				$region_styles = $region->get_tags( '/(<style(.*?)<\/style>)/is' );
-
-				$styles = array_merge( $styles, $region_styles );
-
-			}
-		}
-
-		return $styles;
+		return $this->get_tags( '/(<style(.*?)<\/style>)/is' );
 	}
 
-
-	public function get_regions() {
-		$matches = array();
-		preg_match_all( "/(<\!--\s*Enqueue\s+Start\s*-->(?:(?:(?!<\!--Enqueue\s+End-->).)*)<\!--\s*Enqueue\s+End\s*-->)/is", $this->get_tag(), $matches );
-		$regions = array();
-
-		if ( isset( $matches[1] ) && is_array( $matches[1] ) ) {
-			foreach ( $matches[1] as $value ) {
-				$regions[] = new Brizy_Editor_Helper_DomTag( $value );
-			}
-		}
-
-		return $regions;
-	}
 
 }

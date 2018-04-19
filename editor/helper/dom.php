@@ -4,7 +4,6 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 
 	/**
 	 * @return Brizy_Editor_Helper_DomTag
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	public function get_head() {
 		$tags = $this->get_tags( '/(<head(.*?)<\/head>)/is' );
@@ -18,8 +17,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 
 
 	/**
-	 * @return Brizy_Editor_Helper_DomTag
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return $this|Brizy_Editor_Helper_DomTag
 	 */
 	public function get_body() {
 		$tags = $this->get_tags( '/(<body(.*?)<\/body>)/is' );
@@ -28,7 +26,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 			return new Brizy_Editor_Helper_DomTag('');
 		}
 
-		return $tags[0]->fix_shortcode_attributes();
+		return $tags[0];
 	}
 
 

@@ -279,6 +279,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 			                     $page->get_id(),
 			                     $page
 		                     );
+
 		return $updated_page;
 	}
 
@@ -330,7 +331,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 * @throws Exception
 	 */
-	public function compile_page( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
+	public function compile_page( $project, $post ) {
 
 		$api_project = $project->get_api_project();
 		$api_page    = $post->get_api_page();
@@ -347,7 +348,15 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 
 		$content = trim( $res['html'] );
 
-		return new Brizy_Editor_CompiledHtml( $content );
+		$asset_storage = new Brizy_Editor_Asset_Storage( $project, $post, $config );
+
+		$asset_processors[] = new Brizy_Editor_Asset_HtmlAssetProcessor( $asset_storage );
+		$asset_processors[] = new Brizy_Editor_Asset_CssAssetProcessor( $asset_storage );
+
+		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $content );
+		$brizy_editor_compiled_html->setAssetProcessors( $asset_processors );
+
+		return $brizy_editor_compiled_html;
 	}
 
 	/**

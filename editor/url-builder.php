@@ -31,11 +31,11 @@ class Brizy_Editor_UrlBuilder {
 		$this->post       = $post;
 		$this->upload_dir = wp_upload_dir( null, true );
 
-		if ( $wp_rewrite->permalink_structure == "" ) {
-			$site_url                    = get_site_url();
-			$this->upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['url'] );
-			$this->upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['baseurl'] );
-		}
+//		if ( $wp_rewrite->permalink_structure == "" ) {
+//			$site_url = get_site_url();
+//			$this->upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['url'] );
+//			$this->upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['baseurl'] );
+//		}
 
 
 	}
@@ -102,11 +102,6 @@ class Brizy_Editor_UrlBuilder {
 		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH . $path, $template_version );
 	}
 
-	public function editor_asset_url( $path = null ) {
-
-		return rtrim( BRIZY_PLUGIN_URL, "/" ) . "/" . ltrim( $path, "/" );
-	}
-
 	/**
 	 * This will return the relative path to the upload dir.
 	 * ex: /brizy/media/media_file.jpg
@@ -136,7 +131,7 @@ class Brizy_Editor_UrlBuilder {
 			$template_version = $this->project->get_template_version();
 		}
 
-		return sprintf( Brizy_Config::S3_ASSET_URL . $path, $template_slug, $template_version );
+		return sprintf( Brizy_Config::FE_S3_ASSET_URL . $path, $template_slug, $template_version );
 	}
 
 	/**
