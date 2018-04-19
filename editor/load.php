@@ -4,7 +4,6 @@
 
 include_once 'functions.php';
 
-
 add_action( 'init', 'brizy_check_for_new_imports' );
 
 function brizy_check_for_new_imports() {
@@ -214,5 +213,4 @@ function brizy_handler_proxy_requests( $query ) {
 		}
 	}
 }
-
 

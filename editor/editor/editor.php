@@ -55,7 +55,23 @@ class Brizy_Editor_Editor_Editor {
 
 		global $wp_registered_sidebars;
 
-		$wp_post_id = $this->post->get_wp_post()->ID;
+		$wp_post_id          = null;
+		$preview_post_link   = null;
+		$change_template_url = null;
+		$templates           = null;
+
+		if ( !is_null($this->post) ) {
+			$wp_post_id = $this->post->get_wp_post()->ID;
+
+			$preview_post_link = get_preview_post_link( $this->post->get_wp_post(), [
+				'preview_id'    => $wp_post_id,
+				'preview_nonce' => wp_create_nonce( 'post_preview_' . $wp_post_id )
+			] );
+
+			$change_template_url = admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' );
+			$templates           = $this->post->get_templates();
+		}
+
 
 		$config = array(
 			'env'             => 'WP',
@@ -89,12 +105,9 @@ class Brizy_Editor_Editor_Editor {
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				//'primary'             => Brizy_Config::EDITOR_STATIC_URL,
 				'static'              => $this->urlBuilder->external_asset_url(),
-				'previewUrl'          => get_preview_post_link( $this->post->get_wp_post(), [
-					'preview_id'    => $wp_post_id,
-					'preview_nonce' => wp_create_nonce( 'post_preview_' . $wp_post_id )
-				] ),
+				'previewUrl'          => $preview_post_link,
 				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
-				'change_template_url' => admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' ),
+				'change_template_url' => $change_template_url,
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null )
 			),
 			'user'            => $this->project->get_id(),
@@ -103,9 +116,9 @@ class Brizy_Editor_Editor_Editor {
 				'template' => null
 			),
 			'wp'              => array(
-				'permalink'   => get_permalink( $this->post->get_id() ),
-				'page'        => $this->post->get_id(),
-				'templates'   => $this->post->get_templates(),
+				'permalink'   => get_permalink( $wp_post_id ),
+				'page'        => $wp_post_id,
+				'templates'   => $templates,
 				'api'         => array(
 					'hash'             => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'              => admin_url( 'admin-ajax.php' ),
@@ -129,7 +142,7 @@ class Brizy_Editor_Editor_Editor {
 					'getTerms'         => Brizy_Editor_API::AJAX_GET_TERMS,
 				),
 				'plugins'     => array(
-					'dummy' => true,
+					'dummy'       => true,
 					'woocommerce' => $this->get_woocomerce_plugin_info(),
 				),
 				'hasSidebars' => count( $wp_registered_sidebars ) > 0

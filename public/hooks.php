@@ -104,9 +104,17 @@ function brizy_initialize_admin_edit_Brizy_Public_Main() {
 	}
 }
 
+function brizy_initialize_asset_loader() {
+	$project     = Brizy_Editor_Project::get();
+	$url_builder = new Brizy_Editor_UrlBuilder( $project );
+
+	$config      = Brizy_Editor_Editor_Editor::get( $project )->config();
+	$proxy       = new Brizy_Public_AssetProxy( $url_builder, $config );
+}
+
 add_action( 'wp', 'brizy_initialize_front_end_Brizy_Public_Main' );
 add_action( 'wp_loaded', 'brizy_initialize_admin_edit_Brizy_Public_Main' );
-
+add_action( 'init', 'brizy_initialize_asset_loader', 1000 );
 
 foreach ( brizy()->supported_post_types() as $type ) {
 	add_filter( "brizy:$type:templates", 'brizy_filter_public_page_templates' );
