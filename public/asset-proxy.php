@@ -41,8 +41,8 @@ class Brizy_Public_AssetProxy {
 			return;
 		}
 
-		$asset_path = $wp_query->query_vars[ self::ENDPOINT ];
-		$asset_url  = $this->url_builder->external_asset_url( "/" . ltrim( $asset_path, '/' ) );
+		$asset_path = "/" . ltrim( $wp_query->query_vars[ self::ENDPOINT ], "/" );
+		$asset_url  = $this->url_builder->external_asset_url( $asset_path );
 
 		$tmp_asset_url = $this->url_builder->editor_asset_path( $asset_path );
 		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
