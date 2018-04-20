@@ -60,7 +60,7 @@ class Brizy_Editor_Editor_Editor {
 		$change_template_url = null;
 		$templates           = null;
 
-		if ( !is_null($this->post) ) {
+		if ( ! is_null( $this->post ) ) {
 			$wp_post_id = $this->post->get_wp_post()->ID;
 
 			$preview_post_link = get_preview_post_link( $this->post->get_wp_post(), [
@@ -94,7 +94,7 @@ class Brizy_Editor_Editor_Editor {
 				'base'                => Brizy_Config::EDITOR_BASE_URL,
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
-				'assets'              => $this->urlBuilder->upload_url( $this->urlBuilder->editor_asset_path() ),				
+				//'assets'              => $this->urlBuilder->upload_url( $this->urlBuilder->editor_asset_path() ),
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				//'primary'             => Brizy_Config::EDITOR_STATIC_URL,
 				'static'              => $this->urlBuilder->external_asset_url(),
@@ -104,9 +104,9 @@ class Brizy_Editor_Editor_Editor {
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
 
 				// TESTING
-				'assets'              => plugins_url('brizy/public/editor-build'),
-				'blockThumbnails'     => 'http://localhost:3000/static/template/img-blocks',
-				'templateIcons'       => 'http://brizy.local/?brizy=template/icons',
+				'assets'              => $this->urlBuilder->editor_asset_url( 'public/editor-build' ),
+				'blockThumbnails'     => $this->urlBuilder->external_asset_url() . '/static/template/img-block-thumbs',
+				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 			),
 			'user'            => $this->project->get_id(),
 			'wp'              => array(
