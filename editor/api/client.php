@@ -90,7 +90,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function update_project( Brizy_Editor_API_Project $project ) {
-		return $this->put( "projects/{$project->get_id()}", array( 'body' => $project->getSaveData('PUT') ) )->get_response_body();
+		return $this->put( "projects/{$project->get_id()}", array( 'body' => $project->getSaveData( 'PUT' ) ) )->get_response_body();
 	}
 
 	/**
@@ -182,17 +182,18 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	public function compile_page( $project, $page, $config ) {
 
 		$compile_url = sprintf( Brizy_Config::COMPILER_URI, $project->get_id(), $page->get_id(), $this->access_token->access_token() );
-		$body = array(
+		$body        = array(
 			'editor_data' => array(
 				'urls' => array(
-					'api'     => $this->url( '' ),
+					'api'           => $this->url( '' ),
 					//'primary' => $config['urls']['primary'],
-					'base'    => $config['urls']['base'],
-					'static'  => $config['urls']['static'],
-					'assets'  => $config['urls']['assets'],
-					'image'   => $config['urls']['image'],
+					'base'          => $config['urls']['base'],
+					'static'        => $config['urls']['static'],
+					'assets'        => $config['urls']['assets'],
+					'image'         => $config['urls']['image'],
+					'templateIcons' => $config['urls']['templateIcons'],
 				),
-				'wp' => $config['wp']
+				'wp'   => $config['wp']
 			)
 		);
 
