@@ -11,7 +11,7 @@
  * Domain Path: /languages
  */
 
-define( 'BRIZY_DEVELOPMENT', false );
+define( 'BRIZY_DEVELOPMENT', true );
 define( 'BRIZY_VERSION', '0.2.2' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.8' );
 define( 'BRIZY_FILE', __FILE__ );

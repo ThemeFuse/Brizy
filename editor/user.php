@@ -348,10 +348,14 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 
 		$content = trim( $res['html'] );
 
-		$asset_storage = new Brizy_Editor_Asset_Storage( $project, $post, $config );
+		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
 
-		$asset_processors[] = new Brizy_Editor_Asset_HtmlAssetProcessor( $asset_storage );
-		$asset_processors[] = new Brizy_Editor_Asset_CssAssetProcessor( $asset_storage );
+		$asset_storage = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
+		$media_storage = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
+
+		$asset_processors   = array();
+		$asset_processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
+		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
 
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $content );
 		$brizy_editor_compiled_html->setAssetProcessors( $asset_processors );

@@ -6,7 +6,7 @@
  * Time: 10:46 AM
  */
 
-class Brizy_Editor_Asset_HtmlAssetProcessor implements Brizy_Editor_Asset_ProcessorInterface {
+class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Asset_ProcessorInterface {
 
 	/**
 	 * @var Brizy_Editor_Asset_Storage
@@ -31,7 +31,7 @@ class Brizy_Editor_Asset_HtmlAssetProcessor implements Brizy_Editor_Asset_Proces
 	 */
 	public function process( $content ) {
 
-		$content = $this->process_script_urls( $content );
+		//$content = $this->process_script_urls( $content );
 		$content = $this->process_image_urls( $content );
 		$content = $this->process_inline_css( $content );
 
@@ -43,24 +43,24 @@ class Brizy_Editor_Asset_HtmlAssetProcessor implements Brizy_Editor_Asset_Proces
 	 *
 	 * @return string
 	 */
-	private function process_script_urls( $content ) {
-
-		preg_match_all( '/<script(.*?)<\/script>/im', $content, $matches );
-
-		foreach ( $matches[1] as $attributes ) {
-			preg_match_all( "/src=(?:\"(.[^\"]*)\")/", $attributes, $res );
-			$t = 0;
-
-			if ( isset( $res[1] ) && isset( $res[1][0] ) ) {
-				$url = $res[1][0];
-				// store and replace $url
-				$new_url = $this->storage->store( $url );
-				$content = str_replace( $url, $new_url, $content );
-			}
-		}
-
-		return $content;
-	}
+//	private function process_script_urls( $content ) {
+//
+//		preg_match_all( '/<script(.*?)<\/script>/im', $content, $matches );
+//
+//		foreach ( $matches[1] as $attributes ) {
+//			preg_match_all( "/src=(?:\"(.[^\"]*)\")/", $attributes, $res );
+//			$t = 0;
+//
+//			if ( isset( $res[1] ) && isset( $res[1][0] ) ) {
+//				$url = $res[1][0];
+//				// store and replace $url
+//				$new_url = $this->storage->store( $url );
+//				$content = str_replace( $url, $new_url, $content );
+//			}
+//		}
+//
+//		return $content;
+//	}
 
 	/**
 	 * @param string $content
