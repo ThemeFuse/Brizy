@@ -17,8 +17,6 @@ https://vimeo.com/263343966
 
 Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is the most user-friendly visual page builder in town! No designer or developer skills required. The only tools you'll need to master are clicks and drags.
 
-Built on the popular cloud service provided by [BitBlox.me](https://www.bitblox.me/) (developed by [ThemeFuse](https://themefuse.com/)), Brizy is a new and innovative way of building WordPress pages visually. 
-
 All you need to do to start using the visual builder is to install the WordPress plugin. It will automatically connect to the cloud (via API) and let you create and edit your WordPress pages directly in the front end. It’s free and doesn’t require anything to connect. 
 
 

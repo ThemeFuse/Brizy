@@ -325,9 +325,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function compile_page() {
 
-		// $html_document = file_get_contents( '/home/alex/Projects/bitblox_compiler/test-page/index.html' );
-		// $compiled_html = new Brizy_Editor_CompiledHtml( $html_document );
-
 		Brizy_Logger::instance()->notice( 'Compile page', array( $this ) );
 
 		$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
