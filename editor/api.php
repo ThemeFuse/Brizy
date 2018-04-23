@@ -353,7 +353,7 @@ class Brizy_Editor_API {
 			return $_REQUEST[ $name ];
 		}
 
-		throw new Brizy_Editor_Exceptions_NotFound( "Parameter '$name' is missing", 400 );
+		return null;
 	}
 
 	protected function error( $code, $message ) {
