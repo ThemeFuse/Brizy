@@ -81,7 +81,7 @@ class Brizy_Editor_UrlBuilder {
 			$post_id = $this->post->get_id();
 		}
 
-		$path = "/".ltrim($path,"/");
+		$path = "/" . ltrim( $path, "/" );
 
 		return sprintf( Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH . $path, $template_version, $post_id );
 	}
@@ -101,15 +101,13 @@ class Brizy_Editor_UrlBuilder {
 			$template_version = $this->project->get_template_version();
 		}
 
-		$path = "/".ltrim($path,"/");
+		$path = "/" . ltrim( $path, "/" );
 
-		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH . $path , $template_version );
+		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH . $path, $template_version );
 	}
 
-	public function editor_asset_url( $path = null ) {
-
-		$path = "/".ltrim($path,"/");
-		return rtrim( BRIZY_PLUGIN_URL, "/" ) . "/" . $path;
+	public function editor_asset_url() {
+		return rtrim( BRIZY_PLUGIN_URL, "/" ) . '/public/editor-build/' . BRIZY_EDITOR_VERSION;
 	}
 
 	/**
@@ -141,7 +139,7 @@ class Brizy_Editor_UrlBuilder {
 			$template_version = $this->project->get_template_version();
 		}
 
-		$path = "/".ltrim($path,"/");
+		$path = "/" . ltrim( $path, "/" );
 
 		return sprintf( Brizy_Config::S3_ASSET_URL . $path, $template_slug, $template_version );
 	}
@@ -152,7 +150,7 @@ class Brizy_Editor_UrlBuilder {
 	 * @return string
 	 */
 	public function external_media_url( $path = null ) {
-		$path = "/".ltrim($path,"/");
+		$path = "/" . ltrim( $path, "/" );
 
 		return Brizy_Config::MEDIA_IMAGE_URL . $path;
 	}

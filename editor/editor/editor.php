@@ -104,7 +104,7 @@ class Brizy_Editor_Editor_Editor {
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
 
 				// TESTING
-				'assets'              => $this->urlBuilder->editor_asset_url( 'public/editor-build/' . BRIZY_EDITOR_VERSION ),
+				'assets'              => $this->urlBuilder->editor_asset_url(  ),
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url() . '/template/img-block-thumbs',
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 			),

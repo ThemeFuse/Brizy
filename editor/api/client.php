@@ -183,7 +183,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		$compile_url = sprintf( Brizy_Config::COMPILER_URI, $project->get_id(), $page->get_id(), $this->access_token->access_token() );
 		$body        = array(
-			'editor_data' => array(
+			'editor_data'      => array(
 				'urls' => array(
 					'api'           => $this->url( '' ),
 					//'primary' => $config['urls']['primary'],
@@ -194,7 +194,8 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 					'templateIcons' => $config['urls']['templateIcons'],
 				),
 				'wp'   => $config['wp']
-			)
+			),
+			'template_version' => BRIZY_EDITOR_VERSION
 		);
 
 		return parent::request( $compile_url, array( 'body' => $body ), 'POST' )->get_response_body();
