@@ -287,38 +287,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		return $this;
 	}
 
-//	public function get_fe_asset_url( $template_version = null, $template_slug = null ) {
-//
-//		if ( is_null( $template_slug ) ) {
-//			$template_slug = $this->get_template_slug();
-//		}
-//		if ( is_null( $template_version ) ) {
-//			$template_version = $this->get_template_version();
-//		}
-//
-//		return sprintf( Brizy_Config::FE_S3_ASSET_URL, $template_slug, $template_version );
-//	}
-
-//	public function get_asset_url( $template_version = null, $template_slug = null ) {
-//
-//		if ( is_null( $template_slug ) ) {
-//			$template_slug = $this->get_template_slug();
-//		}
-//		if ( is_null( $template_version ) ) {
-//			$template_version = $this->get_template_version();
-//		}
-//
-//		return sprintf( Brizy_Config::BRIZY_S3_ASSET_URL, $template_slug, $template_version );
-//	}
-//
-//	public function get_asset_path( $template_version = null ) {
-//		if ( is_null( $template_version ) ) {
-//			$template_version = $this->get_template_version();
-//		}
-//
-//		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
-//	}
-
 	public function set_meta_key( $key, $value ) {
 
 		if ( is_null( $key ) ) {

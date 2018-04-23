@@ -42,4 +42,3 @@ function brizy_load_text_domain() {
 }
 
 add_action( 'after_setup_theme', 'brizy_load_text_domain' );
-

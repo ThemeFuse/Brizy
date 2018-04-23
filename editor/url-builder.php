@@ -75,7 +75,7 @@ class Brizy_Editor_UrlBuilder {
 	public function page_asset_path( $path = null, $template_version = null, $post_id = null ) {
 
 		if ( is_null( $template_version ) ) {
-			$template_version = $this->project->get_template_version();
+			$template_version = BRIZY_EDITOR_VERSION;
 		}
 		if ( is_null( $post_id ) ) {
 			$post_id = $this->post->get_id();
@@ -98,7 +98,7 @@ class Brizy_Editor_UrlBuilder {
 	public function editor_asset_path( $path = null, $template_version = null ) {
 
 		if ( is_null( $template_version ) ) {
-			$template_version = $this->project->get_template_version();
+			$template_version = BRIZY_EDITOR_VERSION;
 		}
 
 		$path = "/" . ltrim( $path, "/" );
@@ -136,7 +136,7 @@ class Brizy_Editor_UrlBuilder {
 			$template_slug = $this->project->get_template_slug();
 		}
 		if ( is_null( $template_version ) ) {
-			$template_version = $this->project->get_template_version();
+			$template_version = BRIZY_EDITOR_VERSION;
 		}
 
 		$path = "/" . ltrim( $path, "/" );

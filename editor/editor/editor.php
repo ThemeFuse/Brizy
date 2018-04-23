@@ -94,10 +94,8 @@ class Brizy_Editor_Editor_Editor {
 				'base'                => Brizy_Config::EDITOR_BASE_URL,
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
-				//'assets'              => $this->urlBuilder->upload_url( $this->urlBuilder->editor_asset_path() ),
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
-				//'primary'             => Brizy_Config::EDITOR_STATIC_URL,
-				'static'              => $this->urlBuilder->external_asset_url(),
+				//'static'              => $this->urlBuilder->external_asset_url(),
 				'previewUrl'          => $preview_post_link,
 				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'change_template_url' => $change_template_url,
@@ -105,7 +103,7 @@ class Brizy_Editor_Editor_Editor {
 
 				// TESTING
 				'assets'              => $this->urlBuilder->editor_asset_url(  ),
-				'blockThumbnails'     => $this->urlBuilder->external_asset_url() . '/template/img-block-thumbs',
+				'blockThumbnails'     => $this->urlBuilder->external_asset_url('template/img-block-thumbs'),
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 			),
 			'user'            => $this->project->get_id(),
@@ -156,7 +154,7 @@ class Brizy_Editor_Editor_Editor {
 		$upload_dir_info = wp_upload_dir( null, true );
 
 		if ( is_null( $template_version ) ) {
-			$template_version = $this->project->get_template_version();
+			$template_version = BRIZY_EDITOR_VERSION;
 		}
 
 		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );

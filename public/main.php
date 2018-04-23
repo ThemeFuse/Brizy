@@ -53,9 +53,9 @@ class Brizy_Public_Main {
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 			// main page
 
-			add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
+			//add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
+			//$this->check_project_version();
 
-			$this->check_project_version();
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
 			//wp_enqueue_script( 'wp-api' );
 			//add_action( 'wp_head', array( $this, 'editor_head' ), 0 );
@@ -124,8 +124,6 @@ class Brizy_Public_Main {
 		$twig_template = $this->getTwigTemplate( $template_path );
 
 		$config_object = $this->getConfigObject();
-
-		//$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
 		$iframe_url = add_query_arg(
 			array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
@@ -205,8 +203,6 @@ class Brizy_Public_Main {
 
 			$config_object = $this->getConfigObject();
 
-			//$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
-
 			$context = array( 'editorData' => $config_object );
 
 			if ( WP_DEBUG ) {
@@ -226,7 +222,6 @@ class Brizy_Public_Main {
 		$twig_template = $this->getTwigTemplate();
 
 		$config_object               = $this->getConfigObject();
-		//$config_object->urls->static = brizy()->get_asset_url( sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $this->project->get_template_version() ) );
 
 		$context = array( 'editorData' => $config_object );
 
@@ -313,18 +308,18 @@ class Brizy_Public_Main {
 		return $config_object;
 	}
 
-	private function check_project_version() {
-		try {
-			$api_project  = $this->project->get_api_project();
-			$project_data = Brizy_Editor_User::get()->get_project( $api_project );
-
-			if ( $project_data['version'] != $this->project->get_template_version() ) {
-				do_action( 'brizy:project:version_changed', $project_data['version'], $this->project->get_template_version() );
-			}
-		} catch ( Exception $e ) {
-			return;
-		}
-	}
+//	private function check_project_version() {
+//		try {
+//			$api_project  = $this->project->get_api_project();
+//			$project_data = Brizy_Editor_User::get()->get_project( $api_project );
+//
+//			if ( $project_data['version'] != $this->project->get_template_version() ) {
+//				do_action( 'brizy:project:version_changed', $project_data['version'], $this->project->get_template_version() );
+//			}
+//		} catch ( Exception $e ) {
+//			return;
+//		}
+//	}
 
 	private function remove_sent_cache_headers() {
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
