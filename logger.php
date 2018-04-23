@@ -42,7 +42,7 @@ class Brizy_Logger {
 
 		global $wpdb;
 		$create_table_query = "
-            CREATE TABLE `{$wpdb->prefix}brizy_logs` (
+            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}brizy_logs` (
               `id` bigint  PRIMARY KEY AUTO_INCREMENT,
               `type` text NOT NULL,
               `message` text NOT NULL,
