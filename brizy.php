@@ -7,7 +7,7 @@
  * Author URI: https://brizy.io/
  * Version: 0.2.4
  * Text Domain: brizy
- * License: GPL2+
+ * License: GPLv3
  * Domain Path: /languages
  */
 
