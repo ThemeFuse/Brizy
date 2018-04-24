@@ -17,7 +17,7 @@ class Brizy_Editor_API {
 	const AJAX_GET_TEMPLATES = 'brizy_get_templates';
 	const AJAX_GET_INTERNAL_LINKS = 'brizy_get_internal_links';
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
-	const AJAX_SAVE_TRIGGER = 'brizy_save_trigger';
+	const AJAX_SAVE_TRIGGER = 'brizy_update_post';
 	const AJAX_GET_TERMS = 'brizy_get_terms';
 
 

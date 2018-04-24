@@ -130,7 +130,7 @@ class Brizy_Editor_Editor_Editor {
 					'getTemplates'     => Brizy_Editor_API::AJAX_GET_TEMPLATES,
 					'getInternalLinks' => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
 					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
-					'savePage'         => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
+					'updatePost'         => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
 					'getTerms'         => Brizy_Editor_API::AJAX_GET_TERMS,
 				),
 				'plugins'     => array(
