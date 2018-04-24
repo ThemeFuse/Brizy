@@ -292,7 +292,6 @@ class Brizy_Admin_Main {
 			$project = Brizy_Editor_Project::get();
 			$post    = Brizy_Editor_Post::get( $id );
 
-
 			if ( ! $post->uses_editor() ) {
 				return;
 			}

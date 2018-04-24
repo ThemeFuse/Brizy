@@ -16,7 +16,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Asset_Proce
 	/**
 	 * Brizy_Editor_Asset_HtmlAssetProcessor constructor.
 	 *
-	 * @param Brizy_Editor_Asset_Storage $storage
+	 * @param Brizy_Editor_Asset_AbstractStorage $storage
 	 */
 	public function __construct( $storage ) {
 		$this->storage = $storage;
@@ -74,7 +74,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Asset_Proce
 		foreach ( $matches[1] as $attributes ) {
 			preg_match_all( "/src=(?:\"(.[^\"]*)\")/", $attributes, $res );
 
-			if ( isset( $res[1] ) && isset( $res[1][0] ) ) {
+			if ( isset( $res[1] ) && isset( $res[1][0] ) && strpos( $res[1][0], Brizy_Config::MEDIA_IMAGE_URL ) === 0 ) {
 				$url = $res[1][0];
 
 				// ignore inline images
@@ -105,7 +105,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Asset_Proce
 		foreach ( $matches[1] as $attributes ) {
 			preg_match_all( "/url\(\"?(.[^\"\)]*)\)/im", $attributes, $res );
 
-			if ( isset( $res[1] ) && isset( $res[1][0] ) ) {
+			if ( isset( $res[1] ) && isset( $res[1][0] ) && strpos( $res[1][0], Brizy_Config::MEDIA_IMAGE_URL ) === 0 ) {
 				$url = $res[1][0];
 
 				// ignore inline images

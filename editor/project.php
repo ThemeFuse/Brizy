@@ -296,19 +296,19 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		$this->get_api_project()->set_meta_key( $key, $value );
 	}
 
-	public function invalidateAssetsFor( $version ) {
-
-		Brizy_Logger::instance()->notice( 'Invalidate assets for version ' . $version, array( $version ) );
-
-		$dir_path = sprintf( rtrim( ABSPATH, DIRECTORY_SEPARATOR ) . Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $version );
-
-		Brizy_Logger::instance()->notice( 'Remove directory ' . $dir_path, array( $dir_path ) );
-
-		$fs = new WP_Filesystem_Direct( null );
-		$fs->rmdir( $dir_path, true );
-
-		return $this;
-	}
+//	public function invalidateAssetsFor( $version ) {
+//
+//		Brizy_Logger::instance()->notice( 'Invalidate assets for version ' . $version, array( $version ) );
+//
+//		$dir_path = sprintf( rtrim( ABSPATH, DIRECTORY_SEPARATOR ) . Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $version );
+//
+//		Brizy_Logger::instance()->notice( 'Remove directory ' . $dir_path, array( $dir_path ) );
+//
+//		$fs = new WP_Filesystem_Direct( null );
+//		$fs->rmdir( $dir_path, true );
+//
+//		return $this;
+//	}
 
 	/**
 	 * @return bool

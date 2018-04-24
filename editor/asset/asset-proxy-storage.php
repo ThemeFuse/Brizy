@@ -8,40 +8,6 @@
 
 class Brizy_Editor_Asset_AssetProxyStorage extends Brizy_Editor_Asset_AbstractStorage {
 
-	/**
-	 * @var Brizy_Editor_Project
-	 */
-	private $project;
-
-
-	/**
-	 * @var Brizy_Editor_Post
-	 */
-	private $post;
-
-	/**
-	 * @var array
-	 */
-	private $config;
-
-	/**
-	 * @var Brizy_Editor_UrlBuilder
-	 */
-	private $url_builder;
-
-	/**
-	 * Brizy_Editor_Asset_Storage constructor.
-	 *
-	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_Post $post
-	 */
-
-	public function __construct( $project, $post, $config ) {
-		$this->project     = $project;
-		$this->post        = $post;
-		$this->config      = $config;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
-	}
 
 	/**
 	 * Get the asset and store it somewhere in uploads and return the new local url.

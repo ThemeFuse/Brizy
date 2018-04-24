@@ -122,6 +122,16 @@ class Brizy_Editor_UrlBuilder {
 		return Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL . $path;
 	}
 
+	/**
+	 * @param null $path
+	 *
+	 * @return string
+	 */
+	public function external_media_url( $path = null ) {
+		$path = "/" . ltrim( $path, "/" );
+
+		return Brizy_Config::MEDIA_IMAGE_URL . $path;
+	}
 
 	/**
 	 * @param null $path
@@ -143,17 +153,5 @@ class Brizy_Editor_UrlBuilder {
 
 		return sprintf( Brizy_Config::S3_ASSET_URL . $path, $template_slug, $template_version );
 	}
-
-	/**
-	 * @param null $path
-	 *
-	 * @return string
-	 */
-	public function external_media_url( $path = null ) {
-		$path = "/" . ltrim( $path, "/" );
-
-		return Brizy_Config::MEDIA_IMAGE_URL . $path;
-	}
-
 }
 

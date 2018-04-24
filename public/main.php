@@ -46,13 +46,9 @@ class Brizy_Public_Main {
 
 	public function initialize_front_end() {
 
-		// add the actions for the case when the user edits the page with the editor
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
-			// iframe
 			add_action( 'template_include', array( $this, 'template_include' ), 10000 );
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
-			// main page
-
 			//add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
 			//$this->check_project_version();
 
@@ -221,7 +217,7 @@ class Brizy_Public_Main {
 
 		$twig_template = $this->getTwigTemplate();
 
-		$config_object               = $this->getConfigObject();
+		$config_object = $this->getConfigObject();
 
 		$context = array( 'editorData' => $config_object );
 
@@ -229,18 +225,17 @@ class Brizy_Public_Main {
 			$context['DEBUG'] = true;
 		}
 
-		$render_block = $twig_template->renderBlock( 'header_content', $context );
-		echo $render_block;
+		echo $twig_template->renderBlock( 'header_content', $context );
 	}
 
 
-	function _invalidate_editor_assets( $new_version, $old_version ) {
-		$this->project
-			->invalidateAssetsFor( $old_version )
-			->set_template_version( $new_version )
-			->setStoreAssets( true )
-			->save();
-	}
+//	function _invalidate_editor_assets( $new_version, $old_version ) {
+//		$this->project
+//			->invalidateAssetsFor( $old_version )
+//			->set_template_version( $new_version )
+//			->setStoreAssets( true )
+//			->save();
+//	}
 
 
 	/**
@@ -264,12 +259,7 @@ class Brizy_Public_Main {
 	 * @return string
 	 **/
 	public function insert_page_content( $content ) {
-		$wp_scripts = wp_scripts();
-
-		// the compiled page comes with his jquery version.
-		//$wp_scripts->remove( 'jquery' );
 		$compiled_html_body = $this->post->get_compiled_html_body();
-
 		return Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
 	}
 
@@ -320,31 +310,6 @@ class Brizy_Public_Main {
 //			return;
 //		}
 //	}
-
-	private function remove_sent_cache_headers() {
-		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
-			define( 'DONOTCACHEPAGE', true );
-		}
-
-		if ( ! defined( 'DONOTCACHEDB' ) ) {
-			define( 'DONOTCACHEDB', true );
-		}
-
-		if ( ! defined( 'DONOTMINIFY' ) ) {
-			define( 'DONOTMINIFY', true );
-		}
-
-		if ( ! defined( 'DONOTCDN' ) ) {
-			define( 'DONOTCDN', true );
-		}
-
-		if ( ! defined( 'DONOTCACHCEOBJECT' ) ) {
-			define( 'DONOTCACHCEOBJECT', true );
-		}
-
-		// Set the headers to prevent caching for the different browsers.
-		nocache_headers();
-	}
 
 	private function compilePage() {
 		if ( is_preview() || isset( $_GET['preview'] ) ) {
