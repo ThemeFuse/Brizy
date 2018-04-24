@@ -98,8 +98,11 @@ class Brizy_Editor_API {
 			wp_publish_post( $post_id );
 			add_action( 'save_post', array( $this, 'compile_post_action' ), 10, 2 );
 
-			//wp_update_post($wp_post);
-			//wp_publish_post( $post_id );
+			$post_arr = self::create_post_arr( $post );
+
+			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
+
+			$this->success( array( $post_arr ) );
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception($exception);
