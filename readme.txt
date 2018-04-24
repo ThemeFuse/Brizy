@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-an
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,9 +18,6 @@ More details on: https://brizy.io
 https://vimeo.com/263343966
 
 Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is a new and innovative way of building WordPress pages visually. No designer or developer skills required. The only tools you'll need to master are clicks and drags.
-
-All you need to do to start using the visual builder is to install the WordPress plugin. It will automatically connect to the cloud (via API) and let you create and edit your WordPress pages directly in the front end. It’s free and doesn’t require anything to connect.
-
 
 == Highlights ==
 
@@ -132,7 +129,16 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 0.2.3 - 2018-04-24 =
+* Bug Fixes
+
 = 0.2.2 - 2018-04-13 =
+* Bug Fixes
+
 = 0.2.1 - 2018-04-13 =
+* Bug Fixes
+
 = 0.1.0 - 2018-04-12 =
+* Bug Fixes
+
 * First release

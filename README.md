@@ -3,7 +3,7 @@ Contributors: themefuse
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,9 +16,6 @@ More details on: https://brizy.io
 https://vimeo.com/263343966
 
 Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is the most user-friendly visual page builder in town! No designer or developer skills required. The only tools you'll need to master are clicks and drags.
-
-All you need to do to start using the visual builder is to install the WordPress plugin. It will automatically connect to the cloud (via API) and let you create and edit your WordPress pages directly in the front end. It’s free and doesn’t require anything to connect. 
-
 
 ## Highlights
 
@@ -107,7 +104,8 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
-* 0.2.2 - 2018-04-13
-* 0.2.1 - 2018-04-13
-* 0.1.0 - 2018-04-12
+* 0.2.3 - 2018-04-24 Bug fixes
+* 0.2.2 - 2018-04-13 Bug fixes
+* 0.2.1 - 2018-04-13 Bug fixes
+* 0.1.0 - 2018-04-12 Bug fixes
 * First release
