@@ -27,9 +27,7 @@ class Brizy_SiteUrlReplacer {
 			$url = site_url();
 		}
 
-		$pattern = str_replace( [ '{', '}' ], [ '\{', '\}' ], Brizy_Config::SITE_URL_PLACEHOLDER );
-
-		$content = preg_replace( "/{$pattern}/i", $url, $content );
+		$content = preg_replace( Brizy_Config::SITE_URL_PLACEHOLDER_REGEX, $url, $content );
 
 		return $content;
 	}

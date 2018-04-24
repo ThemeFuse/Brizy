@@ -53,6 +53,8 @@ class Brizy_Editor_CompiledHtml {
 
 		$content = $this->apply_asset_processors( $content );
 
+		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
+
 		return $content;
 	}
 
@@ -68,6 +70,8 @@ class Brizy_Editor_CompiledHtml {
 		$content = $head_tag->get_content();
 
 		$content = $this->apply_asset_processors( $content );
+
+		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
 
 		return $content;
 	}

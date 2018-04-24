@@ -348,8 +348,6 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 
 		$content = trim( $res['html'] );
 
-		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
-
 		$asset_storage = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
 		$media_storage = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
 

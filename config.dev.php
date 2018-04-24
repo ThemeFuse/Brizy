@@ -9,6 +9,8 @@
 class Brizy_Config {
 
 	const SITE_URL_PLACEHOLDER = '{@brizy_SITE_URL_PLACEHOLDER@}';
+	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
+
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
 	const S3_ASSET_URL = 'http://bitblox.local/static';
