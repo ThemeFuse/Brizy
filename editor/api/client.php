@@ -188,7 +188,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 					'api'           => $this->url( '' ),
 					//'primary' => $config['urls']['primary'],
 					'base'          => $config['urls']['base'],
-					'static'        => $config['urls']['static'],
+					//'static'        => $config['urls']['static'],
 					'assets'        => $config['urls']['assets'],
 					'image'         => $config['urls']['image'],
 					'templateIcons' => $config['urls']['templateIcons'],
