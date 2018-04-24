@@ -1,0 +1,19 @@
+{% set assetsUrl = editorData.urls.assets %} {% spaceless %}<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><iframe id="brz-ed-iframe" class="brz-iframe brz-ed-page" style="border: 0" srcdoc='
+        <html>
+          <head>
+          </head>
+          <body>
+            <div id="brz-ed-root"></div>
+            <script src="{{ assetsUrl }}/editor/js/brizy-init.js"></script>
+            <script>
+              var config = JSON.parse("{{ editorData | json_encode | e("js") }}");
+              Brizy.init(config);
+            </script>
+            {% if DEV is defined and DEV %}
+              <script>
+                window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+              </script>
+            {% endif %}
+          </body>
+        </html>
+      '></iframe></body></html>{% endspaceless %}
