@@ -98,9 +98,17 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Screenshots
 
-1. **Add Elements**
-2. **Add Blocks**
-3. **Smart text**
+1. **Add elements to create your own design**
+2. **Add over 150 premade blocks**
+3. **The interface shows only what's needed for the task at hand**
+4. **You'll know where your elements will drop when you drag them**
+5. **Smart text editor**
+6. **Try different fonts and colors across your pages in a matter of seconds**
+7. **What you edit in mobile view will be applied only on mobile devices**
+8. **Brizy comes with a library of over 4000 icons separated in 27 categories**
+9. **Image focus, zoom and resize are all done effortlessly**
+10. **Adjust content to your liking**
+11. **Resize columns by dragging the handle that appears in between**
 
 ## Changelog
 
