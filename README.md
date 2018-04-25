@@ -1,9 +1,9 @@
-# Brizy - Page builder
+# Brizy- Wordpress Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 0.2.4<br>
+Stable tag: 0.2.5<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
