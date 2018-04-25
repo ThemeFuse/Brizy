@@ -102,8 +102,8 @@ class Brizy_Editor_Editor_Editor {
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
 
 				// TESTING
-				'assets'              => $this->urlBuilder->editor_asset_url(  ),
-				'blockThumbnails'     => $this->urlBuilder->external_asset_url('template/img-block-thumbs'),
+				'assets'              => $this->urlBuilder->editor_asset_url(),
+				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ),
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 			),
 			'user'            => $this->project->get_id(),
@@ -130,7 +130,8 @@ class Brizy_Editor_Editor_Editor {
 					'getTemplates'     => Brizy_Editor_API::AJAX_GET_TEMPLATES,
 					'getInternalLinks' => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
 					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
-					'updatePost'         => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
+					'updatePost'       => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
+					'savePage'         => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
 					'getTerms'         => Brizy_Editor_API::AJAX_GET_TERMS,
 				),
 				'plugins'     => array(

@@ -280,6 +280,8 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 			                     $page
 		                     );
 
+
+
 		return $updated_page;
 	}
 

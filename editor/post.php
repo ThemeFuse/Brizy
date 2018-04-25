@@ -111,6 +111,13 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return $post;
 	}
 
+	public function updatePageData( $data = null ) {
+
+		Brizy_Logger::instance()->notice( 'Update page data', array( 'new_data' => $data ) );
+		$this->api_page = new Brizy_Editor_API_Page( $data );
+		$this->save_locally();
+	}
+
 	public function save_locally() {
 		// store the signature only once
 		if ( ! ( $signature = get_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, true ) ) ) {
@@ -130,8 +137,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			$project           = Brizy_Editor_Project::get();
 			$api_project       = $project->get_api_project();
 			$updated_page      = $brizy_editor_user->update_page( $api_project, $this->api_page );
-			$this->api_page    = new Brizy_Editor_API_Page( $updated_page );
-			$this->save_locally();
+			$this->updatePageData( $updated_page );
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -334,8 +340,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$this->invalidate_assets();
 
-		$this->setStoreAssets( true );
-		$this->setNeedsCompile( false );
+		$this->set_store_assets( true );
+		$this->set_needs_compile( false );
 
 		return true;
 	}
@@ -391,20 +397,20 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$this->assets = array();
 	}
 
-	public function setNeedsCompile( $v ) {
+	public function set_needs_compile( $v ) {
 		$this->needs_compile = (bool) $v;
 
 		return $this;
 	}
 
-	public function getNeedsCompile() {
+	public function get_needs_compile() {
 		return $this->needs_compile;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isStoreAssets() {
+	public function is_store_assets() {
 		return $this->store_assets;
 	}
 
@@ -413,7 +419,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 *
 	 * @return Brizy_Editor_Post
 	 */
-	public function setStoreAssets( $store_assets ) {
+	public function set_store_assets( $store_assets ) {
 		$this->store_assets = $store_assets;
 
 		return $this;

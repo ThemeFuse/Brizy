@@ -116,7 +116,9 @@ class Brizy_Admin_Main {
 				//remove_post_type_support( $post_type, 'editor' );
 
 				// hide the default editor
-				add_filter('the_editor',function($editor_html){ return "<div style='display: none'>{$editor_html}</div>"; });
+				add_filter( 'the_editor', function ( $editor_html ) {
+					return "<div style='display: none'>{$editor_html}</div>";
+				} );
 			}
 		}
 	}
@@ -313,7 +315,8 @@ class Brizy_Admin_Main {
 
 			$post->set_status( Brizy_Editor_PostStatus::STATUS_TRASH );
 
-			Brizy_Editor_User::get()->update_page( $project->get_api_project(), $post->get_api_page() );
+			$updated_page = Brizy_Editor_User::get()->update_page( $project->get_api_project(), $post->get_api_page() );
+			$post->updatePageData( $updated_page );
 
 			do_action( 'brizy_delete_post', $id );
 

@@ -247,7 +247,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 			$brizy_post = Brizy_Editor_Post::get( $post->ID );
 
 			if ( $brizy_post->uses_editor() ) {
-				$brizy_post->setNeedsCompile( true );
+				$brizy_post->set_needs_compile( true );
 				$brizy_post->save();
 			}
 		}
