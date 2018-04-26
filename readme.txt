@@ -1,4 +1,4 @@
-=== Brizy- Wordpress Page Builder ===
+=== Brizy - Wordpress Page Builder ===
 Contributors: themefuse
 Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
 Requires at least: 4.5
