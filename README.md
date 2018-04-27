@@ -96,6 +96,7 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
+* 0.2.5 - 2018-04-27 Fixed the Publish/Update button
 * 0.2.4 - 2018-04-24 Bug fixes
 * 0.2.3 - 2018-04-24 Bug fixes
 * 0.2.2 - 2018-04-13 Bug fixes

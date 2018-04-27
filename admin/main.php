@@ -274,15 +274,6 @@ class Brizy_Admin_Main {
 
 	/**
 	 * @param $id
-	 *
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 * @throws Exception
 	 */
 	public function action_delete_page( $id ) {
 
@@ -320,7 +311,7 @@ class Brizy_Admin_Main {
 
 			do_action( 'brizy_delete_post', $id );
 
-		} catch ( Brizy_Editor_Exceptions_UnsupportedPostType $exception ) {
+		} catch ( Exception $exception ) {
 			return;
 		}
 

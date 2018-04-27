@@ -129,6 +129,9 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 0.2.5 - 2018-04-27 =
+* Fixed the Publish/Update button
+
 = 0.2.4 - 2018-04-24 =
 * Bug Fixes
 
