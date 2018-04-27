@@ -95,13 +95,10 @@ class Brizy_Editor_Editor_Editor {
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
-				//'static'              => $this->urlBuilder->external_asset_url(),
-				'previewUrl'          => $preview_post_link,
+				'pagePreview'         => $preview_post_link,
 				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'change_template_url' => $change_template_url,
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
-
-				// TESTING
 				'assets'              => $this->urlBuilder->editor_asset_url(),
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ),
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
