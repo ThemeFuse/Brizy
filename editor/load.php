@@ -179,7 +179,6 @@ function brizy_initialize_Brizy_Public_Api() {
 }
 
 //add_action( 'wp_loaded', 'brizy_handler_proxy_requests' );
-
 //function brizy_handler_proxy_requests( $query ) {
 //
 //	try {
@@ -196,7 +195,7 @@ function brizy_initialize_Brizy_Public_Api() {
 //			try {
 //				$post = Brizy_Editor_Post::get( $pid );
 //			} catch ( Exception $e ) {
-				//// do nothing if there is an exception
+//				// do nothing if there is an exception
 //				$post = null;
 //			}
 //		}
@@ -207,10 +206,10 @@ function brizy_initialize_Brizy_Public_Api() {
 //
 //		Brizy_Logger::instance()->exception( $e );
 //
-		//// do nothing if there is an exception
+//		// do nothing if there is an exception
 //		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
 //			var_dump( $e );
 //		}
 //	}
 //}
-//
+
