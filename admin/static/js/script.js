@@ -1,3 +1,16 @@
+jQuery(document).ready(function ($) {
+    $('.enable-brizy-editor').on('click', function (event) {
+        event.preventDefault();
+
+        jQuery(window).off( 'beforeunload.edit-post' );
+
+        if ( wp.autosave ) {
+            wp.autosave.server.triggerSave();
+        }
+
+        window.location = $(this).attr('href');
+    })
+});
 // jQuery(document).ready(function ($) {
 //     var id = Brizy_Admin_Data.id;
 //     var url = Brizy_Admin_Data.url;
