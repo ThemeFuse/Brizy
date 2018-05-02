@@ -61,6 +61,51 @@ abstract class Brizy_Editor_Asset_AbstractStorage {
 	 */
 	public function store_file( $asset_source, $asset_path ) {
 
+		if(file_exists($asset_path)) return true;
+
+		try {
+			// check destination dir
+			$dir_path = dirname( $asset_path );
+
+			if ( ! file_exists( $dir_path ) ) {
+				mkdir( $dir_path, 0777, true );
+			}
+
+
+			$http        = new WP_Http();
+			$wp_response = $http->request( $asset_source );
+
+			if ( is_wp_error( $wp_response ) ) {
+				return false;
+			}
+
+			$content = wp_remote_retrieve_body( $wp_response );
+
+			file_put_contents( $asset_path, $content );
+
+		} catch ( Exception $e ) {
+			$t = 0;
+
+			// clean up
+			if ( $asset_path ) {
+				@unlink( $asset_path );
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+
+	/**
+	 * @param $asset_source
+	 * @param $asset_path
+	 *
+	 * @return bool
+	 */
+	/*public function store_file( $asset_source, $asset_path ) {
+
 		$full_asset_path = null;
 		try {
 			// check destination dir
@@ -104,5 +149,6 @@ abstract class Brizy_Editor_Asset_AbstractStorage {
 		}
 
 		return true;
-	}
+	}*/
+
 }

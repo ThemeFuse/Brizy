@@ -38,16 +38,14 @@ class Brizy_Editor_Http_Client {
 
 		$options['method'] = $method;
 
+		Brizy_Logger::instance()->notice( "{$method} request to {$url}",array(
+			'options'  => $options,
+
+		) );
+
 		$options = $this->prepare_options( $options );
 
 		$wp_response = $this->getHttp()->request( $url, $options );
-
-		Brizy_Logger::instance()->notice( "{$method} request to {$url}",
-
-			array(
-				'options'  => $options,
-				'response' => $wp_response
-			) );
 
 		if ( is_wp_error( $wp_response ) ) {
 			throw new Brizy_Editor_API_Exceptions_Exception( $wp_response->get_error_message() );
@@ -55,7 +53,7 @@ class Brizy_Editor_Http_Client {
 
 		$response = new Brizy_Editor_Http_Response( $wp_response );
 
-		Brizy_Logger::instance()->debug( "Request {{$url}} status ".$response->get_status_code(), array('status'=>$response->get_status_code()) );
+		Brizy_Logger::instance()->debug( "Request {{$url}} status ".$response->get_status_code(), array('status'=>$response->get_status_code(), 'response' => $wp_response) );
 
 		if ( $response->is_ok() ) {
 			return $response;
