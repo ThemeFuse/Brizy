@@ -180,7 +180,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	public function set_compiled_html_head( $html ) {
 		// remove all title and meta tags.
-		$this->compiled_html_head = $this->strip_tags_content( $html, '<title><meta>', true );
+		$this->compiled_html_head = $this->strip_tags_content( $html, '<title>', true );
 
 		return $this;
 	}
