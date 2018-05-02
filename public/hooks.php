@@ -116,7 +116,8 @@ add_action( 'wp', 'brizy_initialize_front_end_Brizy_Public_Main' );
 add_action( 'wp_loaded', 'brizy_initialize_admin_edit_Brizy_Public_Main' );
 add_action( 'init', 'brizy_initialize_asset_loader', 1000 );
 
-foreach ( brizy()->supported_post_types() as $type ) {
+$supported_post_types = brizy()->supported_post_types();
+foreach ( $supported_post_types as $type ) {
 	add_filter( "brizy:$type:templates", 'brizy_filter_public_page_templates' );
 	add_filter( "theme_{$type}_templates", 'brizy_filter_public_register_page_templates' );
 	add_filter( "{$type}_template", 'brizy_catch_templates' );

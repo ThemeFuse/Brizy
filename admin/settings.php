@@ -135,10 +135,10 @@ class Brizy_Admin_Settings {
 	 * @return array
 	 */
 	protected function post_types() {
-		$get_post_types = get_post_types( array( 'public' => true ), 'objects' );
+		$types = get_post_types( array( 'public' => true ), 'objects' );
 
 		$types = array_filter(
-			$get_post_types,
+			$types,
 			array( $this, 'filter_types' )
 		);
 
@@ -164,10 +164,7 @@ class Brizy_Admin_Settings {
 
 	private function filter_types( WP_Post_Type $type ) {
 
-		return in_array(
-			$type->name,
-			apply_filters( 'brizy:settings:exclude_post_types', brizy()->supported_post_types() )
-		);
+		return !in_array($type->name,array('attachment', 'elementor_library'));
 	}
 
 	private function is_selected( $type ) {

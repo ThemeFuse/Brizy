@@ -471,7 +471,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			update_post_meta( $this->get_id(), '_wp_page_template', $atemplate );
 		}
 
-
 		return $this;
 	}
 

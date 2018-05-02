@@ -49,8 +49,6 @@ class Brizy_Public_Main {
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
 			add_action( 'template_include', array( $this, 'template_include' ), 10000 );
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
-			//add_action( 'brizy:project:version_changed', array( $this, '_invalidate_editor_assets' ), 10, 2 );
-			//$this->check_project_version();
 
 			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
 			//wp_enqueue_script( 'wp-api' );
@@ -74,7 +72,6 @@ class Brizy_Public_Main {
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 		}
 	}
-
 
 	/**
 	 * @internal
@@ -191,6 +188,7 @@ class Brizy_Public_Main {
 	 * @internal
 	 */
 	function _filter_the_content( $content ) {
+
 		if ( is_singular() && is_main_query() ) {
 
 			$template_path = self::path( 'views/editor.html.twig' );
@@ -283,7 +281,6 @@ class Brizy_Public_Main {
 			'editor' => file_get_contents( $template_path )
 		) );
 
-
 		$twig          = new Twig_Environment( $loader, array() );
 		$twig_template = $twig->load( 'editor' );
 
@@ -297,19 +294,6 @@ class Brizy_Public_Main {
 
 		return $config_object;
 	}
-
-//	private function check_project_version() {
-//		try {
-//			$api_project  = $this->project->get_api_project();
-//			$project_data = Brizy_Editor_User::get()->get_project( $api_project );
-//
-//			if ( $project_data['version'] != $this->project->get_template_version() ) {
-//				do_action( 'brizy:project:version_changed', $project_data['version'], $this->project->get_template_version() );
-//			}
-//		} catch ( Exception $e ) {
-//			return;
-//		}
-//	}
 
 	private function compilePage() {
 		if ( is_preview() || isset( $_GET['preview'] ) ) {
