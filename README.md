@@ -1,4 +1,4 @@
-# Brizy - Wordpress Page Builder
+# Brizy - Visual Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
