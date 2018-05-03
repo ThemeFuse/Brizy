@@ -25,7 +25,11 @@ class Brizy_Shortcode_Navigation extends Brizy_Shortcode_AbstractShortcode {
 	 */
 	public function render( $atts, $content=null ) {
 		extract(shortcode_atts(array( 'name' => null, ), $atts));
-		return wp_nav_menu( array( 'menu' => $name, 'echo' => false ) );
+
+		if($name)
+			return wp_nav_menu( array( 'menu' => $name, 'echo' => false ) );
+
+		return '';
 	}
 
 }
