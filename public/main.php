@@ -68,7 +68,7 @@ class Brizy_Public_Main {
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
-			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
+			add_action( 'the_content', array( $this, 'insert_page_content' ) );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 		}
 	}
@@ -257,7 +257,14 @@ class Brizy_Public_Main {
 	 * @return string
 	 **/
 	public function insert_page_content( $content ) {
+
+	    remove_action( 'the_content', array( $this, 'insert_page_content' ) );
+
 		$compiled_html_body = $this->post->get_compiled_html_body();
+		$compiled_html_body = apply_filters('the_content', $compiled_html_body);
+
+		add_action( 'the_content', array( $this, 'insert_page_content' ) );
+
 		return Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
 	}
 
