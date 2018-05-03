@@ -76,7 +76,7 @@ class Brizy_Editor {
 		try {
 			return Brizy_Editor_Storage_Common::instance()->get( self::$settings_key );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
-			return null;
+			return ['post','page'];
 		}
 	}
 }
