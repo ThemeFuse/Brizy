@@ -10,28 +10,27 @@ class Brizy_Config {
 
 	const SITE_URL_PLACEHOLDER = '{@brizy_SITE_URL_PLACEHOLDER@}';
 	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
-
-	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
+	//const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
 	const S3_ASSET_URL = 'https://static.brizy.io/%s/%s';
 
-	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/med ia';
+	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 
-	const LOCAL_PAGE_ASSET_SPLITTER = "/\/brizy\/pages\/(.[^\/]*)\/(.[^\/]*)/";
+	//const LOCAL_PAGE_ASSET_SPLITTER = "/\/brizy\/pages\/(.[^\/]*)\/(.[^\/]*)/";
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/pages/%s';
-	const BRIZY_WP_PAGE_ASSET_PATH = '/brizy/pages/%s/%s';
+	//const BRIZY_WP_PAGE_ASSET_PATH = '/brizy/pages/%s/%s';
 
 
-	const LOCAL_EDITOR_ASSET_STATIC_URL = '/brizy/editor';
-	const LOCAL_EDITOR_ASSET_SPLITTER = "/\/brizy\/editor\/(.[^\/]*)\/(.[^\/]*)/";
-	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor/%s';
+	//const LOCAL_EDITOR_ASSET_STATIC_URL = '/brizy/editor';
+	//const LOCAL_EDITOR_ASSET_SPLITTER = "/\/brizy\/editor\/(.[^\/]*)\/(.[^\/]*)/";
+	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor';
 
 
 	const EDITOR_BASE_URL = 'https://app.brizy.io';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
-	const EDITOR_ASSETS_URL = "public/static";
+	//const EDITOR_ASSETS_URL = "public/static";
 
-	const MEDIA_IMAGE_PATH = '/storage/media';
+	//const MEDIA_IMAGE_PATH = '/storage/media';
 	const MEDIA_IMAGE_URL = 'https://app.brizy.io/storage/media';
 	const MEDIA_IMAGE_URL_REGEX = 'https:\/\/app\.brizy\.io\/storage\/media.[^"\'\s,)]+';
 

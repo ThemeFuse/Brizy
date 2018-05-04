@@ -11,6 +11,7 @@
   "require-dev": {
   },
   "require": {
-    "twig/twig": "~1.5"
+    "twig/twig": "~1.5",
+    "imagine/imagine": "^0.7"
   }
 }

@@ -57,14 +57,3 @@ function brizy_initialize_Brizy_Public_Api() {
 		Brizy_Logger::instance()->exception( $e );
 	}
 }
-
-
-function brizy_load_text_domain() {
-	load_plugin_textdomain(
-		'brizy',
-		false,
-		".." . DIRECTORY_SEPARATOR . 'languages'
-	);
-}
-
-add_action( 'after_setup_theme', 'brizy_load_text_domain' );

@@ -20,9 +20,10 @@ class Brizy_Editor_Storage_Common extends Brizy_Editor_Storage_Abstract {
 	/**
 	 * @return array
 	 */
-	protected function get_storage() {
+	public function get_storage() {
 
 		$get_option = (array) get_option( $this->key(), array() );
+
 		return $get_option;
 	}
 

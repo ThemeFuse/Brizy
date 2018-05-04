@@ -30,6 +30,13 @@ class Brizy_Editor_CompiledHtml {
 		$this->processors = $processors;
 	}
 
+	/**
+	 * @param Brizy_Editor_Asset_ProcessorInterface $asset_processor
+	 */
+	public function addAssetProcessor( $asset_processor ) {
+		$this->asset_processors[] = $asset_processor;
+	}
+
 
 	/**
 	 * @return string
@@ -41,8 +48,6 @@ class Brizy_Editor_CompiledHtml {
 		$content = $body_tag->get_content();
 
 		$content = $this->apply_processors( $content );
-
-		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
 
 		return $content;
 	}
@@ -59,8 +64,6 @@ class Brizy_Editor_CompiledHtml {
 		$content = $head_tag->get_content();
 
 		$content = $this->apply_processors( $content );
-
-		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
 
 		return $content;
 	}

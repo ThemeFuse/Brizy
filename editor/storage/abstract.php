@@ -8,6 +8,7 @@ abstract class Brizy_Editor_Storage_Abstract {
 		$this->update_storage( $value );
 	}
 
+
 	/**
 	 * @param string $key
 	 * @param $value
@@ -62,5 +63,5 @@ abstract class Brizy_Editor_Storage_Abstract {
 	/**
 	 * @return array
 	 */
-	abstract protected function get_storage();
+	abstract public function get_storage();
 }

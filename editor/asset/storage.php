@@ -6,7 +6,7 @@
  * Time: 10:46 AM
  */
 
-class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage{
+class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 
 
 	/**

@@ -8,7 +8,7 @@ class Brizy_Editor_API {
 	const AJAX_UPDATE = 'brizy_update_item';
 	const AJAX_GET_GLOBALS = 'brizy_get_gb';
 	const AJAX_SET_GLOBALS = 'brizy_set_gb';
-	const AJAX_MEDIA = 'Brizy_Editor_Asset_Media';
+	const AJAX_MEDIA = 'brizy_media';
 	const AJAX_SIDEBARS = 'brizy_sidebars';
 	const AJAX_BUILD = 'brizy_build';
 	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
@@ -28,6 +28,8 @@ class Brizy_Editor_API {
 	const AJAX_FORM_INTEGRATION_STATUS = 'brizy_form_integration_status';
 	const AJAX_SUBMIT_FORM = 'brizy_submit_form';
 
+	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
+	const AJAX_MEDIA_METAKEY = 'brizy_get_media_key';
 
 	/**
 	 * @var Brizy_Editor_Project
@@ -70,13 +72,12 @@ class Brizy_Editor_API {
 	private function initialize() {
 
 		if ( Brizy_Editor::is_user_allowed() ) {
-
 			add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_GLOBALS, array( $this, 'get_globals' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_GLOBALS, array( $this, 'set_globals' ) );
-			add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
+			//add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 			//add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SIDEBAR_CONTENT, array( $this, 'sidebar_content' ) );
@@ -87,6 +88,8 @@ class Brizy_Editor_API {
 			add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+			add_action( 'wp_ajax_' . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
+			add_action( 'wp_ajax_' . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
 			add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
 
 			add_action( 'wp_ajax_' . self::AJAX_GET_DEFAULT_FORM, array( $this, 'default_form' ) );
@@ -317,41 +320,6 @@ class Brizy_Editor_API {
 
 	}
 
-	public function save_trigger() {
-		try {
-			$this->authorize();
-			$post_id = $this->param( 'post' );
-			$post    = Brizy_Editor_Post::get( $post_id );
-
-			if ( ! $post->uses_editor() ) {
-				return;
-			}
-
-			wp_update_post( array( 'ID' => $post_id, 'post_content' => $post->get_compiled_html_body() ) );
-
-			$post_type        = $post->get_wp_post()->post_type;
-			$post_type_object = get_post_type_object( $post_type );
-			$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
-
-			if ( $can_publish ) {
-				wp_publish_post( $post_id );
-			} else {
-				wp_update_post( array( 'ID' => $post_id, 'post_status' => 'pending' ) );
-			}
-
-			// get latest version of post
-			$post                 = Brizy_Editor_Post::get( $post_id );
-			$post_arr             = self::create_post_arr( $post );
-			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
-			$this->success( array( $post_arr ) );
-
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( 500, "Invalid post id" );
-			exit;
-		}
-	}
-
 	/**
 	 * @internal
 	 **/
@@ -466,6 +434,45 @@ class Brizy_Editor_API {
 		}
 	}
 
+	public function save_trigger() {
+		try {
+			$this->authorize();
+			$post_id = $this->param( 'post' );
+			$post    = Brizy_Editor_Post::get( $post_id );
+
+			if ( ! $post->uses_editor() ) {
+				return;
+			}
+
+			$post_type        = $post->get_wp_post()->post_type;
+			$post_type_object = get_post_type_object( $post_type );
+			$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
+			$post_status      = $can_publish ? 'publish' : 'pending';
+
+			// compiliation needs to go here
+			$post->compile_page();
+
+			$brizy_compiled_page = $post->get_compiled_page( Brizy_Editor_Project::get() );
+			wp_update_post( array(
+				'ID'           => $post_id,
+				'post_status'  => $post_status,
+				'post_content' => $brizy_compiled_page->get_body()
+			) );
+
+			// get latest version of post
+			$post                 = Brizy_Editor_Post::get( $post_id );
+			$post_arr             = self::create_post_arr( $post );
+			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
+			$this->success( array( $post_arr ) );
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( 500, "Invalid post id" );
+			exit;
+		}
+	}
+
+
 	public function sidebar_content() {
 		try {
 
@@ -569,22 +576,22 @@ class Brizy_Editor_API {
 	/**
 	 * @internal
 	 **/
-	public function media() {
-		try {
-			$this->authorize();
-
-			$attachment_id = $this->param( 'attachmentId' );
-
-			$brizy_editor_user = Brizy_Editor_User::get();
-			$this->success( $brizy_editor_user->get_media_id(
-				$this->project,
-				$attachment_id
-			) );
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
-		}
-	}
+//	public function media() {
+//		try {
+//			$this->authorize();
+//
+//			$attachment_id = $this->param( 'attachmentId' );
+//
+//			$brizy_editor_user = Brizy_Editor_User::get();
+//			$this->success( $brizy_editor_user->get_media_id(
+//				$this->project,
+//				$attachment_id
+//			) );
+//		} catch ( Exception $exception ) {
+//			Brizy_Logger::instance()->exception( $exception );
+//			$this->error( $exception->getCode(), $exception->getMessage() );
+//		}
+//	}
 
 	protected function param( $name ) {
 		if ( isset( $_REQUEST[ $name ] ) ) {
@@ -654,6 +661,9 @@ class Brizy_Editor_API {
 	 * Ex: ['label'=>'Term name',
 	 *      'url'=>'term url',
 	 *      'taxonomy'=>'taxonomy name']
+	 *
+	 *
+	 * @param $search_term
 	 *
 	 * @return array
 	 */
@@ -765,4 +775,52 @@ class Brizy_Editor_API {
 		wp_send_json( array_values( $terms ) );
 	}
 
+	public function download_media() {
+		try {
+			$project = Brizy_Editor_Project::get();
+			$apost   = (int) $_REQUEST['post_id'];
+			$post    = Brizy_Editor_Post::get( $apost );
+
+			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post );
+			$media_cacher->download_original_image( $_REQUEST['media'] );
+
+			wp_send_json( array(), 200 );
+		} catch ( Exception $e ) {
+			wp_send_json_error( array(), 500 );
+		}
+	}
+
+	public function get_media_key() {
+		try {
+			$apost         = (int) $_REQUEST['post_id'];
+			$attachment_id = (int) $_REQUEST['attachment_id'];
+
+			if ( ! $attachment_id ) {
+				$this->error( 400, 'Invalid attachment id' );
+			}
+
+			$uid = get_post_meta( $attachment_id, 'brizy_attachment_uid', true );
+
+			if ( ! $uid ) {
+				$uid = "wp-" . md5( $attachment_id . time() );
+				update_post_meta( $attachment_id, 'brizy_attachment_uid', $uid );
+			}
+
+			if ( $apost ) {
+				$post    = Brizy_Editor_Post::get( $apost );
+				$post_ui = $post->get_uid();
+
+				$post_uids = get_post_meta( $attachment_id, 'brizy_post_uid' );
+
+				if ( ! in_array( $post_ui, $post_uids ) ) {
+					add_post_meta( $attachment_id, 'brizy_post_uid', $post_ui );
+				}
+			}
+
+			$this->success( array( 'uid' => $uid ) );
+
+		} catch ( Exception $E ) {
+			return;
+		}
+	}
 }

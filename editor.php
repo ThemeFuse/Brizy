@@ -53,7 +53,12 @@ class Brizy_Editor {
 	}
 
 	public function supported_post_types() {
-		return apply_filters( 'brizy:post_types', $this->get_post_types() );
+		$types = $this->get_post_types();
+		return apply_filters( 'brizy:post_types', $types );
+	}
+
+	public function default_supported_post_types() {
+		return array( 'page', 'post' );
 	}
 
 	public function get_name() {
@@ -64,7 +69,8 @@ class Brizy_Editor {
 		try {
 			return Brizy_Editor_Storage_Common::instance()->get( self::$settings_key );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
-			return array( 'post', 'page' );
+			Brizy_Editor_Storage_Common::instance()->set( self::$settings_key, $this->default_supported_post_types() );
+			return $this->default_supported_post_types( );
 		}
 	}
 
