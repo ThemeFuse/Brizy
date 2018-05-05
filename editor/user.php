@@ -324,12 +324,11 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 */
 	public function compile_page( $project, $post ) {
 
-		$api_project = $project->get_api_project();
 		$editor_data    = $post->get_editor_data();
 
 		$config = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
 
-		$res = $this->get_client()->compile_page( $api_project, $editor_data, $config );
+		$res = $this->get_client()->compile_page( $project, $editor_data, $config );
 
 		$content = trim( $res['html'] );
 

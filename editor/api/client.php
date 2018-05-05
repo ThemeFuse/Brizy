@@ -169,8 +169,8 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 	/**
 	 * @param Brizy_Editor_API_Project $project
-	 * @param string $page
-	 * @param $config
+	 * @param string $page_data
+	 * @param array $config
 	 *
 	 * @return array|mixed|object
 	 * @throws Brizy_Editor_API_Exceptions_Exception
@@ -179,19 +179,19 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function compile_page( $project, $page, $config ) {
+	public function compile_page( $project, $page_data, $config ) {
 
-		$compile_url = Brizy_Config::COMPILER_URI;
-		$template_slug = 'brizy';
+		$compile_url      = Brizy_Config::COMPILER_URI;
 		$template_version = BRIZY_EDITOR_VERSION;
-		$body = array(
+		$url_builder = new Brizy_Editor_UrlBuilder($project);
+		$body             = array(
 			'template_slug'         => 'brizy',
 			'template_version'      => $template_version,
-			'template_download_url' => 'https://static.brizy.io/' . $template_slug . '/' . $template_version . '/visual/export.js' ,
-			'config_json'           => json_encode($editor_config), // ???
-			'pages_json'            => json_encode($array_with_the_page), // ???
-			'globals_json'          => json_encode($globals_object), // ???
-			'page_id'               => $page->get_id()
+			'template_download_url' => $url_builder->external_asset_url('/visual/export.js'),
+			'config_json'           => json_encode( $config ), // ???
+			'pages_json'            => json_encode( array( $page_data ) ), // ???
+			'globals_json'          => json_encode( $project->get_globals() ),
+			'page_id'               => null
 		);
 
 		return parent::request( $compile_url, array( 'body' => $body ), 'POST' )->get_response_body();

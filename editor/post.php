@@ -193,11 +193,13 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	public function get_editor_data() {
-		return $this->editor_data;
+		return isset( $this->editor_data ) ? $this->editor_data : '';
 	}
 
-	public function set_editor_data($data) {
-		$this->editor_data = $data;
+	public function set_editor_data( $content ) {
+		$this->editor_data = stripslashes( $content );
+
+		return $this;
 	}
 
 	public function get_compiled_html_body() {

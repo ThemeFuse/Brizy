@@ -184,20 +184,20 @@ class Brizy_Editor_API {
 	public function update_item() {
 		try {
 			$_POST     = array_map( 'stripslashes_deep', $_POST );
-			$content   = $this->param( 'data' );
-			$title     = $this->param( 'title' );
+			$data   = $this->param( 'data' );
+			//$title     = $this->param( 'title' );
 			$atemplate = $this->param( 'template' );
 
-			if ( $title ) {
-				$this->post->set_title( $title );
-			}
+//			if ( $title ) {
+//				$this->post->set_title( $title );
+//			}
 
 			if ( $atemplate ) {
 				$this->post->set_template( $atemplate );
 			}
 
-			if ( $content ) {
-				$this->post->set_content( $content );
+			if ( $data ) {
+				$this->post->set_editor_data($data);
 			}
 
 			$this->post
