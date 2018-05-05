@@ -15,7 +15,6 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 		return $tags[0];
 	}
 
-
 	/**
 	 * @return $this|Brizy_Editor_Helper_DomTag
 	 */

@@ -34,17 +34,6 @@ class Brizy_Editor_CompiledHtml {
 	/**
 	 * @return string
 	 */
-	public function get_content() {
-		$content = $this->dom->get_content();
-
-		$content = $this->apply_asset_processors( $content );
-
-		return $content;
-	}
-
-	/**
-	 * @return string
-	 */
 	public function get_body() {
 
 		$body_tag = $this->dom->get_body();
@@ -85,37 +74,5 @@ class Brizy_Editor_CompiledHtml {
 		return $content;
 	}
 
-//	public function get_head_scripts() {
-//		$script_tags = $this->dom->get_head()->get_scripts();
-//
-//		return $this->dom->get_attributes( $script_tags, 'src' );
-//	}
-//
-//	public function get_footer_scripts() {
-//		$script_tags = $this->dom->get_body()->get_scripts();
-//
-//		return $this->dom->get_attributes( $script_tags, 'src' );
-//	}
-//
-//	public function get_links_tags() {
-//		$link_tags = $this->dom->get_head()->get_links();
-//
-//		return $link_tags;
-//	}
-//
-//	public function get_inline_styles() {
-//		$style_tags = $this->dom->get_styles();
-//		$list       = array();
-//
-//		if ( is_array( $style_tags ) ) {
-//			foreach ( $style_tags as $tag ) {
-//
-//				$content = $tag->get_content();
-//				$list[]  = $content;
-//			}
-//		}
-//
-//		return $list;
-//	}
 
 }

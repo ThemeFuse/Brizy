@@ -93,7 +93,8 @@ class Brizy_Admin_Main {
 
 			// compile
 		} catch ( Exception $e ) {
-			return;
+			Brizy_Logger::instance()->exception($e);
+		    return;
 		}
 	}
 

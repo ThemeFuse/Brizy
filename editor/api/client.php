@@ -168,11 +168,10 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 //	}
 
 	/**
-	 * @param Brizy_Editor_API_Project $project
-	 * @param string $page_data
-	 * @param array $config
+	 * @param $project
+	 * @param $page_data
+	 * @param $config
 	 *
-	 * @return array|mixed|object
 	 * @throws Brizy_Editor_API_Exceptions_Exception
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
@@ -183,18 +182,47 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		$compile_url      = Brizy_Config::COMPILER_URI;
 		$template_version = BRIZY_EDITOR_VERSION;
-		$url_builder = new Brizy_Editor_UrlBuilder($project);
+		$url_builder      = new Brizy_Editor_UrlBuilder( $project );
 		$body             = array(
 			'template_slug'         => 'brizy',
 			'template_version'      => $template_version,
-			'template_download_url' => $url_builder->external_asset_url('/visual/export.js'),
+			'template_download_url' => $url_builder->external_asset_url( '/visual/export.js' ),
 			'config_json'           => json_encode( $config ), // ???
-			'pages_json'            => json_encode( array( $page_data ) ), // ???
+			'pages_json'            => json_encode( array(
+				array(
+					'id'       => 1,
+					'data'     => $page_data,
+					'is_index' => true
+				)
+			) ), // ???
 			'globals_json'          => json_encode( $project->get_globals() ),
-			'page_id'               => null
+			'page_id'               => 1
 		);
 
-		return parent::request( $compile_url, array( 'body' => $body ), 'POST' )->get_response_body();
+		$page = parent::request( $compile_url, array( 'body' => $body ), 'POST' )->get_response_body();
+
+		$static_template_page = BRIZY_PLUGIN_PATH . "/public/editor-build/" . BRIZY_EDITOR_VERSION . "/editor/views/static.html.twig";
+
+		$loader = new Twig_Loader_Array( array(
+			'static' => file_get_contents( $static_template_page )
+		) );
+
+		$twig          = new Twig_Environment( $loader, array() );
+		$twig_template = $twig->load( 'static' );
+
+		$template_context = array(
+
+			'editorData' => array(
+				'urls'            => [
+					'assets' => $config['urls']['assets'],
+				],
+				'serverTimestamp' => time()
+			),
+			'page'       => $page
+		);
+
+		return $twig_template->render( $template_context );
+
 	}
 
 	/**
