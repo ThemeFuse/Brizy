@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *
+ * @deprecated
+ *
+ * Class Brizy_Editor_API_Page
+ */
 class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 
 	/**
