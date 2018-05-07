@@ -405,13 +405,30 @@ class Brizy_Admin_Main {
 //	}
 
 	/**
-	 * @param WP_Post $p
+	 * @param $p
+	 *
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+	 * @throws Exception
 	 */
 	private function enable_brizy_for_post( $p ) {
 
+	    $post = null;
+
 		// obtain the post
+        try {
+	        $post    = Brizy_Editor_Post::get( $p->ID );
+        } catch ( Exception $exception ) {
+	        $project  = Brizy_Editor_Project::get();
+            $post = Brizy_Editor_Post::create( $project, $p );
+        }
+
+        if(!$post)
+        {
+	        Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
+	        wp_redirect( $_SERVER['HTTP_REFERER'] );
+        }
+
 		try {
-			$post    = Brizy_Editor_Post::get( $p->ID );
 
 			if ( $p->post_status == 'auto-draft' ) {
 				$p->post_status = 'draft';
@@ -428,6 +445,7 @@ class Brizy_Admin_Main {
 
 			$post->set_template( Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
 
+			$post->save();
 			// redirect
 			wp_redirect( $post->edit_url() );
 
