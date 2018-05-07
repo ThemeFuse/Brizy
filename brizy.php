@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Brizy - Visual Page Builder
+ * Plugin Name: Brizy
  * Description: A free drag & drop front-end page builder to help you create WordPress pages lightning fast. It's easy with Brizy.
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
@@ -11,7 +11,7 @@
  * Domain Path: /languages
  */
 
-define( 'BRIZY_DEVELOPMENT', true );
+define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_VERSION', '0.2.5' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.10' );
 define( 'BRIZY_FILE', __FILE__ );
