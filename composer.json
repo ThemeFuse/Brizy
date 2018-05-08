@@ -9,10 +9,6 @@
     }
   ],
   "require-dev": {
-    "phpunit/phpunit": "^6.2",
-    "phpunit/php-invoker": "^1.1",
-    "phpunit/dbunit": "^3.0",
-    "php-mock/php-mock-phpunit": "^2.0"
   },
   "require": {
     "twig/twig": "~1.5"
