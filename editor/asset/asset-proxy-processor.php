@@ -16,7 +16,7 @@ class Brizy_Editor_Asset_AssetProxyProcessor implements Brizy_Editor_Asset_Proce
 	/**
 	 * Brizy_Editor_Asset_HtmlAssetProcessor constructor.
 	 *
-	 * @param Brizy_Editor_Asset_Storage $storage
+	 * @param Brizy_Editor_Asset_AbstractStorage $storage
 	 */
 	public function __construct( $storage ) {
 		$this->storage = $storage;

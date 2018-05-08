@@ -56,7 +56,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 			self::$instance              = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
 			//self::$instance->api_project = new Brizy_Editor_API_Project( self::$instance->api_project );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			self::$instance                   = Brizy_Editor_Project::create();
+			self::$instance                   = self::create();
 			$_SESSION['brizy_project_stored'] = true;
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
@@ -89,9 +89,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 *
 	 * @return Brizy_Editor_Project
 	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
@@ -110,6 +108,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 		self::$instance = $project;
 
+		/*
 		if ( $clone_from ) {
 
 			$project_data = $project->get_api_project()->get_data();
@@ -153,6 +152,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 				}
 			}
 		}
+		*/
 
 
 		return $project;
@@ -309,24 +309,5 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 //
 //		return $this;
 //	}
-
-	/**
-	 * @return bool
-	 */
-	public function isStoreAssets() {
-		return $this->store_assets;
-	}
-
-	/**
-	 * @param bool $store_assets
-	 *
-	 * @return Brizy_Editor_Project
-	 */
-	public function setStoreAssets( $store_assets ) {
-		$this->store_assets = $store_assets;
-
-		return $this;
-	}
-
 
 }

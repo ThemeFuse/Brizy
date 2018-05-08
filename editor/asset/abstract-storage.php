@@ -61,7 +61,9 @@ abstract class Brizy_Editor_Asset_AbstractStorage {
 	 */
 	public function store_file( $asset_source, $asset_path ) {
 
-		if(file_exists($asset_path)) return true;
+		if ( file_exists( $asset_path ) ) {
+			return true;
+		}
 
 		try {
 			// check destination dir
@@ -99,56 +101,38 @@ abstract class Brizy_Editor_Asset_AbstractStorage {
 
 
 	/**
-	 * @param $asset_source
-	 * @param $asset_path
+	 * Make sure the $asset_path is an existing file.
 	 *
-	 * @return bool
+	 * @param $asset_path
+	 * @param $post_id
+	 * @param string $title
+	 *
+	 * @return bool|int
 	 */
-	/*public function store_file( $asset_source, $asset_path ) {
+	public function attach_to_post( $asset_path, $post_id, $title = '' ) {
 
-		$full_asset_path = null;
-		try {
-			// check destination dir
-			$dir_path = dirname( $asset_path );
-
-			if ( ! file_exists( $dir_path ) ) {
-				mkdir( $dir_path, 0777, true );
-			}
-
-			$full_asset_path = $asset_path;
-
-			$fasset_dest = fopen( $asset_path, 'w' );
-			if ( ! $fasset_dest ) {
-				throw new Exception( 'Invalid file destination.' );
-			}
-
-			$fasset_src = fopen( $asset_source, 'r' );
-			if ( ! $fasset_src ) {
-				throw new Exception( 'Invalid asset source.' );
-			}
-
-			$buffer_length = 81920; // we can tune this later;
-
-			while ( ! feof( $fasset_src ) ) {
-				$buffer = fread( $fasset_src, $buffer_length );
-				fwrite( $fasset_dest, $buffer );
-			}
-
-			fclose( $fasset_src );
-			fclose( $fasset_dest );
-
-		} catch ( Exception $e ) {
-			$t = 0;
-
-			// clean up
-			if ( $full_asset_path ) {
-				@unlink( $full_asset_path );
-			}
-
+		if ( ! $post_id ) {
+			return false;
+		}
+		if ( ! file_exists( $asset_path ) ) {
 			return false;
 		}
 
-		return true;
-	}*/
+		$filetype = wp_check_filetype( $asset_path );
 
+		$attachment = array(
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => $title ? $title : basename( $asset_path ),
+			'post_content'   => '',
+			'post_status'    => 'inherit'
+		);
+
+		$result = wp_insert_attachment( $attachment, $asset_path, $post_id );
+
+		if ( is_wp_error( $result ) ) {
+			return false;
+		}
+
+		return $result;
+	}
 }

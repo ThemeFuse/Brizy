@@ -184,20 +184,20 @@ class Brizy_Editor_API {
 	public function update_item() {
 		try {
 			$_POST     = array_map( 'stripslashes_deep', $_POST );
-			$content   = $this->param( 'data' );
-			$title     = $this->param( 'title' );
+			$data   = $this->param( 'data' );
+			//$title     = $this->param( 'title' );
 			$atemplate = $this->param( 'template' );
 
-			if ( $title ) {
-				$this->post->set_title( $title );
-			}
+//			if ( $title ) {
+//				$this->post->set_title( $title );
+//			}
 
 			if ( $atemplate ) {
 				$this->post->set_template( $atemplate );
 			}
 
-			if ( $content ) {
-				$this->post->set_content( $content );
+			if ( $data ) {
+				$this->post->set_editor_data($data);
 			}
 
 			$this->post
@@ -382,9 +382,9 @@ class Brizy_Editor_API {
 		return array(
 			'title'    => $the_title,
 			'slug'     => sanitize_title( $the_title ),
-			'data'     => $post->get_content(),
+			'data'     => $post->get_editor_data(),
 			'id'       => $p_id,
-			'is_index' => $post->get_api_page()->is_index(),
+			'is_index' => false,
 			'template' => get_page_template_slug( $p_id ),
 			'status'   => get_post_status( $p_id ),
 			'url'      => get_the_permalink( $p_id )

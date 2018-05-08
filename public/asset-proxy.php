@@ -47,7 +47,6 @@ class Brizy_Public_AssetProxy {
 		$tmp_asset_url = $this->url_builder->editor_asset_path( $asset_path );
 		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
 
-
 		if ( ! file_exists( $new_path ) ) {
 			$store_result = $this->store_file( $asset_url, $new_path );
 
@@ -123,7 +122,7 @@ class Brizy_Public_AssetProxy {
 				return false;
 			}
 
-			$content = wp_remote_retrieve_body( $wp_response->response );
+			$content = wp_remote_retrieve_body( $wp_response );
 
 			file_put_contents( $asset_path, $content );
 

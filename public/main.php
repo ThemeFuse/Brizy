@@ -129,9 +129,6 @@ class Brizy_Public_Main {
 			$context['DEBUG'] = true;
 		}
 
-		// make the next request to store one asset
-		$this->project->setStoreAssets( true )->save();
-
 		echo $twig_template->render( $context );
 
 		return self::path( 'views/empty.php' );

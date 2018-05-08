@@ -3,7 +3,7 @@
 }
 
 include_once 'functions.php';
-
+/*
 add_action( 'init', 'brizy_check_for_new_imports' );
 
 function brizy_check_for_new_imports() {
@@ -139,7 +139,7 @@ function brizy_check_for_duplicates() {
 		}
 	}
 }
-
+*/
 
 add_action( 'wp_loaded', 'brizy_initialize_Brizy_Public_Api' );
 

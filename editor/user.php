@@ -184,6 +184,9 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		Brizy_Editor_Storage_Common::instance()->delete( 'access-token' );
 	}
 
+	/**
+	 * @return array|mixed|object
+	 */
 	public function getCurrentUser() {
 		return $this->get_client()->getUser();
 	}
@@ -206,41 +209,47 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		return new Brizy_Editor_API_Project( $project_data );
 	}
 
-	public function clone_pages( $page_ids, $project_target ) {
-		Brizy_Logger::instance()->notice( 'Clone pages', array( 'pages' => $page_ids, 'project' => $project_target ) );
-
-		$clone_pages = $this->get_client()->clone_pages( $page_ids, $project_target );
-
-		// debug logs
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			foreach ( (array) $clone_pages as $clone ) {
-				Brizy_Logger::instance()->debug( sprintf( "Cloned page [%s] in to page [%s]", $clone['cloned_from'], $clone['id'] ) );
-			}
-		}
-
-		return $clone_pages;
-	}
+//	public function clone_pages( $page_ids, $project_target ) {
+//		Brizy_Logger::instance()->notice( 'Clone pages', array( 'pages' => $page_ids, 'project' => $project_target ) );
+//
+//		$clone_pages = $this->get_client()->clone_pages( $page_ids, $project_target );
+//
+//		// debug logs
+//		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+//			foreach ( (array) $clone_pages as $clone ) {
+//				Brizy_Logger::instance()->debug( sprintf( "Cloned page [%s] in to page [%s]", $clone['cloned_from'], $clone['id'] ) );
+//			}
+//		}
+//
+//		return $clone_pages;
+//	}
 
 	/**
 	 * @param $project
 	 * @param $page
 	 *
 	 * @return Brizy_Editor_API_Page
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function create_page( $project, $page ) {
+/*	public function create_page( $project, $page ) {
 
 		Brizy_Logger::instance()->notice( 'Create page', array( $project, $page ) );
-		$page_response = $this->get_client()->create_page( $project->get_id(), $page );
+		//$page_response = $this->get_client()->create_page( $project->get_id(), $page );
 
-		return new Brizy_Editor_API_Page( $page_response );
-
+		return new Brizy_Editor_API_Page( array() );
 	}
+*/
 
+	/**
+	 * @param Brizy_Editor_API_Project $project
+	 * @param Brizy_Editor_API_Page $page
+	 *
+	 * @return mixed
+	 */
+//	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
+//		Brizy_Logger::instance()->notice( 'Delete page', array( $project, $page ) );
+//
+//		return $this->get_client()->delete_page( $project->get_id(), $page->get_id() );
+//	}
 
 	/**
 	 * @param Brizy_Editor_API_Project $project
@@ -253,37 +262,17 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
-		Brizy_Logger::instance()->notice( 'Delete page', array( $project, $page ) );
-
-		return $this->get_client()->delete_page( $project->get_id(), $page->get_id() );
-	}
-
-	/**
-	 * @param Brizy_Editor_API_Project $project
-	 * @param Brizy_Editor_API_Page $page
-	 *
-	 * @return array|mixed|object
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 */
-	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
-		Brizy_Logger::instance()->notice( 'Update page', array( $project, $page ) );
-
-		$updated_page = $this->get_client()
-		                     ->update_page(
-			                     $project->get_id(),
-			                     $page->get_id(),
-			                     $page
-		                     );
-
-
-
-		return $updated_page;
-	}
+//	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
+//		Brizy_Logger::instance()->notice( 'Update page', array( $project, $page ) );
+//
+//		$updated_page = $this->get_client()
+//		                     ->update_page(
+//			                     $project->get_id(),
+//			                     $page->get_id(),
+//			                     $page
+//		                     );
+//		return $updated_page;
+//	}
 
 	/**
 	 * @param Brizy_Editor_API_Project $project
@@ -335,20 +324,11 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 */
 	public function compile_page( $project, $post ) {
 
-		$api_project = $project->get_api_project();
-		$api_page    = $post->get_api_page();
-
-//		$url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
-//		if ( ! is_preview() ) {
-//			$config['urls']['static'] = $url_builder->upload_url( $url_builder->editor_asset_path() );
-//			$config['urls']['image']  = $url_builder->upload_url( $url_builder->media_asset_path() );
-//		}
+		$editor_data    = $post->get_editor_data();
 
 		$config = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
 
-		$res = $this->get_client()->compile_page( $api_project, $api_page, $config );
-
-		$content = trim( $res['html'] );
+		$page_html = $this->get_client()->compile_page( $project, $editor_data, $config );
 
 		$asset_storage = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
 		$media_storage = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
@@ -357,7 +337,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		$asset_processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
 		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
 
-		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $content );
+		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $page_html );
 		$brizy_editor_compiled_html->setAssetProcessors( $asset_processors );
 
 		return $brizy_editor_compiled_html;
@@ -419,14 +399,21 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		set_transient( self::lock_key(), 1, 30 );
 	}
 
+
 	protected static function unlock_access() {
 		delete_transient( self::lock_key() );
 	}
 
+	/**
+	 * @return string
+	 */
 	protected static function lock_key() {
 		return brizy()->get_slug() . '-user-maintenance-enabled';
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected static function is_locked() {
 		return (bool) get_transient( self::lock_key() );
 	}
@@ -451,6 +438,4 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	public function getPlatformUserSignature() {
 		return $this->platform_user_signature;
 	}
-
-
 }

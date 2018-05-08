@@ -41,7 +41,7 @@ class Brizy_Config {
 	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
 	const GATEWAY_URI = 'https://api.brizy.io';
-	const COMPILER_URI = 'https://api.brizy.io/v1/projects/%s/pages/%s/htmls';
+	const COMPILER_URI = 'http://editorcomplier-lb-1472504860.us-east-1.elb.amazonaws.com:3000/compile';
 
 	const BRIZY_REGISTRATION_CREDENTIALS = 'https://app.brizy.io/wordpress/credentials';
 

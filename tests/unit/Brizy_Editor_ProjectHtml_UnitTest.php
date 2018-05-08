@@ -165,32 +165,5 @@ class Brizy_Editor_ProjectHtml_UnitTest extends TestCase {
 		$this->assertNotContains( 'ignore4{}', $styles, $error_should_not_contain );
 	}
 
-	/**
-	 * @depends test_constructor
-	 *
-	 * @param Brizy_Editor_CompiledHtml $ph
-	 */
-	public function test_get_content( Brizy_Editor_CompiledHtml $ph ) {
 
-		$ph->strip_regions();
-
-		$content = $ph->get_content();
-
-		$this->assertNotEmpty( $content, "The <get_content> method should return the html content" );
-
-		$test_ph = new Brizy_Editor_CompiledHtml( $content );
-
-		// test if the scripts are removed
-		$scripts = $test_ph->get_head_scripts();
-
-		$error_should_not_contain = 'The <get_content> method should strip all enqueue regions.';
-		$this->assertNotContains( '/head_include1.js', $scripts, $error_should_not_contain );
-		$this->assertNotContains( '/head_include2.js', $scripts, $error_should_not_contain );
-
-		$scripts = $test_ph->get_footer_scripts();
-
-		$error_should_not_contain = 'The <get_content> method should strip all enqueue regions.';
-		$this->assertNotContains( '/footer_include1.js', $scripts, $error_should_not_contain );
-		$this->assertNotContains( '/footer_include2.js', $scripts, $error_should_not_contain );
-	}
 }
