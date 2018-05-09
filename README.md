@@ -104,7 +104,7 @@ A good bug report includes full details to easily understand the issue you are h
 * Updated: Updated the plugin name.
 * Updated: Disabled leave confirmation when editing with brizy is clicked.
 * Fixed: Changed page compilation
-* Tweak: Added keyword shortcuts for undo / redo
+* New: Added keyword shortcuts for undo / redo
 * Fixed: Responsive issues
 * Fixed: Scroll speed in Firefox
 * Fixed: Other minor bugs
@@ -116,4 +116,4 @@ A good bug report includes full details to easily understand the issue you are h
 * Fixed: Bug Fixes
 
 ### 0.1.0 - 2018-04-12 ###
-* Initial Beta Release
+* New: Initial Beta Release

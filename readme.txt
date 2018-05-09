@@ -137,7 +137,7 @@ The progress you're making while building your page is always backed up in the c
 * Updated: Updated the plugin name.
 * Updated: Disabled leave confirmation when editing with brizy is clicked.
 * Fixed: Changed page compilation
-* Tweak: Added keyword shortcuts for undo / redo
+* New: Added keyword shortcuts for undo / redo
 * Fixed: Responsive issues
 * Fixed: Scroll speed in Firefox
 * Fixed: Other minor bugs
@@ -149,4 +149,4 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Bug Fixes
 
 = 0.1.0 - 2018-04-12 =
-* First release
+* New: First release
