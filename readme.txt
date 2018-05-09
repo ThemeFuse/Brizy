@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-an
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 0.2.5
+Stable tag: 1.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -129,22 +129,24 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.0 - 2018-05-08 =
+* Fixed: Woocomerce product shortcode.
+* Updated: Navigation will return empty if the menu name is null.
+* Updated: Added support for custom type posts.
+* Fixed: Long compile page requests.
+* Updated: Updated the plugin name.
+* Updated: Disabled leave confirmation when editing with brizy is clicked.
+* Fixed: Changed page compilation
+* Tweak: Added keyword shortcuts for undo / redo
+* Fixed: Responsive issues
+* Fixed: Scroll speed in Firefox
+* Fixed: Other minor bugs
+
 = 0.2.5 - 2018-04-27 =
-* Fixed the Publish/Update button
+* Fixed: Fixed the Publish/Update button
 
-= 0.2.4 - 2018-04-24 =
-* Bug Fixes
-
-= 0.2.3 - 2018-04-24 =
-* Bug Fixes
-
-= 0.2.2 - 2018-04-13 =
-* Bug Fixes
-
-= 0.2.1 - 2018-04-13 =
-* Bug Fixes
+= 0.2.0 - 2018-04-13 =
+* Fixed: Bug Fixes
 
 = 0.1.0 - 2018-04-12 =
-* Bug Fixes
-
 * First release
