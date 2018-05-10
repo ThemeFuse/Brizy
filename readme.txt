@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-an
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -129,11 +129,15 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
-= 1.x.x - x =
+= 1.0.2 - x =
 * Fixed: Capability access to edit/save brizy posts
 * Fixed: Settings page
 * Fixed: Recompile page after plugin update
 * Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
+* New: Added cover option for Video element
+* Improved: Clicking on a anchor will trigger a smooth transition to the target
+* Improved: Tabs element with long labels will look better on mobile
+* Fixed: Other minor bugs
 
 
 = 1.0.1 - 2018-05-11 =
