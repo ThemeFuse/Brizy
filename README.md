@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.1
+Stable tag: 1.0.2<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -96,14 +96,19 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
-= 1.x.x - x =
+= 1.0.2 - x =
 * Fixed: Capability access to edit/save brizy posts
 * Fixed: Settings page
 * Fixed: Recompile page after plugin update
 * Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
+* New: Added cover option for Video element
+* Improved: Clicking on a anchor will trigger a smooth transition to the target
+* Improved: Tabs element with long labels will look better on mobile
+* Fixed: Other minor bugs
+
 
 ### 1.0.1 - 2018-05-11 ###
-* Fixed: Reconfigured the page compiler.
+* Fixed: Reconfigured the page compiler
 
 ### 1.0.0 - 2018-05-08 ###
 * Fixed: Woocomerce product shortcode.
