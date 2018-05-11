@@ -90,10 +90,8 @@ class Brizy_Editor_API {
 				return;
 			}
 
-			remove_action( 'save_post', array( $this, 'compile_post_action' ) );
 			wp_update_post( array( 'ID' => $post_id, 'post_content' => $post->get_compiled_html_body() ) );
 			wp_publish_post( $post_id );
-			add_action( 'save_post', array( $this, 'compile_post_action' ), 10, 2 );
 
 			// get latest version of post
 			$post    = Brizy_Editor_Post::get( $post_id );

@@ -308,33 +308,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		);
 	}
 
-	/**
-	 * @return Brizy_Editor_API_Page
-	 */
-//	public function get_api_page() {
-//		return $this->api_page;
-//	}
-
-	/**
-	 * @return int
-	 */
-//	public function get_content() {
-//
-//		return $this->api_page->get_content();
-//	}
-
-	/**
-	 * @param $data
-	 *
-	 * @return $this
-	 */
-//	public function set_content( $data ) {
-//
-//		$this->api_page->set_content( $data );
-//
-//		return $this;
-//	}
-
 
 	/**
 	 * @return bool
@@ -414,62 +387,4 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		return $this;
 	}
-
-/*
-	public static function get_posts_with_foreign_signature() {
-		$query = array(
-			'numberposts' => - 1,
-			'post_type'   => brizy()->supported_post_types(),
-			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' ),
-			'meta_query'  => array(
-				array(
-					'key'     => self::BRIZY_POST_SIGNATURE_KEY,
-					'value'   => Brizy_Editor_Signature::get(),
-					'compare' => '!='
-				)
-			)
-		);
-
-		return get_posts( $query );
-	}
-
-	public static function get_posts_by_foreign_hash( $hash ) {
-		$query = array(
-			'numberposts' => - 1,
-			'post_type'   => brizy()->supported_post_types(),
-			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' ),
-			'orderby'     => 'ID',
-			'order'       => 'ASC',
-			'meta_key'    => self::BRIZY_POST_HASH_KEY,
-			'meta_value'  => $hash,
-		);
-
-		return get_posts( $query );
-	}
-
-	public static function get_post_by_foreign_hash( $hash ) {
-
-		$posts = self::get_posts_by_foreign_hash( $hash );
-
-		return count( $posts ) ? $posts[0] : null;
-	}
-
-	public static function get_duplicate_brizy_posts() {
-		global $wpdb;
-
-		$meta_options = $wpdb->get_results( "SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key LIKE 'brizy-post-hash' GROUP BY meta_value HAVING count(*)>1", ARRAY_A );
-
-		$posts = array();
-
-		foreach ( $meta_options as $post_hash ) {
-			$posts_by_foreign_hash             = self::get_posts_by_foreign_hash( $post_hash['meta_value'] );
-			$posts[ $post_hash['meta_value'] ] = $posts_by_foreign_hash;
-		}
-
-		return $posts;
-
-	}
-
-*/
-
 }
