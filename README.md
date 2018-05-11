@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.0<br>
+Stable tag: 1.0.1
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,9 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.1 - 2018-05-11 ###
+* Fixed: Reconfigured the page compiler.
 
 ### 1.0.0 - 2018-05-08 ###
 * Fixed: Woocomerce product shortcode.
