@@ -4,6 +4,8 @@
 
 class Brizy_Admin_Settings {
 
+	private $selected_post_types;
+
 	private $role_list;
 
 	public static function menu_slug() {
@@ -23,6 +25,13 @@ class Brizy_Admin_Settings {
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		$this->role_list = $this->get_role_list();
 
+		try {
+			$this->selected_post_types = Brizy_Editor_Storage_Common::instance()->get( 'post-types' );
+		} catch ( Exception $e ) {
+			$this->selected_post_types = array( 'post', 'page' );
+
+			Brizy_Editor_Storage_Common::instance()->set( 'post-types', $this->selected_post_types );
+		}
 	}
 
 	public function is_settings_page() {
@@ -35,13 +44,15 @@ class Brizy_Admin_Settings {
 	public function render() {
 
 		try {
+			$list_post_types = $this->list_post_types();
+			$args            = array(
+				'types'   => array_map( array( $this, 'is_selected' ), $list_post_types ),
+				'roles'   => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() ),
+				'project' => Brizy_Editor_Project::get()
+			);
 			echo Brizy_Admin_View::render(
 				'settings/view',
-				array(
-					'types'   => array_map( array( $this, 'is_selected' ), $this->list_post_types() ),
-					'roles'   => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() ),
-					'project' => Brizy_Editor_Project::get()
-				)
+				$args
 			);
 
 			//echo Brizy_Admin_View::render( 'settings/debug', array() );
@@ -55,7 +66,8 @@ class Brizy_Admin_Settings {
 	 */
 	function action_register_settings_page() {
 		add_menu_page( brizy()->get_name(),
-			brizy()->get_name(), 'manage_options',
+			brizy()->get_name(),
+			'manage_options',
 			self::menu_slug(),
 			array( $this, 'render' ),
 			plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
@@ -98,11 +110,15 @@ class Brizy_Admin_Settings {
 		}
 
 		if ( $error_count == 0 ) {
+			$this->selected_post_types = $post_types;
+
 			Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
 			Brizy_Editor_Storage_Common::instance()->set( 'exclude-roles', $roles );
 
 			Brizy_Admin_Flash::instance()->add_success( 'Settings saved.' );
 		}
+
+		wp_redirect( menu_page_url( brizy()->get_name() ) );
 
 	}
 
@@ -164,16 +180,11 @@ class Brizy_Admin_Settings {
 
 	private function filter_types( WP_Post_Type $type ) {
 
-		return !in_array($type->name,array('attachment', 'elementor_library'));
+		return ! in_array( $type->name, array( 'attachment', 'elementor_library' ) );
 	}
 
 	private function is_selected( $type ) {
-
-		try {
-			$type['selected'] = in_array( $type['type'], Brizy_Editor_Storage_Common::instance()->get( 'post-types' ) );
-		} catch ( Exception $e ) {
-			$type['selected'] = true;
-		}
+		$type['selected'] = in_array( $type['type'], $this->selected_post_types );
 
 		return $type;
 	}

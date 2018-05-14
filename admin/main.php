@@ -93,8 +93,9 @@ class Brizy_Admin_Main {
 
 			// compile
 		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception($e);
-		    return;
+			Brizy_Logger::instance()->exception( $e );
+
+			return;
 		}
 	}
 
@@ -333,7 +334,9 @@ class Brizy_Admin_Main {
 	 **/
 	public function filter_add_brizy_edit_row_actions( $actions, $post ) {
 
-		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) ) {
+	    $is_allowed = Brizy_Editor::is_capable("edit_post", $post->ID);
+
+		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) || !$is_allowed ) {
 			return $actions;
 		}
 
@@ -412,32 +415,36 @@ class Brizy_Admin_Main {
 	 */
 	private function enable_brizy_for_post( $p ) {
 
-	    $post = null;
+		$post = null;
 
 		// obtain the post
-        try {
-	        $post    = Brizy_Editor_Post::get( $p->ID );
-        } catch ( Exception $exception ) {
-	        $project  = Brizy_Editor_Project::get();
-            $post = Brizy_Editor_Post::create( $project, $p );
-        }
+		try {
+			$post = Brizy_Editor_Post::get( $p->ID );
+		} catch ( Exception $exception ) {
+			$project = Brizy_Editor_Project::get();
+			$post    = Brizy_Editor_Post::create( $project, $p );
+		}
 
-        if(!$post)
-        {
-	        Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
-	        wp_redirect( $_SERVER['HTTP_REFERER'] );
-        }
+		if ( ! $post ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
+		}
 
 		try {
 
+			$update_post = false;
+
 			if ( $p->post_status == 'auto-draft' ) {
 				$p->post_status = 'draft';
-				wp_update_post( $p );
+				$update_post    = true;
 			}
 
 			if ( $p->post_title == __( 'Auto Draft' ) ) {
-				$count         = $this->get_brizy_auto_draft_count();
-				$p->post_title = 'Brizy #' . ( $count + 1 );
+				$p->post_title = 'Brizy #' . $p->ID;
+				$update_post   = true;
+			}
+
+			if ( $update_post ) {
 				wp_update_post( $p );
 			}
 
@@ -463,14 +470,4 @@ class Brizy_Admin_Main {
 		exit;
 	}
 
-	private function get_brizy_auto_draft_count() {
-		global $wpdb;
-		$results = $wpdb->get_results( 'SELECT count(*) as count FROM wp_posts WHERE post_title LIKE "Brizy #%"' );
-
-		if ( count( $results ) ) {
-			return $results[0]->count;
-		}
-
-		return 0;
-	}
 }
