@@ -521,7 +521,7 @@ class Brizy_Editor_API {
 
 
 	public function get_menu_list() {
-		wp_send_json( wp_get_nav_menus(), 200 );
+		wp_send_json( wp_get_nav_menus(array('hide_empty'=>true)), 200 );
 	}
 
 	public function get_terms() {
