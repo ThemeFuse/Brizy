@@ -153,21 +153,21 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor() {
-		return ! is_admin() && current_user_can( 'edit_pages' ) && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
+		return ! is_admin() && Brizy_Editor::is_capable('edit_posts') && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor_on_iframe() {
-		return ! is_admin() && current_user_can( 'edit_pages' ) && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && $this->post->uses_editor();
+		return ! is_admin() && Brizy_Editor::is_capable('edit_posts') && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && $this->post->uses_editor();
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function is_editing_page_without_editor() {
-		return current_user_can( 'edit_pages' ) && ( isset( $_REQUEST['post'] ) && $_REQUEST['post'] == $this->post->get_id() );
+		return Brizy_Editor::is_capable('edit_posts') && ( isset( $_REQUEST['post'] ) && $_REQUEST['post'] == $this->post->get_id() );
 	}
 
 	/**

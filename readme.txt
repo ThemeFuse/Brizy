@@ -129,6 +129,13 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.x.x - x =
+* Fixed: Capability access to edit/save brizy posts
+* Fixed: Settings page
+* Fixed: Recompile page after plugin update
+* Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
+
+
 = 1.0.1 - 2018-05-11 =
 * Fixed: Reconfigured the page compiler.
 

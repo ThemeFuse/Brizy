@@ -91,16 +91,26 @@ class Brizy_Editor_API {
 			}
 
 			wp_update_post( array( 'ID' => $post_id, 'post_content' => $post->get_compiled_html_body() ) );
-			wp_publish_post( $post_id );
+
+			$post_type        = $post->get_wp_post()->post_type;
+			$post_type_object = get_post_type_object( $post_type );
+			$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
+
+			if ( $can_publish ) {
+				wp_publish_post( $post_id );
+			} else {
+				wp_update_post( array( 'ID' => $post_id, 'post_status' => 'pending' ) );
+			}
+
 
 			// get latest version of post
-			$post    = Brizy_Editor_Post::get( $post_id );
-			$post_arr = self::create_post_arr( $post );
+			$post                 = Brizy_Editor_Post::get( $post_id );
+			$post_arr             = self::create_post_arr( $post );
 			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
 			$this->success( array( $post_arr ) );
 
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( 500, "Invalid post id" );
 			exit;
 		}
@@ -114,7 +124,7 @@ class Brizy_Editor_API {
 			$this->authorize();
 			$this->success( array() );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
 		}
@@ -130,7 +140,7 @@ class Brizy_Editor_API {
 
 			$this->success( $data );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
 		}
@@ -151,7 +161,7 @@ class Brizy_Editor_API {
 
 			$this->success( $this->create_post_globals() );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 			exit;
 		}
@@ -170,7 +180,7 @@ class Brizy_Editor_API {
 
 			$this->success( array( $post_arr ) );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( 500, $exception->getMessage() );
 			exit;
 		}
@@ -181,8 +191,8 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$_POST     = array_map( 'stripslashes_deep', $_POST );
-			$data   = $this->param( 'data' );
+			$_POST = array_map( 'stripslashes_deep', $_POST );
+			$data  = $this->param( 'data' );
 			//$title     = $this->param( 'title' );
 			$atemplate = $this->param( 'template' );
 
@@ -195,7 +205,7 @@ class Brizy_Editor_API {
 			}
 
 			if ( $data ) {
-				$this->post->set_editor_data($data);
+				$this->post->set_editor_data( $data );
 			}
 
 			$this->post
@@ -204,7 +214,7 @@ class Brizy_Editor_API {
 
 			$this->success( self::create_post_arr( $this->post ) );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -245,7 +255,7 @@ class Brizy_Editor_API {
 				'sidebarContent' => $sidebar_html
 			) );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -264,7 +274,7 @@ class Brizy_Editor_API {
 				'shortcode' => $shortcode_content
 			) );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			http://brizy.local/wp-admin/admin-ajax.php?post=13
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
@@ -275,7 +285,7 @@ class Brizy_Editor_API {
 			global $shortcode_tags;
 			$this->success( array_keys( $shortcode_tags ) );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -294,7 +304,7 @@ class Brizy_Editor_API {
 
 			$this->success( $response );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -341,7 +351,7 @@ class Brizy_Editor_API {
 				$attachment_id
 			) );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception($exception);
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
@@ -518,11 +528,11 @@ class Brizy_Editor_API {
 
 		$taxonomy = $this->param( 'taxonomy' );
 
-		$terms = (array)get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
+		$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
 
 		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 
-		wp_send_json(array_values($terms));
+		wp_send_json( array_values( $terms ) );
 	}
 
 }

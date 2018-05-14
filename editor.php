@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Brizy_Editor
  */
@@ -16,12 +17,12 @@ class Brizy_Editor {
 
 	public static function is_user_allowed() {
 
-		if(is_null(self::$is_allowed_for_current_user))
-		{
+		if ( is_null( self::$is_allowed_for_current_user ) ) {
 			$user = wp_get_current_user();
 
-			if($user->ID==0) {
+			if ( $user->ID == 0 ) {
 				self::$is_allowed_for_current_user = false;
+
 				return self::$is_allowed_for_current_user;
 			};
 
@@ -37,6 +38,10 @@ class Brizy_Editor {
 		}
 
 		return self::$is_allowed_for_current_user;
+	}
+
+	public static function is_capable( $capability, $post_id = null ) {
+		return self::is_user_allowed() && current_user_can( $capability, $post_id );
 	}
 
 	private function __construct() {
@@ -76,7 +81,7 @@ class Brizy_Editor {
 		try {
 			return Brizy_Editor_Storage_Common::instance()->get( self::$settings_key );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
-			return ['post','page'];
+			return [ 'post', 'page' ];
 		}
 	}
 }

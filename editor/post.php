@@ -238,7 +238,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @return bool
 	 */
 	public function can_edit() {
-		return current_user_can( 'edit_pages' );
+		return Brizy_Editor::is_capable( "edit_post", $this->get_id() );
 	}
 
 	/**

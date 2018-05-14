@@ -334,7 +334,9 @@ class Brizy_Admin_Main {
 	 **/
 	public function filter_add_brizy_edit_row_actions( $actions, $post ) {
 
-		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) ) {
+	    $is_allowed = Brizy_Editor::is_capable("edit_post", $post->ID);
+
+		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) || !$is_allowed ) {
 			return $actions;
 		}
 
