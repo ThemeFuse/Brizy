@@ -152,16 +152,15 @@ The progress you're making while building your page is always backed up in the c
 * Improved: Disabled leave confirmation when editing with brizy is clicked
 * Fixed: Long compile page requests
 * Fixed: Changed page compilation
-* Fixed: Woocomerce product shortcode
 * Fixed: Responsive issues
 * Fixed: Scroll speed in Firefox
 * Fixed: Other minor bugs
 
 = 0.2.5 - 2018-04-27 =
-* Fixed: Fixed the Publish/Update button
+* Fixed: Publish/Update button
 
 = 0.2.0 - 2018-04-13 =
 * Fixed: Bug Fixes
 
 = 0.1.0 - 2018-04-12 =
-* New: First release
+* New: Initial Beta Release

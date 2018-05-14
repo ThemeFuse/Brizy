@@ -119,7 +119,6 @@ A good bug report includes full details to easily understand the issue you are h
 * Improved: Disabled leave confirmation when editing with brizy is clicked
 * Fixed: Long compile page requests
 * Fixed: Changed page compilation
-* Fixed: Woocomerce product shortcode
 * Fixed: Responsive issues
 * Fixed: Scroll speed in Firefox
 * Fixed: Other minor bugs

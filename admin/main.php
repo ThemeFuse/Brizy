@@ -463,11 +463,6 @@ class Brizy_Admin_Main {
 		} catch ( Exception $exception ) {
 
 			Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
-
-			if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-				var_dump( $exception );
-			}
-
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
 

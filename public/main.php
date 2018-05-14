@@ -304,10 +304,7 @@ class Brizy_Public_Main {
 			try {
 				$this->post->compile_page();
 			} catch ( Exception $e ) {
-				// handle this
-				if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-					var_dump( $e );
-				}
+				Brizy_Logger::instance()->exception($e);
 			}
 		}
 	}
