@@ -130,28 +130,28 @@ The progress you're making while building your page is always backed up in the c
 == Changelog ==
 
 = 1.0.2 - x =
+* New: Added cover option for Video element
+* Improved: readme files
+* Improved: Clicking on a anchor will trigger a smooth transition to the target
+* Improved: Tabs element with long labels will look better on mobile
+* Fixed: Other minor bugs
 * Fixed: Capability access to edit/save brizy posts
 * Fixed: Settings page
 * Fixed: Recompile page after plugin update
 * Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
-* New: Added cover option for Video element
-* Improved: Clicking on a anchor will trigger a smooth transition to the target
-* Improved: Tabs element with long labels will look better on mobile
-* Fixed: Other minor bugs
-
 
 = 1.0.1 - 2018-05-11 =
-* Fixed: Reconfigured the page compiler.
+* Fixed: Reconfigured the page compiler
 
 = 1.0.0 - 2018-05-08 =
-* Fixed: Woocomerce product shortcode.
-* Updated: Navigation will return empty if the menu name is null.
-* Updated: Added support for custom type posts.
-* Fixed: Long compile page requests.
-* Updated: Updated the plugin name.
-* Updated: Disabled leave confirmation when editing with brizy is clicked.
-* Fixed: Changed page compilation
 * New: Added keyword shortcuts for undo / redo
+* Improved: Navigation will return empty if the menu name is null
+* Improved: Added support for custom type posts
+* Improved: Updated the plugin name
+* Improved: Disabled leave confirmation when editing with brizy is clicked
+* Fixed: Long compile page requests
+* Fixed: Changed page compilation
+* Fixed: Woocomerce product shortcode
 * Fixed: Responsive issues
 * Fixed: Scroll speed in Firefox
 * Fixed: Other minor bugs
