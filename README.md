@@ -106,6 +106,7 @@ A good bug report includes full details to easily understand the issue you are h
 * Fixed: Settings page
 * Fixed: Recompile page after plugin update
 * Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
+* Fixed: save compiler version at compile time
 
 ### 1.0.1 - 2018-05-11 ###
 * Fixed: Reconfigured the page compiler
