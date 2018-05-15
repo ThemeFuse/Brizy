@@ -141,6 +141,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Recompile page after plugin update
 * Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
 * Fixed: save compiler version at compile time
+* Fixed: Media asset proxy
 
 = 1.0.1 - 2018-05-11 =
 * Fixed: Reconfigured the page compiler
