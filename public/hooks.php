@@ -67,9 +67,7 @@ function brizy_initialize_front_end_Brizy_Public_Main() {
 		$main->initialize_front_end();
 
 	} catch ( Exception $e ) {
-		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-			var_dump( $e );
-		}
+		Brizy_Logger::instance()->exception($e);
 	}
 }
 
@@ -98,9 +96,7 @@ function brizy_initialize_admin_edit_Brizy_Public_Main() {
 		$main->initialize_wordpress_editor();
 
 	} catch ( Exception $e ) {
-		if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-			var_dump( $e );
-		}
+		Brizy_Logger::instance()->exception($e);
 	}
 }
 

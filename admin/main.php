@@ -433,6 +433,7 @@ class Brizy_Admin_Main {
 		try {
 
 			$update_post = false;
+			$post_type = $p->post_type;
 
 			if ( $p->post_status == 'auto-draft' ) {
 				$p->post_status = 'draft';
@@ -450,7 +451,10 @@ class Brizy_Admin_Main {
 
 			$post->enable_editor();
 
-			$post->set_template( Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
+			if($post_type!='post')
+            {
+                $post->set_template( Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
+            }
 
 			$post->save();
 			// redirect
@@ -459,11 +463,6 @@ class Brizy_Admin_Main {
 		} catch ( Exception $exception ) {
 
 			Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
-
-			if ( defined( 'BRIZY_DUMP_EXCEPTION' ) ) {
-				var_dump( $exception );
-			}
-
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
 

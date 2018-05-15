@@ -158,31 +158,43 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function save() {
 
 		try {
-			//$brizy_editor_user = Brizy_Editor_User::get();
-			//$project           = Brizy_Editor_Project::get();
-			//$api_project       = $project->get_api_project();
-			//$updated_page      = $brizy_editor_user->update_page( $api_project, $this->api_page );
-			//$this->updatePageData( $updated_page );
-
-			// store the signature only once
-			//if ( ! ( $signature = get_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, true ) ) ) {
-			//update_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
-			//update_post_meta( $this->wp_post_id, self::BRIZY_POST_HASH_KEY, $this->get_api_page()->get_id() );
-			//}
-
-			update_post_meta( $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, BRIZY_EDITOR_VERSION );
-
 			$this->storage()->set( self::BRIZY_POST, $this );
-
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
-
 			return false;
 		}
 	}
 
+
+	/**
+	 * @return bool
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
+	 * @throws Exception
+	 */
+	public function compile_page() {
+
+		Brizy_Logger::instance()->notice( 'Compile page', array( $this ) );
+
+		$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
+
+		$this->set_compiled_html_head( $compiled_html->get_head() );
+		$this->set_compiled_html_body( $compiled_html->get_body() );
+
+		$this->set_needs_compile( false );
+
+		update_post_meta( $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, BRIZY_EDITOR_VERSION );
+
+		$this->save();
+
+		return true;
+	}
+
+
+
 	public function get_compiler_version() {
-		return get_post_meta( $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, true );
+		$get_post_meta = get_post_meta( $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, true );
+
+		return $get_post_meta;
 	}
 
 	public function isCompiledWithCurrentVersion() {
@@ -317,26 +329,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
 			get_permalink( $this->get_id() )
 		);
-	}
-
-
-	/**
-	 * @return bool
-	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
-	 * @throws Exception
-	 */
-	public function compile_page() {
-
-		Brizy_Logger::instance()->notice( 'Compile page', array( $this ) );
-
-		$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
-
-		$this->set_compiled_html_head( $compiled_html->get_head() );
-		$this->set_compiled_html_body( $compiled_html->get_body() );
-
-		$this->set_needs_compile( false );
-
-		return true;
 	}
 
 

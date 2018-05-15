@@ -33,6 +33,7 @@ class Brizy_Config {
 
 	const MEDIA_IMAGE_PATH = '/storage/media';
 	const MEDIA_IMAGE_URL = 'https://app.brizy.io/storage/media';
+	const MEDIA_IMAGE_URL_REGEX = 'https:\/\/app\.brizy\.io\/storage\/media.[^"\'\s)]+';
 
 	const EDITOR_ORIGIN_URL = 'http://testblox.info';
 

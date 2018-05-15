@@ -31,96 +31,20 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Asset_Proce
 	 */
 	public function process( $content ) {
 
-		//$content = $this->process_script_urls( $content );
-		$content = $this->process_image_urls( $content );
-		$content = $this->process_inline_css( $content );
+		$content = $this->process_external_asset_urls( $content );
 
 		return $content;
 	}
 
-	/**
-	 * @param string $content
-	 *
-	 * @return string
-	 */
-//	private function process_script_urls( $content ) {
-//
-//		preg_match_all( '/<script(.*?)<\/script>/im', $content, $matches );
-//
-//		foreach ( $matches[1] as $attributes ) {
-//			preg_match_all( "/src=(?:\"(.[^\"]*)\")/", $attributes, $res );
-//			$t = 0;
-//
-//			if ( isset( $res[1] ) && isset( $res[1][0] ) ) {
-//				$url = $res[1][0];
-//				// store and replace $url
-//				$new_url = $this->storage->store( $url );
-//				$content = str_replace( $url, $new_url, $content );
-//			}
-//		}
-//
-//		return $content;
-//	}
+	public function process_external_asset_urls( $content ) {
+		$regex = Brizy_Config::MEDIA_IMAGE_URL_REGEX;
+		preg_match_all( "/{$regex}/im", $content, $matches );
 
-	/**
-	 * @param string $content
-	 *
-	 * @return string
-	 */
-	private function process_image_urls( $content ) {
-
-		preg_match_all( '/<img(.*?)\/?>/im', $content, $matches );
-
-		foreach ( $matches[1] as $attributes ) {
-			preg_match_all( "/src=(?:\"(.[^\"]*)\")/", $attributes, $res );
-
-			if ( isset( $res[1] ) && isset( $res[1][0] ) && strpos( $res[1][0], Brizy_Config::MEDIA_IMAGE_URL ) === 0 ) {
-				$url = $res[1][0];
-
-				// ignore inline images
-				if ( preg_match( "/^data:/i", $url ) ) {
-					continue;
-				}
-
-				// store and replace $url
-				$new_url = $this->storage->store( $url );
-
-				$content = str_replace( $url, $new_url, $content );
-			}
+		foreach ( $matches[0] as $asset_url ) {
+			$new_url = $this->storage->store( $asset_url );
+			$content = str_replace( $asset_url, $new_url, $content );
 		}
 
 		return $content;
 	}
-
-
-	/**
-	 * @param string $content
-	 *
-	 * @return string
-	 */
-	private function process_inline_css( $content ) {
-
-		preg_match_all( '/<style(.[^<]*)<\/style>/im', $content, $matches );
-
-		foreach ( $matches[1] as $attributes ) {
-			preg_match_all( "/url\(\"?(.[^\"\)]*)\)/im", $attributes, $res );
-
-			if ( isset( $res[1] ) && isset( $res[1][0] ) && strpos( $res[1][0], Brizy_Config::MEDIA_IMAGE_URL ) === 0 ) {
-				$url = $res[1][0];
-
-				// ignore inline images
-				if ( preg_match( "/^data:/i", $url ) ) {
-					continue;
-				}
-
-				// store and replace $url
-				$new_url = $this->storage->store( $url );
-				$content = str_replace( $url, $new_url, $content );
-			}
-		}
-
-		return $content;
-	}
-
-
 }
