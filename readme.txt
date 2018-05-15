@@ -134,6 +134,7 @@ The progress you're making while building your page is always backed up in the c
 * Improved: readme files
 * Improved: Clicking on a anchor will trigger a smooth transition to the target
 * Improved: Tabs element with long labels will look better on mobile
+* Improved: Better support for retina displays
 * Fixed: Other minor bugs
 * Fixed: Capability access to edit/save brizy posts
 * Fixed: Settings page
