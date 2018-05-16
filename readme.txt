@@ -129,7 +129,7 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
-= 1.0.2 - x =
+= 1.0.2 - 2018-05-15 =
 * New: Added cover option for Video element
 * Improved: readme files
 * Improved: Clicking on a anchor will trigger a smooth transition to the target
