@@ -96,7 +96,7 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
-### 1.0.2 - x ###
+### 1.0.2 - 2018-05-15 ###
 * New: Added cover option for Video element
 * Improved: readme files
 * Improved: Clicking on a anchor will trigger a smooth transition to the target
