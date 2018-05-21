@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.2<br>
+Stable tag: 1.0.3<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -96,9 +96,14 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
+### 1.0.3 - 2018-05-21 ###
+* New: Added basic animations
+* New: Added spacing option to Menu element
+* Fixed: Other minor bugs
+
 ### 1.0.2 - 2018-05-15 ###
-* New: Added cover option for Video element
-* Improved: readme files
+* New: Added cover option to Video element
+* Improved: Updated readme files
 * Improved: Clicking on a anchor will trigger a smooth transition to the target
 * Improved: Tabs element with long labels will look better on mobile
 * Improved: Better support for retina displays
@@ -107,7 +112,7 @@ A good bug report includes full details to easily understand the issue you are h
 * Fixed: Settings page
 * Fixed: Recompile page after plugin update
 * Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
-* Fixed: save compiler version at compile time
+* Fixed: Save compiler version at compile time
 * Fixed: Media asset proxy
 
 ### 1.0.1 - 2018-05-11 ###
