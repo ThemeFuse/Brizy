@@ -10,8 +10,6 @@
       return
     }
 
-    console.log( id );
-
     $(this).addClass('loading')
 
     xhr = true

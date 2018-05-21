@@ -33,7 +33,6 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 */
 	private $platform_user_signature;
 
-
 	/**
 	 * @return Brizy_Editor_User
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
@@ -71,6 +70,10 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		return self::$instance = $user;
 	}
 
+	public static function reload() {
+		return self::$instance = new self( Brizy_Editor_Storage_Common::instance() );
+	}
+
 	/**
 	 * Brizy_Editor_User constructor.
 	 *
@@ -99,7 +102,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	static protected function clone_user( Brizy_Editor_User $user ) {
+	static protected function clone_user( $user ) {
 		// we create a new user for now
 		$platform = new Brizy_Editor_API_Platform();
 		$platform->createUser( $user->getPlatformUserId() );
@@ -310,7 +313,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 * @throws Exception
 	 */
-	public function update_project( Brizy_Editor_API_Project $project ) {
+	public function update_project(  $project ) {
 		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
 
 		$updated_project = $this->get_client()->update_project( $project );
@@ -330,7 +333,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function get_project( Brizy_Editor_API_Project $project ) {
+	public function get_project(  $project ) {
 		return $this->get_client()->get_project( $project );
 	}
 
@@ -380,7 +383,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function get_media_id( Brizy_Editor_Project $project, $attachment_id ) {
+	public function get_media_id( $project, $attachment_id ) {
 
 		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $attachment_id );
 		$hash_name                 = null;
