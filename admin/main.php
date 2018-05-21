@@ -45,7 +45,7 @@ class Brizy_Admin_Main {
 		}
 
 		if ( function_exists( 'gutenberg_init' ) ) {
-			add_action( 'admin_print_scripts-edit.php', [ $this, 'add_edit_button_to_gutenberg' ], 12 );
+			add_action( 'admin_print_scripts-edit.php', array( $this, 'add_edit_button_to_gutenberg' ), 12 );
 		}
 	}
 
@@ -125,10 +125,10 @@ class Brizy_Admin_Main {
 	public function add_edit_button_to_gutenberg() {
 		global $typenow;
 
-		$new_post_url = add_query_arg( [
+		$new_post_url = add_query_arg( array(
 			'action'    => 'brizy_new_post',
 			'post_type' => $typenow,
-		], admin_url( 'edit.php' ) );
+		), admin_url( 'edit.php' ) );
 
 		?>
         <script type="text/javascript">
@@ -334,9 +334,9 @@ class Brizy_Admin_Main {
 	 **/
 	public function filter_add_brizy_edit_row_actions( $actions, $post ) {
 
-	    $is_allowed = Brizy_Editor::is_capable("edit_post", $post->ID);
+		$is_allowed = Brizy_Editor::is_capable( "edit_post", $post->ID );
 
-		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) || !$is_allowed ) {
+		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) || ! $is_allowed ) {
 			return $actions;
 		}
 
@@ -433,7 +433,7 @@ class Brizy_Admin_Main {
 		try {
 
 			$update_post = false;
-			$post_type = $p->post_type;
+			$post_type   = $p->post_type;
 
 			if ( $p->post_status == 'auto-draft' ) {
 				$p->post_status = 'draft';
@@ -451,10 +451,9 @@ class Brizy_Admin_Main {
 
 			$post->enable_editor();
 
-			if($post_type!='post')
-            {
-                $post->set_template( Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
-            }
+			if ( $post_type != 'post' ) {
+				$post->set_template( Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
+			}
 
 			$post->save();
 			// redirect

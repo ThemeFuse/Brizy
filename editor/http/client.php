@@ -146,7 +146,7 @@ class Brizy_Editor_Http_Client {
 	protected function prepare_options( $options ) {
 
 		if ( ! is_array( $options ) ) {
-			$options = [];
+			$options = array();
 		}
 
 		if ( ! isset( $options['headers'] ) ) {

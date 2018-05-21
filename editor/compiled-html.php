@@ -12,7 +12,7 @@ class Brizy_Editor_CompiledHtml {
 	/**
 	 * @var Brizy_Editor_Asset_ProcessorInterface[]
 	 */
-	private $asset_processors = [];
+	private $asset_processors = array();
 
 	/**
 	 * Brizy_Editor_CompiledHtml constructor.
