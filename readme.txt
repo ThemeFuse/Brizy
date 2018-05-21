@@ -136,7 +136,7 @@ The progress you're making while building your page is always backed up in the c
 
 = 1.0.2 - 2018-05-15 =
 * New: Added cover option to Video element
-* Improved: readme files
+* Improved: Updated readme files
 * Improved: Clicking on a anchor will trigger a smooth transition to the target
 * Improved: Tabs element with long labels will look better on mobile
 * Improved: Better support for retina displays
@@ -145,7 +145,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Settings page
 * Fixed: Recompile page after plugin update
 * Fixed: The default title of the newly created pages will be "Brizy #{ID}" format
-* Fixed: save compiler version at compile time
+* Fixed: Save compiler version at compile time
 * Fixed: Media asset proxy
 
 = 1.0.1 - 2018-05-11 =
