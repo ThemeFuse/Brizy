@@ -63,10 +63,10 @@ class Brizy_Editor_Editor_Editor {
 		if ( ! is_null( $this->post ) ) {
 			$wp_post_id = $this->post->get_wp_post()->ID;
 
-			$preview_post_link = get_preview_post_link( $this->post->get_wp_post(), [
+			$preview_post_link = get_preview_post_link( $this->post->get_wp_post(), array(
 				'preview_id'    => $wp_post_id,
 				'preview_nonce' => wp_create_nonce( 'post_preview_' . $wp_post_id )
-			] );
+			) );
 
 			$change_template_url = admin_url( 'admin-post.php?post=' . $this->get_post()->get_id() . '&action=_brizy_change_template' );
 			$templates           = $this->post->get_templates();

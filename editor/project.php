@@ -57,7 +57,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 			//self::$instance->api_project = new Brizy_Editor_API_Project( self::$instance->api_project );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
 			self::$instance                   = self::create();
-			$_SESSION['brizy_project_stored'] = true;
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 			$t = 0;

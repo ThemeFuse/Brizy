@@ -317,7 +317,7 @@ class Brizy_Editor_API {
 		$links = array_merge( $links, $this->get_post_link_list( $search_term ) );
 		$links = array_merge( $links, $this->get_term_link_list( $search_term ) );
 
-		wp_send_json( [ 'filter_term' => $search_term, 'links' => $links ], 200 );
+		wp_send_json( array( 'filter_term' => $search_term, 'links' => $links ), 200 );
 	}
 
 	public function get_sidebars() {

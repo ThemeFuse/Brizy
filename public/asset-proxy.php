@@ -63,7 +63,7 @@ class Brizy_Public_AssetProxy {
 			$content = file_get_contents( $new_path );
 
 			// send headers
-			$headers                   = [];
+			$headers                   = array();
 			$headers['Content-Type']   = $this->get_mime( $new_path, 1 );
 			$headers['Content-Length'] = strlen( $content );
 			$headers['Cache-Control']  = 'max-age=600';
