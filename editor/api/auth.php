@@ -37,21 +37,22 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 	 *
 	 * @return Brizy_Editor_API_AccessToken
 	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest 
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 	public function getToken( $email ) {
 
-		if(isset($_SESSION[md5($this->client_id.$this->secret)]))
-		{
-			$token = $_SESSION[md5($this->client_id.$this->secret)];
+		$token = get_option( $this->get_meta_id(), null );
 
-			if(!$token->expired())
-				return $_SESSION[md5($this->client_id.$this->secret)];
-			else
+		if ( $token ) {
+
+			if ( ! $token->expired() ) {
+				return $token;
+			} else {
 				$this->clearTokenCache();
+			}
 		}
 
 		$response = $this->post( $this->auth_url(),
@@ -60,7 +61,7 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 					'client_id'     => $this->client_id,
 					'client_secret' => $this->secret,
 					'email'         => $email,
-					'grant_type'      => 'https://visual.dev/api/extended_client_credentials'
+					'grant_type'    => 'https://visual.dev/api/extended_client_credentials'
 				),
 				'sslverify' => false
 			)
@@ -69,18 +70,21 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 
 		$brizy_editor_API_access_token = new Brizy_Editor_API_AccessToken( $response['access_token'], $response['expires_in'] + time() );
 
-		if(isset($response['refresh_token']))
-		{
+		if ( isset( $response['refresh_token'] ) ) {
 			$brizy_editor_API_access_token->set_refresh_token( $response['refresh_token'] );
 		}
 
-		return $_SESSION[md5($this->client_id.$this->secret)] = $brizy_editor_API_access_token;
+		add_option( $this->get_meta_id(), $brizy_editor_API_access_token );
+
+		return $brizy_editor_API_access_token;
 	}
 
 	public function clearTokenCache() {
-
-		unset($_SESSION[md5($this->client_id.$this->secret)]);
+		delete_option( $this->get_meta_id() );
 	}
 
+	private function get_meta_id() {
+		return "brizy_" . md5( $this->client_id );
+	}
 
 }
