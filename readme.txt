@@ -129,7 +129,7 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
-= 1.0.3 - ??? =
+= 1.0.3 - 2018-05-21 =
 * New: Added basic animations
 * New: Added spacing option to Menu element
 * Fixed: Other minor bugs

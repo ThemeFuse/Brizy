@@ -96,7 +96,7 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
-### 1.0.3 - ??? ###
+### 1.0.3 - 2018-05-21 ###
 * New: Added basic animations
 * New: Added spacing option to Menu element
 * Fixed: Other minor bugs
