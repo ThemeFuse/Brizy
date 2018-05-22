@@ -96,6 +96,9 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
+### 1.0.5 - 2018-05-22 ###
+* New: Added WooCommerce elements
+
 ### 1.0.4 - 2018-05-21 ###
 * Fixed: Fixed array declaration syntax to support older php versions
 
