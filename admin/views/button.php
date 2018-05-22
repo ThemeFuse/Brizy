@@ -23,7 +23,9 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
 			} else {
 				?>
 				<?php echo _e( $label, 'brizy' ); ?> <img
-                        src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?>" class="brizy-logo"/>
+                        src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?>"
+                        srcset="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?> 1x, <?php echo plugins_url( '../static/img/brizy-2x.png', __FILE__ ) ?> 2x"
+                        class="brizy-logo"/>
 				<?php
 			}
 			?>
@@ -41,7 +43,7 @@ if ( $is_using_brizy ) {
     <div class="brizy-editor">
         <a class="preview brizy-button brizy-button--primary" type="button"
            href="<?php echo $url; ?>"><?php _e( 'Continue to edit with', 'brizy' ); ?>&nbsp;
-            <img src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ); ?>" class="brizy-logo"/></a>
+            <img src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ); ?>" srcset="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ); ?> 1x, <?php echo plugins_url( '../static/img/brizy-2x.png', __FILE__ ); ?> 2x" class="brizy-logo"/></a>
     </div>
 	<?php
 }

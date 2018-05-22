@@ -28,18 +28,3 @@ function example_add_dashboard_widgets() {
 		// ignore this exceptions for now.
 	}
 }
-
-
-add_action( 'wp_logout', 'brizy_session_end' );
-add_action( 'wp_login', 'brizy_session_end' );
-add_action( 'init', 'brizy_session_start', 1 );
-
-function brizy_session_start() {
-	if ( ! session_id() ) {
-		session_start();
-	}
-}
-
-function brizy_session_end() {
-	session_destroy();
-}
