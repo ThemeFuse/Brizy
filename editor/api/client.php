@@ -172,11 +172,15 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @param $page_data
 	 * @param $config
 	 *
+	 * @return string
 	 * @throws Brizy_Editor_API_Exceptions_Exception
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 * @throws Twig_Error_Loader
+	 * @throws Twig_Error_Runtime
+	 * @throws Twig_Error_Syntax
 	 */
 	public function compile_page( $project, $page_data, $config ) {
 
@@ -263,7 +267,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	protected function get_headers() {
 		return array(
-			'Authorization' => 'Bearer ' . $this->access_token->access_token()
+			//'Authorization' => 'Bearer ' . $this->access_token->access_token()
 		);
 	}
 

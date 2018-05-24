@@ -56,7 +56,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 			self::$instance              = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
 			//self::$instance->api_project = new Brizy_Editor_API_Project( self::$instance->api_project );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			self::$instance                   = self::create();
+			self::$instance = self::create();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 			$t = 0;
@@ -67,7 +67,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
 			Brizy_Logger::instance()->notice( "Project signature mismatch" );
 			self::$instance = self::create( self::$instance->get_id() );
-
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 			throw new Exception( 'Unable to check the signature.' );
@@ -85,6 +84,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 	/**
 	 * @param null $clone_from
+	 * @param bool $is_local
 	 *
 	 * @return Brizy_Editor_Project
 	 * @throws Brizy_Editor_API_Exceptions_Exception
@@ -95,11 +95,11 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 * @throws Exception
 	 */
-	private static function create( $clone_from = null ) {
+	private static function create( $clone_from = null, $is_local = true ) {
 
 		$brizy_editor_user = Brizy_Editor_User::get();
 
-		$api_project = $brizy_editor_user->create_project( $clone_from );
+		$api_project = $brizy_editor_user->create_project( $clone_from, $is_local );
 
 		$project                     = new self( $api_project );
 		$project->creation_signature = Brizy_Editor_Signature::get();

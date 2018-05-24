@@ -56,7 +56,7 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 */
 	private function getToken() {
 
-		Brizy_Logger::instance()->notice('Getting token to create the user');
+		Brizy_Logger::instance()->notice( 'Getting token to create the user' );
 
 		$response = $this->post( $this->auth_url(), array(
 			'body' => array(
@@ -125,17 +125,29 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 
 	/**
 	 * @param null $clone_id
+	 * @param bool $is_local
 	 *
-	 * @return array|mixed|object
+	 * @return array|bool|mixed|object
 	 * @throws Brizy_Editor_API_Exceptions_Exception
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function createUser( $clone_id = null ) {
+	public function createUser( $clone_id = null, $is_local = true ) {
 
 		$email = $this->random_email();
+
+		if ( $is_local ) {
+
+			Brizy_Logger::instance()->notice( 'New user created' );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_local', true );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_id', uniqid( 'user', true ) );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_signature', Brizy_Editor_Signature::get() );
+
+			return true;
+		}
 
 		$token = $this->getToken();
 
@@ -163,12 +175,11 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 		if ( $response->is_ok() ) {
 
 			Brizy_Logger::instance()->notice( 'New user created', array( $user ) );
-
+			Brizy_Editor_Storage_Common::instance()->delete( 'platform_user_local' );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_id', $user['id'] );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_signature', Brizy_Editor_Signature::get() );
-		}
-		else {
+		} else {
 			Brizy_Logger::instance()->error( 'Failed to create user', array( $response ) );
 		}
 
