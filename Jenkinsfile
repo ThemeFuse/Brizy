@@ -29,6 +29,16 @@ pipeline {
     stages {
         stage('CodeClean') {
             steps {
+                git url: "https://github.com/ThemeFuse/Brizy",
+                    credentialsId: 'git',
+                    branch: 'release'
+
+                sh "sed -i 's/Version:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Version: ${params.buildVersion}/' brizy.php"
+                sh "sed -i 's/^Stable tag:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Stable tag: ${params.buildVersion}/' readme.txt"
+                sh "sed -i 's/^Stable tag:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Stable tag: ${params.buildVersion}/' README.md"
+                sh "sed -i \"s/'BRIZY_VERSION',\\s'.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}'/'BRIZY_VERSION', '${params.buildVersion}'/\" brizy.php"
+
+                sh 'git commit -m "Build ${params.buildVersion}"'
 
                 sh 'rm -rf vendor'
                 sh '/usr/local/bin/composer install --no-dev'
@@ -39,10 +49,7 @@ pipeline {
                 sh 'rm -rf ./*.sh'
                 sh 'rm -rf ./.git'
                 sh 'rm -rf ./Jenkinsfile'
-                sh "sed -i 's/Version:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Version: ${params.buildVersion}/' brizy.php"
-                sh "sed -i 's/^Stable tag:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Stable tag: ${params.buildVersion}/' readme.txt"
-                sh "sed -i 's/^Stable tag:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Stable tag: ${params.buildVersion}/' README.md"
-                sh "sed -i \"s/'BRIZY_VERSION',\\s'.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}'/'BRIZY_VERSION', '${params.buildVersion}'/\" brizy.php"
+
             }
         }
 
@@ -65,6 +72,12 @@ pipeline {
             }
             steps {
                 sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion + ' && svn commit -m "Version ${params.buildVersion}"'
+                sh 'git checkout master'
+                sh 'git merge release'
+                sh 'git tag -a '+params.buildVersion
+                sh 'git checkout develop'
+                sh 'git merge release'
+                sh 'git push origin master && git push origin develop && git push origin release'
             }
         }
 
