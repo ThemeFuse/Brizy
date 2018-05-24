@@ -22,8 +22,7 @@ class Brizy_Editor_Signature {
 		return array(
 			get_option( 'siteurl' ),
 			defined('WP_SITEURL')?WP_SITEURL:'',
-			dirname( __FILE__ ),
-			md5('123')
+			dirname( __FILE__ )
 		);
 	}
 
