@@ -135,11 +135,8 @@ class Brizy_Editor_Editor_Editor {
 					'dummy'       => true,
 					'woocommerce' => $this->get_woocomerce_plugin_info(),
 				),
-				'hasSidebars' => count( $wp_registered_sidebars ) > 0
-				//'menus' =>  wp_get_nav_menus()
-//				'shortcodes' => array(
-//					'sidebar' => 'brizy_sidebar'
-//				)
+				'hasSidebars' => count( $wp_registered_sidebars ) > 0,
+				'l10n'        => Brizy_Languages_Texts::get_editor_texts()
 			)
 		);
 
