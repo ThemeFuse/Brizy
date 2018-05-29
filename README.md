@@ -98,7 +98,8 @@ A good bug report includes full details to easily understand the issue you are h
 
 ### 1.0.6 - 2018-05-24 ###
 * New: Disabled all platform api calls
-* Improved: Greatly improved elements resizing experience
+* New: Added resizing via drag for Section paddings
+* New: Added resizing via drag for various elements (Image, Map, Spacer, etc.)
 * Fixed: Other minor bugs
 
 ### 1.0.5 - 2018-05-22 ###
