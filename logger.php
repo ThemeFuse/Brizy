@@ -64,6 +64,10 @@ class Brizy_Logger {
 	private function write_log( $type, $message, $context = array() ) {
 		global $wpdb;
 
+		if ( ! BRIZY_LOG ) {
+			return;
+		}
+
 		$wpdb->insert( "{$wpdb->prefix}brizy_logs", array(
 			'type'       => $type,
 			'message'    => $message,

@@ -12,6 +12,7 @@
  */
 
 define( 'BRIZY_DEVELOPMENT', false );
+define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '1.0.6' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.23' );
 define( 'BRIZY_FILE', __FILE__ );
