@@ -153,11 +153,17 @@ class Brizy_Editor_API {
 		try {
 			$this->authorize();
 
+			// update project globas
 			$data = $this->param( 'globals' );
 			$this->project->set_globals_as_json( stripslashes( $data ) );
 			$this->project->save();
 
-			//Brizy_Editor_User::get()->update_project( $this->project->get_api_project() );
+			// mark all brizy post to be compiled on next view
+			$posts = Brizy_Editor_Post::get_all_brizy_posts();
+			foreach($posts as $bpost) {
+				$bpost->set_needs_compile(true);
+				$bpost->save();
+			}
 
 			$this->success( $this->create_post_globals() );
 		} catch ( Exception $exception ) {
@@ -218,22 +224,6 @@ class Brizy_Editor_API {
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
-
-//	/**
-//	 * @internal
-//	 */
-//	public function build_content() {
-//		try {
-//
-//			$this->post
-//				->compile_page()
-//				->save();
-//
-//			$this->success( self::create_post_arr( $this->post ) );
-//		} catch ( Exception $exception ) {
-//			$this->error( $exception->getCode(), $exception->getMessage() );
-//		}
-//	}
 
 	public function sidebar_content() {
 		try {

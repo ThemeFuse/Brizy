@@ -21,6 +21,11 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	protected $wp_post_id;
 
 	/**
+	 * @var WP_Post
+	 */
+	protected $wp_post;
+
+	/**
 	 * @var string
 	 */
 	protected $compiled_html_body;
@@ -59,8 +64,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function __construct( $wp_post_id ) {
 		$this->wp_post_id = (int) $wp_post_id;
+		$this->wp_post    = get_post( $this->wp_post_id );
 	}
-
 
 	/**
 	 * @return string
@@ -69,6 +74,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$get_object_vars = get_object_vars( $this );
 
 		unset( $get_object_vars['wp_post_id'] );
+		unset( $get_object_vars['wp_post'] );
 		unset( $get_object_vars['api_page'] );
 		unset( $get_object_vars['store_assets'] );
 		unset( $get_object_vars['assets'] );
@@ -117,8 +123,33 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$post = $brizy_editor_storage_post->get( self::BRIZY_POST );
 
 		$post->wp_post_id = $wp_post_id;
+		$post->wp_post    = get_post( $wp_post_id );
 
 		return $post;
+	}
+
+
+	/**
+	 * @return Brizy_Editor_Post[]
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+	 */
+	public static function get_all_brizy_posts() {
+		global $wpdb;
+		$posts = $wpdb->get_results(
+			$wpdb->prepare( "SELECT pm.*, p.post_type FROM {$wpdb->postmeta} pm 
+									JOIN {$wpdb->posts} p ON p.ID=pm.post_id  
+									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
+		);
+
+		$result = array();
+		foreach ( $posts as $p ) {
+			if ( in_array( $p->post_type, brizy()->supported_post_types() ) ) {
+				$result[] = Brizy_Editor_Post::get( $p->post_id );
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -145,13 +176,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return $post;
 	}
 
-//	public function updatePageData( $data = null ) {
-//
-//		Brizy_Logger::instance()->notice( 'Update page data', array( 'new_data' => $data ) );
-//		$this->api_page = new Brizy_Editor_API_Page( $data );
-//		$this->save_locally();
-//	}
-
 	/**
 	 * @return bool
 	 */
@@ -161,10 +185,10 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			$this->storage()->set( self::BRIZY_POST, $this );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
+
 			return false;
 		}
 	}
-
 
 	/**
 	 * @return bool
@@ -188,8 +212,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		return true;
 	}
-
-
 
 	public function get_compiler_version() {
 		$get_post_meta = get_post_meta( $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, true );
@@ -289,14 +311,12 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return Brizy_Editor_Storage_Post::instance( $this->wp_post_id );
 	}
 
-
 	/**
 	 * @return array|null|WP_Post
 	 */
 	public function get_wp_post() {
-		return get_post( $this->get_id() );
+		return $this->wp_post;
 	}
-
 
 	/**
 	 * @return bool
@@ -320,17 +340,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			get_permalink( $this->get_id() )
 		);
 	}
-
-	/**
-	 * @return string
-	 */
-	public function edit_url_iframe() {
-		return add_query_arg(
-			array( Brizy_Editor_Constants::EDIT_KEY_IFRAME => '' ),
-			get_permalink( $this->get_id() )
-		);
-	}
-
 
 	public function set_needs_compile( $v ) {
 		$this->needs_compile = (bool) $v;

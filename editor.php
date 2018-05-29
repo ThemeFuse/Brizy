@@ -11,6 +11,10 @@ class Brizy_Editor {
 
 	private static $instance;
 
+	private function __construct() {
+		//add_filter( 'brizy:post_types', array( $this, '_filter_brizy_supported_port_types' ) );
+	}
+
 	public static function get() {
 		return self::$instance ? self::$instance : self::$instance = new self();
 	}
@@ -42,10 +46,6 @@ class Brizy_Editor {
 
 	public static function is_capable( $capability, $post_id = null ) {
 		return self::is_user_allowed() && current_user_can( $capability, $post_id );
-	}
-
-	private function __construct() {
-		//add_filter( 'brizy:post_types', array( $this, '_filter_brizy_supported_port_types' ) );
 	}
 
 	public function get_path( $rel = '/' ) {
@@ -84,4 +84,5 @@ class Brizy_Editor {
 			return array('post', 'page' );
 		}
 	}
+
 }

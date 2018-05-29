@@ -302,7 +302,7 @@ class Brizy_Public_Main {
 	}
 
 	private function compilePage() {
-		if ( is_preview() || isset( $_GET['preview'] ) || !$this->post->isCompiledWithCurrentVersion() ) {
+		if ( is_preview() || isset( $_GET['preview'] ) || !$this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile() ) {
 			try {
 				$this->post->compile_page();
 			} catch ( Exception $e ) {
