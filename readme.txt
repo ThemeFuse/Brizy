@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-an
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -129,9 +129,23 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.7 - 2018-05-30 =
+* New: Made the editor translatable
+* New: Add 3 new svg icons for wp shortcodes
+* Improved: Image element drag resizer now works better
+* Improved: Added the possibility to enable/disable logs
+* Fixed: Video element autoplay
+* Fixed: Vertical align for row and column elements
+* Fixed: Some issues with text element and undo / redo
+* Fixed: Other minor bugs
+* Fixed: Force all posts to be compiled on next view if the globals has been updated
+* Fixed: Removed autoformat for wordpress content
+
+
 = 1.0.6 - 2018-05-24 =
 * New: Disabled all platform api calls
-* Improved: Greatly improved elements resizing experience
+* New: Added resizing via drag for Section paddings
+* New: Added resizing via drag for various elements (Image, Map, Spacer, etc.)
 * Fixed: Other minor bugs
 
 

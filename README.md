@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.6<br>
+Stable tag: 1.0.7<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -96,9 +96,23 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
+### 1.0.7 - 2018-05-30 ###
+* New: Made the editor translatable
+* New: Add 3 new svg icons for wp shortcodes
+* Improved: Image element drag resizer now works better
+* Improved: Added the possibility to enable/disable logs
+* Fixed: Video element autoplay
+* Fixed: Vertical align for row and column elements
+* Fixed: Some issues with text element and undo / redo
+* Fixed: Other minor bugs
+* Fixed: Force all posts to be compiled on next view if the globals has been updated
+* Fixed: Removed autoformat for wordpress content
+
+
 ### 1.0.6 - 2018-05-24 ###
 * New: Disabled all platform api calls
-* Improved: Greatly improved elements resizing experience
+* New: Added resizing via drag for Section paddings
+* New: Added resizing via drag for various elements (Image, Map, Spacer, etc.)
 * Fixed: Other minor bugs
 
 ### 1.0.5 - 2018-05-22 ###

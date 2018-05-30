@@ -46,7 +46,7 @@ class Brizy_Editor_API_Auth extends Brizy_Editor_Http_Client {
 
 		$token = get_option( $this->get_meta_id(), null );
 
-		if ( $token ) {
+		if ( $token instanceof Brizy_Editor_API_AccessToken) {
 
 			if ( ! $token->expired() ) {
 				return $token;
