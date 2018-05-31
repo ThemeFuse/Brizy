@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     if(folderExist(params.brizySvnPath+"/tags/"+params.buildVersion)) {
-                        error("Build failed because this version os alread built.")
+                        error("Build failed because this version is alread built.")
                     }
                 }
 
@@ -96,7 +96,7 @@ pipeline {
             }
             steps {
                 sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion
-                sh 'cd ' + params.brizySvnPath + ' && svn commit --username themefusecom --password '+params.svnPassword+'  -m "Version '+params.buildVersion+'"'
+                sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password '+params.svnPassword+'  -m "Version '+params.buildVersion+'"'
             }
         }
         stage('Git Merge') {
