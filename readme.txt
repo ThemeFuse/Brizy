@@ -131,15 +131,15 @@ The progress you're making while building your page is always backed up in the c
 
 = 1.0.7 - 2018-05-30 =
 * New: Made the editor translatable
-* New: Add 3 new svg icons for wp shortcodes
+* New: Added 3 new svg icons for wp shortcodes
 * Improved: Image element drag resizer now works better
 * Improved: Added the possibility to enable/disable logs
 * Fixed: Video element autoplay
 * Fixed: Vertical align for row and column elements
 * Fixed: Some issues with text element and undo / redo
-* Fixed: Other minor bugs
 * Fixed: Force all posts to be compiled on next view if the globals has been updated
 * Fixed: Removed autoformat for wordpress content
+* Fixed: Other minor bugs
 
 
 = 1.0.6 - 2018-05-24 =
