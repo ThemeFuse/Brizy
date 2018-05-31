@@ -95,7 +95,8 @@ pipeline {
                 expression { return params.svnCommit }
             }
             steps {
-                sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion + ' && svn commit -m "Version '+params.buildVersion+'"'
+                sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion
+                sh 'cd ' + params.brizySvnPath + ' && svn commit --username themefusecom --password '+params.svnPassword+'  -m "Version '+params.buildVersion+'"'
             }
         }
         stage('Git Merge') {
