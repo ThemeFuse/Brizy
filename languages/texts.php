@@ -1,24 +1,22 @@
 <?php
-class Brizy_Languages_Texts {
+class Brizy_Languages_Texts
+{
 
-	public static function get_editor_texts() {
+	public static function get_editor_texts()
+	{
 		return array(
-
 			// First Block Adder
-
 			"START BUILDING YOUR PAGE" => __("START BUILDING YOUR PAGE", "brizy") ,
 			"Press the button above to add blocks" => __("Press the button above to add blocks", "brizy") ,
 			"SWITCH TO DESKTOP" => __("SWITCH TO DESKTOP", "brizy") ,
 			"Switch to desktop to add blocks" => __("Switch to desktop to add blocks", "brizy") ,
 
 			// Last Block Adder
-
 			"Add a new block" => __("Add a new block", "brizy") ,
 			"Press the button to add blocks" => __("Press the button to add blocks", "brizy") ,
 
 			// Left SideBar
-			// -> Add Elements
-
+			//-> Add Elements
 			"Add Elements" => __("Add Elements", "brizy") ,
 			"Text" => __("Text", "brizy") ,
 			"Button" => __("Button", "brizy") ,
@@ -48,29 +46,21 @@ class Brizy_Languages_Texts {
 			"Menu" => __("Menu", "brizy") ,
 			"Posts" => __("Posts", "brizy") ,
 			"Sidebar" => __("Sidebar", "brizy") ,
-
-			// -> Reorder Blocks
-
+			//-> Reorder Blocks
 			"Reorder Blocks" => __("Reorder Blocks", "brizy") ,
 			"Drag to reorder" => __("Drag to reorder", "brizy") ,
-
-			// -> Styling
-
+			//-> Styling
 			"Styling" => __("Styling", "brizy") ,
 			"Add New Google Font" => __("Add New Google Font", "brizy") ,
 			"Type font name" => __("Type font name", "brizy") ,
 			"Add new option" => __("Add new option", "brizy") ,
 			"Add New" => __("Add New", "brizy") ,
 			"New Style #%s" => __("New Style #%s", "brizy") ,
-
-			// -> Device Mode
-
+			//-> Device Mode
 			"Mobile view" => __("Mobile view", "brizy") ,
 			"Desktop" => __("Desktop", "brizy") ,
 			"Mobile" => __("Mobile", "brizy") ,
-
-			// -> More
-
+			//-> More
 			"More" => __("More", "brizy") ,
 			"About Brizy" => __("About Brizy", "brizy") ,
 			"Back to Brizy" => __("Back to Brizy", "brizy") ,
@@ -78,13 +68,11 @@ class Brizy_Languages_Texts {
 			"Back to WordPress" => __("Back to WordPress", "brizy") ,
 
 			// Fixed Bottom Panel
-
 			"Save HTML" => __("Save HTML", "brizy") ,
 			"Update" => __("Update", "brizy") ,
 			"Publish" => __("Publish", "brizy") ,
 
 			// Right SideBar
-
 			"More Settings" => __("More Settings", "brizy") ,
 			"Styling" => __("Styling", "brizy") ,
 			"Advanced" => __("Advanced", "brizy") ,
@@ -95,11 +83,8 @@ class Brizy_Languages_Texts {
 			"CSS Class" => __("CSS Class", "brizy") ,
 
 			// Section
-
 			"Slider" => __("Slider", "brizy") ,
-
-			// -> Make a Slider
-
+			//-> Make a Slider
 			"Make it a Slider" => __("Make it a Slider", "brizy") ,
 			"Auto Play" => __("Auto Play", "brizy") ,
 			"Speed" => __("Speed", "brizy") ,
@@ -115,9 +100,7 @@ class Brizy_Languages_Texts {
 			"Tail" => __("Tail", "brizy") ,
 			"Round" => __("Round", "brizy") ,
 			"Outline" => __("Outline", "brizy") ,
-
-			// -> Settings
-
+			//-> Settings
 			"Full Height" => __("Full Height", "brizy") ,
 			"Width" => __("Width", "brizy") ,
 			"Height" => __("Height", "brizy") ,
@@ -127,17 +110,13 @@ class Brizy_Languages_Texts {
 			"Full" => __("Full", "brizy") ,
 
 			// Not Found
-
 			"Missing Element" => __("Missing Element", "brizy") ,
 			"Could not find" => __("Could not find", "brizy") ,
 			"component" => __("component", "brizy") ,
 
 			// Popover
-
 			"Add new column" => __("Add new column", "brizy") ,
-
-			// -> Bg
-
+			//-> Bg
 			"Background" => __("Background", "brizy") ,
 			"Bg Size" => __("Bg Size", "brizy") ,
 			"Image" => __("Image", "brizy") ,
@@ -155,24 +134,16 @@ class Brizy_Languages_Texts {
 			"Address" => __("Address", "brizy") ,
 			"Enter address" => __("Enter address", "brizy") ,
 			"Zoom" => __("Zoom", "brizy") ,
-
-			// -> Colors
-
+			//-> Colors
 			"Colors" => __("Colors", "brizy") ,
 			"Overlay" => __("Overlay", "brizy") ,
 			"Border" => __("Border", "brizy") ,
-
-			// -> Settings
-
+			//-> Settings
 			"Settings" => __("Settings", "brizy") ,
-
-			// -> Duplicate & Delete
-
+			//-> Duplicate & Delete
 			"Duplicate" => __("Duplicate", "brizy") ,
 			"Delete" => __("Delete", "brizy") ,
-
-			// -> Animation
-
+			//-> Animation
 			"Animation" => __("Animation", "brizy") ,
 			"Duration" => __("Duration", "brizy") ,
 			"Delay" => __("Delay", "brizy") ,
@@ -251,15 +222,11 @@ class Brizy_Languages_Texts {
 			"JackInTheBox" => __("JackInTheBox", "brizy") ,
 			"RollIn" => __("RollIn", "brizy") ,
 			"RollOut" => __("RollOut", "brizy") ,
-
-			// -> Align
-
+			//-> Align
 			"Content" => __("Content", "brizy") ,
 			"Align" => __("Align", "brizy") ,
 			"Position" => __("Position", "brizy") ,
-
-			// -> Typography
-
+			//-> Typography
 			"Typography" => __("Typography", "brizy") ,
 			"Font Family" => __("Font Family", "brizy") ,
 			"Size" => __("Size", "brizy") ,
@@ -280,9 +247,7 @@ class Brizy_Languages_Texts {
 			"H6" => __("H6", "brizy") ,
 			"PRE" => __("PRE", "brizy") ,
 			"Editable Text" => __("Editable Text", "brizy") ,
-
-			// -> Link
-
+			//-> Link
 			"Link" => __("Link", "brizy") ,
 			"Anchor" => __("Anchor", "brizy") ,
 			"Link to" => __("Link to", "brizy") ,
@@ -290,7 +255,6 @@ class Brizy_Languages_Texts {
 			"Open In New Tab" => __("Open In New Tab", "brizy") ,
 
 			// Option Style Element: padding, margin, border etc
-
 			"Padding" => __("Padding", "brizy") ,
 			"Border" => __("Border", "brizy") ,
 			"Margin" => __("Margin", "brizy") ,
@@ -299,13 +263,11 @@ class Brizy_Languages_Texts {
 			"Spacing" => __("Spacing", "brizy") ,
 
 			// State
-
 			"Normal" => __("Normal", "brizy") ,
 			"Hover" => __("Hover", "brizy") ,
 
 			// Other Option in Shortcode
-			// -> CountDown
-
+			//-> CountDown
 			"Date" => __("Date", "brizy") ,
 			"Hour" => __("Hour", "brizy") ,
 			"Minutes" => __("Minutes", "brizy") ,
@@ -342,18 +304,12 @@ class Brizy_Languages_Texts {
 			"Italian" => __("Italian", "brizy") ,
 			"Dutch" => __("Dutch", "brizy") ,
 			"Russian" => __("Russian", "brizy") ,
-
-			// -> Counter
-
+			//-> Counter
 			"Start" => __("Start", "brizy") ,
 			"End" => __("End", "brizy") ,
-
-			// -> Embed Code
-
+			//-> Embed Code
 			"Paste your code here..." => __("Paste your code here...", "brizy") ,
-
-			// -> Form
-
+			//-> Form
 			"Field" => __("Field", "brizy") ,
 			"Field Type" => __("Field Type", "brizy") ,
 			"Label" => __("Label", "brizy") ,
@@ -368,28 +324,20 @@ class Brizy_Languages_Texts {
 			"Paragraph" => __("Paragraph", "brizy") ,
 			"Select" => __("Select", "brizy") ,
 			"Text" => __("Text", "brizy") ,
-
-			// -> Image
-
+			//-> Image
 			"Style" => __("Style", "brizy") ,
 			"Opacity" => __("Opacity", "brizy") ,
 			"Hue" => __("Hue", "brizy") ,
 			"Brigh.." => __("Brigh..", "brizy") ,
 			"Satur.." => __("Satur..", "brizy") ,
-
-			// -> ProgressBar
-
+			//-> ProgressBar
 			"Percentage" => __("Percentage", "brizy") ,
 			"Show Percentage" => __("Show Percentage", "brizy") ,
 			"Bar" => __("Bar", "brizy") ,
-
-			// -> SoundCloud
-
+			//-> SoundCloud
 			"SoundCloud" => __("SoundCloud", "brizy") ,
 			"SoundCloud Link" => __("SoundCloud Link", "brizy") ,
-
-			// -> Video
-
+			//-> Video
 			"Video Link" => __("Video Link", "brizy") ,
 			"Ratio" => __("Ratio", "brizy") ,
 			"Controls" => __("Controls", "brizy") ,
@@ -397,12 +345,10 @@ class Brizy_Languages_Texts {
 			"Play" => __("Play", "brizy") ,
 
 			// Footer
-
 			"Footer" => __("Footer", "brizy") ,
 			"MultiPage" => __("MultiPage", "brizy") ,
 
 			// WordPress
-
 			"Query" => __("Query", "brizy") ,
 			"Product ID" => __("Product ID", "brizy") ,
 			"Product ID or SKU" => __("Product ID or SKU", "brizy") ,
@@ -452,8 +398,9 @@ class Brizy_Languages_Texts {
 			"Meta Value" => __("Meta Value", "brizy") ,
 			"Modified" => __("Modified", "brizy") ,
 			"Parent" => __("Parent", "brizy") ,
-			"Comment count" => __("Comment count", "brizy")
+			"Comment count" => __("Comment count", "brizy") ,
 		);
 	}
 
 }
+

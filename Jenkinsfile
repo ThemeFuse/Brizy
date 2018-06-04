@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     if(folderExist(params.brizySvnPath+"/tags/"+params.buildVersion)) {
-                        error("Build failed because this version os alread built.")
+                        error("Build failed because this version is alread built.")
                     }
                 }
 
@@ -58,6 +58,7 @@ pipeline {
                 sh "sed -i 's/^Stable tag:\\s.[^<]*/Stable tag: ${params.buildVersion}/' README.md"
                 sh "sed -i \"s/'BRIZY_VERSION',\\s'.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}'/'BRIZY_VERSION', '${params.buildVersion}'/\" brizy.php"
                 sh "sed -i \"s/'BRIZY_DEVELOPMENT',.[^\\)]*/'BRIZY_DEVELOPMENT', false /\" brizy.php"
+                sh "sed -i \"s/'BRIZY_EDITOR_VERSION',\\s'.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}'/'BRIZY_EDITOR_VERSION', '${params.editorVersion}'/\" brizy.php"
                 sh "sed -i \"s/'BRIZY_LOG',.[^\\)]*/'BRIZY_LOG', false /\" brizy.php"
 
                 sh "sed -i \"s/== Changelog ==/== Changelog ==\\n\\n= ${params.buildVersion} - "+currentDate+" =\\n${changeLogs}/\" readme.txt"
@@ -94,7 +95,8 @@ pipeline {
                 expression { return params.svnCommit }
             }
             steps {
-                sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion + ' && svn commit -m "Version '+params.buildVersion+'"'
+                sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion
+                sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password '+params.svnPassword+'  -m "Version '+params.buildVersion+'"'
             }
         }
         stage('Git Merge') {
