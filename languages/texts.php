@@ -399,6 +399,13 @@ class Brizy_Languages_Texts
 			"Modified" => __("Modified", "brizy") ,
 			"Parent" => __("Parent", "brizy") ,
 			"Comment count" => __("Comment count", "brizy") ,
+			"Block" => __("Block", "brizy") ,
+			"Make it a Global" => __("Make it a Global", "brizy") ,
+			"Save" => __("Save", "brizy") ,
+			"Saved" => __("Saved", "brizy") ,
+			"Global" => __("Global", "brizy") ,
+			"All Categories" => __("All Categories", "brizy") ,
+			"Enter Search Keyword" => __("Enter Search Keyword", "brizy") ,
 		);
 	}
 
