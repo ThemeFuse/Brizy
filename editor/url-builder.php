@@ -36,8 +36,14 @@ class Brizy_Editor_UrlBuilder {
 //			$this->upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['url'] );
 //			$this->upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['baseurl'] );
 //		}
+	}
 
+	public function application_form_url() {
+		return sprintf( Brizy_Config::BRIZY_APPLICATION_FORM_URL, Brizy_Config::BRIZY_APPLICATION_FORM_ID, urlencode( $this->multipass_url() ) );
+	}
 
+	public function multipass_url() {
+		return admin_url( 'admin-ajax.php' ) . "?action=brizy_multipass_create&client_id=" . Brizy_Config::BRIZY_APPLICATION_FORM_ID;
 	}
 
 	public function proxy_url( $end_point ) {

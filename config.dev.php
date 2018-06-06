@@ -42,10 +42,16 @@ class Brizy_Config {
 	const EDITOR_HOST_ORIGIN = 'testblox.info';
 	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
-	const GATEWAY_URI = 'https://api.brizy.io';
+	const GATEWAY_URI = 'http://api.testblox.info';
 	const COMPILER_URI = 'http://editor:3000/wp-compile';
 
-	const BRIZY_REGISTRATION_CREDENTIALS = 'https://app.brizy.io/wordpress/credentials';
+	const BRIZY_REGISTRATION_CREDENTIALS = 'http://www.testblox.info/wordpress/credentials';
 
 	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
+
+	const BRIZY_APPLICATION_INTEGRATION_URL = 'http://ec2-52-203-33-55.compute-1.amazonaws.com';
+	const BRIZY_APPLICATION_FORM_ID = '4_4sh251774pwkgswwcow4ssgkkgosk4wowgss00k8w0ggs8808o';
+	const BRIZY_APPLICATION_FORM_URL = 'http://www.testblox.info/client_id/%s?multipass_url=%s';
+	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = 'http://www.testblox.info/form/submit';
+	const BRIZY_PLATFORM_MULTIPASS_LOGIN = 'http://www.testblox.info/multipass/login/%s/%s?email=%s';
 }

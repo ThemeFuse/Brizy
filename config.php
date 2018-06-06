@@ -10,6 +10,7 @@ class Brizy_Config {
 
 	const SITE_URL_PLACEHOLDER = '{@brizy_SITE_URL_PLACEHOLDER@}';
 	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
+
 	const EDITOR_PRIMARY_URL = 'https://api.brizy.io';
 
 	const S3_ASSET_URL = 'https://static.brizy.io/%s/%s';
@@ -48,4 +49,9 @@ class Brizy_Config {
 
 	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 
+	const BRIZY_APPLICATION_INTEGRATION_URL = 'http://ec2-52-203-33-55.compute-1.amazonaws.com';
+	const BRIZY_APPLICATION_FORM_ID = '6_5968m8wd3r8kcwww8o480w4c4c84sc8gw4kwk80s4k0c48ogkc';
+	const BRIZY_APPLICATION_FORM_URL = 'http://app.brizy.io/client_id/%s?multipass_url=%s';
+	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = 'http://www.testblox.info/form/submit';
+	const BRIZY_PLATFORM_MULTIPASS_LOGIN = 'https://app.brizy.io/multipass/login/%s/%s?email=%s';
 }
