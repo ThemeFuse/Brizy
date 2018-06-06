@@ -410,4 +410,3 @@ class Brizy_Languages_Texts
 	}
 
 }
-
