@@ -90,12 +90,14 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_GET_DEFAULT_FORM, array( $this, 'default_form' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
 		add_action( 'wp_ajax_' . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 		add_action( 'wp_ajax_' . self::AJAX_FORM_INTEGRATION_STATUS, array(
 			$this,
 			'update_form_integrations_status'
 		) );
 		add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+
+		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
+		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 	}
 
 	public function default_form() {
