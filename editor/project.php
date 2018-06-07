@@ -50,23 +50,25 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		if ( isset( self::$instance ) ) {
 			return self::$instance;
 		}
-
+		$platform = new Brizy_Editor_API_Platform();
 		try {
 			$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
 			self::$instance              = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
 			//self::$instance->api_project = new Brizy_Editor_API_Project( self::$instance->api_project );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			self::$instance = self::create();
+
+			self::$instance = self::create( $platform->isUserCreatedLocally() );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
-			$t = 0;
 		}
 
 		try {
-			self::$instance->checkSignature();
+			if ( ! $platform->isUserCreatedLocally() ) {
+				self::$instance->checkSignature();
+			}
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
 			Brizy_Logger::instance()->notice( "Project signature mismatch" );
-			self::$instance = self::create( self::$instance->get_id() );
+			self::$instance = self::create( self::$instance->get_id(), false );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 			throw new Exception( 'Unable to check the signature.' );
