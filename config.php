@@ -27,7 +27,7 @@ class Brizy_Config {
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor/%s';
 
 
-	const EDITOR_BASE_URL = 'http://www.testblox.info';
+	const EDITOR_BASE_URL = 'https://app.brizy.io';
 	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
 	const EDITOR_ASSETS_URL = "public/static";
 
