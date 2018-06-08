@@ -215,7 +215,7 @@ class Brizy_Editor_API {
 
 			$field_string = array();
 			foreach ( $fields as $field ) {
-				$field_string[] = "{$field->label}: {$field->value}";
+				$field_string[] = "{$field->label}: " . esc_html( $field->value );
 			}
 
 			$email_body = implode( '<br>', $field_string );
@@ -305,7 +305,7 @@ class Brizy_Editor_API {
 
 				$form->setHasIntegrations( (int) $_REQUEST['has_integrations'] );
 
-				$manager->addForm($form);
+				$manager->addForm( $form );
 
 				$this->success( $form );
 			}
