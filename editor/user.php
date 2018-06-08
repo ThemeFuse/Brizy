@@ -49,28 +49,25 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 				'User is in maintenance mode'
 			);
 		}
-		$user = null;
+		$user     = null;
+		$platform = new Brizy_Editor_API_Platform();
+
 		try {
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
-
-			$platform = new Brizy_Editor_API_Platform();
-
 			if ( ! $platform->isUserCreatedLocally() ) {
 				$user->checkSignature();
 			}
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
-			self::clone_user( $user );
+			$platform->createUser( $user->getPlatformUserId(), false );
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
-			//$user->auth();
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			self::create_user();
+			$platform->createUser( );
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		}
 
-//		if ( ! $user->token || $user->token->expired() ) {
-//			$user->auth();
-//			$user->token = $user->common_storage->get( 'access-token' );
-//		}
+		if ( ! $platform->isUserCreatedLocally() && ( ! $user->token || $user->token->expired() ) ) {
+			$user->auth();
+		}
 
 		return self::$instance = $user;
 	}
@@ -96,26 +93,6 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		$this->token                   = $this->common_storage->get( 'access-token', false );
 
 		Brizy_Logger::instance()->debug( 'New user instance with storage', array( $this ) );
-	}
-
-	/**
-	 * @param Brizy_Editor_User $user
-	 *
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 */
-	static protected function clone_user( $user ) {
-		// we create a new user for now
-		$platform = new Brizy_Editor_API_Platform();
-		$platform->createUser( $user->getPlatformUserId(), false );
-	}
-
-	static protected function create_user( $is_local = true ) {
-		$platform = new Brizy_Editor_API_Platform();
-		$platform->createUser( null, $is_local );
 	}
 
 	/**
