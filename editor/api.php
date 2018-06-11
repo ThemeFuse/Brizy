@@ -273,11 +273,11 @@ class Brizy_Editor_API {
 
 			$date = new \DateTime();
 
-			$user_data = [
+			$user_data = array(
 				"user_id"    => $user->getPlatformUserId(),
 				"created_at" => $date->format( DateTime::ISO8601 ),
 				'client_id'  => $client_id
-			];
+			);
 
 			$multipass = new Brizy_Editor_Multipass( $secret );
 

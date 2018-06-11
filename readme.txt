@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-an
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.8
+Stable tag: 1.0.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -128,6 +128,28 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.10 - 2018-06-11 =
+* Fixed: Changelogs in readme files
+* Fixed: Back compatibility issues
+
+= 1.0.9 - 2018-06-08 =
+* New: Added saved and global blocks
+* New: Paddings and margins now accept values in percent
+* Fixed: Form number input type not accepting negative and decimal values
+* Fixed: Form submit text editing in Firefox
+* Fixed: RichText element align on mobile
+* Fixed: Other minor bugs
+* Fixed: Removed functions.php
+* Fixed: Store the platform credentials in plugin config to avoid one platform request
+
+= 1.0.8 - 2018-06-06 =
+* New: Added saved and global blocks
+* New: Added Form element integrations
+* New: Paddings and margins now accept values in percent
+* Fixed: Form submit text editing in Firefox
+* Fixed: RichText element align on mobile
+* Fixed: Other minor bugs
 
 = 1.0.7 - 2018-05-30 =
 * New: Made the editor translatable
