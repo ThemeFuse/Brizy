@@ -123,7 +123,12 @@ class Brizy_Public_Main {
 			get_permalink( $this->post->get_wp_post()->ID )
 		);
 
-		$context = array( 'editorData' => $config_object, 'iframe_url' => $iframe_url );
+		$context = array(
+			'editorData' => $config_object,
+			'iframe_url' => $iframe_url,
+            'page_title' => apply_filters('the_title',$this->post->get_wp_post()->post_title)
+
+		);
 
 		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
 			$context['DEBUG'] = true;
@@ -153,21 +158,21 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor() {
-		return ! is_admin() && Brizy_Editor::is_capable('edit_posts') && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
+		return ! is_admin() && Brizy_Editor::is_capable( 'edit_posts' ) && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor_on_iframe() {
-		return ! is_admin() && Brizy_Editor::is_capable('edit_posts') && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && $this->post->uses_editor();
+		return ! is_admin() && Brizy_Editor::is_capable( 'edit_posts' ) && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && $this->post->uses_editor();
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function is_editing_page_without_editor() {
-		return Brizy_Editor::is_capable('edit_posts') && ( isset( $_REQUEST['post'] ) && $_REQUEST['post'] == $this->post->get_id() );
+		return Brizy_Editor::is_capable( 'edit_posts' ) && ( isset( $_REQUEST['post'] ) && $_REQUEST['post'] == $this->post->get_id() );
 	}
 
 	/**
@@ -255,10 +260,10 @@ class Brizy_Public_Main {
 	 **/
 	public function insert_page_content( $content ) {
 
-	    remove_filter( 'the_content', array( $this, 'insert_page_content' ) );
+		remove_filter( 'the_content', array( $this, 'insert_page_content' ) );
 
 		$compiled_html_body = $this->post->get_compiled_html_body();
-		$compiled_html_body = apply_filters('the_content', $compiled_html_body);
+		$compiled_html_body = apply_filters( 'the_content', $compiled_html_body );
 
 		add_filter( 'the_content', array( $this, 'insert_page_content' ) );
 
@@ -302,11 +307,11 @@ class Brizy_Public_Main {
 	}
 
 	private function compilePage() {
-		if ( is_preview() || isset( $_GET['preview'] ) || !$this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile() ) {
+		if ( is_preview() || isset( $_GET['preview'] ) || ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile() ) {
 			try {
 				$this->post->compile_page();
 			} catch ( Exception $e ) {
-				Brizy_Logger::instance()->exception($e);
+				Brizy_Logger::instance()->exception( $e );
 			}
 		}
 	}
