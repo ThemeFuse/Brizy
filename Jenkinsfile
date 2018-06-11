@@ -112,7 +112,7 @@ pipeline {
                 sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
 
                 sshagent (credentials: ['7ca32202-12d1-4189-9ff3-093095f8ffc3']) {
-                    sh 'git push origin master && git push origin develop && git push origin '+params.releaseBranch
+                    sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
                 }
             }
         }
