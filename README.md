@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.10<br>
+Stable tag: 1.0.11<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,12 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.11 - 2018-06-11 ###
+* Improved: Trigger post change when project global data is updated
+* Fixed: Brizy editor now works properly on SiteGround
+* Fixed: Fixed page title for editor page
+
 
 ### 1.0.10 - 2018-06-11 ###
 * Fixed: Changelogs in readme files
