@@ -6,8 +6,8 @@ class Brizy_Editor_API {
 	const AJAX_PING = 'brizy_editor_ping';
 	const AJAX_GET = 'brizy_editor_get_items';
 	const AJAX_UPDATE = 'brizy_update_item';
-	const AJAX_GET_GLOBALS = 'brizy_get_globals';
-	const AJAX_SET_GLOBALS = 'brizy_set_globals';
+	const AJAX_GET_GLOBALS = 'brizy_get_gb';
+	const AJAX_SET_GLOBALS = 'brizy_set_gb';
 	const AJAX_MEDIA = 'Brizy_Editor_Asset_Media';
 	const AJAX_SIDEBARS = 'brizy_sidebars';
 	const AJAX_BUILD = 'brizy_build';
@@ -391,7 +391,7 @@ class Brizy_Editor_API {
 			$this->authorize();
 
 			// update project globas
-			$data    = $this->param( 'globals' );
+			$data    = $this->param( 'gb' );
 			$post_id = (int) $this->param( 'post' );
 			$this->project->set_globals_as_json( stripslashes( $data ) );
 			$this->project->save();
@@ -642,7 +642,7 @@ class Brizy_Editor_API {
 
 		return array(
 			'id'        => $this->project->get_id(),
-			'globals'   => $this->project->get_globals(),
+			'gb'        => $this->project->get_globals(),
 			'name'      => $wp_post->post_name,
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
