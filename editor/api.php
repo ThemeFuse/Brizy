@@ -406,6 +406,8 @@ class Brizy_Editor_API {
 			foreach ( $posts as $bpost ) {
 				$bpost->set_needs_compile( true );
 				$bpost->save();
+
+				wp_update_post( array( 'ID' => $bpost->get_id() ) );
 			}
 
 			$this->success( $this->create_post_globals() );
