@@ -54,4 +54,8 @@ class Brizy_Config {
 	const BRIZY_APPLICATION_FORM_URL = 'http://www.testblox.info/client_id/%s?multipass_url=%s';
 	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = 'http://www.testblox.info/form/submit';
 	const BRIZY_PLATFORM_MULTIPASS_LOGIN = 'http://www.testblox.info/multipass/login/%s/%s?email=%s';
+
+	const PLATFORM_CLIENT_ID = "2_5to57xuihv48c4s400sk0wgwcw0gg4s4ggwccos4g4c4444occ";
+	const PLATFORM_CLIENT_SECRET = "3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s";
+	const PLATFORM_EMAIL = "admin@admin.com";
 }

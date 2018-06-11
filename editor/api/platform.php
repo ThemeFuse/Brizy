@@ -90,29 +90,11 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 * @throws Exception
 	 */
 	static public function getCredentials() {
-
-		$credentials = null;
-
-		try {
-			$credentials = Brizy_Editor_Storage_Common::instance()->get( 'platform_credentials' );
-		} catch ( Exception $e ) {
-
-			Brizy_Logger::instance()->debug( 'Obtain credentials' );
-
-			$http        = new WP_Http();
-			$wp_response = new Brizy_Editor_Http_Response( $http->get( Brizy_Config::BRIZY_REGISTRATION_CREDENTIALS ) );
-
-			if ( $wp_response->is_ok() ) {
-				$credentials = $wp_response->get_response_body();
-				Brizy_Editor_Storage_Common::instance()->set( 'platform_credentials', $credentials );
-			} else {
-				Brizy_Logger::instance()->critical( 'Unable to obtain the platform credentials', array( $wp_response ) );
-				throw new Exception( 'unable to obtain the platform credentials' );
-			}
-		}
-
-		return (object) $credentials;
-
+		return (object) array(
+			"client_id"     => Brizy_Config::PLATFORM_CLIENT_ID,
+			"client_secret" => Brizy_Config::PLATFORM_CLIENT_SECRET,
+			"email"         => Brizy_Config::PLATFORM_EMAIL
+		);
 	}
 
 
@@ -121,7 +103,6 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 */
 	protected function random_email() {
 		$uniqid = 'brizy-' . md5( uniqid( '', true ) );
-
 		return $uniqid . '@brizy.io';
 	}
 

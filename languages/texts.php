@@ -315,6 +315,8 @@ class Brizy_Languages_Texts
 			"Label" => __("Label", "brizy") ,
 			"Message" => __("Message", "brizy") ,
 			"Success" => __("Success", "brizy") ,
+			"Error" => __("Error", "brizy") ,
+			"Message sent" => __("Message sent", "brizy") ,
 			"Message not sent" => __("Message not sent", "brizy") ,
 			"Redirect" => __("Redirect", "brizy") ,
 			"Go to" => __("Go to", "brizy") ,
