@@ -19,9 +19,15 @@ class Brizy_Editor_API {
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 	const AJAX_SAVE_TRIGGER = 'brizy_update_post';
 	const AJAX_GET_TERMS = 'brizy_get_terms';
+	const AJAX_JWT_TOKEN = 'brizy_multipass_create';
 
+	const AJAX_GET_DEFAULT_FORM = 'brizy_default_form';
+	const AJAX_GET_FORM = 'brizy_get_form';
+	const AJAX_CREATE_FORM = 'brizy_create_form';
+	const AJAX_DELETE_FORM = 'brizy_delete_form';
+	const AJAX_FORM_INTEGRATION_STATUS = 'brizy_form_integration_status';
+	const AJAX_SUBMIT_FORM = 'brizy_submit_form';
 
-	static private $instance;
 
 	/**
 	 * @var Brizy_Editor_Project
@@ -79,10 +85,242 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 		add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
 		add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+		add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
+
+		add_action( 'wp_ajax_' . self::AJAX_GET_DEFAULT_FORM, array( $this, 'default_form' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
+		add_action( 'wp_ajax_' . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
+		add_action( 'wp_ajax_' . self::AJAX_FORM_INTEGRATION_STATUS, array(
+			$this,
+			'update_form_integrations_status'
+		) );
+		add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+
+		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
+		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
+	}
+
+	public function default_form() {
+		try {
+
+			$current_user = wp_get_current_user();
+			$form         = new Brizy_Editor_Forms_Form();
+			$form->setEmailTo( $current_user->user_email );
+
+			$this->success( $form );
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
+			exit;
+		}
+	}
+
+	public function get_form() {
+		try {
+			//$this->authorize();
+
+			$manager = new Brizy_Editor_Forms_Manager( Brizy_Editor_Storage_Common::instance() );
+
+			$form = $manager->getForm( $_REQUEST['form_id'] );
+
+			if ( $form ) {
+				$this->success( $form );
+			}
+
+			$this->error( 404, 'Form not found' );
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
+			exit;
+		}
+	}
+
+	public function create_form() {
+		try {
+			//$this->authorize();
+			$manager           = new Brizy_Editor_Forms_Manager( Brizy_Editor_Storage_Common::instance() );
+			$instance          = Brizy_Editor_Forms_Form::create_from_post();
+			$validation_result = $instance->validate();
+
+			if ( $validation_result === true ) {
+				$manager->addForm( $instance );
+				$this->success( $instance );
+			}
+
+			$this->error( 400, $validation_result );
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
+			exit;
+		}
+	}
+
+	public function delete_form() {
+		try {
+			//$this->authorize();
+			$manager = new Brizy_Editor_Forms_Manager( Brizy_Editor_Storage_Common::instance() );
+			$manager->deleteFormById( $_REQUEST['form_id'] );
+			$this->success( array() );
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
+			exit;
+		}
+	}
+
+	public function submit_form() {
+		try {
+			$manager = new Brizy_Editor_Forms_Manager( Brizy_Editor_Storage_Common::instance() );
+			/**
+			 * @var Brizy_Editor_Forms_Form $form ;
+			 */
+
+			$form = $manager->getForm( $_REQUEST['form_id'] );
+
+			if ( $form->hasIntegrations() ) {
+				// notify platform
+				$platform = new Brizy_Editor_API_Platform();
+				$platform->notifyFormSubmit( array(
+					'data'             => $_REQUEST['data'],
+					'project_language' => $_REQUEST['project_language'],
+					'form_id'          => $form->getId(),
+				) );
+
+			}
+
+			if ( ! $form ) {
+				$this->error( 400, "Invalid form id" );
+			}
+
+			$fields = json_decode( stripslashes( $_REQUEST['data'] ) );
+
+			if ( ! $fields ) {
+				$this->error( 400, "Invalid form data" );
+			}
+
+			$form   = apply_filters( 'brizy_form', $form );
+			$fields = apply_filters( 'brizy_form_submit_data', $fields, $form );
+
+			// send email
+			$headers   = array();
+			$headers[] = 'Content-type: text/html; charset=utf-8';
+
+			if ( trim( $form->getFromName() ) ) {
+				$headers[] = 'From: ' . htmlspecialchars( $form->getFromName(), null, 'UTF-8' ) . ' <' .
+				             htmlspecialchars( $form->getFromEmail(), null, 'UTF-8' ) . '>';
+			}
+
+			$field_string = array();
+			foreach ( $fields as $field ) {
+				$field_string[] = "{$field->label}: " . esc_html( $field->value );
+			}
+
+			$email_body = implode( '<br>', $field_string );
+
+			$headers    = apply_filters( 'brizy_form_email_headers', $headers, $form, $fields );
+			$email_body = apply_filters( 'brizy_form_email_body', $email_body, $form, $fields );
+
+			$result = wp_mail(
+				$form->getEmailTo(),
+				$form->getSubject(),
+				$email_body,
+				$headers
+			);
+
+			if ( $result ) {
+				$this->success( array() );
+			}
+
+			$this->error( 500, "Unable to send the email" );
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
+			exit;
+		}
+	}
+
+	public function multipass_create() {
+
+		try {
+			$client_id = $_REQUEST['client_id'];
+
+			if ( ! $client_id ) {
+				throw new Exception( 'Bad request' );
+			}
+
+			$platform = new Brizy_Editor_API_Platform();
+			if ( $platform->isUserCreatedLocally() ) {
+				$platform->createUser( null, false );
+			}
+
+			$user = Brizy_Editor_User::get();
+
+			if ( ! $user ) {
+				throw new Exception( "Unable to create user" );
+			}
+
+			$email                = $user->getPlatformUserEmail();
+			$secret               = $user->getPlatformUserSignature();
+			$platform_credentials = Brizy_Editor_API_Platform::getCredentials();
+
+			$platform_client_id = $platform_credentials->client_id;
+
+			date_default_timezone_set( "UTC" );
+
+			$date = new \DateTime();
+
+			$user_data = [
+				"user_id"    => $user->getPlatformUserId(),
+				"created_at" => $date->format( DateTime::ISO8601 ),
+				'client_id'  => $client_id
+			];
+
+			$multipass = new Brizy_Editor_Multipass( $secret );
+
+			$token = $multipass->encode( $user_data );
+
+			$redirect_uri = sprintf( Brizy_Config::BRIZY_PLATFORM_MULTIPASS_LOGIN, $platform_client_id, $token, $email );
+
+			wp_redirect( $redirect_uri );
+			exit;
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( 500, "Bad request" );
+			exit;
+		}
+	}
+
+	public function update_form_integration_status() {
+
+		try {
+
+			$manager = new Brizy_Editor_Forms_Manager( Brizy_Editor_Storage_Common::instance() );
+			$form    = $manager->getForm( $_REQUEST['form_id'] );
+
+			if ( $form ) {
+
+				$form->setHasIntegrations( (int) $_REQUEST['has_integrations'] );
+
+				$manager->addForm( $form );
+
+				$this->success( $form );
+			}
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( 500, "Invalid post id" );
+			exit;
+		}
+
 	}
 
 	public function save_trigger() {
 		try {
+			$this->authorize();
 			$post_id = $this->param( 'post' );
 			$post    = Brizy_Editor_Post::get( $post_id );
 
@@ -101,7 +339,6 @@ class Brizy_Editor_API {
 			} else {
 				wp_update_post( array( 'ID' => $post_id, 'post_status' => 'pending' ) );
 			}
-
 
 			// get latest version of post
 			$post                 = Brizy_Editor_Post::get( $post_id );
@@ -160,8 +397,8 @@ class Brizy_Editor_API {
 
 			// mark all brizy post to be compiled on next view
 			$posts = Brizy_Editor_Post::get_all_brizy_posts();
-			foreach($posts as $bpost) {
-				$bpost->set_needs_compile(true);
+			foreach ( $posts as $bpost ) {
+				$bpost->set_needs_compile( true );
 				$bpost->save();
 			}
 
@@ -355,7 +592,7 @@ class Brizy_Editor_API {
 	}
 
 	protected function error( $code, $message ) {
-		wp_send_json_error( array( 'code' => $code, 'message' => $message ), 500 );
+		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
 	}
 
 	protected function success( $data ) {
@@ -367,7 +604,7 @@ class Brizy_Editor_API {
 	}
 
 	private function authorize() {
-		if ( ! wp_verify_nonce( $_POST['hash'], self::nonce ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST['hash'], self::nonce ) ) {
 			throw new Brizy_Editor_Exceptions_AccessDenied();
 		}
 	}
@@ -511,7 +748,7 @@ class Brizy_Editor_API {
 
 
 	public function get_menu_list() {
-		wp_send_json( wp_get_nav_menus(array('hide_empty'=>true)), 200 );
+		wp_send_json( wp_get_nav_menus( array( 'hide_empty' => true ) ), 200 );
 	}
 
 	public function get_terms() {

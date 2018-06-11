@@ -75,7 +75,10 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		return self::$instance;
 	}
 
-	public function updateProjectData( Brizy_Editor_API_Project $data = null ) {
+	/**
+	 * @param Brizy_Editor_API_Project|null $data
+	 */
+	public function updateProjectData( $data = null ) {
 
 		Brizy_Logger::instance()->notice( 'Update project data', array( 'new_data' => $data ) );
 		$this->api_project = $data;

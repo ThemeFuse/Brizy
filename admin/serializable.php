@@ -6,7 +6,7 @@
  * Time: 3:02 PM
  */
 
-abstract class Brizy_Admin_Serializable implements Serializable {
+abstract class Brizy_Admin_Serializable implements Serializable, JsonSerializable {
 
 	public function serialize() {
 		$get_object_vars = get_object_vars( $this );
@@ -21,5 +21,9 @@ abstract class Brizy_Admin_Serializable implements Serializable {
 		foreach ( $vars as $prop => $value ) {
 			$this->$prop = $value;
 		}
+	}
+
+	public function jsonSerialize() {
+		return get_object_vars( $this );
 	}
 }

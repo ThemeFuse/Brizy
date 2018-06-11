@@ -58,13 +58,15 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 
 		Brizy_Logger::instance()->notice( 'Getting token to create the user' );
 
+		$body = array(
+			'client_id'     => $this->client_id,
+			'client_secret' => $this->secret,
+			'email'         => $this->email,
+			'grant_type'    => 'https://visual.dev/api/limited_client_credentials'
+		);
+
 		$response = $this->post( $this->auth_url(), array(
-			'body' => array(
-				'client_id'     => $this->client_id,
-				'client_secret' => $this->secret,
-				'email'         => $this->email,
-				'grant_type'    => 'https://visual.dev/api/limited_client_credentials'
-			)
+			'body' => $body
 		) );
 
 		$response_array = $response->get_response_body();
@@ -88,29 +90,11 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 * @throws Exception
 	 */
 	static public function getCredentials() {
-
-		$credentials = null;
-
-		try {
-			$credentials = Brizy_Editor_Storage_Common::instance()->get( 'platform_credentials' );
-		} catch ( Exception $e ) {
-
-			Brizy_Logger::instance()->debug( 'Obtain credentials' );
-
-			$http        = new WP_Http();
-			$wp_response = new Brizy_Editor_Http_Response( $http->get( Brizy_Config::BRIZY_REGISTRATION_CREDENTIALS ) );
-
-			if ( $wp_response->is_ok() ) {
-				$credentials = $wp_response->get_response_body();
-				Brizy_Editor_Storage_Common::instance()->set( 'platform_credentials', $credentials );
-			} else {
-				Brizy_Logger::instance()->critical( 'Enable to obtain the platform credentials', array( $wp_response ) );
-				throw new Exception( 'unable to obtain the platform credentials' );
-			}
-		}
-
-		return (object) $credentials;
-
+		return (object) array(
+			"client_id"     => Brizy_Config::PLATFORM_CLIENT_ID,
+			"client_secret" => Brizy_Config::PLATFORM_CLIENT_SECRET,
+			"email"         => Brizy_Config::PLATFORM_EMAIL
+		);
 	}
 
 
@@ -118,8 +102,7 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 * @return string
 	 */
 	protected function random_email() {
-		$uniqid = uniqid( 'brizy-' );
-
+		$uniqid = 'brizy-' . md5( uniqid( '', true ) );
 		return $uniqid . '@brizy.io';
 	}
 
@@ -146,7 +129,7 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_signature', Brizy_Editor_Signature::get() );
 
-			return true;
+			return Brizy_Editor_User::reload();
 		}
 
 		$token = $this->getToken();
@@ -183,8 +166,28 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 			Brizy_Logger::instance()->error( 'Failed to create user', array( $response ) );
 		}
 
-		return $user;
+		return Brizy_Editor_User::reload();
 	}
 
+	public function isUserCreatedLocally() {
+		return Brizy_Editor_Storage_Common::instance()->get( 'platform_user_local', false ) === true;
+	}
+
+	/**
+	 * @param $data
+	 *
+	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 */
+	public function notifyFormSubmit( $data ) {
+		$response = $this->post( Brizy_Config::BRIZY_APPLICATION_FORM_NOTIFICATION_URL, $data );
+
+		if ( ! $response->is_ok() ) {
+			Brizy_Logger::instance()->error( 'Failed to notify the platform about a form submit', array( 'response' => $response ) );
+		}
+	}
 
 }

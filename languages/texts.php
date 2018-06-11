@@ -315,6 +315,8 @@ class Brizy_Languages_Texts
 			"Label" => __("Label", "brizy") ,
 			"Message" => __("Message", "brizy") ,
 			"Success" => __("Success", "brizy") ,
+			"Error" => __("Error", "brizy") ,
+			"Message sent" => __("Message sent", "brizy") ,
 			"Message not sent" => __("Message not sent", "brizy") ,
 			"Redirect" => __("Redirect", "brizy") ,
 			"Go to" => __("Go to", "brizy") ,
@@ -399,6 +401,14 @@ class Brizy_Languages_Texts
 			"Modified" => __("Modified", "brizy") ,
 			"Parent" => __("Parent", "brizy") ,
 			"Comment count" => __("Comment count", "brizy") ,
+			"Filter By" => __("Filter By", "brizy") ,
+			"Block" => __("Block", "brizy") ,
+			"Make it a Global" => __("Make it a Global", "brizy") ,
+			"Save" => __("Save", "brizy") ,
+			"Saved" => __("Saved", "brizy") ,
+			"Global" => __("Global", "brizy") ,
+			"All Categories" => __("All Categories", "brizy") ,
+			"Enter Search Keyword" => __("Enter Search Keyword", "brizy") ,
 		);
 	}
 
