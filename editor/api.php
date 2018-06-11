@@ -391,12 +391,18 @@ class Brizy_Editor_API {
 			$this->authorize();
 
 			// update project globas
-			$data = $this->param( 'globals' );
+			$data    = $this->param( 'globals' );
+			$post_id = (int) $this->param( 'post' );
 			$this->project->set_globals_as_json( stripslashes( $data ) );
 			$this->project->save();
 
 			// mark all brizy post to be compiled on next view
 			$posts = Brizy_Editor_Post::get_all_brizy_posts();
+
+			// we need to trigger a post update action to make sure the cache plugins will update clear the cache
+			wp_update_post( array( 'ID' => $post_id ) );
+
+			// mark all post to be compiled on next view
 			foreach ( $posts as $bpost ) {
 				$bpost->set_needs_compile( true );
 				$bpost->save();
