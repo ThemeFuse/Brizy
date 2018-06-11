@@ -1,6 +1,6 @@
 === Brizy - Page Builder ===
 Contributors: themefuse
-Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
+Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder, unyson
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
@@ -30,7 +30,7 @@ Most page builders crowd all the options for a specific element in remote sideba
 
 = Intuitive drag & drop =
 Moving content elements, columns or rows is a breeze with our intuitive Drag & Drop feature. Just grab and drag them to the desired position and everything will instantly fall into place.
-
+keyword
 ![Design Elements](https://brizy.io/wp-content/uploads/2018/04/Design-Elements.gif)
 
 = Design elements =
