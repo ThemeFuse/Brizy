@@ -208,11 +208,6 @@ class Brizy_Editor_API {
 			$headers   = array();
 			$headers[] = 'Content-type: text/html; charset=utf-8';
 
-			if ( trim( $form->getFromName() ) ) {
-				$headers[] = 'From: ' . htmlspecialchars( $form->getFromName(), null, 'UTF-8' ) . ' <' .
-				             htmlspecialchars( $form->getFromEmail(), null, 'UTF-8' ) . '>';
-			}
-
 			$field_string = array();
 			foreach ( $fields as $field ) {
 				$field_string[] = "{$field->label}: " . esc_html( $field->value );

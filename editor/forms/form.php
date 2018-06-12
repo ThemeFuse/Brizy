@@ -24,16 +24,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	protected $subject;
 
 	/**
-	 * @var string
-	 */
-	protected $fromName;
-
-	/**
-	 * @var string
-	 */
-	protected $fromEmail;
-
-	/**
 	 * @var bool
 	 */
 	protected $hasIntegrations;
@@ -50,8 +40,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 			'id'        => $this->id,
 			'emailTo'   => $this->emailTo,
 			'subject'   => $this->subject,
-			'fromName'  => $this->fromName,
-			'fromEmail' => $this->fromEmail,
 		);
 
 		return $get_object_vars;
@@ -112,42 +100,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getFromName() {
-		return $this->fromName;
-	}
-
-	/**
-	 * @param string $fromName
-	 *
-	 * @return Brizy_Editor_Forms_Form
-	 */
-	public function setFromName( $fromName ) {
-		$this->fromName = $fromName;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getFromEmail() {
-		return $this->fromEmail;
-	}
-
-	/**
-	 * @param string $fromEmail
-	 *
-	 * @return Brizy_Editor_Forms_Form
-	 */
-	public function setFromEmail( $fromEmail ) {
-		$this->fromEmail = $fromEmail;
-
-		return $this;
-	}
-
-	/**
 	 * @return Brizy_Editor_Forms_Form
 	 * @throws Exception
 	 */
@@ -169,14 +121,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		if ( isset( $_POST['form']['emailTo'] ) ) {
 			$instance->setEmailTo( $_POST['form']['emailTo'] );
-		}
-
-		if ( isset( $_POST['form']['fromEmail'] ) ) {
-			$instance->setFromEmail( $_POST['form']['fromEmail'] );
-		}
-
-		if ( isset( $_POST['form']['fromName'] ) ) {
-			$instance->setFromName( $_POST['form']['fromName'] );
 		}
 
 		if ( isset( $_POST['form']['subject'] ) ) {
@@ -206,11 +150,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 		if ( ! $this->getEmailTo() || ! filter_var( $this->getEmailTo(), FILTER_VALIDATE_EMAIL ) ) {
 			$errors['emailTo'] = 'Invalid email provided';
 		}
-
-		if ( ! $this->getFromEmail() || ! filter_var( $this->getFromEmail(), FILTER_VALIDATE_EMAIL ) ) {
-			$errors['fromEmail'] = 'Invalid email provided';
-		}
-
 
 		if ( count( $errors ) ) {
 			return $errors;
