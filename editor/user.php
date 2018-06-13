@@ -49,23 +49,25 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 				'User is in maintenance mode'
 			);
 		}
-		$user = null;
+		$user     = null;
+		$platform = new Brizy_Editor_API_Platform();
+
 		try {
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
-			$user->checkSignature();
+			if ( ! $platform->isUserCreatedLocally() ) {
+				$user->checkSignature();
+			}
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
-			self::clone_user( $user );
+			$platform->createUser( $user->getPlatformUserId(), false );
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
-			//$user->auth();
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			self::create_user();
+			$platform->createUser( );
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		}
 
-//		if ( ! $user->token || $user->token->expired() ) {
-//			$user->auth();
-//			$user->token = $user->common_storage->get( 'access-token' );
-//		}
+		if ( ! $platform->isUserCreatedLocally() && ( ! $user->token || $user->token->expired() ) ) {
+			$user->auth();
+		}
 
 		return self::$instance = $user;
 	}
@@ -79,7 +81,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 *
 	 * @param $common_storage
 	 *
-	 * @throws Exception
+	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	protected function __construct( $common_storage ) {
 
@@ -94,29 +96,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	}
 
 	/**
-	 * @param Brizy_Editor_User $user
-	 *
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 */
-	static protected function clone_user( $user ) {
-		// we create a new user for now
-		$platform = new Brizy_Editor_API_Platform();
-		$platform->createUser( $user->getPlatformUserId() );
-
-	}
-
-	static protected function create_user( $is_local = true ) {
-
-		$platform = new Brizy_Editor_API_Platform();
-		$platform->createUser( null, $is_local );
-	}
-
-	/**
-	 * @throws Exception
+	 * @throws Brizy_Editor_Exceptions_SignatureMismatch
 	 */
 	public function checkSignature() {
 		Brizy_Logger::instance()->debug( 'Checking user signature' );
@@ -209,17 +189,13 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $from_project_id ) );
 
 		if ( $is_local ) {
-			$uniqid = uniqid( 'Local project', true );
-
 			$project_data = array(
-				'id'          => md5( $uniqid ),
+				'id'          => md5( uniqid( 'Local project', true ) ),
 				'title'       => 'Local project ',
 				'globals'     => '{"project":{},"language":{}}',
 				'name'        => uniqid( 'Local project', true ),
 				'user'        => null,
-				'template'    => array(
-					'slug' => 'brizy'
-				),
+				'template'    => array( 'slug' => 'brizy' ),
 				'created'     => new DateTime(),
 				'updated'     => new DateTime(),
 				'languages'   => array(),
@@ -291,7 +267,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
 //	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
-//		Brizy_Logger::instance()->notice( 'Update page', array( $project, $page ) );
+//		Brizy_ExceptionLogger::instance()->notice( 'Update page', array( $project, $page ) );
 //
 //		$updated_page = $this->get_client()
 //		                     ->update_page(
@@ -313,7 +289,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 * @throws Exception
 	 */
-	public function update_project(  $project ) {
+	public function update_project( $project ) {
 		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
 
 		$updated_project = $this->get_client()->update_project( $project );
@@ -333,7 +309,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function get_project(  $project ) {
+	public function get_project( $project ) {
 		return $this->get_client()->get_project( $project );
 	}
 

@@ -162,11 +162,30 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_id', $user['id'] );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', $email );
 			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_signature', Brizy_Editor_Signature::get() );
-		} else {
-			Brizy_Logger::instance()->error( 'Failed to create user', array( $response ) );
+
+			$user = Brizy_Editor_User::reload();
+
+			// try to create the local project on platform
+			try {
+				$local_project = Brizy_Editor_Project::get();
+
+				$api_project = $user->create_project( null, false );
+				$api_project->set_globals( $local_project->get_globals() );
+
+				$local_project->updateProjectData( $api_project );
+				$local_project->save();
+
+				$user->update_project( $api_project );
+
+				return $user;
+			} catch ( Exception $e ) {
+				Brizy_Logger::instance()->error( 'Unable to create the project for remote user', array( $response ) );
+			}
 		}
 
-		return Brizy_Editor_User::reload();
+		Brizy_Logger::instance()->error( 'Failed to create user', array( $response ) );
+
+		return null;
 	}
 
 	public function isUserCreatedLocally() {
@@ -189,5 +208,4 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 			Brizy_Logger::instance()->error( 'Failed to notify the platform about a form submit', array( 'response' => $response ) );
 		}
 	}
-
 }

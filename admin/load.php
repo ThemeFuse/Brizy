@@ -20,8 +20,8 @@ function brizy_load_admin() {
 	}
 }
 
-add_action( 'wp_dashboard_setup', 'example_add_dashboard_widgets' );
-function example_add_dashboard_widgets() {
+add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
+function brizy_add_dashboard_widgets() {
 	try {
 		Brizy_Admin_DashboardWidget::_init();
 	} catch ( Exception $e ) {

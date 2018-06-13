@@ -208,11 +208,6 @@ class Brizy_Editor_API {
 			$headers   = array();
 			$headers[] = 'Content-type: text/html; charset=utf-8';
 
-			if ( trim( $form->getFromName() ) ) {
-				$headers[] = 'From: ' . htmlspecialchars( $form->getFromName(), null, 'UTF-8' ) . ' <' .
-				             htmlspecialchars( $form->getFromEmail(), null, 'UTF-8' ) . '>';
-			}
-
 			$field_string = array();
 			foreach ( $fields as $field ) {
 				$field_string[] = "{$field->label}: " . esc_html( $field->value );
@@ -409,6 +404,12 @@ class Brizy_Editor_API {
 
 				wp_update_post( array( 'ID' => $bpost->get_id() ) );
 			}
+
+			$platform = new Brizy_Editor_API_Platform();
+			if ( ! $platform->isUserCreatedLocally() ) {
+				Brizy_Editor_User::get()->update_project( $this->project->get_api_project() );
+			}
+
 
 			$this->success( $this->create_post_globals() );
 		} catch ( Exception $exception ) {
