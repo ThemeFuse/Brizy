@@ -403,7 +403,7 @@ class Brizy_Languages_Texts
 			"Comment count" => __("Comment count", "brizy") ,
 			"Filter By" => __("Filter By", "brizy") ,
 			"Block" => __("Block", "brizy") ,
-			"Make it a Global" => __("Make it a Global", "brizy") ,
+			"Make it Global" => __("Make it Global", "brizy") ,
 			"Save" => __("Save", "brizy") ,
 			"Saved" => __("Saved", "brizy") ,
 			"Global" => __("Global", "brizy") ,

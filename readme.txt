@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-an
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -128,6 +128,17 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.12 - 2018-06-13 =
+* New: Added WordPress form integration
+* New: Added FontWeight and LetterSpacing for RichText element on Mobile
+* Improved: Section toolbar shows a special icon if the block is global
+* Improved: Section toolbar Save button feedback when clicked
+* Fixed: Button text editing on Safari
+* Fixed: Other minor bugs
+* Fixed: Changed the the_content filter
+* Fixed: Do not check the signature of the user if it's a local user
+* Fixed: Removed from email and name from form class
 
 = 1.0.11 - 2018-06-11 =
 * Improved: Trigger post change when project global data is updated
