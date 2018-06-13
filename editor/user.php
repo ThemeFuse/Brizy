@@ -54,20 +54,20 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 
 		try {
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
-			if ( ! $platform->isUserCreatedLocally() ) {
-				$user->checkSignature();
-			}
+//			if ( ! $platform->isUserCreatedLocally() ) {
+//				$user->checkSignature();
+//			}
 		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
-			$platform->createUser( $user->getPlatformUserId(), false );
-			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
+//			$platform->createUser( $user->getPlatformUserId(), false );
+//			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
 			$platform->createUser( );
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		}
 
-		if ( ! $platform->isUserCreatedLocally() && ( ! $user->token || $user->token->expired() ) ) {
-			$user->auth();
-		}
+//		if ( ! $platform->isUserCreatedLocally() && ( ! $user->token || $user->token->expired() ) ) {
+//			$user->auth();
+//		}
 
 		return self::$instance = $user;
 	}
