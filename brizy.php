@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.11
+ * Version: 1.0.12
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -13,8 +13,8 @@
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.11' );
-define( 'BRIZY_EDITOR_VERSION', '1.0.34' );
+define( 'BRIZY_VERSION', '1.0.12' );
+define( 'BRIZY_EDITOR_VERSION', '1.0.36' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );

@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.11<br>
+Stable tag: 1.0.12<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,17 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.12 - 2018-06-13 ###
+* New: Added WordPress form integration
+* New: Added FontWeight and LetterSpacing for RichText element on Mobile
+* Improved: Section toolbar shows a special icon if the block is global
+* Improved: Section toolbar Save button feedback when clicked
+* Fixed: Button text editing on Safari
+* Fixed: Other minor bugs
+* Fixed: Changed the the_content filter
+* Fixed: Do not check the signature of the user if it's a local user
+* Fixed: Removed from email and name from form class
 
 ### 1.0.11 - 2018-06-11 ###
 * Improved: Trigger post change when project global data is updated
