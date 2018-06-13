@@ -13,7 +13,7 @@
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.12' );
+define( 'BRIZY_VERSION', '1.0.13' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.36' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
