@@ -1,6 +1,6 @@
 === Brizy - Page Builder ===
 Contributors: themefuse
-Tags: brizy, page builder, editor, visual editor, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder, unyson
+Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
