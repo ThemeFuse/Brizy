@@ -116,7 +116,13 @@ class Brizy_Admin_Main {
 
 				// hide the default editor
 				add_filter( 'the_editor', function ( $editor_html ) {
-					return "<div style='display: none'>{$editor_html}</div>";
+					$args = func_get_args();
+
+					if ( strpos( $editor_html,'id="wp-content-editor-container"' ) !== false ) {
+						return "<div style='display: none'>{$editor_html}</div>";
+					}
+
+					return $editor_html;
 				} );
 			}
 		}
