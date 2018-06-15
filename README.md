@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.12<br>
+Stable tag: 1.0.14<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,12 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.14 - 2018-06-14 ###
+* Fixed: update global values request
+
+### 1.0.13 - 2018-06-13 ###
+* Fixed: Removed signature and token check
 
 ### 1.0.12 - 2018-06-13 ###
 * New: Added WordPress form integration
