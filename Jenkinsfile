@@ -90,6 +90,25 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf ./brizy'
             }
         }
+
+        stage('Git Merge') {
+                    when {
+                        expression { return params.gitMerge }
+                    }
+                    steps {
+                        sh 'git commit -a -m "Build '+params.buildVersion+'"'
+                        sh 'git checkout -t origin/master'
+                        sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
+                        sh 'git tag '+params.buildVersion
+                        sh 'git checkout -t origin/develop'
+                        sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
+
+                        sshagent (credentials: ['7ca32202-12d1-4189-9ff3-093095f8ffc3']) {
+                            sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
+                        }
+                    }
+                }
+
         stage('Publish') {
             when {
                 expression { return params.svnCommit }
@@ -99,23 +118,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password '+params.svnPassword+'  -m "Version '+params.buildVersion+'"'
             }
         }
-        stage('Git Merge') {
-            when {
-                expression { return params.gitMerge }
-            }
-            steps {
-                sh 'git commit -a -m "Build '+params.buildVersion+'"'
-                sh 'git checkout -t origin/master'
-                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
-                sh 'git tag '+params.buildVersion
-                sh 'git checkout -t origin/develop'
-                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
 
-                sshagent (credentials: ['7ca32202-12d1-4189-9ff3-093095f8ffc3']) {
-                    sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
-                }
-            }
-        }
     }
 
     post {
