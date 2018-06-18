@@ -409,6 +409,11 @@ class Brizy_Languages_Texts
 			"Global" => __("Global", "brizy") ,
 			"All Categories" => __("All Categories", "brizy") ,
 			"Enter Search Keyword" => __("Enter Search Keyword", "brizy") ,
+			"An error happened while trying to display this block" => __("An error happened while trying to display this block", "brizy") ,
+			"You can" => __("You can", "brizy") ,
+			"open an issue" => __("open an issue", "brizy") ,
+			"or" => __("or", "brizy") ,
+			"remove this block" => __("remove this block", "brizy") ,
 		);
 	}
 
