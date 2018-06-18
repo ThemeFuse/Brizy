@@ -458,9 +458,7 @@ class Brizy_Editor_API {
 				$this->post->set_editor_data( $data );
 			}
 
-			$this->post
-				->set_needs_compile( true )
-				->save();
+			$this->post->save();
 
 			$this->success( self::create_post_arr( $this->post ) );
 		} catch ( Exception $exception ) {
