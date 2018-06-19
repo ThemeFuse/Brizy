@@ -6,8 +6,11 @@ env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
 
 def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
 
+
+    def buildInfo = "\nBranch: "+params.releaseBranch+"\nPlugin version: "+params.buildVersion+"\nEditor version: "+params.editorVersion+"\nChangelog\n"+params.changelog;
+
      if ( buildResult == "SUCCESS" ) {
-       slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
+       slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
 
        withCredentials([string(credentialsId: 'Slack Oauth Token', variable: 'SECRET')]) {
            sh '''
@@ -18,13 +21,13 @@ def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
 
      }
      else if( buildResult == "FAILURE" ) {
-       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
+       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed."+buildInfo
      }
      else if( buildResult == "UNSTABLE" ) {
-       slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable"
+       slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable."+buildInfo
      }
      else {
-       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear"
+       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear."+buildInfo
      }
 }
 
