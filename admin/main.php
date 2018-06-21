@@ -21,28 +21,26 @@ class Brizy_Admin_Main {
 		if ( ! Brizy_Editor::is_user_allowed() ) {
 			return;
 		}
-		add_action( 'admin_head', array( $this, 'hide_editor' ) );
-
-		//add_action( 'admin_action_brizy_new_post', array( $this, 'admin_action_new_post' ) );
-
-		add_action( 'admin_post__brizy_admin_editor_enable', array( $this, 'action_request_enable' ) );
-		add_action( 'admin_post__brizy_admin_editor_disable', array( $this, 'action_request_disable' ) );
-		add_action( 'admin_post__brizy_change_template', array( $this, 'action_change_template' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
-		//add_action( 'before_delete_post', array( $this, 'action_delete_page' ) );
 
-		add_action( 'edit_form_after_title', array( $this, 'action_add_enable_disable_buttons' ) );
+		if(current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE))
+        {
+	        add_action( 'admin_post__brizy_admin_editor_enable', array( $this, 'action_request_enable' ) ); // enable editor for a post
+	        add_action( 'admin_post__brizy_admin_editor_disable', array( $this, 'action_request_disable' ) ); // disable editor for a post
+	        add_action( 'admin_post__brizy_change_template', array( $this, 'action_change_template' ) ); // action to change template from editor
+	        add_action( 'edit_form_after_title', array( $this, 'action_add_enable_disable_buttons' ) ); // add button to enable disable editor
+        }
+
+		//add_action( 'before_delete_post', array( $this, 'action_delete_page' ) );
 
 		add_filter( 'page_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'post_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'admin_body_class', array( $this, 'filter_add_body_class' ), 10, 2 );
 		add_filter( 'save_post', array( $this, 'compile_post_action' ), 10, 2 );
-
-		if ( current_user_can( 'edit_posts' ) ) {
-			add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
-			add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
-		}
+		add_action( 'admin_head', array( $this, 'hide_editor' ) );
+		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
+		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
 
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'admin_print_scripts-edit.php', array( $this, 'add_edit_button_to_gutenberg' ), 12 );
@@ -90,7 +88,6 @@ class Brizy_Admin_Main {
 			wp_update_post( array( 'ID' => $post_id, 'post_content' => $b_post->get_compiled_html_body() ) );
 			add_action( 'save_post', array( $this, 'compile_post_action' ), 10, 2 );
 
-			// compile
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 
@@ -117,7 +114,7 @@ class Brizy_Admin_Main {
 				add_filter( 'the_editor', function ( $editor_html ) {
 					$args = func_get_args();
 
-					if ( strpos( $editor_html,'id="wp-content-editor-container"' ) !== false ) {
+					if ( strpos( $editor_html, 'id="wp-content-editor-container"' ) !== false ) {
 						return "<div style='display: none'>{$editor_html}</div>";
 					}
 
@@ -339,9 +336,9 @@ class Brizy_Admin_Main {
 	 **/
 	public function filter_add_brizy_edit_row_actions( $actions, $post ) {
 
-		$is_allowed = Brizy_Editor::is_capable( "edit_post", $post->ID );
+		$is_allowed = Brizy_Editor::is_user_allowed();
 
-		if ( ! in_array( get_post_type(), brizy()->supported_post_types() ) || ! $is_allowed ) {
+		if ( ! $is_allowed || ! in_array( get_post_type(), brizy()->supported_post_types() ) ) {
 			return $actions;
 		}
 
@@ -379,38 +376,6 @@ class Brizy_Admin_Main {
 
 		return $body . ( $post->uses_editor() ? 'brizy-editor-enabled' : '' );
 	}
-
-
-//	public function admin_action_new_post() {
-//
-//		if ( empty( $_GET['post_type'] ) ) {
-//			$post_type = 'post';
-//		} else {
-//			$post_type = $_GET['post_type'];
-//		}
-//
-//		if ( ! in_array( $post_type, brizy()->supported_post_types() ) ) {
-//			return;
-//		}
-//
-//		$count     = $this->get_brizy_auto_draft_count();
-//		$post_data = [
-//			'post_type'  => $post_type,
-//			'post_title' => 'Brizy #' . ( $count + 1 )
-//		];
-//
-//		try {
-//			$post_id = wp_insert_post( $post_data );
-//
-//			$p = get_post( $post_id );
-//
-//			$this->enable_brizy_for_post( $p );
-//		} catch ( Exception $e ) {
-//			Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );
-//
-//			wp_redirect( $_SERVER['HTTP_REFERER'] );
-//		}
-//	}
 
 	/**
 	 * @param $p

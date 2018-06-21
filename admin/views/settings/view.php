@@ -13,40 +13,25 @@
         <table class="form-table">
             <tbody>
             <tr>
-                <th scope="row"><?php echo __( 'Post Types' );?></th>
+                <th scope="row"><?php echo __( 'Post Types' ); ?></th>
                 <td>
                     <fieldset>
-						<?php foreach ( $types as $type ) : ?>
-                            <label>
-                                <input type="checkbox"
-                                       name="post-types[]"
-                                       value="<?php echo $type['type']; ?>"
-									<?php echo $type['selected'] ? 'checked' : ''; ?>
-                                >
-								<?php echo $type['name']; ?>
-                            </label>
-                            <br>
-						<?php endforeach ?>
+						<?php foreach ( $types as $type ) {
+							do_action( 'brizy_settings_post_type_row', $type );
+							?><br><?php
+						}
+						?>
                     </fieldset>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><?php echo __( 'Exclude for roles' );?></th>
+                <th scope="row"><?php echo __( 'Exclude for roles' ); ?></th>
                 <td>
                     <fieldset>
 						<?php
 						foreach ( $roles as $role ) {
-							?>
-                            <label>
-                                <input type="checkbox"
-                                       name="exclude-roles[]"
-                                       value="<?php echo $role['id']; ?>"
-									<?php echo $role['selected'] ? 'checked' : ''; ?>
-                                >
-								<?php echo $role['name']; ?>
-                            </label>
-                            <br>
-							<?php
+							do_action( 'brizy_settings_exclude_role_row', $role );
+							?><br><?php
 						}
 						?>
                     </fieldset>
@@ -54,7 +39,6 @@
             </tr>
             </tbody>
         </table>
-
 
 
         <p class="submit">

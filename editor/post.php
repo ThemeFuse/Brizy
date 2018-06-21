@@ -291,8 +291,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	/**
 	 * @return bool
 	 */
-	public function can_edit() {
-		return Brizy_Editor::is_capable( "edit_post", $this->get_id() );
+	public function can_edit_posts() {
+		return current_user_can( "edit_posts" );
 	}
 
 	/**
@@ -300,7 +300,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @throws Brizy_Editor_Exceptions_AccessDenied
 	 */
 	public function enable_editor() {
-		if ( ! $this->can_edit() ) {
+		if ( ! $this->can_edit_posts() ) {
 			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
 		}
 
@@ -314,7 +314,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @throws Brizy_Editor_Exceptions_AccessDenied
 	 */
 	public function disable_editor() {
-		if ( ! $this->can_edit() ) {
+		if ( ! $this->can_edit_posts() ) {
 			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
 		}
 

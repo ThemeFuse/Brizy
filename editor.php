@@ -22,30 +22,13 @@ class Brizy_Editor {
 	public static function is_user_allowed() {
 
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
-			$user = wp_get_current_user();
+			self::$is_allowed_for_current_user =
+				( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
+				  current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY ) );
 
-			if ( $user->ID == 0 ) {
-				self::$is_allowed_for_current_user = false;
-
-				return self::$is_allowed_for_current_user;
-			};
-
-			$excluded_roles = array();
-
-			try {
-				$excluded_roles = Brizy_Editor_Storage_Common::instance()->get( 'exclude-roles' );
-			} catch ( Exception $e ) {
-
-			}
-
-			self::$is_allowed_for_current_user = count( array_intersect( $excluded_roles, (array) $user->roles ) ) == 0;
 		}
 
 		return self::$is_allowed_for_current_user;
-	}
-
-	public static function is_capable( $capability, $post_id = null ) {
-		return self::is_user_allowed() && current_user_can( $capability, $post_id );
 	}
 
 	public function get_path( $rel = '/' ) {
@@ -81,7 +64,7 @@ class Brizy_Editor {
 		try {
 			return Brizy_Editor_Storage_Common::instance()->get( self::$settings_key );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
-			return array('post', 'page' );
+			return array( 'post', 'page' );
 		}
 	}
 

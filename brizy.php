@@ -20,6 +20,8 @@ define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
 
+include_once 'autoload.php';
+
 function brizy_install() {
 	Brizy_Logger::install();
 }
@@ -31,8 +33,12 @@ function brizy_clean() {
 register_activation_hook( __FILE__, 'brizy_install' );
 register_deactivation_hook( __FILE__, 'brizy_clean' );
 
-include_once 'autoload.php';
-include_once 'editor/load.php';
-include_once 'shortcode/load.php';
-include_once 'public/hooks.php';
-include_once 'admin/load.php';
+add_action( 'plugins_loaded', 'brizy_load' );
+
+function brizy_load() {
+	include_once 'editor/load.php';
+	include_once 'shortcode/load.php';
+	include_once 'public/hooks.php';
+	include_once 'admin/load.php';
+
+}

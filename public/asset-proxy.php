@@ -15,7 +15,9 @@ class Brizy_Public_AssetProxy {
 	 */
 	private $url_builder;
 
-
+	/**
+	 * @var array
+	 */
 	private $config;
 
 
@@ -53,7 +55,6 @@ class Brizy_Public_AssetProxy {
 			if ( ! $store_result ) {
 				global $wp_query;
 				$wp_query->set_404();
-
 				return;
 			}
 		}
@@ -75,17 +76,16 @@ class Brizy_Public_AssetProxy {
 
 				header( "{$key}: {$val}" );
 			}
+
 			// send file content
 			echo $content;
 			exit;
 		}
 
-
 		global $wp_query;
 		$wp_query->set_404();
 
 		return;
-
 	}
 
 	public function query_vars( $vars ) {
@@ -96,7 +96,6 @@ class Brizy_Public_AssetProxy {
 
 
 	/**
-	 *
 	 * This is code duplicate taken from Brizy_Editor_Asset_Storage
 	 *
 	 * @param $asset_source
@@ -119,6 +118,7 @@ class Brizy_Public_AssetProxy {
 			$wp_response = $http->request( $asset_source );
 
 			if ( is_wp_error( $wp_response ) ) {
+				Brizy_Logger::instance()->error( "Failed to the the editor asset", array($wp_response) );
 				return false;
 			}
 
@@ -127,8 +127,6 @@ class Brizy_Public_AssetProxy {
 			file_put_contents( $asset_path, $content );
 
 		} catch ( Exception $e ) {
-			$t = 0;
-
 			// clean up
 			if ( $asset_path ) {
 				@unlink( $asset_path );

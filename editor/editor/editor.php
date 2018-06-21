@@ -144,12 +144,12 @@ class Brizy_Editor_Editor_Editor {
 					'iframeUrl' => $this->urlBuilder->application_form_url(),
 					'apiUrl'    => Brizy_Config::BRIZY_APPLICATION_INTEGRATION_URL,
 					'wpApiUrl'  => admin_url( 'admin-ajax.php' ),
-					'submitUrl' => admin_url( 'admin-ajax.php' )."?action=brizy_submit_form"
+					'submitUrl' => admin_url( 'admin-ajax.php' ) . "?action=brizy_submit_form"
 				)
 			)
 		);
 
-		return $config;
+		return apply_filters( 'brizy_editor_config', $config );
 	}
 
 
