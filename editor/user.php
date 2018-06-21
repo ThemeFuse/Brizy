@@ -91,8 +91,6 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 		$this->platform_user_email     = $this->common_storage->get( 'platform_user_email' );
 		$this->platform_user_signature = $this->common_storage->get( 'platform_user_signature' );
 		$this->token                   = $this->common_storage->get( 'access-token', false );
-
-		Brizy_Logger::instance()->debug( 'New user instance with storage', array( $this ) );
 	}
 
 	/**

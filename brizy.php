@@ -24,7 +24,12 @@ function brizy_install() {
 	Brizy_Logger::install();
 }
 
+function brizy_clean() {
+	Brizy_Logger::clean();
+}
+
 register_activation_hook( __FILE__, 'brizy_install' );
+register_deactivation_hook( __FILE__, 'brizy_clean' );
 
 include_once 'autoload.php';
 include_once 'editor/load.php';

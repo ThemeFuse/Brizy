@@ -53,6 +53,18 @@ class Brizy_Logger {
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $create_table_query );
+
+		self::clean();
+	}
+
+
+	/**
+	 * Create logger table.
+	 */
+	static public function clean() {
+
+		global $wpdb;
+		$wpdb->query( "TRUNCATE `{$wpdb->prefix}brizy_logs`" );
 	}
 
 
