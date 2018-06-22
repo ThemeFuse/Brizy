@@ -9,7 +9,7 @@ abstract class Brizy_Editor_Resources_Static {
 	private $deps;
 	private $version;
 
-	public function __construct( $id, $url, array $deps = array(), $ver = false ) {
+	public function __construct( $id, $url,  $deps = array(), $ver = false ) {
 		$this->id = $id;
 		$this->set_url( $url );
 		$this->set_deps( $deps );
@@ -38,7 +38,7 @@ abstract class Brizy_Editor_Resources_Static {
 		return $this->deps;
 	}
 
-	public function set_deps( array $deps ) {
+	public function set_deps(  $deps ) {
 		$this->deps = $deps;
 
 		return $this;

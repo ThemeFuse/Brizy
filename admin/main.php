@@ -85,7 +85,6 @@ class Brizy_Admin_Main {
 			}
 
 			$b_post->compile_page();
-			$b_post->save();
 
 			remove_action( 'save_post', array( $this, 'compile_post_action' ) );
 			wp_update_post( array( 'ID' => $post_id, 'post_content' => $b_post->get_compiled_html_body() ) );

@@ -19,6 +19,18 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 		$this->data = unserialize( $data );
 	}
 
+	public function convertToOptionValue() {
+		return array(
+			'data' => serialize( $this->data )
+		);
+	}
+
+	static public function createFromSerializedData( $data ) {
+		$api_project = new self( $data );
+
+		return $api_project;
+	}
+
 	public function get_data() {
 		return $this->data;
 	}
@@ -74,10 +86,6 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 		$this->data['version'] = $version;
 
 		return $this;
-	}
-
-	public function __sleep() {
-		return array( 'data' );
 	}
 
 	public function set_meta_key( $key, $value ) {

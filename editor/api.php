@@ -441,14 +441,9 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$_POST = array_map( 'stripslashes_deep', $_POST );
-			$data  = $this->param( 'data' );
-			//$title     = $this->param( 'title' );
+			//$_POST = array_map( 'stripslashes_deep', $_POST );
+			$data  = stripslashes($this->param( 'data' ));
 			$atemplate = $this->param( 'template' );
-
-//			if ( $title ) {
-//				$this->post->set_title( $title );
-//			}
 
 			if ( $atemplate ) {
 				$this->post->set_template( $atemplate );

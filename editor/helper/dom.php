@@ -46,7 +46,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 	 *
 	 * @return array
 	 */
-	public function get_attributes( array $tags, $attr ) {
+	public function get_attributes( $tags, $attr ) {
 		$list = array();
 
 		foreach ( $tags as $tag ) {
