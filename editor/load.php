@@ -50,9 +50,8 @@ function brizy_initialize_Brizy_Public_Api() {
 			return;
 		}
 
-		if ( Brizy_Editor::is_user_allowed() ) {
-			$api_instance = new Brizy_Editor_API( $project, $post );
-		}
+
+		$api_instance = new Brizy_Editor_API( $project, $post );
 
 	} catch ( Exception $e ) {
 		Brizy_Logger::instance()->exception( $e );
