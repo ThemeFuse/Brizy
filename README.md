@@ -97,10 +97,10 @@ A good bug report includes full details to easily understand the issue you are h
 ## Changelog
 
 ### 1.0.16 - 2018-06-25 ###
-* Fixed: change how we store the data in db
-* Fixed: submit form for guests
-* Fixed: form serialization
-* Fixed: clean the ligs table when the plugin is desactivated
+* Fixed: Changed the way we store the data in db
+* Fixed: Submit form for guests
+* Fixed: Form serialization
+* Fixed: Clean the logs table when the plugin is deactivated
 
 
 ### 1.0.15 - 2018-06-18 ###
