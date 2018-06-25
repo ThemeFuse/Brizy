@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.15
+Stable tag: 1.0.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -128,6 +128,13 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.16 - 2018-06-25 =
+* Fixed: change how we store the data in db
+* Fixed: submit form for guests
+* Fixed: form serialization
+* Fixed: clean the ligs table when the plugin is desactivated
+
 
 = 1.0.15 - 2018-06-18 =
 * New: Added new icons

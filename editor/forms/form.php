@@ -37,13 +37,31 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 	public function jsonSerialize() {
 		$get_object_vars = array(
-			'id'        => $this->id,
-			'emailTo'   => $this->emailTo,
-			'subject'   => $this->subject,
+			'id'      => $this->id,
+			'emailTo' => $this->emailTo,
+			'subject' => $this->subject,
 		);
 
 		return $get_object_vars;
 	}
+
+	public function convertToOptionValue() {
+		return array(
+			'id'      => $this->id,
+			'emailTo' => $this->emailTo,
+			'subject' => $this->subject,
+		);
+	}
+
+	static public function createFromSerializedData( $data ) {
+		$instance          = new self();
+		$instance->id      = $data['id'];
+		$instance->emailTo = $data['emailTo'];
+		$instance->subject = $data['subject'];
+
+		return $instance;
+	}
+
 
 	/**
 	 * @return string
@@ -113,7 +131,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 			throw new Exception( 'Bad Request', 400 );
 		}
 
-		$_POST['form'] = get_object_vars($json_obj);
+		$_POST['form'] = get_object_vars( $json_obj );
 
 		if ( isset( $_POST['form']['id'] ) ) {
 			$instance->setId( $_POST['form']['id'] );
@@ -175,7 +193,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		return $this;
 	}
-
 
 
 }

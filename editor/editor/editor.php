@@ -22,7 +22,7 @@ class Brizy_Editor_Editor_Editor {
 	 *
 	 * @return Brizy_Editor_Editor_Editor
 	 */
-	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
+	public static function get( $project, $post = null ) {
 		return new self( $project, $post );
 	}
 
@@ -32,7 +32,7 @@ class Brizy_Editor_Editor_Editor {
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
+	public function __construct( $project, $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
 		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post );

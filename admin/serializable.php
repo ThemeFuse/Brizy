@@ -23,6 +23,12 @@ abstract class Brizy_Admin_Serializable implements Serializable, JsonSerializabl
 		}
 	}
 
+	abstract public function convertToOptionValue( );
+
+	static public function createFromSerializedData( $data ) {
+		throw new Exception( 'Not implemented' );
+	}
+
 	public function jsonSerialize() {
 		return get_object_vars( $this );
 	}

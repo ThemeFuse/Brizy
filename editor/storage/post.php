@@ -37,7 +37,7 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	 *
 	 * @return $this
 	 */
-	protected function update_storage( array $storage ) {
+	protected function update_storage( $storage ) {
 		update_post_meta( $this->get_id(), $this->key(), $storage );
 
 		return $this;

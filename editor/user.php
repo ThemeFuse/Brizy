@@ -2,7 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor_SignatureInterface {
+class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 
 	const BRIZY_ATTACHMENT_HASH_KEY = 'brizy_attachment_hash';
 
@@ -34,6 +34,30 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 	private $platform_user_signature;
 
 	/**
+	 * Brizy_Editor_User constructor.
+	 *
+	 * @param $common_storage
+	 *
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	protected function __construct( $common_storage ) {
+
+		$this->common_storage = $common_storage;
+
+		$this->platform_user_id        = $this->common_storage->get( 'platform_user_id' );
+		$this->platform_user_email     = $this->common_storage->get( 'platform_user_email' );
+		$this->platform_user_signature = $this->common_storage->get( 'platform_user_signature' );
+
+		$token_data = $this->common_storage->get( 'access-token', false );
+		if ( $token_data instanceof Brizy_Editor_API_AccessToken ) {
+			$this->token = $token_data;
+			$this->common_storage->set( 'access-token', $token_data->convertToOptionValue() );
+		} elseif ( is_array( $token_data ) ) {
+			$this->token = Brizy_Editor_API_AccessToken::createFromSerializedData( $token_data );
+		}
+	}
+
+	/**
 	 * @return Brizy_Editor_User
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 * @throws Exception
@@ -49,50 +73,22 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 				'User is in maintenance mode'
 			);
 		}
+
 		$user     = null;
 		$platform = new Brizy_Editor_API_Platform();
 
 		try {
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
-//			if ( ! $platform->isUserCreatedLocally() ) {
-//				$user->checkSignature();
-//			}
-		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
-//			$platform->createUser( $user->getPlatformUserId(), false );
-//			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			$platform->createUser( );
+			$platform->createUser();
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		}
-
-//		if ( ! $platform->isUserCreatedLocally() && ( ! $user->token || $user->token->expired() ) ) {
-//			$user->auth();
-//		}
 
 		return self::$instance = $user;
 	}
 
 	public static function reload() {
 		return self::$instance = new self( Brizy_Editor_Storage_Common::instance() );
-	}
-
-	/**
-	 * Brizy_Editor_User constructor.
-	 *
-	 * @param $common_storage
-	 *
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	protected function __construct( $common_storage ) {
-
-		$this->common_storage = $common_storage;
-
-		$this->platform_user_id        = $this->common_storage->get( 'platform_user_id' );
-		$this->platform_user_email     = $this->common_storage->get( 'platform_user_email' );
-		$this->platform_user_signature = $this->common_storage->get( 'platform_user_signature' );
-		$this->token                   = $this->common_storage->get( 'access-token', false );
-
-		Brizy_Logger::instance()->debug( 'New user instance with storage', array( $this ) );
 	}
 
 	/**
@@ -148,7 +144,7 @@ class Brizy_Editor_User extends Brizy_Admin_Serializable implements Brizy_Editor
 			$auth_api = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, $credentials->client_id, $credentials->client_secret );
 			$auth_api->clearTokenCache();
 			$this->token = $auth_api->getToken( $this->platform_user_email );
-			$this->common_storage->set( 'access-token', $this->token );
+			$this->common_storage->set( 'access-token', $this->token->convertToOptionValue() );
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );

@@ -69,32 +69,36 @@ class Brizy_Editor_API {
 
 	private function initialize() {
 
-		add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
-		add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_GLOBALS, array( $this, 'get_globals' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SET_GLOBALS, array( $this, 'set_globals' ) );
-		add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
-		//add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SIDEBAR_CONTENT, array( $this, 'sidebar_content' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
-		add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
+		if ( Brizy_Editor::is_user_allowed() ) {
 
-		add_action( 'wp_ajax_' . self::AJAX_GET_DEFAULT_FORM, array( $this, 'default_form' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
-		add_action( 'wp_ajax_' . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
-		add_action( 'wp_ajax_' . self::AJAX_FORM_INTEGRATION_STATUS, array(
-			$this,
-			'update_form_integrations_status'
-		) );
-		add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+			add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
+			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_GLOBALS, array( $this, 'get_globals' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SET_GLOBALS, array( $this, 'set_globals' ) );
+			add_action( 'wp_ajax_' . self::AJAX_MEDIA, array( $this, 'media' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
+			//add_action( 'wp_ajax_' . self::AJAX_BUILD, array( $this, 'build_content' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SIDEBAR_CONTENT, array( $this, 'sidebar_content' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+			add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
+
+			add_action( 'wp_ajax_' . self::AJAX_GET_DEFAULT_FORM, array( $this, 'default_form' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
+			add_action( 'wp_ajax_' . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
+			add_action( 'wp_ajax_' . self::AJAX_FORM_INTEGRATION_STATUS, array(
+				$this,
+				'update_form_integrations_status'
+			) );
+			add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+
+		}
 
 		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
@@ -441,14 +445,9 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			$_POST = array_map( 'stripslashes_deep', $_POST );
-			$data  = $this->param( 'data' );
-			//$title     = $this->param( 'title' );
+			//$_POST = array_map( 'stripslashes_deep', $_POST );
+			$data      = stripslashes( $this->param( 'data' ) );
 			$atemplate = $this->param( 'template' );
-
-//			if ( $title ) {
-//				$this->post->set_title( $title );
-//			}
 
 			if ( $atemplate ) {
 				$this->post->set_template( $atemplate );

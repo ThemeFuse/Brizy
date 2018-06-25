@@ -27,12 +27,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	protected $creation_signature;
 
 	/**
-	 * @var bool
-	 */
-	protected $store_assets = true;
-
-
-	/**
 	 * Brizy_Editor_Project constructor.
 	 *
 	 * @param $api_project
@@ -40,6 +34,21 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	protected function __construct( $api_project ) {
 		$this->api_project = $api_project;
 	}
+
+	public function convertToOptionValue() {
+		return array(
+			'api_project'        => $this->get_api_project()->serialize(),
+			'creation_signature' => $this->creation_signature
+		);
+	}
+
+	static public function createFromSerializedData( $data ) {
+		$project                     = new self( Brizy_Editor_API_Project::createFromSerializedData( unserialize($data['api_project']) ) );
+		$project->creation_signature = $data['creation_signature'];
+
+		return $project;
+	}
+
 
 	/**
 	 * @return Brizy_Editor_Project|mixed
@@ -51,28 +60,23 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 			return self::$instance;
 		}
 
-//		$platform = new Brizy_Editor_API_Platform();
-
 		try {
 			$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
-			self::$instance              = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
+			$project                     = $brizy_editor_storage_common->get( self::BRIZY_PROJECT );
+
+			if ( is_array( $project ) ) {
+				$project = self::createFromSerializedData( $project );
+			} elseif($project instanceof self) {
+				$project->save();
+			}
+
+			self::$instance = $project;
+
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			self::$instance = self::create(  );
+			self::$instance = self::create();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
-
-//		try {
-//			if ( ! $platform->isUserCreatedLocally() ) {
-//				self::$instance->checkSignature();
-//			}
-//		} catch ( Brizy_Editor_Exceptions_SignatureMismatch $e ) {
-//			Brizy_Logger::instance()->notice( "Project signature mismatch" );
-//			self::$instance = self::create( self::$instance->get_id(), false );
-//		} catch ( Exception $e ) {
-//			Brizy_Logger::instance()->exception( $e );
-//			throw new Exception( 'Unable to check the signature.' );
-//		}
 
 		return self::$instance;
 	}
@@ -112,53 +116,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 		self::$instance = $project;
 
-		/*
-		if ( $clone_from ) {
-
-			$project_data = $project->get_api_project()->get_data();
-
-			Brizy_Logger::instance()->notice( 'Clone all project data' );
-
-			foreach ( $project_data['languages'] as $language ) {
-				$pages = $language['pages'];
-
-				Brizy_Logger::instance()->notice( 'New pages from cloned project', array( $pages ) );
-
-				if ( is_array( $pages ) && count( $pages ) > 0 ) {
-
-					// debug logs
-					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-						foreach ( (array) $pages as $aclone ) {
-							Brizy_Logger::instance()->debug( sprintf( "Cloned page [%s] to page [%s]", $aclone['cloned_from'], $aclone['id'] ) );
-						}
-					}
-
-					foreach ( (array) $pages as $page ) {
-						// get wordpress post by old brizy hash
-
-						$wp_post = Brizy_Editor_Post::get_post_by_foreign_hash( $page['cloned_from'] );
-
-						if ( ! $wp_post ) {
-							continue;
-						}
-
-						$old_page = Brizy_Editor_Post::get( $wp_post );
-						$new_post = new Brizy_Editor_Post( new Brizy_Editor_API_Page( $page ), $wp_post->ID );
-
-						$new_post->set_compiled_html_body( $old_page->get_compiled_html_body() );
-						$new_post->set_compiled_html_head( $old_page->get_compiled_html_head() );
-
-						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
-						update_post_meta( $wp_post->ID, Brizy_Editor_Post::BRIZY_POST_HASH_KEY, $new_post->get_api_page()->get_id() );
-
-						$new_post->save();
-					}
-				}
-			}
-		}
-		*/
-
-
 		return $project;
 	}
 
@@ -175,19 +132,9 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		$this->set_meta_key( 'worpdress_description', get_bloginfo( 'description' ) );
 
 		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
-		$brizy_editor_storage_common->set( self::BRIZY_PROJECT, $this );
+		$brizy_editor_storage_common->set( self::BRIZY_PROJECT, $this->convertToOptionValue() );
 
 		return $this;
-	}
-
-
-	/**
-	 * @throws Brizy_Editor_Exceptions_SignatureMismatch
-	 */
-	public function checkSignature() {
-		if ( Brizy_Editor_Signature::get() != $this->creation_signature ) {
-			throw new Brizy_Editor_Exceptions_SignatureMismatch( 'Clone project required.' );
-		}
 	}
 
 	/**
@@ -216,7 +163,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 		return $this->api_project->get_globals();
 	}
 
-
 	/**
 	 * @param $globals
 	 *
@@ -233,7 +179,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 		// when the globals is updated all pages needs to be compiled.
 		// se will update the flag for all pages edited with brizy
-
 		$posts = get_posts( array(
 			'orderby'     => null,
 			'numberposts' => - 1,
@@ -299,19 +244,4 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 		$this->get_api_project()->set_meta_key( $key, $value );
 	}
-
-//	public function invalidateAssetsFor( $version ) {
-//
-//		Brizy_Logger::instance()->notice( 'Invalidate assets for version ' . $version, array( $version ) );
-//
-//		$dir_path = sprintf( rtrim( ABSPATH, DIRECTORY_SEPARATOR ) . Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $version );
-//
-//		Brizy_Logger::instance()->notice( 'Remove directory ' . $dir_path, array( $dir_path ) );
-//
-//		$fs = new WP_Filesystem_Direct( null );
-//		$fs->rmdir( $dir_path, true );
-//
-//		return $this;
-//	}
-
 }

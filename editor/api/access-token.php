@@ -28,6 +28,27 @@ class Brizy_Editor_API_AccessToken extends Brizy_Admin_Serializable {
 		$this->expires = (int) $expires;
 	}
 
+	public function convertToOptionValue() {
+		return array(
+			'token'         => $this->token,
+			'refresh_token' => $this->refresh_token,
+			'expires'       => $this->expires
+		);
+	}
+
+	static public function createFromSerializedData( $data ) {
+
+		if($data instanceof self) {
+
+		}
+
+		$instance                = new self( $data['token'], $data['expires'] );
+		$instance->refresh_token = $data['refresh_token'];
+
+		return $instance;
+	}
+
+
 	public function access_token() {
 		return $this->token;
 	}

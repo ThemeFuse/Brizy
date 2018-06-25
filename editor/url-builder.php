@@ -23,7 +23,7 @@ class Brizy_Editor_UrlBuilder {
 	 * @param Brizy_Editor_Project|null $project
 	 * @param Brizy_Editor_Post|null $post
 	 */
-	public function __construct( Brizy_Editor_Project $project = null, Brizy_Editor_Post $post = null ) {
+	public function __construct( $project = null, $post = null ) {
 
 		global $wp_rewrite;
 

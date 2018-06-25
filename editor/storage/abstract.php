@@ -57,7 +57,7 @@ abstract class Brizy_Editor_Storage_Abstract {
 	 *
 	 * @return Brizy_Editor_Storage_Abstract
 	 */
-	abstract protected function update_storage( array $storage );
+	abstract protected function update_storage( $storage );
 
 	/**
 	 * @return array

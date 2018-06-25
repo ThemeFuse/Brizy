@@ -41,16 +41,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	protected $needs_compile;
 
 	/**
-	 * @var bool
-	 */
-	//protected $store_assets;
-
-	/**
-	 * @var array
-	 */
-	//protected $assets = array();
-
-	/**
 	 * Json for the editor.
 	 *
 	 * @var string
@@ -64,7 +54,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function __construct( $wp_post_id ) {
 		$this->wp_post_id = (int) $wp_post_id;
-		$this->wp_post    = get_post( $this->wp_post_id );
+		if ( $this->wp_post_id ) {
+			$this->wp_post = get_post( $this->wp_post_id );
+		}
 	}
 
 	/**
@@ -97,6 +89,27 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		unset( $this->api_page );
 	}
 
+
+	public function convertToOptionValue() {
+		return array(
+			'compiled_html_body' => $this->get_compiled_html_body(),
+			'compiled_html_head' => $this->get_compiled_html_head(),
+			'needs_compile'      => $this->needs_compile,
+			'editor_data'        => addslashes($this->editor_data),
+		);
+	}
+
+	static public function createFromSerializedData( $data ) {
+		$post                     = new self( null );
+		$post->compiled_html_body = $data['compiled_html_body'];
+		$post->compiled_html_head = $data['compiled_html_head'];
+		$post->needs_compile      = $data['needs_compile'];
+		$post->editor_data        = $data['editor_data'];
+
+		return $post;
+	}
+
+
 	/**
 	 * @param $apost
 	 *
@@ -121,6 +134,12 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $wp_post_id );
 
 		$post = $brizy_editor_storage_post->get( self::BRIZY_POST );
+
+		if ( is_array( $post ) ) {
+			$post = self::createFromSerializedData( $post );
+		} elseif ($post instanceof self) {
+			$post->save();
+		}
 
 		$post->wp_post_id = $wp_post_id;
 		$post->wp_post    = get_post( $wp_post_id );
@@ -182,7 +201,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function save() {
 
 		try {
-			$this->storage()->set( self::BRIZY_POST, $this );
+			$value = $this->convertToOptionValue();
+			$this->storage()->set( self::BRIZY_POST, $value );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 
@@ -242,7 +262,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	public function set_editor_data( $content ) {
-		$this->editor_data = stripslashes( $content );
+		$this->editor_data =  $content ;
 
 		return $this;
 	}

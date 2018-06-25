@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.15<br>
+Stable tag: 1.0.16<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,13 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.16 - 2018-06-25 ###
+* Fixed: change how we store the data in db
+* Fixed: submit form for guests
+* Fixed: form serialization
+* Fixed: clean the ligs table when the plugin is desactivated
+
 
 ### 1.0.15 - 2018-06-18 ###
 * New: Added new icons

@@ -18,8 +18,20 @@ class Brizy_Editor_API_Page extends Brizy_Admin_Serializable {
 	 *
 	 * @return Brizy_Editor_API_Page
 	 */
-	public static function get( array $data = array() ) {
+	public static function get( $data = array() ) {
 		return new self( $data );
+	}
+
+	public function convertToOptionValue() {
+		return array(
+			'data' => $this->data
+		);
+	}
+
+	static public function createFromSerializedData( $data ) {
+		$page = new self( $data['data'] );
+
+		return $page;
 	}
 
 	/**

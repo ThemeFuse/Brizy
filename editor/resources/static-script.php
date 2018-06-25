@@ -11,7 +11,7 @@ class Brizy_Editor_Resources_StaticScript extends Brizy_Editor_Resources_Static 
 		$this->footer = $footer;
 	}
 
-	public function enqueue( $locale_id = null, array $value = array() ) {
+	public function enqueue( $locale_id = null,  $value = array() ) {
 		wp_enqueue_script(
 			$this->get_id(),
 			$this->get_url(),
