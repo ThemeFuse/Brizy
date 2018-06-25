@@ -18,7 +18,7 @@ define( 'BRIZY_EDITOR_VERSION', '1.0.39' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
-define( 'BRIZY_PLUGIN_URL', plugin_dir_url( BRIZY_FILE ) );
+define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
 
 function brizy_install() {
 	Brizy_Logger::install();

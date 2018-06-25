@@ -169,11 +169,11 @@ class Brizy_Admin_Main {
 
 		wp_enqueue_style(
 			brizy()->get_slug() . '-admin-js',
-			brizy()->get_url( '/admin/static/css/style.css' )
+			brizy()->get_url( 'admin/static/css/style.css' )
 		);
 		wp_enqueue_script(
 			brizy()->get_slug() . '-admin-js',
-			brizy()->get_url( '/admin/static/js/script.js' ),
+			brizy()->get_url( 'admin/static/js/script.js' ),
 			array( 'jquery', 'underscore' ),
 			brizy()->get_version(),
 			true
