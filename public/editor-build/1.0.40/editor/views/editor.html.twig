@@ -1,0 +1,19 @@
+{% set assetsUrl = editorData.urls.assets %} {% spaceless %}<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{% if DEV is not defined or DEV == false %}<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115444307-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-115444307-1",{linker:{domains:["brizy.io","avangate.com","2checkout.com","brizy.net","brizydemo.com","bitblox7.xyz"]}}),gtag("config","AW-802288683")</script><!-- End Google Analytics --><!-- Facebook Pixel Code --><script>!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),o.push=o,o.loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src="https://connect.facebook.net/en_US/fbevents.js",(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script"),fbq("init","493684744367422"),fbq("track","PageView")</script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=493684744367422&ev=PageView&noscript=1"></noscript><script>fbq("track","ViewContent",{content_name:"Demo Brizy"})</script><!-- End Facebook Pixel Code --> {% endif %}</head><body><iframe id="brz-ed-iframe" class="brz-iframe brz-ed-page" style="border: 0" srcdoc='
+        <html>
+          <head>
+          </head>
+          <body>
+            <div id="brz-ed-root"></div>
+            <script src="{{ assetsUrl }}/editor/js/brizy-init.js"></script>
+            <script>
+              var config = JSON.parse("{{ editorData | json_encode | e("js") }}");
+              Brizy.init(config);
+            </script>
+            {% if DEV is defined and DEV %}
+              <script>
+                window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+              </script>
+            {% endif %}
+          </body>
+        </html>
+      '></iframe></body></html>{% endspaceless %}
