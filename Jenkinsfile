@@ -118,7 +118,7 @@ pipeline {
             }
             steps {
                 sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion
-                sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password '+params.svnPassword+'  -m "Version '+params.buildVersion+'"'
+                sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password \''+params.svnPassword+'\'  -m "Version '+params.buildVersion+'"'
             }
         }
 
