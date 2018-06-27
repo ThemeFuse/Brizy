@@ -1,13 +1,15 @@
 def now = new Date()
 def currentDate =  now.format("yyyy-MM-dd", TimeZone.getTimeZone('UTC'))
 def changeLogs = params.changelog.replaceAll("\n","\\\\n").replaceAll("/",'\\\\/')
-def zipFileName = "Build-"+params.buildVersion+".zip"
+def zipFileName = "Build-"+buildVersion+".zip"
+def buildVersion = buildVersion + params.gitMerge ? '' : '-rc'
 env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
+
 
 def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
 
 
-    def buildInfo = "\nBranch: "+params.releaseBranch+"\nPlugin version: "+params.buildVersion+"\nEditor version: "+params.editorVersion+"\nChangelog\n"+params.changelog;
+    def buildInfo = "\nBranch: "+params.releaseBranch+"\nPlugin version: "+buildVersion+"\nEditor version: "+params.editorVersion+"\nChangelog\n"+params.changelog;
 
      if ( buildResult == "SUCCESS" ) {
        slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
@@ -41,7 +43,7 @@ pipeline {
         stage('Version Update') {
             steps {
                 script {
-                    if(folderExist(params.brizySvnPath+"/tags/"+params.buildVersion)) {
+                    if(folderExist(params.brizySvnPath+"/tags/"+buildVersion)) {
                         error("Build failed because this version is alread built.")
                     }
                 }
@@ -56,16 +58,16 @@ pipeline {
                 sh 'git remote set-branches --add origin develop'
                 sh 'git remote set-branches --add origin release'
 
-                sh "sed -i 's/Version:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Version: ${params.buildVersion}/' brizy.php"
-                sh "sed -i 's/^Stable tag:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Stable tag: ${params.buildVersion}/' readme.txt"
-                sh "sed -i 's/^Stable tag:\\s.[^<]*/Stable tag: ${params.buildVersion}/' README.md"
-                sh "sed -i \"s/'BRIZY_VERSION',\\s'.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}'/'BRIZY_VERSION', '${params.buildVersion}'/\" brizy.php"
+                sh "sed -i 's/Version:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Version: ${buildVersion}/' brizy.php"
+                sh "sed -i 's/^Stable tag:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Stable tag: ${buildVersion}/' readme.txt"
+                sh "sed -i 's/^Stable tag:\\s.[^<]*/Stable tag: ${buildVersion}/' README.md"
+                sh "sed -i \"s/'BRIZY_VERSION',\\s'.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}'/'BRIZY_VERSION', '${buildVersion}'/\" brizy.php"
                 sh "sed -i \"s/'BRIZY_DEVELOPMENT',.[^\\)]*/'BRIZY_DEVELOPMENT', false /\" brizy.php"
                 sh "sed -i \"s/'BRIZY_EDITOR_VERSION',\\s'.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}'/'BRIZY_EDITOR_VERSION', '${params.editorVersion}'/\" brizy.php"
                 sh "sed -i \"s/'BRIZY_LOG',.[^\\)]*/'BRIZY_LOG', false /\" brizy.php"
 
-                sh "sed -i \"s/== Changelog ==/== Changelog ==\\n\\n= ${params.buildVersion} - "+currentDate+" =\\n${changeLogs}/\" readme.txt"
-                sh "sed -i \"s/## Changelog/## Changelog\\n\\n### ${params.buildVersion} - "+currentDate+" ###\\n${changeLogs}/\" README.md"
+                sh "sed -i \"s/== Changelog ==/== Changelog ==\\n\\n= ${buildVersion} - "+currentDate+" =\\n${changeLogs}/\" readme.txt"
+                sh "sed -i \"s/## Changelog/## Changelog\\n\\n### ${buildVersion} - "+currentDate+" ###\\n${changeLogs}/\" README.md"
             }
         }
 
@@ -99,10 +101,10 @@ pipeline {
                         expression { return params.gitMerge }
                     }
                     steps {
-                        sh 'git commit -a -m "Build '+params.buildVersion+'"'
+                        sh 'git commit -a -m "Build '+buildVersion+'"'
                         sh 'git checkout -t origin/master'
                         sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
-                        sh 'git tag '+params.buildVersion
+                        sh 'git tag '+buildVersion
                         sh 'git checkout -t origin/develop'
                         sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
 
@@ -117,8 +119,8 @@ pipeline {
                 expression { return params.svnCommit }
             }
             steps {
-                sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion
-                sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password '+params.svnPassword+'  -m "Version '+params.buildVersion+'"'
+                sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + buildVersion
+                sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password \''+params.svnPassword+'\'  -m "Version '+buildVersion+'"'
             }
         }
 

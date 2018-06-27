@@ -54,7 +54,7 @@ class Brizy_Editor {
 	}
 
 	public function get_url( $rel = '' ) {
-		return BRIZY_PLUGIN_URL . DIRECTORY_SEPARATOR . ltrim( $rel, DIRECTORY_SEPARATOR );
+		return BRIZY_PLUGIN_URL . "/" . ltrim( $rel, "/" );
 	}
 
 	public function get_domain() {
