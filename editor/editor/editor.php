@@ -104,7 +104,7 @@ class Brizy_Editor_Editor_Editor {
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 
 			),
-			'user'            => $this->project->get_id(),
+			'user'            => array( 'role' => 'admin' ),
 			'wp'              => array(
 				'permalink'   => get_permalink( $wp_post_id ),
 				'page'        => $wp_post_id,
