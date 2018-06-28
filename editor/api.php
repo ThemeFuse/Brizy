@@ -506,7 +506,6 @@ class Brizy_Editor_API {
 			) );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
-			http://brizy.local/wp-admin/admin-ajax.php?post=13
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 	}
