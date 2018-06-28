@@ -47,7 +47,7 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	public function proxy_url( $end_point ) {
-		return site_url() . '?brizy=' . $end_point;
+		return site_url('?brizy=' . $end_point);
 	}
 
 	/**
