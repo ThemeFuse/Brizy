@@ -10,9 +10,9 @@ class Brizy_Editor_CompiledHtml {
 	private $dom;
 
 	/**
-	 * @var Brizy_Editor_Asset_ProcessorInterface[]
+	 * @var Brizy_Editor_Content_ProcessorInterface[]
 	 */
-	private $asset_processors = array();
+	private $processors = array();
 
 	/**
 	 * Brizy_Editor_CompiledHtml constructor.
@@ -24,10 +24,10 @@ class Brizy_Editor_CompiledHtml {
 	}
 
 	/**
-	 * @param Brizy_Editor_Asset_ProcessorInterface[] $asset_processors
+	 * @param Brizy_Editor_Content_ProcessorInterface[] $processors
 	 */
-	public function setAssetProcessors( $asset_processors ) {
-		$this->asset_processors = $asset_processors;
+	public function setProcessors( $processors ) {
+		$this->processors = $processors;
 	}
 
 
@@ -40,7 +40,7 @@ class Brizy_Editor_CompiledHtml {
 
 		$content = $body_tag->get_content();
 
-		$content = $this->apply_asset_processors( $content );
+		$content = $this->apply_processors( $content );
 
 		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
 
@@ -58,16 +58,18 @@ class Brizy_Editor_CompiledHtml {
 
 		$content = $head_tag->get_content();
 
-		$content = $this->apply_asset_processors( $content );
+		$content = $this->apply_processors( $content );
 
 		$content = Brizy_SiteUrlReplacer::hideSiteUrl( $content );
 
 		return $content;
 	}
 
-	private function apply_asset_processors( $content ) {
+	private function apply_processors( $content ) {
 
-		foreach ( $this->asset_processors as $processor ) {
+		$processors = apply_filters( 'brizy_apply_content_processors', $this->processors );
+
+		foreach ( $processors as $processor ) {
 			$content = $processor->process( $content );
 		}
 

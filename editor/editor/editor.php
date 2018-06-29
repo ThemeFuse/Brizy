@@ -137,7 +137,8 @@ class Brizy_Editor_Editor_Editor {
 					'woocommerce' => $this->get_woocomerce_plugin_info(),
 				),
 				'hasSidebars' => count( $wp_registered_sidebars ) > 0,
-				'l10n'        => Brizy_Languages_Texts::get_editor_texts()
+				'l10n'        => Brizy_Languages_Texts::get_editor_texts(),
+				'pageData'    => apply_filters( 'brizy_page_data', array() )
 			),
 			'applications'    => array(
 				'form' => array(

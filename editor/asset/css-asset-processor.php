@@ -6,7 +6,7 @@
  * Time: 10:46 AM
  */
 
-class Brizy_Editor_Asset_CssAssetProcessor implements Brizy_Editor_Asset_ProcessorInterface {
+class Brizy_Editor_Asset_CssAssetProcessor implements Brizy_Editor_Content_ProcessorInterface {
 	/**
 	 * @var Brizy_Editor_Asset_Storage
 	 */

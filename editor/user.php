@@ -338,7 +338,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
 
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $page_html );
-		$brizy_editor_compiled_html->setAssetProcessors( $asset_processors );
+		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 
 		return $brizy_editor_compiled_html;
 	}
