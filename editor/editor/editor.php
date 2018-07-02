@@ -166,6 +166,8 @@ class Brizy_Editor_Editor_Editor {
 					'setFeaturedImage'           => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
 					'setFeaturedImageFocalPoint' => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT,
 					'removeFeaturedImage'        => Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
+					'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA,
+					'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA,
 				),
 				'plugins'         => array(
 					'dummy'       => true,
@@ -184,6 +186,7 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),
+			'menuData'        => $this->get_menu_data()
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -396,4 +399,82 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
+	private function get_menu_data() {
+		$menus     = wp_get_nav_menus();
+		$menu_data = array();
+
+		foreach ( $menus as $menu ) {
+
+			$custom_menu_data = get_term_meta( $menu->term_id, 'brizy_data', true );
+
+			$amenu = array(
+				'id'   => $menu->term_id,
+				'name' => $menu->name,
+			);
+
+			$amenu = (object) array_merge( $amenu, get_object_vars( is_object( $custom_menu_data ) ? $custom_menu_data : (object) array() ) );
+
+			$menu_items = wp_get_nav_menu_items( $menu->term_id );
+
+			$menu_items = $this->get_menu_tree( $menu_items );
+
+			if ( count( $menu_items ) > 0 ) {
+				$amenu->items = $menu_items;
+			}
+
+			$menu_data[] = $amenu;
+		}
+
+		return $menu_data;
+	}
+
+	private function get_menu_tree( $items, $parent = 0 ) {
+		$result_items = array();
+
+		foreach ( $items as $item ) {
+			if ( $item->menu_item_parent != $parent ) {
+				continue;
+			}
+
+			$megaMenuItems = $this->getMegaMenuItems();
+
+			$menu_data = get_post_meta( $item->ID, 'brizy_data', true );
+
+			$item_value = array(
+				'id'            => $item->ID,
+				'title'         => $item->title,
+				'url'           => $item->url,
+				'megaMenuItems' => $megaMenuItems
+			);
+
+			$an_item = (object) array(
+				'type' => 'MenuItem',
+			);
+
+			$an_item->value = (object) array_merge( $item_value, get_object_vars( is_object( $menu_data ) ? $menu_data : (object) array() ) );
+
+			$child_items = $this->get_menu_tree( $items, $item->ID );
+
+			if ( count( $child_items ) > 0 ) {
+				$an_item->value->items = $child_items;
+			}
+
+			$result_items[] = $an_item;
+		}
+
+		return $result_items;
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getMegaMenuItems() {
+
+		return [
+			(object) ( array(
+				'type'  => "SectionMegaMenu",
+				'value' => (object) array( 'items' => array() )
+			) )
+		];
+	}
 }
