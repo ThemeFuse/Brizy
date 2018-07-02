@@ -29,6 +29,8 @@ class Brizy_Editor_API {
 	const AJAX_DELETE_FORM = 'brizy_delete_form';
 	const AJAX_FORM_INTEGRATION_STATUS = 'brizy_form_integration_status';
 	const AJAX_SUBMIT_FORM = 'brizy_submit_form';
+	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
+	const AJAX_UPDATE_MENU_ITEM_DATA = 'brizy_update_menu_item_data';
 
 	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
 	const AJAX_MEDIA_METAKEY = 'brizy_get_media_key';
@@ -108,6 +110,8 @@ class Brizy_Editor_API {
 				'update_form_integration_status'
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+			add_action( 'wp_ajax_' . self::AJAX_UPDATE_MENU_ITEM_DATA, array( $this, 'update_menu_item_data' ) );
+			add_action( 'wp_ajax_' . self::AJAX_UPDATE_MENU_DATA, array( $this, 'update_menu_data' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT, array(
 				$this,
@@ -169,6 +173,38 @@ class Brizy_Editor_API {
 		$this->error( 400, 'Invalid post' );
 	}
 
+
+	public function update_menu_item_data() {
+		if ( ! isset( $_POST['menuItemId'] ) || get_post_type( $_POST['menuItemId'] ) != 'nav_menu_item' ) {
+			$this->error( 400, 'Unknown menu item' );
+		}
+
+		$json_decode = json_decode( stripslashes( $_POST['menuItemData'] ) );
+
+		if ( ! isset( $_POST['menuItemData'] ) || is_null( $json_decode ) ) {
+			$this->error( 400, 'Bad request' );
+		}
+
+		update_post_meta( (int) $_POST['menuItemId'], 'brizy_data', $json_decode );
+
+		$this->success( array() );
+	}
+
+	public function update_menu_data() {
+		if ( ! isset( $_POST['menuId'] )) {
+			$this->error( 400, 'Unknown menu' );
+		}
+
+		$json_decode = json_decode( stripslashes( $_POST['menuData'] ) );
+
+		if ( ! isset( $_POST['menuData'] ) || is_null( $json_decode ) ) {
+			$this->error( 400, 'Bad request' );
+		}
+
+		update_term_meta( (int) $_POST['menuId'], 'brizy_data', $json_decode );
+
+		$this->success( array() );
+	}
 
 	public function default_form() {
 		try {
