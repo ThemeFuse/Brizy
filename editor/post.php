@@ -118,9 +118,22 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	static public function createFromSerializedData( $data ) {
 		$post                     = new self( null );
-		$post->compiled_html      = $data['compiled_html'];
-		$post->compiled_html_body = $data['compiled_html_body'];
-		$post->compiled_html_head = $data['compiled_html_head'];
+
+		if(isset($data['compiled_html']))
+		{
+			$post->compiled_html      = $data['compiled_html'];
+		}
+
+		if(isset($data['compiled_html_body']))
+		{
+			$post->compiled_html_body      = $data['compiled_html_body'];
+		}
+
+		if(isset($data['compiled_html_head']))
+		{
+			$post->compiled_html_head      = $data['compiled_html_head'];
+		}
+
 		$post->needs_compile      = $data['needs_compile'];
 		$post->editor_data        = $data['editor_data'];
 

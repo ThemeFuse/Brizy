@@ -13,32 +13,8 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 	/**
 	 * @return string
 	 */
-	private $url_builder;
-
-	/**
-	 * @var array
-	 */
-	private $config;
-
-	/**
-	 * @return string
-	 */
 	protected function get_endpoint_key() {
 		return self::ENDPOINT;
-	}
-
-	/**
-	 * Brizy_Public_AssetProxy constructor.
-	 *
-	 * @param $url_builder
-	 * @param $config
-	 */
-	public function __construct( $url_builder, $config ) {
-		add_action( 'wp', array( $this, 'process_query' ), - 1 );
-		add_filter( 'query_vars', array( $this, 'query_vars' ) );
-
-		$this->url_builder = $url_builder;
-		$this->config      = $config;
 	}
 
 	public function process_query() {
