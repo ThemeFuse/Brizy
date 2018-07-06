@@ -102,7 +102,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		// resize image
 		if ( $media_filter ) {
 
-			if ( ! file_exists( $resized_image_path ) ) {
+			if ( ! file_exists( $resized_image_path ) && false ) {
 
 				@mkdir( $resized_page_asset_path, 0755, true );
 
@@ -113,11 +113,10 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 				if ( $imagine ) {
 					$imagine->save( $resized_image_path );
-					unset($imagine);
+					unset( $imagine );
+
 					return $resized_image_path;
 				}
-
-
 			}
 		}
 
@@ -128,16 +127,20 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @param $original_path
 	 * @param $resize_params
 	 *
-	 * @return \Imagine\Gd\Image|\Imagine\Image\ImageInterface|null|static
+	 * @return WP_Error|WP_Image_Editor
 	 * @throws Exception
 	 */
 	private function crop( $original_path, $resize_params ) {
-		$imagine        = $this->getImagine();
-		$original_image = $imagine->open( $original_path );
-		$new_image      = null;
+		$imageEditor = wp_get_image_editor( $original_path );
+
+		if ( $imageEditor instanceof WP_Error ) {
+			Brizy_Logger::instance()->error( $imageEditor->get_error_message(), array( $imageEditor ) );
+			throw new Exception( "Unable to obtain the image editor" );
+		}
 
 		$regExAdvanced = "/^iW=[0-9]{1,4}&iH=[0-9]{1,4}&oX=[0-9]{1,4}&oY=[0-9]{1,4}&cW=[0-9]{1,4}&cH=[0-9]{1,4}$/is";
 		$regExBasic    = "/^iW=[0-9]{1,4}&iH=([0-9]{1,4}|any|\*{1})$/is";
+
 		if ( preg_match( $regExBasic, $resize_params ) ) {
 			$cropType = self::BASIC_CROP_TYPE;
 		} elseif ( preg_match( $regExAdvanced, $resize_params ) ) {
@@ -147,47 +150,29 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		$filter_configuration                 = $this->getFilterOptions( $cropType, $original_path, $resize_params );
-		$original_box                         = $original_image->getSize();
-		$filter_configuration['originalSize'] = array( $original_box->getWidth(), $original_box->getHeight() );
+		$filter_configuration['originalSize'] = array_values( $imageEditor->get_size() );
 
 		if ( $filter_configuration['format'] == "gif" ) {
 			// do not resize
-			$new_image = $original_image;
+			return $imageEditor;
 		} else {
 			if ( $filter_configuration['is_advanced'] === false ) {
 				list( $imageWidth, $imageHeight ) = array_values( $filter_configuration['requestedData'] );
 				list( $originalWidth, $originalHeight ) = $filter_configuration['originalSize'];
 				if ( $imageWidth > $originalWidth && ( $imageHeight == "any" || $imageHeight == "*" ) ) {
-					return $original_image;
+					return $imageEditor;
 				}
+				$imageEditor->resize( $imageWidth, $imageHeight );
 
-				return $this->relativeResize( $original_image, $imageWidth, $imageHeight );
+				return $imageEditor;
 			}
 
 			list( $imageWidth, $imageHeight, $offsetX, $offsetY, $cropWidth, $cropHeight ) = array_values( $filter_configuration['requestedData'] );
-			$image     = $this->relativeResize( $original_image, $imageWidth, $imageHeight );
-			$filter    = new \Imagine\Filter\Basic\Crop( new \Imagine\Image\Point( $offsetX, $offsetY ), new \Imagine\Image\Box( $cropWidth, $cropHeight ) );
-			$new_image = $filter->apply( $image );
+			$imageEditor->resize( $imageWidth, $imageHeight );
+			$imageEditor->crop( $offsetX, $offsetY, $cropWidth, $cropHeight, $cropWidth, $cropHeight, false );
+
+			return $imageEditor;
 		}
-
-
-		return $new_image;
-	}
-
-	private function relativeResize( $image, $imageWidth, $imageHeight ) {
-		$filter = new \Imagine\Filter\Advanced\RelativeResize( "widen", $imageWidth );
-		return $filter->apply( $image );
-	}
-
-	private function getImagine() {
-
-		if (extension_loaded('imagick') && class_exists('Imagick'))
-		{
-			return new \Imagine\Imagick\Imagine();
-		}
-
-
-		return new Imagine\Gd\Imagine();
 	}
 
 	private function getFilterOptions( $cropType, $image_path, $resize_params ) {
