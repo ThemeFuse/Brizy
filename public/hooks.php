@@ -114,7 +114,7 @@ function brizy_initialize_asset_loader() {
 		$project     = Brizy_Editor_Project::get();
 		$url_builder = new Brizy_Editor_UrlBuilder( $project );
 
-		$config    = null;//Brizy_Editor_Editor_Editor::get( $project )->config();
+		$config    = null;
 		$proxy     = new Brizy_Public_AssetProxy( $url_builder, $config );
 		$crop_roxy = new Brizy_Public_CropProxy( $url_builder, $config );
 	} catch ( Exception $e ) {
@@ -129,6 +129,10 @@ add_action( 'init', 'brizy_initialize_asset_loader', 1000 );
 $supported_post_types = brizy()->supported_post_types();
 foreach ( $supported_post_types as $type ) {
 	add_filter( "brizy:$type:templates", 'brizy_filter_public_page_templates' );
-	add_filter( "theme_{$type}_templates", 'brizy_filter_public_register_page_templates' );
 	add_filter( "{$type}_template", 'brizy_catch_templates' );
+
+	if($type!='post')
+	{
+		add_filter( "theme_{$type}_templates", 'brizy_filter_public_register_page_templates' );
+	}
 }
