@@ -72,7 +72,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		if ( $this->wp_post_id ) {
 			$this->wp_post = get_post( $this->wp_post_id );
 		}
-		$this->uid = $this->create_uid();
 	}
 
 	/**
@@ -108,38 +107,35 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	public function convertToOptionValue() {
 		return array(
-			'compiled_html'      => $this->get_compiled_html(),
-			'compiled_html_body' => $this->get_compiled_html_body(),
-			'compiled_html_head' => $this->get_compiled_html_head(),
-			'needs_compile'      => $this->needs_compile,
-			'editor_data'        => addslashes( $this->editor_data ),
+			'compiled_html'                    => $this->get_compiled_html(),
+			'compiled_html_body'               => $this->get_compiled_html_body(),
+			'compiled_html_head'               => $this->get_compiled_html_head(),
+			'needs_compile'                    => $this->needs_compile,
+			'editor_data'                      => addslashes( $this->editor_data ),
+			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor()
 		);
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$post                     = new self( null );
+		$post = new self( null );
 
-		if(isset($data['compiled_html']))
-		{
-			$post->compiled_html      = $data['compiled_html'];
+		if ( isset( $data['compiled_html'] ) ) {
+			$post->compiled_html = $data['compiled_html'];
 		}
 
-		if(isset($data['compiled_html_body']))
-		{
-			$post->compiled_html_body      = $data['compiled_html_body'];
+		if ( isset( $data['compiled_html_body'] ) ) {
+			$post->compiled_html_body = $data['compiled_html_body'];
 		}
 
-		if(isset($data['compiled_html_head']))
-		{
-			$post->compiled_html_head      = $data['compiled_html_head'];
+		if ( isset( $data['compiled_html_head'] ) ) {
+			$post->compiled_html_head = $data['compiled_html_head'];
 		}
 
-		$post->needs_compile      = $data['needs_compile'];
-		$post->editor_data        = $data['editor_data'];
+		$post->needs_compile = $data['needs_compile'];
+		$post->editor_data   = $data['editor_data'];
 
 		return $post;
 	}
-
 
 	/**
 	 * @param $apost
@@ -245,7 +241,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		if ( count( $storage_value ) == 0 ) {
 			return;
 		}
-
+		$value                             = $this->convertToOptionValue();
+		$storage_value[ self::BRIZY_POST ] = $value;
 		$storage->loadStorage( $storage_value );
 	}
 
@@ -276,7 +273,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			update_post_meta( $this->get_parent_id(), self::BRIZY_POST_HASH_KEY, $hash_key );
 		}
 
-		if ( isset($revision_storage['brizy-post']['api_page']) ) {
+		if ( isset( $revision_storage['brizy-post']['api_page'] ) ) {
 			$this->set_editor_data( $revision_storage['brizy-post']['api_page'] );
 		} else {
 			$this->set_editor_data( $revision_storage['brizy-post']['editor_data'] );
@@ -284,7 +281,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$this->api_page = null; //$revision_storage['brizy-post']->get_api_page();
 
-		if ( isset($revision_storage['brizy-post']['compiled_html']) ) {
+		if ( isset( $revision_storage['brizy-post']['compiled_html'] ) ) {
 			$this->set_compiled_html( $revision_storage['brizy-post']['compiled_html'] );
 		} else {
 			$this->set_needs_compile( true )
@@ -363,7 +360,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
 
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
-		$brizy_editor_compiled_html->setAssetProcessors( $asset_processors );
+		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 
 		return self::$compiled_page = $brizy_editor_compiled_html;
 	}
@@ -532,11 +529,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		if ( ! $this->can_edit_posts() ) {
 			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
 		}
-
 		$this->storage()->set( Brizy_Editor_Constants::USES_BRIZY, 1 );
-
-		$this->create_uid();
-
 		return $this;
 	}
 

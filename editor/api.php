@@ -453,6 +453,7 @@ class Brizy_Editor_API {
 			$post->compile_page();
 
 			$brizy_compiled_page = $post->get_compiled_page( Brizy_Editor_Project::get() );
+
 			wp_update_post( array(
 				'ID'           => $post_id,
 				'post_status'  => $post_status,
