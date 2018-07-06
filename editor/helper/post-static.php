@@ -17,7 +17,7 @@ class Brizy_Editor_Helper_PostStatic {
 	}
 
 	private function uploads_dir() {
-		$upload_dir = wp_upload_dir();
+		$upload_dir = Brizy_Admin_UploadDir::getUploadDir();
 
 		return $upload_dir['baseurl'];
 	}

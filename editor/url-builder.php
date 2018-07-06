@@ -27,7 +27,7 @@ class Brizy_Editor_UrlBuilder {
 
 		$this->project    = $project;
 		$this->post       = $post;
-		$this->upload_dir = wp_upload_dir( null, true );
+		$this->upload_dir = Brizy_Admin_UploadDir::getUploadDir(null,true);
 	}
 
 	public function application_form_url() {

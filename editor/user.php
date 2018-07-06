@@ -331,18 +331,7 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		$page_html = $this->get_client()->compile_page( $project, $editor_data, $config );
 
 		return $page_html;
-//
-//		$asset_storage = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
-//		$media_storage = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
-//
-//		$asset_processors   = array();
-//		$asset_processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
-//		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
-//
-//		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $page_html );
-//		$brizy_editor_compiled_html->setProcessors( $asset_processors );
-//
-//		return $brizy_editor_compiled_html;
+
 	}
 
 	/**

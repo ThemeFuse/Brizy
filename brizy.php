@@ -11,6 +11,13 @@
  * Domain Path: /languages
  */
 
+/**
+ * This will fix the url protocol for websites that are working behind a load balancer
+ */
+if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FORWARDED_PROTO'], 'https' ) !== false ) {
+	$_SERVER['HTTPS'] = 'on';
+}
+
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '1.0.18' );
