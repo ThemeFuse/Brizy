@@ -2,24 +2,6 @@
 	die( 'Direct access forbidden.' );
 }
 
-function brizy_action_delete_scripts_and_styles( $id ) {
-
-	// delete all meta keys added th the attachments
-	$post = Brizy_Editor_Post::get( $id );
-	delete_post_meta( $id, 'brizy_post_uid', $post->get_uid() );
-
-
-	$path = Brizy_Editor_Resources_StaticStorage::get_path()
-	        . DIRECTORY_SEPARATOR
-	        . brizy()->get_slug()
-	        . "-$id*";
-	foreach ( glob( $path ) as $item ) {
-		unlink( $item );
-	}
-}
-
-add_action( 'brizy_delete_post', 'brizy_action_delete_scripts_and_styles' );
-
 function brizy_filter_public_page_templates( $templates ) {
 
 	$list = wp_get_theme()->get_page_templates();

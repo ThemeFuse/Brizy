@@ -9,6 +9,7 @@
 class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 
 	const ENDPOINT = 'brizy';
+	const ENDPOINT_POST = 'brizy_post';
 
 	/**
 	 * @return string
@@ -17,21 +18,45 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 		return self::ENDPOINT;
 	}
 
+	/**
+	 * @param $vars
+	 *
+	 * @return array
+	 */
+	public function query_vars( $vars ) {
+		$vars   = parent::query_vars( $vars );
+		$vars[] = self::ENDPOINT_POST;
+
+		return $vars;
+	}
+
+
 	public function process_query() {
 		global $wp_query;
+		$vars = $wp_query->query_vars;
 
 		// Check if user is not querying API
 		if ( ! isset( $wp_query->query_vars[ self::ENDPOINT ] ) || ! is_string( $wp_query->query_vars[ self::ENDPOINT ] ) ) {
 			return;
 		}
 
+		if ( ! isset( $vars[ self::ENDPOINT_POST ] ) || ! is_numeric( $vars[ self::ENDPOINT_POST ] ) ) {
+			return;
+		}
+
+		$brizyPost = Brizy_Editor_Post::get( (int) $vars[ self::ENDPOINT_POST ] );
+
+		if ( $brizyPost->uses_editor() ) {
+			$this->url_builder->set_post( $brizyPost );
+		}
+
 		$endpoint_value = $wp_query->query_vars[ self::ENDPOINT ];
 
 		// clean endpoint value
-		$asset_path = ltrim( $endpoint_value, "/" );
+		$asset_path = "/".ltrim( $endpoint_value, "/" );
 		$asset_url  = $this->url_builder->external_asset_url( $asset_path );
 
-		$tmp_asset_url = $this->url_builder->page_asset_path() . basename($asset_path);
+		$tmp_asset_url = $this->url_builder->page_asset_path( basename( $asset_path ) ) ;
 		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
 
 		if ( ! file_exists( $new_path ) ) {

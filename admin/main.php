@@ -43,7 +43,7 @@ class Brizy_Admin_Main {
 			) ); // add button to enable disable editor
 		}
 
-		//add_action( 'before_delete_post', array( $this, 'action_delete_page' ) );
+		add_action( 'before_delete_post', array( $this, 'action_delete_page' ) );
 
 		add_filter( 'page_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
 		add_filter( 'post_row_actions', array( $this, 'filter_add_brizy_edit_row_actions' ), 10, 2 );
@@ -62,6 +62,54 @@ class Brizy_Admin_Main {
 		}
 	}
 
+
+	function brizy_action_delete_scripts_and_styles( $id ) {
+
+		// delete all meta keys added th the attachments
+		$post = Brizy_Editor_Post::get( $id );
+		delete_post_meta( $id, 'brizy_post_uid', $post->get_uid() );
+
+
+		$path = Brizy_Editor_Resources_StaticStorage::get_path()
+		        . DIRECTORY_SEPARATOR
+		        . brizy()->get_slug()
+		        . "-$id*";
+		foreach ( glob( $path ) as $item ) {
+			unlink( $item );
+		}
+	}
+
+	public function action_delete_page( $post = null ) {
+		try {
+
+			$bpost = Brizy_Editor_Post::get( $post );
+
+			if ( ! $bpost->uses_editor() ) {
+				return;
+			}
+
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost );
+			$pageUploadPath = $urlBuilder->upload_path($urlBuilder->page_upload_path());
+
+			$dIterator = new DirectoryIterator($pageUploadPath);
+			foreach($dIterator as $entry) {
+				if (!$entry->isDot() && $entry->isDir()) {
+					$subDirIterator = new RecursiveDirectoryIterator( $entry->getRealPath(), RecursiveDirectoryIterator::SKIP_DOTS );
+					$files          = new RecursiveIteratorIterator( $subDirIterator, RecursiveIteratorIterator::CHILD_FIRST );
+					foreach ( $files as $file ) {
+						if ( !$file->isDir() ) {
+							unlink( $file->getRealPath() );
+						}
+					}
+					rmdir( $entry->getRealPath() );
+				}
+
+			}
+
+		} catch ( Exception $e ) {
+			// ignore this.
+		}
+	}
 
 	/**
 	 * @param array $post_states

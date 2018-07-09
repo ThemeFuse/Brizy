@@ -103,7 +103,7 @@ class Brizy_Editor_Editor_Editor {
 				'change_template_url' => $change_template_url,
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
 				'assets'              => $this->urlBuilder->editor_asset_url(),
-				'pageAssets'          => $this->urlBuilder->page_asset_url(),
+				'pageAssets'          => $this->urlBuilder->page_upload_url(),
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ),
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => site_url()

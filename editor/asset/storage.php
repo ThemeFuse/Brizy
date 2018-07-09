@@ -34,7 +34,7 @@ class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 
 		if ( $this->isStaticUrl( $asset_url ) ) {
 			$sufix_url     = $this->getAssetPart( $asset_url, $this->config['urls']['static'] );
-			$tmp_asset_url = $this->url_builder->page_asset_path( $sufix_url );
+			$tmp_asset_url = $this->url_builder->page_upload_path( $sufix_url );
 			$new_url       = $this->url_builder->upload_url( $tmp_asset_url );
 			$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
 

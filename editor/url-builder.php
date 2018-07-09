@@ -27,7 +27,7 @@ class Brizy_Editor_UrlBuilder {
 
 		$this->project    = $project;
 		$this->post       = $post;
-		$this->upload_dir = Brizy_Admin_UploadDir::getUploadDir(null,true);
+		$this->upload_dir = Brizy_Admin_UploadDir::getUploadDir( null, true );
 	}
 
 	public function application_form_url() {
@@ -47,7 +47,16 @@ class Brizy_Editor_UrlBuilder {
 
 
 	public function proxy_url( $end_point ) {
-		return site_url('?brizy=' . $end_point);
+
+		$params = array();
+
+		if ( $this->post ) {
+			$params['brizy_post'] = ( (int) $this->post->get_parent_id() );
+		}
+
+		$params['brizy'] = $end_point;
+
+		return site_url( "?" . http_build_query( $params ) );
 	}
 
 	/**
@@ -55,12 +64,12 @@ class Brizy_Editor_UrlBuilder {
 	 *
 	 * @return string
 	 */
-	public function media_proxy_url( $end_point = '' ) {
-
-		$end_point = ltrim( $end_point, "/" );
-
-		return $this->proxy_url( "/media/" . $end_point );
-	}
+//	public function media_proxy_url( $end_point = '' ) {
+//
+//		$end_point = ltrim( $end_point, "/" );
+//
+//		return $this->proxy_url( "/media/" . $end_point );
+//	}
 
 	/**
 	 * @param $path
@@ -81,6 +90,34 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	/**
+	 * @param null $path
+	 *
+	 * @return string
+	 */
+	public function page_asset_path( $path = null ) {
+
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
+
+		return $this->page_upload_path( 'assets' . $path );
+	}
+
+	/**
+	 * @param null $path
+	 *
+	 * @return string
+	 */
+	public function page_asset_url( $path = null ) {
+
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
+
+		return $this->page_upload_url( 'assets' . $path );
+	}
+
+	/**
 	 * This will return the relative path to the upload dir.
 	 * ex: /brizy/pages/3/x.jpg
 	 *
@@ -89,7 +126,7 @@ class Brizy_Editor_UrlBuilder {
 	 *
 	 * @return string
 	 */
-	public function page_asset_path( $path = null, $post_id = null ) {
+	public function page_upload_path( $path = null, $post_id = null ) {
 
 		if ( is_null( $post_id ) && $this->post ) {
 			$post_id = $this->post->get_parent_id();
@@ -108,9 +145,9 @@ class Brizy_Editor_UrlBuilder {
 	 *
 	 * @return string
 	 */
-	public function page_asset_url( $path = null, $post_id = null ) {
+	public function page_upload_url( $path = null, $post_id = null ) {
 
-		return $this->upload_url( $this->page_asset_path( $path, $post_id ) );
+		return $this->upload_url( $this->page_upload_path( $path, $post_id ) );
 	}
 
 	/**
