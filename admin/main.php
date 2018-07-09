@@ -24,13 +24,24 @@ class Brizy_Admin_Main {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
 
-		if(current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE))
-        {
-	        add_action( 'admin_post__brizy_admin_editor_enable', array( $this, 'action_request_enable' ) ); // enable editor for a post
-	        add_action( 'admin_post__brizy_admin_editor_disable', array( $this, 'action_request_disable' ) ); // disable editor for a post
-	        add_action( 'admin_post__brizy_change_template', array( $this, 'action_change_template' ) ); // action to change template from editor
-	        add_action( 'edit_form_after_title', array( $this, 'action_add_enable_disable_buttons' ) ); // add button to enable disable editor
-        }
+		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ) {
+			add_action( 'admin_post__brizy_admin_editor_enable', array(
+				$this,
+				'action_request_enable'
+			) ); // enable editor for a post
+			add_action( 'admin_post__brizy_admin_editor_disable', array(
+				$this,
+				'action_request_disable'
+			) ); // disable editor for a post
+			add_action( 'admin_post__brizy_change_template', array(
+				$this,
+				'action_change_template'
+			) ); // action to change template from editor
+			add_action( 'edit_form_after_title', array(
+				$this,
+				'action_add_enable_disable_buttons'
+			) ); // add button to enable disable editor
+		}
 
 		//add_action( 'before_delete_post', array( $this, 'action_delete_page' ) );
 
@@ -230,7 +241,9 @@ class Brizy_Admin_Main {
 		}
 
 		try {
-			Brizy_Editor_Post::get( $p->ID )->disable_editor();
+			Brizy_Editor_Post::get( $p->ID )
+			                 ->disable_editor()
+			                 ->save();
 		} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to disabled the editor. Please try again later.' );
 		}

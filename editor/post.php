@@ -58,6 +58,11 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	protected $uid;
 
 	/**
+	 * @var bool
+	 */
+	protected $uses_editor;
+
+	/**
 	 * @var Brizy_Editor_CompiledHtml
 	 */
 	static private $compiled_page;
@@ -111,8 +116,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			'compiled_html_body'               => $this->get_compiled_html_body(),
 			'compiled_html_head'               => $this->get_compiled_html_head(),
 			'needs_compile'                    => $this->needs_compile,
-			'editor_data'                      => addslashes( $this->editor_data ),
-			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor()
+			'editor_data'                      => $this->editor_data,
+			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor
 		);
 	}
 
@@ -133,6 +138,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$post->needs_compile = $data['needs_compile'];
 		$post->editor_data   = $data['editor_data'];
+		$post->uses_editor   = isset( $data[ Brizy_Editor_Constants::USES_BRIZY ] ) ? $data[ Brizy_Editor_Constants::USES_BRIZY ] : false;
 
 		return $post;
 	}
@@ -179,7 +185,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		return $post;
 	}
-
 
 	/**
 	 * @return Brizy_Editor_Post[]
@@ -297,18 +302,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function save() {
 
 		try {
-			//$brizy_editor_user = Brizy_Editor_User::get();
-			//$project           = Brizy_Editor_Project::get();
-			//$api_project       = $project->get_api_project();
-			//$updated_page      = $brizy_editor_user->update_page( $api_project, $this->api_page );
-			//$this->updatePageData( $updated_page );
-
-			// store the signature only once
-			//if ( ! ( $signature = get_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, true ) ) ) {
-			//update_post_meta( $this->wp_post_id, self::BRIZY_POST_SIGNATURE_KEY, Brizy_Editor_Signature::get() );
-			//update_post_meta( $this->wp_post_id, self::BRIZY_POST_HASH_KEY, $this->get_api_page()->get_id() );
-			//}
-
+			update_post_meta( $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, BRIZY_EDITOR_VERSION );
 			$value = $this->convertToOptionValue();
 			$this->storage()->set( self::BRIZY_POST, $value );
 		} catch ( Exception $exception ) {
@@ -335,10 +329,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$this->set_compiled_html_body( null );
 
 		$this->set_needs_compile( false );
-
-		update_post_meta( $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, BRIZY_EDITOR_VERSION );
-
-		$this->save();
 
 		return true;
 	}
@@ -529,20 +519,16 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		if ( ! $this->can_edit_posts() ) {
 			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
 		}
-		$this->storage()->set( Brizy_Editor_Constants::USES_BRIZY, 1 );
+		$this->uses_editor = true;
+
 		return $this;
 	}
 
 	/**
-	 * @return $this
-	 * @throws Brizy_Editor_Exceptions_AccessDenied
+	 *
 	 */
 	public function disable_editor() {
-		if ( ! $this->can_edit_posts() ) {
-			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
-		}
-
-		$this->storage()->delete( Brizy_Editor_Constants::USES_BRIZY );
+		$this->uses_editor = false;
 
 		return $this;
 	}
@@ -565,14 +551,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @return bool
 	 */
 	public function uses_editor() {
-
-		try {
-			$brizy_editor_storage_post = $this->storage();
-
-			return (bool) $brizy_editor_storage_post->get( Brizy_Editor_Constants::USES_BRIZY );
-		} catch ( Exception $exception ) {
-			return false;
-		}
+		return $this->uses_editor;
 	}
 
 

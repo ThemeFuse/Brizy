@@ -413,7 +413,6 @@ class Brizy_Editor_API {
 	 **/
 	public function update_item() {
 		try {
-			//$_POST = array_map( 'stripslashes_deep', $_POST );
 			$data      = stripslashes( $this->param( 'data' ) );
 			$atemplate = $this->param( 'template' );
 
@@ -451,6 +450,7 @@ class Brizy_Editor_API {
 
 			// compiliation needs to go here
 			$post->compile_page();
+			$post->save();
 
 			$brizy_compiled_page = $post->get_compiled_page( Brizy_Editor_Project::get() );
 
@@ -573,26 +573,6 @@ class Brizy_Editor_API {
 
 		$this->success( $items );
 	}
-
-	/**
-	 * @internal
-	 **/
-//	public function media() {
-//		try {
-//			$this->authorize();
-//
-//			$attachment_id = $this->param( 'attachmentId' );
-//
-//			$brizy_editor_user = Brizy_Editor_User::get();
-//			$this->success( $brizy_editor_user->get_media_id(
-//				$this->project,
-//				$attachment_id
-//			) );
-//		} catch ( Exception $exception ) {
-//			Brizy_Logger::instance()->exception( $exception );
-//			$this->error( $exception->getCode(), $exception->getMessage() );
-//		}
-//	}
 
 	protected function param( $name ) {
 		if ( isset( $_REQUEST[ $name ] ) ) {

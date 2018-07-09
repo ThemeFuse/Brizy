@@ -25,7 +25,6 @@ class Brizy_Public_Main {
 	private $url_builder;
 
 
-
 	/**
 	 * Brizy_Public_Main constructor.
 	 *
@@ -263,9 +262,9 @@ class Brizy_Public_Main {
 			return;
 		}
 
-		$compiled_page = $this->post->get_compiled_page($this->project);
+		$compiled_page = $this->post->get_compiled_page( $this->project );
 
-		$compiled_page->addAssetProcessor(new Brizy_Editor_Asset_StripTagsProcessor(array('<title>')));
+		$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 
 		$head = $compiled_page->get_head();
 
@@ -296,7 +295,7 @@ class Brizy_Public_Main {
 			return $content;
 		}
 
-		$compiled_page = $this->post->get_compiled_page($this->project);
+		$compiled_page = $this->post->get_compiled_page( $this->project );
 
 		$body = $compiled_page->get_body();
 
@@ -340,6 +339,11 @@ class Brizy_Public_Main {
 		if ( is_preview() || isset( $_GET['preview'] ) || ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile() ) {
 			try {
 				$this->post->compile_page();
+
+				if ( ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile() ) {
+					$this->post->save();
+				}
+
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
 			}
