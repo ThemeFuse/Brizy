@@ -91,7 +91,7 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	public function page_asset_path( $path = null, $post_id = null ) {
 
-		if ( is_null( $post_id ) ) {
+		if ( is_null( $post_id ) && $this->post ) {
 			$post_id = $this->post->get_parent_id();
 		}
 

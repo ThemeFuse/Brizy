@@ -28,10 +28,10 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 		$endpoint_value = $wp_query->query_vars[ self::ENDPOINT ];
 
 		// clean endpoint value
-		$asset_path = "/" . ltrim( $endpoint_value, "/" );
+		$asset_path = ltrim( $endpoint_value, "/" );
 		$asset_url  = $this->url_builder->external_asset_url( $asset_path );
 
-		$tmp_asset_url = $this->url_builder->editor_asset_path( $asset_path );
+		$tmp_asset_url = $this->url_builder->page_asset_path() . basename($asset_path);
 		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
 
 		if ( ! file_exists( $new_path ) ) {
@@ -40,6 +40,7 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 			if ( ! $store_result ) {
 				global $wp_query;
 				$wp_query->set_404();
+
 				return;
 			}
 		}
