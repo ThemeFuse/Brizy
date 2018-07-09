@@ -448,7 +448,7 @@ class Brizy_Editor_API {
 			$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
 			$post_status      = $can_publish ? 'publish' : 'pending';
 
-			// compiliation needs to go here
+			// compilation needs to go here
 			$post->compile_page();
 			$post->save();
 
