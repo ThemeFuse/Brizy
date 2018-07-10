@@ -19,7 +19,7 @@ class Brizy_Editor_Asset_MediaProxyStorage extends Brizy_Editor_Asset_AbstractSt
 
 		$asset_url     = html_entity_decode( $asset_url );
 		$sufix_url     = $this->getAssetPart( $asset_url, $this->config['urls']['image'] );
-		$tmp_asset_url = $this->url_builder->page_upload_path( $sufix_url );
+		$tmp_asset_url = $this->url_builder->page_asset_path( "images/".$sufix_url );
 		$new_url       = $this->url_builder->upload_url( $tmp_asset_url );
 		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
 		$external_url  = $this->url_builder->external_media_url( $sufix_url );
@@ -33,6 +33,12 @@ class Brizy_Editor_Asset_MediaProxyStorage extends Brizy_Editor_Asset_AbstractSt
 		return $asset_url;
 	}
 
+	/**
+	 * @param $url
+	 * @param $prefix
+	 *
+	 * @return mixed
+	 */
 	public function getAssetPart( $url, $prefix ) {
 		return str_replace( $prefix, '', $url );
 	}

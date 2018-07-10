@@ -56,7 +56,7 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 		$asset_path = "/".ltrim( $endpoint_value, "/" );
 		$asset_url  = $this->url_builder->external_asset_url( $asset_path );
 
-		$tmp_asset_url = $this->url_builder->page_asset_path( basename( $asset_path ) ) ;
+		$tmp_asset_url = $this->url_builder->page_asset_path( "icons/".basename( $asset_path ) ) ;
 		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
 
 		if ( ! file_exists( $new_path ) ) {

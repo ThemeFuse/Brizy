@@ -48,7 +48,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		$external_asset_url  = $this->url_builder->external_media_url( "iW=5000&iH=any/" . $madia_name );
-		$original_asset_path = $this->url_builder->upload_path( $this->url_builder->page_upload_path( $madia_name ) );
+		$original_asset_path = $this->url_builder->upload_path( $this->url_builder->page_asset_path( "images/".$madia_name ) );
 
 		if ( ! file_exists( $original_asset_path ) ) {
 			// I assume that the media was already attached.
@@ -95,7 +95,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new InvalidArgumentException( "Invalid crop filter" );
 		}
 
-		$resized_page_asset_path = $this->url_builder->upload_path( $this->url_builder->page_upload_path( $media_filter ) );
+		$resized_page_asset_path = $this->url_builder->upload_path( $this->url_builder->page_asset_path( "images/".$media_filter ) );
 		$ext                     = pathinfo( $original_asset_path, PATHINFO_EXTENSION );
 		$resized_image_path      = $resized_page_asset_path . "/" . md5( $original_asset_path ) . '.' . $ext;
 
