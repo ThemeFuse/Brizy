@@ -63,48 +63,38 @@ class Brizy_Admin_Main {
 	}
 
 
-	function brizy_action_delete_scripts_and_styles( $id ) {
-
-		// delete all meta keys added th the attachments
-		$post = Brizy_Editor_Post::get( $id );
-		delete_post_meta( $id, 'brizy_post_uid', $post->get_uid() );
-
-
-		$path = Brizy_Editor_Resources_StaticStorage::get_path()
-		        . DIRECTORY_SEPARATOR
-		        . brizy()->get_slug()
-		        . "-$id*";
-		foreach ( glob( $path ) as $item ) {
-			unlink( $item );
-		}
-	}
+//	function brizy_action_delete_scripts_and_styles( $id ) {
+//
+//		// delete all meta keys added th the attachments
+//		$post = Brizy_Editor_Post::get( $id );
+//		delete_post_meta( $id, 'brizy_post_uid', $post->get_uid() );
+//
+//
+//		$path = Brizy_Editor_Resources_StaticStorage::get_path()
+//		        . DIRECTORY_SEPARATOR
+//		        . brizy()->get_slug()
+//		        . "-$id*";
+//		foreach ( glob( $path ) as $item ) {
+//			unlink( $item );
+//		}
+//	}
 
 	public function action_delete_page( $post = null ) {
 		try {
 
 			$bpost = Brizy_Editor_Post::get( $post );
 
-			if ( ! $bpost->uses_editor() ) {
-				return;
-			}
 
 			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost );
-			$pageUploadPath = $urlBuilder->upload_path($urlBuilder->page_upload_path());
 
-			$dIterator = new DirectoryIterator($pageUploadPath);
-			foreach($dIterator as $entry) {
-				if (!$entry->isDot() && $entry->isDir()) {
-					$subDirIterator = new RecursiveDirectoryIterator( $entry->getRealPath(), RecursiveDirectoryIterator::SKIP_DOTS );
-					$files          = new RecursiveIteratorIterator( $subDirIterator, RecursiveIteratorIterator::CHILD_FIRST );
-					foreach ( $files as $file ) {
-						if ( !$file->isDir() ) {
-							unlink( $file->getRealPath() );
-						}
-					}
-					rmdir( $entry->getRealPath() );
-				}
+			$pageUploadPath = $urlBuilder->upload_path($urlBuilder->page_upload_path("assets/images"));
 
-			}
+			$this->deleteFilesAndDirectory( $pageUploadPath );
+
+			$pageUploadPath = $urlBuilder->upload_path($urlBuilder->page_upload_path("assets/icons"));
+
+			$this->deleteFilesAndDirectory( $pageUploadPath );
+
 
 		} catch ( Exception $e ) {
 			// ignore this.
@@ -450,6 +440,25 @@ class Brizy_Admin_Main {
 		}
 
 		exit;
+	}
+
+	/**
+	 * @param $pageUploadPath
+	 */
+	private function deleteFilesAndDirectory( $pageUploadPath ) {
+		$dIterator = new DirectoryIterator( $pageUploadPath );
+		foreach ( $dIterator as $entry ) {
+			if ( ! $entry->isDot() && $entry->isDir() ) {
+				$subDirIterator = new RecursiveDirectoryIterator( $entry->getRealPath(), RecursiveDirectoryIterator::SKIP_DOTS );
+				$files          = new RecursiveIteratorIterator( $subDirIterator, RecursiveIteratorIterator::CHILD_FIRST );
+				foreach ( $files as $file ) {
+					if ( ! $file->isDir() ) {
+						unlink( $file->getRealPath() );
+					}
+				}
+				rmdir( $entry->getRealPath() );
+			}
+		}
 	}
 
 }
