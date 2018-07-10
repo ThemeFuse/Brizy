@@ -36,6 +36,7 @@ class Brizy_Admin_Settings {
 		add_action( 'brizy_settings_submit', array( $this, 'settings_submit' ) );
 		add_action( 'brizy_settings_render_tabs', array( $this, 'render_tabs' ) );
 		add_action( 'brizy_settings_render_content', array( $this, 'render_tab_content' ) );
+
 		$this->role_list          = self::get_role_list();
 		$this->capability_options = $this->get_capability_options();
 

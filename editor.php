@@ -19,13 +19,19 @@ class Brizy_Editor {
 		return self::$instance ? self::$instance : self::$instance = new self();
 	}
 
+	public static function is_administrator() {
+		$user = wp_get_current_user();
+		return in_array( 'administrator', (array) $user->roles );
+	}
 	public static function is_user_allowed() {
 
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
+
 			self::$is_allowed_for_current_user =
 				( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
-				  current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY ) );
-
+				  current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
+				  || self::is_administrator()
+				);
 		}
 
 		return self::$is_allowed_for_current_user;

@@ -38,10 +38,6 @@ class Brizy_Editor_API_AccessToken extends Brizy_Admin_Serializable {
 
 	static public function createFromSerializedData( $data ) {
 
-		if($data instanceof self) {
-
-		}
-
 		$instance                = new self( $data['token'], $data['expires'] );
 		$instance->refresh_token = $data['refresh_token'];
 

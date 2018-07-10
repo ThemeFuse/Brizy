@@ -115,13 +115,11 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		if ( $this->get_api_page() ) {
 			$save_data = $this->get_api_page()->get_content();
-
 			$this->editor_data = $save_data;
 		}
 
 		unset( $this->api_page );
 	}
-
 
 	public function convertToOptionValue() {
 		return array(
@@ -155,7 +153,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$post->editor_data      = $data['editor_data'];
 		$post->editor_version   = isset( $data['editor_version'] ) ? $data['editor_version'] : BRIZY_EDITOR_VERSION;
 		$post->compiler_version = isset( $data['compiler_version'] ) ? $data['compiler_version'] : BRIZY_EDITOR_VERSION;
-		$post->uses_editor      = isset( $data[ Brizy_Editor_Constants::USES_BRIZY ] ) ? $data[ Brizy_Editor_Constants::USES_BRIZY ] : false;
+		$post->uses_editor      = (bool) ( isset( $data[ Brizy_Editor_Constants::USES_BRIZY ] ) ? $data[ Brizy_Editor_Constants::USES_BRIZY ] : false );
 
 		return $post;
 	}
@@ -187,12 +185,15 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		}
 
 		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $wp_post_id );
-
 		$post = $brizy_editor_storage_post->get( self::BRIZY_POST );
 
 		if ( is_array( $post ) ) {
 			$post = self::createFromSerializedData( $post );
 		} elseif ( $post instanceof self ) {
+			$post->uses_editor = $brizy_editor_storage_post->get(Brizy_Editor_Constants::USES_BRIZY);
+			$post->wp_post_id = $wp_post_id;
+			$post->wp_post    = get_post( $wp_post_id );
+			$post->create_uid();
 			$post->save();
 		}
 
