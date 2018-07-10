@@ -140,8 +140,9 @@ class Brizy_Editor_Editor_Editor {
 					'getMediaUid'      => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
 				),
 				'plugins'         => array(
-					'dummy'       => true,
-					'woocommerce' => $this->get_woocomerce_plugin_info(),
+					'dummy'        => true,
+					'woocommerce'  => $this->get_woocomerce_plugin_info(),
+					'smartslider3' => $this->get_smartslider3_info(),
 				),
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => Brizy_Languages_Texts::get_editor_texts(),
@@ -194,6 +195,20 @@ class Brizy_Editor_Editor_Editor {
 	private function get_woocomerce_plugin_info() {
 		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {
 			return array( 'version' => WooCommerce::instance()->version );
+		}
+
+		return null;
+	}
+
+	private function get_smartslider3_info() {
+		if ( class_exists( 'SmartSlider3' ) ) {
+			global $wpdb;
+			$sliders = $wpdb->get_results( "SELECT id, title FROM " . $wpdb->prefix . "nextend2_smartslider3_sliders" );
+
+			return array(
+				'version'    => get_option( "n2_ss3_version", 1 ),
+				'SliderList' => $sliders
+			);
 		}
 
 		return null;
