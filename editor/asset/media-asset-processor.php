@@ -41,7 +41,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 		$site_url = site_url();
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
 
-		$project     = Brizy_Editor_Project::get();
+		$project = Brizy_Editor_Project::get();
 
 
 		preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
@@ -65,7 +65,6 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 				continue;
 			}
 
-
 			$brizy_post  = Brizy_Editor_Post::get( (int) $params[ Brizy_Public_CropProxy::ENDPOINT_POST ] );
 			$media_cache = new Brizy_Editor_CropCacheMedia( $project, $brizy_post );
 
@@ -74,12 +73,26 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 			$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
 
 			if ( ! $media_path ) {
-				continue;
+
+				// there may be cases when there is no attachment with uid due to old version of plugins
+				// in this case we try to download the media and attach it to the current post
+				try {
+					// download media
+					$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $brizy_post );
+					$media_cacher->download_original_image( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
+					$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
+				} catch ( Exception $e ) {
+					continue;
+				}
+
+				if ( ! $media_path ) {
+					continue;
+				}
 			}
 
 			try {
 				$crop_media_path = $media_cache->crop_media( $media_path, $params[ Brizy_Public_CropProxy::ENDPOINT_FILTER ] );
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
 				continue;
 			}
 
@@ -94,9 +107,9 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 	private function get_attachment_file_by_uid( $uid ) {
 		$attachments = get_posts( array(
-			'meta_key'    => 'brizy_attachment_uid',
-			'meta_value'  => $uid,
-			'post_type'   => 'attachment',
+			'meta_key'   => 'brizy_attachment_uid',
+			'meta_value' => $uid,
+			'post_type'  => 'attachment',
 		) );
 
 		if ( count( $attachments ) == 0 ) {
