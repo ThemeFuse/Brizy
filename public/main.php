@@ -336,11 +336,14 @@ class Brizy_Public_Main {
 	}
 
 	private function compilePage() {
-		if ( is_preview() || isset( $_GET['preview'] ) || ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile() ) {
+		$is_preview    = is_preview() || isset( $_GET['preview'] );
+		$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
+
+		if ( $is_preview || $needs_compile ) {
 			try {
 				$this->post->compile_page();
 
-				if ( ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile() ) {
+				if ( ! $is_preview && $needs_compile ) {
 					$this->post->save();
 				}
 
