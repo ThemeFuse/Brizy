@@ -54,6 +54,7 @@ class Brizy_Editor_UrlBuilder {
 			$params['brizy_post'] = ( (int) $this->post->get_parent_id() );
 		}
 
+		// do not move this line
 		$params['brizy'] = $end_point;
 
 		return site_url( "?" . http_build_query( $params ) );
