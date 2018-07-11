@@ -605,7 +605,7 @@ class Brizy_Editor_API {
 		$p_id      = (int) $post->get_id();
 		$the_title = get_the_title( $p_id );
 
-		return array(
+		$global = array(
 			'title'    => $the_title,
 			'slug'     => sanitize_title( $the_title ),
 			'data'     => $post->get_editor_data(),
@@ -615,6 +615,8 @@ class Brizy_Editor_API {
 			'status'   => get_post_status( $p_id ),
 			'url'      => get_the_permalink( $p_id )
 		);
+
+		return $global;
 	}
 
 	/**
@@ -623,7 +625,7 @@ class Brizy_Editor_API {
 	public function create_post_globals() {
 		$wp_post = $this->post->get_wp_post();
 
-		return array(
+		$globals = array(
 			'id'        => $this->project->get_id(),
 			'gb'        => $this->project->get_globals(),
 			'name'      => $wp_post->post_name,
@@ -634,6 +636,8 @@ class Brizy_Editor_API {
 				'id'    => null,
 			),
 		);
+
+		return $globals;
 	}
 
 	/**

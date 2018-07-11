@@ -44,6 +44,11 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 	}
 
 	public function get_globals() {
+
+		if ( base64_encode( base64_decode( $this->data['globals'], true ) ) === $this->data['globals'] ) {
+			return json_decode( base64_decode( $this->data['globals'], true ) );
+		}
+
 		return json_decode( $this->data['globals'] );
 	}
 
@@ -52,11 +57,11 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 	}
 
 	public function set_globals( $globals ) {
-		return $this->data['globals'] = json_encode( $globals );
+		return $this->data['globals'] = base64_encode( json_encode( $globals ) );
 	}
 
 	public function set_globals_as_json( $globals ) {
-		return $this->data['globals'] = $globals;
+		return $this->data['globals'] = base64_encode( $globals );
 	}
 
 	/**
