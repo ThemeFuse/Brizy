@@ -47,6 +47,5 @@ function brizy_load() {
 	include_once 'shortcode/load.php';
 	include_once 'public/hooks.php';
 	include_once 'admin/load.php';
-
 }
 
