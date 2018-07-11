@@ -195,18 +195,18 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $wp_post_id );
 		$using_editor_old          = $brizy_editor_storage_post->get( Brizy_Editor_Constants::USES_BRIZY, false );
-		$brizy_post_data           = $brizy_editor_storage_post->get( self::BRIZY_POST );
-		$post                      = null;
+		$post           = $brizy_editor_storage_post->get( self::BRIZY_POST );
 
-		if ( is_array( $brizy_post_data ) ) {
-			$post = self::createFromSerializedData( $brizy_post_data );
-		} elseif ( $brizy_post_data instanceof self ) {
-			$brizy_post_data->uses_editor = (bool)$using_editor_old;
-			$brizy_post_data->wp_post_id  = $wp_post_id;
-			$brizy_post_data->wp_post     = get_post( $wp_post_id );
-			$brizy_post_data->create_uid();
-			$brizy_post_data->save();
-			$post = $brizy_post_data;
+		if ( is_array( $post ) ) {
+			$post = self::createFromSerializedData( $post );
+		}
+
+		if ( $post instanceof self || !is_null($using_editor_old) ) {
+			$post->uses_editor = (bool)$using_editor_old;
+			$post->wp_post_id  = $wp_post_id;
+			$post->wp_post     = get_post( $wp_post_id );
+			$post->create_uid();
+			$post->save();
 		}
 
 		$post->wp_post_id = $wp_post_id;
