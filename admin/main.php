@@ -378,7 +378,7 @@ class Brizy_Admin_Main {
 			return $body;
 		}
 
-		return $body . ( $post->uses_editor() ? 'brizy-editor-enabled' : '' );
+		return $body . ( $post->uses_editor() ? ' brizy-editor-enabled ' : '' );
 	}
 
 	/**
