@@ -62,7 +62,6 @@ abstract class Brizy_Editor_Asset_StaticFile {
 	 *
 	 * @return bool|int|WP_Error
 	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
 	public function attach_to_post( $asset_path, $post_id, $uid = null ) {
 

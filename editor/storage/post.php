@@ -45,14 +45,14 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	 */
 	protected function update_storage( $storage ) {
 
-		if(isset($storage['brizy-post']['editor_data']))
-		{
-			$storage['brizy-post']['editor_data'] = addslashes($storage['brizy-post']['editor_data']);
-		}
-		if(isset($storage['brizy-post']['compiled_html']))
-		{
-			$storage['brizy-post']['compiled_html'] = addslashes($storage['brizy-post']['compiled_html']);
-		}
+//		if(isset($storage['brizy-post']['editor_data']))
+//		{
+//			$storage['brizy-post']['editor_data'] = addslashes($storage['brizy-post']['editor_data']);
+//		}
+//		if(isset($storage['brizy-post']['compiled_html']))
+//		{
+//			$storage['brizy-post']['compiled_html'] = addslashes($storage['brizy-post']['compiled_html']);
+//		}
 
 		update_metadata( 'post', $this->get_id(), $this->key(), $storage );
 

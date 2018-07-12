@@ -395,11 +395,8 @@ class Brizy_Editor_API {
 	public function get_item() {
 		try {
 			$this->authorize();
-
 			$post_arr = self::create_post_arr( $this->post );
-
 			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
-
 			$this->success( array( $post_arr ) );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -422,6 +419,7 @@ class Brizy_Editor_API {
 
 			if ( $data ) {
 				$this->post->set_editor_data( $data );
+				$this->post->set_editor_version( BRIZY_EDITOR_VERSION );
 			}
 
 			$this->post->save();

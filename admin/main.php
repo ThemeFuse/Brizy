@@ -354,7 +354,7 @@ class Brizy_Admin_Main {
 				                         . "</a>";
 			}
 		} catch ( Exception $exception ) {
-
+            $t = 0;
 		}
 
 		return $actions;
