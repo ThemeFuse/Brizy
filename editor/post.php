@@ -97,11 +97,15 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		// get the storage values
 		$storage          = $this->storage();
+		//$storageData          = $storage->get_storage();
 		$using_editor_old = $storage->get( Brizy_Editor_Constants::USES_BRIZY, false );
 		$storage_post     = $storage->get( self::BRIZY_POST, false );
 
 		// check for deprecated forms of posts
 		if ( $storage_post instanceof self ) {
+			$this->set_editor_data( $storage_post->editor_data );
+			$this->set_needs_compile( true );
+			$this->set_uses_editor( $using_editor_old );
 			$this->save();
 		} else if ( is_array( $storage_post ) ) {
 			$this->loadStorageData( $storage_post );
