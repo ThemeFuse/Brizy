@@ -169,17 +169,39 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 			list( $imageWidth, $imageHeight, $offsetX, $offsetY, $cropWidth, $cropHeight ) = array_values( $filter_configuration['requestedData'] );
 
-			if ( $imageWidth > $originalWidth || $imageHeight > $originalHeight ) {
+			if ( $cropWidth > $originalWidth || $cropHeight > $originalHeight ) {
 
-				$dwh       = $cropWidth / $cropHeight;
-				$ratio     = $dwh < 1 ? $dwh : $cropHeight / $cropWidth;
-				$newCropWidth = $dwh < 1 ? $originalWidth * $ratio : $originalWidth;
-				$newCropHeight = $dwh > 1 ? $originalHeight * $ratio : $originalHeight;
-				$offsetX    = $dwh < 1 ? $offsetX * $ratio : $offsetX;
-				$offsetX    = $dwh > 1 ? $newCropWidth * $offsetX / $cropHeight  : $offsetX;
-				$offsetY    = $dwh > 1 ? $newCropHeight * $offsetY / $cropWidth  : $offsetY;
+				$imgRation       = $originalWidth / $originalHeight;
+				$containerRation = $cropWidth / $cropHeight;
 
-				$imageEditor->crop( $offsetX, $offsetY, $newCropWidth, $newCropHeight, $newCropWidth, $newCropHeight, false );
+				if ( $imgRation < $containerRation ) {
+
+					$newCropWidth  = $originalWidth;
+					$newCropHeight = $originalWidth * $cropHeight / $cropWidth;
+
+					$newOffsetX = 0;
+
+					if ( $originalHeight < $cropHeight ) {
+						$newOffsetY = $newCropHeight * $offsetY / $cropHeight;
+					} else {
+						$newOffsetY = $cropHeight * $offsetY / $newCropHeight;
+					}
+
+
+				} else {
+					$newCropWidth  = $originalHeight * $cropWidth / $cropHeight;
+					$newCropHeight = $originalHeight;
+
+					$newOffsetY = 0;
+
+					if ( $newCropWidth < $cropWidth ) {
+						$newOffsetX = $cropWidth * $offsetX / $newCropWidth;
+					} else {
+						$newOffsetX = $newCropWidth * $offsetX / $cropWidth;
+					}
+				}
+
+				$imageEditor->crop( $newOffsetX, $newOffsetY, $newCropWidth, $newCropHeight, $newCropWidth, $newCropHeight, false );
 
 			} else {
 				$imageEditor->resize( $imageWidth, $imageHeight );
