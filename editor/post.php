@@ -100,17 +100,18 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$using_editor_old = $storage->get( Brizy_Editor_Constants::USES_BRIZY, false );
 		$storage_post     = $storage->get( self::BRIZY_POST, false );
 
-		// check if the old flag is set
-		if ( ! is_null( $using_editor_old ) ) {
-			$this->uses_editor = (bool) $using_editor_old;
-			$storage->delete( Brizy_Editor_Constants::USES_BRIZY );
-		}
-
 		// check for deprecated forms of posts
 		if ( $storage_post instanceof self ) {
 			$this->save();
 		} else if ( is_array( $storage_post ) ) {
 			$this->loadStorageData( $storage_post );
+		}
+
+		// check if the old flag is set
+		if ( ! is_null( $using_editor_old ) ) {
+			$this->uses_editor = (bool) $using_editor_old;
+			$storage->delete( Brizy_Editor_Constants::USES_BRIZY );
+			$this->save();
 		}
 
 		if ( $this->uses_editor() ) {
