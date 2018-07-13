@@ -166,7 +166,7 @@ class Brizy_Admin_Settings {
 	 */
 	public function get_capability_options() {
 		return apply_filters( 'brizy_settings_capability_options', array(
-			array( 'capability' => '', 'label' => 'Forbidden Access' ),
+			array( 'capability' => '', 'label' => 'No Access' ),
 			array( 'capability' => Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE, 'label' => 'Full Access' )
 		) );
 	}
