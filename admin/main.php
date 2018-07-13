@@ -131,7 +131,7 @@ class Brizy_Admin_Main {
 			if ( $parent_id ) {
 				$brizy_post = Brizy_Editor_Post::get( $parent_id );
 
-				if ( $brizy_post ) {
+				if ( $brizy_post->uses_editor() ) {
 					$brizy_post->save_revision( $post_id );
 				}
 			}
@@ -147,7 +147,9 @@ class Brizy_Admin_Main {
 
 		try {
 			$post = Brizy_Editor_Post::get( $post_id );
-			$post->restore_from_revision( $revision_id );
+			if ( $post->uses_editor() ) {
+				$post->restore_from_revision( $revision_id );
+			}
 		} catch ( Exception $e ) {
 
 			return;
@@ -354,7 +356,7 @@ class Brizy_Admin_Main {
 				                         . "</a>";
 			}
 		} catch ( Exception $exception ) {
-            $t = 0;
+			$t = 0;
 		}
 
 		return $actions;

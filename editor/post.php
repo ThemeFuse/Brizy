@@ -114,8 +114,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		}
 
 		if ( $this->uses_editor() ) {
-			//$this->set_compiler_version( BRIZY_EDITOR_VERSION );
-			//$this->set_editor_version( BRIZY_EDITOR_VERSION );
 			$this->create_uid();
 		}
 
@@ -429,6 +427,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function save() {
 
 		try {
+			$this->set_editor_version( BRIZY_EDITOR_VERSION );
 			$value = $this->convertToOptionValue();
 			$this->storage()->set( self::BRIZY_POST, $value );
 		} catch ( Exception $exception ) {
