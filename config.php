@@ -17,7 +17,7 @@ class Brizy_Config {
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 
 	//const LOCAL_PAGE_ASSET_SPLITTER = "/\/brizy\/pages\/(.[^\/]*)\/(.[^\/]*)/";
-	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/Page/%s';
+	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
 	//const BRIZY_WP_PAGE_ASSET_PATH = '/brizy/pages/%s/%s';
 
 
