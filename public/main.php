@@ -51,7 +51,7 @@ class Brizy_Public_Main {
 			add_action( 'template_include', array( $this, 'template_include' ), 10000 );
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 
-			add_action( 'wp_enqueue_scripts', 'wp_enqueue_media' );
+			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ) );
 			//wp_enqueue_script( 'wp-api' );
 			//add_action( 'wp_head', array( $this, 'editor_head' ), 0 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
@@ -101,6 +101,17 @@ class Brizy_Public_Main {
 				)
 			) );
 		}
+	}
+
+	/**
+	 * @internal
+	 */
+	public function _action_enqueue_editor_assets() {
+		if (wp_script_is('jquery') === false) {
+			wp_register_script('jquery', "/wp-includes/js/jquery/jquery.js", array(), false);
+		}
+
+		wp_enqueue_media();
 	}
 
 	public function toolbar_link( $wp_admin_bar ) {
