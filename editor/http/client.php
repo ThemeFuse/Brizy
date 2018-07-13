@@ -37,6 +37,7 @@ class Brizy_Editor_Http_Client {
 	public function request( $url, $options = array(), $method = 'GET' ) {
 
 		$options['method'] = $method;
+		$options['timeout'] = 30;
 
 		Brizy_Logger::instance()->notice( "{$method} request to {$url}",array(
 			'options'  => $options,
