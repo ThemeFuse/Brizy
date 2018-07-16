@@ -156,56 +156,73 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			// do not resize
 			return $imageEditor;
 		} else {
-			list( $originalWidth, $originalHeight ) = $filter_configuration['originalSize'];
+
+			list( $imgWidth, $imgHeight ) = $filter_configuration['originalSize'];
 			if ( $filter_configuration['is_advanced'] === false ) {
-				list( $imageWidth, $imageHeight ) = array_values( $filter_configuration['requestedData'] );
-				if ( $imageWidth > $originalWidth && ( $imageHeight == "any" || $imageHeight == "*" ) ) {
+				list( $requestedImgWidth, $requestedImgHeight ) = array_values( $filter_configuration['requestedData'] );
+				if ( $requestedImgWidth > $imgWidth && ( $requestedImgHeight == "any" || $requestedImgHeight == "*" ) ) {
 					return $imageEditor;
 				}
-				$imageEditor->resize( $imageWidth, $imageHeight );
+				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
 
 				return $imageEditor;
 			}
 
-			list( $imageWidth, $imageHeight, $offsetX, $offsetY, $cropWidth, $cropHeight ) = array_values( $filter_configuration['requestedData'] );
+			list( $requestedImgWidth, $requestedImgHeight, $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight ) = array_values( $filter_configuration['requestedData'] );
 
-			if ( $cropWidth > $originalWidth || $cropHeight > $originalHeight ) {
+			if ( $containerWidth > $imgWidth || $containerHeight > $imgHeight ) {
 
-				$imgRation       = $originalWidth / $originalHeight;
-				$containerRation = $cropWidth / $cropHeight;
+				/*
+				print_r($filter_configuration);
+				/** */
+				
+				$imgRatio       = $imgHeight / $imgWidth;
+				$containerRatio = $containerHeight / $containerWidth;
+				
+				/*
+				echo 'imgWidth: ' . $imgWidth . "\n";
+				echo 'imgHeight: ' . $imgHeight . "\n";
 
-				if ( $imgRation < $containerRation ) {
+				echo 'containerWidth: ' . $containerWidth . "\n";
+				echo 'containerHeight: ' . $containerHeight . "\n";
 
-					$newCropWidth  = $originalWidth;
-					$newCropHeight = $originalWidth * $cropHeight / $cropWidth;
+				echo 'requestedOffsetX: ' . $requestedOffsetX . "\n";
+				echo 'requestedOffsetY: ' . $requestedOffsetY . "\n";
 
-					$newOffsetX = 0;
+				echo 'imgRatio: ' . $imgRatio . "\n";
+				echo 'containerRatio: ' . $containerRatio . "\n";				
+				/* */
 
-					if ( $originalHeight < $cropHeight ) {
-						$newOffsetY = $newCropHeight * $offsetY / $cropHeight;
-					} else {
-						$newOffsetY = $cropHeight * $offsetY / $newCropHeight;
-					}
+				$newOffsetX = $imgWidth  * $requestedOffsetX / $requestedImgWidth;
+				$newOffsetY = $imgHeight * $requestedOffsetY / $requestedImgHeight;
 
+				if ( $imgRatio < $containerRatio ) {
+
+					$newImgWidth  = $containerWidth * $imgHeight / $containerHeight;
+					$newImgHeight = $imgHeight;
+
+					/*
+					echo 'newImgWidth: ' . $newImgWidth . "\n";
+					echo 'newImgHeight: ' . $newImgHeight . "\n";
+					/* */
+
+					/*
+					echo 'newOffsetX: ' . $newOffsetX  . "\n";
+					echo 'newOffsetY: ' . $newOffsetY . "\n";
+					die();
+					/* */
 
 				} else {
-					$newCropWidth  = $originalHeight * $cropWidth / $cropHeight;
-					$newCropHeight = $originalHeight;
 
-					$newOffsetY = 0;
-
-					if ( $newCropWidth < $cropWidth ) {
-						$newOffsetX = $cropWidth * $offsetX / $newCropWidth;
-					} else {
-						$newOffsetX = $newCropWidth * $offsetX / $cropWidth;
-					}
+					$newImgWidth  = $imgWidth;
+					$newImgHeight = $containerHeight * $imgWidth / $containerWidth;
 				}
 
-				$imageEditor->crop( $newOffsetX, $newOffsetY, $newCropWidth, $newCropHeight, $newCropWidth, $newCropHeight, false );
+				$imageEditor->crop( $newOffsetX, $newOffsetY, $newImgWidth, $newImgHeight, $newImgWidth, $newImgHeight, false );
 
 			} else {
-				$imageEditor->resize( $imageWidth, $imageHeight );
-				$imageEditor->crop( $offsetX, $offsetY, $cropWidth, $cropHeight, $cropWidth, $cropHeight, false );
+				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
+				$imageEditor->crop( $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight, $containerWidth, $containerHeight, false );
 			}
 
 
