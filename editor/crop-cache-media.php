@@ -172,57 +172,17 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 			if ( $containerWidth > $imgWidth || $containerHeight > $imgHeight ) {
 
-				/*
-				print_r($filter_configuration);
-				/** */
-				
-				$imgRatio       = $imgHeight / $imgWidth;
-				$containerRatio = $containerHeight / $containerWidth;
-				
-				/*
-				echo 'imgWidth: ' . $imgWidth . "\n";
-				echo 'imgHeight: ' . $imgHeight . "\n";
-
-				echo 'containerWidth: ' . $containerWidth . "\n";
-				echo 'containerHeight: ' . $containerHeight . "\n";
-
-				echo 'requestedOffsetX: ' . $requestedOffsetX . "\n";
-				echo 'requestedOffsetY: ' . $requestedOffsetY . "\n";
-
-				echo 'imgRatio: ' . $imgRatio . "\n";
-				echo 'containerRatio: ' . $containerRatio . "\n";				
-				/* */
-
 				$newOffsetX = $imgWidth  * $requestedOffsetX / $requestedImgWidth;
 				$newOffsetY = $imgHeight * $requestedOffsetY / $requestedImgHeight;
 
-				if ( $imgRatio < $containerRatio ) {
+				$newImgWidth  = $imgWidth * $containerWidth / $requestedImgWidth; // aici
+				$newImgHeight = $imgHeight *  $containerHeight / $requestedImgHeight;
 
-					$newImgWidth  = $containerWidth * $imgHeight / $containerHeight;
-					$newImgHeight = $imgHeight;
-
-					/*
-					echo 'newImgWidth: ' . $newImgWidth . "\n";
-					echo 'newImgHeight: ' . $newImgHeight . "\n";
-					/* */
-
-					/*
-					echo 'newOffsetX: ' . $newOffsetX  . "\n";
-					echo 'newOffsetY: ' . $newOffsetY . "\n";
-					die();
-					/* */
-
-				} else {
-
-					$newImgWidth  = $imgWidth;
-					$newImgHeight = $containerHeight * $imgWidth / $containerWidth;
-				}
-
-				$imageEditor->crop( $newOffsetX, $newOffsetY, $newImgWidth, $newImgHeight, $newImgWidth, $newImgHeight, false );
+				$imageEditor->crop( $newOffsetX, $newOffsetY,  $newImgWidth, $newImgHeight );
 
 			} else {
 				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
-				$imageEditor->crop( $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight, $containerWidth, $containerHeight, false );
+				$imageEditor->crop( $requestedOffsetX, $requestedOffsetY,  $containerWidth, $containerHeight );
 			}
 
 
