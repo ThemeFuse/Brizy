@@ -108,7 +108,7 @@ class Brizy_Public_Main {
 	 */
 	public function _action_enqueue_editor_assets() {
 		if (wp_script_is('jquery') === false) {
-			wp_register_script('jquery', "/wp-includes/js/jquery/jquery.js", array(), false);
+			wp_register_script('jquery', "/wp-includes/js/jquery/jquery.js");
 		}
 
 		wp_enqueue_media();

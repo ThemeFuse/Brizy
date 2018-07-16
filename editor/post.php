@@ -97,11 +97,15 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		// get the storage values
 		$storage          = $this->storage();
+		//$storageData          = $storage->get_storage();
 		$using_editor_old = $storage->get( Brizy_Editor_Constants::USES_BRIZY, false );
 		$storage_post     = $storage->get( self::BRIZY_POST, false );
 
 		// check for deprecated forms of posts
 		if ( $storage_post instanceof self ) {
+			$this->set_editor_data( $storage_post->editor_data );
+			$this->set_needs_compile( true );
+			$this->set_uses_editor( $using_editor_old );
 			$this->save();
 		} else if ( is_array( $storage_post ) ) {
 			$this->loadStorageData( $storage_post );
@@ -256,8 +260,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$this->needs_compile = $data['needs_compile'];
 		$this->set_editor_data( $data['editor_data'] );
-		$this->editor_version   = isset( $data['editor_version'] ) ? $data['editor_version'] : BRIZY_EDITOR_VERSION;
-		$this->compiler_version = isset( $data['compiler_version'] ) ? $data['compiler_version'] : BRIZY_EDITOR_VERSION;
+		$this->editor_version   = isset( $data['editor_version'] ) ? $data['editor_version'] : null;
+		$this->compiler_version = isset( $data['compiler_version'] ) ? $data['compiler_version'] : null;
 		$this->uses_editor      = (bool) ( isset( $data[ Brizy_Editor_Constants::USES_BRIZY ] ) ? $data[ Brizy_Editor_Constants::USES_BRIZY ] : false );
 	}
 
@@ -428,7 +432,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function save() {
 
 		try {
-			$this->set_editor_version( BRIZY_EDITOR_VERSION );
 			$value = $this->convertToOptionValue();
 			$this->storage()->set( self::BRIZY_POST, $value );
 		} catch ( Exception $exception ) {
@@ -456,7 +459,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$this->set_needs_compile( false );
 		$this->set_compiler_version( BRIZY_EDITOR_VERSION );
-		$this->set_editor_version( BRIZY_EDITOR_VERSION );
 		return true;
 	}
 

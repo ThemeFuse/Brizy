@@ -48,7 +48,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		$external_asset_url  = $this->url_builder->external_media_url( "iW=5000&iH=any/" . $madia_name );
-		$original_asset_path = $this->url_builder->upload_path( $this->url_builder->page_asset_path( "images/".$madia_name ) );
+		$original_asset_path = $this->url_builder->upload_path( $this->url_builder->page_asset_path( "images/" . $madia_name ) );
 
 		if ( ! file_exists( $original_asset_path ) ) {
 			// I assume that the media was already attached.
@@ -95,7 +95,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new InvalidArgumentException( "Invalid crop filter" );
 		}
 
-		$resized_page_asset_path = $this->url_builder->upload_path( $this->url_builder->page_asset_path( "images/".$media_filter ) );
+		$resized_page_asset_path = $this->url_builder->upload_path( $this->url_builder->page_asset_path( "images/" . $media_filter ) );
 		$ext                     = pathinfo( $original_asset_path, PATHINFO_EXTENSION );
 		$resized_image_path      = $resized_page_asset_path . "/" . md5( $original_asset_path ) . '.' . $ext;
 
@@ -156,20 +156,35 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			// do not resize
 			return $imageEditor;
 		} else {
+
+			list( $imgWidth, $imgHeight ) = $filter_configuration['originalSize'];
 			if ( $filter_configuration['is_advanced'] === false ) {
-				list( $imageWidth, $imageHeight ) = array_values( $filter_configuration['requestedData'] );
-				list( $originalWidth, $originalHeight ) = $filter_configuration['originalSize'];
-				if ( $imageWidth > $originalWidth && ( $imageHeight == "any" || $imageHeight == "*" ) ) {
+				list( $requestedImgWidth, $requestedImgHeight ) = array_values( $filter_configuration['requestedData'] );
+				if ( $requestedImgWidth > $imgWidth && ( $requestedImgHeight == "any" || $requestedImgHeight == "*" ) ) {
 					return $imageEditor;
 				}
-				$imageEditor->resize( $imageWidth, $imageHeight );
+				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
 
 				return $imageEditor;
 			}
 
-			list( $imageWidth, $imageHeight, $offsetX, $offsetY, $cropWidth, $cropHeight ) = array_values( $filter_configuration['requestedData'] );
-			$imageEditor->resize( $imageWidth, $imageHeight );
-			$imageEditor->crop( $offsetX, $offsetY, $cropWidth, $cropHeight, $cropWidth, $cropHeight, false );
+			list( $requestedImgWidth, $requestedImgHeight, $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight ) = array_values( $filter_configuration['requestedData'] );
+
+			if ( $containerWidth > $imgWidth || $containerHeight > $imgHeight ) {
+
+				$newOffsetX = $imgWidth  * $requestedOffsetX / $requestedImgWidth;
+				$newOffsetY = $imgHeight * $requestedOffsetY / $requestedImgHeight;
+
+				$newImgWidth  = $imgWidth * $containerWidth / $requestedImgWidth; // aici
+				$newImgHeight = $imgHeight *  $containerHeight / $requestedImgHeight;
+
+				$imageEditor->crop( $newOffsetX, $newOffsetY,  $newImgWidth, $newImgHeight );
+
+			} else {
+				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
+				$imageEditor->crop( $requestedOffsetX, $requestedOffsetY,  $containerWidth, $containerHeight );
+			}
+
 
 			return $imageEditor;
 		}

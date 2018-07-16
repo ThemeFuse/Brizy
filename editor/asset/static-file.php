@@ -29,7 +29,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 
 
 			$http        = new WP_Http();
-			$wp_response = $http->request( $asset_source );
+			$wp_response = $http->request( $asset_source, array( 'timeout' => 30 ) );
 
 			$code = wp_remote_retrieve_response_code( $wp_response );
 
