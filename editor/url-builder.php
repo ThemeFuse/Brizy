@@ -25,30 +25,52 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	public function __construct( $project = null, $post = null ) {
 
-		global $wp_rewrite;
-
 		$this->project    = $project;
 		$this->post       = $post;
-		$this->upload_dir = wp_upload_dir( null, true );
-
-//		if ( $wp_rewrite->permalink_structure == "" ) {
-//			$site_url = get_site_url();
-//			$this->upload_dir['url']     = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['url'] );
-//			$this->upload_dir['baseurl'] = str_replace( $site_url, $site_url . "/index.php", $this->upload_dir['baseurl'] );
-//		}
+		$this->upload_dir = Brizy_Admin_UploadDir::getUploadDir( null, true );
 	}
 
 	public function application_form_url() {
 		return sprintf( Brizy_Config::BRIZY_APPLICATION_FORM_URL, Brizy_Config::BRIZY_APPLICATION_FORM_ID, urlencode( $this->multipass_url() ) );
 	}
 
+	/**
+	 * @param $post
+	 */
+	public function set_post( $post ) {
+		$this->post = $post;
+	}
+
 	public function multipass_url() {
 		return admin_url( 'admin-ajax.php' ) . "?action=brizy_multipass_create&client_id=" . Brizy_Config::BRIZY_APPLICATION_FORM_ID;
 	}
 
+
 	public function proxy_url( $end_point ) {
-		return site_url('?brizy=' . $end_point);
+
+		$params = array();
+
+		if ( $this->post ) {
+			$params['brizy_post'] = ( (int) $this->post->get_parent_id() );
+		}
+
+		// do not move this line
+		$params['brizy'] = $end_point;
+
+		return site_url( "?" . http_build_query( $params ) );
 	}
+
+	/**
+	 * @param string $end_point
+	 *
+	 * @return string
+	 */
+//	public function media_proxy_url( $end_point = '' ) {
+//
+//		$end_point = ltrim( $end_point, "/" );
+//
+//		return $this->proxy_url( "/media/" . $end_point );
+//	}
 
 	/**
 	 * @param $path
@@ -69,47 +91,81 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	/**
-	 * This will return the relative path to the upload dir.
-	 * ex: /brizy/pages/9.0.6/3/x.jpg
-	 *
 	 * @param null $path
-	 * @param null $template_version
-	 * @param null $post_id
 	 *
 	 * @return string
 	 */
-	public function page_asset_path( $path = null, $template_version = null, $post_id = null ) {
+	public function page_asset_path( $path = null ) {
 
-		if ( is_null( $template_version ) ) {
-			$template_version = BRIZY_EDITOR_VERSION;
-		}
-		if ( is_null( $post_id ) ) {
-			$post_id = $this->post->get_id();
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
 		}
 
-		$path = "/" . ltrim( $path, "/" );
+		return $this->page_upload_path( 'assets' . $path );
+	}
 
-		return sprintf( Brizy_Config::BRIZY_WP_PAGE_ASSET_PATH . $path, $template_version, $post_id );
+	/**
+	 * @param null $path
+	 *
+	 * @return string
+	 */
+	public function page_asset_url( $path = null ) {
+
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
+
+		return $this->page_upload_url( 'assets' . $path );
 	}
 
 	/**
 	 * This will return the relative path to the upload dir.
-	 * ex: /brizy/editor/9.0.3/x.jpg
+	 * ex: /brizy/pages/3/x.jpg
 	 *
 	 * @param null $path
-	 * @param null $template_version
+	 * @param null $post_id
 	 *
 	 * @return string
 	 */
-	public function editor_asset_path( $path = null, $template_version = null ) {
+	public function page_upload_path( $path = null, $post_id = null ) {
 
-		if ( is_null( $template_version ) ) {
-			$template_version = BRIZY_EDITOR_VERSION;
+		if ( is_null( $post_id ) && $this->post ) {
+			$post_id = $this->post->get_parent_id();
 		}
 
-		$path = "/" . ltrim( $path, "/" );
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
 
-		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH . $path, $template_version );
+		return sprintf( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL . $path, $post_id );
+	}
+
+	/**
+	 * @param null $path
+	 * @param null $post_id
+	 *
+	 * @return string
+	 */
+	public function page_upload_url( $path = null, $post_id = null ) {
+
+		return $this->upload_url( $this->page_upload_path( $path, $post_id ) );
+	}
+
+	/**
+	 * This will return the relative path to the upload dir.
+	 * ex: /brizy/editor/x.jpg
+	 *
+	 * @param null $path
+	 *
+	 * @return string
+	 */
+	public function editor_asset_path( $path = null ) {
+
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
+
+		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH . $path );
 	}
 
 	public function editor_asset_url() {
@@ -155,7 +211,9 @@ class Brizy_Editor_UrlBuilder {
 			$template_version = BRIZY_EDITOR_VERSION;
 		}
 
-		$path = "/" . ltrim( $path, "/" );
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
 
 		return sprintf( Brizy_Config::S3_ASSET_URL . $path, $template_slug, $template_version );
 	}

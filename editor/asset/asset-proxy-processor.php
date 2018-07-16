@@ -6,7 +6,7 @@
  * Time: 10:46 AM
  */
 
-class Brizy_Editor_Asset_AssetProxyProcessor implements Brizy_Editor_Asset_ProcessorInterface {
+class Brizy_Editor_Asset_AssetProxyProcessor implements Brizy_Editor_Content_ProcessorInterface {
 
 	/**
 	 * @var Brizy_Editor_Asset_Storage
@@ -31,13 +31,14 @@ class Brizy_Editor_Asset_AssetProxyProcessor implements Brizy_Editor_Asset_Proce
 	 */
 	public function process( $content ) {
 
-		preg_match_all( '/"(.[^"\?]*\?brizy=(.[^"]*))"/im', $content, $matches );
+		preg_match_all( '/"(.[^"]*(?:\?|&|&amp;)brizy=(.[^"]*))"/im', $content, $matches );
 
 		if ( ! isset( $matches[2] ) ) {
 			return $content;
 		}
 
 		foreach ( $matches[2] as $i => $url ) {
+			$url = urldecode($url);
 			$hash_matches = array();
 			preg_match( "/^.[^#]*(#.*)$/", $url, $hash_matches );
 

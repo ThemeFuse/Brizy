@@ -8,10 +8,15 @@ class Brizy_Admin_Settings {
 
 	private $role_list;
 
+	private $capability_options;
+
 	public static function menu_slug() {
 		return brizy()->get_slug() . '-settings';
 	}
 
+	/**
+	 * @return Brizy_Admin_Settings
+	 */
 	public static function _init() {
 
 		static $instance;
@@ -19,11 +24,21 @@ class Brizy_Admin_Settings {
 		return $instance ? $instance : $instance = new self();
 	}
 
+	/**
+	 * Brizy_Admin_Settings constructor.
+	 */
 	private function __construct() {
 
 		add_action( 'admin_menu', array( $this, 'action_register_settings_page' ) );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
-		$this->role_list = $this->get_role_list();
+		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
+		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
+		add_action( 'brizy_settings_submit', array( $this, 'settings_submit' ) );
+		add_action( 'brizy_settings_render_tabs', array( $this, 'render_tabs' ) );
+		add_action( 'brizy_settings_render_content', array( $this, 'render_tab_content' ) );
+
+		$this->role_list          = self::get_role_list();
+		$this->capability_options = $this->get_capability_options();
 
 		try {
 			$this->selected_post_types = Brizy_Editor_Storage_Common::instance()->get( 'post-types' );
@@ -34,8 +49,155 @@ class Brizy_Admin_Settings {
 		}
 	}
 
+	private function get_selected_tab() {
+		return $tab = ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : null;
+	}
+
+	private function get_tabs() {
+		$selected_tab = $this->get_selected_tab();
+		$tabs         = array(
+			array(
+				'id'          => 'general',
+				'label'       => 'General',
+				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
+				'href'        => menu_page_url( $this->menu_slug(), false ) . "&tab=general"
+
+			),
+			array(
+				'id'          => 'roles',
+				'label'       => 'Role Manager',
+				'is_selected' => $selected_tab == 'roles',
+				'href'        => menu_page_url( $this->menu_slug(), false ) . "&tab=roles"
+			)
+		);
+
+		return apply_filters( 'brizy_settings_tabs', $tabs );
+	}
+
+	private function get_tab_content() {
+		switch ( $this->get_selected_tab() ) {
+			default:
+			case 'general':
+				return $this->get_general_tab();
+				break;
+			case 'roles':
+				return $this->get_roles_tab();
+				break;
+		}
+
+		return '';
+	}
+
+	private function get_general_tab() {
+		$list_post_types = $this->list_post_types();
+		$prepared_types  = array_map( array( $this, 'is_selected' ), $list_post_types );
+
+		return Brizy_Admin_View::render(
+			'settings/general',
+			array( 'types' => $prepared_types, )
+		);
+	}
+
+	private function get_roles_tab() {
+		return Brizy_Admin_View::render(
+			'settings/roles',
+			array( 'roles' => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() ), )
+		);
+	}
+
+
+	/**
+	 * @return bool
+	 */
 	public function is_settings_page() {
 		return get_current_screen()->base === "settings_page_" . brizy()->get_slug() . "-settings";
+	}
+
+	public function settings_submit() {
+
+		switch ( $_POST['tab'] ) {
+			case 'general':
+				$this->general_settings_submit();
+				break;
+			case 'roles':
+				$this->roles_settings_submit();
+				break;
+		}
+	}
+
+	public function general_settings_submit() {
+		$error_count        = 0;
+		$allowed_post_types = array_map( array( $this, 'to_type' ), $this->post_types() );
+		$post_types         = isset( $_POST['post-types'] ) ? (array) $_POST['post-types'] : array();
+		$array_diff         = array_diff( $post_types, $allowed_post_types );
+
+		if ( count( $array_diff ) > 0 ) {
+			//error
+			Brizy_Admin_Flash::instance()->add_error( 'Invalid post type selected' );
+			$error_count ++;
+		}
+
+		if ( $error_count == 0 ) {
+			$this->selected_post_types = $post_types;
+			Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
+		}
+
+	}
+
+	/**
+	 * Return the list of allowed capabilities Ids
+	 * @return array
+	 */
+	public function get_capabilities() {
+		$capabilities = $this->get_capability_options();
+		$caps         = array();
+
+		foreach ( $capabilities as $capability ) {
+			$caps[] = $capability['capability'];
+		}
+
+		return $caps;
+	}
+
+	/**
+	 * Return the list of capabilities including the label
+	 *
+	 * @return mixed|void
+	 */
+	public function get_capability_options() {
+		return apply_filters( 'brizy_settings_capability_options', array(
+			array( 'capability' => '', 'label' => 'No Access' ),
+			array( 'capability' => Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE, 'label' => 'Full Access' )
+		) );
+	}
+
+	public function roles_settings_submit() {
+		$allowed_roles        = array_map( array( $this, 'role_to_id' ), $this->list_wp_roles() );
+		$allowed_capabilities = $this->get_capabilities();
+		$roles                = isset( $_POST['role-capability'] ) ? (array) $_POST['role-capability'] : array();
+
+		if ( count( $roles ) != 0 ) {
+			foreach ( $roles as $role_id => $capability ) {
+
+				if ( ! in_array( $role_id, $allowed_roles ) ) {
+					continue;
+				}
+
+				// validate capability
+				if ( $capability != "" && ! in_array( $capability, $allowed_capabilities ) ) {
+					continue;
+				}
+
+				// remove all brizy capabilities from this role
+				foreach ( $allowed_capabilities as $cap ) {
+					wp_roles()->remove_cap( $role_id, $cap );
+				}
+
+				if ( $capability != "" ) {
+					wp_roles()->add_cap( $role_id, $capability );
+				}
+			}
+		}
 	}
 
 	/**
@@ -44,21 +206,32 @@ class Brizy_Admin_Settings {
 	public function render() {
 
 		try {
-			$list_post_types = $this->list_post_types();
-			$args            = array(
-				'types'   => array_map( array( $this, 'is_selected' ), $list_post_types ),
-				'roles'   => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() ),
-				'project' => Brizy_Editor_Project::get()
-			);
 			echo Brizy_Admin_View::render(
 				'settings/view',
-				$args
+				array()
 			);
 
 			//echo Brizy_Admin_View::render( 'settings/debug', array() );
 		} catch ( Exception $e ) {
 
 		}
+	}
+
+	public function render_tabs() {
+		$tabs = $this->get_tabs();
+		foreach ( $tabs as $tab ) {
+			$is_active_class = $tab['is_selected'] ? 'nav-tab-active' : '';
+			?>
+            <a href="<?php echo $tab['href'] ?>"
+               class="nav-tab <?php echo $is_active_class ?>"><?php echo __( $tab['label'] ) ?></a>
+			<?php
+		}
+	}
+
+	public function render_tab_content() {
+		$tab = $this->get_selected_tab();
+
+		echo apply_filters( 'brizy_settings_render_tab', $this->get_tab_content( $tab ) );
 	}
 
 	/**
@@ -80,8 +253,6 @@ class Brizy_Admin_Settings {
 	 **/
 	public function action_validate_form_submit() {
 
-		$error_count = 0;
-
 		if ( count( $_POST ) == 0 ) {
 			return;
 		}
@@ -89,46 +260,28 @@ class Brizy_Admin_Settings {
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'] ) ) {
 			return;
 		}
-		$allowed_post_types = array_map( array( $this, 'to_type' ), $this->post_types() );
-		$allowed_roles      = array_map( array( $this, 'role_to_id' ), $this->list_wp_roles() );
 
-		$post_types = isset( $_POST['post-types'] ) ? (array) $_POST['post-types'] : array();
-		$roles      = isset( $_POST['exclude-roles'] ) ? (array) $_POST['exclude-roles'] : array();
+		do_action( 'brizy_settings_submit' );
 
-		$array_diff = array_diff( $post_types, $allowed_post_types );
-
-		if ( count( $array_diff ) > 0 ) {
-			//error
-			Brizy_Admin_Flash::instance()->add_error( 'Invalid post type selected' );
-			$error_count ++;
-		}
-
-		if ( count( array_diff( $roles, (array) $allowed_roles ) ) > 0 ) {
-			//error
-			Brizy_Admin_Flash::instance()->add_error( 'Invalid role selected' );
-			$error_count ++;
-		}
-
-		if ( $error_count == 0 ) {
-			$this->selected_post_types = $post_types;
-
-			Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
-			Brizy_Editor_Storage_Common::instance()->set( 'exclude-roles', $roles );
-
+		if ( ! Brizy_Admin_Flash::instance()->has_notice_type( Brizy_Admin_Flash::ERROR ) ) {
 			Brizy_Admin_Flash::instance()->add_success( 'Settings saved.' );
 		}
 
-		wp_redirect( menu_page_url( brizy()->get_name() ) );
+		$tab = $this->get_selected_tab();
+
+		wp_redirect( menu_page_url( $this->menu_slug(), false ) . ( $tab ? '&tab=' . $tab : '' ) );
+
+		exit;
 
 	}
 
 	protected function list_post_types() {
 		$types = $this->post_types();
 
-		return array_map( array( $this, 'to_choice' ), $types );
+		return array_map( array( $this, 'post_type_to_choice' ), $types );
 	}
 
-	private function get_role_list() {
+	static public function get_role_list() {
 		$roles = wp_roles()->roles;
 
 		unset( $roles['administrator'] );
@@ -136,6 +289,8 @@ class Brizy_Admin_Settings {
 		foreach ( $roles as $key => $role ) {
 			$roles[ $key ]['id'] = $key;
 		}
+
+		$roles = apply_filters( 'brizy_settings_roles', $roles );
 
 		return $roles;
 	}
@@ -162,7 +317,7 @@ class Brizy_Admin_Settings {
 	}
 
 
-	private function to_choice( WP_Post_Type $type ) {
+	private function post_type_to_choice( WP_Post_Type $type ) {
 		return array(
 			'type' => $type->name,
 			'name' => $type->labels->name,
@@ -190,13 +345,43 @@ class Brizy_Admin_Settings {
 	}
 
 	private function is_role_selected( $role ) {
-		try {
-			$selected_roles = Brizy_Editor_Storage_Common::instance()->get( 'exclude-roles' );
-		} catch ( Exception $e ) {
-			$selected_roles = array();
-		}
-		$role['selected'] = in_array( $role['id'], $selected_roles );
+		$role['selected'] = ! isset( $role['capabilities'][ Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ] );
 
 		return $role;
+	}
+
+	public function role_capability_select_row( $role ) {
+		?>
+        <tr class="user-display-name-wrap">
+            <th><label for="display_name"><?php echo $role['name'] ?></label></th>
+            <td>
+                <select name="role-capability[<?php echo $role['id'] ?>]">
+					<?php
+					foreach ( $this->capability_options as $option ) {
+						?>
+                        <option value="<?php echo $option['capability'] ?>"
+							<?php echo isset( $role['capabilities'][ $option['capability'] ] ) ? 'selected' : '' ?>>
+							<?php echo $option['label'] ?>
+                        </option>
+						<?php
+					}
+					?>
+                </select>
+            </td>
+        </tr>
+		<?php
+	}
+
+	public function post_type_row( $type ) {
+		?>
+        <label>
+            <input type="checkbox"
+                   name="post-types[]"
+                   value="<?php echo $type['type']; ?>"
+				<?php echo $type['selected'] ? 'checked' : ''; ?>
+            >
+			<?php echo $type['name']; ?>
+        </label>
+		<?php
 	}
 }

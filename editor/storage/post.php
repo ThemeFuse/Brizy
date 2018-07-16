@@ -18,7 +18,7 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	}
 
 	protected function __construct( $id ) {
-		$this->id = (int)$id;
+		$this->id = (int) $id;
 	}
 
 	protected function get_id() {
@@ -28,8 +28,14 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	/**
 	 * @return array
 	 */
-	protected function get_storage() {
-		return (array) get_post_meta( $this->get_id(), $this->key(), true );
+	public function get_storage() {
+		$get_metadata = get_metadata( 'post', $this->get_id(), $this->key(), true );
+
+		if ( is_array( $get_metadata ) ) {
+			return $get_metadata;
+		}
+
+		return [];
 	}
 
 	/**
@@ -38,7 +44,17 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	 * @return $this
 	 */
 	protected function update_storage( $storage ) {
-		update_post_meta( $this->get_id(), $this->key(), $storage );
+
+//		if(isset($storage['brizy-post']['editor_data']))
+//		{
+//			$storage['brizy-post']['editor_data'] = addslashes($storage['brizy-post']['editor_data']);
+//		}
+//		if(isset($storage['brizy-post']['compiled_html']))
+//		{
+//			$storage['brizy-post']['compiled_html'] = addslashes($storage['brizy-post']['compiled_html']);
+//		}
+
+		update_metadata( 'post', $this->get_id(), $this->key(), $storage );
 
 		return $this;
 	}

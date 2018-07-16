@@ -94,6 +94,15 @@ class Brizy_Admin_Flash {
 		return isset( $this->notices[ $hash ] );
 	}
 
+	public function has_notice_type( $type ) {
+
+		$array_filter = array_filter( $this->notices, function ( $var ) use ( $type ) {
+			return $var['type'] == $type;
+		} );
+
+		return count( $array_filter ) > 0;
+	}
+
 	public function get( $hash ) {
 		if ( $this->has( $hash ) ) {
 			return $this->notices[ $hash ];

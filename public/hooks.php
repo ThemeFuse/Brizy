@@ -2,18 +2,6 @@
 	die( 'Direct access forbidden.' );
 }
 
-function brizy_action_delete_scripts_and_styles( $id ) {
-	$path = Brizy_Editor_Resources_StaticStorage::get_path()
-	        . DIRECTORY_SEPARATOR
-	        . brizy()->get_slug()
-	        . "-$id*";
-	foreach ( glob( $path ) as $item ) {
-		unlink( $item );
-	}
-}
-
-add_action( 'brizy_delete_post', 'brizy_action_delete_scripts_and_styles' );
-
 function brizy_filter_public_page_templates( $templates ) {
 
 	$list = wp_get_theme()->get_page_templates();
@@ -67,7 +55,7 @@ function brizy_initialize_front_end_Brizy_Public_Main() {
 		$main->initialize_front_end();
 
 	} catch ( Exception $e ) {
-		Brizy_Logger::instance()->exception($e);
+		Brizy_Logger::instance()->exception( $e );
 	}
 }
 
@@ -96,16 +84,24 @@ function brizy_initialize_admin_edit_Brizy_Public_Main() {
 		$main->initialize_wordpress_editor();
 
 	} catch ( Exception $e ) {
-		Brizy_Logger::instance()->exception($e);
+		Brizy_Logger::instance()->exception( $e );
 	}
 }
 
+/**
+ * @throws Exception
+ */
 function brizy_initialize_asset_loader() {
-	$project     = Brizy_Editor_Project::get();
-	$url_builder = new Brizy_Editor_UrlBuilder( $project );
+	try {
+		$project     = Brizy_Editor_Project::get();
+		$url_builder = new Brizy_Editor_UrlBuilder( $project );
 
-	$config      = Brizy_Editor_Editor_Editor::get( $project )->config();
-	$proxy       = new Brizy_Public_AssetProxy( $url_builder, $config );
+		$config    = null;
+		$proxy     = new Brizy_Public_AssetProxy( $url_builder, $config );
+		$crop_roxy = new Brizy_Public_CropProxy( $url_builder, $config );
+	} catch ( Exception $e ) {
+		Brizy_Logger::instance()->exception( $e );
+	}
 }
 
 add_action( 'wp', 'brizy_initialize_front_end_Brizy_Public_Main' );
@@ -115,6 +111,10 @@ add_action( 'init', 'brizy_initialize_asset_loader', 1000 );
 $supported_post_types = brizy()->supported_post_types();
 foreach ( $supported_post_types as $type ) {
 	add_filter( "brizy:$type:templates", 'brizy_filter_public_page_templates' );
-	add_filter( "theme_{$type}_templates", 'brizy_filter_public_register_page_templates' );
 	add_filter( "{$type}_template", 'brizy_catch_templates' );
+
+	if($type!='post')
+	{
+		add_filter( "theme_{$type}_templates", 'brizy_filter_public_register_page_templates' );
+	}
 }

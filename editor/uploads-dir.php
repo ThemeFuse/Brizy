@@ -30,7 +30,7 @@ class Brizy_Editor_UploadsDir {
 		static $uri;
 
 		if ( ! $uri ) {
-			$uploads = wp_upload_dir();
+			$uploads = Brizy_Admin_UploadDir::getUploadDir();
 			$uri     = $uploads['baseurl'];
 		}
 
@@ -41,7 +41,7 @@ class Brizy_Editor_UploadsDir {
 		static $uri;
 
 		if ( ! $uri ) {
-			$uploads = wp_upload_dir();
+			$uploads = Brizy_Admin_UploadDir::getUploadDir();
 			$uri     = $uploads['basedir'];
 		}
 

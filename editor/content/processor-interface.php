@@ -6,6 +6,6 @@
  * Time: 10:46 AM
  */
 
-interface Brizy_Editor_Asset_ProcessorInterface {
+interface Brizy_Editor_Content_ProcessorInterface {
 	public function process( $content );
 }

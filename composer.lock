@@ -4,42 +4,39 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3b2286b839dcc31825a8ae375e35bad",
+    "content-hash": "98a23204bab6a75dc0cb0c0eb015f02b",
     "packages": [
         {
             "name": "twig/twig",
-            "version": "v1.35.3",
+            "version": "v1.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f"
+                "reference": "9935b662e24d6e634da88901ab534cc12e8c728f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
-                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9935b662e24d6e634da88901ab534cc12e8c728f",
+                "reference": "9935b662e24d6e634da88901ab534cc12e8c728f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.2.7"
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/debug": "^2.7",
-                "symfony/phpunit-bridge": "^3.3"
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~3.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.35-dev"
+                    "dev-master": "1.32-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
                     "Twig_": "lib/"
-                },
-                "psr-4": {
-                    "Twig\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -69,7 +66,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-03-20T04:25:58+00:00"
+            "time": "2017-02-27T00:07:03+00:00"
         }
     ],
     "packages-dev": [],

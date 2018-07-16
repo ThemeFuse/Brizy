@@ -81,6 +81,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf  ./bin ./tests *.dist *.xml *.lock *.json *.yml .gitignore'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/test'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/doc'
+                sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./*.sh'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./.git'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./Jenkinsfile'
