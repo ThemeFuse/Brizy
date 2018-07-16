@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.18<br>
+Stable tag: 1.0.19<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,21 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.19 - 2018-07-16 ###
+* New: Added box shadow option for various elements
+* New: Added hamburger option for Menu
+* New: Revisions support
+* New: Image resize integration
+* New: Settings page redesign
+* Improved: Image resizing will now happen locally in WP instead of on Brizy servers
+* Improved: IconBox, Form, Tabs, Accordion toolbar looks like Row ## Changelog Column ones
+* Improved: Added tooltips for sidebar elements
+* Fixed: Corrected Countdown preview bug
+* Fixed: Corrected Form integration url
+* Fixed: Fixed the upload urls
+* Fixed: Fixed https value in 
+* Fixed: Other minor bugs
 
 ### 1.0.18 - 2018-06-28 ###
 * Fixed: Fixed asset proxy url
