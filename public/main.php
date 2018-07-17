@@ -107,6 +107,17 @@ class Brizy_Public_Main {
 	 * @internal
 	 */
 	public function _action_enqueue_editor_assets() {
+
+		global $wp_scripts;
+		$array = array();
+		// Runs through the queue scripts
+		foreach ($wp_scripts->queue as $handle) :
+			$array[] = $handle;
+		endforeach;
+
+		wp_dequeue_script($array);
+		wp_dequeue_script($array);
+
 		if (wp_script_is('jquery') === false) {
 			wp_register_script('jquery', "/wp-includes/js/jquery/jquery.js");
 		}
