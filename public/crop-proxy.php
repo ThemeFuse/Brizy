@@ -15,16 +15,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	/**
 	 * @return string
 	 */
-	protected function get_endpoint_key() {
-		return self::ENDPOINT;
-	}
-
-	public function query_vars( $vars ) {
-		$vars   = parent::query_vars( $vars );
-		$vars[] = self::ENDPOINT_FILTER;
-		$vars[] = self::ENDPOINT_POST;
-
-		return $vars;
+	protected function get_endpoint_keys() {
+		return array( self::ENDPOINT, self::ENDPOINT_FILTER, self::ENDPOINT_POST );
 	}
 
 	/**
@@ -53,7 +45,7 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 				$this->crop_local_asset( $vars[ self::ENDPOINT ], html_entity_decode( $vars[ self::ENDPOINT_FILTER ] ), (int) $vars[ self::ENDPOINT_POST ] );
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
-				status_header(404);
+				status_header( 404 );
 				global $wp_query;
 				$wp_query->set_404();
 
@@ -74,13 +66,13 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 		try {
 
 			$attachments = get_posts( array(
-				'meta_key'    => 'brizy_attachment_uid',
-				'meta_value'  => $attachment_hash,
-				'post_type'   => 'attachment',
+				'meta_key'   => 'brizy_attachment_uid',
+				'meta_value' => $attachment_hash,
+				'post_type'  => 'attachment',
 			) );
 
 			if ( count( $attachments ) == 0 ) {
-				throw new Exception('No post found with such media hash.');
+				throw new Exception( 'No post found with such media hash.' );
 			}
 
 			$attachment_id = $attachments[0]->ID;

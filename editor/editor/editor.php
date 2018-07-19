@@ -121,23 +121,24 @@ class Brizy_Editor_Editor_Editor {
 						'set' => Brizy_Editor_API::AJAX_SET_GLOBALS,
 						'get' => Brizy_Editor_API::AJAX_GET_GLOBALS,
 					),
-					'media'            => Brizy_Editor_API::AJAX_MEDIA,
-					'ping'             => Brizy_Editor_API::AJAX_PING,
-					'getPage'          => Brizy_Editor_API::AJAX_GET,
-					'updatePage'       => Brizy_Editor_API::AJAX_UPDATE,
-					'getSidebars'      => Brizy_Editor_API::AJAX_SIDEBARS,
-					'buildContent'     => Brizy_Editor_API::AJAX_BUILD,
-					'sidebarContent'   => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
-					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
-					'shortcodeList'    => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
-					'getTemplates'     => Brizy_Editor_API::AJAX_GET_TEMPLATES,
-					'getInternalLinks' => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
-					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
-					'updatePost'       => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
-					'savePage'         => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
-					'getTerms'         => Brizy_Editor_API::AJAX_GET_TERMS,
-					'downloadMedia'    => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
-					'getMediaUid'      => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+					'media'               => Brizy_Editor_API::AJAX_MEDIA,
+					'ping'                => Brizy_Editor_API::AJAX_PING,
+					'getPage'             => Brizy_Editor_API::AJAX_GET,
+					'updatePage'          => Brizy_Editor_API::AJAX_UPDATE,
+					'getSidebars'         => Brizy_Editor_API::AJAX_SIDEBARS,
+					'buildContent'        => Brizy_Editor_API::AJAX_BUILD,
+					'sidebarContent'      => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT,
+					'shortcodeContent'    => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+					'shortcodeList'       => Brizy_Editor_API::AJAX_SHORTCODE_LIST,
+					'getTemplates'        => Brizy_Editor_API::AJAX_GET_TEMPLATES,
+					'getInternalLinks'    => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
+					'getMenus'            => Brizy_Editor_API::AJAX_GET_MENU_LIST,
+					'updatePost'          => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
+					'savePage'            => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
+					'getTerms'            => Brizy_Editor_API::AJAX_GET_TERMS,
+					'downloadMedia'       => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
+					'getMediaUid'         => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+					'saveBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_SAVE_BLOCK_SCREENSHOT,
 				),
 				'plugins'         => array(
 					'dummy'       => true,
@@ -180,16 +181,16 @@ class Brizy_Editor_Editor_Editor {
 		return (object) $attachment_data;
 	}
 
-	public function get_asset_url( $template_version = null ) {
-
-		$upload_dir_info = wp_upload_dir( null, true );
-
-		if ( is_null( $template_version ) ) {
-			$template_version = BRIZY_EDITOR_VERSION;
-		}
-
-		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
-	}
+//	public function get_asset_url( $template_version = null ) {
+//
+//		$upload_dir_info = wp_upload_dir( null, true );
+//
+//		if ( is_null( $template_version ) ) {
+//			$template_version = BRIZY_EDITOR_VERSION;
+//		}
+//
+//		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
+//	}
 
 	private function get_woocomerce_plugin_info() {
 		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {

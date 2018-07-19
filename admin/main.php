@@ -70,11 +70,11 @@ class Brizy_Admin_Main {
 
 			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost );
 
-			$pageUploadPath = $urlBuilder->upload_path( $urlBuilder->page_upload_path( "assets/images" ) );
+			$pageUploadPath = $urlBuilder->page_upload_path( "assets/images" ) ;
 
 			$this->deleteAllDirectories( $pageUploadPath );
 
-			$pageUploadPath = $urlBuilder->upload_path( $urlBuilder->page_upload_path( "assets/icons" ) );
+			$pageUploadPath = $urlBuilder->page_upload_path( "assets/icons" );
 
 			$this->deleteFilesAndDirectory( $pageUploadPath );
 

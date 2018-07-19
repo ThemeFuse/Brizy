@@ -753,8 +753,6 @@ class Brizy_Editor_API {
 
 		$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
 
-		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
-
 		wp_send_json( array_values( $terms ) );
 	}
 
