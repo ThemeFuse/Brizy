@@ -42,10 +42,24 @@ register_deactivation_hook( __FILE__, 'brizy_clean' );
 
 add_action( 'plugins_loaded', 'brizy_load' );
 
+
 function brizy_load() {
+
+	if ( version_compare( PHP_VERSION, '5.6' ) < 0 ) {
+		add_action( 'admin_notices', 'brizy_notices' );
+		return;
+	}
+
 	include_once 'editor/load.php';
 	include_once 'shortcode/load.php';
 	include_once 'public/hooks.php';
 	include_once 'admin/load.php';
 }
 
+function brizy_notices() {
+	?>
+    <div class="notice notice-error is-dismissible">
+        <p>Brizy requires PHP version 5.4+, you currently running PHP <?php echo PHP_VERSION?>.  <b>BRIZY IS NOT RUNNING. </b></p>
+    </div>
+	<?php
+}
