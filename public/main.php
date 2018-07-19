@@ -24,7 +24,6 @@ class Brizy_Public_Main {
 	 */
 	private $url_builder;
 
-
 	/**
 	 * Brizy_Public_Main constructor.
 	 *
@@ -111,15 +110,15 @@ class Brizy_Public_Main {
 		global $wp_scripts;
 		$array = array();
 		// Runs through the queue scripts
-		foreach ($wp_scripts->queue as $handle) :
+		foreach ( $wp_scripts->queue as $handle ) :
 			$array[] = $handle;
 		endforeach;
 
-		wp_dequeue_script($array);
-		wp_dequeue_script($array);
+		wp_dequeue_script( $array );
+		wp_dequeue_script( $array );
 
-		if (wp_script_is('jquery') === false) {
-			wp_register_script('jquery', "/wp-includes/js/jquery/jquery.js");
+		if ( wp_script_is( 'jquery' ) === false ) {
+			wp_register_script( 'jquery', "/wp-includes/js/jquery/jquery.js" );
 		}
 
 		wp_enqueue_media();
@@ -231,6 +230,8 @@ class Brizy_Public_Main {
 
 			$render_block = $twig_template->render( $context );
 
+			remove_filter( 'the_content', array( $this, '_filter_the_content' ) );
+
 			return $render_block;
 		}
 
@@ -280,21 +281,22 @@ class Brizy_Public_Main {
 			<?php echo $compiled_html_head; ?>
             <!-- END BRIZY HEAD -->
 			<?php
+		} else {
+			$compiled_page = $this->post->get_compiled_page( $this->project );
 
-			return;
+			$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
+
+			$head = $compiled_page->get_head();
+
+			?>
+            <!-- BRIZY HEAD -->
+			<?php echo $head; ?>
+            <!-- END BRIZY HEAD -->
+			<?php
+
 		}
 
-		$compiled_page = $this->post->get_compiled_page( $this->project );
-
-		$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
-
-		$head = $compiled_page->get_head();
-
-		?>
-        <!-- BRIZY HEAD -->
-		<?php echo $head; ?>
-        <!-- END BRIZY HEAD -->
-		<?php
+		remove_action( 'wp_head', array( $this, 'insert_page_head' ) );
 
 		return;
 	}
@@ -307,21 +309,17 @@ class Brizy_Public_Main {
 	 */
 	public function insert_page_content( $content ) {
 		if ( ! $this->post->get_compiled_html() ) {
-
 			$compiled_html_body = $this->post->get_compiled_html_body();
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
-
-			$this->post->set_needs_compile( true )
-			           ->save();
-
-			return $content;
+			$this->post->set_needs_compile( true )->save();
+		} else {
+			$compiled_page = $this->post->get_compiled_page( $this->project );
+			$content       = $compiled_page->get_body();
 		}
 
-		$compiled_page = $this->post->get_compiled_page( $this->project );
+		remove_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 
-		$body = $compiled_page->get_body();
-
-		return $body;
+		return $content;
 	}
 
 	/**
