@@ -32,6 +32,9 @@ class Brizy_Editor_API {
 	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
 	const AJAX_MEDIA_METAKEY = 'brizy_get_media_key';
 
+	const AJAX_SET_FEATURED_IMAGE = 'brizy_set_featured_image';
+	const AJAX_REMOVE_FEATURED_IMAGE = 'brizy_remove_featured_image';
+
 	/**
 	 * @var Brizy_Editor_Project
 	 */
@@ -102,12 +105,43 @@ class Brizy_Editor_API {
 				'update_form_integrations_status'
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
+			add_action( 'wp_ajax_' . self::AJAX_REMOVE_FEATURED_IMAGE, array( $this, 'remove_featured_image' ) );
 
 		}
 
 		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 	}
+
+	public function set_featured_image() {
+		$this->authorize();
+
+		if ( !isset( $_REQUEST['attachment_id'] ) ) {
+			$this->error( 400, 'Bad request' );
+		}
+
+		if($this->post && $this->post->uses_editor())
+		{
+			set_post_thumbnail( $this->post->get_id(), (int) $_REQUEST['attachment_id'] );
+			$this->success( null );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
+	public function remove_featured_image() {
+		$this->authorize();
+
+		if($this->post && $this->post->uses_editor())
+		{
+			delete_post_thumbnail( $this->post->get_id() );
+			$this->success( null );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
 
 	public function default_form() {
 		try {
@@ -185,7 +219,7 @@ class Brizy_Editor_API {
 		try {
 			$manager = new Brizy_Editor_Forms_Manager( Brizy_Editor_Storage_Common::instance() );
 			/**
-			 * @var Brizy_Editor_Forms_Form $form ;
+			 * @var Brizy_Editor_FormsCompatibility fix_Form $form ;
 			 */
 
 			$form = $manager->getForm( $_REQUEST['form_id'] );
@@ -629,7 +663,7 @@ class Brizy_Editor_API {
 
 	private function authorize() {
 		if ( ! wp_verify_nonce( $_REQUEST['hash'], self::nonce ) ) {
-			throw new Brizy_Editor_Exceptions_AccessDenied();
+			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
 		}
 	}
 
