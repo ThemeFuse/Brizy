@@ -146,6 +146,11 @@ class Brizy_Public_Main {
 	}
 
 	public function toolbar_link( $wp_admin_bar ) {
+
+		if ( ! Brizy_Editor::is_user_allowed() ) {
+			return;
+		}
+
 		$type = $this->post->get_wp_post()->post_type;
 		$args = array(
 			'id'    => 'brizy_Edit_page_link',
