@@ -71,6 +71,7 @@ class Brizy_Public_Main {
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
+			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ) );
 		}
 	}
 
@@ -107,21 +108,41 @@ class Brizy_Public_Main {
 	 */
 	public function _action_enqueue_editor_assets() {
 
-		global $wp_scripts;
-		$array = array();
-		// Runs through the queue scripts
-		foreach ( $wp_scripts->queue as $handle ) :
-			$array[] = $handle;
-		endforeach;
-
-		wp_dequeue_script( $array );
-		wp_dequeue_script( $array );
+		// EXPERIMENTAL & NOT TESTED
+		// global $wp_scripts;
+		// $array = array();
+		// // Runs through the queue scripts
+		// foreach ( $wp_scripts->queue as $handle ) :
+		// 	$array[] = $handle;
+		// endforeach;
+		// wp_dequeue_script( $array );
+		// wp_dequeue_script( $array );
 
 		if ( wp_script_is( 'jquery' ) === false ) {
 			wp_register_script( 'jquery', "/wp-includes/js/jquery/jquery.js" );
 		}
 
 		wp_enqueue_media();
+	}
+
+	/**
+	 * @internal
+	 */
+	public function _action_enqueue_preview_assets() {
+		if ( wp_script_is( 'jquery' ) === false ) {
+			wp_register_script( 'jquery', "/wp-includes/js/jquery/jquery.js" );
+		}
+
+		$config_object = $this->getConfigObject();
+		$assets_url = $config_object->urls->assets;
+		$config_json = json_encode( array(
+			'serverTimestamp' => time()
+		) );
+
+		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), null );
+		wp_register_script( 'brizy-polyfill', "https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry", array(), null, true );
+		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array('jquery', 'brizy-polyfill'), null, true );
+		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = JSON.parse('${config_json}')", 'before' );
 	}
 
 	public function toolbar_link( $wp_admin_bar ) {
