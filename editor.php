@@ -20,14 +20,38 @@ class Brizy_Editor {
 	}
 
 	public static function is_administrator() {
+
+		if ( ! is_user_logged_in() ) {
+			return false;
+		}
+
 		$user = wp_get_current_user();
+
 		return in_array( 'administrator', (array) $user->roles );
 	}
+
+	public static function is_subscriber() {
+
+		if ( ! is_user_logged_in() ) {
+			return false;
+		}
+
+		$user = wp_get_current_user();
+
+		return in_array( 'subscriber', (array) $user->roles );
+	}
+
+
 	public static function is_user_allowed() {
+
+		if ( ! is_user_logged_in() ) {
+			return false;
+		}
 
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
 
 			self::$is_allowed_for_current_user =
+				!self::is_subscriber() &&
 				( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
 				  current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
 				  || self::is_administrator()
@@ -60,6 +84,7 @@ class Brizy_Editor {
 
 	public function supported_post_types() {
 		$types = $this->get_post_types();
+
 		return apply_filters( 'brizy:post_types', $types );
 	}
 
@@ -76,7 +101,8 @@ class Brizy_Editor {
 			return Brizy_Editor_Storage_Common::instance()->get( self::$settings_key );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
 			Brizy_Editor_Storage_Common::instance()->set( self::$settings_key, $this->default_supported_post_types() );
-			return $this->default_supported_post_types( );
+
+			return $this->default_supported_post_types();
 		}
 	}
 

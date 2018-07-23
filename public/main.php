@@ -107,14 +107,19 @@ class Brizy_Public_Main {
 	 * @internal
 	 */
 	public function _action_enqueue_editor_assets() {
-		if (wp_script_is('jquery') === false) {
-			wp_register_script('jquery', "/wp-includes/js/jquery/jquery.js");
+		if ( wp_script_is( 'jquery' ) === false ) {
+			wp_register_script( 'jquery', "/wp-includes/js/jquery/jquery.js" );
 		}
 
 		wp_enqueue_media();
 	}
 
 	public function toolbar_link( $wp_admin_bar ) {
+
+		if ( ! Brizy_Editor::is_user_allowed() ) {
+			return;
+		}
+
 		$type = $this->post->get_wp_post()->post_type;
 		$args = array(
 			'id'    => 'brizy_Edit_page_link',
