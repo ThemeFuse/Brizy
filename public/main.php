@@ -24,7 +24,6 @@ class Brizy_Public_Main {
 	 */
 	private $url_builder;
 
-
 	/**
 	 * Brizy_Public_Main constructor.
 	 *
@@ -51,7 +50,7 @@ class Brizy_Public_Main {
 			add_action( 'template_include', array( $this, 'template_include' ), 10000 );
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 
-			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
 			//wp_enqueue_script( 'wp-api' );
 			//add_action( 'wp_head', array( $this, 'editor_head' ), 0 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
@@ -72,6 +71,7 @@ class Brizy_Public_Main {
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
+			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 		}
 	}
 
@@ -108,13 +108,50 @@ class Brizy_Public_Main {
 	 */
 	public function _action_enqueue_editor_assets() {
 		if (wp_script_is('jquery') === false) {
-			wp_register_script('jquery', "/wp-includes/js/jquery/jquery.js");
+			wp_register_script( 'jquery-core', "/wp-includes/js/jquery/jquery.js" );
+			wp_register_script( 'jquery-migrate', "/wp-includes/js/jquery/jquery-migrate.min.js" );
+			wp_register_script( 'jquery', false, array( 'jquery-core', 'jquery-migrate' ) );
+		}
+
+		if (wp_script_is('wp-mediaelement') === false) {
+			wp_register_script( 'wp-mediaelement', "/wp-includes/js/mediaelement/wp-mediaelement.min.js", array('mediaelement'), false, 1 );
+		}
+
+		if (wp_style_is('wp-mediaelement') === false) {
+			wp_register_style( 'wp-mediaelement', "/wp-includes/js/mediaelement/wp-mediaelement.min.css", array( 'mediaelement' ) );
 		}
 
 		wp_enqueue_media();
 	}
 
+	/**
+	 * @internal
+	 */
+	public function _action_enqueue_preview_assets() {
+		if ( wp_script_is( 'jquery' ) === false ) {
+			wp_register_script( 'jquery-core', "/wp-includes/js/jquery/jquery.js" );
+			wp_register_script( 'jquery-migrate', "/wp-includes/js/jquery/jquery-migrate.min.js" );
+			wp_register_script( 'jquery', false, array( 'jquery-core', 'jquery-migrate' ) );
+		}
+
+		$config_object = $this->getConfigObject();
+		$assets_url = $config_object->urls->assets;
+		$config_json = json_encode( array(
+			'serverTimestamp' => time()
+		) );
+
+		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), null );
+		wp_register_script( 'brizy-polyfill', "https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry", array(), null, true );
+		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array('jquery', 'brizy-polyfill'), null, true );
+		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = JSON.parse('${config_json}')", 'before' );
+	}
+
 	public function toolbar_link( $wp_admin_bar ) {
+
+		if ( ! Brizy_Editor::is_user_allowed() ) {
+			return;
+		}
+
 		$type = $this->post->get_wp_post()->post_type;
 		$args = array(
 			'id'    => 'brizy_Edit_page_link',
@@ -269,22 +306,19 @@ class Brizy_Public_Main {
 			<?php echo $compiled_html_head; ?>
             <!-- END BRIZY HEAD -->
 			<?php
+		} else {
+			$compiled_page = $this->post->get_compiled_page( $this->project );
 
-			return;
+			$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
+
+			$head = $compiled_page->get_head();
+
+			?>
+            <!-- BRIZY HEAD -->
+			<?php echo $head; ?>
+            <!-- END BRIZY HEAD -->
+			<?php
 		}
-
-		$compiled_page = $this->post->get_compiled_page( $this->project );
-
-		$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
-
-		$head = $compiled_page->get_head();
-
-		?>
-        <!-- BRIZY HEAD -->
-		<?php echo $head; ?>
-        <!-- END BRIZY HEAD -->
-		<?php
-
 		return;
 	}
 
@@ -296,21 +330,15 @@ class Brizy_Public_Main {
 	 */
 	public function insert_page_content( $content ) {
 		if ( ! $this->post->get_compiled_html() ) {
-
 			$compiled_html_body = $this->post->get_compiled_html_body();
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
-
-			$this->post->set_needs_compile( true )
-			           ->save();
-
-			return $content;
+			$this->post->set_needs_compile( true )->save();
+		} else {
+			$compiled_page = $this->post->get_compiled_page( $this->project );
+			$content       = $compiled_page->get_body();
 		}
 
-		$compiled_page = $this->post->get_compiled_page( $this->project );
-
-		$body = $compiled_page->get_body();
-
-		return $body;
+		return $content;
 	}
 
 	/**

@@ -44,10 +44,16 @@ class Brizy_Admin_Capabilities {
 		$old_explude = is_array( $old_explude ) ? $old_explude : array();
 
 		foreach ( $roles as $role ) {
+
+			if ( $role['id'] == 'subscriber' ) {
+				continue;
+			}
+
 			if ( in_array( $role['id'], $old_explude ) ) {
 				$wp_roles->remove_cap( $role['id'], self::CAP_EDIT_WHOLE_PAGE );
 				continue;
 			}
+
 			$wp_roles->add_cap( $role['id'], self::CAP_EDIT_WHOLE_PAGE );
 		}
 	}

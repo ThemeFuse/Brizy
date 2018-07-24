@@ -62,23 +62,6 @@ class Brizy_Admin_Main {
 		}
 	}
 
-
-//	function brizy_action_delete_scripts_and_styles( $id ) {
-//
-//		// delete all meta keys added th the attachments
-//		$post = Brizy_Editor_Post::get( $id );
-//		delete_post_meta( $id, 'brizy_post_uid', $post->get_uid() );
-//
-//
-//		$path = Brizy_Editor_Resources_StaticStorage::get_path()
-//		        . DIRECTORY_SEPARATOR
-//		        . brizy()->get_slug()
-//		        . "-$id*";
-//		foreach ( glob( $path ) as $item ) {
-//			unlink( $item );
-//		}
-//	}
-
 	public function action_delete_page( $post = null ) {
 		try {
 
