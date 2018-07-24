@@ -257,8 +257,6 @@ class Brizy_Public_Main {
 
 			$render_block = $twig_template->render( $context );
 
-			remove_filter( 'the_content', array( $this, '_filter_the_content' ) );
-
 			return $render_block;
 		}
 
@@ -320,11 +318,7 @@ class Brizy_Public_Main {
 			<?php echo $head; ?>
             <!-- END BRIZY HEAD -->
 			<?php
-
 		}
-
-		remove_action( 'wp_head', array( $this, 'insert_page_head' ) );
-
 		return;
 	}
 
@@ -343,8 +337,6 @@ class Brizy_Public_Main {
 			$compiled_page = $this->post->get_compiled_page( $this->project );
 			$content       = $compiled_page->get_body();
 		}
-
-		remove_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 
 		return $content;
 	}
