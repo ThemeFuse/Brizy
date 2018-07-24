@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.19<br>
+Stable tag: 1.0.20<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -96,6 +96,20 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
+### 1.0.20 - 2018-07-24 ###
+* New: Added  option to external links
+* New: Check the PHP version and stop the plugin if the required php version is not meet
+* Improved: Added font subsets (e.g., arabic, bengali, cyrillic)
+* Improved: Video element will be loaded after click on it’s preview image
+* Improved: Reduced  tooltip animation delay for better UX
+* Improved: Clicking on a Tabs element handle on mobile will scroll the document to the top of it’s content
+* Fixed: PHP compatibility fix
+* Fixed: jQuery conflicts at preview
+* Fixed: Some Image element resize / crop issues
+* Fixed: Linking to global blocks should now work as expected
+* Fixed: Section slider styles in Safari and some conflicts with host theme’s styles
+* Fixed: RichText tags (i.e., p, span, a, em) ## Changelog figure tag style conflicts with the host theme (edited)
+
 ### 1.0.19 - 2018-07-16 ###
 * New: Added box shadow option for various elements
 * New: Added hamburger option for Menu
@@ -103,7 +117,21 @@ A good bug report includes full details to easily understand the issue you are h
 * New: Image resize integration
 * New: Settings page redesign
 * Improved: Image resizing will now happen locally in WP instead of on Brizy servers
-* Improved: IconBox, Form, Tabs, Accordion toolbar looks like Row ## Changelog Column ones
+* Improved: IconBox, Form, Tabs, Accordion toolbar looks like Row ## Changelog
+
+### 1.0.20 - 2018-07-24 ###
+* New: Added  option to external links
+* New: Check the PHP version and stop the plugin if the required php version is not meet
+* Improved: Added font subsets (e.g., arabic, bengali, cyrillic)
+* Improved: Video element will be loaded after click on it’s preview image
+* Improved: Reduced  tooltip animation delay for better UX
+* Improved: Clicking on a Tabs element handle on mobile will scroll the document to the top of it’s content
+* Fixed: PHP compatibility fix
+* Fixed: jQuery conflicts at preview
+* Fixed: Some Image element resize / crop issues
+* Fixed: Linking to global blocks should now work as expected
+* Fixed: Section slider styles in Safari and some conflicts with host theme’s styles
+* Fixed: RichText tags (i.e., p, span, a, em) ## Changelog figure tag style conflicts with the host theme (edited) Column ones
 * Improved: Added tooltips for sidebar elements
 * Fixed: Corrected Countdown preview bug
 * Fixed: Corrected Form integration url
