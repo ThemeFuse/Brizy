@@ -35,7 +35,7 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 			return $get_metadata;
 		}
 
-		return [];
+		return array();
 	}
 
 	/**
