@@ -1,9 +1,3 @@
-{% set assetsUrl = editorData.urls.assets %}
 {% spaceless %}
     <div id="brz-ed-root"></div>
-    <script src="{{ assetsUrl }}/editor/js/brizy-init.js"></script>
-    <script>
-        var config = JSON.parse("{{ editorData | json_encode | e("js") }}");
-        Brizy.init(config);
-    </script>
 {% endspaceless %}

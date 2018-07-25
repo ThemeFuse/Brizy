@@ -205,7 +205,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		$page = parent::request( $compile_url, array( 'body' => $body ), 'POST' )->get_response_body();
 
-		$static_template_page = BRIZY_PLUGIN_PATH . "/public/editor-build/" . BRIZY_EDITOR_VERSION . "/editor/views/static.html.twig";
+		$static_template_page = BRIZY_PLUGIN_PATH . "/public/editor-build/editor/views/static.html.twig";
 
 		$loader = new Twig_Loader_Array( array(
 			'static' => file_get_contents( $static_template_page )
