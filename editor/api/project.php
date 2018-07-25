@@ -8,7 +8,7 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 
 	public function __construct( $data ) {
 		$defaults   = array( 'title' => '', 'globals' => array() );
-		$this->data = array_merge( $defaults, $data );
+		$this->data = array_merge( $defaults, is_array( $data ) ? $data : array() );
 	}
 
 	public function serialize() {
