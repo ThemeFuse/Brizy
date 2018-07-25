@@ -169,7 +169,7 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	public function editor_asset_url() {
-		return BRIZY_PLUGIN_URL . '/public/editor-build/' . BRIZY_EDITOR_VERSION;
+		return BRIZY_PLUGIN_URL . '/public/editor-build';
 	}
 
 	/**
