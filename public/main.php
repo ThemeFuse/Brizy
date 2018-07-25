@@ -130,7 +130,7 @@ class Brizy_Public_Main {
 			'brizy-editor-vendor',
 			'brizy-editor-polyfill'
 		), BRIZY_EDITOR_VERSION, true );
-		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = JSON.parse('${config_json}')", 'before' );
+		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_editor_enqueue_scripts' );
 	}
@@ -157,7 +157,7 @@ class Brizy_Public_Main {
 			'jquery',
 			'brizy-polyfill'
 		), BRIZY_EDITOR_VERSION, true );
-		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = JSON.parse('${config_json}')", 'before' );
+		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_preview_enqueue_scripts' );
 	}
