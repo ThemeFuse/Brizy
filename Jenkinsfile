@@ -133,3 +133,5 @@ pipeline {
     }
 }
 
+
+sed -i "s/== Changelog ==/== Changelog ==\n\n= 1.0.21- 20-20-2100 =\n'* New: Added `nofollow`  (edited)'/" readme.txt
