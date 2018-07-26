@@ -72,7 +72,7 @@ class Brizy_Editor_Editor_Editor {
 				'preview_nonce' => wp_create_nonce( 'post_preview_' . $wp_post_id )
 			) );
 
-			$change_template_url = admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' );
+			$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' ) );
 			$templates           = $this->post->get_templates();
 		}
 
@@ -116,7 +116,7 @@ class Brizy_Editor_Editor_Editor {
 				'templates'       => $templates,
 				'api'             => array(
 					'hash'             => wp_create_nonce( Brizy_Editor_API::nonce ),
-					'url'              => admin_url( 'admin-ajax.php' ),
+					'url'              => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 					'globals'          => array(
 						'set' => Brizy_Editor_API::AJAX_SET_GLOBALS,
 						'get' => Brizy_Editor_API::AJAX_GET_GLOBALS,
@@ -145,14 +145,14 @@ class Brizy_Editor_Editor_Editor {
 				),
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => Brizy_Languages_Texts::get_editor_texts(),
-				'pageData'    => apply_filters( 'brizy_page_data', array() )
+				'pageData'        => apply_filters( 'brizy_page_data', array() )
 			),
 			'applications'    => array(
 				'form' => array(
 					'iframeUrl' => $this->urlBuilder->application_form_url(),
 					'apiUrl'    => Brizy_Config::BRIZY_APPLICATION_INTEGRATION_URL,
-					'wpApiUrl'  => admin_url( 'admin-ajax.php' ),
-					'submitUrl' => admin_url( 'admin-ajax.php' ) . "?action=brizy_submit_form"
+					'wpApiUrl'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+					'submitUrl' => set_url_scheme( admin_url( 'admin-ajax.php' ) ) . "?action=brizy_submit_form"
 				)
 			)
 		);
@@ -163,7 +163,7 @@ class Brizy_Editor_Editor_Editor {
 	private function get_page_attachments() {
 		global $wpdb;
 		$query = $wpdb->prepare(
-		"SELECT 
+			"SELECT 
 					pm.*
 				FROM 
 					{$wpdb->prefix}postmeta pm 
@@ -171,7 +171,7 @@ class Brizy_Editor_Editor_Editor {
 				WHERE pm.meta_key='brizy_attachment_uid'
 				GROUP BY pm.post_id", $this->post->get_uid() );
 
-		$results = $wpdb->get_results( $query  );
+		$results         = $wpdb->get_results( $query );
 		$attachment_data = array();
 		foreach ( $results as $row ) {
 			$attachment_data[ $row->meta_value ] = true;

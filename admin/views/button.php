@@ -13,7 +13,7 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
 ?>
     <div class="brizy-buttons">
         <a class="brizy-button <?php echo $className; ?> enable-brizy-editor" type="button"
-           href="<?php echo esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_' . $state . '&post=' . $post->ID ) ); ?>">
+           href="<?php echo esc_url( set_url_scheme(admin_url( 'admin-post.php?action=_brizy_admin_editor_' . $state . '&post=' . $post->ID )) ); ?>">
 			<?php
 			if ( $is_using_brizy ) {
 				?>
