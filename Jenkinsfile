@@ -76,6 +76,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf trunk/*'
                 sh 'cp -r * '+ params.brizySvnPath + '/trunk/'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf vendor'
+                sh 'cd ' + params.brizySvnPath + ' && rm -rf public/editor-src'
                 sh 'cd ' + params.brizySvnPath + '/trunk && /usr/local/bin/composer install --no-dev'
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -type f -name "*.dev.php" -delete'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf  ./bin ./tests *.dist *.xml *.lock *.json *.yml .gitignore'
