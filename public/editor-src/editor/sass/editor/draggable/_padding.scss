@@ -1,0 +1,40 @@
+// Padding Resiser
+.brz-ed-draggable__padding {
+  width: 100%;
+  background-color: rgba($brand-primary, 0.15);
+  cursor: ns-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--value {
+    font-size: 14px;
+    font-family: $font-family-1;
+    color: #2ea9d0;
+    font-weight: bold;
+  }
+}
+
+// Responsive
+&.brz-ed--desktop {
+  .brz-ed-draggable__padding {
+    height: var(--height);
+  }
+  .brz-ed-draggable__padding--desktop-value {
+    visibility: visible;
+  }
+  .brz-ed-draggable__padding--mobile-value {
+    visibility: hidden;
+  }
+}
+&.brz-ed--mobile {
+  .brz-ed-draggable__padding {
+    height: var(--mobileHeight);
+  }
+  .brz-ed-draggable__padding--desktop-value {
+    visibility: hidden;
+  }
+  .brz-ed-draggable__padding--mobile-value {
+    visibility: visible;
+  }
+}

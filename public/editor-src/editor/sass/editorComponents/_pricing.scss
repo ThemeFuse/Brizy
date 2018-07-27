@@ -1,0 +1,60 @@
+// --- Shortcode Pricing Group Text
+.shortcode-price {
+  display: inline-block;
+}
+[class^="price-size-"],
+[class*=" price-size-"] {
+  .pricing__currency .brz-p,
+  .pricing__amount .brz-p,
+  .pricing__period .brz-p {
+    line-height: 1;
+  }
+  .pricing__currency .brz-p {
+    font-size: 0.22em;
+    margin-top: 0.7em;
+  }
+  .pricing__amount .brz-p {
+    font-size: 100%;
+  }
+  .pricing__period .brz-p {
+    font-size: 0.22em;
+    margin-bottom: 0.45em;
+  }
+}
+.pricing {
+  &__model {
+    .brz-p {
+      cursor: auto !important;
+    }
+  }
+  &__currency,
+  &__amount,
+  &__period {
+    margin-right: 5px;
+    min-width: 15px;
+  }
+  &__currency {
+    text-align: right;
+    align-self: flex-start;
+  }
+  &__amount {
+    text-align: center;
+    align-self: center;
+  }
+  &__period {
+    text-align: left;
+    align-self: flex-end;
+    margin-right: 0;
+  }
+}
+
+$from: 50;
+$size: 150;
+
+@for $i from $from through $size {
+  $currency: $i * 1px;
+
+  .price-size-#{$i} {
+    font-size: $currency;
+  }
+}

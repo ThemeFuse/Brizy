@@ -1,0 +1,234 @@
+.brz-ed-border {
+  position: relative;
+
+  &.active > {
+    .brz-ed-collapsible__section .brz-ed-collapsible__icon,
+    .brz-ed-collapsible__section .brz-ed-collapsible__badge,
+    .brz-ed-row__toolbar,
+    .brz-ed-column__toolbar,
+    .brz-ed-wrapper__toolbar,
+    .brz-ed-draggable__column,
+    .brz-ed-cloneable__buttons .brz-ed-static__toolbar .brz-ed-toolbar {
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0.15s linear, opacity 0.15s linear;
+    }
+    .brz-ed-draggable__column {
+      transition: none;
+    }
+  }
+
+  // Inner 1, Inner 2
+  &__inner-1,
+  &__inner-2 {
+    &:after,
+    &:before {
+      visibility: hidden;
+      opacity: 0;
+      content: "";
+      position: absolute;
+      border-color: transparent;
+      border-width: 0;
+      z-index: z("cloneable-bar");
+      transition: visibility 0.15s linear, opacity 0.15s linear;
+    }
+  }
+  &__inner-1:after {
+    left: -2px;
+    right: -2px;
+    top: -2px;
+    border-top-width: 2px;
+  }
+  &__inner-1:before {
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    border-left-width: 2px;
+  }
+  &__inner-2:after {
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-top-width: 2px;
+  }
+  &__inner-2:before {
+    top: -2px;
+    bottom: -2px;
+    right: -2px;
+    border-left-width: 2px;
+  }
+
+  // Active
+  &--active {
+    &:after,
+    &:before {
+      visibility: visible !important;
+      opacity: 1 !important;
+      transition: visibility 0.15s linear, opacity 0.15s linear;
+    }
+  }
+
+  // Borders Color
+  &--grey {
+    &:after,
+    &:before {
+      border-color: $by-block-border-grey;
+    }
+    &.brz-ed-border--dashed:after {
+      background-image: linear-gradient(
+        to right,
+        $by-block-border-grey 44%,
+        rgba(255, 255, 255, 0) 0%
+      );
+    }
+    &.brz-ed-border--dashed:before {
+      background-image: linear-gradient(
+        $by-block-border-grey 44%,
+        rgba(255, 255, 255, 0) 0
+      );
+    }
+  }
+  &--blue {
+    &:after,
+    &:before {
+      border-color: $by-block-border-blue;
+    }
+
+    &.brz-ed-border--dashed:after {
+      background-image: linear-gradient(
+        to right,
+        $by-block-border-blue 44%,
+        rgba(255, 255, 255, 0) 0%
+      );
+    }
+    &.brz-ed-border--dashed:before {
+      background-image: linear-gradient(
+        $by-block-border-blue 44%,
+        rgba(255, 255, 255, 0) 0
+      );
+    }
+  }
+  &--red {
+    &:after,
+    &:before {
+      border-color: $by-block-border-red;
+    }
+
+    &.brz-ed-border--dashed:after {
+      background-image: linear-gradient(
+        to right,
+        $by-block-border-red 44%,
+        rgba(255, 255, 255, 0) 0%
+      );
+    }
+    &.brz-ed-border--dashed:before {
+      background-image: linear-gradient(
+        $by-block-border-red 44%,
+        rgba(255, 255, 255, 0) 0
+      );
+    }
+  }
+
+  // Border Style
+  &--dashed {
+    &:after,
+    &:before {
+      border-style: dashed;
+      border-color: transparent;
+    }
+    &:after {
+      background-position: 11px bottom;
+      background-size: 8px 2px;
+      background-repeat: repeat-x;
+    }
+    &:before {
+      background-position: right 11px;
+      background-size: 2px 8px;
+      background-repeat: repeat-y;
+    }
+  }
+  &--solid {
+    &:after,
+    &:before {
+      border-style: solid;
+    }
+  }
+  &--dotted {
+    &:after,
+    &:before {
+      border-style: dotted;
+    }
+  }
+
+  // Border Style Active
+  &--active-dotted {
+    &:after,
+    &:before {
+      border-style: dotted !important;
+    }
+  }
+  &--active-solid {
+    &:after,
+    &:before {
+      background: $by-block-border-blue;
+      border-style: solid !important;
+    }
+  }
+  &--active-dashed {
+    &:after,
+    &:before {
+      border-style: dashed !important;
+    }
+  }
+
+  // No space
+  &--no-space {
+    &.brz-ed-border__inner-1 {
+      &:after {
+        left: 0;
+        right: 0;
+        top: 0;
+      }
+      &:before {
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+    &.brz-ed-border__inner-2 {
+      &:after {
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      &:before {
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+}
+
+// Clone / Remove buttons
+.brz-ed-cloneable__buttons {
+  position: absolute;
+  top: -18px;
+  right: 19px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: z("cloneable-bar") + 1;
+}
+
+// Wrapper uses that becoused was problems with BoxResizer
+.brz-ed-border__wrapper {
+  .brz-ed-border__inner-1,
+  .brz-ed-border__inner-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--zIndex);
+  }
+}

@@ -1,0 +1,66 @@
+// Visual Notification
+.brz-ed-notification {
+  position: fixed;
+  z-index: z("notification");
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -120px);
+  min-width: 556px;
+  font-family: $font-family-1;
+  text-align: center;
+  padding: 22px 30px;
+  color: #fff;
+  background: rgba(0, 154, 198, 0.92);
+  font-weight: 300;
+  font-size: 14px;
+  transition: transform 200ms linear;
+  -webkit-transition: transform 200ms linear;
+  -moz-transition: transform 200ms linear;
+
+  .brz-p {
+    color: inherit;
+    font-family: inherit;
+  }
+  .brz-span {
+    position: absolute;
+    color: white;
+    right: 20px;
+    top: 0;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 45px;
+  }
+  &.brz-ed-notification-animating {
+    transform: translate(-50%, 0);
+  }
+}
+.brz-ed-notification-dismissible {
+  padding-right: 70px;
+}
+.brz-ed-notification-dismiss {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 30px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+  &:before,
+  &:after {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: "";
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: white;
+  }
+  &:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  &:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}

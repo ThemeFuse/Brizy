@@ -1,0 +1,21 @@
+{
+  "iconPosition": "left",
+  "iconSpacing": 20,
+  "items": [
+    {
+      "type": "Icon",
+      "value": {}
+    },
+    {
+      "type": "RichText",
+      "value": {}
+    },
+    {
+      "type": "Cloneable",
+      "value": {
+        "horizontalAlign": "left",
+        "mobileHorizontalAlign": "left"
+      }
+    }
+  ]
+}

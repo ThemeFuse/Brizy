@@ -1,0 +1,100 @@
+/**
+ * Bottom Panel. The area where is placed undo/redo buttons
+ */
+.brz-ed-fixed-bottom-panel {
+  position: fixed;
+  bottom: 25px;
+  right: 30px;
+  border-radius: 50px;
+  box-shadow: 0 0 5px 0 rgba(#000, 0.5);
+  background-color: rgba(#03080f, 0.92);
+  z-index: z("sidebar") - 1;
+  user-select: none;
+
+  .brz-ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__item {
+    color: #818a91;
+    font-size: 12px;
+    letter-spacing: $control-letter-spacing;
+    font-family: $font-family-1;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    cursor: default;
+    transition: color 150ms linear;
+    padding: 14px;
+    border-right: 1px solid rgba(#fff, 0.15);
+
+    &.active {
+      color: #fff;
+      cursor: pointer;
+
+      &:hover {
+        color: $brand-primary;
+      }
+    }
+    &:first-child {
+      padding-left: 18px;
+    }
+    &:last-child {
+      border-right: none;
+    }
+    .brz-icon-svg {
+      width: 1.2em;
+      height: 1.2em;
+    }
+  }
+  &__preview {
+    cursor: pointer;
+    padding: 0;
+
+    .brz-a {
+      color: #fff;
+      transition: color 150ms linear;
+      padding: 14px;
+    }
+    &:hover .brz-a {
+      color: $brand-primary;
+    }
+  }
+  &__btn {
+    padding: 8px 13px;
+    cursor: pointer;
+
+    .brz-span,
+    .brz-a {
+      font-size: 13px;
+      line-height: 1;
+      color: #fff;
+      padding: 8px 14px 5px;
+      border-bottom: 2px solid #006799;
+      background-color: #0085ba;
+      border-radius: 15px;
+      height: 28px;
+      min-width: 75px;
+      text-align: center;
+      transition: background-color 150ms linear;
+
+      &:hover {
+        background-color: #0092cc;
+        color: #fff;
+      }
+      .brz-icon-svg {
+        width: 1em;
+        height: 1em;
+      }
+    }
+
+    &--download {
+      .brz-span,
+      .brz-a {
+        min-width: 97px;
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+//
+// Visibility utilities
+//
+.brz-invisible {
+  visibility: hidden !important;
+}
+.brz-visible {
+  visibility: visible !important;
+}
+
+// Responsive visibility utilities
+@each $bp in map-keys($grid-breakpoints) {
+  .brz-hidden-#{$bp}-up {
+    @include media-breakpoint-up($bp) {
+      display: none !important;
+    }
+  }
+  .brz-hidden-#{$bp}-down {
+    @include media-breakpoint-down($bp) {
+      display: none !important;
+    }
+  }
+  .brz-invisible-#{$bp}-up {
+    @include media-breakpoint-up($bp) {
+      visibility: hidden !important;
+    }
+  }
+  .brz-invisible-#{$bp}-down {
+    @include media-breakpoint-down($bp) {
+      visibility: hidden !important;
+    }
+  }
+  .brz-invisible-blur-#{$bp}-up .brz-bg-content {
+    @include media-breakpoint-up($bp) {
+      filter: blur(3px);
+      opacity: 0.9;
+    }
+  }
+  .brz-invisible-blur-#{$bp}-down .brz-bg-content {
+    @include media-breakpoint-down($bp) {
+      filter: blur(3px);
+      opacity: 0.9;
+    }
+  }
+}
+.brz-hidden {
+  display: none !important;
+}
+
+// Print utilities
+//
+// Media queries are placed on the inside to be mixin-friendly.
+.brz-visible-print-block {
+  display: none !important;
+
+  @media print {
+    display: block !important;
+  }
+}
+.brz-visible-print-inline {
+  display: none !important;
+
+  @media print {
+    display: inline !important;
+  }
+}
+.brz-visible-print-inline-block {
+  display: none !important;
+
+  @media print {
+    display: inline-block !important;
+  }
+}
+
+// Hidden print
+.brz-hidden-print {
+  @media print {
+    display: none !important;
+  }
+}

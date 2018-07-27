@@ -1,0 +1,53 @@
+// Tooltip
+.brz-ed-tooltip {
+  &__content {
+    position: relative;
+    z-index: 1;
+  }
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: z("tooltip-overlay");
+  }
+
+  // Size
+  &--auto {
+    width: auto;
+  }
+  &--medium {
+    width: $toolbar-tooltip-md-width;
+  }
+  &--big {
+    width: $toolbar-tooltip-lg-width;
+  }
+  &--large {
+    width: $toolbar-tooltip-typo-width;
+  }
+
+  // Static
+  &__static {
+    $spaceBetween: 6px + 3px; // 6px is Arrow | 3px is space between target and content
+
+    position: relative;
+
+    .brz-ed-tooltip--top-right,
+    .brz-ed-tooltip--bottom-right {
+      left: auto;
+      right: -15px;
+    }
+    .brz-ed-tooltip--top-left,
+    .brz-ed-tooltip--bottom-left {
+      left: -15px;
+    }
+    .brz-ed-tooltip--top-right,
+    .brz-ed-tooltip--top-left {
+      bottom: calc(100% + #{$spaceBetween});
+      top: auto;
+    }
+    .brz-ed-tooltip--bottom-right,
+    .brz-ed-tooltip--bottom-left {
+      top: calc(100% + #{$spaceBetween});
+    }
+  }
+}

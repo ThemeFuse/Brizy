@@ -1,0 +1,14 @@
+{
+  "className": "",
+
+  "width": 100,
+  "mobileWidth": 100,
+
+  "number": 8,
+  "orderBy": "name",
+  "order": "ASC",
+  "columns": 4,
+  "hideEmpty": 0,
+  "parent": "",
+  "ids": ""
+}

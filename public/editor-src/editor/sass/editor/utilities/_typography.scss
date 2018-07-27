@@ -1,0 +1,19 @@
+// Desktop
+&.brz-ed--desktop {
+  @include generateFontSize($font-size-min, $font-size-max, large, lg);
+  @include generateLineHeight($line-height-min, $line-height-max, lg);
+  @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, lg);
+  @include generateFontWeight($font-weight-min, $font-weight-max, lg);
+}
+
+// Mobile
+&.brz-ed--mobile {
+  @include generateFontSize($font-size-min, $font-size-max, large, im);
+  @include generateFontSize($font-size-min, $font-size-max, large, xs);
+  @include generateLineHeight($line-height-min, $line-height-max, im);
+  @include generateLineHeight($line-height-min, $line-height-max, xs);
+  @include generateFontWeight($font-weight-min, $font-weight-max, im);
+  @include generateFontWeight($font-weight-min, $font-weight-max, xs);
+  @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, im);
+  @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, xs);
+}

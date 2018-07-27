@@ -1,0 +1,58 @@
+// Root
+#brz-ed-root {
+  position: relative;
+  background-color: #f3f3f3;
+
+  > .brz-reset-all {
+    overflow: hidden;
+  }
+}
+
+// Scroll For Body
+.body-without-scroll {
+  overflow: hidden;
+}
+
+// Wrapper blocks and addBlock
+.brz-ed-wrap-block-wrap {
+  width: 100%;
+
+  &--first {
+    min-height: 400px;
+    height: 100vh;
+  }
+}
+
+/* Button editor */
+.btn .brz-span[contenteditable="true"] {
+  cursor: text;
+}
+
+// Visual Element Place Holder
+.brz-ed-element-placeholder {
+  position: relative;
+
+  * {
+    visibility: hidden;
+  }
+  &:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+    display: block;
+    border: 1px dashed #34beea;
+    visibility: visible;
+  }
+}
+
+// Generic style// Utilities
+.brz-ed-sidebar-block,
+.brz-ed-bar-wrapper,
+.brz-ed-fixed,
+.brz-ed-large-popup {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

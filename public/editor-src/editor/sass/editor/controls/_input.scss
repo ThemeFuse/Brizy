@@ -1,0 +1,56 @@
+// --- Input Control
+.brz-ed-control__input {
+  font-family: $font-family-1;
+  font-size: $control-font-size;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  background: $control-background-color none;
+  color: #fff;
+  width: auto;
+  flex: 1 1 auto;
+  height: $control-height;
+  text-indent: 5px;
+  padding: 0 5px;
+  border-radius: $control-border-radius;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  text-shadow: none;
+  text-align: left;
+  -moz-appearance: textfield; // Remove spin button on Firefox
+
+  &:focus,
+  &:active {
+    background-color: $control-background-color;
+    color: #fff;
+  }
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  // Placeholder
+  @include placeholder {
+    & {
+      color: rgba(234, 241, 255, 0.2);
+      font-style: italic;
+      font-size: 1em;
+    }
+  }
+
+  // Size Styles
+  &--large {
+    max-width: $control-lg-width;
+  }
+  &--medium {
+    max-width: $control-md-width;
+  }
+  &--small {
+    max-width: $control-sm-width;
+  }
+  &--auto {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,13 @@
+// Multipicker
+.brz-ed-control-multiPicker {
+  &--body {
+    margin-top: 20px;
+  }
+}
+
+// When is in sidebar
+.brz-ed-sidebar-row {
+  .brz-ed-options--multi-picker {
+    display: block;
+  }
+}

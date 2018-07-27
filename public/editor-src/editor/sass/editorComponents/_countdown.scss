@@ -1,0 +1,21 @@
+// Countdown
+.brz-countdown {
+  display: flex;
+
+  &__item {
+    flex: 1 0 25%;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    word-break: break-word;
+    word-wrap: break-word;
+  }
+  &__number {
+    font-size: 1em;
+    margin-bottom: 15px;
+  }
+  .brz-ed-box__resizer {
+    display: inline-flex;
+    width: 100%;
+  }
+}

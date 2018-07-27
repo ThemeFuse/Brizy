@@ -1,0 +1,15 @@
+// Align Mixins
+@mixin align-left {
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+
+@mixin align-center {
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+@mixin align-right {
+  text-align: right !important;
+  justify-content: flex-end !important;
+}

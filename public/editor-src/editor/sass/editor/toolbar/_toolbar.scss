@@ -1,0 +1,338 @@
+// --- Toolbar
+.brz-ed-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: z("toolbar");
+  will-change: top, right, bottom, left;
+
+  &__items {
+    background-color: $toolbar-bg-color;
+    box-shadow: $toolbar-box-shadow;
+    border-radius: $toolbar-item-height;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  &__item {
+    height: $toolbar-item-height;
+    font-size: $toolbar-font-size;
+    line-height: 1;
+    color: $toolbar-item-color;
+    border-left: 1px solid $toolbar-border-color;
+    margin-left: -1px;
+    transition: 0.15s linear color;
+
+    &:first-child {
+      border-left-color: transparent;
+    }
+    &:hover .brz-ed-tooltip__content {
+      color: $brand-primary;
+      transition: 0.15s linear color;
+
+      .brz-ed-popover__tooltip--icon-custom {
+        border-color: $brand-primary;
+      }
+    }
+
+    // Tooltip
+    &__tooltip {
+      font-size: 12px;
+      line-height: 1;
+      font-family: $font-family-1;
+      visibility: hidden;
+      height: 27px;
+      width: auto;
+      min-width: 60px;
+      white-space: nowrap;
+      background-color: #879294;
+      color: #fff;
+      text-align: center;
+      padding: 7px 10px;
+      border-radius: 14px;
+      box-shadow: 0 0 5px 0 rgba(0, 0, 1, 0.15);
+      position: absolute;
+      z-index: 1;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      will-change: transform, opacity;
+      opacity: 0;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -4px;
+        border: 4px solid transparent;
+        border-top-color: #879294;
+      }
+
+      &.active {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+  &__option {
+    padding: $toolbar-item-padding;
+    font-size: $toolbar-font-size;
+    display: block;
+    cursor: pointer;
+  }
+  &--active {
+    color: $brand-primary !important;
+  }
+  &__arrow {
+    width: auto;
+
+    &:after {
+      left: 0;
+    }
+  }
+  .brz-ed-popover {
+    padding: 0;
+  }
+  .brz-ed-tooltip__content {
+    padding: $toolbar-item-padding;
+  }
+}
+
+// Collapsible Defaults
+.brz-ed-collapsible {
+  // Wrap
+  &-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: z("toolbar-collapsible");
+  }
+
+  // Handle Icon
+  &__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $toolbar-bg-color;
+    box-shadow: $toolbar-box-shadow;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.15s linear color;
+
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+
+  // Badge Icon
+  &__badge {
+    position: absolute;
+    top: -5px;
+    left: -16px;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    line-height: 2.2;
+    text-align: center;
+    color: #fff;
+    background-color: rgba($brand-primary, 0.92);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    border-radius: 11px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s linear;
+    z-index: 10;
+  }
+
+  // Size
+  &--big {
+    .brz-ed-collapsible__icon {
+      width: $options-handle-size;
+      height: $options-handle-size;
+      border-radius: $options-handle-size;
+      font-size: $options-handle-font-size;
+      line-height: $options-handle-size + 4; // ?
+    }
+    .brz-ed-collapsible__toolbar {
+      border-radius: $options-handle-size;
+    }
+  }
+  &--small {
+    .brz-ed-collapsible__icon {
+      width: $options-handle-size-small;
+      height: $options-handle-size-small;
+      border-radius: $options-handle-size-small;
+      font-size: $options-handle-font-size-small;
+      line-height: $options-handle-size-small + 4;
+    }
+    .brz-ed-collapsible__toolbar {
+      border-radius: $options-handle-size-small;
+    }
+  }
+
+  // Toolbar
+  &__toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .brz-ed-toolbar {
+      position: static;
+      top: auto;
+      right: auto;
+      padding: 0;
+    }
+  }
+}
+
+// Collapsible Toolbar Section
+.brz-ed-collapsible__section {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  .brz-ed-collapsible-wrap {
+    top: 36px;
+    right: 40px;
+    left: auto;
+  }
+  .brz-ed-collapsible__icon {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.1s linear;
+  }
+  .brz-ed-collapsible__icon,
+  .brz-ed-collapsible__toolbar {
+    right: 0;
+    left: auto;
+    margin: 4px;
+    margin-right: 0;
+  }
+}
+
+// Toolbar Animation
+.brz-ed-collapsible__toolbar {
+  // Toolbar Animation right to left
+  &.animation-right-left-enter {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(96px, 0, 0);
+    }
+  }
+  &.animation-right-left-enter-active {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(0, 0, 0);
+      transition: transform 150ms linear;
+    }
+  }
+  &.animation-right-left-exit {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(0, 0, 0);
+      transition: transform 150ms linear;
+    }
+  }
+  &.animation-right-left-exit-active {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(96px, 0, 0);
+      transition: transform 150ms linear;
+    }
+  }
+
+  // Toolbar Animation left to right
+  &.animation-left-right-enter {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(-96px, 0, 0);
+    }
+  }
+  &.animation-left-right-enter-active {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(0, 0, 0);
+      transition: transform 150ms linear;
+    }
+  }
+  &.animation-left-right-exit {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(0, 0, 0);
+      transition: transform 150ms linear;
+    }
+  }
+  &.animation-left-right-exit-active {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transform: translate3d(-96px, 0, 0);
+      transition: transform 150ms linear;
+    }
+  }
+}
+
+// Icon
+.fadeCollapsibleIcon-enter {
+  opacity: 0.01;
+}
+.fadeCollapsibleIcon-enter.fadeCollapsibleIcon-enter-active {
+  opacity: 1;
+  transition: opacity 150ms ease-in;
+}
+.fadeCollapsibleIcon-exit {
+  opacity: 1;
+}
+.fadeCollapsibleIcon-exit.fadeCollapsibleIcon-exit-active {
+  opacity: 0.01;
+  transition: opacity 150ms ease-in;
+}
+
+// Toolbar Row & Toolbar Column & Toolbar Wrapper
+.brz-ed-row__toolbar,
+.brz-ed-column__toolbar,
+.brz-ed-wrapper__toolbar {
+  position: absolute;
+  top: -7px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.15s linear, opacity 0.15s linear;
+}
+
+// -- Row
+.brz-ed-row__toolbar {
+  left: -10px;
+  z-index: z("toolbar");
+}
+
+// -- Column
+.brz-ed-column__toolbar {
+  right: -7px;
+  z-index: z("toolbar-column");
+}
+
+// -- Wrapper
+.brz-ed-wrapper__toolbar {
+  right: -7px;
+  z-index: z("toolbar");
+}
+
+// Mobile
+&.brz-ed--mobile {
+  .brz-ed-collapsible-wrap {
+    right: 20px;
+  }
+}

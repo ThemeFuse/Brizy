@@ -1,0 +1,58 @@
+// Buttons
+.brz-ed-option__button {
+  transition: color 0.2s linear;
+
+  &:hover {
+    transition: color 0.2s linear;
+    color: $brand-primary;
+  }
+}
+
+// Round Plus Button
+.floating-action-button {
+  position: relative;
+  width: $block-adder-icon-size;
+  height: $block-adder-icon-size;
+  border-radius: 50%;
+  background: $brand-primary;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 200ms linear;
+
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    transition: transform 200ms linear;
+  }
+  &:before {
+    width: 16px;
+    height: 2px;
+  }
+  &:after {
+    width: 2px;
+    height: 16px;
+  }
+  &:hover {
+    background: #03080f;
+  }
+  &--icon {
+    color: #fff;
+    font-size: 16px;
+
+    .brz-icon-svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &:after,
+    &:before {
+      display: none;
+    }
+  }
+}

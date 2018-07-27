@@ -1,0 +1,8 @@
+// Grid option
+// .brz-ed-grid-option__column {}
+.brz-ed-grid__options {
+  @extend .brz-ed-popover__options;
+}
+.brz-ed-grid__option {
+  @extend .brz-ed-popover__option;
+}

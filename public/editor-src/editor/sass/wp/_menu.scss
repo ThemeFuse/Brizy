@@ -1,0 +1,222 @@
+// Wordpress Menu
+.brz-wp-shortcode__menu {
+  .menu {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+
+    .menu-item {
+      position: relative;
+      text-align: left;
+      list-style: none;
+
+      a span {
+        display: block;
+      }
+    }
+    .sub-menu {
+      position: absolute;
+      left: 0;
+      padding-left: 0;
+      padding-right: 0;
+      text-align: center;
+      text-transform: none;
+      list-style: none;
+      margin: 0 !important;
+      display: none;
+      width: 280px;
+      background-color: #33344b;
+      z-index: 110;
+
+      .menu-item {
+        display: block;
+        margin: 0;
+        padding: 0;
+
+        a {
+          display: block;
+          line-height: 1.2em;
+          padding: 10px 12%;
+        }
+      }
+      .sub-menu {
+        display: none;
+        left: 100%;
+        top: 0;
+      }
+    }
+    & > .menu-item {
+      display: inline-block;
+      flex: 0 1 auto;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      & > .sub-menu {
+        top: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+      &:hover > .sub-menu {
+        display: block;
+      }
+      & > .sub-menu > .menu-item:hover > .sub-menu {
+        display: block;
+      }
+    }
+
+    // If default menu hasn't items
+    & > ul {
+      margin: 0 !important;
+
+      .page_item:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+  }
+  // Toggle Menu for Mobile
+  &__toggle {
+    .menu {
+      display: flex;
+      flex-flow: row wrap;
+    }
+  }
+  &__icon {
+    display: none;
+    padding: 15px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+
+    &--bars {
+      display: block;
+      height: 2px;
+      position: relative;
+      transition: background 0.2s ease-out;
+      width: 18px;
+
+      &:before,
+      &:after {
+        background-color: currentColor;
+        content: "";
+        display: block;
+        height: 100%;
+        position: absolute;
+        transition: all 0.2s ease-out;
+        width: 100%;
+      }
+      &:before {
+        top: 5px;
+      }
+      &:after {
+        top: -5px;
+      }
+    }
+  }
+  &__btn {
+    display: none;
+
+    &:checked ~ div .menu {
+      display: flex;
+      max-height: 100%;
+    }
+    &:checked
+    ~ .brz-wp-shortcode__menu__icon
+    .brz-wp-shortcode__menu__icon--bars {
+      background: transparent;
+    }
+    &:checked
+    ~ .brz-wp-shortcode__menu__icon
+    .brz-wp-shortcode__menu__icon--bars:before {
+      transform: rotate(-45deg);
+    }
+    &:checked
+    ~ .brz-wp-shortcode__menu__icon
+    .brz-wp-shortcode__menu__icon--bars:after {
+      transform: rotate(45deg);
+    }
+    &:checked
+    ~ .brz-wp-shortcode__menu__icon:not(.steps)
+    .brz-wp-shortcode__menu__icon--bars:before,
+    &:checked
+    ~ .brz-wp-shortcode__menu__icon:not(.steps)
+    .brz-wp-shortcode__menu__icon--bars:after {
+      top: 0;
+    }
+  }
+}
+// Responsive
+&:not(.brz-ed) {
+  @include media-breakpoint-down(ms) {
+    .brz-wp-shortcode__menu {
+      width: auto;
+      text-align: center;
+
+      &__toggle .menu {
+        display: none;
+        flex-flow: column nowrap;
+        max-height: 0;
+        align-items: flex-start;
+        transition: max-height 0.2s ease-out;
+
+        .sub-menu {
+          position: relative;
+          display: block;
+          width: 100%;
+          left: 15px;
+          background-color: transparent;
+
+          .menu-item a {
+            padding: 5px;
+
+            &:hover {
+              background-color: transparent;
+            }
+          }
+          .sub-menu {
+            display: block;
+            left: 15px;
+          }
+        }
+        & > .menu-item {
+          padding: 0;
+
+          & > .sub-menu {
+            top: 100%;
+            padding: 5px 0;
+          }
+        }
+      }
+      &__icon {
+        display: inline-block;
+      }
+
+      & > div:not(.brz-wp-shortcode__menu__toggle) {
+        .menu .sub-menu .menu-item a {
+          color: #fcfcfc;
+
+          &:hover {
+            color: #fff;
+            background: rgba(36, 36, 53, 0.94);
+          }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    .brz-wp-shortcode__menu {
+      .menu .sub-menu .menu-item a {
+        color: #fcfcfc;
+
+        &:hover {
+          color: #fff;
+          background: rgba(36, 36, 53, 0.94);
+        }
+      }
+    }
+  }
+}

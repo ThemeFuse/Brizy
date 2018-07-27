@@ -1,0 +1,113 @@
+// -- Toolbar tabs
+.brz-ed-toolbar__link {
+  &__anchor,
+  &__popup,
+  &__upload,
+  &__custom {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 46px !important;
+    padding: 0 !important;
+    font-family: $font-family-1;
+  }
+  &__icon {
+    padding-right: 14px;
+    padding-left: 10px;
+    color: #fff;
+  }
+  &__title {
+    flex: 1 0 auto;
+    max-width: 100%;
+    font-size: 14px;
+    padding-left: 17px;
+  }
+  &__label {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__icon,
+  &--save {
+    font-size: 16px;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &--save {
+    width: 46px;
+    flex: 1 0 46px;
+    max-width: 46px;
+    height: 45px;
+    color: rgba(255, 255, 255, 0.25);
+    border-left: 1px solid $toolbar-border-color;
+  }
+  &__input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+    font-family: $font-family-1;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+
+    @include placeholder {
+      color: rgba(255, 255, 255, 0.2);
+      font-style: italic;
+    }
+  }
+  &__upload-name {
+    flex: 1 0 auto;
+    max-width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+// Popup
+.brz-ed-toolbar__link__popup {
+  .brz-ed-toolbar__link__title {
+    cursor: pointer;
+    font-style: italic;
+  }
+}
+.brz-ed-toolbar__link__anchor {
+  .brz-ed-toolbar__link__icon {
+    z-index: 1;
+  }
+  .brz-ed-toolbar__link__title {
+    margin-left: -17px;
+  }
+}
+
+// Tooltip List blocks
+.brz-ed-link__list {
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 4px;
+
+  &-item {
+    cursor: pointer;
+    padding-top: 8px;
+    padding-bottom: 9px;
+    padding-left: 20px;
+    transition: 0.2s linear color;
+
+    &:hover {
+      color: $brand-primary;
+      transition: 0.2s linear color;
+    }
+  }
+}

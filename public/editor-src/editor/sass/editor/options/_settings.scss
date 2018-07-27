@@ -1,0 +1,34 @@
+// --- Settings
+.brz-ed-option-tools {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  font-size: 15px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  visibility: hidden;
+  position: absolute;
+  z-index: 100;
+
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+  }
+  &:after {
+    top: 15px;
+    width: 22px;
+    height: 1px;
+  }
+  &:before {
+    top: 32px;
+    width: 1px;
+    height: 22px;
+  }
+  i {
+    position: absolute;
+    top: 8px;
+    left: 7px;
+  }
+}

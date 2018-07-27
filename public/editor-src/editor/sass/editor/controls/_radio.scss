@@ -1,0 +1,26 @@
+// Radio
+.brz-ed-control-radio-check {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #34beea;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: #34beea;
+    border-radius: 50%;
+    transform: scale(0, 0);
+    transition: transform 0.2s linear;
+  }
+  &.active:before {
+    transform: scale(1, 1);
+  }
+}

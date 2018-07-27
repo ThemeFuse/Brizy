@@ -1,0 +1,45 @@
+{
+  "className": "",
+  "items": [],
+  "activeAccordionItem": 0,
+
+  "fontStyle": "",
+  "fontFamily": "noto_serif",
+  "fontSize": 16,
+  "fontWeight": 400,
+  "lineHeight": 1.5,
+  "letterSpacing": 0,
+
+  "colorHex": "#73777f",
+  "colorOpacity": 0.7,
+  "colorPalette": "",
+
+  "bgColorHex": "#ffffff",
+  "bgColorOpacity": 1,
+  "bgColorPalette": "",
+
+  "borderColorHex": "#dcdee1",
+  "borderColorOpacity": 1,
+  "borderColorPalette": "",
+  "borderWidth": 2,
+
+  "mobileFontStyle": "",
+  "mobileFontSize": 14,
+  "mobileLineHeight": 1.5,
+  "mobileFontWeight": 400,
+  "mobileLetterSpacing": 0,
+
+  "paddingType": "ungrouped",
+  "padding": 0,
+  "paddingTop": 0,
+  "paddingRight": 10,
+  "paddingBottom": 0,
+  "paddingLeft": 10,
+
+  "mobilePaddingType": "ungrouped",
+  "mobilePadding": 0,
+  "mobilePaddingTop": 0,
+  "mobilePaddingRight": 10,
+  "mobilePaddingBottom": 0,
+  "mobilePaddingLeft": 10
+}

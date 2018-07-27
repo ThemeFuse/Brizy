@@ -1,0 +1,69 @@
+.brz-bg {
+  position: relative;
+}
+.brz-bg-content {
+  position: relative;
+  flex: 1;
+}
+
+// Media
+.brz-bg-media {
+  overflow: hidden;
+}
+.brz-bg-media,
+.brz-bg-image,
+.brz-bg-video,
+.brz-bg-color,
+.brz-bg-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// Image
+.brz-bg-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+// Video & Map
+.brz-iframe.brz-bg-video__cover,
+.brz-iframe.brz-bg-map__cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  max-width: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+// Color
+.brz-bg-color {
+  opacity: 1;
+}
+
+.brz-bg-image-parallax {
+  width: 100%;
+  background-size: cover !important;
+  background-position: 50% 50%;
+  left: 0;
+  top: -50vh;
+  height: 100vh;
+  transition: all 0s ease !important;
+  transform-origin: center center 0;
+  transform-style: preserve-3d;
+}
+
+// Responsive
+@include media-breakpoint-down(ms) {
+  .brz-bg-video {
+    .brz-iframe {
+      display: none !important;
+    }
+  }
+}

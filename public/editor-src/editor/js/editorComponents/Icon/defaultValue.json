@@ -1,0 +1,87 @@
+{
+  "className": "",
+
+  "name": "favourite-31",
+  "type": "glyph",
+  "size": "medium",
+  "customSize": 48,
+  "smallSize": 32,
+  "mediumSize": 48,
+  "largeSize": 64,
+  "padding": 0,
+  "tempPadding": 20,
+
+  "linkType": "external",
+  "linkExternal": "",
+  "linkAnchor": "",
+  "linkExternalBlank": "on",
+  "linkExternalRel": "off",
+
+  "colorHex": "#239ddb",
+  "colorOpacity": 1,
+  "colorPalette": "color3",
+  "hoverColorHex": "#239ddb",
+  "hoverColorOpacity": 0.8,
+  "hoverColorPalette": "color3",
+  "tempColorOpacity": 1,
+  "tempColorPalette": "color3",
+  "tempHoverColorOpacity": 1,
+  "tempHoverColorPalette": "color3",
+
+  "bgColorHex": "#bde1f4",
+  "bgColorOpacity": 0,
+  "bgColorPalette": "",
+  "hoverBgColorHex": "#bde1f4",
+  "hoverBgColorOpacity": 0,
+  "hoverBgColorPalette": "",
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "color5",
+  "tempHoverBgColorOpacity": 1,
+  "tempHoverBgColorPalette": "color5",
+
+  "borderColorHex": "#239ddb",
+  "borderColorOpacity": 0,
+  "borderColorPalette": "",
+  "hoverBorderColorHex": "#239ddb",
+  "hoverBorderColorOpacity": 0,
+  "hoverBorderColorPalette": "",
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "color3",
+  "tempHoverBorderColorOpacity": 1,
+  "tempHoverBorderColorPalette": "color3",
+
+  "borderRadiusType": "",
+  "tempBorderRadiusType": "rounded",
+
+  "fillType": "default",
+  "tempFillType": "filled",
+
+  "borderRadius": 0,
+  "tempBorderRadius": 4,
+
+  "borderWidth": 0,
+  "tempBorderWidth": 3,
+
+  "borderStyle": "solid",
+
+  "boxShadow": "off",
+  "boxShadowColorHex": "#000000",
+  "boxShadowColorOpacity": 1,
+  "boxShadowColorPalette": "",
+  "boxShadowBlur": 4,
+  "boxShadowSpread": 0,
+  "boxShadowVertical": 2,
+  "boxShadowHorizontal": 1,
+  "tempBoxShadowColorOpacity": 1,
+
+  "strokeWidth": 1,
+
+  "mobileSize": "medium",
+  "mobileCustomSize": 48,
+
+  "mobilePadding": 0,
+  "tempMobilePadding": 20,
+
+  "mobileBorderRadius": 0,
+  "tempMobileBorderRadius": 4
+}

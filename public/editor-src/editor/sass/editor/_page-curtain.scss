@@ -1,0 +1,43 @@
+// Page Curtain
+.brz-ed-page-curtain {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #141923;
+  z-index: z("brz-ed-fixed");
+  // transition: all 0.5s ease-in-out;
+}
+.brz-ed-page-spinner,
+.brz-ed-page-spinner:after,
+.brz-ed-page-spinner:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 3px solid rgba(0, 0, 0, 0);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.brz-ed-page-spinner {
+  width: 100px;
+  height: 100px;
+  margin: -50px 0 0 -50px;
+  border-top-color: #22b0da;
+  animation-duration: 2.5s;
+
+  &:after {
+    width: 80px;
+    height: 80px;
+    margin: -40px 0 0 -40px;
+    border-right-color: #ed2164;
+    animation-duration: 2s;
+  }
+  &:before {
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border-bottom-color: #fff;
+  }
+}

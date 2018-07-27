@@ -1,0 +1,46 @@
+{
+  "items": [],
+
+  "fontStyle": "",
+  "fontFamily": "noto_serif",
+  "fontSize": 16,
+  "fontWeight": 400,
+  "lineHeight": 1.5,
+  "letterSpacing": 0,
+
+  "colorHex": "#73777f",
+  "colorOpacity": 0.7,
+  "colorPalette": "",
+  "bgColorHex": "#ffffff",
+  "bgColorOpacity": 1,
+  "bgColorPalette": "",
+  "borderColorHex": "#dcdee1",
+  "borderColorOpacity": 1,
+  "borderColorPalette": "",
+
+  "size": "medium",
+  "padding": 15,
+  "paddingTop": 0,
+  "paddingRight": 15,
+  "paddingBottom": 15,
+  "paddingLeft": 15,
+  "borderRadiusType": "square",
+  "fillType": "filled",
+  "tempFillType": "filled",
+  "borderRadius": 0,
+  "borderWidth": 1,
+  "borderStyle": "solid",
+
+  "mobileFontStyle": "",
+  "mobileFontSize": 14,
+  "mobileLineHeight": 1.5,
+  "mobileFontWeight": 400,
+  "mobileLetterSpacing": 0,
+  "mobileBorderRadius": 0,
+
+  "mobilePadding": 10,
+  "mobilePaddingTop": 0,
+  "mobilePaddingRight": 10,
+  "mobilePaddingBottom": 10,
+  "mobilePaddingLeft": 10
+}

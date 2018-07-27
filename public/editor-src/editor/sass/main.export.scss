@@ -1,0 +1,12 @@
+// Components Template
+.brz {
+  @import "editorComponents";
+
+  // Utilities Typography/Margin/Align
+  // Used that becoused for editor generate for classes brz-{mobile|desktop}
+  // For Preview used @media responsive
+  @import "editorComponents/utilities";
+
+  // WordPress
+  @import "wp.export";
+}

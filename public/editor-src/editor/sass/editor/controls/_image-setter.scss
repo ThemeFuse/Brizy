@@ -1,0 +1,83 @@
+// --- Focal Point Option
+.brz-ed-control__focal-point {
+  position: relative;
+  text-align: center;
+
+  &:after {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    content: "";
+  }
+  &__setter {
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    width: 100%;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $focal-point-background-before;
+    }
+    .brz-img {
+      max-width: $focal-point-img-size;
+      max-height: $focal-point-img-size;
+    }
+  }
+  &__point {
+    position: absolute;
+    z-index: 10;
+    width: $focal-point-size;
+    height: $focal-point-size;
+    transform: translate(-50%, -50%);
+    background-color: $focal-point-background;
+    border: 2px solid #fff;
+    border-radius: $focal-point-size;
+    cursor: pointer;
+  }
+  &__upload {
+    width: $focal-point-width;
+    height: $focal-point-height;
+    border: 1px dashed $focal-point-border-color;
+    background-color: $focal-point-background-upload;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: $focal-point-upload-font-size;
+    color: $focal-point-upload-color;
+    transition: all 0.2s linear;
+
+    &:hover {
+      border-color: $focal-point-border-color--hover;
+      color: $focal-point-upload-color--hover;
+    }
+
+    // Loading icon animation
+    &--loading {
+      cursor: progress;
+    }
+  }
+  &__delete {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    z-index: 11;
+    font-size: $focal-point-delete-font-size;
+    width: $focal-point-delete-font-size;
+    height: $focal-point-delete-font-size;
+    background-color: $focal-point-background-upload;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+  }
+  &__label--disable .brz-ed-control__focal-point__upload {
+    cursor: no-drop;
+  }
+}

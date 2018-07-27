@@ -1,0 +1,31 @@
+// Desktop
+
+// Mobile
+&.brz-ed--mobile {
+  padding-left: $mobile-paddings;
+  padding-right: $mobile-paddings;
+
+  .brz-container__wrap,
+  .brz-container__wrap--fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+// Section
+.brz-section {
+  position: relative;
+}
+.brz-section__content {
+  > .brz-ed-border,
+  > .brz-ed-border > .brz-bg,
+  > .brz-ed-border > .brz-bg > .brz-bg-content {
+    height: 100%;
+  }
+  > .brz-ed-border > .brz-bg > .brz-bg-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: space-between;
+  }
+}
