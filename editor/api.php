@@ -147,13 +147,15 @@ class Brizy_Editor_API {
 			$attachmentId = get_post_thumbnail_id( $this->post->get_id() );
 
 			if ( $attachmentId != $_REQUEST['attachmentId'] ) {
-				$this->error( 400, 'Bad request' );
+				$this->error( 400, 'Invalid attachment id' );
 			}
 
 			update_post_meta( $attachmentId, 'brizy_attachment_focal_point', array(
 				'x' => $_REQUEST['pointX'],
 				'y' => $_REQUEST['pointY']
 			) );
+
+			$this->success( array() );
 		}
 
 		$this->error( 400, 'Invalid post' );
