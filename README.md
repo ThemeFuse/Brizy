@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.20<br>
+Stable tag: 1.0.21-rc5<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,17 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.21-rc5 - 2018-07-30 ###
+* Improved: Smooth scroll for internal WordPress menu links
+* Improved: Text for link nofollow option
+* Fixed: The editor should now work with performance optimization plugins
+* Fixed: Color styles for form fields
+* Fixed: EmbedCode height consistent with content
+* Fixed: RichText hyphens
+* Fixed: Used body_class in body tag in brizy-blank-template.php
+* Fixed: Fixed the inline json for editor
+* Fixed: Admin url fix for wpengine hosting
 
 ### 1.0.20 - 2018-07-24 ###
 * New: Added  option to external links
