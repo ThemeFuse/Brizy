@@ -174,7 +174,7 @@ class Brizy_Admin_Main {
 		$new_post_url = add_query_arg( array(
 			'action'    => 'brizy_new_post',
 			'post_type' => $typenow,
-		), admin_url( 'edit.php' ) );
+		), set_url_scheme(admin_url( 'edit.php' )) );
 
 		?>
         <script type="text/javascript">
@@ -224,7 +224,7 @@ class Brizy_Admin_Main {
 			brizy()->get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
 			array(
-				'url'     => admin_url( 'admin-ajax.php' ),
+				'url'     => set_url_scheme(admin_url( 'admin-ajax.php' )),
 				'id'      => get_the_ID(),
 				'actions' => array(
 					'enable'  => '_brizy_admin_editor_enable',

@@ -1,0 +1,257 @@
+// Colors
+//
+// Gray scale and brand colors for use across Bootstrap.
+$brand-primary: #3dbfe8;
+$brand-options: #383e48;
+$brand-options-border: rgba(255, 255, 255, 0.1);
+$link-color: $brand-primary;
+$link-hover-color: darken($brand-primary, 10%);
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+// Globals Font Family For Editors
+$font-family-1: "pn", "Open Sans", Arial, sans-serif;
+$font-family-2: "europa", sans-serif;
+$font-family-3: "iowanoldst_btroman";
+$font-family-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+
+// Device mode
+$mobile-width: 460px;
+$mobile-paddings: 15px;
+$desktop-paddings: 48px;
+
+// z indexes map
+// $z-indexes is used in functions/_z-index.scss
+$z-indexes: (
+  "brz-ed-fixed": 1100,
+  "notification": 1090,
+  "popup-overlay": 1080,
+  "toolbar": 1070,
+  "sidebar": 1060,
+  "toolbar-collapsible": 1050,
+  "section-menu": 1050,
+  "toolbar-column": 1040,
+  "tooltip-overlay": 1070,
+  "cloneable-bar": 1030,
+  "column-resize": 1030,
+  "adder-block": 1020,
+  "padding-resizer": 99
+);
+
+// Sidebar
+//
+// Sidebar sizes
+$sidebar-size: 48px;
+$sidebar-font-size: 16px; // 24
+$sidebar-item-padding: 20px;
+$sidebar-content-size: 280px;
+$sidebar-content-padding: 30px;
+$sidebar-header-font-size: 15px;
+
+// Sidebar colors
+$sidebar-bg: rgba(20, 25, 35, 1);
+$sidebar-item-separator-1: $brand-options-border;
+$sidebar-item-separator-2: rgba(255, 255, 255, 0.07);
+$sidebar-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.4);
+$sidebar-content-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+$sidebar-right-content-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+$sidebar-header-bg: #383e47;
+$sidebar-content-bg: #2b3039;
+$sidebar-content-footer-bg: $sidebar-header-bg;
+$sidebar-font-color: #fff;
+$sidebar-btn-bg: #91a652;
+$sidebar-dropdown-bg: #3c424c;
+
+// Toolbar
+//
+// Colors
+$toolbar-bg-color: rgba(3, 8, 15, 0.92);
+$toolbar-border-color: rgba(255, 255, 255, 0.15);
+$toolbar-item-color: $text-white;
+$toolbar-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+
+// Sizes for toolbar's item
+$toolbar-item-padding: 13px;
+$toolbar-font-size: 16px;
+$toolbar-arrow-size: 6px;
+$toolbar-arrow-collision: ($toolbar-arrow-size * 2) - 1;
+$toolbar-item-height: ($toolbar-item-padding * 2) + $toolbar-font-size;
+$toolbar-border-radius: 8px;
+
+// Static Toolabr
+//
+// Colors
+$toolbar-static-bg: #879294;
+$toolbar-static-border-color: #a3abad;
+$toolbar-static-item-height: 30px;
+$toolbar-static-font-size: 12px;
+
+// Popover
+//
+// Sizes
+$toolbar-tooltip-sm-width: 230px !default;
+$toolbar-tooltip-md-width: 255px !default;
+$toolbar-tooltip-lg-width: 305px !default;
+$toolbar-tooltip-typo-width: 385px;
+
+// $popover-item-width: 46px !default;
+$popover-item-height: 50px !default;
+$popover-item-padding: 17px;
+
+// Popover Tabs
+$popover-tabs-height: 34px; // 35
+$popover-tabs-font-size: 13px; // 12
+
+// Popover Form
+$popover-form-input-font-size: 13px; // 14
+$popover-form-icon-size: 15px; // 16
+
+// Popover Opacity
+$popover-opacity-width: 46px; // 65
+$popover-opacity-height: 170px;
+$popover-opacity-padding: 12px;
+$popover-opacity-wrap-height: 79px;
+
+// Popover Headings
+$popover-headings-width: 55px;
+
+// Popover Color Picker
+$popover-colorpicker-width: 220px;
+
+// Popover Focal Point
+$focal-point-background: #2eb0d8;
+$focal-point-background-before: rgba(0, 0, 0, 0.3);
+$focal-point-background-upload: #2d323b;
+$focal-point-border-color: #444952;
+$focal-point-border-color--hover: #5e6470;
+$focal-point-upload-color: rgba(94, 100, 111, 0.6);
+$focal-point-upload-color--hover: rgba(94, 100, 111, 1);
+$focal-point-upload-font-size: 24px;
+$focal-point-delete-font-size: 16px;
+$focal-point-size: 18px;
+$focal-point-width: 140px;
+$focal-point-height: 93px;
+$focal-point-img-size: $focal-point-width;
+$focal-point-margin: 23px;
+
+// Popover Options Background
+// Controls: Select, Stepper
+$options-control-background: #383e48;
+
+// Scroll Panel
+//
+// Scroll pane in popover
+$scroll-border-radius: 4px;
+$scroll-bg-color: #373d47;
+$scroll-text-color: #fff;
+
+// Scroll pane in popup
+$scroll-popup-bg-color: #d4d5d7;
+$scroll-popup-width: 5px;
+$scroll-popup-border-radius: $scroll-popup-width / 2;
+
+// Spinner Loading Content
+//
+// Styles
+$spinner-bg-color: rgba(255, 255, 255, 0.5);
+$spinner-size: 20px;
+$spinner-border-width: 4px;
+$spinner-border-bg-color: #2eb9d8;
+$spinner-border-animate-color: rgba(3, 8, 15, 0.9);
+
+// Floating Button
+//
+// Styles
+$floating-button-grey: #879294;
+$floating-button-blue: #22b0da;
+$floating-button-red: #ed2164;
+
+// Borders
+//
+// Colors
+$by-block-border-grey: $floating-button-grey;
+$by-block-border-blue: $floating-button-blue;
+$by-block-border-red: $floating-button-red;
+
+// Options
+//
+// Handle Icon Settings
+$options-handle-size: 42px;
+$options-handle-size-small: 32px;
+$options-handle-font-size: 14px;
+$options-handle-font-size-small: 12px;
+
+// Options Item
+$options-item-height: 51px;
+$options-item-padding: 17px;
+$options-item-font-size: 13px;
+$options-label-color: $gray-light;
+$options-control-height: 30px;
+$options-control-radius: 4px;
+
+// Resize
+$resize-blue: $by-block-border-blue;
+$resize-red: $by-block-border-red;
+$resize-shortcode-width: 11px;
+$resize-shortcode-height: $resize-shortcode-width;
+$resize-point-position: ceil(-$resize-shortcode-width / 2);
+
+// Blocks
+//
+// Prompt blocks
+$prompt-blocks-lg-width: 1009px;
+$prompt-blocks-md-width: 694px;
+$prompt-blocks-sm-width: 380px;
+
+$prompt-blocks-lg-height: 634px;
+$prompt-blocks-md-height: 500px;
+$prompt-blocks-sm-height: 430px;
+
+$prompt-blocks-header-bg-color: #e0e1e2;
+$prompt-blocks-header-height: 80px;
+
+// Prompt select
+$prompt-select-width: 300px;
+$prompt-select-height: 40px;
+$prompt-select-font-size: 14px;
+$prompt-select-bg-color: #fff;
+$prompt-select-bg-hover-color: #fbfbfb;
+$prompt-select-border-color: #f4f4f4;
+$prompt-select-border-radius: 4px;
+$prompt-select-box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+$prompt-select-options-box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.2);
+
+// Adder blocks
+$block-item-width: 291px;
+$block-item-height: 181px;
+$block-item-margin: 12px;
+$block-hover-bg-color: rgba(41, 46, 55, 0.9);
+$block-item-box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.07);
+
+// Adder container for add blocks
+$block-adder-container-width: 710px;
+$block-adder-container-sm-width: 430px;
+$block-adder-container-height: 130px;
+$block-adder-container-border-radius: 4px;
+$block-adder-title-color: #292e37;
+$block-adder-desc-color: #9da0a6;
+$block-adder-font-size: 15px;
+
+// Adder icon
+$block-adder-icon-size: 54px;
+
+// Editor Controls(select, input, stepper, etc...)
+$control-font-size: 13px;
+$control-arrow-size: 8px;
+$control-letter-spacing: 0.25px;
+$control-border-radius: 4px;
+$control-height: 30px;
+$control-padding: 10px;
+$control-sm-width: 62px;
+$control-md-width: 112px;
+$control-lg-width: 136px;
+$control-background-color: $brand-options;
+$control-color: rgba(255, 255, 255, 0.85);
+$control-border-color: rgba(255, 255, 255, 0.07);
+$control-dropdown-shadow: 0 2px 13px 0 rgba(0, 0, 0, 0.1);

@@ -1,0 +1,595 @@
+// scss-lint:disable QualifyingElement, DuplicateProperty, VendorPrefix
+
+// Reboot
+//
+// Normalization of HTML elements, manually forked from Normalize.css to remove
+// styles targeting irrelevant browsers while applying new styles.
+//
+// Normalize is licensed MIT. https://github.com/necolas/normalize.css
+
+// Document
+//
+// 1. Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
+// 2. Change the default font family in all browsers.
+// 3. Correct the line height in all browsers.
+// 4. Prevent adjustments of font size after orientation changes in IE on Windows Phone and in iOS.
+// 5. Setting @viewport causes scrollbars to overlap content in IE11 and Edge, so
+//    we force a non-overlapping, non-auto-hiding scrollbar to counteract.
+// 6. Change the default tap highlight to be completely transparent in iOS.
+@at-root {
+  html {
+    box-sizing: border-box; // 1
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box; // 1
+  }
+}
+
+// IE10+ doesn't honor `<meta name="viewport">` in some cases.
+@at-root {
+  @-ms-viewport {
+    width: device-width;
+  }
+}
+
+// Shim for "new" HTML5 structural elements to display correctly (IE10, older browsers)
+.brz-figcaption,
+.brz-figure,
+.brz-section {
+  display: block;
+}
+
+// Body
+//
+// 1. Remove the margin in all browsers.
+// 2. As a best practice, apply a default `background-color`.
+@at-root {
+  body {
+    margin: 0; // 1
+
+    &.brz-ed {
+      background-color: $body-bg; // 2
+    }
+
+    // For Wordpress themes
+    &.brz {
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+  .brz-iframe {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+  }
+  .brz {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    .brz-root__container.brz-reset-all {
+      overflow: hidden;
+    }
+  }
+}
+
+// Content grouping
+//
+// 1. Add the correct box sizing in Firefox.
+// 2. Show the overflow in Edge and IE.
+.brz-hr {
+  box-sizing: content-box; // 1
+  height: 0; // 1
+  overflow: visible; // 2
+  margin: 0;
+}
+
+//
+// Typography
+//
+// Remove top margins from headings
+//
+// By default, `<h1>`-`<h6>` all receive top and bottom margins. We nuke the top
+// margin for easier control within type scales as it avoids margin collapsing.
+.brz-h1,
+.brz-h2,
+.brz-h3,
+.brz-h4,
+.brz-h5,
+.brz-h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+// Reset margins on paragraphs
+//
+// Similarly, the top margin on `<p>`s get reset. However, we also reset the
+// bottom margin to use `rem` units instead of `em`.
+.brz-p {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.brz-span {
+  float: none;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+//
+// Abbreviations
+//
+.brz-ol,
+.brz-ul,
+.brz-dl {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+.brz-ol .brz-ol,
+.brz-ul .brz-ul,
+.brz-ol .brz-ul,
+.brz-ul .brz-ol {
+  margin: 0;
+}
+.brz-dt {
+  font-weight: $dt-font-weight;
+}
+.brz-dd {
+  margin-bottom: 0.5rem;
+  margin-left: 0; // Undo browser default
+}
+.brz-blockquote {
+  margin: 0 0 1rem;
+}
+.brz-dfn {
+  font-style: italic; // Add the correct font style in Android 4.3-
+}
+.brz-b,
+.brz-strong {
+  font-weight: 700; // Add the correct font weight in Chrome, Edge, and Safari
+}
+
+//
+// Links
+//
+.brz-a {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  background-color: transparent; // Remove the gray background on active links in IE 10.
+  -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
+  box-shadow: none;
+
+  &[href] {
+    @include hover {
+      color: $link-hover-color;
+      text-decoration: $link-hover-decoration;
+      box-shadow: none;
+      cursor: pointer;
+    }
+  }
+}
+
+//
+// Figures
+//
+.brz-figure {
+  // Apply a consistent margin strategy (matches our type styles).
+  margin: 0;
+  min-width: auto;
+  min-height: auto;
+}
+
+//
+// Images and content
+//
+.brz-img {
+  vertical-align: middle;
+  border-style: none; // Remove the border on images inside links in IE 10-.
+}
+svg:not(:root) {
+  overflow: hidden; // Hide the overflow in IE
+}
+
+//
+// Button and Iiputs
+//
+.brz-button,
+.brz-input,
+.brz-label,
+.brz-textarea {
+  touch-action: manipulation;
+}
+
+//
+// Tables
+//
+.brz-table {
+  border-collapse: collapse; // Prevent double borders
+}
+.brz-caption {
+  padding-top: $table-cell-padding;
+  padding-bottom: $table-cell-padding;
+  color: $text-muted;
+  text-align: left;
+  caption-side: bottom;
+}
+.brz-th {
+  text-align: left;
+}
+
+//
+// Forms
+//
+.brz-label {
+  // Allow labels to use `margin` for spacing.
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+// Work around a Firefox/IE bug where the transparent `button` background
+// results in a loss of the default `button` focus styles.
+//
+// Credit: https://github.com/suitcss/base/
+.brz-button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+.brz-input,
+.brz-button,
+.brz-select,
+.brz-optgroup,
+.brz-textarea {
+  padding: 0;
+  margin: 0; // Remove the margin in Firefox and Safari
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.brz-button,
+.brz-input {
+  overflow: visible; // Show the overflow in Edge
+}
+.brz-button,
+.brz-select {
+  text-transform: none; // Remove the inheritance of text transform in Firefox
+}
+
+// 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+//    controls in Android 4.
+// 2. Correct the inability to style clickable types in iOS and Safari.
+.brz-button {
+  -webkit-appearance: button; // 2
+}
+
+// Remove inner border and padding from Firefox, but don't restore the outline like Normalize.
+.brz-button::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+.brz-input[type="radio"],
+.brz-input[type="checkbox"] {
+  box-sizing: border-box; // 1. Add the correct box sizing in IE 10-
+  padding: 0; // 2. Remove the padding in IE 10-
+}
+.brz-input[type="date"],
+.brz-input[type="time"],
+.brz-input[type="datetime-local"],
+.brz-input[type="month"] {
+  // Remove the default appearance of temporal inputs to avoid a Mobile Safari
+  // bug where setting a custom line-height prevents text from being vertically
+  // centered within the input.
+  // See https://bugs.webkit.org/show_bug.cgi?id=139848
+  // and https://github.com/twbs/bootstrap/issues/11266
+  -webkit-appearance: listbox;
+}
+.brz-textarea {
+  overflow: auto; // Remove the default vertical scrollbar in IE.
+  // Textareas should really only resize vertically so they don't break their (horizontal) containers.
+  resize: vertical;
+}
+.brz-fieldset {
+  // Browsers set a default `min-width: min-content;` on fieldsets,
+  // unlike e.g. `<div>`s, which have `min-width: 0;` by default.
+  // So we reset that to ensure fieldsets behave more like a standard block element.
+  // See https://github.com/twbs/bootstrap/issues/12359
+  // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
+  min-width: 0;
+  // Reset the default outline behavior of fieldsets so they don't affect page layout.
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+//
+// Correct element displays
+//
+.brz-iframe,
+.brz-object {
+  margin-bottom: 0;
+  max-width: 100%;
+}
+.brz-iframe {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+// Always hide an element with the `hidden` HTML attribute (from PureCSS).
+// Needed for proper display in IE 10-.
+[hidden] {
+  display: none !important;
+}
+
+// Initial CSS values for all: initial polyfill
+.brz-reset-all {
+  align-content: stretch;
+  align-items: stretch;
+  align-self: auto;
+  animation-delay: 0s;
+  animation-direction: normal;
+  animation-duration: 0s;
+  animation-fill-mode: none;
+  animation-iteration-count: 1;
+  animation-name: none;
+  animation-play-state: running;
+  animation-timing-function: ease;
+  azimuth: center;
+  backface-visibility: visible;
+  background-attachment: scroll;
+  background-blend-mode: normal;
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: none;
+  background-origin: padding-box;
+  background-position: 0% 0%;
+  background-repeat: repeat;
+  background-size: auto auto;
+  block-size: auto;
+  border-block-end-color: currentcolor;
+  border-block-end-style: none;
+  border-block-end-width: medium;
+  border-block-start-color: currentcolor;
+  border-block-start-style: none;
+  border-block-start-width: medium;
+  border-bottom-color: currentcolor;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-style: none;
+  border-bottom-width: medium;
+  border-collapse: separate;
+  border-image-outset: 0s;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-inline-end-color: currentcolor;
+  border-inline-end-style: none;
+  border-inline-end-width: medium;
+  border-inline-start-color: currentcolor;
+  border-inline-start-style: none;
+  border-inline-start-width: medium;
+  border-left-color: currentcolor;
+  border-left-style: none;
+  border-left-width: medium;
+  border-right-color: currentcolor;
+  border-right-style: none;
+  border-right-width: medium;
+  border-spacing: 0;
+  border-top-color: currentcolor;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top-style: none;
+  border-top-width: medium;
+  bottom: auto;
+  box-decoration-break: slice;
+  box-shadow: none;
+  box-sizing: content-box;
+  break-after: auto;
+  break-before: auto;
+  break-inside: auto;
+  caption-side: top;
+  caret-color: auto;
+  clear: none;
+  clip: auto;
+  clip-path: none;
+  color: initial;
+  column-count: auto;
+  column-fill: balance;
+  column-gap: normal;
+  column-rule-color: currentcolor;
+  column-rule-style: none;
+  column-rule-width: medium;
+  column-span: none;
+  column-width: auto;
+  content: normal;
+  counter-increment: none;
+  counter-reset: none;
+  cursor: auto;
+  display: inline;
+  empty-cells: show;
+  filter: none;
+  flex-basis: auto;
+  flex-direction: row;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-wrap: nowrap;
+  float: none;
+  font-family: initial;
+  font-feature-settings: normal;
+  font-kerning: auto;
+  font-language-override: normal;
+  font-size: medium;
+  font-size-adjust: none;
+  font-stretch: normal;
+  font-style: normal;
+  font-synthesis: weight style;
+  font-variant: normal;
+  font-variant-alternates: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: normal;
+  font-variant-position: normal;
+  font-weight: normal;
+  grid-auto-columns: auto;
+  grid-auto-flow: row;
+  grid-auto-rows: auto;
+  grid-column-end: auto;
+  grid-column-gap: 0;
+  grid-column-start: auto;
+  grid-row-end: auto;
+  grid-row-gap: 0;
+  grid-row-start: auto;
+  grid-template-areas: none;
+  grid-template-columns: none;
+  grid-template-rows: none;
+  height: auto;
+  hyphens: manual;
+  image-orientation: 0deg;
+  image-rendering: auto;
+  image-resolution: 1dppx;
+  ime-mode: auto;
+  inline-size: auto;
+  isolation: auto;
+  justify-content: flex-start;
+  left: auto;
+  letter-spacing: normal;
+  line-break: auto;
+  line-height: normal;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: disc;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-bottom: 0;
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  mask-clip: border-box;
+  mask-composite: add;
+  mask-image: none;
+  mask-mode: match-source;
+  mask-origin: border-box;
+  mask-position: 0% 0%;
+  mask-repeat: repeat;
+  mask-size: auto;
+  mask-type: luminance;
+  max-height: none;
+  max-width: none;
+  min-block-size: 0;
+  min-height: 0;
+  min-inline-size: 0;
+  min-width: 0;
+  mix-blend-mode: normal;
+  object-fit: fill;
+  object-position: 50% 50%;
+  offset-block-end: auto;
+  offset-block-start: auto;
+  offset-inline-end: auto;
+  offset-inline-start: auto;
+  opacity: 1;
+  order: 0;
+  orphans: 2;
+  outline-color: initial;
+  outline-offset: 0;
+  outline-style: none;
+  outline-width: medium;
+  overflow: visible;
+  overflow-wrap: normal;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding-block-end: 0;
+  padding-block-start: 0;
+  padding-bottom: 0;
+  padding-inline-end: 0;
+  padding-inline-start: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  page-break-after: auto;
+  page-break-before: auto;
+  page-break-inside: auto;
+  perspective: none;
+  perspective-origin: 50% 50%;
+  pointer-events: auto;
+  position: static;
+  quotes: initial;
+  resize: none;
+  right: auto;
+  ruby-align: space-around;
+  ruby-merge: separate;
+  ruby-position: over;
+  scroll-behavior: auto;
+  scroll-snap-coordinate: none;
+  scroll-snap-destination: 0 0;
+  scroll-snap-points-x: none;
+  scroll-snap-points-y: none;
+  scroll-snap-type: none;
+  shape-image-threshold: 0;
+  shape-margin: 0;
+  shape-outside: none;
+  tab-size: 8;
+  table-layout: auto;
+  text-align: initial;
+  text-align-last: auto;
+  text-combine-upright: none;
+  text-decoration-color: currentcolor;
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-emphasis-color: currentcolor;
+  text-emphasis-position: over right;
+  text-emphasis-style: none;
+  text-indent: 0;
+  text-justify: auto;
+  text-orientation: mixed;
+  text-overflow: clip;
+  text-rendering: auto;
+  text-shadow: none;
+  text-transform: none;
+  text-underline-position: auto;
+  top: auto;
+  touch-action: auto;
+  transform: none;
+  transform-box: border-box;
+  transform-origin: 50% 50% 0;
+  transform-style: flat;
+  transition-delay: 0s;
+  transition-duration: 0s;
+  transition-property: all;
+  transition-timing-function: ease;
+  vertical-align: baseline;
+  visibility: visible;
+  white-space: normal;
+  widows: 2;
+  width: auto;
+  will-change: auto;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  writing-mode: horizontal-tb;
+  z-index: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+}

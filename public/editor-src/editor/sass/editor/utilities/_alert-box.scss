@@ -1,0 +1,42 @@
+/* Alert boxes */
+.brz-ed-alert {
+  font: 600 14px/18px $font-family-1;
+  background-color: #f2f2f2;
+  padding: 12px 15px;
+  margin: 0 0 20px;
+}
+.brz-ed-alert-error {
+  border-left: 4px solid #df3c3c;
+  color: #df3c3c;
+  background-color: rgba(#df3c3c, 0.1);
+}
+.brz-ed-alert-success {
+  border-left: 4px solid #6ab504;
+  color: #6ab504;
+  background-color: #eff5e8;
+}
+.brz-ed-alert-info {
+  border-left: 4px solid #47a9c8;
+  color: #656b6f;
+  background-color: #eff9fd;
+
+  .popup-icon-info {
+    float: left;
+    margin: 0 15px 5px 0;
+    color: #47a9c8;
+    border-color: #47a9c8;
+  }
+}
+.popup-icon-info {
+  font-family: $font-family-1;
+  display: inline-block;
+  border: 2px solid #ccc;
+  color: #ccc;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  font-size: 18px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}

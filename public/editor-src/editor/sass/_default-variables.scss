@@ -1,0 +1,126 @@
+// Variable
+// asserting ASC map keys and values (for breakpoints)
+@mixin _assert-ascending($map, $map-name) {
+  $prev-key: null;
+  $prev-num: null;
+
+  @each $key, $num in $map {
+    @if $prev-num != null and $prev-num >= $num {
+      @warn "Invalid value for #{$map-name}: This map must be in ascending order,
+        but key "#{$key}" has value #{$num} which isn't greater than #{$prev-num},
+        the value of the previous key "#{$prev-key}" !";
+    }
+    $prev-key: $key;
+    $prev-num: $num;
+  }
+}
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+$enable-flex: true !default;
+$enable-rounded: true !default;
+$enable-shadows: false !default;
+$enable-gradients: false !default;
+$enable-transitions: false !default;
+$enable-hover-media-query: false !default;
+$enable-grid-classes: true !default;
+$enable-print-styles: true !default;
+$enable-container: false !default;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+$grid-breakpoints: (
+  xs: 0,
+  ms: 480px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px,
+  xl: 1400px
+) !default;
+
+@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+$container-max-widths: (
+  ms: 460px,
+  sm: 720px,
+  md: 940px,
+  lg: 1170px,
+  xl: 1170px
+) !default;
+//@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+// Vary gutter by screen size
+$grid-gutter-width-xs: 30px !default; // 0 +
+$grid-gutter-width-ms: 30px !default; // 480px +
+$grid-gutter-width-sm: 30px !default; // 768px +
+$grid-gutter-width-md: 30px !default; // 992px +
+$grid-gutter-width-lg: 30px !default; // 1200px +
+
+//** Number of columns in the grid.
+$grid-columns: 12 !default;
+//** Padding between columns. Gets divided in half for the left and right.
+// Default grid gutter
+$grid-gutter-width: $grid-gutter-width-md;
+
+// Colors
+//
+// Gray scale and brand colors for use across Bootstrap.
+$gray-dark: #373a3c !default;
+$gray: #55595c !default;
+$gray-light: #818a91 !default;
+$gray-lighter: #eceeef !default;
+$gray-lightest: #f7f7f9 !default;
+$text-white: #fff !default;
+
+// Body
+//
+// Settings for the `<body>` element.
+$body-bg: #f3f3f3 !default;
+
+// Links
+//
+// Style anchor elements.
+$link-decoration: none !default;
+$link-hover-decoration: none !default;
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+$font-weight-normal: normal !default;
+$font-weight-bold: bold !default;
+$dt-font-weight: bold !default;
+
+$font-weight-base: $font-weight-normal !default;
+
+$text-muted: $gray-light !default;
+
+$h1-font-size: 55px !default; // 2.5rem !default;
+$h2-font-size: 40px !default; // 2rem !default;
+$h3-font-size: 32px !default; // 1.75rem !default;
+$h4-font-size: 26px !default; // 1.5rem !default;
+$h5-font-size: 19px !default; // 1.25rem !default;
+$h6-font-size: 14px !default; // 1rem !default;
+$font-size-paragraph: 14px !default; // 1rem !default;
+
+$headings-font-family: inherit !default;
+$headings-font-weight: 700 !default;
+$headings-line-height: 1.2 !default;
+$headings-color: inherit !default;
+
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+$table-cell-padding: 0.75rem !default;
+$table-sm-cell-padding: 0.3rem !default;
+$table-bg: transparent !default;
+$abbr-border-color: $gray-light !default;

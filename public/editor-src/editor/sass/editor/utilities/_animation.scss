@@ -1,0 +1,45 @@
+// Animation
+.brz-ed-animated {
+  animation-duration: 0.15s;
+  animation-fill-mode: both;
+
+  &--fadeInDown {
+    animation-name: brz-ed-fadeInDown;
+  }
+  &--fadeInUp {
+    animation-name: brz-ed-fadeInUp;
+  }
+  &--fadeIn {
+    animation-name: brz-ed-fadeIn;
+  }
+  &--fadeInLeft {
+    animation-name: brz-ed-fadeInLeft;
+  }
+  &--spin {
+    animation-name: brz-ed-spin;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+}
+
+// React Animation
+.brz-ed-fade-enter {
+  opacity: 0.01;
+}
+.brz-ed-fade-enter.brz-ed-fade-enter-active {
+  opacity: 1;
+  transition: opacity 150ms ease-in;
+}
+.brz-ed-fade-exit {
+  opacity: 1;
+}
+.brz-ed-fade-exit.brz-ed-fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 150ms ease-in;
+}
+
+// Fix to access toolbar column/row
+.brz-animated {
+  animation-fill-mode: none;
+}

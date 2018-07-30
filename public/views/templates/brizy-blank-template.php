@@ -12,7 +12,7 @@
 <head>
 	<?php wp_head(); ?>
 </head>
-<body class="brz">
+<body <?php body_class(); ?>>
 <?php while ( have_posts() ) : the_post() ?>
 	<?php the_content() ?>
 <?php endwhile ?>

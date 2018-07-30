@@ -1,0 +1,113 @@
+// FontStyles
+.brz-ed-option__font-style-editor {
+  position: relative;
+  cursor: pointer;
+  margin: 0 30px 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &__container {
+    border: 2px solid #3c424d;
+    border-radius: 3px;
+    padding: 16px 20px 18px;
+    transition: border-color 0.2s linear;
+  }
+  &.active,
+  &:hover {
+    .brz-ed-option__font-style-editor__container {
+      border-color: $brand-primary;
+      transition: border-color 0.2s linear;
+    }
+    .brz-ed-option__font-style-editor--delete {
+      opacity: 1;
+      transition: 0.2s linear opacity;
+    }
+  }
+  &__title {
+    line-height: 1;
+    margin-bottom: 3px;
+    margin-right: 0;
+
+    @extend .brz-ed-option__label;
+
+    .brz-span {
+      display: block;
+      line-height: 1.5;
+    }
+  }
+  &__sample {
+    color: #fff;
+    line-height: 1;
+    font-size: 21px;
+  }
+  &--delete {
+    position: absolute;
+    top: -7px;
+    right: -6px;
+    color: #fff;
+    font-size: 16px;
+    opacity: 0;
+    transition: 0.2s linear opacity;
+
+    .brz-icon-svg {
+      background-color: #fff;
+      color: #15191f;
+      border-radius: 16px;
+    }
+  }
+}
+.brz-ed-option__font-styles {
+  position: relative;
+  height: calc(100% - 258px);
+  margin-right: -30px;
+  margin-left: -30px;
+
+  &--add {
+    font-size: 0;
+    margin-bottom: 0;
+    padding-top: 33px;
+    padding-bottom: 30px;
+    color: #818a91;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s linear, color 0.2s linear;
+    position: absolute;
+    bottom: -20px;
+    left: 30px;
+    right: 30px;
+    transform: translateY(100%);
+
+    @extend .brz-ed-option__font-style-editor__container;
+
+    &:hover {
+      border-color: $brand-primary;
+      color: $brand-primary;
+      transition: border-color 0.2s linear, color 0.2s linear;
+    }
+    .brz-icon-svg,
+    .brz-span {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 13px;
+      line-height: 1;
+    }
+    .brz-icon-svg {
+      font-size: 16px;
+    }
+    .brz-span {
+      margin-left: 10px;
+    }
+  }
+  &--scroll-pane {
+    position: absolute;
+    top: -10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .brz-ed-scroll-inner {
+      padding-top: 10px;
+    }
+  }
+}

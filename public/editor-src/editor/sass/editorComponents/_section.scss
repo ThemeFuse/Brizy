@@ -1,0 +1,62 @@
+// Section Full Height
+.brz-section {
+  background-color: #fff;
+  position: relative;
+
+  &__content {
+    position: relative;
+    width: 100%;
+
+    > .brz-bg {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      height: 100%;
+    }
+  }
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+
+// Section Full height
+.brz-sec-full-height {
+  .brz-container__wrap,
+  .brz-container__wrap--fluid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+  }
+}
+
+// Section Menu
+.brz-section__header {
+  &--animated {
+    position: fixed;
+    z-index: z("section-menu");
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translate3d(0, -100%, 0);
+    transition: transform 0.2s linear;
+
+    &-opened {
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.2s linear;
+    }
+  }
+  &--fixed {
+    position: relative;
+
+    &-opened {
+      position: fixed;
+      z-index: z("section-menu") + 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+}

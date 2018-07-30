@@ -1,0 +1,39 @@
+// --- MultiPicker
+.brz-ed-option__multiPicker.brz-ed-option__inline {
+  flex-direction: column;
+  align-items: unset;
+  justify-content: unset;
+}
+.brz-ed-multiPicker {
+  &__head__option,
+  &__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__option {
+    &:first-child {
+      margin-top: 10px;
+    }
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+// Right sidebar multi picker style
+.brz-ed-sidebar__right {
+  .brz-ed-multiPicker {
+    &__option {
+      &.brz-ed-option__slider:not(:last-child) {
+        margin-bottom: 15px;
+      }
+      &:first-child {
+        margin-top: 20px;
+      }
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}

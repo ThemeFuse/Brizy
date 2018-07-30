@@ -1,0 +1,90 @@
+// TextField
+.brz-ed-option__text-box {
+  width: 44px;
+  border-bottom: 1px solid $brand-options-border;
+  margin-left: 17px;
+  padding: 0 0 4px;
+
+  .brz-label {
+    display: flex;
+    line-height: 1;
+    color: $options-label-color;
+    font-family: $font-family-1;
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    padding: 0;
+    margin: 0;
+  }
+  &__input,
+  &__helper {
+    position: relative;
+    font-weight: 400;
+  }
+  &__helper {
+    font-family: inherit;
+    font-size: inherit;
+    margin-left: 3px;
+
+    &--active {
+      color: $brand-primary;
+    }
+  }
+  &--auto {
+    width: 57px;
+    margin-left: 13px;
+    border-bottom-color: transparent;
+
+    .brz-label {
+      align-items: center;
+    }
+    .brz-ed-option__text-box__input {
+      margin-right: 2px;
+
+      &:after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: $brand-options-border;
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+      }
+    }
+    .brz-ed-option__text-box__helper {
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    .brz-ed-control__text-box--resizer {
+      position: relative;
+    }
+  }
+}
+.brz-ed-control__text-box--resizer {
+  background-color: transparent;
+  color: $options-label-color;
+  font-weight: 400;
+  border: none;
+  outline: 0;
+  padding: 0;
+  line-height: 1;
+  -moz-appearance: textfield; // Remove spin button on Firefox
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 105%;
+  height: 100%;
+
+  &:focus,
+  &:active {
+    background-color: transparent;
+    color: $options-label-color;
+  }
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

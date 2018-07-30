@@ -42,7 +42,7 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	public function multipass_url() {
-		return admin_url( 'admin-ajax.php' ) . "?action=brizy_multipass_create&client_id=" . Brizy_Config::BRIZY_APPLICATION_FORM_ID;
+		return set_url_scheme( admin_url( 'admin-ajax.php' ) ) . "?action=brizy_multipass_create&client_id=" . Brizy_Config::BRIZY_APPLICATION_FORM_ID;
 	}
 
 
@@ -169,7 +169,7 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	public function editor_asset_url() {
-		return BRIZY_PLUGIN_URL . '/public/editor-build/' . BRIZY_EDITOR_VERSION;
+		return BRIZY_PLUGIN_URL . '/public/editor-build';
 	}
 
 	/**

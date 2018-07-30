@@ -1,0 +1,42 @@
+span[contenteditable],
+div[contenteditable] {
+  /* Invisible background for IE and Firefox bug */
+  background: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  cursor: text;
+
+  &:focus {
+    outline: none;
+  }
+  &.brz-ed-content-editable-noTransitions *,
+  &:focus * {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+.brz-ed-content-editable-wrap {
+  position: relative;
+
+  * {
+    cursor: default;
+  }
+
+  // for hidden clipboard rich text
+  .ql-clipboard {
+    left: -100000px;
+    height: 1px;
+    overflow-y: hidden;
+    position: absolute;
+    top: 50%;
+  }
+
+  &.brz-ed-content-editable-focus * {
+    cursor: auto;
+  }
+}

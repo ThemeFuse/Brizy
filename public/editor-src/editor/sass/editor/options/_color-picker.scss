@@ -1,0 +1,12 @@
+// Option Color Picker
+.brz-ed-option__colorPicker {
+  border-bottom: 0;
+
+  &__fields {
+    padding-top: 0;
+
+    &:last-child {
+      min-height: 100%;
+    }
+  }
+}

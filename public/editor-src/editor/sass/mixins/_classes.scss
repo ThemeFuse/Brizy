@@ -1,0 +1,32 @@
+/// Generate stepwise classes with certain property or property-postfix
+/// @param {Number} $from - begin
+/// @param {Number} $to - finish
+/// @param {Number} $step - step-by-step
+/// @param {String} $class-name - give the class name
+/// @param {String} $property - give the property for the class
+/// @param {String} $prop-postfix - give the postfix for the $property
+/// @example - example with prop-postfix
+/// @include generate-stepwise-classes($from, $to, $step, $class-name, $property, $prop-postfix);
+/// @include generate-stepwise-classes(1, 15, 5, padding-divider, padding, (top, bottom));
+/// @example - example only for property
+/// @include generate-stepwise-classes(1, 15, 5, col-inner, margin, all);
+/// @return generated stepwise className with value
+
+@mixin generate-stepwise-classes($from: 1, $to: 30, $step: 10, $class-name: null, $property: null, $prop-postfix: null) {
+  @for $i from $from through $to {
+    $i: $i * $step;
+    @each $_class-name in $class-name {
+      .#{$_class-name}-#{$i} {
+        @each $_property in $property {
+          @each $_prop-postfix in $prop-postfix {
+            @if $_prop-postfix == "all" {
+              #{$_property}: #{$i * 1px} !important;
+            } @else {
+              #{$_property}-#{$_prop-postfix}: #{$i * 1px} !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

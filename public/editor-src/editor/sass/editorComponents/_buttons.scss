@@ -1,0 +1,47 @@
+// Buttons
+// = Buttons defaults
+$btn-default-color: #fff;
+
+// --
+.brz-btn {
+  //display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  color: $btn-default-color;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  white-space: nowrap;
+  font-weight: 400;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  &:hover,
+  &:focus,
+  &.focus {
+    text-decoration: none;
+  }
+  &:focus {
+    text-decoration: none;
+  }
+  .brz-span {
+    display: block;
+  }
+}
+
+// Buttons when is in list
+.buttons {
+  margin: -10px;
+  align-items: center;
+
+  .brz-wrapper-clone__item {
+    padding: 10px;
+  }
+}

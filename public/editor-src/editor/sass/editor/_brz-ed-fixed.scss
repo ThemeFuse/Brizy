@@ -1,0 +1,41 @@
+/**
+ * Container for the content to display in a modal way
+ *
+ * Example of markup
+ *
+ * <div class="brz-ed-fixed">
+ *     <div class="brz-ed-fixed-overlay"></div>
+ *     <div class="brz-ed-fixed-scroll"> ... ANY CONTENT TO DISPLAY ... </div>
+ * </div>
+ */
+.brz-ed-fixed {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: z("brz-ed-fixed");
+}
+
+/**
+ * Overlay. Covers whole area and is placed just under content area
+ */
+.brz-ed-fixed-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(3, 8, 15, 0.75);
+}
+
+/**
+ * Scroll. The area where content should be placed. It is completely empty with
+ * no padding, no margin, and no border. Any content placed here will be scrolled
+ * if it is too wide or to long for this area.
+ */
+.brz-ed-fixed-scroll {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}

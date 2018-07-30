@@ -1,0 +1,39 @@
+//
+// Headings
+//
+.brz-h1,
+.brz-h2,
+.brz-h3,
+.brz-h4,
+.brz-h5,
+.brz-h6 {
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
+}
+.brz-h1 {
+  font-size: $h1-font-size;
+  font-weight: 400;
+}
+.brz-h2 {
+  font-size: $h2-font-size;
+}
+.brz-h3 {
+  font-size: $h3-font-size;
+}
+.brz-h4 {
+  font-size: $h4-font-size;
+}
+.brz-h5 {
+  font-size: $h5-font-size;
+}
+.brz-h6 {
+  font-size: $h6-font-size;
+}
+
+// Paragraph
+.brz-p {
+  font-size: $font-size-paragraph;
+  font-weight: $font-weight-base;
+}

@@ -1,0 +1,32 @@
+// --- Import Editor and componenents
+// brz-ed class is for to avoid global styling conflicts
+// Default variables
+@import "default-variables";
+
+// Variable
+@import "variables";
+
+// Mixins
+@import "mixins";
+
+// Functions
+@import "functions/functions";
+
+// Fonts
+@import "editor/fonts";
+
+// Sortable
+@import "editor/sortable";
+
+// Components Template
+.brz {
+  @import "editorComponents";
+
+  // WordPress
+  @import "wp.editor";
+}
+
+// Components Editor
+.brz-ed {
+  @import "editor";
+}

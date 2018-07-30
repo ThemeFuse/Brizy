@@ -1,0 +1,24 @@
+// --- Tooltip
+.brz-ed-popover__tooltip {
+  &.brz-ed-tooltip--opened .brz-ed-tooltip__content {
+    color: $brand-primary;
+
+    .brz-ed-popover__tooltip--icon-custom {
+      border-color: $brand-primary;
+    }
+  }
+
+  // Icon Custom
+  &--icon-custom {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-radius: 2px;
+    transition: border-color 0.2s linear;
+  }
+}
+.brz-ed-tooltip__overlay {
+  background-color: $toolbar-bg-color;
+  box-shadow: $toolbar-box-shadow;
+  border-radius: $toolbar-border-radius;
+}

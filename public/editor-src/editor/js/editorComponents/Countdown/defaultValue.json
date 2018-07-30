@@ -1,0 +1,32 @@
+{
+  "className": "",
+
+  "colorHex": "#73777f",
+  "colorOpacity": 0.75,
+  "colorPalette": "color7",
+  "tempColorOpacity": 0.75,
+  "tempColorPalette": "color7",
+
+  "width": 100,
+
+  "date": "",
+  "hours": "10 am",
+  "minutes": 30,
+  "language": "en",
+  "timeZone": -120,
+
+  "fontStyle": "",
+  "fontFamily": "roboto",
+  "fontSize": 42,
+  "fontWeight": 700,
+  "lineHeight": 1.3,
+  "letterSpacing": 0,
+
+  "mobileWidth": 100,
+
+  "mobileFontStyle": "",
+  "mobileFontSize": 30,
+  "mobileFontWeight": 700,
+  "mobileLineHeight": 1,
+  "mobileLetterSpacing": 1
+}

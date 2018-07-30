@@ -1,0 +1,40 @@
+// Flex variation
+//
+// Custom styles for additional flex alignment options.
+.brz-d-block {
+  display: block !important;
+}
+.brz-d-inline-block {
+  display: inline-block !important;
+}
+.brz-d-inline {
+  display: inline !important;
+}
+.brz-d-table {
+  width: 100%;
+  display: table;
+  position: relative;
+}
+.brz-d-table-cell {
+  display: table-cell;
+}
+
+// Block blocked
+.brz-ed-blocked {
+  pointer-events: none;
+}
+
+// Responsive Display flex
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    // Display Flex/inline-flex
+    @if $enable-flex {
+      .brz-d-#{$breakpoint}-flex {
+        display: flex;
+      }
+      .brz-d-#{$breakpoint}-inline-flex {
+        display: inline-flex;
+      }
+    }
+  }
+}

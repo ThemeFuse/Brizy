@@ -1,0 +1,28 @@
+// --- Icon Setter
+.brz-ed-control__icon-setter {
+  position: relative;
+
+  &__box {
+    width: 48px;
+    height: 48px;
+    border: 1px dashed $focal-point-border-color;
+    background-color: $focal-point-background-upload;
+    font-size: 16px;
+    color: $focal-point-upload-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .2s linear;
+
+    &:hover {
+      border-color: $focal-point-border-color--hover;
+      color: $focal-point-upload-color--hover;
+    }
+  }
+  &--active {
+    color: #fff;
+    display: inline-block;
+    font-size: 0;
+  }
+}

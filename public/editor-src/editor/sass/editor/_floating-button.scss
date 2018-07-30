@@ -1,0 +1,71 @@
+// FloatingButton like Row, Column Toolbar
+.brz-ed-floating__button {
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  font-size: 7px;
+  background-color: #999;
+  color: #fff;
+  box-shadow: none;
+  transform: scale(1);
+  transition: transform 0.2s linear;
+  cursor: pointer;
+
+  &:after {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 28px;
+    border: 3px solid #999;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin-top: -14px;
+    margin-left: -14px;
+    border-radius: 50%;
+    opacity: 0;
+    // animation: pulsate 1.7s ease-out;
+    // animation-iteration-count: infinite;
+  }
+  &--active,
+  &:hover {
+    transform: scale(1.75);
+    transition: transform 0.2s linear;
+    font-size: 8px;
+
+    &:after {
+      animation: none;
+    }
+  }
+  .brz-icon-svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-0.5em, -0.5em);
+    line-height: 1;
+  }
+
+  // Colors
+  &--grey {
+    background-color: $floating-button-grey;
+
+    &:after {
+      border-color: $floating-button-grey;
+    }
+  }
+  &--blue {
+    background-color: $floating-button-blue;
+
+    &:after {
+      border-color: $floating-button-blue;
+    }
+  }
+  &--red {
+    background-color: $floating-button-red;
+
+    &:after {
+      border-color: $floating-button-red;
+    }
+  }
+}

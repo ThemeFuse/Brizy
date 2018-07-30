@@ -1,0 +1,44 @@
+{
+  "linkType": "external",
+  "linkExternal": "",
+  "linkAnchor": "",
+  "linkExternalBlank": "on",
+  "linkExternalRel": "off",
+
+  "imageSrc": "",
+  "imageWidth": 600,
+  "imageHeight": 450,
+  "imageOpacity": 100,
+  "imageBrightness": 100,
+  "imageHue": 0,
+  "imageSaturation": 100,
+
+  "positionY": 50,
+  "positionX": 50,
+
+  "resize": 100,
+  "zoom": 100,
+  "width": 100,
+  "height": 100,
+  "borderRadiusType": "square",
+  "borderRadius": 0,
+  "tempBorderRadius": 0,
+
+  "boxShadow": "off",
+  "boxShadowColorHex": "#000000",
+  "boxShadowColorOpacity": 1,
+  "boxShadowColorPalette": "",
+  "boxShadowBlur": 4,
+  "boxShadowSpread": 0,
+  "boxShadowVertical": 2,
+  "boxShadowHorizontal": 1,
+  "tempBoxShadowColorOpacity": 1,
+
+  "mobileResize": 100,
+  "mobileZoom": 100,
+  "mobileWidth": 100,
+  "mobileHeight": 100,
+
+  "mobilePositionY": 50,
+  "mobilePositionX": 50
+}

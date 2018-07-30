@@ -1,0 +1,13 @@
+// --- Z-index Function
+/// How it works
+/// $z-indexes: (
+///   "header": 2,
+/// )
+/// .header { z-index: z("header"); }
+@function z($layer) {
+  @if not map-has-key($z-indexes, $layer) {
+    @warn "No z-index found in $z-layers map for `#{$layer}`. Property omitted.";
+  }
+
+  @return map-get($z-indexes, $layer);
+}

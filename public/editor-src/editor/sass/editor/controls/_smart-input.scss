@@ -1,0 +1,43 @@
+// Smart Input (used in sideBar)
+.brz-ed-input__search {
+  position: absolute;
+  border: none;
+  background: transparent;
+  color: rgba(#fff, 0.6);
+  outline: 0;
+  font-size: 13px;
+  text-indent: 10px;
+  padding: 0 35px 0 0;
+  width: 100%;
+
+  &:focus,
+  &:active {
+    background: transparent;
+    color: rgba(#fff, 0.6);
+  }
+  &::-webkit-input-placeholder {
+    color: rgba(234, 241, 255, 0.2);
+    font-style: italic;
+    font-size: 1em;
+    letter-spacing: $control-letter-spacing;
+  }
+  &--auto-complete {
+    color: #fff;
+  }
+  &__icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    color: #818487;
+    transform: translateY(-50%);
+    transition: color 0.2s ease-in;
+    cursor: pointer;
+    font-size: 16px;
+    height: 16px;
+    line-height: 1;
+
+    &.active {
+      color: $brand-primary;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+// Text align
+// Desktop
+.brz-text-lg-left { @include align-left; }
+.brz-text-lg-right { @include align-right; }
+.brz-text-lg-center { @include align-center; }
+
+// Mobile
+@include media-breakpoint-down(ms) {
+  .brz-text-xs-left { @include align-left; }
+  .brz-text-xs-right { @include align-right; }
+  .brz-text-xs-center { @include align-center; }
+}

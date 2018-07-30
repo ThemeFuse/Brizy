@@ -1,0 +1,62 @@
+// Tabs
+.brz-ed-sidebar-options {
+  height: 100%;
+}
+.brz-ed-sidebar__right__tabs {
+  .brz-ed-control__tabs {
+    justify-content: flex-start;
+    color: #fff;
+    margin-bottom: 15px;
+
+    .brz-ed-control__tab {
+      margin-right: 20px;
+      position: relative;
+      min-height: 30px;
+
+      &:not(:last-child) {
+        margin-right: 19px;
+      }
+      &:after {
+        display: none;
+      }
+      &.active:before {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        height: 2px;
+        background-color: currentColor;
+        width: 100%;
+      }
+    }
+  }
+  .brz-ed-control__tab__content > {
+    .brz-ed-options-field {
+      margin-bottom: 15px;
+    }
+  }
+  .brz-ed-options-tabs-helpers {
+    font-size: 12px;
+  }
+}
+.brz-ed-sidebar-row {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #3a3f47;
+
+  .brz-ed-options-field {
+    margin-bottom: 15px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Select
+.brz-ed-sidebar__right__option {
+  .brz-control__select-option {
+    max-width: $control-md-width - 6; // 6 is scrollPane borderRightWidth
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

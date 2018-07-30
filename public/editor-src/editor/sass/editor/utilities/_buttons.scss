@@ -1,0 +1,195 @@
+// Defaul Buttons for BrizyEditor
+.brz-ed-btn {
+  display: inline-block;
+  border: 1px solid transparent;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: $font-family-1;
+  font-size: 14px;
+  padding: 12px 18px;
+  line-height: 1;
+  outline: none;
+
+  &:active {
+    outline: 0;
+    background-image: none;
+    box-shadow: inset 0 3px 5px rgba(#000, 0.1);
+  }
+
+  // Button with icon
+  &-icon {
+    .brz-icon-svg {
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+  &-icon--left {
+    .brz-icon-svg {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+  }
+  // Loading
+  &--loading {
+    .brz-icon-svg {
+      animation-name: spin;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+}
+.brz-ed-btn-rounded {
+  border-radius: 3px;
+}
+.brz-ed-btn-sm {
+  padding: 10px 17px 11px;
+  font-size: 14px;
+
+  &.brz-ed-btn-icon {
+    .brz-icon-svg {
+      font-size: 12px;
+    }
+  }
+  &.brz-ed-btn--loading {
+    font-size: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+.brz-ed-btn-full {
+  width: 100%;
+}
+.brz-ed-btn-width-1 {
+  min-width: 130px;
+}
+.brz-ed-btn-width-2 {
+  min-width: 176px;
+}
+.brz-ed-btn-width-3 {
+  min-width: 102px;
+}
+.brz-ed-btn-default {
+  border-color: transparent;
+  background-color: transparent;
+  color: #626b70;
+
+  &:hover {
+    border-color: transparent;
+    background-color: transparent;
+  }
+}
+.brz-ed-btn-dark {
+  border-color: #3b474b;
+  background-color: #3b474b;
+  color: #fff;
+
+  &:hover {
+    border-color: #283337;
+    background-color: #283337;
+  }
+}
+.brz-ed-btn-dark-outline {
+  color: #3b474b;
+  border-color: #3b474b;
+  background-color: #fff;
+
+  &:hover {
+    background-color: #3b474b;
+    color: #fff !important;
+  }
+}
+.brz-ed-btn-teal {
+  border-color: #34beea;
+  background-color: #34beea;
+  color: #fff !important;
+
+  &:hover {
+    border-color: #35a9d6;
+    background-color: #35a9d6;
+  }
+}
+.brz-ed-btn-teal-outline {
+  color: #34beea;
+  border-color: #34beea;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: #34beea;
+    color: #fff !important;
+  }
+}
+.brz-ed-btn-green {
+  border-color: #8dc63f;
+  background-color: #8dc63f;
+  color: #fff !important;
+
+  &:hover,
+  &:focus {
+    border-color: #8dc63f;
+    background-color: #8dc63f;
+  }
+}
+.brz-ed-btn-green-outline {
+  color: #8dc63f;
+  border-color: #8dc63f;
+  background-color: transparent;
+
+  &:hover {
+    background-color: #8dc63f;
+    color: #fff !important;
+  }
+}
+.brz-ed-btn-gray {
+  border-color: transparent;
+  background-color: rgba(#292e37, 0.5);
+  color: #fff !important;
+
+  &:hover,
+  &:focus {
+    border-color: transparent;
+    background-color: rgba(#292e37, 0.5);
+  }
+}
+.brz-ed-btn-gray-outline {
+  color: rgba(#292e37, 0.5);
+  border-color: rgba(#292e37, 0.5);
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(#292e37, 0.5);
+    color: #fff !important;
+  }
+}
+.brz-ed-btn-red {
+  border-color: transparent;
+  background-color: #df3c3c;
+  color: #fff !important;
+
+  &:hover,
+  &:focus {
+    border-color: transparent;
+    background-color: #df3c3c;
+  }
+}
+.brz-ed-btn-red-outline {
+  color: #df3c3c;
+  border-color: #df3c3c;
+  background-color: transparent;
+
+  &:hover {
+    background-color: #df3c3c;
+    color: #fff !important;
+  }
+}
