@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.21-rc5
+Stable tag: 1.0.21
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -128,6 +128,17 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.21 - 2018-07-30 =
+* Improved: Smooth scroll for internal WordPress menu links
+* Improved: Text for link nofollow option
+* Fixed: The editor should now work with performance optimization plugins
+* Fixed: Color styles for form fields
+* Fixed: EmbedCode height consistent with content
+* Fixed: RichText hyphens
+* Fixed: Used body_class in body tag in brizy-blank-template.php
+* Fixed: Fixed the inline json for editor
+* Fixed: Admin url fix for wpengine hosting
 
 = 1.0.21-rc5 - 2018-07-30 =
 * Improved: Smooth scroll for internal WordPress menu links
