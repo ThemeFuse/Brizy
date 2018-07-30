@@ -107,17 +107,6 @@ A good bug report includes full details to easily understand the issue you are h
 * Fixed: Fixed the inline json for editor
 * Fixed: Admin url fix for wpengine hosting
 
-### 1.0.21-rc5 - 2018-07-30 ###
-* Improved: Smooth scroll for internal WordPress menu links
-* Improved: Text for link nofollow option
-* Fixed: The editor should now work with performance optimization plugins
-* Fixed: Color styles for form fields
-* Fixed: EmbedCode height consistent with content
-* Fixed: RichText hyphens
-* Fixed: Used body_class in body tag in brizy-blank-template.php
-* Fixed: Fixed the inline json for editor
-* Fixed: Admin url fix for wpengine hosting
-
 ### 1.0.20 - 2018-07-24 ###
 * New: Added  option to external links
 * New: Check the PHP version and stop the plugin if the required php version is not meet
