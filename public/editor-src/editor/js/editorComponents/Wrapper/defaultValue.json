@@ -1,0 +1,69 @@
+{
+  "className": "",
+  "horizontalAlign": "center",
+  "showOnDesktop": "on",
+  "customClassName": "",
+
+  "paddingType": "grouped",
+  "padding": 0,
+  "paddingSuffix": "px",
+  "paddingTop": 0,
+  "paddingTopSuffix": "px",
+  "paddingRight": 0,
+  "paddingRightSuffix": "px",
+  "paddingBottom": 0,
+  "paddingBottomSuffix": "px",
+  "paddingLeft": 0,
+  "paddingLeftSuffix": "px",
+
+  "marginType": "ungrouped",
+  "margin": 0,
+  "marginSuffix": "px",
+  "marginTop": 10,
+  "marginTopSuffix": "px",
+  "marginRight": 0,
+  "marginRightSuffix": "px",
+  "marginBottom": 10,
+  "marginBottomSuffix": "px",
+  "marginLeft": 0,
+  "marginLeftSuffix": "px",
+
+  "items": [],
+
+  "showToolbar": "off",
+
+  "zIndex": 0,
+
+  "showOnMobile": "on",
+
+  "animationName": "none",
+  "tempAnimationName": "none",
+  "animationDuration": 1000,
+  "animationDelay": 1000,
+
+  "mobileHorizontalAlign": "center",
+
+  "mobilePaddingType": "grouped",
+  "mobilePadding": 0,
+  "mobilePaddingSuffix": "px",
+  "mobilePaddingTop": 0,
+  "mobilePaddingTopSuffix": "px",
+  "mobilePaddingRight": 0,
+  "mobilePaddingRightSuffix": "px",
+  "mobilePaddingBottom": 0,
+  "mobilePaddingBottomSuffix": "px",
+  "mobilePaddingLeft": 0,
+  "mobilePaddingLeftSuffix": "px",
+
+  "mobileMarginType": "ungrouped",
+  "mobileMargin": 0,
+  "mobileMarginSuffix": "px",
+  "mobileMarginTop": 10,
+  "mobileMarginTopSuffix": "px",
+  "mobileMarginRight": 0,
+  "mobileMarginRightSuffix": "px",
+  "mobileMarginBottom": 10,
+  "mobileMarginBottomSuffix": "px",
+  "mobileMarginLeft": 0,
+  "mobileMarginLeftSuffix": "px"
+}

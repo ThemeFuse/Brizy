@@ -1,0 +1,161 @@
+// --- Option
+.brz-ed-popover__option,
+.brz-ed-sidebar__right__option {
+  font-family: $font-family-1;
+  font-size: $options-item-font-size;
+  line-height: normal;
+  min-height: $options-item-height;
+  border-bottom: 1px solid $brand-options-border;
+  margin-bottom: -1px;
+
+  &:last-child {
+    border-bottom-color: transparent;
+  }
+}
+
+// Popover
+.brz-ed-popover__inner--icon {
+  transition: color 0.2s linear;
+
+  &:hover {
+    color: $brand-primary;
+    transition: color 0.2s linear;
+  }
+}
+
+// Padding for option
+.brz-ed-popover__option {
+  padding: 10px $options-item-padding;
+  user-select: none;
+
+  &:first-child {
+    padding-top: 15px;
+    border-top-color: transparent;
+  }
+  &:last-child {
+    padding-bottom: 15px;
+    min-height: 56px;
+  }
+}
+.brz-ed-tabs__option--inline:first-child:last-child {
+  .brz-ed-popover__option {
+    &:first-child {
+      padding-top: 15px;
+    }
+    &:last-child {
+      padding-bottom: 15px;
+    }
+  }
+  .brz-ed-control__tabs__top + .brz-ed-control__tab__content {
+    .brz-ed-popover__option {
+      &:first-child {
+        padding-top: 10px;
+      }
+      &:last-child {
+        padding-bottom: 15px;
+      }
+    }
+  }
+}
+.brz-ed-control__tabs__top + .brz-ed-control__tab__content {
+  .brz-ed-popover__option {
+    &:first-child {
+      padding-top: 10px;
+    }
+    &:last-child {
+      padding-bottom: 10px;
+    }
+  }
+}
+.brz-ed-tabs__option--inline + .brz-ed-option__advanced {
+  border-top: 1px solid $brand-options-border;
+}
+
+// Option
+.brz-ed-option {
+  &__inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+  }
+  &__block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+
+    .brz-ed-option__label {
+      flex-basis: auto;
+      margin-bottom: 6px;
+      margin-right: 0;
+    }
+    &.brz-ed-option__slider {
+      padding-top: 15px !important;
+    }
+  }
+  &__advanced {
+    padding-top: 15px;
+    min-height: initial !important;
+    color: $brand-primary;
+    transition: color 0.2s linear;
+    font-size: 0;
+
+    .brz-ed-option__label {
+      flex-basis: 100%;
+      color: inherit;
+      margin: 0;
+      margin-left: 9px;
+      cursor: pointer;
+      font-size: $options-item-font-size;
+    }
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  // Option Label
+  &__label {
+    font-family: $font-family-1;
+    font-size: $options-item-font-size;
+    color: $options-label-color;
+    flex-basis: auto;
+    margin-right: 17px;
+    display: flex;
+    line-height: 1.3;
+  }
+
+  // Select Label
+  &__slider__label {
+    flex-basis: 65px;
+  }
+}
+
+// Popover Options
+.brz-ed-popover__options {
+  height: 100%;
+  width: 100%;
+  flex-basis: 100%;
+
+  .brz-ed-option__advanced .brz-icon-svg {
+    font-size: 14px;
+  }
+}
+
+// Toolbar
+.brz-ed-toolbar__item > {
+  .brz-ed-option__advanced {
+    border: none;
+    color: inherit;
+    transition: color 0.2s linear;
+
+    &:hover {
+      color: $brand-primary;
+      transition: color 0.2s linear;
+    }
+    .brz-icon-svg {
+      font-size: $toolbar-font-size;
+    }
+  }
+}

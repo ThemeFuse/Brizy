@@ -1,0 +1,46 @@
+// --- Select Option
+.brz-ed-option__select {
+  &__after {
+    margin-left: 8px;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: $options-label-color;
+    line-height: 1;
+    display: flex;
+    cursor: pointer;
+    transition: color 0.2s linear;
+
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+  .brz-control__select-current {
+    .brz-control__select-option {
+      border-bottom: none;
+
+      span {
+        top: 1px;
+      }
+    }
+  }
+  .brz-control__select-option {
+    display: flex;
+    align-items: center;
+
+    .brz-icon-svg,
+    span {
+      line-height: 1;
+    }
+    span {
+      position: relative;
+      top: 0.5px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .brz-icon-svg {
+      font-size: 12px;
+      margin-right: 10px;
+    }
+  }
+}

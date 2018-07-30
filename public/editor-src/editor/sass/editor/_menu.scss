@@ -1,0 +1,47 @@
+// Wordpress Menu
+&.brz-ed--mobile {
+  .brz-wp-shortcode__menu {
+    width: auto;
+    text-align: center;
+
+    &__toggle .menu {
+      display: none;
+      flex-flow: column nowrap;
+      max-height: 0;
+      align-items: flex-start;
+      transition: max-height .2s ease-out;
+
+      .sub-menu {
+        position: relative;
+        display: block;
+        width: 100%;
+        left: 15px;
+        background-color: transparent;
+
+        .menu-item a {
+          padding: 5px;
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
+        .sub-menu {
+          display: block;
+          left: 15px;
+        }
+      }
+      & > .menu-item {
+        padding: 0;
+
+        & > .sub-menu {
+          display: none;
+          top: 100%;
+          padding: 5px 0;
+        }
+      }
+    }
+    &__icon {
+      display: inline-block;
+    }
+  }
+}

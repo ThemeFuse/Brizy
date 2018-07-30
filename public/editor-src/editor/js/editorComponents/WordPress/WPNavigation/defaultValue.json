@@ -1,0 +1,28 @@
+{
+  "menuName": "",
+
+  "className": "",
+  "width": 100,
+  "itemPadding": 15,
+
+  "fontStyle": "",
+  "fontFamily": "roboto",
+  "fontSize": 14,
+  "fontWeight": 600,
+  "lineHeight": 1.3,
+  "letterSpacing": 0,
+
+  "colorHex": "#33344b",
+  "colorOpacity": 1,
+  "colorPalette": "",
+
+  "mobileWidth": 100,
+  "mobileItemPadding": 15,
+  "mobileToggleMenu": "off",
+
+  "mobileFontStyle": "",
+  "mobileFontSize": 14,
+  "mobileLineHeight": 1.3,
+  "mobileFontWeight": 600,
+  "mobileLetterSpacing": 0
+}

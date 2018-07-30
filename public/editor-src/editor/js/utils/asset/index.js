@@ -1,0 +1,1 @@
+export { assetUrl } from "./assetUrl";

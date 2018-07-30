@@ -1,0 +1,9 @@
+// Toggle icon
+.brz-ed-option__toggle {
+  transition: color 0.2s linear;
+
+  &:hover {
+    transition: color 0.2s linear;
+    color: $brand-primary;
+  }
+}

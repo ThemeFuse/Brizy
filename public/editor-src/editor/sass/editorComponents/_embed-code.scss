@@ -1,0 +1,14 @@
+// --- Embed Code
+.brz-embed-code {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-height: 10px;
+  height: auto;
+  word-break: break-all;
+  word-wrap: break-word;
+
+  .brz-shortcode__placeholder {
+    height: 250px;
+  }
+}

@@ -1,0 +1,88 @@
+// --- Upload Styles
+// Container size for upload
+$imageContainer: 117px;
+$paddingContainer: 4px;
+$borderWidth: 2px;
+
+// Popup image upload
+.brz-ed-popup-image {
+  &-inner {
+    position: relative;
+    color: #fff;
+    display: inline-block;
+    font-size: 0;
+  }
+  &-label {
+    margin-bottom: 0;
+  }
+  &-remove {
+    position: absolute;
+    z-index: 2;
+    top: -10px;
+    right: -10px;
+    width: 22px;
+    height: 22px;
+    font-size: 8px;
+    background-color: #34beec;
+    border-radius: 50%;
+    transition: background 0.2s linear;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #03080f;
+      transition: background 0.2s linear;
+    }
+    i {
+      line-height: 2.75;
+    }
+  }
+  &-upload {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background: #fff url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDIwIDIwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTE5LDIwSDFjLTAuNTUyLDAtMS0wLjQ0OC0xLTFWMy44OTNjMC0wLjU1MiwwLjQ0OC0wLjksMS0wLjlMMy42ODUsM0M0LjEsMyw0LjQ3MiwyLjYzNiw0LjYyLDIuMjQ4bDAuNTgtMUM1LjIsMS4yNDksNS41NiwwLDYuMjUsMGg3LjVjMC42OSwwLDEuMTUsMS4yNDksMS4xNSwxLjI0OWwwLjQ4LDFjMC4xNDcsMC4zODgsMC41MiwwLjc0NSwwLjkzNSwwLjc0NUgxOWMwLjU1MiwwLDEsMC4zNDgsMSwwLjlWMTlDMjAsMTkuNTUyLDE5LjU1MiwyMCwxOSwyMHogTTE5LDQuNTg2Yy0wLjAwNC0wLjMyOC0wLjI3Mi0wLjU5Mi0wLjYtMC41OTJoLTMuMzk5Yy0wLjE0My0wLjE0My0wLjExNy0wLjIwMi0wLjg4MS0xLjg0N2MwLDAtMC40NDgtMS4xNDctMS0xLjE0N0g3LjExOGMtMC41NTIsMC0xLDEuMTQ3LTEsMS4xNDdDNS4wNTEsMy45MTMsNS4wOCwzLjg2NCw1LDMuOTk0SDEuNjUxYy0wLjMzMSwwLTAuNiwwLjI2OS0wLjYsMC42VjE4LjRjMCwwLjMzMSwwLjI2OSwwLjYsMC42LDAuNkgxOC40YzAuMzMxLDAsMC42LTAuMjY5LDAuNi0wLjZMMTksNC41ODZ6IE0xMi4wMiwxNS42MDNjLTQuMjg3LDEuNjk2LTguMzE5LTIuMzM1LTYuNjI0LTYuNjIyYzAuNDYzLTEuMTcyLDEuNDE0LTIuMTIyLDIuNTg2LTIuNTg2YzQuMjg3LTEuNjk1LDguMzE4LDIuMzM4LDYuNjIyLDYuNjI0QzE0LjE0LDE0LjE5LDEzLjE5LDE1LjE0LDEyLjAyLDE1LjYwM3ogTTEwLjYzMiw3LjA0OWMtMi43MDMtMC40MTQtNC45OTcsMS44OC00LjU4NCw0LjU4NGMwLjI1OCwxLjY4NSwxLjYzNSwzLjA2MSwzLjMxOSwzLjMxOWMyLjcwMywwLjQxNCw0Ljk5Ny0xLjg4LDQuNTg0LTQuNTg0QzEzLjY5NCw4LjY4MywxMi4zMTcsNy4zMDYsMTAuNjMyLDcuMDQ5eiIvPjwvc3ZnPg==) no-repeat 50% 50%;
+    background-size: 25px;
+  }
+}
+
+// Loading image style
+.brz-ed-loading {
+  position: relative;
+  padding: $paddingContainer;
+  border: $borderWidth dashed #ccc;
+  width: $imageContainer;
+  height: $imageContainer;
+  cursor: pointer;
+  transition: all 0.2s linear;
+
+  &:before {
+    content: 'Change Image';
+    font: bold 10px $font-family-1;
+    color: $text-white;
+    line-height: $imageContainer;
+    text-transform: uppercase;
+    position: absolute;
+    z-index: 1;
+    top: -$borderWidth;
+    left: -$borderWidth;
+    width: $imageContainer;
+    height: $imageContainer;
+    background-color: rgba(#000, 0.8);
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s linear, visibility 0.2s linear;
+  }
+  &:hover {
+    border-color: transparent;
+
+    &:before {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.2s linear, visibility 0.2s linear;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+// Accordion
+.brz-accordion {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+
+  // Nav
+  &__nav {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-style: solid;
+    background-clip: padding-box;
+  }
+
+  // Content
+  &__item {
+    display: block;
+    width: 100%;
+
+    & > .brz-accordion__content {
+      display: none;
+      border-style: solid;
+      background-clip: padding-box;
+      border-top-color: transparent !important;
+    }
+    &:not(:last-child) {
+      margin-bottom: 3px;
+    }
+  }
+  &__item--active {
+    & > .brz-accordion__content {
+      display: block;
+
+      &:empty {
+        min-height: 50px;
+      }
+    }
+  }
+}

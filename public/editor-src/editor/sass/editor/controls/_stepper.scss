@@ -1,0 +1,71 @@
+// --- Stepper
+.brz-ed-control__stepper {
+  position: relative;
+  width: $control-sm-width;
+  height: $control-height;
+  border-radius: $control-border-radius;
+  overflow: hidden;
+  background: $control-background-color;
+  color: $control-color;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.brz-ed-control__stepper--value,
+.brz-ed-control__stepper--arrows {
+  position: relative;
+}
+.brz-ed-control__stepper--value {
+  font-family: $font-family-1;
+  font-size: $control-font-size;
+  letter-spacing: $control-letter-spacing;
+  line-height: 1;
+  width: 65%;
+  flex-basis: 65%;
+  padding-left: $control-padding;
+  padding-top: 2px;
+}
+.brz-ed-control__stepper--arrows {
+  width: 35%;
+  flex-basis: 35%;
+  height: $control-height;
+}
+.brz-ed-control__stepper--up,
+.brz-ed-control__stepper--down {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: $control-height / 2;
+  line-height: $control-height / 2;
+  font-size: 8px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  color: $control-color;
+  -webkit-transition: color 0.2s linear;
+  transition: color 0.2s linear;
+
+  .brz-icon-svg {
+    position: absolute;
+    right: 10px;
+    top: auto;
+  }
+  &:hover {
+    color: $brand-primary;
+  }
+}
+.brz-ed-control__stepper--up {
+  top: 0;
+
+  .brz-icon-svg {
+    bottom: 1px;
+  }
+}
+.brz-ed-control__stepper--down {
+  bottom: 0;
+
+  .brz-icon-svg {
+    top: 1px;
+  }
+}

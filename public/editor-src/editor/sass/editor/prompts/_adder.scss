@@ -1,0 +1,62 @@
+// Visual Container Plus for popup blocks
+.brz-ed-container-adder {
+  max-width: $block-adder-container-sm-width;
+  height: auto;
+  margin: 40px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fff;
+  border: 2px dashed $brand-primary;
+  border-radius: $block-adder-container-border-radius;
+
+  .floating-action-button {
+    margin: 0 35px;
+    flex: 1 0 54px;
+  }
+ .brz-span {
+   width: 100%;
+ }
+}
+.brz-ed-block-adder-title {
+  font-family: $font-family-1;
+  font-size: $block-adder-font-size;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: $block-adder-title-color;
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+.brz-ed-block-adder-desc {
+  font-family: $font-family-1;
+  font-size: $block-adder-font-size;
+  font-style: italic;
+  color: $block-adder-desc-color;
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
+
+// Hide adder when device mode is Mobile
+&.brz-ed--mobile {
+  .brz-ed-container-adder {
+    display: none;
+  }
+}
+
+// --- Responsive
+@include media-breakpoint-up(sm) {
+  .brz-ed-container-adder {
+    max-width: $block-adder-container-width;
+    height: $block-adder-container-height;
+    flex-direction: row;
+  }
+  .brz-ed-block-adder-title,
+  .brz-ed-block-adder-desc {
+    margin: 0;
+    min-width: 165px;
+  }
+  .brz-ed-block-adder-title {
+    text-align: right;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": ["last 2 chrome versions", "last 2 firefox versions"]
+        },
+        "useBuiltIns": true,
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": [
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ],
+  "env": {
+    "export": {
+      "plugins": ["transform-remove-console"]
+    }
+  }
+}

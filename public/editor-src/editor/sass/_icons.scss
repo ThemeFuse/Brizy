@@ -1,0 +1,40 @@
+// SVG
+.brz-icon-svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke: none;
+  position: relative;
+  fill: currentColor;
+  color: currentColor;
+
+  // There is problems with flex
+  //vertical-align: middle;
+  //top: -0.0625em;
+
+  use {
+    /* change 'inherit' to a color value if you want to add a secondary color to Nucleo icons */
+    fill: inherit;
+  }
+
+  &.grid-16 {
+    height: 16px;
+    width: 16px;
+  }
+  &.grid-24 {
+    height: 24px;
+    width: 24px;
+  }
+  &.glyph {
+    fill: currentColor;
+    stroke: none;
+  }
+  &.outline {
+    stroke: currentColor;
+    fill: none;
+
+    &.stroke-2 {
+      stroke-width: 2px;
+    }
+  }
+}

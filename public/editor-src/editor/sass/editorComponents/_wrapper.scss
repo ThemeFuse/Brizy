@@ -1,0 +1,16 @@
+// Wrapper
+.brz-wrapper {
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  margin-top: -1px;
+  margin-bottom: -1px;
+
+  &-clone {
+    @extend .brz-wrapper;
+  }
+  &-clone__item {
+    position: relative;
+    min-height: 1px;
+    flex-basis: auto;
+  }
+}

@@ -1,0 +1,130 @@
+// Shortcode Text
+.brz-rich-text {
+  -webkit-font-smoothing: antialiased;
+  flex: 1 1 auto;
+
+  @include word-wrap;
+
+  i,
+  em {
+    font-style: italic;
+  }
+  ul,
+  ol {
+    li {
+      list-style: none;
+    }
+  }
+  ul {
+    li:before {
+      position: relative;
+      top: -0.1em;
+      line-height: 1;
+      content: "\2022";
+      padding-right: 0.5em;
+    }
+  }
+
+  ol {
+    counter-reset: number;
+
+    li {
+      counter-increment: number;
+
+      &:before {
+        content: counter(number);
+        line-height: 1;
+        padding-right: 0.5em;
+      }
+    }
+  }
+
+  .ql-editor {
+    white-space: pre-wrap;
+  }
+
+  // Text Reset
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    text-shadow: none;
+    text-transform: initial;
+    text-decoration: initial;
+  }
+  p,
+  span {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-shadow: none;
+    text-transform: initial;
+    text-decoration: initial;
+  }
+  span {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+  p {
+    display: block;
+  }
+  a,
+  em,
+  span {
+    display: inline;
+  }
+  ol,
+  ul,
+  dl {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+  }
+  ol ol,
+  ul ul,
+  ol ul,
+  ul ol {
+    margin: 0;
+  }
+  a {
+    color: $link-color;
+    text-decoration: $link-decoration;
+    background-color: transparent; // Remove the gray background on active links in IE 10.
+    -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
+
+    &[href] {
+      @include hover {
+        color: $link-hover-color;
+        text-decoration: $link-hover-decoration;
+      }
+    }
+  }
+  .link--anchor,
+  .link--external {
+    &:not(.is-empty) {
+      color: $link-color;
+
+      @include hover {
+        color: $link-hover-color;
+      }
+    }
+  }
+}
+
+// Simple text
+.brz-text__editor {
+  min-width: 10px;
+
+  &:empty:before {
+    content: "\00a0\00a0";
+  }
+}

@@ -1,0 +1,31 @@
+$containers-width: map-get($container-max-widths, "lg");
+
+// Device Mode Styles
+#brz-ed-iframe {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  border: 0;
+  outline: none;
+  user-select: none;
+  // transition: min-width 0.2s linear, max-width 0.2s linear;
+  // will-change: transform;
+
+  &.brz-ed-iframe--desktop {
+    width: calc(100% - #{$desktop-paddings}) !important; // temporary bug chrome (blink)
+  }
+}
+
+// Container
+.brz-ed-iframe--desktop {
+  min-width: $containers-width;
+  margin-left: $desktop-paddings !important; // change padding to marign bug chrome (blink)
+  max-width: 100%;
+  box-shadow: none;
+}
+.brz-ed-iframe--mobile {
+  min-width: $mobile-width;
+  max-width: $mobile-width;
+  // box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.1); // temporary bug chrome (blink)
+}

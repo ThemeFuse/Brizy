@@ -1,0 +1,15 @@
+// --- Placeholder for shortcodes
+.brz-shortcode__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: #373e48;
+  color: #151924;
+  font-size: inherit;
+
+  @media (max-width: 767px) {
+    font-size: 36px !important;
+  }
+}

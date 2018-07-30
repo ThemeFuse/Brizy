@@ -1,0 +1,46 @@
+{
+  "className": "",
+
+  "size": 100,
+
+  "controls": "on",
+  "ratio": "16:9",
+  "video": "",
+
+  "coverImageWidth": 0,
+  "coverImageHeight": 0,
+  "coverImageSrc": "",
+  "coverPositionY": 50,
+  "coverPositionX": 50,
+  "coverZoom": 100,
+  "iconSize": 80,
+  "iconSizeWidth": 80,
+  "iconSizeHeight": 80,
+
+  "bgColorHex": "#d62b63",
+  "bgColorOpacity": 0.75,
+  "bgColorPalette": "",
+  "tempBgColorOpacity": 0.75,
+  "tempBgColorPalette": "",
+
+  "hoverBgColorHex": "#239ddb",
+  "hoverBgColorOpacity": 0.75,
+  "hoverBgColorPalette": "",
+  "tempHoverBgColorOpacity": 0.75,
+  "tempHoverBgColorPalette": "",
+
+  "boxShadow": "off",
+  "boxShadowColorHex": "#000000",
+  "boxShadowColorOpacity": 1,
+  "boxShadowColorPalette": "",
+  "boxShadowBlur": 4,
+  "boxShadowSpread": 0,
+  "boxShadowVertical": 2,
+  "boxShadowHorizontal": 1,
+  "tempBoxShadowColorOpacity": 1,
+
+  "mobileSize": 100,
+
+  "mobileCoverImageWidth": 0,
+  "mobileCoverImageHeight": 0
+}

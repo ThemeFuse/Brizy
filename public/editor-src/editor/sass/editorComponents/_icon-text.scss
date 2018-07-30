@@ -1,0 +1,14 @@
+// Shortcode Icon Text
+.brz-icon-text {
+  display: flex;
+  width: 100%;
+  text-align: left;
+  align-items: stretch;
+  flex-wrap: nowrap;
+
+  // Style for editor
+  .brz-text__editor,
+  .brz-text-btn {
+    width: 100%;
+  }
+}

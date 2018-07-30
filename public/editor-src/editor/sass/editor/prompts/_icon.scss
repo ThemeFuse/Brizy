@@ -1,0 +1,29 @@
+// Icons Grid
+.brz-ed-popup-icons__grid {
+  .brz-ed-scroll-inner {
+    padding: 20px 20px 0;
+  }
+  &__item {
+    width: 68px;
+    height: 68px;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #222;
+    position: relative;
+
+    &.active,
+    &:hover {
+      background-color: #85d8f2;
+      color: #fff;
+    }
+    svg,
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

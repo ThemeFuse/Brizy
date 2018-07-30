@@ -1,0 +1,12 @@
+// --- Progress Bar
+.brz-progress-bar {
+  &__wrapper {
+    overflow: hidden;
+  }
+  .brz-text__editor {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

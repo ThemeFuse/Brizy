@@ -1,0 +1,46 @@
+// --- Font Option
+.brz-ed-popover__typography {
+  padding: 11px 7px 14px;
+
+  .brz-ed-popover__option,
+  .brz-ed-grid__option {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding: 6px 10px;
+  }
+  &--mobile {
+    .brz-ed-popover__option,
+    .brz-ed-grid__option {
+      padding-right: 10px;
+      padding-left: $popover-item-padding;
+    }
+    &:last-child {
+      .brz-ed-popover__option,
+      .brz-ed-grid__option {
+        padding-left: 10px;
+        padding-right: $popover-item-padding;
+      }
+    }
+  }
+}
+.brz-ed-popover__typography,
+.brz-ed-popover__typography--mobile {
+  .brz-control__select,
+  .brz-control__select-current,
+  .brz-ed-control__stepper {
+    width: 62px;
+  }
+  .brz-control__select-options {
+    width: 95px;
+  }
+}
+
+
+// Font Style Custom
+.brz-ed-popover__font-style {
+  .brz-control__select,
+  .brz-control__select-current,
+  .brz-control__select-options {
+    width: 120px;
+  }
+}

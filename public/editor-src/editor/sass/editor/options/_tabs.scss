@@ -1,0 +1,61 @@
+// Tabs
+.brz-ed-control-tabs-options {
+  position: relative;
+
+  > .brz-ed-options-tabs--label {
+    position: absolute;
+    top: 7px;
+  }
+  > .brz-ed-control__tabs {
+    border-bottom: 0;
+    justify-content: flex-end;
+
+    > .brz-ed-control__tab {
+      position: relative;
+      width: 37px;
+      height: 30px;
+      line-height: 30px;
+      background-color: #383e48;
+      color: #fff;
+      text-align: center;
+      transition: 0.2s linear background-color, 0.2s linear color;
+
+      .brz-icon-svg {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &:after {
+        width: 1px;
+        height: 100%;
+        background-color: #4c525b;
+        margin: 0;
+        border-right: 0;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      &.active {
+        background-color: $brand-primary;
+      }
+      &:first-child {
+        border-radius: 3px 0 0 3px;
+      }
+      &:last-child {
+        border-radius: 0 3px 3px 0;
+      }
+    }
+  }
+}
+
+// Tabs inline
+.brz-ed-tabs__option--inline {
+  position: relative;
+
+  .brz-ed-control__tabs {
+    margin-bottom: 0;
+  }
+}

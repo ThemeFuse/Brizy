@@ -1,0 +1,96 @@
+{
+  "className": "",
+
+  "media": "image",
+
+  "bgImageWidth": 0,
+  "bgImageHeight": 0,
+  "bgImageSrc": "",
+  "bgPositionY": 50,
+  "bgPositionX": 50,
+
+  "bgVideo": "",
+  "bgVideoQuality": 1080,
+  "bgVideoLoop": "off",
+
+  "bgColorHex": "#000000",
+  "bgColorOpacity": 0,
+  "bgColorPalette": "",
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "",
+
+  "bgMapZoom": 15,
+  "bgMapAddress": "Wall Street",
+
+  "paddingType": "grouped",
+  "padding": 75,
+  "paddingSuffix": "px",
+  "paddingTop": 75,
+  "paddingTopSuffix": "px",
+  "paddingBottom": 75,
+  "paddingBottomSuffix": "px",
+
+  "bgAttachment": "none",
+
+  "borderColorHex": "#66738d",
+  "borderColorOpacity": 0,
+  "borderColorPalette": "",
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "",
+
+  "borderWidthType": "grouped",
+  "borderWidth": 0,
+  "borderTopWidth": 0,
+  "borderRightWidth": 0,
+  "borderBottomWidth": 0,
+  "borderLeftWidth": 0,
+
+  "tempBorderWidth": 8,
+  "tempBorderTopWidth": 8,
+  "tempBorderRightWidth": 8,
+  "tempBorderBottomWidth": 8,
+  "tempBorderLeftWidth": 8,
+
+  "borderRadiusType": "grouped",
+  "borderRadius": 0,
+  "borderTopLeftRadius": 0,
+  "borderTopRightRadius": 0,
+  "borderBottomRightRadius": 0,
+  "borderBottomLeftRadius": 0,
+
+  "tempBorderRadius": 0,
+  "tempBorderTopLeftRadius": 0,
+  "tempBorderTopRightRadius": 0,
+  "tempBorderBottomRightRadius": 0,
+  "tempBorderBottomLeftRadius": 0,
+
+  "containerClassName": "",
+  "containerType": "boxed",
+  "containerSize": 100,
+  "items": [],
+
+  "mobileMedia": "image",
+
+  "mobileBgImageWidth": 0,
+  "mobileBgImageHeight": 0,
+  "mobileBgImageSrc": "",
+  "mobileBgPositionY": 50,
+  "mobileBgPositionX": 50,
+  "mobileBgAttachment": "none",
+
+  "mobileBgColorHex": "#000000",
+  "mobileBgColorOpacity": 0,
+  "mobileBgColorPalette": "",
+  "tempMobileBgColorOpacity": 1,
+  "tempMobileBgColorPalette": "",
+
+  "mobilePaddingType": "grouped",
+  "mobilePadding": 25,
+  "mobilePaddingSuffix": "px",
+  "mobilePaddingTop": 25,
+  "mobilePaddingTopSuffix": "px",
+  "mobilePaddingBottom": 25,
+  "mobilePaddingBottomSuffix": "px",
+
+  "mobileBgMapZoom": 15
+}

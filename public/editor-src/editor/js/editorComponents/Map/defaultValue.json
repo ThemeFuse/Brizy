@@ -1,0 +1,21 @@
+{
+  "className": "",
+
+  "size": 100,
+  "height": 400,
+  "zoom": 15,
+  "address": "Wall Street",
+
+  "boxShadow": "off",
+  "boxShadowColorHex": "#000000",
+  "boxShadowColorOpacity": 1,
+  "boxShadowColorPalette": "",
+  "boxShadowBlur": 4,
+  "boxShadowSpread": 0,
+  "boxShadowVertical": 2,
+  "boxShadowHorizontal": 1,
+  "tempBoxShadowColorOpacity": 1,
+
+  "mobileSize": 100,
+  "mobileHeight": 300
+}

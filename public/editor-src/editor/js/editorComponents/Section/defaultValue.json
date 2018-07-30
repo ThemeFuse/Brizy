@@ -1,0 +1,30 @@
+{
+  "className": "",
+  "showOnDesktop": "on",
+  "customClassName": "",
+  "fullHeight": "off",
+
+  "slider": "off",
+
+  "sliderDots": "circle",
+  "sliderDotsColorHex": "#000000",
+  "sliderDotsColorOpacity": 1,
+  "sliderDotsColorPalette": "",
+  "tempSliderDotsColorOpacity": 1,
+
+  "sliderArrows": "thin",
+  "sliderArrowsColorHex": "#000000",
+  "sliderArrowsColorOpacity": 1,
+  "sliderArrowsColorPalette": "",
+  "tempSliderArrowsColorOpacity": 1,
+
+  "sliderAnimation": "none",
+  "sliderAutoPlay": "off",
+  "sliderAutoPlaySpeed": 3,
+
+  "items": [],
+
+  "zIndex": 0,
+
+  "showOnMobile": "on"
+}

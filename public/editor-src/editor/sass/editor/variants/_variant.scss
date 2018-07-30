@@ -1,0 +1,35 @@
+// Container Variant
+.brz-ed-container-variants {
+  position: fixed;
+  z-index: 9984;
+  right: 32px;
+  bottom: 150px;
+}
+
+// Sidebar Variant
+.brz-ed-sidebar-variants {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  font-size: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+
+  &-title {
+    font-size: 14px;
+    line-height: 1;
+    font-family: $font-family-2;
+    color: #fff;
+    margin-right: 10px;
+  }
+}
+
+// Include Synchronize Button
+@import "synchronize-button";
+
+// Import Variant Select
+@import "variant-select";

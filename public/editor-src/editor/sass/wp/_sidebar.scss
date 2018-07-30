@@ -1,0 +1,22 @@
+// Sidebar
+.admin-bar .wp-env {
+  .visual-sidebar {
+    top: 32px;
+    left: 0;
+  }
+
+  .visual-wrap-block-wrap {
+    margin-left: 0;
+    padding-bottom: 0;
+  }
+}
+
+/// Sidebar Shortcode
+.brz-wp__sidebar {
+  width: 100%;
+
+  .brz-shortcode__placeholder {
+    width: 100%;
+    min-height: 300px;
+  }
+}

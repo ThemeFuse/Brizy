@@ -1,0 +1,295 @@
+// Select Default
+// Scroll Pane
+$select-options-scrollpane-track-width: 8px;
+$select-options-scrollpane-track-thumb: 3px;
+$scroll-border-radius: 4px;
+
+// ---
+.brz-control__select {
+  font-family: $font-family-1;
+  position: relative;
+  width: $control-md-width;
+
+  .brz-ed-scroll-pane {
+    .brz-ed-tall-thumb {
+      width: $select-options-scrollpane-track-width;
+      background-color: transparent;
+      border-radius: 4px;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 3px;
+        top: 0;
+        bottom: 0;
+        width: $select-options-scrollpane-track-thumb;
+        min-height: $select-options-scrollpane-track-thumb;
+        background-color: #7b7b7b;
+        border-radius: 2px;
+      }
+    }
+    .brz-ed-wide-thumb {
+      height: $select-options-scrollpane-track-thumb;
+      background-color: #7b7b7b;
+      border-radius: 2px;
+      top: 3px;
+    }
+    .brz-ed-tall-track {
+      border-radius: 0 4px 4px 0;
+    }
+  }
+  &.opened {
+    .brz-control__select-options {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  .brz-ed-scroll-pane-content {
+    border-right: none !important;
+  }
+}
+.brz-control__select-current {
+  line-height: $control-height;
+  height: $control-height;
+  border-radius: $control-border-radius;
+  overflow: hidden;
+
+  .brz-control__select-option {
+    border-bottom-color: transparent !important;
+    padding-right: $control-padding + $control-arrow-size + 2; // 2 - to not override text with arrow
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+.brz-icon-svg.brz-control__select--arrow {
+  position: absolute;
+  top: 50%;
+  right: ($control-arrow-size + 4); // 4 - is constant
+  margin-top: -0.5em;
+  font-size: $control-arrow-size;
+}
+.brz-control__select-options {
+  position: absolute;
+  z-index: 12;
+  left: 0;
+  margin-top: 3px;
+  min-width: 100%;
+  border-radius: $control-border-radius;
+  box-shadow: $control-dropdown-shadow;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+
+  .brz-control__select-option {
+    &:hover,
+    &.active {
+      transition: color 0.15s linear;
+      color: $brand-primary;
+    }
+  }
+}
+.brz-control__select-option {
+  position: relative;
+  cursor: pointer;
+  padding-left: $control-padding;
+  padding-right: $control-padding;
+  font-size: $control-font-size;
+  letter-spacing: $control-letter-spacing;
+  border-bottom: 1px solid $control-border-color;
+  line-height: $control-height;
+  height: $control-height;
+  transition: color 0.15s linear;
+  white-space: nowrap;
+
+  &:last-child {
+    border-bottom-color: transparent !important;
+  }
+}
+
+// Dark Version
+.brz-control__select--dark {
+  .brz-control__select-current,
+  .brz-control__select-options {
+    background-color: $control-background-color;
+  }
+  .brz-control__select-current {
+    color: $control-color;
+
+    &:hover {
+      background-color: $control-background-color;
+    }
+  }
+  .brz-control__select-option {
+    color: $control-color;
+  }
+}
+
+// Light Version
+.brz-control__select--light {
+  $control-background-color: #f2f2f2;
+  $control-color: #656b6f;
+  $control-border-color: #e6e6e6;
+
+  .brz-control__select-current,
+  .brz-control__select-options {
+    background-color: $control-background-color;
+  }
+  .brz-control__select-current {
+    color: $control-color;
+
+    &:hover {
+      background-color: $control-background-color;
+    }
+  }
+  .brz-control__select-option {
+    color: $control-color;
+    border-bottom-color: $control-border-color;
+  }
+}
+
+// Small Size
+.brz-control__select--small {
+  .brz-control__select {
+    width: 62px;
+  }
+}
+
+// Medium Size
+.brz-control__select--medium {
+  // Init Variables
+  $control-height: 37px;
+  $control-padding: 15px;
+  $control-font-size: 14px;
+  $control-arrow-size: 10px;
+
+  // Overwrite styles
+  .brz-control__select-current,
+  .brz-control__select-option {
+    line-height: $control-height;
+    height: $control-height;
+  }
+  .brz-control__select-option {
+    font-size: $control-font-size;
+    padding-left: $control-padding;
+    padding-right: $control-padding;
+  }
+  .brz-control__select--arrow {
+    font-size: $control-arrow-size;
+    right: ($control-arrow-size + 4); // 4 - is constant
+  }
+}
+
+// Popup Control Select Light
+.brz-ed-popup-control__select--light {
+  $control-background-color: #fff;
+  $control-color: #292e37;
+  $control-border-color: #f4f4f4;
+
+  .brz-control__select-current,
+  .brz-control__select-options {
+    background-color: $control-background-color;
+  }
+  .brz-control__select-current {
+    color: $brand-primary;
+
+    &:hover {
+      background-color: $control-background-color;
+    }
+    .brz-control__select-option {
+      color: $brand-primary;
+    }
+  }
+  .brz-control__select-option {
+    color: $control-color;
+  }
+}
+
+// Popup light Control tmp
+.brz-ed-popup-control-select-light {
+  box-shadow: $prompt-select-box-shadow;
+  border-radius: $prompt-select-border-radius;
+
+  &.opened {
+    .brz-control__select-current {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .brz-control__select-option {
+        border-bottom: 1px solid $prompt-select-border-color !important;
+      }
+    }
+    .brz-control__select-options {
+      box-shadow: $prompt-select-options-box-shadow;
+      border-radius: 0 0 $prompt-select-border-radius
+        $prompt-select-border-radius;
+    }
+  }
+  &.brz-control__select {
+    width: $prompt-select-width;
+  }
+  .brz-control__select-current {
+    background-color: $prompt-select-bg-color;
+    height: $prompt-select-height;
+    color: $brand-primary;
+    font-size: $prompt-select-font-size;
+    font-family: $font-family-1;
+    font-weight: normal;
+
+    &:after {
+      border-style: solid;
+      border-width: 6px 4px 0;
+      border-color: $brand-primary transparent;
+    }
+    .brz-control__select-option {
+      border-bottom: 0;
+      color: $brand-primary;
+
+      &:hover {
+        background-color: $prompt-select-bg-color;
+        color: $brand-primary;
+      }
+    }
+  }
+  .brz-control__select-options {
+    background-color: $prompt-select-bg-color;
+    top: 100%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .brz-control__select-option {
+    font-size: 14px;
+    height: $prompt-select-height;
+    line-height: ($prompt-select-height + 1); // +1 is from border-width
+    font-family: $font-family-1;
+    padding-left: 15px;
+    padding-right: 15px;
+    letter-spacing: 0.1px;
+    color: rgba(41, 46, 55, 0.8);
+    border-bottom: 0;
+
+    &:not(:first-child) {
+      border-top: 1px solid $prompt-select-border-color;
+    }
+    &:hover,
+    &.active {
+      background-color: $prompt-select-bg-hover-color;
+      color: rgba(41, 46, 55, 1);
+    }
+  }
+  .brz-ed-scroll-pane {
+    .brz-ed-tall-thumb {
+      width: $scroll-popup-width;
+      background-color: $scroll-popup-bg-color;
+      border-radius: $scroll-popup-border-radius;
+
+      &:after {
+        opacity: 0;
+      }
+    }
+    .brz-ed-tall-track {
+      width: $scroll-popup-width;
+      right: 4px;
+    }
+  }
+}

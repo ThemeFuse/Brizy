@@ -1,0 +1,26 @@
+// Visual Menu Editor Wrap
+
+.brz-ed-menu-editor-wrap {
+  position: relative;
+}
+.brz-ed-menu-editor-button {
+  position: absolute;
+  right: -54px;
+  top: -9px;
+  height: 54px;
+  border-radius: 7px;
+  background-color: rgba(3, 8, 15, 0.9);
+  padding: 16px 9px 0 18px;
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  z-index: 2;
+
+  &:hover {
+    background-color: #34beea;
+
+    .brz-ed-menu-editor-button {
+      display: block;
+    }
+  }
+}

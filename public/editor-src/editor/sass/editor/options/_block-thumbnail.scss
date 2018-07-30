@@ -1,0 +1,56 @@
+// Block Anchor
+.brz-ed-option__block-thumbnail {
+  .brz-ed-scroll-pane {
+    .brz-ed-scroll-inner {
+      max-height: 240px;
+      border-right-style: none !important;
+    }
+    .brz-ed-tall-track {
+      right: -10px;
+    }
+  }
+  .brz-figure {
+    margin-bottom: 5px;
+    max-width: 140px;
+    position: relative;
+    cursor: pointer;
+
+    img {
+      max-width: 100%;
+      position: relative;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid transparent;
+      transition: 0.2s linear border-color;
+    }
+    &:hover:after,
+    &.active:after {
+      border-color: $brand-primary;
+      transition: 0.2s linear border-color;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Loader
+  &-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    color: rgba(94, 100, 111, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: progress;
+  }
+}

@@ -1,0 +1,18 @@
+// Text align
+.brz-text-lg-left { @include align-left; }
+.brz-text-lg-right { @include align-right; }
+.brz-text-lg-center { @include align-center; }
+
+// Desktop
+&.brz-ed--desktop {
+  .brz-text-lg-left { @include align-left; }
+  .brz-text-lg-right { @include align-right; }
+  .brz-text-lg-center { @include align-center; }
+}
+
+// Mobile
+&.brz-ed--mobile {
+  .brz-text-xs-left { @include align-left; }
+  .brz-text-xs-right { @include align-right; }
+  .brz-text-xs-center { @include align-center; }
+}

@@ -1,0 +1,18 @@
+{
+  "className": "",
+
+  "width": 100,
+  "mobileWidth": 100,
+
+  "numberPosts": 5,
+  "category": "",
+  "author": "",
+  "orderBy": "date",
+  "order": "DESC",
+  "include": "",
+  "exclude": "",
+  "metaKey": "",
+  "metaValue": "",
+  "postType": "post",
+  "postStatus": "publish"
+}

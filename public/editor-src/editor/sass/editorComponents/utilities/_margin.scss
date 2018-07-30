@@ -1,0 +1,10 @@
+// Generated className marginTop and marginBottom from 0 to 100
+// Desktop
+@include generate-stepwise-classes(0, 100, 1, brz-mt-lg, margin, top);
+@include generate-stepwise-classes(0, 100, 1, brz-mb-lg, margin, bottom);
+
+// Mobile
+@include media-breakpoint-down(ms) {
+  @include generate-stepwise-classes(0, 100, 1, brz-mt-xs, margin, top);
+  @include generate-stepwise-classes(0, 100, 1, brz-mb-xs, margin, bottom);
+}

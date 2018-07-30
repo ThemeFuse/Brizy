@@ -1,0 +1,39 @@
+// Columns
+.brz-columns {
+  > .brz-ed-border {
+    display: flex;
+    flex: 1 1 auto;
+
+    > .brz-ed-border__inner-1:before,
+    > .brz-ed-border__inner-1:after,
+    > .brz-ed-border__inner-2:after {
+      left: 0;
+    }
+  }
+  > .brz-ed-border > .brz-bg {
+    flex: 1 1 auto;
+  }
+  &:first-child {
+    > .brz-ed-border {
+      > .brz-ed-border__inner-1:before,
+      > .brz-ed-border__inner-1:after,
+      > .brz-ed-border__inner-2:after {
+        left: -2px;
+      }
+    }
+  }
+  .brz-ed-border__column--empty {
+    min-height: 125px;
+  }
+}
+
+// When is device mode mobile
+&.brz-ed--mobile .brz-columns {
+  > .brz-ed-border {
+    > .brz-ed-border__inner-1:before,
+    > .brz-ed-border__inner-1:after,
+    > .brz-ed-border__inner-2:after {
+      left: -2px;
+    }
+  }
+}
