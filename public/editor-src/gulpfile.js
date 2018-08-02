@@ -8,9 +8,7 @@ const util = require("util");
 const readline = require("readline");
 const exec = util.promisify(require("child_process").exec);
 
-const _ = require("underscore");
 const chalk = require("chalk");
-const glob = require("glob");
 const del = require("del");
 
 // gulp
@@ -20,7 +18,8 @@ const runSequence = require("run-sequence");
 
 // webpack
 const webpack = require("webpack");
-const webpackConfig = require("./webpack.config");
+const webpackConfigEditor = require("./webpack.config.editor");
+const webpackConfigExport = require("./webpack.config.export");
 
 // rollup
 var babel = require("rollup-plugin-babel");
@@ -31,22 +30,18 @@ const postcssSCSS = require("postcss-scss");
 const stylelint = require("stylelint");
 const autoprefixer = require("autoprefixer");
 
-const TARGET =
-  process.env.TARGET ||
-  (process.argv.indexOf("--target") !== -1 &&
-    process.argv[process.argv.indexOf("--target") + 1]);
-const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const IS_EXPORT = process.argv.indexOf("--export") !== -1;
-const NO_WATCH = process.env.NO_WATCH;
-const TEMPLATE_NAME =
-  process.argv.indexOf("-t") !== -1 &&
-  process.argv[process.argv.indexOf("-t") + 1];
-const BUILD_DIR =
-  process.argv.indexOf("--build-dir") !== -1
-    ? process.argv[process.argv.indexOf("--build-dir") + 1]
-    : TARGET === "WP" && !IS_PRODUCTION
-      ? "../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
-      : null;
+// flags
+const argv = require("minimist")(process.argv.slice(2));
+const TEMPLATE_NAME = "brizy";
+const TARGET = argv.target || argv.t || "none";
+const IS_PRODUCTION = Boolean(argv.production);
+const IS_EXPORT = Boolean(argv.export || argv.e);
+const BUILD_DIR = argv["build-dir"]
+  ? argv["build-dir"]
+  : TARGET === "WP" && !IS_PRODUCTION
+    ? "../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
+    : null;
+const NO_WATCH = Boolean(argv["no-watch"]);
 let ABORTED = false;
 
 const paths = {
@@ -179,7 +174,6 @@ gulp.task("scss-lint", () => {
 gulp.task(
   "editor",
   [
-    "editor.js.init",
     "editor.js.lib",
     "editor.js.compile",
     "editor.css",
@@ -201,26 +195,6 @@ gulp.task(
     runSequence(tasks, done);
   }
 );
-gulp.task("editor.js.init", done => {
-  const src = paths.editor + "/js/bootstraps/init/index.js";
-  const dest = paths.build + "/editor/js";
-
-  gulp
-    .src(src)
-    .pipe(
-      gulpPlugins.betterRollup(
-        {},
-        {
-          format: "iife",
-          name: "Brizy"
-        }
-      )
-    )
-    .pipe(gulpPlugins.rename("brizy-init.js"))
-    .pipe(gulpPlugins.if(IS_PRODUCTION, gulpPlugins.uglify()))
-    .pipe(gulp.dest(dest))
-    .on("end", done);
-});
 gulp.task("editor.js.lib", done => {
   const src = [
     paths.editor + "/lib/editor/*/*.js",
@@ -237,15 +211,19 @@ gulp.task("editor.js.lib", done => {
     });
 });
 gulp.task("editor.js.compile", done => {
-  const config = webpackConfig.makeForGulp({
+  const options = {
+    TEMPLATE_NAME,
+    TEMPLATE_PATH: paths.template,
     TARGET,
     IS_PRODUCTION,
     IS_EXPORT,
-    NO_WATCH,
-    TEMPLATE_NAME,
-    TEMPLATE_PATH: paths.template,
-    BUILD_PATH: paths.build
-  });
+    BUILD_PATH: paths.build,
+    NO_WATCH
+  };
+  const config = [
+    webpackConfigEditor(options),
+    ...(IS_EXPORT ? [webpackConfigExport(options)] : [])
+  ];
 
   let doneCalled = false;
   webpack(config, (err, stats) => {

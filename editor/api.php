@@ -358,9 +358,21 @@ class Brizy_Editor_API {
 			$this->authorize();
 
 			// update project globas
-			$data    = $this->param( 'gb' );
-			$post_id = (int) $this->param( 'post' );
-			$this->project->set_globals_as_json( stripslashes( $data ) );
+			$data = stripslashes( $this->param( 'gb' ) );
+
+			// let's try to validate the global data
+			// by deserializing and checking the project and globals properties
+			$jsonData = json_decode( $data );
+			if ( is_null( $jsonData ) ) {
+				throw new Exception( "The received global json cannot be decoded" );
+			}
+			if ( ! is_object( $jsonData ) || ! isset( $jsonData->project ) || ! isset( $jsonData->language ) ) {
+				throw new Exception( "The received global data is invalid" );
+			}
+
+
+			//$post_id = (int) $this->param( 'post' );
+			$this->project->set_globals_as_json( $data );
 			$this->project->save();
 
 			// mark all brizy post to be compiled on next view
@@ -395,7 +407,7 @@ class Brizy_Editor_API {
 	public function get_item() {
 		try {
 			$this->authorize();
-			$post_arr = self::create_post_arr( $this->post );
+			$post_arr             = self::create_post_arr( $this->post );
 			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
 			$this->success( array( $post_arr ) );
 		} catch ( Exception $exception ) {

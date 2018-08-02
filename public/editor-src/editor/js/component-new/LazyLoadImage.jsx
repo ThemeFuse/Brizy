@@ -95,12 +95,10 @@ export default class LazyLoadImage extends Component {
   render() {
     const { width, height, src } = this.props;
     const { imageFetched, showSpinner } = this.state;
+    const ratio = Math.round((height / width) * 100 * 10) / 10;
 
     return (
-      <div
-        className="brz-observer__image"
-        style={{ width: `${width}px`, height: `${height}px` }}
-      >
+      <div className="brz-observer__image" style={{ paddingTop: `${ratio}%` }}>
         {showSpinner && (
           <div className="brz-ed-option__block-thumbnail-loading">
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />

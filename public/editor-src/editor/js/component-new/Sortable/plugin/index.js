@@ -499,7 +499,7 @@ class Sortable {
           const zIndex = node.sortableInfo.zIndex;
           const depth = node.sortableInfo.depth;
 
-          if (zIndex >= acc.zIndex && depth > acc.depth) {
+          if (zIndex > acc.zIndex  || (zIndex === acc.zIndex && depth > acc.depth)) {
             return { node, depth, zIndex };
           }
         }

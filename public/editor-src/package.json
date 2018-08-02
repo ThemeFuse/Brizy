@@ -42,7 +42,6 @@
     "del": "^3.0.0",
     "express": "^4.16.2",
     "file-loader": "^1.1.11",
-    "glob": "^7.0.5",
     "gulp": "^3.9.1",
     "gulp-better-rollup": "^2.0.0",
     "gulp-concat": "^2.6.0",
@@ -62,10 +61,11 @@
     "gulp-util": "^3.0.7",
     "gulp-zip": "^4.1.0",
     "json-loader": "^0.5.4",
+    "minimist": "^1.2.0",
     "node-fetch": "^1.7.3",
     "node-sass": "^4.7.2",
     "nodemon": "^1.17.1",
-    "npm-run-all": "^4.1.2",
+    "npm-run-all": "^4.1.3",
     "null-loader": "^0.1.1",
     "postcss-reporter": "^5.0.0",
     "postcss-scss": "^1.0.4",
@@ -76,10 +76,15 @@
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^17.0.0",
     "twig": "^1.10.5",
-    "uglifyjs-webpack-plugin": "^1.2.2",
-    "webpack": "^3.11.0"
+    "webpack": "^4.16.0"
   },
   "scripts": {
+    "build": "npm-run-all --parallel \"build:brizy -- {@}\" server --",
+    "build:brizy": "gulp build",
+    "server": "node ./backend/server.js",
+    "build:github": "npm run build:brizy -- -t WP --build-dir ../editor-build"
+  },
+  "x-scripts": {
     "build": "npm-run-all --parallel build:brizy server",
     "build:export": "npm-run-all --parallel build:brizy:export server",
     "build:brizy": "gulp build -t brizy",

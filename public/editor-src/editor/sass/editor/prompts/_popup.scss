@@ -19,11 +19,15 @@
     padding: 20px;
     background-color: rgba(#03080f, 0.12);
     text-align: center;
+    margin-bottom: 16px;
+
+    & > div {
+      margin-right: 10px;
+    }
   }
   &__search {
     position: relative;
     width: 400px;
-    margin-left: 10px;
   }
   &__input {
     font-family: $font-family-1;
@@ -72,6 +76,19 @@
     $control-font-size: 14px;
     $control-arrow-size: 10px;
 
+    &.brz-control__select {
+      width: 120px;
+    }
+    &.brz-ed-popup__select--block-categories {
+      width: 200px;
+
+      .brz-control__select-options {
+        width: 548px;
+      }
+      .brz-ed-scroll-inner {
+        columns: 3;
+      }
+    }
     .brz-control__select-current {
       line-height: $control-height;
       height: $control-height;
@@ -87,9 +104,6 @@
       font-size: $control-arrow-size;
       right: ($control-arrow-size + 4); // 4 - is constant
     }
-    &.brz-control__select {
-      width: 208px;
-    }
     .brz-control__select-option {
       border-bottom-color: transparent;
       text-align: left;
@@ -102,13 +116,8 @@
     .brz-control__select-options {
       padding: 15px 28px;
       top: 100%;
-      width: 548px;
       margin-top: 4px;
       box-shadow: 0 0 10px 0 rgba(0, 0, 1, 0.1);
-
-      .brz-ed-scroll-inner {
-        columns: 3;
-      }
     }
   }
 }

@@ -17,7 +17,7 @@ class LastBlockAdder extends React.Component {
   open = () => {
     UIState.set("prompt", {
       prompt: "blocks",
-      onAddBlock: this.props.onAddBlock
+      onAddBlocks: this.props.onAddBlocks
     });
   };
 

@@ -5,6 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ assetsUrl }}/editor/css/editor.css" rel="stylesheet">
+    <style id="brz-ed-page-curtain-style">@keyframes spin{100%{transform:rotate(360deg)}}.brz-ed-page-curtain{position:fixed;left:0;right:0;top:0;bottom:0;background-color:#141923;z-index:1000}.brz-ed-page-spinner,.brz-ed-page-spinner:after,.brz-ed-page-spinner:before{content:'';position:absolute;top:50%;left:50%;border:3px solid transparent;border-radius:50%;animation:spin 1s linear infinite}.brz-ed-page-spinner{width:100px;height:100px;margin:-50px 0 0 -50px;border-top-color:#22b0da;animation-duration:2.5s}.brz-ed-page-spinner:after{width:80px;height:80px;margin:-40px 0 0 -40px;border-right-color:#ed2164;animation-duration:2s}.brz-ed-page-spinner:before{width:60px;height:60px;margin:-30px 0 0 -30px;border-bottom-color:#fff}</style>
+
     {% if DEV is not defined or DEV == false %}
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115444307-1"></script>
@@ -29,18 +32,23 @@
         <!-- End Facebook Pixel Code -->
       {% endif %}
   </head>
-  <body>
-      <iframe id="brz-ed-iframe" class="brz-iframe brz-ed-page" style="border: 0" srcdoc='
+  <body class="brz brz-ed">
+      <div class="brz-ed-page-curtain"><div class="brz-ed-page-spinner"></div></div>
+      <iframe id="brz-ed-iframe" class="brz-iframe brz-ed-iframe--desktop" style="border: 0" srcdoc='
         <html>
           <head>
+            <link href="{{ assetsUrl }}/editor/css/editor.css" rel="stylesheet">
           </head>
-          <body>
+          <body class="brz brz-ed brz-ed--desktop">
             <div id="brz-ed-root"></div>
-            <script src="{{ assetsUrl }}/editor/js/brizy-init.js"></script>
+            <script src="https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script src="{{ assetsUrl }}/editor/js/editor.vendor.js"></script>
             <script>
-              var config = JSON.parse("{{ editorData | json_encode | e("js") }}");
-              Brizy.init(config);
+              window.__VISUAL_CONFIG__ = {{ editorData | json_encode }};
             </script>
+            <script src="{{ assetsUrl }}/editor/js/editor.js"></script>
+
             {% if DEV is defined and DEV %}
               <script>
                 window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -49,6 +57,7 @@
           </body>
         </html>
       '></iframe>
+      <script src="https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry"></script>
   </body>
   </html>
 {% endspaceless %}

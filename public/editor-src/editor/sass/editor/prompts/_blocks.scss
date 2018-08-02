@@ -19,7 +19,6 @@
     width: 100%;
     height: $prompt-blocks-sm-height;
     padding: 24px 28px 16px;
-    margin-top: 16px;
   }
 }
 
@@ -45,7 +44,9 @@
   margin-right: auto;
 
   .brz-img {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     transform: scale(0.51) translate(-50%, -50%);
   }
   figcaption {
@@ -70,6 +71,9 @@
       background-color: $brand-primary;
     }
   }
+}
+.brz-observer__image {
+  position: relative;
 }
 
 // Block Blank

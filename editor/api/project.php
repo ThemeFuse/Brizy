@@ -27,7 +27,6 @@ class Brizy_Editor_API_Project extends Brizy_Admin_Serializable {
 
 	static public function createFromSerializedData( $data ) {
 		$api_project = new self( $data );
-
 		return $api_project;
 	}
 

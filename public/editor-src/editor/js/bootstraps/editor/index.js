@@ -61,8 +61,15 @@ Promise.resolve()
       </Provider>,
       appDiv,
       () => {
-        appDiv.setAttribute("data-rendered", true);
-        appDiv.dispatchEvent(new Event("brz.render"));
+        if (window.parent !== window) {
+          const pageCurtain = window.parent.document.querySelector(
+            ".brz-ed-page-curtain"
+          );
+
+          if (pageCurtain) {
+            pageCurtain.parentElement.removeChild(pageCurtain);
+          }
+        }
       }
     );
   })

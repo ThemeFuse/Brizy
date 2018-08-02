@@ -15,7 +15,7 @@ const SortableItem = SortableElement(({ item, onRemove }) => {
   return (
     <div className="brz-ed-sidebar-block-item">
       <div className="brz-ed-sidebar-block-image">
-        <img className="brz-img" src={blockThumbnailUrl(blockId)} />
+        <img className="brz-img" src={blockThumbnailUrl(blockData)} />
         <div className="brz-ed-sidebar-block-layout">
           <span className="brz-span brz-ed-sidebar-block-drag">
             {t("Drag to reorder")}

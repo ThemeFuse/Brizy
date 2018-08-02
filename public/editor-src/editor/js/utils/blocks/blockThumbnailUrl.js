@@ -1,10 +1,10 @@
 import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 
-export function blockThumbnailUrl(blockId) {
+export function blockThumbnailUrl(block) {
   const configUrl = Config.get("urls").blockThumbnails;
 
   return configUrl
-    ? `${configUrl}/${blockId}.jpg`
-    : assetUrl(`template/img-block-thumbs/${blockId}.jpg`);
+    ? `${configUrl}/${block.id}.jpg`
+    : assetUrl(`template/img-block-thumbs/${block.id}.jpg`);
 }
