@@ -14,8 +14,12 @@ class Blocks extends EditorArrayComponent {
     return "Page.Items";
   }
 
-  handleBlockAdd = (index, blockData) => {
-    this.insertItem(index, blockData);
+  handleBlocksAdd = (index, blockData) => {
+    if (Array.isArray(blockData)) {
+      this.insertItemsBatch(index, blockData);
+    } else {
+      this.insertItem(index, blockData);
+    }
   };
 
   getItemProps(itemData, itemIndex) {
@@ -66,7 +70,7 @@ class Blocks extends EditorArrayComponent {
         </BlockErrorBoundary>
         {showMiddleAdder && (
           <MiddleBlockAdder
-            onAddBlock={this.handleBlockAdd.bind(null, nextItemIndex)}
+            onAddBlocks={this.handleBlocksAdd.bind(null, nextItemIndex)}
           />
         )}
       </div>
@@ -79,14 +83,16 @@ class Blocks extends EditorArrayComponent {
     }
 
     if (items.length === 0) {
-      return <FirstBlockAdder onAddBlock={this.handleBlockAdd.bind(null, 0)} />;
+      return (
+        <FirstBlockAdder onAddBlocks={this.handleBlocksAdd.bind(null, 0)} />
+      );
     }
 
     return (
       <div className="brz-ed-wrap-block-wrap">
         {items}
         <LastBlockAdder
-          onAddBlock={this.handleBlockAdd.bind(null, items.length)}
+          onAddBlocks={this.handleBlocksAdd.bind(null, items.length)}
         />
       </div>
     );

@@ -20,16 +20,16 @@ const textsByDeviceMode = {
 
 class FirstBlockAdder extends React.Component {
   static defaultProps = {
-    onAddBlock: _.noop
+    onAddBlocks: _.noop
   };
 
   handleClick = () => {
-    const { deviceMode, blocks, onAddBlock, dispatch } = this.props;
+    const { deviceMode, blocks, onAddBlocks, dispatch } = this.props;
 
     if (deviceMode === "desktop") {
       UIState.set("prompt", {
         prompt: "blocks",
-        onAddBlock
+        onAddBlocks
       });
     } else {
       dispatch(setDeviceMode("desktop"));
@@ -71,5 +71,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default rolesHOC({
   allow: ["admin"],
-  component: connect(stateToProps, mapDispatchToProps)(FirstBlockAdder)
+  component: connect(
+    stateToProps,
+    mapDispatchToProps
+  )(FirstBlockAdder)
 });

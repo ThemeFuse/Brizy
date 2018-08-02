@@ -16,10 +16,5 @@
     "transform-runtime",
     "transform-object-rest-spread",
     "transform-class-properties"
-  ],
-  "env": {
-    "export": {
-      "plugins": ["transform-remove-console"]
-    }
-  }
+  ]
 }
