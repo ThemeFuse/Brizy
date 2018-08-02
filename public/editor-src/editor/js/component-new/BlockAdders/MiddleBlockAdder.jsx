@@ -5,7 +5,7 @@ import { rolesHOC } from "visual/component-new/Roles";
 
 class MiddleBlockAdder extends React.Component {
   static defaultProps = {
-    onAddBlock: _.noop()
+    onAddBlocks: _.noop()
   };
 
   shouldComponentUpdate() {
@@ -15,7 +15,7 @@ class MiddleBlockAdder extends React.Component {
   open = () => {
     UIState.set("prompt", {
       prompt: "blocks",
-      onAddBlock: this.props.onAddBlock
+      onAddBlocks: this.props.onAddBlocks
     });
   };
 

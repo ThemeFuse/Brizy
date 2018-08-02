@@ -3,34 +3,39 @@ import _ from "underscore";
 import LazyLoadImage from "visual/component-new/LazyLoadImage";
 import EditorIcon from "visual/component-new/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
-import { blockThumbnailUrl } from "visual/utils/blocks";
+import { t } from "visual/utils/i18n";
 
 const MAX_CONTAINER_WIDTH = 292;
 
-class BlockThumbnail extends React.Component {
+export default class Thumbnail extends React.Component {
   static defaultProps = {
     showRemoveIcon: false,
     blockData: {},
-    onClick: _.noop,
+    onAdd: _.noop,
     onRemove: _.noop
   };
 
   handleClick = () => {
-    const { blockData, onClick } = this.props;
+    const { data, onAdd } = this.props;
 
-    onClick(blockData);
+    onAdd(data);
   };
 
   handleRemove = () => {
-    const { blockData, onRemove } = this.props;
+    const { data, onRemove } = this.props;
 
-    onRemove(blockData);
+    onRemove(data);
   };
 
   render() {
     const {
-      blockData: { id, blank, thumbnailWidth, thumbnailHeight },
-      showRemoveIcon
+      data: {
+        thumbnailSrc,
+        thumbnailWidth,
+        thumbnailHeight,
+        blank,
+        showRemoveIcon
+      }
     } = this.props;
     let thumbnail;
 
@@ -42,11 +47,10 @@ class BlockThumbnail extends React.Component {
           className="brz-ed-popup-block-item brz-ed-popup-block__blank"
         >
           <div className="brz-ed-container-trigger brz-ed-container-trigger--small" />
-          <p className="brz-p">Add a Blank Block</p>
+          <p className="brz-p">{t("Add a Blank Block")}</p>
         </div>
       );
     } else {
-      const src = blockThumbnailUrl(id);
       const { width, height } = imageWrapperSize(
         thumbnailWidth,
         thumbnailHeight,
@@ -60,7 +64,7 @@ class BlockThumbnail extends React.Component {
         >
           <LazyLoadImage
             observerRootSelector=".brz-ed-popup-blocks-body"
-            src={src}
+            src={thumbnailSrc}
             width={width}
             height={height}
           />
@@ -86,5 +90,3 @@ class BlockThumbnail extends React.Component {
     );
   }
 }
-
-export default BlockThumbnail;

@@ -1,5 +1,4 @@
 import React from "react";
-import deepExtend from "deep-extend";
 import { insert, removeAt, replaceAt, setIn } from "timm";
 import Editor from "visual/global/Editor";
 import EditorComponent from "./EditorComponent";
@@ -34,6 +33,17 @@ export default class EditorArrayComponent extends EditorComponent {
     const updatedValue = insert(dbValue, itemIndex, itemDataWithIds);
 
     this.handleValueChange(updatedValue, { arrayOperation: "insert" });
+  }
+
+  insertItemsBatch(itemIndex, itemsData) {
+    const dbValue = this.getDBValue() || [];
+    const updatedValue = itemsData.reduce(
+      (acc, itemData, index) =>
+        insert(acc, itemIndex + index, setIds(itemData)),
+      dbValue
+    );
+
+    this.handleValueChange(updatedValue, { arrayOperation: "insert_bulk" });
   }
 
   updateItem(itemIndex, itemValue) {
