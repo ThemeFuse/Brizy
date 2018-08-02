@@ -177,29 +177,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	public function set_globals_as_json( $globals ) {
 		$this->api_project->set_globals_as_json( $globals );
 
-		// when the globals is updated all pages needs to be compiled.
-		// se will update the flag for all pages edited with brizy
-		$posts = get_posts( array(
-			'orderby'     => null,
-			'numberposts' => - 1,
-			'post_type'   => 'any',
-			'post_status' => 'any',
-			'meta_key'    => Brizy_Editor_Constants::BRIZY
-		) );
 
-		foreach ( (array) $posts as $post ) {
-
-			if ( ! in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() ) ) {
-				continue;
-			}
-
-			$brizy_post = Brizy_Editor_Post::get( $post->ID );
-
-			if ( $brizy_post->uses_editor() ) {
-				$brizy_post->set_needs_compile( true );
-				$brizy_post->save();
-			}
-		}
 
 		return $this;
 	}
