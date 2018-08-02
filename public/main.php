@@ -260,24 +260,28 @@ class Brizy_Public_Main {
 
 		if ( is_singular() && is_main_query() ) {
 
-			$template_path = self::path( 'views/editor.html.twig' );
+			try {
+				$template_path = self::path( 'views/editor.html.twig' );
 
-			$twig_template = $this->getTwigTemplate( $template_path );
+				$twig_template = $this->getTwigTemplate( $template_path );
 
-			$config_object = $this->getConfigObject();
+				$config_object = $this->getConfigObject();
 
-			$context = array(
-				'editorData'    => $config_object,
-				'editorVersion' => BRIZY_EDITOR_VERSION
-			);
+				$context = array(
+					'editorData'    => $config_object,
+					'editorVersion' => BRIZY_EDITOR_VERSION
+				);
 
-			if ( WP_DEBUG ) {
-				$context['DEBUG'] = true;
+				if ( WP_DEBUG ) {
+					$context['DEBUG'] = true;
+				}
+
+				$render_block = $twig_template->render( $context );
+
+				return $render_block;
+			} catch ( Exception $e ) {
+				return $e->getMessage();
 			}
-
-			$render_block = $twig_template->render( $context );
-
-			return $render_block;
 		}
 
 		return $content;
@@ -371,9 +375,14 @@ class Brizy_Public_Main {
 		return dirname( __FILE__ ) . "/$rel";
 	}
 
+	/**
+	 * @param null $template_path
+	 *
+	 * @return Twig_TemplateWrapper
+	 */
 	private function getTwigTemplate( $template_path = null ) {
 
-		if ( $this->twig_template[ $template_path ] ) {
+		if ( isset( $this->twig_template[ $template_path ] ) ) {
 			return $this->twig_template[ $template_path ];
 		}
 
@@ -381,7 +390,18 @@ class Brizy_Public_Main {
 			'editor' => file_get_contents( $template_path )
 		) );
 
-		$twig          = new Twig_Environment( $loader, array() );
+		$twig_cache = $this->url_builder->upload_path( 'brizy/twig' );
+
+		if ( ! file_exists( $twig_cache ) ) {
+			@mkdir( $twig_cache, 0755, true );
+		}
+
+		$options = array();
+		if ( file_exists( $twig_cache ) ) {
+			$options['cache'] = $twig_cache;
+		}
+
+		$twig          = new Twig_Environment( $loader, $options );
 		$twig_template = $twig->load( 'editor' );
 
 		return $this->twig_template[ $template_path ] = $twig_template;
