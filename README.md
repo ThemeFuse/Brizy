@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.21<br>
+Stable tag: 1.0.22<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,11 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.22 - 2018-08-02 ###
+* Improvement : Removed duplicate code that updates the needs_compile flag when the globals is updated
+* Improvement: Added validation of global JSON object
+* Fixed: Editor loading animation wouldn’t end when certain plugins were installed
 
 ### 1.0.21 - 2018-07-30 ###
 * Improved: Smooth scroll for internal WordPress menu links
