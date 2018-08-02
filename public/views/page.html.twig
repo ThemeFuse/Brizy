@@ -13,25 +13,6 @@
     <body class="brz brz-ed" style="margin: 0;">
         <div class="brz-ed-page-curtain"><div class="brz-ed-page-spinner"></div></div>
         <iframe id="brz-ed-iframe" class="brz-iframe brz-ed-iframe--desktop" style="border: 0; width: 100%; min-height: 100vh; margin: 0 auto;" src="{{ iframe_url }}"></iframe>
-        <script>
-            document.querySelector("#brz-ed-iframe").onload = function() {
-                function removePageCurtain() {
-                    document.body.removeChild(document.querySelector(".brz-ed-page-curtain"));
-                }
-
-                var root = this.contentDocument.querySelector("#brz-ed-root");
-                if (root) {
-                    // sometimes the editor is rendered faster
-                    // then we can attach the custom event handler
-                    if (root.hasAttribute("data-rendered")) {
-                        removePageCurtain();
-                    }
-                    root.addEventListener("brz.render", removePageCurtain);
-                } else {
-                    console.error('Could not find #brz-ed-root');
-                }
-            };
-        </script>
     </body>
 </html>
 {% endspaceless %}
