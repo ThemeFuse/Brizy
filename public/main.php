@@ -245,7 +245,7 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_view_page() {
-		return ! is_admin() && $this->post->uses_editor();
+		return ! is_admin() && $this->post->uses_editor() && !isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && !isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] );
 	}
 
 	/**
