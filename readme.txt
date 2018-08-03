@@ -111,15 +111,17 @@ The progress you're making while building your page is always backed up in the c
 [Terms of use](https://brizy.io/terms/)
 [Privacy policy](https://brizy.io/privacy/)
 
-== Source Code, Suggestions & Issues ==
 
-= ON THE PUBLIC GITHUB YOU CAN =
+== Frequently Asked Questions ==
+
+= Source Code, Suggestions & Issues =
+
+**ON THE PUBLIC GITHUB YOU CAN**
 
 - [Download the source code](https://github.com/ThemeFuse/Brizy)
 - [Request a feature](https://github.com/ThemeFuse/Brizy/issues)
 - [Submit an issue](https://github.com/ThemeFuse/Brizy/issues)
 
-== Frequently Asked Questions ==
 
 == Screenshots ==
 
