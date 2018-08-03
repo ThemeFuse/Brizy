@@ -257,7 +257,7 @@ class Brizy_Public_Main {
 	 */
 	function _filter_the_content( $content ) {
 
-		if ( is_singular() && is_main_query() ) {
+		if ( is_main_query() ) {
 
 			try {
 
