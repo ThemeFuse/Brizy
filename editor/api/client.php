@@ -205,15 +205,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		$page = parent::request( $compile_url, array( 'body' => $body ), 'POST' )->get_response_body();
 
-		$static_template_page = BRIZY_PLUGIN_PATH . "/public/editor-build/editor/views/static.html.twig";
-
-		$loader = new Twig_Loader_Array( array(
-			'static' => file_get_contents( $static_template_page )
-		) );
-
-		$twig          = new Twig_Environment( $loader, array() );
-		$twig_template = $twig->load( 'static' );
-
 		$template_context = array(
 
 			'editorData' => array(
@@ -225,7 +216,8 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 			'page'       => $page
 		);
 
-		return $twig_template->render( $template_context );
+		return Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/public/editor-build/editor/views/" )
+		                       ->render( 'static.html.twig', $template_context );
 
 	}
 

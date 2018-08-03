@@ -179,8 +179,6 @@ class Brizy_Public_Main {
 	}
 
 	public function template_include( $atemplate ) {
-		$template_path = self::path( 'views/page.html.twig' );
-		$twig_template = $this->getTwigTemplate( $template_path );
 
 		$config_object = $this->getConfigObject();
 
@@ -200,7 +198,8 @@ class Brizy_Public_Main {
 			$context['DEBUG'] = true;
 		}
 
-		echo $twig_template->render( $context );
+		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
+		                     ->render( 'page.html.twig', $context );
 
 		return self::path( 'views/empty.php' );
 	}
@@ -261,9 +260,6 @@ class Brizy_Public_Main {
 		if ( is_singular() && is_main_query() ) {
 
 			try {
-				$template_path = self::path( 'views/editor.html.twig' );
-
-				$twig_template = $this->getTwigTemplate( $template_path );
 
 				$config_object = $this->getConfigObject();
 
@@ -276,7 +272,8 @@ class Brizy_Public_Main {
 					$context['DEBUG'] = true;
 				}
 
-				$render_block = $twig_template->render( $context );
+				$render_block = Brizy_TwigEngine::instance( self::path( 'views' ) )
+				                                ->render( 'editor.html.twig', $context );
 
 				return $render_block;
 			} catch ( Exception $e ) {
@@ -287,36 +284,13 @@ class Brizy_Public_Main {
 		return $content;
 	}
 
-	function editor_head() {
-
-		$twig_template = $this->getTwigTemplate();
-
-		$config_object = $this->getConfigObject();
-
-		$context = array( 'editorData' => $config_object );
-
-		if ( WP_DEBUG ) {
-			$context['DEBUG'] = true;
-		}
-
-		echo $twig_template->renderBlock( 'header_content', $context );
-	}
-
-
-//	function _invalidate_editor_assets( $new_version, $old_version ) {
-//		$this->project
-//			->invalidateAssetsFor( $old_version )
-//			->set_template_version( $new_version )
-//			->setStoreAssets( true )
-//			->save();
-//	}
-
 
 	/**
 	 *  Show the compiled page head content
 	 */
 	public function insert_page_head() {
 
+		$context = array( 'content' => '' );
 		if ( ! $this->post->get_compiled_html() ) {
 
 			$compiled_html_head = $this->post->get_compiled_html_head();
@@ -325,11 +299,8 @@ class Brizy_Public_Main {
 			$this->post->set_needs_compile( true )
 			           ->save();
 
-			?>
-            <!-- BRIZY HEAD -->
-			<?php echo $compiled_html_head; ?>
-            <!-- END BRIZY HEAD -->
-			<?php
+			$context['content'] = $compiled_html_head;
+
 		} else {
 			$compiled_page = $this->post->get_compiled_page( $this->project );
 
@@ -337,12 +308,11 @@ class Brizy_Public_Main {
 
 			$head = $compiled_page->get_head();
 
-			?>
-            <!-- BRIZY HEAD -->
-			<?php echo $head; ?>
-            <!-- END BRIZY HEAD -->
-			<?php
+			$context['content'] = $head;
 		}
+
+		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
+		                     ->render( 'head-partial.html.twig', $context );
 
 		return;
 	}

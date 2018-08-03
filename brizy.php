@@ -20,7 +20,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.22' );
+define( 'BRIZY_VERSION', '1.0.21' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.49' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
@@ -47,6 +47,7 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.4.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
+
 		return;
 	}
 
@@ -59,7 +60,8 @@ function brizy_load() {
 function brizy_notices() {
 	?>
     <div class="notice notice-error is-dismissible">
-        <p>Brizy requires PHP version 5.4+, you currently running PHP <?php echo PHP_VERSION?>.  <b>BRIZY IS NOT RUNNING. </b></p>
+        <p>Brizy requires PHP version 5.4+, you currently running PHP <?php echo PHP_VERSION ?>. <b>BRIZY IS NOT
+                RUNNING. </b></p>
     </div>
 	<?php
 }
