@@ -4,6 +4,7 @@
 .brz-bg-content {
   position: relative;
   flex: 1;
+  min-width: 0;
 }
 
 // Media
@@ -46,7 +47,6 @@
 .brz-bg-color {
   opacity: 1;
 }
-
 .brz-bg-image-parallax {
   width: 100%;
   background-size: cover !important;

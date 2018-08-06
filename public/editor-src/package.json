@@ -79,7 +79,7 @@
     "webpack": "^4.16.0"
   },
   "scripts": {
-    "build": "npm-run-all --parallel \"build:brizy -- {@}\" server --",
+    "build": "npm-run-all --parallel \"build:brizy -- {@}\" \"server -- {@}\" --",
     "build:brizy": "gulp build",
     "server": "node ./backend/server.js",
     "build:github": "npm run build:brizy -- -t WP --build-dir ../editor-build"

@@ -78,6 +78,10 @@ class Brizy_Editor_UrlBuilder {
 	 * @return string
 	 */
 	public function upload_path( $path = null ) {
+		if ( $path ) {
+			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+		}
+
 		return $this->upload_dir['basedir'] . $path;
 	}
 
@@ -87,6 +91,10 @@ class Brizy_Editor_UrlBuilder {
 	 * @return string
 	 */
 	public function upload_url( $path = null ) {
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
+
 		return $this->upload_dir['baseurl'] . $path;
 	}
 

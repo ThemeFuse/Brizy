@@ -20,6 +20,19 @@ class Brizy_Editor_Http_Client {
 		} else {
 			$this->http = $http;
 		}
+
+		add_filter( 'http_request_args', array( $this, 'sendExpect' ) );
+	}
+
+	/**
+	 * @param $r
+	 *
+	 * @return mixed
+	 */
+	public function sendExpect( $r ) {
+		$r['headers']['Expect'] = '';
+
+		return $r;
 	}
 
 	/**
@@ -36,13 +49,10 @@ class Brizy_Editor_Http_Client {
 	 */
 	public function request( $url, $options = array(), $method = 'GET' ) {
 
-		$options['method'] = $method;
+		$options['method']  = $method;
 		$options['timeout'] = 30;
 
-		Brizy_Logger::instance()->notice( "{$method} request to {$url}",array(
-			'options'  => $options,
-
-		) );
+		Brizy_Logger::instance()->notice( "{$method} request to {$url}", array('options' => $options) );
 
 		$options = $this->prepare_options( $options );
 
@@ -54,7 +64,10 @@ class Brizy_Editor_Http_Client {
 
 		$response = new Brizy_Editor_Http_Response( $wp_response );
 
-		Brizy_Logger::instance()->debug( "Request {{$url}} status ".$response->get_status_code(), array('status'=>$response->get_status_code(), 'response' => $wp_response) );
+		Brizy_Logger::instance()->debug( "Request {{$url}} status " . $response->get_status_code(), array(
+			'status'   => $response->get_status_code(),
+			'response' => $wp_response
+		) );
 
 		if ( $response->is_ok() ) {
 			return $response;

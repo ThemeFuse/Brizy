@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.22
+Stable tag: 1.0.23
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -111,15 +111,17 @@ The progress you're making while building your page is always backed up in the c
 [Terms of use](https://brizy.io/terms/)
 [Privacy policy](https://brizy.io/privacy/)
 
-== Source Code, Suggestions & Issues ==
 
-= ON THE PUBLIC GITHUB YOU CAN =
+== Frequently Asked Questions ==
+
+= Source Code, Suggestions & Issues =
+
+**ON THE PUBLIC GITHUB YOU CAN**
 
 - [Download the source code](https://github.com/ThemeFuse/Brizy)
 - [Request a feature](https://github.com/ThemeFuse/Brizy/issues)
 - [Submit an issue](https://github.com/ThemeFuse/Brizy/issues)
 
-== Frequently Asked Questions ==
 
 == Screenshots ==
 
@@ -136,6 +138,13 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.23 - 2018-08-06 =
+* Fixed: RichText word-break in Firefox
+* Fixed: Added twig file system cache to avoid using eval function.
+* Fixed: Disabled Expect header for compiler requests
+* Fixed: Improved the preview page
+* Fixed: Filter content only on main request regardles of what page type we show the content
 
 = 1.0.22 - 2018-08-02 =
 * Improvement : Removed duplicate code that updates the needs_compile flag when the globals is updated

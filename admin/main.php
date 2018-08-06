@@ -72,11 +72,11 @@ class Brizy_Admin_Main {
 
 			$pageUploadPath = $urlBuilder->upload_path( $urlBuilder->page_upload_path( "assets/images" ) );
 
-			$this->deleteAllDirectories( $pageUploadPath );
+			Brizy_Admin_FileSystem::deleteAllDirectories($pageUploadPath);
 
 			$pageUploadPath = $urlBuilder->upload_path( $urlBuilder->page_upload_path( "assets/icons" ) );
 
-			$this->deleteFilesAndDirectory( $pageUploadPath );
+			Brizy_Admin_FileSystem::deleteFilesAndDirectory($pageUploadPath);
 
 
 		} catch ( Exception $e ) {
@@ -426,53 +426,4 @@ class Brizy_Admin_Main {
 
 		exit;
 	}
-
-	/**
-	 * @param $pageUploadPath
-	 */
-	private function deleteAllDirectories( $pageUploadPath ) {
-		$dIterator = new DirectoryIterator( $pageUploadPath );
-		foreach ( $dIterator as $entry ) {
-			if ( ! $entry->isDot() && $entry->isDir() ) {
-				$subDirIterator = new RecursiveDirectoryIterator( $entry->getRealPath(), RecursiveDirectoryIterator::SKIP_DOTS );
-				$files          = new RecursiveIteratorIterator( $subDirIterator, RecursiveIteratorIterator::CHILD_FIRST );
-				foreach ( $files as $file ) {
-					if ( ! $file->isDir() ) {
-						@unlink( $file->getRealPath() );
-					}
-				}
-				@rmdir( $entry->getRealPath() );
-			}
-		}
-	}
-
-
-	/**
-	 * @param $pageUploadPath
-	 */
-	private function deleteFilesAndDirectory( $pageUploadPath ) {
-		$dIterator = new DirectoryIterator( $pageUploadPath );
-		foreach ( $dIterator as $entry ) {
-			if ( $entry->isDot() ) {
-				continue;
-			}
-
-			if ( $entry->isDir() ) {
-				$subDirIterator = new RecursiveDirectoryIterator( $entry->getRealPath(), RecursiveDirectoryIterator::SKIP_DOTS );
-				$files          = new RecursiveIteratorIterator( $subDirIterator, RecursiveIteratorIterator::CHILD_FIRST );
-				foreach ( $files as $file ) {
-					if ( ! $file->isDir() ) {
-						@unlink( $file->getRealPath() );
-					}
-				}
-
-				@rmdir( $entry->getRealPath() );
-			} else {
-				@unlink( $entry->getRealPath() );
-			}
-		}
-
-		@rmdir( $pageUploadPath );
-	}
-
 }
