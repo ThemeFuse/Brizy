@@ -31,6 +31,7 @@
     @if $enable-flex {
       .brz-d-#{$breakpoint}-flex {
         display: flex;
+        min-width: 0;
       }
       .brz-d-#{$breakpoint}-inline-flex {
         display: inline-flex;

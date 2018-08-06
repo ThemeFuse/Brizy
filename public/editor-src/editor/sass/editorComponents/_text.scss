@@ -2,6 +2,7 @@
 .brz-rich-text {
   -webkit-font-smoothing: antialiased;
   flex: 1 1 auto;
+  min-width: 0;
 
   @include word-wrap;
 
