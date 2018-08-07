@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.23<br>
+Stable tag: 1.0.24<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -96,6 +96,9 @@ A good bug report includes full details to easily understand the issue you are h
 
 ## Changelog
 
+### 1.0.24 - 2018-08-07 ###
+* Fixed: Upload path for windows installs
+
 ### 1.0.23 - 2018-08-06 ###
 * Fixed: RichText word-break in Firefox
 * Fixed: Added twig file system cache to avoid using eval function.
@@ -104,8 +107,8 @@ A good bug report includes full details to easily understand the issue you are h
 * Fixed: Filter content only on main request regardles of what page type we show the content
 
 ### 1.0.22 - 2018-08-02 ###
-* Improvement : Removed duplicate code that updates the needs_compile flag when the globals is updated
-* Improvement: Added validation of global JSON object
+* Improved: Removed duplicate code that updates the needs_compile flag when the globals is updated
+* Improved: Added validation of global JSON object
 * Fixed: Editor loading animation wouldn’t end when certain plugins were installed
 
 ### 1.0.21 - 2018-07-30 ###
