@@ -147,8 +147,8 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Filter content only on main request regardles of what page type we show the content
 
 = 1.0.22 - 2018-08-02 =
-* Improvement : Removed duplicate code that updates the needs_compile flag when the globals is updated
-* Improvement: Added validation of global JSON object
+* Improved: Removed duplicate code that updates the needs_compile flag when the globals is updated
+* Improved: Added validation of global JSON object
 * Fixed: Editor loading animation wouldn’t end when certain plugins were installed
 
 = 1.0.21 - 2018-07-30 =
