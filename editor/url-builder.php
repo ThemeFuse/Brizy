@@ -79,7 +79,7 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	public function upload_path( $path = null ) {
 		if ( $path ) {
-			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = "/" . ltrim( $path, "/" );
 		}
 
 		return $this->upload_dir['basedir'] . $path;
