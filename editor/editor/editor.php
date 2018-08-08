@@ -1,6 +1,17 @@
 <?php
 
 class Brizy_Editor_Editor_Editor {
+
+	/**
+	 * @var self
+	 */
+	static private $insance;
+
+	/**
+	 * @var array
+	 */
+	static private $config;
+
 	/**
 	 * @var Brizy_Editor_Post
 	 */
@@ -23,7 +34,12 @@ class Brizy_Editor_Editor_Editor {
 	 * @return Brizy_Editor_Editor_Editor
 	 */
 	public static function get( $project, $post = null ) {
-		return new self( $project, $post );
+
+		if ( self::$insance ) {
+			return self::$insance;
+		}
+
+		return self::$insance = new self( $project, $post );
 	}
 
 	/**
@@ -56,6 +72,10 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	public function config() {
+
+		if ( self::$config ) {
+			return self::$config;
+		}
 
 		global $wp_registered_sidebars;
 
@@ -157,7 +177,7 @@ class Brizy_Editor_Editor_Editor {
 			)
 		);
 
-		return apply_filters( 'brizy_editor_config', $config );
+		return self::$config = apply_filters( 'brizy_editor_config', $config );
 	}
 
 	private function get_page_attachments() {
