@@ -72,10 +72,10 @@ function getPageHeadBlock($pageHTML, glamorCSS) {
   const $ = cheerio.load("<head></head>");
   const $head = $("head");
 
-  addFonts($head);
   addColorPaletteCSS($head);
-  addFontStylesCSS($head);
+  addFontStylesCSS($head, $pageHTML);
   addGlamorCSS($head, glamorCSS);
+  addFonts($head);
 
   // transformMetaShare($head, $pageHTML);
   // transformColorScheme($head, $pageHTML);

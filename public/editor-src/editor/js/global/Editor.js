@@ -1,10 +1,18 @@
-const components = {};
+import deepMerge from "deepmerge";
+
+let components = {};
 let notFoundComponent;
-let blocksConfig;
-let blocksById;
+let blocks = {};
+let blocksById = {};
+let blockThumbnailUrlHandlers = [];
+let templates;
+let templateThumbnailUrlHandlers = [];
 let shortcodes = {};
+let styles = [];
 
 const Editor = {
+  // components
+
   registerComponent(component) {
     if (process.env.NODE_ENV === "development") {
       if (!component.componentId) {
@@ -17,28 +25,16 @@ const Editor = {
     components[component.componentId] = component;
   },
 
-  registerNotFoundComponent(component) {
-    notFoundComponent = component;
-  },
-
-  registerBlocks(config) {
-    blocksConfig = config;
-    blocksById = config.blocks.reduce((acc, blockData) => {
-      acc[blockData.id] = blockData;
-      return acc;
-    }, {});
-  },
-
-  registerShortcode(shortcodeComponents) {
-    shortcodes = shortcodeComponents;
-  },
-
   getComponents() {
     return components;
   },
 
   getComponent(id) {
     return components[id] || null;
+  },
+
+  registerNotFoundComponent(component) {
+    notFoundComponent = component;
   },
 
   getNotFoundComponent() {
@@ -49,20 +45,77 @@ const Editor = {
     return notFoundComponent;
   },
 
+  // blocks
+
+  registerBlocks(config, { thumbnailUrlHandler } = {}) {
+    if (thumbnailUrlHandler) {
+      blockThumbnailUrlHandlers.push(thumbnailUrlHandler);
+    }
+
+    blocks = deepMerge(blocks, config);
+
+    blocksById = blocks.blocks.reduce((acc, blockData) => {
+      acc[blockData.id] = blockData;
+      return acc;
+    }, {});
+  },
+
   getBlocks() {
-    return blocksConfig;
+    return blocks;
   },
 
   getBlock(id) {
     return blocksById[id] || null;
   },
 
+  getBlockThumbnailUrlHandlers() {
+    return blockThumbnailUrlHandlers;
+  },
+
+  // templates
+
+  registerTemplates(templatesConfig, { thumbnailUrlHandler } = {}) {
+    if (thumbnailUrlHandler) {
+      templateThumbnailUrlHandlers.push(thumbnailUrlHandler);
+    }
+
+    templates = templatesConfig;
+  },
+
+  getTemplates() {
+    return templates;
+  },
+
+  getTemplateThumbnailUrlHandlers() {
+    return templateThumbnailUrlHandlers;
+  },
+
+  // shortcodes
+
+  registerShortcode(shortcodeComponents) {
+    shortcodes = shortcodeComponents;
+  },
+
   getShortcodes() {
     return shortcodes;
   },
 
-  getShortcode(shortcodeType) {
-    return shortcodes[shortcodeType] || null;
+  getShortcode(id) {
+    return shortcodes[id] || null;
+  },
+
+  // styles
+
+  registerStyles(stylesConfig) {
+    styles.push(...stylesConfig);
+  },
+
+  getStyles() {
+    return styles;
+  },
+
+  getStyle(id) {
+    return styles.find(style => style.id === id);
   }
 };
 

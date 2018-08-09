@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
 import Notifications from "visual/global/Notifications";
 import Draggable from "./Draggable";
@@ -21,7 +20,9 @@ export default class ImageSetter extends React.Component {
     y: 50,
     width: 0,
     height: 0,
-    onlyPointer: false
+    onlyPointer: false,
+    customUrl: false,
+    onUpload: null
   };
 
   state = {
@@ -35,12 +36,20 @@ export default class ImageSetter extends React.Component {
     this.mounted = true;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.src !== nextProps.src) {
+      this.setState({
+        src: nextProps.src
+      });
+    }
+  }
+
   componentWillUnmount() {
     this.mounted = false;
   }
 
   getNewValue = value => {
-    return _.extend({}, this.state, { ...value });
+    return Object.assign({}, this.state, { ...value });
   };
 
   handleChangePosition = value => {
@@ -97,7 +106,8 @@ export default class ImageSetter extends React.Component {
     this.props.onChange(newValue);
   };
 
-  renderDraggable = () => {
+  renderDraggable() {
+    const { customUrl } = this.props;
     const {
       src,
       x,
@@ -107,10 +117,12 @@ export default class ImageSetter extends React.Component {
       onlyPointer
     } = this.state;
     const position = { x, y };
-    const imgUrl = imageUrl(src, {
-      iW: MAX_IMAGE_SETTER_WIDTH,
-      iH: "any"
-    });
+    const imgUrl = customUrl
+      ? src
+      : imageUrl(src, {
+          iW: MAX_IMAGE_SETTER_WIDTH,
+          iH: "any"
+        });
 
     const { width, height } = imageWrapperSize(
       _width,
@@ -149,10 +161,10 @@ export default class ImageSetter extends React.Component {
     }
 
     return content;
-  };
+  }
 
-  renderUpload = () => {
-    const { onlyPointer } = this.props;
+  renderUpload() {
+    const { onlyPointer, onUpload } = this.props;
     const { loading } = this.state;
     const className = classnames(
       "brz-label brz-ed-control__focal-point__label",
@@ -160,6 +172,7 @@ export default class ImageSetter extends React.Component {
         "brz-ed-control__focal-point__label--disable": onlyPointer
       }
     );
+    const hasCustomUpload = typeof onUpload === "function";
 
     return (
       <label className={className}>
@@ -172,18 +185,18 @@ export default class ImageSetter extends React.Component {
             <EditorIcon icon="nc-upload" />
           </div>
         )}
-        {!onlyPointer ? (
+        {!onlyPointer && (
           <input
             className="brz-input"
             type="file"
             accept="image/*"
             hidden
-            onChange={this.handleImageChange}
+            onChange={hasCustomUpload ? onUpload : this.handleImageChange}
           />
-        ) : null}
+        )}
       </label>
     );
-  };
+  }
 
   render() {
     const className = classnames(
@@ -193,7 +206,7 @@ export default class ImageSetter extends React.Component {
 
     return (
       <div className={className}>
-        {Boolean(this.state.src) ? this.renderDraggable() : this.renderUpload()}
+        {this.state.src ? this.renderDraggable() : this.renderUpload()}
       </div>
     );
   }

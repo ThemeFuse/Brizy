@@ -87,7 +87,6 @@ class Select extends React.Component {
       React.cloneElement(child, {
         key: index,
         active: child.props.value === currentValue,
-        title: child.props.value,
         onClick: child.props.disabled
           ? null
           : () => this.onItemClick(child.props.value)

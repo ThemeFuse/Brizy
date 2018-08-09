@@ -1,7 +1,11 @@
 import { getStore } from "visual/redux/store";
+import { currentStyleSelector } from "visual/redux/selectors";
 
-export function getFontStyles() {
-  const allFontStyles = getStore().getState().styles.fontStyles;
+export function getFontStyles({ includeDeleted = false } = {}) {
+  const allFontStyles = currentStyleSelector(getStore().getState())
+    .mergedFontStyles;
 
-  return allFontStyles.filter(el => el.deleted !== true);
+  return includeDeleted
+    ? allFontStyles
+    : allFontStyles.filter(el => el.deleted !== true);
 }

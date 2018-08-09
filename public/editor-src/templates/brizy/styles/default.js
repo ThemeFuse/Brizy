@@ -1,5 +1,6 @@
 export default {
   id: "default",
+  title: "Brizy default",
   colorPalette: [
     {
       id: "color1",

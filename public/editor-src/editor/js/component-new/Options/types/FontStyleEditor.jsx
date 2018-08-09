@@ -324,14 +324,16 @@ class FontStyleEditor extends React.Component {
 
   render() {
     const { value } = this.props;
-    const items = value.map(el => (
-      <FontStyle
-        key={el.id}
-        showDeleteIcon={el.deletable === "on"}
-        {...el}
-        onChange={this.handleChange.bind(null, el.id)}
-      />
-    ));
+    const items = value
+      .filter(el => el.deleted !== true)
+      .map(el => (
+        <FontStyle
+          key={el.id}
+          showDeleteIcon={el.deletable === "on"}
+          {...el}
+          onChange={this.handleChange.bind(null, el.id)}
+        />
+      ));
 
     return (
       <div className="brz-ed-option__font-styles">

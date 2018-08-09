@@ -2,7 +2,7 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 
-export function getItemsForDesktop(v) {
+export function getItemsForDesktop(v, component) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
   const { hex: borderColorHex } = getOptionColor(v, "borderColor");
 
@@ -11,15 +11,19 @@ export function getItemsForDesktop(v) {
       id: "toolbarFooter",
       type: "popover",
       icon: "nc-menu",
-      title: "Footer",
-      disabled: true,
+      title: t("Footer"),
       position: 70,
       options: [
         {
-          id: "multiPage",
-          label: t("MultiPage"),
+          id: "makeItGlobal",
+          label: t("Make it Global"),
           type: "switch",
-          value: v.multiPage
+          value: component.props.meta.globalBlockId ? "on" : "off",
+          onChange: value => {
+            value === "on"
+              ? component.becomeGlobal()
+              : component.becomeNormal();
+          }
         }
       ]
     },
@@ -338,6 +342,17 @@ export function getItemsForDesktop(v) {
           ]
         }
       ]
+    },
+    {
+      id: "makeItSaved",
+      type: "buttonTooltip",
+      icon: "nc-save-section",
+      position: 100,
+      title: t("Save"),
+      tooltipContent: t("Saved"),
+      onChange: () => {
+        component.becomeSaved();
+      }
     },
     {
       id: "toolbarSettings",

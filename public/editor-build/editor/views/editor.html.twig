@@ -13,6 +13,10 @@
             </script>
             <script src="{{ assetsUrl }}/editor/js/editor.js"></script>
 
+            {% if PRO is defined and PRO %}
+              <script src="{{ assetsUrl }}/pro/js/editor.pro.js"></script>
+            {% endif %}
+
             {% if DEV is defined and DEV %}
               <script>
                 window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;

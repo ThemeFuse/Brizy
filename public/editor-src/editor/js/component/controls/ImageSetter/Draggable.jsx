@@ -23,6 +23,7 @@ export default class Draggable extends React.Component {
       x: props.position ? props.position.x : props.defaultPosition.x,
       y: props.position ? props.position.y : props.defaultPosition.y
     };
+    this.window = null;
   }
 
   componentDidMount() {
@@ -30,6 +31,8 @@ export default class Draggable extends React.Component {
     const parent = node.parentNode || node.ownerDocument.body;
 
     jQuery(parent).on("click", this.onDragEnd);
+
+    this.window = node.ownerDocument.defaultView;
   }
 
   componentWillUnmount() {
@@ -39,8 +42,10 @@ export default class Draggable extends React.Component {
     this.enableTextSelect();
 
     jQuery(parent).off("click", this.onDragEnd);
-    jQuery(window).off("mousemove", this.onDrag);
-    jQuery(window).off("mouseup", this.onDragEnd);
+    jQuery(this.window).off("mousemove", this.onDrag);
+    jQuery(this.window).off("mouseup", this.onDragEnd);
+
+    this.window = null;
   }
 
   disableTextSelect = () => {
@@ -109,8 +114,8 @@ export default class Draggable extends React.Component {
     const propsBound = this.getBoundPosition();
 
     return {
-      x: int(x * 100 / propsBound.left),
-      y: int(y * 100 / propsBound.top)
+      x: int((x * 100) / propsBound.left),
+      y: int((y * 100) / propsBound.top)
     };
   };
 
@@ -125,8 +130,8 @@ export default class Draggable extends React.Component {
 
     this.disableTextSelect();
 
-    jQuery(window).on("mousemove", this.onDrag);
-    jQuery(window).on("mouseup", this.onDragEnd);
+    jQuery(this.window).on("mousemove", this.onDrag);
+    jQuery(this.window).on("mouseup", this.onDragEnd);
   };
 
   onDrag = event => {
@@ -142,8 +147,8 @@ export default class Draggable extends React.Component {
 
     this.enableTextSelect();
 
-    jQuery(window).off("mousemove", this.onDrag);
-    jQuery(window).off("mouseup", this.onDragEnd);
+    jQuery(this.window).off("mousemove", this.onDrag);
+    jQuery(this.window).off("mouseup", this.onDragEnd);
 
     this.setState(coordinatesInPercent);
   };

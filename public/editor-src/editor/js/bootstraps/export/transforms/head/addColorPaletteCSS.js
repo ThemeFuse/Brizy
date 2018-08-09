@@ -1,9 +1,10 @@
-import { getStore } from "visual/redux/store";
+import { getColorPaletteColors } from "visual/utils/color";
 import { makeRichTextColorPaletteCSS } from "visual/utils/color";
 
 export default $head => {
-  const { colorPalette } = getStore().getState().styles;
-  const richTextPaletteCSS = makeRichTextColorPaletteCSS(colorPalette);
+  const richTextPaletteCSS = makeRichTextColorPaletteCSS(
+    getColorPaletteColors()
+  );
 
   $head.append(`<style>${richTextPaletteCSS}</style>`);
 };

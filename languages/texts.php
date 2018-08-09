@@ -75,6 +75,9 @@ class Brizy_Languages_Texts
 			"Back to Brizy" => __("Back to Brizy", "brizy"),
 			"Plugin Settings" => __("Plugin Settings", "brizy"),
 			"Back to WordPress" => __("Back to WordPress", "brizy"),
+			"Featured Image" => __("Featured Image", "brizy"),
+			"Submit an Issue" => __("Submit an Issue", "brizy"),
+			"Upgrade to Pro" => __("Upgrade to Pro", "brizy"),
 		  
 			// Fixed Bottom Panel
 			"Save HTML" => __("Save HTML", "brizy"),
@@ -423,6 +426,7 @@ class Brizy_Languages_Texts
 			"Block" => __("Block", "brizy"),
 			"Make it Global" => __("Make it Global", "brizy"),
 			"Save" => __("Save", "brizy"),
+			"Pages" => __("Pages", "brizy"),
 			"Blocks" => __("Blocks", "brizy"),
 			"Saved" => __("Saved", "brizy"),
 			"Global" => __("Global", "brizy"),
