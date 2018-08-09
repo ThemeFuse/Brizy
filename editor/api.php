@@ -31,6 +31,10 @@ class Brizy_Editor_API {
 	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
 	const AJAX_MEDIA_METAKEY = 'brizy_get_media_key';
 
+	const AJAX_SET_FEATURED_IMAGE = 'brizy_set_featured_image';
+	const AJAX_SET_FEATURED_IMAGE_FOCAL_POINT = 'brizy_set_featured_image_focal_point';
+	const AJAX_REMOVE_FEATURED_IMAGE = 'brizy_remove_featured_image';
+
 	/**
 	 * @var Brizy_Editor_Project
 	 */
@@ -100,12 +104,72 @@ class Brizy_Editor_API {
 				'update_form_integrations_status'
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT, array(
+				$this,
+				'set_featured_image_focal_point'
+			) );
+			add_action( 'wp_ajax_' . self::AJAX_REMOVE_FEATURED_IMAGE, array( $this, 'remove_featured_image' ) );
 
 		}
 
 		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 	}
+
+	public function set_featured_image() {
+		$this->authorize();
+
+		if ( ! isset( $_REQUEST['attachmentId'] ) ) {
+			$this->error( 400, 'Bad request' );
+		}
+
+		if ( $this->post && $this->post->uses_editor() ) {
+			set_post_thumbnail( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
+
+			$uid = $this->createMediaKey( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
+
+			$this->success( array( 'uid' => $uid ) );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
+	public function set_featured_image_focal_point() {
+		if ( ! isset( $_REQUEST['attachmentId'] ) || ! isset( $_REQUEST['pointX'] ) || ! isset( $_REQUEST['pointY'] ) ) {
+			$this->error( 400, 'Bad request' );
+		}
+
+		if ( $this->post && $this->post->uses_editor() ) {
+
+			$attachmentId = get_post_thumbnail_id( $this->post->get_id() );
+
+			if ( $attachmentId != $_REQUEST['attachmentId'] ) {
+				$this->error( 400, 'Invalid attachment id' );
+			}
+
+			update_post_meta( $attachmentId, 'brizy_attachment_focal_point', array(
+				'x' => $_REQUEST['pointX'],
+				'y' => $_REQUEST['pointY']
+			) );
+
+			$this->success( array() );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
+	public function remove_featured_image() {
+		$this->authorize();
+
+		if ( $this->post && $this->post->uses_editor() ) {
+			delete_post_thumbnail( $this->post->get_id() );
+			$this->success( null );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
 
 	public function default_form() {
 		try {
@@ -182,7 +246,7 @@ class Brizy_Editor_API {
 		try {
 			$manager = new Brizy_Editor_Forms_Manager( Brizy_Editor_Storage_Common::instance() );
 			/**
-			 * @var Brizy_Editor_Forms_Form $form ;
+			 * @var Brizy_Editor_FormsCompatibility fix_Form $form ;
 			 */
 
 			$form = $manager->getForm( $_REQUEST['form_id'] );
@@ -606,7 +670,7 @@ class Brizy_Editor_API {
 
 	private function authorize() {
 		if ( ! wp_verify_nonce( $_REQUEST['hash'], self::nonce ) ) {
-			throw new Brizy_Editor_Exceptions_AccessDenied();
+			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
 		}
 	}
 
@@ -794,28 +858,35 @@ class Brizy_Editor_API {
 				$this->error( 400, 'Invalid attachment id' );
 			}
 
-			$uid = get_post_meta( $attachment_id, 'brizy_attachment_uid', true );
-
-			if ( ! $uid ) {
-				$uid = "wp-" . md5( $attachment_id . time() );
-				update_post_meta( $attachment_id, 'brizy_attachment_uid', $uid );
-			}
-
-			if ( $apost ) {
-				$post    = Brizy_Editor_Post::get( $apost );
-				$post_ui = $post->get_uid();
-
-				$post_uids = get_post_meta( $attachment_id, 'brizy_post_uid' );
-
-				if ( ! in_array( $post_ui, $post_uids ) ) {
-					add_post_meta( $attachment_id, 'brizy_post_uid', $post_ui );
-				}
-			}
+			$uid = $this->createMediaKey( $apost, $attachment_id );
 
 			$this->success( array( 'uid' => $uid ) );
 
 		} catch ( Exception $E ) {
 			return;
 		}
+	}
+
+
+	private function createMediaKey( $postId, $attachmentId ) {
+		$uid = get_post_meta( $attachmentId, 'brizy_attachment_uid', true );
+
+		if ( ! $uid ) {
+			$uid = "wp-" . md5( $attachmentId . time() );
+			update_post_meta( $attachmentId, 'brizy_attachment_uid', $uid );
+		}
+
+		if ( $postId ) {
+			$post    = Brizy_Editor_Post::get( $postId );
+			$post_ui = $post->get_uid();
+
+			$post_uids = get_post_meta( $attachmentId, 'brizy_post_uid' );
+
+			if ( ! in_array( $post_ui, $post_uids ) ) {
+				add_post_meta( $attachmentId, 'brizy_post_uid', $post_ui );
+			}
+		}
+
+		return $uid;
 	}
 }
