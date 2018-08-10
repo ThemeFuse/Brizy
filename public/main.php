@@ -47,7 +47,7 @@ class Brizy_Public_Main {
 	public function initialize_front_end() {
 
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
-			add_action( 'template_include', array( $this, 'template_include' ), 10000 );
+			add_action( 'template_include', array( $this, 'templateInclude' ), 10000 );
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 			add_filter( 'show_admin_bar', '__return_false' );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
@@ -164,21 +164,24 @@ class Brizy_Public_Main {
 
 	public function toolbar_link( $wp_admin_bar ) {
 
+		global $wp_post_types;
+
 		if ( ! Brizy_Editor::is_user_allowed() ) {
 			return;
 		}
 
 		$type = $this->post->get_wp_post()->post_type;
+		$postTypeLabel = $wp_post_types[$type]->labels->singular_name;
 		$args = array(
 			'id'    => 'brizy_Edit_page_link',
-			'title' => __( "Edit {$type} with Brizy" ),
+			'title' => __( "Edit ".$postTypeLabel." with Brizy" ),
 			'href'  => $this->post->edit_url(),
 			'meta'  => array()
 		);
 		$wp_admin_bar->add_node( $args );
 	}
 
-	public function template_include( $atemplate ) {
+	public function templateInclude( $atemplate ) {
 
 		$config_object = $this->getConfigObject();
 

@@ -105,3 +105,82 @@
   background-color: #fff;
   box-shadow: 0px 2px 0px 0px #e3e3e3;
 }
+
+/**
+ * Style Brizy Templates
+ */
+
+.brizy-template-rules input[type="text"], 
+.brizy-template-rules select {
+  vertical-align: middle;
+  height: 28px;
+  line-height: 28px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: none;
+}
+
+.brizy-rule-select,
+.brizy-rule-select ~ .select2-container {
+  margin-right: 5px;
+}
+
+.brizy-template-rules .rule:not(:first-of-type) {
+  margin-top: 10px;
+}
+
+.brizy-delete-rule {
+  border: 0;
+  padding: 0;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  color: #a00;
+}
+
+#template-rules .inside {
+  padding-bottom: 20px;
+}
+
+.brizy-rule-select > select {
+  padding-left: 8px;
+  padding-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
+}
+.brizy-rule-select > select:disabled {
+  color: #444;
+  background-color: #eee;
+  border: 1px solid #aaa;
+}
+
+.brizy-rule-select--options {
+  min-width: 175px;
+}
+
+.brizy-rule-select {
+  position: relative;
+}
+
+.brizy-rule-select::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  height: 0;
+  width: 0;
+  border-color: #888 transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px 4px 0 4px;
+}

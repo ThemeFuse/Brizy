@@ -16,6 +16,7 @@ class Brizy_Editor_API {
 	const AJAX_SHORTCODE_LIST = 'brizy_shortcode_list';
 	const AJAX_GET_TEMPLATES = 'brizy_get_templates';
 	const AJAX_GET_INTERNAL_LINKS = 'brizy_get_internal_links';
+	const AJAX_GET_POST_OBJECTS = 'brizy_get_posts';
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 	const AJAX_SAVE_TRIGGER = 'brizy_update_post';
 	const AJAX_GET_TERMS = 'brizy_get_terms';
@@ -85,6 +86,7 @@ class Brizy_Editor_API {
 			add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_LIST, array( $this, 'shortcode_list' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_TEMPLATES, array( $this, 'template_list' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_INTERNAL_LINKS, array( $this, 'get_internal_links' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
@@ -109,11 +111,12 @@ class Brizy_Editor_API {
 
 	public function default_form() {
 		try {
+			add_action( 'wp_ajax_' . self::RULE_CREATE, array( $this, 'getGroupList' ) );
+
 
 			$current_user = wp_get_current_user();
 			$form         = new Brizy_Editor_Forms_Form();
 			$form->setEmailTo( $current_user->user_email );
-
 			$this->success( $form );
 
 		} catch ( Exception $exception ) {
@@ -379,7 +382,7 @@ class Brizy_Editor_API {
 			$posts = Brizy_Editor_Post::get_all_brizy_posts();
 
 			// we need to trigger a post update action to make sure the cache plugins will update clear the cache
-			remove_action( 'save_post', array( Brizy_Admin_Main::_init(), 'compile_post_action' ) );
+			remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
 			// mark all post to be compiled on next view
 			foreach ( $posts as $bpost ) {
 				$bpost->set_needs_compile( true );
@@ -555,6 +558,26 @@ class Brizy_Editor_API {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
+	}
+
+	public function get_post_objects() {
+
+		global $wp_post_types;
+
+		$searchTerm      = $this->param( 'filterTerm' );
+		$postType        = $this->param( 'postType' ) ? $this->param( 'postType' ) : null;
+		$excludePostType = $this->param( 'excludePostTypes' ) ? $this->param( 'excludePostTypes' ) : array();
+
+		if ( ! $postType ) {
+			$postType = array_keys( array_filter( $wp_post_types, function ( $type ) {
+				return ! in_array( $type->name, array( 'brizy_template' ) ) && $type->show_ui;
+			} ) );
+		}
+
+
+		$posts = $this->get_post_list( $searchTerm, $postType, $excludePostType );
+
+		wp_send_json( array( 'filter_term' => $searchTerm, 'posts' => $posts ), 200 );
 	}
 
 	public function get_internal_links() {
@@ -735,9 +758,50 @@ class Brizy_Editor_API {
 			$links[] = (object) array( 'label' => $label, 'url' => $permalink, 'post_type' => $post->post_type );
 		}
 
-		remove_filter( 'posts_where', 'brizy_post_title_filter', 10, 2 );
+		remove_filter( 'posts_where', 'brizy_post_title_filter', 10 );
 
 		return $links;
+	}
+
+	public function get_post_list( $searchTerm, $postType, $excludePostType = array() ) {
+
+		global $wp_post_types;
+
+		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
+
+		$post_query = array(
+			'post_type'      => $postType,
+			'posts_per_page' => - 1,
+			'post_status'    => $postType=='attachment'?'inherit':'publish',
+			'orderby'        => 'post_title',
+			'order'          => 'ASC'
+		);
+
+		if ( $searchTerm ) {
+			$post_query['post_title_term'] = $searchTerm;
+		}
+
+		$posts = new WP_Query( $post_query );
+
+		$result = array();
+
+		foreach ( $posts->posts as $post ) {
+
+			if ( in_array( $post->post_type, $excludePostType ) ) {
+				continue;
+			}
+
+			$result[] = (object) array(
+				'ID'              => $post->ID,
+				'post_type'       => $post->post_type,
+				'post_type_label' => $wp_post_types[ $post->post_type ]->label,
+				'title'           => apply_filters( 'the_title', $post->post_title )
+			);
+		}
+
+		remove_filter( 'posts_where', 'brizy_post_title_filter', 10 );
+
+		return $result;
 	}
 
 	public function brizy_post_title_filter( $where, &$wp_query ) {
@@ -759,13 +823,14 @@ class Brizy_Editor_API {
 		wp_send_json( wp_get_nav_menus( array( 'hide_empty' => true ) ), 200 );
 	}
 
+	/**
+	 * Used in woocomerce producs shortcode in editor
+	 */
 	public function get_terms() {
 
 		$taxonomy = $this->param( 'taxonomy' );
 
 		$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
-
-		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 
 		wp_send_json( array_values( $terms ) );
 	}
