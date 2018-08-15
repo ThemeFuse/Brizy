@@ -275,11 +275,18 @@ class Image extends EditorComponent {
 
     const hrefs = {
       anchor: linkAnchor,
-      external: linkExternal
+      external: linkExternal,
+      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
+
     if (hrefs[linkType] !== "") {
       content = (
-        <Link type={linkType} href={hrefs[linkType]} target={linkExternalBlank} rel={linkExternalRel}>
+        <Link
+          type={linkType}
+          href={hrefs[linkType]}
+          target={linkExternalBlank}
+          rel={linkExternalRel}
+        >
           {content}
         </Link>
       );
@@ -332,7 +339,7 @@ class Image extends EditorComponent {
     return (
       <div
         ref={this.handleContainerRef}
-        className={imageStylesClassName(v)}
+        className={imageStylesClassName(v, wrapperSizes, this.props)}
         style={imageStylesCSSVars(v)}
       >
         <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
@@ -463,12 +470,18 @@ class Image extends EditorComponent {
 
     const hrefs = {
       anchor: linkAnchor,
-      external: linkExternal
+      external: linkExternal,
+      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
 
     if (hrefs[linkType] !== "") {
       content = (
-        <Link type={linkType} href={hrefs[linkType]} target={linkExternalBlank} rel={linkExternalRel}>
+        <Link
+          type={linkType}
+          href={hrefs[linkType]}
+          target={linkExternalBlank}
+          rel={linkExternalRel}
+        >
           {content}
         </Link>
       );

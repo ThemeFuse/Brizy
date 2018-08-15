@@ -9,7 +9,7 @@ export const getMinHeight = () => 5;
 export const getMaxHeight = (cW, v) => {
   const { imageWidth: iW, imageHeight: iH } = v;
   const originalContainerWidth = iH / (iW / cW);
-  const maxHeight = cW * 2 / originalContainerWidth * 100;
+  const maxHeight = ((cW * 2) / originalContainerWidth) * 100;
 
   return maxHeight >= 100 ? Math.round(maxHeight) : 100;
 };
@@ -65,7 +65,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
             const newHeight =
               src === v.imageSrc
                 ? v.height
-                : wrapperSizes.height / newWrapperSize.height * 100;
+                : (wrapperSizes.height / newWrapperSize.height) * 100;
 
             return {
               imageWidth: width,
@@ -273,6 +273,18 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                   value: v.linkExternalRel
                 }
               ]
+            },
+            {
+              id: "lightBox",
+              label: t("Lightbox"),
+              options: [
+                {
+                  id: "linkLightBox",
+                  label: t("Lightbox"),
+                  type: "switch",
+                  value: v.linkLightBox
+                }
+              ]
             }
           ]
         }
@@ -455,9 +467,15 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                                   hex: boxShadowColorHex,
                                   opacity: v.boxShadowColorOpacity
                                 },
-                                onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
+                                onChange: ({
+                                  hex,
+                                  opacity,
+                                  isChanged,
+                                  opacityDragEnd
+                                }) => {
                                   const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
                                       : opacity;
 
@@ -467,7 +485,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                                     boxShadowColorPalette:
                                       isChanged === "hex"
                                         ? ""
-                                        : v.boxShadowColorPalette,
+                                        : v.boxShadowColorPalette
                                   };
                                 }
                               },
@@ -482,7 +500,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                                   boxShadowColorOpacity:
                                     v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
-                                      : v.boxShadowColorOpacity,
+                                      : v.boxShadowColorOpacity
                                 })
                               },
                               {
@@ -495,7 +513,8 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                                 },
                                 onChange: ({ hex, opacity, isChanged }) => {
                                   const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
                                       : opacity;
 
@@ -539,7 +558,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -571,7 +590,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -604,7 +623,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -637,7 +656,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           }
                         ]
@@ -685,7 +704,8 @@ export const getItemsForMobile = (wrapperSizes, cW) => v => {
               width: v.mobileWidth,
               height: 100
             });
-            const newHeight = wrapperSizes.height / newWrapperSize.height * 100;
+            const newHeight =
+              (wrapperSizes.height / newWrapperSize.height) * 100;
 
             return {
               imageWidth: width,

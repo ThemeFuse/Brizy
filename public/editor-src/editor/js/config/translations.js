@@ -343,6 +343,8 @@ export default {
   "Hue": __("Hue", "brizy"),
   "Brigh..": __("Brigh..", "brizy"),
   "Satur..": __("Satur..", "brizy"),
+  //-> LightBox
+  "Lightbox": __("Lightbox", "brizy"),
   //-> ProgressBar
   "Percentage": __("Percentage", "brizy"),
   "Show Percentage": __("Show Percentage", "brizy"),
