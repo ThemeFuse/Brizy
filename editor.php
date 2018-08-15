@@ -85,7 +85,7 @@ class Brizy_Editor {
 	public function supported_post_types() {
 		$types = $this->get_post_types();
 
-		return apply_filters( 'brizy:post_types', $types );
+		return apply_filters( 'brizy_supported_post_types', apply_filters( 'brizy:post_types', $types ) );
 	}
 
 	public function default_supported_post_types() {

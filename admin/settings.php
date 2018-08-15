@@ -29,7 +29,7 @@ class Brizy_Admin_Settings {
 	 */
 	private function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'action_register_settings_page' ) );
+		add_action( 'admin_menu', array( $this, 'action_register_settings_page' ), 9 );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
 		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
@@ -49,6 +49,26 @@ class Brizy_Admin_Settings {
 		}
 	}
 
+	/**
+	 * @internal
+	 */
+	function action_register_settings_page() {
+
+		add_menu_page( brizy()->get_name(),
+			brizy()->get_name(),
+			'manage_options',
+			self::menu_slug(),
+			array( $this, 'render' ),
+			plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
+			81
+		);
+
+		add_submenu_page( self::menu_slug(), __( 'Role Manager' ), __( 'Role Manager' ), 'manage_options', self::menu_slug(), array(
+			$this,
+			'render'
+		) );
+	}
+
 	private function get_selected_tab() {
 		return $tab = ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : null;
 	}
@@ -60,22 +80,21 @@ class Brizy_Admin_Settings {
 				'id'          => 'general',
 				'label'       => 'General',
 				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
-				'href'        => menu_page_url( $this->menu_slug(), false ) . "&tab=general"
-
+				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
 			),
 			array(
 				'id'          => 'roles',
 				'label'       => 'Role Manager',
 				'is_selected' => $selected_tab == 'roles',
-				'href'        => menu_page_url( $this->menu_slug(), false ) . "&tab=roles"
+				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=roles"
 			)
 		);
 
 		return apply_filters( 'brizy_settings_tabs', $tabs );
 	}
 
-	private function get_tab_content() {
-		switch ( $this->get_selected_tab() ) {
+	private function get_tab_content( $tab ) {
+		switch ( $tab ) {
 			default:
 			case 'general':
 				return $this->get_general_tab();
@@ -84,8 +103,6 @@ class Brizy_Admin_Settings {
 				return $this->get_roles_tab();
 				break;
 		}
-
-		return '';
 	}
 
 	private function get_general_tab() {
@@ -124,6 +141,7 @@ class Brizy_Admin_Settings {
 				break;
 		}
 	}
+
 
 	public function general_settings_submit() {
 		$error_count        = 0;
@@ -234,19 +252,6 @@ class Brizy_Admin_Settings {
 		echo apply_filters( 'brizy_settings_render_tab', $this->get_tab_content( $tab ) );
 	}
 
-	/**
-	 * @internal
-	 */
-	function action_register_settings_page() {
-		add_menu_page( brizy()->get_name(),
-			brizy()->get_name(),
-			'manage_options',
-			self::menu_slug(),
-			array( $this, 'render' ),
-			plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
-			81
-		);
-	}
 
 	/**
 	 * @internal

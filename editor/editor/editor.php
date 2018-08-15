@@ -93,7 +93,7 @@ class Brizy_Editor_Editor_Editor {
 			) );
 
 			$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' ) );
-			$templates           = $this->post->get_templates();
+			$templates           = apply_filters( "brizy:templates", $this->post->get_templates() );
 		}
 
 		$config = array(
