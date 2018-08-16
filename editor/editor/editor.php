@@ -407,9 +407,16 @@ class Brizy_Editor_Editor_Editor {
 
 			$custom_menu_data = get_term_meta( $menu->term_id, 'brizy_data', true );
 
+			$menu_uid = get_term_meta( $menu->term_id, 'brizy_uid', true );
+			if ( ! $menu_uid ) {
+				$menu_uid = md5( $menu->term_id . time() );
+				update_term_meta( $menu->term_id, 'brizy_uid', $menu_uid );
+			}
+
 			$amenu = array(
-				'id'   => $menu->term_id,
-				'name' => $menu->name,
+				'id'    => $menu_uid,
+				'name'  => $menu->name,
+				'items' => array()
 			);
 
 			$amenu = (object) array_merge( $amenu, get_object_vars( is_object( $custom_menu_data ) ? $custom_menu_data : (object) array() ) );
@@ -436,12 +443,18 @@ class Brizy_Editor_Editor_Editor {
 				continue;
 			}
 
+			$menu_uid = get_post_meta( $item->ID, 'brizy_post_uid', true );
+			if ( ! $menu_uid ) {
+				$menu_uid = md5( $item->ID . time() );
+				update_post_meta( $item->ID, 'brizy_post_uid', $menu_uid );
+			}
+
 			$megaMenuItems = $this->getMegaMenuItems();
 
 			$menu_data = get_post_meta( $item->ID, 'brizy_data', true );
 
 			$item_value = array(
-				'id'            => $item->ID,
+				'id'            => $menu_uid,
 				'title'         => $item->title,
 				'url'           => $item->url,
 				'megaMenuItems' => $megaMenuItems
@@ -454,6 +467,8 @@ class Brizy_Editor_Editor_Editor {
 			$an_item->value = (object) array_merge( $item_value, get_object_vars( is_object( $menu_data ) ? $menu_data : (object) array() ) );
 
 			$child_items = $this->get_menu_tree( $items, $item->ID );
+
+			$an_item->value->items = array();
 
 			if ( count( $child_items ) > 0 ) {
 				$an_item->value->items = $child_items;
@@ -470,11 +485,11 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private function getMegaMenuItems() {
 
-		return [
+		return array(
 			(object) ( array(
 				'type'  => "SectionMegaMenu",
 				'value' => (object) array( 'items' => array() )
 			) )
-		];
+		);
 	}
 }

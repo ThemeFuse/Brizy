@@ -29,6 +29,7 @@ class Brizy_Editor_API {
 	const AJAX_DELETE_FORM = 'brizy_delete_form';
 	const AJAX_FORM_INTEGRATION_STATUS = 'brizy_form_integration_status';
 	const AJAX_SUBMIT_FORM = 'brizy_submit_form';
+
 	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
 	const AJAX_UPDATE_MENU_ITEM_DATA = 'brizy_update_menu_item_data';
 
@@ -180,13 +181,25 @@ class Brizy_Editor_API {
 			$this->error( 400, 'Bad request' );
 		}
 
-		update_post_meta( (int) $_POST['menuItemId'], 'brizy_data', $json_decode );
+		$menuItems = get_posts( array(
+			'meta_key'   => 'brizy_post_uid',
+			'meta_value' => $_POST['menuItemId'],
+			'post_type'  => 'nav_menu_item',
+		) );
+
+		if ( count( $menuItems ) == 0 ) {
+			$this->error( 400, 'Unknown menu item' );;
+		}
+
+		$menu = $menuItems[0];
+
+		update_post_meta( (int) $menu->ID, 'brizy_data', $json_decode );
 
 		$this->success( array() );
 	}
 
 	public function update_menu_data() {
-		if ( ! isset( $_POST['menuId'] )) {
+		if ( ! isset( $_POST['menuId'] ) ) {
 			$this->error( 400, 'Unknown menu' );
 		}
 
@@ -196,7 +209,27 @@ class Brizy_Editor_API {
 			$this->error( 400, 'Bad request' );
 		}
 
-		update_term_meta( (int) $_POST['menuId'], 'brizy_data', $json_decode );
+
+		$menu = get_terms( array(
+			'taxonomy'   => 'nav_menu',
+			'hide_empty' => false,
+			'meta_query' => array(
+				'relation' => 'AND',
+				array(
+					'key'     => 'brizy_uid',
+					'value'   => $_POST['menuId'],
+					'compare' => '='
+				)
+			)
+		) );
+
+
+		if ( isset( $menu[0] ) ) {
+			$menu = $menu[0];
+		} else {
+			$this->error( 400, 'Unknown menu item' );
+		}
+		update_term_meta( (int) $menu->term_id, 'brizy_data', $json_decode );
 
 		$this->success( array() );
 	}
