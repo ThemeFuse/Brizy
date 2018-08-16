@@ -382,7 +382,7 @@ class Brizy_Admin_Templates {
 		} elseif ( is_front_page() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'front_page';
-		} elseif ( is_category() || is_tag() ) {
+		} elseif ( is_category() || is_tag() || is_tax()) {
 			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
 			$entityType     = $wp_query->queried_object->taxonomy;
 			$entityValues[] = $wp_query->queried_object_id;

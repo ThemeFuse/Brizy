@@ -61,7 +61,7 @@ class Brizy_Public_Main {
 			}
 
 			$this->compilePage();
-
+			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			remove_filter( 'the_content', 'wpautop' );
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
