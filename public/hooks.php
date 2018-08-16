@@ -56,19 +56,6 @@ function brizy_initialize_admin_edit_Brizy_Public_Main() {
 }
 
 
-function brizy_catch_templates( $template ) {
-
-	global $post;
-
-	$template_path = get_post_meta( $post->ID, '_wp_page_template', true );
-
-	if ( basename( $template_path ) == Brizy_Config::BRIZY_TEMPLATE_FILE_NAME ) {
-		return Brizy_Editor::get()->get_path( '/public/views/templates/brizy-blank-template.php' );
-	}
-
-	return $template;
-}
-
 function brizy_filter_public_page_templates( $templates ) {
 
 	$list = wp_get_theme()->get_page_templates();
@@ -86,7 +73,7 @@ function brizy_filter_public_page_templates( $templates ) {
 function brizy_filter_public_register_page_templates( $templates ) {
 	return array_merge( $templates,
 		array(
-			Brizy_Config::BRIZY_TEMPLATE_FILE_NAME => __( 'Brizy Template', 'brizy' )
+			Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __( 'Brizy Template', 'brizy' )
 		) );
 }
 
@@ -112,7 +99,6 @@ add_action( 'wp_loaded', 'brizy_initialize_admin_edit_Brizy_Public_Main' );
 add_action( 'init', 'brizy_initialize_asset_loader', 1000 );
 
 add_filter( "brizy:templates", 'brizy_filter_public_page_templates' );
-add_filter( "template_include", 'brizy_catch_templates', 1000 );
 
 $supported_post_types   = brizy()->supported_post_types();
 $supported_post_types[] = Brizy_Admin_Templates::CP_TEMPLATE;

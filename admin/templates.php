@@ -339,9 +339,14 @@ class Brizy_Admin_Templates {
 		}
 
 		if ( $this->template ) {
-			$template = $this->template->get_template();
+			$templateName = $this->template->get_template();
 
-			return Brizy_Editor::get()->get_path( '/public/views/templates/' . $template );
+			if ( in_array( $templateName, array(
+				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME,
+				Brizy_Config::BRIZY_TEMPLATE_FILE_NAME
+			) ) ) {
+				return Brizy_Editor::get()->get_path( '/public/views/templates/' . $templateName );
+			}
 		}
 
 
@@ -382,7 +387,7 @@ class Brizy_Admin_Templates {
 			$entityType     = $wp_query->queried_object->taxonomy;
 			$entityValues[] = $wp_query->queried_object_id;
 		} elseif ( is_archive() ) {
-			$applyFor     = Brizy_Admin_Rule::TEMPLATE;
+			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'archive';
 		} elseif ( $wp_query->queried_object instanceof WP_Post ) {
 			$applyFor       = Brizy_Admin_Rule::POSTS;

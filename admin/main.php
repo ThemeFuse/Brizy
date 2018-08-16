@@ -409,7 +409,7 @@ class Brizy_Admin_Main {
 			}
 
 			$post->enable_editor();
-			$post->set_template( Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
+			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->save();
 			// redirect
 			wp_redirect( $post->edit_url() );
