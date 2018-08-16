@@ -420,7 +420,8 @@ var RuleListItem = function (params) {
             type: "button",
             value: "Delete",
             onclick: function (e) {
-                params.onDelete(params.rule);
+                if(confirm('Are you sure you want to delete?'))
+                    params.onDelete(params.rule);
             }
         })
     ]);
