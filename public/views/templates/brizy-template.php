@@ -11,7 +11,7 @@
     <?php wp_head(); ?>
 </head>
 <body class="brz">
-<?php the_content() ?>
+<?php do_action('brizy_template_content') ?>
 <?php wp_footer(); ?>
 </body>
 </html>
