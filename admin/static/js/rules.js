@@ -308,7 +308,7 @@ var RuleApplyGroupField = function (params) {
         params.groups.forEach(function (group) {
             var options = [];
             group.items.forEach(function (option) {
-                var optionValue = group.value + "|" + option.value;
+                var optionValue = option.groupValue + "|" + option.value;
                 var attributes = {
                     value: optionValue,
                     selected: optionValue === value

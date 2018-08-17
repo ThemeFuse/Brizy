@@ -254,41 +254,29 @@ class Brizy_Admin_Templates {
 	}
 
 	public function getGroupList() {
+		$closure = function ( $v ) {
+			return array(
+				'title'      => $v->label,
+				'value'      => $v->name,
+				'groupValue' => $v->groupValue
+			);
+		};
+
 		$groups = array(
-			array(
-				'title' => 'All pages',
-				'value' => '',
-				'items' => array()
-			),
 			array(
 				'title' => 'Pages',
 				'value' => Brizy_Admin_Rule::POSTS,
-				'items' => array_map( function ( $v ) {
-					return array(
-						'title' => $v->label,
-						'value' => $v->name
-					);
-				}, $this->getCustomPostsList() )
+				'items' => array_map( $closure, $this->getCustomPostsList( Brizy_Admin_Rule::POSTS ) )
 			),
 			array(
 				'title' => 'Categories',
 				'value' => Brizy_Admin_Rule::TAXONOMY,
-				'items' => array_map( function ( $v ) {
-					return array(
-						'title' => $v->label,
-						'value' => $v->name
-					);
-				}, $this->getTaxonomyList() )
+				'items' => array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY ) )
 			),
 			array(
 				'title' => 'Archives',
 				'value' => Brizy_Admin_Rule::ARCHIVE,
-				'items' => array_map( function ( $v ) {
-					return array(
-						'title' => $v->label,
-						'value' => $v->name
-					);
-				}, $this->getArchivesList() )
+				'items' => array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::TAXONOMY ) )
 			),
 			array(
 				'title' => 'Others',
@@ -300,35 +288,42 @@ class Brizy_Admin_Templates {
 		wp_send_json( $groups, 200 );
 	}
 
-	private function getCustomPostsList() {
+	private function getCustomPostsList( $groupValue ) {
 		global $wp_post_types;
 
-		return array_values( array_filter( $wp_post_types, function ( $type ) {
+		return array_values( array_filter( $wp_post_types, function ( $type ) use ( $groupValue ) {
+			$type->groupValue = $groupValue;
+
 			return $type->public && $type->show_ui;
 		} ) );
 	}
 
-	private function getArchivesList() {
+	private function getArchivesList( $groupValue ) {
 		global $wp_post_types;
 
-		return array_values( array_filter( $wp_post_types, function ( $type ) {
+		return array_values( array_filter( $wp_post_types, function ( $type ) use ( $groupValue ) {
+			$type->groupValue = $groupValue;
+
 			return $type->public && $type->show_ui && $type->has_archive;
 		} ) );
 	}
 
-	private function getTaxonomyList() {
+	private function getTaxonomyList( $groupValue ) {
 		$terms = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
 
-		return array_values( $terms );
+		return array_values( array_filter( $terms, function ( $term ) use ( $groupValue ) {
+			$term->groupValue = $groupValue;
+			return $term;
+		} ) );
 	}
 
 	public function geTemplateList() {
 		return array(
-			array( 'title' => 'Author page', 'value' => 'author' ),
-			array( 'title' => 'Search page', 'value' => 'search' ),
-			array( 'title' => 'Home page', 'value' => 'front_page' ),
-			array( 'title' => '404 page', 'value' => '404' ),
-			array( 'title' => 'Archive page', 'value' => 'archive' ),
+			array( 'title' => 'Author page', 'value' => 'author', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
+			array( 'title' => 'Search page', 'value' => 'search', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
+			array( 'title' => 'Home page', 'value' => 'front_page', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
+			array( 'title' => '404 page', 'value' => '404', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
+			array( 'title' => 'Archive page', 'value' => '', 'groupValue' => Brizy_Admin_Rule::ARCHIVE ),
 		);
 	}
 
@@ -340,7 +335,7 @@ class Brizy_Admin_Templates {
 
 		global $wp_query;
 
-		if ( ! isset( $wp_query ) ) {
+		if ( ! isset( $wp_query ) || is_admin()  ) {
 			return null;
 		}
 
