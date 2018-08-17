@@ -346,7 +346,7 @@ var RuleApplyGroupField = function (params) {
         switch (appliedFor) {
             case RULE_POSTS:
                 elements.push(
-                    h("span", {class: "brizy-rule-select"}, [
+                    h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RuleCustomPostSearchField, {
                             id: appliedFor + value,
                             postType: entityType,
@@ -365,7 +365,7 @@ var RuleApplyGroupField = function (params) {
                 break;
             case RULE_TAXONOMY:
                 elements.push(
-                    h("span", {class: "brizy-rule-select"}, [
+                    h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RuleTaxonomySearchField, {
                             id: appliedFor + value,
                             rule: params.rule,
@@ -404,7 +404,7 @@ var RuleForm = function (params) {
         elements.push(h("p", {class: "error"}, params.errors));
     }
 
-    return h("div", {}, elements);
+    return h("div", { class: "brizy-rule-new-condition" }, elements);
 };
 
 var RuleListItem = function (params) {
