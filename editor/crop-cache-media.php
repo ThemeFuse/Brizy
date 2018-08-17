@@ -42,8 +42,12 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	public function download_original_image( $madia_name ) {
 
 		// Check if user is querying API
-		if ( ! $madia_name ) {
+		if ( ! $madia_name  ) {
 			Brizy_Logger::instance()->error( 'Empty media file provided' );
+			throw new InvalidArgumentException( "Invalid media file" );
+		}
+		if ( strpos( $madia_name, "wp-" ) === 0  ) {
+			Brizy_Logger::instance()->error( 'Invalid try to download wordpress file from application server' );
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
 
