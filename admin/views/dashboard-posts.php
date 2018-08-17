@@ -6,7 +6,7 @@
  * Time: 3:06 PM
  */
 ?>
-<h3><b>Latest created posts</b></h3>
+<h3><b></b></h3>
 <ul>
 	<?php
 	if ( count( $posts ) ) {
@@ -37,7 +37,7 @@
 		}
 	} else {
 		?>
-        <p>No posts created.</p>
+        <p><?php _e('No posts created')?>.</p>
 		<?php
 	}
 	?>
