@@ -12,6 +12,7 @@ function brizy() {
 
 function brizy_get_current_post_id() {
 	$pid = null;
+	global $wp_query;
 
 	if ( isset( $_REQUEST['post'] ) ) {
 		$pid = (int) $_REQUEST['post'];
@@ -21,7 +22,7 @@ function brizy_get_current_post_id() {
 		$pid = (int) $_POST['post_ID'];
 	} elseif ( isset( $_POST['id'] ) ) {
 		$pid = (int) $_POST['id'];
-	} elseif ( $apid     = get_queried_object_id() ) {
+	} elseif ( ($apid     = get_queried_object_id()) && is_single() && is_main_query()) {
 		$pid = (int) $apid;
 	}
 
