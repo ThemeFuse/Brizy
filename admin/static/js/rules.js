@@ -10,8 +10,8 @@ var RULE_TEMPLATE = "8";
 
 var defaultRule = {
     type: RULE_TYPE_INCLUDE,
-    appliedFor: "",
-    entityType: "",
+    appliedFor: "1",
+    entityType: "post",
     entityValues: []
 };
 
