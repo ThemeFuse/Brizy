@@ -144,13 +144,7 @@ class Brizy_Editor_API {
 
 		if ( $this->post && $this->post->uses_editor() ) {
 
-			$attachmentId = get_post_thumbnail_id( $this->post->get_id() );
-
-			if ( $attachmentId != $_REQUEST['attachmentId'] ) {
-				$this->error( 400, 'Invalid attachment id' );
-			}
-
-			update_post_meta( $attachmentId, 'brizy_attachment_focal_point', array(
+			update_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point', array(
 				'x' => $_REQUEST['pointX'],
 				'y' => $_REQUEST['pointY']
 			) );
@@ -166,6 +160,7 @@ class Brizy_Editor_API {
 
 		if ( $this->post && $this->post->uses_editor() ) {
 			delete_post_thumbnail( $this->post->get_id() );
+			delete_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point' );
 			$this->success( null );
 		}
 
@@ -836,7 +831,7 @@ class Brizy_Editor_API {
 		$post_query = array(
 			'post_type'      => $postType,
 			'posts_per_page' => - 1,
-			'post_status'    => $postType=='attachment'?'inherit':'publish',
+			'post_status'    => $postType == 'attachment' ? 'inherit' : 'publish',
 			'orderby'        => 'post_title',
 			'order'          => 'ASC'
 		);
