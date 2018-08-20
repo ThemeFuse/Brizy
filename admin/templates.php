@@ -276,7 +276,7 @@ class Brizy_Admin_Templates {
 			array(
 				'title' => 'Archives',
 				'value' => Brizy_Admin_Rule::ARCHIVE,
-				'items' => array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::TAXONOMY ) )
+				'items' => array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE ) )
 			),
 			array(
 				'title' => 'Others',
