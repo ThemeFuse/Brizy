@@ -369,7 +369,6 @@ class Brizy_Admin_Templates {
 			$applyFor       = Brizy_Admin_Rule::POSTS;
 			$entityType     = $wp_query->queried_object->post_type;
 			$entityValues[] = get_the_ID();
-		} else {
 		}
 
 
@@ -423,7 +422,7 @@ class Brizy_Admin_Templates {
 
 		$is_using_brizy = false;
 		try {
-			if ( $wp_query->queried_object instanceof WP_Post && in_array( get_post_type( $pid ), brizy()->supported_post_types() ) ) {
+			if ( in_array( get_post_type( $pid ), brizy()->supported_post_types() ) ) {
 				$is_using_brizy = Brizy_Editor_Post::get( $pid )->uses_editor();
 			}
 		} catch ( Exception $e ) {
