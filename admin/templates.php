@@ -313,6 +313,7 @@ class Brizy_Admin_Templates {
 
 		return array_values( array_filter( $terms, function ( $term ) use ( $groupValue ) {
 			$term->groupValue = $groupValue;
+
 			return $term;
 		} ) );
 	}
@@ -335,7 +336,7 @@ class Brizy_Admin_Templates {
 
 		global $wp_query;
 
-		if ( ! isset( $wp_query ) || is_admin()  ) {
+		if ( ! isset( $wp_query ) || is_admin() ) {
 			return null;
 		}
 
@@ -377,6 +378,20 @@ class Brizy_Admin_Templates {
 			'numberposts' => - 1,
 			'post_status' => 'publish'
 		) );
+
+		$ruleManager = $this->ruleManager;
+		// sort templates by rule set weight
+		usort( $templates, function ( $t1, $t2 ) use ( $ruleManager ) {
+			$ruleSetT1 = $ruleManager->getRuleSet( $t1->ID );
+			$ruleSetT2 = $ruleManager->getRuleSet( $t2->ID );
+			$rule_weight_t1 = $ruleSetT1->getRuleWeight();
+			$rule_weight_t2 = $ruleSetT2->getRuleWeight();
+			if ( $rule_weight_t1 == $rule_weight_t2 ) {
+				return 0;
+			}
+
+			return ( $rule_weight_t1 < $rule_weight_t2 ) ? 1 : -1;
+		} );
 
 		foreach ( $templates as $atemplate ) {
 			$ruleSet = $this->ruleManager->getRuleSet( $atemplate->ID );

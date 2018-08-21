@@ -29,6 +29,15 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 	}
 
 	/**
+	 * @return float|int
+	 */
+	public function getRuleWeight() {
+		return array_sum( array_map( function ( $v ) {
+			return $v->getRuleWeight();
+		}, $this->rules ) );
+	}
+
+	/**
 	 * @param $applyFor
 	 * @param null $entityType
 	 * @param $entityValues
@@ -44,7 +53,7 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 		foreach ( $this->rules as $rule ) {
 
 			if ( $rule->isMatching( $applyFor, $entityType, $entityValues ) ) {
-				return $rule->getType()==Brizy_Admin_Rule::TYPE_INCLUDE ? true : false ;
+				return $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ? true : false;
 			}
 
 		}
