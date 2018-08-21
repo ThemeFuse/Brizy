@@ -3,7 +3,7 @@ import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 
 export function imageStylesClassName(v, sizes, props) {
-  const { className, borderRadius, imageSrc, linkLightBox } = v;
+  const { className, borderRadius, imageSrc, linkType, linkLightBox } = v;
   const {
     meta: { desktopW, mobileW }
   } = props;
@@ -61,7 +61,10 @@ export function imageStylesClassName(v, sizes, props) {
 
   return classnames(
     "brz-image",
-    { "brz-image__lightbox": linkLightBox === "on" && imageSrc },
+    {
+      "brz-image__lightbox":
+        imageSrc && linkType === "lightBox" && linkLightBox === "on"
+    },
     className,
     glamorClassName
   );

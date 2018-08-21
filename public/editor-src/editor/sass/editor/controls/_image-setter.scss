@@ -59,6 +59,10 @@
       color: $focal-point-upload-color--hover;
     }
 
+    .brz-icon-svg {
+      font-size: inherit !important;
+    }
+
     // Loading icon animation
     &--loading {
       cursor: progress;
@@ -76,6 +80,10 @@
     border-radius: 50%;
     color: #fff;
     cursor: pointer;
+
+    .brz-icon-svg {
+      font-size: inherit !important;
+    }
   }
   &__label--disable .brz-ed-control__focal-point__upload {
     cursor: no-drop;

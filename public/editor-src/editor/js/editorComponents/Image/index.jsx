@@ -230,7 +230,8 @@ class Image extends EditorComponent {
       linkAnchor,
       linkExternal,
       linkExternalBlank,
-      linkExternalRel
+      linkExternalRel,
+      linkLightBox
     } = v;
     const { desktopW, mobileW } = this.props.meta;
     const {
@@ -276,7 +277,8 @@ class Image extends EditorComponent {
     const hrefs = {
       anchor: linkAnchor,
       external: linkExternal,
-      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
+      lightBox:
+        linkLightBox === "on" ? imageUrl(imageSrc, { iW: 1200, iH: "any" }) : ""
     };
 
     if (hrefs[linkType] !== "") {
@@ -381,7 +383,8 @@ class Image extends EditorComponent {
       linkAnchor,
       linkExternal,
       linkExternalBlank,
-      linkExternalRel
+      linkExternalRel,
+      linkLightBox
     } = v;
     const { desktopW, mobileW } = this.props.meta;
     const wrapperSizes = {
@@ -471,7 +474,8 @@ class Image extends EditorComponent {
     const hrefs = {
       anchor: linkAnchor,
       external: linkExternal,
-      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
+      lightBox:
+        linkLightBox === "on" ? imageUrl(imageSrc, { iW: 1200, iH: "any" }) : ""
     };
 
     if (hrefs[linkType] !== "") {

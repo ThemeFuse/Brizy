@@ -276,11 +276,11 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
             },
             {
               id: "lightBox",
-              label: t("Lightbox"),
+              label: t("LightBox"),
               options: [
                 {
                   id: "linkLightBox",
-                  label: t("Lightbox"),
+                  label: t("LightBox"),
                   type: "switch",
                   value: v.linkLightBox
                 }

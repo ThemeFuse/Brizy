@@ -72,7 +72,7 @@ module.exports = options => {
       }
     },
     devtool: options.IS_PRODUCTION ? false : "cheap-module-eval-source-map",
-    watch: !options.IS_PRODUCTION,
+    watch: !options.NO_WATCH && !options.IS_PRODUCTION,
     watchOptions: {
       ignored: new RegExp(`templates/${options.TEMPLATE_NAME}`)
     }
