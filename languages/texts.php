@@ -75,6 +75,9 @@ class Brizy_Languages_Texts
 			"Back to Brizy" => __("Back to Brizy", "brizy"),
 			"Plugin Settings" => __("Plugin Settings", "brizy"),
 			"Back to WordPress" => __("Back to WordPress", "brizy"),
+			"Featured Image" => __("Featured Image", "brizy"),
+			"Submit an Issue" => __("Submit an Issue", "brizy"),
+			"Upgrade to Pro" => __("Upgrade to Pro", "brizy"),
 		  
 			// Fixed Bottom Panel
 			"Save HTML" => __("Save HTML", "brizy"),
@@ -346,6 +349,8 @@ class Brizy_Languages_Texts
 			"Hue" => __("Hue", "brizy"),
 			"Brigh.." => __("Brigh..", "brizy"),
 			"Satur.." => __("Satur..", "brizy"),
+			//-> LightBox
+			"LightBox" => __("LightBox", "brizy"),
 			//-> ProgressBar
 			"Percentage" => __("Percentage", "brizy"),
 			"Show Percentage" => __("Show Percentage", "brizy"),

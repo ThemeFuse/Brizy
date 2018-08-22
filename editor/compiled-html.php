@@ -62,13 +62,14 @@ class Brizy_Editor_CompiledHtml {
 		$head_tag = $this->dom->get_head();
 
 		$content = $head_tag->get_content();
-
 		$content = $this->apply_processors( $content );
 
 		return $content;
 	}
 
 	private function apply_processors( $content ) {
+
+		$content = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5 );
 
 		$processors = apply_filters( 'brizy_apply_content_processors', $this->processors );
 

@@ -42,8 +42,12 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	public function download_original_image( $madia_name ) {
 
 		// Check if user is querying API
-		if ( ! $madia_name ) {
+		if ( ! $madia_name  ) {
 			Brizy_Logger::instance()->error( 'Empty media file provided' );
+			throw new InvalidArgumentException( "Invalid media file" );
+		}
+		if ( strpos( $madia_name, "wp-" ) === 0  ) {
+			Brizy_Logger::instance()->error( 'Invalid try to download wordpress file from application server' );
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
 
@@ -170,26 +174,32 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 			list( $requestedImgWidth, $requestedImgHeight, $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight ) = array_values( $filter_configuration['requestedData'] );
 
-			if ( $containerWidth > $imgWidth || $containerHeight > $imgHeight ) {
+			if ( ( $containerWidth > $imgWidth || $containerHeight > $imgHeight ) || $requestedImgWidth > $imgWidth && $requestedImgHeight > $imgHeight ) {
 
-				$newOffsetX = $imgWidth  * $requestedOffsetX / $requestedImgWidth;
+				$newOffsetX = $imgWidth * $requestedOffsetX / $requestedImgWidth;
 				$newOffsetY = $imgHeight * $requestedOffsetY / $requestedImgHeight;
 
-				$newImgWidth  = $imgWidth * $containerWidth / $requestedImgWidth; // aici
-				$newImgHeight = $imgHeight *  $containerHeight / $requestedImgHeight;
+				$newImgWidth  = $imgWidth * $containerWidth / $requestedImgWidth;
+				$newImgHeight = $imgHeight * $containerHeight / $requestedImgHeight;
 
-				$imageEditor->crop( $newOffsetX, $newOffsetY,  $newImgWidth, $newImgHeight );
+				$imageEditor->crop( $newOffsetX, $newOffsetY, $newImgWidth, $newImgHeight );
 
 			} else {
 				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
-				$imageEditor->crop( $requestedOffsetX, $requestedOffsetY,  $containerWidth, $containerHeight );
+				$imageEditor->crop( $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight );
 			}
-
 
 			return $imageEditor;
 		}
 	}
 
+	/**
+	 * @param $cropType
+	 * @param $image_path
+	 * @param $resize_params
+	 *
+	 * @return array
+	 */
 	private function getFilterOptions( $cropType, $image_path, $resize_params ) {
 
 		parse_str( strtolower( $resize_params ), $output );
@@ -198,17 +208,17 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		switch ( $cropType ) {
 			case self::BASIC_CROP_TYPE:
-				$configuration['requestedData']['imageWidth']  = $output['iw'];
-				$configuration['requestedData']['imageHeight'] = $output['ih'];
+				$configuration['requestedData']['imageWidth']  = (int) $output['iw'];
+				$configuration['requestedData']['imageHeight'] = (int) $output['ih'];
 				$configuration['is_advanced']                  = false;
 				break;
 			case self::ADVANCED_CROP_TYPE:
-				$configuration['requestedData']['imageWidth']  = $output['iw'];
-				$configuration['requestedData']['imageHeight'] = $output['ih'];
-				$configuration['requestedData']['offsetX']     = $output['ox'];
-				$configuration['requestedData']['offsetY']     = $output['oy'];
-				$configuration['requestedData']['cropWidth']   = $output['cw'];
-				$configuration['requestedData']['cropHeight']  = $output['ch'];
+				$configuration['requestedData']['imageWidth']  = (int) $output['iw'];
+				$configuration['requestedData']['imageHeight'] = (int) $output['ih'];
+				$configuration['requestedData']['offsetX']     = (int) $output['ox'];
+				$configuration['requestedData']['offsetY']     = (int) $output['oy'];
+				$configuration['requestedData']['cropWidth']   = (int) $output['cw'];
+				$configuration['requestedData']['cropHeight']  = (int) $output['ch'];
 				$configuration['is_advanced']                  = true;
 				break;
 		}

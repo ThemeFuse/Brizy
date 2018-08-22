@@ -45,7 +45,8 @@ class Brizy_Config {
 
 	const BRIZY_REGISTRATION_CREDENTIALS = 'https://app.brizy.io/wordpress/credentials';
 
-	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
+	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
+	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-template.php';
 
 	const BRIZY_APPLICATION_INTEGRATION_URL = 'https://integrations.brizy.io';
 	const BRIZY_APPLICATION_FORM_ID = '6_5968m8wd3r8kcwww8o480w4c4c84sc8gw4kwk80s4k0c48ogkc';

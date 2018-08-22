@@ -27,6 +27,12 @@ abstract class Brizy_Shortcode_AbstractShortcode {
 	 */
 	abstract public function render( $atts, $content = null );
 
+	/**
+	 * @param $atts
+	 * @param null $content
+	 *
+	 * @return string
+	 */
 	final public function masterRender( $atts, $content = null ) {
 		ob_start();
 

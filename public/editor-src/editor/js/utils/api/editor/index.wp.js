@@ -196,3 +196,31 @@ export function getTerms(taxonomy) {
   const apiConfig = Config.get("wp").api;
   return request(apiConfig.getTerms, { taxonomy });
 }
+
+export function updateFeaturedImage(post, attachmentId) {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.setFeaturedImage, {
+    post,
+    attachmentId
+  });
+}
+
+export function updateFeaturedImageFocalPoint(
+  post,
+  attachmentId,
+  pointX,
+  pointY
+) {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.setFeaturedImageFocalPoint, {
+    post,
+    attachmentId,
+    pointX,
+    pointY
+  });
+}
+
+export function removeFeaturedImage(post) {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.removeFeaturedImage, { post });
+}

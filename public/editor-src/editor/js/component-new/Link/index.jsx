@@ -6,7 +6,7 @@ class Link extends Component {
     className: "",
     href: "",
     target: null,
-    type: "external", // external | anchor
+    type: "external", // external | anchor | lightBox
     rel: null
   };
 

@@ -3,13 +3,13 @@ import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 
 export function imageStylesClassName(v, sizes, props) {
-  const { className, borderRadius, imageSrc } = v;
+  const { className, borderRadius, imageSrc, linkType, linkLightBox } = v;
+  const {
+    meta: { desktopW, mobileW }
+  } = props;
   let glamorObj = {};
 
   if (IS_PREVIEW) {
-    const {
-      meta: { desktopW, mobileW }
-    } = props;
     const {
       desktop: { width: dW, height: dH },
       mobile: { width: mW, height: mH }
@@ -33,14 +33,14 @@ export function imageStylesClassName(v, sizes, props) {
     const boxShadowStyle =
       boxShadow === "on"
         ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-        boxShadowColorHex,
-        boxShadowColorOpacity
-        )}`
+            boxShadowColorHex,
+            boxShadowColorOpacity
+          )}`
         : "none";
 
     glamorObj = {
       ".brz &": {
-        maxWidth: `${Math.round(Math.abs(dW * 100 / desktopW))}%`,
+        maxWidth: `${Math.round(Math.abs((dW * 100) / desktopW))}%`,
         height: !imageSrc ? `${dH}px` : "auto",
         borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`,
         opacity: `${imageOpacity / 100}`,
@@ -49,7 +49,7 @@ export function imageStylesClassName(v, sizes, props) {
       },
       "@media (max-width: 768px)": {
         ".brz &": {
-          maxWidth: `${Math.round(Math.abs(mW * 100 / mobileW))}%`,
+          maxWidth: `${Math.round(Math.abs((mW * 100) / mobileW))}%`,
           height: !imageSrc ? `${mH}px` : "auto",
           borderRadius: `${Math.min(borderRadius, maxMobileBorderRadius)}px`
         }
@@ -59,7 +59,15 @@ export function imageStylesClassName(v, sizes, props) {
 
   const glamorClassName = String(css(glamorObj));
 
-  return classnames("brz-image", className, glamorClassName);
+  return classnames(
+    "brz-image",
+    {
+      "brz-image__lightbox":
+        imageSrc && linkType === "lightBox" && linkLightBox === "on"
+    },
+    className,
+    glamorClassName
+  );
 }
 
 export function imageStylesCSSVars(v) {
@@ -149,9 +157,9 @@ export function wrapperStyleCSSVars(v, sizes) {
   const boxShadowStyle =
     boxShadow === "on"
       ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-      boxShadowColorHex,
-      boxShadowColorOpacity
-      )}`
+          boxShadowColorHex,
+          boxShadowColorOpacity
+        )}`
       : "none";
 
   return {

@@ -13,14 +13,40 @@ export default {
     DeviceModes,
     {
       id: "popover",
-      icon: "nc-menu",
-      title: t("More"),
+      icon: "nc-page",
+      title: t("Page"),
       type: "popover",
       options: [
         {
           type: "wpTemplate",
           label: t("Page Template"),
           roles: ["admin"]
+        },
+        {
+          type: "wpFeatureImage",
+          label: t("Featured Image")
+        }
+      ]
+    },
+    {
+      id: "popover",
+      icon: "nc-menu",
+      title: t("More"),
+      type: "popover",
+      options: [
+        {
+          type: "link",
+          icon: "nc-unlock",
+          linkTarget: "_blank",
+          label: t("Upgrade to Pro"),
+          link: "http://brizy.io/pro"
+        },
+        {
+          type: "link",
+          icon: "nc-bug",
+          linkTarget: "_blank",
+          label: t("Submit an Issue"),
+          link: "https://github.com/ThemeFuse/Brizy/issues"
         },
         {
           type: "link",
