@@ -63,8 +63,8 @@ export default class WPImageSetter extends ImageSetter {
     frame.open();
   };
 
-  renderUpload = () => {
-    const { onlyPointer } = this.props;
+  renderUpload() {
+    const { onlyPointer, onUpload } = this.props;
     const { loading } = this.state;
     const className = classnames(
       "brz-label brz-ed-control__focal-point__label",
@@ -72,6 +72,7 @@ export default class WPImageSetter extends ImageSetter {
         "brz-ed-control__focal-point__label--disable": onlyPointer
       }
     );
+    const hasCustomUpload = typeof onUpload === "function";
 
     return (
       <label className={className}>
@@ -82,12 +83,12 @@ export default class WPImageSetter extends ImageSetter {
         ) : (
           <div
             className="brz-ed-control__focal-point__upload"
-            onClick={this.handleWpImageChange}
+            onClick={hasCustomUpload ? onUpload : this.handleWpImageChange}
           >
             <EditorIcon icon="nc-upload" />
           </div>
         )}
       </label>
     );
-  };
+  }
 }

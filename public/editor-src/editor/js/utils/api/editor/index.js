@@ -1,7 +1,6 @@
 import _ from "underscore";
 import jQuery from "jquery";
 import Config from "visual/global/Config";
-import Notifications from "visual/global/Notifications";
 import converter from "./converter";
 
 const hardcodedAjaxSettings = {

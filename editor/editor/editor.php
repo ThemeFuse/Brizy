@@ -236,7 +236,7 @@ class Brizy_Editor_Editor_Editor {
 		$post_thumbnail    = "";
 
 		if ( $post_thumbnail_id ) {
-			$post_thumbnail_focal_point = get_post_meta( $post_thumbnail_id, 'brizy_attachment_focal_point', true );
+			$post_thumbnail_focal_point = get_post_meta( $wp_post_id, 'brizy_attachment_focal_point', true );
 
 			if ( ! is_array( $post_thumbnail_focal_point ) ) {
 				$post_thumbnail_focal_point = array( 'x' => "", 'y' => "" );

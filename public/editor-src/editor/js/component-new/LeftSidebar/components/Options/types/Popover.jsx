@@ -15,7 +15,8 @@ export default class DrawerPopover extends React.Component {
   };
 
   state = {
-    isOpen: false
+    isOpen: false,
+    isHidden: false
   };
 
   handleClick = () => {
@@ -41,26 +42,63 @@ export default class DrawerPopover extends React.Component {
     }
   };
 
-  renderOptions = () => {
+  show = () => {
+    const { isHidden } = this.state;
+
+    if (isHidden) {
+      this.setState({ isHidden: false });
+    }
+  };
+
+  hide = () => {
+    const { isHidden } = this.state;
+
+    if (!isHidden) {
+      this.setState({ isHidden: true });
+    }
+  };
+
+  renderOptions() {
     const { options } = this.props;
-    return options.map((el, index) => {
+
+    return options.map((option, index) => {
       return (
         <Option
           key={index}
-          data={el}
+          data={option}
+          meta={{
+            popover: {
+              show: this.show,
+              hide: this.hide
+            }
+          }}
           className="brz-ed-sidebar__popover__item"
         />
       );
     });
-  };
+  }
 
   render() {
-    const { icon, clickOutsideExceptions, className: _className, title } = this.props;
+    const {
+      icon,
+      clickOutsideExceptions: _clickOutsideExceptions,
+      className: _className,
+      title
+    } = this.props;
+    const { isOpen, isHidden } = this.state;
     const className = classnames(
       "brz-ed-sidebar-bottom__option brz-ed-sidebar__popover",
       _className,
-      { "brz-ed-sidebar__popover__item--active": this.state.isOpen }
+      { "brz-ed-sidebar__popover__item--active": isOpen }
     );
+    const popoverClassName = classnames(
+      "brz-ed-animated brz-ed-animated--fadeInLeft brz-ed-sidebar__popover-content",
+      { "brz-hidden": isHidden }
+    );
+    const clickOutsideExceptions = [
+      ..._clickOutsideExceptions,
+      ".supports-drag-drop" // featured media popup
+    ];
 
     return (
       <ClickOutside
@@ -70,9 +108,7 @@ export default class DrawerPopover extends React.Component {
         <div className={className} title={title} onClick={this.handleClick}>
           <EditorIcon icon={icon} />
           {this.state.isOpen && (
-            <div className="brz-ed-animated brz-ed-animated--fadeInLeft brz-ed-sidebar__popover-content">
-              {this.renderOptions()}
-            </div>
+            <div className={popoverClassName}>{this.renderOptions()}</div>
           )}
         </div>
       </ClickOutside>
