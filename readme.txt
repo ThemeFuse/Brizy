@@ -144,7 +144,7 @@ The progress you're making while building your page is always backed up in the c
 * New: Added Upgrade to Pro option in LeftSidebar
 * New: Added Submit an Issue option in LeftSidebar
 * New: Added Brizy Templates
-* Fixed: Image LightBox minor issues
+* New: Added Image LightBox
 
 = 1.0.24 - 2018-08-07 =
 * Fixed: Upload path for windows installs
