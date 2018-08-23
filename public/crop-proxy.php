@@ -106,7 +106,7 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 			) );
 
 			if ( isset( $attachments[0] ) ) {
-				$attachment = $attachments[0]->ID;
+				$attachment = $attachments[0];
 			}
 		}
 
