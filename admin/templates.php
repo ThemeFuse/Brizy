@@ -366,10 +366,10 @@ class Brizy_Admin_Templates {
 		} elseif ( is_archive() ) {
 			$applyFor   = Brizy_Admin_Rule::ARCHIVE;
 			$entityType = $wp_query->queried_object->name;
-		} elseif ( $wp_query->queried_object instanceof WP_Post ) {
+		} elseif ( $wp_query->queried_object instanceof WP_Post || $wp_query->post instanceof WP_Post ) {
 			$applyFor       = Brizy_Admin_Rule::POSTS;
-			$entityType     = $wp_query->queried_object->post_type;
-			$entityValues[] = get_the_ID();
+			$entityType     = get_queried_object()->post_type;
+			$entityValues[] = get_queried_object_id();
 		}
 
 
