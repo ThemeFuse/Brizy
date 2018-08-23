@@ -863,7 +863,7 @@ class Brizy_Editor_API {
 		return $result;
 	}
 
-	public function brizy_post_title_filter( $where, &$wp_query = null ) {
+	public function brizy_post_title_filter( $where, $wp_query = null ) {
 
 		global $wpdb;
 
