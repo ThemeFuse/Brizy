@@ -372,7 +372,6 @@ class Brizy_Admin_Templates {
 			$entityValues[] = get_queried_object_id();
 		}
 
-
 		$templates = get_posts( array(
 			'post_type'   => self::CP_TEMPLATE,
 			'numberposts' => - 1,
