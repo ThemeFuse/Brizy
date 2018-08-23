@@ -863,11 +863,12 @@ class Brizy_Editor_API {
 		return $result;
 	}
 
-	public function brizy_post_title_filter( $where, &$wp_query ) {
+	public function brizy_post_title_filter( $where, &$wp_query = null ) {
 
 		global $wpdb;
 
-		if ( $term = $wp_query->get( 'post_title_term' ) ) {
+
+		if ( $wp_query instanceof WP_Query && $term = $wp_query->get( 'post_title_term' ) ) {
 			$search_term = $wpdb->esc_like( $term );
 			$search_term = ' \'%' . $search_term . '%\'';
 
