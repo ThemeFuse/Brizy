@@ -18,7 +18,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 	$_SERVER['HTTPS'] = 'on';
 }
 
-define( 'BRIZY_DEVELOPMENT', false );
+define( 'BRIZY_DEVELOPMENT', true );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '1.0.25' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.52' );
@@ -31,10 +31,12 @@ include_once 'autoload.php';
 
 function brizy_install() {
 	Brizy_Logger::install();
+	flush_rewrite_rules();
 }
 
 function brizy_clean() {
 	Brizy_Logger::clean();
+	flush_rewrite_rules();
 }
 
 register_activation_hook( __FILE__, 'brizy_install' );
