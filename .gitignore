@@ -3,3 +3,5 @@
 vendor/
 nohup.out
 **/node_modules/
+editor-build/
+!editor-build/editor/
