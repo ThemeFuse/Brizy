@@ -29,19 +29,6 @@ define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
 
 include_once 'autoload.php';
 
-function brizy_install() {
-	Brizy_Logger::install();
-	Brizy_Admin_Templates::registerCustomPostTemplate();
-	flush_rewrite_rules();
-}
-
-function brizy_clean() {
-	Brizy_Logger::clean();
-	//flush_rewrite_rules();
-}
-
-register_activation_hook( __FILE__, 'brizy_install' );
-register_deactivation_hook( __FILE__, 'brizy_clean' );
 
 add_action( 'plugins_loaded', 'brizy_load' );
 
