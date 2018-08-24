@@ -180,8 +180,6 @@ import Gabi046Dark from "./Gabi046Dark";
 import Gabi046Light from "./Gabi046Light";
 import Gabi047Dark from "./Gabi047Dark";
 import Gabi047Light from "./Gabi047Light";
-import Header001Light from "./Header001Light";
-import Header001Dark from "./Header001Dark";
 
 export default {
   types: [
@@ -201,8 +199,6 @@ export default {
   blocks: [
     Blank000Dark,
     Blank000Light,
-    // Header001Light,
-    // Header001Dark,
     Bogdan001Dark,
     Bogdan001Light,
     Dimi001Dark,

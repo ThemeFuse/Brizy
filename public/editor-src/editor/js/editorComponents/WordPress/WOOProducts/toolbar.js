@@ -47,7 +47,12 @@ const getItemsForDesktop = categoriesList => v => [
                 label: t("Products Count"),
                 type: "input",
                 inputSize: "small",
-                value: v.limit
+                value: {
+                  value: v.limit
+                },
+                onChange: ({ value: limit }) => ({
+                  limit
+                })
               }
             ]
           },
@@ -93,11 +98,11 @@ const getItemsForDesktop = categoriesList => v => [
                       icon: "nc-down"
                     }
                   ],
-                  value: v.order,
+                  value: v.order
                 }
-              },
+              }
             ]
-          },
+          }
         ]
       }
     ]

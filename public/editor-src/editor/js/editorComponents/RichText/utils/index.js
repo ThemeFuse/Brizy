@@ -58,7 +58,9 @@ const getLink = value => {
     anchor,
     external,
     externalBlank,
-    externalRel
+    externalRel,
+    population,
+    externalType
   } = formatLinkFromString(value);
 
   return {
@@ -66,7 +68,9 @@ const getLink = value => {
     linkAnchor: anchor.replace("#", ""),
     linkExternal: external,
     linkExternalBlank: externalBlank,
-    linkExternalRel: externalRel
+    linkExternalRel: externalRel,
+    linkPopulation: population,
+    linkExternalType: externalType
   };
 };
 
@@ -109,6 +113,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
       opacity: format.opacity ? getFirstValue(format.opacity) : cssOpacity
     },
     colorPalette: format.colorPalette || null,
+    population: format.population || null,
     font: format.font ? getFirstValue(format.font) : getCurrentFont(font),
     fontStyle: format.fontStyle || null,
     height: formatHeight
@@ -132,6 +137,12 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     mobileSize: format.mobileSize || null,
     size: formatSize ? getFirstValue(formatSize) : size,
     tagName: getTagName(format, $elem),
+    prepopulation: format.prepopulation
+      ? $elem
+          .closest(".brz-pre-population-visible")
+          .text()
+          .substr(1)
+      : null,
     weight: formatWeight ? getFirstValue(formatWeight) : String(weight)
   };
 };

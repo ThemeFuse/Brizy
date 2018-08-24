@@ -41,7 +41,12 @@ export function getItemsForDesktop(v) {
           type: "input",
           inputSize: "medium",
           placeholder: "dd/mm/yyyy",
-          value: v.date
+          value: {
+            value: v.date
+          },
+          onChange: ({ value: date }) => ({
+            date
+          })
         },
         {
           id: "hours",
@@ -489,7 +494,10 @@ export function getItemsForMobile(v) {
                   choices: getWeightChoices(fontFamily),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
-                    onChangeTypography({ mobileFontWeight: newMobileFontWeight }, v)
+                    onChangeTypography(
+                      { mobileFontWeight: newMobileFontWeight },
+                      v
+                    )
                 },
                 {
                   id: "mobileLetterSpacing",

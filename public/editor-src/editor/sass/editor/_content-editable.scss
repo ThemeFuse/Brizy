@@ -35,8 +35,24 @@ div[contenteditable] {
     position: absolute;
     top: 50%;
   }
-
   &.brz-ed-content-editable-focus * {
     cursor: auto;
+  }
+
+  // Data Population Ribons
+  span[data-population] {
+    color: #fff;
+    background-color: #828b92;
+    padding: 2px 15px 3px;
+    border-radius: 1em;
+    transition: 0.2s linear background-color;
+    cursor: pointer;
+    margin-left: 3px;
+    margin-right: 3px;
+
+    &:hover {
+      background-color: $brand-primary;
+      transition: 0.2s linear background-color;
+    }
   }
 }

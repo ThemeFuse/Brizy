@@ -1,6 +1,7 @@
+import Config from "visual/global/Config";
 import { calcWrapperSizes } from "./calculations";
 import { t } from "visual/utils/i18n";
-import { getOptionColor, getAnimations } from "visual/utils/options";
+import { getOptionColor, getDynamicChoices } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 
 export const getMinSize = () => 5;
@@ -13,6 +14,8 @@ export const getMaxHeight = (cW, v) => {
 
   return maxHeight >= 100 ? Math.round(maxHeight) : 100;
 };
+
+const dynamicContent = Config.get("dynamicContent");
 
 export default ({
   desktopWrapperSizes,
@@ -45,14 +48,25 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
           id: "image",
           label: t("Image"),
           type: "imageSetter",
+          population: {
+            show: Boolean(dynamicContent),
+            choices: getDynamicChoices("image")
+          },
           value: {
             width: v.imageWidth,
             height: v.imageHeight,
             src: v.imageSrc,
             x: v.positionX,
-            y: v.positionY
+            y: v.positionY,
+            population: v.imagePopulation
           },
-          onChange: ({ width, height, src, x, y }) => {
+          onChange: ({ width, height, src, x, y, population }) => {
+            if (population) {
+              return {
+                imagePopulation: population
+              };
+            }
+
             width = width || DEFAULT_IMAGE_SIZES.width;
             height = height || DEFAULT_IMAGE_SIZES.height;
             const newWrapperSize = calcWrapperSizes(cW, {
@@ -74,6 +88,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
               height: Math.round(newHeight),
               positionX: x,
               positionY: y,
+              imagePopulation: "",
               mobilePositionX:
                 v.positionX === v.mobilePositionX ? x : v.mobilePositionX,
               mobilePositionY:
@@ -85,6 +100,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
           id: "zoom",
           label: t("Zoom"),
           type: "slider",
+          disabled: Boolean(v.imagePopulation),
           slider: {
             min: 100,
             max: 200
@@ -258,7 +274,28 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                   type: "input",
                   label: t("Link to"),
                   placeholder: "http://",
-                  value: v.linkExternal
+                  population: {
+                    show: Boolean(dynamicContent),
+                    choices: getDynamicChoices("link")
+                  },
+                  value: {
+                    population: v.linkPopulation,
+                    value: v.linkExternal
+                  },
+                  onChange: ({
+                    value: linkExternal,
+                    population: linkPopulation,
+                    changed
+                  }) => {
+                    return {
+                      linkExternal,
+                      linkPopulation,
+                      linkExternalType:
+                        changed === "value" || linkPopulation === ""
+                          ? "linkExternal"
+                          : "linkPopulation"
+                    };
+                  }
                 },
                 {
                   id: "linkExternalBlank",
@@ -687,14 +724,25 @@ export const getItemsForMobile = (wrapperSizes, cW) => v => {
           label: t("Image"),
           type: "imageSetter",
           onlyPointer: true,
+          population: {
+            show: Boolean(dynamicContent),
+            choices: getDynamicChoices("image", dynamicContent)
+          },
           value: {
             width: v.imageWidth,
             height: v.imageHeight,
             src: v.imageSrc,
             x: v.mobilePositionX,
-            y: v.mobilePositionY
+            y: v.mobilePositionY,
+            population: v.imagePopulation
           },
-          onChange: ({ width, height, x, y }) => {
+          onChange: ({ width, height, x, y, population }) => {
+            if (population) {
+              return {
+                imagePopulation: population
+              };
+            }
+
             width = width || DEFAULT_IMAGE_SIZES.width;
             height = height || DEFAULT_IMAGE_SIZES.height;
             const newWrapperSize = calcWrapperSizes(cW, {
@@ -712,7 +760,8 @@ export const getItemsForMobile = (wrapperSizes, cW) => v => {
               imageHeight: height,
               mobilePositionX: x,
               mobilePositionY: y,
-              mobileHeight: Math.round(newHeight)
+              mobileHeight: Math.round(newHeight),
+              imagePopulation: ""
             };
           }
         },
@@ -720,6 +769,7 @@ export const getItemsForMobile = (wrapperSizes, cW) => v => {
           id: "mobileZoom",
           label: t("Zoom"),
           type: "slider",
+          disabled: Boolean(v.imagePopulation),
           slider: {
             min: 100,
             max: 200

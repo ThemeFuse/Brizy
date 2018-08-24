@@ -21,10 +21,10 @@ class Icon extends EditorComponent {
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
       _v.hoverColorPalette && `${_v.hoverColorPalette}__hoverColor`,
-      _v.hoverBorderColorPalette && `${_v.hoverBorderColorPalette}__hoverBorder`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`
     ]);
-
     const {
       type: iconType,
       name: iconName,
@@ -32,12 +32,17 @@ class Icon extends EditorComponent {
       linkAnchor,
       linkExternal,
       linkExternalBlank,
-      linkExternalRel
+      linkExternalRel,
+      linkExternalType,
+      linkPopulation
     } = v;
-
+    const external = {
+      linkExternal,
+      linkPopulation
+    };
     const hrefs = {
       anchor: linkAnchor,
-      external: linkExternal
+      external: external[linkExternalType]
     };
 
     let content = (
@@ -48,7 +53,12 @@ class Icon extends EditorComponent {
 
     if (hrefs[linkType] !== "") {
       content = (
-        <Link type={linkType} href={hrefs[linkType]} target={linkExternalBlank} rel={linkExternalRel}>
+        <Link
+          type={linkType}
+          href={hrefs[linkType]}
+          target={linkExternalBlank}
+          rel={linkExternalRel}
+        >
           {content}
         </Link>
       );

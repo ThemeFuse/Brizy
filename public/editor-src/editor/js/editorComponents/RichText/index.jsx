@@ -4,8 +4,10 @@ import _ from "underscore";
 import classNames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Toolbar from "visual/component-new/Toolbar";
+import ClickOutside from "visual/component-new/ClickOutside";
+import Downshift from "visual/component/controls/Downshift";
+import { getDynamicChoices } from "visual/utils/options";
 import Quill from "./Quill";
-import { hexToRgba } from "visual/utils/color";
 import toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
 
@@ -15,6 +17,11 @@ class RichText extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  state = {
+    prepopulation: null,
+    selectionCoords: null
+  };
 
   componentDidMount() {
     const node = ReactDOM.findDOMNode(this);
@@ -34,14 +41,31 @@ class RichText extends EditorComponent {
     this.quill = el;
   };
 
-  handleSelectionChange = () => {
+  handleSelectionChange = ({ prepopulation }, selectionCoords) => {
     this.toolbar.show({
       getProps: this.getToolbarProps
     });
+
+    if (
+      this.state.prepopulation !== prepopulation ||
+      (selectionCoords && this.state.selectionCoords !== selectionCoords)
+    ) {
+      this.setState({ prepopulation, selectionCoords });
+    }
   };
 
   handleTextChange = text => {
     this.patchValue({ text });
+  };
+
+  handlePopulationSet = value => {
+    this.quill.format("population", value);
+    this.quill.format("prepopulation", null);
+  };
+  handlePopulationClickOutside = () => {
+    this.setState({
+      prepopulation: null
+    });
   };
 
   getToolbarProps = () => {
@@ -53,7 +77,9 @@ class RichText extends EditorComponent {
     return {
       node: ReactDOM.findDOMNode(this),
       offsetTop: 14,
-      ...this.makeToolbarPropsFromConfig(toolbarConfig(formats, onChange))
+      ...this.makeToolbarPropsFromConfig(
+        toolbarConfig({ ...formats }, onChange)
+      )
     };
   };
 
@@ -61,7 +87,39 @@ class RichText extends EditorComponent {
     return classNames("brz-rich-text", v.className);
   }
 
+  renderPopulationHelper() {
+    const {
+      prepopulation,
+      selectionCoords: { left, top, height }
+    } = this.state;
+
+    const style = {
+      width: "130px",
+      left,
+      top: top + height
+    };
+    const choices = getDynamicChoices("richText") || [];
+
+    const filteredChoices = choices.filter(
+      ({ title }) =>
+        title.toLowerCase().indexOf(prepopulation.toLowerCase()) === 0
+    );
+
+    const content = (
+      <ClickOutside onClickOutside={this.handlePopulationClickOutside}>
+        <Downshift
+          style={style}
+          value={filteredChoices}
+          onChange={this.handlePopulationSet}
+        />
+      </ClickOutside>
+    );
+
+    return ReactDOM.createPortal(content, document.body);
+  }
+
   renderForEdit(v) {
+    const { prepopulation } = this.state;
     const {
       meta: { globalBlockId: isGlobalBlock },
       onToolbarEnter,
@@ -84,6 +142,7 @@ class RichText extends EditorComponent {
             onSelectionChange={this.handleSelectionChange}
             onTextChange={this.handleTextChange}
           />
+          {prepopulation !== null && this.renderPopulationHelper()}
         </div>
       </Toolbar>
     );

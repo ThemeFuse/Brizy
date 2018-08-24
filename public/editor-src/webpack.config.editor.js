@@ -17,6 +17,7 @@ module.exports = options => {
     mode: options.IS_PRODUCTION ? "production" : "development",
     entry: {
       editor: [
+        "./editor/js/bootstraps/initBrizyGlobal.js",
         "./editor/js/bootstraps/editor/configInit.js",
         "./editor/js/bootstraps/editor/index.js"
       ]
@@ -72,7 +73,7 @@ module.exports = options => {
       }
     },
     devtool: options.IS_PRODUCTION ? false : "cheap-module-eval-source-map",
-    watch: !options.NO_WATCH && !options.IS_PRODUCTION,
+    watch: !options.IS_PRODUCTION,
     watchOptions: {
       ignored: new RegExp(`templates/${options.TEMPLATE_NAME}`)
     }

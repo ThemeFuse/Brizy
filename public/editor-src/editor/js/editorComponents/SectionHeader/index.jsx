@@ -1,14 +1,14 @@
 import React from "react";
 import classnames from "classnames";
 import ResizeAware from "react-resize-aware";
-import { css } from "glamor";
+import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Portal from "visual/component-new/Portal";
 import Sticky from "visual/component-new/Sticky";
 import SortableZIndex from "visual/component-new//Sortable/SortableZIndex";
-import { currentTooltip } from "visual/component/controls/Tooltip";
 import { ToolbarExtend, hideToolbar } from "visual/component-new/Toolbar";
+import { currentTooltip } from "visual/component/controls/Tooltip";
 import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { uuid } from "visual/utils/uuid";
@@ -17,7 +17,20 @@ import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
 
 const STICKY_ITEM_INDEX = 1;
-const ADD_BLOCK_Z_INDEX = 1051;
+
+const fixedContainerPlus = ({ fixed = false, node = null, height = 0 }) => {
+  const $adderBlock = jQuery(node).siblings(".brz-ed-container-plus");
+
+  if (fixed) {
+    $adderBlock.addClass("brz-ed-container-plus--fixed").css({
+      top: `${height}px`
+    });
+  } else {
+    $adderBlock.removeClass("brz-ed-container-plus--fixed").css({
+      top: "auto"
+    });
+  }
+};
 
 class SectionHeader extends EditorComponent {
   static get componentId() {
@@ -40,38 +53,42 @@ class SectionHeader extends EditorComponent {
     return stateUpdate || this.optionalSCU(nextProps);
   }
 
-  handleRef = el => {
-    this.node = el;
+  componentDidUpdate() {
+    const { type } = this.getValue();
+    if (type !== "fixed") {
+      fixedContainerPlus({
+        fixed: false,
+        node: this.sectionNode
+      });
+    }
+  }
+
+  handleSectionRef = el => {
+    this.sectionNode = el;
   };
 
-  // handleStickyClose = () => {
-  //   if (currentTooltip) {
-  //     currentTooltip.hide();
-  //   }
-  //   hideToolbar();
+  handleStickyRef = el => {
+    this.stickyNode = el;
+  };
 
-  //   if (this.state.isOpen) {
-  //     this.setState({
-  //       isOpen: false
-  //     });
-  //   }
-  // };
+  handleStickyChange = isSticky => {
+    hideToolbar();
 
-  // handleStickyOpen = () => {
-  //   if (currentTooltip) {
-  //     currentTooltip.hide();
-  //   }
-  //   hideToolbar();
+    if (currentTooltip) {
+      currentTooltip.hide();
+    }
 
-  //   if (!this.state.isOpen) {
-  //     this.setState({
-  //       isOpen: true
-  //     });
-  //   }
-  // };
+    if (this.getValue().type === "fixed") {
+      fixedContainerPlus({
+        fixed: isSticky,
+        node: this.sectionNode,
+        height: this.state.height
+      });
+    }
+  };
 
   handleUpdateHeight = () => {
-    const { height } = this.node.getBoundingClientRect();
+    const { height } = this.stickyNode.getBoundingClientRect();
 
     if (height !== this.state.height) {
       this.setState({
@@ -90,6 +107,7 @@ class SectionHeader extends EditorComponent {
         refSelector={`#${this.getId()}`}
         type="animated"
         render={this.renderAnimatedSticky}
+        onChange={this.handleStickyChange}
       />
     );
 
@@ -141,6 +159,7 @@ class SectionHeader extends EditorComponent {
         refSelector={`#${this.getId()}`}
         type="fixed"
         render={this.renderFixedSticky}
+        onChange={this.handleStickyChange}
       />
     );
   };
@@ -153,7 +172,7 @@ class SectionHeader extends EditorComponent {
 
     return (
       <SortableZIndex zindex={1}>
-        <div className={className}>
+        <div className={className} ref={this.handleStickyRef}>
           <ToolbarExtend position={toolbarPosition}>
             {this.renderStatic()}
           </ToolbarExtend>
@@ -180,29 +199,12 @@ class SectionHeader extends EditorComponent {
     let className = "brz-section__header";
     let content = this[`render${capitalize(v.type)}`]();
 
-    // TODO: SEE WHAT TO DO WITH THE PLUS AFTER FIXED HEADER
-    // className = classnames(
-    //   className,
-    //   isOpen &&
-    //     String(
-    //       css({
-    //         "& + .brz-ed-container-plus": {
-    //           position: "fixed",
-    //           top: height,
-    //           left: 0,
-    //           width: "100%",
-    //           zIndex: ADD_BLOCK_Z_INDEX
-    //         }
-    //       })
-    //     )
-    // );
-
     return (
       <section
-        ref={this.handleRef}
         id={this.getId()}
         className={className}
         style={this.getStyle(v)}
+        ref={this.handleSectionRef}
       >
         {content}
       </section>

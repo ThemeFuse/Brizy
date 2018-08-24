@@ -2,14 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import _ from "underscore";
 import jQuery from "jquery";
-import Quill, { Delta, Keyboard } from "./utils/quill";
-import { getFormats } from "./utils";
+import { getDynamicContentByPlaceholder } from "visual/utils/options";
 import { getStore } from "visual/redux/store";
+import Quill, { Delta, Keyboard } from "./utils/quill";
+import bindings from "./utils/bindings";
+import { getFormats } from "./utils";
 
 const DEFAULT = {
   bold: false,
   color: "#000",
   colorPalette: null,
+  population: null,
   font: null,
   fontStyle: null,
   height: 1.6,
@@ -23,6 +26,8 @@ const DEFAULT = {
   linkExternalBlank: "on",
   linkExternalRel: "off",
   linkType: "anchor",
+  linkPopulation: "",
+  linkExternalType: "external",
   list: null,
   marginBottom: "0",
   marginTop: "0",
@@ -41,7 +46,7 @@ export default class QuillComponent extends React.Component {
   }
 
   componentWillReceiveProps({ forceUpdate, value }) {
-    if (!this.quill.hasFocus() && forceUpdate && this.props.value !== value) {
+    if (!this.quill.hasFocus() && (forceUpdate || this.props.value !== value)) {
       this.destroyPlugin();
       this.contentEditable.innerHTML = value;
       this.initPlugin();
@@ -56,106 +61,23 @@ export default class QuillComponent extends React.Component {
     this.destroyPlugin();
   }
 
+  getCoords(range) {
+    const node = ReactDOM.findDOMNode(this);
+    const { top, left } = node.getBoundingClientRect();
+    const bounds = this.quill.getBounds(range);
+
+    return {
+      ...bounds,
+      top: bounds.top + top,
+      left: bounds.left + left
+    };
+  }
+
   handleContentEditableRef = el => {
     this.contentEditable = el;
   };
 
   initPlugin = () => {
-    const handleEnter = function({ index, length }, context) {
-      if (length === 0) {
-        const [{ domNode: elem }, offset] = this.quill.getLine(index);
-        const currentTextLength = elem.textContent.length;
-
-        let delta;
-        let selectionOffset;
-        // enter was triggered in the end of line
-        if (currentTextLength === offset) {
-          delta = new Delta().retain(index + 1).insert(" \n", context.format);
-          selectionOffset = index + 1;
-          // enter was triggered in the middle of line
-        } else if (offset > 0) {
-          delta = new Delta().retain(index).insert("\n", context.format);
-          selectionOffset = index + 1;
-          // enter was triggered in the start of line
-        } else {
-          delta = new Delta().retain(index).insert(" \n", context.format);
-          selectionOffset = index + 2;
-        }
-
-        this.quill.updateContents(delta);
-        this.quill.setSelection(selectionOffset, 0);
-
-        return;
-      }
-
-      return true;
-    };
-
-    const handleBackspace = function({ index, length }, context) {
-      const lines = this.quill.getLines(index, length);
-      const [{ domNode: elem }, offset] = this.quill.getLine(index);
-      const currentTextLength = elem.textContent.length;
-
-      if (currentTextLength === length || lines.length > 1) {
-        this.quill.deleteText(index, length);
-        this.quill.updateContents(
-          new Delta().retain(index).insert(" ", context.format)
-        );
-        return;
-      }
-      if (currentTextLength === 1) {
-        // Check for astral symbols
-        let length = /[\uD800-\uDBFF][\uDC00-\uDFFF]$/.test(context.prefix)
-          ? 2
-          : 1;
-        this.quill.deleteText(index - length, length);
-        if (offset > 0) {
-          this.quill.updateContents(
-            new Delta().retain(index - 1).insert(" ", context.format)
-          );
-        }
-        return;
-      }
-
-      return true;
-    };
-
-    const handleDelete = function({ index, length }, context) {
-      const lines = this.quill.getLines(index, length);
-      const [{ domNode: elem }, offset] = this.quill.getLine(index);
-      const currentText = elem.textContent;
-
-      if (currentText.length === length || lines.length > 1) {
-        this.quill.deleteText(index, length);
-        this.quill.updateContents(
-          new Delta().retain(index).insert(" ", context.format)
-        );
-
-        return;
-      }
-
-      if (
-        offset === 0 &&
-        currentText.length === 1 &&
-        currentText.replace(/ /gi, "").length === 0
-      ) {
-        this.quill.deleteText(index, 2);
-
-        return;
-      }
-
-      if (offset === 0 && currentText.length === 1) {
-        this.quill.deleteText(index, 1);
-        this.quill.updateContents(
-          new Delta().retain(index).insert(" ", context.format)
-        );
-
-        return;
-      }
-
-      return true;
-    };
-
     this.quill = new Quill(this.contentEditable, {
       placeholder: "Enter text here...",
       modules: {
@@ -163,23 +85,7 @@ export default class QuillComponent extends React.Component {
         history: {
           maxStack: 0
         },
-        keyboard: {
-          bindings: {
-            enter: {
-              key: Keyboard.keys.ENTER,
-              handler: handleEnter
-            },
-            "header enter": handleEnter,
-            backspace: {
-              key: Keyboard.keys.BACKSPACE,
-              handler: handleBackspace
-            },
-            delete: {
-              key: Keyboard.keys.DELETE,
-              handler: handleDelete
-            }
-          }
-        }
+        keyboard: { bindings }
       }
     });
     this.quill.on("selection-change", (range, oldRange) => {
@@ -187,13 +93,14 @@ export default class QuillComponent extends React.Component {
         // TODO: make much less hacky
         if (!_.isEqual(range, oldRange)) {
           const format = this.getSelectionFormat();
-          this.props.onSelectionChange(format);
+          this.props.onSelectionChange(format, this.getCoords(range));
         }
       }
     });
     this.quill.on("text-change", () => {
+      const range = this.quill.getSelection(true);
       const format = this.getSelectionFormat();
-      this.props.onSelectionChange(format);
+      this.props.onSelectionChange(format, this.getCoords(range));
       const html = this.quill.root.innerHTML.replace(
         /(?=^|>)(\s+)|(\s+)(?=<|$)/g,
         "&nbsp;"
@@ -208,6 +115,7 @@ export default class QuillComponent extends React.Component {
       return new Delta().insert(node.textContent, attributers);
     });
 
+    window.quill = this.quill;
     // we add just one listener for all instances
     // because otherwise we would end up with tens of
     // listeners on the document
@@ -216,7 +124,7 @@ export default class QuillComponent extends React.Component {
       document.addEventListener("mousedown", this.onBlurAll, false);
     }
     instances.push(this);
-  }
+  };
 
   destroyPlugin() {
     this.quill = null;
@@ -295,20 +203,50 @@ export default class QuillComponent extends React.Component {
           dangerouslySetInnerHTML={{ __html: value }}
           onClick={this.handleClick}
         />
+        <div ref={el => (this.population = el)} />
       </div>
     );
+  }
+
+  setPopulation(selection, value) {
+    let [leafBlot, offset] = this.quill.getLeaf(selection.index);
+    const { label } = getDynamicContentByPlaceholder("richText", value);
+    const formats = this.quill.getFormat();
+    let { index, length } = selection;
+    if (formats.prepopulation || (!selection.length && formats.population)) {
+      index = selection.index - offset;
+      length = leafBlot.length();
+    }
+    const population = value.replace("{{", "").replace("}}", "");
+
+    this.quill.deleteText(index, length);
+    this.quill.insertText(index, String(label), {
+      ...formats,
+      population
+    });
+
+    this.quill.setSelection(index, String(label).length);
   }
 
   // api
   format = (type, value) => {
     const selection = this.quill.getSelection(true);
-    if (!selection.length) {
-      const lineBlot = this.quill.getLine(selection.index)[0];
-      const index = lineBlot.offset();
-      const length = lineBlot.length();
+    const lineBlot = this.quill.getLine(selection.index)[0];
 
+    if (type === "population") {
+      this.setPopulation(selection, value);
+
+      return;
+    }
+
+    if (!selection.length) {
       const newValue = value || false;
-      this.quill.formatText(index, length, type, newValue);
+      this.quill.formatText(
+        lineBlot.offset(),
+        lineBlot.length(),
+        type,
+        newValue
+      );
       return;
     }
 

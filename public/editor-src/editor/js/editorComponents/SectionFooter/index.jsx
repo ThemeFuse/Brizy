@@ -1,11 +1,12 @@
 import React from "react";
-import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import SectionFooterItems from "./Items";
 import Background from "visual/component-new/Background";
 import ContainerBorder from "visual/component-new/ContainerBorder";
-import { hexToRgba } from "visual/utils/color";
-import { videoData as getVideoData } from "visual/utils/video";
+import PaddingResizer from "visual/component-new/PaddingResizer";
+import { getStore } from "visual/redux/store";
+import { updateGlobals } from "visual/redux/actionCreators";
+import { uuid } from "visual/utils/uuid";
 import {
   wInBoxedPage,
   wInMobilePage,
@@ -15,7 +16,6 @@ import { CollapsibleToolbar } from "visual/component-new/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
   sectionStyleClassName,
-  sectionStyleCSSVars,
   bgStyleClassName,
   bgStyleCSSVars,
   itemsStyleClassName,
@@ -45,11 +45,14 @@ class SectionFooter extends EditorComponent {
       this.containerBorder.setActive(true);
     }
   };
+
   handleToolbarClose = () => {
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
   };
+
+  handlePaddingResizerChange = patch => this.patchValue(patch);
 
   getMeta(v) {
     const { meta } = this.props;
@@ -106,7 +109,7 @@ class SectionFooter extends EditorComponent {
       bgImageSrc,
       bgColorOpacity,
       mobileBgImageSrc,
-      mobileBgColorOpacity,
+      mobileBgColorOpacity
     } = v;
 
     const meta = this.getMeta(v);
@@ -127,9 +130,11 @@ class SectionFooter extends EditorComponent {
 
     return (
       <Background {...bgProps}>
-        <div className={containerStyleClassName(v)}>
-          <SectionFooterItems {...itemsProps} />
-        </div>
+        <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
+          <div className={containerStyleClassName(v)}>
+            <SectionFooterItems {...itemsProps} />
+          </div>
+        </PaddingResizer>
       </Background>
     );
   }
@@ -177,6 +182,65 @@ class SectionFooter extends EditorComponent {
         {this.renderItems(v)}
       </footer>
     );
+  }
+
+  // api
+  becomeSaved() {
+    const { blockId } = this.props;
+    const dbValue = this.getDBValue();
+    const store = getStore();
+    const { savedBlocks = [] } = store.getState().globals.project;
+
+    store.dispatch(
+      updateGlobals("savedBlocks", [
+        ...savedBlocks,
+        {
+          type: "SectionFooter",
+          blockId,
+          value: dbValue
+        }
+      ])
+    );
+  }
+
+  becomeGlobal() {
+    const { blockId } = this.props;
+    const dbValue = this.getDBValue();
+    const store = getStore();
+    const { globalBlocks = {} } = store.getState().globals.project;
+    const globalBlockId = uuid(10);
+
+    store.dispatch(
+      updateGlobals("globalBlocks", {
+        ...globalBlocks,
+        [globalBlockId]: {
+          type: "SectionFooter",
+          blockId,
+          value: dbValue
+        }
+      })
+    );
+
+    this.props.onChange(
+      {
+        type: "GlobalBlock",
+        blockId,
+        value: { globalBlockId }
+      },
+      {
+        intent: "replace_all"
+      }
+    );
+  }
+
+  becomeNormal() {
+    const store = getStore();
+    const { globalBlocks = {} } = store.getState().globals.project;
+    const { globalBlockId } = this.props.meta;
+
+    this.props.onChange(globalBlocks[globalBlockId], {
+      intent: "replace_all"
+    });
   }
 }
 

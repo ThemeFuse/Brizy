@@ -153,6 +153,7 @@ class Brizy_Languages_Texts
 			"Overlay" => __("Overlay", "brizy"),
 			"Border" => __("Border", "brizy"),
 			//-> Settings
+			"Dynamic content" => __("Dynamic content", "brizy"),
 			"Settings" => __("Settings", "brizy"),
 			//-> Duplicate & Delete
 			"Duplicate" => __("Duplicate", "brizy"),
@@ -428,6 +429,7 @@ class Brizy_Languages_Texts
 			"Block" => __("Block", "brizy"),
 			"Make it Global" => __("Make it Global", "brizy"),
 			"Save" => __("Save", "brizy"),
+			"Pages" => __("Pages", "brizy"),
 			"Blocks" => __("Blocks", "brizy"),
 			"Saved" => __("Saved", "brizy"),
 			"Global" => __("Global", "brizy"),

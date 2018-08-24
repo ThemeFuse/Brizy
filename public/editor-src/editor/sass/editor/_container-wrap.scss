@@ -18,6 +18,13 @@
   &-plus {
     position: relative;
     z-index: z("adder-block");
+
+    &--fixed {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      z-index: z("adder-block-fixed");
+    }
   }
 
   // Trigger open or close popup
@@ -324,7 +331,7 @@
 .brz-ed-wrap-block-item .brz-ed-container-wrap {
   visibility: hidden;
   opacity: 0;
-  transition: visibility .15s linear, opacity .15s linear;
+  transition: visibility 0.15s linear, opacity 0.15s linear;
 }
 .brz-ed-wrap-block-item:hover .brz-ed-container-wrap,
 .brz-ed-wrap-block-item.brz-ed-under-bar .brz-ed-container-wrap,

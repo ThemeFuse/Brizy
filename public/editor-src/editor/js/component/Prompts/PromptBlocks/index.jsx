@@ -4,11 +4,18 @@ import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component-new/EditorIcon";
 import { t } from "visual/utils/i18n";
 
+import Templates from "./Templates";
 import Blocks from "./Blocks";
 import Saved from "./Saved";
 import Global from "./Global";
 
 const tabs = [
+  {
+    id: "templates",
+    title: t("Pages"),
+    icon: "nc-pages",
+    component: Templates
+  },
   {
     id: "blocks",
     title: t("Blocks"),

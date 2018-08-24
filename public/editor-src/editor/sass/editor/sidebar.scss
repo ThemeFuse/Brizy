@@ -483,6 +483,16 @@
     .brz-ed-sidebar-options > [class^="brz-ed-option"] {
       margin-bottom: 30px;
     }
+    .brz-ed-sidebar-options {
+      .brz-ed-option__select {
+        border-bottom: 1px solid #3a3f47;
+        padding-bottom: 30px;
+      }
+      .brz-ed-option__select > div,
+      .brz-control__select {
+        width: 100%;
+      }
+    }
   }
 
   // Variants
