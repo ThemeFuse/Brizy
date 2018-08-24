@@ -31,12 +31,13 @@ include_once 'autoload.php';
 
 function brizy_install() {
 	Brizy_Logger::install();
+	Brizy_Admin_Templates::registerCustomPostTemplate();
 	flush_rewrite_rules();
 }
 
 function brizy_clean() {
 	Brizy_Logger::clean();
-	flush_rewrite_rules();
+	//flush_rewrite_rules();
 }
 
 register_activation_hook( __FILE__, 'brizy_install' );
@@ -49,7 +50,6 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.4.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
-
 		return;
 	}
 

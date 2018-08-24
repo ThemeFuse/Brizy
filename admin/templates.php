@@ -37,7 +37,7 @@ class Brizy_Admin_Templates {
 	 */
 	protected function __construct() {
 
-		$this->registerCustomPostTemplate();
+		self::registerCustomPostTemplate();
 
 		if ( ! Brizy_Editor::is_user_allowed() ) {
 			return;
@@ -158,7 +158,7 @@ class Brizy_Admin_Templates {
 		return $messages;
 	}
 
-	public function registerCustomPostTemplate() {
+	static public function registerCustomPostTemplate() {
 		global $wp_rewrite;
 
 		$labels = array(

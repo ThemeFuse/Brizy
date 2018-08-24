@@ -11,7 +11,7 @@ class Brizy_Admin_Settings {
 	private $capability_options;
 
 	public static function menu_slug() {
-		return brizy()->get_slug() . '-settings';
+		return  'brizy-settings';
 	}
 
 	/**
