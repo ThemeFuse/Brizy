@@ -66,16 +66,17 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 				throw new Exception( 'Unable to cache media' );
 			}
 
-			// attach to post
-			$parent_post_id = $this->post->get_parent_id();
-			$attach_to_post = $this->attach_to_post( $original_asset_path, $parent_post_id, $madia_name );
-			if ( $attach_to_post === 0 || is_wp_error( $attach_to_post ) ) {
-				Brizy_Logger::instance()->error( 'Unable to attach media file', array(
-					'media'       => $original_asset_path,
-					'parent_post' => $parent_post_id
-				) );
-				throw new Exception( 'Unable to attach media' );
-			}
+		}
+
+		// attach to post
+		$parent_post_id = $this->post->get_parent_id();
+		$attach_to_post = $this->attach_to_post( $original_asset_path, $parent_post_id, $madia_name );
+		if ( $attach_to_post === 0 || is_wp_error( $attach_to_post ) ) {
+			Brizy_Logger::instance()->error( 'Unable to attach media file', array(
+				'media'       => $original_asset_path,
+				'parent_post' => $parent_post_id
+			) );
+			throw new Exception( 'Unable to attach media' );
 		}
 
 		return $original_asset_path;
