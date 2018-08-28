@@ -11,7 +11,7 @@ class Brizy_Admin_Settings {
 	private $capability_options;
 
 	public static function menu_slug() {
-		return  'brizy-settings';
+		return 'brizy-settings';
 	}
 
 	/**
@@ -29,7 +29,8 @@ class Brizy_Admin_Settings {
 	 */
 	private function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'action_register_settings_page' ), 9 );
+		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
+		add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 8 );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
 		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
@@ -52,17 +53,26 @@ class Brizy_Admin_Settings {
 	/**
 	 * @internal
 	 */
-	function action_register_settings_page() {
+	function actionRegisterSettingsPage() {
+
+		if ( ! Brizy_Editor::is_user_allowed() ) {
+			return;
+		}
 
 		add_menu_page( brizy()->get_name(),
 			brizy()->get_name(),
-			'manage_options',
+			'read',
 			self::menu_slug(),
 			array( $this, 'render' ),
 			plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
 			81
 		);
+	}
 
+	/**
+	 * @internal
+	 */
+	function actionRegisterRoleManagerPage() {
 		add_submenu_page( self::menu_slug(), __( 'Role Manager' ), __( 'Role Manager' ), 'manage_options', self::menu_slug(), array(
 			$this,
 			'render'

@@ -17,6 +17,7 @@ function brizy_addTemplateSupport( $posts ) {
 class Brizy_Admin_Templates {
 
 	const CP_TEMPLATE = 'brizy_template';
+	const CP_TEMPLATES = 'brizy_templates';
 	const RULE_LIST_VEIW = 'brizy_rule_list_view';
 	const RULE_GROUP_LIST = 'brizy_rule_group_list';
 	const RULE_TAXONOMY_LIST = 'brizy_taxonomy_list';
@@ -37,11 +38,11 @@ class Brizy_Admin_Templates {
 	 */
 	protected function __construct() {
 
-		self::registerCustomPostTemplate();
-
 		if ( ! Brizy_Editor::is_user_allowed() ) {
 			return;
 		}
+
+		self::registerCustomPostTemplate();
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 
@@ -57,11 +58,17 @@ class Brizy_Admin_Templates {
 			add_action( 'wp_ajax_' . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
 			add_filter( 'post_row_actions', array( $this, 'removeRowActions' ), 10, 1 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
+			add_action( 'admin_init', array( $this, 'addTemplateRoleCaps' ), 10000 );
 
 		} elseif ( ! is_admin() && ! defined( 'DOING_AJAX' ) ) {
 			add_action( 'wp', array( $this, 'templateFrontEnd' ) );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 20000 );
 		}
+
+		global $current_user;
+
+		//var_dump( $current_user );
+		//exit;
 	}
 
 	/**
@@ -157,8 +164,41 @@ class Brizy_Admin_Templates {
 		return $messages;
 	}
 
+	public function addTemplateRoleCaps() {
+		$roles = wp_roles()->roles;
+		foreach ( $roles as $name => $role ) {
+			$roleObject = get_role( $name );
+
+			/*if ( $roleObject->has_cap( 'brizy_edit_whole_page' ) || $roleObject->has_cap( 'brizy_edit_content_only' ) ) {
+				$roleObject->add_cap( 'read_' . self::CP_TEMPLATE );
+				$roleObject->add_cap( 'read_private_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'edit_' . self::CP_TEMPLATE );
+				$roleObject->add_cap( 'edit_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'edit_others_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'edit_published_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'publish_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'delete_others_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'delete_private_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'delete_published_' . self::CP_TEMPLATES );
+			} else */
+			{
+				$roleObject->remove_cap( 'read_' . self::CP_TEMPLATE );
+				$roleObject->remove_cap( 'read_private_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'edit_' . self::CP_TEMPLATE );
+				$roleObject->remove_cap( 'edit_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'edit_others_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'edit_published_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'publish_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'delete_others_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'delete_private_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'delete_published_' . self::CP_TEMPLATES );
+			}
+		}
+	}
+
 	static public function registerCustomPostTemplate() {
 		global $wp_rewrite;
+
 
 		$labels = array(
 			'name'               => _x( 'Templates', 'post type general name' ),
@@ -188,7 +228,8 @@ class Brizy_Admin_Templates {
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => 'brizy-template' ),
-				'capability_type'     => 'post',
+				'capability_type'        => 'page',
+				//'map_meta_cap'        => true,
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
 				'exclude_from_search' => false,
@@ -507,7 +548,7 @@ class Brizy_Admin_Templates {
 		if ( ! $this->template ) {
 			return;
 		}
-		$pid           = brizy_get_current_post_id();
+		$pid = brizy_get_current_post_id();
 
 		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), Brizy_Editor_Post::get( $pid ) );
 
