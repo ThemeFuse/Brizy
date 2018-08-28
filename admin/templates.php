@@ -55,7 +55,6 @@ class Brizy_Admin_Templates {
 			add_action( 'add_meta_boxes', array( $this, 'registerTemplateMetaBox' ), 9 );
 			add_action( 'wp_ajax_' . self::RULE_LIST_VEIW, array( $this, 'getTemplateRuleBox' ) );
 			add_action( 'wp_ajax_' . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
-			add_action( 'wp_ajax_' . self::RULE_CREATE, array( $this, 'ruleCreate' ) );
 			add_filter( 'post_row_actions', array( $this, 'removeRowActions' ), 10, 1 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
 
@@ -197,10 +196,6 @@ class Brizy_Admin_Templates {
 			)
 		);
 
-	}
-
-	public function ruleCreate() {
-		$t = 0;
 	}
 
 	public function registerTemplateMetaBox() {
