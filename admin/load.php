@@ -4,9 +4,7 @@
 
 add_action( 'init', 'brizy_init_templates' );
 add_action( 'wp_loaded', 'brizy_load_admin' );
-add_action( 'upgrader_process_complete', 'wp_upe_upgrade_completed', 10, 2 );
-register_activation_hook( __FILE__, 'brizy_install' );
-register_deactivation_hook( __FILE__, 'brizy_clean' );
+
 
 function brizy_init_templates() {
 	try {
@@ -47,30 +45,3 @@ function brizy_load_admin() {
 
 	add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
 }
-
-
-function wp_upe_upgrade_completed( $upgrader_object, $options ) {
-	$our_plugin = plugin_basename( __FILE__ );
-	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
-		foreach ( $options['plugins'] as $plugin ) {
-			if ( $plugin == $our_plugin ) {
-				Brizy_Admin_Templates::registerCustomPostTemplate();
-				flush_rewrite_rules();
-			}
-		}
-	}
-}
-
-function brizy_install() {
-	Brizy_Logger::install();
-	Brizy_Admin_Templates::registerCustomPostTemplate();
-	flush_rewrite_rules();
-}
-
-function brizy_clean() {
-	Brizy_Logger::clean();
-}
-
-
-
-

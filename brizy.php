@@ -31,12 +31,15 @@ include_once 'autoload.php';
 
 
 add_action( 'plugins_loaded', 'brizy_load' );
-
+add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
+register_activation_hook( BRIZY_FILE, 'brizy_install' );
+register_deactivation_hook( BRIZY_FILE, 'brizy_clean' );
 
 function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.4.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
+
 		return;
 	}
 
@@ -54,3 +57,26 @@ function brizy_notices() {
     </div>
 	<?php
 }
+
+function brizy_upgrade_completed( $upgrader_object, $options ) {
+	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
+		foreach ( $options['plugins'] as $plugin ) {
+			if ( $plugin == BRIZY_PLUGIN_BASE ) {
+				Brizy_Admin_Templates::registerCustomPostTemplate();
+				flush_rewrite_rules();
+			}
+		}
+	}
+}
+
+function brizy_install() {
+	Brizy_Logger::install();
+
+	Brizy_Admin_Templates::registerCustomPostTemplate();
+	flush_rewrite_rules();
+}
+
+function brizy_clean() {
+	Brizy_Logger::clean();
+}
+
