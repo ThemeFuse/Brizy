@@ -496,6 +496,10 @@ class Brizy_Editor_API {
 				$this->post->set_editor_version( BRIZY_EDITOR_VERSION );
 			}
 
+			if ( $this->param( 'compile' ) ) {
+				$this->post->compile_page();
+			}
+
 			$this->post->save();
 
 			$this->success( self::create_post_arr( $this->post ) );
@@ -521,7 +525,7 @@ class Brizy_Editor_API {
 			$post_status      = $can_publish ? 'publish' : 'pending';
 
 			// compilation needs to go here
-			$post->compile_page();
+			//$post->compile_page();
 			$post->save();
 
 			$brizy_compiled_page = $post->get_compiled_page( Brizy_Editor_Project::get() );
