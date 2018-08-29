@@ -491,8 +491,9 @@ class Brizy_Admin_Templates {
 					return;
 				}
 
-				if ( is_preview() ) {
+				if ( is_preview() || $this->template->get_needs_compile() ) {
 					$this->template->compile_page();
+					$this->template->save();
 				}
 
 				remove_filter( 'the_content', 'wpautop' );

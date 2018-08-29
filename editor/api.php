@@ -512,32 +512,32 @@ class Brizy_Editor_API {
 	public function save_trigger() {
 		try {
 			$this->authorize();
-			$post_id = $this->param( 'post' );
-			$post    = Brizy_Editor_Post::get( $post_id );
+			//$post_id = $this->param( 'post' );
+			//$post    = Brizy_Editor_Post::get( $post_id );
 
-			if ( ! $post->uses_editor() ) {
+			if ( ! $this->post->uses_editor() ) {
 				return;
 			}
 
-			$post_type        = $post->get_wp_post()->post_type;
+			$post_type        = $this->post->get_wp_post()->post_type;
 			$post_type_object = get_post_type_object( $post_type );
 			$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
 			$post_status      = $can_publish ? 'publish' : 'pending';
 
 			// compilation needs to go here
 			//$post->compile_page();
-			$post->save();
+			$this->post->save();
 
-			$brizy_compiled_page = $post->get_compiled_page( Brizy_Editor_Project::get() );
+			$brizy_compiled_page = $this->post->get_compiled_page( Brizy_Editor_Project::get() );
 
 			wp_update_post( array(
-				'ID'           => $post_id,
+				'ID'           => $this->post->get_parent_id(),
 				'post_status'  => $post_status,
 				'post_content' => $brizy_compiled_page->get_body()
 			) );
 
 			// get latest version of post
-			$post                 = Brizy_Editor_Post::get( $post_id );
+			$post                 = Brizy_Editor_Post::get( $this->post->get_parent_id() );
 			$post_arr             = self::create_post_arr( $post );
 			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
 			$this->success( array( $post_arr ) );
