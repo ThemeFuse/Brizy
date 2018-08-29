@@ -193,7 +193,7 @@ var RuleTypeField = function (params) {
     };
 };
 
-Select2 = function (params) {
+BrzSelect2 = function (params) {
     var oncreate = function (element) {
         var el = jQuery(element);
         if (!params.disabled) {
@@ -244,7 +244,7 @@ var PostSelect2Field = function (params) {
     };
 
     return h(
-        Select2,
+        BrzSelect2,
         {
             id: params.id,
             value: params.value,
@@ -285,7 +285,7 @@ var RuleTaxonomySearchField = function (params) {
     };
 
     return h(
-        Select2,
+        BrzSelect2,
         {
             id: "taxonomies-" + params.taxonomy,
             style: params.style ? params.style : {width: "200px"},
