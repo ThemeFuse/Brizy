@@ -409,10 +409,12 @@ class Brizy_Admin_Templates {
 			$entityValues[] = get_queried_object_id();
 		}
 
+		$is_preview = is_preview();
+
 		$templates = get_posts( array(
 			'post_type'   => self::CP_TEMPLATE,
 			'numberposts' => - 1,
-			'post_status' => 'publish'
+			'post_status' => $is_preview ? 'any' : 'publish'
 		) );
 
 		$ruleManager = $this->ruleManager;
@@ -489,6 +491,10 @@ class Brizy_Admin_Templates {
 					return;
 				}
 
+				if ( is_preview() ) {
+					$this->template->compile_page();
+				}
+
 				remove_filter( 'the_content', 'wpautop' );
 
 				// insert the compiled head and content
@@ -520,8 +526,14 @@ class Brizy_Admin_Templates {
 		if ( ! $this->template ) {
 			return;
 		}
-		$pid           = brizy_get_current_post_id();
-		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), Brizy_Editor_Post::get( $pid ) );
+		$pid = brizy_get_current_post_id();
+
+		$brizyPost = $this->template;
+
+		if ( $pid ) {
+			$brizyPost = Brizy_Editor_Post::get( $pid );
+		}
+		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
 
 		$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 
@@ -550,7 +562,13 @@ class Brizy_Admin_Templates {
 		}
 		$pid = brizy_get_current_post_id();
 
-		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), Brizy_Editor_Post::get( $pid ) );
+		$brizyPost = $this->template;
+
+		if ( $pid ) {
+			$brizyPost = Brizy_Editor_Post::get( $pid );
+		}
+
+		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
 
 		echo $compiled_page->get_body();
 	}
