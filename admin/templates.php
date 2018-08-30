@@ -536,9 +536,10 @@ class Brizy_Admin_Templates {
 
 		$brizyPost = $this->template;
 
-		if ( $pid ) {
+		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid , false)) {
 			$brizyPost = Brizy_Editor_Post::get( $pid );
 		}
+
 		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
 
 		$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
@@ -570,7 +571,7 @@ class Brizy_Admin_Templates {
 
 		$brizyPost = $this->template;
 
-		if ( $pid ) {
+		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid, false )) {
 			$brizyPost = Brizy_Editor_Post::get( $pid );
 		}
 

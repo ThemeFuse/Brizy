@@ -298,9 +298,17 @@ class Brizy_Editor_Editor_Editor {
 						$array = get_posts( $args );
 
 						foreach ( $array as $p ) {
-							if (  !Brizy_Editor_Post::checkIfPostTypeIsSupported($p->ID, false) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
-								$wp_post = $p;
-								break;
+
+							switch ( $p->post_type ) {
+								case 'attachment':
+									return addQueryStringToUrl( get_attachment_link($p->ID), 'preview=1' );
+									break;
+								default:
+									if ( ! Brizy_Editor_Post::checkIfPostTypeIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+										$wp_post = $p;
+										break;
+									}
+									break;
 							}
 						}
 						break;
@@ -313,9 +321,9 @@ class Brizy_Editor_Editor_Editor {
 							$args['term_taxonomy_id'] = $rule->getEntityValues();
 						}
 
-						$array  = get_terms( $args );
-						$term = array_pop( $array );
-						$link = get_term_link( $term );
+						$array = get_terms( $args );
+						$term  = array_pop( $array );
+						$link  = get_term_link( $term );
 
 						return addQueryStringToUrl( $link, 'preview=1' );
 						break;
