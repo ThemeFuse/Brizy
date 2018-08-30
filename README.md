@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.25<br>
+Stable tag: 1.0.26<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,23 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.26 - 2018-08-30 ###
+* New: Added get_taxonomies api method
+* Improved: Links will not open a new tab by default
+* Improved: Toolbar labels color contrast for better readability
+* Improved: Device mode popover styles
+* Improved: Icons popup categories dropdown styles
+* Improved: Modified the crop proxy to accept attachemt ids and uid hashes
+* Improved: Added custom preview urls for templates
+* Fixed: Image LightBox cursor style (set to zoom-in)
+* Fixed: Text space for ordered and unordered lists
+* Fixed: Line css conflicts with certain WordPress themes
+* Fixed: Refresh permalink cache
+* Fixed: Bug fixes on template module
+* Fixed: Fixed templates for user with limited access or no acccess
+* Fixed: Fixed the rule class in template module
+* Fixed: Fixed the compile check for templates
 
 ### 1.0.25 - 2018-08-22 ###
 * New: Added Featured Image option in LeftSidebar
