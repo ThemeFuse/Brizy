@@ -187,20 +187,29 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	/**
 	 * @param $wp_post_id
+	 * @param bool $throw
 	 *
+	 * @return bool
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
-	private static function checkIfPostTypeIsSupported( $wp_post_id ) {
+	public static function checkIfPostTypeIsSupported( $wp_post_id, $throw = true ) {
 		$type = get_post_type( $wp_post_id );
 
 		$supported_post_types   = brizy()->supported_post_types();
 		$supported_post_types[] = 'revision';
 
 		if ( ! in_array( $type, $supported_post_types ) ) {
-			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
-				"Brizy editor doesn't support '{$type}' post type"
-			);
+
+			if ( $throw ) {
+				throw new Brizy_Editor_Exceptions_UnsupportedPostType(
+					"Brizy editor doesn't support '{$type}' post type"
+				);
+			} else {
+				return false;
+			}
 		}
+
+		return true;
 	}
 
 	/**

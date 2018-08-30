@@ -298,22 +298,22 @@ class Brizy_Editor_Editor_Editor {
 						$array = get_posts( $args );
 
 						foreach ( $array as $p ) {
-							if ( ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+							if (  !Brizy_Editor_Post::checkIfPostTypeIsSupported($p->ID, false) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
 								$wp_post = $p;
 								break;
 							}
 						}
 						break;
 					case  Brizy_Admin_Rule::TAXONOMY :
-						$array = get_terms( array(
+						$args = array(
 							'taxonomy'   => $rule->getEntityType(),
 							'hide_empty' => false,
-						) );
-
+						);
 						if ( count( $rule->getEntityValues() ) ) {
-							$array['term_taxonomy_id'] = $rule->getEntityValues();
+							$args['term_taxonomy_id'] = $rule->getEntityValues();
 						}
 
+						$array  = get_terms( $args );
 						$term = array_pop( $array );
 						$link = get_term_link( $term );
 
