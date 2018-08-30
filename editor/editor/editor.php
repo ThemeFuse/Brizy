@@ -301,7 +301,7 @@ class Brizy_Editor_Editor_Editor {
 
 							switch ( $p->post_type ) {
 								case 'attachment':
-									return addQueryStringToUrl( get_attachment_link($p->ID), 'preview=1' );
+									return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
 									break;
 								default:
 									if ( ! Brizy_Editor_Post::checkIfPostTypeIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
@@ -322,8 +322,12 @@ class Brizy_Editor_Editor_Editor {
 						}
 
 						$array = get_terms( $args );
-						$term  = array_pop( $array );
-						$link  = get_term_link( $term );
+
+						if ( count( $array ) == 0 ) {
+							break;
+						}
+						$term = array_pop( $array );
+						$link = get_term_link( $term );
 
 						return addQueryStringToUrl( $link, 'preview=1' );
 						break;
@@ -339,7 +343,12 @@ class Brizy_Editor_Editor_Editor {
 						$archivePostTypes = array_filter( $wp_post_types, function ( $type ) {
 							return $type->public && $type->show_ui && $type->has_archive;
 						} );
-						$postTypes        = array_pop( $archivePostTypes );
+
+						if ( count( $archivePostTypes ) == 0 ) {
+							break;
+						}
+
+						$postTypes = array_pop( $archivePostTypes );
 
 						$link = get_post_type_archive_link( $postTypes->name );
 
