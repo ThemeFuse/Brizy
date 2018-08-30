@@ -19,6 +19,7 @@ class Brizy_Editor_API {
 	const AJAX_GET_POST_OBJECTS = 'brizy_get_posts';
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 	const AJAX_SAVE_TRIGGER = 'brizy_update_post';
+	const AJAX_GET_TAXONOMIES = 'brizy_get_taxonomies';
 	const AJAX_GET_TERMS = 'brizy_get_terms';
 	const AJAX_JWT_TOKEN = 'brizy_multipass_create';
 
@@ -94,6 +95,7 @@ class Brizy_Editor_API {
 			add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SAVE_TRIGGER, array( $this, 'save_trigger' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_TAXONOMIES, array( $this, 'get_taxonomies' ) );
 			add_action( 'wp_ajax_' . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
 			add_action( 'wp_ajax_' . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
 			add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
@@ -891,12 +893,33 @@ class Brizy_Editor_API {
 	 */
 	public function get_terms() {
 
-		$taxonomy = $this->param( 'taxonomy' );
 
-		$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
+		try {
+			$this->authorize();
+			$taxonomy = $this->param( 'taxonomy' );
 
-		wp_send_json( array_values( $terms ) );
+			$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
+
+			wp_send_json( array_values( $terms ) );
+		} catch ( Exception $e ) {
+			wp_send_json_error( array(), 500 );
+		}
 	}
+
+	public function get_taxonomies() {
+
+		try {
+			$this->authorize();
+			$terms = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
+
+			wp_send_json( array_values( array_filter( $terms, function ( $term ) {
+				return $term;
+			} ) ) );
+		} catch ( Exception $e ) {
+			wp_send_json_error( array(), 500 );
+		}
+	}
+
 
 	public function download_media() {
 		try {

@@ -158,6 +158,7 @@ class Brizy_Editor_Editor_Editor {
 					'updatePost'                 => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
 					'savePage'                   => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
 					'getTerms'                   => Brizy_Editor_API::AJAX_GET_TERMS,
+					'getTaxonomies'              => Brizy_Editor_API::AJAX_GET_TAXONOMIES,
 					'downloadMedia'              => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
 					'getMediaUid'                => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
 					'setFeaturedImage'           => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
