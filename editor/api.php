@@ -893,9 +893,7 @@ class Brizy_Editor_API {
 	 */
 	public function get_terms() {
 
-
 		try {
-			$this->authorize();
 			$taxonomy = $this->param( 'taxonomy' );
 
 			$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
@@ -909,7 +907,6 @@ class Brizy_Editor_API {
 	public function get_taxonomies() {
 
 		try {
-			$this->authorize();
 			$terms = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
 
 			wp_send_json( array_values( array_filter( $terms, function ( $term ) {
