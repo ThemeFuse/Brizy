@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.25
+Stable tag: 1.0.26
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,12 +139,29 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.26 - 2018-08-30 =
+* New: Added get_taxonomies api method
+* Improved: Links will not open a new tab by default
+* Improved: Toolbar labels color contrast for better readability
+* Improved: Device mode popover styles
+* Improved: Icons popup categories dropdown styles
+* Improved: Modified the crop proxy to accept attachemt ids and uid hashes
+* Improved: Added custom preview urls for templates
+* Fixed: Image LightBox cursor style (set to zoom-in)
+* Fixed: Text space for ordered and unordered lists
+* Fixed: Line css conflicts with certain WordPress themes
+* Fixed: Refresh permalink cache
+* Fixed: Bug fixes on template module
+* Fixed: Fixed templates for user with limited access or no acccess
+* Fixed: Fixed the rule class in template module
+* Fixed: Fixed the compile check for templates
+
 = 1.0.25 - 2018-08-22 =
 * New: Added Featured Image option in LeftSidebar
 * New: Added Upgrade to Pro option in LeftSidebar
 * New: Added Submit an Issue option in LeftSidebar
 * New: Added Brizy Templates
-* Fixed: Image LightBox minor issues
+* New: Added Image LightBox
 
 = 1.0.24 - 2018-08-07 =
 * Fixed: Upload path for windows installs

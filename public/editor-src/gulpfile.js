@@ -20,6 +20,7 @@ const runSequence = require("run-sequence");
 const webpack = require("webpack");
 const webpackConfigEditor = require("./webpack.config.editor");
 const webpackConfigExport = require("./webpack.config.export");
+const webpackConfigPro = require("./webpack.config.pro");
 
 // rollup
 var babel = require("rollup-plugin-babel");
@@ -36,6 +37,7 @@ const TEMPLATE_NAME = "brizy";
 const TARGET = argv.target || argv.t || "none";
 const IS_PRODUCTION = Boolean(argv.production);
 const IS_EXPORT = Boolean(argv.export || argv.e);
+const IS_PRO = Boolean(argv.pro || argv.p);
 const BUILD_DIR = argv["build-dir"]
   ? argv["build-dir"]
   : TARGET === "WP" && !IS_PRODUCTION
@@ -66,6 +68,7 @@ gulp.task(
       "editor",
       "template",
       ...(IS_EXPORT ? ["export"] : []),
+      ...(IS_PRO ? ["pro"] : []),
       ...(IS_PRODUCTION || NO_WATCH ? [] : ["watch"]),
       ...(IS_PRODUCTION && IS_EXPORT && TARGET === "WP" ? ["open-source"] : []),
       ...(IS_PRODUCTION && IS_EXPORT ? ["stats"] : [])
@@ -574,6 +577,68 @@ gulp.task("stats", () => {
   );
 });
 
+gulp.task("pro", ["pro.js", "pro.img.blocks", "pro.img.templates"]);
+gulp.task("pro.js", done => {
+  const options = {
+    TEMPLATE_NAME,
+    TEMPLATE_PATH: paths.template,
+    TARGET,
+    IS_PRODUCTION,
+    IS_EXPORT,
+    BUILD_PATH: paths.build,
+    NO_WATCH
+  };
+  const config = webpackConfigPro(options);
+
+  let doneCalled = false;
+  webpack(config, (err, stats) => {
+    if (stats.hasErrors()) {
+      gulpPlugins.util.log(
+        "[webpack pro] error",
+        stats.toString("errors-only")
+      );
+    } else {
+      gulpPlugins.util.log("[webpack pro] success");
+    }
+    if (!doneCalled) {
+      doneCalled = true;
+      done();
+    }
+  });
+});
+gulp.task("pro.img.blocks", done => {
+  const src = paths.template + "/pro/blocks/**/Preview.jpg";
+  const dest = paths.build + "/pro/img-block-thumbs";
+  gulp
+    .src(src)
+    .pipe(
+      gulpPlugins.rename(path => {
+        path.basename = path.dirname;
+        path.dirname = "";
+      })
+    )
+    .pipe(gulp.dest(dest))
+    .on("end", () => {
+      done();
+    });
+});
+gulp.task("pro.img.templates", done => {
+  const src = paths.template + "/pro/templates/**/Preview.jpg";
+  const dest = paths.build + "/pro/img-template-thumbs";
+  gulp
+    .src(src)
+    .pipe(
+      gulpPlugins.rename(path => {
+        path.basename = path.dirname;
+        path.dirname = "";
+      })
+    )
+    .pipe(gulp.dest(dest))
+    .on("end", () => {
+      done();
+    });
+});
+
 gulp.task("open-source", done => {
   const src = [
     "./**/*",
@@ -584,7 +649,10 @@ gulp.task("open-source", done => {
     "!build/",
     "!build/**/*",
     "!templates/*/assets/{icons,img}/",
-    "!templates/*/assets/{icons,img}/**"
+    "!templates/*/assets/{icons,img}/**",
+    "!**/pro/",
+    "!**/pro/**/*",
+    "!**/*.pro.*"
   ];
   const dest = paths.build + "/editor-src";
 

@@ -1,7 +1,5 @@
 import React from "react";
-import classnames from "classnames";
-import jQuery from "jquery";
-import deepExtend from "deep-extend";
+import deepMerge from "deepmerge";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component-new/Sortable";
 import { hideToolbar } from "visual/component-new/Toolbar";
@@ -49,7 +47,7 @@ class Items extends EditorArrayComponent {
   };
 
   getItemProps(itemData, itemIndex, items) {
-    const meta = deepExtend({}, this.props.meta, {
+    const meta = deepMerge(this.props.meta, {
       column: {
         item: {
           index: itemIndex,

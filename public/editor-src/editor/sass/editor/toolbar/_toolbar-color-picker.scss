@@ -62,7 +62,7 @@
       border: 0;
       background-color: transparent;
       text-transform: uppercase;
-      color: #818a91;
+      color: $options-label-color;
       outline: none;
       text-align: center;
       padding: 0;
@@ -76,7 +76,7 @@
   }
   &__label {
     margin-right: 3px;
-    color: rgba($gray-light, 0.5);
+    color: $options-label-color;
     font-family: $font-family-1;
     font-size: 13px;
     font-style: normal;

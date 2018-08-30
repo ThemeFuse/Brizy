@@ -41,6 +41,10 @@ class Wrapper extends EditorComponent {
     this.floatingButton = el;
   };
 
+  handleExtendParentToolbar = childToolbarExtend => {
+    this.childToolbarExtend = childToolbarExtend;
+  };
+
   handleToolbarOpen = () => {
     this.containerBorder.setActive(true);
     this.floatingButton.setActive(true);
@@ -211,7 +215,8 @@ class Wrapper extends EditorComponent {
       }),
       itemProps: {
         onToolbarEnter: this.handleToolbarEnter,
-        onToolbarLeave: this.handleToolbarLeave
+        onToolbarLeave: this.handleToolbarLeave,
+        extendParentToolbar: this.handleExtendParentToolbar
       }
     });
 

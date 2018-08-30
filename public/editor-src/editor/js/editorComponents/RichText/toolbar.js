@@ -1,9 +1,9 @@
-import _ from "underscore";
-import { getFontById } from "visual/utils/fonts";
+import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
-import { getWeight, getWeightChoices, getFontStyle } from "visual/utils/fonts";
+import { getWeight, getWeightChoices } from "visual/utils/fonts";
+import { getDynamicContentChoices } from "visual/utils/options";
 import { formatStringFromLink } from "./utils/link";
-import { getStore } from "visual/redux/store";
+import { getFontStyles } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 
 const getBlockTag = value => {
@@ -60,8 +60,7 @@ const getDesktopFontStyles = (fontStyle, value) => {
     return value;
   }
 
-  const { fontStyles } = getStore().getState().styles;
-  const styles = fontStyles.find(item => item.id === fontStyle);
+  const styles = getFontStyles().find(item => item.id === fontStyle);
 
   return {
     desktopHeight: String(styles.lineHeight).replace(".", "_"),
@@ -95,6 +94,8 @@ const calcIntermediateStyle = (
 
   return Math.min(Math.max(min, roundedValue), max);
 };
+
+const linkDynamicContentChoices = getDynamicContentChoices("link");
 
 const MIN_SIZE = 6;
 const MAX_SIZE = 99;
@@ -138,6 +139,8 @@ const getItemsForDesktop = (
     linkExternal,
     linkExternalBlank,
     linkType,
+    linkExternalType,
+    linkPopulation,
     marginTop,
     marginBottom
   },
@@ -546,7 +549,9 @@ const getItemsForDesktop = (
                       anchor: linkAnchor ? `#${linkAnchor}` : "",
                       external: linkExternal,
                       externalBlank: linkExternalBlank,
-                      externalRel: linkExternalRel
+                      externalRel: linkExternalRel,
+                      externalType: linkExternalType,
+                      population: linkPopulation
                     })
                   })
               }
@@ -561,14 +566,28 @@ const getItemsForDesktop = (
                 type: "input",
                 label: t("Link to"),
                 placeholder: "http://",
-                value: linkExternal,
-                onChange: linkExternal =>
+                population: {
+                  show: linkDynamicContentChoices.length > 0,
+                  choices: linkDynamicContentChoices
+                },
+                value: {
+                  value: linkExternal,
+                  population: linkPopulation
+                },
+                onChange: ({
+                  value: linkExternal,
+                  population: linkPopulation,
+                  changed
+                }) =>
                   onChange({
                     link: formatStringFromLink(linkType, {
                       anchor: linkAnchor ? `#${linkAnchor}` : "",
                       external: linkExternal,
                       externalBlank: linkExternalBlank,
-                      externalRel: linkExternalRel
+                      externalRel: linkExternalRel,
+                      externalType:
+                        changed === "value" ? "external" : "population",
+                      population: linkPopulation
                     })
                   })
               },
@@ -583,7 +602,9 @@ const getItemsForDesktop = (
                       anchor: linkAnchor ? `#${linkAnchor}` : "",
                       external: linkExternal,
                       externalBlank: linkExternalBlank,
-                      externalRel: linkExternalRel
+                      externalRel: linkExternalRel,
+                      externalType: linkExternalType,
+                      population: linkPopulation
                     })
                   })
               },
@@ -598,7 +619,9 @@ const getItemsForDesktop = (
                       anchor: linkAnchor ? `#${linkAnchor}` : "",
                       external: linkExternal,
                       externalBlank: linkExternalBlank,
-                      externalRel: linkExternalRel
+                      externalRel: linkExternalRel,
+                      externalType: linkExternalType,
+                      population: linkPopulation
                     })
                   })
               }
@@ -611,7 +634,9 @@ const getItemsForDesktop = (
               anchor: linkAnchor ? `#${linkAnchor}` : "",
               external: linkExternal,
               externalBlank: linkExternalBlank,
-              externalRel: linkExternalRel
+              externalRel: linkExternalRel,
+              externalType: linkExternalType,
+              population: linkPopulation
             })
           })
       }

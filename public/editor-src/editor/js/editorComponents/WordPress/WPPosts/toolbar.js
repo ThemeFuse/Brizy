@@ -30,31 +30,56 @@ export function getItemsForDesktop(v) {
                   id: "numberPosts",
                   label: t("Number posts"),
                   type: "input",
-                  value: v.numberPosts
+                  value: {
+                    value: v.numberPosts
+                  },
+                  onChange: ({ value: numberPosts }) => ({
+                    numberPosts
+                  })
                 },
                 {
                   id: "category",
                   label: t("Category"),
                   type: "input",
-                  value: v.category
+                  value: {
+                    value: v.category
+                  },
+                  onChange: ({ value: category }) => ({
+                    category
+                  })
                 },
                 {
                   id: "author",
                   label: t("Author"),
                   type: "input",
-                  value: v.author
+                  value: {
+                    value: v.author
+                  },
+                  onChange: ({ value: author }) => ({
+                    author
+                  })
                 },
                 {
                   id: "include",
                   label: t("Include"),
                   type: "input",
-                  value: v.include
+                  value: {
+                    value: v.include
+                  },
+                  onChange: ({ value: include }) => ({
+                    include
+                  })
                 },
                 {
                   id: "exclude",
                   label: t("Exclude"),
                   type: "input",
-                  value: v.exclude
+                  value: {
+                    value: v.exclude
+                  },
+                  onChange: ({ value: exclude }) => ({
+                    exclude
+                  })
                 },
                 {
                   id: "postStatus",
@@ -76,13 +101,23 @@ export function getItemsForDesktop(v) {
                   id: "metaKey",
                   label: t("Meta Key"),
                   type: "input",
-                  value: v.metaKey
+                  value: {
+                    value: v.metaKey
+                  },
+                  onChange: ({ value: metaKey }) => ({
+                    metaKey
+                  })
                 },
                 {
                   id: "metaValue",
                   label: t("Meta Value"),
                   type: "input",
-                  value: v.metaValue
+                  value: {
+                    value: v.metaValue
+                  },
+                  onChange: ({ value: metaValue }) => ({
+                    metaValue
+                  })
                 }
               ]
             },

@@ -123,7 +123,7 @@ export default class extends Component {
 
     return (
       <Select
-        className="brz-ed-popup__select brz-ed-popup-control__select--light"
+        className="brz-ed-popup__select brz-ed-popup__select--block-categories brz-ed-popup-control__select--light"
         defaultValue={this.state.category}
         maxItems={10}
         itemHeight={30}

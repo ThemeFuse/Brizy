@@ -150,6 +150,7 @@ export default {
   "Overlay": __("Overlay", "brizy"),
   "Border": __("Border", "brizy"),
   //-> Settings
+  "Dynamic content": __("Dynamic content", "brizy"),
   "Settings": __("Settings", "brizy"),
   //-> Duplicate & Delete
   "Duplicate": __("Duplicate", "brizy"),
@@ -339,6 +340,7 @@ export default {
   "Number": __("Number", "brizy"),
   "Paragraph": __("Paragraph", "brizy"),
   "Select": __("Select", "brizy"),
+  "No matches found": __("No matches found", "brizy"),
   "Text": __("Text", "brizy"),
   //-> Image
   "Style": __("Style", "brizy"),
@@ -348,6 +350,9 @@ export default {
   "Satur..": __("Satur..", "brizy"),
   //-> LightBox
   "LightBox": __("LightBox", "brizy"),
+  "Open in LightBox": __("Open in LightBox", "brizy"),
+  //-> Gallery
+  "Gallery": __("Gallery", "brizy"),
   //-> ProgressBar
   "Percentage": __("Percentage", "brizy"),
   "Show Percentage": __("Show Percentage", "brizy"),
@@ -369,6 +374,9 @@ export default {
   // SectionMenu
   "Type": __("Type", "brizy"),
   "Static": __("Static", "brizy"),
+
+  // No matches found
+  "No matches found": __("No matches found", "brizy"),
 
   // WordPress
   "Query": __("Query", "brizy"),
@@ -425,6 +433,7 @@ export default {
   "Block": __("Block", "brizy"),
   "Make it Global": __("Make it Global", "brizy"),
   "Save": __("Save", "brizy"),
+  "Pages": __("Pages", "brizy"),
   "Blocks": __("Blocks", "brizy"),
   "Saved": __("Saved", "brizy"),
   "Global": __("Global", "brizy"),

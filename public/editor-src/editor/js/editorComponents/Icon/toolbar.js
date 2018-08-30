@@ -1,6 +1,8 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+
+const linkDynamicContentChoices = getDynamicContentChoices("link");
 
 export function getItemsForDesktop(v) {
   const maxBorderRadius = Math.round(
@@ -78,24 +80,24 @@ export function getItemsForDesktop(v) {
                     value: v.size,
                     onChange: size => {
                       const borderRadius = Math.round(
-                        v.borderRadius /
+                        (v.borderRadius /
                           Math.round(
                             v[`${v.size}Size`] +
                               v.padding * 2 +
                               v.borderWidth * 2
-                          ) *
+                          )) *
                           Math.round(
                             v[`${size}Size`] + v.padding * 2 + v.borderWidth * 2
                           )
                       );
 
                       const mobileBorderRadius = Math.round(
-                        v.borderRadius /
+                        (v.borderRadius /
                           Math.round(
                             v[`${v.size}Size`] +
                               v.padding * 2 +
                               v.borderWidth * 2
-                          ) *
+                          )) *
                           Math.round(
                             v.mobileCustomSize +
                               v.mobilePadding * 2 +
@@ -153,20 +155,20 @@ export function getItemsForDesktop(v) {
                         },
                         onChange: ({ value: customSize }) => {
                           const borderRadius = Math.round(
-                            v.borderRadius /
+                            (v.borderRadius /
                               Math.round(
                                 v.customSize + v.padding * 2 + v.borderWidth * 2
-                              ) *
+                              )) *
                               Math.round(
                                 customSize + v.padding * 2 + v.borderWidth * 2
                               )
                           );
 
                           const mobileBorderRadius = Math.round(
-                            v.borderRadius /
+                            (v.borderRadius /
                               Math.round(
                                 v.customSize + v.padding * 2 + v.borderWidth * 2
-                              ) *
+                              )) *
                               Math.round(
                                 v.mobileCustomSize +
                                   v.mobilePadding * 2 +
@@ -224,7 +226,9 @@ export function getItemsForDesktop(v) {
                       padding:
                         fillType === "default"
                           ? 0
-                          : fillType !== "default" ? v.tempPadding : v.padding,
+                          : fillType !== "default"
+                            ? v.tempPadding
+                            : v.padding,
 
                       borderRadiusType:
                         fillType === "default"
@@ -445,8 +449,8 @@ export function getItemsForDesktop(v) {
                             v.borderRadiusType === "rounded"
                               ? maxMobileBorderRadius
                               : v.mobileBorderRadius === v.borderRadius
-                              ? borderRadius
-                              : v.mobileBorderRadius
+                                ? borderRadius
+                                : v.mobileBorderRadius
                         })
                       }
                     ]
@@ -477,20 +481,20 @@ export function getItemsForDesktop(v) {
                   },
                   onChange: ({ value: padding }) => {
                     const borderRadius = Math.round(
-                      v.borderRadius /
+                      (v.borderRadius /
                         Math.round(
                           v.customSize + v.padding * 2 + v.borderWidth * 2
-                        ) *
+                        )) *
                         Math.round(
                           v.customSize + padding * 2 + v.borderWidth * 2
                         )
                     );
 
                     const mobileBorderRadius = Math.round(
-                      v.borderRadius /
+                      (v.borderRadius /
                         Math.round(
                           v.customSize + v.padding * 2 + v.borderWidth * 2
-                        ) *
+                        )) *
                         Math.round(
                           v.mobileCustomSize +
                             v.mobilePadding * 2 +
@@ -581,7 +585,9 @@ export function getItemsForDesktop(v) {
                       padding:
                         borderWidth === 0 && v.bgColorOpacity === 0
                           ? 0
-                          : borderWidth > 0 ? v.tempPadding : v.padding,
+                          : borderWidth > 0
+                            ? v.tempPadding
+                            : v.padding,
 
                       borderRadiusType:
                         borderWidth === 0 && v.bgColorOpacity === 0
@@ -593,7 +599,9 @@ export function getItemsForDesktop(v) {
                       fillType:
                         borderWidth === 0 && v.bgColorOpacity === 0
                           ? "default"
-                          : borderWidth > 0 ? v.tempFillType : v.fillType,
+                          : borderWidth > 0
+                            ? v.tempFillType
+                            : v.fillType,
 
                       borderRadius:
                         borderWidth === 0 && v.bgColorOpacity === 0
@@ -793,7 +801,9 @@ export function getItemsForDesktop(v) {
                               padding:
                                 opacity === 0 && v.borderColorOpacity === 0
                                   ? 0
-                                  : opacity > 0 ? v.tempPadding : v.padding,
+                                  : opacity > 0
+                                    ? v.tempPadding
+                                    : v.padding,
 
                               borderRadiusType:
                                 opacity === 0 && v.borderColorOpacity === 0
@@ -807,7 +817,9 @@ export function getItemsForDesktop(v) {
                                   ? "default"
                                   : opacity === 0 && v.borderColorOpacity > 0
                                     ? "outline"
-                                    : opacity > 0 ? "filled" : v.fillType,
+                                    : opacity > 0
+                                      ? "filled"
+                                      : v.fillType,
 
                               borderWidth:
                                 opacity === 0 && v.borderColorOpacity === 0
@@ -944,7 +956,9 @@ export function getItemsForDesktop(v) {
                               padding:
                                 opacity === 0 && v.bgColorOpacity === 0
                                   ? 0
-                                  : opacity > 0 ? v.tempPadding : v.padding,
+                                  : opacity > 0
+                                    ? v.tempPadding
+                                    : v.padding,
 
                               borderRadiusType:
                                 opacity === 0 && v.bgColorOpacity === 0
@@ -1009,7 +1023,9 @@ export function getItemsForDesktop(v) {
                             fillType:
                               v.bgColorOpacity === 0
                                 ? "outline"
-                                : v.bgColorOpacity > 0 ? "filled" : v.fillType,
+                                : v.bgColorOpacity > 0
+                                  ? "filled"
+                                  : v.fillType,
 
                             borderWidth: v.tempBorderWidth
 
@@ -1259,7 +1275,28 @@ export function getItemsForDesktop(v) {
                   type: "input",
                   label: t("Link to"),
                   placeholder: "http://",
-                  value: v.linkExternal
+                  population: {
+                    show: linkDynamicContentChoices.length > 0,
+                    choices: linkDynamicContentChoices
+                  },
+                  value: {
+                    value: v.linkExternal,
+                    population: v.linkPopulation
+                  },
+                  onChange: ({
+                    value: linkExternal,
+                    population: linkPopulation,
+                    changed
+                  }) => {
+                    return {
+                      linkExternal,
+                      linkPopulation,
+                      linkExternalType:
+                        changed === "value" || linkPopulation === ""
+                          ? "linkExternal"
+                          : "linkPopulation"
+                    };
+                  }
                 },
                 {
                   id: "linkExternalBlank",
@@ -1331,9 +1368,15 @@ export function getItemsForDesktop(v) {
                               hex: boxShadowColorHex,
                               opacity: v.boxShadowColorOpacity
                             },
-                            onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
+                            onChange: ({
+                              hex,
+                              opacity,
+                              isChanged,
+                              opacityDragEnd
+                            }) => {
                               const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                hex !== v.boxShadowColorHex &&
+                                v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
                                   : opacity;
 
@@ -1343,7 +1386,7 @@ export function getItemsForDesktop(v) {
                                 boxShadowColorPalette:
                                   isChanged === "hex"
                                     ? ""
-                                    : v.boxShadowColorPalette,
+                                    : v.boxShadowColorPalette
                               };
                             }
                           },
@@ -1358,7 +1401,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -1371,7 +1414,8 @@ export function getItemsForDesktop(v) {
                             },
                             onChange: ({ hex, opacity, isChanged }) => {
                               const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                hex !== v.boxShadowColorHex &&
+                                v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
                                   : opacity;
 
@@ -1415,7 +1459,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       },
                       {
@@ -1447,7 +1491,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       },
                       {
@@ -1480,7 +1524,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       },
                       {
@@ -1513,7 +1557,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       }
                     ]
@@ -1565,12 +1609,12 @@ export function getItemsForMobile(v) {
             value: v.mobileSize,
             onChange: mobileSize => {
               const mobileBorderRadius = Math.round(
-                v.mobileBorderRadius /
+                (v.mobileBorderRadius /
                   Math.round(
                     v[`${v.mobileSize}Size`] +
                       v.mobilePadding * 2 +
                       v.borderWidth * 2
-                  ) *
+                  )) *
                   Math.round(
                     v[`${mobileSize}Size`] +
                       v.mobilePadding * 2 +
@@ -1618,12 +1662,12 @@ export function getItemsForMobile(v) {
                 },
                 onChange: ({ value: mobileCustomSize }) => {
                   const mobileBorderRadius = Math.round(
-                    v.mobileBorderRadius /
+                    (v.mobileBorderRadius /
                       Math.round(
                         v.mobileCustomSize +
                           v.mobilePadding * 2 +
                           v.borderWidth * 2
-                      ) *
+                      )) *
                       Math.round(
                         mobileCustomSize +
                           v.mobilePadding * 2 +
@@ -1666,10 +1710,10 @@ export function getItemsForMobile(v) {
           },
           onChange: ({ value: mobilePadding }) => {
             const mobileBorderRadius = Math.round(
-              v.mobileBorderRadius /
+              (v.mobileBorderRadius /
                 Math.round(
                   v.mobileCustomSize + v.mobilePadding * 2 + v.borderWidth * 2
-                ) *
+                )) *
                 Math.round(
                   v.mobileCustomSize + mobilePadding * 2 + v.borderWidth * 2
                 )

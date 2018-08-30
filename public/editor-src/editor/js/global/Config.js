@@ -1,9 +1,11 @@
-import deepExtend from "deep-extend";
+import deepMerge from "deepmerge";
 
-const _config = {};
+let _config = {};
 
 export default {
-  load: config => deepExtend(_config, config),
+  load: config => {
+    _config = deepMerge(_config, config);
+  },
   get: key => _config[key],
   getAll: () => _config
 };

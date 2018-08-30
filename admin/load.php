@@ -5,6 +5,7 @@
 add_action( 'init', 'brizy_init_templates' );
 add_action( 'wp_loaded', 'brizy_load_admin' );
 
+
 function brizy_init_templates() {
 	try {
 

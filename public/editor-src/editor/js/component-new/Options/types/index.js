@@ -29,7 +29,6 @@ import Stepper from "./Stepper";
 import Switch from "./Switch";
 import Tabs from "./Tabs";
 import Toggle from "./Toggle";
-import Carousel from "./Carousel";
 
 export default {
   advancedSettings: AdvancedSettings,
@@ -62,6 +61,5 @@ export default {
   stepper: Stepper,
   switch: Switch,
   tabs: Tabs,
-  toggle: Toggle,
-  carousel: Carousel
+  toggle: Toggle
 };

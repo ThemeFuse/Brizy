@@ -21,7 +21,7 @@
     text-align: center;
     margin-bottom: 16px;
 
-    & > div {
+    & > div:not(:last-child) {
       margin-right: 10px;
     }
   }
@@ -83,7 +83,7 @@
       width: 200px;
 
       .brz-control__select-options {
-        width: 548px;
+        width: 560px;
       }
       .brz-ed-scroll-inner {
         columns: 3;

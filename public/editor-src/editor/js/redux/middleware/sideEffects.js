@@ -7,12 +7,11 @@ import {
 } from "visual/utils/fonts";
 import { makeRichTextColorPaletteCSS } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
+import { currentStyleSelector } from "../selectors";
 import { HYDRATE, UPDATE_GLOBALS, UPDATE_UI } from "../actionTypes";
 import { ActionTypes as HistoryActionTypes } from "../reducers/historyEnhancer";
 
 const { UNDO, REDO } = HistoryActionTypes;
-
-const currentSkin = "default";
 
 export default config => store => next => action => {
   if (action.type === HYDRATE) {
@@ -49,7 +48,12 @@ export default config => store => next => action => {
 };
 
 function handleHydrate(config, store, action, done) {
+  done();
+
   const { document, parentDocument } = config;
+  const { mergedFontStyles, colorPalette } = currentStyleSelector(
+    store.getState()
+  );
 
   // fonts
   const configFonts = Config.get("fonts");
@@ -60,55 +64,41 @@ function handleHydrate(config, store, action, done) {
     type: "text/css",
     rel: "stylesheet"
   });
-
   jQuery("head", document).append($fonts);
   jQuery("head", parentDocument).append($fonts.clone());
 
-  // rich text font families
-  const richTextFontFamiliesCSS = makeRichTextFontFamiliesCSS(fontsToLoad);
   const $richTextFontFamiliesStyle = jQuery("<style>")
     .attr("id", "brz-rich-text-font-families")
-    .text(richTextFontFamiliesCSS);
-
+    .html(makeRichTextFontFamiliesCSS(fontsToLoad));
   jQuery("head", document).append($richTextFontFamiliesStyle);
 
-  done();
-
-  const { fontStyles, colorPalette } = store.getState().styles;
-
-  // rich text font styles
-  // NOTE: this is called after done() intentionally
-  // because it needs the computed store
-  const richTextFontStylesCSS = makeRichTextFontStylesCSS(fontStyles);
   const $richTextFontStyle = jQuery("<style>")
     .attr("id", "brz-rich-text-font-styles")
-    .text(richTextFontStylesCSS);
-
+    .html(makeRichTextFontStylesCSS(mergedFontStyles));
   jQuery("head", document).append($richTextFontStyle);
 
-  // rich text colors
-  // NOTE: this is called after done() intentionally
-  // because it needs the computed store
-  const richTextPaletteCSS = makeRichTextColorPaletteCSS(colorPalette);
   const $richTextPaletteStyle = jQuery("<style>")
     .attr("id", "brz-rich-text-colors")
-    .text(richTextPaletteCSS);
-
+    .html(makeRichTextColorPaletteCSS(colorPalette));
   jQuery("head", document).append($richTextPaletteStyle);
 }
 
 function handleAddExtraFont(config, store, action, done) {
   const { document, parentDocument } = config;
+  const addedFonts = action.meta.addedFonts;
 
-  const addedFont = action.meta.addedFont;
+  if (addedFonts.length === 0) {
+    return;
+  }
+
   const $addedFont = jQuery("<link>").attr({
-    href: makeFontsUrl([addedFont]),
+    href: makeFontsUrl(addedFonts),
     type: "text/css",
     rel: "stylesheet"
   });
 
   jQuery("#brz-rich-text-font-families").append(
-    makeRichTextFontFamiliesCSS([addedFont])
+    makeRichTextFontFamiliesCSS(addedFonts)
   );
 
   jQuery("head", document).append($addedFont);
@@ -118,17 +108,19 @@ function handleAddExtraFont(config, store, action, done) {
 }
 
 function handleStylesChange(config, store, action, done) {
-  const { colorPalette, fontStyles } = action.value[currentSkin];
+  done();
+
+  const { mergedFontStyles, colorPalette } = currentStyleSelector(
+    store.getState()
+  );
+
+  jQuery("#brz-rich-text-font-styles").html(
+    makeRichTextFontStylesCSS(mergedFontStyles)
+  );
 
   jQuery("#brz-rich-text-colors").html(
     makeRichTextColorPaletteCSS(colorPalette)
   );
-
-  jQuery("#brz-rich-text-font-styles").html(
-    makeRichTextFontStylesCSS(fontStyles)
-  );
-
-  done();
 }
 
 function handleDeviceModeChange(config, store, action, done) {
@@ -160,19 +152,17 @@ function handleDeviceModeChange(config, store, action, done) {
 function handleHistoryChange(config, store, action, done) {
   done();
 
-  const currentStyles = action.currentSnapshot.styles;
-  const nextStyles = action.nextSnapshot.styles;
+  const currentGlobals = action.currentSnapshot.globals;
+  const nextGlobals = action.nextSnapshot.globals;
 
-  if (currentStyles.fontStyles !== nextStyles.fontStyles) {
-    const fontStyles = nextStyles.fontStyles;
+  if (currentGlobals !== nextGlobals) {
+    const { mergedFontStyles, colorPalette } = currentStyleSelector(
+      store.getState()
+    );
 
     jQuery("#brz-rich-text-font-styles").html(
-      makeRichTextFontStylesCSS(fontStyles)
+      makeRichTextFontStylesCSS(mergedFontStyles)
     );
-  }
-
-  if (currentStyles.colorPalette !== nextStyles.colorPalette) {
-    const colorPalette = nextStyles.colorPalette;
 
     jQuery("#brz-rich-text-colors").html(
       makeRichTextColorPaletteCSS(colorPalette)

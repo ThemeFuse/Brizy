@@ -27,14 +27,18 @@ import {
   imgStyleCSSVars
 } from "./styles";
 
-const resizerPoints = [
-  "topLeft",
-  "topCenter",
-  "topRight",
-  "bottomLeft",
-  "bottomCenter",
-  "bottomRight"
-];
+const resizerPoints = {
+  default: [
+    "topLeft",
+    "topCenter",
+    "topRight",
+    "bottomLeft",
+    "bottomCenter",
+    "bottomRight"
+  ],
+  gallery: ["bottomCenter"]
+};
+
 const resizerTransformValue = v => {
   const { resize, mobileResize, ...rest } = v;
 
@@ -58,10 +62,19 @@ const resizerTransformPatch = patch => {
   return patch;
 };
 
+const populationUrl = (population, { cW, cH }) => {
+  return `{{${population.replace(/{{|}}/g, "")} cW='${cW}' cH='${cH}'}}`;
+};
+
 class Image extends EditorComponent {
   static get componentId() {
     return "Image";
   }
+
+  static defaultProps = {
+    meta: {},
+    onResize: _.noop
+  };
 
   static defaultValue = defaultValue;
 
@@ -99,9 +112,13 @@ class Image extends EditorComponent {
   handleResize = () => {
     this.updateContainerMaxWidth();
     this.updateContainerWidth();
+    this.props.onResize();
   };
 
-  handleResizerChange = patch => this.patchValue(resizerTransformPatch(patch));
+  handleBoxResizerChange = patch => {
+    this.patchValue(resizerTransformPatch(patch));
+    this.props.onResize();
+  };
 
   updateContainerWidth = () => {
     const { containerWidth: stateContainerWidth } = this.state;
@@ -171,7 +188,6 @@ class Image extends EditorComponent {
 
   getImageSizes = (v, containerWidth) => {
     const {
-      imageSrc,
       imageWidth,
       imageHeight,
       positionX,
@@ -183,7 +199,6 @@ class Image extends EditorComponent {
     } = v;
     const { mobileW } = this.props.meta;
     const desktopValue = {
-      imageSrc,
       imageWidth,
       imageHeight,
       positionX,
@@ -194,7 +209,6 @@ class Image extends EditorComponent {
       height
     };
     const mobileValue = {
-      imageSrc,
       imageWidth,
       imageHeight,
       positionX: v.mobilePositionX,
@@ -211,15 +225,34 @@ class Image extends EditorComponent {
     };
   };
 
+  getImageOptions({ iW, iH, oX, oY, cW, cH }, imagePopulation, multiplier = 1) {
+    if (imagePopulation) {
+      return {
+        cW: cW * multiplier,
+        cH: cH * multiplier
+      };
+    }
+
+    return {
+      iW: iW * multiplier,
+      iH: iH * multiplier,
+      oX: oX * multiplier,
+      oY: oY * multiplier,
+      cW: cW * multiplier,
+      cH: cH * multiplier
+    };
+  }
+
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`
     ]);
 
     const {
-      imageSrc,
       imageWidth,
       imageHeight,
+      imageSrc,
+      imagePopulation,
       positionX,
       positionY,
       resize,
@@ -228,12 +261,12 @@ class Image extends EditorComponent {
       height,
       linkType,
       linkAnchor,
-      linkExternal,
       linkExternalBlank,
       linkExternalRel,
-      linkLightBox
+      linkLightBox,
+      linkExternalType
     } = v;
-    const { desktopW, mobileW } = this.props.meta;
+    const { desktopW, mobileW, inGallery = false } = this.props.meta;
     const {
       containerWidth,
       maxDesktopContainerWidth,
@@ -259,28 +292,33 @@ class Image extends EditorComponent {
       desktopImageOptions
     )} 1x, ${imageUrl(imageSrc, desktopImageOptions2X)} 2x`;
 
-    let content = imageSrc ? (
-      <picture>
-        <source srcSet={desktopSrcSet} media="(min-width: 992px)" />
-        <img
-          className={imgStyleClassName(v)}
-          style={imgStyleCSSVars(v, imageSizes)}
-          srcSet={mobileSrcSet}
-          src={imageUrl(imageSrc, mobileImageOptions)}
-          draggable={false}
-        />
-      </picture>
-    ) : (
-      <Placeholder icon="nc-img" containerWidth={desktopW} />
-    );
+    let content;
+
+    if (imagePopulation) {
+      content = <Placeholder icon="nc-dynamic-img" containerWidth={desktopW} />;
+    } else if (imageSrc) {
+      content = (
+        <picture>
+          <source srcSet={desktopSrcSet} media="(min-width: 992px)" />
+          <img
+            className={imgStyleClassName(v)}
+            style={imgStyleCSSVars(v, imageSizes)}
+            srcSet={mobileSrcSet}
+            src={imageUrl(imageSrc, mobileImageOptions)}
+            draggable={false}
+          />
+        </picture>
+      );
+    } else {
+      content = <Placeholder icon="nc-img" containerWidth={desktopW} />;
+    }
 
     const hrefs = {
       anchor: linkAnchor,
-      external: linkExternal,
+      external: v[linkExternalType],
       lightBox:
         linkLightBox === "on" ? imageUrl(imageSrc, { iW: 1200, iH: "any" }) : ""
     };
-
     if (hrefs[linkType] !== "") {
       content = (
         <Link
@@ -324,7 +362,8 @@ class Image extends EditorComponent {
       desktopWrapperSizes: wrapperSizes.desktop,
       desktopContainerWidth: containerWidth,
       mobileWrapperSizes: wrapperSizes.mobile,
-      mobileContainerWidth: mobileW
+      mobileContainerWidth: mobileW,
+      inGallery
     });
 
     const resizerRestrictions = {
@@ -337,6 +376,9 @@ class Image extends EditorComponent {
         max: getMaxSize()
       }
     };
+    const resizerPoints_ = inGallery
+      ? resizerPoints.gallery
+      : resizerPoints.default;
 
     return (
       <div
@@ -351,10 +393,10 @@ class Image extends EditorComponent {
           >
             <BoxResizer
               restrictions={resizerRestrictions}
-              points={resizerPoints}
+              points={resizerPoints_}
               meta={this.props.meta}
               value={resizerTransformValue(v)}
-              onChange={this.handleResizerChange}
+              onChange={this.handleBoxResizerChange}
             >
               <div
                 className={wrapperStyleClassName(v)}
@@ -376,15 +418,16 @@ class Image extends EditorComponent {
     ]);
 
     const {
+      imagePopulation,
       imageWidth,
       imageHeight,
       imageSrc,
       linkType,
       linkAnchor,
-      linkExternal,
       linkExternalBlank,
       linkExternalRel,
-      linkLightBox
+      linkLightBox,
+      linkExternalType
     } = v;
     const { desktopW, mobileW } = this.props.meta;
     const wrapperSizes = {
@@ -418,19 +461,13 @@ class Image extends EditorComponent {
 
     oX = Math.abs(oX);
     oY = Math.abs(oY);
-    const imageOptions = { iW, iH, oX, oY, cW, cH };
-    const imageOptions2X = {
-      iW: iW * 2,
-      iH: iH * 2,
-      oX: oX * 2,
-      oY: oY * 2,
-      cW: cW * 2,
-      cH: cH * 2
-    };
+    const options = { iW, iH, oX, oY, cW, cH };
+    const imageOptions = this.getImageOptions(options, imagePopulation);
+    const imageOptions2X = this.getImageOptions(options, imagePopulation, 2);
 
     mOX = Math.abs(mOX);
     mOY = Math.abs(mOY);
-    const mobileImageOptions = {
+    const mOptions = {
       iW: mIW,
       iH: mIH,
       oX: mOX,
@@ -438,46 +475,60 @@ class Image extends EditorComponent {
       cW: mCW,
       cH: mCH
     };
-    const mobileImageOptions2X = {
-      iW: mIW * 2,
-      iH: mIH * 2,
-      oX: mOX * 2,
-      oY: mOY * 2,
-      cW: mCW * 2,
-      cH: mCH * 2
-    };
-
-    const src = imageUrl(imageSrc, imageOptions);
-    const srcSet = `${imageUrl(imageSrc, imageOptions)} 1x, ${imageUrl(
-      imageSrc,
-      imageOptions2X
-    )} 2x`;
-
-    const mobileSrc = `${imageUrl(imageSrc, mobileImageOptions)} 1x, ${imageUrl(
-      imageSrc,
-      mobileImageOptions2X
-    )} 2x`;
-
-    let content = src ? (
-      <picture>
-        <source srcSet={srcSet} media="(min-width: 992px)" />
-        <img
-          className="brz-img"
-          src={imageUrl(imageSrc, mobileImageOptions)}
-          srcSet={mobileSrc}
-        />
-      </picture>
-    ) : (
-      <Placeholder icon="nc-img" containerWidth={desktopW} />
+    const mobileImageOptions = this.getImageOptions(mOptions, imagePopulation);
+    const mobileImageOptions2X = this.getImageOptions(
+      mOptions,
+      imagePopulation,
+      2
     );
+
+    let sourceSrcSet;
+    let desktopSrc;
+    let mobileSrc;
+    if (imagePopulation) {
+      sourceSrcSet = `${populationUrl(
+        imagePopulation,
+        imageOptions
+      )} 1x, ${populationUrl(imagePopulation, imageOptions2X)} 2x`;
+
+      desktopSrc = populationUrl(imagePopulation, mobileImageOptions);
+
+      mobileSrc = `${populationUrl(
+        imagePopulation,
+        mobileImageOptions
+      )} 1x, ${populationUrl(imagePopulation, mobileImageOptions2X)} 2x`;
+    } else {
+      sourceSrcSet = `${imageUrl(imageSrc, imageOptions)} 1x, ${imageUrl(
+        imageSrc,
+        imageOptions2X
+      )} 2x`;
+
+      desktopSrc = imageUrl(imageSrc, mobileImageOptions);
+
+      mobileSrc = `${imageUrl(imageSrc, mobileImageOptions)} 1x, ${imageUrl(
+        imageSrc,
+        mobileImageOptions2X
+      )} 2x`;
+    }
+
+    let content;
+    if (imagePopulation || imageSrc) {
+      content = (
+        <picture>
+          <source srcSet={sourceSrcSet} media="(min-width: 992px)" />
+          <img className="brz-img" src={desktopSrc} srcSet={mobileSrc} />
+        </picture>
+      );
+    } else {
+      content = <Placeholder icon="nc-img" containerWidth={desktopW} />;
+    }
 
     const hrefs = {
       anchor: linkAnchor,
-      external: linkExternal,
+      external: v[linkExternalType],
       lightBox:
         linkLightBox === "on" ? imageUrl(imageSrc, { iW: 1200, iH: "any" }) : ""
     };
-
     if (hrefs[linkType] !== "") {
       content = (
         <Link

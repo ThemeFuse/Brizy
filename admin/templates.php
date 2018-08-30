@@ -17,6 +17,7 @@ function brizy_addTemplateSupport( $posts ) {
 class Brizy_Admin_Templates {
 
 	const CP_TEMPLATE = 'brizy_template';
+	const CP_TEMPLATES = 'brizy_templates';
 	const RULE_LIST_VEIW = 'brizy_rule_list_view';
 	const RULE_GROUP_LIST = 'brizy_rule_group_list';
 	const RULE_TAXONOMY_LIST = 'brizy_taxonomy_list';
@@ -37,11 +38,11 @@ class Brizy_Admin_Templates {
 	 */
 	protected function __construct() {
 
-		$this->registerCustomPostTemplate();
-
 		if ( ! Brizy_Editor::is_user_allowed() ) {
 			return;
 		}
+
+		self::registerCustomPostTemplate();
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 
@@ -55,14 +56,19 @@ class Brizy_Admin_Templates {
 			add_action( 'add_meta_boxes', array( $this, 'registerTemplateMetaBox' ), 9 );
 			add_action( 'wp_ajax_' . self::RULE_LIST_VEIW, array( $this, 'getTemplateRuleBox' ) );
 			add_action( 'wp_ajax_' . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
-			add_action( 'wp_ajax_' . self::RULE_CREATE, array( $this, 'ruleCreate' ) );
 			add_filter( 'post_row_actions', array( $this, 'removeRowActions' ), 10, 1 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
+			add_action( 'admin_init', array( $this, 'addTemplateRoleCaps' ), 10000 );
 
 		} elseif ( ! is_admin() && ! defined( 'DOING_AJAX' ) ) {
 			add_action( 'wp', array( $this, 'templateFrontEnd' ) );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 20000 );
 		}
+
+		global $current_user;
+
+		//var_dump( $current_user );
+		//exit;
 	}
 
 	/**
@@ -158,7 +164,40 @@ class Brizy_Admin_Templates {
 		return $messages;
 	}
 
-	public function registerCustomPostTemplate() {
+	public function addTemplateRoleCaps() {
+		$roles = wp_roles()->roles;
+		foreach ( $roles as $name => $role ) {
+			$roleObject = get_role( $name );
+
+			/*if ( $roleObject->has_cap( 'brizy_edit_whole_page' ) || $roleObject->has_cap( 'brizy_edit_content_only' ) ) {
+				$roleObject->add_cap( 'read_' . self::CP_TEMPLATE );
+				$roleObject->add_cap( 'read_private_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'edit_' . self::CP_TEMPLATE );
+				$roleObject->add_cap( 'edit_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'edit_others_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'edit_published_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'publish_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'delete_others_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'delete_private_' . self::CP_TEMPLATES );
+				$roleObject->add_cap( 'delete_published_' . self::CP_TEMPLATES );
+			} else */
+			{
+				$roleObject->remove_cap( 'read_' . self::CP_TEMPLATE );
+				$roleObject->remove_cap( 'read_private_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'edit_' . self::CP_TEMPLATE );
+				$roleObject->remove_cap( 'edit_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'edit_others_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'edit_published_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'publish_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'delete_others_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'delete_private_' . self::CP_TEMPLATES );
+				$roleObject->remove_cap( 'delete_published_' . self::CP_TEMPLATES );
+			}
+		}
+	}
+
+	static public function registerCustomPostTemplate() {
+		global $wp_rewrite;
 
 
 		$labels = array(
@@ -189,17 +228,15 @@ class Brizy_Admin_Templates {
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => 'brizy-template' ),
-				'capability_type'     => 'post',
+				'capability_type'        => 'page',
+				//'map_meta_cap'        => true,
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
 				'exclude_from_search' => false,
 				'supports'            => array( 'title', 'revisions', 'page-attributes' )
 			)
 		);
-	}
 
-	public function ruleCreate() {
-		$t = 0;
 	}
 
 	public function registerTemplateMetaBox() {
@@ -366,31 +403,32 @@ class Brizy_Admin_Templates {
 		} elseif ( is_archive() ) {
 			$applyFor   = Brizy_Admin_Rule::ARCHIVE;
 			$entityType = $wp_query->queried_object->name;
-		} elseif ( $wp_query->queried_object instanceof WP_Post ) {
+		} elseif ( $wp_query->queried_object instanceof WP_Post || $wp_query->post instanceof WP_Post ) {
 			$applyFor       = Brizy_Admin_Rule::POSTS;
-			$entityType     = $wp_query->queried_object->post_type;
-			$entityValues[] = get_the_ID();
+			$entityType     = get_queried_object()->post_type;
+			$entityValues[] = get_queried_object_id();
 		}
 
+		$is_preview = is_preview();
 
 		$templates = get_posts( array(
 			'post_type'   => self::CP_TEMPLATE,
 			'numberposts' => - 1,
-			'post_status' => 'publish'
+			'post_status' => $is_preview ? 'any' : 'publish'
 		) );
 
 		$ruleManager = $this->ruleManager;
 		// sort templates by rule set weight
 		usort( $templates, function ( $t1, $t2 ) use ( $ruleManager ) {
-			$ruleSetT1 = $ruleManager->getRuleSet( $t1->ID );
-			$ruleSetT2 = $ruleManager->getRuleSet( $t2->ID );
+			$ruleSetT1      = $ruleManager->getRuleSet( $t1->ID );
+			$ruleSetT2      = $ruleManager->getRuleSet( $t2->ID );
 			$rule_weight_t1 = $ruleSetT1->getRuleWeight();
 			$rule_weight_t2 = $ruleSetT2->getRuleWeight();
 			if ( $rule_weight_t1 == $rule_weight_t2 ) {
 				return 0;
 			}
 
-			return ( $rule_weight_t1 < $rule_weight_t2 ) ? 1 : -1;
+			return ( $rule_weight_t1 < $rule_weight_t2 ) ? 1 : - 1;
 		} );
 
 		foreach ( $templates as $atemplate ) {
@@ -453,6 +491,16 @@ class Brizy_Admin_Templates {
 					return;
 				}
 
+				$is_preview    = is_preview() || isset( $_GET['preview'] );
+				$needs_compile = ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
+
+				if ( $needs_compile ) {
+					$this->template->compile_page();
+					if ( ! $is_preview && $needs_compile ) {
+						$this->template->save();
+					}
+				}
+
 				remove_filter( 'the_content', 'wpautop' );
 
 				// insert the compiled head and content
@@ -484,8 +532,15 @@ class Brizy_Admin_Templates {
 		if ( ! $this->template ) {
 			return;
 		}
+		$pid = brizy_get_current_post_id();
 
-		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get() );
+		$brizyPost = $this->template;
+
+		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid , false)) {
+			$brizyPost = Brizy_Editor_Post::get( $pid );
+		}
+
+		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
 
 		$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 
@@ -498,6 +553,31 @@ class Brizy_Admin_Templates {
 		<?php
 
 		return;
+	}
+
+
+	/**
+	 * @param $content
+	 *
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
+	public function insertPageContent() {
+
+		if ( ! $this->template ) {
+			return;
+		}
+		$pid = brizy_get_current_post_id();
+
+		$brizyPost = $this->template;
+
+		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid, false )) {
+			$brizyPost = Brizy_Editor_Post::get( $pid );
+		}
+
+		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
+
+		echo $compiled_page->get_body();
 	}
 
 	/**
@@ -523,24 +603,6 @@ class Brizy_Admin_Templates {
 		//wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_preview_enqueue_scripts' );
-	}
-
-
-	/**
-	 * @param $content
-	 *
-	 * @return null|string|string[]
-	 * @throws Exception
-	 */
-	public function insertPageContent() {
-
-		if ( ! $this->template ) {
-			return;
-		}
-
-		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get() );
-
-		echo $compiled_page->get_body();
 	}
 
 

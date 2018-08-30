@@ -7,24 +7,26 @@ import { updateUI } from "visual/redux/actionCreators";
 import { getFontStyles } from "visual/utils/fonts";
 
 class FontStyle extends Select {
-  handleSidebarOpen = () => {
+  handleSidebarOpen() {
     getStore().dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
         drawerContentType: "styling"
       })
     );
-  };
+  }
 
-  renderChoices = () => {
-    return [{ id: "", title: 'Custom' }, ...getFontStyles()]
-      .map(({ id, title }) => (
+  renderChoices() {
+    return [{ id: "", title: "Custom" }, ...getFontStyles()].map(
+      ({ id, title }) => (
         <SelectItem key={id} value={id}>
           {title}
         </SelectItem>
-      ));
-  };
-  renderAfterSelect = () => {
+      )
+    );
+  }
+
+  renderAfterSelect() {
     return (
       <div
         className="brz-ed-option__select__after"
@@ -33,7 +35,7 @@ class FontStyle extends Select {
         <EditorIcon icon="nc-cog" />
       </div>
     );
-  };
+  }
 }
 
 export default FontStyle;

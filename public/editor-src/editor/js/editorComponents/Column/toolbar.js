@@ -2162,7 +2162,12 @@ export function getItemsForDesktop(v) {
                       label: t("CSS Class"),
                       type: "input",
                       inputSize: "auto",
-                      value: v.customClassName
+                      value: {
+                        value: v.customClassName
+                      },
+                      onChange: ({ value: customClassName }) => ({
+                        customClassName
+                      })
                     },
                     {
                       id: "animation",

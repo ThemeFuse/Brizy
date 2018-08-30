@@ -187,20 +187,29 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	/**
 	 * @param $wp_post_id
+	 * @param bool $throw
 	 *
+	 * @return bool
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
-	private static function checkIfPostTypeIsSupported( $wp_post_id ) {
+	public static function checkIfPostTypeIsSupported( $wp_post_id, $throw = true ) {
 		$type = get_post_type( $wp_post_id );
 
 		$supported_post_types   = brizy()->supported_post_types();
 		$supported_post_types[] = 'revision';
 
 		if ( ! in_array( $type, $supported_post_types ) ) {
-			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
-				"Brizy editor doesn't support '{$type}' post type"
-			);
+
+			if ( $throw ) {
+				throw new Brizy_Editor_Exceptions_UnsupportedPostType(
+					"Brizy editor doesn't support '{$type}' post type"
+				);
+			} else {
+				return false;
+			}
 		}
+
+		return true;
 	}
 
 	/**
@@ -371,16 +380,20 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return true;
 	}
 
-	public function get_compiled_page( $project ) {
+	public function get_compiled_page( $project, $post = null ) {
 
 		if ( self::$compiled_page ) {
 			return self::$compiled_page;
 		}
 
+		if ( is_null( $post ) ) {
+			$post = $this;
+		}
+
 		$brizy_editor_editor_editor = Brizy_Editor_Editor_Editor::get( $project, $this );
 		$config                     = $brizy_editor_editor_editor->config();
-		$asset_storage              = new Brizy_Editor_Asset_AssetProxyStorage( $project, $this, $config );
-		$media_storage              = new Brizy_Editor_Asset_MediaProxyStorage( $project, $this, $config );
+		$asset_storage              = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
+		$media_storage              = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
 
 		$asset_processors   = array();
 		$asset_processors[] = new Brizy_Editor_Asset_DomainProcessor();
@@ -389,7 +402,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 
-		$asset_processors = apply_filters( 'brizy_content_processors', $asset_processors, $project, $this );
+		$asset_processors = apply_filters( 'brizy_content_processors', $asset_processors, $project, $post );
 
 		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 

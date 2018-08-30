@@ -53,7 +53,7 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 				$this->crop_local_asset( $vars[ self::ENDPOINT ], html_entity_decode( $vars[ self::ENDPOINT_FILTER ] ), (int) $vars[ self::ENDPOINT_POST ] );
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
-				status_header(404);
+				status_header( 404 );
 				global $wp_query;
 				$wp_query->set_404();
 
@@ -73,19 +73,13 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	private function crop_local_asset( $attachment_hash, $filter, $post_id ) {
 		try {
 
-			$attachments = get_posts( array(
-				'meta_key'    => 'brizy_attachment_uid',
-				'meta_value'  => $attachment_hash,
-				'post_type'   => 'attachment',
-			) );
+			$attachment = $this->getAttachment( $attachment_hash );
 
-			if ( count( $attachments ) == 0 ) {
-				throw new Exception('No post found with such media hash.');
+			if ( ! $attachment ) {
+				throw new Exception( 'Media not found' );
 			}
 
-			$attachment_id = $attachments[0]->ID;
-
-			$media_url = get_attached_file( $attachment_id );
+			$media_url = get_attached_file( $attachment->ID );
 
 			$project    = Brizy_Editor_Project::get();
 			$brizy_post = Brizy_Editor_Post::get( $post_id );
@@ -98,5 +92,24 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 			Brizy_Logger::instance()->exception( $e );
 			throw new Exception( 'Unable to crop media' );
 		}
+	}
+
+	private function getAttachment( $hash ) {
+		$attachment = null;
+		if ( is_numeric( $hash ) ) {
+			$attachment = get_post( (int) $hash );
+		} else {
+			$attachments = get_posts( array(
+				'meta_key'   => 'brizy_attachment_uid',
+				'meta_value' => $hash,
+				'post_type'  => 'attachment',
+			) );
+
+			if ( isset( $attachments[0] ) ) {
+				$attachment = $attachments[0];
+			}
+		}
+
+		return $attachment;
 	}
 }
