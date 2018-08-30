@@ -19,7 +19,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 	 * @return $this|Brizy_Editor_Helper_DomTag
 	 */
 	public function get_body() {
-		$tags = $this->get_tags( '/(<body(.*?)<\/body>)/is' );
+		$tags = $this->get_tags( '/(<body(.*)<\/body>)/mis' );
 
 		if ( empty( $tags ) ) {
 			return new Brizy_Editor_Helper_DomTag('');
