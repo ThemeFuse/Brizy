@@ -491,9 +491,14 @@ class Brizy_Admin_Templates {
 					return;
 				}
 
-				if ( is_preview() || $this->template->get_needs_compile() ) {
+				$is_preview    = is_preview() || isset( $_GET['preview'] );
+				$needs_compile = ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
+
+				if ( $needs_compile ) {
 					$this->template->compile_page();
-					$this->template->save();
+					if ( ! $is_preview && $needs_compile ) {
+						$this->template->save();
+					}
 				}
 
 				remove_filter( 'the_content', 'wpautop' );
