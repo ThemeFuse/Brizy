@@ -44,7 +44,7 @@ class DrawerComponent extends React.Component {
   };
 
   renderIcons(shortcodes) {
-    return Editor.getShortcode(shortcodes)
+    return shortcodes
       .filter(shortcode => !shortcode.hidden)
       .map(({ id, title, icon }) => (
         <SortableElement key={id} type="addable" subtype={id}>
@@ -55,30 +55,28 @@ class DrawerComponent extends React.Component {
             <span className="brz-span brz-ed-sidebar__add-elements__text">
               {title}
             </span>
-            <div className="brz-ed-sidebar__add-elements__tooltip">
-              {title}
-            </div>
+            <div className="brz-ed-sidebar__add-elements__tooltip">{title}</div>
           </div>
         </SortableElement>
       ));
   }
 
   render() {
-    const Shortcodes = Editor.getShortcodes();
+    const shortcodes = Editor.getShortcodes();
 
-    return Object.keys(Shortcodes).map((el, index, arr) => (
-      <React.Fragment key={index}>
+    return Object.keys(shortcodes).map((category, index, arr) => (
+      <React.Fragment key={category}>
         <Sortable
           type="addable"
           blindZone={sortableBlindZone}
           onSort={data => {
-            this.handleSortableSort(data, el);
+            this.handleSortableSort(data, category);
           }}
         >
           <div
-            className={`brz-ed-sidebar__add-elements brz-ed-sidebar__add-elements--${el}`}
+            className={`brz-ed-sidebar__add-elements brz-ed-sidebar__add-elements--${category}`}
           >
-            {this.renderIcons(el)}
+            {this.renderIcons(shortcodes[category])}
           </div>
         </Sortable>
         {arr.length - 1 !== index && (

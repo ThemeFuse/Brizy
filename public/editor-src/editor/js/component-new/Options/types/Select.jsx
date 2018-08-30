@@ -19,7 +19,7 @@ class SelectOptionType extends React.Component {
     onChange: _.noop
   };
 
-  renderLabel = () => {
+  renderLabel() {
     const { label, helper: _helper, helperContent } = this.props;
     const helper = _helper ? (
       <div className="brz-ed-option__helper">
@@ -34,9 +34,9 @@ class SelectOptionType extends React.Component {
         {helper}
       </div>
     );
-  };
+  }
 
-  renderChoices = () => {
+  renderChoices() {
     return this.props.choices.map((item, index) => {
       const { title, icon, value } = item;
 
@@ -47,9 +47,9 @@ class SelectOptionType extends React.Component {
         </SelectItem>
       );
     });
-  };
+  }
 
-  renderAfterSelect = () => {};
+  renderAfterSelect() {}
 
   render() {
     const {
@@ -58,20 +58,19 @@ class SelectOptionType extends React.Component {
       itemHeight,
       helper,
       value,
-      onChange,
       className: _className,
-      attr: _attr
+      attr,
+      onChange
     } = this.props;
     const className = classnames(
       "brz-ed-option__select",
       `brz-ed-option__${display}`,
       _className,
-      _attr.className
+      attr.className
     );
-    const attr = _.omit(_attr, "className");
 
     return (
-      <div className={className} {...attr}>
+      <div {...attr} className={className}>
         {label || helper ? this.renderLabel() : null}
         <div className="brz-d-xs-flex brz-align-items-xs-center">
           <Select

@@ -1,15 +1,15 @@
 import React from "react";
 import _ from "underscore";
-import jQuery from "jquery";
 import classnames from "classnames";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component-new/EditorIcon";
 import ClickOutside from "visual/component-new/ClickOutside";
 
 function getDropdownHeight(itemsCount, itemHeight, minItems, maxItems) {
-  var minHeight = itemHeight * minItems,
-    maxHeight = itemHeight * maxItems,
-    itemsHeight = itemsCount * itemHeight;
+  const minHeight = itemHeight * minItems;
+  const maxHeight = itemHeight * maxItems;
+  const itemsHeight = itemsCount * itemHeight;
+
   return Math.max(minHeight, Math.min(maxHeight, itemsHeight));
 }
 
@@ -17,6 +17,8 @@ class Select extends React.Component {
   static defaultProps = {
     defaultValue: "",
     inputAttributes: {},
+    labelType: "input",
+    labelIcon: "nc-menu",
     minItems: 1,
     maxItems: 5,
     itemHeight: 38,
@@ -26,8 +28,13 @@ class Select extends React.Component {
 
   state = {
     isOpen: false,
-    currentValue: this.props.defaultValue
+    currentValue: this.props.defaultValue,
+    position: "bottom"
   };
+
+  componentDidMount() {
+    this.reposition();
+  }
 
   componentWillReceiveProps(nextProps) {
     if (this.state.defaultValue !== nextProps.defaultValue) {
@@ -53,29 +60,57 @@ class Select extends React.Component {
     this.props.onChange(value);
   };
 
-  onSelectedClick = () => {
+  handleDropdownNode = node => {
+    this.dropdown = node;
+  };
+
+  handleLabelClick = () => {
     this.setState({
       isOpen: !this.state.isOpen
     });
   };
 
-  renderSelectedOption() {
-    const { children } = this.props;
-    const { currentValue } = this.state;
+  reposition() {
+    const { bottom } = this.dropdown.getBoundingClientRect();
 
-    return (
-      _.find(children, child => child.props.value === currentValue) ||
-      this.props.children[0]
-    );
+    if (bottom >= window.innerHeight) {
+      this.setState({
+        position: "top"
+      });
+    }
   }
 
-  renderArrow() {
+  renderLabel() {
+    const { labelType } = this.props;
+
+    switch (labelType) {
+      case "icon":
+        return this.renderLabelIcon();
+      case "input":
+        return this.renderLabelInput();
+      default:
+        throw new Error(`Invalid label type ${labelType}`);
+    }
+  }
+
+  renderLabelIcon() {
+    return <EditorIcon icon={this.props.labelIcon} />;
+  }
+
+  renderLabelInput() {
     const { arrowIcon } = this.props;
+    const { currentValue } = this.state;
+    const children = React.Children.toArray(this.props.children);
+    const selectedItem =
+      children.find(child => child.props.value === currentValue) || children[0];
 
     return (
-      arrowIcon && (
-        <EditorIcon icon={arrowIcon} className="brz-control__select--arrow" />
-      )
+      <React.Fragment>
+        {selectedItem}
+        {arrowIcon && (
+          <EditorIcon icon={arrowIcon} className="brz-control__select--arrow" />
+        )}
+      </React.Fragment>
     );
   }
 
@@ -87,7 +122,6 @@ class Select extends React.Component {
       React.cloneElement(child, {
         key: index,
         active: child.props.value === currentValue,
-        title: child.props.value,
         onClick: child.props.disabled
           ? null
           : () => this.onItemClick(child.props.value)
@@ -98,13 +132,18 @@ class Select extends React.Component {
   render() {
     const {
       className: _className,
+      labelType,
       children,
       currentValue,
       inputAttributes
     } = this.props;
-    const className = classnames("brz-control__select", _className, {
-      opened: this.state.isOpen
-    });
+    const { position, isOpen } = this.state;
+    const className = classnames(
+      "brz-control__select",
+      `brz-control__select--${position}`,
+      _className,
+      { opened: isOpen }
+    );
     const scrollPaneStyle = {
       height: getDropdownHeight(
         React.Children.count(children),
@@ -118,13 +157,15 @@ class Select extends React.Component {
       <ClickOutside onClickOutside={this.onClickOutside}>
         <div className={className}>
           <div
-            className="brz-control__select-current"
-            onClick={this.onSelectedClick}
+            className={`brz-control__select-current brz-control__select-current__${labelType}`}
+            onClick={this.handleLabelClick}
           >
-            {this.renderSelectedOption()}
-            {this.renderArrow()}
+            {this.renderLabel()}
           </div>
-          <div className="brz-control__select-options">
+          <div
+            ref={this.handleDropdownNode}
+            className="brz-control__select-options"
+          >
             <ScrollPane style={scrollPaneStyle}>
               {this.renderOptions()}
             </ScrollPane>

@@ -19,6 +19,7 @@ import Counter from "./Counter";
 import SoundCloud from "./SoundCloud";
 import Countdown from "./Countdown";
 import Accordion from "./Accordion";
+import ImageGallery from "./ImageGallery";
 
 export default {
   base: [
@@ -38,7 +39,8 @@ export default {
     Countdown,
     Tabs,
     ProgressBar,
-    Accordion
+    Accordion,
+    ImageGallery
   ],
   grid: [Row, Columns]
 };

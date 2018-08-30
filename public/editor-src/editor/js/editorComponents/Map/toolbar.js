@@ -18,7 +18,12 @@ export function getItemsForDesktop(v) {
           label: t("Address"),
           type: "input",
           placeholder: t("Enter address"),
-          value: v.address
+          value: {
+            value: v.address
+          },
+          onChange: ({ value: address }) => ({
+            address
+          })
         },
         {
           id: "zoom",
@@ -159,9 +164,15 @@ export function getItemsForDesktop(v) {
                                   hex: boxShadowColorHex,
                                   opacity: v.boxShadowColorOpacity
                                 },
-                                onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
+                                onChange: ({
+                                  hex,
+                                  opacity,
+                                  isChanged,
+                                  opacityDragEnd
+                                }) => {
                                   const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
                                       : opacity;
 
@@ -171,7 +182,7 @@ export function getItemsForDesktop(v) {
                                     boxShadowColorPalette:
                                       isChanged === "hex"
                                         ? ""
-                                        : v.boxShadowColorPalette,
+                                        : v.boxShadowColorPalette
                                   };
                                 }
                               },
@@ -186,7 +197,7 @@ export function getItemsForDesktop(v) {
                                   boxShadowColorOpacity:
                                     v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
-                                      : v.boxShadowColorOpacity,
+                                      : v.boxShadowColorOpacity
                                 })
                               },
                               {
@@ -199,7 +210,8 @@ export function getItemsForDesktop(v) {
                                 },
                                 onChange: ({ hex, opacity, isChanged }) => {
                                   const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
                                       : opacity;
 
@@ -243,7 +255,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -275,7 +287,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -308,7 +320,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -341,7 +353,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           }
                         ]

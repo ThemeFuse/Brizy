@@ -31,6 +31,7 @@ import GlobalBlock from "./GlobalBlock";
 import SectionHeader from "./SectionHeader";
 import SectionHeaderItem from "./SectionHeader/SectionHeaderItem";
 import SectionHeaderStickyItem from "./SectionHeader/SectionHeaderStickyItem";
+import ImageGallery from "./ImageGallery";
 
 export default {
   Page,
@@ -65,7 +66,9 @@ export default {
   Tab,
   Accordion,
   AccordionItem,
-  GlobalBlock
+  GlobalBlock,
+  SectionFooter,
+  ImageGallery
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

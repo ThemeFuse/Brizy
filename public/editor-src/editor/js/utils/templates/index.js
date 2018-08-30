@@ -1,0 +1,1 @@
+export { templateThumbnailUrl } from "./templateThumbnailUrl";

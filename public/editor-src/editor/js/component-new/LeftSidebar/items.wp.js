@@ -5,7 +5,8 @@ import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
 
-let urls = Config.get("urls");
+const urls = Config.get("urls");
+const wp = Config.get("wp");
 
 export default {
   top: [AddElements, BlocksSortable, Styling],
@@ -24,7 +25,8 @@ export default {
         },
         {
           type: "wpFeatureImage",
-          label: t("Featured Image")
+          label: t("Featured Image"),
+          disabled: wp.isTemplate
         }
       ]
     },

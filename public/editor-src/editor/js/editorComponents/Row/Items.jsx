@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import _ from "underscore";
 import { setIn } from "timm";
-import deepExtend from "deep-extend";
+import deepMerge from "deepmerge";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component-new/Sortable";
 import { hideToolbar } from "visual/component-new/Toolbar/index";
@@ -77,8 +77,8 @@ class Items extends EditorArrayComponent {
       sum - widthOtherColumns - MIN_COL_WIDTH
     );
 
-    this.firstColumnWidth = toDecimalTen(col1Width * 100 / sum);
-    this.secondColumnWidth = toDecimalTen(col2Width * 100 / sum);
+    this.firstColumnWidth = toDecimalTen((col1Width * 100) / sum);
+    this.secondColumnWidth = toDecimalTen((col2Width * 100) / sum);
 
     let newValue = setIn(
       this.getDBValue(),
@@ -103,7 +103,7 @@ class Items extends EditorArrayComponent {
   };
 
   getItemProps(itemData, itemIndex, items) {
-    const meta = deepExtend({}, this.props.meta, {
+    const meta = deepMerge(this.props.meta, {
       row: {
         item: {
           index: itemIndex,

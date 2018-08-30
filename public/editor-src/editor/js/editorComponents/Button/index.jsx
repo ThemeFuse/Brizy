@@ -52,13 +52,17 @@ class Button extends EditorComponent {
   }
 
   renderLink(v, content) {
-    const { linkType, linkAnchor, linkExternal, linkExternalBlank, linkExternalRel } = v;
-
+    const {
+      linkType,
+      linkAnchor,
+      linkExternalBlank,
+      linkExternalType,
+      linkExternalRel
+    } = v;
     const hrefs = {
       anchor: linkAnchor,
-      external: linkExternal
+      external: v[linkExternalType]
     };
-
     let props = {
       type: linkType,
       style: { ...styleCSSVars(v), ...iconStyleCSSVars(v) },

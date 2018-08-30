@@ -1,38 +1,98 @@
 import React from "react";
 import { connect } from "react-redux";
+import _ from "underscore";
+import Editor from "visual/global/Editor";
 import Options from "visual/component-new/Options";
-import { getColorPaletteColors } from "visual/utils/color";
-import { getFontStyles } from "visual/utils/fonts";
 import { updateGlobals } from "visual/redux/actionCreators";
+import { currentStyleSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 
-const currentSkin = "default";
-
 class DrawerComponent extends React.Component {
-  handleStylingChange = (key, value) => {
-    const { styles, dispatch } = this.props;
-    const newStyles = Object.assign({}, styles, { [key]: value });
+  handleCurrentStyleChange = value => {
+    const { globalStyles, dispatch } = this.props;
 
-    dispatch(updateGlobals("styles", { [currentSkin]: newStyles }));
+    const newStyles = {
+      ...globalStyles,
+      _selected: value
+    };
+
+    dispatch(updateGlobals("styles", newStyles));
+  };
+
+  handleStylingChange = (key, value) => {
+    const {
+      styles: {
+        id: currentStyleId,
+        colorPalette: _colorPalette,
+        fontStyles: _fontStyles,
+        extraFontStyles: _extraFontStyles
+      },
+      globalStyles,
+      dispatch
+    } = this.props;
+    let colorPalette;
+    let fontStyles;
+    let extraFontStyles;
+
+    if (key === "colorPalette") {
+      colorPalette = value;
+      fontStyles = _fontStyles;
+      extraFontStyles = _extraFontStyles;
+    } else if (key === "fontStyles") {
+      colorPalette = _colorPalette;
+      [extraFontStyles, fontStyles] = _.partition(
+        value,
+        fs => fs.deletable === "on"
+      );
+    }
+
+    const newStyles = {
+      ...globalStyles,
+      _selected: currentStyleId,
+      _extraFontStyles: extraFontStyles,
+      [currentStyleId]: {
+        colorPalette,
+        fontStyles
+      }
+    };
+
+    dispatch(updateGlobals("styles", newStyles));
   };
 
   handleFontAdd = font => {
     const { extraFonts, dispatch } = this.props;
     const newExtraFonts = [...extraFonts, font];
-    const meta = { addedFont: font };
+    const meta = { addedFonts: [font] };
 
     dispatch(updateGlobals("extraFonts", newExtraFonts, meta));
   };
 
   render() {
+    const {
+      styles: { id: currentStyleId, colorPalette, mergedFontStyles }
+    } = this.props;
+    const currentStyleChoices = Editor.getStyles().map(style => ({
+      title: style.title,
+      value: style.id
+    }));
+
     const options = [
+      {
+        id: "currentStyle",
+        label: "Current Style",
+        type: "select",
+        choices: currentStyleChoices,
+        value: currentStyleId,
+        display: "block",
+        onChange: this.handleCurrentStyleChange
+      },
       {
         id: "colorPalette",
         type: "colorPaletteEditor",
         attr: {
           className: "brz-ed-sidebar-option__color-palette-editor"
         },
-        value: getColorPaletteColors(),
+        value: colorPalette,
         onChange: value => this.handleStylingChange("colorPalette", value)
       },
       {
@@ -45,7 +105,7 @@ class DrawerComponent extends React.Component {
       {
         id: "fontStyles",
         type: "fontStyleEditor",
-        value: getFontStyles(),
+        value: mergedFontStyles,
         onChange: value => this.handleStylingChange("fontStyles", value)
       }
     ];
@@ -59,7 +119,8 @@ class DrawerComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  styles: state.styles,
+  styles: currentStyleSelector(state),
+  globalStyles: state.globals.project.styles || {},
   extraFonts: state.globals.project.extraFonts || []
 });
 const mapDispatchToProps = dispatch => ({
@@ -70,5 +131,8 @@ export const Styling = {
   id: "styling",
   icon: "nc-brush",
   drawerTitle: t("Styling"),
-  drawerComponent: connect(mapStateToProps, mapDispatchToProps)(DrawerComponent)
+  drawerComponent: connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(DrawerComponent)
 };

@@ -24,6 +24,9 @@ class PublishButton extends React.Component {
         data: page.data
       };
       const updateMeta = {
+        apiExtraData: {
+          compile: true
+        },
         syncImmediate: true,
         syncSuccess: () => {
           Api.updatePost().then(() => {
@@ -62,4 +65,7 @@ const mapDispatchToProps = dispatch => ({
   updatePage: (...args) => dispatch(updatePage(...args))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PublishButton);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PublishButton);

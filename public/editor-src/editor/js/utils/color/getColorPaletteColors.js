@@ -1,5 +1,6 @@
 import { getStore } from "visual/redux/store";
+import { currentStyleSelector } from "visual/redux/selectors";
 
 export function getColorPaletteColors() {
-  return getStore().getState().styles.colorPalette;
+  return currentStyleSelector(getStore().getState()).colorPalette;
 }

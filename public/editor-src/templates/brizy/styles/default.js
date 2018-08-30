@@ -1,5 +1,6 @@
 export default {
   id: "default",
+  title: "Brizy default",
   colorPalette: [
     {
       id: "color1",
@@ -184,6 +185,9 @@ export default {
       showToolbar: "on"
     },
     "wrapper--accordion": {
+      showToolbar: "on"
+    },
+    "wrapper--imageGallery": {
       showToolbar: "on"
     },
     "wrapper--spacer": {

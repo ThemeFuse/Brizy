@@ -71,6 +71,13 @@
       z-index: 2;
       border-top: 1px solid $sidebar-item-separator-1;
     }
+    &__options .brz-ed-sidebar__control__options {
+      .brz-ed-sidebar__control__item {
+        cursor: auto;
+        width: auto;
+        max-height: none;
+      }
+    }
   }
 
   // Control Bottom
@@ -174,6 +181,7 @@
     &--deviceMode {
       .brz-ed-sidebar__popover-content {
         bottom: -25px;
+        min-width: 130px;
 
         &:before {
           bottom: 0;
@@ -447,7 +455,7 @@
       font-size: 13px;
       line-height: 1;
       margin: 0 0 10px;
-      color: #818a91;
+      color: $options-label-color;
     }
 
     // Select
@@ -483,6 +491,16 @@
     .brz-ed-sidebar-options > [class^="brz-ed-option"] {
       margin-bottom: 30px;
     }
+    .brz-ed-sidebar-options {
+      .brz-ed-option__select {
+        border-bottom: 1px solid #3a3f47;
+        padding-bottom: 30px;
+      }
+      .brz-ed-option__select > div,
+      .brz-control__select {
+        width: 100%;
+      }
+    }
   }
 
   // Variants
@@ -503,6 +521,7 @@
     .brz-ed-option__label {
       margin-bottom: 6px;
     }
+
     // Select
     .brz-control__select {
       width: 100%;

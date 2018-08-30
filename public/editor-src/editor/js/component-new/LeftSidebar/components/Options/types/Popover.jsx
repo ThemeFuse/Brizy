@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import ClickOutside from "visual/component-new/ClickOutside";
 import EditorIcon from "visual/component-new/EditorIcon";
-import Option from "visual/component-new/LeftSidebar/components/Options/Option";
+import Options from "visual/component-new/LeftSidebar/components/Options";
 import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actionCreators";
 
@@ -60,22 +60,20 @@ export default class DrawerPopover extends React.Component {
 
   renderOptions() {
     const { options } = this.props;
+    const meta = {
+      popover: {
+        show: this.show,
+        hide: this.hide
+      }
+    };
 
-    return options.map((option, index) => {
-      return (
-        <Option
-          key={index}
-          data={option}
-          meta={{
-            popover: {
-              show: this.show,
-              hide: this.hide
-            }
-          }}
-          className="brz-ed-sidebar__popover__item"
-        />
-      );
-    });
+    return (
+      <Options
+        optionClassName="brz-ed-sidebar__popover__item"
+        data={options}
+        meta={meta}
+      />
+    );
   }
 
   render() {

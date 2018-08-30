@@ -35,8 +35,13 @@ div[contenteditable] {
     position: absolute;
     top: 50%;
   }
-
   &.brz-ed-content-editable-focus * {
     cursor: auto;
+  }
+
+  // Data Population Ribons
+  span[data-population] {
+    text-decoration: underline;
+    text-decoration-style: dashed;
   }
 }

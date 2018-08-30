@@ -5,7 +5,7 @@ import { hexToRgba } from "visual/utils/color";
 export function imageStylesClassName(v, sizes, props) {
   const { className, borderRadius, imageSrc, linkType, linkLightBox } = v;
   const {
-    meta: { desktopW, mobileW }
+    meta: { desktopW, mobileW, inGallery }
   } = props;
   let glamorObj = {};
 
@@ -63,7 +63,10 @@ export function imageStylesClassName(v, sizes, props) {
     "brz-image",
     {
       "brz-image__lightbox":
-        imageSrc && linkType === "lightBox" && linkLightBox === "on"
+        imageSrc &&
+        linkType === "lightBox" &&
+        linkLightBox === "on" &&
+        !inGallery
     },
     className,
     glamorClassName

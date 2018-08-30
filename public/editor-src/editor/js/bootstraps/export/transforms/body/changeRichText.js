@@ -1,6 +1,7 @@
 const linkClassNames = ["link--anchor", "link--external", "is-empty"];
 
-export default function changeRichTextLinks($) {
+export default function changeRichText($) {
+  // Change Links
   $(".brz-rich-text")
     .find("a[data-href]")
     .each(function() {
@@ -10,13 +11,21 @@ export default function changeRichTextLinks($) {
       const style = $this.attr("style") || "";
       const href = $this.attr("data-href");
       const data = JSON.parse(decodeURIComponent(href));
-      const url = data[data.type];
+      const externalLink = {
+        external: data.external,
+        population: data.population
+      };
+      const newData = {
+        ...data,
+        external: externalLink[data.externalType]
+      };
+      const url = newData[data.type];
       const target =
-        data.type === "external" && data.externalBlank === "on"
+        newData.type === "external" && newData.externalBlank === "on"
           ? `target="_blank"`
           : "";
       const rel =
-        data.type === "external" && data.externalRel === "on"
+        newData.type === "external" && newData.externalRel === "on"
           ? `rel="nofollow"`
           : "";
 
@@ -30,5 +39,14 @@ export default function changeRichTextLinks($) {
         $this.removeClass(classNames);
         $this.removeAttr("data-href");
       }
+    });
+
+  // replace DynamicContent
+  $(".brz-rich-text")
+    .find("[data-population]")
+    .each(function() {
+      const $this = $(this);
+      const population = $this.attr("data-population");
+      $this.html(`{{${population}}}`);
     });
 }

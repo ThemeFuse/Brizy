@@ -1,5 +1,6 @@
 import Quill from "quill";
 import Link from "./formats/Link";
+import Population from "./formats/Population";
 import Pre from "./formats/Pre";
 
 if (IS_EDITOR) {
@@ -52,6 +53,8 @@ if (IS_EDITOR) {
   registerBlockParchment("fontStyle", "brz-tp");
   registerInlineParchment("colorPalette", "brz-cp");
   registerInlineParchment("opacity", "opacity", true);
+  registerInlineParchment("prepopulation", "brz-pre-population");
+  Quill.register(Population);
   Quill.register(Link);
   Quill.register(Pre, true);
 }

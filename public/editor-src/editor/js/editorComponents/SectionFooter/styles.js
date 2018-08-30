@@ -339,16 +339,7 @@ export function containerStyleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       maxWidth: "var(--containerWidth)",
-      height: "100%",
-
-      ".brz-ed--desktop &": {
-        paddingTop: "var(--paddingTop)",
-        paddingBottom: "var(--paddingBottom)"
-      },
-      ".brz-ed--mobile &": {
-        paddingTop: "var(--mobilePaddingTop)",
-        paddingBottom: "var(--mobilePaddingBottom)"
-      }
+      height: "100%"
     };
   } else {
     const {
@@ -391,31 +382,9 @@ export function containerStyleClassName(v) {
 export function containerStyleCSSVars(v) {
   if (IS_PREVIEW) return null;
 
-  const {
-    containerType,
-    paddingType,
-    padding,
-    paddingTop,
-    paddingBottom,
-    mobilePaddingType,
-    mobilePadding,
-    mobilePaddingTop,
-    mobilePaddingBottom
-  } = v;
+  const { containerType } = v;
 
   return {
-    "--containerWidth": containerType === "fullWidth" ? "100%" : "1170px",
-    "--paddingTop":
-      paddingType === "grouped" ? `${padding}px` : `${paddingTop}px`,
-    "--paddingBottom":
-      paddingType === "grouped" ? `${padding}px` : `${paddingBottom}px`,
-    "--mobilePaddingTop":
-      mobilePaddingType === "grouped"
-        ? `${mobilePadding}px`
-        : `${mobilePaddingTop}px`,
-    "--mobilePaddingBottom":
-      mobilePaddingType === "grouped"
-        ? `${mobilePadding}px`
-        : `${mobilePaddingBottom}px`
+    "--containerWidth": containerType === "fullWidth" ? "100%" : "1170px"
   };
 }
