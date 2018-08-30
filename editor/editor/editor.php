@@ -136,6 +136,7 @@ class Brizy_Editor_Editor_Editor {
 				'featuredImage'   => $post_thumbnail,
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
+				'taxonomies'      => $this->getTaxonomyList(),
 				'api'             => array(
 					'hash'                       => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'                        => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
@@ -391,5 +392,20 @@ class Brizy_Editor_Editor_Editor {
 			'preview_id'    => $wp_post->ID,
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $wp_post->ID )
 		) );
+	}
+
+	private function getTaxonomyList() {
+		$terms = (array) get_terms( array( 'hide_empty' => false ) );
+		$taxs  = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
+
+		return array_map( function ( $tax ) {
+
+			return (object) array(
+				'name'=>$tax->name,
+				'label'=>$tax->labels->name,
+			);
+
+		}, $taxs );
+
 	}
 }
