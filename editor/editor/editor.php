@@ -291,7 +291,14 @@ class Brizy_Editor_Editor_Editor {
 							'post_type' => $rule->getEntityType(),
 							'post__in'  => $rule->getEntityValues()
 						) );
-						$wp_post = array_pop( $array );
+
+						foreach($array as $p) {
+							if(!Brizy_Editor_Post::get($p)->uses_editor())
+							{
+								$wp_post = $p;
+								break;
+							}
+						}
 						break;
 					case  Brizy_Admin_Rule::TAXONOMY :
 						$array = get_terms( array(
