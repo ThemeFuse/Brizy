@@ -6,9 +6,7 @@ export default class Sticky extends React.Component {
     refSelector: "",
     type: "animated", // animated | fixed
     render: () => null,
-
-    onClose: () => {},
-    onOpen: () => {}
+    onChange: () => null
   };
 
   state = {
@@ -19,12 +17,17 @@ export default class Sticky extends React.Component {
 
   componentDidMount() {
     observer.addListener(this.checkSticky);
+    this.checkSticky();
   }
 
   componentWillUnmount() {
     this.refNode = null;
     observer.removeListener(this.checkSticky);
   }
+
+  handleChange = () => {
+    this.props.onChange(this.state.isSticky);
+  };
 
   checkSticky = () => {
     const { refSelector, type } = this.props;
@@ -40,7 +43,7 @@ export default class Sticky extends React.Component {
         : refNodeRect.top <= 0;
 
     if (isSticky !== this.state.isSticky) {
-      this.setState({ isSticky });
+      this.setState({ isSticky }, this.handleChange);
     }
   };
 

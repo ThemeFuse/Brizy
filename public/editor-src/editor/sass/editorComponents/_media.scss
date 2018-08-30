@@ -77,5 +77,14 @@
     picture {
       width: 100%;
     }
+    &__lightbox * {
+      cursor: zoom-in;
+    }
   }
+}
+
+// Lightbox
+.mfp-figure:after,
+.mfp-iframe-scaler iframe {
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
 }

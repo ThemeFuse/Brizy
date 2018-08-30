@@ -1,16 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import _ from "underscore";
 import {
   mergeOptions,
   optionTraverse
 } from "visual/component-new/Options/utils";
 import { getStore } from "visual/redux/store";
+import { currentStyleSelector } from "visual/redux/selectors";
 
 const capitalize = ([first, ...rest], lowerRest = false) =>
   first.toUpperCase() +
   (lowerRest ? rest.join("").toLowerCase() : rest.join(""));
 
-export class EditorComponent extends Component {
+export class EditorComponent extends React.Component {
   static get componentId() {
     throw new Error(`${this.name} must implement \`static get componentId()\``);
   }
@@ -81,7 +82,7 @@ export class EditorComponent extends Component {
     return this.props.reduxDispatch;
   }
 
-  getDefaultValue(theme) {
+  getDefaultValue() {
     return this.props.defaultValue
       ? { ...this.constructor.defaultValue, ...this.props.defaultValue } // allows defaultValue overriding
       : this.constructor.defaultValue;
@@ -93,15 +94,17 @@ export class EditorComponent extends Component {
 
   getStylesValue() {
     const { _styles } = this.getDBValue() || {};
-    const storeRules = this.getReduxState().styles.rules;
+    const currentStyleRules = currentStyleSelector(this.getReduxState()).rules;
 
-    if (!_styles || !storeRules) {
+    if (!_styles || !currentStyleRules) {
       return null;
     }
 
     return _styles.reduce(
       (acc, style) =>
-        storeRules[style] ? Object.assign(acc, storeRules[style]) : acc,
+        currentStyleRules[style]
+          ? Object.assign(acc, currentStyleRules[style])
+          : acc,
       {}
     );
   }
@@ -122,10 +125,10 @@ export class EditorComponent extends Component {
       : defaultValue;
   }
 
-  patchValue(patch) {
+  patchValue(patch, meta) {
     const newValue = this.makeNewValueFromPatch(patch);
 
-    this.handleValueChange(newValue, { patch });
+    this.handleValueChange(newValue, { patch, meta });
   }
 
   makeNewValueFromPatch(patch) {
@@ -143,7 +146,6 @@ export class EditorComponent extends Component {
   validateValue(newValue) {
     const defaultValueKeys = Object.keys(this.getDefaultValue());
     const newValueKeys = Object.keys(_.omit(newValue, "_id", "_styles"));
-    const defaultValueDiffKeys = _.difference(defaultValueKeys, newValueKeys);
     const newValueDiffKeys = _.difference(newValueKeys, defaultValueKeys);
 
     if (newValueDiffKeys.length > 0) {
@@ -175,7 +177,8 @@ export class EditorComponent extends Component {
 
     const defaultValue = this.getDefaultValue();
     const dbValue = this.getDBValue();
-    const onChange = (value, meta) => this.patchValue({ [bindWithKey]: value });
+    const onChange = (value, meta) =>
+      this.patchValue({ [bindWithKey]: value }, meta);
 
     return {
       ...otherProps,
@@ -223,6 +226,13 @@ export class EditorComponent extends Component {
         if (extendFilter) {
           extendItems = extendFilter(extendItems);
         }
+
+        items = mergeOptions(items, extendItems);
+      }
+
+      if (this.childToolbarExtend && allowExtend) {
+        const { getItems } = this.childToolbarExtend;
+        const extendItems = getItems(deviceMode);
 
         items = mergeOptions(items, extendItems);
       }
@@ -298,9 +308,9 @@ export class EditorComponent extends Component {
   }
 
   getRulesValue(rules) {
-    const storeRules = this.getReduxState().styles.rules;
+    const currentStyleRules = currentStyleSelector(this.getReduxState()).rules;
 
-    if (!storeRules) {
+    if (!currentStyleRules) {
       return null;
     }
 
@@ -311,10 +321,11 @@ export class EditorComponent extends Component {
         case "object":
           const { rule: ruleName, mapper } = rule;
 
-          overrides = storeRules[ruleName] && mapper(storeRules[ruleName]);
+          overrides =
+            currentStyleRules[ruleName] && mapper(currentStyleRules[ruleName]);
           break;
         case "string":
-          overrides = storeRules[rule];
+          overrides = currentStyleRules[rule];
           break;
         default:
           throw new Error("Invalid rule type");

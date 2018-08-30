@@ -26,14 +26,24 @@ export function getItemsForDesktop(v) {
                   type: "input",
                   label: t("Success"),
                   placeholder: t("Message sent"),
-                  value: v.messageSuccess
+                  value: {
+                    value: v.messageSuccess
+                  },
+                  onChange: ({ value: messageSuccess }) => ({
+                    messageSuccess
+                  })
                 },
                 {
                   id: "messageError",
                   type: "input",
                   label: t("Error"),
                   placeholder: t("Message not sent"),
-                  value: v.messageError
+                  value: {
+                    value: v.messageError
+                  },
+                  onChange: ({ value: messageError }) => ({
+                    messageError
+                  })
                 }
               ]
             },
@@ -46,7 +56,12 @@ export function getItemsForDesktop(v) {
                   type: "input",
                   label: t("Go to"),
                   placeholder: "http://",
-                  value: v.messageRedirect
+                  value: {
+                    value: v.messageRedirect
+                  },
+                  onChange: ({ value: messageRedirect }) => ({
+                    messageRedirect
+                  })
                 }
               ]
             }

@@ -1,7 +1,7 @@
 import { calcWrapperSizes } from "./calculations";
-import { t } from "visual/utils/i18n";
-import { getOptionColor, getAnimations } from "visual/utils/options";
+import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
 
 export const getMinSize = () => 5;
 export const getMaxSize = () => 100;
@@ -14,20 +14,29 @@ export const getMaxHeight = (cW, v) => {
   return maxHeight >= 100 ? Math.round(maxHeight) : 100;
 };
 
+const linkDynamicContentChoices = getDynamicContentChoices("link");
+const imageDynamicContentChoices = getDynamicContentChoices("image");
+
 export default ({
   desktopWrapperSizes,
   desktopContainerWidth,
   mobileWrapperSizes,
-  mobileContainerWidth
+  mobileContainerWidth,
+  inGallery
 }) => ({
   getItemsForDesktop: getItemsForDesktop(
     desktopWrapperSizes,
-    desktopContainerWidth
+    desktopContainerWidth,
+    inGallery
   ),
-  getItemsForMobile: getItemsForMobile(mobileWrapperSizes, mobileContainerWidth)
+  getItemsForMobile: getItemsForMobile(
+    mobileWrapperSizes,
+    mobileContainerWidth,
+    inGallery
+  )
 });
 
-export const getItemsForDesktop = (wrapperSizes, cW) => v => {
+export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
   const maxBorderRadius = Math.round(
     Math.min(wrapperSizes.width, wrapperSizes.height) / 2
   );
@@ -42,186 +51,90 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
       position: 80,
       options: [
         {
-          id: "image",
-          label: t("Image"),
-          type: "imageSetter",
-          value: {
-            width: v.imageWidth,
-            height: v.imageHeight,
-            src: v.imageSrc,
-            x: v.positionX,
-            y: v.positionY
-          },
-          onChange: ({ width, height, src, x, y }) => {
-            width = width || DEFAULT_IMAGE_SIZES.width;
-            height = height || DEFAULT_IMAGE_SIZES.height;
-            const newWrapperSize = calcWrapperSizes(cW, {
-              imageWidth: width,
-              imageHeight: height,
-              resize: v.resize,
-              width: v.width,
-              height: 100
-            });
-            const newHeight =
-              src === v.imageSrc
-                ? v.height
-                : (wrapperSizes.height / newWrapperSize.height) * 100;
+          id: "media",
+          type: "tabs",
+          tabs: [
+            {
+              id: "image",
+              label: t("Image"),
+              options: [
+                {
+                  id: "image",
+                  label: t("Image"),
+                  type: "imageSetter",
+                  population: {
+                    show: imageDynamicContentChoices.length > 0,
+                    choices: imageDynamicContentChoices
+                  },
+                  value: {
+                    width: v.imageWidth,
+                    height: v.imageHeight,
+                    src: v.imageSrc,
+                    x: v.positionX,
+                    y: v.positionY,
+                    population: v.imagePopulation
+                  },
+                  onChange: ({ width, height, src, x, y, population }) => {
+                    if (population) {
+                      return {
+                        imagePopulation: population
+                      };
+                    }
 
-            return {
-              imageWidth: width,
-              imageHeight: height,
-              imageSrc: src,
-              height: Math.round(newHeight),
-              positionX: x,
-              positionY: y,
-              mobilePositionX:
-                v.positionX === v.mobilePositionX ? x : v.mobilePositionX,
-              mobilePositionY:
-                v.positionY === v.mobilePositionY ? y : v.mobilePositionY
-            };
-          }
-        },
-        {
-          id: "zoom",
-          label: t("Zoom"),
-          type: "slider",
-          slider: {
-            min: 100,
-            max: 200
-          },
-          value: {
-            value: v.zoom
-          },
-          onChange: ({ value: zoom }) => ({
-            zoom,
-            mobileZoom: v.zoom === v.mobileZoom ? zoom : v.mobileZoom
-          })
+                    width = width || DEFAULT_IMAGE_SIZES.width;
+                    height = height || DEFAULT_IMAGE_SIZES.height;
+                    const newWrapperSize = calcWrapperSizes(cW, {
+                      imageWidth: width,
+                      imageHeight: height,
+                      resize: v.resize,
+                      width: v.width,
+                      height: 100
+                    });
+                    const newHeight =
+                      src === v.imageSrc
+                        ? v.height
+                        : (wrapperSizes.height / newWrapperSize.height) * 100;
+
+                    return {
+                      imageWidth: width,
+                      imageHeight: height,
+                      imageSrc: src,
+                      height: Math.round(newHeight),
+                      positionX: x,
+                      positionY: y,
+                      imagePopulation: "",
+                      mobilePositionX:
+                        v.positionX === v.mobilePositionX
+                          ? x
+                          : v.mobilePositionX,
+                      mobilePositionY:
+                        v.positionY === v.mobilePositionY
+                          ? y
+                          : v.mobilePositionY
+                    };
+                  }
+                },
+                {
+                  id: "zoom",
+                  label: t("Zoom"),
+                  type: "slider",
+                  disabled: Boolean(v.imagePopulation),
+                  slider: {
+                    min: 100,
+                    max: 200
+                  },
+                  value: {
+                    value: v.zoom
+                  },
+                  onChange: ({ value: zoom }) => ({
+                    zoom,
+                    mobileZoom: v.zoom === v.mobileZoom ? zoom : v.mobileZoom
+                  })
+                }
+              ]
+            }
+          ]
         }
-        // {
-        //   id: "media",
-        //   type: "tabs",
-        //   tabs: [
-        //     {
-        //       id: "image",
-        //       label: t("Image"),
-        //       options: []
-        //     },
-        //     {
-        //       id: "style",
-        //       label: t("Style"),
-        //       options: [
-        //          {
-        //            id: "imageOpacity",
-        //            label: t("Opacity"),
-        //            type: "slider",
-        //            slider: {
-        //              min: 0,
-        //              max: 100
-        //            },
-        //            input: {
-        //              show: true,
-        //              min: 0,
-        //              max: 100
-        //            },
-        //            suffix: {
-        //              show: true,
-        //              choices: [
-        //                {
-        //                  title: "%",
-        //                  value: "%"
-        //                }
-        //              ]
-        //            },
-        //            value: {
-        //              value: v.imageOpacity
-        //            },
-        //            onChange: ({ value: imageOpacity }) => ({imageOpacity})
-        //          },
-        //          {
-        //            id: "imageHue",
-        //            label: t("Hue"),
-        //            type: "slider",
-        //            slider: {
-        //              min: 0,
-        //              max: 360
-        //            },
-        //            input: {
-        //              show: true,
-        //              min: 0,
-        //              max: 360
-        //            },
-        //            suffix: {
-        //              show: true,
-        //              choices: [
-        //                {
-        //                  title: "deg",
-        //                  value: "deg"
-        //                }
-        //              ]
-        //            },
-        //            value: {
-        //              value: v.imageHue
-        //            },
-        //            onChange: ({ value: imageHue }) => ({imageHue})
-        //          },
-        //          {
-        //            id: "imageBrightness",
-        //            label: t("Brigh.."),
-        //            type: "slider",
-        //            slider: {
-        //              min: 10,
-        //              max: 200
-        //            },
-        //            input: {
-        //              show: true,
-        //              min: 10,
-        //              max: 200
-        //            },
-        //            suffix: {
-        //              show: true,
-        //              choices: [
-        //                {
-        //                  title: "%",
-        //                  value: "%"
-        //                }
-        //              ]
-        //            },
-        //            value: {
-        //              value: v.imageBrightness
-        //            },
-        //            onChange: ({ value: imageBrightness }) => ({imageBrightness})
-        //          },
-        //          {
-        //            id: "imageSaturation",
-        //            label: t("Satur.."),
-        //            type: "slider",
-        //            slider: {
-        //              min: 0,
-        //              max: 200
-        //            },
-        //            input: {
-        //              show: true,
-        //              min: 0,
-        //              max: 200
-        //            },
-        //            suffix: {
-        //              show: true,
-        //              choices: [
-        //                {
-        //                  title: "%",
-        //                  value: "%"
-        //                }
-        //              ]
-        //            },
-        //            value: {
-        //              value: v.imageSaturation
-        //            },
-        //            onChange: ({ value: imageSaturation }) => ({imageSaturation})
-        //          }
-        //       ]
-        //     }
-        //   ]
-        // }
       ]
     },
     {
@@ -231,6 +144,8 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
       title: t("Link"),
       size: "medium",
       position: 90,
+      disabled:
+        inGallery && (v.linkType === "lightBox" && v.linkLightBox === "on"),
       options: [
         {
           id: "linkType",
@@ -258,7 +173,28 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
                   type: "input",
                   label: t("Link to"),
                   placeholder: "http://",
-                  value: v.linkExternal
+                  population: {
+                    show: linkDynamicContentChoices.length > 0,
+                    choices: linkDynamicContentChoices
+                  },
+                  value: {
+                    population: v.linkPopulation,
+                    value: v.linkExternal
+                  },
+                  onChange: ({
+                    value: linkExternal,
+                    population: linkPopulation,
+                    changed
+                  }) => {
+                    return {
+                      linkExternal,
+                      linkPopulation,
+                      linkExternalType:
+                        changed === "value" || linkPopulation === ""
+                          ? "linkExternal"
+                          : "linkPopulation"
+                    };
+                  }
                 },
                 {
                   id: "linkExternalBlank",
@@ -277,10 +213,11 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
             {
               id: "lightBox",
               label: t("LightBox"),
+              disabled: inGallery,
               options: [
                 {
                   id: "linkLightBox",
-                  label: t("LightBox"),
+                  label: t("Open in LightBox"),
                   type: "switch",
                   value: v.linkLightBox
                 }
@@ -297,6 +234,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
+      disabled: inGallery,
       options: [
         {
           id: "resize",
@@ -673,7 +611,7 @@ export const getItemsForDesktop = (wrapperSizes, cW) => v => {
   ];
 };
 
-export const getItemsForMobile = (wrapperSizes, cW) => v => {
+export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
   return [
     {
       id: "toolbarImage",
@@ -683,51 +621,76 @@ export const getItemsForMobile = (wrapperSizes, cW) => v => {
       position: 80,
       options: [
         {
-          id: "mobileImage",
-          label: t("Image"),
-          type: "imageSetter",
-          onlyPointer: true,
-          value: {
-            width: v.imageWidth,
-            height: v.imageHeight,
-            src: v.imageSrc,
-            x: v.mobilePositionX,
-            y: v.mobilePositionY
-          },
-          onChange: ({ width, height, x, y }) => {
-            width = width || DEFAULT_IMAGE_SIZES.width;
-            height = height || DEFAULT_IMAGE_SIZES.height;
-            const newWrapperSize = calcWrapperSizes(cW, {
-              imageWidth: width,
-              imageHeight: height,
-              resize: v.mobileResize,
-              width: v.mobileWidth,
-              height: 100
-            });
-            const newHeight =
-              (wrapperSizes.height / newWrapperSize.height) * 100;
+          id: "media",
+          type: "tabs",
+          tabs: [
+            {
+              id: "image",
+              label: t("Image"),
+              options: [
+                {
+                  id: "mobileImage",
+                  label: t("Image"),
+                  type: "imageSetter",
+                  onlyPointer: true,
+                  population: {
+                    show: imageDynamicContentChoices.length > 0,
+                    choices: imageDynamicContentChoices
+                  },
+                  value: {
+                    width: v.imageWidth,
+                    height: v.imageHeight,
+                    src: v.imageSrc,
+                    x: v.mobilePositionX,
+                    y: v.mobilePositionY,
+                    population: v.imagePopulation
+                  },
+                  onChange: ({ width, height, x, y, population }) => {
+                    if (population) {
+                      return {
+                        imagePopulation: population
+                      };
+                    }
 
-            return {
-              imageWidth: width,
-              imageHeight: height,
-              mobilePositionX: x,
-              mobilePositionY: y,
-              mobileHeight: Math.round(newHeight)
-            };
-          }
-        },
-        {
-          id: "mobileZoom",
-          label: t("Zoom"),
-          type: "slider",
-          slider: {
-            min: 100,
-            max: 200
-          },
-          value: {
-            value: v.mobileZoom
-          },
-          onChange: ({ value: mobileZoom }) => ({ mobileZoom })
+                    width = width || DEFAULT_IMAGE_SIZES.width;
+                    height = height || DEFAULT_IMAGE_SIZES.height;
+                    const newWrapperSize = calcWrapperSizes(cW, {
+                      imageWidth: width,
+                      imageHeight: height,
+                      resize: v.mobileResize,
+                      width: v.mobileWidth,
+                      height: 100
+                    });
+                    const newHeight =
+                      (wrapperSizes.height / newWrapperSize.height) * 100;
+
+                    return {
+                      imageWidth: width,
+                      imageHeight: height,
+                      mobilePositionX: x,
+                      mobilePositionY: y,
+                      mobileHeight: Math.round(newHeight),
+                      imagePopulation: ""
+                    };
+                  }
+                },
+                {
+                  id: "mobileZoom",
+                  label: t("Zoom"),
+                  type: "slider",
+                  disabled: Boolean(v.imagePopulation),
+                  slider: {
+                    min: 100,
+                    max: 200
+                  },
+                  value: {
+                    value: v.mobileZoom
+                  },
+                  onChange: ({ value: mobileZoom }) => ({ mobileZoom })
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -738,6 +701,7 @@ export const getItemsForMobile = (wrapperSizes, cW) => v => {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
+      disabled: inGallery,
       options: [
         {
           id: "mobileResize",
@@ -793,3 +757,129 @@ const DEFAULT_IMAGE_SIZES = {
   width: 1440,
   height: 960
 };
+
+// {
+//   id: "media",
+//   type: "tabs",
+//   tabs: [
+//     {
+//       id: "image",
+//       label: t("Image"),
+//       options: []
+//     },
+//     {
+//       id: "style",
+//       label: t("Style"),
+//       options: [
+//          {
+//            id: "imageOpacity",
+//            label: t("Opacity"),
+//            type: "slider",
+//            slider: {
+//              min: 0,
+//              max: 100
+//            },
+//            input: {
+//              show: true,
+//              min: 0,
+//              max: 100
+//            },
+//            suffix: {
+//              show: true,
+//              choices: [
+//                {
+//                  title: "%",
+//                  value: "%"
+//                }
+//              ]
+//            },
+//            value: {
+//              value: v.imageOpacity
+//            },
+//            onChange: ({ value: imageOpacity }) => ({imageOpacity})
+//          },
+//          {
+//            id: "imageHue",
+//            label: t("Hue"),
+//            type: "slider",
+//            slider: {
+//              min: 0,
+//              max: 360
+//            },
+//            input: {
+//              show: true,
+//              min: 0,
+//              max: 360
+//            },
+//            suffix: {
+//              show: true,
+//              choices: [
+//                {
+//                  title: "deg",
+//                  value: "deg"
+//                }
+//              ]
+//            },
+//            value: {
+//              value: v.imageHue
+//            },
+//            onChange: ({ value: imageHue }) => ({imageHue})
+//          },
+//          {
+//            id: "imageBrightness",
+//            label: t("Brigh.."),
+//            type: "slider",
+//            slider: {
+//              min: 10,
+//              max: 200
+//            },
+//            input: {
+//              show: true,
+//              min: 10,
+//              max: 200
+//            },
+//            suffix: {
+//              show: true,
+//              choices: [
+//                {
+//                  title: "%",
+//                  value: "%"
+//                }
+//              ]
+//            },
+//            value: {
+//              value: v.imageBrightness
+//            },
+//            onChange: ({ value: imageBrightness }) => ({imageBrightness})
+//          },
+//          {
+//            id: "imageSaturation",
+//            label: t("Satur.."),
+//            type: "slider",
+//            slider: {
+//              min: 0,
+//              max: 200
+//            },
+//            input: {
+//              show: true,
+//              min: 0,
+//              max: 200
+//            },
+//            suffix: {
+//              show: true,
+//              choices: [
+//                {
+//                  title: "%",
+//                  value: "%"
+//                }
+//              ]
+//            },
+//            value: {
+//              value: v.imageSaturation
+//            },
+//            onChange: ({ value: imageSaturation }) => ({imageSaturation})
+//          }
+//       ]
+//     }
+//   ]
+// }

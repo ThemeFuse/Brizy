@@ -1,0 +1,37 @@
+// Uses for dynamic Content
+.brz-ed-option__input {
+  .brz-control__select {
+    margin-left: 10px;
+  }
+}
+.brz-ed-option__input-container {
+  position: relative;
+
+  .brz-icon-svg {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    font-size: 16px;
+    top: 50%;
+    transform: translateY(-0.5em);
+    color: #fff;
+    transition: 0.2s linear color;
+
+    &:hover {
+      color: $brand-primary;
+      transition: 0.2s linear color;
+    }
+  }
+}
+
+// Population
+.brz-ed-option__input__population {
+  @extend .brz-ed-control__input;
+
+  width: $control-lg-width;
+  line-height: $control-height;
+  padding-right: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

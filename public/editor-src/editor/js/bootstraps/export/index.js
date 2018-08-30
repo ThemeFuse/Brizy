@@ -19,7 +19,7 @@ import addFonts from "./transforms/head/addFonts";
 import addColorPaletteCSS from "./transforms/head/addColorPaletteCSS";
 import addFontStylesCSS from "./transforms/head/addFontStylesCSS";
 import addGlamorCSS from "./transforms/head/addGlamorCSS";
-import changeRichTextLinks from "./transforms/body/changeRichTextLinks";
+import changeRichText from "./transforms/body/changeRichText";
 
 export default function main(pageId, pages, globals) {
   const convertedPages = pages.map(converter.pageFromBackend);
@@ -72,10 +72,10 @@ function getPageHeadBlock($pageHTML, glamorCSS) {
   const $ = cheerio.load("<head></head>");
   const $head = $("head");
 
-  addFonts($head);
   addColorPaletteCSS($head);
-  addFontStylesCSS($head);
+  addFontStylesCSS($head, $pageHTML);
   addGlamorCSS($head, glamorCSS);
+  addFonts($head);
 
   // transformMetaShare($head, $pageHTML);
   // transformColorScheme($head, $pageHTML);
@@ -96,7 +96,7 @@ function getPageBodyBlock($pageHTML) {
   // if (Config.get("blurImages")) {
   //   transformBlurredImages($pageHTML);
   // }
-  changeRichTextLinks($pageHTML);
+  changeRichText($pageHTML);
 
   return $pageHTML.html();
 }

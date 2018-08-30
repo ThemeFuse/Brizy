@@ -13,7 +13,12 @@ export function getItemsForDesktop(v) {
           label: t("Product ID"),
           type: "input",
           placeholder: t("Product ID or SKU"),
-          value: v.productID
+          value: {
+            value: v.productID
+          },
+          onChange: ({ value: productID }) => ({
+            productID
+          })
         }
       ]
     },

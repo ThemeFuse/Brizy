@@ -48,6 +48,27 @@ $scroll-border-radius: 4px;
   .brz-ed-scroll-pane-content {
     border-right: none !important;
   }
+
+  // Position
+  &--top {
+    .brz-control__select-options {
+      bottom: 100%;
+      margin-bottom: 3px;
+    }
+  }
+  &--bottom {
+    .brz-control__select-options {
+      margin-top: 3px;
+    }
+  }
+}
+.brz-control__select--active {
+  .brz-control__select-current {
+    color: $brand-primary;
+  }
+}
+.brz-control__select__auto {
+  width: auto;
 }
 .brz-control__select-current {
   line-height: $control-height;
@@ -69,11 +90,17 @@ $scroll-border-radius: 4px;
   margin-top: -0.5em;
   font-size: $control-arrow-size;
 }
+.brz-control__select-current__icon {
+  width: auto;
+  height: auto;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
 .brz-control__select-options {
   position: absolute;
   z-index: 12;
   left: 0;
-  margin-top: 3px;
   min-width: 100%;
   border-radius: $control-border-radius;
   box-shadow: $control-dropdown-shadow;
@@ -101,6 +128,8 @@ $scroll-border-radius: 4px;
   height: $control-height;
   transition: color 0.15s linear;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:last-child {
     border-bottom-color: transparent !important;
@@ -120,8 +149,20 @@ $scroll-border-radius: 4px;
       background-color: $control-background-color;
     }
   }
+  &.brz-control__select--active {
+    .brz-control__select-current {
+      color: $brand-primary;
+    }
+  }
   .brz-control__select-option {
     color: $control-color;
+  }
+  .brz-control__select-current__icon {
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
 
@@ -134,6 +175,13 @@ $scroll-border-radius: 4px;
   .brz-control__select-current,
   .brz-control__select-options {
     background-color: $control-background-color;
+  }
+  .brz-control__select-current__icon {
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
   .brz-control__select-current {
     color: $control-color;
@@ -291,5 +339,25 @@ $scroll-border-radius: 4px;
       width: $scroll-popup-width;
       right: 4px;
     }
+  }
+}
+
+// Population
+.brz-control__select-population {
+  .brz-control__select-current {
+    transition: 0.2s linear color;
+
+    &:hover {
+      color: $brand-primary;
+      transition: 0.2s linear color;
+    }
+  }
+  &.opened {
+    .brz-control__select-current {
+      color: $brand-primary;
+    }
+  }
+  .brz-control__select-options {
+    width: 120px;
   }
 }

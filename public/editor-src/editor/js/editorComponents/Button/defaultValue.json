@@ -18,8 +18,10 @@
   "linkType": "external",
   "linkExternal": "",
   "linkAnchor": "",
-  "linkExternalBlank": "on",
+  "linkExternalBlank": "off",
   "linkExternalRel": "off",
+  "linkExternalType": "linkExternal",
+  "linkPopulation": "",
 
   "fontStyle": "button",
   "fontFamily": "montserrat",

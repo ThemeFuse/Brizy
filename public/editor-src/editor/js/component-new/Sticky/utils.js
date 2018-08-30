@@ -3,14 +3,18 @@ export var observer = {
   listeners: [],
   framePending: false,
   addEvents: function() {
+    var _this = this;
     this.notifyListeners = this.notifyListeners.bind(this);
+
     this.events.forEach(function(event) {
-      window.addEventListener(event, this.notifyListeners);
+      window.addEventListener(event, _this.notifyListeners);
     });
   },
   removeEvents: function() {
+    var _this = this;
+
     this.events.forEach(function(event) {
-      window.removeEventListener(event, this.notifyListeners);
+      window.removeEventListener(event, _this.notifyListeners);
     });
   },
   addListener: function(listener) {
@@ -29,9 +33,11 @@ export var observer = {
   },
   notifyListeners: function() {
     if (!this.framePending) {
+      var _this = this;
+
       requestAnimationFrame(function() {
-        this.framePending = false;
-        this.listeners.forEach(function(listener) {
+        _this.framePending = false;
+        _this.listeners.forEach(function(listener) {
           listener();
         });
       });

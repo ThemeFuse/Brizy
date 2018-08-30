@@ -21,7 +21,12 @@ export function getItemsForDesktop(v) {
                   label: t("Product"),
                   type: "input",
                   placeholder: t("Product ID or SKU"),
-                  value: v.productID
+                  value: {
+                    value: v.productID
+                  },
+                  onChange: ({ value: productID }) => ({
+                    productID
+                  })
                 }
               ]
             },
@@ -34,7 +39,12 @@ export function getItemsForDesktop(v) {
                   label: t("Style"),
                   type: "input",
                   placeholder: t("Style Add to Cart"),
-                  value: v.style
+                  value: {
+                    value: v.style
+                  },
+                  onChange: ({ value: style }) => ({
+                    style
+                  })
                 }
               ]
             }

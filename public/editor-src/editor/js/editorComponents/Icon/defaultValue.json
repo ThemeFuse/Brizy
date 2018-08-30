@@ -14,8 +14,10 @@
   "linkType": "external",
   "linkExternal": "",
   "linkAnchor": "",
-  "linkExternalBlank": "on",
+  "linkExternalBlank": "off",
   "linkExternalRel": "off",
+  "linkExternalType": "linkExternal",
+  "linkPopulation": "",
 
   "colorHex": "#239ddb",
   "colorOpacity": 1,

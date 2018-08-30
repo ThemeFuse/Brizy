@@ -1,11 +1,13 @@
 import { hexToRgba } from "visual/utils/color";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import {
   onChangeTypography,
   onChangeTypographyMobile
 } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
+
+const linkDynamicContentChoices = getDynamicContentChoices("link");
 
 export function getItemsForDesktop(v) {
   // Typography
@@ -19,8 +21,7 @@ export function getItemsForDesktop(v) {
     mobileFontWeight,
     mobileLineHeight,
     mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   // Border Radius
   let contentHeight =
@@ -1857,7 +1858,28 @@ export function getItemsForDesktop(v) {
                   type: "input",
                   label: t("Link to"),
                   placeholder: "http://",
-                  value: v.linkExternal
+                  population: {
+                    show: linkDynamicContentChoices.length > 0,
+                    choices: linkDynamicContentChoices
+                  },
+                  value: {
+                    value: v.linkExternal,
+                    population: v.linkPopulation
+                  },
+                  onChange: ({
+                    value: linkExternal,
+                    population: linkPopulation,
+                    changed
+                  }) => {
+                    return {
+                      linkExternal,
+                      linkPopulation,
+                      linkExternalType:
+                        changed === "value" || linkPopulation === ""
+                          ? "linkExternal"
+                          : "linkPopulation"
+                    };
+                  }
                 },
                 {
                   id: "linkExternalBlank",
@@ -1929,9 +1951,15 @@ export function getItemsForDesktop(v) {
                               hex: boxShadowColorHex,
                               opacity: v.boxShadowColorOpacity
                             },
-                            onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
+                            onChange: ({
+                              hex,
+                              opacity,
+                              isChanged,
+                              opacityDragEnd
+                            }) => {
                               const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                hex !== v.boxShadowColorHex &&
+                                v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
                                   : opacity;
 
@@ -1941,7 +1969,7 @@ export function getItemsForDesktop(v) {
                                 boxShadowColorPalette:
                                   isChanged === "hex"
                                     ? ""
-                                    : v.boxShadowColorPalette,
+                                    : v.boxShadowColorPalette
                               };
                             }
                           },
@@ -1956,7 +1984,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -1969,7 +1997,8 @@ export function getItemsForDesktop(v) {
                             },
                             onChange: ({ hex, opacity, isChanged }) => {
                               const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                hex !== v.boxShadowColorHex &&
+                                v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
                                   : opacity;
 
@@ -2013,7 +2042,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       },
                       {
@@ -2045,7 +2074,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       },
                       {
@@ -2078,7 +2107,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       },
                       {
@@ -2111,7 +2140,7 @@ export function getItemsForDesktop(v) {
                           boxShadowColorOpacity:
                             v.boxShadowColorOpacity === 0
                               ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity,
+                              : v.boxShadowColorOpacity
                         })
                       }
                     ]
@@ -2136,8 +2165,7 @@ export function getItemsForMobile(v) {
     mobileFontWeight,
     mobileLineHeight,
     mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   // Border Radius
   let mobileContentHeight =
@@ -2435,7 +2463,10 @@ export function getItemsForMobile(v) {
                   choices: getWeightChoices(fontFamily),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
-                    onChangeTypography({ mobileFontWeight: newMobileFontWeight }, v)
+                    onChangeTypography(
+                      { mobileFontWeight: newMobileFontWeight },
+                      v
+                    )
                 },
                 {
                   id: "mobileLetterSpacing",

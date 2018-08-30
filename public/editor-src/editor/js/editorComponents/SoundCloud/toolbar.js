@@ -14,7 +14,12 @@ export function getItemsForDesktop(v) {
           label: t("Link"),
           type: "input",
           placeholder: t("SoundCloud Link"),
-          value: v.url
+          value: {
+            value: v.url
+          },
+          onChange: ({ value: url }) => ({
+            url
+          })
         },
         {
           id: "autoPlay",

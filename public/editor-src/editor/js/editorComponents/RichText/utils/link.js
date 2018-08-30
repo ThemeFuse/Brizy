@@ -16,7 +16,9 @@ export const formatLinkFromString = value => {
       linkAnchor: "",
       linkExternal: "",
       linkExternalBlank: "on",
-      linkExternalRel: "off"
+      linkExternalRel: "off",
+      linkPopulation: "",
+      linkExternalType: "external"
     };
   }
 };

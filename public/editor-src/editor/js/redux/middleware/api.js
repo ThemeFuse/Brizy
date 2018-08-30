@@ -24,12 +24,14 @@ export default store => next => action => {
     action.type === UNDO ||
     action.type === REDO
   ) {
+    const { apiExtraData = {}, syncImmediate = false, syncSuccess = _.noop } =
+      action.meta || {};
     const storePage = store.getState().page;
     const apiPageData = {
       ...storePage,
-      data: JSON.stringify(storePage.data)
+      data: JSON.stringify(storePage.data),
+      ...apiExtraData
     };
-    const { syncImmediate = false, syncSuccess = _.noop } = action.meta || {};
 
     if (syncImmediate === true) {
       debouncedApiUpdatePage.cancel();

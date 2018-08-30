@@ -2,9 +2,11 @@
   "linkType": "external",
   "linkExternal": "",
   "linkAnchor": "",
-  "linkExternalBlank": "on",
+  "linkExternalBlank": "off",
   "linkExternalRel": "off",
   "linkLightBox": "off",
+  "linkExternalType": "linkExternal",
+  "linkPopulation": "",
 
   "imageSrc": "",
   "imageWidth": 600,
@@ -13,6 +15,7 @@
   "imageBrightness": 100,
   "imageHue": 0,
   "imageSaturation": 100,
+  "imagePopulation": "",
 
   "positionY": 50,
   "positionX": 50,

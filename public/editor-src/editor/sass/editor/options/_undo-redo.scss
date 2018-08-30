@@ -18,7 +18,7 @@
     justify-content: space-between;
   }
   &__item {
-    color: #818a91;
+    color: $options-label-color;
     font-size: 12px;
     letter-spacing: $control-letter-spacing;
     font-family: $font-family-1;

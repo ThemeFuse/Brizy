@@ -125,8 +125,10 @@ export function getItemsForDesktop(v, component) {
                   type: "input",
                   inputType: "video",
                   placeholder: t("YouTube or Vimeo"),
-                  value: v.bgVideo,
-                  onChange: bgVideo => ({
+                  value: {
+                    value: v.bgVideo
+                  },
+                  onChange: ({ value: bgVideo }) => ({
                     bgVideo,
 
                     bgColorOpacity:
@@ -173,7 +175,12 @@ export function getItemsForDesktop(v, component) {
                   label: t("Address"),
                   type: "input",
                   placeholder: t("Enter address"),
-                  value: v.bgMapAddress
+                  value: {
+                    value: v.bgMapAddress
+                  },
+                  onChange: ({ value: bgMapAddress }) => ({
+                    bgMapAddress
+                  })
                 },
                 {
                   id: "bgMapZoom",

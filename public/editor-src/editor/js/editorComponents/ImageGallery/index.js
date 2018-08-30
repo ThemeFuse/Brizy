@@ -1,0 +1,107 @@
+import React from "react";
+import jQuery from "jquery";
+import _ from "underscore";
+import { mergeIn } from "timm";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import Items from "./items";
+import * as parentToolbarExtend from "./parentExtendToolbar";
+import defaultValue from "./defaultValue.json";
+import { styleClassName, styleCSSVars } from "./styles";
+
+class ImageGallery extends EditorComponent {
+  static get componentId() {
+    return "ImageGallery";
+  }
+
+  static defaultValue = defaultValue;
+
+  node = null;
+
+  componentDidMount() {
+    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
+      allowExtend: false
+    });
+    this.props.extendParentToolbar(toolbarExtend);
+
+    this.initIsotope();
+  }
+
+  componentDidUpdate(nextProps) {
+    if (nextProps.dbValue.items.length !== this.props.dbValue.items.length) {
+      this.destroyIsotope();
+      this.initIsotope();
+    }
+  }
+
+  handleRef = el => {
+    this.node = el;
+  };
+
+  handleResizeImage = () => {
+    if (this.node) {
+      jQuery(this.node).isotope("layout");
+    }
+  };
+
+  handleValueChange(newValue, meta) {
+    if (meta.patch.lightBox) {
+      const { lightBox } = newValue;
+      const items = newValue.items.map(el =>
+        mergeIn(el, ["value"], {
+          linkType: lightBox === "on" ? "lightBox" : "external",
+          linkLightBox: lightBox
+        })
+      );
+
+      newValue = mergeIn(newValue, ["items"], items);
+    }
+
+    super.handleValueChange(newValue, meta);
+  }
+
+  getMeta(v) {
+    const { meta } = this.props;
+    const { spacing, gridColumn } = v;
+    const desktopW = meta.desktopW / gridColumn;
+
+    return Object.assign({}, meta, {
+      desktopW: Math.round((desktopW - spacing) * 10) / 10,
+      inGallery: true
+    });
+  }
+
+  renderForEdit(v) {
+    const itemProps = this.makeSubcomponentProps({
+      bindWithKey: "items",
+      itemProps: {
+        meta: this.getMeta(v),
+        onResize: this.handleResizeImage
+      }
+    });
+
+    return (
+      <div
+        ref={this.handleRef}
+        className={styleClassName(v)}
+        style={styleCSSVars(v)}
+      >
+        <Items {...itemProps} />
+      </div>
+    );
+  }
+
+  initIsotope() {
+    jQuery(this.node).isotope({
+      itemSelector: ".brz-image__gallery-item",
+      masonry: {
+        columnWidth: ".brz-image__gallery-item"
+      }
+    });
+  }
+
+  destroyIsotope() {
+    jQuery(this.node).isotope("destroy");
+  }
+}
+
+export default ImageGallery;

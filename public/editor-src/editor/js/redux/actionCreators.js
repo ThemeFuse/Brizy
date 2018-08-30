@@ -1,11 +1,5 @@
 import _ from "underscore";
-import {
-  HYDRATE,
-  UPDATE_PAGE,
-  UPDATE_GLOBALS,
-  UPDATE_UI,
-  SET_AJAX
-} from "./actionTypes";
+import { HYDRATE, UPDATE_PAGE, UPDATE_GLOBALS, UPDATE_UI } from "./actionTypes";
 import { page as pageReducer, globals as globalsReducer } from "./reducers";
 
 export function hydrate({ page, globals, styles }) {
@@ -62,13 +56,4 @@ export function updateUI(key, value) {
 
 export function setDeviceMode(mode) {
   return updateUI("deviceMode", mode);
-}
-
-// ajax
-
-export function setIsSaving(value) {
-  return {
-    type: SET_AJAX,
-    value
-  };
 }

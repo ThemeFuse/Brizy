@@ -1,0 +1,69 @@
+// DropDown
+$listbox-scrollpane-track-width: 8px;
+$listbox-scrollpane-track-thumb: 3px;
+
+// --
+.brz-ed-listbox {
+  position: absolute;
+  background-color: $brand-options;
+  z-index: z("toolbar");
+  border-radius: $control-border-radius;
+  box-shadow: $control-dropdown-shadow;
+  color: #fff;
+
+  .brz-ed-scroll-pane {
+    .brz-ed-tall-thumb {
+      width: $listbox-scrollpane-track-width;
+      background-color: transparent;
+      border-radius: 4px;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 3px;
+        top: 0;
+        bottom: 0;
+        width: $listbox-scrollpane-track-thumb;
+        min-height: $listbox-scrollpane-track-thumb;
+        background-color: #7b7b7b;
+        border-radius: 2px;
+      }
+    }
+    .brz-ed-wide-thumb {
+      height: $listbox-scrollpane-track-thumb;
+      background-color: #7b7b7b;
+      border-radius: 2px;
+      top: 3px;
+    }
+    .brz-ed-tall-track {
+      border-radius: 0 4px 4px 0;
+    }
+  }
+  &__item {
+    position: relative;
+    cursor: pointer;
+    padding-left: $control-padding;
+    padding-right: $control-padding;
+    font-size: $control-font-size;
+    letter-spacing: $control-letter-spacing;
+    border-bottom: 1px solid $control-border-color;
+    line-height: $control-height;
+    height: $control-height;
+    transition: color 0.15s linear;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:last-child {
+      border-bottom-color: transparent !important;
+    }
+  }
+  &__item--active {
+    color: $brand-primary;
+    transition: color 0.15s linear;
+  }
+  &__item--disable {
+    cursor: default;
+  }
+}

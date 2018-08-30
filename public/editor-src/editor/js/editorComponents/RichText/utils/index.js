@@ -58,7 +58,9 @@ const getLink = value => {
     anchor,
     external,
     externalBlank,
-    externalRel
+    externalRel,
+    population,
+    externalType
   } = formatLinkFromString(value);
 
   return {
@@ -66,7 +68,9 @@ const getLink = value => {
     linkAnchor: anchor.replace("#", ""),
     linkExternal: external,
     linkExternalBlank: externalBlank,
-    linkExternalRel: externalRel
+    linkExternalRel: externalRel,
+    linkPopulation: population,
+    linkExternalType: externalType
   };
 };
 
@@ -125,11 +129,21 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
           .replace("_", ".")
       : String(letterSpacing),
     ...link,
+    list: format.list ? getFirstValue(format.list) : null,
     marginBottom: marginBottom ? getFirstValue(marginBottom) : cssMarginBottom,
     marginTop: marginTop ? getFirstValue(marginTop) : cssMarginTop,
     mobileHeight: format.mobileHeight || null,
     mobileHorizontalAlign: format.mobileHorizontalAlign || align,
     mobileSize: format.mobileSize || null,
+    population: format.population
+      ? {
+          population: format.population,
+          label: $elem.closest("[data-population]").text()
+        }
+      : null,
+    prepopulation: format.prepopulation
+      ? $elem.closest(".brz-pre-population-visible").text()
+      : null,
     size: formatSize ? getFirstValue(formatSize) : size,
     tagName: getTagName(format, $elem),
     weight: formatWeight ? getFirstValue(formatWeight) : String(weight)

@@ -14,7 +14,8 @@ $link-hover-color: darken($brand-primary, 10%);
 $font-family-1: "pn", "Open Sans", Arial, sans-serif;
 $font-family-2: "europa", sans-serif;
 $font-family-3: "iowanoldst_btroman";
-$font-family-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-monospace: "SFMono-Regular", Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace !default;
 
 // Device mode
 $mobile-width: 460px;
@@ -36,6 +37,7 @@ $z-indexes: (
   "cloneable-bar": 1030,
   "column-resize": 1030,
   "adder-block": 1020,
+  "adder-block-fixed": 1051,
   "padding-resizer": 99
 );
 

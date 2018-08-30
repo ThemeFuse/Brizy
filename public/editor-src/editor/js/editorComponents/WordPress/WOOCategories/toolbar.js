@@ -36,7 +36,12 @@ export function getItemsForDesktop(v) {
                   label: t("Categories Count"),
                   type: "input",
                   inputSize: "small",
-                  value: v.number
+                  value: {
+                    value: v.number
+                  },
+                  onChange: ({ value: number }) => ({
+                    number
+                  })
                 }
               ]
             },
@@ -72,7 +77,7 @@ export function getItemsForDesktop(v) {
                         icon: "nc-down"
                       }
                     ],
-                    value: v.order,
+                    value: v.order
                   }
                 }
               ]

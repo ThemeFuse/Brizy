@@ -149,8 +149,10 @@ export function getItemsForDesktop(v) {
                   type: "input",
                   inputType: "video",
                   placeholder: t("YouTube or Vimeo"),
-                  value: v.bgVideo,
-                  onChange: bgVideo => ({
+                  value: {
+                    value: v.bgVideo
+                  },
+                  onChange: ({ value: bgVideo }) => ({
                     bgVideo,
 
                     bgColorOpacity:
@@ -197,7 +199,12 @@ export function getItemsForDesktop(v) {
                   label: t("Address"),
                   type: "input",
                   placeholder: t("Enter address"),
-                  value: v.bgMapAddress
+                  value: {
+                    value: v.bgMapAddress
+                  },
+                  onChange: ({ value: bgMapAddress }) => ({
+                    bgMapAddress
+                  })
                 },
                 {
                   id: "bgMapZoom",
@@ -2262,7 +2269,12 @@ export function getItemsForDesktop(v) {
                       label: t("CSS Class"),
                       type: "input",
                       inputSize: "auto",
-                      value: v.customClassName
+                      value: {
+                        value: v.customClassName
+                      },
+                      onChange: ({ value: customClassName }) => ({
+                        customClassName
+                      })
                     },
                     {
                       id: "animation",

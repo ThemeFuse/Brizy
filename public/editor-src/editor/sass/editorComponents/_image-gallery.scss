@@ -1,0 +1,13 @@
+// Image Gallery
+.brz-image__gallery {
+  display: flex;
+  flex-wrap: wrap;
+
+  .brz-image {
+    display: block;
+  }
+
+  &-item {
+    transition: none !important;
+  }
+}

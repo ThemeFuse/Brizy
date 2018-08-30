@@ -2,6 +2,8 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component-new/EditorIcon";
+import PopulationSelect from "./common/PopulationSelect";
+import PopulationInput from "./common/PopulationInput";
 
 class InputOptionType extends React.Component {
   static defaultProps = {
@@ -11,19 +13,28 @@ class InputOptionType extends React.Component {
     helper: false,
     helperContent: "",
     attr: {},
-    value: "",
+    value: {
+      value: "",
+      population: ""
+    },
     inputType: "text",
     inputSize: "large",
+    population: {
+      show: false,
+      choices: []
+    },
     onChange: _.noop
   };
 
   state = {
-    value: this.props.value
+    inputValue: this.props.value.value
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.state.value) {
-      this.setState({ value: nextProps.value });
+    if (nextProps.value.value !== this.state.inputValue) {
+      this.setState({
+        inputValue: nextProps.value.value
+      });
     }
   }
 
@@ -31,18 +42,45 @@ class InputOptionType extends React.Component {
     this.props.onChange(value);
   }, 1000);
 
-  handleChange = event => {
-    const value = event.target.value;
-
-    this.setState({ value });
-    this.onChangeDebounced(value);
-  };
-
-  handleFocus = () => {
+  handleInputFocus = () => {
     this.input.focus();
   };
 
-  renderLabel = () => {
+  handleInputChange = event => {
+    const value = event.target.value;
+    const { population } = this.props.value;
+
+    this.setState({
+      inputValue: value
+    });
+    this.onChangeDebounced({
+      changed: "value",
+      value,
+      population
+    });
+  };
+
+  handlePopulationChange = value => {
+    const { inputValue } = this.state;
+
+    this.props.onChange({
+      changed: "population",
+      population: value,
+      value: inputValue
+    });
+  };
+
+  handlePopulationClear = () => {
+    const { inputValue } = this.state;
+
+    this.props.onChange({
+      changed: "population",
+      population: "",
+      value: inputValue
+    });
+  };
+
+  renderLabel() {
     const { label, helper: _helper, helperContent } = this.props;
     const helper = _helper ? (
       <div className="brz-ed-option__helper">
@@ -57,42 +95,104 @@ class InputOptionType extends React.Component {
         {helper}
       </div>
     );
-  };
+  }
+
+  renderInput() {
+    const { placeholder, inputSize, inputType } = this.props;
+    const { inputValue } = this.state;
+    const checkedValue =
+      inputType === "number" ? Number(inputValue) : String(inputValue);
+
+    return (
+      <input
+        ref={el => {
+          this.input = el;
+        }}
+        type={inputType}
+        className={`brz-input brz-ed-control__input brz-ed-control__input--${inputSize}`}
+        placeholder={placeholder}
+        value={checkedValue}
+        onClick={this.handleInputFocus}
+        onChange={this.handleInputChange}
+      />
+    );
+  }
+
+  renderPopulationInput() {
+    const {
+      population: { choices },
+      value: { population },
+      inputSize
+    } = this.props;
+    const { title = "" } = choices.find(el => el.value === population) || {};
+
+    return (
+      <PopulationInput
+        className={`brz-ed-control__input--${inputSize}`}
+        value={title}
+        onClear={this.handlePopulationClear}
+      />
+    );
+  }
+
+  renderPopulationSelect() {
+    const {
+      population: { choices },
+      value: { population }
+    } = this.props;
+
+    return (
+      <PopulationSelect
+        defaultValue={population}
+        choices={choices}
+        onChange={this.handlePopulationChange}
+      />
+    );
+  }
 
   render() {
     const {
       label,
       className: _className,
       helper,
-      placeholder,
-      attr: _attr,
-      inputType,
-      inputSize
+      attr,
+      population,
+      value
     } = this.props;
-    const { value } = this.state;
     const className = classnames(
       "brz-ed-option__input",
       "brz-ed-option__inline",
       _className,
-      _attr.className
+      attr.className
     );
-    const attr = _.omit(_attr, "className");
-    const checkedValue = inputType === "number" ? Number(value) : String(value);
+    const hasPopulation = population && population.show;
+    let content;
+
+    if (hasPopulation) {
+      const hasPopulationValue = Boolean(value.population);
+
+      content = (
+        <React.Fragment>
+          <div className="brz-ed-option__input-container">
+            {hasPopulationValue
+              ? this.renderPopulationInput()
+              : this.renderInput()}
+          </div>
+          {this.renderPopulationSelect()}
+        </React.Fragment>
+      );
+    } else {
+      content = (
+        <div className="brz-ed-option__input-container">
+          {this.renderInput()}
+        </div>
+      );
+    }
 
     return (
-      <div className={className} {...attr}>
-        {label || helper ? this.renderLabel() : null}
-        <input
-          ref={el => {
-            this.input = el;
-          }}
-          type={inputType}
-          className={`brz-input brz-ed-control__input brz-ed-control__input--${inputSize}`}
-          placeholder={placeholder}
-          value={checkedValue}
-          onClick={this.handleFocus}
-          onChange={this.handleChange}
-        />
+      <div {...attr} className={className}>
+        {(label || helper) && this.renderLabel()}
+        {content}
       </div>
     );
   }

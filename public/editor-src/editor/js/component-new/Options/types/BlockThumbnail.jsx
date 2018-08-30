@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import classnames from "classnames";
 import Editor from "visual/global/Editor";
 import ScrollPane from "visual/component/ScrollPane";

@@ -40,7 +40,12 @@ export function getItemsForDesktop(v) {
           type: "input",
           inputType: "number",
           inputSize: "small",
-          value: v.start
+          value: {
+            value: v.start
+          },
+          onChange: ({ value: start }) => ({
+            start
+          })
         },
         {
           id: "end",
@@ -49,7 +54,10 @@ export function getItemsForDesktop(v) {
           inputType: "number",
           inputSize: "small",
           value: v.end,
-          onChange: end => ({
+          value: {
+            value: v.end
+          },
+          onChange: ({ value: end }) => ({
             end: end !== "" ? end : 0
           })
         },
@@ -442,7 +450,10 @@ export function getItemsForMobile(v) {
                   choices: getWeightChoices(fontFamily),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
-                    onChangeTypography({ mobileFontWeight: newMobileFontWeight }, v)
+                    onChangeTypography(
+                      { mobileFontWeight: newMobileFontWeight },
+                      v
+                    )
                 },
                 {
                   id: "mobileLetterSpacing",

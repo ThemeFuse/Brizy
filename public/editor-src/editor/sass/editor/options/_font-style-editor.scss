@@ -59,7 +59,7 @@
 }
 .brz-ed-option__font-styles {
   position: relative;
-  height: calc(100% - 258px);
+  height: calc(100% - 354px);
   margin-right: -30px;
   margin-left: -30px;
 
@@ -68,7 +68,7 @@
     margin-bottom: 0;
     padding-top: 33px;
     padding-bottom: 30px;
-    color: #818a91;
+    color: $options-label-color;
     text-align: center;
     cursor: pointer;
     transition: border-color 0.2s linear, color 0.2s linear;
