@@ -105,7 +105,7 @@ class Brizy_Editor_API {
 			add_action( 'wp_ajax_' . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
 			add_action( 'wp_ajax_' . self::AJAX_FORM_INTEGRATION_STATUS, array(
 				$this,
-				'update_form_integrations_status'
+				'update_form_integration_status'
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
