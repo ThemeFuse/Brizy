@@ -371,7 +371,7 @@ class Brizy_Editor_Editor_Editor {
 								break;
 
 							case 'search':
-								return addQueryStringToUrl( get_search_link(), 'preview=1' );
+								return addQueryStringToUrl( get_search_link('find-me'), 'preview=1' );
 								break;
 							case '404':
 								//return addQueryStringToUrl( get_post_permalink( new WP_Post((object)array("ID"=>time())) ), 'preview=1' );
