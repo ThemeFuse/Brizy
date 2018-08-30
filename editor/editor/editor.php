@@ -287,14 +287,18 @@ class Brizy_Editor_Editor_Editor {
 
 				switch ( $rule->getAppliedFor() ) {
 					case  Brizy_Admin_Rule::POSTS :
-						$array   = get_posts( array(
+						$args = array(
 							'post_type' => $rule->getEntityType(),
-							'post__in'  => $rule->getEntityValues()
-						) );
+						);
 
-						foreach($array as $p) {
-							if(!Brizy_Editor_Post::get($p)->uses_editor())
-							{
+						if ( count( $rule->getEntityValues() ) ) {
+							$args['post__in'] = $rule->getEntityValues();
+						}
+
+						$array = get_posts( $args );
+
+						foreach ( $array as $p ) {
+							if ( ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
 								$wp_post = $p;
 								break;
 							}
@@ -302,12 +306,16 @@ class Brizy_Editor_Editor_Editor {
 						break;
 					case  Brizy_Admin_Rule::TAXONOMY :
 						$array = get_terms( array(
-							'taxonomy'         => $rule->getEntityType(),
-							'term_taxonomy_id' => $rule->getEntityValues(),
-							'hide_empty'       => false,
+							'taxonomy'   => $rule->getEntityType(),
+							'hide_empty' => false,
 						) );
-						$term  = array_pop( $array );
-						$link  = get_term_link( $term );
+
+						if ( count( $rule->getEntityValues() ) ) {
+							$array['term_taxonomy_id'] = $rule->getEntityValues();
+						}
+
+						$term = array_pop( $array );
+						$link = get_term_link( $term );
 
 						return addQueryStringToUrl( $link, 'preview=1' );
 						break;
