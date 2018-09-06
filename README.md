@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.26<br>
+Stable tag: 1.0.27<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,14 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.27 - 2018-09-06 ###
+* Improved: CSS transition for Section padding resizer
+* Improved: Show a special overlay for unsupported browsers instead of loading the editor
+* Fixed: External links that were broken by previous update
+* Fixed: RichText font families that were broken by previous update
+* Fixed: Do not show Upgrade to Pro option when Pro is enabled
+* Fixed: ColorPicker option in advanced options (right sidebar) being cut by overflow
 
 ### 1.0.26 - 2018-08-30 ###
 * New: Added get_taxonomies api method
