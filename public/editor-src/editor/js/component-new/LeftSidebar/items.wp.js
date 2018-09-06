@@ -7,6 +7,7 @@ import { t } from "visual/utils/i18n";
 
 const urls = Config.get("urls");
 const wp = Config.get("wp");
+const proEnabled = Boolean(Config.get("pro"));
 
 export default {
   top: [AddElements, BlocksSortable, Styling],
@@ -41,7 +42,8 @@ export default {
           icon: "nc-unlock",
           linkTarget: "_blank",
           label: t("Upgrade to Pro"),
-          link: "http://brizy.io/pro"
+          link: "http://brizy.io/pro",
+          disabled: proEnabled
         },
         {
           type: "link",

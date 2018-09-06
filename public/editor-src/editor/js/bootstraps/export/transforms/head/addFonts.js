@@ -9,31 +9,42 @@ import {
   makeRichTextFontFamiliesCSS
 } from "visual/utils/fonts";
 
-export default function addFonts($head) {
+export default function addFonts($) {
   const allPossibleFonts = getUsedFonts();
-  const parsedFontFamilies = parseFontFamilies($head);
+  const parsedFontFamilies = parseFontFamilies($);
 
   if (allPossibleFonts.length > 0 && parsedFontFamilies.length > 0) {
     const parsedFontFamiliesObj = arrayToObject(parsedFontFamilies);
     const fontsToLoad = allPossibleFonts
-      .filter(font => parsedFontFamiliesObj[font.family.replace(/\s+/g, "")])
+      .filter(
+        font =>
+          parsedFontFamiliesObj[font.id] ||
+          parsedFontFamiliesObj[font.family.replace(/\s+/g, "")]
+      )
       .map(font => font.id);
 
     const fontsUrl = makeFontsUrl(fontsToLoad);
-    $head.append(
+    $("head").append(
       `<link type="text/css" rel="stylesheet" href="${fontsUrl}" />`
     );
 
     const richTextFamiliesCSS = makeRichTextFontFamiliesCSS(fontsToLoad);
-    $head.append(`<style>${richTextFamiliesCSS}</style>`);
+    $("head").append(`<style>${richTextFamiliesCSS}</style>`);
   }
 }
 
-function parseFontFamilies($head) {
+function parseFontFamilies($) {
   const families = new Set();
 
-  $head.find("style").each(function() {
-    const cssText = $head.find(this).text();
+  $(`[class*="brz-ff-"]`).each(function() {
+    const className = $(this).attr("class");
+    const match = className.match(/brz-ff-([^\s]+)/);
+
+    families.add(match[1]);
+  });
+
+  $("style").each(function() {
+    const cssText = $(this).text();
     const r = /font-family:([^;]+);/g;
     let match;
 
