@@ -17,7 +17,12 @@ export default function changeRichText($) {
       };
       const newData = {
         ...data,
-        external: externalLink[data.externalType]
+        // when we added dynamic content old links
+        // did not have data.externalType
+        // so temporarily defaulted to external
+        external: data.externalType
+          ? externalLink[data.externalType]
+          : externalLink.external
       };
       const url = newData[data.type];
       const target =

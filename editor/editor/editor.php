@@ -136,6 +136,7 @@ class Brizy_Editor_Editor_Editor {
 				'featuredImage'   => $post_thumbnail,
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
+				'taxonomies'      => $this->getTaxonomyList(),
 				'api'             => array(
 					'hash'                       => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'                        => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
@@ -371,7 +372,7 @@ class Brizy_Editor_Editor_Editor {
 								break;
 
 							case 'search':
-								return addQueryStringToUrl( get_search_link('find-me'), 'preview=1' );
+								return addQueryStringToUrl( get_search_link( 'find-me' ), 'preview=1' );
 								break;
 							case '404':
 								//return addQueryStringToUrl( get_post_permalink( new WP_Post((object)array("ID"=>time())) ), 'preview=1' );
@@ -391,5 +392,30 @@ class Brizy_Editor_Editor_Editor {
 			'preview_id'    => $wp_post->ID,
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $wp_post->ID )
 		) );
+	}
+
+	private function getTaxonomyList() {
+
+		$taxs = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
+
+		$result = array_map( function ( $tax ) {
+
+			$terms = (array) get_terms( array( 'taxonomy' => $tax->name, 'hide_empty' => false ) );
+
+			return (object) array(
+				'name'  => $tax->name,
+				'label' => $tax->labels->name,
+				'terms' => array_map( function ( $term ) {
+					return (object) array(
+						'id'   => $term->term_id,
+						'name' => $term->name,
+					);
+				}, $terms )
+			);
+
+		}, $taxs );
+
+
+		return array_values( $result );
 	}
 }

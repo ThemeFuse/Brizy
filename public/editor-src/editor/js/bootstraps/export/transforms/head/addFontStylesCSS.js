@@ -1,8 +1,8 @@
 import { getFontStyles, makeRichTextFontStylesCSS } from "visual/utils/fonts";
 
-export default function addFontStylesCSS($head, $body) {
+export default function addFontStylesCSS($) {
   const allPossibleFontStyles = getFontStyles({ includeDeleted: true });
-  const parsedFontStyles = parseBodyFontStyles($body);
+  const parsedFontStyles = parseFontStyles($);
   const parsedFontStylesObj = arrayToObject(parsedFontStyles);
 
   const fontStylesToLoad = allPossibleFontStyles.filter(
@@ -10,14 +10,14 @@ export default function addFontStylesCSS($head, $body) {
   );
   const richTextFontStylesCSS = makeRichTextFontStylesCSS(fontStylesToLoad);
 
-  $head.append(`<style>${richTextFontStylesCSS}</style>`);
+  $("head").append(`<style>${richTextFontStylesCSS}</style>`);
 }
 
-function parseBodyFontStyles($body) {
+function parseFontStyles($) {
   const fontStyles = new Set();
 
-  $body(`[class*="brz-tp-"]`).each(function() {
-    const className = $body(this).attr("class");
+  $(`[class*="brz-tp-"]`).each(function() {
+    const className = $(this).attr("class");
     const match = className.match(/brz-tp-([^\s]+)/);
 
     fontStyles.add(match[1]);
