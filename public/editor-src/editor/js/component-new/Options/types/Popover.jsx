@@ -61,23 +61,6 @@ class PopoverOptionType extends React.Component {
     ) : null;
 
     return (
-      <div className="brz-ed-option__label brz-ed-option__popover__label">
-        {label}
-        {helper}
-      </div>
-    );
-  };
-
-  renderLabel = () => {
-    const { label, helper: _helper, helperContent } = this.props;
-    const helper = _helper ? (
-      <div className="brz-ed-option__helper">
-        <EditorIcon icon="nc-alert-circle-que" />
-        <div className="brz-ed-option__helper__content">{helperContent}</div>
-      </div>
-    ) : null;
-
-    return (
       <div
         key="label"
         className="brz-ed-option__label brz-ed-option__popover__label"

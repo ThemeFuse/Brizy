@@ -135,7 +135,7 @@ export default class TooltipContent extends React.Component {
   };
 
   repositionByNode = node => {
-    const { scrollY } = window;
+    const { scrollY } = window.parent || window;
     const {
       width: contentWidth,
       height: contentHeight

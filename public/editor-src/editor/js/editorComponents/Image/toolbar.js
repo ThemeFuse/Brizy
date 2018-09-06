@@ -63,7 +63,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   label: t("Image"),
                   type: "imageSetter",
                   population: {
-                    show: imageDynamicContentChoices.length > 0,
+                    show: imageDynamicContentChoices.length > 0 && !inGallery,
                     choices: imageDynamicContentChoices
                   },
                   value: {
@@ -174,7 +174,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   label: t("Link to"),
                   placeholder: "http://",
                   population: {
-                    show: linkDynamicContentChoices.length > 0,
+                    show: linkDynamicContentChoices.length > 0 && !inGallery,
                     choices: linkDynamicContentChoices
                   },
                   value: {
@@ -634,7 +634,7 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                   type: "imageSetter",
                   onlyPointer: true,
                   population: {
-                    show: imageDynamicContentChoices.length > 0,
+                    show: imageDynamicContentChoices.length > 0 && !inGallery,
                     choices: imageDynamicContentChoices
                   },
                   value: {
