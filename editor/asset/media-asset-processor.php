@@ -106,18 +106,31 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 	}
 
 	private function get_attachment_file_by_uid( $uid ) {
-		$attachments = get_posts( array(
-			'meta_key'   => 'brizy_attachment_uid',
-			'meta_value' => $uid,
-			'post_type'  => 'attachment',
+
+		global $wpdb;
+
+		$posts_table = $wpdb->posts;
+		$meta_table  = $wpdb->postmeta;
+		$attachments = $wpdb->get_var( $wpdb->prepare(
+			"SELECT {$posts_table}.ID
+			FROM {$posts_table}
+			INNER JOIN {$meta_table}
+			ON ( {$posts_table}.ID = {$meta_table}.post_id )
+			WHERE 1=1
+			AND ( ( wp_postmeta.meta_key = 'brizy_attachment_uid'
+			AND wp_postmeta.meta_value = %s ) )
+			AND wp_posts.post_type = 'attachment'
+			AND ((wp_posts.post_status = 'inherit'))
+			GROUP BY {$posts_table}.ID
+			ORDER BY {$posts_table}.post_date DESC
+			LIMIT 0, 5",
+			$uid
 		) );
 
-		if ( count( $attachments ) == 0 ) {
+		if ( ! $attachments ) {
 			return;
 		}
 
-		return get_attached_file( $attachments[0]->ID );
-
+		return get_attached_file( $attachments );
 	}
-
 }
