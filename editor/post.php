@@ -242,6 +242,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	public function convertToOptionValue() {
+
 		return array(
 			'compiled_html'                    => $this->get_compiled_html(),
 			'compiled_html_body'               => $this->get_compiled_html_body(),
@@ -615,7 +616,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @return bool
+	 * @param $val
+	 *
+	 * @return $this
 	 */
 	public function set_uses_editor( $val ) {
 		$this->uses_editor = $val;
