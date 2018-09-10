@@ -38,10 +38,6 @@ class Brizy_Admin_Templates {
 	 */
 	protected function __construct() {
 
-		if ( ! Brizy_Editor::is_user_allowed() ) {
-			return;
-		}
-
 		self::registerCustomPostTemplate();
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
