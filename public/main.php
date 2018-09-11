@@ -343,6 +343,7 @@ class Brizy_Public_Main {
 	 * @throws Exception
 	 */
 	public function insert_page_content( $content ) {
+
 		if ( ! $this->post->get_compiled_html() ) {
 			$compiled_html_body = $this->post->get_compiled_html_body();
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
@@ -351,6 +352,8 @@ class Brizy_Public_Main {
 			$compiled_page = $this->post->get_compiled_page( $this->project );
 			$content       = $compiled_page->get_body();
 		}
+
+		remove_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 
 		return $content;
 	}
