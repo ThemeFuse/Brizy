@@ -53,10 +53,11 @@ class Brizy_Public_Main {
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			add_filter( 'show_admin_bar', '__return_false' );
-			$this->plugin_live_composer_fixes();
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
+
+			$this->plugin_live_composer_fixes();
 		} elseif ( $this->is_view_page() ) {
 
 			if ( post_password_required( $this->post->get_wp_post() ) ) {
@@ -65,7 +66,6 @@ class Brizy_Public_Main {
 
 			$this->compilePage();
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
-			$this->plugin_live_composer_fixes();
 			remove_filter( 'the_content', 'wpautop' );
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
@@ -73,6 +73,7 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
+			$this->plugin_live_composer_fixes();
 		}
 	}
 
