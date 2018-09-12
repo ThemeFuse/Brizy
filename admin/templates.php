@@ -60,11 +60,6 @@ class Brizy_Admin_Templates {
 			add_action( 'wp', array( $this, 'templateFrontEnd' ) );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 20000 );
 		}
-
-		global $current_user;
-
-		//var_dump( $current_user );
-		//exit;
 	}
 
 	/**

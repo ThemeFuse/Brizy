@@ -364,37 +364,37 @@ class Brizy_Public_Main {
 		return dirname( __FILE__ ) . "/$rel";
 	}
 
-	/**
-	 * @param null $template_path
-	 *
-	 * @return Twig_TemplateWrapper
-	 */
-	private function getTwigTemplate( $template_path = null ) {
-
-		if ( isset( $this->twig_template[ $template_path ] ) ) {
-			return $this->twig_template[ $template_path ];
-		}
-
-		$loader = new Twig_Loader_Array( array(
-			'editor' => file_get_contents( $template_path )
-		) );
-
-		$twig_cache = $this->url_builder->upload_path( 'brizy/twig' );
-
-		if ( ! file_exists( $twig_cache ) ) {
-			@mkdir( $twig_cache, 0755, true );
-		}
-
-		$options = array();
-		if ( file_exists( $twig_cache ) ) {
-			$options['cache'] = $twig_cache;
-		}
-
-		$twig          = new Twig_Environment( $loader, $options );
-		$twig_template = $twig->load( 'editor' );
-
-		return $this->twig_template[ $template_path ] = $twig_template;
-	}
+//	/**
+//	 * @param null $template_path
+//	 *
+//	 * @return Twig_TemplateWrapper
+//	 */
+//	private function getTwigTemplate( $template_path = null ) {
+//
+//		if ( isset( $this->twig_template[ $template_path ] ) ) {
+//			return $this->twig_template[ $template_path ];
+//		}
+//
+//		$loader = new Twig_Loader_Array( array(
+//			'editor' => file_get_contents( $template_path )
+//		) );
+//
+//		$twig_cache = $this->url_builder->upload_path( 'brizy/twig' );
+//
+//		if ( ! file_exists( $twig_cache ) ) {
+//			@mkdir( $twig_cache, 0755, true );
+//		}
+//
+//		$options = array();
+//		if ( file_exists( $twig_cache ) ) {
+//			$options['cache'] = $twig_cache;
+//		}
+//
+//		$twig          = new Twig_Environment( $loader, $options );
+//		$twig_template = $twig->load( 'editor' );
+//
+//		return $this->twig_template[ $template_path ] = $twig_template;
+//	}
 
 	private function getConfigObject() {
 		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
