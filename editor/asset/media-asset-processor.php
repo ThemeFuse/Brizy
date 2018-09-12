@@ -116,8 +116,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 			FROM {$posts_table}
 			INNER JOIN {$meta_table}
 			ON ( {$posts_table}.ID = {$meta_table}.post_id )
-			WHERE
-			( {$meta_table}.meta_key = 'brizy_attachment_uid' AND {$meta_table}.meta_value = %s )
+			WHERE ( {$meta_table}.meta_key = 'brizy_attachment_uid' AND {$meta_table}.meta_value = %s )
 			AND {$posts_table}.post_type = 'attachment'
 			AND {$posts_table}.post_status = 'inherit'
 			GROUP BY {$posts_table}.ID
