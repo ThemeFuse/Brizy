@@ -31,6 +31,7 @@ include_once 'autoload.php';
 
 
 add_action( 'plugins_loaded', 'brizy_load' );
+add_action( 'upgrader_process_complete', 'brizy_run_migrations', 9, 2 );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 register_activation_hook( BRIZY_FILE, 'brizy_install' );
 register_deactivation_hook( BRIZY_FILE, 'brizy_clean' );
@@ -64,6 +65,17 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 			if ( $plugin == BRIZY_PLUGIN_BASE ) {
 				Brizy_Admin_Templates::registerCustomPostTemplate();
 				flush_rewrite_rules();
+			}
+		}
+	}
+}
+
+function brizy_run_migrations( $upgrader_object, $options ) {
+	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
+		foreach ( $options['plugins'] as $plugin ) {
+			if ( $plugin == BRIZY_PLUGIN_BASE ) {
+				$migrations = new Brizy_Admin_Migrations();
+				$migrations->migrateTo( BRIZY_VERSION );
 			}
 		}
 	}
