@@ -415,7 +415,8 @@ class Brizy_Editor_Editor_Editor {
 
 		}, $taxs );
 
-
-		return array_values( $result );
+		return array_filter( array_values( $result ), function ( $term ) {
+			return count( $term->terms ) > 0;
+		} );
 	}
 }
