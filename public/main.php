@@ -54,6 +54,13 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
+
+			/*
+				The plugin https://wordpress.org/plugins/wp-copyright-protection/ loads a script js which disable the right click on frontend.
+				Its purpose is to prevent users from copying the text from the site, a way to prevent copyright.
+			 */
+			remove_action( 'wp_head', 'wp_copyright_protection' );
+
 		} elseif ( $this->is_view_page() ) {
 
 			if ( post_password_required( $this->post->get_wp_post() ) ) {
