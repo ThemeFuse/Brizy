@@ -356,6 +356,11 @@ class Brizy_Public_Main {
 	 * @throws Exception
 	 */
 	public function insert_page_content( $content ) {
+
+		if ( false === strpos( $content, '___brizy-content___' ) ) {
+			return $content;
+		}
+
 		if ( ! $this->post->get_compiled_html() ) {
 			$compiled_html_body = $this->post->get_compiled_html_body();
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
