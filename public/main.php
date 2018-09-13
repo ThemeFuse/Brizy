@@ -217,7 +217,7 @@ class Brizy_Public_Main {
 			'editorData'    => $config_object,
 			'editorVersion' => BRIZY_EDITOR_VERSION,
 			'iframe_url'    => $iframe_url,
-			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title )
+			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title, $this->post->get_wp_post()->ID )
 		);
 
 		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
