@@ -47,6 +47,8 @@ class Brizy_Public_Main {
 	public function initialize_front_end() {
 
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
+			// When some plugins want to redirect to their templates.
+			remove_all_actions( 'template_redirect' );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 10000 );
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
@@ -55,11 +57,14 @@ class Brizy_Public_Main {
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
 
+			$this->plugin_live_composer_fixes();
+
 			/*
 				The plugin https://wordpress.org/plugins/wp-copyright-protection/ loads a script js which disable the right click on frontend.
 				Its purpose is to prevent users from copying the text from the site, a way to prevent copyright.
 			 */
 			remove_action( 'wp_head', 'wp_copyright_protection' );
+
 
 		} elseif ( $this->is_view_page() ) {
 
@@ -76,6 +81,7 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
+			$this->plugin_live_composer_fixes();
 		}
 	}
 
@@ -427,5 +433,12 @@ class Brizy_Public_Main {
 				Brizy_Logger::instance()->exception( $e );
 			}
 		}
+	}
+
+	private function plugin_live_composer_fixes() {
+		// Conflict with Live Composer builder when it has set a template for single post.
+		remove_filter( 'the_content', 'dslc_filter_content', 101 );
+		// Remove button "Edit Template" from single when it is builded with brizy.
+		remove_filter( 'wp_footer', array( 'DSLC_EditorInterface', 'show_lc_button_on_front' ) );
 	}
 }
