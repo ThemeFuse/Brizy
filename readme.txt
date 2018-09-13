@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.26
+Stable tag: 1.0.28
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,17 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.28 - 2018-09-10 =
+* Fixed: Brizy templates preview when the user was not logged in
+
+= 1.0.27 - 2018-09-06 =
+* Improved: CSS transition for Section padding resizer
+* Improved: Show a special overlay for unsupported browsers instead of loading the editor
+* Fixed: External links that were broken by previous update
+* Fixed: RichText font families that were broken by previous update
+* Fixed: Do not show Upgrade to Pro option when Pro is enabled
+* Fixed: ColorPicker option in advanced options (right sidebar) being cut by overflow
 
 = 1.0.26 - 2018-08-30 =
 * New: Added get_taxonomies api method

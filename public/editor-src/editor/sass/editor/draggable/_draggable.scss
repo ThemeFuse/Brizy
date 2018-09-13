@@ -1,10 +1,10 @@
 // Draggable
 .brz-ed-draggable {
   opacity: 0;
-  transition: opacity 0.15s linear;
+  transition: opacity .15s linear;
 
   &-active {
     opacity: 1;
-    transition: opacity 0.15s linear;
+    transition-delay: .5s;
   }
 }

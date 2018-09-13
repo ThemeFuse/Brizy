@@ -18,7 +18,6 @@ import "../registerEditorParts";
 import addFonts from "./transforms/head/addFonts";
 import addColorPaletteCSS from "./transforms/head/addColorPaletteCSS";
 import addFontStylesCSS from "./transforms/head/addFontStylesCSS";
-import addGlamorCSS from "./transforms/head/addGlamorCSS";
 import changeRichText from "./transforms/body/changeRichText";
 
 export default function main(pageId, pages, globals) {
@@ -60,43 +59,26 @@ function getPageBlocks(page, globals) {
     )
   );
 
-  const $pageHTML = cheerio.load(html);
+  const $pageHTML = cheerio.load(
+    `<html><head><style>${glamorCSS}</style></head><body>${html}</body></html>`
+  );
 
   return {
-    head: getPageHeadBlock($pageHTML, glamorCSS),
+    head: getPageHeadBlock($pageHTML),
     body: getPageBodyBlock($pageHTML)
   };
 }
 
-function getPageHeadBlock($pageHTML, glamorCSS) {
-  const $ = cheerio.load("<head></head>");
-  const $head = $("head");
+function getPageHeadBlock($pageHTML) {
+  addColorPaletteCSS($pageHTML);
+  addFontStylesCSS($pageHTML);
+  addFonts($pageHTML);
 
-  addColorPaletteCSS($head);
-  addFontStylesCSS($head, $pageHTML);
-  addGlamorCSS($head, glamorCSS);
-  addFonts($head);
-
-  // transformMetaShare($head, $pageHTML);
-  // transformColorScheme($head, $pageHTML);
-  // transformGridScheme($head, $pageHTML);
-  // transformUserStyles($head, $pageHTML);
-  // transformUserScripts($head, $pageHTML);
-  // transformHoverButtonStyles($head, $pageHTML);
-  // transformSeo($head, $pageHTML);
-
-  return $head.html();
+  return $pageHTML("head").html();
 }
 
 function getPageBodyBlock($pageHTML) {
-  // transformNoscriptTags($pageHTML);
-  // transformInternalLinks($pageHTML);
-  // transformUnusedPopups($pageHTML);
-  // transformDeletedClassNames($pageHTML);
-  // if (Config.get("blurImages")) {
-  //   transformBlurredImages($pageHTML);
-  // }
   changeRichText($pageHTML);
 
-  return $pageHTML.html();
+  return $pageHTML("body").html();
 }

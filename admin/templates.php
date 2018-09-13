@@ -38,10 +38,6 @@ class Brizy_Admin_Templates {
 	 */
 	protected function __construct() {
 
-		if ( ! Brizy_Editor::is_user_allowed() ) {
-			return;
-		}
-
 		self::registerCustomPostTemplate();
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
@@ -64,11 +60,6 @@ class Brizy_Admin_Templates {
 			add_action( 'wp', array( $this, 'templateFrontEnd' ) );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 20000 );
 		}
-
-		global $current_user;
-
-		//var_dump( $current_user );
-		//exit;
 	}
 
 	/**

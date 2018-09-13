@@ -58,6 +58,14 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
 
 			$this->plugin_live_composer_fixes();
+
+			/*
+				The plugin https://wordpress.org/plugins/wp-copyright-protection/ loads a script js which disable the right click on frontend.
+				Its purpose is to prevent users from copying the text from the site, a way to prevent copyright.
+			 */
+			remove_action( 'wp_head', 'wp_copyright_protection' );
+
+
 		} elseif ( $this->is_view_page() ) {
 
 			if ( post_password_required( $this->post->get_wp_post() ) ) {
@@ -215,7 +223,7 @@ class Brizy_Public_Main {
 			'editorData'    => $config_object,
 			'editorVersion' => BRIZY_EDITOR_VERSION,
 			'iframe_url'    => $iframe_url,
-			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title )
+			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title, $this->post->get_wp_post()->ID )
 		);
 
 		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
@@ -369,37 +377,37 @@ class Brizy_Public_Main {
 		return dirname( __FILE__ ) . "/$rel";
 	}
 
-	/**
-	 * @param null $template_path
-	 *
-	 * @return Twig_TemplateWrapper
-	 */
-	private function getTwigTemplate( $template_path = null ) {
-
-		if ( isset( $this->twig_template[ $template_path ] ) ) {
-			return $this->twig_template[ $template_path ];
-		}
-
-		$loader = new Twig_Loader_Array( array(
-			'editor' => file_get_contents( $template_path )
-		) );
-
-		$twig_cache = $this->url_builder->upload_path( 'brizy/twig' );
-
-		if ( ! file_exists( $twig_cache ) ) {
-			@mkdir( $twig_cache, 0755, true );
-		}
-
-		$options = array();
-		if ( file_exists( $twig_cache ) ) {
-			$options['cache'] = $twig_cache;
-		}
-
-		$twig          = new Twig_Environment( $loader, $options );
-		$twig_template = $twig->load( 'editor' );
-
-		return $this->twig_template[ $template_path ] = $twig_template;
-	}
+//	/**
+//	 * @param null $template_path
+//	 *
+//	 * @return Twig_TemplateWrapper
+//	 */
+//	private function getTwigTemplate( $template_path = null ) {
+//
+//		if ( isset( $this->twig_template[ $template_path ] ) ) {
+//			return $this->twig_template[ $template_path ];
+//		}
+//
+//		$loader = new Twig_Loader_Array( array(
+//			'editor' => file_get_contents( $template_path )
+//		) );
+//
+//		$twig_cache = $this->url_builder->upload_path( 'brizy/twig' );
+//
+//		if ( ! file_exists( $twig_cache ) ) {
+//			@mkdir( $twig_cache, 0755, true );
+//		}
+//
+//		$options = array();
+//		if ( file_exists( $twig_cache ) ) {
+//			$options['cache'] = $twig_cache;
+//		}
+//
+//		$twig          = new Twig_Environment( $loader, $options );
+//		$twig_template = $twig->load( 'editor' );
+//
+//		return $this->twig_template[ $template_path ] = $twig_template;
+//	}
 
 	private function getConfigObject() {
 		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );

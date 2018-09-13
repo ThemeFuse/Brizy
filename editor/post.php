@@ -242,6 +242,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	public function convertToOptionValue() {
+
 		return array(
 			'compiled_html'                    => $this->get_compiled_html(),
 			'compiled_html_body'               => $this->get_compiled_html_body(),
@@ -615,7 +616,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @return bool
+	 * @param $val
+	 *
+	 * @return $this
 	 */
 	public function set_uses_editor( $val ) {
 		$this->uses_editor = $val;
@@ -693,16 +696,18 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @param string $atemplate
+	 * @param string $aTemplate
 	 *
 	 * @return $this
 	 */
-	public function set_template( $atemplate ) {
+	public function set_template( $aTemplate ) {
 
-		if ( $atemplate == '' ) {
+		$aTemplate = apply_filters( 'brizy_post_template', $aTemplate );
+
+		if ( $aTemplate == '' ) {
 			delete_post_meta( $this->get_id(), '_wp_page_template' );
 		} else {
-			update_post_meta( $this->get_id(), '_wp_page_template', $atemplate );
+			update_post_meta( $this->get_id(), '_wp_page_template', $aTemplate );
 		}
 
 		return $this;
