@@ -395,8 +395,9 @@ class Brizy_Admin_Main {
 			$update_post = false;
 
 			if ( $p->post_status == 'auto-draft' ) {
-				$p->post_status = 'draft';
-				$update_post    = true;
+				$p->post_status  = 'draft';
+				$p->post_content = $p->post_content . '<div class="brz-root__container"></div>';
+				$update_post     = true;
 			}
 
 			if ( $p->post_title == __( 'Auto Draft' ) ) {
@@ -411,6 +412,7 @@ class Brizy_Admin_Main {
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->save();
+
 			// redirect
 			wp_redirect( $post->edit_url() );
 
