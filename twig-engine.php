@@ -56,12 +56,13 @@ class Brizy_TwigEngine {
 			$options['cache'] = $path;
 		}
 
-		$this->environment = new Brizy_Editor_Twig_Enviroment( $loader, $options );
-		$this->environment->addFunction( new Twig_SimpleFunction( 'dump', function ( $value ) {
-			if ( WP_DEBUG ) {
+		$this->environment = new Twig_Environment( $loader, $options );
+
+		if ( WP_DEBUG ) {
+			$this->environment->addFunction( new Twig_SimpleFunction( 'dump', function ( $value ) {
 				var_dump( $value );
-			}
-		} ) );
+			} ) );
+		}
 	}
 
 	/**
@@ -94,7 +95,7 @@ class Brizy_TwigEngine {
 		if ( ! file_exists( $twig_cache ) ) {
 			// delete all folders from brizy/twig
 
-			Brizy_Admin_FileSystem::deleteAllDirectories( $twig_cache_root );
+			Brizy_Admin_FileSystem::deleteAllDirectories($twig_cache_root);
 
 			@mkdir( $twig_cache, 0755, true );
 		}
