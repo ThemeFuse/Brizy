@@ -395,14 +395,18 @@ class Brizy_Admin_Main {
 			$update_post = false;
 
 			if ( $p->post_status == 'auto-draft' ) {
-				$p->post_status  = 'draft';
-				$p->post_content = $p->post_content . '<div class="brz-root__container"></div>';
-				$update_post     = true;
+				$p->post_status = 'draft';
+				$update_post    = true;
 			}
 
 			if ( $p->post_title == __( 'Auto Draft' ) ) {
 				$p->post_title = 'Brizy #' . $p->ID;
 				$update_post   = true;
+			}
+
+			if ( $p->post_status == 'auto-draft' || $p->post_status == 'draft' ) {
+				$p->post_content = $p->post_content . '<div class="brz-root__container"></div>';
+				$update_post     = true;
 			}
 
 			if ( $update_post ) {
