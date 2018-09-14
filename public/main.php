@@ -357,7 +357,7 @@ class Brizy_Public_Main {
 	 */
 	public function insert_page_content( $content ) {
 
-		if ( false === strpos( $content, '___brizy-content___' ) ) {
+		if ( false === strpos( $content, 'brz-root__container' ) ) {
 			return $content;
 		}
 
