@@ -558,6 +558,7 @@ class Brizy_Admin_Templates {
 		if ( ! $this->template ) {
 			return;
 		}
+
 		$pid = brizy_get_current_post_id();
 
 		$brizyPost = $this->template;

@@ -255,9 +255,11 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	/**
-	 * @param WP_Post $wp_post
+	 * @param $wp_post
 	 *
 	 * @return null|string
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
 	private function getPreviewUrl( $wp_post ) {
 
@@ -269,7 +271,7 @@ class Brizy_Editor_Editor_Editor {
 			// find first include rule
 			foreach ( $rules as $rule ) {
 				/**
-				 * @var Brizy_Admin_Rule $rule ;
+				 * @var Brizy_Admin_Rule $rule;
 				 */
 				if ( $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ) {
 					break;
