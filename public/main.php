@@ -34,7 +34,7 @@ class Brizy_Public_Main {
 
 		$this->project     = $project;
 		$this->post        = $post;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
+		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post->get_parent_id() );
 	}
 
 	public function initialize_wordpress_editor() {

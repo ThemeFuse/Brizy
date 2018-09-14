@@ -51,7 +51,7 @@ class Brizy_Editor_Editor_Editor {
 	public function __construct( $project, $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post );
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post?$post->get_parent_id():null );
 	}
 
 	/**

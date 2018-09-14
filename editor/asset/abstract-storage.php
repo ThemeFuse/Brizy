@@ -33,14 +33,14 @@ abstract class Brizy_Editor_Asset_AbstractStorage  extends  Brizy_Editor_Asset_S
 	 * Brizy_Editor_Asset_AbstractStorage constructor.
 	 *
 	 * @param $project
-	 * @param $post
+	 * @param Brizy_Editor_Post $post
 	 * @param $config
 	 */
 	public function __construct( $project, $post, $config ) {
 		$this->project     = $project;
 		$this->post        = $post;
 		$this->config      = $config;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
+		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post->get_parent_id() );
 	}
 
 

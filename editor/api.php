@@ -922,7 +922,7 @@ class Brizy_Editor_API {
 			$apost   = (int) $_REQUEST['post_id'];
 			$post    = Brizy_Editor_Post::get( $apost );
 
-			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post );
+			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post->get_parent_id() );
 			$media_cacher->download_original_image( $_REQUEST['media'] );
 
 			wp_send_json( array(), 200 );

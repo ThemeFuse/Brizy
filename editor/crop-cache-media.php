@@ -19,18 +19,18 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @var Brizy_Editor_Post
 	 */
-	private $post;
+	private $post_id;
 
 	/**
 	 * Brizy_Editor_CropCacheMedia constructor.
 	 *
 	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_Post $post
+	 * @param int $post_id
 	 */
-	public function __construct( $project, $post ) {
+	public function __construct( $project, $post_id ) {
 
-		$this->post        = $post;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
+		$this->post_id     = $post_id;
+		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $this->post_id );
 	}
 
 	/**
@@ -42,11 +42,11 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	public function download_original_image( $madia_name ) {
 
 		// Check if user is querying API
-		if ( ! $madia_name  ) {
+		if ( ! $madia_name ) {
 			Brizy_Logger::instance()->error( 'Empty media file provided' );
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
-		if ( strpos( $madia_name, "wp-" ) === 0  ) {
+		if ( strpos( $madia_name, "wp-" ) === 0 ) {
 			Brizy_Logger::instance()->error( 'Invalid try to download wordpress file from application server' );
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
@@ -69,12 +69,12 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		// attach to post
-		$parent_post_id = $this->post->get_parent_id();
-		$attach_to_post = $this->attach_to_post( $original_asset_path, $parent_post_id, $madia_name );
+		$attach_to_post = $this->attach_to_post( $original_asset_path, $this->post_id, $madia_name );
 		if ( $attach_to_post === 0 || is_wp_error( $attach_to_post ) ) {
 			Brizy_Logger::instance()->error( 'Unable to attach media file', array(
 				'media'       => $original_asset_path,
-				'parent_post' => $parent_post_id
+				'parent_post' => $this->post_id
+
 			) );
 			throw new Exception( 'Unable to attach media' );
 		}
