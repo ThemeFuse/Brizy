@@ -121,7 +121,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 * @return Brizy_Editor_Forms_Form
 	 * @throws Exception
 	 */
-	public function create_from_post() {
+	public static function create_from_post() {
 		$instance = new self();
 
 		$stripcslashes = stripcslashes( $_POST['form'] );

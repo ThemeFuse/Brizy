@@ -396,14 +396,13 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$asset_storage              = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
 		$media_storage              = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
 
-		$asset_processors   = array();
 		$asset_processors[] = new Brizy_Editor_Asset_DomainProcessor();
 		$asset_processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
 		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
 
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 
-		$asset_processors = apply_filters( 'brizy_content_processors', $asset_processors, $project, $post );
+		$asset_processors   = apply_filters( 'brizy_content_processors', $asset_processors, $project, $post );
 
 		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 
@@ -696,16 +695,18 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @param string $atemplate
+	 * @param string $aTemplate
 	 *
 	 * @return $this
 	 */
-	public function set_template( $atemplate ) {
+	public function set_template( $aTemplate ) {
 
-		if ( $atemplate == '' ) {
+		$aTemplate = apply_filters( 'brizy_post_template', $aTemplate );
+
+		if ( $aTemplate == '' ) {
 			delete_post_meta( $this->get_id(), '_wp_page_template' );
 		} else {
-			update_post_meta( $this->get_id(), '_wp_page_template', $atemplate );
+			update_post_meta( $this->get_id(), '_wp_page_template', $aTemplate );
 		}
 
 		return $this;

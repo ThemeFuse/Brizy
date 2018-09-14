@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.28
+Stable tag: 1.0.29
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,17 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.29 - 2018-09-14 =
+* Improved: Laid some groundwork for future pro features
+* Improved: Use native query to get the attachment by uid
+* Fixed: Mobile Tabs content Scroll
+* Fixed: The conflict with Live composer builder
+* Fixed: The conflict with Wp copyright plugin
+* Fixed: The insert content filter
+* Fixed: Changed the UrlBuilder and CromMedia classe to depend on post id 
+* Fixed: Filter the texonomies that does not have any terms
+* Fixed: Image crop on dynamic content placeholders
 
 = 1.0.28 - 2018-09-10 =
 * Fixed: Brizy templates preview when the user was not logged in

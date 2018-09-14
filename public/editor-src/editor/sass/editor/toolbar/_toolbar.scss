@@ -14,6 +14,7 @@
     padding-right: 6px;
   }
   &__item {
+    position: relative;
     height: $toolbar-item-height;
     font-size: $toolbar-font-size;
     line-height: 1;

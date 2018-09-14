@@ -1,136 +1,205 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import Editor from "visual/global/Editor";
 import UIState from "visual/global/UIState";
-import random4 from "visual/helper/utils/MiscUtils/randomStringFragment";
-import addPopup from "visual/helper/utils/popups/addPopup";
-import showPopup from "visual/helper/utils/popups/showPopup";
 import EditorIcon from "visual/component-new/EditorIcon";
+import { hideToolbar } from "visual/component-new/Toolbar";
+import { currentContainerBorder } from "visual/component-new/ContainerBorder";
+import { getStore } from "visual/redux/store";
+import { updatePage } from "visual/redux/actionCreators";
+import { setIds } from "visual/utils/models";
+import { SectionPopupInstances } from "visual/editorComponents/SectionPopup";
+import { blockThumbnailUrl } from "visual/utils/blocks";
+import { imageWrapperSize } from "visual/utils/image";
 
-// import deletePopup from 'visual/helper/utils/popups/deletePopup';
+const getBlocksConfig = _.memoize(() => {
+  const blocksConfig = Editor.getBlocks();
+  const popupCategory =
+    blocksConfig.categories.find(category => category.slug === "popup") || {};
 
-const ID_PREFIX = "#brz-popup-";
-const VALUE_REGEX = new RegExp(`^${ID_PREFIX}([\\w]*)$`);
-const TIMEOUT = 2000;
+  const categories = blocksConfig.categories.filter(
+    category => category.id === popupCategory.id
+  );
+  const blocks = blocksConfig.blocks.filter(block =>
+    block.cat.includes(popupCategory.id)
+  );
+
+  return {
+    ...blocksConfig,
+    categories,
+    blocks
+  };
+});
 
 class PromptAddPopupOptionType extends React.Component {
   static defaultProps = {
+    label: "",
     className: "",
     attr: {},
+    helper: false,
+    helperContent: "",
+    display: "inline",
     value: "",
-    icon: "nc-circle-remove",
     onChange: _.noop
   };
 
-  constructor(props) {
-    super(props);
-    const [, popupId = null] = VALUE_REGEX.exec(props.value) || [];
-
-    this.state = { popupId };
-  }
-
-  handleAdd = () => {
-    // this.props.toolbar.resetContent();
-
+  handleCreate = () => {
     UIState.set("prompt", {
-      prompt: "popup",
-      onChange: blockType => {
-        const id = random4() + random4() + random4() + random4();
-
-        addPopup({ id, blockType });
-        showPopup(id);
-
-        setTimeout(() => {
-          this.props.onChange(`${ID_PREFIX}${id}`);
-          // this.props.toolbar.resetContent();
-        }, TIMEOUT);
-      }
+      prompt: "blocks",
+      blocksConfig: getBlocksConfig(),
+      filterUI: {
+        categories: false
+      },
+      onAddBlocks: this.handleAddBlocks
     });
   };
 
-  handleDelete = () => {
-    const { popupId } = this.state;
+  handleAddBlocks = blockData => {
+    const blockDataWithIds = setIds(blockData);
+    blockDataWithIds.value._blockVisibility = "unlisted";
 
-    this.props.onChange("");
+    const store = getStore();
+    const pageData = store.getState().page.data;
+    const pageItems = pageData.items || [];
 
-    /*
-     * ATTENTION: These lines are commented out
-     * because there isn't yet a better solution
-     * for popups cleanup.
-     * They need to be cleaned up when deleting a block
-     * that could potentially have buttons with popup links
-     * or when a cloneable is removed
-     */
-    // setTimeout(() => {
-    //   deletePopup(popupId);
-    // }, TIMEOUT);
+    store.dispatch(
+      updatePage({
+        data: {
+          ...pageData,
+          items: [...pageItems, blockDataWithIds]
+        }
+      })
+    );
+
+    setTimeout(() => {
+      this.props.onChange(blockDataWithIds.value._id);
+    }, 0);
   };
 
   handleEdit = () => {
-    // this.props.toolbar.resetContent();
-    showPopup(this.state.popupId);
+    const { value } = this.props;
+    const popupByInstance = SectionPopupInstances.get(value);
+
+    popupByInstance.open();
+
+    hideToolbar();
+
+    // Hide Border
+    if (currentContainerBorder) {
+      currentContainerBorder.setParentsHover(false);
+    }
   };
 
-  renderIcon = () => {
+  handleDelete = () => {
+    const store = getStore();
+    const pageData = store.getState().page.data;
+    const pageItems = pageData.items || [];
+    const pageItemsWithoutPopup = pageItems.filter(
+      item => item.value._id !== this.props.value
+    );
+
+    store.dispatch(
+      updatePage({
+        data: {
+          ...pageData,
+          items: pageItemsWithoutPopup
+        }
+      })
+    );
+
+    setTimeout(() => {
+      this.props.onChange("");
+    }, 0);
+  };
+
+  renderLabel() {
+    const { label, helper, helperContent } = this.props;
+
     return (
-      <div className="brz-ed-toolbar__link__icon">
-        <EditorIcon icon={this.props.icon} />
+      <div className="brz-ed-option__label">
+        {label}
+        {helper && (
+          <div className="brz-ed-option__helper">
+            <EditorIcon icon="nc-alert-circle-que" />
+            <div className="brz-ed-option__helper__content">
+              {helperContent}
+            </div>
+          </div>
+        )}
       </div>
     );
-  };
+  }
 
-  render() {
-    const title = this.state.popupId ? (
-      <div className="brz-ed-toolbar__link__title" onClick={this.handleEdit}>
-        Click to edit popup
-      </div>
-    ) : (
-      <div className="brz-ed-toolbar__link__title" onClick={this.handleAdd}>
-        Click to add popup
-      </div>
+  renderThumbnail() {
+    const { value } = this.props;
+    const blocks = getStore().getState().page.data.items;
+    const { blockId } = blocks.find(el => el.value._id === value);
+    const blockData = Editor.getBlock(blockId);
+    const MAX_CONTAINER_WIDTH = 140;
+    const { width, height } = imageWrapperSize(
+      blockData.thumbnailWidth,
+      blockData.thumbnailHeight,
+      MAX_CONTAINER_WIDTH
     );
 
-    const icons = this.state.popupId ? (
-      [
-        <div
-          key="edit"
-          className="brz-ed-toolbar__link--save brz-ed-toolbar--active"
+    return (
+      <figure
+        className="brz-figure brz-ed-option__prompt-popup__image"
+        style={{
+          width: `${width}px`,
+          height: `${height}px`
+        }}
+      >
+        <img
+          src={blockThumbnailUrl(blockData)}
+          className="brz-img"
           onClick={this.handleEdit}
-        >
-          <EditorIcon icon="nc-cog" />
-        </div>,
+          alt="Popup Thumbnail"
+        />
         <div
-          key="delete"
-          className="brz-ed-toolbar__link--save brz-ed-toolbar--active"
+          className="brz-ed-option__prompt-popup-remove"
           onClick={this.handleDelete}
         >
-          <EditorIcon icon="nc-trash" />
+          <EditorIcon icon="nc-circle-remove" />
         </div>
-      ]
-    ) : (
-      <div
-        key="edit"
-        className="brz-ed-toolbar__link--save"
-        onClick={this.handleAdd}
-      >
-        <EditorIcon icon="nc-arrow-right" />
+      </figure>
+    );
+  }
+
+  renderAdder() {
+    return (
+      <div className="brz-ed-control__focal-point__label">
+        <div
+          className="brz-ed-control__focal-point__upload"
+          onClick={this.handleCreate}
+        >
+          <EditorIcon icon="nc-add" />
+        </div>
       </div>
     );
+  }
 
-    const { className: _className, attr: _attr, icon } = this.props;
-
+  render() {
+    const {
+      className: _className,
+      attr,
+      label,
+      helper,
+      display,
+      value
+    } = this.props;
     const className = classnames(
-      "brz-ed-toolbar__link__popup",
+      "brz-ed-option__prompt-popup",
+      `brz-ed-option__${display}`,
       _className,
-      _attr.className
+      attr.className
     );
-    const attr = _.omit(_attr, "className");
 
     return (
-      <div className={className} {...attr}>
-        {icon ? this.renderIcon() : null}
-        {title}
-        {icons}
+      <div {...attr} className={className}>
+        {label || helper ? this.renderLabel() : null}
+        {value ? this.renderThumbnail() : this.renderAdder()}
       </div>
     );
   }

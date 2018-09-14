@@ -2,7 +2,7 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColor, getAnimations } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 
-export function getItemsForDesktop(v) {
+export function getItemsForDesktop(v, component) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
   const { hex: borderColorHex } = getOptionColor(v, "borderColor");
   const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
@@ -83,7 +83,8 @@ export function getItemsForDesktop(v) {
 
     return { none: [] };
   };
-
+  const inPopup = Boolean(component.props.meta.sectionPopup);
+  
   return [
     {
       id: "toolbarMedia",
@@ -645,6 +646,7 @@ export function getItemsForDesktop(v) {
           id: "size",
           label: t("Width"),
           type: "slider",
+          disabled: inPopup,
           slider: {
             min: 40,
             max: 100
@@ -1006,6 +1008,7 @@ export function getItemsForDesktop(v) {
                     },
                     {
                       type: "multiPicker",
+                      disabled: inPopup,
                       picker: {
                         id: "marginType",
                         label: t("Margin"),
@@ -2243,12 +2246,14 @@ export function getItemsForDesktop(v) {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
                       type: "switch",
+                      disabled: inPopup,
                       value: v.showOnDesktop
                     },
                     {
                       id: "zIndex",
                       label: t("Z-index"),
                       type: "slider",
+                      disabled: inPopup,
                       slider: {
                         min: 0,
                         max: 100
@@ -2306,8 +2311,9 @@ export function getItemsForDesktop(v) {
   ];
 }
 
-export function getItemsForMobile(v) {
+export function getItemsForMobile(v, component) {
   const { hex: mobileBgColorHex } = getOptionColor(v, "mobileBgColor");
+  const inPopup = Boolean(component.props.meta.sectionPopup);
 
   return [
     {
@@ -2769,6 +2775,7 @@ export function getItemsForMobile(v) {
         },
         {
           type: "multiPicker",
+          disabled: inPopup,
           picker: {
             id: "mobileMarginType",
             label: t("Margin"),

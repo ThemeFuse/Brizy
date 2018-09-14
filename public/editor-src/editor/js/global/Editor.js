@@ -1,11 +1,8 @@
-import deepMerge from "deepmerge";
 import { applyFilter } from "visual/utils/filters";
 
 let components = {};
 let notFoundComponent;
 let blocks = {};
-let blocksById = {};
-let blockThumbnailUrlHandlers = [];
 let templates;
 let templateThumbnailUrlHandlers = [];
 let shortcodes = {};
@@ -48,25 +45,16 @@ const Editor = {
 
   // blocks
 
-  registerBlocks(config, { thumbnailUrlHandler } = {}) {
-    if (thumbnailUrlHandler) {
-      blockThumbnailUrlHandlers.push(thumbnailUrlHandler);
-    }
-
-    blocks = deepMerge(blocks, config);
-
-    blocksById = blocks.blocks.reduce((acc, blockData) => {
-      acc[blockData.id] = blockData;
-      return acc;
-    }, {});
+  registerBlocks(config) {
+    blocks = config;
   },
 
   getBlocks() {
-    return blocks;
+    return applyFilter("getBlocks", blocks);
   },
 
   getBlock(id) {
-    return blocksById[id] || null;
+    return this.getBlocks().blocks.find(block => block.id === id);
   },
 
   getBlockThumbnailUrlHandlers() {

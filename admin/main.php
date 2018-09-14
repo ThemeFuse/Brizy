@@ -77,7 +77,7 @@ class Brizy_Admin_Main {
 			$bpost = Brizy_Editor_Post::get( $post );
 
 
-			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost );
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->get_parent_id() );
 
 			$pageUploadPath = $urlBuilder->upload_path( $urlBuilder->page_upload_path( "assets/images" ) );
 
@@ -404,6 +404,11 @@ class Brizy_Admin_Main {
 				$update_post   = true;
 			}
 
+			if ( $p->post_status == 'auto-draft' || $p->post_status == 'draft' ) {
+				$p->post_content = $p->post_content . '<div class="brz-root__container"></div>';
+				$update_post     = true;
+			}
+
 			if ( $update_post ) {
 				wp_update_post( $p );
 			}
@@ -411,6 +416,7 @@ class Brizy_Admin_Main {
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->save();
+
 			// redirect
 			wp_redirect( $post->edit_url() );
 

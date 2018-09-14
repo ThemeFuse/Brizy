@@ -51,7 +51,7 @@ class Brizy_Editor_Editor_Editor {
 	public function __construct( $project, $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post );
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post?$post->get_parent_id():null );
 	}
 
 	/**
@@ -255,9 +255,11 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	/**
-	 * @param WP_Post $wp_post
+	 * @param $wp_post
 	 *
 	 * @return null|string
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
 	private function getPreviewUrl( $wp_post ) {
 
@@ -269,7 +271,7 @@ class Brizy_Editor_Editor_Editor {
 			// find first include rule
 			foreach ( $rules as $rule ) {
 				/**
-				 * @var Brizy_Admin_Rule $rule ;
+				 * @var Brizy_Admin_Rule $rule;
 				 */
 				if ( $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ) {
 					break;
@@ -415,7 +417,8 @@ class Brizy_Editor_Editor_Editor {
 
 		}, $taxs );
 
-
-		return array_values( $result );
+		return array_filter( array_values( $result ), function ( $term ) {
+			return count( $term->terms ) > 0;
+		} );
 	}
 }

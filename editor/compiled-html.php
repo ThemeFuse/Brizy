@@ -69,7 +69,7 @@ class Brizy_Editor_CompiledHtml {
 
 	private function apply_processors( $content ) {
 
-		$content = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5 );
+		$content = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5, get_bloginfo( 'charset' ) );
 
 		$processors = apply_filters( 'brizy_apply_content_processors', $this->processors );
 

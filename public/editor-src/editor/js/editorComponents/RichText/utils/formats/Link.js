@@ -20,7 +20,12 @@ export default class linkType extends Link {
     node.removeAttribute("href");
     node.removeAttribute("target");
     node.setAttribute("data-href", link);
-    node.classList.remove("link--anchor", "link--external", "is-empty");
+    node.classList.remove(
+      "link--anchor",
+      "link--external",
+      "link--popup",
+      "is-empty"
+    );
 
     if (type === "anchor") {
       node.classList.add("link--anchor");
@@ -28,11 +33,13 @@ export default class linkType extends Link {
     if (type === "external") {
       node.classList.add("link--external");
     }
-
-    if (!value[type]) {
-      node.classList.add('is-empty');
+    if (type === "popup") {
+      node.classList.add("link--popup");
     }
 
+    if (!value[type]) {
+      node.classList.add("is-empty");
+    }
   }
   format(name, value) {
     if (name !== this.statics.blotName || !value)

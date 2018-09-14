@@ -6,6 +6,7 @@ import RoundPlus from "visual/component-new/RoundPlus";
 import { rolesHOC } from "visual/component-new/Roles";
 import { setDeviceMode } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
+import { getBlocksConfig } from "./utils";
 
 const textsByDeviceMode = {
   desktop: {
@@ -29,6 +30,7 @@ class FirstBlockAdder extends React.Component {
     if (deviceMode === "desktop") {
       UIState.set("prompt", {
         prompt: "blocks",
+        blocksConfig: getBlocksConfig(),
         onAddBlocks
       });
     } else {

@@ -13,6 +13,11 @@ class Brizy_Editor_UrlBuilder {
 	protected $post;
 
 	/**
+	 * @var int
+	 */
+	protected $post_id;
+
+	/**
 	 * @var array
 	 */
 	protected $upload_dir;
@@ -21,12 +26,13 @@ class Brizy_Editor_UrlBuilder {
 	 * Brizy_Editor_UrlBuilder constructor.
 	 *
 	 * @param Brizy_Editor_Project|null $project
-	 * @param Brizy_Editor_Post|null $post
+	 * @param int|null $post_id
 	 */
-	public function __construct( $project = null, $post = null ) {
+	public function __construct( $project = null, $post_id = null ) {
 
-		$this->project    = $project;
-		$this->post       = $post;
+		$this->project = $project;
+		$this->post_id = $post_id;
+
 		$this->upload_dir = Brizy_Admin_UploadDir::getUploadDir( null, true );
 	}
 
@@ -37,8 +43,8 @@ class Brizy_Editor_UrlBuilder {
 	/**
 	 * @param $post
 	 */
-	public function set_post( $post ) {
-		$this->post = $post;
+	public function set_post_id( $post_id ) {
+		$this->post_id = $post_id;
 	}
 
 	public function multipass_url() {
@@ -50,8 +56,8 @@ class Brizy_Editor_UrlBuilder {
 
 		$params = array();
 
-		if ( $this->post ) {
-			$params['brizy_post'] = ( (int) $this->post->get_parent_id() );
+		if ( $this->post_id ) {
+			$params['brizy_post'] = ( (int) $this->post_id );
 		}
 
 		// do not move this line
@@ -137,8 +143,8 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	public function page_upload_path( $path = null, $post_id = null ) {
 
-		if ( is_null( $post_id ) && $this->post ) {
-			$post_id = $this->post->get_parent_id();
+		if ( is_null( $post_id ) && $this->post_id ) {
+			$post_id = (int) $this->post_id;
 		}
 
 		if ( $path ) {

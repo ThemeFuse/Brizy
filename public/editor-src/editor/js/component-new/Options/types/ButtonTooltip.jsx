@@ -20,6 +20,16 @@ class ButtonTooltip extends React.Component {
     active: false
   };
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleMouseDown = event => {
     event.preventDefault();
 
@@ -32,12 +42,16 @@ class ButtonTooltip extends React.Component {
     if (!loading) {
       this.setState({ loading: true }, () => {
         return setTimeout(() => {
-          this.setState({ loading: false, active: true });
+          if (this.mounted) {
+            this.setState({ loading: false, active: true });
+          }
         }, LOADING_TIME);
       });
 
       setTimeout(() => {
-        this.setState({ active: false });
+        if (this.mounted) {
+          this.setState({ active: false });
+        }
       }, LOADING_TEXT);
     }
   };
@@ -46,17 +60,12 @@ class ButtonTooltip extends React.Component {
     const { tooltipContent } = this.props;
     const { loading, active } = this.state;
 
-    const className = classnames(
-      "brz-ed-toolbar__item__tooltip",
-      { "brz-ed-animated brz-ed-animated--fadeIn active": active },
-    );
+    const className = classnames("brz-ed-toolbar__item__tooltip", {
+      "brz-ed-animated brz-ed-animated--fadeIn active": active
+    });
 
-    return !loading && (
-      <div className={className}>
-        {tooltipContent}
-      </div>
-    );
-  };
+    return !loading && <div className={className}>{tooltipContent}</div>;
+  }
 
   render() {
     const {
@@ -89,7 +98,10 @@ class ButtonTooltip extends React.Component {
         {loading ? (
           <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
         ) : (
-          <EditorIcon icon={icon} className="brz-ed-animated brz-ed-animated--fadeIn" />
+          <EditorIcon
+            icon={icon}
+            className="brz-ed-animated brz-ed-animated--fadeIn"
+          />
         )}
       </div>
     );

@@ -9,8 +9,8 @@ module.exports = options => {
     mode: "none",
     target: "node",
     entry: [
+      "./editor/js/bootstraps/initConfig.js",
       "./editor/js/bootstraps/initBrizyGlobal.js",
-      "./editor/js/bootstraps/export/configInit.js",
       "./editor/js/bootstraps/export/index.js"
     ],
     output: {

@@ -1,6 +1,10 @@
 // Popup blocks
 .brz-ed-popup-blocks {
   width: $prompt-blocks-sm-width;
+
+  .brz-ed-popup__head--search {
+    margin-bottom: 16px;
+  }
 }
 
 // Body

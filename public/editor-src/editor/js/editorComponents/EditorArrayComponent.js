@@ -197,6 +197,6 @@ export default class EditorArrayComponent extends EditorComponent {
   renderForEdit(v) {
     const items = v.map(this.renderItem);
 
-    return this.renderItemsContainer(items);
+    return this.renderItemsContainer(items, v);
   }
 }

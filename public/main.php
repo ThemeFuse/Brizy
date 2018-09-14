@@ -34,7 +34,7 @@ class Brizy_Public_Main {
 
 		$this->project     = $project;
 		$this->post        = $post;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post );
+		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post->get_parent_id() );
 	}
 
 	public function initialize_wordpress_editor() {
@@ -47,6 +47,8 @@ class Brizy_Public_Main {
 	public function initialize_front_end() {
 
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
+			// When some plugins want to redirect to their templates.
+			remove_all_actions( 'template_redirect' );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 10000 );
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
@@ -54,6 +56,16 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
+
+			$this->plugin_live_composer_fixes();
+
+			/*
+				The plugin https://wordpress.org/plugins/wp-copyright-protection/ loads a script js which disable the right click on frontend.
+				Its purpose is to prevent users from copying the text from the site, a way to prevent copyright.
+			 */
+			remove_action( 'wp_head', 'wp_copyright_protection' );
+
+
 		} elseif ( $this->is_view_page() ) {
 
 			if ( post_password_required( $this->post->get_wp_post() ) ) {
@@ -69,6 +81,7 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
+			$this->plugin_live_composer_fixes();
 		}
 	}
 
@@ -210,7 +223,7 @@ class Brizy_Public_Main {
 			'editorData'    => $config_object,
 			'editorVersion' => BRIZY_EDITOR_VERSION,
 			'iframe_url'    => $iframe_url,
-			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title )
+			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title, $this->post->get_wp_post()->ID )
 		);
 
 		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
@@ -343,6 +356,11 @@ class Brizy_Public_Main {
 	 * @throws Exception
 	 */
 	public function insert_page_content( $content ) {
+
+		if ( false === strpos( $content, 'brz-root__container' ) ) {
+			return $content;
+		}
+
 		if ( ! $this->post->get_compiled_html() ) {
 			$compiled_html_body = $this->post->get_compiled_html_body();
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
@@ -364,37 +382,37 @@ class Brizy_Public_Main {
 		return dirname( __FILE__ ) . "/$rel";
 	}
 
-	/**
-	 * @param null $template_path
-	 *
-	 * @return Twig_TemplateWrapper
-	 */
-	private function getTwigTemplate( $template_path = null ) {
-
-		if ( isset( $this->twig_template[ $template_path ] ) ) {
-			return $this->twig_template[ $template_path ];
-		}
-
-		$loader = new Twig_Loader_Array( array(
-			'editor' => file_get_contents( $template_path )
-		) );
-
-		$twig_cache = $this->url_builder->upload_path( 'brizy/twig' );
-
-		if ( ! file_exists( $twig_cache ) ) {
-			@mkdir( $twig_cache, 0755, true );
-		}
-
-		$options = array();
-		if ( file_exists( $twig_cache ) ) {
-			$options['cache'] = $twig_cache;
-		}
-
-		$twig          = new Twig_Environment( $loader, $options );
-		$twig_template = $twig->load( 'editor' );
-
-		return $this->twig_template[ $template_path ] = $twig_template;
-	}
+//	/**
+//	 * @param null $template_path
+//	 *
+//	 * @return Twig_TemplateWrapper
+//	 */
+//	private function getTwigTemplate( $template_path = null ) {
+//
+//		if ( isset( $this->twig_template[ $template_path ] ) ) {
+//			return $this->twig_template[ $template_path ];
+//		}
+//
+//		$loader = new Twig_Loader_Array( array(
+//			'editor' => file_get_contents( $template_path )
+//		) );
+//
+//		$twig_cache = $this->url_builder->upload_path( 'brizy/twig' );
+//
+//		if ( ! file_exists( $twig_cache ) ) {
+//			@mkdir( $twig_cache, 0755, true );
+//		}
+//
+//		$options = array();
+//		if ( file_exists( $twig_cache ) ) {
+//			$options['cache'] = $twig_cache;
+//		}
+//
+//		$twig          = new Twig_Environment( $loader, $options );
+//		$twig_template = $twig->load( 'editor' );
+//
+//		return $this->twig_template[ $template_path ] = $twig_template;
+//	}
 
 	private function getConfigObject() {
 		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
@@ -420,5 +438,12 @@ class Brizy_Public_Main {
 				Brizy_Logger::instance()->exception( $e );
 			}
 		}
+	}
+
+	private function plugin_live_composer_fixes() {
+		// Conflict with Live Composer builder when it has set a template for single post.
+		remove_filter( 'the_content', 'dslc_filter_content', 101 );
+		// Remove button "Edit Template" from single when it is builded with brizy.
+		remove_filter( 'wp_footer', array( 'DSLC_EditorInterface', 'show_lc_button_on_front' ) );
 	}
 }
