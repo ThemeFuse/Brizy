@@ -396,13 +396,13 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$asset_storage              = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
 		$media_storage              = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
 
+		$asset_processors[] = new Brizy_Editor_Asset_DomainProcessor();
+		$asset_processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
+		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
 
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 
 		$asset_processors   = apply_filters( 'brizy_content_processors', array(), $project, $post );
-		$asset_processors[] = new Brizy_Editor_Asset_DomainProcessor();
-		$asset_processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
-		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
 
 		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 
