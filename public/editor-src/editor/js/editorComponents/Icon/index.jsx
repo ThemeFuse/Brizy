@@ -32,11 +32,13 @@ class Icon extends EditorComponent {
       linkAnchor,
       linkExternalBlank,
       linkExternalRel,
-      linkExternalType
+      linkExternalType,
+      linkPopup
     } = v;
     const hrefs = {
       anchor: linkAnchor,
-      external: v[linkExternalType]
+      external: v[linkExternalType],
+      popup: linkPopup
     };
 
     let content = (

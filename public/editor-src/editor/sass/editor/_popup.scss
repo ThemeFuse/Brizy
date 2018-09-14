@@ -1,0 +1,11 @@
+.brz-popup {
+  > .brz-ed-border {
+    height: 100%;
+  }
+  &__editor {
+    display: none;
+  }
+  &--opened {
+    display: block;
+  }
+}

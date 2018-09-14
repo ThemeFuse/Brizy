@@ -47,7 +47,9 @@ class BlockThumbnail extends React.Component {
 
   renderThumbnails() {
     const { value } = this.props;
-    const blocks = getStore().getState().page.data.items;
+    const blocks = getStore()
+      .getState()
+      .page.data.items.filter(el => el.value._blockVisibility !== "unlisted");
 
     return blocks.map(block => {
       const {

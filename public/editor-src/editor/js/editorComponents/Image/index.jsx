@@ -259,12 +259,12 @@ class Image extends EditorComponent {
       zoom,
       width,
       height,
-      linkType,
       linkAnchor,
       linkExternalBlank,
       linkExternalRel,
       linkLightBox,
-      linkExternalType
+      linkExternalType,
+      linkPopup
     } = v;
     const { desktopW, mobileW, inGallery = false } = this.props.meta;
     const {
@@ -313,17 +313,18 @@ class Image extends EditorComponent {
       content = <Placeholder icon="nc-img" containerWidth={desktopW} />;
     }
 
-    const hrefs = {
+    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
+    const linkHrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
-      lightBox:
-        linkLightBox === "on" ? imageUrl(imageSrc, { iW: 1200, iH: "any" }) : ""
+      popup: linkPopup,
+      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
-    if (hrefs[linkType] !== "") {
+    if (linkHrefs[linkType] !== "") {
       content = (
         <Link
           type={linkType}
-          href={hrefs[linkType]}
+          href={linkHrefs[linkType]}
           target={linkExternalBlank}
           rel={linkExternalRel}
         >
@@ -422,12 +423,12 @@ class Image extends EditorComponent {
       imageWidth,
       imageHeight,
       imageSrc,
-      linkType,
       linkAnchor,
       linkExternalBlank,
       linkExternalRel,
       linkLightBox,
-      linkExternalType
+      linkExternalType,
+      linkPopup
     } = v;
     const { desktopW, mobileW } = this.props.meta;
     const wrapperSizes = {
@@ -523,17 +524,18 @@ class Image extends EditorComponent {
       content = <Placeholder icon="nc-img" containerWidth={desktopW} />;
     }
 
-    const hrefs = {
+    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
+    const linkHrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
-      lightBox:
-        linkLightBox === "on" ? imageUrl(imageSrc, { iW: 1200, iH: "any" }) : ""
+      popup: linkPopup,
+      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
-    if (hrefs[linkType] !== "") {
+    if (linkHrefs[linkType] !== "") {
       content = (
         <Link
           type={linkType}
-          href={hrefs[linkType]}
+          href={linkHrefs[linkType]}
           target={linkExternalBlank}
           rel={linkExternalRel}
         >

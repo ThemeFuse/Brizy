@@ -32,6 +32,7 @@ import SectionHeader from "./SectionHeader";
 import SectionHeaderItem from "./SectionHeader/SectionHeaderItem";
 import SectionHeaderStickyItem from "./SectionHeader/SectionHeaderStickyItem";
 import ImageGallery from "./ImageGallery";
+import SectionPopup from "./SectionPopup";
 
 export default {
   Page,
@@ -68,7 +69,8 @@ export default {
   AccordionItem,
   GlobalBlock,
   SectionFooter,
-  ImageGallery
+  ImageGallery,
+  SectionPopup
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

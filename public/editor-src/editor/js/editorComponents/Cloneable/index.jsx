@@ -204,7 +204,8 @@ class Cloneable extends EditorComponent {
           showBorders={showBorder}
           clickOutsideExceptions={[
             ".brz-ed-sidebar__right",
-            "#brz-toolbar-portal"
+            "#brz-toolbar-portal",
+            ".brz-ed-tooltip__content-portal"
           ]}
           path={this.props.path}
         >

@@ -130,6 +130,13 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                     zoom,
                     mobileZoom: v.zoom === v.mobileZoom ? zoom : v.mobileZoom
                   })
+                },
+                {
+                  id: "linkLightBox",
+                  disabled: inGallery,
+                  label: t("Open in LightBox"),
+                  type: "switch",
+                  value: v.linkLightBox
                 }
               ]
             }
@@ -144,8 +151,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
       title: t("Link"),
       size: "medium",
       position: 90,
-      disabled:
-        inGallery && (v.linkType === "lightBox" && v.linkLightBox === "on"),
+      disabled: inGallery && v.linkLightBox === "on",
       options: [
         {
           id: "linkType",
@@ -207,19 +213,6 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   type: "switch",
                   label: t("Make it Nofollow"),
                   value: v.linkExternalRel
-                }
-              ]
-            },
-            {
-              id: "lightBox",
-              label: t("LightBox"),
-              disabled: inGallery,
-              options: [
-                {
-                  id: "linkLightBox",
-                  label: t("Open in LightBox"),
-                  type: "switch",
-                  value: v.linkLightBox
                 }
               ]
             }

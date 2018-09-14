@@ -14,15 +14,14 @@ import FormApps from "./FormApps";
 import Grid from "./Grid";
 import ImageSetter from "./ImageSetter";
 import IconSetter from "./IconSetter";
-import InputTooltip from "./InputTooltip";
 import MultiPicker from "./MultiPicker";
 import Input from "./Input";
 import Textarea from "./Textarea";
-import InputSave from "./InputSave";
 import Popover from "./Popover";
-// import PromptAddPopup from "./PromptAddPopup";
+import PromptAddPopup from "./PromptAddPopup";
 import PromptIcon from "./PromptIcon";
 import RadioGroup from "./RadioGroup";
+import CheckGroup from "./CheckGroup";
 import Select from "./Select";
 import Slider from "./Slider";
 import Stepper from "./Stepper";
@@ -47,15 +46,14 @@ export default {
   grid: Grid,
   imageSetter: ImageSetter,
   iconSetter: IconSetter,
-  inputTooltip: InputTooltip,
   multiPicker: MultiPicker,
   input: Input,
   textarea: Textarea,
-  inputSave: InputSave,
   popover: Popover,
-  // promptAddPopup: PromptAddPopup,
+  promptAddPopup: PromptAddPopup,
   promptIcon: PromptIcon,
   radioGroup: RadioGroup,
+  checkGroup: CheckGroup,
   select: Select,
   slider: Slider,
   stepper: Stepper,

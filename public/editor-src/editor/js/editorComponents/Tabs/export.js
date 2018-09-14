@@ -29,12 +29,13 @@ $(".brz-tabs").each(function() {
   });
 
   // For Mobile
-  var $mobileTabsContent = $this.find(".brz-tabs__items");
+  var $mobileTabsContent = $this.find(".brz-tabs__nav--mobile");
 
   $mobileTabsContent.on("click", function() {
+    var $navMobile = $(this);
     var activeClassName = "brz-tabs__items--active";
     var mobileActiveClassName = "brz-tabs__nav--mobile--active";
-    var $item = $(this).closest(".brz-tabs__items");
+    var $item = $navMobile.closest(".brz-tabs__items");
 
     $item.siblings().removeClass(activeClassName);
     $item
@@ -45,9 +46,8 @@ $(".brz-tabs").each(function() {
     $item.addClass(activeClassName);
     $item.children(".brz-tabs__nav--mobile").addClass(mobileActiveClassName);
 
-    $("html, body").animate(
-      { scrollTop: $(".brz-tabs__items--active").offset().top },
-      200
-    );
+    setTimeout(function() {
+      $("html, body").animate({ scrollTop: $navMobile.offset().top }, 200);
+    }, 100);
   });
 });

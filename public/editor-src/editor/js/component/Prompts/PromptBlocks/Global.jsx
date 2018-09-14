@@ -12,6 +12,19 @@ import { updateGlobals } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
 
 export default class Global extends React.Component {
+  static defaultProps = {
+    filterUI: {},
+    blocksConfig: null,
+    onAddBlocks: _.noop,
+    onClose: _.noop
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.blocksConfig = props.blocksConfig || Editor.getBlocks();
+  }
+
   handleThumbnailAdd = thumbnailData => {
     const { onAddBlocks, onClose } = this.props;
     const { resolve } = thumbnailData;
@@ -36,6 +49,8 @@ export default class Global extends React.Component {
   };
 
   render() {
+    const { filterUI } = this.props;
+
     const globalBlocks =
       getStore().getState().globals.project.globalBlocks || {};
     const thumbnails = Object.entries(globalBlocks).reduce(
@@ -46,6 +61,14 @@ export default class Global extends React.Component {
 
         const blockData = Editor.getBlock(block.blockId);
         if (!blockData) {
+          return acc;
+        }
+
+        const inCategories =
+          this.blocksConfig.categories.find(cat =>
+            blockData.cat.includes(cat.id)
+          ) !== undefined;
+        if (!inCategories) {
           return acc;
         }
 
@@ -71,6 +94,7 @@ export default class Global extends React.Component {
       },
       []
     );
+
     const filterFn = (item, cf) => {
       const categoryMatch =
         cf.category === "*" || item.cat.includes(Number(cf.category));
@@ -91,8 +115,9 @@ export default class Global extends React.Component {
       {
         id: "*",
         title: t("All Categories")
-      }
-    ].concat(Editor.getBlocks().categories);
+      },
+      ...this.blocksConfig.categories
+    ].filter(category => category.hidden !== true);
 
     return (
       <DataFilter
@@ -103,16 +128,20 @@ export default class Global extends React.Component {
         {(filteredThumbnails, currentFilter, setFilter) => (
           <React.Fragment>
             <div className="brz-ed-popup__head--search brz-d-xs-flex brz-align-items-center brz-justify-content-xs-center">
-              <Select
-                className="brz-ed-popup__select--block-categories"
-                options={categories}
-                value={currentFilter.category}
-                onChange={value => setFilter({ category: value })}
-              />
-              <SearchInput
-                value={currentFilter.search}
-                onChange={value => setFilter({ search: value })}
-              />
+              {filterUI.categories !== false && (
+                <Select
+                  className="brz-ed-popup__select--block-categories"
+                  options={categories}
+                  value={currentFilter.category}
+                  onChange={value => setFilter({ category: value })}
+                />
+              )}
+              {filterUI.search !== false && (
+                <SearchInput
+                  value={currentFilter.search}
+                  onChange={value => setFilter({ search: value })}
+                />
+              )}
             </div>
             <div className="brz-ed-popup-blocks-body">
               <ScrollPane

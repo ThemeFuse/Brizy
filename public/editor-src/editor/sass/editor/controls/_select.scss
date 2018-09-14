@@ -93,9 +93,13 @@ $scroll-border-radius: 4px;
 .brz-control__select-current__icon {
   width: auto;
   height: auto;
-  font-size: 14px;
+  font-size: 0;
   line-height: 1;
   cursor: pointer;
+
+  .brz-icon-svg {
+    font-size: 14px;
+  }
 }
 .brz-control__select-options {
   position: absolute;
@@ -345,11 +349,18 @@ $scroll-border-radius: 4px;
 // Population
 .brz-control__select-population {
   .brz-control__select-current {
+    color: #fff;
+    font-size: 0;
     transition: 0.2s linear color;
 
     &:hover {
-      color: $brand-primary;
+      color: $brand-primary !important;
       transition: 0.2s linear color;
+    }
+  }
+  &.brz-control__select--active {
+    .brz-control__select-current {
+      color: #fff;
     }
   }
   &.opened {

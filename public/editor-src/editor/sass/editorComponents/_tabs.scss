@@ -47,9 +47,6 @@
   }
 
   // Content
-  &__content {
-    font-size: 0;
-  }
   &__items {
     display: none;
     border-style: solid;
@@ -57,7 +54,7 @@
     width: 100%;
   }
   &__items--active {
-    display: inline-block;
+    display: block;
     border-top: none;
 
     & > .brz-tabs__item--content {
@@ -74,10 +71,6 @@
 /// Responsive
 @include media-breakpoint-down(ms) {
   .brz-tabs {
-    &__content {
-      font-size: inherit;
-    }
-
     // Mobile
     &__nav--mobile {
       display: block;

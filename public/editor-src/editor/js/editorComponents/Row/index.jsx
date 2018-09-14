@@ -1,7 +1,4 @@
 import React from "react";
-import _ from "underscore";
-import classnames from "classnames";
-import { css } from "glamor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import SortableElement from "visual/component-new/Sortable/SortableElement";
 import SortableHandle from "visual/component-new/Sortable/SortableHandle";
@@ -11,7 +8,6 @@ import Background from "visual/component-new/Background";
 import Animation from "visual/component-new/Animation";
 import Toolbar from "visual/component-new/Toolbar";
 import { Roles } from "visual/component-new/Roles";
-import { hexToRgba } from "visual/utils/color";
 import { videoData as getVideoData } from "visual/utils/video";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./Items";
@@ -40,7 +36,9 @@ class Row extends EditorComponent {
   }
 
   handleValueChange(value, meta) {
-    if (value.items.length === 0) {
+    const inPopup = Boolean(this.props.meta.sectionPopup);
+
+    if (value.items.length === 0 && !inPopup) {
       this.selfDestruct();
     } else {
       super.handleValueChange(value, meta);
@@ -141,7 +139,7 @@ class Row extends EditorComponent {
     const mobileW =
       Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
 
-    return _.extend({}, meta, {
+    return Object.assign({}, meta, {
       row: {
         isInner: this.isInnerRow(),
         itemsLength: items.length
@@ -157,7 +155,7 @@ class Row extends EditorComponent {
     return meta.row !== undefined;
   }
 
-  renderToolbar(v) {
+  renderToolbar() {
     return (
       <div className="brz-ed-row__toolbar">
         <Toolbar
