@@ -204,6 +204,32 @@ export default {
     },
     submit: {
       type: "submit"
+    },
+    "sectionPopup--dark": {
+      bgColorHex: "#000000",
+      bgColorOpacity: 0.89,
+      bgColorPalette: ""
+    },
+    "sectionPopup--light": {
+      bgColorHex: "#ffffff",
+      bgColorOpacity: 0.89,
+      bgColorPalette: "",
+      mobileBgColorHex: "#ffffff",
+      mobileBgColorOpacity: 0.89,
+      mobileBgColorPalette: ""
+    },
+    "row--sectionPopup-dark": {
+      bgColorHex: "#d6d6d6",
+      bgColorOpacity: 1,
+      bgColorPalette: "",
+      mobileBgColorHex: "#d6d6d6",
+      mobileBgColorOpacity: 1,
+      mobileBgColorPalette: ""
+    },
+    "row--sectionPopup-light": {
+      bgColorHex: "#d6d6d6",
+      bgColorOpacity: 1,
+      bgColorPalette: ""
     }
   }
 };

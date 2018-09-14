@@ -250,7 +250,8 @@ class Wrapper extends EditorComponent {
             activeBorderStyle="dotted"
             clickOutsideExceptions={[
               ".brz-ed-sidebar__right",
-              "#brz-toolbar-portal"
+              "#brz-toolbar-portal",
+              ".brz-ed-tooltip__content-portal"
             ]}
             path={this.props.path}
           >

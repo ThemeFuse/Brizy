@@ -4,6 +4,7 @@ import UIState from "visual/global/UIState";
 import RoundPlus from "visual/component-new/RoundPlus";
 import { rolesHOC } from "visual/component-new/Roles";
 import { t } from "visual/utils/i18n";
+import { getBlocksConfig } from "./utils";
 
 class LastBlockAdder extends React.Component {
   static defaultProps = {
@@ -17,6 +18,7 @@ class LastBlockAdder extends React.Component {
   open = () => {
     UIState.set("prompt", {
       prompt: "blocks",
+      blocksConfig: getBlocksConfig(),
       onAddBlocks: this.props.onAddBlocks
     });
   };

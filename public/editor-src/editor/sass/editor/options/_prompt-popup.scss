@@ -1,0 +1,27 @@
+// -- Toolbar tabs
+.brz-ed-option__prompt-popup {
+  &__image {
+    position: relative;
+    cursor: pointer;
+
+    .brz-img {
+      max-width: 100%;
+    }
+  }
+  &-remove {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    z-index: 11;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    background-color: #2d323b;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+  }
+  .brz-ed-control__focal-point__upload {
+    font-size: 16px;
+  }
+}

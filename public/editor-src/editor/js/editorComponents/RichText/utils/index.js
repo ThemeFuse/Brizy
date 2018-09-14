@@ -60,7 +60,8 @@ const getLink = value => {
     externalBlank,
     externalRel,
     population,
-    externalType
+    externalType,
+    popup
   } = formatLinkFromString(value);
 
   return {
@@ -70,7 +71,8 @@ const getLink = value => {
     linkExternalBlank: externalBlank,
     linkExternalRel: externalRel,
     linkPopulation: population,
-    linkExternalType: externalType
+    linkExternalType: externalType,
+    linkPopup: popup.replace("#", "")
   };
 };
 

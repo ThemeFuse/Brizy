@@ -17,8 +17,8 @@ module.exports = options => {
     mode: options.IS_PRODUCTION ? "production" : "development",
     entry: {
       editor: [
+        "./editor/js/bootstraps/initConfig.js",
         "./editor/js/bootstraps/initBrizyGlobal.js",
-        "./editor/js/bootstraps/editor/configInit.js",
         "./editor/js/bootstraps/editor/index.js"
       ]
     },

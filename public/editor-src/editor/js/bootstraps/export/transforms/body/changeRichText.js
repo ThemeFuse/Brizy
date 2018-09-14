@@ -36,7 +36,16 @@ export default function changeRichText($) {
 
       if (url) {
         $this.replaceWith(
-          `<a href="${url}" ${target} ${rel} style="${style}" class="${className}">${html}</a>`
+          `<a
+            href="${url}"
+            ${target}
+            ${rel}
+            style="${style}"
+            class="${className}"
+            data-brz-link-type="${data.type}"
+          >
+            ${html}
+          </a>`
         );
       } else {
         const classNames = linkClassNames.join(" ");

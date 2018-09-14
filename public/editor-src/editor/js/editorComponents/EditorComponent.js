@@ -6,6 +6,7 @@ import {
 } from "visual/component-new/Options/utils";
 import { getStore } from "visual/redux/store";
 import { currentStyleSelector } from "visual/redux/selectors";
+import { applyFilter } from "visual/utils/filters";
 
 const capitalize = ([first, ...rest], lowerRest = false) =>
   first.toUpperCase() +
@@ -219,6 +220,7 @@ export class EditorComponent extends React.Component {
       const v = this.getValue();
       let items = this.bindToolbarItems(getItemsFn(v, this));
 
+      // allow extend from parent
       if (this.props.toolbarExtend && allowExtend) {
         const { getItems } = this.props.toolbarExtend;
         let extendItems = getItems(deviceMode);
@@ -230,11 +232,25 @@ export class EditorComponent extends React.Component {
         items = mergeOptions(items, extendItems);
       }
 
+      // allow extend from child
       if (this.childToolbarExtend && allowExtend) {
         const { getItems } = this.childToolbarExtend;
         const extendItems = getItems(deviceMode);
 
         items = mergeOptions(items, extendItems);
+      }
+
+      // allow extend from filter
+      const filterToolbarExtend = applyFilter(
+        `toolbarItemsExtend_${this.constructor.componentId}`,
+        null
+      );
+      if (filterToolbarExtend) {
+        const filterItems = this.bindToolbarItems(
+          filterToolbarExtend[getItemsFnName](v, this)
+        );
+
+        items = mergeOptions(items, filterItems);
       }
 
       return items;

@@ -12,6 +12,10 @@ const SortableItem = SortableElement(({ item, onRemove }) => {
   const blockId = item.blockId;
   const blockData = Editor.getBlock(blockId);
 
+  if (item.value._blockVisibility === "unlisted") {
+    return <div hidden />;
+  }
+
   return (
     <div className="brz-ed-sidebar-block-item">
       <div className="brz-ed-sidebar-block-image">
@@ -74,33 +78,6 @@ class DrawerComponent extends React.Component {
     const { pageData, onPageDataChange } = this.props;
 
     onPageDataChange({ ...pageData, items: blocks });
-  };
-
-  renderItem = (item, index) => {
-    const blockId = item.blockId;
-    const blockData = Editor.getBlock(blockId);
-    const thumbUrl = blockData.thumbnailSrc;
-    const thumbStyle = {
-      backgroundImage: `url("${thumbUrl}")`
-    };
-
-    return (
-      <div key={index} className="brz-ed-sidebar-block-item">
-        <div className="brz-ed-sidebar-block-image" style={thumbStyle}>
-          <div className="brz-ed-sidebar-block-layout">
-            <span className="brz-span brz-ed-sidebar-block-drag">
-              Drag to reorder
-            </span>
-          </div>
-        </div>
-        <div
-          className="brz-ed-sidebar-block-remove"
-          onClick={() => this.handleRemoveItem(index)}
-        >
-          <EditorIcon icon="nc-circle-remove-2" className="brz-ed-bar-icon" />
-        </div>
-      </div>
-    );
   };
 
   render() {

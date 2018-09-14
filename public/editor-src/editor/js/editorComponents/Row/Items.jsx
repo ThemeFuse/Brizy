@@ -209,6 +209,10 @@ class Items extends EditorArrayComponent {
       return <div className={this.props.containerClassName}>{items}</div>;
     }
 
+    const sortableContent = items.length ? (
+      <div className={this.props.containerClassName}>{items}</div>
+    ) : null;
+
     return (
       <Sortable
         path={this.getPath()}
@@ -216,7 +220,7 @@ class Items extends EditorArrayComponent {
         isGrid={true}
         acceptElements={this.handleSortableAcceptElements}
       >
-        <div className={this.props.containerClassName}>{items}</div>
+        {sortableContent}
       </Sortable>
     );
   }

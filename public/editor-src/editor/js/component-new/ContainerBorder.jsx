@@ -3,6 +3,7 @@ import classnames from "classnames";
 import ClickOutside from "visual/component-new/ClickOutside";
 
 let instancesByPath = {};
+export let currentContainerBorder = null;
 
 class ContainerBorder extends React.Component {
   static defaultProps = {
@@ -37,6 +38,7 @@ class ContainerBorder extends React.Component {
     const { path } = this.props;
 
     delete instancesByPath[path];
+    currentContainerBorder = null;
   }
 
   componentWillReceiveProps({ path: newPath }) {
@@ -52,11 +54,13 @@ class ContainerBorder extends React.Component {
   handleClickOutside = () => {
     if (this.state.active) {
       this.setState({ active: false });
+      currentContainerBorder = null;
     }
   };
 
   handleClick = e => {
     this.setState({ active: true });
+    currentContainerBorder = this;
   };
 
   handleOver = e => {

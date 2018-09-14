@@ -12,6 +12,19 @@ import { updateGlobals } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
 
 export default class Saved extends React.Component {
+  static defaultProps = {
+    filterUI: {},
+    blocksConfig: null,
+    onAddBlocks: _.noop,
+    onClose: _.noop
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.blocksConfig = props.blocksConfig || Editor.getBlocks();
+  }
+
   handleThumbnailAdd = thumbnailData => {
     const { onAddBlocks, onClose } = this.props;
     const { resolve } = thumbnailData;
@@ -29,25 +42,39 @@ export default class Saved extends React.Component {
   };
 
   render() {
-    const savedBlocks = getStore().getState().globals.project.savedBlocks || [];
-    const thumbnails = savedBlocks
-      .filter(block => Editor.getBlock(block.blockId) != null)
-      .map(block => {
-        const blockData = Editor.getBlock(block.blockId);
-        const { thumbnailWidth, thumbnailHeight, keywords, cat } = blockData;
+    const { filterUI } = this.props;
 
-        return {
-          id: block.blockId,
-          thumbnailSrc: blockThumbnailUrl(blockData),
-          thumbnailWidth,
-          thumbnailHeight,
-          showRemoveIcon: true,
-          keywords,
-          cat,
-          type: this.id,
-          resolve: block
-        };
+    const savedBlocks = getStore().getState().globals.project.savedBlocks || [];
+    const thumbnails = savedBlocks.reduce((acc, block) => {
+      const blockData = Editor.getBlock(block.blockId);
+      if (!blockData) {
+        return acc;
+      }
+
+      const inCategories =
+        this.blocksConfig.categories.find(cat =>
+          blockData.cat.includes(cat.id)
+        ) !== undefined;
+      if (!inCategories) {
+        return acc;
+      }
+
+      const { thumbnailWidth, thumbnailHeight, keywords, cat } = blockData;
+
+      acc.push({
+        id: block.blockId,
+        thumbnailSrc: blockThumbnailUrl(blockData),
+        thumbnailWidth,
+        thumbnailHeight,
+        showRemoveIcon: true,
+        keywords,
+        cat,
+        type: this.id,
+        resolve: block
       });
+
+      return acc;
+    }, []);
     const filterFn = (item, cf) => {
       const categoryMatch =
         cf.category === "*" || item.cat.includes(Number(cf.category));
@@ -68,8 +95,9 @@ export default class Saved extends React.Component {
       {
         id: "*",
         title: t("All Categories")
-      }
-    ].concat(Editor.getBlocks().categories);
+      },
+      ...this.blocksConfig.categories
+    ].filter(category => category.hidden !== true);
 
     return (
       <DataFilter
@@ -80,16 +108,20 @@ export default class Saved extends React.Component {
         {(filteredThumbnails, currentFilter, setFilter) => (
           <React.Fragment>
             <div className="brz-ed-popup__head--search brz-d-xs-flex brz-align-items-center brz-justify-content-xs-center">
-              <Select
-                className="brz-ed-popup__select--block-categories"
-                options={categories}
-                value={currentFilter.category}
-                onChange={value => setFilter({ category: value })}
-              />
-              <SearchInput
-                value={currentFilter.search}
-                onChange={value => setFilter({ search: value })}
-              />
+              {filterUI.categories !== false && (
+                <Select
+                  className="brz-ed-popup__select--block-categories"
+                  options={categories}
+                  value={currentFilter.category}
+                  onChange={value => setFilter({ category: value })}
+                />
+              )}
+              {filterUI.search !== false && (
+                <SearchInput
+                  value={currentFilter.search}
+                  onChange={value => setFilter({ search: value })}
+                />
+              )}
             </div>
             <div className="brz-ed-popup-blocks-body">
               <ScrollPane

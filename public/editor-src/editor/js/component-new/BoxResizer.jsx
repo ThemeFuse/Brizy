@@ -90,7 +90,9 @@ class BoxResizer extends Component {
   };
 
   handleClickOutside = () => {
-    this.setState({ showPoints: false });
+    if (this.state.showPoints) {
+      this.setState({ showPoints: false });
+    }
   };
 
   handleDragStart = () => {

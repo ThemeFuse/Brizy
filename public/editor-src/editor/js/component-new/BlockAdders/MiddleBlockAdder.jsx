@@ -2,6 +2,7 @@ import _ from "underscore";
 import React from "react";
 import UIState from "visual/global/UIState";
 import { rolesHOC } from "visual/component-new/Roles";
+import { getBlocksConfig } from "./utils";
 
 class MiddleBlockAdder extends React.Component {
   static defaultProps = {
@@ -15,6 +16,7 @@ class MiddleBlockAdder extends React.Component {
   open = () => {
     UIState.set("prompt", {
       prompt: "blocks",
+      blocksConfig: getBlocksConfig(),
       onAddBlocks: this.props.onAddBlocks
     });
   };

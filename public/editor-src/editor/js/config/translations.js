@@ -378,6 +378,10 @@ export default {
   // No matches found
   "No matches found": __("No matches found", "brizy"),
 
+  // Popup
+  "Popup": __("Popup", "brizy"),
+  "Close": __("Close", "brizy"),
+
   // WordPress
   "Query": __("Query", "brizy"),
   "Product ID": __("Product ID", "brizy"),

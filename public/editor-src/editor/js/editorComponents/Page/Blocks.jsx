@@ -61,7 +61,12 @@ class Blocks extends EditorArrayComponent {
     }
 
     const nextItemIndex = itemIndex + 1;
-    const showMiddleAdder = nextItemIndex < itemsArray.length;
+    const showMiddleAdder =
+      itemData.value._blockVisibility !== "unlisted" &&
+      // if this item is the last not unlisted one
+      itemsArray
+        .slice(itemIndex + 1)
+        .some(item => item.value._blockVisibility !== "unlisted");
 
     return (
       <div key={itemKey} className="brz-ed-wrap-block-item">
@@ -77,12 +82,16 @@ class Blocks extends EditorArrayComponent {
     );
   }
 
-  renderItemsContainer(items) {
+  renderItemsContainer(items, itemsValue) {
     if (IS_PREVIEW) {
       return items;
     }
 
-    if (items.length === 0) {
+    const allItemsAreUnlisted = itemsValue.every(
+      item => item.value._blockVisibility === "unlisted"
+    );
+
+    if (items.length === 0 || allItemsAreUnlisted) {
       return (
         <FirstBlockAdder onAddBlocks={this.handleBlocksAdd.bind(null, 0)} />
       );
