@@ -52,7 +52,9 @@ class Brizy_TwigEngine {
 
 		$options = array( 'debug' => WP_DEBUG );
 
-		if ( $path = $this->getCacheFolderPath() ) {
+		$disabled = explode( ',', ini_get( 'disable_functions' ) );
+
+		if ( in_array( 'eval', $disabled ) && $path = $this->getCacheFolderPath() ) {
 			$options['cache'] = $path;
 		}
 
@@ -95,7 +97,7 @@ class Brizy_TwigEngine {
 		if ( ! file_exists( $twig_cache ) ) {
 			// delete all folders from brizy/twig
 
-			Brizy_Admin_FileSystem::deleteAllDirectories($twig_cache_root);
+			Brizy_Admin_FileSystem::deleteAllDirectories( $twig_cache_root );
 
 			@mkdir( $twig_cache, 0755, true );
 		}
