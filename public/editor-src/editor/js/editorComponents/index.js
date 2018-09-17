@@ -33,6 +33,7 @@ import SectionHeaderItem from "./SectionHeader/SectionHeaderItem";
 import SectionHeaderStickyItem from "./SectionHeader/SectionHeaderStickyItem";
 import ImageGallery from "./ImageGallery";
 import SectionPopup from "./SectionPopup";
+import Carousel from "./Carousel";
 
 export default {
   Page,
@@ -70,7 +71,8 @@ export default {
   GlobalBlock,
   SectionFooter,
   ImageGallery,
-  SectionPopup
+  SectionPopup,
+  Carousel
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

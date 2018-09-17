@@ -186,7 +186,7 @@ const moveAddableToRow = (oldValue, from, to) => {
   });
   const value = addIn(oldValue, to.itemPath, newColumn);
 
-  return normalizeColumnsWidths(value, to.containerPath);
+  return normalizeColumnsWidths(value, to.containerPath, from);
 };
 
 const moveShortcodeToRow = (oldValue, from, to, movedShortcode) => {
@@ -199,7 +199,8 @@ const moveShortcodeToRow = (oldValue, from, to, movedShortcode) => {
   if (from.itemPath.length < to.itemPath.length) {
     value = normalizeColumnsWidths(
       addIn(oldValue, to.itemPath, newColumn),
-      to.containerPath
+      to.containerPath,
+      from
     );
     value = removeIn(value, from.itemPath);
 
@@ -209,7 +210,7 @@ const moveShortcodeToRow = (oldValue, from, to, movedShortcode) => {
   value = removeIn(oldValue, from.itemPath);
   value = addIn(value, to.itemPath, newColumn);
 
-  return normalizeColumnsWidths(value, to.containerPath);
+  return normalizeColumnsWidths(value, to.containerPath, from);
 };
 
 const moveShortcodeToSection = (oldValue, from, to, movedShortcode) => {
@@ -236,11 +237,16 @@ const moveColumnToSection = (oldValue, from, to) => {
   return moveColumns(oldValue, from, newTo, newRow);
 };
 
-const normalizeColumnsWidths = (value, path) => {
+const normalizeColumnsWidths = (value, path, from) => {
   const targetColumns = getIn(value, path);
+  const { containerType, containerPath } = from;
+  const inCarousel =
+    containerType === "carousel" && _.isEqual(containerPath, path);
+
   if (
     !targetColumns ||
-    !_.every(targetColumns, ({ type }) => type === "Column")
+    !_.every(targetColumns, ({ type }) => type === "Column") ||
+    inCarousel
   )
     return value;
 
@@ -262,20 +268,24 @@ const moveElement = (oldValue, from, to, newValue) => {
   if (isSourceFirst(from.itemPath, to.itemPath)) {
     value = normalizeColumnsWidths(
       addIn(oldValue, to.itemPath, newValue),
-      to.containerPath
+      to.containerPath,
+      from
     );
     return normalizeColumnsWidths(
       removeIn(value, from.itemPath),
-      from.containerPath
+      from.containerPath,
+      from
     );
   } else {
     value = normalizeColumnsWidths(
       removeIn(oldValue, from.itemPath),
-      from.containerPath
+      from.containerPath,
+      from
     );
     return normalizeColumnsWidths(
       addIn(value, to.itemPath, newValue),
-      to.containerPath
+      to.containerPath,
+      from
     );
   }
 };

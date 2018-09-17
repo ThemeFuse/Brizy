@@ -1,0 +1,34 @@
+// Carousel
+.brz-carousel {
+  display: block;
+  width: 100%;
+
+  > .slick-slider {
+    overflow: hidden;
+
+    > .slick-list {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+    .slick-slide {
+      height: auto;
+    }
+    > .slick-list > .slick-track > .slick-slide > div,
+    > .slick-list > .slick-track > .slick-slide > div > .brz-columns {
+      height: 100%;
+    }
+    > .brz-slick-slider__arrow {
+      opacity: 1;
+    }
+    > .brz-slick-slider__dots {
+      bottom: 10px;
+    }
+    .slick-slide {
+      outline: none;
+    }
+  }
+  .brz-rich-text *,
+  .brz-icon-svg {
+    backface-visibility: hidden;
+  }
+}

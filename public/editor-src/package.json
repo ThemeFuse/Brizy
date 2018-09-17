@@ -71,7 +71,7 @@
     "postcss-reporter": "^5.0.0",
     "postcss-scss": "^1.0.4",
     "react-list": "^0.8.7",
-    "react-slick": "^0.23.1",
+    "react-slick": "git+ssh://git@github.com/bagrinsergiu/react-slick.git",
     "rollup-plugin-babel": "^3.0.3",
     "run-sequence": "^2.2.1",
     "stylelint": "^8.4.0",

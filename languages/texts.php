@@ -108,6 +108,7 @@ class Brizy_Languages_Texts
 			"Diamond" => __("Diamond", "brizy"),
 			"Square" => __("Square", "brizy"),
 			"Arrows" => __("Arrows", "brizy"),
+			"Arrows Spacing" => __("Arrows Spacing", "brizy"),
 			"Thin" => __("Thin", "brizy"),
 			"Heavy" => __("Heavy", "brizy"),
 			"Tail" => __("Tail", "brizy"),
@@ -121,6 +122,9 @@ class Brizy_Languages_Texts
 			"Auto" => __("Auto", "brizy"),
 			"Custom" => __("Custom", "brizy"),
 			"Full" => __("Full", "brizy"),
+		  
+			"Carousel" => __("Carousel", "brizy"),
+			"Swipe" => __("Swipe", "brizy"),
 		  
 			// Not Found
 			"Missing Element" => __("Missing Element", "brizy"),

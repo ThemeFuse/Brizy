@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.29<br>
+Stable tag: 1.0.30<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,10 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.30 - 2018-09-17 ###
+* Updated: Carousel library that is used in the editor (react-slick)
+* Fixed: Display keys instead of blank texts in the editor when missing translations
 
 ### 1.0.29 - 2018-09-14 ###
 * Improved: Laid some groundwork for future pro features

@@ -38,25 +38,43 @@ const TARGET = argv.target || argv.t || "none";
 const IS_PRODUCTION = Boolean(argv.production);
 const IS_EXPORT = Boolean(argv.export || argv.e);
 const IS_PRO = Boolean(argv.pro || argv.p);
-const BUILD_DIR = argv["build-dir"]
-  ? argv["build-dir"]
-  : TARGET === "WP" && !IS_PRODUCTION
-    ? "../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
-    : null;
+const BUILD_DIR = argv["build-dir"];
+const BUILD_DIR_PRO = argv["build-dir-pro"];
 const NO_WATCH = Boolean(argv["no-watch"]);
 let ABORTED = false;
 
 const paths = {
   editor: path.resolve(__dirname, "./editor"),
-  template: null, // assigned at run time
-  build: null // assigned at run time
+  template: path.resolve(__dirname, `./templates/${TEMPLATE_NAME}`),
+  build: BUILD_DIR
+    ? path.isAbsolute(BUILD_DIR)
+      ? BUILD_DIR
+      : path.resolve(__dirname, BUILD_DIR)
+    : TARGET === "WP" && !IS_PRODUCTION
+      ? path.resolve(
+          __dirname,
+          "../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
+        )
+      : path.resolve(__dirname, `./build/${TEMPLATE_NAME}`),
+  buildPro: BUILD_DIR_PRO
+    ? path.isAbsolute(BUILD_DIR_PRO)
+      ? BUILD_DIR_PRO
+      : path.resolve(__dirname, BUILD_DIR_PRO)
+    : TARGET === "WP" && !IS_PRODUCTION
+      ? path.resolve(
+          __dirname,
+          "../../apache/wordpress/wp-content/plugins/brizy-pro/public/editor-build"
+        )
+      : path.resolve(__dirname, `./build/${TEMPLATE_NAME}/pro`)
 };
 
 const supportedBrowsers = ["last 2 versions"];
 
 gulp.task(
   "build",
-  [...(IS_PRODUCTION && IS_EXPORT ? ["verifications"] : []), "assignPaths"],
+  [
+    ...(IS_PRODUCTION && IS_EXPORT ? ["verifications"] : []) /* "assignPaths" */
+  ],
   () => {
     if (ABORTED) {
       return;
@@ -146,9 +164,12 @@ gulp.task("assignPaths", () => {
   }
 });
 
-gulp.task("clean", () => {
-  const delOptions = BUILD_DIR ? { force: true } : {};
-  del.sync(paths.build + "/*", delOptions);
+gulp.task("clean", ["clean.free", "clean.pro"]);
+gulp.task("clean.free", () => {
+  del.sync(paths.build + "/*", { force: true });
+});
+gulp.task("clean.pro", () => {
+  del.sync(paths.buildPro + "/*", { force: true });
 });
 
 gulp.task("scss-lint", () => {
@@ -221,6 +242,7 @@ gulp.task("editor.js.compile", done => {
     IS_PRODUCTION,
     IS_EXPORT,
     BUILD_PATH: paths.build,
+    BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH
   };
   const config = [
@@ -312,14 +334,13 @@ gulp.task("editor.js.vendor.concat", done => {
     paths.build + "/editor/js/editor.vendor.bundle.js"
   ];
   const dest = paths.build + "/editor/js";
-  const delOptions = BUILD_DIR ? { force: true } : {};
 
   gulp
     .src(src)
     .pipe(gulpPlugins.concat("editor.vendor.js"))
     .pipe(gulp.dest(dest))
     .on("end", () => {
-      del.sync(src, delOptions);
+      del.sync(src, { force: true });
       done();
     });
 });
@@ -586,6 +607,7 @@ gulp.task("pro.js", done => {
     IS_PRODUCTION,
     IS_EXPORT,
     BUILD_PATH: paths.build,
+    BUILD_PATH_PRO: paths.buildPro,
     NO_WATCH
   };
   const config = webpackConfigPro(options);
@@ -608,7 +630,7 @@ gulp.task("pro.js", done => {
 });
 gulp.task("pro.img.blocks", done => {
   const src = paths.template + "/pro/blocks/**/Preview.jpg";
-  const dest = paths.build + "/pro/img-block-thumbs";
+  const dest = paths.buildPro + "/img-block-thumbs";
   gulp
     .src(src)
     .pipe(
@@ -624,7 +646,8 @@ gulp.task("pro.img.blocks", done => {
 });
 gulp.task("pro.img.templates", done => {
   const src = paths.template + "/pro/templates/**/Preview.jpg";
-  const dest = paths.build + "/pro/img-template-thumbs";
+  const dest = paths.buildPro + "/img-template-thumbs";
+
   gulp
     .src(src)
     .pipe(

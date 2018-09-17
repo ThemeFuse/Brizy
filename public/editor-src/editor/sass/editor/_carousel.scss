@@ -1,0 +1,37 @@
+// Shortcode Carousel
+.brz-carousel {
+  > .slick-slider > .slick-list > .slick-track > .slick-slide {
+    > div > .brz-columns > .brz-ed-border {
+      > .brz-ed-border__inner-1:after {
+        top: 0;
+      }
+      > .brz-ed-border__inner-2:after {
+        bottom: 0;
+      }
+      > .brz-ed-border__inner-1:before,
+      > .brz-ed-border__inner-2:before {
+        top: 0;
+        bottom: 0;
+      }
+      > .brz-ed-border__inner-1:before,
+      > .brz-ed-border__inner-1:after,
+      > .brz-ed-border__inner-2:after {
+        left: 0;
+      }
+      > .brz-ed-border__inner-2:before,
+      > .brz-ed-border__inner-2:after,
+      > .brz-ed-border__inner-1:after {
+        right: 0;
+      }
+    }
+  }
+  > .slick-slider > .slick-list > .slick-track > .slick-active + .slick-active {
+    > div > .brz-columns > .brz-ed-border {
+      > .brz-ed-border__inner-1:before,
+      > .brz-ed-border__inner-1:after,
+      > .brz-ed-border__inner-2:after {
+        left: -2px;
+      }
+    }
+  }
+}

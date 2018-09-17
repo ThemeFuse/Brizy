@@ -10,9 +10,11 @@ function getArrow(src, className) {
   );
 }
 
-$(".brz-slick-slider").each(function() {
+$(".brz-slick-slider, .brz-carousel__slider").each(function() {
   var $this = $(this);
   var data = $this.data();
+  var slidesToShow = data.slidesToShow;
+  var slidesToScroll = data.slidesToScroll;
   var dots = data.dots;
   var dotsClass = data.dotsClass;
   var arrows = data.arrows;
@@ -22,11 +24,13 @@ $(".brz-slick-slider").each(function() {
   var vertical = data.vertical;
   var autoPlay = data.autoPlay;
   var autoPlaySpeed = data.autoPlaySpeed;
+  var swipe = data.swipe;
 
   $this.slick({
-    slidesToShow: 1,
-    swipe: false,
-    draggable: false,
+    slidesToShow: slidesToShow,
+    slidesToScroll: slidesToScroll,
+    swipe: swipe,
+    draggable: swipe,
     dots: dots,
     dotsClass: dotsClass,
     arrows: arrows,
@@ -35,6 +39,15 @@ $(".brz-slick-slider").each(function() {
     fade: fade,
     vertical: vertical,
     autoplay: autoPlay,
-    autoplaySpeed: autoPlaySpeed
+    autoplaySpeed: autoPlaySpeed,
+    responsive: [
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   });
 });

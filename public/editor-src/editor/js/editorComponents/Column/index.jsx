@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import { css } from "glamor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import SortableElement from "visual/component-new/Sortable/SortableElement";
 import Background from "visual/component-new/Background";
@@ -11,7 +10,6 @@ import SortableHandle from "visual/component-new/Sortable/SortableHandle";
 import Animation from "visual/component-new/Animation";
 import Toolbar from "visual/component-new/Toolbar";
 import { Roles } from "visual/component-new/Roles";
-import { hexToRgba } from "visual/utils/color";
 import { wInMobilePage, minWinColumn } from "visual/config/columns";
 import ColumnResizer from "./components/ColumnResizer";
 import { percentageToPixels } from "visual/utils/meta";
@@ -24,6 +22,16 @@ import {
   styleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
+
+const updatedWhenInCarousel = (props, nextProps) => {
+  const { meta } = props;
+  const { meta: newMeta } = nextProps;
+  const inCarousel = meta && Boolean(newMeta.inCarousel);
+  const metaW =
+    meta.desktopW !== newMeta.desktopW || meta.mobileW !== newMeta.mobileW;
+
+  return metaW && inCarousel;
+};
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -40,7 +48,10 @@ class Column extends EditorComponent {
   static defaultValue = defaultValue;
 
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    return (
+      this.optionalSCU(nextProps) ||
+      updatedWhenInCarousel(this.props, nextProps)
+    );
   }
 
   handleToolbarOpen = () => {
@@ -122,7 +133,7 @@ class Column extends EditorComponent {
     } = v;
 
     let wInMobileCol = meta.mobileW;
-    if (meta.row.isInner && meta.desktopW <= wInMobilePage) {
+    if (meta.row && meta.row.isInner && meta.desktopW <= wInMobilePage) {
       wInMobileCol = meta.mobileW * (columnWidth / 100);
     }
     const wInDesktopCol = meta.desktopW * (columnWidth / 100);
@@ -192,9 +203,15 @@ class Column extends EditorComponent {
     });
   }
 
+  isInnerRow() {
+    const { meta } = this.props;
+
+    return meta.row && meta.row.isInner;
+  }
+
   renderToolbar(v) {
-    const { row } = this.props.meta;
-    const isInnerRow = row.isInner;
+    const { inGrid } = this.props.meta;
+    const isInnerRow = this.isInnerRow();
 
     return (
       <div className="brz-ed-column__toolbar">
@@ -212,7 +229,7 @@ class Column extends EditorComponent {
                   this.floatingButton = el;
                 }}
                 reactToClick={false}
-                color={isInnerRow ? "red" : "blue"}
+                color={isInnerRow && inGrid ? "red" : "blue"}
               />
             </div>
           </SortableHandle>
@@ -223,16 +240,18 @@ class Column extends EditorComponent {
 
   renderResizer = position => {
     const {
-      meta: {
-        row: {
-          isInner: isInnerRow,
-          item: { isFirst, isLast }
-        }
-      },
+      meta: { row, inGrid },
       popoverData,
       onResize,
       onResizeEnd
     } = this.props;
+
+    if (!inGrid) {
+      return null;
+    }
+
+    const { isFirst, isLast } = row.item;
+    const isInnerRow = this.isInnerRow();
 
     if ((isFirst && position === "left") || (isLast && position === "right")) {
       return null;
@@ -242,7 +261,7 @@ class Column extends EditorComponent {
       <ColumnResizer
         popoverData={popoverData}
         position={position}
-        color={isInnerRow ? "red" : "blue"}
+        color={isInnerRow && inGrid ? "red" : "blue"}
         onResize={({ deltaX }) => onResize(position, deltaX)}
         onResizeEnd={onResizeEnd}
       />
@@ -295,10 +314,10 @@ class Column extends EditorComponent {
 
     const { animationName, animationDuration, animationDelay, items } = v;
     const {
-      meta: { row },
+      meta: { inGrid },
       path
     } = this.props;
-    const isInnerRow = row.isInner;
+    const isInnerRow = this.isInnerRow();
     const styles = {
       ...bgStyleCSSVars(v, this.props),
       ...styleCSSVars(v, this.props)
@@ -323,7 +342,7 @@ class Column extends EditorComponent {
                 this.containerBorder = input;
               }}
               className={borderClassName}
-              borderColor={isInnerRow ? "red" : "blue"}
+              borderColor={isInnerRow && inGrid ? "red" : "blue"}
               borderStyle="solid"
               reactToClick={false}
               path={path}
