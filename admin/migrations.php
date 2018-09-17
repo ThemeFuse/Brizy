@@ -23,17 +23,10 @@ class Brizy_Admin_Migrations {
 	public function migrateTo( $version ) {
 
 		$latestExecutedMigration = $this->getLatestRunMigration();
+		$latestVersion = $latestExecutedMigration->getVersion();
 
-		if ( $latestExecutedMigration ) {
-			$latestVersion = $latestExecutedMigration->getVersion();
-		} else {
-			$latestVersion = BRIZY_VERSION;
-		}
-
-
-		if ( version_compare( $version, $latestVersion ) === 1 ) {
-			// upgrade
-			// execute all migration that were not run
+		$version_compare = version_compare( $version, $latestVersion );
+		if ( $version_compare === 1 ) {
 			$this->upgradeTo( $version );
 		}
 	}
@@ -48,7 +41,6 @@ class Brizy_Admin_Migrations {
 		$wpdb->query( 'START TRANSACTION ' );
 
 		Brizy_Logger::instance()->debug( 'Starting migration process: [upgrading]' );
-
 
 		try {
 
@@ -160,7 +152,7 @@ class Brizy_Admin_Migrations {
 		$migrations = $this->getExecutedMigrations();
 
 		if ( count( $migrations ) == 0 ) {
-			return;
+			return new Brizy_Admin_Migrations_NullMigration();
 		}
 
 		return end( $migrations );
