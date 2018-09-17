@@ -686,7 +686,7 @@ class Brizy_Editor_API {
 	}
 
 	protected function static_url() {
-		return brizy()->get_url( '/includes/editor/static' );
+		return Brizy_Editor::get()->get_url( '/includes/editor/static' );
 	}
 
 	private function authorize() {
@@ -780,7 +780,7 @@ class Brizy_Editor_API {
 		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
 
 		$post_query = array(
-			'post_type'      => brizy()->supported_post_types(),
+			'post_type'      => Brizy_Editor::get()->supported_post_types(),
 			'posts_per_page' => - 1,
 			'post_status'    => 'publish',
 			'orderby'        => 'post_title',

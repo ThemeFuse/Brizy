@@ -43,10 +43,28 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$project                     = new self( Brizy_Editor_API_Project::createFromSerializedData( unserialize($data['api_project']) ) );
+		$project                     = new self( Brizy_Editor_API_Project::createFromSerializedData( unserialize( $data['api_project'] ) ) );
 		$project->creation_signature = $data['creation_signature'];
 
 		return $project;
+	}
+
+	static public function registerCustomPostType() {
+		register_post_type( self::BRIZY_PROJECT,
+			array(
+				'public'              => false,
+				'has_archive'         => false,
+				'description'         => __( 'Brizy Project.' ),
+				'publicly_queryable'  => false,
+				'show_ui'             => false,
+				'show_in_menu'        => false,
+				'query_var'           => false,
+				'hierarchical'        => false,
+				'show_in_rest'        => false,
+				'exclude_from_search' => true,
+				'supports'            => array( 'title', 'revisions', 'page-attributes' )
+			)
+		);
 	}
 
 
@@ -66,7 +84,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 			if ( is_array( $project ) ) {
 				$project = self::createFromSerializedData( $project );
-			} elseif($project instanceof self) {
+			} elseif ( $project instanceof self ) {
 				$project->save();
 			}
 
@@ -176,7 +194,6 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 	public function set_globals_as_json( $globals ) {
 		$this->api_project->set_globals_as_json( $globals );
-
 
 
 		return $this;

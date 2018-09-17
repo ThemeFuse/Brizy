@@ -92,7 +92,7 @@ class Brizy_Public_Main {
 		global $wp_admin_bar;
 
 		$wp_admin_bar->add_menu( array(
-			'id'    => brizy()->get_slug() . '-post-preview-url',
+			'id'    => Brizy_Editor::get()->get_slug() . '-post-preview-url',
 			'title' => __( 'Preview' ),
 			'href'  => get_preview_post_link(),
 			'meta'  => array(
@@ -103,7 +103,7 @@ class Brizy_Public_Main {
 		$status = get_post_status( $this->post->get_id() );
 		if ( in_array( $status, array( 'publish', 'future', 'private' ) ) ) {
 			$wp_admin_bar->add_menu( array(
-				'id'    => brizy()->get_slug() . '-post-view-url',
+				'id'    => Brizy_Editor::get()->get_slug() . '-post-view-url',
 				'title' => __( 'View' ),
 				'href'  => get_permalink(),
 				'meta'  => array(
