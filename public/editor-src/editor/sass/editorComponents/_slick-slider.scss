@@ -89,14 +89,7 @@
   .brz-bg-content {
     transform: translateZ(0);
   }
-  .brz-container__wrap {
-    align-items: center;
-  }
-  &:not(.slick-initialized) {
-    & > .brz-section__items:not(:first-child) {
-      display: none;
-    }
-  }
+
   // Animation
   &--fade {
     .slick-slide {
@@ -117,20 +110,6 @@
 .slick-track {
   display: flex;
   flex-wrap: wrap;
-}
-.slick-slide {
-  height: auto;
-
-  .brz-section__content {
-    height: 100%;
-
-    > .brz-bg > .brz-bg-content {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-  }
 }
 
 // Dots

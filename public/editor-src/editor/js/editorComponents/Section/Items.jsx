@@ -162,6 +162,8 @@ class SectionItems extends EditorArrayComponent {
         ret = (
           <div
             className="brz-slick-slider"
+            data-slides-to-show={1}
+            data-slides-to-scroll={1}
             data-arrows={sliderArrows !== "none"}
             data-next-arrow={arrowIcon}
             data-prev-arrow={arrowIcon}
@@ -171,6 +173,7 @@ class SectionItems extends EditorArrayComponent {
             data-vertical={sliderAnimation === "vertical"}
             data-auto-play={sliderAutoPlay}
             data-auto-play-speed={sliderAutoPlaySpeed * 1000}
+            data-swipe={false}
           >
             {items}
           </div>

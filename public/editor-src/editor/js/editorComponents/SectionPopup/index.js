@@ -6,7 +6,8 @@ import Background from "visual/component-new/Background";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import EditorIcon from "visual/component-new/EditorIcon";
 import ThemeIcon from "visual/component-new/ThemeIcon";
-import SortableZIndex from "visual/component-new//Sortable/SortableZIndex";
+import SortableZIndex from "visual/component-new/Sortable/SortableZIndex";
+import { Roles } from "visual/component-new/Roles";
 import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { uuid } from "visual/utils/uuid";
@@ -191,19 +192,21 @@ class SectionPopup extends EditorComponent {
         <div className="brz-popup__close" onClick={this.handleDropClick}>
           <EditorIcon icon="nc-close-popup" />
         </div>
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {this.renderToolbar(v)}
-          {this.renderItems(v)}
-        </ContainerBorder>
+        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+          <ContainerBorder
+            ref={el => {
+              this.containerBorder = el;
+            }}
+            borderStyle="none"
+            activeBorderStyle="none"
+            reactToClick={false}
+            showBorders={false}
+            path={this.getPath()}
+          >
+            {this.renderToolbar(v)}
+            {this.renderItems(v)}
+          </ContainerBorder>
+        </Roles>
       </div>
     );
   }

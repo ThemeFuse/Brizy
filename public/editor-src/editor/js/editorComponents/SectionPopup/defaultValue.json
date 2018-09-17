@@ -7,9 +7,9 @@
   "bgPositionY": 50,
   "bgPositionX": 50,
 
-  "colorHex": "#239ddb",
+  "colorHex": "#ffffff",
   "colorOpacity": 1,
-  "colorPalette": "color3",
+  "colorPalette": "",
   "hoverColorHex": "#239ddb",
   "hoverColorOpacity": 0.8,
   "hoverColorPalette": "color3",

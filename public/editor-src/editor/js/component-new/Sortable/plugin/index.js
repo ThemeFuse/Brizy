@@ -467,6 +467,13 @@ class Sortable {
     const sourceElementType = sourceElement.getAttribute("data-sortable-type");
 
     return allSortableNodes.filter(node => {
+      if (
+        node.dataset.sortableDisabled === "true" ||
+        node.closest("[data-sortable-disabled='true']")
+      ) {
+        return false;
+      }
+
       // call custom filter callback if provided
       if (typeof node.sortableInfo.acceptElements === "function") {
         const from = {
@@ -499,7 +506,10 @@ class Sortable {
           const zIndex = node.sortableInfo.zIndex;
           const depth = node.sortableInfo.depth;
 
-          if (zIndex > acc.zIndex  || (zIndex === acc.zIndex && depth > acc.depth)) {
+          if (
+            zIndex > acc.zIndex ||
+            (zIndex === acc.zIndex && depth > acc.depth)
+          ) {
             return { node, depth, zIndex };
           }
         }

@@ -196,6 +196,12 @@ export default {
       mobileMarginTop: 0,
       mobileMarginBottom: 0
     },
+    "wrapper--carousel": {
+      showToolbar: "on"
+    },
+    "column--carousel": {
+      width: 100
+    },
     "hide-row-borders": {
       showToolbar: "off"
     },

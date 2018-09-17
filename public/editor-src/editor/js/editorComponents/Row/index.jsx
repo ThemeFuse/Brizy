@@ -144,6 +144,7 @@ class Row extends EditorComponent {
         isInner: this.isInnerRow(),
         itemsLength: items.length
       },
+      inGrid: true,
       mobileW,
       desktopW
     });
