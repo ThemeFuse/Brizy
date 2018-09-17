@@ -115,10 +115,10 @@ class Brizy_Admin_Migrations {
 	 * @return Brizy_Admin_Migrations_MigrationInterface[]
 	 */
 	private function getExecutedMigrations() {
-		//$executed   = get_option( self::BRIZY_MIGRATIONS, array() );
-		$executed   = array(
-			array( 'version' => '1.0.27', 'class' => 'Brizy_Admin_Migrations_JsonUpdateMigration' )
-		);
+		$executed   = get_option( self::BRIZY_MIGRATIONS, array() );
+//		$executed   = array(
+//			array( 'version' => '1.0.27', 'class' => 'Brizy_Admin_Migrations_JsonUpdateMigration' )
+//		);
 		$migrations = array();
 		foreach ( $executed as $migration ) {
 			$className    = $migration['class'];

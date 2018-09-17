@@ -6,7 +6,7 @@
  * Time: 4:47 PM
  */
 
-class Brizy_Admin_Migrations_SecondUpdateMigration implements Brizy_Admin_Migrations_MigrationInterface {
+class Brizy_Admin_Migrations_GlobalsToCustomPostMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
 	/**
 	 * Return the version
@@ -14,7 +14,7 @@ class Brizy_Admin_Migrations_SecondUpdateMigration implements Brizy_Admin_Migrat
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.28';
+		return '1.0.29';
 	}
 
 	/**
@@ -23,6 +23,6 @@ class Brizy_Admin_Migrations_SecondUpdateMigration implements Brizy_Admin_Migrat
 	 * @return mixed
 	 */
 	public function execute() {
-	}
 
+	}
 }
