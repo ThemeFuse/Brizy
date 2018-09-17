@@ -121,9 +121,13 @@ class Image extends EditorComponent {
   };
 
   updateContainerWidth = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     const { containerWidth: stateContainerWidth } = this.state;
 
-    if (this.mounted && getStore().getState().ui.deviceMode === "desktop") {
+    if (getStore().getState().ui.deviceMode === "desktop") {
       const containerWidth = this.container.clientWidth;
 
       if (containerWidth !== stateContainerWidth) {
@@ -133,6 +137,10 @@ class Image extends EditorComponent {
   };
 
   updateContainerMaxWidth = _.debounce(() => {
+    if (!this.mounted) {
+      return;
+    }
+
     const { mobileW } = this.props.meta;
 
     const {

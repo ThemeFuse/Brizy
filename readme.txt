@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.29
+Stable tag: 1.0.30
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,10 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.30 - 2018-09-17 =
+* Updated: Carousel library that is used in the editor (react-slick)
+* Fixed: Display keys instead of blank texts in the editor when missing translations
 
 = 1.0.29 - 2018-09-14 =
 * Improved: Laid some groundwork for future pro features

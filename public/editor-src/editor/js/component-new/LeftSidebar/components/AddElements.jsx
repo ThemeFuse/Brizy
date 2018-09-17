@@ -19,7 +19,9 @@ class DrawerComponent extends React.Component {
     const { from, to } = data;
 
     const shortcodes = Editor.getShortcodes();
-    const { resolve } = shortcodes[type][from.elementIndex];
+    const { resolve } = shortcodes[type].filter(shortcode => !shortcode.hidden)[
+      from.elementIndex
+    ];
     const itemData = setIds(resolve);
 
     const toContainerPath = to.sortableNode

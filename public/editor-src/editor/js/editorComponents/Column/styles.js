@@ -10,6 +10,10 @@ const aligns = {
   bottom: "flex-end"
 };
 
+const isInnerRow = meta => {
+  return meta.row && meta.row.isInner;
+};
+
 export function bgStyleClassName(v, props) {
   const { showOnDesktop, showOnMobile, customClassName, items } = v;
   const hasItems = items.length >= 1;
@@ -62,7 +66,7 @@ export function bgStyleClassName(v, props) {
         borderTopRightRadius: "var(--borderTopRightRadius)",
         borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
         borderBottomRightRadius: "var(--borderBottomRightRadius)",
-        boxShadow: "var(--boxShadow)",
+        boxShadow: "var(--boxShadow)"
       },
       "> .brz-bg-content": {
         borderTopWidth: "var(--borderTopWidth)",
@@ -328,7 +332,7 @@ export function bgStyleClassName(v, props) {
           borderRadiusType === "grouped"
             ? `${borderRadius}px`
             : `${borderBottomRightRadius}px`,
-        boxShadow: boxShadowStyle,
+        boxShadow: boxShadowStyle
       },
       "> .brz-bg-media > .brz-bg-image": {
         backgroundImage: bgImageSrc ? `url(${imageUrl(bgImageSrc)})` : "none",
@@ -619,7 +623,7 @@ export function styleClassName(v, props) {
       }
     };
 
-    if (meta.row.isInner && meta.desktopW <= wInMobilePage) {
+    if (isInnerRow(meta) && meta.desktopW <= wInMobilePage) {
       glamorObj["@media (min-width: 320px)"] = {
         ".brz &": {
           willChange: "flex, max-width",
@@ -647,7 +651,7 @@ export function styleCSSVars(v, props) {
 
   const { width } = v;
   const { meta } = props;
-  const needMobileWidth = meta.row.isInner && meta.desktopW <= wInMobilePage;
+  const needMobileWidth = isInnerRow(meta) && meta.desktopW <= wInMobilePage;
 
   return {
     "--width": `${width}%`,

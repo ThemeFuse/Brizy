@@ -52,6 +52,7 @@ class Sortable extends React.Component {
     acceptElements: [],
     isGrid: false,
     blindZone: null,
+    disabled: false,
     onSort,
     onStart: _.noop,
     onEnd: _.noop
@@ -110,7 +111,7 @@ class Sortable extends React.Component {
   };
 
   render() {
-    const { children, type, path } = this.props;
+    const { children, type, path, disabled } = this.props;
 
     if (IS_PREVIEW) {
       return React.Children.only(children);
@@ -122,6 +123,7 @@ class Sortable extends React.Component {
           className="brz-ed-sortable--empty"
           data-sortable-type={type}
           data-sortable-path={path.join(".")}
+          data-sortable-disabled={disabled}
         >
           <div className="brz-ed-border__sortable brz-ed-border__inner-1 brz-ed-border--no-space brz-ed-border--grey brz-ed-border--dotted brz-ed-border--active" />
           <div className="brz-ed-border__sortable brz-ed-border__inner-2 brz-ed-border--no-space brz-ed-border--grey brz-ed-border--dotted brz-ed-border--active" />
@@ -135,7 +137,8 @@ class Sortable extends React.Component {
 
     return React.cloneElement(React.Children.only(children), {
       "data-sortable-type": type,
-      "data-sortable-path": path.join(".")
+      "data-sortable-path": path.join("."),
+      "data-sortable-disabled": disabled
     });
   }
 }

@@ -17,11 +17,9 @@ class Items extends EditorArrayComponent {
   };
 
   handleSortableAcceptElements = (from, to) => {
-    const {
-      row: { isInner: insideInnerRow }
-    } = this.props.meta;
+    const { row } = this.props.meta;
 
-    if (insideInnerRow) {
+    if (row && row.isInner) {
       if (from.elementType === "column" || from.elementType === "row") {
         return false;
       }
