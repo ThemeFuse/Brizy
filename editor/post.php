@@ -195,7 +195,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public static function checkIfPostTypeIsSupported( $wp_post_id, $throw = true ) {
 		$type = get_post_type( $wp_post_id );
 
-		$supported_post_types   = brizy()->supported_post_types();
+		$supported_post_types   = Brizy_Editor::get()->supported_post_types();
 		$supported_post_types[] = 'revision';
 
 		if ( ! in_array( $type, $supported_post_types ) ) {
@@ -315,7 +315,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$result = array();
 		foreach ( $posts as $p ) {
-			if ( in_array( $p->post_type, brizy()->supported_post_types() ) ) {
+			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
 				$result[] = Brizy_Editor_Post::get( $p->post_id );
 			}
 		}
@@ -332,7 +332,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @throws Exception
 	 */
 	public static function create( $project, $post ) {
-		if ( ! in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() ) ) {
+		if ( ! in_array( ( $type = get_post_type( $post->ID ) ), Brizy_Editor::get()->supported_post_types() ) ) {
 			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
 				"Brizy editor doesn't support '$type' post type 2"
 			);

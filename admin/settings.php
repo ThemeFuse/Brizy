@@ -59,8 +59,8 @@ class Brizy_Admin_Settings {
 			return;
 		}
 
-		add_menu_page( brizy()->get_name(),
-			brizy()->get_name(),
+		add_menu_page( Brizy_Editor::get()->get_name(),
+			Brizy_Editor::get()->get_name(),
 			'read',
 			self::menu_slug(),
 			array( $this, 'render' ),
@@ -137,7 +137,7 @@ class Brizy_Admin_Settings {
 	 * @return bool
 	 */
 	public function is_settings_page() {
-		return get_current_screen()->base === "settings_page_" . brizy()->get_slug() . "-settings";
+		return get_current_screen()->base === "settings_page_" . Brizy_Editor::get()->get_slug() . "-settings";
 	}
 
 	public function settings_submit() {
