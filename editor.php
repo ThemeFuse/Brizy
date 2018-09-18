@@ -15,36 +15,31 @@ class Brizy_Editor {
 	 * Brizy_Editor constructor.
 	 */
 	private function __construct() {
-		//add_filter( 'brizy:post_types', array( $this, '_filter_brizy_supported_port_types' ) );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
 
-		//add_action( 'wp_loaded', 'brizy_initialize_admin_edit_Brizy_Public_Main' );
-		//add_action( 'wp', 'brizy_initialize_front_end_Brizy_Public_Main' );
 
 		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ) {
 			Brizy_Admin_Rules_Api::_init();
 		}
-		Brizy_Admin_Templates::_init();
 
 		add_filter( "brizy:templates", array( $this, 'filterPublicTemplates' ) );
+	}
 
+	public function wordpressInit() {
+
+		Brizy_Admin_Templates::_init();
+
+		$this->loadShortcodes();
+		$this->registerCustomPostTemplates();
+		$this->initializeAssetLoaders();
 
 		$supported_post_types   = $this->supported_post_types();
 		$supported_post_types[] = Brizy_Admin_Templates::CP_TEMPLATE;
 		foreach ( $supported_post_types as $type ) {
 			add_filter( "theme_{$type}_templates", array( $this, 'registerPageTemplates' ) );
 		}
-	}
-
-	/**
-	 *
-	 */
-	public function wordpressInit() {
-		$this->loadShortcodes();
-		$this->registerCustomPostTemplates();
-		$this->initializeAssetLoader();
 	}
 
 	/**
@@ -123,9 +118,8 @@ class Brizy_Editor {
 
 
 	public function registerCustomPostTemplates() {
-		do_action( 'brizy_register_custom_posts' );
-
 		Brizy_Editor_Project::registerCustomPostType();
+		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}
 
 	/**
@@ -218,7 +212,7 @@ class Brizy_Editor {
 		$c = new Brizy_Shortcode_Navigation();
 	}
 
-	private function initializeAssetLoader() {
+	private function initializeAssetLoaders() {
 		try {
 			$project     = Brizy_Editor_Project::get();
 			$url_builder = new Brizy_Editor_UrlBuilder( $project );

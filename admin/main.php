@@ -28,6 +28,7 @@ class Brizy_Admin_Main {
 		// watch all supported posts and create meta revisions
 		$metaManager = new Brizy_Admin_Post_RevisionManager();
 		$metaManager->addMonitor( new Brizy_Admin_Post_BrizyPostsMonitor() );
+		$metaManager->addMonitor( new Brizy_Admin_Post_ProjectPostMonitor() );
 
 		// enqueue admin scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
@@ -75,7 +76,6 @@ class Brizy_Admin_Main {
 		try {
 
 			$bpost = Brizy_Editor_Post::get( $post );
-
 
 			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->get_parent_id() );
 
@@ -406,7 +406,7 @@ class Brizy_Admin_Main {
 
 			if ( false === strpos( $p->post_content, 'brz-root__container' ) ) {
 				$p->post_content .= '<div class="brz-root__container"></div>';
-				$update_post = true;
+				$update_post     = true;
 			}
 
 			if ( $update_post ) {

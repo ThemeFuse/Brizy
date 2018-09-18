@@ -168,12 +168,13 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 //	}
 
 	/**
-	 * @param $project
+	 * @param Brizy_Editor_Project $project
 	 * @param $page_data
 	 * @param $config
 	 *
 	 * @return string
 	 * @throws Brizy_Editor_API_Exceptions_Exception
+	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
@@ -182,7 +183,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @throws Twig_Error_Runtime
 	 * @throws Twig_Error_Syntax
 	 */
-	public function compile_page( $project, $page_data, $config ) {
+	public function compile_page( Brizy_Editor_Project $project, $page_data, $config ) {
 
 		$compile_url      = Brizy_Config::COMPILER_URI;
 		$template_version = BRIZY_EDITOR_VERSION;
@@ -199,7 +200,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 					'is_index' => true
 				)
 			) ), // ???
-			'globals_json'          => json_encode( $project->get_globals() ),
+			'globals_json'          => $project->getGlobalsAsJson(),
 			'page_id'               => 1
 		);
 
@@ -258,8 +259,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 * @return array
 	 */
 	protected function get_headers() {
-		return array(
-			//'Authorization' => 'Bearer ' . $this->access_token->access_token()
+		return array(//'Authorization' => 'Bearer ' . $this->access_token->access_token()
 		);
 	}
 

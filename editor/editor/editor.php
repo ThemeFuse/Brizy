@@ -104,7 +104,7 @@ class Brizy_Editor_Editor_Editor {
 				'origin'  => Brizy_Config::EDITOR_HOST_ORIGIN,
 				'primary' => Brizy_Config::EDITOR_HOST_PRIMARY,
 			),
-			'project'         => $this->project->get_id(),
+			'project'         => $this->project->getId(),
 			'projectLanguage' => array(
 				'id'      => 7,
 				'variant' => array(

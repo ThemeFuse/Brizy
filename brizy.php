@@ -46,15 +46,16 @@ function brizy_load() {
 	}
 
 	$instance = Brizy_Editor::get();
-
 }
 
 
 function brizy_notices() {
 	?>
     <div class="notice notice-error is-dismissible">
-        <p>Brizy requires PHP version 5.4+, you currently running PHP <?php echo PHP_VERSION ?>. <b>BRIZY IS NOT
-                RUNNING. </b></p>
+        <p>
+            Brizy requires PHP version 5.4+, you currently running PHP <?php echo PHP_VERSION ?>.
+            <b>BRIZY IS NOT RUNNING. </b>
+        </p>
     </div>
 	<?php
 }
