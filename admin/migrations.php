@@ -75,7 +75,6 @@ class Brizy_Admin_Migrations {
 
 					Brizy_Logger::instance()->debug( 'Run migration: ' . $migrationClass, array( $migrationClass ) );
 				}
-
 			}
 
 			$wpdb->query( 'COMMIT' );

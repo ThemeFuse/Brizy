@@ -93,67 +93,67 @@ class Brizy_Editor_User {
 	/**
 	 * @return string
 	 */
-	protected function generateRandomEmail() {
+	static protected function generateRandomEmail() {
 		$uniqid = 'brizy-' . md5( uniqid( '', true ) );
 
 		return $uniqid . '@brizy.io';
 	}
 
 
-	/**
-	 * @param null $from_project_id
-	 * @param bool $is_local
-	 *
-	 * @return Brizy_Editor_API_Project
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 */
-	public function create_project( $from_project_id = null, $is_local = true ) {
-		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $from_project_id ) );
+//	/**
+//	 * @param null $from_project_id
+//	 * @param bool $is_local
+//	 *
+//	 * @return Brizy_Editor_API_Project
+//	 * @throws Brizy_Editor_API_Exceptions_Exception
+//	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+//	 */
+//	public function create_project( $from_project_id = null, $is_local = true ) {
+//		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $from_project_id ) );
+//
+//		$project_data = array(
+//			'id'          => md5( uniqid( 'Local project', true ) ),
+//			'title'       => 'Local project ',
+//			'globals'     => '{"project":{},"language":{}}',
+//			'name'        => uniqid( 'Local project', true ),
+//			'user'        => null,
+//			'template'    => array( 'slug' => 'brizy' ),
+//			'created'     => new DateTime(),
+//			'updated'     => new DateTime(),
+//			'languages'   => array(),
+//			'version'     => BRIZY_EDITOR_VERSION,
+//			'signature'   => Brizy_Editor_Signature::get(),
+//			'cloned_from' => $from_project_id,
+//		);
+//
+//		$api_project = new Brizy_Editor_API_Project( $project_data );
+//
+//		return $api_project;
+//	}
 
-		$project_data = array(
-			'id'          => md5( uniqid( 'Local project', true ) ),
-			'title'       => 'Local project ',
-			'globals'     => '{"project":{},"language":{}}',
-			'name'        => uniqid( 'Local project', true ),
-			'user'        => null,
-			'template'    => array( 'slug' => 'brizy' ),
-			'created'     => new DateTime(),
-			'updated'     => new DateTime(),
-			'languages'   => array(),
-			'version'     => BRIZY_EDITOR_VERSION,
-			'signature'   => Brizy_Editor_Signature::get(),
-			'cloned_from' => $from_project_id,
-		);
-
-		$api_project = new Brizy_Editor_API_Project( $project_data );
-
-		return $api_project;
-	}
-
-	/**
-	 * @param Brizy_Editor_API_Project $project
-	 *
-	 * @return array|mixed|object
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 * @throws Exception
-	 */
-	public function update_project( $project ) {
-		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
-
-		$updated_project = $this->get_client()->update_project( $project );
-
-		Brizy_Editor_Project::get()->updateProjectData( new Brizy_Editor_API_Project( $updated_project ) );
-
-		return $updated_project;
-	}
+//	/**
+//	 * @param Brizy_Editor_API_Project $project
+//	 *
+//	 * @return array|mixed|object
+//	 * @throws Brizy_Editor_API_Exceptions_Exception
+//	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+//	 * @throws Exception
+//	 */
+//	public function update_project( $project ) {
+//		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
+//
+//		$updated_project = $this->get_client()->update_project( $project );
+//
+//		Brizy_Editor_Project::get()->updateProjectData( new Brizy_Editor_API_Project( $updated_project ) );
+//
+//		return $updated_project;
+//	}
 
 	/**
 	 * @param Brizy_Editor_API_Project $project

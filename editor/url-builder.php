@@ -259,7 +259,7 @@ class Brizy_Editor_UrlBuilder {
 	public function external_asset_url( $path = null, $template_version = null, $template_slug = null ) {
 
 		if ( is_null( $template_slug ) ) {
-			$template_slug = $this->project->get_template_slug();
+			$template_slug = $this->project->getTemplateSlug();
 		}
 		if ( is_null( $template_version ) ) {
 			$template_version = BRIZY_EDITOR_VERSION;

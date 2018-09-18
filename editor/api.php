@@ -435,8 +435,7 @@ class Brizy_Editor_API {
 
 
 			//$post_id = (int) $this->param( 'post' );
-			$this->project->set_globals_as_json( $data );
-			$this->project->save();
+			$this->project->setGlobalsAsJson( $data );
 
 			// mark all brizy post to be compiled on next view
 			$posts = Brizy_Editor_Post::get_all_brizy_posts();
@@ -722,8 +721,8 @@ class Brizy_Editor_API {
 		$wp_post = $this->post->get_wp_post();
 
 		$globals = array(
-			'id'        => $this->project->get_id(),
-			'gb'        => $this->project->get_globals(),
+			'id'        => $this->project->getId(),
+			'gb'        => $this->project->getGlobals(),
 			'name'      => $wp_post->post_name,
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,

@@ -39,7 +39,6 @@ class Brizy_Admin_Templates {
 	protected function __construct() {
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_action( 'brizy_register_custom_posts', array( $this, 'registerCustomPostTemplate' ) );
 
 		$this->ruleManager = new Brizy_Admin_Rules_Manager();
 	}
@@ -190,7 +189,7 @@ class Brizy_Admin_Templates {
 		}
 	}
 
-	public function registerCustomPostTemplate() {
+	static public function registerCustomPostTemplate() {
 
 		$labels = array(
 			'name'               => _x( 'Templates', 'post type general name' ),
