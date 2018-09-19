@@ -352,9 +352,10 @@ class Brizy_Languages_Texts
 			//-> Image
 			"Style" => __("Style", "brizy"),
 			"Opacity" => __("Opacity", "brizy"),
+			"Contrast" => __("Contrast", "brizy"),
 			"Hue" => __("Hue", "brizy"),
-			"Brigh.." => __("Brigh..", "brizy"),
-			"Satur.." => __("Satur..", "brizy"),
+			"Brightness" => __("Brightness", "brizy"),
+			"Saturation" => __("Saturation", "brizy"),
 			//-> LightBox
 			"LightBox" => __("LightBox", "brizy"),
 			"Open in LightBox" => __("Open in LightBox", "brizy"),

@@ -9,11 +9,11 @@ class SelectItem extends React.Component {
     onClick: _.noop
   };
 
-  getClassName = () => {
+  getClassName() {
     return classnames("brz-control__select-option", {
       active: this.props.active
     });
-  };
+  }
 
   render() {
     const { title, onClick, children } = this.props;

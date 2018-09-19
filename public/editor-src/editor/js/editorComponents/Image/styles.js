@@ -17,9 +17,9 @@ export function imageStylesClassName(v, sizes, props) {
     const maxBorderRadius = Math.round(Math.min(dW, dH) / 2);
     const maxMobileBorderRadius = Math.round(Math.min(mW, mH) / 2);
     const {
-      imageOpacity,
       imageBrightness,
       imageHue,
+      imageContrast,
       imageSaturation,
       boxShadow,
       boxShadowColorHex,
@@ -43,8 +43,7 @@ export function imageStylesClassName(v, sizes, props) {
         maxWidth: `${Math.round(Math.abs((dW * 100) / desktopW))}%`,
         height: !imageSrc ? `${dH}px` : "auto",
         borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`,
-        opacity: `${imageOpacity / 100}`,
-        filter: `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%)`,
+        filter: `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`,
         boxShadow: boxShadowStyle
       },
       "@media (max-width: 768px)": {
@@ -70,11 +69,10 @@ export function imageStylesClassName(v, sizes, props) {
 }
 
 export function imageStylesCSSVars(v) {
-  const { imageOpacity, imageBrightness, imageHue, imageSaturation } = v;
+  const { imageOpacity, imageBrightness, imageHue, imageSaturation, imageContrast } = v;
 
   return {
-    "--imageOpacity": `${imageOpacity / 100}`,
-    "--imageFilter": `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%)`
+    "--imageFilter": `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`
   };
 }
 export function contentStyleClassName(v) {
@@ -173,7 +171,6 @@ export function wrapperStyleCSSVars(v, sizes) {
 export function imgStyleClassName(v) {
   const { className } = v;
   const glamorObj = {
-    opacity: "var(--imageOpacity)",
     filter: "var(--imageFilter)",
 
     ".brz-ed--desktop &": {

@@ -2,6 +2,7 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import Select from "visual/component/controls/Select";
+import SelectOptgroup from "visual/component/controls/Select/SelectOptgroup";
 import SelectItem from "visual/component/controls/Select/SelectItem";
 import EditorIcon from "visual/component-new/EditorIcon";
 
@@ -36,9 +37,22 @@ class SelectOptionType extends React.Component {
     );
   }
 
-  renderChoices() {
-    return this.props.choices.map((item, index) => {
-      const { title, icon, value } = item;
+  renderChoices(choices = this.props.choices) {
+    return choices.map((item, index) => {
+      const { title, icon, optgroup, value } = item;
+
+      if (optgroup && optgroup.length) {
+        return (
+          <SelectOptgroup
+            key={index}
+            title={title}
+            items={this.renderChoices(optgroup)}
+          >
+            {icon && <EditorIcon icon={icon} />}
+            <span className="brz-span">{title}</span>
+          </SelectOptgroup>
+        );
+      }
 
       return (
         <SelectItem key={index} value={value} title={title}>
