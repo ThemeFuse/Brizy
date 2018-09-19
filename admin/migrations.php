@@ -38,6 +38,8 @@ class Brizy_Admin_Migrations {
 
 		global $wpdb;
 
+		wp_raise_memory_limit( 'image' );
+
 		$wpdb->query( 'START TRANSACTION ' );
 
 		Brizy_Logger::instance()->debug( 'Starting migration process: [upgrading]' );
