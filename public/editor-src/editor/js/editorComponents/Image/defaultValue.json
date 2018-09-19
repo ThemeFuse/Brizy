@@ -12,11 +12,12 @@
   "imageSrc": "",
   "imageWidth": 600,
   "imageHeight": 450,
-  "imageOpacity": 100,
   "imageBrightness": 100,
   "imageHue": 0,
   "imageSaturation": 100,
+  "imageContrast": 100,
   "imagePopulation": "",
+  "imageOpacity": 100,
 
   "positionY": 50,
   "positionX": 50,

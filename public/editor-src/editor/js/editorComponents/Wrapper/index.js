@@ -4,19 +4,16 @@ import SortableElement from "visual/component-new/Sortable/SortableElement";
 import SortableHandle from "visual/component-new/Sortable/SortableHandle";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import FloatingButton from "visual/component-new/FloatingButton";
-import Background from "visual/component-new/Background";
 import Animation from "visual/component-new/Animation";
 import Toolbar from "visual/component-new/Toolbar";
 import { Roles } from "visual/component-new/Roles";
-import Items from "./Items";
+import Items from "./items";
 import { percentageToPixels } from "visual/utils/meta";
 import { currentUserRole } from "visual/component-new/Roles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
 import {
   styleClassName,
-  bgStyleClassName,
-  bgStyleCSSVars,
   containerStyleClassName,
   containerStyleCSSVars
 } from "./styles";
@@ -157,12 +154,13 @@ class Wrapper extends EditorComponent {
       Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
     const desktopW = Math.round((meta.desktopW - externalSpacing) * 10) / 10;
 
-    return Object.assign({}, meta, {
+    return {
+      ...meta,
       mobileW,
       desktopW,
       horizontalAlign,
       mobileHorizontalAlign
-    });
+    };
   }
 
   renderToolbar(v) {
@@ -197,7 +195,6 @@ class Wrapper extends EditorComponent {
 
   renderContent(v) {
     const { showToolbar } = v;
-
     const toolbarExtendFilter =
       showToolbar === "on" || currentUserRole() !== "admin"
         ? toolbarExtendItems =>
@@ -220,25 +217,17 @@ class Wrapper extends EditorComponent {
       }
     });
 
-    return (
-      <Background className={bgStyleClassName(v)}>
-        <Items {...itemsProps} />
-      </Background>
-    );
+    return <Items {...itemsProps} />;
   }
 
-  renderForEdit(v, Vi) {
-    const style = {
-      ...bgStyleCSSVars(v),
-      ...containerStyleCSSVars(v)
-    };
+  renderForEdit(v) {
     const { animationName, animationDuration, animationDelay } = v;
 
     return (
       <SortableElement type="shortcode">
         <Animation
           className={styleClassName(v)}
-          style={style}
+          style={containerStyleCSSVars(v)}
           name={animationName !== "none" && animationName}
           duration={animationDuration}
           delay={animationDelay}

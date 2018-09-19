@@ -20,7 +20,20 @@
     justify-content: center;
     background-repeat: no-repeat;
 
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto;
+    }
+
     .brz-video__cover-icon {
+      position: relative;
+      z-index: 1;
       color: #fff;
       display: flex;
       align-items: center;

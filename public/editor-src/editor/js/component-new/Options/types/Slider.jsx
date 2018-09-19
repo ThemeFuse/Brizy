@@ -9,6 +9,7 @@ import { clamp } from "visual/utils/math";
 class SliderOptionType extends React.Component {
   static defaultProps = {
     label: "",
+    title: "",
     display: "inline",
     className: "",
     helperContent: "",
@@ -91,9 +92,11 @@ class SliderOptionType extends React.Component {
     );
   }
 
-  renderIcon(icon) {
+  renderIcon() {
+    const { icon, title } = this.props;
+
     return (
-      <div className="brz-ed-option__slider__icon">
+      <div className="brz-ed-option__slider__icon" title={title}>
         <EditorIcon icon={icon} />
       </div>
     );

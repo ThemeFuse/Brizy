@@ -110,12 +110,6 @@ const handleDelete = function({ index, length }, context) {
   return true;
 };
 
-const handlePopulation = function({ index }, context) {
-  this.quill.format("prepopulation", "visible");
-
-  return true;
-};
-
 const handleArrowChange = function() {
   const { prepopulation, population } = this.quill.getFormat();
 
@@ -136,11 +130,6 @@ const bindings = IS_EDITOR
       delete: {
         key: Keyboard.keys.DELETE,
         handler: handleDelete
-      },
-      population: {
-        key: 51,
-        shiftKey: true,
-        handler: handlePopulation
       },
       arrowUp: {
         key: 38,

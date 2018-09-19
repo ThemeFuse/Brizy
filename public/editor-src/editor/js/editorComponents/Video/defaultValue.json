@@ -39,6 +39,11 @@
   "boxShadowHorizontal": 1,
   "tempBoxShadowColorOpacity": 1,
 
+  "brightness": 100,
+  "hue": 0,
+  "saturation": 100,
+  "contrast": 100,
+
   "mobileSize": 100,
 
   "mobileCoverImageWidth": 0,

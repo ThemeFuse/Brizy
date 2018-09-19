@@ -404,9 +404,9 @@ class Brizy_Admin_Main {
 				$update_post   = true;
 			}
 
-			if ( $p->post_status == 'auto-draft' || $p->post_status == 'draft' ) {
-				$p->post_content = $p->post_content . '<div class="brz-root__container"></div>';
-				$update_post     = true;
+			if ( false === strpos( $p->post_content, 'brz-root__container' ) ) {
+				$p->post_content .= '<div class="brz-root__container"></div>';
+				$update_post = true;
 			}
 
 			if ( $update_post ) {
