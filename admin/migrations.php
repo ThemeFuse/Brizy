@@ -141,7 +141,7 @@ class Brizy_Admin_Migrations {
 			$data[] = array( 'version' => $migration->getVersion(), 'class' => get_class( $migration ) );
 		}
 
-		update_option( self::BRIZY_MIGRATIONS, $data );
+		update_option( self::BRIZY_MIGRATIONS, $data, true );
 	}
 
 	/**

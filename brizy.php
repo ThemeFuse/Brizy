@@ -19,7 +19,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 }
 
 define( 'BRIZY_DEVELOPMENT', false );
-define( 'BRIZY_LOG', true );
+define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '1.0.30' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.58' );
 define( 'BRIZY_FILE', __FILE__ );
@@ -31,7 +31,6 @@ include_once 'autoload.php';
 
 
 add_action( 'plugins_loaded', 'brizy_load' );
-add_action( 'upgrader_process_complete', 'brizy_run_migrations', 9, 2 );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 
 register_activation_hook( BRIZY_FILE, 'brizy_install' );
@@ -43,6 +42,12 @@ function brizy_load() {
 		add_action( 'admin_notices', 'brizy_notices' );
 
 		return;
+	}
+
+	if ( is_admin() && ! is_ajax() ) {
+		// run migrations first
+		$migrations = new Brizy_Admin_Migrations();
+		$migrations->migrateTo( BRIZY_VERSION );
 	}
 
 	$instance = Brizy_Editor::get();
@@ -65,17 +70,6 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 		foreach ( $options['plugins'] as $plugin ) {
 			if ( $plugin == BRIZY_PLUGIN_BASE ) {
 				flush_rewrite_rules();
-			}
-		}
-	}
-}
-
-function brizy_run_migrations( $upgrader_object, $options ) {
-	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
-		foreach ( $options['plugins'] as $plugin ) {
-			if ( $plugin == BRIZY_PLUGIN_BASE ) {
-				$migrations = new Brizy_Admin_Migrations();
-				$migrations->migrateTo( BRIZY_VERSION );
 			}
 		}
 	}
