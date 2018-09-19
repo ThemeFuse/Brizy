@@ -120,6 +120,7 @@ $scroll-border-radius: 4px;
     }
   }
 }
+.brz-control__select-optgroup-label,
 .brz-control__select-option {
   position: relative;
   cursor: pointer;
@@ -137,6 +138,20 @@ $scroll-border-radius: 4px;
 
   &:last-child {
     border-bottom-color: transparent !important;
+  }
+}
+.brz-control__select-optgroup {
+  &-label {
+    cursor: auto;
+  }
+  .brz-control__select-option {
+    padding-left: 20px;
+    border-bottom-color: $control-border-color !important;
+  }
+  &:last-child {
+    .brz-control__select-option:last-child {
+      border-bottom-color: transparent !important;
+    }
   }
 }
 
@@ -167,6 +182,9 @@ $scroll-border-radius: 4px;
     &:hover {
       background-color: transparent;
     }
+  }
+  .brz-control__select-optgroup-label {
+    color: $options-label-color;
   }
 }
 

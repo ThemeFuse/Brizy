@@ -7,6 +7,10 @@
 
   &-clone {
     @extend .brz-wrapper;
+
+    &__wrap {
+      height: 100%;
+    }
   }
   &-clone__item {
     position: relative;

@@ -44,6 +44,31 @@ class Select extends React.Component {
     }
   }
 
+  getScrollPaneStyle() {
+    const { children } = this.props;
+    const childrenCount = React.Children.count(children);
+    let childrenOptgroupCount = 0;
+
+    React.Children.forEach(children, child => {
+      const { items } = child.props;
+
+      if (items && items.length) {
+        childrenOptgroupCount += items.length;
+      }
+    });
+
+    const maxChildrenCount = childrenCount + childrenOptgroupCount;
+
+    return {
+      height: getDropdownHeight(
+        maxChildrenCount,
+        this.props.itemHeight,
+        this.props.minItems,
+        this.props.maxItems
+      )
+    };
+  }
+
   onClickOutside = () => {
     if (this.state.isOpen) {
       this.setState({
@@ -52,7 +77,7 @@ class Select extends React.Component {
     }
   };
 
-  onItemClick = value => {
+  handleItemClick = value => {
     this.setState({
       isOpen: false,
       currentValue: value
@@ -98,15 +123,31 @@ class Select extends React.Component {
   }
 
   renderLabelInput() {
-    const { arrowIcon } = this.props;
+    const { arrowIcon, children } = this.props;
     const { currentValue } = this.state;
-    const children = React.Children.toArray(this.props.children);
-    const selectedItem =
-      children.find(child => child.props.value === currentValue) || children[0];
+    let selectedItem;
+
+    React.Children.forEach(children, child => {
+      const { items } = child.props;
+
+      if (selectedItem) {
+        return;
+      }
+
+      if (items && items.length) {
+        const children = React.Children.toArray(child.props.items);
+
+        selectedItem = children.find(
+          child => child.props.value === currentValue
+        );
+      } else if (child.props.value === currentValue) {
+        selectedItem = child;
+      }
+    });
 
     return (
       <React.Fragment>
-        {selectedItem}
+        {selectedItem || this.findFirstItem()}
         {arrowIcon && (
           <EditorIcon icon={arrowIcon} className="brz-control__select--arrow" />
         )}
@@ -114,26 +155,31 @@ class Select extends React.Component {
     );
   }
 
-  renderOptions = () => {
-    const { children } = this.props;
+  renderItems(children = this.props.children) {
     const { currentValue } = this.state;
 
-    return _.map(children, (child, index) =>
-      React.cloneElement(child, {
+    return React.Children.map(children, (child, index) => {
+      const { value, disabled, items } = child.props;
+
+      if (items && items.length) {
+        return React.cloneElement(child, {
+          key: index,
+          items: this.renderItems(items)
+        });
+      }
+
+      return React.cloneElement(child, {
         key: index,
-        active: child.props.value === currentValue,
-        onClick: child.props.disabled
-          ? null
-          : () => this.onItemClick(child.props.value)
-      })
-    );
-  };
+        active: value === currentValue,
+        onClick: disabled ? null : () => this.handleItemClick(value)
+      });
+    });
+  }
 
   render() {
     const {
       className: _className,
       labelType,
-      children,
       currentValue,
       inputAttributes
     } = this.props;
@@ -144,14 +190,6 @@ class Select extends React.Component {
       _className,
       { opened: isOpen }
     );
-    const scrollPaneStyle = {
-      height: getDropdownHeight(
-        React.Children.count(children),
-        this.props.itemHeight,
-        this.props.minItems,
-        this.props.maxItems
-      )
-    };
 
     return (
       <ClickOutside onClickOutside={this.onClickOutside}>
@@ -166,14 +204,33 @@ class Select extends React.Component {
             ref={this.handleDropdownNode}
             className="brz-control__select-options"
           >
-            <ScrollPane style={scrollPaneStyle}>
-              {this.renderOptions()}
+            <ScrollPane style={this.getScrollPaneStyle()}>
+              {this.renderItems()}
             </ScrollPane>
           </div>
           <input type="hidden" value={currentValue} {...inputAttributes} />
         </div>
       </ClickOutside>
     );
+  }
+
+  findFirstItem(items = this.props.children) {
+    let selectedItem;
+
+    React.Children.forEach(items, item => {
+      const { items } = item.props;
+
+      if (selectedItem) {
+        return;
+      }
+      if (items && items.length) {
+        selectedItem = this.findFirstItem(items);
+      } else {
+        selectedItem = item;
+      }
+    });
+
+    return selectedItem;
   }
 }
 

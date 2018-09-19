@@ -41,7 +41,12 @@ export default class RadioGroup extends React.Component {
       <div className={className}>
         {this.renderOptions()}
         <div>
-          <input className="brz-input" name={name} type="hidden" value={defaultValue} />
+          <input
+            className="brz-input"
+            name={name}
+            type="hidden"
+            value={defaultValue}
+          />
         </div>
       </div>
     );

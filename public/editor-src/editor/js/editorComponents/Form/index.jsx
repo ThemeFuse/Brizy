@@ -1,8 +1,7 @@
 import React from "react";
-import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Config from "visual/global/Config";
-import Items from "./Items";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfigButton from "./extendToolbarButton";
@@ -23,7 +22,12 @@ class Form extends EditorComponent {
     const projectLanguageId = Config.get("projectLanguage").id;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfigButton)
+      itemProps: {
+        meta: this.props.meta,
+        toolbarExtend: this.makeToolbarPropsFromConfig(
+          toolbarExtendConfigButton
+        )
+      }
     });
 
     return (
@@ -38,7 +42,7 @@ class Form extends EditorComponent {
           data-redirect={v.messageRedirect}
           onSubmit={this.handleSubmit}
         >
-          <Items {...itemsProps} />
+          <EditorArrayComponent {...itemsProps} />
         </form>
       </div>
     );

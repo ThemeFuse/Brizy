@@ -180,6 +180,12 @@ export default class QuillComponent extends React.Component {
     );
   };
 
+  handleKeyPress = event => {
+    if (event.key === "#") {
+      this.quill.format("prepopulation", "visible");
+    }
+  };
+
   onBlurAll = event => {
     instances.forEach(instance => {
       const node = ReactDOM.findDOMNode(instance);
@@ -204,6 +210,7 @@ export default class QuillComponent extends React.Component {
           ref={this.handleContentEditableRef}
           dangerouslySetInnerHTML={{ __html: value }}
           onClick={this.handleClick}
+          onKeyPress={this.handleKeyPress}
         />
         <div ref={el => (this.population = el)} />
       </div>

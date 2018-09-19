@@ -1,18 +1,14 @@
 import React from "react";
-import _ from "underscore";
-import classnames from "classnames";
-import { css } from "glamor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import ContainerBorder from "visual/component-new/ContainerBorder";
-import Background from "visual/component-new/Background";
 import Animation from "visual/component-new/Animation";
 import { percentageToPixels } from "visual/utils/meta";
-import Items from "./Items";
+import Items from "./items";
 import * as toolbarExtendConfig from "./extendToolbar";
 import {
   styleClassName,
-  bgStyleClassName,
-  bgStyleCSSVars,
+  wrapStyleClassName,
+  wrapStyleCSSVars,
   containerStyleClassName,
   containerStyleCSSVars,
   itemsStyleClassName,
@@ -147,12 +143,11 @@ class Cloneable extends EditorComponent {
       Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
     const desktopW = Math.round((meta.desktopW - externalSpacing) * 10) / 10;
 
-    return _.extend({}, meta, { mobileW, desktopW, inCloneable: true });
+    return { ...meta, mobileW, desktopW, inCloneable: true };
   }
 
   renderContent(v) {
     const { minItems, maxItems, blockType } = v;
-
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       blockType,
@@ -171,16 +166,16 @@ class Cloneable extends EditorComponent {
     });
 
     return (
-      <Background className={bgStyleClassName(v)}>
+      <div className={wrapStyleClassName(v)}>
         <Items {...itemsProps} />
-      </Background>
+      </div>
     );
   }
 
   renderForEdit(v) {
     const { showBorder } = this.props;
     const style = {
-      ...bgStyleCSSVars(v),
+      ...wrapStyleCSSVars(v),
       ...containerStyleCSSVars(v),
       ...itemsStyleCSSVars(v)
     };

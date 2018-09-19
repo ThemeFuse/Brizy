@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 
 const aligns = {
   left: "flex-start",
@@ -37,7 +36,7 @@ export function styleClassName(v, props) {
   );
 }
 
-export function bgStyleClassName(v) {
+export function wrapStyleClassName(v) {
   let glamorObj;
 
   if (IS_EDITOR) {
@@ -48,59 +47,22 @@ export function bgStyleClassName(v) {
     };
 
     glamorObj = {
+      position: "var(--position)",
       zIndex: "var(--zIndex)",
 
-      "> .brz-bg-media": {
-        borderTopWidth: "var(--borderTopWidth)",
-        borderRightWidth: "var(--borderRightWidth)",
-        borderBottomWidth: "var(--borderBottomWidth)",
-        borderLeftWidth: "var(--borderLeftWidth)",
-        borderColor: "var(--borderColor)",
-        borderStyle: "var(--borderStyle)",
-        borderTopLeftRadius: "var(--borderTopLeftRadius)",
-        borderTopRightRadius: "var(--borderTopRightRadius)",
-        borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
-        borderBottomRightRadius: "var(--borderBottomRightRadius)"
-      },
-      "> .brz-bg-content": {
-        borderTopWidth: "var(--borderTopWidth)",
-        borderRightWidth: "var(--borderRightWidth)",
-        borderBottomWidth: "var(--borderBottomWidth)",
-        borderLeftWidth: "var(--borderLeftWidth)",
-        borderColor: "transparent",
-        borderStyle: "solid"
-      },
       ".brz-ed--desktop &": {
+        ...(showOnDesktop === "on" ? null : blurred),
         marginTop: "var(--marginTop)",
         marginRight: "var(--marginRight)",
         marginBottom: "var(--marginBottom)",
-        marginLeft: "var(--marginLeft)",
-        ...(showOnDesktop === "on" ? null : blurred),
-
-        "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage: "var(--backgroundImage)",
-          backgroundPositionX: "var(--backgroundPositionX)",
-          backgroundPositionY: "var(--backgroundPositionY)"
-        },
-        "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--backgroundColor)"
-        }
+        marginLeft: "var(--marginLeft)"
       },
       ".brz-ed--mobile &": {
+        ...(showOnMobile === "on" ? null : blurred),
         marginTop: "var(--mobileMarginTop)",
         marginRight: "var(--mobileMarginRight)",
         marginBottom: "var(--mobileMarginBottom)",
-        marginLeft: "var(--mobileMarginLeft)",
-        ...(showOnMobile === "on" ? null : blurred),
-
-        "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage: "var(--mobileBackgroundImage)",
-          backgroundPositionX: "var(--mobileBackgroundPositionX)",
-          backgroundPositionY: "var(--mobileBackgroundPositionY)"
-        },
-        "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--mobileBackgroundColor)"
-        }
+        marginLeft: "var(--mobileMarginLeft)"
       }
     };
   } else {
@@ -131,8 +93,8 @@ export function bgStyleClassName(v) {
     } = v;
 
     glamorObj = {
+      position: zIndex === 0 ? "static" : "relative",
       zIndex: zIndex === 0 ? "auto" : zIndex,
-
       marginTop:
         marginType === "grouped"
           ? margin + marginSuffix
@@ -166,20 +128,21 @@ export function bgStyleClassName(v) {
         marginLeft:
           mobileMarginType === "grouped"
             ? mobileMargin + mobileMarginSuffix
-            : mobileMarginLeft + mobileMarginSuffix
+            : mobileMarginLeft + mobileMarginLeftSuffix
       }
     };
   }
 
   const glamorClassName = String(css(glamorObj));
 
-  return classnames("brz-d-xs-flex", "brz-flex-xs-wrap", glamorClassName);
+  return classnames("brz-wrapper-clone__wrap", glamorClassName);
 }
 
-export function bgStyleCSSVars(v) {
+export function wrapStyleCSSVars(v) {
   if (IS_PREVIEW) return;
 
   const {
+    zIndex,
     marginType,
     margin,
     marginSuffix,
@@ -191,7 +154,6 @@ export function bgStyleCSSVars(v) {
     marginBottomSuffix,
     marginLeft,
     marginLeftSuffix,
-    zIndex,
     mobileMarginType,
     mobileMargin,
     mobileMarginSuffix,
@@ -206,20 +168,8 @@ export function bgStyleCSSVars(v) {
   } = v;
 
   return {
-    "--backgroundImage": "none",
-    "--backgroundPositionX": "initial",
-    "--backgroundPositionY": "initial",
-    "--backgroundColor": "transparent",
-    "--borderTopWidth": "0",
-    "--borderRightWidth": "0",
-    "--borderBottomWidth": "0",
-    "--borderLeftWidth": "0",
-    "--borderColor": "transparent",
-    "--borderStyle": "solid",
-    "--borderTopLeftRadius": "0",
-    "--borderTopRightRadius": "0",
-    "--borderBottomLeftRadius": "0",
-    "--borderBottomRightRadius": "0",
+    "--position": zIndex === 0 ? "static" : "relative",
+    "--zIndex": zIndex === 0 ? "auto" : zIndex,
     "--marginTop":
       marginType === "grouped"
         ? margin + marginSuffix
@@ -236,11 +186,6 @@ export function bgStyleCSSVars(v) {
       marginType === "grouped"
         ? margin + marginSuffix
         : marginLeft + marginLeftSuffix,
-    "--zIndex": zIndex === 0 ? "auto" : zIndex,
-    "--mobileBackgroundImage": "none",
-    "--mobileBackgroundPositionX": "initial",
-    "--mobileBackgroundPositionY": "initial",
-    "--mobileBackgroundColor": "transparent",
     "--mobileMarginTop":
       mobileMarginType === "grouped"
         ? mobileMargin + mobileMarginSuffix

@@ -12,7 +12,11 @@ export function styleClassName(v, props) {
     glamorObj = {
       ".brz &": {
         backgroundColor: "var(--backgroundColor)",
-        boxShadow: "var(--boxShadow)"
+        boxShadow: "var(--boxShadow)",
+
+        "& .brz-iframe, & .brz-video__cover::before": {
+          filter: "var(--videoFilter)"
+        }
       },
       ".brz-ed--desktop &": {
         maxWidth: "var(--maxWidth)",
@@ -35,7 +39,11 @@ export function styleClassName(v, props) {
       boxShadowBlur,
       boxShadowSpread,
       boxShadowVertical,
-      boxShadowHorizontal
+      boxShadowHorizontal,
+      brightness,
+      hue,
+      contrast,
+      saturation
     } = v;
     const {
       meta: { desktopW }
@@ -65,7 +73,11 @@ export function styleClassName(v, props) {
         backgroundColor: ratio === "4:3" ? "#000" : null,
         maxWidth: `${size}%`,
         height: !src ? `${height}px` : null,
-        boxShadow: boxShadowStyle
+        boxShadow: boxShadowStyle,
+
+        "& .brz-iframe, & .brz-video__cover::before": {
+          filter: `brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%)`
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
@@ -95,7 +107,11 @@ export function styleCSSVars(v, props) {
     boxShadowBlur,
     boxShadowSpread,
     boxShadowVertical,
-    boxShadowHorizontal
+    boxShadowHorizontal,
+    brightness,
+    hue,
+    contrast,
+    saturation
   } = v;
 
   const {
@@ -127,7 +143,8 @@ export function styleCSSVars(v, props) {
     "--height": !src ? `${height}px` : "auto",
     "--boxShadow": boxShadowStyle,
     "--mobileMaxWidth": `${mobileSize}%`,
-    "--mobileHeight": !src ? `${mobileHeight}px` : "auto"
+    "--mobileHeight": !src ? `${mobileHeight}px` : "auto",
+    "--videoFilter": `brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%)`
   };
 }
 
@@ -140,7 +157,7 @@ export function wrapperStyleClassName(v) {
       paddingTop: "var(--paddingTop)",
       pointerEvents: "var(--pointerEvents)",
 
-      "& .brz-video__cover": {
+      "& .brz-video__cover::before": {
         backgroundImage: "var(--imageSrc)",
         backgroundPositionX: "var(--coverPositionX)",
         backgroundPositionY: "var(--coverPositionY)",
@@ -167,13 +184,12 @@ export function wrapperStyleClassName(v) {
       bgColorHex,
       bgColorOpacity,
       hoverBgColorHex,
-      hoverBgColorOpacity,
-      video
+      hoverBgColorOpacity
     } = v;
 
     const videoCoverCss = coverImageSrc
       ? {
-          "& .brz-video__cover": {
+          "& .brz-video__cover::before": {
             backgroundImage: `url(${imageUrl(coverImageSrc)})`,
             backgroundPositionX: `${coverPositionX}%`,
             backgroundPositionY: `${coverPositionY}%`,
