@@ -30,8 +30,8 @@ class Brizy_Editor_API {
 	const AJAX_FORM_INTEGRATION_STATUS = 'brizy_form_integration_status';
 	const AJAX_SUBMIT_FORM = 'brizy_submit_form';
 
-//	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
-//  const AJAX_UPDATE_MENU_ITEM_DATA = 'brizy_update_menu_item_data';
+	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
+	const AJAX_UPDATE_MENU_ITEM_DATA = 'brizy_update_menu_item_data';
 
 	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
 	const AJAX_MEDIA_METAKEY = 'brizy_get_media_key';
@@ -112,8 +112,8 @@ class Brizy_Editor_API {
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
 
-			//add_action( 'wp_ajax_' . self::AJAX_UPDATE_MENU_ITEM_DATA, array( $this, 'update_menu_item_data' ) );
-			//add_action( 'wp_ajax_' . self::AJAX_UPDATE_MENU_DATA, array( $this, 'update_menu_data' ) );
+			add_action( 'wp_ajax_' . self::AJAX_UPDATE_MENU_ITEM_DATA, array( $this, 'update_menu_item_data' ) );
+			add_action( 'wp_ajax_' . self::AJAX_UPDATE_MENU_DATA, array( $this, 'update_menu_data' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT, array(
 				$this,
@@ -126,120 +126,6 @@ class Brizy_Editor_API {
 		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 	}
-
-//	public function update_menu_item_data() {
-//		if ( ! isset( $_POST['menuItemId'] ) || get_post_type( $_POST['menuItemId'] ) != 'nav_menu_item' ) {
-//			$this->error( 400, 'Unknown menu item' );
-//		}
-//
-//		$json_decode = json_decode( stripslashes( $_POST['menuItemData'] ) );
-//
-//		if ( ! isset( $_POST['menuItemData'] ) || is_null( $json_decode ) ) {
-//			$this->error( 400, 'Bad request' );
-//		}
-//
-//		$menuItems = get_posts( array(
-//			'meta_key'   => 'brizy_post_uid',
-//			'meta_value' => $_POST['menuItemId'],
-//			'post_type'  => 'nav_menu_item',
-//		) );
-//
-//		if ( count( $menuItems ) == 0 ) {
-//			$this->error( 400, 'Unknown menu item' );;
-//		}
-//
-//		$menu = $menuItems[0];
-//
-//		update_post_meta( (int) $menu->ID, 'brizy_data', $json_decode );
-//
-//		$this->success( array() );
-//	}
-//
-//	public function update_menu_data() {
-//		if ( ! isset( $_POST['menuId'] ) ) {
-//			$this->error( 400, 'Unknown menu' );
-//		}
-//
-//		$json_decode = json_decode( stripslashes( $_POST['menuData'] ) );
-//
-//		if ( ! isset( $_POST['menuData'] ) || is_null( $json_decode ) ) {
-//			$this->error( 400, 'Bad request' );
-//		}
-//
-//
-//		$menu = get_terms( array(
-//			'taxonomy'   => 'nav_menu',
-//			'hide_empty' => false,
-//			'meta_query' => array(
-//				'relation' => 'AND',
-//				array(
-//					'key'     => 'brizy_uid',
-//					'value'   => $_POST['menuId'],
-//					'compare' => '='
-//				)
-//			)
-//		) );
-//
-//
-//		if ( isset( $menu[0] ) ) {
-//			$menu = $menu[0];
-//		} else {
-//			$this->error( 400, 'Unknown menu item' );
-//		}
-//		update_term_meta( (int) $menu->term_id, 'brizy_data', $json_decode );
-//
-//		$this->success( array() );
-//	}
-
-
-	public function set_featured_image() {
-		$this->authorize();
-
-		if ( ! isset( $_REQUEST['attachmentId'] ) ) {
-			$this->error( 400, 'Bad request' );
-		}
-
-		if ( $this->post && $this->post->uses_editor() ) {
-			set_post_thumbnail( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
-
-			$uid = $this->createMediaKey( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
-
-			$this->success( array( 'uid' => $uid ) );
-		}
-
-		$this->error( 400, 'Invalid post' );
-	}
-
-	public function set_featured_image_focal_point() {
-		if ( ! isset( $_REQUEST['attachmentId'] ) || ! isset( $_REQUEST['pointX'] ) || ! isset( $_REQUEST['pointY'] ) ) {
-			$this->error( 400, 'Bad request' );
-		}
-
-		if ( $this->post && $this->post->uses_editor() ) {
-
-			update_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point', array(
-				'x' => $_REQUEST['pointX'],
-				'y' => $_REQUEST['pointY']
-			) );
-
-			$this->success( array() );
-		}
-
-		$this->error( 400, 'Invalid post' );
-	}
-
-	public function remove_featured_image() {
-		$this->authorize();
-
-		if ( $this->post && $this->post->uses_editor() ) {
-			delete_post_thumbnail( $this->post->get_id() );
-			delete_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point' );
-			$this->success( null );
-		}
-
-		$this->error( 400, 'Invalid post' );
-	}
-
 
 	public function update_menu_item_data() {
 		if ( ! isset( $_POST['menuItemId'] ) || get_post_type( $_POST['menuItemId'] ) != 'nav_menu_item' ) {
@@ -304,6 +190,59 @@ class Brizy_Editor_API {
 
 		$this->success( array() );
 	}
+
+
+
+
+	public function set_featured_image() {
+		$this->authorize();
+
+		if ( ! isset( $_REQUEST['attachmentId'] ) ) {
+			$this->error( 400, 'Bad request' );
+		}
+
+		if ( $this->post && $this->post->uses_editor() ) {
+			set_post_thumbnail( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
+
+			$uid = $this->createMediaKey( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
+
+			$this->success( array( 'uid' => $uid ) );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
+	public function set_featured_image_focal_point() {
+		if ( ! isset( $_REQUEST['attachmentId'] ) || ! isset( $_REQUEST['pointX'] ) || ! isset( $_REQUEST['pointY'] ) ) {
+			$this->error( 400, 'Bad request' );
+		}
+
+		if ( $this->post && $this->post->uses_editor() ) {
+
+			update_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point', array(
+				'x' => $_REQUEST['pointX'],
+				'y' => $_REQUEST['pointY']
+			) );
+
+			$this->success( array() );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
+	public function remove_featured_image() {
+		$this->authorize();
+
+		if ( $this->post && $this->post->uses_editor() ) {
+			delete_post_thumbnail( $this->post->get_id() );
+			delete_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point' );
+			$this->success( null );
+		}
+
+		$this->error( 400, 'Invalid post' );
+	}
+
+
 
 	public function default_form() {
 		try {

@@ -166,8 +166,8 @@ class Brizy_Editor_Editor_Editor {
 					'setFeaturedImage'           => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
 					'setFeaturedImageFocalPoint' => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT,
 					'removeFeaturedImage'        => Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
-					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA,
-					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA,
+					'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA,
+					'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA,
 				),
 				'plugins'         => array(
 					'dummy'       => true,
