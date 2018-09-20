@@ -103,6 +103,7 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	 */
 	protected function random_email() {
 		$uniqid = 'brizy-' . md5( uniqid( '', true ) );
+
 		return $uniqid . '@brizy.io';
 	}
 
@@ -195,14 +196,15 @@ class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 	/**
 	 * @param $data
 	 *
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+	 * @throws Exception
 	 */
 	public function notifyFormSubmit( $data ) {
-		$response = $this->post( Brizy_Config::BRIZY_APPLICATION_FORM_NOTIFICATION_URL, $data );
+
+
+		$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
+		$urls       = $urlBuilder->application_form_notification_url();
+
+		$response = $this->post( $urls, $data );
 
 		if ( ! $response->is_ok() ) {
 			Brizy_Logger::instance()->error( 'Failed to notify the platform about a form submit', array( 'response' => $response ) );

@@ -326,9 +326,11 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 
 		$editor_data = $post->get_editor_data();
 
-		$config = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
+		$config     = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
+		$urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post );
 
-		$page_html = $this->get_client()->compile_page( $project, $editor_data, $config );
+
+		$page_html = $this->get_client()->compile_page( $project, $editor_data, $config, $urlBuilder->compiler_url() );
 
 		return $page_html;
 
