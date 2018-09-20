@@ -24,11 +24,9 @@ class Brizy_Editor_Asset_MediaProxyStorage extends Brizy_Editor_Asset_AbstractSt
 		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
 		$external_url  = $this->url_builder->external_media_url( $sufix_url );
 
-
 		if ( $this->store_file( $external_url, $new_path ) ) {
 			$asset_url = $new_url;
 		}
-
 
 		return $asset_url;
 	}

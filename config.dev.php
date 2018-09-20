@@ -58,4 +58,8 @@ class Brizy_Config {
 	const PLATFORM_CLIENT_ID = "5_3nneq7brm50k4s4s4g0owk0088k8wco80cg4kc88o8wg0ks4w0";
 	const PLATFORM_CLIENT_SECRET = "3dfj9r23uqgws0kws0cgsgs0008owcwo4o0o08sgs8o4wgco4";
 	const PLATFORM_EMAIL = "admin@admin.com";
+
+	static public function getCompilerUrls() {
+		return array( 'http://editor:3000/wp-compile' );
+	}
 }

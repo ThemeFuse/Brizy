@@ -27,9 +27,22 @@ abstract class Brizy_Editor_Asset_StaticFile {
 				@mkdir( $dir_path, 0755, true );
 			}
 
+			$http = new WP_Http();
 
-			$http        = new WP_Http();
-			$wp_response = $http->request( $asset_source, array( 'timeout' => 30 ) );
+
+			if ( is_string( $asset_source ) ) {
+				$wp_response = $http->request( $asset_source, array( 'timeout' => 30 ) );
+			} else {
+				foreach ( $asset_source as $url ) {
+					$wp_response = $http->request( $url, array( 'timeout' => 30 ) );
+
+					if ( is_wp_error( $wp_response ) ) {
+						continue;
+					}
+
+					break;
+				}
+			}
 
 			$code = wp_remote_retrieve_response_code( $wp_response );
 

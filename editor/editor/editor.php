@@ -115,7 +115,7 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'urls'            => array(
 				'api'                 => home_url( '/wp-json/v1' ),
-				'base'                => Brizy_Config::EDITOR_BASE_URL,
+				'base'                => Brizy_Config::getEditorBaseUrls(),
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
 				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,

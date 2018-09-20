@@ -329,9 +329,10 @@ class Brizy_Editor_API {
 
 			$email                = $user->getPlatformUserEmail();
 			$secret               = $user->getPlatformUserSignature();
-			$platform_credentials = Brizy_Editor_API_Platform::getCredentials();
+			$platformCredentials = Brizy_Editor_API_Platform::getCredentials();
+			$urlBuilder           = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
 
-			$platform_client_id = $platform_credentials->client_id;
+			$platform_client_id = $platformCredentials->client_id;
 
 			date_default_timezone_set( "UTC" );
 
@@ -347,7 +348,7 @@ class Brizy_Editor_API {
 
 			$token = $multipass->encode( $user_data );
 
-			$redirect_uri = sprintf( Brizy_Config::BRIZY_PLATFORM_MULTIPASS_LOGIN, $platform_client_id, $token, $email );
+			$redirect_uri = sprintf( Brizy_Config::getEditorBaseUrls() . Brizy_Config::BRIZY_PLATFORM_MULTIPASS_LOGIN, $platform_client_id, $token, $email );
 
 			wp_redirect( $redirect_uri );
 			exit;

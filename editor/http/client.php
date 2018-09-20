@@ -51,12 +51,23 @@ class Brizy_Editor_Http_Client {
 
 		$options['method']  = $method;
 		$options['timeout'] = 30;
+		$options            = $this->prepare_options( $options );
+		$wp_response        = null;
 
-		Brizy_Logger::instance()->notice( "{$method} request to {$url}", array('options' => $options) );
+		if ( is_string( $url ) ) {
+			Brizy_Logger::instance()->notice( "{$method} request to {$url}", array( 'options' => $options ) );
+			$wp_response = $this->getHttp()->request( $url, $options );
+		} else {
+			foreach ( $url as $aurl ) {
+				$wp_response = $this->getHttp()->request( $aurl, $options );
 
-		$options = $this->prepare_options( $options );
-
-		$wp_response = $this->getHttp()->request( $url, $options );
+				if ( is_wp_error( $wp_response ) ) {
+					continue;
+				} else {
+					break;
+				}
+			}
+		}
 
 		if ( is_wp_error( $wp_response ) ) {
 			throw new Brizy_Editor_API_Exceptions_Exception( $wp_response->get_error_message() );
