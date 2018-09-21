@@ -182,7 +182,6 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => set_url_scheme( admin_url( 'admin-ajax.php' ) ) . "?action=brizy_submit_form"
 				)
 			),
-			'taxonomies'      => $this->getTaxonomyList(),
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -396,29 +395,5 @@ class Brizy_Editor_Editor_Editor {
 		) );
 	}
 
-	private function getTaxonomyList() {
 
-		$taxs = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
-
-		$result = array_map( function ( $tax ) {
-
-			$terms = (array) get_terms( array( 'taxonomy' => $tax->name, 'hide_empty' => false ) );
-
-			return (object) array(
-				'name'  => $tax->name,
-				'label' => $tax->labels->name,
-				'terms' => array_map( function ( $term ) {
-					return (object) array(
-						'id'   => $term->term_id,
-						'name' => $term->name,
-					);
-				}, $terms )
-			);
-
-		}, $taxs );
-
-		return array_filter( array_values( $result ), function ( $term ) {
-			return count( $term->terms ) > 0;
-		} );
-	}
 }
