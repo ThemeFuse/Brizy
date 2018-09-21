@@ -44,7 +44,7 @@ function brizy_load() {
 		return;
 	}
 
-	if ( is_admin() && ! is_ajax() ) {
+	if ( is_admin() && ! wp_doing_ajax() ) {
 		// run migrations first
 		$migrations = new Brizy_Admin_Migrations();
 		$migrations->migrateTo( BRIZY_VERSION );
