@@ -54,6 +54,7 @@ class Brizy_Languages_Texts
 			"Shortcode" => __("Shortcode", "brizy"),
 			"Menu" => __("Menu", "brizy"),
 			"Posts" => __("Posts", "brizy"),
+			"Taxonomy" => __("Taxonomy", "brizy"),
 			"Sidebar" => __("Sidebar", "brizy"),
 			//-> Reorder Blocks
 			"Reorder Blocks" => __("Reorder Blocks", "brizy"),
@@ -462,6 +463,9 @@ class Brizy_Languages_Texts
 			"Page Template" => __("Page Template", "brizy"),
 			"Toggle Menu" => __("Toggle Menu", "brizy"),
 			"Make it Nofollow" => __("Make it Nofollow", "brizy"),
+			"Dividers" => __("Dividers", "brizy"),
+			"Arrangement" => __("Arrangement", "brizy"),
+			"Repeat" => __("Repeat", "brizy"),
 		);
 	}
 

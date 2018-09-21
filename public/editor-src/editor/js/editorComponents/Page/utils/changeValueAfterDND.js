@@ -72,7 +72,9 @@ export default function changeValueAfterDND(oldValue, { from, to }) {
   return value;
 }
 
-function getValue(oldValue, { from, to }) {
+function getValue(value, { from, to }) {
+  let oldValue = value;
+
   if (from.itemType === "shortcode") {
     let movedElement = getIn(oldValue, from.itemPath);
     if (from.containerType === "cloneable") {
@@ -112,6 +114,13 @@ function getValue(oldValue, { from, to }) {
   }
 
   if (from.itemType === "column") {
+    if (from.containerType === "posts") {
+      // Cloned Column and changed the paths for the first column
+      from.itemPath[from.itemPath.length - 1] = "0";
+      const movedElement = setIds(getIn(oldValue, from.itemPath));
+      oldValue = addIn(oldValue, from.itemPath, movedElement);
+    }
+
     switch (to.containerType) {
       case "column":
         return moveColumnToSection(oldValue, from, to);

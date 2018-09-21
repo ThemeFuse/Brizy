@@ -51,7 +51,7 @@ class Brizy_Editor_Editor_Editor {
 	public function __construct( $project, $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post?$post->get_parent_id():null );
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->get_parent_id() : null );
 	}
 
 	/**
@@ -136,7 +136,6 @@ class Brizy_Editor_Editor_Editor {
 				'featuredImage'   => $post_thumbnail,
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
-				'taxonomies'      => $this->getTaxonomyList(),
 				'api'             => array(
 					'hash'                       => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'                        => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
@@ -182,7 +181,7 @@ class Brizy_Editor_Editor_Editor {
 					'wpApiUrl'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 					'submitUrl' => set_url_scheme( admin_url( 'admin-ajax.php' ) ) . "?action=brizy_submit_form"
 				)
-			)
+			),
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -271,7 +270,7 @@ class Brizy_Editor_Editor_Editor {
 			// find first include rule
 			foreach ( $rules as $rule ) {
 				/**
-				 * @var Brizy_Admin_Rule $rule;
+				 * @var Brizy_Admin_Rule $rule ;
 				 */
 				if ( $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ) {
 					break;
@@ -396,29 +395,5 @@ class Brizy_Editor_Editor_Editor {
 		) );
 	}
 
-	private function getTaxonomyList() {
 
-		$taxs = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
-
-		$result = array_map( function ( $tax ) {
-
-			$terms = (array) get_terms( array( 'taxonomy' => $tax->name, 'hide_empty' => false ) );
-
-			return (object) array(
-				'name'  => $tax->name,
-				'label' => $tax->labels->name,
-				'terms' => array_map( function ( $term ) {
-					return (object) array(
-						'id'   => $term->term_id,
-						'name' => $term->name,
-					);
-				}, $terms )
-			);
-
-		}, $taxs );
-
-		return array_filter( array_values( $result ), function ( $term ) {
-			return count( $term->terms ) > 0;
-		} );
-	}
 }

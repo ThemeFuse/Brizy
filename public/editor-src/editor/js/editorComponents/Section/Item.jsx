@@ -120,6 +120,8 @@ class SectionItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette && `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
@@ -133,6 +135,8 @@ class SectionItem extends EditorComponent {
       bgVideoQuality,
       bgMapZoom,
       bgMapAddress,
+      shapeTopType,
+      shapeBottomType,
       mobileMedia,
       mobileBgImageSrc,
       mobileBgColorOpacity,
@@ -161,6 +165,14 @@ class SectionItem extends EditorComponent {
       bgProps.mapZoom = bgMapZoom;
     }
 
+    if (shapeTopType !== "none") {
+      bgProps.shapeTopType = shapeTopType;
+    }
+
+    if (shapeBottomType !== "none") {
+      bgProps.shapeBottomType = shapeBottomType;
+    }
+
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       className: itemsStyleClassName(v),
@@ -182,6 +194,8 @@ class SectionItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette && `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

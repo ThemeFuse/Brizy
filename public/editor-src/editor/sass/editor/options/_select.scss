@@ -40,8 +40,33 @@
     }
     .brz-icon-svg {
       font-size: 12px;
-      margin-right: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
     }
+    &__bg {
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 100%;
+      height: 12px;
+      filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(125deg)
+        brightness(103%) contrast(103%);
+
+      &.brz-ed-shape--5,
+      &.brz-ed-shape--6,
+      &.brz-ed-shape--40,
+      &.brz-ed-shape--42 {
+        height: 8px;
+      }
+    }
+    &.active .brz-control__select-option__bg {
+      filter: invert(73%) sepia(61%) saturate(2312%) hue-rotate(160deg)
+        brightness(97%) contrast(87%);
+    }
+  }
+  .brz-control__select-options .brz-control__select-option__bg:hover {
+    filter: invert(73%) sepia(61%) saturate(2312%) hue-rotate(160deg)
+      brightness(97%) contrast(87%);
   }
 
   // Taxonomy

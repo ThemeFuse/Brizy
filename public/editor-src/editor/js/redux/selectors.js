@@ -51,6 +51,12 @@ export const currentStyleSelector = createSelector(globalsSelector, globals => {
       [`${color.id}__boxShadow`]: {
         boxShadowColorHex: color.hex
       },
+      [`${color.id}__shapeTopColor`]: {
+        shapeTopColorHex: color.hex
+      },
+      [`${color.id}__shapeBottomColor`]: {
+        shapeBottomColorHex: color.hex
+      },
       [`${color.id}__mobileBg`]: {
         mobileBgColorHex: color.hex
       }

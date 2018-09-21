@@ -47,6 +47,16 @@ $helperSize: 30px;
         bottom: -1px;
       }
     }
+    &.brz-columns__posts {
+      > .brz-ed-border {
+        > .brz-ed-border__inner-1:after {
+          top: -2px;
+        }
+        > .brz-ed-border__inner-2:after {
+          bottom: -2px;
+        }
+      }
+    }
   }
 
   // receivers
@@ -74,7 +84,7 @@ $helperSize: 30px;
         bottom: auto;
       }
     }
-    > .brz-columns {
+    > .brz-columns:not(.brz-columns__posts) {
       > .brz-ed-border {
         > .brz-ed-border__inner-1:before,
         > .brz-ed-border__inner-2:before {
