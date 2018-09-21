@@ -643,7 +643,12 @@ export function styleClassName(v, props) {
 
   const glamorClassName = String(css(glamorObj));
 
-  return classnames("brz-columns", glamorClassName, className);
+  return classnames(
+    "brz-columns",
+    { "brz-columns__posts": IS_EDITOR && meta.posts },
+    glamorClassName,
+    className
+  );
 }
 
 export function styleCSSVars(v, props) {

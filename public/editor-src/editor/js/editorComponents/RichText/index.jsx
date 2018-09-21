@@ -106,8 +106,11 @@ class RichText extends EditorComponent {
     };
     const choices = getDynamicContentChoices("richText") || [];
 
-    // remove first symbol - #
-    const re = new RegExp(currentPattern.substr(1), "i");
+    // remove first symbol - # && escape string for use in regexp
+    const re = new RegExp(
+      currentPattern.substr(1).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+      "i"
+    );
     const filteredChoices = choices.filter(({ title }) => re.test(title));
 
     const content = (

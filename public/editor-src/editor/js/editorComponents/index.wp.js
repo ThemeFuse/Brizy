@@ -8,11 +8,13 @@ import WOOProductPage from "./WordPress/WOOProductPage";
 import WOOCategories from "./WordPress/WOOCategories";
 // import WOOAddToCart from "./WordPress/WOOAddToCart";
 import WOOPages from "./WordPress/WOOPages";
+import Posts from "./Posts";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 
 export default {
   ...nonWP,
+  // Posts,
   ...(hasSidebars() ? { WPSidebar } : {}),
   WPCustomShortcode,
   WPNavigation,

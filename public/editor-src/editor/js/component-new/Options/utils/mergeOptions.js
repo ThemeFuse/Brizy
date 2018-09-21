@@ -19,7 +19,12 @@ export default function mergeOptions(options1, options2) {
 }
 
 function canMergeOption(option1, option2) {
-  return option1.type === option2.type && option1.id === option2.id;
+  return (
+    option1.type === option2.type &&
+    option1.id &&
+    option2.id &&
+    option1.id === option2.id
+  );
 }
 
 function mergeOption(option1, option2) {

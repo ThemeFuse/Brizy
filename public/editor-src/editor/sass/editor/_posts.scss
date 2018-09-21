@@ -1,0 +1,14 @@
+// Columns Border
+@for $i from 1 through 6 {
+  .brz-posts__col-#{$i} > {
+    .brz-columns:nth-child(#{$i}n + 1) > {
+      .brz-ed-border > {
+        .brz-ed-border__inner-1:before,
+        .brz-ed-border__inner-1:after,
+        .brz-ed-border__inner-2:after {
+          left: -2px;
+        }
+      }
+    }
+  }
+}

@@ -16,6 +16,10 @@ class Background extends React.Component {
     // Video
     video: false,
 
+    // Shape
+    shapeTopType: "",
+    shapeBottomType: "",
+
     // Mobile
     mobileImageSrc: "",
     mobileColorOpacity: 0,
@@ -283,6 +287,17 @@ class Background extends React.Component {
     );
   };
 
+  renderShape() {
+    const { shapeTopType, shapeBottomType } = this.props;
+
+    return (
+      <React.Fragment>
+        {shapeTopType && <div className="brz-bg-shape brz-bg-shape__top" />}
+        {shapeBottomType && <div className="brz-bg-shape brz-bg-shape__bottom" />}
+      </React.Fragment>
+    )
+  }
+
   render() {
     const {
       className: _className,
@@ -303,6 +318,7 @@ class Background extends React.Component {
           {this.renderVideo()}
           {this.renderMap()}
           <div className="brz-bg-color" />
+          {this.renderShape()}
         </div>
         <div className="brz-bg-content">{children}</div>
         {needsResizeDetection && (

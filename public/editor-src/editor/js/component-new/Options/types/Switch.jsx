@@ -59,7 +59,7 @@ class SwitchOptionType extends React.Component {
       <div {...attr} className={className}>
         {label || helper ? this.renderLabel(label) : null}
         <SwitchControl
-          key="switch"
+          key={value}
           defaultValue={value}
           valueMap={valueMap}
           onChange={onChange}
