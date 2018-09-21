@@ -199,6 +199,12 @@ export default {
     "wrapper--carousel": {
       showToolbar: "on"
     },
+    "wrapper--posts": {
+      showToolbar: "on",
+      paddingType: "ungrouped",
+      paddingTop: 10,
+      paddingBottom: 10
+    },
     "column--carousel": {
       width: 100
     },
@@ -236,6 +242,9 @@ export default {
       bgColorHex: "#d6d6d6",
       bgColorOpacity: 1,
       bgColorPalette: ""
+    },
+    "posts--column": {
+      width: 100
     }
   }
 };

@@ -704,7 +704,9 @@ gulp.task("watch", () => {
   // editor css
   const coreCSSPath = paths.editor + "/**/*.scss";
   //gulp.watch(coreCSSPath, ['scss-lint', 'editor.css']).on('change', handleChange);
-  gulp.watch(coreCSSPath, ["editor.css"]).on("change", handleChange);
+  gulp
+    .watch(coreCSSPath, ["editor.css", ...(IS_EXPORT ? ["export.css"] : [])])
+    .on("change", handleChange);
 
   // libs (uncomment if needed)
   // const editorLibs = paths.editor + "/lib/*/*/*.js";

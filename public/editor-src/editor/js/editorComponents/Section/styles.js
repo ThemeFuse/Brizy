@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { imageUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
+import { svgToUri } from "visual/utils/icons";
 
 const backgroundAttachment = {
   none: "scroll",
@@ -110,7 +111,19 @@ export function bgStyleClassName(v, props) {
         borderTopLeftRadius: "var(--borderTopLeftRadius)",
         borderTopRightRadius: "var(--borderTopRightRadius)",
         borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
-        borderBottomRightRadius: "var(--borderBottomRightRadius)"
+        borderBottomRightRadius: "var(--borderBottomRightRadius)",
+
+        // Shape
+        "& > .brz-bg-shape__top": {
+          transform: "var(--shapeTopFlip)",
+          backgroundImage: "var(--shapeTopType)",
+          zIndex: "var(--shapeTopIndex)"
+        },
+        "& > .brz-bg-shape__bottom": {
+          transform: "var(--shapeBottomFlip)",
+          backgroundImage: "var(--shapeBottomType)",
+          zIndex: "var(--shapeBottomIndex)"
+        }
       },
       ".brz-ed--desktop &": {
         "> .brz-bg-media > .brz-bg-image": {
@@ -124,6 +137,16 @@ export function bgStyleClassName(v, props) {
         },
         "> .brz-bg-media > .brz-bg-map": {
           display: "var(--mediaBg)"
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: "var(--shapeTopBackgroundSize)",
+          height: "var(--shapeTopHeight)"
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: "var(--shapeBottomBackgroundSize)",
+          height: "var(--shapeBottomHeight)"
         }
       },
       ".brz-ed--mobile &": {
@@ -132,6 +155,15 @@ export function bgStyleClassName(v, props) {
           backgroundPositionX: "var(--mobileBackgroundPositionX)",
           backgroundPositionY: "var(--mobileBackgroundPositionY)",
           backgroundAttachment: "var(--mobileBackgroundAttachment)"
+        },
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: "var(--mobileShapeTopBackgroundSize)",
+          height: "var(--mobileShapeTopHeight)"
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: "var(--mobileShapeBottomBackgroundSize)",
+          height: "var(--mobileShapeBottomHeight)"
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: "var(--mobileBackgroundColor)"
@@ -164,6 +196,24 @@ export function bgStyleClassName(v, props) {
       borderTopRightRadius,
       borderBottomLeftRadius,
       borderBottomRightRadius,
+      shapeTopHorizontal,
+      shapeBottomHorizontal,
+      shapeTopHeight,
+      shapeBottomHeight,
+      shapeTopHeightSuffix,
+      shapeBottomHeightSuffix,
+      shapeTopColorHex,
+      shapeTopColorOpacity,
+      shapeBottomColorHex,
+      shapeBottomColorOpacity,
+      shapeTopIndex,
+      shapeBottomIndex,
+      shapeTopType,
+      shapeBottomType,
+      mobileShapeTopHeight: _mobileShapeTopHeight,
+      mobileShapeBottomHeight: _mobileShapeBottomHeight,
+      mobileShapeTopHeightSuffix: _mobileShapeTopHeightSuffix,
+      mobileShapeBottomHeightSuffix: _mobileShapeBottomHeightSuffix,
       mobileMedia,
       mobileBgImageSrc,
       mobileBgPositionX,
@@ -173,6 +223,22 @@ export function bgStyleClassName(v, props) {
       mobileBgColorOpacity
     } = v;
     const { showSlider } = props.meta;
+
+    const mobileShapeTopHeight =
+      _mobileShapeTopHeight === null ? shapeTopHeight : _mobileShapeTopHeight;
+    const mobileShapeBottomHeight =
+      _mobileShapeBottomHeight === null
+        ? shapeBottomHeight
+        : _mobileShapeBottomHeight;
+
+    const mobileShapeTopHeightSuffix =
+      _mobileShapeTopHeightSuffix === null
+        ? shapeTopHeightSuffix
+        : _mobileShapeTopHeightSuffix;
+    const mobileShapeBottomHeightSuffix =
+      _mobileShapeBottomHeightSuffix === null
+        ? shapeBottomHeightSuffix
+        : _mobileShapeBottomHeightSuffix;
 
     glamorObj = {
       "> .brz-bg-media": {
@@ -226,6 +292,38 @@ export function bgStyleClassName(v, props) {
       "> .brz-bg-media > .brz-bg-map": {
         display: media === "map" ? "block" : "none"
       },
+      "> .brz-bg-media > .brz-bg-shape__top": {
+        backgroundImage:
+          shapeTopType === "none"
+            ? "none"
+            : `url('${svgToUri(
+                shapeTopType,
+                hexToRgba(shapeTopColorHex, shapeTopColorOpacity)
+              )}')`,
+        backgroundSize: `100% ${shapeTopHeight + shapeTopHeightSuffix}`,
+        transform:
+          shapeTopHorizontal === "on"
+            ? "rotateX(0deg) rotateY(-180deg)"
+            : "rotateX(0deg) rotateY(0deg)",
+        height: shapeTopHeight + shapeTopHeightSuffix,
+        zIndex: shapeTopIndex
+      },
+      "> .brz-bg-media > .brz-bg-shape__bottom": {
+        backgroundImage:
+          shapeBottomType === "none"
+            ? "none"
+            : `url('${svgToUri(
+                shapeBottomType,
+                hexToRgba(shapeBottomColorHex, shapeBottomColorOpacity)
+              )}')`,
+        backgroundSize: `100% ${shapeBottomHeight + shapeBottomHeightSuffix}`,
+        transform:
+          shapeBottomHorizontal === "on"
+            ? "rotateX(-180deg) rotateY(0deg)"
+            : "rotateX(-180deg) rotateY(-180deg)",
+        height: shapeBottomHeight + shapeBottomHeightSuffix,
+        zIndex: shapeBottomIndex
+      },
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
@@ -241,6 +339,15 @@ export function bgStyleClassName(v, props) {
         },
         "> .brz-bg-media > .brz-bg-map": {
           display: mobileMedia === "map" ? "block" : "none"
+        },
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: `100% ${mobileShapeTopHeight + mobileShapeTopHeightSuffix}`,
+          height: mobileShapeTopHeight + mobileShapeTopHeightSuffix
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: `100% ${mobileShapeBottomHeight + mobileShapeBottomHeightSuffix}`,
+          height: mobileShapeBottomHeight + mobileShapeBottomHeightSuffix
         }
       }
     };
@@ -275,6 +382,24 @@ export function bgStyleCSSVars(v, props) {
     borderTopRightRadius,
     borderBottomLeftRadius,
     borderBottomRightRadius,
+    shapeTopType,
+    shapeBottomType,
+    shapeTopColorHex,
+    shapeTopColorOpacity,
+    shapeBottomColorHex,
+    shapeBottomColorOpacity,
+    shapeTopHeight,
+    shapeBottomHeight,
+    shapeTopHeightSuffix,
+    shapeBottomHeightSuffix,
+    shapeTopHorizontal,
+    shapeBottomHorizontal,
+    shapeTopIndex,
+    shapeBottomIndex,
+    mobileShapeTopHeight: _mobileShapeTopHeight,
+    mobileShapeBottomHeight: _mobileShapeBottomHeight,
+    mobileShapeTopHeightSuffix: _mobileShapeTopHeightSuffix,
+    mobileShapeBottomHeightSuffix: _mobileShapeBottomHeightSuffix,
     mobileMedia,
     mobileBgImageSrc,
     mobileBgAttachment,
@@ -284,6 +409,22 @@ export function bgStyleCSSVars(v, props) {
     mobileBgColorOpacity
   } = v;
   const { showSlider } = props.meta;
+
+  const mobileShapeTopHeight =
+    _mobileShapeTopHeight === null ? shapeTopHeight : _mobileShapeTopHeight;
+  const mobileShapeBottomHeight =
+    _mobileShapeBottomHeight === null
+      ? shapeBottomHeight
+      : _mobileShapeBottomHeight;
+
+  const mobileShapeTopHeightSuffix =
+    _mobileShapeTopHeightSuffix === null
+      ? shapeTopHeightSuffix
+      : _mobileShapeTopHeightSuffix;
+  const mobileShapeBottomHeightSuffix =
+    _mobileShapeBottomHeightSuffix === null
+      ? shapeBottomHeightSuffix
+      : _mobileShapeBottomHeightSuffix;
 
   return {
     "--mediaBg": media === "map" ? "block" : "none",
@@ -328,6 +469,46 @@ export function bgStyleCSSVars(v, props) {
       borderRadiusType === "grouped"
         ? `${borderRadius}px`
         : `${borderBottomRightRadius}px`,
+
+    // Shape
+    "--shapeTopHeight": shapeTopHeight + shapeTopHeightSuffix,
+    "--shapeBottomHeight": shapeBottomHeight + shapeBottomHeightSuffix,
+    "--shapeTopFlip":
+      shapeTopHorizontal === "on"
+        ? "rotateX(0deg) rotateY(-180deg)"
+        : "rotateX(0deg) rotateY(0deg)",
+    "--shapeBottomFlip":
+      shapeBottomHorizontal === "on"
+        ? "rotateX(-180deg) rotateY(0deg)"
+        : "rotateX(-180deg) rotateY(-180deg)",
+    "--shapeTopIndex": shapeTopIndex,
+    "--shapeBottomIndex": shapeBottomIndex,
+    "--shapeTopType":
+      shapeTopType === "none"
+        ? "none"
+        : `url('${svgToUri(
+            shapeTopType,
+            hexToRgba(shapeTopColorHex, shapeTopColorOpacity)
+          )}')`,
+    "--shapeTopBackgroundSize": `100% ${shapeTopHeight + shapeTopHeightSuffix}`,
+    "--shapeBottomType":
+      shapeBottomType === "none"
+        ? "none"
+        : `url('${svgToUri(
+            shapeBottomType,
+            hexToRgba(shapeBottomColorHex, shapeBottomColorOpacity)
+          )}')`,
+    "--shapeBottomBackgroundSize": `100% ${shapeBottomHeight +
+      shapeBottomHeightSuffix}`,
+
+    // Mobile
+    "--mobileShapeTopHeight": mobileShapeTopHeight + mobileShapeTopHeightSuffix,
+    "--mobileShapeBottomHeight":
+      mobileShapeBottomHeight + mobileShapeBottomHeightSuffix,
+    "--mobileShapeTopBackgroundSize": `${100}% ${mobileShapeTopHeight +
+      mobileShapeTopHeightSuffix}`,
+    "--mobileShapeBottomBackgroundSize": `${100}% ${mobileShapeBottomHeight +
+      mobileShapeBottomHeightSuffix}`,
     "--mobileMediaBg": mobileMedia === "map" ? "block" : "none",
     "--mobileBackgroundImage":
       mobileBgImageSrc && mobileMedia !== "map"

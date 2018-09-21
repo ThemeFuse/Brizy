@@ -139,6 +139,13 @@ $scroll-border-radius: 4px;
   &:last-child {
     border-bottom-color: transparent !important;
   }
+
+  &--icon .brz-control__select-option .brz-icon-svg {
+    width: 100%;
+  }
+  &--icon--bottom .brz-control__select-option__bg {
+    transform: rotateX(180deg);
+  }
 }
 .brz-control__select-optgroup {
   &-label {

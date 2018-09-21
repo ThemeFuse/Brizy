@@ -12,7 +12,7 @@ class SelectOptionType extends React.Component {
     display: "inline",
     className: "",
     itemHeight: 30,
-    icon: null,
+    icon: "",
     choices: [],
     attr: {},
     helper: false,
@@ -39,7 +39,18 @@ class SelectOptionType extends React.Component {
 
   renderChoices(choices = this.props.choices) {
     return choices.map((item, index) => {
-      const { title, icon, optgroup, value } = item;
+      const { title, icon: _icon, optgroup, value } = item;
+      let icon;
+
+      if (_.isObject(_icon)) {
+        const iconClassName = classnames(
+          "brz-control__select-option__bg",
+          _icon.className
+        );
+        icon = <div {..._icon} className={iconClassName} />;
+      } else if (_icon) {
+        icon = <EditorIcon icon={_icon} />;
+      }
 
       if (optgroup && optgroup.length) {
         return (
@@ -48,16 +59,16 @@ class SelectOptionType extends React.Component {
             title={title}
             items={this.renderChoices(optgroup)}
           >
-            {icon && <EditorIcon icon={icon} />}
-            <span className="brz-span">{title}</span>
+            {icon}
+            {title && <span className="brz-span">{title}</span>}
           </SelectOptgroup>
         );
       }
 
       return (
         <SelectItem key={index} value={value} title={title}>
-          {icon && <EditorIcon icon={icon} />}
-          <span className="brz-span">{title}</span>
+          {icon}
+          {title && <span className="brz-span">{title}</span>}
         </SelectItem>
       );
     });
