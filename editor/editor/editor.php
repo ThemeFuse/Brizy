@@ -51,7 +51,7 @@ class Brizy_Editor_Editor_Editor {
 	public function __construct( $project, $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post?$post->get_parent_id():null );
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->get_parent_id() : null );
 	}
 
 	/**
@@ -136,7 +136,6 @@ class Brizy_Editor_Editor_Editor {
 				'featuredImage'   => $post_thumbnail,
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
-				'taxonomies'      => $this->getTaxonomyList(),
 				'api'             => array(
 					'hash'                       => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'                        => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
@@ -182,7 +181,8 @@ class Brizy_Editor_Editor_Editor {
 					'wpApiUrl'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 					'submitUrl' => set_url_scheme( admin_url( 'admin-ajax.php' ) ) . "?action=brizy_submit_form"
 				)
-			)
+			),
+			'taxonomies'      => $this->getTaxonomyList(),
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -271,7 +271,7 @@ class Brizy_Editor_Editor_Editor {
 			// find first include rule
 			foreach ( $rules as $rule ) {
 				/**
-				 * @var Brizy_Admin_Rule $rule;
+				 * @var Brizy_Admin_Rule $rule ;
 				 */
 				if ( $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ) {
 					break;
