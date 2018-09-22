@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.32
+ * Version: 1.0.33
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -20,8 +20,8 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.32' );
-define( 'BRIZY_EDITOR_VERSION', '1.0.60' );
+define( 'BRIZY_VERSION', '1.0.33' );
+define( 'BRIZY_EDITOR_VERSION', '1.0.61' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
