@@ -14,7 +14,7 @@ import { hasSidebars, pluginActivated } from "visual/utils/wp";
 
 export default {
   ...nonWP,
-  // Posts,
+  Posts,
   ...(hasSidebars() ? { WPSidebar } : {}),
   WPCustomShortcode,
   WPNavigation,
