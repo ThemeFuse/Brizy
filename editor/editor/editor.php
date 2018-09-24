@@ -127,7 +127,7 @@ class Brizy_Editor_Editor_Editor {
 				'pageAssets'          => $this->urlBuilder->page_upload_url(),
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ),
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
-				'site'                => site_url()
+				'site'                => home_url()
 			),
 			'user'            => array( 'role' => 'admin' ),
 			'wp'              => array(
