@@ -135,17 +135,18 @@ class Brizy_Editor_Project implements Serializable {
 		Brizy_Logger::instance()->notice( 'Create new project', array( 'id' => $post_id ) );
 
 		$project_data = array(
-			'id'        => md5( uniqid( 'Local project', true ) ),
-			'title'     => 'Brizy Project',
-			'globals'   => base64_encode( '{"project":{},"language":{}}' ),
-			'name'      => uniqid( 'Local project', true ),
-			'user'      => null,
-			'template'  => array( 'slug' => 'brizy' ),
-			'created'   => new DateTime(),
-			'updated'   => new DateTime(),
-			'languages' => array(),
-			'version'   => BRIZY_EDITOR_VERSION,
-			'signature' => Brizy_Editor_Signature::get(),
+			'id'            => md5( uniqid( 'Local project', true ) ),
+			'title'         => 'Brizy Project',
+			'globals'       => base64_encode( '{"project":{},"language":{}}' ),
+			'name'          => uniqid( 'Local project', true ),
+			'user'          => null,
+			'template'      => array( 'slug' => 'brizy' ),
+			'created'       => new DateTime(),
+			'updated'       => new DateTime(),
+			'languages'     => array(),
+			'pluginVersion'       => BRIZY_VERSION,
+			'editorVersion' => BRIZY_EDITOR_VERSION,
+			'signature'     => Brizy_Editor_Signature::get(),
 		);
 
 

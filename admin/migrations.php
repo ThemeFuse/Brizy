@@ -23,7 +23,7 @@ class Brizy_Admin_Migrations {
 	public function migrateTo( $version ) {
 
 		$latestExecutedMigration = $this->getLatestRunMigration();
-		$latestVersion = $latestExecutedMigration->getVersion();
+		$latestVersion           = $latestExecutedMigration->getVersion();
 
 		$version_compare = version_compare( $version, $latestVersion );
 		if ( $version_compare === 1 ) {
@@ -49,8 +49,8 @@ class Brizy_Admin_Migrations {
 			/**
 			 * @var Brizy_Admin_Migrations_MigrationInterface
 			 */
-			$latestExecutedMigration = $this->getLatestRunMigration();
 			$latestExecutedVersion   = BRIZY_VERSION;
+			$latestExecutedMigration = $this->getLatestRunMigration();
 			if ( $latestExecutedMigration ) {
 				$latestExecutedVersion = $latestExecutedMigration->getVersion();
 			}
