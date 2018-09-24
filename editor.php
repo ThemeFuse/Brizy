@@ -29,11 +29,9 @@ class Brizy_Editor {
 	}
 
 	public function runMigrations() {
-		if ( is_admin() && ! wp_doing_ajax() && !wp_doing_cron()) {
-			// run migrations first
-			$migrations = new Brizy_Admin_Migrations();
-			$migrations->migrateTo( BRIZY_VERSION );
-		}
+		// run migrations first
+		$migrations = new Brizy_Admin_Migrations();
+		$migrations->migrateTo( BRIZY_VERSION );
 	}
 
 	public function wordpressInit() {
