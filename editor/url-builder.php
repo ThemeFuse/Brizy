@@ -235,7 +235,9 @@ class Brizy_Editor_UrlBuilder {
 	 * @return string
 	 */
 	public function external_media_url( $path = null ) {
-		$path = "/" . ltrim( $path, "/" );
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
 
 		$url = Brizy_Config::MEDIA_IMAGE_URL . $path;
 

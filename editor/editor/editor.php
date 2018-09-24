@@ -117,7 +117,7 @@ class Brizy_Editor_Editor_Editor {
 				'api'                 => home_url( '/wp-json/v1' ),
 				'base'                => Brizy_Config::getEditorBaseUrls()."",
 				'integration'         => Brizy_Config::EDITOR_INTEGRATION_URL,
-				'image'               => Brizy_Config::MEDIA_IMAGE_URL,
+				'image'               => $this->urlBuilder->external_media_url()."",
 				'origin'              => Brizy_Config::EDITOR_ORIGIN_URL,
 				'pagePreview'         => $preview_post_link,
 				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
