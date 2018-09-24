@@ -15,6 +15,7 @@ class Brizy_Editor {
 	 * Brizy_Editor constructor.
 	 */
 	private function __construct() {
+		add_action( 'init', array( $this, 'runMigrations' ), - 1000 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
@@ -25,6 +26,14 @@ class Brizy_Editor {
 		}
 
 		add_filter( "brizy:templates", array( $this, 'filterPublicTemplates' ) );
+	}
+
+	public function runMigrations() {
+		if ( is_admin() && ! wp_doing_ajax() && !wp_doing_cron()) {
+			// run migrations first
+			$migrations = new Brizy_Admin_Migrations();
+			$migrations->migrateTo( BRIZY_VERSION );
+		}
 	}
 
 	public function wordpressInit() {
