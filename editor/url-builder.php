@@ -36,8 +36,39 @@ class Brizy_Editor_UrlBuilder {
 		$this->upload_dir = Brizy_Admin_UploadDir::getUploadDir( null, true );
 	}
 
+	/**
+	 * @return Brizy_Admin_UrlIterator
+	 */
+	public function compiler_url() {
+		return Brizy_Config::getCompilerUrls();
+	}
+
+
+	/**
+	 * @return Brizy_Admin_UrlIterator
+	 */
 	public function application_form_url() {
-		return sprintf( Brizy_Config::BRIZY_APPLICATION_FORM_URL, Brizy_Config::BRIZY_APPLICATION_FORM_ID, urlencode( $this->multipass_url() ) );
+
+		$form_url = sprintf( Brizy_Config::BRIZY_APPLICATION_FORM_URL, Brizy_Config::BRIZY_APPLICATION_FORM_ID, urlencode( $this->multipass_url() ) );
+
+		$urls = array();
+
+		foreach ( Brizy_Config::getEditorBaseUrls() as $url ) {
+			$urls[] = $url . $form_url;
+		}
+
+		return new Brizy_Admin_UrlIterator( $urls );
+	}
+
+	public function application_form_notification_url() {
+
+		$urls = array();
+
+		foreach ( Brizy_Config::getEditorBaseUrls() as $url ) {
+			$urls[] = $url . Brizy_Config::BRIZY_APPLICATION_FORM_NOTIFICATION_URL;
+		}
+
+		return new Brizy_Admin_UrlIterator( $urls );
 	}
 
 	/**
@@ -204,9 +235,18 @@ class Brizy_Editor_UrlBuilder {
 	 * @return string
 	 */
 	public function external_media_url( $path = null ) {
-		$path = "/" . ltrim( $path, "/" );
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
 
-		return Brizy_Config::MEDIA_IMAGE_URL . $path;
+		$url = Brizy_Config::MEDIA_IMAGE_URL . $path;
+
+		$urls = array();
+		foreach ( Brizy_Config::getEditorBaseUrls() as $baseUrl ) {
+			$urls[] = $baseUrl . $url;
+		}
+
+		return new Brizy_Admin_UrlIterator( $urls );
 	}
 
 	/**
@@ -229,7 +269,12 @@ class Brizy_Editor_UrlBuilder {
 			$path = "/" . ltrim( $path, "/" );
 		}
 
-		return sprintf( Brizy_Config::S3_ASSET_URL . $path, $template_slug, $template_version );
+		$urls = array();
+		foreach ( Brizy_Config::getStaticBrizyUrls() as $url ) {
+			$urls[] = sprintf( $url . $path, $template_slug, $template_version );
+		}
+
+		return new Brizy_Admin_UrlIterator( $urls );
 	}
 }
 
