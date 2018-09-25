@@ -27,7 +27,6 @@ trait Brizy_Admin_Migrations_HelpersTrait {
 			return $array;
 		}
 
-		//echo $array['type'].'<br>';
 		if ( $shortcode == $array['type'] ) {
 			// replace "mobile" with empty string then make first letter lowercase
 			$key = lcfirst( str_replace("mobile", "", $mobile_key) );

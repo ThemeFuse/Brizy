@@ -14,7 +14,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	}
 
 	/**
-	 * 
+	 * Execute the migration
 	 */
 	public function execute() {
 		$result = $this->get_posts_and_meta();
@@ -33,27 +33,23 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 				$json_value = $old_meta->get_editor_data();
 			}
 
-			// test only for specific post id
-			if ( 605 == $item->ID ) {
-				if( !is_null($json_value) ) {
-					// make a backup to previous version
-					update_post_meta($item->ID, 'brizy_bk_v_'.$this->getVersion(), $storage);
+			if( !is_null($json_value) ) {
+				// make a backup to previous version
+				update_post_meta($item->ID, 'brizy_bk_v_'.$this->getVersion(), $storage);
 
-					// migrate post
-					$new_json = $this->migrate_post($json_value, $item->ID); // $item->ID only for test with json
+				// migrate post
+				$new_json = $this->migrate_post($json_value);
 
-					// set the changed value in DB
-					if ( is_array($old_meta) ) {
-						$old_meta['editor_data'] = base64_encode($new_json);
-					}
-					elseif( is_object($old_meta) ) {
-						$old_meta->set_editor_data($new_json);
-					}
-					$instance->set(Brizy_Editor_Post::BRIZY_POST, $old_meta);
+				// set the changed value in DB
+				if ( is_array($old_meta) ) {
+					$old_meta['editor_data'] = base64_encode($new_json);
 				}
+				elseif( is_object($old_meta) ) {
+					$old_meta->set_editor_data($new_json);
+				}
+				$instance->set(Brizy_Editor_Post::BRIZY_POST, $old_meta);
 			}
 		}
-		die();
 	}
 
 	/**
@@ -75,20 +71,8 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	/**
 	 * Migrate post
 	 */
-	public function migrate_post($json_value, $post_id) {
+	public function migrate_post($json_value) {
 		$old_arr = json_decode($json_value, true);
-
-		$debug = true;
-		//$debug = false;
-		if ( $debug ) {
-			// write in before.json to track the changes
-			$result_old = file_put_contents($post_id.'-before.json', json_encode(
-				$old_arr,
-				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
-			));
-			echo 'put-contents-before-json=='.$result_old.'<br>';
-		}
-
 
 		// todo: need here to inspect if is allow inline function in PHP 5.4
 		$new_arr = $this->array_walk_recursive_and_delete($old_arr, function ($value, $key) {
@@ -101,16 +85,6 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 				return true;
 			}
 		});
-
-
-		if ( $debug ) {
-			// write in before.json to track the changes
-			$result_new = file_put_contents($post_id.'-after.json', json_encode(
-				$new_arr,
-				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
-			));
-			echo 'put-contents-before-json=='.$result_new.'<br>';
-		}
 
 		return json_encode($new_arr);
 	}
@@ -172,11 +146,6 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 
 		// WPNavigation
 		$array = $this->unset_mobile_key( $array, "WPNavigation", "mobileItemPadding" );
-
-		// need to finish Column
-		/*$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageWidth" );
-		$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageHeight" );
-		$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageSrc" );*/
 
 		return $array;
 	}
