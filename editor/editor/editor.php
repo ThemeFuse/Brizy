@@ -379,7 +379,7 @@ class Brizy_Editor_Editor_Editor {
 								//return addQueryStringToUrl( get_post_permalink( new WP_Post((object)array("ID"=>time())) ), 'preview=1' );
 								break;
 							case 'front_page':
-								return addQueryStringToUrl( site_url(), 'preview=1' );
+								return addQueryStringToUrl( home_url(), 'preview=1' );
 								break;
 						}
 
