@@ -135,40 +135,32 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 			"dependent_keys" => true
 		) );
 
+		// Tabs
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "Tabs",
+			"mobile_keys" => array(
+				"mobileHorizontalAlign",
+				"mobilePadding"
+			)
+		) );
+
+		// delete ungrouped mobile paddings if all are equal
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Tabs",
+			"mobile_keys"    => array(
+				"mobilePaddingType",
+				"mobilePaddingTop",
+				"mobilePaddingRight",
+				"mobilePaddingBottom",
+				"mobilePaddingLeft"
+			),
+			"dependent_keys" => true
+		) );
+
 		// Column - need to finish
 		/*$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageWidth" );
 		$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageHeight" );
 		$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageSrc" );*/
-
-		return $array;
-	}
-
-	/**
-	 * Special Migration for Wrapper and Cloneable "Align"
-	 */
-	public function mobile_migation_wrapper_align(array &$array, $shortcode = "") {
-		if ( empty($shortcode) ) {
-			return $array;
-		}
-
-		if ( $shortcode == $array['type'] ) {
-			if ( isset( $array['value']['horizontalAlign'] )
-				&& isset( $array['value']['mobileHorizontalAlign'] )
-				&& $array['value']['horizontalAlign'] === $array['value']['mobileHorizontalAlign'] )
-			{
-				unset( $array['value']['mobileHorizontalAlign'] );
-			}
-			else
-			{
-				// !Attention this need only 1-time execution in JSON (to not apply to the same JSON 2 times)
-				if ( isset( $array['value']['horizontalAlign'] )
-					&& $array['value']['horizontalAlign'] !== "center"
-					&& !isset( $array['value']['mobileHorizontalAlign'] ) )
-				{
-					$array['value']['mobileHorizontalAlign'] = "center";
-				}
-			}
-		}
 
 		return $array;
 	}
