@@ -357,7 +357,9 @@ class Brizy_Public_Main {
 	 */
 	public function insert_page_content( $content ) {
 
-		if ( false === strpos( $content, 'brz-root__container' ) ) {
+		global $post;
+
+		if ( false === strpos( $content, 'brz-root__container' ) || ( $post && $post->ID !== $this->post->get_id() )) {
 			return $content;
 		}
 
