@@ -75,6 +75,7 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			return $array;
 		}
 
+		//echo 'type=='.$array['type'].'<br>';
 		if ( $shortcode == $array['type'] ) {
 			// replace "mobile" with empty string then make first letter lowercase
 			$key = lcfirst( str_replace("mobile", "", $mobile_key) );
@@ -102,6 +103,51 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			WHERE pm.meta_key = 'brizy-project'
 			AND p.post_type = 'brizy-project'
 		");
+	}
+
+	public function unset_mobile_multi_keys( array &$array, $atts = array() ) {
+		// merge with default $atts
+		$atts = array_merge(
+			array (
+				"shortcode"      => "",
+				"mobile_keys"    => array(),
+				"dependent_keys" => false,
+			),
+			$atts
+		);
+
+		if ( empty($atts['shortcode']) && empty($atts['mobile_keys']) ) {
+			return $array;
+		}
+
+		//echo 'type=='.$array['type'].'<br>';
+		if ( $atts['shortcode'] == $array['type'] ) {
+			$keys_to_remove = array();
+			foreach($atts['mobile_keys'] as $mobile_key) {
+				// replace "mobile" with empty string then make first letter lowercase
+				$key = lcfirst( str_replace("mobile", "", $mobile_key) );
+				if ( isset( $array['value'][$key] )
+					&& isset( $array['value'][$mobile_key] )
+					&& $array['value'][$key] === $array['value'][$mobile_key] )
+				{
+					$keys_to_remove[] = $mobile_key;
+				}
+			}
+
+			// !Atention if the number of keys to delete are not the same to not delete
+			if ( $atts['dependent_keys'] && count($keys_to_remove) != count($atts['mobile_keys']) ) {
+				$keys_to_remove = array();
+			}
+
+			// remove keys
+			if ( !empty($keys_to_remove) ) {
+				foreach($keys_to_remove as $key_to_remove) {
+					unset( $array['value'][$key_to_remove] );
+				}
+			}
+		}
+
+		return $array;
 	}
 
 }
