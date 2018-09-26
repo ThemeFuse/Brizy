@@ -21,6 +21,11 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 
 		// parse each post
 		foreach ( $result as $item ) {
+			$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $item->ID );
+			if ( $postMigrationStorage->hasMigration($this) ) {
+				return;
+			}
+
 			$json_value = null;
 			$instance   = Brizy_Editor_Storage_Post::instance($item->ID);
 			$storage    = $instance->get_storage();
@@ -38,7 +43,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 				update_post_meta($item->ID, 'brizy_bk_v_'.$this->getVersion(), $storage);
 
 				// migrate post
-				$new_json = $this->migrate_post($json_value);
+				$new_json = $this->migrate_post($json_value, $item->ID);
 
 				// set the changed value in DB
 				if ( is_array($old_meta) ) {
@@ -48,6 +53,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 					$old_meta->set_editor_data($new_json);
 				}
 				$instance->set(Brizy_Editor_Post::BRIZY_POST, $old_meta);
+				$postMigrationStorage->addMigration($this)->save();
 			}
 		}
 	}
@@ -71,8 +77,19 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	/**
 	 * Migrate post
 	 */
-	public function migrate_post($json_value) {
+	public function migrate_post($json_value, $post_id) {
 		$old_arr = json_decode($json_value, true);
+
+		$debug = true;
+		//$debug = false;
+		if ( $debug ) {
+			// write in before.json to track the changes
+			$result_old = file_put_contents($post_id.'-before.json', json_encode(
+				$old_arr,
+				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
+			));
+			echo 'put-contents-before-json=='.$result_old.'<br>';
+		}
 
 		// todo: need here to inspect if is allow inline function in PHP 5.4
 		$new_arr = $this->array_walk_recursive_and_delete($old_arr, function ($value, $key) {
@@ -85,6 +102,15 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 				return true;
 			}
 		});
+
+		if ( $debug ) {
+			// write in before.json to track the changes
+			$result_new = file_put_contents($post_id.'-after.json', json_encode(
+				$new_arr,
+				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
+			));
+			echo 'put-contents-before-json=='.$result_new.'<br>';
+		}
 
 		return json_encode($new_arr);
 	}
