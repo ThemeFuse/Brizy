@@ -281,9 +281,7 @@ class Brizy_Admin_Main {
 
 		try {
 			Brizy_Editor_Post::get( $p->ID )->set_template( $_REQUEST['template'] );
-
 			wp_redirect( Brizy_Editor_Post::get( $p->ID )->edit_url() );
-
 		} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to disabled the editor. Please try again later.' );
 		}
@@ -415,6 +413,7 @@ class Brizy_Admin_Main {
 
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
+			$post->set_plugin_version( BRIZY_VERSION );
 			$post->save();
 
 			// redirect

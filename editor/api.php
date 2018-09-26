@@ -327,10 +327,10 @@ class Brizy_Editor_API {
 				throw new Exception( "Unable to create user" );
 			}
 
-			$email                = $user->getPlatformUserEmail();
-			$secret               = $user->getPlatformUserSignature();
+			$email               = $user->getPlatformUserEmail();
+			$secret              = $user->getPlatformUserSignature();
 			$platformCredentials = Brizy_Editor_API_Platform::getCredentials();
-			$urlBuilder           = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
+			$urlBuilder          = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
 
 			$platform_client_id = $platformCredentials->client_id;
 

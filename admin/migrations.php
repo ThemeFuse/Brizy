@@ -18,14 +18,16 @@ class Brizy_Admin_Migrations {
 	}
 
 	/**
-	 * @param $version
+	 * @param Brizy_Editor_Post $post
+	 * @param string $version
 	 */
-	public function migrateTo( $version ) {
+	public function runMigrations( $post, $version ) {
 
-		$latestExecutedMigration = $this->getLatestRunMigration();
+		$latestExecutedMigration = $this->getLatestRunMigration( $post );
 		$latestVersion           = $latestExecutedMigration->getVersion();
 
 		$version_compare = version_compare( $version, $latestVersion );
+
 		if ( $version_compare === 1 ) {
 			$this->upgradeTo( $version );
 		}
@@ -40,35 +42,33 @@ class Brizy_Admin_Migrations {
 
 		wp_raise_memory_limit( 'image' );
 
-		$wpdb->query( 'START TRANSACTION ' );
-
 		Brizy_Logger::instance()->debug( 'Starting migration process: [upgrading]' );
 
-		try {
+		/**
+		 * @var Brizy_Admin_Migrations_MigrationInterface
+		 */
+		$latestExecutedVersion   = BRIZY_VERSION;
+		$latestExecutedMigration = $this->getLatestRunMigration();
+		if ( $latestExecutedMigration ) {
+			$latestExecutedVersion = $latestExecutedMigration->getVersion();
+		}
+		Brizy_Logger::instance()->debug( "Upgrading to version [{$version}] from version: [{$latestExecutedVersion}]: ", array( $version ) );
 
-			/**
-			 * @var Brizy_Admin_Migrations_MigrationInterface
-			 */
-			$latestExecutedVersion   = BRIZY_VERSION;
-			$latestExecutedMigration = $this->getLatestRunMigration();
-			if ( $latestExecutedMigration ) {
-				$latestExecutedVersion = $latestExecutedMigration->getVersion();
-			}
-			Brizy_Logger::instance()->debug( "Upgrading to version [{$version}] from version: [{$latestExecutedVersion}]: ", array( $version ) );
+		/**
+		 * @var Brizy_Admin_Migrations_MigrationInterface[]
+		 */
+		$existingMigrations = $this->getExistingMigrations();
 
-			/**
-			 * @var Brizy_Admin_Migrations_MigrationInterface[]
-			 */
-			$existingMigrations = $this->getExistingMigrations();
-
+		foreach ( $existingMigrations as $migration ) {
 			$completedMigrations = array();
 
-			foreach ( $existingMigrations as $migration ) {
+			$vc  = version_compare( $migration->getVersion(), $latestExecutedMigration->getVersion() );
+			$vc2 = version_compare( $migration->getVersion(), $version );
 
-				$vc  = version_compare( $migration->getVersion(), $latestExecutedMigration->getVersion() );
-				$vc2 = version_compare( $migration->getVersion(), $version );
-				if ( $vc == 1 && in_array( $vc2, [ - 1, 0 ] ) && ! $this->itWasExecuted( $migration )
-				) {
+			if ( $vc == 1 && in_array( $vc2, [ - 1, 0 ] ) && ! $this->itWasExecuted( $migration ) ) {
+				try {
+					$wpdb->query( 'START TRANSACTION ' );
+
 					$migrationClass = get_class( $migration );
 
 					$migration->execute();
@@ -76,19 +76,18 @@ class Brizy_Admin_Migrations {
 					$completedMigrations[] = clone $migration;
 
 					Brizy_Logger::instance()->debug( 'Run migration: ' . $migrationClass, array( $migrationClass ) );
+
+					$wpdb->query( 'COMMIT' );
+
+					$this->addExecutedMigrations( $completedMigrations );
+				} catch ( Exception $e ) {
+					$wpdb->query( 'ROLLBACK' );
+					Brizy_Logger::instance()->debug( 'Migration process ERROR', $e );
 				}
 			}
-
-			$wpdb->query( 'COMMIT' );
-
-			$this->addExecutedMigrations( $completedMigrations );
-
-			Brizy_Logger::instance()->debug( 'Migration process successful' );
-
-		} catch ( Exception $e ) {
-			$wpdb->query( 'ROLLBACK' );
-			Brizy_Logger::instance()->debug( 'Migration process ERROR', $e );
 		}
+
+		Brizy_Logger::instance()->debug( 'Migration process successful' );
 	}
 
 	/**
@@ -111,10 +110,17 @@ class Brizy_Admin_Migrations {
 	}
 
 	/**
+	 * @param null $post
+	 *
 	 * @return Brizy_Admin_Migrations_MigrationInterface[]
 	 */
-	private function getExecutedMigrations() {
-		$executed   = get_option( self::BRIZY_MIGRATIONS, array() );
+	private function getExecutedMigrations( $post = null ) {
+
+		if ( $post ) {
+			$executed = get_post_meta( $post, Brizy_Editor_Post::BRIZY_POST_PLUGIN_VERSION, array() );
+		} else {
+			$executed = get_option( self::BRIZY_MIGRATIONS, array() );
+		}
 		$migrations = array();
 		foreach ( $executed as $migration ) {
 			$className    = $migration['class'];
@@ -147,10 +153,12 @@ class Brizy_Admin_Migrations {
 	}
 
 	/**
-	 * @return Brizy_Admin_Migrations_MigrationInterface|mixed|void
+	 * @param null $post
+	 *
+	 * @return Brizy_Admin_Migrations_MigrationInterface|Brizy_Admin_Migrations_NullMigration|mixed
 	 */
-	private function getLatestRunMigration() {
-		$migrations = $this->getExecutedMigrations();
+	private function getLatestRunMigration( $post = null ) {
+		$migrations = $this->getExecutedMigrations( $post );
 
 		if ( count( $migrations ) == 0 ) {
 			return new Brizy_Admin_Migrations_NullMigration();
