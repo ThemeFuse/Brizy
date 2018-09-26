@@ -122,7 +122,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 		// Accordion
 		$array = $this->unset_mobile_key( $array, "Accordion", "mobilePadding" );
 
-		// delete ungrouped mobile paddings if all are equal
+		// Delete ungrouped mobile paddings if all are equal
 		$array = $this->unset_mobile_multi_keys( $array, array(
 			"shortcode"      => "Accordion", 
 			"mobile_keys"    => array(
@@ -144,7 +144,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 			)
 		) );
 
-		// delete ungrouped mobile paddings if all are equal
+		// Delete ungrouped mobile paddings if all are equal
 		$array = $this->unset_mobile_multi_keys( $array, array(
 			"shortcode"      => "Tabs",
 			"mobile_keys"    => array(
@@ -156,6 +156,65 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 			),
 			"dependent_keys" => true
 		) );
+
+		// Image
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Image",
+			"mobile_keys"    => array(
+				"mobileResize",
+				"mobileZoom",
+				"mobileWidth",
+				"mobileHeight"
+			)
+		) );
+
+		// Delete image position if all are equal
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Image",
+			"mobile_keys"    => array(
+				"mobilePositionX",
+				"mobilePositionY"
+			),
+			"dependent_keys" => true
+		) );
+
+		// Form
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Form",
+			"mobile_keys"    => array(
+				"mobileHorizontalAlign"
+			)
+		) );
+
+		// Form fields options
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "FormFields",
+			"mobile_keys"    => array(
+				"mobilePadding",
+				"mobilePaddingRight",
+				"mobilePaddingBottom",
+				"mobilePaddingLeft",
+			),
+			"dependent_keys" => true
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "FormFields",
+			"mobile_keys"    => array(
+				"mobileBorderRadius",
+				"mobilePaddingTop" // top is used as zero from the default json
+			)
+		) );
+
+		// Form single field options
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "FormField",
+			"mobile_keys"    => array(
+				"mobileWidth",
+				"mobileHeight"
+			)
+		) );
+
 
 		// Column - need to finish
 		/*$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageWidth" );
