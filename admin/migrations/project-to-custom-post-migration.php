@@ -23,8 +23,12 @@ class Brizy_Admin_Migrations_ProjectToCustomPostMigration implements Brizy_Admin
 	 */
 	public function execute() {
 
+		if ( $this->isGlobalProjectCreated() ) {
+			return;
+		}
+
 		$storage     = Brizy_Editor_Storage_Common::instance();
-		$projectData = $storage->get( Brizy_Editor_Project::BRIZY_PROJECT );
+		$projectData = $storage->get( Brizy_Editor_Project::BRIZY_PROJECT, false );
 
 		if ( is_array( $projectData ) ) {
 			$projectData = unserialize( $projectData['api_project'] );
@@ -32,8 +36,9 @@ class Brizy_Admin_Migrations_ProjectToCustomPostMigration implements Brizy_Admin
 			$projectData            = $projectData->getApiProject()->get_data();
 			$projectData['globals'] = base64_encode( $projectData['globals'] );
 		} else {
-			throw new Exception( 'Invalid project data encountered' );
+			return;
 		}
+
 
 		$post_id = wp_insert_post( array(
 			'post_type'      => Brizy_Editor_Project::BRIZY_PROJECT,
@@ -61,6 +66,15 @@ class Brizy_Admin_Migrations_ProjectToCustomPostMigration implements Brizy_Admin
 		$storage->loadStorage( $newProjectData );
 
 		return $post_id;
+
+	}
+
+	public function isGlobalProjectCreated() {
+		global $wpdb;
+
+		$projectId = $wpdb->get_var( $wpdb->prepare( " SELECT ID FROM {$wpdb->posts} WHERE post_type=%s", Brizy_Editor_Project::BRIZY_PROJECT ) );
+
+		return ! is_null( $projectId ) && $projectId > 0;
 
 	}
 }
