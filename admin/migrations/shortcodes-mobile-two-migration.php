@@ -120,11 +120,16 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 	 */
 	public function parse_shortcodes(array &$array) {
 		// Accordion
-		$array = $this->unset_mobile_key( $array, "Accordion", "mobilePadding" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Accordion",
+			"mobile_keys"    => array(
+				"mobilePadding"
+			),
+		) );
 
 		// Delete ungrouped mobile paddings if all are equal
 		$array = $this->unset_mobile_multi_keys( $array, array(
-			"shortcode"      => "Accordion", 
+			"shortcode"      => "Accordion",
 			"mobile_keys"    => array(
 				"mobilePaddingType",
 				"mobilePaddingTop",
@@ -231,6 +236,31 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 			),
 			"dependent_keys" => true
 		) );
+
+		// Row
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Row",
+			"mobile_keys"    => array(
+				"mobileMedia",
+				"mobileBgImageWidth",
+				"mobileBgImageHeight",
+				"mobileBgImageSrc",
+				"mobileBgColorHex",
+				"mobileBgColorOpacity",
+				"mobileBgColorPalette",
+				"mobileBgMapZoom"
+			)
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Row",
+			"mobile_keys"    => array(
+				"mobileBgPositionX",
+				"mobileBgPositionY"
+			),
+			"dependent_keys" => true
+		) );
+
 
 		// Column - need to finish
 		/*$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageWidth" );
