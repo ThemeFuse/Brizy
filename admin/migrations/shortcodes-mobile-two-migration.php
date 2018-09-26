@@ -215,6 +215,22 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 			)
 		) );
 
+		// Icon
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Icon",
+			"mobile_keys"    => array(
+				"mobilePadding"
+			)
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Icon",
+			"mobile_keys"    => array(
+				"mobileSize",
+				"mobileCustomSize"
+			),
+			"dependent_keys" => true
+		) );
 
 		// Column - need to finish
 		/*$array = $this->unset_mobile_key( $array, "Column", "mobileBgImageWidth" );
