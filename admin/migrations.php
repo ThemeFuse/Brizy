@@ -35,7 +35,7 @@ class Brizy_Admin_Migrations {
 		$migrations = $this->getExistingMigrations();
 
 		$latestExecutedMigration = $this->getLatestRunMigration();
-		$latestExecutedVersion           = $latestExecutedMigration->getVersion();
+		$latestExecutedVersion   = $latestExecutedMigration->getVersion();
 		$latestMigrationVersion  = end( $migrations );
 
 		$version_compare = version_compare( $version, $latestExecutedVersion );
@@ -164,10 +164,11 @@ class Brizy_Admin_Migrations {
 		$migrationsToRun = $this->getExistingMigrations();
 
 		if ( $latestExecutedMigration ) {
-			$migrationsToRun = array_filter( $migrationsToRun, function ( $migration ) use ( $latestExecutedMigration ) {
-				$version_compare = version_compare( $latestExecutedMigration->getVersion(), $migration->getVersion() );
+			$migrationsToRun = array_filter( $migrationsToRun, function ( $migration ) use ( $latestExecutedMigration, $version ) {
+				$version_compare1 = version_compare( $latestExecutedMigration->getVersion(), $migration->getVersion() );
+				$version_compare2 = version_compare( $migration->getVersion(), $version );
 
-				return $version_compare == - 1;
+				return $version_compare1 == -1 && $version_compare2 == - 1;
 			} );
 		}
 
