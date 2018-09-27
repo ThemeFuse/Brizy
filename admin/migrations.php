@@ -69,7 +69,8 @@ class Brizy_Admin_Migrations {
 				$runMigrations = true;
 			}
 		} else {
-			$runMigrations = version_compare( $version, $latestExecutedMigration->getVersion() ) == 1 && $latestMigrationVersion->getVersion() != $latestExecutedMigration->getVersion();
+			$runMigrations = version_compare( $version, $latestExecutedMigration->getVersion() ) == 1 &&
+			                 $latestMigrationVersion->getVersion() != $latestExecutedMigration->getVersion();
 		}
 
 		if ( $runMigrations ) {
@@ -100,6 +101,10 @@ class Brizy_Admin_Migrations {
 
 		usort( $migrations, function ( $a, $b ) {
 			return version_compare( $a->getVersion(), $b->getVersion() );
+		} );
+
+		$migrations = array_filter( $migrations, function ( $migration ) {
+			return in_array( version_compare( $migration->getVersion(), BRIZY_VERSION ), [ - 1, 0 ] );
 		} );
 
 		return $this->existinMigrations = $migrations;
@@ -168,7 +173,7 @@ class Brizy_Admin_Migrations {
 				$version_compare1 = version_compare( $latestExecutedMigration->getVersion(), $migration->getVersion() );
 				$version_compare2 = version_compare( $migration->getVersion(), $version );
 
-				return $version_compare1 == -1 && $version_compare2 == - 1;
+				return $version_compare1 == - 1 && $version_compare2 == - 1;
 			} );
 		}
 
@@ -207,9 +212,9 @@ class Brizy_Admin_Migrations {
 		/**
 		 * @var Brizy_Admin_Migrations_MigrationInterface[]
 		 */
-		$existingMigrations = $this->getExistingMigrations();
+		$migrationsToRun = $this->getExistingMigrations();
 
-		foreach ( $existingMigrations as $migration ) {
+		foreach ( $migrationsToRun as $migration ) {
 
 			try {
 				$wpdb->query( 'START TRANSACTION ' );
