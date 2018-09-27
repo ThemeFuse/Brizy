@@ -10,7 +10,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.32';
+		return '1.0.39';
 	}
 
 	/**
@@ -18,6 +18,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 */
 	public function execute() {
 		$result = $this->get_posts_and_meta();
+		$class  = get_class();
 
 		// parse each post
 		foreach ( $result as $item ) {
@@ -40,7 +41,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 
 			if( !is_null($json_value) ) {
 				// make a backup to previous version
-				update_post_meta($item->ID, 'brizy_bk_v_'.$this->getVersion(), $storage);
+				update_post_meta($item->ID, 'brizy-bk-'.$class.'-'.$this->getVersion(), $storage);
 
 				// migrate post
 				$new_json = $this->migrate_post($json_value, $item->ID);
