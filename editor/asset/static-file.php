@@ -127,7 +127,6 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			// send headers
 			$headers                   = array();
 			$headers['Content-Type']   = $this->get_mime( $filename, 1 );
-			$headers['Content-Length'] = strlen( $content );
 			$headers['Cache-Control']  = 'max-age=600';
 
 			foreach ( $headers as $key => $val ) {
