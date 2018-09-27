@@ -227,6 +227,30 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 			"dependent_keys" => true
 		) );
 
+		// Section
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "SectionItem",
+			"mobile_keys"    => array(
+				"mobileMedia",
+				"mobileBgImageWidth",
+				"mobileBgImageHeight",
+				"mobileBgImageSrc",
+				"mobileBgColorHex",
+				"mobileBgColorOpacity",
+				"mobileBgColorPalette",
+				"mobileBgMapZoom"
+			)
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "SectionItem",
+			"mobile_keys"    => array(
+				"mobileBgPositionX",
+				"mobileBgPositionY"
+			),
+			"dependent_keys" => true
+		) );
+
 		return $array;
 	}
 
