@@ -1,6 +1,6 @@
 <?php
 
-trait Brizy_Admin_Migrations_HelpersTrait {
+trait Brizy_Admin_Migrations_Posts_Trait {
 
 	/**
 	 * Parse array of shortcodes recursive
