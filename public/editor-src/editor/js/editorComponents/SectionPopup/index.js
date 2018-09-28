@@ -133,12 +133,13 @@ class SectionPopup extends EditorComponent {
     const {
       bgImageSrc,
       bgColorOpacity,
+      bgPopulation,
       mobileBgImageSrc,
       mobileBgColorOpacity
     } = v;
     let bgProps = {
       className: bgStyleClassName(v),
-      imageSrc: bgImageSrc,
+      imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
       mobileImageSrc: mobileBgImageSrc,
       mobileColorOpacity: mobileBgColorOpacity

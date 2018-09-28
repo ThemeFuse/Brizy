@@ -1,6 +1,8 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+
+const imageDynamicContentChoices = getDynamicContentChoices("image");
 
 export function getItemsForDesktop(v, component) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
@@ -38,60 +40,76 @@ export function getItemsForDesktop(v, component) {
           id: "bgImage",
           label: t("Image"),
           type: "imageSetter",
+          population: {
+            show: imageDynamicContentChoices.length > 0,
+            choices: imageDynamicContentChoices
+          },
           value: {
             width: v.bgImageWidth,
             height: v.bgImageHeight,
             src: v.bgImageSrc,
             x: v.bgPositionX,
-            y: v.bgPositionY
+            y: v.bgPositionY,
+            population: v.bgPopulation
           },
-          onChange: ({ width, height, src, x, y }) => ({
-            bgImageWidth: width,
-            bgImageHeight: height,
-            bgImageSrc: src,
-            bgPositionX: x,
-            bgPositionY: y,
+          onChange: ({ width, height, src, x, y, population }) => {
+            if (population) {
+              return {
+                bgPopulation: population
+              };
+            }
 
-            bgColorOpacity:
-              src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.bgColorOpacity,
+            return {
+              bgImageWidth: width,
+              bgImageHeight: height,
+              bgImageSrc: src,
+              bgPositionX: x,
+              bgPositionY: y,
+              bgPopulation: "",
 
-            tempBgColorOpacity:
-              src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.tempBgColorOpacity,
+              bgColorOpacity:
+                src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.bgColorOpacity,
 
-            // Mobile
-            mobileBgImageWidth:
-              v.bgImageWidth === v.mobileBgImageWidth
-                ? width
-                : v.mobileBgImageWidth,
+              tempBgColorOpacity:
+                src !== "" && v.bgColorOpacity === 1
+                  ? 0.9
+                  : v.tempBgColorOpacity,
 
-            mobileBgImageHeight:
-              v.bgImageHeight === v.mobileBgImageHeight
-                ? height
-                : v.mobileBgImageHeight,
+              // Mobile
+              mobileBgImageWidth:
+                v.bgImageWidth === v.mobileBgImageWidth
+                  ? width
+                  : v.mobileBgImageWidth,
 
-            mobileBgImageSrc:
-              v.bgImageSrc === v.mobileBgImageSrc ? src : v.mobileBgImageSrc,
+              mobileBgImageHeight:
+                v.bgImageHeight === v.mobileBgImageHeight
+                  ? height
+                  : v.mobileBgImageHeight,
 
-            mobileBgPositionX:
-              v.bgPositionX === v.mobileBgPositionX ? x : v.mobileBgPositionX,
+              mobileBgImageSrc:
+                v.bgImageSrc === v.mobileBgImageSrc ? src : v.mobileBgImageSrc,
 
-            mobileBgPositionY:
-              v.bgPositionX === v.mobileBgPositionX ? y : v.mobileBgPositionY,
+              mobileBgPositionX:
+                v.bgPositionX === v.mobileBgPositionX ? x : v.mobileBgPositionX,
 
-            mobileBgColorOpacity:
-              src !== "" &&
-              v.bgImageSrc === v.mobileBgImageSrc &&
-              v.mobileBgColorOpacity === 1
-                ? 0.9
-                : v.mobileBgColorOpacity,
+              mobileBgPositionY:
+                v.bgPositionX === v.mobileBgPositionX ? y : v.mobileBgPositionY,
 
-            tempMobileBgColorOpacity:
-              src !== "" &&
-              v.bgImageSrc === v.mobileBgImageSrc &&
-              v.mobileBgColorOpacity === 1
-                ? 0.9
-                : v.tempMobileBgColorOpacity
-          })
+              mobileBgColorOpacity:
+                src !== "" &&
+                v.bgImageSrc === v.mobileBgImageSrc &&
+                v.mobileBgColorOpacity === 1
+                  ? 0.9
+                  : v.mobileBgColorOpacity,
+
+              tempMobileBgColorOpacity:
+                src !== "" &&
+                v.bgImageSrc === v.mobileBgImageSrc &&
+                v.mobileBgColorOpacity === 1
+                  ? 0.9
+                  : v.tempMobileBgColorOpacity
+            };
+          }
         }
       ]
     },
@@ -1014,30 +1032,44 @@ export function getItemsForMobile(v) {
           id: "mobileImage",
           label: t("Image"),
           type: "imageSetter",
+          population: {
+            show: imageDynamicContentChoices.length > 0,
+            choices: imageDynamicContentChoices
+          },
           value: {
             width: v.mobileBgImageWidth,
             height: v.mobileBgImageHeight,
             src: v.mobileBgImageSrc,
             x: v.mobileBgPositionX,
-            y: v.mobileBgPositionY
+            y: v.mobileBgPositionY,
+            population: v.bgPopulation
           },
-          onChange: ({ width, height, src, x, y }) => ({
-            mobileBgImageWidth: width,
-            mobileBgImageHeight: height,
-            mobileBgImageSrc: src,
-            mobileBgPositionX: x,
-            mobileBgPositionY: y,
+          onChange: ({ width, height, src, x, y, population }) => {
+            if (population) {
+              return {
+                bgPopulation: population
+              };
+            }
 
-            mobileBgColorOpacity:
-              src !== "" && v.mobileBgColorOpacity === 1
-                ? 0.9
-                : v.mobileBgColorOpacity,
+            return {
+              mobileBgImageWidth: width,
+              mobileBgImageHeight: height,
+              mobileBgImageSrc: src,
+              mobileBgPositionX: x,
+              mobileBgPositionY: y,
+              bgPopulation: "",
 
-            tempMobileBgColorOpacity:
-              src !== "" && v.mobileBgColorOpacity === 1
-                ? 0.9
-                : v.tempMobileBgColorOpacity
-          })
+              mobileBgColorOpacity:
+                src !== "" && v.mobileBgColorOpacity === 1
+                  ? 0.9
+                  : v.mobileBgColorOpacity,
+
+              tempMobileBgColorOpacity:
+                src !== "" && v.mobileBgColorOpacity === 1
+                  ? 0.9
+                  : v.tempMobileBgColorOpacity
+            };
+          }
         }
       ]
     },

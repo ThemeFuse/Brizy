@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { imageUrl } from "visual/utils/image";
+import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
 import { svgToUri } from "visual/utils/icons";
 
@@ -177,6 +177,7 @@ export function bgStyleClassName(v, props) {
     const {
       media,
       bgImageSrc,
+      bgPopulation,
       bgPositionX,
       bgPositionY,
       bgAttachment,
@@ -239,6 +240,9 @@ export function bgStyleClassName(v, props) {
       _mobileShapeBottomHeightSuffix === null
         ? shapeBottomHeightSuffix
         : _mobileShapeBottomHeightSuffix;
+    const bgImage = bgPopulation
+      ? imagePopulationUrl(bgPopulation)
+      : imageUrl(bgImageSrc);
 
     glamorObj = {
       "> .brz-bg-media": {
@@ -279,10 +283,12 @@ export function bgStyleClassName(v, props) {
       },
       "> .brz-bg-media > .brz-bg-image": {
         backgroundImage:
-          media === "image" && bgImageSrc
-            ? `url(${imageUrl(bgImageSrc)})`
+          media === "image" && (bgImageSrc || bgPopulation)
+            ? `url(${bgImage})`
             : "none",
-        backgroundPosition: `${bgPositionX}% ${bgPositionY}%`,
+        backgroundPosition: bgPopulation
+          ? "0% 0%"
+          : `${bgPositionX}% ${bgPositionY}%`,
         backgroundAttachment:
           backgroundAttachment[showSlider ? "none" : bgAttachment]
       },
@@ -327,10 +333,12 @@ export function bgStyleClassName(v, props) {
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
-            mobileBgImageSrc && mobileMedia !== "map"
-              ? `url(${imageUrl(mobileBgImageSrc)})`
+            (mobileBgImageSrc || bgPopulation) && mobileMedia !== "map"
+              ? `url(${bgImage})`
               : "none",
-          backgroundPosition: `${mobileBgPositionX}% ${mobileBgPositionY}%`,
+          backgroundPosition: bgPopulation
+            ? "0% 0%"
+            : `${mobileBgPositionX}% ${mobileBgPositionY}%`,
           backgroundAttachment:
             backgroundAttachment[showSlider ? "none" : mobileBgAttachment]
         },
@@ -342,11 +350,13 @@ export function bgStyleClassName(v, props) {
         },
         // Shape
         "> .brz-bg-media > .brz-bg-shape__top": {
-          backgroundSize: `100% ${mobileShapeTopHeight + mobileShapeTopHeightSuffix}`,
+          backgroundSize: `100% ${mobileShapeTopHeight +
+            mobileShapeTopHeightSuffix}`,
           height: mobileShapeTopHeight + mobileShapeTopHeightSuffix
         },
         "> .brz-bg-media > .brz-bg-shape__bottom": {
-          backgroundSize: `100% ${mobileShapeBottomHeight + mobileShapeBottomHeightSuffix}`,
+          backgroundSize: `100% ${mobileShapeBottomHeight +
+            mobileShapeBottomHeightSuffix}`,
           height: mobileShapeBottomHeight + mobileShapeBottomHeightSuffix
         }
       }
@@ -363,6 +373,7 @@ export function bgStyleCSSVars(v, props) {
   const {
     media,
     bgImageSrc,
+    bgPopulation,
     bgAttachment,
     bgPositionX,
     bgPositionY,
@@ -429,9 +440,11 @@ export function bgStyleCSSVars(v, props) {
   return {
     "--mediaBg": media === "map" ? "block" : "none",
     "--backgroundImage":
-      media === "image" && bgImageSrc ? `url(${imageUrl(bgImageSrc)})` : "none",
-    "--backgroundPositionX": `${bgPositionX}%`,
-    "--backgroundPositionY": `${bgPositionY}%`,
+      media === "image" && bgImageSrc && !bgPopulation
+        ? `url(${imageUrl(bgImageSrc)})`
+        : "none",
+    "--backgroundPositionX": bgPopulation ? "0%" : `${bgPositionX}%`,
+    "--backgroundPositionY": bgPopulation ? "0%" : `${bgPositionY}%`,
     "--backgroundAttachment":
       backgroundAttachment[showSlider ? "none" : bgAttachment],
     "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
@@ -511,11 +524,15 @@ export function bgStyleCSSVars(v, props) {
       mobileShapeBottomHeightSuffix}`,
     "--mobileMediaBg": mobileMedia === "map" ? "block" : "none",
     "--mobileBackgroundImage":
-      mobileBgImageSrc && mobileMedia !== "map"
+      mobileBgImageSrc && mobileMedia !== "map" && !bgPopulation
         ? `url(${imageUrl(mobileBgImageSrc)})`
         : "none",
-    "--mobileBackgroundPositionX": `${mobileBgPositionX}%`,
-    "--mobileBackgroundPositionY": `${mobileBgPositionY}%`,
+    "--mobileBackgroundPositionX": bgPopulation
+      ? "0%"
+      : `${mobileBgPositionX}%`,
+    "--mobileBackgroundPositionY": bgPopulation
+      ? "0%"
+      : `${mobileBgPositionY}%`,
     "--mobileBackgroundAttachment":
       backgroundAttachment[showSlider ? "none" : mobileBgAttachment],
     "--mobileBackgroundColor": hexToRgba(mobileBgColorHex, mobileBgColorOpacity)

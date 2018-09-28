@@ -11,7 +11,6 @@ export class WPShortcode extends Component {
     attributes: {},
     raw: null,
     placeholderIcon: "nc-wp-shortcode",
-    placeholderContainerWidth: 0,
     resizerPoints: null,
     resizerMeta: null,
     resizerValue: null,
@@ -76,7 +75,6 @@ class Inner extends Component {
     attributes: {},
     raw: null,
     placeholderIcon: "nc-wp-shortcode",
-    placeholderContainerWidth: 0,
     renderHTMLInEditor: true
   };
 
@@ -157,7 +155,6 @@ class Inner extends Component {
       className: _className,
       style,
       placeholderIcon,
-      placeholderContainerWidth
     } = this.props;
     const { shortcodeHTML } = this.state;
 
@@ -167,10 +164,7 @@ class Inner extends Component {
         dangerouslySetInnerHTML={{ __html: shortcodeHTML }}
       />
     ) : (
-      <Placeholder
-        icon={placeholderIcon}
-        containerWidth={placeholderContainerWidth}
-      />
+      <Placeholder icon={placeholderIcon} />
     );
   }
 

@@ -3,7 +3,13 @@ import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 
 export function imageStylesClassName(v, sizes, props) {
-  const { className, borderRadius, imageSrc, linkLightBox } = v;
+  const {
+    className,
+    borderRadius,
+    imageSrc,
+    imagePopulation,
+    linkLightBox
+  } = v;
   const {
     meta: { desktopW, mobileW, inGallery }
   } = props;
@@ -17,7 +23,6 @@ export function imageStylesClassName(v, sizes, props) {
     const maxBorderRadius = Math.round(Math.min(dW, dH) / 2);
     const maxMobileBorderRadius = Math.round(Math.min(mW, mH) / 2);
     const {
-      imagePopulation,
       imageBrightness,
       imageHue,
       imageContrast,
@@ -62,7 +67,8 @@ export function imageStylesClassName(v, sizes, props) {
   return classnames(
     "brz-image",
     {
-      "brz-image__lightbox": imageSrc && linkLightBox === "on" && !inGallery
+      "brz-image__lightbox":
+        (imageSrc || imagePopulation) && linkLightBox === "on" && !inGallery
     },
     className,
     glamorClassName

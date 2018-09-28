@@ -3,3 +3,60 @@
   width: 100%;
   display: grid;
 }
+
+// pagination all class is from WP
+.brz-posts {
+  ul.page-numbers {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: 1 / -1;
+    align-items: center;
+    justify-content: center;
+  }
+  ul.page-numbers > li {
+    position: relative;
+    margin-left: 4px;
+    margin-right: 4px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  ul.page-numbers .page-numbers {
+    position: relative;
+    display: block;
+    color: inherit;
+    font-size: 18px;
+    line-height: 1;
+    text-decoration: none;
+    padding: 6px 10px;
+    transition: 0.2s linear color;
+    outline: none;
+
+    &:before {
+      content: "";
+      width: 28px;
+      height: 28px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid transparent;
+      transition: 0.2s linear border-color;
+      opacity: 0.75;
+    }
+    &:hover {
+      transition: 0.2s linear color;
+    }
+    &.current:before {
+      border-color: currentColor;
+      transition: 0.2s linear border-color;
+    }
+  }
+}

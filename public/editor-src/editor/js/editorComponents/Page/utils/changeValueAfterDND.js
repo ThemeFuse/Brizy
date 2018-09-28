@@ -114,7 +114,13 @@ function getValue(value, { from, to }) {
   }
 
   if (from.itemType === "column") {
-    if (from.containerType === "posts") {
+    const parentElement = getIn(oldValue, from.itemPath.slice(0, -3));
+
+    if (
+      from.containerType === "posts" ||
+      (from.containerType === "carousel" &&
+        parentElement.value.dynamic === "on")
+    ) {
       // Cloned Column and changed the paths for the first column
       from.itemPath[from.itemPath.length - 1] = "0";
       const movedElement = setIds(getIn(oldValue, from.itemPath));

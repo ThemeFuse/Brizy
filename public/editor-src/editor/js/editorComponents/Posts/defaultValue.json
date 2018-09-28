@@ -1,10 +1,22 @@
 {
   "className": "",
+  "type": "posts",
   "gridColumn": 3,
   "gridRow": 1,
   "padding": 0,
   "items": [],
-  "mobilePadding": null,
   "taxonomy": "category",
-  "taxonomyId": 1
+  "taxonomyId": 1,
+  "order": "ASC",
+  "orderBy": "ID",
+  "pagination": "off",
+  "paginationSpacing": 20,
+  "paginationColorHex": "#ffffff",
+  "paginationColorOpacity": 1,
+  "paginationColorPalette": "color3",
+  "paginationTempColorOpacity": 1,
+  "paginationTempColorPalette": "color3",
+
+  "mobilePadding": null,
+  "mobilePaginationSpacing": null
 }

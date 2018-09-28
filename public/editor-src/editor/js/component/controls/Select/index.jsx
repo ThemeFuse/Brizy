@@ -29,10 +29,18 @@ class Select extends React.Component {
   state = {
     isOpen: false,
     currentValue: this.props.defaultValue,
-    position: "bottom"
+    position: "bottom-left"
   };
 
   componentDidMount() {
+    this.reposition();
+  }
+
+  componentDidUpdate() {
+    if (this.isRepositioning) {
+      return;
+    }
+
     this.reposition();
   }
 
@@ -96,13 +104,22 @@ class Select extends React.Component {
   };
 
   reposition() {
-    const { bottom } = this.dropdown.getBoundingClientRect();
+    const { bottom, width, x } = this.dropdown.getBoundingClientRect();
+    let { position } = this.state;
+    const [positionX, positionY] = position.split("-");
 
     if (bottom >= window.innerHeight) {
-      this.setState({
-        position: "top"
-      });
+      position = `top-${positionY}`;
     }
+    if (width + x >= window.innerWidth) {
+      position = `${positionX}-right`;
+    }
+
+    this.isRepositioning = true;
+
+    this.setState({ position }, () => {
+      this.isRepositioning = false;
+    });
   }
 
   renderLabel() {

@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.34<br>
+Stable tag: 1.0.35<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,16 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.35 - 2018-09-28 ###
+* New: Added justify to alignment options for RichText
+* Updated: RichText font size limit was increased up to 300
+* Fixed: Section with slider enabled Full Height option
+* Fixed: Fixed select2 compatibility
+* Fixed: Remove Content-Length header when returning assets
+* Fixed: Fixed the_Excerpt recursion
+* Fixed: Fixed icons urls
+
 
 ### 1.0.34 - 2018-09-24 ###
 * Improved: Added redundant config urls

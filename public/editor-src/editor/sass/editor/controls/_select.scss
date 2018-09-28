@@ -50,15 +50,29 @@ $scroll-border-radius: 4px;
   }
 
   // Position
-  &--top {
+  &--top-left,
+  &--top-right {
     .brz-control__select-options {
       bottom: 100%;
       margin-bottom: 3px;
     }
   }
-  &--bottom {
+  &--bottom-left,
+  &--bottom-right {
     .brz-control__select-options {
       margin-top: 3px;
+    }
+  }
+  &--top-left,
+  &--bottom-left {
+    .brz-control__select-options {
+      left: 0;
+    }
+  }
+  &--top-right,
+  &--bottom-right {
+    .brz-control__select-options {
+      right: 0;
     }
   }
 }
@@ -104,7 +118,6 @@ $scroll-border-radius: 4px;
 .brz-control__select-options {
   position: absolute;
   z-index: 12;
-  left: 0;
   min-width: 100%;
   border-radius: $control-border-radius;
   box-shadow: $control-dropdown-shadow;

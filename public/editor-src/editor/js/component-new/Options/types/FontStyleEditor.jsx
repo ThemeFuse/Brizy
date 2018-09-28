@@ -125,7 +125,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 100,
+                                    max: 300,
                                     step: 1,
                                     value: fontSize,
                                     onChange: fontSize =>

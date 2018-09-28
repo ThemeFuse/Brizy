@@ -105,6 +105,7 @@ class SectionHeaderItem extends EditorComponent {
     const {
       bgImageSrc,
       bgColorOpacity,
+      bgPopulation,
       mobileBgImageSrc,
       mobileBgColorOpacity
     } = v;
@@ -113,7 +114,7 @@ class SectionHeaderItem extends EditorComponent {
 
     let bgProps = {
       className: bgStyleClassName(v, this.props),
-      imageSrc: bgImageSrc,
+      imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
       mobileImageSrc: mobileBgImageSrc,
       mobileColorOpacity: mobileBgColorOpacity

@@ -47,8 +47,12 @@ class InputOptionType extends React.Component {
   };
 
   handleInputChange = event => {
-    const value = event.target.value;
-    const { population } = this.props.value;
+    const {
+      inputType,
+      value: { population }
+    } = this.props;
+    const value =
+      inputType === "number" ? Number(event.target.value) : event.target.value;
 
     this.setState({
       inputValue: value

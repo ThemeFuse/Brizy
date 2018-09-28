@@ -13,3 +13,8 @@
   text-align: right !important;
   justify-content: flex-end !important;
 }
+
+@mixin align-justify {
+  text-align: justify !important;
+}
+

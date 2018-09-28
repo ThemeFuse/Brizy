@@ -7,9 +7,9 @@
   width: 100%;
   background-color: #373e48;
   color: #151924;
-  font-size: inherit;
 
-  @media (max-width: 767px) {
-    font-size: 36px !important;
+  .brz-icon-svg {
+    width: calc(16px + (0.075 * 100%));
+    height: calc(16px + (0.075 * 100%));
   }
 }

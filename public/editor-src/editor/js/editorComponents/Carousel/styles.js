@@ -57,6 +57,7 @@ export function styleClassName(v) {
   } else {
     const {
       spacing,
+      slidesToShow,
       sliderArrowsSpacing,
       sliderArrowsColorHex,
       sliderArrowsColorOpacity,
@@ -88,6 +89,15 @@ export function styleClassName(v) {
     } = v;
 
     glamorObj = {
+      // Hide slideItems before slick-slide initialized
+      [`& > [data-slides-to-show="${slidesToShow}"]:not(.slick-initialized)`]: {
+        "& .brz-carousel__item": {
+          flexBasis: `${100 / slidesToShow}%`
+        },
+        [`& .brz-carousel__item:nth-child(1n+${slidesToShow + 1})`]: {
+          display: "none"
+        }
+      },
       "& > .slick-slider": {
         paddingLeft:
           sliderPaddingType === "grouped"

@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { imageUrl } from "visual/utils/image";
+import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
 
 export function sectionStyleClassName(v) {
@@ -79,6 +79,7 @@ export function bgStyleClassName(v) {
       bgPositionY,
       bgColorHex,
       bgColorOpacity,
+      bgPopulation,
       borderWidth,
       borderWidthType,
       borderTopWidth,
@@ -99,6 +100,9 @@ export function bgStyleClassName(v) {
       mobileBgColorHex,
       mobileBgColorOpacity
     } = v;
+    const bgImage = bgPopulation
+      ? imagePopulationUrl(bgPopulation)
+      : imageUrl(bgImageSrc);
 
     glamorObj = {
       "> .brz-bg-media": {
@@ -138,18 +142,22 @@ export function bgStyleClassName(v) {
             : `${borderBottomRightRadius}px`
       },
       "> .brz-bg-media > .brz-bg-image": {
-        backgroundImage: bgImageSrc ? `url(${imageUrl(bgImageSrc)})` : "none",
-        backgroundPosition: `${bgPositionX}% ${bgPositionY}%`
+        backgroundImage:
+          bgImageSrc || bgPopulation ? `url(${bgImage})` : "none",
+        backgroundPosition: bgPopulation
+          ? "0% 0%"
+          : `${bgPositionX}% ${bgPositionY}%`
       },
       "> .brz-bg-media > .brz-bg-color": {
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
       },
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage: mobileBgImageSrc
-            ? `url(${imageUrl(mobileBgImageSrc)})`
-            : "none",
-          backgroundPosition: `${mobileBgPositionX}% ${mobileBgPositionY}%`
+          backgroundImage:
+            mobileBgImageSrc || bgPopulation ? `url(${bgImage})` : "none",
+          backgroundPosition: bgPopulation
+            ? "0% 0%"
+            : `${mobileBgPositionX}% ${mobileBgPositionY}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
@@ -171,6 +179,7 @@ export function bgStyleCSSVars(v) {
     bgPositionY,
     bgColorHex,
     bgColorOpacity,
+    bgPopulation,
     borderWidth,
     borderWidthType,
     borderTopWidth,
@@ -193,9 +202,10 @@ export function bgStyleCSSVars(v) {
   } = v;
 
   return {
-    "--backgroundImage": bgImageSrc ? `url(${imageUrl(bgImageSrc)})` : "none",
-    "--backgroundPositionX": `${bgPositionX}%`,
-    "--backgroundPositionY": `${bgPositionY}%`,
+    "--backgroundImage":
+      bgImageSrc && !bgPopulation ? `url(${imageUrl(bgImageSrc)})` : "none",
+    "--backgroundPositionX": bgPopulation ? "0%" : `${bgPositionX}%`,
+    "--backgroundPositionY": bgPopulation ? "0%" : `${bgPositionY}%`,
     "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
     "--borderTopWidth":
       borderWidthType === "grouped"
@@ -231,11 +241,16 @@ export function bgStyleCSSVars(v) {
       borderRadiusType === "grouped"
         ? `${borderRadius}px`
         : `${borderBottomRightRadius}px`,
-    "--mobileBackgroundImage": mobileBgImageSrc
-      ? `url(${imageUrl(mobileBgImageSrc)})`
-      : "none",
-    "--mobileBackgroundPositionX": `${mobileBgPositionX}%`,
-    "--mobileBackgroundPositionY": `${mobileBgPositionY}%`,
+    "--mobileBackgroundImage":
+      mobileBgImageSrc && !bgPopulation
+        ? `url(${imageUrl(mobileBgImageSrc)})`
+        : "none",
+    "--mobileBackgroundPositionX": bgPopulation
+      ? "0%"
+      : `${mobileBgPositionX}%`,
+    "--mobileBackgroundPositionY": bgPopulation
+      ? "0%"
+      : `${mobileBgPositionY}%`,
     "--mobileBackgroundColor": hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
   };
 }

@@ -154,10 +154,9 @@ class SectionItems extends EditorArrayComponent {
 
       if (IS_PREVIEW) {
         const { sliderAutoPlay, sliderAutoPlaySpeed } = this.props;
-        const arrowIcon = templateIconUrl(
-          "editor",
-          `right-arrow-${sliderArrows}`
-        );
+        const arrowIcon =
+          sliderArrows !== "none" &&
+          templateIconUrl("editor", `right-arrow-${sliderArrows}`);
 
         ret = (
           <div

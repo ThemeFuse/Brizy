@@ -138,7 +138,7 @@ export function getItemsForDesktop(v) {
                     { title: t("Modified"), value: "modified" },
                     { title: t("Parent"), value: "parent" },
                     { title: t("Random"), value: "rand" },
-                    { title: t("Comment count"), value: "comment_count" },
+                    { title: t("Comment Count"), value: "comment_count" },
                     { title: t("Menu order"), value: "menu_order" }
                   ],
                   value: v.orderBy

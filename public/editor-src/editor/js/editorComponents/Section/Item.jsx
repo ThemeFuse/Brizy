@@ -121,13 +121,15 @@ class SectionItem extends EditorComponent {
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
-      _v.shapeBottomColorPalette && `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
     const {
       media,
       bgImageSrc,
+      bgPopulation,
       bgColorOpacity,
       bgAttachment,
       bgVideo,
@@ -139,15 +141,14 @@ class SectionItem extends EditorComponent {
       shapeBottomType,
       mobileMedia,
       mobileBgImageSrc,
-      mobileBgColorOpacity,
-      mobileBgAttachment
+      mobileBgColorOpacity
     } = v;
 
     const meta = this.getMeta(v);
 
     let bgProps = {
       className: bgStyleClassName(v, this.props),
-      imageSrc: bgImageSrc,
+      imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
       parallax: bgAttachment === "animated" && !meta.showSlider,
       mobileImageSrc: mobileBgImageSrc,
@@ -195,7 +196,8 @@ class SectionItem extends EditorComponent {
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
-      _v.shapeBottomColorPalette && `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

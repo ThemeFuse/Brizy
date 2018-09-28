@@ -32,7 +32,7 @@ class EmbedCode extends EditorComponent {
   renderForEdit(v) {
     const { code } = v;
     const content = !code ? (
-      <Placeholder icon="nc-iframe" containerWidth={this.props.meta.desktopW} />
+      <Placeholder icon="nc-iframe" />
     ) : (
       <div
         className={classnames({ "brz-ed-blocked": IS_EDITOR })}

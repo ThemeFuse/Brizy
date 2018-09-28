@@ -12,6 +12,9 @@ class Items extends EditorArrayComponent {
     gridColumn: 2,
     taxonomy: "",
     taxonomyId: "",
+    order: "",
+    orderBy: "",
+    pagination: false,
     meta: {}
   };
 
@@ -50,7 +53,7 @@ class Items extends EditorArrayComponent {
   };
 
   renderForEdit(v) {
-    const { className, style, gridRow, gridColumn } = this.props;
+    const { className, style, gridRow, gridColumn, pagination } = this.props;
     const item = super.renderForEdit(v);
     const items = Array(gridRow * gridColumn).fill(item);
 
@@ -62,6 +65,38 @@ class Items extends EditorArrayComponent {
       >
         <div className={className} style={style}>
           {items}
+          {pagination && (
+            <ul className="page-numbers">
+              <li>
+                <span className="page-numbers current">1</span>
+              </li>
+              <li>
+                <a className="page-numbers" href="#">
+                  2
+                </a>
+              </li>
+              <li>
+                <a className="page-numbers" href="#">
+                  3
+                </a>
+              </li>
+              <li>
+                <a className="page-numbers" href="#">
+                  ...
+                </a>
+              </li>
+              <li>
+                <a className="page-numbers" href="#">
+                  10
+                </a>
+              </li>
+              <li>
+                <a className="page-numbers" href="#">
+                  11
+                </a>
+              </li>
+            </ul>
+          )}
         </div>
       </Sortable>
     );
@@ -75,15 +110,34 @@ class Items extends EditorArrayComponent {
       gridColumn,
       gridRow,
       taxonomy,
-      taxonomyId
+      taxonomyId,
+      order,
+      orderBy,
+      pagination
     } = this.props;
     const maxPostItems = gridRow * gridColumn;
 
     return (
       <div className={className} style={style}>
-        {`{{brizy_dc_post_loop count='${maxPostItems}' taxonomy='${taxonomy}' value='${taxonomyId}'}}`}
+        {`{{
+            brizy_dc_post_loop
+            count='${maxPostItems}'
+            taxonomy='${taxonomy}'
+            value='${taxonomyId}'
+            order='${order}'
+            orderby='${orderBy}'
+        }}`}
         {super.renderItemsContainer(v)}
         {`{{end_brizy_dc_post_loop}}`}
+        {pagination &&
+          `{{
+              brizy_dc_post_loop_pagination
+              count='${maxPostItems}'
+              taxonomy='${taxonomy}'
+              value='${taxonomyId}'
+              order='${order}'
+              orderby='${orderBy}'
+            }}`}
       </div>
     );
   }
