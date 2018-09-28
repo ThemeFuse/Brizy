@@ -106,5 +106,20 @@ trait Brizy_Admin_Migrations_PostsTrait {
 		return $array;
 	}
 
+	/**
+	 * Get Glogals posts
+	 */
+	public function get_globals_posts() {
+		global $wpdb;
+
+		// query all global posts
+		return $wpdb->get_results("
+			SELECT p.ID, pm.meta_value FROM {$wpdb->postmeta} pm
+			LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			WHERE pm.meta_key = 'brizy-project'
+			AND p.post_type = 'brizy-project'
+		");
+	}
+
 }
 

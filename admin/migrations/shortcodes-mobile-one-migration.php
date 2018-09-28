@@ -24,7 +24,8 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		foreach ( $result as $item ) {
 			$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $item->ID );
 			if ( $postMigrationStorage->hasMigration($this) ) {
-				return;
+				continue;
+				//return;
 			}
 
 			$json_value = null;
@@ -54,9 +55,14 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 					$old_meta->set_editor_data($new_json);
 				}
 				$instance->set(Brizy_Editor_Post::BRIZY_POST, $old_meta);
+
+				// set that migration was successful executed
 				$postMigrationStorage->addMigration($this)->save();
 			}
 		}
+
+		// globals migration
+		$this->globals_migration();
 	}
 
 	/**
@@ -148,6 +154,17 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Globals migration
+	 */
+	public function globals_migration() {
+		$result = $this->get_globals_posts();
+		/*echo '<pre>';
+		print_r($result);
+		echo '</pre>';*/
+		//die();
 	}
 
 }
