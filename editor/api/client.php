@@ -190,7 +190,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		$body             = array(
 			'template_slug'         => 'brizy',
 			'template_version'      => $template_version,
-			'template_download_url' => $url_builder->external_asset_url( '/visual/export.js' ),
+			'template_download_url' => $url_builder->external_asset_url( '/visual/export.js' )."",
 			'config_json'           => json_encode( $config ), // ???
 			'pages_json'            => json_encode( array(
 				array(
