@@ -173,7 +173,7 @@ class Brizy_Admin_Migrations {
 				$version_compare1 = version_compare( $latestExecutedMigration->getVersion(), $migration->getVersion() );
 				$version_compare2 = version_compare( $migration->getVersion(), $version );
 
-				return $version_compare1 == - 1 && $version_compare2 == - 1;
+				return $version_compare1 == - 1 && ( $version_compare2 == - 1 || $version_compare2 == 0);
 			} );
 		}
 
