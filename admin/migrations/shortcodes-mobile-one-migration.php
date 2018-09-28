@@ -2,7 +2,7 @@
 
 class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
-	use Brizy_Admin_Migrations_Posts_Trait;
+	use Brizy_Admin_Migrations_PostsTrait;
 
 	/**
 	 * Return the version

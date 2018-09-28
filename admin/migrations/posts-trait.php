@@ -1,6 +1,6 @@
 <?php
 
-trait Brizy_Admin_Migrations_Posts_Trait {
+trait Brizy_Admin_Migrations_PostsTrait {
 
 	/**
 	 * Parse array of shortcodes recursive
@@ -42,7 +42,7 @@ trait Brizy_Admin_Migrations_Posts_Trait {
 		$old_arr = json_decode($json_value, true);
 
 		$debug = true;
-		$debug = false; // comment this for testing
+		//$debug = false; // comment this for testing
 		if ( $debug ) {
 			// write in before.json to track the changes
 			$result_old = file_put_contents($post_id.'-before.json', json_encode(
