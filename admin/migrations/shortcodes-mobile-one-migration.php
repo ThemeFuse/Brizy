@@ -121,7 +121,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	}
 
 	/**
-	 * Special Migration for Wrapper and Cloneable "Align"
+	 * Special Migration for Wrapper and Cloneable "align"
 	 */
 	public function mobile_migation_wrapper_align(array &$array, $shortcode = "") {
 		if ( empty($shortcode) ) {

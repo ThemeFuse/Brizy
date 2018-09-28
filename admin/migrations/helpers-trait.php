@@ -2,11 +2,14 @@
 
 trait Brizy_Admin_Migrations_HelpersTrait {
 
+	/**
+	 * Parse array of shortcodes recursive
+	 */
 	public function array_walk_recursive_and_delete(array &$array, callable $callback, $userdata = null) {
 		foreach ($array as $key => &$value) {
 			if ( is_array($value) ) {
 				$value = $this->array_walk_recursive_and_delete($value, $callback, $userdata);
-				// check if is shortcode
+				// if is shortcode parse recursive
 				if ( isset( $value['type'] ) && isset( $value['value'] ) ) {
 					$this->parse_shortcodes($value);
 				}
@@ -39,17 +42,16 @@ trait Brizy_Admin_Migrations_HelpersTrait {
 		$old_arr = json_decode($json_value, true);
 
 		$debug = true;
-		$debug = false;
+		$debug = false; // comment this for testing
 		if ( $debug ) {
 			// write in before.json to track the changes
 			$result_old = file_put_contents($post_id.'-before.json', json_encode(
 				$old_arr,
 				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
 			));
-			echo 'put-contents-before-json=='.$result_old.'<br>';
+			echo 'put-contents-json-before=='.$result_old.'<br>';
 		}
 
-		// todo: need here to inspect if is allow inline function in PHP 5.4
 		$new_arr = $this->array_walk_recursive_and_delete($old_arr, function ($value, $key) {
 			if ( is_array($value) ) {
 				return empty($value);
@@ -63,22 +65,28 @@ trait Brizy_Admin_Migrations_HelpersTrait {
 
 		if ( $debug ) {
 			// write in before.json to track the changes
-			$result_new = file_put_contents($post_id.'-after.json', json_encode(
+			$result_new = file_put_contents($post_id.'-bfafter.json', json_encode(
 				$new_arr,
 				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
 			));
-			echo 'put-contents-before-json=='.$result_new.'<br>';
+			echo 'put-contents-json-after=='.$result_new.'<br>';
 		}
 
 		return json_encode($new_arr);
 	}
 
+	/**
+	 * Parse shortcodes
+	 */
 	public function parse_shortcodes(array &$array) {
 		// rewrite this function in your class
 
 		return $array;
 	}
 
+	/**
+	 * Unset a mobile key
+	 */
 	public function unset_mobile_key(array &$array, $shortcode = "", $mobile_key = "") {
 		if ( empty($shortcode) && empty($mobile_key) ) {
 			return $array;
