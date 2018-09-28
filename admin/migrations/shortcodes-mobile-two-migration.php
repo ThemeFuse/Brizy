@@ -2,7 +2,7 @@
 
 class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
-	use Brizy_Admin_Migrations_HelpersTrait;
+	use Brizy_Admin_Migrations_PostsTrait;
 
 	/**
 	 * Return the version
