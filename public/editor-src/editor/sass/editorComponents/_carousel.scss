@@ -3,6 +3,10 @@
   display: block;
   width: 100%;
 
+  &__slider:not(.slick-initialized) {
+    display: flex;
+    flex-wrap: wrap;
+  }
   > .slick-slider {
     overflow: hidden;
 

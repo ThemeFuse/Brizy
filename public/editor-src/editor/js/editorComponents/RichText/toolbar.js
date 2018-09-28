@@ -100,7 +100,7 @@ const calcIntermediateStyle = (
 const linkDynamicContentChoices = getDynamicContentChoices("link");
 
 const MIN_SIZE = 6;
-const MAX_SIZE = 99;
+const MAX_SIZE = 300;
 
 const MIN_HEIGHT = 1;
 const MAX_HEIGHT = 5;
@@ -480,6 +480,11 @@ const getItemsForDesktop = (
           icon: "nc-text-align-right",
           title: t("Align"),
           value: "right"
+        },
+        {
+          icon: "nc-text-align-justify",
+          title: t("Align"),
+          value: "justify"
         }
       ],
       value: horizontalAlign,
@@ -820,7 +825,7 @@ export const getItemsForMobile = (
                 type: "stepper",
                 display: "block",
                 min: 6,
-                max: 99,
+                max: MAX_SIZE,
                 step: 1,
                 value: size,
                 onChange: value =>
@@ -909,6 +914,11 @@ export const getItemsForMobile = (
         icon: "nc-text-align-right",
         title: t("Align"),
         value: "right"
+      },
+      {
+        icon: "nc-text-align-justify",
+        title: t("Align"),
+        value: "justify"
       }
     ],
     value: horizontalAlign,

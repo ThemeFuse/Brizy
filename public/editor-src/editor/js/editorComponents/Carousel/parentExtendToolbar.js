@@ -1,5 +1,5 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColor, getTaxonomies } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 
 export function getItemsForDesktop(v) {
@@ -82,16 +82,15 @@ export function getItemsForDesktop(v) {
                   onChange: ({ value: slidesToShow }) => ({ slidesToShow })
                 },
                 {
-                  id: "padding",
-                  type: "slider",
+                  id: "spacing",
                   label: t("Spacing"),
-                  input: {
-                    show: true,
-                    min: 0
-                  },
+                  type: "slider",
                   slider: {
-                    min: 0,
-                    max: 50
+                    min: 1,
+                    max: 6
+                  },
+                  input: {
+                    show: true
                   },
                   suffix: {
                     show: true,
@@ -111,7 +110,7 @@ export function getItemsForDesktop(v) {
             },
             {
               id: "navigation",
-              label: "Navigation",
+              label: t("Navigation"),
               options: [
                 {
                   type: "multiPicker",
@@ -218,6 +217,72 @@ export function getItemsForDesktop(v) {
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      id: "dynamicToolbarCarousel",
+      type: "popover",
+      icon: "nc-dynamic",
+      title: t("Dynamic Content"),
+      roles: ["admin"],
+      position: 80,
+      options: [
+        {
+          id: "dynamic",
+          label: t("Dynamic Content"),
+          type: "switch",
+          value: v.dynamic
+        },
+        {
+          id: "taxonomy",
+          label: t("Categories"),
+          disabled: v.dynamic === "off",
+          type: "select",
+          choices: getTaxonomies(),
+          value: `${v.taxonomy}|${v.taxonomyId}`,
+          onChange: _taxonomy => {
+            const [taxonomy, taxonomyId] = _taxonomy.split("|");
+
+            return {
+              taxonomy,
+              taxonomyId
+            };
+          }
+        },
+        {
+          id: "orderBy",
+          label: t("Filter By"),
+          disabled: v.dynamic === "off",
+          type: "select",
+          choices: [
+            { title: t("ID"), value: "ID" },
+            { title: t("Title"), value: "title" },
+            { title: t("Date"), value: "date" },
+            { title: t("Random"), value: "rand" },
+            { title: t("Comment Count"), value: "comment_count" }
+          ],
+          value: v.orderBy
+        },
+        {
+          type: "multiPicker",
+          disabled: v.dynamic === "off",
+          picker: {
+            id: "order",
+            label: t("Order"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "ASC",
+                icon: "nc-up"
+              },
+              {
+                value: "DESC",
+                icon: "nc-down"
+              }
+            ],
+            value: v.order
+          }
         }
       ]
     },

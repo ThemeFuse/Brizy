@@ -13,14 +13,28 @@ export const getTaxonomies = () => {
   }
 
   return taxonomies.map(taxonomy => {
-    const { label, name, terms } = taxonomy;
+    const { id = "", label = "", name = "", terms = [] } = taxonomy;
+
+    if (!id && !label && !name && !terms && terms.length === 0) {
+      return {
+        title: "-",
+        value: ""
+      };
+    }
+
+    if (terms && terms.length) {
+      return {
+        title: label,
+        optgroup: terms.map(term => ({
+          title: term.name,
+          value: `${name}|${term.id}`
+        }))
+      };
+    }
 
     return {
       title: label,
-      optgroup: terms.map(term => ({
-        title: term.name,
-        value: `${name}|${term.id}`
-      }))
+      value: `${name}|${id}`
     };
   });
 };

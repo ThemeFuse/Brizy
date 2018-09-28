@@ -24,7 +24,11 @@ class Items extends EditorArrayComponent {
 
   static defaultProps = {
     containerClassName: "",
-    slider: false,
+    dynamic: "off",
+    taxonomy: "",
+    taxonomyId: "",
+    orderBy: "",
+    order: "",
     slidesToShow: 2,
     slidesToScroll: 1,
     sliderArrows: "none",
@@ -90,57 +94,71 @@ class Items extends EditorArrayComponent {
   };
 
   getItemProps(itemData, itemIndex, items) {
-    const { meta, slidesToShow } = this.props;
-    const cloneRemoveConfig = {
-      getItemsForDesktop: () => [
-        {
-          id: "emptyItem",
-          type: "button",
-          icon: "nc-add",
-          title: t("Add new column"),
-          position: 100,
-          onChange: () => {
-            const emptyItemData = {
-              ...itemData,
-              value: { ...itemData.value, items: [] }
-            };
-            this.insertItem(itemIndex + 1, emptyItemData);
-          }
-        },
-        {
-          id: "duplicate",
-          type: "button",
-          icon: "nc-duplicate",
-          title: t("Duplicate"),
-          position: 200,
-          onChange: () => {
-            this.cloneItem(itemIndex);
-          }
-        },
-        ...(items.length > slidesToShow
-          ? [
-              {
-                id: "remove",
-                type: "button",
-                title: t("Delete"),
-                icon: "nc-trash",
-                position: 250,
-                onChange: () => {
-                  hideToolbar();
-                  this.removeItem(itemIndex);
+    let { meta, slidesToShow, dynamic, toolbarExtend } = this.props;
+
+    if (dynamic === "off") {
+      const cloneRemoveConfig = {
+        getItemsForDesktop: () => [
+          {
+            id: "emptyItem",
+            type: "button",
+            icon: "nc-add",
+            title: t("Add new column"),
+            position: 100,
+            onChange: () => {
+              const emptyItemData = {
+                ...itemData,
+                value: { ...itemData.value, items: [] }
+              };
+              this.insertItem(itemIndex + 1, emptyItemData);
+            }
+          },
+          {
+            id: "duplicate",
+            type: "button",
+            icon: "nc-duplicate",
+            title: t("Duplicate"),
+            position: 200,
+            onChange: () => {
+              this.cloneItem(itemIndex);
+            }
+          },
+          ...(items.length > slidesToShow
+            ? [
+                {
+                  id: "remove",
+                  type: "button",
+                  title: t("Delete"),
+                  icon: "nc-trash",
+                  position: 250,
+                  onChange: () => {
+                    hideToolbar();
+                    this.removeItem(itemIndex);
+                  }
                 }
-              }
-            ]
-          : [])
-      ],
-      getItemsForMobile: () => []
-    };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+              ]
+            : [])
+        ],
+        getItemsForMobile: () => []
+      };
+
+      toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+    }
 
     return {
       meta,
       toolbarExtend
     };
+  }
+
+  renderItemWrapper(item, itemKey) {
+    return IS_PREVIEW ? (
+      <div key={itemKey} className="brz-carousel__item">
+        {item}
+      </div>
+    ) : (
+      item
+    );
   }
 
   renderSlider(content) {
@@ -155,10 +173,9 @@ class Items extends EditorArrayComponent {
     } = this.props;
 
     if (IS_PREVIEW) {
-      const arrowIcon = templateIconUrl(
-        "editor",
-        `right-arrow-${sliderArrows}`
-      );
+      const arrowIcon =
+        sliderArrows !== "none" &&
+        templateIconUrl("editor", `right-arrow-${sliderArrows}`);
 
       return (
         <div
@@ -174,11 +191,7 @@ class Items extends EditorArrayComponent {
           data-auto-play-speed={sliderAutoPlaySpeed * 1000}
           data-swipe={swipe === "on"}
         >
-          {content.map((item, index) => (
-            <div key={index} className="brz-carousel__item">
-              {item}
-            </div>
-          ))}
+          {content}
         </div>
       );
     }
@@ -223,8 +236,12 @@ class Items extends EditorArrayComponent {
     );
   }
 
-  renderItemsContainer(items) {
-    const { className, style } = this.props;
+  renderForEdit(v) {
+    const { className, style, dynamic, columns } = this.props;
+    let content =
+      dynamic === "on"
+        ? Array(columns).fill(super.renderForEdit(v.slice(0, 1)))
+        : super.renderForEdit(v);
 
     return (
       <Sortable
@@ -233,7 +250,7 @@ class Items extends EditorArrayComponent {
         acceptElements={this.handleSortableAcceptElements}
       >
         <div className={className} style={style}>
-          {this.renderSlider(items)}
+          {this.renderSlider(content)}
         </div>
       </Sortable>
     );
