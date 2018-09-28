@@ -126,7 +126,7 @@ class Brizy_Editor_Project extends Brizy_Admin_Serializable {
 
 		Brizy_Logger::instance()->notice( 'Save project', array( $this ) );
 
-		$this->set_meta_key( 'worpdress_url', get_site_url() );
+		$this->set_meta_key( 'worpdress_url', home_url() );
 		$this->set_meta_key( 'worpdress_site_name', get_bloginfo( 'name' ) );
 		$this->set_meta_key( 'worpdress_version', get_bloginfo( 'version' ) );
 		$this->set_meta_key( 'worpdress_description', get_bloginfo( 'description' ) );

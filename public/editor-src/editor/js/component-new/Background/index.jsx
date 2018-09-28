@@ -293,9 +293,11 @@ class Background extends React.Component {
     return (
       <React.Fragment>
         {shapeTopType && <div className="brz-bg-shape brz-bg-shape__top" />}
-        {shapeBottomType && <div className="brz-bg-shape brz-bg-shape__bottom" />}
+        {shapeBottomType && (
+          <div className="brz-bg-shape brz-bg-shape__bottom" />
+        )}
       </React.Fragment>
-    )
+    );
   }
 
   render() {

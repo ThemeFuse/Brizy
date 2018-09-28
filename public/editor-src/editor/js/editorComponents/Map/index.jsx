@@ -81,7 +81,7 @@ class Map extends EditorComponent {
     const src = `${URL}?key=${KEY}&q=${address}&zoom=${zoom}`;
 
     const content = !address ? (
-      <Placeholder icon="nc-pin" containerWidth={this.props.meta.desktopW} />
+      <Placeholder icon="nc-pin" />
     ) : (
       <iframe
         className={classnames("brz-iframe", { "brz-ed-blocked": IS_EDITOR })}

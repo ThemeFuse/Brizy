@@ -57,6 +57,9 @@ export const currentStyleSelector = createSelector(globalsSelector, globals => {
       [`${color.id}__shapeBottomColor`]: {
         shapeBottomColorHex: color.hex
       },
+      [`${color.id}__paginationColor`]: {
+        paginationColorHex: color.hex
+      },
       [`${color.id}__mobileBg`]: {
         mobileBgColorHex: color.hex
       }

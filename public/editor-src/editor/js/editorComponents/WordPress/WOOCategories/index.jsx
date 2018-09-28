@@ -34,7 +34,6 @@ class WOOCategories extends EditorComponent {
           name="product_categories"
           attributes={attributes}
           placeholderIcon="nc-woo-2"
-          placeholderContainerWidth={this.props.meta.desktopW}
           className={styleClassName(v)}
           style={styleCSSVars(v)}
           resizerPoints={resizerPoints}

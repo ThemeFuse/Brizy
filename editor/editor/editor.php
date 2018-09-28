@@ -127,7 +127,7 @@ class Brizy_Editor_Editor_Editor {
 				'pageAssets'          => $this->urlBuilder->page_upload_url(),
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' )."",
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
-				'site'                => site_url()
+				'site'                => home_url()
 			),
 			'user'            => array( 'role' => 'admin' ),
 			'wp'              => array(
@@ -379,7 +379,7 @@ class Brizy_Editor_Editor_Editor {
 								//return addQueryStringToUrl( get_post_permalink( new WP_Post((object)array("ID"=>time())) ), 'preview=1' );
 								break;
 							case 'front_page':
-								return addQueryStringToUrl( site_url(), 'preview=1' );
+								return addQueryStringToUrl( home_url(), 'preview=1' );
 								break;
 						}
 

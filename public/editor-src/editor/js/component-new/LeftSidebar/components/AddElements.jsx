@@ -48,6 +48,12 @@ class DrawerComponent extends React.Component {
   renderIcons(shortcodes) {
     return shortcodes
       .filter(shortcode => !shortcode.hidden)
+      .sort((a, b) => {
+        const aPos = a.position || 10;
+        const bPos = b.position || 10;
+
+        return aPos - bPos;
+      })
       .map(({ id, title, icon }) => (
         <SortableElement key={id} type="addable" subtype={id}>
           <div className="brz-ed-sidebar__add-elements__item">

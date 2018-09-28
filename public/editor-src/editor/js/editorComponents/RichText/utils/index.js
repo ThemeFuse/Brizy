@@ -1,4 +1,3 @@
-import _ from "underscore";
 import { isHex } from "visual/utils/color";
 import { getUsedFonts } from "visual/utils/fonts";
 import { formatLinkFromString } from "./link";
@@ -37,17 +36,15 @@ const getTagName = ({ header, pre }, $elem) => {
   return preTagName || headerTagName;
 };
 
-const getFirstValue = format => {
-  return _.isArray(format) ? format[0] : format;
-};
+const getFirstValue = format => (Array.isArray(format) ? format[0] : format);
 
 const getCurrentFont = font => {
-  const fontKeys = _.pluck(getUsedFonts(), "id");
+  const fontKeys = getUsedFonts().map(item => item["id"]);
   const currentFonts = font.split(",");
 
-  const currentFont = _.find(currentFonts, item => {
-    return _.indexOf(fontKeys, formatStr(item)) !== -1;
-  });
+  const currentFont = currentFonts.find(item =>
+    fontKeys.includes(formatStr(item))
+  );
 
   return currentFont ? formatStr(currentFont) : null;
 };
@@ -87,8 +84,9 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
   const letterSpacing = parseFloat($elem.css("letterSpacing"));
   const height = cssHeight / size;
   const cssAlign = $elem.css("textAlign");
-  const align =
-    _.indexOf(["left", "center", "right"], cssAlign) != -1 ? cssAlign : "left";
+  const align = ["left", "center", "right", "justify"].includes(cssAlign)
+    ? cssAlign
+    : "left";
   const font = $elem.css("fontFamily");
   const weight = parseInt($elem.css("fontWeight"));
 

@@ -4,6 +4,7 @@ export default {
   id: "WOOCategories",
   title: t("Categories"),
   icon: "nc-woo-2",
+  position: 20,
   resolve: {
     type: "Wrapper",
     value: {

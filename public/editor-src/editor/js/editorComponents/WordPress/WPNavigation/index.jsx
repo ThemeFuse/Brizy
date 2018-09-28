@@ -46,7 +46,6 @@ class WPNavigation extends EditorComponent {
           name="brizy_navigation"
           attributes={attributes}
           placeholderIcon="nc-wp-shortcode"
-          placeholderContainerWidth={this.props.meta.desktopW}
           className={styleClassName(v)}
           style={styleCSSVars(v)}
           toggleMenu={v.mobileToggleMenu === "on"}

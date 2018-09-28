@@ -32,8 +32,20 @@ class Posts extends EditorComponent {
     };
   }
 
-  renderForEdit(v) {
-    const { taxonomy, taxonomyId, gridRow, gridColumn } = v;
+  renderForEdit(_v) {
+    const v = this.applyRulesToValue(_v, [
+      _v.paginationColorPalette &&
+        `${_v.paginationColorPalette}__paginationColor`
+    ]);
+    const {
+      taxonomy,
+      taxonomyId,
+      orderBy,
+      order,
+      gridRow,
+      gridColumn,
+      pagination
+    } = v;
 
     const itemsProps = this.makeSubcomponentProps({
       className: styleClassName(v),
@@ -43,6 +55,9 @@ class Posts extends EditorComponent {
       gridColumn,
       taxonomy,
       taxonomyId,
+      order,
+      orderBy,
+      pagination: pagination === "on",
       meta: this.getMeta(v)
     });
 

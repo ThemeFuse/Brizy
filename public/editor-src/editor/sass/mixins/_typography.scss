@@ -8,7 +8,7 @@ $font-weight-max: 9;
 
 // Font Size Setting min/max
 $font-size-min: 6;
-$font-size-max: 180;
+$font-size-max: 300;
 
 // Line-height 1 - 3
 @mixin generateLineHeight($line-height-min, $line-height-max, $device) {

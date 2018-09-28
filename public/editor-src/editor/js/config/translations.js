@@ -43,6 +43,8 @@ export default {
   "Accordion": __("Accordion", "brizy"),
   "Row": __("Row", "brizy"),
   "Column": __("Column", "brizy"),
+  "Rows": __("Rows", "brizy"),
+  "Columns": __("Columns", "brizy"),
   "Add to cart": __("Add to cart", "brizy"),
   "Categories": __("Categories", "brizy"),
   "Pages": __("Pages", "brizy"),
@@ -51,7 +53,9 @@ export default {
   "Shortcode": __("Shortcode", "brizy"),
   "Menu": __("Menu", "brizy"),
   "Posts": __("Posts", "brizy"),
+  "Archives": __("Archives", "brizy"),
   "Taxonomy": __("Taxonomy", "brizy"),
+  "Pagination": __("Pagination", "brizy"),
   "Sidebar": __("Sidebar", "brizy"),
   //-> Reorder Blocks
   "Reorder Blocks": __("Reorder Blocks", "brizy"),
@@ -155,7 +159,7 @@ export default {
   "Overlay": __("Overlay", "brizy"),
   "Border": __("Border", "brizy"),
   //-> Settings
-  "Dynamic content": __("Dynamic content", "brizy"),
+  "Dynamic Content": __("Dynamic Content", "brizy"),
   "Settings": __("Settings", "brizy"),
   //-> Duplicate & Delete
   "Duplicate": __("Duplicate", "brizy"),
@@ -438,7 +442,7 @@ export default {
   "Meta Value": __("Meta Value", "brizy"),
   "Modified": __("Modified", "brizy"),
   "Parent": __("Parent", "brizy"),
-  "Comment count": __("Comment count", "brizy"),
+  "Comment Count": __("Comment Count", "brizy"),
   "Filter By": __("Filter By", "brizy"),
   "Block": __("Block", "brizy"),
   "Make it Global": __("Make it Global", "brizy"),

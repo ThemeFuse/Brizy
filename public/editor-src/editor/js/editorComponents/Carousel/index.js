@@ -4,6 +4,7 @@ import Items from "./items";
 import { percentageToPixels } from "visual/utils/meta";
 import { styleClassName, styleCSSVars } from "./styles";
 import * as parentToolbarExtend from "./parentExtendToolbar";
+import * as toolbarExtend from "./toolbarExtend";
 import defaultValue from "./defaultValue.json";
 
 class Carousel extends EditorComponent {
@@ -45,19 +46,23 @@ class Carousel extends EditorComponent {
       mobileSliderPaddingRight,
       mobileSliderPaddingRightSuffix
     } = v;
-    const desktopW = meta.desktopW / slidesToShow;
+
     const paddingW =
       sliderPaddingType === "grouped"
-        ? percentageToPixels(sliderPadding * 2, sliderPaddingSuffix, desktopW)
+        ? percentageToPixels(
+            sliderPadding * 2,
+            sliderPaddingSuffix,
+            meta.desktopW
+          )
         : percentageToPixels(
             sliderPaddingLeft,
             sliderPaddingLeftSuffix,
-            desktopW
+            meta.desktopW
           ) +
           percentageToPixels(
             sliderPaddingRight,
             sliderPaddingRightSuffix,
-            desktopW
+            meta.desktopW
           );
     const mobilePaddingW =
       mobileSliderPaddingType === "grouped"
@@ -76,14 +81,15 @@ class Carousel extends EditorComponent {
             mobileSliderPaddingRightSuffix,
             meta.mobileW
           );
-    const externalSpacing = spacing + paddingW;
+    const desktopW = meta.desktopW - (spacing + paddingW);
 
-    return Object.assign({}, meta, {
-      desktopW: Math.round((desktopW - externalSpacing) * 10) / 10,
+    return {
+      ...meta,
+      desktopW: Math.round((desktopW / slidesToShow) * 10) / 10,
       mobileW: Math.round((meta.mobileW - mobilePaddingW) * 10) / 10,
       inCarousel: true,
       inGrid: false
-    });
+    };
   }
 
   renderForEdit(_v) {
@@ -99,10 +105,19 @@ class Carousel extends EditorComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderDots,
-      swipe
+      swipe,
+      dynamic,
+      columns,
+      taxonomy,
+      taxonomyId,
+      orderBy,
+      order
     } = v;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
+      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtend, {
+        allowExtend: false
+      }),
       className: styleClassName(v),
       style: styleCSSVars(v),
       meta: this.getMeta(v),
@@ -112,7 +127,13 @@ class Carousel extends EditorComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderDots,
-      swipe
+      swipe,
+      dynamic,
+      columns,
+      taxonomy,
+      taxonomyId,
+      orderBy,
+      order
     });
 
     return <Items {...itemsProps} />;

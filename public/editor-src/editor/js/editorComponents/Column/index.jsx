@@ -23,16 +23,6 @@ import {
 } from "./styles";
 import defaultValue from "./defaultValue.json";
 
-const updatedWhenInCarousel = (props, nextProps) => {
-  const { meta } = props;
-  const { meta: newMeta } = nextProps;
-  const inCarousel = meta && Boolean(newMeta.inCarousel);
-  const metaW =
-    meta.desktopW !== newMeta.desktopW || meta.mobileW !== newMeta.mobileW;
-
-  return metaW && inCarousel;
-};
-
 class Column extends EditorComponent {
   static get componentId() {
     return "Column";
@@ -48,10 +38,7 @@ class Column extends EditorComponent {
   static defaultValue = defaultValue;
 
   shouldComponentUpdate(nextProps) {
-    return (
-      this.optionalSCU(nextProps) ||
-      updatedWhenInCarousel(this.props, nextProps)
-    );
+    return this.optionalSCU(nextProps);
   }
 
   handleToolbarOpen = () => {

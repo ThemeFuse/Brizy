@@ -1,9 +1,12 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import SectionHeaderStickyItemItems from "./Items";
+import SectionFooterItems from "./Items";
 import Background from "visual/component-new/Background";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import PaddingResizer from "visual/component-new/PaddingResizer";
+import { getStore } from "visual/redux/store";
+import { updateGlobals } from "visual/redux/actionCreators";
+import { uuid } from "visual/utils/uuid";
 import {
   wInBoxedPage,
   wInMobilePage,
@@ -12,6 +15,7 @@ import {
 import { CollapsibleToolbar } from "visual/component-new/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
+  sectionStyleClassName,
   bgStyleClassName,
   bgStyleCSSVars,
   itemsStyleClassName,
@@ -21,9 +25,9 @@ import {
 } from "./styles";
 import defaultValue from "./defaultValue.json";
 
-class SectionHeaderStickyItem extends EditorComponent {
+class SectionFooter extends EditorComponent {
   static get componentId() {
-    return "SectionHeaderStickyItem";
+    return "SectionFooter";
   }
 
   static defaultProps = {
@@ -90,31 +94,30 @@ class SectionHeaderStickyItem extends EditorComponent {
         animation="rightToLeft"
         onOpen={this.handleToolbarOpen}
         onClose={this.handleToolbarClose}
-        outSideExceptions={[".portal-menu__sticky"]}
       />
     );
   }
 
-  renderItems(v) {
+  renderItems(_v) {
+    const v = this.applyRulesToValue(_v, [
+      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+    ]);
+
     const {
       bgImageSrc,
       bgColorOpacity,
+      bgPopulation,
       mobileBgImageSrc,
       mobileBgColorOpacity
     } = v;
 
     const meta = this.getMeta(v);
 
-    const styles = {
-      ...bgStyleCSSVars(v, this.props),
-      ...itemsStyleCSSVars(v),
-      ...containerStyleCSSVars(v)
-    };
-
     let bgProps = {
-      className: bgStyleClassName(v, this.props),
-      style: styles,
-      imageSrc: bgImageSrc,
+      className: bgStyleClassName(v),
+      imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
       mobileImageSrc: mobileBgImageSrc,
       mobileColorOpacity: mobileBgColorOpacity
@@ -130,7 +133,7 @@ class SectionHeaderStickyItem extends EditorComponent {
       <Background {...bgProps}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
           <div className={containerStyleClassName(v)}>
-            <SectionHeaderStickyItemItems {...itemsProps} />
+            <SectionFooterItems {...itemsProps} />
           </div>
         </PaddingResizer>
       </Background>
@@ -144,32 +147,102 @@ class SectionHeaderStickyItem extends EditorComponent {
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
+    const styles = {
+      ...bgStyleCSSVars(v),
+      ...itemsStyleCSSVars(v),
+      ...containerStyleCSSVars(v)
+    };
+
     return (
-      <ContainerBorder
-        ref={el => {
-          this.containerBorder = el;
-        }}
-        borderStyle="none"
-        activeBorderStyle="none"
-        reactToClick={false}
-        showBorders={false}
-        path={this.getPath()}
+      <footer
+        id={this.getId()}
+        className={sectionStyleClassName(v)}
+        data-block-id={this.props.blockId}
+        style={styles}
       >
-        {this.renderToolbar(v)}
-        {this.renderItems(v)}
-      </ContainerBorder>
+        <ContainerBorder
+          ref={el => {
+            this.containerBorder = el;
+          }}
+          borderStyle="none"
+          activeBorderStyle="none"
+          reactToClick={false}
+          showBorders={false}
+          path={this.getPath()}
+        >
+          {this.renderToolbar(v)}
+          {this.renderItems(v)}
+        </ContainerBorder>
+      </footer>
     );
   }
 
-  renderForView(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
+  renderForView(v) {
+    return (
+      <footer id={this.getId()} className={sectionStyleClassName(v)}>
+        {this.renderItems(v)}
+      </footer>
+    );
+  }
 
-    return this.renderItems(v);
+  // api
+  becomeSaved() {
+    const { blockId } = this.props;
+    const dbValue = this.getDBValue();
+    const store = getStore();
+    const { savedBlocks = [] } = store.getState().globals.project;
+
+    store.dispatch(
+      updateGlobals("savedBlocks", [
+        ...savedBlocks,
+        {
+          type: "SectionFooter",
+          blockId,
+          value: dbValue
+        }
+      ])
+    );
+  }
+
+  becomeGlobal() {
+    const { blockId } = this.props;
+    const dbValue = this.getDBValue();
+    const store = getStore();
+    const { globalBlocks = {} } = store.getState().globals.project;
+    const globalBlockId = uuid(10);
+
+    store.dispatch(
+      updateGlobals("globalBlocks", {
+        ...globalBlocks,
+        [globalBlockId]: {
+          type: "SectionFooter",
+          blockId,
+          value: dbValue
+        }
+      })
+    );
+
+    this.props.onChange(
+      {
+        type: "GlobalBlock",
+        blockId,
+        value: { globalBlockId }
+      },
+      {
+        intent: "replace_all"
+      }
+    );
+  }
+
+  becomeNormal() {
+    const store = getStore();
+    const { globalBlocks = {} } = store.getState().globals.project;
+    const { globalBlockId } = this.props.meta;
+
+    this.props.onChange(globalBlocks[globalBlockId], {
+      intent: "replace_all"
+    });
   }
 }
 
-export default SectionHeaderStickyItem;
+export default SectionFooter;

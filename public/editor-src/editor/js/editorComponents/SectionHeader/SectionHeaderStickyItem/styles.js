@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { imageUrl } from "visual/utils/image";
+import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
 
-export function bgStyleClassName(v, props) {
+export function bgStyleClassName(v) {
   let glamorObj;
   if (IS_EDITOR) {
     glamorObj = {
@@ -42,12 +42,12 @@ export function bgStyleClassName(v, props) {
     };
   } else {
     const {
-      media,
       bgImageSrc,
       bgPositionX,
       bgPositionY,
       bgColorHex,
       bgColorOpacity,
+      bgPopulation,
       borderWidth,
       borderWidthType,
       borderTopWidth,
@@ -68,7 +68,9 @@ export function bgStyleClassName(v, props) {
       mobileBgColorHex,
       mobileBgColorOpacity
     } = v;
-    const { showSlider } = props.meta;
+    const bgImage = bgPopulation
+      ? imagePopulationUrl(bgPopulation)
+      : imageUrl(bgImageSrc);
 
     glamorObj = {
       "> .brz-bg-media": {
@@ -108,16 +110,22 @@ export function bgStyleClassName(v, props) {
             : `${borderBottomRightRadius}px`
       },
       "> .brz-bg-media > .brz-bg-image": {
-        backgroundImage: `url(${imageUrl(bgImageSrc)})`,
-        backgroundPosition: `${bgPositionX}% ${bgPositionY}%`
+        backgroundImage:
+          bgImageSrc || bgPopulation ? `url(${bgImage})` : "none",
+        backgroundPosition: bgPopulation
+          ? "0% 0%"
+          : `${bgPositionX}% ${bgPositionY}%`
       },
       "> .brz-bg-media > .brz-bg-color": {
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
       },
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage: `url(${imageUrl(mobileBgImageSrc)})`,
-          backgroundPosition: `${mobileBgPositionX}% ${mobileBgPositionY}%`
+          backgroundImage:
+            mobileBgImageSrc || bgPopulation ? `url(${bgImage})` : "none",
+          backgroundPosition: bgPopulation
+            ? "0% 0%"
+            : `${mobileBgPositionX}% ${mobileBgPositionY}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
@@ -130,7 +138,7 @@ export function bgStyleClassName(v, props) {
   return classnames(glamorClassName);
 }
 
-export function bgStyleCSSVars(v, props) {
+export function bgStyleCSSVars(v) {
   if (IS_PREVIEW) return null;
 
   const {
@@ -139,6 +147,7 @@ export function bgStyleCSSVars(v, props) {
     bgPositionY,
     bgColorHex,
     bgColorOpacity,
+    bgPopulation,
     borderWidth,
     borderWidthType,
     borderTopWidth,
@@ -159,12 +168,12 @@ export function bgStyleCSSVars(v, props) {
     mobileBgColorHex,
     mobileBgColorOpacity
   } = v;
-  const { showSlider } = props.meta;
 
   return {
-    "--backgroundImage": bgImageSrc ? `url(${imageUrl(bgImageSrc)})` : "none",
-    "--backgroundPositionX": `${bgPositionX}%`,
-    "--backgroundPositionY": `${bgPositionY}%`,
+    "--backgroundImage":
+      bgImageSrc && !bgPopulation ? `url(${imageUrl(bgImageSrc)})` : "none",
+    "--backgroundPositionX": bgPopulation ? "0%" : `${bgPositionX}%`,
+    "--backgroundPositionY": bgPopulation ? "0%" : `${bgPositionY}%`,
     "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
     "--borderTopWidth":
       borderWidthType === "grouped"
@@ -200,11 +209,16 @@ export function bgStyleCSSVars(v, props) {
       borderRadiusType === "grouped"
         ? `${borderRadius}px`
         : `${borderBottomRightRadius}px`,
-    "--mobileBackgroundImage": mobileBgImageSrc
-      ? `url(${imageUrl(mobileBgImageSrc)})`
-      : "none",
-    "--mobileBackgroundPositionX": `${mobileBgPositionX}%`,
-    "--mobileBackgroundPositionY": `${mobileBgPositionY}%`,
+    "--mobileBackgroundImage":
+      mobileBgImageSrc && !bgPopulation
+        ? `url(${imageUrl(mobileBgImageSrc)})`
+        : "none",
+    "--mobileBackgroundPositionX": bgPopulation
+      ? "0%"
+      : `${mobileBgPositionX}%`,
+    "--mobileBackgroundPositionY": bgPopulation
+      ? "0%"
+      : `${mobileBgPositionY}%`,
     "--mobileBackgroundColor": hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
   };
 }

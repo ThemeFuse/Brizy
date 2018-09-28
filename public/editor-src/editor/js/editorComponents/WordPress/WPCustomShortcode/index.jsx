@@ -23,7 +23,6 @@ class WPCustomShortcode extends EditorComponent {
         <WPShortcode
           raw={v.shortcode}
           placeholderIcon="nc-wp-shortcode"
-          placeholderContainerWidth={this.props.meta.desktopW}
           className={styleClassName(v)}
           style={styleCSSVars(v)}
           resizerPoints={resizerPoints}

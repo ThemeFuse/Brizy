@@ -7,7 +7,7 @@ import Placeholder from "visual/component-new/Placeholder";
 import Link from "visual/component-new/Link";
 import Toolbar from "visual/component-new/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
-import { imageUrl } from "visual/utils/image";
+import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
 import defaultValue from "./defaultValue.json";
 import toolbarConfigFn, {
@@ -60,10 +60,6 @@ const resizerTransformPatch = patch => {
   }
 
   return patch;
-};
-
-const populationUrl = (population, { cW, cH }) => {
-  return `{{${population.replace(/{{|}}/g, "")} cW='${cW}' cH='${cH}'}}`;
 };
 
 class Image extends EditorComponent {
@@ -303,7 +299,7 @@ class Image extends EditorComponent {
     let content;
 
     if (imagePopulation) {
-      content = <Placeholder icon="nc-dynamic-img" containerWidth={desktopW} />;
+      content = <Placeholder icon="nc-dynamic-img" />;
     } else if (imageSrc) {
       content = (
         <picture>
@@ -318,7 +314,7 @@ class Image extends EditorComponent {
         </picture>
       );
     } else {
-      content = <Placeholder icon="nc-img" containerWidth={desktopW} />;
+      content = <Placeholder icon="nc-img" />;
     }
 
     const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
@@ -326,7 +322,9 @@ class Image extends EditorComponent {
       anchor: linkAnchor,
       external: v[linkExternalType],
       popup: linkPopup,
-      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
+      lightBox: imagePopulation
+        ? imagePopulationUrl(imagePopulation)
+        : imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
     if (linkHrefs[linkType] !== "") {
       content = (
@@ -495,17 +493,17 @@ class Image extends EditorComponent {
     let desktopSrc;
     let mobileSrc;
     if (imagePopulation) {
-      sourceSrcSet = `${populationUrl(
+      sourceSrcSet = `${imagePopulationUrl(
         imagePopulation,
         imageOptions
-      )} 1x, ${populationUrl(imagePopulation, imageOptions2X)} 2x`;
+      )} 1x, ${imagePopulationUrl(imagePopulation, imageOptions2X)} 2x`;
 
-      desktopSrc = populationUrl(imagePopulation, mobileImageOptions);
+      desktopSrc = imagePopulationUrl(imagePopulation, mobileImageOptions);
 
-      mobileSrc = `${populationUrl(
+      mobileSrc = `${imagePopulationUrl(
         imagePopulation,
         mobileImageOptions
-      )} 1x, ${populationUrl(imagePopulation, mobileImageOptions2X)} 2x`;
+      )} 1x, ${imagePopulationUrl(imagePopulation, mobileImageOptions2X)} 2x`;
     } else {
       sourceSrcSet = `${imageUrl(imageSrc, imageOptions)} 1x, ${imageUrl(
         imageSrc,
@@ -529,7 +527,7 @@ class Image extends EditorComponent {
         </picture>
       );
     } else {
-      content = <Placeholder icon="nc-img" containerWidth={desktopW} />;
+      content = <Placeholder icon="nc-img" />;
     }
 
     const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
@@ -537,7 +535,9 @@ class Image extends EditorComponent {
       anchor: linkAnchor,
       external: v[linkExternalType],
       popup: linkPopup,
-      lightBox: imageUrl(imageSrc, { iW: 1200, iH: "any" })
+      lightBox: imagePopulation
+        ? imagePopulationUrl(imagePopulation)
+        : imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
     if (linkHrefs[linkType] !== "") {
       content = (
