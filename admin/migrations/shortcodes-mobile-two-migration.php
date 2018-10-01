@@ -17,6 +17,14 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 	 * Execute the migration
 	 */
 	public function execute() {
+		$this->posts_migration();
+		$this->globals_migration();
+	}
+
+	/**
+	 * Posts migrations
+	 */
+	public function posts_migration() {
 		$result = $this->get_posts_and_meta();
 		$class  = get_class();
 
@@ -54,6 +62,39 @@ class Brizy_Admin_Migrations_ShortcodesMobileTwoMigration implements Brizy_Admin
 					$old_meta->set_editor_data($new_json);
 				}
 				$instance->set(Brizy_Editor_Post::BRIZY_POST, $old_meta);
+				$postMigrationStorage->addMigration($this)->save();
+			}
+		}
+	}
+
+	/**
+	 * Globals migration
+	 */
+	public function globals_migration() {
+		$class  = get_class();
+		$result = $this->get_globals_posts();
+		foreach ($result as $item) {
+			$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $item->ID );
+			if ( $postMigrationStorage->hasMigration($this) ) {
+				continue;
+			}
+
+			$instance   = Brizy_Editor_Storage_Project::instance( $item->ID );
+			$storage    = $instance->get_storage();
+			$json_value = base64_decode($storage['globals']);
+
+			if( !is_null($json_value) ) {
+				// make a backup to previous version
+				update_post_meta($item->ID, 'brizy-bk-' . $class . '-' . $this->getVersion(), $storage);
+
+				// migrate data
+				$new_json = $this->migrate_post($json_value, $item->ID);
+
+				// set the changed value in DB
+				$storage['globals'] = base64_encode($new_json);
+				$instance->loadStorage($storage);
+
+				// set that migration was successful executed
 				$postMigrationStorage->addMigration($this)->save();
 			}
 		}
