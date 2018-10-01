@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "underscore";
 import Editor from "visual/global/Editor";
 import UIEvents from "visual/global/UIEvents";
 import EditorIcon from "visual/component-new/EditorIcon";
@@ -15,13 +16,10 @@ const sortableBlindZone = {
 };
 
 class DrawerComponent extends React.Component {
-  handleSortableSort = (data, type) => {
+  handleSortableSort = (data, shortcodes) => {
     const { from, to } = data;
 
-    const shortcodes = Editor.getShortcodes();
-    const { resolve } = shortcodes[type].filter(shortcode => !shortcode.hidden)[
-      from.elementIndex
-    ];
+    const { resolve } = shortcodes[from.elementIndex];
     const itemData = setIds(resolve);
 
     const toContainerPath = to.sortableNode
@@ -46,52 +44,56 @@ class DrawerComponent extends React.Component {
   };
 
   renderIcons(shortcodes) {
-    return shortcodes
-      .filter(shortcode => !shortcode.hidden)
-      .sort((a, b) => {
-        const aPos = a.position || 10;
-        const bPos = b.position || 10;
-
-        return aPos - bPos;
-      })
-      .map(({ id, title, icon }) => (
-        <SortableElement key={id} type="addable" subtype={id}>
-          <div className="brz-ed-sidebar__add-elements__item">
-            <div className="brz-ed-sidebar__add-elements__icon">
-              <EditorIcon icon={icon} />
-            </div>
-            <span className="brz-span brz-ed-sidebar__add-elements__text">
-              {title}
-            </span>
-            <div className="brz-ed-sidebar__add-elements__tooltip">{title}</div>
+    return shortcodes.map(({ id, title, icon }) => (
+      <SortableElement key={id} type="addable" subtype={id}>
+        <div className="brz-ed-sidebar__add-elements__item">
+          <div className="brz-ed-sidebar__add-elements__icon">
+            <EditorIcon icon={icon} />
           </div>
-        </SortableElement>
-      ));
+          <span className="brz-span brz-ed-sidebar__add-elements__text">
+            {title}
+          </span>
+          <div className="brz-ed-sidebar__add-elements__tooltip">{title}</div>
+        </div>
+      </SortableElement>
+    ));
   }
 
   render() {
     const shortcodes = Editor.getShortcodes();
 
-    return Object.keys(shortcodes).map((category, index, arr) => (
-      <React.Fragment key={category}>
-        <Sortable
-          type="addable"
-          blindZone={sortableBlindZone}
-          onSort={data => {
-            this.handleSortableSort(data, category);
-          }}
-        >
-          <div
-            className={`brz-ed-sidebar__add-elements brz-ed-sidebar__add-elements--${category}`}
-          >
-            {this.renderIcons(shortcodes[category])}
-          </div>
-        </Sortable>
-        {arr.length - 1 !== index && (
-          <hr className="brz-ed-sidebar__add-elements--separator" />
-        )}
-      </React.Fragment>
-    ));
+    return Object.entries(shortcodes).map(
+      ([category, categoryShortcodes], index, arr) => {
+        // we use _.sortBy instead of native sort
+        // because native can be unstable and change
+        // the order of elements with equal positions
+        const prepared = _.sortBy(
+          categoryShortcodes.filter(s => !s.hidden),
+          s => s.position || 10
+        );
+
+        return (
+          <React.Fragment key={category}>
+            <Sortable
+              type="addable"
+              blindZone={sortableBlindZone}
+              onSort={data => {
+                this.handleSortableSort(data, prepared);
+              }}
+            >
+              <div
+                className={`brz-ed-sidebar__add-elements brz-ed-sidebar__add-elements--${category}`}
+              >
+                {this.renderIcons(prepared)}
+              </div>
+            </Sortable>
+            {arr.length - 1 !== index && (
+              <hr className="brz-ed-sidebar__add-elements--separator" />
+            )}
+          </React.Fragment>
+        );
+      }
+    );
   }
 }
 
