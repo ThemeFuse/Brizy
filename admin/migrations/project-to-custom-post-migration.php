@@ -34,11 +34,13 @@ class Brizy_Admin_Migrations_ProjectToCustomPostMigration implements Brizy_Admin
 			$projectData = unserialize( $projectData['api_project'] );
 		} elseif ( $projectData instanceof Brizy_Editor_Project ) {
 			$projectData            = $projectData->getApiProject()->get_data();
-			$projectData['globals'] = base64_encode( $projectData['globals'] );
 		} else {
 			return;
 		}
 
+		if ( base64_encode( base64_decode( $projectData['globals'] ) ) !== $projectData['globals'] ) {
+			$projectData['globals'] = base64_encode( $projectData['globals'] );
+		}
 
 		$post_id = wp_insert_post( array(
 			'post_type'      => Brizy_Editor_Project::BRIZY_PROJECT,
