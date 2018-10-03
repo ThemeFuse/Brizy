@@ -327,10 +327,10 @@ class Brizy_Editor_API {
 				throw new Exception( "Unable to create user" );
 			}
 
-			$email                = $user->getPlatformUserEmail();
-			$secret               = $user->getPlatformUserSignature();
+			$email               = $user->getPlatformUserEmail();
+			$secret              = $user->getPlatformUserSignature();
 			$platformCredentials = Brizy_Editor_API_Platform::getCredentials();
-			$urlBuilder           = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
+			$urlBuilder          = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
 
 			$platform_client_id = $platformCredentials->client_id;
 
@@ -435,8 +435,7 @@ class Brizy_Editor_API {
 
 
 			//$post_id = (int) $this->param( 'post' );
-			$this->project->set_globals_as_json( $data );
-			$this->project->save();
+			$this->project->setGlobalsAsJson( $data );
 
 			// mark all brizy post to be compiled on next view
 			$posts = Brizy_Editor_Post::get_all_brizy_posts();
@@ -687,7 +686,7 @@ class Brizy_Editor_API {
 	}
 
 	protected function static_url() {
-		return brizy()->get_url( '/includes/editor/static' );
+		return Brizy_Editor::get()->get_url( '/includes/editor/static' );
 	}
 
 	private function authorize() {
@@ -722,8 +721,8 @@ class Brizy_Editor_API {
 		$wp_post = $this->post->get_wp_post();
 
 		$globals = array(
-			'id'        => $this->project->get_id(),
-			'gb'        => $this->project->get_globals(),
+			'id'        => $this->project->getId(),
+			'gb'        => $this->project->getGlobals(),
 			'name'      => $wp_post->post_name,
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
@@ -781,7 +780,7 @@ class Brizy_Editor_API {
 		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
 
 		$post_query = array(
-			'post_type'      => brizy()->supported_post_types(),
+			'post_type'      => Brizy_Editor::get()->supported_post_types(),
 			'posts_per_page' => - 1,
 			'post_status'    => 'publish',
 			'orderby'        => 'post_title',

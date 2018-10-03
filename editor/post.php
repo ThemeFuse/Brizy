@@ -9,6 +9,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	const BRIZY_POST_HASH_KEY = 'brizy-post-hash';
 	const BRIZY_POST_EDITOR_VERSION = 'brizy-post-editor-version';
 	const BRIZY_POST_COMPILER_VERSION = 'brizy-post-compiler-version';
+	const BRIZY_POST_PLUGIN_VERSION = 'brizy-post-plugin-version';
 
 	static protected $instance = null;
 
@@ -75,6 +76,11 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	protected $compiler_version;
 
 	/**
+	 * @var string
+	 */
+	protected $plugin_version;
+
+	/**
 	 * @var Brizy_Editor_CompiledHtml
 	 */
 	static private $compiled_page;
@@ -121,7 +127,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		if ( $this->uses_editor() ) {
 			$this->create_uid();
 		}
-
 	}
 
 	/**
@@ -143,45 +148,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		return self::$instance[ $wp_post_id ] = new self( $wp_post_id );
 
-//		$wp_post_id = $apost;
-//
-//		if ( $apost instanceof WP_Post ) {
-//			$wp_post_id = $apost->ID;
-//		}
-//
-//		self::checkIfPostTypeIsSupported( $wp_post_id );
-//
-//		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $wp_post_id );
-//		$using_editor_old          = $brizy_editor_storage_post->get( Brizy_Editor_Constants::USES_BRIZY, false );
-//		$post                      = $brizy_editor_storage_post->get( self::BRIZY_POST );
-//
-//		if ( is_array( $post ) ) {
-//			$post = self::createFromSerializedData( $post );
-//
-//			if ( ! is_null( $using_editor_old ) ) {
-//				$post->uses_editor = (bool) $using_editor_old;
-//				$post->wp_post_id  = $wp_post_id;
-//				$post->wp_post     = get_post( $wp_post_id );
-//				$post->create_uid();
-//				$brizy_editor_storage_post->delete( Brizy_Editor_Constants::USES_BRIZY );
-//				$post->save();
-//			}
-//
-//		} elseif ( $post instanceof self ) {
-//			$post->uses_editor = (bool) $using_editor_old;
-//			$post->wp_post_id  = $wp_post_id;
-//			$post->wp_post     = get_post( $wp_post_id );
-//			$post->create_uid();
-//			$post->save();
-//
-//			return $post;
-//		}
-//
-//		$post->wp_post_id = $wp_post_id;
-//		$post->wp_post    = get_post( $wp_post_id );
-//		$post->create_uid();
-//
-//		return $post;
 	}
 
 
@@ -195,7 +161,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public static function checkIfPostTypeIsSupported( $wp_post_id, $throw = true ) {
 		$type = get_post_type( $wp_post_id );
 
-		$supported_post_types   = brizy()->supported_post_types();
+		$supported_post_types   = Brizy_Editor::get()->supported_post_types();
 		$supported_post_types[] = 'revision';
 
 		if ( ! in_array( $type, $supported_post_types ) ) {
@@ -250,6 +216,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			'needs_compile'                    => $this->needs_compile,
 			'editor_version'                   => $this->editor_version,
 			'compiler_version'                 => $this->compiler_version,
+			'plugin_version'                   => $this->plugin_version,
 			'editor_data'                      => $this->editor_data,
 			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor
 		);
@@ -272,33 +239,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$this->set_editor_data( $data['editor_data'] );
 		$this->editor_version   = isset( $data['editor_version'] ) ? $data['editor_version'] : null;
 		$this->compiler_version = isset( $data['compiler_version'] ) ? $data['compiler_version'] : null;
+		$this->plugin_version   = isset( $data['plugin_version'] ) ? $data['plugin_version'] : null;
 		$this->uses_editor      = (bool) ( isset( $data[ Brizy_Editor_Constants::USES_BRIZY ] ) ? $data[ Brizy_Editor_Constants::USES_BRIZY ] : false );
 	}
-
-//	static public function createFromSerializedData( $data ) {
-//		$post = new self( null );
-//
-//		if ( isset( $data['compiled_html'] ) ) {
-//			$post->compiled_html = $data['compiled_html'];
-//		}
-//
-//		if ( isset( $data['compiled_html_body'] ) ) {
-//			$post->compiled_html_body = $data['compiled_html_body'];
-//		}
-//
-//		if ( isset( $data['compiled_html_head'] ) ) {
-//			$post->compiled_html_head = $data['compiled_html_head'];
-//		}
-//
-//		$post->needs_compile = $data['needs_compile'];
-//		$post->set_editor_data( $data['editor_data'] );
-//		$post->editor_version   = isset( $data['editor_version'] ) ? $data['editor_version'] : BRIZY_EDITOR_VERSION;
-//		$post->compiler_version = isset( $data['compiler_version'] ) ? $data['compiler_version'] : BRIZY_EDITOR_VERSION;
-//		$post->uses_editor      = (bool) ( isset( $data[ Brizy_Editor_Constants::USES_BRIZY ] ) ? $data[ Brizy_Editor_Constants::USES_BRIZY ] : false );
-//
-//		return $post;
-//	}
-
 
 	/**
 	 * @return Brizy_Editor_Post[]
@@ -315,7 +258,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$result = array();
 		foreach ( $posts as $p ) {
-			if ( in_array( $p->post_type, brizy()->supported_post_types() ) ) {
+			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
 				$result[] = Brizy_Editor_Post::get( $p->post_id );
 			}
 		}
@@ -332,7 +275,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @throws Exception
 	 */
 	public static function create( $project, $post ) {
-		if ( ! in_array( ( $type = get_post_type( $post->ID ) ), brizy()->supported_post_types() ) ) {
+		if ( ! in_array( ( $type = get_post_type( $post->ID ) ), Brizy_Editor::get()->supported_post_types() ) ) {
 			throw new Brizy_Editor_Exceptions_UnsupportedPostType(
 				"Brizy editor doesn't support '$type' post type 2"
 			);
@@ -340,6 +283,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		Brizy_Logger::instance()->notice( 'Create post', array( $project, $post ) );
 
 		$post = new self( $post->ID );
+		$post->set_plugin_version( BRIZY_VERSION );
 
 		return $post;
 	}
@@ -402,7 +346,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 
-		$asset_processors   = apply_filters( 'brizy_content_processors', $asset_processors, $project, $post );
+		$asset_processors = apply_filters( 'brizy_content_processors', $asset_processors, $project, $post );
 
 		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 
@@ -733,6 +677,14 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function set_compiler_version( $compiler_version ) {
 		$this->compiler_version = $compiler_version;
 		update_metadata( 'post', $this->wp_post_id, self::BRIZY_POST_COMPILER_VERSION, $compiler_version );
+	}
+
+	/**
+	 * @param string $plugin_version
+	 */
+	public function set_plugin_version( $plugin_version ) {
+		$this->plugin_version = $plugin_version;
+		update_metadata( 'post', $this->wp_post_id, self::BRIZY_POST_PLUGIN_VERSION, $plugin_version );
 	}
 
 	/**

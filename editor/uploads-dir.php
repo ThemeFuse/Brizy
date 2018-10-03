@@ -7,14 +7,14 @@ class Brizy_Editor_UploadsDir {
 	public static function get_uri( $rel = null ) {
 		return implode(
 			'/',
-			array( self::get_uploads_url(), brizy()->get_slug(), (string) $rel )
+			array( self::get_uploads_url(), Brizy_Editor::get()->get_slug(), (string) $rel )
 		);
 	}
 
 	public static function get_path( $rel = null ) {
 		return implode(
 			DIRECTORY_SEPARATOR,
-			array( self::get_uploads_path(), brizy()->get_slug(), (string) $rel )
+			array( self::get_uploads_path(), Brizy_Editor::get()->get_slug(), (string) $rel )
 		);
 	}
 
