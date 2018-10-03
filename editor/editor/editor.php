@@ -128,7 +128,7 @@ class Brizy_Editor_Editor_Editor {
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ) . "",
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
-				'upgradeToPro'        => apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRDE_TO_PRO_URL )
+				'upgradeToPro'        => apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL )
 			),
 			'user'            => array( 'role' => 'admin' ),
 			'wp'              => array(
