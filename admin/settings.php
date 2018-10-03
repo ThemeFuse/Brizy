@@ -30,7 +30,8 @@ class Brizy_Admin_Settings {
 	private function __construct() {
 
 		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
-		add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 8 );
+		add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
+		add_action( 'admin_head', array($this,'addClassToWpNavMenu'));
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
 		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
@@ -51,6 +52,16 @@ class Brizy_Admin_Settings {
 	}
 
 	/**
+	 * Keep the tempate menu selected
+	 */
+	function addClassToWpNavMenu() {
+		global $parent_file, $submenu_file, $post_type;
+		if ( Brizy_Admin_Templates::CP_TEMPLATE == $post_type ) :
+			$submenu_file = 'edit.php?post_type=brizy_template';
+		endif;
+    }
+
+	/**
 	 * @internal
 	 */
 	function actionRegisterSettingsPage() {
@@ -59,8 +70,8 @@ class Brizy_Admin_Settings {
 			return;
 		}
 
-		add_menu_page( brizy()->get_name(),
-			brizy()->get_name(),
+		add_menu_page( Brizy_Editor::get()->get_name(),
+			Brizy_Editor::get()->get_name(),
 			'read',
 			self::menu_slug(),
 			array( $this, 'render' ),
@@ -137,7 +148,7 @@ class Brizy_Admin_Settings {
 	 * @return bool
 	 */
 	public function is_settings_page() {
-		return get_current_screen()->base === "settings_page_" . brizy()->get_slug() . "-settings";
+		return get_current_screen()->base === "settings_page_" . Brizy_Editor::get()->get_slug() . "-settings";
 	}
 
 	public function settings_submit() {

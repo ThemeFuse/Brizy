@@ -2,7 +2,7 @@
 	die( 'Direct access forbidden.' );
 }
 
-class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
+class Brizy_Editor_User {
 
 	const BRIZY_ATTACHMENT_HASH_KEY = 'brizy_attachment_hash';
 
@@ -68,19 +68,18 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 			return self::$instance;
 		}
 
-		if ( self::is_locked() ) {
-			throw new Brizy_Editor_Exceptions_ServiceUnavailable(
-				'User is in maintenance mode'
-			);
-		}
-
-		$user     = null;
-		$platform = new Brizy_Editor_API_Platform();
+		$user = null;
 
 		try {
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
-			$platform->createUser();
+
+			Brizy_Logger::instance()->notice( 'New user created' );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_local', true );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_id', uniqid( 'user', true ) );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_email', self::generateRandomEmail() );
+			Brizy_Editor_Storage_Common::instance()->set( 'platform_user_signature', Brizy_Editor_Signature::get() );
+
 			$user = new Brizy_Editor_User( Brizy_Editor_Storage_Common::instance() );
 		}
 
@@ -92,208 +91,69 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	}
 
 	/**
-	 * @throws Brizy_Editor_Exceptions_SignatureMismatch
-	 */
-	public function checkSignature() {
-		Brizy_Logger::instance()->debug( 'Checking user signature' );
-
-		if ( Brizy_Editor_Signature::get() != $this->platform_user_signature ) {
-
-			Brizy_Logger::instance()->debug( 'User signature mismatch', array(
-				Brizy_Editor_Signature::get(),
-				$this->platform_user_signature
-			) );
-
-			// clone required
-			throw new Brizy_Editor_Exceptions_SignatureMismatch( 'Clone user required. Not implemented yet.' );
-		}
-
-		Brizy_Logger::instance()->debug( 'User signature match' );
-	}
-
-
-	/**
 	 * @return string
 	 */
-	protected function random_email() {
-		$uniqid = uniqid( 'brizy-' );
+	static protected function generateRandomEmail() {
+		$uniqid = 'brizy-' . md5( uniqid( '', true ) );
 
 		return $uniqid . '@brizy.io';
 	}
 
 
-	/**
-	 * @return $this
-	 * @throws Exception
-	 */
-	public function login() {
-		$this->auth();
-
-		return $this;
-	}
-
-	/**
-	 * @throws Exception
-	 */
-	public function auth() {
-		try {
-			//self::lock_access();
-			Brizy_Logger::instance()->debug( 'Obtain new user token' );
-			$credentials = Brizy_Editor_API_Platform::getCredentials();
-
-			$auth_api = new Brizy_Editor_API_Auth( Brizy_Config::GATEWAY_URI, $credentials->client_id, $credentials->client_secret );
-			$auth_api->clearTokenCache();
-			$this->token = $auth_api->getToken( $this->platform_user_email );
-			$this->common_storage->set( 'access-token', $this->token->convertToOptionValue() );
-
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			//self::unlock_access();
-			throw $exception;
-		}
-
-		//self::unlock_access();
-	}
-
-
-	/**
-	 * @return void
-	 */
-	public static function logout() {
-		Brizy_Editor_Storage_Common::instance()->delete( 'access-token' );
-	}
-
-	/**
-	 * @return array|mixed|object
-	 */
-	public function getCurrentUser() {
-		return $this->get_client()->getUser();
-	}
-
-	/**
-	 * @param null $from_project_id
-	 * @param bool $is_local
-	 *
-	 * @return Brizy_Editor_API_Project
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 */
-	public function create_project( $from_project_id = null, $is_local = true ) {
-		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $from_project_id ) );
-
-		if ( $is_local ) {
-			$project_data = array(
-				'id'          => md5( uniqid( 'Local project', true ) ),
-				'title'       => 'Local project ',
-				'globals'     => '{"project":{},"language":{}}',
-				'name'        => uniqid( 'Local project', true ),
-				'user'        => null,
-				'template'    => array( 'slug' => 'brizy' ),
-				'created'     => new DateTime(),
-				'updated'     => new DateTime(),
-				'languages'   => array(),
-				'version'     => BRIZY_EDITOR_VERSION,
-				'signature'   => Brizy_Editor_Signature::get(),
-				'cloned_from' => $from_project_id,
-			);
-		} else {
-			$project_data = $this->get_client()->create_project( $from_project_id );
-		}
-
-
-		$api_project = new Brizy_Editor_API_Project( $project_data );
-
-		return $api_project;
-	}
-
-//	public function clone_pages( $page_ids, $project_target ) {
-//		Brizy_Logger::instance()->notice( 'Clone pages', array( 'pages' => $page_ids, 'project' => $project_target ) );
+//	/**
+//	 * @param null $from_project_id
+//	 * @param bool $is_local
+//	 *
+//	 * @return Brizy_Editor_API_Project
+//	 * @throws Brizy_Editor_API_Exceptions_Exception
+//	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+//	 */
+//	public function create_project( $from_project_id = null, $is_local = true ) {
+//		Brizy_Logger::instance()->notice( 'Create new project', array( 'clone_from' => $from_project_id ) );
 //
-//		$clone_pages = $this->get_client()->clone_pages( $page_ids, $project_target );
+//		$project_data = array(
+//			'id'          => md5( uniqid( 'Local project', true ) ),
+//			'title'       => 'Local project ',
+//			'globals'     => '{"project":{},"language":{}}',
+//			'name'        => uniqid( 'Local project', true ),
+//			'user'        => null,
+//			'template'    => array( 'slug' => 'brizy' ),
+//			'created'     => new DateTime(),
+//			'updated'     => new DateTime(),
+//			'languages'   => array(),
+//			'version'     => BRIZY_EDITOR_VERSION,
+//			'signature'   => Brizy_Editor_Signature::get(),
+//			'cloned_from' => $from_project_id,
+//		);
 //
-//		// debug logs
-//		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-//			foreach ( (array) $clone_pages as $clone ) {
-//				Brizy_Logger::instance()->debug( sprintf( "Cloned page [%s] in to page [%s]", $clone['cloned_from'], $clone['id'] ) );
-//			}
-//		}
+//		$api_project = new Brizy_Editor_API_Project( $project_data );
 //
-//		return $clone_pages;
+//		return $api_project;
 //	}
 
-	/**
-	 * @param $project
-	 * @param $page
-	 *
-	 * @return Brizy_Editor_API_Page
-	 */
-	/*	public function create_page( $project, $page ) {
-
-			Brizy_Logger::instance()->notice( 'Create page', array( $project, $page ) );
-			//$page_response = $this->get_client()->create_page( $project->get_id(), $page );
-
-			return new Brizy_Editor_API_Page( array() );
-		}
-	*/
-
-	/**
-	 * @param Brizy_Editor_API_Project $project
-	 * @param Brizy_Editor_API_Page $page
-	 *
-	 * @return mixed
-	 */
-//	public function delete_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
-//		Brizy_Logger::instance()->notice( 'Delete page', array( $project, $page ) );
+//	/**
+//	 * @param Brizy_Editor_API_Project $project
+//	 *
+//	 * @return array|mixed|object
+//	 * @throws Brizy_Editor_API_Exceptions_Exception
+//	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
+//	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
+//	 * @throws Exception
+//	 */
+//	public function update_project( $project ) {
+//		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
 //
-//		return $this->get_client()->delete_page( $project->get_id(), $page->get_id() );
-//	}
-
-	/**
-	 * @param Brizy_Editor_API_Project $project
-	 * @param Brizy_Editor_API_Page $page
-	 *
-	 * @return array|mixed|object
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 */
-//	public function update_page( Brizy_Editor_API_Project $project, Brizy_Editor_API_Page $page ) {
-//		Brizy_ExceptionLogger::instance()->notice( 'Update page', array( $project, $page ) );
+//		$updated_project = $this->get_client()->update_project( $project );
 //
-//		$updated_page = $this->get_client()
-//		                     ->update_page(
-//			                     $project->get_id(),
-//			                     $page->get_id(),
-//			                     $page
-//		                     );
-//		return $updated_page;
+//		Brizy_Editor_Project::get()->updateProjectData( new Brizy_Editor_API_Project( $updated_project ) );
+//
+//		return $updated_project;
 //	}
-
-	/**
-	 * @param Brizy_Editor_API_Project $project
-	 *
-	 * @return array|mixed|object
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 * @throws Exception
-	 */
-	public function update_project( $project ) {
-		Brizy_Logger::instance()->notice( 'Update project', array( $project ) );
-
-		$updated_project = $this->get_client()->update_project( $project );
-
-		Brizy_Editor_Project::get()->updateProjectData( new Brizy_Editor_API_Project( $updated_project ) );
-
-		return $updated_project;
-	}
 
 	/**
 	 * @param Brizy_Editor_API_Project $project
@@ -348,25 +208,25 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
 	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
 	 */
-	public function get_media_id( $project, $attachment_id ) {
-
-		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $attachment_id );
-		$hash_name                 = null;
-		try {
-			$hash_name = $brizy_editor_storage_post->get( self::BRIZY_ATTACHMENT_HASH_KEY );
-		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
-
-			$response = $this
-				->get_client()
-				->add_media( $project->get_id(), $this->image_to_base64( $attachment_id ) );
-
-			$brizy_editor_storage_post->set( self::BRIZY_ATTACHMENT_HASH_KEY, $response['name'] );
-
-			$hash_name = $response['name'];
-		}
-
-		return $hash_name;
-	}
+//	public function get_media_id( $project, $attachment_id ) {
+//
+//		$brizy_editor_storage_post = Brizy_Editor_Storage_Post::instance( $attachment_id );
+//		$hash_name                 = null;
+//		try {
+//			$hash_name = $brizy_editor_storage_post->get( self::BRIZY_ATTACHMENT_HASH_KEY );
+//		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {
+//
+//			$response = $this
+//				->get_client()
+//				->add_media( $project->get_id(), $this->image_to_base64( $attachment_id ) );
+//
+//			$brizy_editor_storage_post->set( self::BRIZY_ATTACHMENT_HASH_KEY, $response['name'] );
+//
+//			$hash_name = $response['name'];
+//		}
+//
+//		return $hash_name;
+//	}
 
 	protected function get_token() {
 		return $this->token;
@@ -386,29 +246,6 @@ class Brizy_Editor_User implements Brizy_Editor_SignatureInterface {
 		$data = file_get_contents( $path );
 
 		return base64_encode( $data );
-	}
-
-	protected static function lock_access() {
-		set_transient( self::lock_key(), 1, 30 );
-	}
-
-
-	protected static function unlock_access() {
-		delete_transient( self::lock_key() );
-	}
-
-	/**
-	 * @return string
-	 */
-	protected static function lock_key() {
-		return brizy()->get_slug() . '-user-maintenance-enabled';
-	}
-
-	/**
-	 * @return bool
-	 */
-	protected static function is_locked() {
-		return (bool) get_transient( self::lock_key() );
 	}
 
 	/**

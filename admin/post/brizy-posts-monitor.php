@@ -20,6 +20,12 @@ class Brizy_Admin_Post_BrizyPostsMonitor extends Brizy_Admin_Post_AbstractMonito
 		) );
 	}
 
+	/**
+	 * @param $postId
+	 * @param $postType
+	 *
+	 * @return bool|mixed
+	 */
 	public function shouldStoreMetaRevision( $postId, $postType ) {
 		return $this->isUsingBrizy( $postId );
 	}
