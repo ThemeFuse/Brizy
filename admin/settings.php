@@ -30,7 +30,8 @@ class Brizy_Admin_Settings {
 	private function __construct() {
 
 		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
-		add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 8 );
+		add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
+		add_action( 'admin_head', array($this,'addClassToWpNavMenu'));
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
 		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
@@ -49,6 +50,16 @@ class Brizy_Admin_Settings {
 			Brizy_Editor_Storage_Common::instance()->set( 'post-types', $this->selected_post_types );
 		}
 	}
+
+	/**
+	 * Keep the tempate menu selected
+	 */
+	function addClassToWpNavMenu() {
+		global $parent_file, $submenu_file, $post_type;
+		if ( Brizy_Admin_Templates::CP_TEMPLATE == $post_type ) :
+			$submenu_file = 'edit.php?post_type=brizy_template';
+		endif;
+    }
 
 	/**
 	 * @internal
