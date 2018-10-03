@@ -15,6 +15,7 @@ class Brizy_Editor {
 	 * Brizy_Editor constructor.
 	 */
 	private function __construct() {
+		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 2000 );
 		add_action( 'init', array( $this, 'runMigrations' ), - 1000 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
@@ -93,6 +94,9 @@ class Brizy_Editor {
 		add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
 	}
 
+	public function loadCompatibilityClasses() {
+		// initialize here the compatibilty classes
+	}
 
 	/**
 	 * @param $templates
