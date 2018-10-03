@@ -38,6 +38,8 @@ class Brizy_Config {
 	const PLATFORM_CLIENT_SECRET = "3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s";
 	const PLATFORM_EMAIL = "admin@admin.com";
 
+	const UPGRADE_TO_PRO_URL = "https://brizy.io/pro";
+
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(

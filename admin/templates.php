@@ -192,8 +192,6 @@ class Brizy_Admin_Templates {
 	}
 
 	static public function registerCustomPostTemplate() {
-		global $wp_rewrite;
-
 
 		$labels = array(
 			'name'               => _x( 'Templates', 'post type general name' ),
@@ -231,7 +229,6 @@ class Brizy_Admin_Templates {
 				'supports'            => array( 'title', 'revisions', 'page-attributes' )
 			)
 		);
-
 	}
 
 	public function registerTemplateMetaBox() {
