@@ -38,19 +38,8 @@ trait Brizy_Admin_Migrations_PostsTrait {
 	/**
 	 * Migrate post
 	 */
-	public function migrate_post($json_value, $post_id) {
+	public function migrate_post($json_value) {
 		$old_arr = json_decode($json_value, true);
-
-		$debug = true;
-		//$debug = false; // comment this for testing
-		if ( $debug ) {
-			// write in before.json to track the changes
-			$result_old = file_put_contents($post_id.'-before.json', json_encode(
-				$old_arr,
-				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
-			));
-			echo 'put-contents-json-before=='.$result_old.'<br>';
-		}
 
 		$new_arr = $this->array_walk_recursive_and_delete($old_arr, function ($value, $key) {
 			if ( is_array($value) ) {
@@ -62,15 +51,6 @@ trait Brizy_Admin_Migrations_PostsTrait {
 				return true;
 			}
 		});
-
-		if ( $debug ) {
-			// write in before.json to track the changes
-			$result_new = file_put_contents($post_id.'-bfafter.json', json_encode(
-				$new_arr,
-				JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
-			));
-			echo 'put-contents-json-after=='.$result_new.'<br>';
-		}
 
 		return json_encode($new_arr);
 	}

@@ -52,7 +52,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 				update_post_meta($item->ID, 'brizy-bk-'.$class.'-'.$this->getVersion(), $storage);
 
 				// migrate post
-				$new_json = $this->migrate_post($json_value, $item->ID);
+				$new_json = $this->migrate_post($json_value);
 
 				// set the changed value in DB
 				if ( is_array($old_meta) ) {
