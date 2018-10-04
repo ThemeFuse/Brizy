@@ -15,12 +15,17 @@ class Brizy_Editor {
 	 * Brizy_Editor constructor.
 	 */
 	private function __construct() {
-		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 2000 );
+
+		add_action( 'init', array( $this, 'initialize' ), - 2000 );
+	}
+
+	public function initialize() {
+
+		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 1500 );
 		add_action( 'init', array( $this, 'runMigrations' ), - 1000 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
-
 
 		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ) {
 			Brizy_Admin_Rules_Api::_init();
@@ -58,7 +63,7 @@ class Brizy_Editor {
 		$post = null;
 		try {
 			// do not delete this line
-			$user = Brizy_Editor_User::get();
+			$user    = Brizy_Editor_User::get();
 			$project = Brizy_Editor_Project::get();
 
 			if ( $pid ) {
@@ -229,7 +234,7 @@ class Brizy_Editor {
 		try {
 
 			// do not load the assed proxies when in admin
-			if ( !is_admin() ) {
+			if ( ! is_admin() ) {
 				return;
 			}
 
