@@ -59,7 +59,6 @@ class Brizy_Editor {
 		try {
 			// do not delete this line
 			$user = Brizy_Editor_User::get();
-
 			$project = Brizy_Editor_Project::get();
 
 			if ( $pid ) {
@@ -228,6 +227,12 @@ class Brizy_Editor {
 
 	private function initializeAssetLoaders() {
 		try {
+
+			// do not load the assed proxies when in admin
+			if ( !is_admin() ) {
+				return;
+			}
+
 			$project     = Brizy_Editor_Project::get();
 			$url_builder = new Brizy_Editor_UrlBuilder( $project );
 
