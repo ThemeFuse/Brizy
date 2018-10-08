@@ -140,21 +140,16 @@ class Brizy_Editor_API {
 	}
 
 	public function set_featured_image_focal_point() {
-		if ( ! isset( $_REQUEST['attachmentId'] ) || ! isset( $_REQUEST['pointX'] ) || ! isset( $_REQUEST['pointY'] ) ) {
+		if ( ! isset( $_REQUEST['attachmentId'] ) || ! isset( $_REQUEST['pointX'] ) || ! isset( $_REQUEST['pointY'] ) || ! $_REQUEST['post'] ) {
 			$this->error( 400, 'Bad request' );
 		}
 
-		if ( $this->post && $this->post->uses_editor() ) {
+		update_post_meta( $_REQUEST['post'], 'brizy_attachment_focal_point', array(
+			'x' => $_REQUEST['pointX'],
+			'y' => $_REQUEST['pointY']
+		) );
 
-			update_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point', array(
-				'x' => $_REQUEST['pointX'],
-				'y' => $_REQUEST['pointY']
-			) );
-
-			$this->success( array() );
-		}
-
-		$this->error( 400, 'Invalid post' );
+		$this->success( array() );
 	}
 
 	public function remove_featured_image() {

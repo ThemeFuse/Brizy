@@ -2,188 +2,238 @@
 .brizy-editor-enabled #wp-content-editor-tools .wp-editor-tabs,
 .brizy-editor-enabled #wp-content-editor-container .quicktags-toolbar,
 .brizy-editor-enabled #wp-content-editor-container .wp-editor-area {
-  display: none;
+    display: none;
 }
 
 #brizy-admin-enable,
 #brizy-admin-disable {
-  float: left;
+    float: left;
 }
 
 #brizy-admin-disable,
 .brizy-editor-enabled #brizy-admin-enable {
-  display: none;
+    display: none;
 }
 
 .brizy-editor-enabled #brizy-admin-disable {
-  display: block;
+    display: block;
 }
 
 .brizy-editor {
-  padding: 10% 0;
-  display: none;
-  background: #fff;
-  align-items: center;
-  justify-content: center;
+    padding: 10% 0;
+    display: none;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
 }
 
 .brizy-editor-enabled .brizy-editor {
-  display: flex;
+    display: flex;
 }
 
 .brizy-logo {
-  max-height: 22px;
-  margin-left: 11px;
-  transform: translateY(2px);
+    max-height: 22px;
+    margin-left: 11px;
+    transform: translateY(2px);
 }
 
 .brizy-button--arrow {
-  max-height: 14px;
-  margin-right: 11px;
+    max-height: 14px;
+    margin-right: 11px;
 }
 
 .brizy-buttons {
-  height: 50px;
-  text-align: left;
-  margin-top: 10px;
+    height: 50px;
+    text-align: left;
+    margin-top: 10px;
 }
 
 .brizy-button {
-  padding: 11px 27px 12px;
-  border-style: solid;
-  border-width: 1px;
-  border-bottom: 0;
-  border-radius: 3px;
-  background-color: #d62c64;
-  box-shadow: 0px 2px 0px 0px #981e46;
-  text-shadow: none;
-  font-size: 15px;
-  font-family: "Open Sans", sans-serif;
-  color: #fff;
-  font-style: italic;
-  line-height: 1;
-  height: auto;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  transition: all 200ms linear;
+    padding: 11px 27px 12px;
+    border-style: solid;
+    border-width: 1px;
+    border-bottom: 0;
+    border-radius: 3px;
+    background-color: #d62c64;
+    box-shadow: 0px 2px 0px 0px #981e46;
+    text-shadow: none;
+    font-size: 15px;
+    font-family: "Open Sans", sans-serif;
+    color: #fff;
+    font-style: italic;
+    line-height: 1;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 200ms linear;
 }
+
 .brizy-button--default {
-  padding: 15px 30px 15px 24px;
-  font-size: 14px;
-  color: #444;
-  border-color: #e5e5e5;
-  background-color: #fff;
-  box-shadow: 0px 2px 0px 0px #e3e3e3;
+    padding: 15px 30px 15px 24px;
+    font-size: 14px;
+    color: #444;
+    border-color: #e5e5e5;
+    background-color: #fff;
+    box-shadow: 0px 2px 0px 0px #e3e3e3;
 }
+
 .brizy-button--primary {
-  color: #fff;
-  border-color: #d62c64;
-  background-color: #d62c64;
-  box-shadow: 0px 2px 0px 0px #981e46;
+    color: #fff;
+    border-color: #d62c64;
+    background-color: #d62c64;
+    box-shadow: 0px 2px 0px 0px #981e46;
 }
+
 .brizy-button:hover,
 .brizy-button:focus,
 .brizy-button:active {
-  transform: none;
+    transform: none;
 }
 
 .brizy-button--primary:hover,
 .brizy-button--primary:focus,
 .brizy-button--primary:active {
-  color: #fff;
-  background-color: #e2356e;
-  border-color: #d62c64;
-  box-shadow: 0px 2px 0px 0px #981e46;
+    color: #fff;
+    background-color: #e2356e;
+    border-color: #d62c64;
+    box-shadow: 0px 2px 0px 0px #981e46;
 }
 
 .brizy-button--default:hover,
 .brizy-button--default:focus,
 .brizy-button--default:active {
-  color: #444;
-  border-color: #e5e5e5;
-  background-color: #fff;
-  box-shadow: 0px 2px 0px 0px #e3e3e3;
+    color: #444;
+    border-color: #e5e5e5;
+    background-color: #fff;
+    box-shadow: 0px 2px 0px 0px #e3e3e3;
 }
 
 /**
  * Style Brizy Templates
  */
 
-.brizy-template-rules input[type="text"], 
+.brizy-template-rules input[type="text"],
 .brizy-template-rules select {
-  vertical-align: middle;
-  height: 28px;
-  line-height: 28px;
-  background-color: #fff;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  box-sizing: border-box;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  box-shadow: none;
+    vertical-align: middle;
+    height: 28px;
+    line-height: 28px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    box-shadow: none;
 }
 
 .brizy-rule-select,
 .brizy-rule-select ~ .select2-container {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 
 .brizy-template-rules .rule:not(:first-of-type) {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .brizy-delete-rule {
-  border: 0;
-  padding: 0;
-  font-size: 13px;
-  text-decoration: underline;
-  cursor: pointer;
-  background: none;
-  color: #a00;
+    border: 0;
+    padding: 0;
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    color: #a00;
 }
 
 #template-rules .inside {
-  padding-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .brizy-rule-select > select {
-  padding-left: 8px;
-  padding-right: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 1;
-  -moz-appearance: none; /* Firefox */
-  -webkit-appearance: none; /* Safari and Chrome */
-  appearance: none;
+    padding-left: 8px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1;
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
 }
+
 .brizy-rule-select > select:disabled {
-  color: #444;
-  background-color: #eee;
-  border: 1px solid #aaa;
+    color: #444;
+    background-color: #eee;
+    border: 1px solid #aaa;
 }
 
 .brizy-rule-select--options {
-  min-width: 175px;
+    min-width: 175px;
 }
 
 .brizy-rule-select {
-  position: relative;
+    position: relative;
 }
 
 .brizy-rule-select::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 7px;
-  height: 0;
-  width: 0;
-  border-color: #888 transparent transparent transparent;
-  border-style: solid;
-  border-width: 5px 4px 0 4px;
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    height: 0;
+    width: 0;
+    border-color: #888 transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
 }
+
 .brizy-rule-new-condition .brizy-rule-select2::after {
-  content: none;
+    content: none;
+}
+
+.brizy-featured-image {
+
+}
+
+.brizy-featured-image .wrapper {
+    position: relative;
+}
+
+.brizy-featured-image .focal-point {
+    position: absolute;
+    z-index: 10;
+    width: 14px;
+    height: 14px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: #2eb0d8;
+    border: 2px solid #fff;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.brizy-featured-image .deleteImage {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    z-index: 11;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    background-color: #2d323b;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+}
+
+.brizy-featured-image .deleteImage svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    position: relative;
+    color: #efefef;
+    fill:  #efefef;
+    stroke: none;
 }
