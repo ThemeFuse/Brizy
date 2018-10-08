@@ -40,6 +40,9 @@ trait Brizy_Admin_Migrations_PostsTrait {
 	 */
 	public function migrate_post($json_value) {
 		$old_arr = json_decode($json_value, true);
+		if( is_null($old_arr) ) {
+			return $json_value;
+		}
 
 		$new_arr = $this->array_walk_recursive_and_delete($old_arr, function ($value, $key) {
 			if ( is_array($value) ) {
