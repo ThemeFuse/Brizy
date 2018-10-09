@@ -3,6 +3,37 @@
 trait Brizy_Admin_Migrations_PostsTrait {
 
 	/**
+	 * Get posts and meta
+	 */
+	public function get_posts_and_meta() {
+		global $wpdb;
+
+		// query all posts (all post_type, all post_status) that have meta_key = 'brizy' and is not 'revision'
+		return $wpdb->get_results("
+			SELECT p.ID, pm.meta_value FROM {$wpdb->postmeta} pm
+			LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			WHERE pm.meta_key = 'brizy'
+			AND p.post_type != 'revision'
+			AND p.post_type != 'attachment'
+		");
+	}
+
+	/**
+	 * Get Glogals posts
+	 */
+	public function get_globals_posts() {
+		global $wpdb;
+
+		// query all global posts
+		return $wpdb->get_results("
+			SELECT p.ID, pm.meta_value FROM {$wpdb->postmeta} pm
+			LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			WHERE pm.meta_key = 'brizy-project'
+			AND p.post_type = 'brizy-project'
+		");
+	}
+
+	/**
 	 * Parse array of shortcodes recursive
 	 */
 	public function array_walk_recursive_and_delete(array &$array, callable $callback, $userdata = null) {
@@ -17,22 +48,6 @@ trait Brizy_Admin_Migrations_PostsTrait {
 		}
 
 		return $array;
-	}
-
-	/**
-	 * Get posts and meta
-	 */
-	public function get_posts_and_meta() {
-		global $wpdb;
-
-		// query all posts (all post_type, all post_status) that have meta_key = 'brizy' and is not 'revision'
-		return $wpdb->get_results("
-			SELECT p.ID, pm.meta_value FROM {$wpdb->postmeta} pm
-			LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-			WHERE pm.meta_key = 'brizy'
-			AND p.post_type != 'revision'
-			AND p.post_type != 'attachment'
-		");
 	}
 
 	/**
@@ -75,7 +90,6 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			return $array;
 		}
 
-		//echo 'type=='.$array['type'].'<br>';
 		if ( $shortcode == $array['type'] ) {
 			// replace "mobile" with empty string then make first letter lowercase
 			$key = lcfirst( str_replace("mobile", "", $mobile_key) );
@@ -88,21 +102,6 @@ trait Brizy_Admin_Migrations_PostsTrait {
 		}
 
 		return $array;
-	}
-
-	/**
-	 * Get Glogals posts
-	 */
-	public function get_globals_posts() {
-		global $wpdb;
-
-		// query all global posts
-		return $wpdb->get_results("
-			SELECT p.ID, pm.meta_value FROM {$wpdb->postmeta} pm
-			LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-			WHERE pm.meta_key = 'brizy-project'
-			AND p.post_type = 'brizy-project'
-		");
 	}
 
 	public function unset_mobile_multi_keys( array &$array, $atts = array() ) {
@@ -120,7 +119,6 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			return $array;
 		}
 
-		//echo 'type=='.$array['type'].'<br>';
 		if ( $atts['shortcode'] == $array['type'] ) {
 			$keys_to_remove = array();
 			foreach($atts['mobile_keys'] as $mobile_key) {
