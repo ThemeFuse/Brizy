@@ -160,6 +160,194 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		// WPNavigation
 		$array = $this->unset_mobile_key( $array, "WPNavigation", "mobileItemPadding" );
 
+		// Accordion
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Accordion",
+			"mobile_keys"    => array(
+				"mobilePadding"
+			),
+		) );
+
+		// Delete ungrouped mobile paddings if all are equal
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Accordion",
+			"mobile_keys"    => array(
+				"mobilePaddingType",
+				"mobilePaddingTop",
+				"mobilePaddingRight",
+				"mobilePaddingBottom",
+				"mobilePaddingLeft"
+			),
+			"dependent_keys" => true
+		) );
+
+		// Tabs
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "Tabs",
+			"mobile_keys" => array(
+				"mobileHorizontalAlign",
+				"mobilePadding"
+			)
+		) );
+
+		// Delete ungrouped mobile paddings if all are equal
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Tabs",
+			"mobile_keys"    => array(
+				"mobilePaddingType",
+				"mobilePaddingTop",
+				"mobilePaddingRight",
+				"mobilePaddingBottom",
+				"mobilePaddingLeft"
+			),
+			"dependent_keys" => true
+		) );
+
+		// Image
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Image",
+			"mobile_keys"    => array(
+				"mobileResize",
+				"mobileZoom",
+				"mobileWidth",
+				"mobileHeight"
+			)
+		) );
+
+		// Delete image position if all are equal
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Image",
+			"mobile_keys"    => array(
+				"mobilePositionX",
+				"mobilePositionY"
+			),
+			"dependent_keys" => true
+		) );
+
+		// Form
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Form",
+			"mobile_keys"    => array(
+				"mobileHorizontalAlign"
+			)
+		) );
+
+		// Form fields options
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "FormFields",
+			"mobile_keys"    => array(
+				"mobilePadding",
+				"mobilePaddingRight",
+				"mobilePaddingBottom",
+				"mobilePaddingLeft",
+			),
+			"dependent_keys" => true
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "FormFields",
+			"mobile_keys"    => array(
+				"mobileBorderRadius",
+				"mobilePaddingTop" // top is used as zero from the default json
+			)
+		) );
+
+		// Form single field options
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "FormField",
+			"mobile_keys"    => array(
+				"mobileWidth",
+				"mobileHeight"
+			)
+		) );
+
+		// Icon
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Icon",
+			"mobile_keys"    => array(
+				"mobilePadding"
+			)
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Icon",
+			"mobile_keys"    => array(
+				"mobileSize",
+				"mobileCustomSize"
+			),
+			"dependent_keys" => true
+		) );
+
+		// Row
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Row",
+			"mobile_keys"    => array(
+				"mobileMedia",
+				"mobileBgImageWidth",
+				"mobileBgImageHeight",
+				"mobileBgImageSrc",
+				"mobileBgColorHex",
+				"mobileBgColorOpacity",
+				"mobileBgColorPalette",
+				"mobileBgMapZoom"
+			)
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Row",
+			"mobile_keys"    => array(
+				"mobileBgPositionX",
+				"mobileBgPositionY"
+			),
+			"dependent_keys" => true
+		) );
+
+		// Column
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Column",
+			"mobile_keys"    => array(
+				"mobileBgImageWidth",
+				"mobileBgImageHeight",
+				"mobileBgImageSrc",
+				"mobileBgColorHex",
+				"mobileBgColorOpacity",
+				"mobileBgColorPalette"
+			)
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "Column",
+			"mobile_keys"    => array(
+				"mobileBgPositionX",
+				"mobileBgPositionY"
+			),
+			"dependent_keys" => true
+		) );
+
+		// Section
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "SectionItem",
+			"mobile_keys"    => array(
+				"mobileMedia",
+				"mobileBgImageWidth",
+				"mobileBgImageHeight",
+				"mobileBgImageSrc",
+				"mobileBgColorHex",
+				"mobileBgColorOpacity",
+				"mobileBgColorPalette",
+				"mobileBgMapZoom"
+			)
+		) );
+
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"      => "SectionItem",
+			"mobile_keys"    => array(
+				"mobileBgPositionX",
+				"mobileBgPositionY"
+			),
+			"dependent_keys" => true
+		) );
+
 		return $array;
 	}
 
