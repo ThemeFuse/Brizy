@@ -47,7 +47,7 @@ class Brizy_Admin_Main {
 				'action_change_template'
 			) ); // action to change template from editor
 
-            add_action( 'edit_form_after_title', array(
+			add_action( 'edit_form_after_title', array(
 				$this,
 				'action_add_enable_disable_buttons'
 			) ); // add button to enable disable editor
@@ -135,7 +135,7 @@ class Brizy_Admin_Main {
 	public function hide_editor() {
 
 		$post_type = get_post_type();
-		if ( in_array( $post_type, Brizy_Editor::get()->supported_post_types() ) ) {
+		if ( Brizy_Editor_Post::checkIfPosIsSupported( $post_type, false ) ) {
 			$p = get_post();
 
 			try {
@@ -189,6 +189,11 @@ class Brizy_Admin_Main {
 			Brizy_Editor::get()->get_version(),
 			true
 		);
+		$post_id = null;
+
+		if ( isset( $_GET['post'] ) ) {
+			$post_id = (int) $_GET['post'];
+		}
 
 		wp_localize_script(
 			Brizy_Editor::get()->get_slug() . '-admin-js',
@@ -196,19 +201,49 @@ class Brizy_Admin_Main {
 			array(
 				'url'         => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 				'ruleApiHash' => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
-				'id'          => get_the_ID(),
+				'id'          => $post_id,
+				'usesBrizy'   => $post_id && Brizy_Editor_Post::checkIfPosIsSupported( $post_id, false ) && Brizy_Editor_Post::get( $post_id )->uses_editor() ? 1 : 0,
+				'labels'      => array(
+					'backToWordpress' => __( 'Back to WordPress Editor', 'brizy' ),
+					'editWithBrizy'   => __( 'Edit with Brizy', 'brizy' ),
+				),
+				'urls'        => array(
+					'enableBrizy'  => esc_url( set_url_scheme( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . $post_id ) ) ),
+					'disableBrizy' => esc_url( set_url_scheme( admin_url( 'admin-post.php?action=_brizy_admin_editor_disable&post=' . $post_id ) ) )
+				),
 				'actions'     => array(
 					'enable'  => '_brizy_admin_editor_enable',
 					'disable' => '_brizy_admin_editor_disable',
 				)
 			)
 		);
+
+		if ( function_exists( 'gutenberg_init' ) ) {
+
+			if ( ! Brizy_Editor_Post::checkIfPosIsSupported( $post_id, false ) ) {
+				return;
+			}
+
+			wp_enqueue_script(
+				Brizy_Editor::get()->get_slug() . '-gutemberg-admin-js',
+				Brizy_Editor::get()->get_url( 'admin/static/js/gutemberg-script.js' ),
+				array( 'jquery', 'underscore' ),
+				Brizy_Editor::get()->get_version(),
+				true
+			);
+		}
 	}
 
 	/**
 	 * @internal
 	 */
 	public function action_request_enable() {
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Bad Request' );
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
+			exit();
+		}
 
 		if ( ! isset( $_REQUEST['post'] ) || ! ( $p = get_post( (int) $_REQUEST['post'] ) ) ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
@@ -339,60 +374,17 @@ class Brizy_Admin_Main {
 
 	/**
 	 * @param $p
-	 *
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
-	 * @throws Exception
 	 */
 	private function enable_brizy_for_post( $p ) {
 
 		$post = null;
-
-		// obtain the post
 		try {
 			$post = Brizy_Editor_Post::get( $p->ID );
-		} catch ( Exception $exception ) {
-			$project = Brizy_Editor_Project::get();
-			$post    = Brizy_Editor_Post::create( $project, $p );
-		}
-
-		if ( ! $post ) {
-			Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
-			wp_redirect( $_SERVER['HTTP_REFERER'] );
-		}
-
-		try {
-
-			$update_post = false;
-
-			if ( $p->post_status == 'auto-draft' ) {
-				$p->post_status = 'draft';
-				$update_post    = true;
-			}
-
-			if ( $p->post_title == __( 'Auto Draft' ) ) {
-				$p->post_title = 'Brizy #' . $p->ID;
-				$update_post   = true;
-			}
-
-			if ( false === strpos( $p->post_content, 'brz-root__container' ) ) {
-				$p->post_content .= '<div class="brz-root__container"></div>';
-				$update_post     = true;
-			}
-
-			if ( $update_post ) {
-				wp_update_post( $p );
-			}
-
-			$post->enable_editor();
-			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
-			$post->set_plugin_version( BRIZY_VERSION );
-			$post->save();
-
+			$post->enableEditor();
 			// redirect
 			wp_redirect( $post->edit_url() );
 
 		} catch ( Exception $exception ) {
-
 			Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}

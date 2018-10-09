@@ -94,7 +94,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function __construct( $wp_post_id ) {
 
-		self::checkIfPostTypeIsSupported( $wp_post_id );
+		self::checkIfPosIsSupported( $wp_post_id );
 		$this->wp_post_id = (int) $wp_post_id;
 
 		if ( $this->wp_post_id ) {
@@ -158,8 +158,13 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @return bool
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 */
-	public static function checkIfPostTypeIsSupported( $wp_post_id, $throw = true ) {
+	public static function checkIfPosIsSupported( $wp_post_id, $throw = true ) {
 		$type = get_post_type( $wp_post_id );
+
+		return self::checkIfPosTypeIsSupported( $type, $throw );
+	}
+
+	public static function checkIfPosTypeIsSupported( $type, $throw = true ) {
 
 		$supported_post_types   = Brizy_Editor::get()->supported_post_types();
 		$supported_post_types[] = 'revision';
@@ -176,6 +181,44 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return $this
+	 * @throws Brizy_Editor_Exceptions_AccessDenied
+	 */
+	public function enableEditor() {
+
+		$update_post = false;
+
+		$p = $this->get_wp_post();
+
+		if ( $p->post_status == 'auto-draft' ) {
+			$p->post_status = 'draft';
+			$update_post    = true;
+		}
+
+		if ( $p->post_title == __( 'Auto Draft' ) ) {
+			$p->post_title = 'Brizy #' . $p->ID;
+			$update_post   = true;
+		}
+
+		if ( false === strpos( $p->post_content, 'brz-root__container' ) ) {
+			$p->post_content .= '<div class="brz-root__container"></div>';
+			$update_post     = true;
+		}
+
+		if ( $update_post ) {
+			wp_update_post( $p );
+		}
+
+		$this->set_uses_editor(true);
+		$this->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
+		$this->set_plugin_version( BRIZY_VERSION );
+		$this->save();
+
+
+		return $this;
 	}
 
 	/**

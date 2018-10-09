@@ -307,7 +307,7 @@ class Brizy_Editor_Editor_Editor {
 									return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
 									break;
 								default:
-									if ( ! Brizy_Editor_Post::checkIfPostTypeIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+									if ( ! Brizy_Editor_Post::checkIfPosIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
 										$wp_post = $p;
 										break;
 									}

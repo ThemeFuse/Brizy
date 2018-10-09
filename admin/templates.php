@@ -526,7 +526,7 @@ class Brizy_Admin_Templates {
 
 		$brizyPost = $this->template;
 
-		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid, false ) ) {
+		if ( $pid && Brizy_Editor_Post::checkIfPosIsSupported( $pid, false ) ) {
 			$brizyPost = Brizy_Editor_Post::get( $pid );
 		}
 
@@ -562,7 +562,7 @@ class Brizy_Admin_Templates {
 
 		$brizyPost = $this->template;
 
-		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid, false ) ) {
+		if ( $pid && Brizy_Editor_Post::checkIfPosIsSupported( $pid, false ) ) {
 			$brizyPost = Brizy_Editor_Post::get( $pid );
 		}
 

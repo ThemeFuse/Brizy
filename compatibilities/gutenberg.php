@@ -12,6 +12,7 @@ class Brizy_Compatibilities_Gutenberg {
 		add_action( 'admin_print_scripts-edit.php', array( $this, 'add_edit_button_to_gutenberg' ), 12 );
 		add_action( 'admin_init', array( $this, 'action_disable_gutenberg' ) );
 		add_action( 'admin_footer', array( $this, 'print_admin_footer_tpls' ) );
+		add_action( 'admin_action_brizy_new_post', [ $this, 'handle_new_post_action' ] );
 	}
 
 	public function filter_the_content( $content ) {
@@ -89,5 +90,52 @@ class Brizy_Compatibilities_Gutenberg {
                      </a>
                 </div>
             </script>';
+	}
+
+
+	public function handle_new_post_action() {
+
+		if ( empty( $_GET['post_type'] ) ) {
+			$post_type = 'post';
+		} else {
+			$post_type = $_GET['post_type'];
+		}
+
+		if ( ! Brizy_Editor_Post::checkIfPosTypeIsSupported( $post_type, false ) ) {
+			return;
+		}
+
+		$post_data               = array();
+		$post_data['post_title'] = 'Brizy Draft';
+		$post_data['post_type']  = $post_type;
+
+		$post_id = wp_insert_post( $post_data );
+
+		$post_data['ID']         = $post_id;
+		$post_data['post_title'] = "Brizy #" . $post_id;
+
+		wp_update_post( $post_data );
+
+
+		try {
+			if ( is_int( $post_id ) && $post_id !== 0 ) {
+
+			    $brizyPost = Brizy_Editor_Post::get($post_id);
+				$brizyPost->enableEditor();
+			}
+		} catch ( Exception $e ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Unable to create the page. Please try again later.' );
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
+		}
+
+
+		$add_query_arg = add_query_arg(
+			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+			get_permalink( $post_id )
+		);
+
+		wp_redirect( $add_query_arg );
+
+		die;
 	}
 }
