@@ -10,7 +10,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.39';
+		return '1.0.44';
 	}
 
 	/**
@@ -90,7 +90,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 				update_post_meta($item->ID, 'brizy-bk-' . $class . '-' . $this->getVersion(), $storage);
 
 				// migrate post
-				$new_json = $this->migrate_post($json_value, $item->ID);
+				$new_json = $this->migrate_post($json_value);
 
 				// set the changed value in DB
 				$storage['globals'] = base64_encode($new_json);
@@ -107,31 +107,65 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 */
 	public function parse_shortcodes(array &$array) {
 		// Line
-		$array = $this->unset_mobile_key( $array, "Line", "mobileWidth" );
-		$array = $this->unset_mobile_key( $array, "Line", "mobileBorderWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "Line",
+			"mobile_keys" => array(
+				"mobileWidth",
+				"mobileBorderWidth"
+			)
+		) );
 
 		// Spacer
 		$array = $this->unset_mobile_key( $array, "Spacer", "mobileHeight" );
 
 		// Video
-		$array = $this->unset_mobile_key( $array, "Video", "mobileSize" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "Video",
+			"mobile_keys" => array(
+				"mobileSize",
+				"mobileCoverImageWidth",
+				"mobileCoverImageHeight"
+			)
+		) );
 
 		// EmbedCode
-		$array = $this->unset_mobile_key( $array, "EmbedCode", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "EmbedCode",
+			"mobile_keys" => array(
+				"mobileWidth",
+				"mobileHeight"
+			)
+		) );
 
 		// Map
-		$array = $this->unset_mobile_key( $array, "Map", "mobileSize" );
-		$array = $this->unset_mobile_key( $array, "Map", "mobileHeight" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "Map",
+			"mobile_keys" => array(
+				"mobileSize",
+				"mobileHeight"
+			)
+		) );
 
 		// SoundCloud
-		$array = $this->unset_mobile_key( $array, "SoundCloud", "mobileWidth" );
-		$array = $this->unset_mobile_key( $array, "SoundCloud", "mobileHeight" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "SoundCloud",
+			"mobile_keys" => array(
+				"mobileWidth",
+				"mobileHeight"
+			)
+		) );
 
 		// Countdown
 		$array = $this->unset_mobile_key( $array, "Countdown", "mobileWidth" );
 
 		// ProgressBar
-		$array = $this->unset_mobile_key( $array, "ProgressBar", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "ProgressBar",
+			"mobile_keys" => array(
+				"mobileWidth",
+				"mobileBorderRadius"
+			)
+		) );
 
 		// Wrapper
 		$array = $this->mobile_migation_wrapper_align( $array, "Wrapper" );
@@ -158,49 +192,28 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		$array = $this->unset_mobile_key( $array, "WOOProductPage", "mobileWidth" );
 
 		// WPNavigation
-		$array = $this->unset_mobile_key( $array, "WPNavigation", "mobileItemPadding" );
-
-		// Accordion
 		$array = $this->unset_mobile_multi_keys( $array, array(
-			"shortcode"      => "Accordion",
-			"mobile_keys"    => array(
-				"mobilePadding"
-			),
+			"shortcode"   => "WPNavigation",
+			"mobile_keys" => array(
+				"mobileWidth",
+				"mobileItemPadding"
+			)
 		) );
 
-		// Delete ungrouped mobile paddings if all are equal
+		// Button
 		$array = $this->unset_mobile_multi_keys( $array, array(
-			"shortcode"      => "Accordion",
-			"mobile_keys"    => array(
-				"mobilePaddingType",
-				"mobilePaddingTop",
-				"mobilePaddingRight",
-				"mobilePaddingBottom",
-				"mobilePaddingLeft"
-			),
-			"dependent_keys" => true
+			"shortcode"   => "Button",
+			"mobile_keys" => array(
+				"mobileBorderRadius"
+			)
 		) );
 
 		// Tabs
 		$array = $this->unset_mobile_multi_keys( $array, array(
 			"shortcode"   => "Tabs",
 			"mobile_keys" => array(
-				"mobileHorizontalAlign",
-				"mobilePadding"
+				"mobileHorizontalAlign"
 			)
-		) );
-
-		// Delete ungrouped mobile paddings if all are equal
-		$array = $this->unset_mobile_multi_keys( $array, array(
-			"shortcode"      => "Tabs",
-			"mobile_keys"    => array(
-				"mobilePaddingType",
-				"mobilePaddingTop",
-				"mobilePaddingRight",
-				"mobilePaddingBottom",
-				"mobilePaddingLeft"
-			),
-			"dependent_keys" => true
 		) );
 
 		// Image
@@ -265,7 +278,8 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		$array = $this->unset_mobile_multi_keys( $array, array(
 			"shortcode"      => "Icon",
 			"mobile_keys"    => array(
-				"mobilePadding"
+				"mobilePadding",
+				"mobileBorderRadius"
 			)
 		) );
 
