@@ -10,7 +10,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.44';
+		return '1.0.39';
 	}
 
 	/**
