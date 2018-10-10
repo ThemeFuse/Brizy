@@ -115,7 +115,7 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			}
 
 			// !Atention if the number of keys to delete are not the same to not delete
-			if ( $atts['dependent_keys'] && count($keys_to_remove) != count($atts['mobile_keys']) ) {
+			if ( $atts['dependent_keys'] && count($keys_to_remove) != count($atts['delete_keys']) ) {
 				$keys_to_remove = array();
 			}
 
