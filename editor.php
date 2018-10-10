@@ -313,13 +313,15 @@ class Brizy_Editor {
 			return false;
 		}
 
-		if ( is_null( self::$is_allowed_for_current_user ) ) {
+		if ( self::is_administrator() ) {
+			return true;
+		}
 
+		if ( is_null( self::$is_allowed_for_current_user ) ) {
 			self::$is_allowed_for_current_user =
-				! self::is_subscriber() &&
-				( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
-				  current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
-				  || self::is_administrator()
+				(
+					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
+				    current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
 				);
 		}
 
