@@ -116,7 +116,12 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// Spacer
-		$array = $this->unset_mobile_key( $array, "Spacer", "mobileHeight" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "Spacer",
+			"mobile_keys" => array(
+				"mobileHeight"
+			)
+		) );
 
 		// Video
 		$array = $this->unset_mobile_multi_keys( $array, array(
@@ -156,7 +161,12 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// Countdown
-		$array = $this->unset_mobile_key( $array, "Countdown", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "Countdown",
+			"mobile_keys" => array(
+				"mobileWidth"
+			)
+		) );
 
 		// ProgressBar
 		$array = $this->unset_mobile_multi_keys( $array, array(
@@ -174,22 +184,52 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		$array = $this->mobile_migation_wrapper_align( $array, "Cloneable" );
 
 		// WOOCategories
-		$array = $this->unset_mobile_key( $array, "WOOCategories", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "WOOCategories",
+			"mobile_keys" => array(
+				"mobileWidth"
+			)
+		) );
 
 		// WOOPages
-		$array = $this->unset_mobile_key( $array, "WOOPages", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "WOOPages",
+			"mobile_keys" => array(
+				"mobileWidth"
+			)
+		) );
 
 		// WOOProducts
-		$array = $this->unset_mobile_key( $array, "WOOProducts", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "WOOProducts",
+			"mobile_keys" => array(
+				"mobileWidth"
+			)
+		) );
 
 		// WPSidebar
-		$array = $this->unset_mobile_key( $array, "WPSidebar", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "WPSidebar",
+			"mobile_keys" => array(
+				"mobileWidth"
+			)
+		) );
 
 		// WPCustomShortcode
-		$array = $this->unset_mobile_key( $array, "WPCustomShortcode", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "WPCustomShortcode",
+			"mobile_keys" => array(
+				"mobileWidth"
+			)
+		) );
 
 		// WOOProductPage
-		$array = $this->unset_mobile_key( $array, "WOOProductPage", "mobileWidth" );
+		$array = $this->unset_mobile_multi_keys( $array, array(
+			"shortcode"   => "WOOProductPage",
+			"mobile_keys" => array(
+				"mobileWidth"
+			)
+		) );
 
 		// WPNavigation
 		$array = $this->unset_mobile_multi_keys( $array, array(

@@ -19,7 +19,7 @@ trait Brizy_Admin_Migrations_PostsTrait {
 	}
 
 	/**
-	 * Get Glogals posts
+	 * Get Globals posts
 	 */
 	public function get_globals_posts() {
 		global $wpdb;
@@ -83,27 +83,8 @@ trait Brizy_Admin_Migrations_PostsTrait {
 	}
 
 	/**
-	 * Unset a mobile key
+	 * Unset mobile keys
 	 */
-	public function unset_mobile_key(array &$array, $shortcode = "", $mobile_key = "") {
-		if ( empty($shortcode) && empty($mobile_key) ) {
-			return $array;
-		}
-
-		if ( $shortcode == $array['type'] ) {
-			// replace "mobile" with empty string then make first letter lowercase
-			$key = lcfirst( str_replace("mobile", "", $mobile_key) );
-			if ( isset( $array['value'][$key] )
-				&& isset( $array['value'][$mobile_key] )
-				&& $array['value'][$key] === $array['value'][$mobile_key] )
-			{
-				unset( $array['value'][$mobile_key] );
-			}
-		}
-
-		return $array;
-	}
-
 	public function unset_mobile_multi_keys( array &$array, $atts = array() ) {
 		// merge with default $atts
 		$atts = array_merge(
