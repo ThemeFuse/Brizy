@@ -85,31 +85,32 @@ trait Brizy_Admin_Migrations_PostsTrait {
 	/**
 	 * Unset mobile keys
 	 */
-	public function unset_mobile_multi_keys( array &$array, $atts = array() ) {
+	public function unset_prefixed_keys( array &$array, $atts = array() ) {
 		// merge with default $atts
 		$atts = array_merge(
 			array (
 				"shortcode"      => "",
-				"mobile_keys"    => array(),
+				"delete_keys"    => array(),
 				"dependent_keys" => false,
+				"key_prefix"     => "mobile"
 			),
 			$atts
 		);
 
-		if ( empty($atts['shortcode']) && empty($atts['mobile_keys']) ) {
+		if ( empty($atts['shortcode']) && empty($atts['delete_keys']) ) {
 			return $array;
 		}
 
 		if ( $atts['shortcode'] == $array['type'] ) {
 			$keys_to_remove = array();
-			foreach($atts['mobile_keys'] as $mobile_key) {
-				// replace "mobile" with empty string then make first letter lowercase
-				$key = lcfirst( str_replace("mobile", "", $mobile_key) );
+			foreach($atts['delete_keys'] as $key_to_delete) {
+				// replace "prefix" with empty string then make first letter lowercase
+				$key = lcfirst( str_replace($atts['key_prefix'], "", $key_to_delete) );
 				if ( isset( $array['value'][$key] )
-					&& isset( $array['value'][$mobile_key] )
-					&& $array['value'][$key] === $array['value'][$mobile_key] )
+					&& isset( $array['value'][$key_to_delete] )
+					&& $array['value'][$key] === $array['value'][$key_to_delete] )
 				{
-					$keys_to_remove[] = $mobile_key;
+					$keys_to_remove[] = $key_to_delete;
 				}
 			}
 

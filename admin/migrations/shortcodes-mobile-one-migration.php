@@ -107,26 +107,26 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 */
 	public function parse_shortcodes(array &$array) {
 		// Line
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "Line",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth",
 				"mobileBorderWidth"
 			)
 		) );
 
 		// Spacer
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "Spacer",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileHeight"
 			)
 		) );
 
 		// Video
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "Video",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileSize",
 				"mobileCoverImageWidth",
 				"mobileCoverImageHeight"
@@ -134,44 +134,44 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// EmbedCode
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "EmbedCode",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth",
 				"mobileHeight"
 			)
 		) );
 
 		// Map
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "Map",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileSize",
 				"mobileHeight"
 			)
 		) );
 
 		// SoundCloud
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "SoundCloud",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth",
 				"mobileHeight"
 			)
 		) );
 
 		// Countdown
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "Countdown",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth"
 			)
 		) );
 
 		// ProgressBar
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "ProgressBar",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth",
 				"mobileBorderRadius"
 			)
@@ -184,82 +184,82 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		$array = $this->mobile_migation_wrapper_align( $array, "Cloneable" );
 
 		// WOOCategories
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "WOOCategories",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth"
 			)
 		) );
 
 		// WOOPages
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "WOOPages",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth"
 			)
 		) );
 
 		// WOOProducts
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "WOOProducts",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth"
 			)
 		) );
 
 		// WPSidebar
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "WPSidebar",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth"
 			)
 		) );
 
 		// WPCustomShortcode
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "WPCustomShortcode",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth"
 			)
 		) );
 
 		// WOOProductPage
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "WOOProductPage",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth"
 			)
 		) );
 
 		// WPNavigation
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "WPNavigation",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileWidth",
 				"mobileItemPadding"
 			)
 		) );
 
 		// Button
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "Button",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileBorderRadius"
 			)
 		) );
 
 		// Tabs
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"   => "Tabs",
-			"mobile_keys" => array(
+			"delete_keys" => array(
 				"mobileHorizontalAlign"
 			)
 		) );
 
 		// Image
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Image",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileResize",
 				"mobileZoom",
 				"mobileWidth",
@@ -268,9 +268,9 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// Delete image position if all are equal
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Image",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobilePositionX",
 				"mobilePositionY"
 			),
@@ -278,17 +278,17 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// Form
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Form",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileHorizontalAlign"
 			)
 		) );
 
 		// Form fields options
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "FormFields",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobilePadding",
 				"mobilePaddingRight",
 				"mobilePaddingBottom",
@@ -297,35 +297,35 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 			"dependent_keys" => true
 		) );
 
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "FormFields",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileBorderRadius",
 				"mobilePaddingTop" // top is used as zero from the default json
 			)
 		) );
 
 		// Form single field options
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "FormField",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileWidth",
 				"mobileHeight"
 			)
 		) );
 
 		// Icon
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Icon",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobilePadding",
 				"mobileBorderRadius"
 			)
 		) );
 
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Icon",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileSize",
 				"mobileCustomSize"
 			),
@@ -333,9 +333,9 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// Row
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Row",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileMedia",
 				"mobileBgImageWidth",
 				"mobileBgImageHeight",
@@ -347,9 +347,9 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 			)
 		) );
 
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Row",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileBgPositionX",
 				"mobileBgPositionY"
 			),
@@ -357,9 +357,9 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// Column
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Column",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileBgImageWidth",
 				"mobileBgImageHeight",
 				"mobileBgImageSrc",
@@ -369,9 +369,9 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 			)
 		) );
 
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "Column",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileBgPositionX",
 				"mobileBgPositionY"
 			),
@@ -379,9 +379,9 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		) );
 
 		// Section
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "SectionItem",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileMedia",
 				"mobileBgImageWidth",
 				"mobileBgImageHeight",
@@ -393,9 +393,9 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 			)
 		) );
 
-		$array = $this->unset_mobile_multi_keys( $array, array(
+		$array = $this->unset_prefixed_keys( $array, array(
 			"shortcode"      => "SectionItem",
-			"mobile_keys"    => array(
+			"delete_keys"    => array(
 				"mobileBgPositionX",
 				"mobileBgPositionY"
 			),
