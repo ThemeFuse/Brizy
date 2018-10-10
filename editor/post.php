@@ -161,10 +161,10 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public static function checkIfPosIsSupported( $wp_post_id, $throw = true ) {
 		$type = get_post_type( $wp_post_id );
 
-		return self::checkIfPosTypeIsSupported( $type, $throw );
+		return self::checkIfPostTypeIsSupported( $type, $throw );
 	}
 
-	public static function checkIfPosTypeIsSupported( $type, $throw = true ) {
+	public static function checkIfPostTypeIsSupported( $type, $throw = true ) {
 
 		$supported_post_types   = Brizy_Editor::get()->supported_post_types();
 		$supported_post_types[] = 'revision';
