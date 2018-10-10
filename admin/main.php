@@ -46,7 +46,8 @@ class Brizy_Admin_Main {
 				$this,
 				'action_change_template'
 			) ); // action to change template from editor
-			add_action( 'edit_form_after_title', array(
+
+            add_action( 'edit_form_after_title', array(
 				$this,
 				'action_add_enable_disable_buttons'
 			) ); // add button to enable disable editor
@@ -63,10 +64,6 @@ class Brizy_Admin_Main {
 		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
 
 		add_filter( 'save_post', array( $this, 'save_post' ), 10, 2 );
-
-		if ( function_exists( 'gutenberg_init' ) ) {
-			add_action( 'admin_print_scripts-edit.php', array( $this, 'add_edit_button_to_gutenberg' ), 12 );
-		}
 	}
 
 	/**
@@ -162,31 +159,6 @@ class Brizy_Admin_Main {
 				} );
 			}
 		}
-	}
-
-	public function add_edit_button_to_gutenberg() {
-		global $typenow;
-
-		$new_post_url = add_query_arg( array(
-			'action'    => 'brizy_new_post',
-			'post_type' => $typenow,
-		), set_url_scheme( admin_url( 'edit.php' ) ) );
-
-		?>
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', function () {
-                var dropdown = document.querySelector('#split-page-title-action .dropdown');
-
-                if (!dropdown) {
-                    return;
-                }
-
-                var url = '<?php echo esc_attr( $new_post_url ); ?>';
-
-                dropdown.insertAdjacentHTML('afterbegin', '<a href="' + url + '">Brizy</a>');
-            });
-        </script>
-		<?php
 	}
 
 	public function plugin_action_links( $links ) {

@@ -99,7 +99,7 @@ class Brizy_Editor {
 	}
 
 	public function loadCompatibilityClasses() {
-		// initialize here the compatibilty classes
+		new Brizy_Compatibilities_Gutenberg();
 	}
 
 	/**
