@@ -19,7 +19,7 @@ abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content
 	/**
 	 * @return array
 	 */
-	protected function getDefaultGroupPlacehoders() {
+	protected function getDefaultGroupPlaceholders() {
 		return array(
 			self::CONFIG_KEY_TEXT     =>array(),
 			self::CONFIG_KEY_IMAGE    =>array(),

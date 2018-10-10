@@ -21,7 +21,10 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
 
 		parent::__construct( $context );
 
-		$this->providers = apply_filters( 'brizy_providers', $this->providers, $context );
+		$this->providers[] = new Brizy_Content_Providers_FreeProvider( $context );
+		$this->providers   = apply_filters( 'brizy_providers', $this->providers, $context );
+
+		$context->setProvider( $this );
 	}
 
 	/**

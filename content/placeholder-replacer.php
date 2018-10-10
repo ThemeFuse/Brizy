@@ -44,16 +44,19 @@ class Brizy_Content_PlaceholderReplacer {
 		$placeholders        = $this->placeholderExtractor->extract();
 		$toReplace           = array();
 		$toReplaceWithValues = array();
+
 		foreach ( $placeholders as $contentPlaceholder ) {
 			try {
 				$placeholder = $this->placeholderProvider->getPlaceholder( $contentPlaceholder->getName() );
 
-				if ( ! $placeholder ) {
-					continue;
+				$toReplace[]           = $contentPlaceholder->getUid();
+
+				if ( $placeholder ) {
+					$toReplaceWithValues[] = $placeholder->getValue( $this->context, $contentPlaceholder );
+				} else {
+					$toReplaceWithValues[] = '';
 				}
 
-				$toReplace[]           = $contentPlaceholder->getUid();
-				$toReplaceWithValues[] = $placeholder->getValue( $this->context, $contentPlaceholder );
 			} catch ( Exception $e ) {
 				continue;
 			}
