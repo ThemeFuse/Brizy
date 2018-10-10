@@ -3,6 +3,7 @@ import { css } from "glamor";
 import { imageUrl } from "visual/utils/image";
 import { videoData as getVideoData } from "visual/utils/video";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v, props) {
   const { className } = v;
@@ -32,7 +33,6 @@ export function styleClassName(v, props) {
       size,
       video,
       ratio,
-      mobileSize,
       boxShadow,
       boxShadowColorHex,
       boxShadowColorOpacity,
@@ -55,6 +55,7 @@ export function styleClassName(v, props) {
         ? Math.round((((desktopW / 16) * 9) / 100) * size)
         : Math.round((((desktopW / 4) * 3) / 100) * size);
 
+    const mobileSize   = mobileSyncOnChange(v, "size");
     const mobileHeight =
       ratio === "16:9"
         ? Math.round((((370 / 16) * 9) / 100) * mobileSize)
@@ -100,7 +101,6 @@ export function styleCSSVars(v, props) {
     size,
     video,
     ratio,
-    mobileSize,
     boxShadow,
     boxShadowColorHex,
     boxShadowColorOpacity,
@@ -124,6 +124,7 @@ export function styleCSSVars(v, props) {
       ? Math.round((((desktopW / 16) * 9) / 100) * size)
       : Math.round((((desktopW / 4) * 3) / 100) * size);
 
+  const mobileSize   = mobileSyncOnChange(v, "size");
   const mobileHeight =
     ratio === "16:9"
       ? Math.round((((370 / 16) * 9) / 100) * mobileSize)

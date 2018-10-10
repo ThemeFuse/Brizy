@@ -80,8 +80,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 25,
-                                            mobileHeight: 25
+                                            height: 25
                                         }
                                     }
                                 ]
@@ -142,7 +141,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
-                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 38,
                                                                     imageSrc: "573e6062bdfaf506d289faca40b276a7c1af4ad6.jpeg"
@@ -227,9 +225,6 @@ resolve: {
                                             bgColorPalette: "color7",
                                             bgColorHex: "#73777f",
                                             bgColorOpacity: 0.15,
-                                            mobileBgColorPalette: "color7",
-                                            mobileBgColorHex: "#73777f",
-                                            mobileBgColorOpacity: 0.15,
                                             tempBgColorOpacity: 0.15,
                                             margin: 15,
                                             marginTop: 15,
@@ -282,7 +277,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
-                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 38,
                                                                     imageSrc: "f438d0fc4047469522b10f080023d608bf333cb1.jpeg"
@@ -367,9 +361,6 @@ resolve: {
                                             bgColorPalette: "color7",
                                             bgColorHex: "#73777f",
                                             bgColorOpacity: 0.15,
-                                            mobileBgColorPalette: "color7",
-                                            mobileBgColorHex: "#73777f",
-                                            mobileBgColorOpacity: 0.15,
                                             tempBgColorOpacity: 0.15,
                                             margin: 15,
                                             marginTop: 15,
@@ -422,7 +413,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
-                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 40,
                                                                     imageSrc: "ed6dbaa1c81979d670bfd097caf7effed5d8974a.jpeg"
@@ -507,9 +497,6 @@ resolve: {
                                             bgColorPalette: "color7",
                                             bgColorHex: "#73777f",
                                             bgColorOpacity: 0.15,
-                                            mobileBgColorPalette: "color7",
-                                            mobileBgColorHex: "#73777f",
-                                            mobileBgColorOpacity: 0.15,
                                             tempBgColorOpacity: 0.15,
                                             margin: 15,
                                             marginTop: 15,
@@ -519,9 +506,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

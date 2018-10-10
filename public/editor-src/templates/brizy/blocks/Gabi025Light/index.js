@@ -103,15 +103,9 @@ resolve: {
                                             paddingLeft: 60,
                                             verticalAlign: "center",
                                             bgColorPalette: "color3",
-                                            mobileBgColorPalette: "color3",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.75,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
-                                            bgImageSrc: "b2d6cc003214896b8009bcee496da93d4ae1f61d.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "b2d6cc003214896b8009bcee496da93d4ae1f61d.jpeg"
+                                            bgImageSrc: "b2d6cc003214896b8009bcee496da93d4ae1f61d.jpeg"
                                         }
                                     },
                                     {
@@ -179,17 +173,11 @@ resolve: {
                                             paddingBottom: 125,
                                             paddingLeft: 60,
                                             verticalAlign: "center",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.9,
                                             bgImageWidth: 1362,
                                             bgImageHeight: 1920,
                                             bgImageSrc: "0f2401af8d380447137dfa57d7baa5ba4ebb9890.jpeg",
-                                            mobileBgImageWidth: 1362,
-                                            mobileBgImageHeight: 1920,
-                                            mobileBgImageSrc: "0f2401af8d380447137dfa57d7baa5ba4ebb9890.jpeg",
                                             bgPositionY: 100,
-                                            bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8"
+                                            bgColorPalette: "color8"
                                         }
                                     },
                                     {
@@ -258,15 +246,9 @@ resolve: {
                                             paddingLeft: 60,
                                             verticalAlign: "center",
                                             bgColorPalette: "color3",
-                                            mobileBgColorPalette: "color3",
-                                            mobileBgColorHex: "#239ddb",
-                                            mobileBgColorOpacity: 0.8,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
-                                            bgImageSrc: "212d85c0c25b15c50c92260faee2879c70757664.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "212d85c0c25b15c50c92260faee2879c70757664.jpeg"
+                                            bgImageSrc: "212d85c0c25b15c50c92260faee2879c70757664.jpeg"
                                         }
                                     },
                                     {
@@ -334,16 +316,10 @@ resolve: {
                                             paddingBottom: 125,
                                             paddingLeft: 60,
                                             verticalAlign: "center",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.9,
                                             bgImageWidth: 720,
                                             bgImageHeight: 798,
                                             bgImageSrc: "cc8da7f8f0ed68077c03c0e27ff8ef09e71de4e6.jpeg",
-                                            mobileBgImageWidth: 720,
-                                            mobileBgImageHeight: 798,
-                                            mobileBgImageSrc: "cc8da7f8f0ed68077c03c0e27ff8ef09e71de4e6.jpeg",
-                                            bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8"
+                                            bgColorPalette: "color8"
                                         }
                                     }
                                 ]

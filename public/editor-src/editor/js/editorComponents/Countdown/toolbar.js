@@ -5,7 +5,9 @@ import { getArrayLanguages } from "./languages";
 import { getFontStyle, getWeight, getWeightChoices } from "visual/utils/fonts";
 import {
   onChangeTypography,
-  onChangeTypographyMobile
+  onChangeTypographyMobile,
+  tabletSyncOnChange,
+  mobileSyncOnChange
 } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 
@@ -14,15 +16,6 @@ export function getItemsForDesktop(v) {
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
-
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   // ...
   const { hex: colorHex } = getOptionColor(v, "color");
@@ -236,12 +229,7 @@ export function getItemsForDesktop(v) {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },
@@ -410,8 +398,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: width }) => {
             return {
-              width,
-              mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
+              width
             };
           }
         }
@@ -549,7 +536,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileWidth
+            value: mobileSyncOnChange(v, "width")
           },
           onChange: ({ value: mobileWidth }) => {
             return {

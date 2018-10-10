@@ -61,9 +61,7 @@ resolve: {
                                                                     imageWidth: 350,
                                                                     imageHeight: 334,
                                                                     positionX: 97,
-                                                                    mobilePositionX: 97,
-                                                                    positionY: 47,
-                                                                    mobilePositionY: 47
+                                                                    positionY: 47
                                                                 }
                                                             }
                                                         ]
@@ -189,7 +187,6 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -205,7 +202,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -262,9 +258,6 @@ resolve: {
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -397,7 +390,6 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -413,7 +405,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -490,9 +481,6 @@ resolve: {
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -650,7 +638,6 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -666,7 +653,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -723,9 +709,6 @@ resolve: {
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15

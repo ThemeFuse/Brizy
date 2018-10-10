@@ -59,13 +59,11 @@ resolve: {
                                                                     imageHeight: 1280,
                                                                     imageSrc: "3387c015e4b54f8ac6e19f88145d684de9f43876.jpeg",
                                                                     height: 143,
-                                                                    resize: 88,
-                                                                    mobileResize: 88
+                                                                    resize: 88
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -210,7 +208,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         itemPadding: 40,
                                                         itemPaddingRight: 40,
                                                         itemPaddingLeft: 40
@@ -239,8 +236,7 @@ resolve: {
                                                 "line"
                                             ],
                                             borderColorOpacity: 0.29,
-                                            width: 98,
-                                            mobileWidth: 98
+                                            width: 98
                                         }
                                     }
                                 ],

@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -33,9 +34,7 @@ export function styleClassName(v) {
       borderWidth,
       borderColorHex,
       borderColorOpacity,
-      borderStyle,
-      mobileWidth,
-      mobileBorderWidth,
+      borderStyle
     } = v;
 
     glamorObj = {
@@ -50,10 +49,10 @@ export function styleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          width: `${mobileWidth}%`,
+          width: `${mobileSyncOnChange(v, "width")}%`,
 
           "& .brz-hr": {
-            borderTopWidth: `${mobileBorderWidth}px`
+            borderTopWidth: `${mobileSyncOnChange(v, "borderWidth")}px`
           }
         }
       }
@@ -73,16 +72,14 @@ export function styleCSSVars(v) {
     borderWidth,
     borderColorHex,
     borderColorOpacity,
-    borderStyle,
-    mobileWidth,
-    mobileBorderWidth,
+    borderStyle
   } = v;
 
   return {
     "--width": `${width}%`,
-    "--mobileWidth": `${mobileWidth}%`,
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
     "--borderWidth": `${borderWidth}px`,
-    "--mobileBorderWidth": `${mobileBorderWidth}px`,
+    "--mobileBorderWidth": `${mobileSyncOnChange(v, "borderWidth")}px`,
     "--borderTopStyle": borderStyle,
     "--borderTopColor": hexToRgba(borderColorHex, borderColorOpacity)
   };

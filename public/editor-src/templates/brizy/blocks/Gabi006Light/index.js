@@ -121,15 +121,14 @@ resolve: {
                                                                     hoverBgColorHex: "#216fbd",
                                                                     hoverColorOpacity: 1,
                                                                     size: "large",
-                                                                    customSize: 64,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64
+                                                                    customSize: 64
                                                                 }
                                                             }
                                                         ],
                                                         horizontalAlign: "right",
                                                         mobileMarginBottom: 0,
-                                                        mobileMarginTop: 0
+                                                        mobileMarginTop: 0,
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],

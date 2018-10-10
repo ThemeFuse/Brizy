@@ -19,6 +19,7 @@ import {
   containerStyleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -199,25 +200,21 @@ class Row extends EditorComponent {
       bgVideo,
       bgMapZoom,
       bgMapAddress,
-      mobileMedia,
-      mobileBgImageSrc,
-      mobileBgColorOpacity,
-      mobileBgMapZoom
     } = v;
 
     let bgProps = {
       className: bgStyleClassName(v),
       imageSrc: bgImageSrc,
       colorOpacity: bgColorOpacity,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
+      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
+      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
 
     if (media === "video") {
       bgProps.video = getVideoData(bgVideo);
     }
 
-    if (media === "map" || mobileMedia === "map") {
+    if (media === "map" || mobileSyncOnChange(v, "media") === "map") {
       bgProps.mapAddress = bgMapAddress;
       bgProps.mapZoom = bgMapZoom;
     }

@@ -5,6 +5,6 @@
   "height": 250,
   "code": "",
 
-  "mobileWidth": 100,
-  "mobileHeight": 250
+  "mobileWidth": null,
+  "mobileHeight": null
 }

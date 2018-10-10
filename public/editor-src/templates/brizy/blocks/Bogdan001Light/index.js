@@ -177,8 +177,7 @@ resolve: {
                                                 "line"
                                             ],
                                             borderColorOpacity: 0.29,
-                                            borderWidth: 1,
-                                            mobileBorderWidth: 1
+                                            borderWidth: 1
                                         }
                                     }
                                 ],
@@ -558,13 +557,8 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 900,
                     bgImageSrc: "024b135312585dcbe3373dafc1d10d3e581e7b41.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 900,
-                    mobileBgImageSrc: "024b135312585dcbe3373dafc1d10d3e581e7b41.jpeg",
                     bgPositionX: 52,
-                    mobileBgPositionX: 52,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 0.8
+                    mobileBgPositionX: 52
                 }
             }
         ]

@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#eef0f2",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#eef0f2",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -60,15 +58,14 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     name: "dashboard-level",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "right"
+                                                        horizontalAlign: "right",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 },
                                                 {
@@ -149,15 +146,14 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     name: "settings",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "right"
+                                                        horizontalAlign: "right",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 },
                                                 {
@@ -270,15 +266,14 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     name: "big-eyes",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 },
                                                 {
@@ -359,15 +354,14 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     name: "cloud-sun-19",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 },
                                                 {

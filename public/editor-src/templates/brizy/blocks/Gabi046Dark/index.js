@@ -134,8 +134,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -178,8 +177,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -297,9 +295,7 @@ resolve: {
                     ],
                     containerSize: 90,
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 1,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    bgColorOpacity: 1
                 }
             }
         ]

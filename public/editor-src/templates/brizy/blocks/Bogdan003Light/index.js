@@ -63,8 +63,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20,
-                                            mobileHeight: 20
+                                            height: 20
                                         }
                                     }
                                 ]
@@ -102,10 +101,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 56,
                                                                     name: "image",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -162,10 +159,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 56,
                                                                     name: "newsletter-dev",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -222,10 +217,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 56,
                                                                     name: "contacts",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -282,10 +275,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 56,
                                                                     name: "collection",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -336,8 +327,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10,
-                                            mobileHeight: 10
+                                            height: 10
                                         }
                                     }
                                 ]

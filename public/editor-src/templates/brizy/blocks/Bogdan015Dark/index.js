@@ -78,11 +78,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -150,11 +148,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -201,11 +197,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -252,11 +246,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -303,11 +295,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -354,11 +344,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -405,11 +393,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -456,11 +442,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -471,11 +455,8 @@ resolve: {
                                             paddingLeft: 0,
                                             paddingRight: 0,
                                             bgColorHex: "#142850",
-                                            mobileBgColorHex: "#142850",
                                             bgColorPalette: "color2",
                                             bgColorOpacity: 0.6,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorOpacity: 0.6,
                                             tempBgColorOpacity: 0.6,
                                             borderColorPalette: "color6",
                                             borderColorHex: "#eef0f2",
@@ -543,11 +524,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -591,11 +570,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -642,11 +619,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -668,10 +643,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -697,11 +670,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -723,10 +694,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -752,11 +721,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -778,10 +745,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -807,11 +772,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -833,10 +796,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "simple-remove",
                                                                     colorPalette: "color8",
                                                                     colorHex: "#ffffff",
@@ -865,11 +826,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -891,10 +850,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "simple-remove",
                                                                     colorPalette: "color8",
                                                                     colorHex: "#ffffff",
@@ -924,11 +881,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.19,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -950,10 +905,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "simple-remove",
                                                                     colorPalette: "color8",
                                                                     colorHex: "#ffffff",
@@ -983,11 +936,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1065,9 +1016,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "#142850",
                                             bgColorOpacity: 0.6,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "#142850",
-                                            mobileBgColorOpacity: 0.6,
                                             tempBgColorOpacity: 0.6,
                                             borderColorPalette: "color6",
                                             borderTopWidth: 1,
@@ -1119,11 +1067,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1167,11 +1113,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1218,11 +1162,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1244,10 +1186,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1273,11 +1213,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1299,10 +1237,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1328,11 +1264,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1354,10 +1288,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1383,11 +1315,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1409,10 +1339,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1438,11 +1366,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1464,10 +1390,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1493,11 +1417,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1519,10 +1441,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "simple-remove",
                                                                     colorPalette: "color8",
                                                                     colorHex: "#ffffff",
@@ -1552,11 +1472,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1634,9 +1552,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "#142850",
                                             bgColorOpacity: 0.6,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "#142850",
-                                            mobileBgColorOpacity: 0.6,
                                             tempBgColorOpacity: 0.6,
                                             borderColorPalette: "color6",
                                             borderTopWidth: 1,
@@ -1689,11 +1604,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1737,11 +1650,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1788,11 +1699,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1814,10 +1723,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1843,11 +1750,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1869,10 +1774,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1898,11 +1801,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1924,10 +1825,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -1953,11 +1852,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -1979,10 +1876,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -2008,11 +1903,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -2034,10 +1927,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -2063,11 +1954,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -2089,10 +1978,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 20,
                                                                     borderRadius: 2,
-                                                                    mobileCustomSize: 20,
                                                                     name: "check-2",
                                                                     hoverColorOpacity: 1
                                                                 }
@@ -2118,11 +2005,9 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorHex: "#eef0f2",
                                                                     borderColorOpacity: 0.2,
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorPalette: "color6"
                                                                 }
                                                             }
@@ -2197,9 +2082,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "#142850",
                                             bgColorOpacity: 0.6,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "#142850",
-                                            mobileBgColorOpacity: 0.6,
                                             borderRadius: 4,
                                             borderTopRightRadius: 4,
                                             borderBottomRightRadius: 4,
@@ -2215,9 +2097,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

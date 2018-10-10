@@ -3,7 +3,9 @@ import { getOptionColor } from "visual/utils/options";
 import { getFontStyle, getWeight, getWeightChoices } from "visual/utils/fonts";
 import {
   onChangeTypography,
-  onChangeTypographyMobile
+  onChangeTypographyMobile,
+  tabletSyncOnChange,
+  mobileSyncOnChange
 } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 
@@ -23,15 +25,6 @@ const getItemsForDesktop = menuList => v => {
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
-
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
     {
@@ -73,11 +66,7 @@ const getItemsForDesktop = menuList => v => {
           },
           onChange: ({ value: itemPadding }) => {
             return {
-              itemPadding,
-              mobileItemPadding:
-                v.itemPadding === v.mobileItemPadding
-                  ? itemPadding
-                  : v.mobileItemPadding
+              itemPadding
             };
           }
         }
@@ -130,12 +119,7 @@ const getItemsForDesktop = menuList => v => {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },
@@ -317,7 +301,7 @@ const getItemsForMobile = v => {
             ]
           },
           value: {
-            value: v.mobileItemPadding
+            value: mobileSyncOnChange(v, "itemPadding")
           },
           onChange: ({ value: mobileItemPadding }) => {
             return {

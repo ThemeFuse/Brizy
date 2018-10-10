@@ -59,8 +59,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10,
-                                            mobileHeight: 10
+                                            height: 10
                                         }
                                     }
                                 ]
@@ -100,8 +99,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -129,7 +127,6 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
-                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color8",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -140,8 +137,7 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left",
-                                mobileHorizontalAlign: "left"
+                                horizontalAlign: "left"
                             }
                         }
                     ],
@@ -149,16 +145,11 @@ resolve: {
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgColorHex: "#142850",
-                    mobileBgColorHex: "#142850",
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 1280,
-                    bgImageSrc: "f1d5392472573e76bb8282e59b96e37427f7fec0.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1280,
-                    mobileBgImageSrc: "f1d5392472573e76bb8282e59b96e37427f7fec0.jpeg"
+                    bgImageSrc: "f1d5392472573e76bb8282e59b96e37427f7fec0.jpeg"
                 }
             },
             {
@@ -204,8 +195,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10,
-                                            mobileHeight: 10
+                                            height: 10
                                         }
                                     }
                                 ]
@@ -245,8 +235,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -274,7 +263,6 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
-                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color8",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -292,16 +280,11 @@ resolve: {
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgColorHex: "#142850",
-                    mobileBgColorHex: "#142850",
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
-                    bgImageSrc: "4f02c5a57a8027cd6b815dfb911da569ee964f9c.jpeg",
-                    mobileBgImageWidth: 1996,
-                    mobileBgImageHeight: 1331,
-                    mobileBgImageSrc: "4f02c5a57a8027cd6b815dfb911da569ee964f9c.jpeg"
+                    bgImageSrc: "4f02c5a57a8027cd6b815dfb911da569ee964f9c.jpeg"
                 }
             },
             {
@@ -347,8 +330,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10,
-                                            mobileHeight: 10
+                                            height: 10
                                         }
                                     }
                                 ]
@@ -388,8 +370,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -417,7 +398,6 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
-                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color8",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -428,8 +408,7 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "right",
-                                mobileHorizontalAlign: "right"
+                                horizontalAlign: "right"
                             }
                         }
                     ],
@@ -437,16 +416,11 @@ resolve: {
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgColorHex: "#142850",
-                    mobileBgColorHex: "#142850",
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
-                    bgImageSrc: "238c36aa6d2908d86bfced58ad9f51c5ade13130.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 881,
-                    mobileBgImageSrc: "238c36aa6d2908d86bfced58ad9f51c5ade13130.jpeg"
+                    bgImageSrc: "238c36aa6d2908d86bfced58ad9f51c5ade13130.jpeg"
                 }
             }
         ],

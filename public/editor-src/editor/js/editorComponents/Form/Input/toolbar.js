@@ -1,6 +1,7 @@
 import _ from "underscore";
 import * as types from "./types/index";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const getTypeChoices = _.map(types, item => {
   return {
@@ -59,8 +60,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: width }) => {
             return {
-              width,
-              mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
+              width
             };
           }
         },
@@ -91,9 +91,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: height }) => {
             return {
-              height,
-              mobileHeight:
-                v.height === v.mobileHeight ? height : v.mobileHeight
+              height
             };
           }
         }
@@ -133,7 +131,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileWidth
+            value: mobileSyncOnChange(v, "width")
           },
           onChange: ({ value: mobileWidth }) => {
             return {
@@ -164,7 +162,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileHeight
+            value: mobileSyncOnChange(v, "height")
           },
           onChange: ({ value: mobileHeight }) => {
             return {

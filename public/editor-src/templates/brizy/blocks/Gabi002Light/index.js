@@ -23,7 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#eef0f2",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#eef0f2",
                     items: [
                         {
                             type: "Row",
@@ -65,8 +64,7 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -176,8 +174,7 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -185,8 +182,6 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
                                             paddingTop: 30,
                                             paddingRight: 65,
                                             paddingLeft: 65,
@@ -216,8 +211,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -335,8 +329,7 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -344,8 +337,6 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
                                             paddingTop: 30,
                                             paddingRight: 65,
                                             paddingLeft: 65,
@@ -388,7 +379,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "right",
-                                                        mobileHorizontalAlign: "right",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }

@@ -221,7 +221,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -374,7 +375,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -527,7 +529,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -569,12 +572,7 @@ resolve: {
                     ],
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
-                    bgImageSrc: "497e747cd8ae166381d471f943450fe4e021c21c.jpeg",
-                    mobileBgImageWidth: 1996,
-                    mobileBgImageHeight: 1331,
-                    mobileBgImageSrc: "497e747cd8ae166381d471f943450fe4e021c21c.jpeg",
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9
+                    bgImageSrc: "497e747cd8ae166381d471f943450fe4e021c21c.jpeg"
                 }
             }
         ]

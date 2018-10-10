@@ -64,8 +64,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -107,8 +106,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 40,
-                                            mobileHeight: 40
+                                            height: 40
                                         }
                                     }
                                 ]
@@ -136,7 +134,6 @@ resolve: {
                                             borderRadiusType: "custom",
                                             tempBorderRadiusType: "custom",
                                             borderRadius: 27,
-                                            mobileBorderRadius: 27,
                                             tempBorderRadius: 27,
                                             size: "custom",
                                             fontSize: 13,
@@ -171,7 +168,6 @@ resolve: {
                                             borderRadiusType: "custom",
                                             tempBorderRadiusType: "custom",
                                             borderRadius: 27,
-                                            mobileBorderRadius: 27,
                                             tempBorderRadius: 27,
                                             size: "custom",
                                             fontSize: 13,
@@ -203,11 +199,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
                     bgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 893,
-                    mobileBgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.81,
                     containerSize: 60
                 }
             }

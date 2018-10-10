@@ -40,11 +40,11 @@
   "boxShadowHorizontal": 1,
   "tempBoxShadowColorOpacity": 1,
 
-  "mobileResize": 100,
-  "mobileZoom": 100,
-  "mobileWidth": 100,
-  "mobileHeight": 100,
+  "mobileResize": null,
+  "mobileZoom": null,
+  "mobileWidth": null,
+  "mobileHeight": null,
 
-  "mobilePositionY": 50,
-  "mobilePositionX": 50
+  "mobilePositionY": null,
+  "mobilePositionX": null
 }

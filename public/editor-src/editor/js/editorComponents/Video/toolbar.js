@@ -1,6 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
@@ -309,8 +310,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: size }) => {
             return {
-              size,
-              mobileSize: v.size === v.mobileSize ? size : v.mobileSize
+              size
             };
           }
         },
@@ -599,7 +599,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileSize
+            value: mobileSyncOnChange(v, "size")
           },
           onChange: ({ value: mobileSize }) => {
             return {

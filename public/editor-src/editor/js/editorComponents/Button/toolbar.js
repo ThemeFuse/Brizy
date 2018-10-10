@@ -3,7 +3,9 @@ import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import {
   onChangeTypography,
-  onChangeTypographyMobile
+  onChangeTypographyMobile,
+  tabletSyncOnChange,
+  mobileSyncOnChange
 } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 
@@ -15,14 +17,6 @@ export function getItemsForDesktop(v) {
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
-
   // Border Radius
   let contentHeight =
     fontSize * lineHeight >= v.iconCustomSize
@@ -31,24 +25,6 @@ export function getItemsForDesktop(v) {
 
   let maxBorderRadius = Math.round(
     (contentHeight + v.paddingTop * 2 + v.tempBorderWidth * 2) / 2
-  );
-
-  // Valorile de mobile sigur e nevoie de ele???
-  // Eu nu sunt sigur din moment ce sync intre desktop si mobile nu se ai face pentru orice optiune
-  let mobileContentHeight =
-    v.iconSize === "custom" &&
-    mobileFontSize * mobileLineHeight >= v.iconCustomSize
-      ? mobileFontSize * mobileLineHeight
-      : v.iconSize === "custom" &&
-        mobileFontSize * mobileLineHeight < v.iconCustomSize
-        ? v.iconCustomSize
-        : v.iconSize !== "custom" &&
-          mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
-          ? mobileFontSize * mobileLineHeight
-          : v[`${v.iconSize}IconSize`];
-
-  let maxMobileBorderRadius = Math.round(
-    (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
   );
 
   // Colors
@@ -107,8 +83,6 @@ export function getItemsForDesktop(v) {
                     onChange: size => {
                       return {
                         size,
-                        mobileSize:
-                          v.size === v.mobileSize ? size : v.mobileSize,
 
                         fontSize:
                           size !== "custom" ? v[`${size}FontSize`] : fontSize,
@@ -206,33 +180,7 @@ export function getItemsForDesktop(v) {
                             ? 0
                             : size !== "custom" && v.fillType !== "default"
                               ? v.tempBorderWidth
-                              : v.borderWidth,
-
-                        // Mobile
-                        mobilePaddingTop:
-                          v.paddingTop === v.mobilePaddingTop
-                            ? v.paddingTop
-                            : v.mobilePaddingTop,
-
-                        mobilePaddingRight:
-                          v.paddingRight === v.mobilePaddingRight
-                            ? v.paddingRight
-                            : v.mobilePaddingRight,
-
-                        mobilePaddingBottom:
-                          v.paddingBottom === v.mobilePaddingBottom
-                            ? v.paddingBottom
-                            : v.mobilePaddingBottom,
-
-                        mobilePaddingLeft:
-                          v.paddingLeft === v.mobilePaddingLeft
-                            ? v.paddingLeft
-                            : v.mobilePaddingLeft,
-
-                        mobileBorderRadius:
-                          v.borderRadiusType === "rounded"
-                            ? maxMobileBorderRadius
-                            : v.mobileBorderRadius
+                              : v.borderWidth
                       };
                     }
                   },
@@ -459,29 +407,7 @@ export function getItemsForDesktop(v) {
                             ? 0
                             : //: fillType !== "default" && v.hoverBgColorPalette === v.hoverBorderColorPalette
                               //  ? 0
-                              v.hoverBorderColorOpacity,
-
-                      // Mobile
-                      mobilePaddingRL:
-                        fillType === "default"
-                          ? 0
-                          : fillType !== "default"
-                            ? v.tempMobilePaddingRL
-                            : v.mobilePaddingRL,
-
-                      mobilePaddingRight:
-                        fillType === "default"
-                          ? 0
-                          : fillType !== "default"
-                            ? v.tempMobilePaddingRight
-                            : v.mobilePaddingRight,
-
-                      mobilePaddingLeft:
-                        fillType === "default"
-                          ? 0
-                          : fillType !== "default"
-                            ? v.tempMobilePaddingLeft
-                            : v.mobilePaddingRight
+                              v.hoverBorderColorOpacity
                     };
                   }
                 },
@@ -570,15 +496,7 @@ export function getItemsForDesktop(v) {
                         hoverBorderColorOpacity:
                           borderRadiusType !== ""
                             ? v.tempHoverBorderColorOpacity
-                            : v.hoverBorderColorOpacity,
-
-                        // Mobile
-                        mobileBorderRadius:
-                          borderRadiusType === "square"
-                            ? v.tempMobileBorderRadius
-                            : borderRadiusType === "rounded"
-                              ? maxMobileBorderRadius
-                              : v.mobileBorderRadius
+                            : v.hoverBorderColorOpacity
                       };
                     }
                   },
@@ -608,18 +526,7 @@ export function getItemsForDesktop(v) {
                         },
                         onChange: ({ value: borderRadius }) => ({
                           borderRadius,
-                          tempBorderRadius: borderRadius,
-                          tempMobileBorderRadius:
-                            v.tempBorderRadius === v.tempMobileBorderRadius
-                              ? borderRadius
-                              : v.tempMobileBorderRadius,
-
-                          mobileBorderRadius:
-                            v.borderRadiusType === "rounded"
-                              ? maxMobileBorderRadius
-                              : v.mobileBorderRadius === v.borderRadius
-                                ? borderRadius
-                                : v.mobileBorderRadius
+                          tempBorderRadius: borderRadius
                         })
                       }
                     ]
@@ -802,24 +709,6 @@ export function getItemsForDesktop(v) {
                           2
                       );
 
-                      let mobileContentHeight =
-                        iconSize === "custom" &&
-                        mobileFontSize * mobileLineHeight >= v.iconCustomSize
-                          ? mobileFontSize * mobileLineHeight
-                          : iconSize === "custom" &&
-                            mobileFontSize * mobileLineHeight < v.iconCustomSize
-                            ? v.iconCustomSize
-                            : iconSize !== "custom" &&
-                              mobileFontSize * mobileLineHeight >=
-                                v[`${iconSize}IconSize`]
-                              ? mobileFontSize * mobileLineHeight
-                              : v[`${iconSize}IconSize`];
-                      let maxMobileBorderRadius = Math.round(
-                        (mobileContentHeight +
-                          v.mobilePaddingTop * 2 +
-                          v.borderWidth * 2) /
-                          2
-                      );
                       return {
                         iconSize,
 
@@ -835,13 +724,7 @@ export function getItemsForDesktop(v) {
                         borderRadius:
                           v.borderRadiusType === "rounded"
                             ? maxBorderRadius
-                            : v.borderRadius,
-
-                        // Mobile
-                        mobileBorderRadius:
-                          v.borderRadiusType === "rounded"
-                            ? maxMobileBorderRadius
-                            : v.mobileBorderRadius
+                            : v.borderRadius
                       };
                     }
                   },
@@ -881,29 +764,12 @@ export function getItemsForDesktop(v) {
                               2
                           );
 
-                          let mobileContentHeight =
-                            mobileFontSize * mobileLineHeight >= iconCustomSize
-                              ? mobileFontSize * mobileLineHeight
-                              : iconCustomSize;
-                          let maxMobileBorderRadius = Math.round(
-                            (mobileContentHeight +
-                              v.mobilePaddingTop * 2 +
-                              v.borderWidth * 2) /
-                              2
-                          );
-
                           return {
                             iconCustomSize,
                             borderRadius:
                               v.borderRadiusType === "rounded"
                                 ? maxBorderRadius
-                                : v.borderRadius,
-
-                            // Mobile
-                            mobileBorderRadius:
-                              v.borderRadiusType === "rounded"
-                                ? maxMobileBorderRadius
-                                : v.mobileBorderRadius
+                                : v.borderRadius
                           };
                         }
                       }
@@ -993,12 +859,7 @@ export function getItemsForDesktop(v) {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },
@@ -2167,16 +2028,6 @@ export function getItemsForMobile(v) {
     mobileLetterSpacing
   } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
-  // Border Radius
-  let mobileContentHeight =
-    mobileFontSize * mobileLineHeight >= v.iconCustomSize
-      ? mobileFontSize * mobileLineHeight
-      : v.iconCustomSize;
-
-  let maxMobileBorderRadius = Math.round(
-    (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
-  );
-
   return [
     {
       id: "mobileToolbarCurrentShortcode",
@@ -2307,7 +2158,7 @@ export function getItemsForMobile(v) {
                             v.borderWidth * 2) /
                             2
                         )
-                      : v.mobileBorderRadius
+                      : mobileSyncOnChange(v, "borderRadius")
               };
             }
           },
@@ -2394,7 +2245,7 @@ export function getItemsForMobile(v) {
                                 v.borderWidth * 2) /
                                 2
                             )
-                          : v.mobileBorderRadius
+                          : mobileSyncOnChange(v, "borderRadius")
                   };
                 }
               }

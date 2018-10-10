@@ -58,7 +58,6 @@ resolve: {
                                                                     imageWidth: 800,
                                                                     imageHeight: 800,
                                                                     resize: 99,
-                                                                    mobileResize: 99,
                                                                     height: 99,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 83,
@@ -133,11 +132,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 360,
                     bgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 360,
-                    mobileBgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     containerSize: 85
                 }
             }

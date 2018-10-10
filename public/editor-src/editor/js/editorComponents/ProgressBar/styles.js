@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function containerStyleClassName(v) {
   const { className } = v;
@@ -29,11 +30,7 @@ export function containerStyleClassName(v) {
 
       // Color
       bg2ColorHex,
-      bg2ColorOpacity,
-
-      // Mobile Settings
-      mobileWidth,
-      mobileBorderRadius
+      bg2ColorOpacity
     } = v;
 
     glamorObj = {
@@ -44,8 +41,8 @@ export function containerStyleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          width: `${mobileWidth}%`,
-          borderRadius: `${mobileBorderRadius}px`
+          width: `${mobileSyncOnChange(v, "width")}%`,
+          borderRadius: `${mobileSyncOnChange(v, "borderRadius")}px`
         }
       }
     }
@@ -66,18 +63,14 @@ export function containerStyleCSSVars(v) {
 
     // Color
     bg2ColorHex,
-    bg2ColorOpacity,
-
-    // Mobile Settings
-    mobileWidth,
-    mobileBorderRadius
+    bg2ColorOpacity
   } = v;
 
   return {
     "--width": `${width}%`,
-    "--mobileWidth": `${mobileWidth}%`,
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
     "--borderRadius": `${borderRadius}px`,
-    "--mobileBorderRadius": `${mobileBorderRadius}px`,
+    "--mobileBorderRadius": `${mobileSyncOnChange(v, "borderRadius")}px`,
     "--bg2Color": hexToRgba(bg2ColorHex, bg2ColorOpacity),
   };
 }
@@ -141,8 +134,7 @@ export function styleClassName(v) {
       mobileFontSize,
       mobileLineHeight,
       mobileFontWeight,
-      mobileLetterSpacing,
-      mobileBorderRadius
+      mobileLetterSpacing
     } = v;
 
     glamorObj = {
@@ -168,7 +160,7 @@ export function styleClassName(v) {
           lineHeight: `${mobileLineHeight}`,
           fontWeight: mobileFontWeight,
           letterSpacing: `${mobileLetterSpacing}px`,
-          borderRadius: `${mobileBorderRadius}px`
+          borderRadius: `${mobileSyncOnChange(v, "borderRadius")}px`
         }
       }
     }
@@ -215,8 +207,7 @@ export function styleCSSVars(v) {
     mobileFontSize,
     mobileLineHeight,
     mobileFontWeight,
-    mobileLetterSpacing,
-    mobileBorderRadius
+    mobileLetterSpacing
   } = v;
 
   return {
@@ -241,6 +232,6 @@ export function styleCSSVars(v) {
     "--mobileLineHeight": `${mobileLineHeight}`,
     "--mobileFontWeight": mobileFontWeight,
     "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
-    "--mobileBorderRadius": `${mobileBorderRadius}px`
+    "--mobileBorderRadius": `${mobileSyncOnChange(v, "borderRadius")}px`
   };
 }

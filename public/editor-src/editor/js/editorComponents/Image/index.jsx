@@ -26,6 +26,7 @@ import {
   imgStyleClassName,
   imgStyleCSSVars
 } from "./styles";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const resizerPoints = {
   default: [
@@ -40,11 +41,11 @@ const resizerPoints = {
 };
 
 const resizerTransformValue = v => {
-  const { resize, mobileResize, ...rest } = v;
+  const { resize, ...rest } = v;
 
   return {
     size: resize,
-    mobileSize: mobileResize,
+    mobileSize: mobileSyncOnChange(v, "resize"),
     ...rest
   };
 };
@@ -215,12 +216,12 @@ class Image extends EditorComponent {
     const mobileValue = {
       imageWidth,
       imageHeight,
-      positionX: v.mobilePositionX,
-      positionY: v.mobilePositionY,
-      resize: v.mobileResize,
-      zoom: v.mobileZoom,
+      positionX: mobileSyncOnChange(v, "positionX"),
+      positionY: mobileSyncOnChange(v, "positionY"),
+      resize: mobileSyncOnChange(v, "resize"),
+      zoom: mobileSyncOnChange(v, "zoom"),
       width,
-      height: v.mobileHeight
+      height: mobileSyncOnChange(v, "height")
     };
 
     return {
@@ -354,12 +355,12 @@ class Image extends EditorComponent {
       imageSrc,
       imageWidth,
       imageHeight,
-      positionX: v.mobilePositionX,
-      positionY: v.mobilePositionY,
-      resize: v.mobileResize,
-      zoom: v.mobileZoom,
+      positionX: mobileSyncOnChange(v, "positionX"),
+      positionY: mobileSyncOnChange(v, "positionY"),
+      resize: mobileSyncOnChange(v, "resize"),
+      zoom: mobileSyncOnChange(v, "zoom"),
       width,
-      height: v.mobileHeight
+      height: mobileSyncOnChange(v, "height")
     };
     const wrapperSizes = {
       desktop: calcWrapperSizes(containerWidth, desktopValue),
@@ -442,9 +443,9 @@ class Image extends EditorComponent {
       mobile: calcWrapperSizes(mobileW, {
         imageWidth,
         imageHeight,
-        resize: v.mobileResize,
-        width: v.mobileWidth,
-        height: v.mobileHeight
+        resize: mobileSyncOnChange(v, "resize"),
+        width: mobileSyncOnChange(v, "width"),
+        height: mobileSyncOnChange(v, "height")
       })
     };
     const imageSizes = this.getImageSizes(v, desktopW);

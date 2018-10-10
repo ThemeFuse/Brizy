@@ -252,8 +252,7 @@ resolve: {
                                                         horizontalAlign: "left",
                                                         itemPadding: 28,
                                                         itemPaddingRight: 28,
-                                                        itemPaddingLeft: 28,
-                                                        mobileHorizontalAlign: "left"
+                                                        itemPaddingLeft: 28
                                                     }
                                                 },
                                                 {
@@ -316,15 +315,11 @@ resolve: {
                                                                     borderColorPalette: "color7",
                                                                     hoverBorderColorOpacity: 1,
                                                                     hoverBorderColorPalette: "color3",
-                                                                    mobilePadding: 15,
-                                                                    mobileBorderRadius: 30,
                                                                     tempBorderWidth: 2,
                                                                     tempBorderColorPalette: "color7",
                                                                     name: "logo-fb-simple",
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 24,
-                                                                    mobileCustomSize: 24,
                                                                     tempPadding: 15
                                                                 }
                                                             },
@@ -345,15 +340,12 @@ resolve: {
                                                                     borderColorPalette: "color7",
                                                                     hoverBorderColorOpacity: 1,
                                                                     hoverBorderColorPalette: "color3",
-                                                                    mobilePadding: 15,
                                                                     mobileBorderRadius: 35,
                                                                     tempBorderWidth: 2,
                                                                     tempBorderColorPalette: "color7",
                                                                     name: "logo-google-plus",
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 24,
-                                                                    mobileCustomSize: 24,
                                                                     tempPadding: 15
                                                                 }
                                                             },
@@ -374,15 +366,12 @@ resolve: {
                                                                     borderColorPalette: "color7",
                                                                     hoverBorderColorOpacity: 1,
                                                                     hoverBorderColorPalette: "color3",
-                                                                    mobilePadding: 15,
                                                                     mobileBorderRadius: 35,
                                                                     tempBorderWidth: 2,
                                                                     tempBorderColorPalette: "color7",
                                                                     name: "logo-twitter",
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 24,
-                                                                    mobileCustomSize: 24,
                                                                     tempPadding: 15
                                                                 }
                                                             },
@@ -403,21 +392,17 @@ resolve: {
                                                                     borderColorPalette: "color7",
                                                                     hoverBorderColorOpacity: 1,
                                                                     hoverBorderColorPalette: "color3",
-                                                                    mobilePadding: 15,
                                                                     mobileBorderRadius: 35,
                                                                     tempBorderWidth: 2,
                                                                     tempBorderColorPalette: "color7",
                                                                     name: "logo-linkedin",
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 24,
-                                                                    mobileCustomSize: 24,
                                                                     tempPadding: 15
                                                                 }
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         itemPadding: 20,
                                                         itemPaddingRight: 20,
                                                         itemPaddingLeft: 20
@@ -430,9 +415,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#eef0f2",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

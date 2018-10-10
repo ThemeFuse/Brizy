@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 0.9,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     items: [
                         {
                             type: "Row",
@@ -45,9 +43,6 @@ resolve: {
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1266,
                                             bgImageSrc: "baddd18fc617d0be38a54b0d1001c8c53fc56582.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1266,
-                                            mobileBgImageSrc: "baddd18fc617d0be38a54b0d1001c8c53fc56582.jpeg",
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10
                                         }
@@ -150,8 +145,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -161,9 +155,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10,
                                             paddingTop: 70,
@@ -181,10 +172,7 @@ resolve: {
                     tempMobileBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 1280,
-                    bgImageSrc: "9a2e389b3e155301d3e9867c99d648762c5b6c75.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1280,
-                    mobileBgImageSrc: "9a2e389b3e155301d3e9867c99d648762c5b6c75.jpeg"
+                    bgImageSrc: "9a2e389b3e155301d3e9867c99d648762c5b6c75.jpeg"
                 }
             },
             {
@@ -195,8 +183,6 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 0.9,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     items: [
                         {
                             type: "Row",
@@ -305,8 +291,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -316,9 +301,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10,
                                             paddingTop: 70,
@@ -335,9 +317,6 @@ resolve: {
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
                                             bgImageSrc: "436b3288dbf6fa20793eaf59e69e8a56f495917f.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "436b3288dbf6fa20793eaf59e69e8a56f495917f.jpeg",
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10
                                         }
@@ -353,10 +332,7 @@ resolve: {
                     tempMobileBgColorOpacity: 0.9,
                     bgImageWidth: 1928,
                     bgImageHeight: 1285,
-                    bgImageSrc: "eea8c04f8fc510d60baf1e35284cda274587d601.jpeg",
-                    mobileBgImageWidth: 1928,
-                    mobileBgImageHeight: 1285,
-                    mobileBgImageSrc: "eea8c04f8fc510d60baf1e35284cda274587d601.jpeg"
+                    bgImageSrc: "eea8c04f8fc510d60baf1e35284cda274587d601.jpeg"
                 }
             },
             {
@@ -367,8 +343,6 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 0.9,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     items: [
                         {
                             type: "Row",
@@ -389,9 +363,6 @@ resolve: {
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
                                             bgImageSrc: "0975fbf36294a254f7bfde4c097abcdafdfd60d2.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "0975fbf36294a254f7bfde4c097abcdafdfd60d2.jpeg",
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10
                                         }
@@ -494,8 +465,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -505,9 +475,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10,
                                             paddingTop: 70,
@@ -525,10 +492,7 @@ resolve: {
                     tempMobileBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 1280,
-                    bgImageSrc: "32aefb87f3b23921c3605d85c016e7e5a8f53df5.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1280,
-                    mobileBgImageSrc: "32aefb87f3b23921c3605d85c016e7e5a8f53df5.jpeg"
+                    bgImageSrc: "32aefb87f3b23921c3605d85c016e7e5a8f53df5.jpeg"
                 }
             },
             {
@@ -539,8 +503,6 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 0.9,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     items: [
                         {
                             type: "Row",
@@ -649,8 +611,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -660,9 +621,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10,
                                             paddingTop: 70,
@@ -679,9 +637,6 @@ resolve: {
                                             bgImageWidth: 1928,
                                             bgImageHeight: 1285,
                                             bgImageSrc: "49a7c5c26fcd8ae9e9a64b78030723e4aac2fb5f.jpeg",
-                                            mobileBgImageWidth: 1928,
-                                            mobileBgImageHeight: 1285,
-                                            mobileBgImageSrc: "49a7c5c26fcd8ae9e9a64b78030723e4aac2fb5f.jpeg",
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10
                                         }
@@ -697,10 +652,7 @@ resolve: {
                     tempMobileBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 1280,
-                    bgImageSrc: "360d0689e72fcd18b203673cb73c78274c1e15a6.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1280,
-                    mobileBgImageSrc: "360d0689e72fcd18b203673cb73c78274c1e15a6.jpeg"
+                    bgImageSrc: "360d0689e72fcd18b203673cb73c78274c1e15a6.jpeg"
                 }
             }
         ],

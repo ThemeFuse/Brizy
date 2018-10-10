@@ -79,8 +79,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20,
-                                            mobileHeight: 20
+                                            height: 20
                                         }
                                     }
                                 ],
@@ -115,8 +114,7 @@ resolve: {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
-                                                                    width: 50,
-                                                                    mobileWidth: 50
+                                                                    width: 50
                                                                 }
                                                             },
                                                             {
@@ -129,7 +127,6 @@ resolve: {
                                                                         "Option 2"
                                                                     ],
                                                                     width: 50,
-                                                                    mobileWidth: 50,
                                                                     type: "Email"
                                                                 }
                                                             },
@@ -156,8 +153,7 @@ resolve: {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
-                                                                    height: 140,
-                                                                    mobileHeight: 140
+                                                                    height: 140
                                                                 }
                                                             }
                                                         ],
@@ -204,8 +200,6 @@ resolve: {
                             }
                         }
                     ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1,
                     containerSize: 60
                 }
             }

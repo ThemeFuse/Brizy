@@ -117,7 +117,6 @@ resolve: {
                                                                     imageHeight: 512,
                                                                     height: 101,
                                                                     resize: 22,
-                                                                    mobileResize: 22,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 37,
                                                                     imageSrc: "837a82fc04fbf6c6c12da27739728d994ff63e9b.jpeg"
@@ -196,7 +195,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 22,
-                                                                    mobileResize: 22,
                                                                     height: 101,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 37,
@@ -276,7 +274,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 22,
-                                                                    mobileResize: 22,
                                                                     height: 101,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 37,
@@ -388,8 +385,7 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "19f264df2d56685c8ce435afc2fe08ab995d8190.png",
                                                                     height: 91,
-                                                                    resize: 90,
-                                                                    mobileResize: 90
+                                                                    resize: 90
                                                                 }
                                                             }
                                                         ]
@@ -437,8 +433,7 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "c5c14d6a259b25f81e5bd0a1f85e628f82565117.png",
                                                                     height: 97,
-                                                                    resize: 85,
-                                                                    mobileResize: 85
+                                                                    resize: 85
                                                                 }
                                                             }
                                                         ]
@@ -485,8 +480,7 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "9f26c3a67df3033e7bcca9255b3924fc9de8579c.png",
                                                                     height: 91,
-                                                                    resize: 80,
-                                                                    mobileResize: 80
+                                                                    resize: 80
                                                                 }
                                                             }
                                                         ],
@@ -545,8 +539,7 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "a55155a23287558af1dd620ffdcbcefd9cf33594.png",
                                                                     height: 81,
-                                                                    resize: 70,
-                                                                    mobileResize: 70
+                                                                    resize: 70
                                                                 }
                                                             }
                                                         ]
@@ -594,8 +587,7 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "0c77993836b3abee962578e95ded62de930b4c1c.png",
                                                                     height: 111,
-                                                                    resize: 70,
-                                                                    mobileResize: 70
+                                                                    resize: 70
                                                                 }
                                                             }
                                                         ]
@@ -641,8 +633,7 @@ resolve: {
                                                                     imageWidth: 220,
                                                                     imageHeight: 65,
                                                                     imageSrc: "fea22e5e1f7a6f052bc480627ff48eda92a75181.png",
-                                                                    resize: 70,
-                                                                    mobileResize: 70
+                                                                    resize: 70
                                                                 }
                                                             }
                                                         ]
@@ -689,8 +680,7 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "caaa8e29cae9d770e721f92a9898d96ecd2d6ceb.png",
                                                                     height: 120,
-                                                                    resize: 53,
-                                                                    mobileResize: 53
+                                                                    resize: 53
                                                                 }
                                                             }
                                                         ]
@@ -705,9 +695,7 @@ resolve: {
                         }
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 1,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1
+                    bgColorOpacity: 1
                 }
             }
         ]

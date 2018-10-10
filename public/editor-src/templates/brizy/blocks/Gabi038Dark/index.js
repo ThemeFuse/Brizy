@@ -59,8 +59,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ],
@@ -135,8 +134,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 100,
-                                                                                            mobileHeight: 100
+                                                                                            height: 100
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -344,14 +342,9 @@ resolve: {
                     mobilePaddingBottom: 0,
                     tempBgColorOpacity: 0.9,
                     containerSize: 90,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
-                    bgImageSrc: "2d2b0fb4129a51786fd1f2755e2b6974e4333eef.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 893,
-                    mobileBgImageSrc: "2d2b0fb4129a51786fd1f2755e2b6974e4333eef.jpeg"
+                    bgImageSrc: "2d2b0fb4129a51786fd1f2755e2b6974e4333eef.jpeg"
                 }
             }
         ]

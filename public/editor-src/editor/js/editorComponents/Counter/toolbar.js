@@ -13,15 +13,6 @@ export function getItemsForDesktop(v) {
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
-
   // ...
   const { hex: colorHex } = getOptionColor(v, "color");
   const { hex: hoverColorHex } = getOptionColor(v, "hoverColor");
@@ -53,7 +44,6 @@ export function getItemsForDesktop(v) {
           type: "input",
           inputType: "number",
           inputSize: "small",
-          value: v.end,
           value: {
             value: v.end
           },
@@ -140,12 +130,7 @@ export function getItemsForDesktop(v) {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },

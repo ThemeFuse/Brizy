@@ -28,8 +28,6 @@ resolve: {
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
                     tempBgColorOpacity: 0.82,
                     padding: 200,
-                    mobileBgColorHex: "#142850",
-                    mobileBgColorOpacity: 0.82,
                     items: [
                         {
                             type: "Wrapper",
@@ -45,8 +43,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60,
-                                            mobileHeight: 60
+                                            height: 60
                                         }
                                     }
                                 ]
@@ -177,10 +174,7 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "64829c29ed31d316cd173dcebd8f7925c919d363.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1059,
-                    mobileBgImageSrc: "64829c29ed31d316cd173dcebd8f7925c919d363.jpeg"
+                    bgImageSrc: "64829c29ed31d316cd173dcebd8f7925c919d363.jpeg"
                 }
             },
             {
@@ -196,8 +190,6 @@ resolve: {
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
                     tempBgColorOpacity: 0.82,
                     padding: 200,
-                    mobileBgColorHex: "#142850",
-                    mobileBgColorOpacity: 0.82,
                     items: [
                         {
                             type: "Wrapper",
@@ -213,8 +205,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60,
-                                            mobileHeight: 60
+                                            height: 60
                                         }
                                     }
                                 ]
@@ -345,10 +336,7 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "34f8d5bfea6869ce410f93ea140ab9e13d027738.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1059,
-                    mobileBgImageSrc: "34f8d5bfea6869ce410f93ea140ab9e13d027738.jpeg"
+                    bgImageSrc: "34f8d5bfea6869ce410f93ea140ab9e13d027738.jpeg"
                 }
             },
             {
@@ -364,8 +352,6 @@ resolve: {
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
                     tempBgColorOpacity: 0.82,
                     padding: 200,
-                    mobileBgColorHex: "#142850",
-                    mobileBgColorOpacity: 0.82,
                     items: [
                         {
                             type: "Wrapper",
@@ -381,8 +367,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60,
-                                            mobileHeight: 60
+                                            height: 60
                                         }
                                     }
                                 ]
@@ -513,10 +498,7 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "491d3f59bc7e612ab0817df7705b44ffe0668b1e.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1059,
-                    mobileBgImageSrc: "491d3f59bc7e612ab0817df7705b44ffe0668b1e.jpeg"
+                    bgImageSrc: "491d3f59bc7e612ab0817df7705b44ffe0668b1e.jpeg"
                 }
             }
         ],

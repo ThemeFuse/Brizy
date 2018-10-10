@@ -124,8 +124,7 @@ resolve: {
                                                                     imageSrc: "147d8513024141d5096fa092543df0a5e3d318d3.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90,
-                                                                    mobileHeight: 90
+                                                                    height: 90
                                                                 }
                                                             }
                                                         ]
@@ -162,8 +161,7 @@ resolve: {
                                                                     imageSrc: "80dc91c2d62894a53b15a2a5f5742b7b9253c10c.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90,
-                                                                    mobileHeight: 90
+                                                                    height: 90
                                                                 }
                                                             }
                                                         ]
@@ -190,8 +188,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20,
-                                            mobileHeight: 20
+                                            height: 20
                                         }
                                     }
                                 ]
@@ -233,8 +230,7 @@ resolve: {
                                                                     imageSrc: "55bc5c8474d726ab0a17c8f7d745a99d5b3bab55.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90,
-                                                                    mobileHeight: 90
+                                                                    height: 90
                                                                 }
                                                             }
                                                         ]
@@ -271,8 +267,7 @@ resolve: {
                                                                     imageSrc: "fd5920cf260b05ddc8c049d7f499d9c3ac4b8835.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90,
-                                                                    mobileHeight: 90
+                                                                    height: 90
                                                                 }
                                                             }
                                                         ]
@@ -309,8 +304,7 @@ resolve: {
                                                                     imageSrc: "111a8c1bcf828e9962dd6da636944f99927bf156.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90,
-                                                                    mobileHeight: 90
+                                                                    height: 90
                                                                 }
                                                             }
                                                         ]
@@ -339,9 +333,7 @@ resolve: {
                                             ],
                                             borderColorOpacity: 0.3,
                                             borderWidth: 1,
-                                            mobileBorderWidth: 1,
-                                            width: 95,
-                                            mobileWidth: 95
+                                            width: 95
                                         }
                                     }
                                 ],
@@ -385,8 +377,6 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     name: "remix",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -469,8 +459,6 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     name: "window-dev",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -551,8 +539,6 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     name: "css3",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -616,9 +602,7 @@ resolve: {
                     ],
                     mobilePadding: 0,
                     mobilePaddingTop: 0,
-                    mobilePaddingBottom: 0,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    mobilePaddingBottom: 0
                 }
             }
         ]

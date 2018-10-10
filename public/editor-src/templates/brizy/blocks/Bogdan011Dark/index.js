@@ -84,9 +84,7 @@ resolve: {
                                                                     imageWidth: 360,
                                                                     imageHeight: 260,
                                                                     positionY: 42,
-                                                                    mobilePositionY: 42,
-                                                                    positionX: 55,
-                                                                    mobilePositionX: 55
+                                                                    positionX: 55
                                                                 }
                                                             }
                                                         ],
@@ -162,9 +160,6 @@ resolve: {
                                             marginLeft: 15,
                                             tempBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -270,9 +265,6 @@ resolve: {
                                             marginLeft: 15,
                                             tempBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -380,9 +372,6 @@ resolve: {
                                             marginLeft: 15,
                                             tempBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -499,10 +488,7 @@ resolve: {
                                             tempBorderTopRightRadius: 6,
                                             tempBorderBottomRightRadius: 6,
                                             tempBorderBottomLeftRadius: 6,
-                                            mobileBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -607,10 +593,7 @@ resolve: {
                                             tempBorderTopRightRadius: 6,
                                             tempBorderBottomRightRadius: 6,
                                             tempBorderBottomLeftRadius: 6,
-                                            mobileBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -715,10 +698,7 @@ resolve: {
                                             tempBorderTopRightRadius: 6,
                                             tempBorderBottomRightRadius: 6,
                                             tempBorderBottomLeftRadius: 6,
-                                            mobileBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -727,9 +707,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

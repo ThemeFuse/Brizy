@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -130,10 +128,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 58,
                                                                     name: "drag",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -212,10 +208,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 58,
                                                                     name: "window-dev",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -293,10 +287,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 58,
                                                                     name: "time-countdown",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -374,10 +366,8 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
-                                                                    mobileCustomSize: 58,
                                                                     name: "cake-13",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1

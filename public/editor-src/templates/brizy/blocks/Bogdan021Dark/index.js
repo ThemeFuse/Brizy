@@ -185,7 +185,6 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -203,7 +202,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -261,9 +259,6 @@ resolve: {
                                             tempBorderLeftWidth: 1,
                                             tempBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -396,7 +391,6 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -414,7 +408,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -496,9 +489,6 @@ resolve: {
                                             borderBottomLeftRadius: 26,
                                             tempBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -656,7 +646,6 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -674,7 +663,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -732,9 +720,6 @@ resolve: {
                                             tempBorderLeftWidth: 1,
                                             tempBgColorOpacity: 0.1,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -743,9 +728,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

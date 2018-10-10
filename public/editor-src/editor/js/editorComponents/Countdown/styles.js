@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const getLabelSize = fontSize => {
   return fontSize <= 24 ? 20 : fontSize > 24 && fontSize <= 32 ? 40 : 60;
@@ -50,7 +51,6 @@ export function styleClassName(v) {
       width,
       colorHex,
       colorOpacity,
-      mobileWidth,
       mobileFontSize,
       mobileLineHeight,
       mobileFontWeight,
@@ -76,7 +76,7 @@ export function styleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          width: `${mobileWidth}%`,
+          width: `${mobileSyncOnChange(v, "width")}%`,
           fontSize: mobileFontSize,
           lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
@@ -107,7 +107,6 @@ export function styleCSSVars(v) {
     width,
     colorHex,
     colorOpacity,
-    mobileWidth,
     mobileFontSize,
     mobileLineHeight,
     mobileFontWeight,
@@ -130,7 +129,7 @@ export function styleCSSVars(v) {
     "--mobileFontWeight": mobileFontWeight,
     "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
     "--width": `${width}%`,
-    "--mobileWidth": `${mobileWidth}%`,
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
     "--color": hexToRgba(colorHex, colorOpacity)
   };
 }

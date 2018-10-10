@@ -129,8 +129,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -228,8 +226,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -326,8 +322,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -392,9 +386,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

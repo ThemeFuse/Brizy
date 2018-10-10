@@ -64,8 +64,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -107,8 +106,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -208,9 +206,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
                     bgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 893,
-                    mobileBgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
                     containerSize: 60
                 }
             }

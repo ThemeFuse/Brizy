@@ -94,18 +94,18 @@
   "mobileShapeBottomHeight": null,
   "mobileShapeBottomHeightSuffix": null,
 
-  "mobileMedia": "image",
+  "mobileMedia": null,
 
-  "mobileBgImageWidth": 0,
-  "mobileBgImageHeight": 0,
-  "mobileBgImageSrc": "",
-  "mobileBgPositionY": 50,
-  "mobileBgPositionX": 50,
+  "mobileBgImageWidth": null,
+  "mobileBgImageHeight": null,
+  "mobileBgImageSrc": null,
+  "mobileBgPositionY": null,
+  "mobileBgPositionX": null,
   "mobileBgAttachment": "none",
 
-  "mobileBgColorHex": "#000000",
-  "mobileBgColorOpacity": 0,
-  "mobileBgColorPalette": "",
+  "mobileBgColorHex": null,
+  "mobileBgColorOpacity": null,
+  "mobileBgColorPalette": null,
   "tempMobileBgColorOpacity": 1,
   "tempMobileBgColorPalette": "",
 
@@ -117,5 +117,5 @@
   "mobilePaddingBottom": 25,
   "mobilePaddingBottomSuffix": "px",
 
-  "mobileBgMapZoom": 15
+  "mobileBgMapZoom": null
 }

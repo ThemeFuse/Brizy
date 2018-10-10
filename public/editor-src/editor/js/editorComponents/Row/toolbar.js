@@ -1,6 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor, getAnimations } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v, component) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
@@ -84,7 +85,7 @@ export function getItemsForDesktop(v, component) {
     return { none: [] };
   };
   const inPopup = Boolean(component.props.meta.sectionPopup);
-  
+
   return [
     {
       id: "toolbarMedia",
@@ -130,10 +131,6 @@ export function getItemsForDesktop(v, component) {
                         : v.tempBgColorOpacity,
 
                     // Mobile
-                    mobileBgImageWidth: width,
-                    mobileBgImageHeight: height,
-                    mobileBgImageSrc: src,
-
                     mobilePaddingRight: !src ? 0 : v.tempMobilePaddingRight,
                     mobilePaddingLeft: !src ? 0 : v.tempMobilePaddingLeft
                   })
@@ -224,8 +221,7 @@ export function getItemsForDesktop(v, component) {
                   },
                   onChange: ({ value: bgMapZoom }) => {
                     return {
-                      bgMapZoom,
-                      mobileBgMapZoom: bgMapZoom
+                      bgMapZoom
                     };
                   }
                 }
@@ -235,8 +231,7 @@ export function getItemsForDesktop(v, component) {
           value: v.media,
           onChange: media => {
             return {
-              media,
-              mobileMedia: v.media === v.mobileMedia ? media : v.mobileMedia
+              media
             };
           }
         }
@@ -280,22 +275,6 @@ export function getItemsForDesktop(v, component) {
                       bgColorOpacity: bgColorOpacity,
                       bgColorPalette:
                         isChanged === "hex" ? "" : v.bgColorPalette,
-
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
-
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? bgColorOpacity
-                          : v.mobileBgColorOpacity,
-
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette,
 
                       tempBgColorOpacity:
                         bgColorOpacity > 0 && opacityDragEnd
@@ -366,21 +345,6 @@ export function getItemsForDesktop(v, component) {
                         ? v.tempBgColorOpacity
                         : v.bgColorOpacity,
 
-                    mobileBgColorPalette:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? value
-                        : v.mobileBgColorPalette,
-
-                    mobileBgColorHex:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? ""
-                        : v.mobileBgColorHex,
-
-                    mobileBgColorOpacity:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? v.tempBgColorOpacity
-                        : v.mobileBgColorOpacity,
-
                     mobilePaddingRight:
                       value !== ""
                         ? v.tempMobilePaddingRight
@@ -411,22 +375,6 @@ export function getItemsForDesktop(v, component) {
                         isChanged === "hex" ? "" : v.bgColorPalette,
                       bgColorHex: hex,
                       bgColorOpacity: bgColorOpacity,
-
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
-
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? opacity
-                          : v.mobileBgColorOpacity,
-
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette,
 
                       mobilePaddingRight:
                         bgColorOpacity === 0
@@ -1236,12 +1184,7 @@ export function getItemsForDesktop(v, component) {
                                 bgColorOpacity:
                                   borderRadius > 0 && v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderRadius > 0 && v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           }
@@ -1320,13 +1263,7 @@ export function getItemsForDesktop(v, component) {
                                   borderTopLeftRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderTopLeftRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           },
@@ -1403,13 +1340,7 @@ export function getItemsForDesktop(v, component) {
                                   borderTopRightRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderTopRightRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           },
@@ -1486,13 +1417,7 @@ export function getItemsForDesktop(v, component) {
                                   borderBottomRightRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderBottomRightRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           },
@@ -1569,13 +1494,7 @@ export function getItemsForDesktop(v, component) {
                                   borderBottomLeftRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderBottomLeftRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           }
@@ -2312,7 +2231,11 @@ export function getItemsForDesktop(v, component) {
 }
 
 export function getItemsForMobile(v, component) {
-  const { hex: mobileBgColorHex } = getOptionColor(v, "mobileBgColor");
+  const { hex: mobileBgColorHex } =
+  v.mobileBgColorHex !== null
+    ? getOptionColor(v, "mobileBgColor")
+    : getOptionColor(v, "bgColor");
+
   const inPopup = Boolean(component.props.meta.sectionPopup);
 
   return [
@@ -2354,11 +2277,11 @@ export function getItemsForMobile(v, component) {
                   label: t("Image"),
                   type: "imageSetter",
                   value: {
-                    width: v.mobileBgImageWidth,
-                    height: v.mobileBgImageHeight,
-                    src: v.mobileBgImageSrc,
-                    x: v.mobileBgPositionX,
-                    y: v.mobileBgPositionY
+                    width: mobileSyncOnChange(v, "bgImageWidth"),
+                    height: mobileSyncOnChange(v, "bgImageHeight"),
+                    src: mobileSyncOnChange(v, "bgImageSrc"),
+                    x: mobileSyncOnChange(v, "bgPositionX"),
+                    y: mobileSyncOnChange(v, "bgPositionY")
                   },
                   onChange: ({ width, height, src, x, y }) => ({
                     mobileBgImageWidth: width,
@@ -2368,12 +2291,12 @@ export function getItemsForMobile(v, component) {
                     mobileBgPositionY: y,
 
                     mobileBgColorOpacity:
-                      src !== "" && v.mobileBgColorOpacity === 1
+                      src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
                         ? 0.9
-                        : v.mobileBgColorOpacity,
+                        : mobileSyncOnChange(v, "bgColorOpacity"),
 
                     tempMobileBgColorOpacity:
-                      src !== "" && v.mobileBgColorOpacity === 1
+                      src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
                         ? 0.9
                         : v.tempMobileBgColorOpacity,
 
@@ -2399,7 +2322,7 @@ export function getItemsForMobile(v, component) {
                     show: true
                   },
                   value: {
-                    value: v.mobileBgMapZoom
+                    value: mobileSyncOnChange(v, "bgMapZoom")
                   },
                   onChange: ({ value: mobileBgMapZoom }) => ({
                     mobileBgMapZoom
@@ -2408,7 +2331,7 @@ export function getItemsForMobile(v, component) {
               ]
             }
           ],
-          value: v.mobileMedia
+          value: mobileSyncOnChange(v, "media") === "video" ? "image" : mobileSyncOnChange(v, "media")
         }
       ]
     },
@@ -2420,7 +2343,7 @@ export function getItemsForMobile(v, component) {
       position: 90,
       icon: {
         style: {
-          backgroundColor: hexToRgba(v.mobileBgColorHex, v.mobileBgColorOpacity)
+          backgroundColor: hexToRgba(mobileBgColorHex, mobileSyncOnChange(v, "bgColorOpacity"))
         }
       },
       options: [
@@ -2430,11 +2353,11 @@ export function getItemsForMobile(v, component) {
           position: 10,
           value: {
             hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
+            opacity: mobileSyncOnChange(v, "bgColorOpacity")
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
-              hex !== v.mobileBgColorHex && v.mobileBgColorOpacity === 0
+              hex !== mobileBgColorHex && mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
                 : opacity;
 
@@ -2442,7 +2365,7 @@ export function getItemsForMobile(v, component) {
               mobileBgColorHex: hex,
               mobileBgColorOpacity: bgColorOpacity,
               mobileBgColorPalette:
-                isChanged === "hex" ? "" : v.mobileBgColorPalette,
+                isChanged === "hex" ? "" : mobileSyncOnChange(v, "bgColorPalette"),
 
               mobilePaddingRight:
                 bgColorOpacity === 0
@@ -2464,14 +2387,14 @@ export function getItemsForMobile(v, component) {
           id: "mobileBgColorPalette",
           type: "colorPalette",
           position: 20,
-          value: v.mobileBgColorPalette,
+          value: mobileSyncOnChange(v, "bgColorPalette"),
           onChange: value => ({
             mobileBgColorPalette: value,
             mobileBgColorHex: "",
             mobileBgColorOpacity:
-              v.mobileBgColorOpacity === 0
+              mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
-                : v.mobileBgColorOpacity,
+                : mobileSyncOnChange(v, "bgColorOpacity"),
 
             mobilePaddingRight:
               value !== "" ? v.tempMobilePaddingRight : v.mobilePaddingRight,
@@ -2486,7 +2409,7 @@ export function getItemsForMobile(v, component) {
           position: 30,
           value: {
             hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
+            opacity: mobileSyncOnChange(v, "bgColorOpacity")
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
@@ -2496,7 +2419,7 @@ export function getItemsForMobile(v, component) {
 
             return {
               mobileBgColorPalette:
-                isChanged === "hex" ? "" : v.mobileBgColorPalette,
+                isChanged === "hex" ? "" : mobileSyncOnChange(v, "bgColorPalette"),
               mobileBgColorHex: hex,
               mobileBgColorOpacity: bgColorOpacity,
 
