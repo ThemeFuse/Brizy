@@ -101,6 +101,11 @@ class Brizy_Content_Placeholders_ImageAttributes extends Brizy_Content_Placehold
 
 		$attrs = array();
 		foreach ( $attributes as $key => $value ) {
+
+			if ( $value == '' ) {
+				continue;
+			}
+
 			$attrs[] = "{$key}=\"{$value}\"";
 		}
 
