@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -68,7 +66,8 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileMarginBottom: 0
+                                                        mobileMarginBottom: 0,
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ]
@@ -171,8 +170,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],

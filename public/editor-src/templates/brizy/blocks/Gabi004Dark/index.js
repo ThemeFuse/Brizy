@@ -28,13 +28,8 @@ resolve: {
                     bgImageWidth: 1928,
                     bgImageHeight: 1285,
                     bgImageSrc: "1555b7780f05b38a6937204bb4e42a48cbd8fdc0.jpeg",
-                    mobileBgImageWidth: 1928,
-                    mobileBgImageHeight: 1285,
-                    mobileBgImageSrc: "1555b7780f05b38a6937204bb4e42a48cbd8fdc0.jpeg",
                     bgColorPalette: "color1",
                     bgColorHex: "#191b21",
-                    mobileBgColorPalette: "color1",
-                    mobileBgColorHex: "#191b21",
                     items: [
                         {
                             type: "Row",
@@ -88,10 +83,7 @@ resolve: {
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
-                                            bgColorPalette: "color1",
-                                            mobileBgColorPalette: "color1",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.85
+                                            bgColorPalette: "color1"
                                         }
                                     }
                                 ]

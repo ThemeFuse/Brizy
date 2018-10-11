@@ -126,13 +126,12 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 },
                                                 {
@@ -232,13 +231,12 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 },
                                                 {
@@ -338,13 +336,12 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 },
                                                 {
@@ -502,12 +499,7 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 1290,
                     bgImageSrc: "dc02ac8cfadc01ac3a0ff940acea0e3a3b6a3633.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1290,
-                    mobileBgImageSrc: "dc02ac8cfadc01ac3a0ff940acea0e3a3b6a3633.jpeg",
-                    paddingType: "ungrouped",
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 0.9
+                    paddingType: "ungrouped"
                 }
             }
         ]

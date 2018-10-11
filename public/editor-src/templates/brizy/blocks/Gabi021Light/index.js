@@ -80,8 +80,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 25,
-                                            mobileHeight: 25
+                                            height: 25
                                         }
                                     }
                                 ]
@@ -115,9 +114,6 @@ resolve: {
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
                                             bgImageSrc: "7cec295a6bae37e1dfbfe05f7f417473961b0529.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "7cec295a6bae37e1dfbfe05f7f417473961b0529.jpeg",
                                             bgPositionX: 92,
                                             bgPositionY: 47,
                                             marginTop: 15,
@@ -166,8 +162,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -231,9 +226,6 @@ resolve: {
                                             tempBorderBottomLeftRadius: 4,
                                             marginRight: 15,
                                             bgColorPalette: "color6",
-                                            mobileBgColorPalette: "color6",
-                                            mobileBgColorHex: "#eef0f2",
-                                            mobileBgColorOpacity: 1,
                                             marginTop: 15,
                                             marginBottom: 15,
                                             borderTopLeftRadius: 4,
@@ -262,9 +254,6 @@ resolve: {
                                             bgImageWidth: 1347,
                                             bgImageHeight: 1920,
                                             bgImageSrc: "65432ca76b31fd9a39f7fa9ae3dba4e5f6f611c9.jpeg",
-                                            mobileBgImageWidth: 1347,
-                                            mobileBgImageHeight: 1920,
-                                            mobileBgImageSrc: "65432ca76b31fd9a39f7fa9ae3dba4e5f6f611c9.jpeg",
                                             bgPositionY: 57,
                                             bgPositionX: 49,
                                             marginTop: 15,
@@ -313,8 +302,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 47,
-                                                                    mobileHeight: 47
+                                                                    height: 47
                                                                 }
                                                             }
                                                         ]
@@ -382,9 +370,6 @@ resolve: {
                                             tempBorderBottomLeftRadius: 4,
                                             marginRight: 15,
                                             bgColorPalette: "color6",
-                                            mobileBgColorPalette: "color6",
-                                            mobileBgColorHex: "#eef0f2",
-                                            mobileBgColorOpacity: 1,
                                             marginTop: 15,
                                             marginBottom: 15
                                         }

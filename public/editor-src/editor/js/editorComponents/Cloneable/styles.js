@@ -1,5 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
+import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const aligns = {
   left: "flex-start",
@@ -260,8 +262,7 @@ export function containerStyleClassName(v) {
       mobilePaddingBottom,
       mobilePaddingBottomSuffix,
       mobilePaddingLeft,
-      mobilePaddingLeftSuffix,
-      mobileHorizontalAlign
+      mobilePaddingLeftSuffix
     } = v;
 
     glamorObj = {
@@ -289,7 +290,7 @@ export function containerStyleClassName(v) {
       marginLeft: `${parseFloat(-itemPaddingLeft / 2)}px`,
 
       "@media (max-width: 767px)": {
-        justifyContent: aligns[mobileHorizontalAlign],
+        justifyContent: aligns[mobileSyncOnChange(v, "horizontalAlign")],
         paddingTop:
           mobilePaddingType === "grouped"
             ? mobilePadding + mobilePaddingSuffix
@@ -349,8 +350,7 @@ export function containerStyleCSSVars(v) {
     mobilePaddingBottom,
     mobilePaddingBottomSuffix,
     mobilePaddingLeft,
-    mobilePaddingLeftSuffix,
-    mobileHorizontalAlign
+    mobilePaddingLeftSuffix
   } = v;
 
   return {
@@ -375,7 +375,7 @@ export function containerStyleCSSVars(v) {
     "--itemMarginRight": `${parseFloat(-itemPaddingRight / 2)}px`,
     "--itemMarginBottom": `${-itemPaddingBottom}px`,
     "--itemMarginLeft": `${parseFloat(-itemPaddingLeft / 2)}px`,
-    "--mobileHorizontalAlign": aligns[mobileHorizontalAlign],
+    "--mobileHorizontalAlign": aligns[mobileSyncOnChange(v, "horizontalAlign")],
     "--mobilePaddingTop":
       mobilePaddingType === "grouped"
         ? mobilePadding + mobilePaddingSuffix

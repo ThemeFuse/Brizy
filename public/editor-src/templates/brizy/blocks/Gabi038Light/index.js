@@ -59,8 +59,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ],
@@ -135,8 +134,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 100,
-                                                                                            mobileHeight: 100
+                                                                                            height: 100
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -345,10 +343,7 @@ resolve: {
                     containerSize: 90,
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
-                    bgImageSrc: "d8e7dc2fc2cf51872acaeeb229cc1c207fb0e98c.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 893,
-                    mobileBgImageSrc: "d8e7dc2fc2cf51872acaeeb229cc1c207fb0e98c.jpeg"
+                    bgImageSrc: "d8e7dc2fc2cf51872acaeeb229cc1c207fb0e98c.jpeg"
                 }
             }
         ]

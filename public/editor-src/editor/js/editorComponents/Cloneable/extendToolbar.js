@@ -1,5 +1,6 @@
 import { getAnimations } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   const getAnimationChoices = () => {
@@ -104,11 +105,7 @@ export function getItemsForDesktop(v) {
       ],
       value: v.horizontalAlign,
       onChange: horizontalAlign => ({
-        horizontalAlign,
-        mobileHorizontalAlign:
-          v.horizontalAlign === v.mobileHorizontalAlign
-            ? horizontalAlign
-            : v.mobileHorizontalAlign
+        horizontalAlign
       })
     },
     {
@@ -787,7 +784,7 @@ export function getItemsForMobile(v) {
           value: "right"
         }
       ],
-      value: v.mobileHorizontalAlign
+      value: mobileSyncOnChange(v, "horizontalAlign")
     },
     {
       id: "mobileToolbarSettings",

@@ -504,7 +504,6 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     bgColorHex: "#ffffff",
                                                                     colorPalette: "color3",
                                                                     tempHoverBorderColorPalette: "",
@@ -512,7 +511,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -526,9 +526,7 @@ resolve: {
                     ],
                     mobilePadding: 0,
                     mobilePaddingTop: 0,
-                    mobilePaddingBottom: 0,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    mobilePaddingBottom: 0
                 }
             }
         ]

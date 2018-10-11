@@ -110,8 +110,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ],
@@ -162,8 +161,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -225,8 +222,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -287,8 +282,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -331,8 +324,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ],
@@ -383,8 +375,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -445,8 +435,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -507,8 +495,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -551,8 +537,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ],
@@ -603,8 +588,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -665,8 +648,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -727,8 +708,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -757,9 +736,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

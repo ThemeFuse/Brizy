@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -69,8 +70,6 @@ export function styleClassName(v) {
       mobileLetterSpacing,
       width,
       itemPadding,
-      mobileItemPadding,
-      mobileWidth,
       mobileToggleMenu
     } = v;
 
@@ -97,7 +96,7 @@ export function styleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          maxWidth: `${mobileWidth}%`
+          maxWidth: `${mobileSyncOnChange(v, "width")}%`
         },
         ".brz & .menu > .menu-item": {
           fontSize: `${mobileFontSize}px`,
@@ -106,8 +105,8 @@ export function styleClassName(v) {
           letterSpacing: `${mobileLetterSpacing}px`,
 
           "&:not(:last-child)": {
-            marginRight: mobileToggleMenu === "off" ? `${mobileItemPadding}px` : 0,
-            marginBottom: mobileToggleMenu === "on" ? `${mobileItemPadding}px` : 0,
+            marginRight: mobileToggleMenu === "off" ? `${mobileSyncOnChange(v, "itemPadding")}px` : 0,
+            marginBottom: mobileToggleMenu === "on" ? `${mobileSyncOnChange(v, "itemPadding")}px` : 0,
           }
         },
         ".brz & .menu .menu-item a": {
@@ -144,8 +143,6 @@ export function styleCSSVars(v) {
     mobileLineHeight,
     mobileFontWeight,
     mobileLetterSpacing,
-    mobileItemPadding,
-    mobileWidth,
     mobileToggleMenu
   } = v;
 
@@ -165,13 +162,13 @@ export function styleCSSVars(v) {
     "--color": hexToRgba(colorHex, colorOpacity),
 
     // Mobile
-    "--mobileItemPadding": `${mobileItemPadding}px`,
-    "--mobileMarginRight": mobileToggleMenu === "off" ? `${mobileItemPadding}px` : 0,
-    "--mobileMarginBottom": mobileToggleMenu === "on" ? `${mobileItemPadding}px` : 0,
+    "--mobileItemPadding": `${mobileSyncOnChange(v, "itemPadding")}px`,
+    "--mobileMarginRight": mobileToggleMenu === "off" ? `${mobileSyncOnChange(v, "itemPadding")}px` : 0,
+    "--mobileMarginBottom": mobileToggleMenu === "on" ? `${mobileSyncOnChange(v, "itemPadding")}px` : 0,
     "--mobileFontSize": `${mobileFontSize}px`,
     "--mobileLineHeight": mobileLineHeight,
     "--mobileFontWeight": mobileFontWeight,
     "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
-    "--mobileMaxWidth": `${mobileWidth}%`,
+    "--mobileMaxWidth": `${mobileSyncOnChange(v, "width")}%`,
   };
 }

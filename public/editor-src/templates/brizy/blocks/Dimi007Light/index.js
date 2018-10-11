@@ -26,8 +26,6 @@ resolve: {
                     padding: 50,
                     paddingTop: 50,
                     paddingBottom: 50,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -79,9 +77,7 @@ resolve: {
                                                                                 hoverColorOpacity: 0.5,
                                                                                 size: "large",
                                                                                 customSize: 64,
-                                                                                borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64
+                                                                                borderRadius: 5
                                                                             }
                                                                         },
                                                                         {
@@ -144,9 +140,7 @@ resolve: {
                                                                                 hoverColorOpacity: 0.5,
                                                                                 size: "large",
                                                                                 customSize: 64,
-                                                                                borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64
+                                                                                borderRadius: 5
                                                                             }
                                                                         },
                                                                         {
@@ -209,9 +203,7 @@ resolve: {
                                                                                 hoverColorOpacity: 0.5,
                                                                                 size: "large",
                                                                                 customSize: 64,
-                                                                                borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64
+                                                                                borderRadius: 5
                                                                             }
                                                                         },
                                                                         {

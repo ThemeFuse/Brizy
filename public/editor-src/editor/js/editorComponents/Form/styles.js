@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   let glamorObj;
@@ -16,13 +17,13 @@ export function styleClassName(v) {
       }
     };
   } else {
-    const { horizontalAlign, mobileHorizontalAlign } = v;
+    const { horizontalAlign } = v;
 
     glamorObj = {
       textAlign: horizontalAlign,
 
       "@media (max-width: 767px)": {
-        textAlign: mobileHorizontalAlign
+        textAlign: mobileSyncOnChange(v, "horizontalAlign")
       }
     };
   }
@@ -34,11 +35,11 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const { horizontalAlign, mobileHorizontalAlign } = v;
+  const { horizontalAlign } = v;
 
   return {
     "--horizontalAlign": horizontalAlign,
-    "--mobileHorizontalAlign": mobileHorizontalAlign
+    "--mobileHorizontalAlign": mobileSyncOnChange(v, "horizontalAlign")
   };
 }
 
@@ -117,12 +118,7 @@ export function fieldsStyleClassName(v) {
       mobileFontSize,
       mobileLineHeight,
       mobileFontWeight,
-      mobileLetterSpacing,
-      mobileBorderRadius,
-      mobilePaddingTop,
-      mobilePaddingRight,
-      mobilePaddingBottom,
-      mobilePaddingLeft
+      mobileLetterSpacing
     } = v;
 
     glamorObj = {
@@ -157,17 +153,17 @@ export function fieldsStyleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &.brz-form__fields": {
-          marginRight: `-${mobilePaddingRight / 2}px`,
-          marginLeft: `-${mobilePaddingLeft / 2}px`
+          marginRight: `-${mobileSyncOnChange(v, "paddingRight") / 2}px`,
+          marginLeft: `-${mobileSyncOnChange(v, "paddingLeft") / 2}px`
         },
         ".brz & .brz-form__item": {
           fontSize: `${mobileFontSize}px`,
           lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
           letterSpacing: `${mobileLetterSpacing}px`,
-          paddingRight: `${mobilePaddingRight / 2}px`,
-          paddingBottom: `${mobilePaddingBottom}px`,
-          paddingLeft: `${mobilePaddingLeft / 2}px`
+          paddingRight: `${mobileSyncOnChange(v, "paddingRight") / 2}px`,
+          paddingBottom: `${mobileSyncOnChange(v, "paddingBottom")}px`,
+          paddingLeft: `${mobileSyncOnChange(v, "paddingLeft") / 2}px`
         }
       }
     };
@@ -204,12 +200,7 @@ export function fieldsStyleCSSVars(v) {
     mobileFontSize,
     mobileLineHeight,
     mobileFontWeight,
-    mobileLetterSpacing,
-    mobileBorderRadius,
-    mobilePaddingTop,
-    mobilePaddingRight,
-    mobilePaddingBottom,
-    mobilePaddingLeft
+    mobileLetterSpacing
   } = v;
 
   return {
@@ -242,13 +233,13 @@ export function fieldsStyleCSSVars(v) {
     "--mobileLineHeight": mobileLineHeight,
     "--mobileFontWeight": mobileFontWeight,
     "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
-    "--mobileBorderRadius": `${mobileBorderRadius}px`,
+    "--mobileBorderRadius": `${mobileSyncOnChange(v, "borderRadius")}px`, // this key is used only here, but no div use this variable
 
-    "--mobilePaddingTop": `${mobilePaddingTop}px`,
-    "--mobilePaddingRight": `${mobilePaddingRight / 2}px`,
-    "--mobilePaddingBottom": `${mobilePaddingBottom}px`,
-    "--mobilePaddingLeft": `${mobilePaddingLeft / 2}px`,
-    "--mobileMarginRight": `-${mobilePaddingRight / 2}px`,
-    "--mobileMarginLeft": `-${mobilePaddingLeft / 2}px`
+    "--mobilePaddingTop": `${mobileSyncOnChange(v, "paddingTop")}px`,
+    "--mobilePaddingRight": `${mobileSyncOnChange(v, "paddingRight") / 2}px`,
+    "--mobilePaddingBottom": `${mobileSyncOnChange(v, "paddingBottom")}px`,
+    "--mobilePaddingLeft": `${mobileSyncOnChange(v, "paddingLeft") / 2}px`,
+    "--mobileMarginRight": `-${mobileSyncOnChange(v, "paddingRight") / 2}px`,
+    "--mobileMarginLeft": `-${mobileSyncOnChange(v, "paddingLeft") / 2}px`
   };
 }

@@ -79,12 +79,12 @@
 
   "strokeWidth": 1,
 
-  "mobileSize": "medium",
-  "mobileCustomSize": 48,
+  "mobileSize": null,
+  "mobileCustomSize": null,
 
-  "mobilePadding": 0,
+  "mobilePadding": null,
   "tempMobilePadding": 20,
 
-  "mobileBorderRadius": 0,
+  "mobileBorderRadius": null,
   "tempMobileBorderRadius": 4
 }

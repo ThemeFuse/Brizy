@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { css } from "glamor";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -15,7 +16,7 @@ export function styleClassName(v) {
       }
     };
   } else {
-    const { width, mobileWidth } = v;
+    const { width } = v;
 
     glamorObj = {
       ".brz &": {
@@ -23,7 +24,7 @@ export function styleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          width: `${mobileWidth}%`
+          width: `${mobileSyncOnChange(v, "width")}%`
         }
       }
     };
@@ -37,10 +38,10 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const { width, mobileWidth } = v;
+  const { width } = v;
 
   return {
     "--width": `${width}%`,
-    "--mobileWidth": `${mobileWidth}%`
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`
   };
 }

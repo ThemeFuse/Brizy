@@ -107,7 +107,7 @@ class Brizy_Editor_Project implements Serializable {
 		$row = $wpdb->get_results(
 			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} p 
 									JOIN {$wpdb->postmeta} pm ON p.ID=pm.post_id  
-									WHERE p.post_type = %s  ORDER BY ID ASC LIMIT 1 ", self::BRIZY_PROJECT ),
+									WHERE p.post_type = %s  ORDER BY ID DESC LIMIT 1 ", self::BRIZY_PROJECT ),
 			OBJECT
 		);
 

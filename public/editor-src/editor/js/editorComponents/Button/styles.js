@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -69,6 +70,7 @@ export function styleClassName(v) {
       paddingBottom,
       paddingLeft,
       borderRadius,
+      borderRadiusType,
       hoverColorHex,
       hoverColorOpacity,
       hoverBgColorHex,
@@ -89,8 +91,7 @@ export function styleClassName(v) {
       mobilePaddingTop,
       mobilePaddingRight,
       mobilePaddingBottom,
-      mobilePaddingLeft,
-      mobileBorderRadius
+      mobilePaddingLeft  
     } = v;
 
     const boxShadowStyle =
@@ -101,6 +102,33 @@ export function styleClassName(v) {
         )}`
         : "none";
 
+    // calculations copied from toolbar
+    let mobileContentHeight =
+    v.iconSize === "custom" &&
+    mobileFontSize * mobileLineHeight >= v.iconCustomSize
+      ? mobileFontSize * mobileLineHeight
+      : v.iconSize === "custom" &&
+        mobileFontSize * mobileLineHeight < v.iconCustomSize
+        ? v.iconCustomSize
+        : v.iconSize !== "custom" &&
+          mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
+          ? mobileFontSize * mobileLineHeight
+          : v[`${v.iconSize}IconSize`];
+    let maxMobileBorderRadius = Math.round(
+      (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
+    );
+
+    let mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+
+    if (borderRadiusType === "square") {
+      // old method (get border radius from tempBorderRadius)
+      mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+    } else if (borderRadiusType === "rounded") {
+      mobileBorderRadius = maxMobileBorderRadius;
+    } else if (borderRadiusType === "custom") {
+      // now the border radius come from desktop
+      mobileBorderRadius = mobileSyncOnChange(v, "borderRadius");
+    }
     glamorObj = {
       ".brz &": {
         flexFlow: iconPosition !== "left" ? "row-reverse nowrap" : "row nowrap",
@@ -171,6 +199,7 @@ export function styleCSSVars(v) {
     paddingBottom,
     paddingLeft,
     borderRadius,
+    borderRadiusType,
     hoverColorHex,
     hoverColorOpacity,
     hoverBgColorHex,
@@ -191,8 +220,7 @@ export function styleCSSVars(v) {
     mobilePaddingTop,
     mobilePaddingRight,
     mobilePaddingBottom,
-    mobilePaddingLeft,
-    mobileBorderRadius
+    mobilePaddingLeft
   } = v;
 
   const boxShadowStyle =
@@ -202,6 +230,34 @@ export function styleCSSVars(v) {
       boxShadowColorOpacity
       )}`
       : "none";
+
+  // calculations copied from toolbar
+  let mobileContentHeight =
+    v.iconSize === "custom" &&
+    mobileFontSize * mobileLineHeight >= v.iconCustomSize
+      ? mobileFontSize * mobileLineHeight
+      : v.iconSize === "custom" &&
+        mobileFontSize * mobileLineHeight < v.iconCustomSize
+        ? v.iconCustomSize
+        : v.iconSize !== "custom" &&
+          mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
+          ? mobileFontSize * mobileLineHeight
+          : v[`${v.iconSize}IconSize`];
+  let maxMobileBorderRadius = Math.round(
+    (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
+  );
+
+  let mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+
+  if (borderRadiusType === "square") {
+      // old method (get border radius from tempBorderRadius)
+      mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+  } else if (borderRadiusType === "rounded") {
+      mobileBorderRadius = maxMobileBorderRadius;
+  } else if (borderRadiusType === "custom") {
+      // now the border radius come from desktop
+      mobileBorderRadius = mobileSyncOnChange(v, "borderRadius");
+  }
 
   return {
     "--iconPosition":

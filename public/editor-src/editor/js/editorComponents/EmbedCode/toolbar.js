@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   return [
@@ -52,8 +53,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: width }) => {
             return {
-              width,
-              mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
+              width
             };
           }
         }
@@ -93,7 +93,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileWidth
+            value: mobileSyncOnChange(v, "width")
           },
           onChange: ({ value: mobileWidth }) => ({ mobileWidth })
         }

@@ -164,8 +164,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 200,
-                                                                    mobileHeight: 200
+                                                                    height: 200
                                                                 }
                                                             }
                                                         ]
@@ -223,15 +222,9 @@ resolve: {
                                             bgImageWidth: 1928,
                                             bgImageHeight: 1285,
                                             bgImageSrc: "c4c77a95a5537c16e86fd6004eae0822d11df86e.jpeg",
-                                            mobileBgImageWidth: 1928,
-                                            mobileBgImageHeight: 1285,
-                                            mobileBgImageSrc: "c4c77a95a5537c16e86fd6004eae0822d11df86e.jpeg",
                                             bgColorPalette: "color1",
                                             bgColorHex: "#191b21",
                                             bgColorOpacity: 0.35,
-                                            mobileBgColorPalette: "color1",
-                                            mobileBgColorHex: "#191b21",
-                                            mobileBgColorOpacity: 0.35,
                                             tempBgColorOpacity: 0.35,
                                             marginType: "ungrouped",
                                             marginLeft: 15,
@@ -255,8 +248,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20,
-                                            mobileHeight: 20
+                                            height: 20
                                         }
                                     }
                                 ]
@@ -352,8 +344,7 @@ resolve: {
                                                                     imageWidth: 1920,
                                                                     imageHeight: 1280,
                                                                     height: 90,
-                                                                    zoom: 108,
-                                                                    mobileZoom: 108
+                                                                    zoom: 108
                                                                 }
                                                             }
                                                         ]
@@ -409,7 +400,6 @@ resolve: {
                                                                     imageHeight: 1280,
                                                                     height: 90,
                                                                     zoom: 163,
-                                                                    mobileZoom: 163,
                                                                     mobileHeight: 105
                                                                 }
                                                             }

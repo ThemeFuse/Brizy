@@ -69,8 +69,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            width: 33,
-                                                                                            mobileWidth: 33
+                                                                                            width: 33
                                                                                         }
                                                                                     },
                                                                                     {
@@ -83,7 +82,6 @@ resolve: {
                                                                                                 "Option 2"
                                                                                             ],
                                                                                             width: 33,
-                                                                                            mobileWidth: 33,
                                                                                             type: "Email"
                                                                                         }
                                                                                     },
@@ -97,7 +95,6 @@ resolve: {
                                                                                                 "Option 2"
                                                                                             ],
                                                                                             width: 34,
-                                                                                            mobileWidth: 34,
                                                                                             type: "Number"
                                                                                         }
                                                                                     },
@@ -111,8 +108,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 150,
-                                                                                            mobileHeight: 150
+                                                                                            height: 150
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -164,16 +160,10 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
                                             bgColorOpacity: 0.8,
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
-                                            mobileBgColorOpacity: 0.8,
                                             tempBgColorOpacity: 0.8,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 573,
                                             bgImageSrc: "d58757a28107d73c48d5c7d872fae82bc11c33e9.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 573,
-                                            mobileBgImageSrc: "d58757a28107d73c48d5c7d872fae82bc11c33e9.jpeg",
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10
                                         }
@@ -296,8 +286,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],

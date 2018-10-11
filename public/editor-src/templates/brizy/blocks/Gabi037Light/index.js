@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -81,8 +79,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -132,8 +129,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            width: 50,
-                                                                                            mobileWidth: 50
+                                                                                            width: 50
                                                                                         }
                                                                                     },
                                                                                     {
@@ -146,7 +142,6 @@ resolve: {
                                                                                                 "Option 2"
                                                                                             ],
                                                                                             width: 50,
-                                                                                            mobileWidth: 50,
                                                                                             type: "Email"
                                                                                         }
                                                                                     },
@@ -222,9 +217,6 @@ resolve: {
                                             bgColorPalette: "color2",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color2",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10
                                         }
@@ -246,8 +238,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]

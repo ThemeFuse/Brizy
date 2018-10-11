@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -82,8 +80,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 40,
-                                            mobileHeight: 40
+                                            height: 40
                                         }
                                     }
                                 ],
@@ -522,8 +519,7 @@ resolve: {
                                                                                             _styles: [
                                                                                                 "spacer"
                                                                                             ],
-                                                                                            height: 20,
-                                                                                            mobileHeight: 20
+                                                                                            height: 20
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -546,10 +542,8 @@ resolve: {
                                                                                             name: "phone-call",
                                                                                             type: "outline",
                                                                                             size: "custom",
-                                                                                            mobileSize: "custom",
                                                                                             customSize: 56,
-                                                                                            borderRadius: 5,
-                                                                                            mobileCustomSize: 56
+                                                                                            borderRadius: 5
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -703,8 +697,7 @@ resolve: {
                                                                                             _styles: [
                                                                                                 "spacer"
                                                                                             ],
-                                                                                            height: 20,
-                                                                                            mobileHeight: 20
+                                                                                            height: 20
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -769,12 +762,9 @@ resolve: {
                                             paddingLeft: 5,
                                             bgColorHex: "",
                                             verticalAlign: "center",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             borderRadius: 8,
                                             tempBorderRadius: 8,
-                                            bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8"
+                                            bgColorPalette: "color8"
                                         }
                                     }
                                 ]

@@ -23,9 +23,7 @@ resolve: {
                     ],
                     bgColorHex: "#eef0f2",
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
-                    mobileBgColorHex: "#eef0f2",
                     items: [
                         {
                             type: "Row",
@@ -104,7 +102,6 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorOpacity: 0.15
                                                                 }
                                                             }
@@ -174,7 +171,6 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     width: 100,
-                                                                    mobileWidth: 100,
                                                                     borderColorOpacity: 0.15
                                                                 }
                                                             }
@@ -294,8 +290,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 100,
-                                                                                            mobileHeight: 100
+                                                                                            height: 100
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -348,10 +343,7 @@ resolve: {
                     containerSize: 80,
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
-                    bgImageSrc: "7f83717c6e5c1ac723f42e351a782cf4543ce29d.jpeg",
-                    mobileBgImageWidth: 1996,
-                    mobileBgImageHeight: 1331,
-                    mobileBgImageSrc: "7f83717c6e5c1ac723f42e351a782cf4543ce29d.jpeg"
+                    bgImageSrc: "7f83717c6e5c1ac723f42e351a782cf4543ce29d.jpeg"
                 }
             }
         ]

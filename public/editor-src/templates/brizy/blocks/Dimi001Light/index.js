@@ -26,11 +26,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 1280,
                     bgImageSrc: "dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1280,
-                    mobileBgImageSrc: "dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg",
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     items: [
                         {
@@ -135,8 +130,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 colorPalette: "color2",
                                                                                 hoverColorPalette: "color2",
                                                                                 name: "dashboard-29",
@@ -175,8 +168,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 25,
-                                                                    mobileHeight: 25
+                                                                    height: 25
                                                                 }
                                                             }
                                                         ]
@@ -207,8 +199,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 colorPalette: "color2",
                                                                                 hoverColorPalette: "color2",
                                                                                 name: "donut",
@@ -280,9 +270,7 @@ resolve: {
                         }
                     ],
                     bgPositionY: 93,
-                    mobileBgPositionY: 93,
-                    bgPositionX: 52,
-                    mobileBgPositionX: 52
+                    bgPositionX: 52
                 }
             }
         ]

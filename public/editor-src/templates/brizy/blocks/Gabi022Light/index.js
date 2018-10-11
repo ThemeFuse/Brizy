@@ -80,8 +80,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 25,
-                                            mobileHeight: 25
+                                            height: 25
                                         }
                                     }
                                 ]
@@ -142,7 +141,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
-                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 38,
                                                                     imageSrc: "13b4294bbc3d79a44913ecdd72bb317b1a03ee5e.jpeg"
@@ -275,7 +273,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
-                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 38,
                                                                     imageSrc: "271d1f6f75d39b619be9e317fa3823fa9dae0b4f.jpeg"
@@ -408,7 +405,6 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
-                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 40,
                                                                     imageSrc: "182511c469294bad878d06871b2fcd8505457b9d.jpeg"

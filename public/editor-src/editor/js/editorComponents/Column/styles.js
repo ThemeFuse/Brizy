@@ -3,6 +3,7 @@ import { css } from "glamor";
 import { wInMobilePage } from "visual/config/columns";
 import { imageUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const aligns = {
   top: "flex-start",
@@ -158,11 +159,6 @@ export function bgStyleClassName(v, props) {
       marginLeft,
       marginLeftSuffix,
       zIndex,
-      mobileBgImageSrc,
-      mobileBgPositionX,
-      mobileBgPositionY,
-      mobileBgColorHex,
-      mobileBgColorOpacity,
       mobileMarginType,
       mobileMargin,
       mobileMarginSuffix,
@@ -356,13 +352,13 @@ export function bgStyleClassName(v, props) {
           display: showOnMobile === "off" && "none"
         },
         "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage: mobileBgImageSrc
-            ? `url(${imageUrl(mobileBgImageSrc)})`
+          backgroundImage: mobileSyncOnChange(v, "bgImageSrc")
+            ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
             : "none",
-          backgroundPosition: `${mobileBgPositionX}% ${mobileBgPositionY}%`
+          backgroundPosition: `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(v, "bgPositionY")}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+          backgroundColor: hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
         }
       }
     };
@@ -427,11 +423,6 @@ export function bgStyleCSSVars(v, props) {
     marginLeft,
     marginLeftSuffix,
     zIndex,
-    mobileBgImageSrc,
-    mobileBgPositionX,
-    mobileBgPositionY,
-    mobileBgColorHex,
-    mobileBgColorOpacity,
     mobileMarginType,
     mobileMargin,
     mobileMarginSuffix,
@@ -540,14 +531,14 @@ export function bgStyleCSSVars(v, props) {
         : paddingLeft + paddingLeftSuffix,
     "--zIndex": zIndex === 0 ? "auto" : zIndex,
     "--boxShadow": boxShadowStyle,
-    "--mobileBackgroundImage": mobileBgImageSrc
-      ? `url(${imageUrl(mobileBgImageSrc)})`
+    "--mobileBackgroundImage": mobileSyncOnChange(v, "bgImageSrc")
+      ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
       : "none",
-    "--mobileBackgroundPositionX": `${mobileBgPositionX}%`,
-    "--mobileBackgroundPositionY": `${mobileBgPositionY}%`,
+    "--mobileBackgroundPositionX": `${mobileSyncOnChange(v, "bgPositionX")}%`,
+    "--mobileBackgroundPositionY": `${mobileSyncOnChange(v, "bgPositionY")}%`,
     "--mobileBackgroundColor": hexToRgba(
-      mobileBgColorHex,
-      mobileBgColorOpacity
+      mobileSyncOnChange(v, "bgColorHex"),
+      mobileSyncOnChange(v, "bgColorOpacity")
     ),
     "--mobileMarginTop":
       mobileMarginType === "grouped"

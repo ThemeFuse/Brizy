@@ -232,10 +232,8 @@ resolve: {
                                                                     ],
                                                                     name: "logo-fb-simple",
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 22,
-                                                                    borderRadius: 2,
-                                                                    mobileCustomSize: 22
+                                                                    borderRadius: 2
                                                                 }
                                                             },
                                                             {
@@ -246,10 +244,8 @@ resolve: {
                                                                     ],
                                                                     name: "logo-google-plus",
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 22,
-                                                                    borderRadius: 2,
-                                                                    mobileCustomSize: 22
+                                                                    borderRadius: 2
                                                                 }
                                                             },
                                                             {
@@ -260,17 +256,16 @@ resolve: {
                                                                     ],
                                                                     name: "logo-twitter",
                                                                     size: "custom",
-                                                                    mobileSize: "custom",
                                                                     customSize: 22,
-                                                                    borderRadius: 2,
-                                                                    mobileCustomSize: 22
+                                                                    borderRadius: 2
                                                                 }
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
                                                         itemPadding: 15,
                                                         itemPaddingRight: 15,
-                                                        itemPaddingLeft: 15
+                                                        itemPaddingLeft: 15,
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ]
@@ -280,8 +275,6 @@ resolve: {
                             }
                         }
                     ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1,
                     containerSize: 85
                 }
             }

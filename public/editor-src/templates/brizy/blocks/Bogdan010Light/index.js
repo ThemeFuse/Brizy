@@ -256,12 +256,7 @@ resolve: {
                     ],
                     bgImageWidth: 1920,
                     bgImageHeight: 1172,
-                    bgImageSrc: "a0d5ebb6803aba335e8e4b72c7bc721ce40c52ff.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1172,
-                    mobileBgImageSrc: "a0d5ebb6803aba335e8e4b72c7bc721ce40c52ff.jpeg",
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 0.8
+                    bgImageSrc: "a0d5ebb6803aba335e8e4b72c7bc721ce40c52ff.jpeg"
                 }
             }
         ]

@@ -112,7 +112,6 @@ resolve: {
                                             tempBorderRadiusType: "custom",
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
-                                            mobileBorderRadius: 4,
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
                                             hoverBorderColorHex: "#142850",
@@ -126,22 +125,16 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left",
-                                mobileHorizontalAlign: "left"
+                                horizontalAlign: "left"
                             }
                         }
                     ],
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
                     bgImageSrc: "93e14abf0cc64763ebe549dfa33067c92f05c32d.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 881,
-                    mobileBgImageSrc: "93e14abf0cc64763ebe549dfa33067c92f05c32d.jpeg",
                     mobilePadding: 60,
                     mobilePaddingTop: 60,
-                    mobilePaddingBottom: 60,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.8
+                    mobilePaddingBottom: 60
                 }
             }
         ]

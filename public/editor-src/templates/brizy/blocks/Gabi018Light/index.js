@@ -147,9 +147,6 @@ resolve: {
                                                                                 size: "custom",
                                                                                 customSize: 16,
                                                                                 borderRadius: 3,
-                                                                                mobileSize: "custom",
-                                                                                mobileCustomSize: 16,
-                                                                                mobileBorderRadius: 3,
                                                                                 name: "time-3",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -232,8 +229,7 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left",
-                                                                                mobileHorizontalAlign: "left"
+                                                                                horizontalAlign: "left"
                                                                             }
                                                                         }
                                                                     ],
@@ -314,9 +310,6 @@ resolve: {
                                             paddingRight: 35,
                                             paddingBottom: 40,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.9,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -396,9 +389,6 @@ resolve: {
                                                                                 size: "custom",
                                                                                 customSize: 16,
                                                                                 borderRadius: 3,
-                                                                                mobileSize: "custom",
-                                                                                mobileCustomSize: 16,
-                                                                                mobileBorderRadius: 3,
                                                                                 name: "time-3",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -561,9 +551,6 @@ resolve: {
                                             paddingRight: 35,
                                             paddingBottom: 40,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.9,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -643,9 +630,6 @@ resolve: {
                                                                                 size: "custom",
                                                                                 customSize: 16,
                                                                                 borderRadius: 3,
-                                                                                mobileSize: "custom",
-                                                                                mobileCustomSize: 16,
-                                                                                mobileBorderRadius: 3,
                                                                                 name: "time-3",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -808,9 +792,6 @@ resolve: {
                                             paddingRight: 35,
                                             paddingBottom: 40,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.9,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -822,10 +803,7 @@ resolve: {
                     ],
                     bgImageWidth: 2048,
                     bgImageHeight: 1045,
-                    bgImageSrc: "8ea1d313879b777245777e356daaca4e5b5e7e64.jpeg",
-                    mobileBgImageWidth: 2048,
-                    mobileBgImageHeight: 1045,
-                    mobileBgImageSrc: "8ea1d313879b777245777e356daaca4e5b5e7e64.jpeg"
+                    bgImageSrc: "8ea1d313879b777245777e356daaca4e5b5e7e64.jpeg"
                 }
             }
         ]

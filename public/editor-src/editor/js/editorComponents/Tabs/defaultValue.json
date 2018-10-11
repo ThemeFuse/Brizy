@@ -29,7 +29,7 @@
   "mobileLineHeight": 1.5,
   "mobileLetterSpacing": 0,
   "mobileFontWeight": 400,
-  "mobileHorizontalAlign": "left",
+  "mobileHorizontalAlign": null,
 
   "paddingType": "ungrouped",
   "padding": 0,

@@ -93,7 +93,7 @@
   "columnsHeight": 400,
   "items": [],
 
-  "mobileMedia": "image",
+  "mobileMedia": null,
 
   "zIndex": 0,
 
@@ -104,11 +104,11 @@
   "animationDuration": 1000,
   "animationDelay": 1000,
 
-  "mobileBgImageWidth": 0,
-  "mobileBgImageHeight": 0,
-  "mobileBgImageSrc": "",
-  "mobileBgPositionY": 50,
-  "mobileBgPositionX": 50,
+  "mobileBgImageWidth": null,
+  "mobileBgImageHeight": null,
+  "mobileBgImageSrc": null,
+  "mobileBgPositionY": null,
+  "mobileBgPositionX": null,
 
   "mobilePaddingType": "ungrouped",
   "mobilePadding": 0,
@@ -128,9 +128,9 @@
   "tempMobilePaddingBottom": 10,
   "tempMobilePaddingLeft": 10,
 
-  "mobileBgColorHex": "#000000",
-  "mobileBgColorOpacity": 0,
-  "mobileBgColorPalette": "",
+  "mobileBgColorHex": null,
+  "mobileBgColorOpacity": null,
+  "mobileBgColorPalette": null,
   "tempMobileBgColorOpacity": 1,
   "tempMobileBgColorPalette": "",
 
@@ -142,5 +142,5 @@
   "mobileMarginBottom": 10,
   "mobileMarginBottomSuffix": "px",
 
-  "mobileBgMapZoom": 15
+  "mobileBgMapZoom": null
 }

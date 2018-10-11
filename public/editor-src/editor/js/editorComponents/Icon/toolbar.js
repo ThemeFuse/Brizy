@@ -1,15 +1,13 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const linkDynamicContentChoices = getDynamicContentChoices("link");
 
 export function getItemsForDesktop(v) {
   const maxBorderRadius = Math.round(
     (v.customSize + v.tempPadding * 2 + v.tempBorderWidth * 2) / 2
-  );
-  const maxMobileBorderRadius = Math.round(
-    (v.mobileCustomSize + v.tempMobilePadding * 2 + v.tempBorderWidth * 2) / 2
   );
 
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
@@ -91,20 +89,6 @@ export function getItemsForDesktop(v) {
                           )
                       );
 
-                      const mobileBorderRadius = Math.round(
-                        (v.borderRadius /
-                          Math.round(
-                            v[`${v.size}Size`] +
-                              v.padding * 2 +
-                              v.borderWidth * 2
-                          )) *
-                          Math.round(
-                            v.mobileCustomSize +
-                              v.mobilePadding * 2 +
-                              v.borderWidth * 2
-                          )
-                      );
-
                       return {
                         size,
 
@@ -112,20 +96,7 @@ export function getItemsForDesktop(v) {
                           size !== "custom" ? v[`${size}Size`] : v.customSize,
 
                         borderRadius:
-                          size !== "custom" ? borderRadius : v.borderRadius,
-
-                        mobileSize:
-                          v.size === v.mobileSize ? size : v.mobileSize,
-
-                        mobileCustomSize:
-                          v.size === v.mobileSize
-                            ? v[`${size}Size`]
-                            : v.mobileCustomSize,
-
-                        mobileBorderRadius:
-                          size !== "custom"
-                            ? mobileBorderRadius
-                            : v.mobileBorderRadius
+                          size !== "custom" ? borderRadius : v.borderRadius
                       };
                     }
                   },
@@ -164,26 +135,9 @@ export function getItemsForDesktop(v) {
                               )
                           );
 
-                          const mobileBorderRadius = Math.round(
-                            (v.borderRadius /
-                              Math.round(
-                                v.customSize + v.padding * 2 + v.borderWidth * 2
-                              )) *
-                              Math.round(
-                                v.mobileCustomSize +
-                                  v.mobilePadding * 2 +
-                                  v.borderWidth * 2
-                              )
-                          );
                           return {
                             customSize,
-                            borderRadius,
-                            mobileCustomSize:
-                              v.customSize === v.mobileCustomSize
-                                ? customSize
-                                : v.mobileCustomSize,
-
-                            mobileBorderRadius
+                            borderRadius
                           };
                         }
                       }
@@ -304,23 +258,7 @@ export function getItemsForDesktop(v) {
                           ? ""
                           : fillType !== "default"
                             ? v.tempHoverBorderColorPalette
-                            : v.hoverBorderColorPalette,
-
-                      // Mobile
-                      mobilePadding:
-                        fillType === "default"
-                          ? 0
-                          : fillType !== "default"
-                            ? v.tempMobilePadding
-                            : v.mobilePadding,
-
-                      mobileBorderRadius:
-                        fillType === "default"
-                          ? 0
-                          : fillType !== "default" &&
-                            v.tempBorderRadiusType === "rounded"
-                            ? maxMobileBorderRadius
-                            : v.mobileBorderRadius
+                            : v.hoverBorderColorPalette
                     };
                   }
                 },
@@ -401,15 +339,7 @@ export function getItemsForDesktop(v) {
                         hoverBorderColorOpacity:
                           borderRadiusType !== ""
                             ? v.tempHoverBorderColorOpacity
-                            : v.hoverBorderColorOpacity,
-
-                        // Mobile
-                        mobileBorderRadius:
-                          borderRadiusType === "square"
-                            ? v.tempMobileBorderRadius
-                            : borderRadiusType === "rounded"
-                              ? maxMobileBorderRadius
-                              : v.mobileBorderRadius
+                            : v.hoverBorderColorOpacity
                       };
                     }
                   },
@@ -439,18 +369,7 @@ export function getItemsForDesktop(v) {
                         },
                         onChange: ({ value: borderRadius }) => ({
                           borderRadius,
-                          tempBorderRadius: borderRadius,
-                          tempMobileBorderRadius:
-                            v.tempBorderRadius === v.tempMobileBorderRadius
-                              ? borderRadius
-                              : v.tempMobileBorderRadius,
-
-                          mobileBorderRadius:
-                            v.borderRadiusType === "rounded"
-                              ? maxMobileBorderRadius
-                              : v.mobileBorderRadius === v.borderRadius
-                                ? borderRadius
-                                : v.mobileBorderRadius
+                          tempBorderRadius: borderRadius
                         })
                       }
                     ]
@@ -480,27 +399,6 @@ export function getItemsForDesktop(v) {
                     value: v.padding
                   },
                   onChange: ({ value: padding }) => {
-                    const borderRadius = Math.round(
-                      (v.borderRadius /
-                        Math.round(
-                          v.customSize + v.padding * 2 + v.borderWidth * 2
-                        )) *
-                        Math.round(
-                          v.customSize + padding * 2 + v.borderWidth * 2
-                        )
-                    );
-
-                    const mobileBorderRadius = Math.round(
-                      (v.borderRadius /
-                        Math.round(
-                          v.customSize + v.padding * 2 + v.borderWidth * 2
-                        )) *
-                        Math.round(
-                          v.mobileCustomSize +
-                            v.mobilePadding * 2 +
-                            v.borderWidth * 2
-                        )
-                    );
                     return {
                       padding,
                       tempPadding: padding,
@@ -540,14 +438,7 @@ export function getItemsForDesktop(v) {
                       bgColorPalette:
                         padding > 0 && v.tempFillType === "filled"
                           ? v.tempBgColorPalette
-                          : v.bgColorPalette,
-
-                      mobilePadding:
-                        v.padding === v.mobilePadding
-                          ? padding
-                          : v.mobilePadding,
-
-                      mobileBorderRadius
+                          : v.bgColorPalette
                     };
                   }
                 },
@@ -854,15 +745,7 @@ export function getItemsForDesktop(v) {
                                   ? 0
                                   : opacity > 0
                                     ? v.tempHoverBgColorOpacity
-                                    : v.hoverBgColorOpacity,
-
-                              // Mobile
-                              mobilePadding:
-                                opacity === 0 && v.borderColorOpacity === 0
-                                  ? 0
-                                  : opacity > 0
-                                    ? v.tempMobilePadding
-                                    : v.mobilePadding
+                                    : v.hoverBgColorOpacity
                             };
                           }
                         },
@@ -892,10 +775,7 @@ export function getItemsForDesktop(v) {
                             fillType: "filled",
 
                             // Hover
-                            hoverBgColorOpacity: v.tempHoverBgColorOpacity,
-
-                            // Mobile
-                            mobilePadding: v.tempMobilePadding
+                            hoverBgColorOpacity: v.tempHoverBgColorOpacity
                           })
                         },
                         {
@@ -1606,33 +1486,15 @@ export function getItemsForMobile(v) {
                 icon: "nc-more"
               }
             ],
-            value: v.mobileSize,
+            value: mobileSyncOnChange(v, "size"),
             onChange: mobileSize => {
-              const mobileBorderRadius = Math.round(
-                (v.mobileBorderRadius /
-                  Math.round(
-                    v[`${v.mobileSize}Size`] +
-                      v.mobilePadding * 2 +
-                      v.borderWidth * 2
-                  )) *
-                  Math.round(
-                    v[`${mobileSize}Size`] +
-                      v.mobilePadding * 2 +
-                      v.borderWidth * 2
-                  )
-              );
               return {
                 mobileSize,
 
                 mobileCustomSize:
                   mobileSize !== "custom"
                     ? v[`${mobileSize}Size`]
-                    : v.mobileCustomSize,
-
-                mobileBorderRadius:
-                  mobileSize !== "custom"
-                    ? mobileBorderRadius
-                    : v.mobileBorderRadius
+                    : v.mobileCustomSize
               };
             }
           },
@@ -1658,26 +1520,11 @@ export function getItemsForMobile(v) {
                   ]
                 },
                 value: {
-                  value: v.mobileCustomSize
+                  value: mobileSyncOnChange(v, "customSize")
                 },
                 onChange: ({ value: mobileCustomSize }) => {
-                  const mobileBorderRadius = Math.round(
-                    (v.mobileBorderRadius /
-                      Math.round(
-                        v.mobileCustomSize +
-                          v.mobilePadding * 2 +
-                          v.borderWidth * 2
-                      )) *
-                      Math.round(
-                        mobileCustomSize +
-                          v.mobilePadding * 2 +
-                          v.borderWidth * 2
-                      )
-                  );
-
                   return {
-                    mobileCustomSize,
-                    mobileBorderRadius
+                    mobileCustomSize
                   };
                 }
               }
@@ -1706,22 +1553,11 @@ export function getItemsForMobile(v) {
           },
           disabled: v.fillType === "default",
           value: {
-            value: v.mobilePadding
+            value: mobileSyncOnChange(v, "padding")
           },
           onChange: ({ value: mobilePadding }) => {
-            const mobileBorderRadius = Math.round(
-              (v.mobileBorderRadius /
-                Math.round(
-                  v.mobileCustomSize + v.mobilePadding * 2 + v.borderWidth * 2
-                )) *
-                Math.round(
-                  v.mobileCustomSize + mobilePadding * 2 + v.borderWidth * 2
-                )
-            );
-
             return {
-              mobilePadding,
-              mobileBorderRadius
+              mobilePadding
             };
           }
         }

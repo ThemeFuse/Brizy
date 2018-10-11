@@ -558,8 +558,6 @@ resolve: {
                             }
                         }
                     ],
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1,
                     paddingType: "ungrouped",
                     paddingBottom: 90
                 }

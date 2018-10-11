@@ -128,9 +128,7 @@ resolve: {
                                                                                 ],
                                                                                 name: "check-circle-07",
                                                                                 size: "custom",
-                                                                                mobileSize: "custom",
                                                                                 customSize: 40,
-                                                                                mobileCustomSize: 40,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -169,9 +167,7 @@ resolve: {
                                                                     ],
                                                                     borderColorOpacity: 0.2,
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
-                                                                    width: 80,
-                                                                    mobileWidth: 80
+                                                                    width: 80
                                                                 }
                                                             }
                                                         ]
@@ -201,9 +197,7 @@ resolve: {
                                                                                 ],
                                                                                 name: "check-circle-07",
                                                                                 size: "custom",
-                                                                                mobileSize: "custom",
                                                                                 customSize: 40,
-                                                                                mobileCustomSize: 40,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -242,9 +236,7 @@ resolve: {
                                                                     ],
                                                                     borderColorOpacity: 0.2,
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
-                                                                    width: 80,
-                                                                    mobileWidth: 80
+                                                                    width: 80
                                                                 }
                                                             }
                                                         ]
@@ -274,9 +266,7 @@ resolve: {
                                                                                 ],
                                                                                 name: "check-circle-07",
                                                                                 size: "custom",
-                                                                                mobileSize: "custom",
                                                                                 customSize: 40,
-                                                                                mobileCustomSize: 40,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -365,7 +355,6 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorOpacity: 0.2
                                                                 }
                                                             }
@@ -511,8 +500,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -600,9 +588,6 @@ resolve: {
                                             tempBgColorOpacity: 0.04,
                                             borderColorPalette: "color4",
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.04,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -653,7 +638,6 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    mobileBorderWidth: 1,
                                                                     borderColorOpacity: 0.2
                                                                 }
                                                             }
@@ -799,8 +783,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -888,9 +871,6 @@ resolve: {
                                             tempBgColorOpacity: 0.04,
                                             borderColorPalette: "color4",
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 0.04,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -899,9 +879,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

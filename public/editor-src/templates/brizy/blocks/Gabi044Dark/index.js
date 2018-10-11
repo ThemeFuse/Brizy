@@ -78,8 +78,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 40,
-                                            mobileHeight: 40
+                                            height: 40
                                         }
                                     }
                                 ],
@@ -125,9 +124,6 @@ resolve: {
                                                                                 bgImageWidth: 1920,
                                                                                 bgImageHeight: 1266,
                                                                                 bgImageSrc: "e4a5d1aeb42faa67d3ca8d6f292a1183899b5ce0.jpeg",
-                                                                                mobileBgImageWidth: 1920,
-                                                                                mobileBgImageHeight: 1266,
-                                                                                mobileBgImageSrc: "e4a5d1aeb42faa67d3ca8d6f292a1183899b5ce0.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 width: 50
@@ -234,8 +230,7 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left",
-                                                                                            mobileHorizontalAlign: "left"
+                                                                                            horizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -244,8 +239,6 @@ resolve: {
                                                                                 verticalAlign: "center",
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "#ffffff",
-                                                                                mobileBgColorPalette: "color8",
-                                                                                mobileBgColorHex: "#ffffff",
                                                                                 paddingTop: 70,
                                                                                 paddingBottom: 70,
                                                                                 borderColorPalette: "color8",
@@ -373,8 +366,7 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left",
-                                                                                            mobileHorizontalAlign: "left"
+                                                                                            horizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -383,8 +375,6 @@ resolve: {
                                                                                 verticalAlign: "center",
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "#ffffff",
-                                                                                mobileBgColorPalette: "color8",
-                                                                                mobileBgColorHex: "#ffffff",
                                                                                 paddingTop: 70,
                                                                                 paddingBottom: 70
                                                                             }
@@ -399,9 +389,6 @@ resolve: {
                                                                                 bgImageWidth: 1920,
                                                                                 bgImageHeight: 1280,
                                                                                 bgImageSrc: "d6a6c8c324e76ca8108376efd3240f4102e7803f.jpeg",
-                                                                                mobileBgImageWidth: 1920,
-                                                                                mobileBgImageHeight: 1280,
-                                                                                mobileBgImageSrc: "d6a6c8c324e76ca8108376efd3240f4102e7803f.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 bgPositionX: 0,
@@ -439,9 +426,6 @@ resolve: {
                                                                                 bgImageWidth: 1920,
                                                                                 bgImageHeight: 1280,
                                                                                 bgImageSrc: "2cbbf849f80cc1ddaf7383c1a7d3c02c2a94de69.jpeg",
-                                                                                mobileBgImageWidth: 1920,
-                                                                                mobileBgImageHeight: 1280,
-                                                                                mobileBgImageSrc: "2cbbf849f80cc1ddaf7383c1a7d3c02c2a94de69.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 width: 50
@@ -548,8 +532,7 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left",
-                                                                                            mobileHorizontalAlign: "left"
+                                                                                            horizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -558,8 +541,6 @@ resolve: {
                                                                                 verticalAlign: "center",
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "#ffffff",
-                                                                                mobileBgColorPalette: "color8",
-                                                                                mobileBgColorHex: "#ffffff",
                                                                                 paddingTop: 70,
                                                                                 paddingBottom: 70
                                                                             }
@@ -685,8 +666,7 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left",
-                                                                                            mobileHorizontalAlign: "left"
+                                                                                            horizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -695,8 +675,6 @@ resolve: {
                                                                                 verticalAlign: "center",
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "#ffffff",
-                                                                                mobileBgColorPalette: "color8",
-                                                                                mobileBgColorHex: "#ffffff",
                                                                                 paddingTop: 70,
                                                                                 paddingBottom: 70
                                                                             }
@@ -711,9 +689,6 @@ resolve: {
                                                                                 bgImageWidth: 1928,
                                                                                 bgImageHeight: 1285,
                                                                                 bgImageSrc: "892a9084fbf9486ef022389cb78a17e4c7dc6881.jpeg",
-                                                                                mobileBgImageWidth: 1928,
-                                                                                mobileBgImageHeight: 1285,
-                                                                                mobileBgImageSrc: "892a9084fbf9486ef022389cb78a17e4c7dc6881.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 width: 50
@@ -740,7 +715,6 @@ resolve: {
                                             colorHex: "#142850",
                                             colorOpacity: 1,
                                             horizontalAlign: "center",
-                                            mobileHorizontalAlign: "center",
                                             borderColorPalette: "color8",
                                             paddingRight: 0,
                                             paddingLeft: 0,
@@ -756,8 +730,6 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 0.9,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     tempMobileBgColorOpacity: 0.9
                 }

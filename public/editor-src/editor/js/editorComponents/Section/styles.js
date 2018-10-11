@@ -3,6 +3,7 @@ import { css } from "glamor";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
 import { svgToUri } from "visual/utils/icons";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const backgroundAttachment = {
   none: "scroll",
@@ -211,38 +212,23 @@ export function bgStyleClassName(v, props) {
       shapeBottomIndex,
       shapeTopType,
       shapeBottomType,
-      mobileShapeTopHeight: _mobileShapeTopHeight,
-      mobileShapeBottomHeight: _mobileShapeBottomHeight,
-      mobileShapeTopHeightSuffix: _mobileShapeTopHeightSuffix,
-      mobileShapeBottomHeightSuffix: _mobileShapeBottomHeightSuffix,
-      mobileMedia,
-      mobileBgImageSrc,
-      mobileBgPositionX,
-      mobileBgPositionY,
-      mobileBgAttachment,
-      mobileBgColorHex,
-      mobileBgColorOpacity
+      mobileBgAttachment
     } = v;
     const { showSlider } = props.meta;
 
-    const mobileShapeTopHeight =
-      _mobileShapeTopHeight === null ? shapeTopHeight : _mobileShapeTopHeight;
-    const mobileShapeBottomHeight =
-      _mobileShapeBottomHeight === null
-        ? shapeBottomHeight
-        : _mobileShapeBottomHeight;
-
-    const mobileShapeTopHeightSuffix =
-      _mobileShapeTopHeightSuffix === null
-        ? shapeTopHeightSuffix
-        : _mobileShapeTopHeightSuffix;
-    const mobileShapeBottomHeightSuffix =
-      _mobileShapeBottomHeightSuffix === null
-        ? shapeBottomHeightSuffix
-        : _mobileShapeBottomHeightSuffix;
     const bgImage = bgPopulation
       ? imagePopulationUrl(bgPopulation)
       : imageUrl(bgImageSrc);
+
+    const mobileBgImage = bgPopulation
+      ? imagePopulationUrl(bgPopulation)
+      : imageUrl(mobileSyncOnChange(v, "bgImageSrc"));
+
+    const mobileShapeTopHeight    = mobileSyncOnChange(v, "shapeTopHeight");
+    const mobileShapeBottomHeight = mobileSyncOnChange(v, "shapeBottomHeight");
+
+    const mobileShapeTopHeightSuffix    = mobileSyncOnChange(v, "shapeTopHeightSuffix");
+    const mobileShapeBottomHeightSuffix = mobileSyncOnChange(v, "shapeBottomHeightSuffix");
 
     glamorObj = {
       "> .brz-bg-media": {
@@ -333,20 +319,20 @@ export function bgStyleClassName(v, props) {
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
-            (mobileBgImageSrc || bgPopulation) && mobileMedia !== "map"
-              ? `url(${bgImage})`
+            (mobileSyncOnChange(v, "bgImageSrc") || bgPopulation) && mobileSyncOnChange(v, "media") !== "map"
+              ? `url(${mobileBgImage})`
               : "none",
           backgroundPosition: bgPopulation
             ? "0% 0%"
-            : `${mobileBgPositionX}% ${mobileBgPositionY}%`,
+            : `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(v, "bgPositionY")}%`,
           backgroundAttachment:
             backgroundAttachment[showSlider ? "none" : mobileBgAttachment]
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+          backgroundColor: hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
         },
         "> .brz-bg-media > .brz-bg-map": {
-          display: mobileMedia === "map" ? "block" : "none"
+          display: mobileSyncOnChange(v, "media") === "map" ? "block" : "none"
         },
         // Shape
         "> .brz-bg-media > .brz-bg-shape__top": {
@@ -407,35 +393,15 @@ export function bgStyleCSSVars(v, props) {
     shapeBottomHorizontal,
     shapeTopIndex,
     shapeBottomIndex,
-    mobileShapeTopHeight: _mobileShapeTopHeight,
-    mobileShapeBottomHeight: _mobileShapeBottomHeight,
-    mobileShapeTopHeightSuffix: _mobileShapeTopHeightSuffix,
-    mobileShapeBottomHeightSuffix: _mobileShapeBottomHeightSuffix,
-    mobileMedia,
-    mobileBgImageSrc,
-    mobileBgAttachment,
-    mobileBgPositionX,
-    mobileBgPositionY,
-    mobileBgColorHex,
-    mobileBgColorOpacity
+    mobileBgAttachment
   } = v;
   const { showSlider } = props.meta;
 
-  const mobileShapeTopHeight =
-    _mobileShapeTopHeight === null ? shapeTopHeight : _mobileShapeTopHeight;
-  const mobileShapeBottomHeight =
-    _mobileShapeBottomHeight === null
-      ? shapeBottomHeight
-      : _mobileShapeBottomHeight;
+  const mobileShapeTopHeight    = mobileSyncOnChange(v, "shapeTopHeight");
+  const mobileShapeBottomHeight = mobileSyncOnChange(v, "shapeBottomHeight");
 
-  const mobileShapeTopHeightSuffix =
-    _mobileShapeTopHeightSuffix === null
-      ? shapeTopHeightSuffix
-      : _mobileShapeTopHeightSuffix;
-  const mobileShapeBottomHeightSuffix =
-    _mobileShapeBottomHeightSuffix === null
-      ? shapeBottomHeightSuffix
-      : _mobileShapeBottomHeightSuffix;
+  const mobileShapeTopHeightSuffix    = mobileSyncOnChange(v, "shapeTopHeightSuffix");
+  const mobileShapeBottomHeightSuffix = mobileSyncOnChange(v, "shapeBottomHeightSuffix");
 
   return {
     "--mediaBg": media === "map" ? "block" : "none",
@@ -522,20 +488,20 @@ export function bgStyleCSSVars(v, props) {
       mobileShapeTopHeightSuffix}`,
     "--mobileShapeBottomBackgroundSize": `${100}% ${mobileShapeBottomHeight +
       mobileShapeBottomHeightSuffix}`,
-    "--mobileMediaBg": mobileMedia === "map" ? "block" : "none",
+    "--mobileMediaBg": mobileSyncOnChange(v, "media") === "map" ? "block" : "none",
     "--mobileBackgroundImage":
-      mobileBgImageSrc && mobileMedia !== "map" && !bgPopulation
-        ? `url(${imageUrl(mobileBgImageSrc)})`
+        mobileSyncOnChange(v, "bgImageSrc") && mobileSyncOnChange(v, "media") !== "map" && !bgPopulation
+          ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
         : "none",
     "--mobileBackgroundPositionX": bgPopulation
       ? "0%"
-      : `${mobileBgPositionX}%`,
+      : `${mobileSyncOnChange(v, "bgPositionX")}%`,
     "--mobileBackgroundPositionY": bgPopulation
       ? "0%"
-      : `${mobileBgPositionY}%`,
+      : `${mobileSyncOnChange(v, "bgPositionY")}%`,
     "--mobileBackgroundAttachment":
       backgroundAttachment[showSlider ? "none" : mobileBgAttachment],
-    "--mobileBackgroundColor": hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+    "--mobileBackgroundColor": hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
   };
 }
 

@@ -25,13 +25,8 @@ resolve: {
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
                     bgImageSrc: "a69f2b6b6db1078e7736b06ee6c9da52ac1be101.jpeg",
-                    mobileBgImageWidth: 1996,
-                    mobileBgImageHeight: 1331,
-                    mobileBgImageSrc: "a69f2b6b6db1078e7736b06ee6c9da52ac1be101.jpeg",
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
-                    mobileBgColorHex: "#ffffff",
                     items: [
                         {
                             type: "Row",
@@ -74,8 +69,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 name: "path-minus",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -113,7 +106,6 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     width: 90,
-                                                                    mobileWidth: 90,
                                                                     borderColorOpacity: 0.15
                                                                 }
                                                             }
@@ -145,8 +137,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 name: "tablet",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -184,7 +174,6 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     width: 90,
-                                                                    mobileWidth: 90,
                                                                     borderColorOpacity: 0.15
                                                                 }
                                                             }
@@ -216,8 +205,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 name: "money-time",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -271,7 +258,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],

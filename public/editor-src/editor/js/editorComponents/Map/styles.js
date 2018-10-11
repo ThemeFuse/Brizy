@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -31,9 +32,7 @@ export function styleClassName(v) {
       boxShadowBlur,
       boxShadowSpread,
       boxShadowVertical,
-      boxShadowHorizontal,
-      mobileSize,
-      mobileHeight
+      boxShadowHorizontal
     } = v;
 
     const boxShadowStyle =
@@ -52,8 +51,8 @@ export function styleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          width: `${mobileSize}%`,
-          height: `${mobileHeight}px`
+          width: `${mobileSyncOnChange(v, "size")}%`,
+          height: `${mobileSyncOnChange(v, "height")}px`
         }
       }
     };
@@ -76,9 +75,7 @@ export function styleCSSVars(v) {
     boxShadowBlur,
     boxShadowSpread,
     boxShadowVertical,
-    boxShadowHorizontal,
-    mobileSize,
-    mobileHeight
+    boxShadowHorizontal
   } = v;
 
   const boxShadowStyle =
@@ -93,7 +90,7 @@ export function styleCSSVars(v) {
     "--width": `${size}%`,
     "--height": `${height}px`,
     "--boxShadow": boxShadowStyle,
-    "--mobileWidth": `${mobileSize}%`,
-    "--mobileHeight": `${mobileHeight}px`
+    "--mobileWidth": `${mobileSyncOnChange(v, "size")}%`,
+    "--mobileHeight": `${mobileSyncOnChange(v, "height")}px`
   };
 }

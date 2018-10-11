@@ -8,7 +8,7 @@
  */
 
 $state     = $is_using_brizy ? 'disable' : 'enable';
-$label     = $is_using_brizy ? 'Back to WordPress Editor' : 'Edit with';
+$label     = $is_using_brizy ? esc_html__( 'Back to WordPress Editor', 'brizy' ) : esc_html__( 'Edit with', 'brizy' );
 $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary';
 ?>
     <div class="brizy-buttons">
@@ -22,7 +22,7 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
 				<?php
 			} else {
 				?>
-				<?php echo _e( $label, 'brizy' ); ?> <img
+				<?php echo $label; ?> <img
                         src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?>"
                         srcset="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?> 1x, <?php echo plugins_url( '../static/img/brizy-2x.png', __FILE__ ) ?> 2x"
                         class="brizy-logo"/>

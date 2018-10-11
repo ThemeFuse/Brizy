@@ -136,8 +136,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 75,
-                                            mobileHeight: 75
+                                            height: 75
                                         }
                                     }
                                 ],
@@ -188,7 +187,8 @@ resolve: {
                                                         horizontalAlign: "right",
                                                         paddingType: "ungrouped",
                                                         paddingTop: 40,
-                                                        paddingBottom: 40
+                                                        paddingBottom: 40,
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -240,8 +240,7 @@ resolve: {
                                                                     imageWidth: 220,
                                                                     imageHeight: 65,
                                                                     mobileHeight: 109,
-                                                                    resize: 70,
-                                                                    mobileResize: 70
+                                                                    resize: 70
                                                                 }
                                                             }
                                                         ],
@@ -300,7 +299,6 @@ resolve: {
                                                                     imageWidth: 220,
                                                                     imageHeight: 65,
                                                                     resize: 70,
-                                                                    mobileResize: 70,
                                                                     height: 98
                                                                 }
                                                             }
@@ -368,7 +366,8 @@ resolve: {
                                                         horizontalAlign: "left",
                                                         paddingType: "ungrouped",
                                                         paddingTop: 40,
-                                                        paddingBottom: 40
+                                                        paddingBottom: 40,
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -402,11 +401,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 900,
                     bgImageSrc: "aabcb23b967eb7d80787877fc43397532f91fe94.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 900,
-                    mobileBgImageSrc: "aabcb23b967eb7d80787877fc43397532f91fe94.jpeg",
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.9,
                     bgPositionY: 100,
                     mobileBgPositionY: 100
                 }

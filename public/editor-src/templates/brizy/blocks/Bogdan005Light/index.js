@@ -150,8 +150,7 @@ resolve: {
                                                                     imageSrc: "0d3c5e68fe37910554a0ee7b748b78b1ae03dcd0.jpeg",
                                                                     imageWidth: 720,
                                                                     imageHeight: 798,
-                                                                    height: 96,
-                                                                    mobileHeight: 96
+                                                                    height: 96
                                                                 }
                                                             }
                                                         ]
@@ -263,8 +262,7 @@ resolve: {
                                                                     imageSrc: "80e3efa8e818001685a55159671d3ba28f650a05.jpeg",
                                                                     imageWidth: 720,
                                                                     imageHeight: 798,
-                                                                    height: 96,
-                                                                    mobileHeight: 96
+                                                                    height: 96
                                                                 }
                                                             }
                                                         ]
@@ -290,8 +288,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ],

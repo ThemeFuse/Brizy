@@ -296,9 +296,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#142850",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

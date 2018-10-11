@@ -131,14 +131,9 @@ resolve: {
                     mobilePadding: 60,
                     mobilePaddingTop: 60,
                     mobilePaddingBottom: 60,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.8,
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
                     bgImageSrc: "3f0ed29e6e534e6b8be61f7513463cbd7d8492e9.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 881,
-                    mobileBgImageSrc: "3f0ed29e6e534e6b8be61f7513463cbd7d8492e9.jpeg",
                     containerSize: 90
                 }
             }

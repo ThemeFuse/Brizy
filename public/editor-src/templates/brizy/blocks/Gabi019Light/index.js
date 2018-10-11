@@ -60,9 +60,7 @@ resolve: {
                                                                     imageHeight: 1280,
                                                                     height: 82,
                                                                     positionX: 48,
-                                                                    mobilePositionX: 48,
-                                                                    positionY: 66,
-                                                                    mobilePositionY: 66
+                                                                    positionY: 66
                                                                 }
                                                             }
                                                         ]
@@ -164,8 +162,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -190,8 +187,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -299,8 +295,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -334,8 +329,7 @@ resolve: {
                                                                     imageWidth: 1920,
                                                                     imageHeight: 1280,
                                                                     height: 82,
-                                                                    zoom: 144,
-                                                                    mobileZoom: 144
+                                                                    zoom: 144
                                                                 }
                                                             }
                                                         ]

@@ -1,6 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor, getAnimations } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
@@ -116,9 +117,7 @@ export function getItemsForDesktop(v) {
               src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.tempBgColorOpacity,
 
             // mobile
-            mobileBgImageWidth: width,
-            mobileBgImageHeight: height,
-            mobileBgImageSrc: src,
+            // this 2 values are used for view the result of the bg color or image when you have a image in a column for example
             mobilePaddingRight: !src ? 0 : v.tempMobilePaddingRight,
             mobilePaddingLeft: !src ? 0 : v.tempMobilePaddingLeft
           })
@@ -163,22 +162,6 @@ export function getItemsForDesktop(v) {
                       bgColorOpacity: bgColorOpacity,
                       bgColorPalette:
                         isChanged === "hex" ? "" : v.bgColorPalette,
-
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
-
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? bgColorOpacity
-                          : v.mobileBgColorOpacity,
-
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette,
 
                       tempBgColorOpacity:
                         bgColorOpacity > 0 && opacityDragEnd
@@ -249,21 +232,6 @@ export function getItemsForDesktop(v) {
                         ? v.tempBgColorOpacity
                         : v.bgColorOpacity,
 
-                    mobileBgColorPalette:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? bgColorPalette
-                        : v.mobileBgColorPalette,
-
-                    mobileBgColorHex:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? ""
-                        : v.mobileBgColorHex,
-
-                    mobileBgColorOpacity:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? v.tempBgColorOpacity
-                        : v.mobileBgColorOpacity,
-
                     mobilePaddingRight:
                       bgColorPalette !== ""
                         ? v.tempMobilePaddingRight
@@ -294,22 +262,6 @@ export function getItemsForDesktop(v) {
                         isChanged === "hex" ? "" : v.bgColorPalette,
                       bgColorHex: hex,
                       bgColorOpacity: bgColorOpacity,
-
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
-
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? bgColorOpacity
-                          : v.mobileBgColorOpacity,
-
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette,
 
                       mobilePaddingRight:
                         bgColorOpacity === 0
@@ -1133,12 +1085,7 @@ export function getItemsForDesktop(v) {
                                 bgColorOpacity:
                                   borderRadius > 0 && v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderRadius > 0 && v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           }
@@ -1217,13 +1164,7 @@ export function getItemsForDesktop(v) {
                                   borderTopLeftRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderTopLeftRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           },
@@ -1300,13 +1241,7 @@ export function getItemsForDesktop(v) {
                                   borderTopRightRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderTopRightRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           },
@@ -1383,13 +1318,7 @@ export function getItemsForDesktop(v) {
                                   borderBottomRightRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderBottomRightRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           },
@@ -1466,13 +1395,7 @@ export function getItemsForDesktop(v) {
                                   borderBottomLeftRadius > 0 &&
                                   v.borderColorOpacity === 0
                                     ? v.tempBgColorOpacity
-                                    : v.bgColorOpacity,
-
-                                mobileBgColorOpacity:
-                                  borderBottomLeftRadius > 0 &&
-                                  v.borderColorOpacity === 0
-                                    ? v.tempBgColorOpacity
-                                    : v.mobileBgColorOpacity
+                                    : v.bgColorOpacity
                               };
                             }
                           }
@@ -2200,7 +2123,10 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForMobile(v) {
-  const { hex: mobileBgColorHex } = getOptionColor(v, "mobileBgColor");
+  const { hex: mobileBgColorHex } =
+    v.mobileBgColorHex !== null
+      ? getOptionColor(v, "mobileBgColor")
+      : getOptionColor(v, "bgColor");
 
   return [
     {
@@ -2233,11 +2159,11 @@ export function getItemsForMobile(v) {
           label: t("Image"),
           type: "imageSetter",
           value: {
-            width: v.mobileBgImageWidth,
-            height: v.mobileBgImageHeight,
-            src: v.mobileBgImageSrc,
-            x: v.mobileBgPositionX,
-            y: v.mobileBgPositionY
+            width: mobileSyncOnChange(v, "bgImageWidth"),
+            height: mobileSyncOnChange(v, "bgImageHeight"),
+            src: mobileSyncOnChange(v, "bgImageSrc"),
+            x: mobileSyncOnChange(v, "bgPositionX"),
+            y: mobileSyncOnChange(v, "bgPositionY")
           },
           onChange: ({ width, height, src, x, y }) => ({
             mobileBgImageWidth: width,
@@ -2247,12 +2173,12 @@ export function getItemsForMobile(v) {
             mobileBgPositionY: y,
 
             mobileBgColorOpacity:
-              src !== "" && v.mobileBgColorOpacity === 1
+              src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
                 ? 0.9
-                : v.mobileBgColorOpacity,
+                : mobileSyncOnChange(v, "bgColorOpacity"),
 
             tempMobileBgColorOpacity:
-              src !== "" && v.mobileBgColorOpacity === 1
+              src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
                 ? 0.9
                 : v.tempMobileBgColorOpacity,
 
@@ -2270,7 +2196,7 @@ export function getItemsForMobile(v) {
       position: 90,
       icon: {
         style: {
-          backgroundColor: hexToRgba(v.mobileBgColorHex, v.mobileBgColorOpacity)
+          backgroundColor: hexToRgba(mobileBgColorHex, mobileSyncOnChange(v, "bgColorOpacity"))
         }
       },
       options: [
@@ -2280,11 +2206,11 @@ export function getItemsForMobile(v) {
           position: 10,
           value: {
             hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
+            opacity: mobileSyncOnChange(v, "bgColorOpacity")
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
-              hex !== v.mobileBgColorHex && v.mobileBgColorOpacity === 0
+              hex !== mobileBgColorHex && mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
                 : opacity;
 
@@ -2292,7 +2218,7 @@ export function getItemsForMobile(v) {
               mobileBgColorHex: hex,
               mobileBgColorOpacity: bgColorOpacity,
               mobileBgColorPalette:
-                isChanged === "hex" ? "" : v.mobileBgColorPalette,
+                isChanged === "hex" ? "" : mobileSyncOnChange(v, "bgColorPalette"),
 
               mobilePaddingRight:
                 bgColorOpacity === 0
@@ -2314,14 +2240,14 @@ export function getItemsForMobile(v) {
           id: "mobileBgColorPalette",
           type: "colorPalette",
           position: 20,
-          value: v.mobileBgColorPalette,
+          value: mobileSyncOnChange(v, "bgColorPalette"),
           onChange: value => ({
             mobileBgColorPalette: value,
             mobileBgColorHex: "",
             mobileBgColorOpacity:
-              v.mobileBgColorOpacity === 0
+              mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
-                : v.mobileBgColorOpacity,
+                : mobileSyncOnChange(v, "bgColorOpacity"),
 
             mobilePaddingRight:
               value !== "" ? v.tempMobilePaddingRight : v.mobilePaddingRight,
@@ -2336,17 +2262,17 @@ export function getItemsForMobile(v) {
           position: 30,
           value: {
             hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
+            opacity: mobileSyncOnChange(v, "bgColorOpacity")
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
-              hex !== v.mobileBgColorHex && v.mobileBgColorOpacity === 0
+              hex !== mobileBgColorHex && mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
                 : opacity;
 
             return {
               mobileBgColorPalette:
-                isChanged === "hex" ? "" : v.mobileBgColorPalette,
+                isChanged === "hex" ? "" : mobileSyncOnChange(v, "bgColorPalette"),
               mobileBgColorHex: hex,
               mobileBgColorOpacity: bgColorOpacity,
 

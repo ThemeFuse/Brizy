@@ -2,6 +2,7 @@ import { calcWrapperSizes } from "./calculations";
 import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export const getMinSize = () => 5;
 export const getMaxSize = () => 100;
@@ -102,15 +103,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                       height: Math.round(newHeight),
                       positionX: x,
                       positionY: y,
-                      imagePopulation: "",
-                      mobilePositionX:
-                        v.positionX === v.mobilePositionX
-                          ? x
-                          : v.mobilePositionX,
-                      mobilePositionY:
-                        v.positionY === v.mobilePositionY
-                          ? y
-                          : v.mobilePositionY
+                      imagePopulation: ""
                     };
                   }
                 },
@@ -127,8 +120,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                     value: v.zoom
                   },
                   onChange: ({ value: zoom }) => ({
-                    zoom,
-                    mobileZoom: v.zoom === v.mobileZoom ? zoom : v.mobileZoom
+                    zoom
                   })
                 },
                 {
@@ -253,8 +245,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
             value: v.resize
           },
           onChange: ({ value: resize }) => ({
-            resize,
-            mobileResize: v.resize === v.mobileResize ? resize : v.mobileResize
+            resize
           })
         },
         {
@@ -281,8 +272,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
             value: v.height
           },
           onChange: ({ value: height }) => ({
-            height,
-            mobileHeight: v.height === v.mobileHeight ? height : v.mobileHeight
+            height
           })
         },
         {
@@ -634,8 +624,8 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                     width: v.imageWidth,
                     height: v.imageHeight,
                     src: v.imageSrc,
-                    x: v.mobilePositionX,
-                    y: v.mobilePositionY,
+                    x: mobileSyncOnChange(v, "positionX"),
+                    y: mobileSyncOnChange(v, "positionY"),
                     population: v.imagePopulation
                   },
                   onChange: ({ width, height, x, y, population }) => {
@@ -650,8 +640,8 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                     const newWrapperSize = calcWrapperSizes(cW, {
                       imageWidth: width,
                       imageHeight: height,
-                      resize: v.mobileResize,
-                      width: v.mobileWidth,
+                      resize: mobileSyncOnChange(v, "resize"),
+                      width: mobileSyncOnChange(v, "width"),
                       height: 100
                     });
                     const newHeight =
@@ -677,7 +667,7 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                     max: 200
                   },
                   value: {
-                    value: v.mobileZoom
+                    value: mobileSyncOnChange(v, "zoom")
                   },
                   onChange: ({ value: mobileZoom }) => ({ mobileZoom })
                 }
@@ -713,7 +703,7 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
             ]
           },
           value: {
-            value: v.mobileResize
+            value: mobileSyncOnChange(v, "resize")
           },
           onChange: ({ value: mobileResize }) => ({ mobileResize })
         },
@@ -737,7 +727,7 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
             ]
           },
           value: {
-            value: v.mobileHeight
+            value: mobileSyncOnChange(v, "height")
           },
           onChange: ({ value: mobileHeight }) => ({ mobileHeight })
         }

@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { imageUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const aligns = {
   top: "flex-start",
@@ -124,12 +125,6 @@ export function bgStyleClassName(v) {
       boxShadowSpread,
       boxShadowVertical,
       boxShadowHorizontal,
-      mobileMedia,
-      mobileBgImageSrc,
-      mobileBgPositionX,
-      mobileBgPositionY,
-      mobileBgColorHex,
-      mobileBgColorOpacity,
       mobileMarginType,
       mobileMargin,
       mobileMarginSuffix,
@@ -246,16 +241,16 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
-            mobileBgImageSrc && mobileMedia !== "map"
-              ? `url(${imageUrl(mobileBgImageSrc)})`
+            mobileSyncOnChange(v, "bgImageSrc") && mobileSyncOnChange(v, "media") !== "map"
+              ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
               : "none",
-          backgroundPosition: `${mobileBgPositionX}% ${mobileBgPositionY}%`
+          backgroundPosition: `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(v, "bgPositionY")}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+          backgroundColor: hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
         },
         "> .brz-bg-media > .brz-bg-map": {
-          display: mobileMedia === "map" ? "block" : "none"
+          display: mobileSyncOnChange(v, "media") === "map" ? "block" : "none"
         }
       },
       "@media (min-width: 768px)": {
@@ -324,12 +319,6 @@ export function bgStyleCSSVars(v) {
     boxShadowSpread,
     boxShadowVertical,
     boxShadowHorizontal,
-    mobileMedia,
-    mobileBgImageSrc,
-    mobileBgPositionX,
-    mobileBgPositionY,
-    mobileBgColorHex,
-    mobileBgColorOpacity,
     mobileMarginType,
     mobileMargin,
     mobileMarginSuffix,
@@ -404,16 +393,16 @@ export function bgStyleCSSVars(v) {
     "--boxShadow": boxShadowStyle,
 
     // Mobile
-    "--mobileMediaBg": mobileMedia === "map" ? "block" : "none",
+    "--mobileMediaBg": mobileSyncOnChange(v, "media") === "map" ? "block" : "none",
     "--mobileBackgroundImage":
-      mobileBgImageSrc && mobileMedia !== "map"
-        ? `url(${imageUrl(mobileBgImageSrc)})`
+      mobileSyncOnChange(v, "bgImageSrc") && mobileSyncOnChange(v, "media") !== "map"
+        ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
         : "none",
-    "--mobileBackgroundPositionX": `${mobileBgPositionX}%`,
-    "--mobileBackgroundPositionY": `${mobileBgPositionY}%`,
+    "--mobileBackgroundPositionX": `${mobileSyncOnChange(v, "bgPositionX")}%`,
+    "--mobileBackgroundPositionY": `${mobileSyncOnChange(v, "bgPositionY")}%`,
     "--mobileBackgroundColor": hexToRgba(
-      mobileBgColorHex,
-      mobileBgColorOpacity
+      mobileSyncOnChange(v, "bgColorHex"),
+      mobileSyncOnChange(v, "bgColorOpacity")
     ),
     "--mobileMarginTop":
       mobileMarginType === "grouped"

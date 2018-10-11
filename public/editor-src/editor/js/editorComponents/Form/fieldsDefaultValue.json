@@ -36,11 +36,11 @@
   "mobileLineHeight": 1.5,
   "mobileFontWeight": 400,
   "mobileLetterSpacing": 0,
-  "mobileBorderRadius": 0,
+  "mobileBorderRadius": null,
 
-  "mobilePadding": 10,
-  "mobilePaddingTop": 0,
-  "mobilePaddingRight": 10,
-  "mobilePaddingBottom": 10,
-  "mobilePaddingLeft": 10
+  "mobilePadding": null,
+  "mobilePaddingTop": null,
+  "mobilePaddingRight": null,
+  "mobilePaddingBottom": null,
+  "mobilePaddingLeft": null
 }

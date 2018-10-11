@@ -15,11 +15,17 @@ class Brizy_Editor {
 	 * Brizy_Editor constructor.
 	 */
 	private function __construct() {
+
+		add_action( 'init', array( $this, 'initialize' ), - 2000 );
+	}
+
+	public function initialize() {
+
+		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 1500 );
 		add_action( 'init', array( $this, 'runMigrations' ), - 1000 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
-
 
 		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ) {
 			Brizy_Admin_Rules_Api::_init();
@@ -57,8 +63,7 @@ class Brizy_Editor {
 		$post = null;
 		try {
 			// do not delete this line
-			$user = Brizy_Editor_User::get();
-
+			$user    = Brizy_Editor_User::get();
 			$project = Brizy_Editor_Project::get();
 
 			if ( $pid ) {
@@ -93,6 +98,9 @@ class Brizy_Editor {
 		add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
 	}
 
+	public function loadCompatibilityClasses() {
+		new Brizy_Compatibilities_Gutenberg();
+	}
 
 	/**
 	 * @param $templates
@@ -305,13 +313,15 @@ class Brizy_Editor {
 			return false;
 		}
 
-		if ( is_null( self::$is_allowed_for_current_user ) ) {
+		if ( self::is_administrator() ) {
+			return true;
+		}
 
+		if ( is_null( self::$is_allowed_for_current_user ) ) {
 			self::$is_allowed_for_current_user =
-				! self::is_subscriber() &&
-				( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
-				  current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
-				  || self::is_administrator()
+				(
+					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
+				    current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
 				);
 		}
 

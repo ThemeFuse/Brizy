@@ -1,6 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   const { hex: borderColorHex } = getOptionColor(v, "borderColor");
@@ -59,11 +60,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: borderWidth }) => {
             return {
-              borderWidth,
-              mobileBorderWidth:
-                v.borderWidth === v.mobileBorderWidth
-                  ? borderWidth
-                  : v.mobileBorderWidth
+              borderWidth
             };
           }
         }
@@ -167,8 +164,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: width }) => {
             return {
-              width,
-              mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
+              width
             };
           }
         }
@@ -208,7 +204,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileBorderWidth
+            value: mobileSyncOnChange(v, "borderWidth")
           },
           onChange: ({ value: mobileBorderWidth }) => ({ mobileBorderWidth })
         }
@@ -243,7 +239,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileWidth
+            value: mobileSyncOnChange(v, "width")
           },
           onChange: ({ value: mobileWidth }) => ({ mobileWidth })
         }

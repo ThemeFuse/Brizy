@@ -16,6 +16,6 @@
   "boxShadowHorizontal": 1,
   "tempBoxShadowColorOpacity": 1,
 
-  "mobileSize": 100,
-  "mobileHeight": 300
+  "mobileSize": null,
+  "mobileHeight": null
 }

@@ -157,9 +157,6 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -264,9 +261,6 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -371,9 +365,6 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -485,9 +476,6 @@ resolve: {
                                             paddingBottom: 0,
                                             paddingTop: 0,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -587,9 +575,6 @@ resolve: {
                                             paddingBottom: 0,
                                             paddingTop: 0,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -689,9 +674,6 @@ resolve: {
                                             paddingBottom: 0,
                                             paddingTop: 0,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -700,9 +682,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#eef0f2",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

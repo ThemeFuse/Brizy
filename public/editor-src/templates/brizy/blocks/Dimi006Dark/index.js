@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorOpacity: 1,
                     bgColorHex: "#191b21",
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -53,8 +51,6 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
-                                                        mobileSize: "large",
-                                                        mobileCustomSize: 64,
                                                         colorPalette: "color7",
                                                         hoverColorOpacity: 1,
                                                         hoverColorPalette: "color7"
@@ -163,8 +159,7 @@ resolve: {
                                                 "line"
                                             ],
                                             borderColorOpacity: 0.2,
-                                            width: 84,
-                                            mobileWidth: 84
+                                            width: 84
                                         }
                                     }
                                 ],
@@ -200,8 +195,6 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
-                                                        mobileSize: "large",
-                                                        mobileCustomSize: 64,
                                                         colorPalette: "color7",
                                                         hoverColorPalette: "color7",
                                                         hoverColorHex: "#73777f",
