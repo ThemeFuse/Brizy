@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -74,7 +75,6 @@ export function styleClassName(v) {
       sliderPaddingBottomSuffix,
       sliderPaddingLeft,
       sliderPaddingLeftSuffix,
-      mobileSliderArrowsSpacing,
       mobileSliderPaddingType,
       mobileSliderPadding,
       mobileSliderPaddingSuffix,
@@ -87,6 +87,8 @@ export function styleClassName(v) {
       mobileSliderPaddingLeft,
       mobileSliderPaddingLeftSuffix
     } = v;
+
+    const mobileSliderArrowsSpacing = mobileSyncOnChange(v, "sliderArrowsSpacing");
 
     glamorObj = {
       // Hide slideItems before slick-slide initialized
@@ -165,16 +167,10 @@ export function styleClassName(v) {
           paddingRight: 0
         },
         "& > .slick-slider > .brz-slick-slider__arrow-prev": {
-          left:
-            mobileSliderArrowsSpacing === null
-              ? `${sliderArrowsSpacing}px`
-              : `${mobileSliderArrowsSpacing}px`
+          left: `${mobileSliderArrowsSpacing}px`
         },
         "& > .slick-slider > .brz-slick-slider__arrow-next": {
-          right:
-            mobileSliderArrowsSpacing === null
-              ? `${sliderArrowsSpacing}px`
-              : `${mobileSliderArrowsSpacing}px`
+          right: `${mobileSliderArrowsSpacing}px`
         }
       }
     };
@@ -206,7 +202,6 @@ export function styleCSSVars(v) {
     sliderPaddingBottomSuffix,
     sliderPaddingLeft,
     sliderPaddingLeftSuffix,
-    mobileSliderArrowsSpacing,
     mobileSliderPaddingType,
     mobileSliderPadding,
     mobileSliderPaddingSuffix,
@@ -219,6 +214,8 @@ export function styleCSSVars(v) {
     mobileSliderPaddingLeft,
     mobileSliderPaddingLeftSuffix
   } = v;
+
+  const mobileSliderArrowsSpacing = mobileSyncOnChange(v, "sliderArrowsSpacing");
 
   return {
     "--spacing": `${spacing / 2}px`,
@@ -242,10 +239,7 @@ export function styleCSSVars(v) {
       sliderPaddingType === "grouped"
         ? sliderPadding + sliderPaddingSuffix
         : sliderPaddingLeft + sliderPaddingLeftSuffix,
-    "--mobileArrowsSpacing":
-      mobileSliderArrowsSpacing === null
-        ? `${sliderArrowsSpacing}px`
-        : `${mobileSliderArrowsSpacing}px`,
+    "--mobileArrowsSpacing": `${mobileSliderArrowsSpacing}px`,
     "--mobilePaddingTop":
       mobileSliderPaddingType === "grouped"
         ? mobileSliderPadding + mobileSliderPaddingSuffix

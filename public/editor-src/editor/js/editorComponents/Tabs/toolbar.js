@@ -13,15 +13,6 @@ export function getItemsForDesktop(v) {
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
-
   // ...
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
   const { hex: colorHex } = getOptionColor(v, "color");
@@ -75,12 +66,7 @@ export function getItemsForDesktop(v) {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },
@@ -321,11 +307,7 @@ export function getItemsForDesktop(v) {
       ],
       value: v.horizontalAlign,
       onChange: horizontalAlign => ({
-        horizontalAlign,
-        mobileHorizontalAlign:
-          v.horizontalAlign === v.mobileHorizontalAlign
-            ? horizontalAlign
-            : v.mobileHorizontalAlign
+        horizontalAlign
       })
     },
     {

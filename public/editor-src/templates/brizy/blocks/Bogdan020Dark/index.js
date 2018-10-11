@@ -79,8 +79,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20,
-                                            mobileHeight: 20
+                                            height: 20
                                         }
                                     }
                                 ],
@@ -122,8 +121,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20,
-                                            mobileHeight: 20
+                                            height: 20
                                         }
                                     }
                                 ],
@@ -170,8 +168,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10,
-                                            mobileHeight: 10
+                                            height: 10
                                         }
                                     }
                                 ]
@@ -226,8 +223,6 @@ resolve: {
                             }
                         }
                     ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1,
                     containerSize: 60
                 }
             }

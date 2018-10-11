@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { css } from "glamor";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   let glamorObj;
@@ -26,8 +27,8 @@ export function styleClassName(v) {
       }
     };
   } else {
-    const { gridColumn, spacing, mobileSpacing: _mobileSpacing } = v;
-    const mobileSpacing = _mobileSpacing === null ? spacing : _mobileSpacing;
+    const { gridColumn, spacing } = v;
+    const mobileSpacing = mobileSyncOnChange(v, "spacing")
 
     glamorObj = {
       ".brz &": {
@@ -64,8 +65,8 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const { gridColumn, spacing, mobileSpacing: _mobileSpacing } = v;
-  const mobileSpacing = _mobileSpacing === null ? spacing : _mobileSpacing;
+  const { gridColumn, spacing } = v;
+  const mobileSpacing = mobileSyncOnChange(v, "spacing");
 
   return {
     "--width": `calc(100% + ${spacing}px)`,

@@ -138,6 +138,6 @@
   "mobileLineHeight": 1.8,
   "mobileLetterSpacing": 1,
 
-  "mobileBorderRadius": 2,
+  "mobileBorderRadius": null,
   "tempMobileBorderRadius": 2
 }

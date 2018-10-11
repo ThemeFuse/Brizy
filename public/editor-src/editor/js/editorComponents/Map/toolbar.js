@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
@@ -80,8 +81,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: size }) => {
             return {
-              size,
-              mobileSize: v.size === v.mobileSize ? size : v.mobileSize
+              size
             };
           }
         },
@@ -110,9 +110,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: height }) => {
             return {
-              height,
-              mobileHeight:
-                v.height === v.mobileHeight ? height : v.mobileHeight
+              height
             };
           }
         },
@@ -401,7 +399,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileSize
+            value: mobileSyncOnChange(v, "size")
           },
           onChange: ({ value: mobileSize }) => {
             return {
@@ -430,7 +428,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileHeight
+            value: mobileSyncOnChange(v, "height")
           },
           onChange: ({ value: mobileHeight }) => {
             return {

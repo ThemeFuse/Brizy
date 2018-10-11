@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export default taxonomies => {
   const categoriesList = taxonomies.map(item => ({
@@ -139,8 +140,7 @@ const getItemsForDesktop = categoriesList => v => [
         },
         onChange: ({ value: width }) => {
           return {
-            width,
-            mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
+            width
           };
         }
       }
@@ -177,7 +177,7 @@ const getItemsForMobile = v => [
           ]
         },
         value: {
-          value: v.mobileWidth
+          value: mobileSyncOnChange(v, "width")
         },
         onChange: ({ value: mobileWidth }) => {
           return {

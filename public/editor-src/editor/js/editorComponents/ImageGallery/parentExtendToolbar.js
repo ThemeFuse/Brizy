@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   return [
@@ -96,7 +97,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileSpacing === null ? v.spacing : v.mobileSpacing
+            value: mobileSyncOnChange(v, "spacing")
           },
           onChange: ({ value: mobileSpacing }) => ({ mobileSpacing })
         }

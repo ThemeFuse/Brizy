@@ -3,7 +3,9 @@ import { getOptionColor } from "visual/utils/options";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import {
   onChangeTypography,
-  onChangeTypographyMobile
+  onChangeTypographyMobile,
+  tabletSyncOnChange,
+  mobileSyncOnChange
 } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 
@@ -12,15 +14,6 @@ export function getItemsForDesktop(v) {
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
-
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   // ...
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
@@ -118,12 +111,7 @@ export function getItemsForDesktop(v) {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },
@@ -397,7 +385,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobilePadding
+            value: mobileSyncOnChange(v, "padding")
           },
           onChange: ({ value: mobilePadding }) => {
             return {

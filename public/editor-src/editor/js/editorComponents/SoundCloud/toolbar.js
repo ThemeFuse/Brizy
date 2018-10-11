@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   return [
@@ -53,14 +54,7 @@ export function getItemsForDesktop(v) {
                   ? v.mediumHeight
                   : style === "artwork"
                     ? v.largeHeight
-                    : v.height,
-
-              mobileHeight:
-                style === "basic"
-                  ? v.mediumHeight
-                  : v.height === v.mobileHeight && style === "artwork"
-                    ? v.largeHeight
-                    : v.mobileHeight
+                    : v.height
             })
           }
         }
@@ -98,8 +92,7 @@ export function getItemsForDesktop(v) {
             value: v.width
           },
           onChange: ({ value: width }) => ({
-            width,
-            mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
+            width
           })
         },
         {
@@ -126,8 +119,7 @@ export function getItemsForDesktop(v) {
             value: v.height
           },
           onChange: ({ value: height }) => ({
-            height,
-            mobileHeight: v.height === v.mobileHeight ? height : v.mobileHeight
+            height
           })
         }
       ]
@@ -166,7 +158,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileWidth
+            value: mobileSyncOnChange(v, "width")
           },
           onChange: ({ value: mobileWidth }) => {
             return {
@@ -195,7 +187,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileHeight
+            value: mobileSyncOnChange(v, "height")
           },
           onChange: ({ value: mobileHeight }) => {
             return {

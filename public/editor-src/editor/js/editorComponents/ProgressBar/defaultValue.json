@@ -32,11 +32,12 @@
   "paddingBottom": 5,
   "paddingLeft": 15,
 
-  "mobileWidth": 100,
   "mobileFontStyle": "",
   "mobileFontSize": 13,
   "mobileFontWeight": 400,
   "mobileLineHeight": 1.3,
   "mobileLetterSpacing": 0,
-  "mobileBorderRadius": 0
+
+  "mobileWidth": null,
+  "mobileBorderRadius": null
 }

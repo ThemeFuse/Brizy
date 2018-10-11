@@ -22,6 +22,7 @@ import {
   styleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -265,9 +266,7 @@ class Column extends EditorComponent {
 
     const {
       bgImageSrc,
-      bgColorOpacity,
-      mobileBgImageSrc,
-      mobileBgColorOpacity
+      bgColorOpacity
     } = v;
 
     const itemsProps = this.makeSubcomponentProps({
@@ -280,8 +279,8 @@ class Column extends EditorComponent {
       className: bgStyleClassName(v, this.props),
       imageSrc: bgImageSrc,
       colorOpacity: bgColorOpacity,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
+      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
+      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
 
     return (

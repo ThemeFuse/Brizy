@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className, gridColumn } = v;
@@ -32,16 +33,11 @@ export function styleClassName(v) {
       padding,
       paginationSpacing,
       paginationColorHex,
-      paginationColorOpacity,
-      mobilePadding: _mobilePadding,
-      mobilePaginationSpacing: _mobilePaginationSpacing
+      paginationColorOpacity
     } = v;
-    const mobilePadding = _mobilePadding === null ? padding : _mobilePadding;
+    const mobilePadding = mobileSyncOnChange(v, "padding");
     const columnWidth = gridColumn === 1 ? "100%" : `${100 / gridColumn}%`;
-    const mobilePaginationSpacing =
-      _mobilePaginationSpacing === null
-        ? paginationSpacing
-        : _mobilePaginationSpacing;
+    const mobilePaginationSpacing = mobileSyncOnChange(v, "paginationSpacing");
 
     glamorObj = {
       ".brz &": {
@@ -83,16 +79,11 @@ export function styleCSSVars(v) {
     padding,
     paginationSpacing,
     paginationColorHex,
-    paginationColorOpacity,
-    mobilePadding: _mobilePadding,
-    mobilePaginationSpacing: _mobilePaginationSpacing
+    paginationColorOpacity
   } = v;
-  const mobilePadding = _mobilePadding === null ? padding : _mobilePadding;
+  const mobilePadding = mobileSyncOnChange(v, "padding");
   const columnWidth = gridColumn === 1 ? "100%" : `${100 / gridColumn}%`;
-  const mobilePaginationSpacing =
-    _mobilePaginationSpacing === null
-      ? paginationSpacing
-      : _mobilePaginationSpacing;
+  const mobilePaginationSpacing = mobileSyncOnChange(v, "paginationSpacing");
 
   return {
     "--gridTemplateColumn": `repeat(${gridColumn}, minmax(0, ${columnWidth}))`,

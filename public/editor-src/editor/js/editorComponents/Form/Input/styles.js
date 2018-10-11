@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { css } from "glamor";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 /// Form Field
 export function fieldStyleClassName(v) {
@@ -28,9 +29,7 @@ export function fieldStyleClassName(v) {
     const {
       type,
       width,
-      height,
-      mobileWidth,
-      mobileHeight
+      height
     } = v;
 
     glamorObj = {
@@ -44,11 +43,11 @@ export function fieldStyleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          maxWidth: `${mobileWidth}%`,
-          flexBasis: `${mobileWidth}%`,
+          maxWidth: `${mobileSyncOnChange(v, "width")}%`,
+          flexBasis: `${mobileSyncOnChange(v, "width")}%`,
 
           "& .brz-textarea": {
-            height: type === "Paragraph" ? `${mobileHeight}px` : null,
+            height: type === "Paragraph" ? `${mobileSyncOnChange(v, "height")}px` : null,
           }
         },
       }
@@ -66,15 +65,13 @@ export function fieldStyleCSSVars(v) {
   const {
     type,
     width,
-    height,
-    mobileWidth,
-    mobileHeight
+    height
   } = v;
 
   return {
     "--width": `${width}%`,
     "--height": type === "Paragraph" ? `${height}px` : "auto",
-    "--mobileWidth": `${mobileWidth}%`,
-    "--mobileHeight": type === "Paragraph" ? `${mobileHeight}px` : "auto"
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
+    "--mobileHeight": type === "Paragraph" ? `${mobileSyncOnChange(v, "height")}px` : "auto"
   };
 }

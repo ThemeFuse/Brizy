@@ -58,8 +58,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10,
-                                            mobileHeight: 10
+                                            height: 10
                                         }
                                     }
                                 ]
@@ -99,8 +98,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ]
@@ -128,7 +126,6 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
-                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color2",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -138,25 +135,19 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left",
-                                mobileHorizontalAlign: "left"
+                                horizontalAlign: "left"
                             }
                         }
                     ],
                     bgColorHex: "#ffffff",
-                    mobileBgColorHex: "#ffffff",
                     tempBgColorOpacity: 0.9,
                     padding: 250,
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
-                    bgImageSrc: "ce137a5f47624305107686a5e468c4ed5cd880c1.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 893,
-                    mobileBgImageSrc: "ce137a5f47624305107686a5e468c4ed5cd880c1.jpeg"
+                    bgImageSrc: "ce137a5f47624305107686a5e468c4ed5cd880c1.jpeg"
                 }
             },
             {
@@ -202,8 +193,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30,
-                                            mobileHeight: 30
+                                            height: 30
                                         }
                                     }
                                 ],
@@ -278,8 +268,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 100,
-                                                                                            mobileHeight: 100
+                                                                                            height: 100
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -482,18 +471,13 @@ resolve: {
                     ],
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 0.9,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     padding: 250,
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
-                    bgImageSrc: "f5e9f386d8358fb5036d9697ce8a5b846a9ed3da.jpeg",
-                    mobileBgImageWidth: 1996,
-                    mobileBgImageHeight: 1331,
-                    mobileBgImageSrc: "f5e9f386d8358fb5036d9697ce8a5b846a9ed3da.jpeg"
+                    bgImageSrc: "f5e9f386d8358fb5036d9697ce8a5b846a9ed3da.jpeg"
                 }
             }
         ],

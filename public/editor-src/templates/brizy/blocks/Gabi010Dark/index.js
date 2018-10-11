@@ -384,9 +384,6 @@ resolve: {
                                             borderColorHex: "#73777f",
                                             borderColorPalette: "color7",
                                             bgColorPalette: "color7",
-                                            mobileBgColorPalette: "color7",
-                                            mobileBgColorHex: "#73777f",
-                                            mobileBgColorOpacity: 0.1,
                                             tempBgColorOpacity: 0.1,
                                             tempBorderColorOpacity: 0.35
                                         }
@@ -607,8 +604,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 60,
-                                                                    mobileHeight: 60
+                                                                    height: 60
                                                                 }
                                                             }
                                                         ]
@@ -677,9 +673,6 @@ resolve: {
                                             borderColorHex: "#73777f",
                                             borderColorPalette: "color7",
                                             bgColorPalette: "color7",
-                                            mobileBgColorPalette: "color7",
-                                            mobileBgColorHex: "#73777f",
-                                            mobileBgColorOpacity: 0.1,
                                             tempBgColorOpacity: 0.1,
                                             tempBorderColorOpacity: 0.35,
                                             borderWidthType: "ungrouped"
@@ -925,8 +918,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 28,
-                                                                    mobileHeight: 28
+                                                                    height: 28
                                                                 }
                                                             }
                                                         ]
@@ -998,9 +990,6 @@ resolve: {
                                             padding: 45,
                                             borderColorPalette: "color7",
                                             bgColorPalette: "color7",
-                                            mobileBgColorPalette: "color7",
-                                            mobileBgColorHex: "#73777f",
-                                            mobileBgColorOpacity: 0.1,
                                             tempBgColorOpacity: 0.1,
                                             tempBorderColorOpacity: 0.35
                                         }
@@ -1008,9 +997,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

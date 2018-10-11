@@ -17,7 +17,7 @@ export function styleClassName(v) {
           color: "var(--color)",
           backgroundColor: "var(--backgroundColor)",
           borderColor: "var(--borderColor)",
-          borderWidth: "var(--borderWidth)",
+          borderWidth: "var(--borderWidth)"
         },
         "& .brz-accordion__content": {
           marginTop: "var(--marginTop)"
@@ -35,7 +35,7 @@ export function styleClassName(v) {
           paddingRight: "var(--paddingRight)",
           paddingBottom: "var(--paddingBottom)",
           paddingLeft: "var(--paddingLeft)"
-        },
+        }
       },
       ".brz-ed--mobile &": {
         fontSize: "var(--mobileFontSize)",
@@ -48,7 +48,7 @@ export function styleClassName(v) {
           paddingRight: "var(--mobilePaddingRight)",
           paddingBottom: "var(--mobilePaddingBottom)",
           paddingLeft: "var(--mobilePaddingLeft)"
-        },
+        }
       }
     };
   } else {
@@ -100,14 +100,14 @@ export function styleClassName(v) {
           paddingBottom:
             paddingType === "grouped" ? `${padding}px` : `${paddingBottom}px`,
           paddingLeft:
-            paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`,
+            paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`
         },
         "& .brz-accordion__nav, & .brz-accordion__content": {
           color: hexToRgba(colorHex, colorOpacity),
           backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
           borderColor: hexToRgba(borderColorHex, borderColorOpacity),
-          borderWidth,
-        },
+          borderWidth
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
@@ -133,8 +133,8 @@ export function styleClassName(v) {
               mobilePaddingType === "grouped"
                 ? `${mobilePadding}px`
                 : `${mobilePaddingLeft}px`
-          },
-        },
+          }
+        }
       }
     };
   }
@@ -225,6 +225,6 @@ export function styleCSSVars(v) {
     "--mobileFontSize": `${mobileFontSize}px`,
     "--mobileLineHeight": mobileLineHeight,
     "--mobileFontWeight": mobileFontWeight,
-    "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
+    "--mobileLetterSpacing": `${mobileLetterSpacing}px`
   };
 }

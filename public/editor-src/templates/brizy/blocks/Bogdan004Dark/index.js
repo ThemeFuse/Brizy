@@ -67,8 +67,7 @@ resolve: {
                                             imageSrc: "3f530b5c8b286d47d8a5612550d6d4ce93e495e1.jpeg",
                                             imageWidth: 1920,
                                             imageHeight: 573,
-                                            resize: 97,
-                                            mobileResize: 97
+                                            resize: 97
                                         }
                                     }
                                 ]
@@ -134,10 +133,8 @@ resolve: {
                                                                                     "iconText--icon"
                                                                                 ],
                                                                                 size: "custom",
-                                                                                mobileSize: "custom",
                                                                                 customSize: 56,
                                                                                 borderRadius: 5,
-                                                                                mobileCustomSize: 56,
                                                                                 name: "navigation",
                                                                                 type: "outline",
                                                                                 colorHex: "#1b6489",
@@ -196,10 +193,8 @@ resolve: {
                                                                                     "iconText--icon"
                                                                                 ],
                                                                                 size: "custom",
-                                                                                mobileSize: "custom",
                                                                                 customSize: 56,
                                                                                 borderRadius: 5,
-                                                                                mobileCustomSize: 56,
                                                                                 name: "pulse-watch",
                                                                                 type: "outline",
                                                                                 colorHex: "#1b6489",
@@ -257,10 +252,8 @@ resolve: {
                                                                                     "iconText--icon"
                                                                                 ],
                                                                                 size: "custom",
-                                                                                mobileSize: "custom",
                                                                                 customSize: 56,
                                                                                 borderRadius: 5,
-                                                                                mobileCustomSize: 56,
                                                                                 name: "desktop-screen",
                                                                                 type: "outline",
                                                                                 colorHex: "#1b6489",
@@ -290,9 +283,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

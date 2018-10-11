@@ -44,8 +44,8 @@
   "saturation": 100,
   "contrast": 100,
 
-  "mobileSize": 100,
+  "mobileSize": null,
 
-  "mobileCoverImageWidth": 0,
-  "mobileCoverImageHeight": 0
+  "mobileCoverImageWidth": null,
+  "mobileCoverImageHeight": null
 }

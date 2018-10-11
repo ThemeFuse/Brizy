@@ -1,5 +1,6 @@
 import { t } from "visual/utils/i18n";
 import _ from "underscore";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   const fields = _.pluck(v.items[0].value.items, "value");
@@ -136,7 +137,7 @@ export function getItemsForMobile(v) {
           value: "right"
         }
       ],
-      value: v.mobileHorizontalAlign
+      value: mobileSyncOnChange(v, "horizontalAlign")
     },
     {
       id: "mobileToolbarSettings",

@@ -1,6 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor, getTaxonomies } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   const { hex: sliderArrowsColorHex } = getOptionColor(v, "sliderArrowsColor");
@@ -739,10 +740,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value:
-              v.mobileSliderArrowsSpacing === null
-                ? v.sliderArrowsSpacing
-                : v.mobileSliderArrowsSpacing
+            value: mobileSyncOnChange(v, "sliderArrowsSpacing")
           },
           onChange: ({ value: mobileSliderArrowsSpacing }) => ({
             mobileSliderArrowsSpacing

@@ -41,7 +41,7 @@
   "animationDuration": 1000,
   "animationDelay": 1000,
 
-  "mobileHorizontalAlign": "center",
+  "mobileHorizontalAlign": null,
 
   "mobilePaddingType": "grouped",
   "mobilePadding": 0,

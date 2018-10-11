@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const getIconStrokeWidth = (v, iconSize) => {
   const { type } = v;
@@ -77,11 +78,32 @@ export function styleClassName(v) {
       boxShadowBlur,
       boxShadowSpread,
       boxShadowVertical,
-      boxShadowHorizontal,
-      mobileCustomSize,
-      mobilePadding,
-      mobileBorderRadius
+      boxShadowHorizontal
     } = v;
+
+    // Mobile
+    const mobileCustomSize = mobileSyncOnChange(v, "customSize");
+    const mobilePadding = v.fillType !== "default" ? mobileSyncOnChange(v, "padding") : 0;
+    const maxMobileBorderRadius = Math.round(
+      (mobileCustomSize + mobilePadding * 2 + v.tempBorderWidth * 2) / 2
+    );
+    const mobileBorderRadius =
+      v.fillType === "default"
+        ? 0
+        : v.fillType !== "default" && v.tempBorderRadiusType === "rounded"
+          ? maxMobileBorderRadius
+          : Math.round(
+            v.borderRadius /
+            Math.round(
+              v.customSize + v.padding * 2 + v.borderWidth * 2
+            ) *
+            Math.round(
+              mobileCustomSize +
+              mobilePadding * 2 +
+              v.borderWidth * 2
+            )
+          );
+
     const iconSize = Math.round(customSize + padding * 2 + borderWidth * 2);
     const mobileIconSize = Math.round(
       mobileCustomSize + mobilePadding * 2 + borderWidth * 2
@@ -162,11 +184,31 @@ export function styleCSSVars(v) {
     boxShadowBlur,
     boxShadowSpread,
     boxShadowVertical,
-    boxShadowHorizontal,
-    mobileCustomSize,
-    mobilePadding,
-    mobileBorderRadius
+    boxShadowHorizontal
   } = v;
+
+  // Mobile
+  const mobileCustomSize = mobileSyncOnChange(v, "customSize");
+  const mobilePadding = v.fillType !== "default" ? mobileSyncOnChange(v, "padding") : 0;
+  const maxMobileBorderRadius = Math.round(
+    (mobileCustomSize + mobilePadding * 2 + v.tempBorderWidth * 2) / 2
+  );
+  const mobileBorderRadius =
+    v.fillType === "default"
+      ? 0
+      : v.fillType !== "default" && v.tempBorderRadiusType === "rounded"
+        ? maxMobileBorderRadius
+        : Math.round(
+          v.borderRadius /
+          Math.round(
+            v.customSize + v.padding * 2 + v.borderWidth * 2
+          ) *
+          Math.round(
+            mobileCustomSize +
+            mobilePadding * 2 +
+            v.borderWidth * 2
+          )
+        );
 
   const iconSize = Math.round(customSize + padding * 2 + borderWidth * 2);
   const mobileIconSize = Math.round(

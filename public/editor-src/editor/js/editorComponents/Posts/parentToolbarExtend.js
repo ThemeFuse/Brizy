@@ -1,6 +1,7 @@
 import { getOptionColor, getTaxonomies } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const getToolbarArchives = v => [
   {
@@ -381,7 +382,7 @@ export function getItemsForMobile(v) {
             max: 100
           },
           value: {
-            value: v.mobilePadding === null ? v.padding : v.mobilePadding
+            value: mobileSyncOnChange(v, "padding")
           },
           onChange: ({ value: mobilePadding }) => ({
             mobilePadding

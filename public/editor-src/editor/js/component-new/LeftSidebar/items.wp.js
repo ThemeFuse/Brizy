@@ -42,7 +42,7 @@ export default {
           icon: "nc-unlock",
           linkTarget: "_blank",
           label: t("Upgrade to Pro"),
-          link: "http://brizy.io/pro",
+          link: urls.upgradeToPro,
           disabled: proEnabled
         },
         {

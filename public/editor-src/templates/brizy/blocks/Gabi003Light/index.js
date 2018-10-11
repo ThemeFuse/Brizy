@@ -79,8 +79,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 15,
-                                            mobileHeight: 15
+                                            height: 15
                                         }
                                     }
                                 ]
@@ -127,8 +126,6 @@ resolve: {
                                                                     borderColorHex: "#cccccc",
                                                                     tempBorderColorOpacity: 0.7,
                                                                     hoverBgColorHex: "#216fbd",
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
@@ -189,8 +186,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10,
-                                                                    mobileHeight: 10
+                                                                    height: 10
                                                                 }
                                                             }
                                                         ]
@@ -270,9 +266,6 @@ resolve: {
                                             bgImageWidth: 1280,
                                             bgImageHeight: 1920,
                                             bgImageSrc: "d3e637a2ecd213d20b7259a13ae31b1d1bd146fa.jpeg",
-                                            mobileBgImageWidth: 1280,
-                                            mobileBgImageHeight: 1920,
-                                            mobileBgImageSrc: "d3e637a2ecd213d20b7259a13ae31b1d1bd146fa.jpeg",
                                             bgPositionY: 91,
                                             margin: 15,
                                             marginTop: 15,
@@ -311,8 +304,6 @@ resolve: {
                                                                     borderColorHex: "#cccccc",
                                                                     tempBorderColorOpacity: 0.7,
                                                                     hoverBgColorHex: "#216fbd",
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
@@ -373,8 +364,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10,
-                                                                    mobileHeight: 10
+                                                                    height: 10
                                                                 }
                                                             }
                                                         ]
@@ -454,9 +444,6 @@ resolve: {
                                             bgImageWidth: 1536,
                                             bgImageHeight: 1920,
                                             bgImageSrc: "32a61f3becbfc6ffe65fda9c27afd59d398ccb01.jpeg",
-                                            mobileBgImageWidth: 1536,
-                                            mobileBgImageHeight: 1920,
-                                            mobileBgImageSrc: "32a61f3becbfc6ffe65fda9c27afd59d398ccb01.jpeg",
                                             bgPositionX: 100,
                                             bgPositionY: 91,
                                             margin: 15,
@@ -496,8 +483,6 @@ resolve: {
                                                                     borderColorHex: "#cccccc",
                                                                     tempBorderColorOpacity: 0.7,
                                                                     hoverBgColorHex: "#216fbd",
-                                                                    mobileSize: "large",
-                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
@@ -558,8 +543,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10,
-                                                                    mobileHeight: 10
+                                                                    height: 10
                                                                 }
                                                             }
                                                         ]
@@ -639,9 +623,6 @@ resolve: {
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
                                             bgImageSrc: "1f0e63565b71c046a2b753528d54c137faaad949.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "1f0e63565b71c046a2b753528d54c137faaad949.jpeg",
                                             bgPositionX: 20,
                                             bgPositionY: 49,
                                             margin: 15,

@@ -192,8 +192,7 @@ resolve: {
                                             imageSrc: "8085a9b59494ea66f252cfde1405f6039fb9a424.jpeg",
                                             imageWidth: 970,
                                             imageHeight: 330,
-                                            resize: 90,
-                                            mobileResize: 90
+                                            resize: 90
                                         }
                                     }
                                 ],
@@ -206,11 +205,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
                     bgImageSrc: "014861fb4ee85e752356c52e1937261cedb41e61.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 881,
-                    mobileBgImageSrc: "014861fb4ee85e752356c52e1937261cedb41e61.jpeg",
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 0.85,
                     mobilePadding: 0,
                     mobilePaddingBottom: 0,
                     mobilePaddingType: "ungrouped"

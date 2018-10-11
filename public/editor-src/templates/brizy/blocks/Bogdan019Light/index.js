@@ -504,12 +504,12 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
-                                                                    mobileBorderRadius: 4,
                                                                     borderWidth: 0
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],

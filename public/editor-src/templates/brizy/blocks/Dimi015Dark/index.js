@@ -28,7 +28,6 @@ resolve: {
                     mobilePadding: 60,
                     mobilePaddingTop: 60,
                     mobilePaddingBottom: 60,
-                    mobileBgColorHex: "#142850",
                     items: [
                         {
                             type: "Wrapper",
@@ -189,8 +188,7 @@ resolve: {
                                             customSize: 25,
                                             borderRadius: 2,
                                             mobileSize: "custom",
-                                            mobileCustomSize: 19,
-                                            mobileBorderRadius: 2
+                                            mobileCustomSize: 19
                                         }
                                     }
                                 ],
@@ -200,13 +198,9 @@ resolve: {
                     ],
                     paddingType: "ungrouped",
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
                     bgImageSrc: "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 881,
-                    mobileBgImageSrc: "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg",
                     tempBgColorOpacity: 0.9
                 }
             }

@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorOpacity: 1,
                     bgColorHex: "#ffffff",
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -53,8 +51,6 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
-                                                        mobileSize: "large",
-                                                        mobileCustomSize: 64,
                                                         hoverColorOpacity: 1
                                                     }
                                                 },
@@ -161,8 +157,7 @@ resolve: {
                                                 "line"
                                             ],
                                             borderColorOpacity: 0.2,
-                                            width: 84,
-                                            mobileWidth: 84
+                                            width: 84
                                         }
                                     }
                                 ],
@@ -198,8 +193,6 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
-                                                        mobileSize: "large",
-                                                        mobileCustomSize: 64,
                                                         hoverColorOpacity: 1
                                                     }
                                                 },

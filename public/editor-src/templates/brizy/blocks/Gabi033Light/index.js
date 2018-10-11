@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -71,7 +69,8 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileMarginBottom: 0
+                                                        mobileMarginBottom: 0,
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ]
@@ -140,8 +139,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 30,
-                                                                    mobileHeight: 30
+                                                                    height: 30
                                                                 }
                                                             }
                                                         ]
@@ -199,8 +197,7 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 130,
-                                                                                            mobileHeight: 130
+                                                                                            height: 130
                                                                                         }
                                                                                     }
                                                                                 ],

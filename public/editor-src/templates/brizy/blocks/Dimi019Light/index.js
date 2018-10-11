@@ -25,8 +25,6 @@ resolve: {
                     bgColorHex: "#eef0f2",
                     bgColorOpacity: 1,
                     bgAttachment: "animated",
-                    mobileBgColorHex: "#eef0f2",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -123,7 +121,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -146,8 +145,6 @@ resolve: {
                                             marginTop: 25,
                                             marginBottom: 25,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
                                             borderColorPalette: "color7",
                                             paddingLeft: 80,
                                             paddingRight: 80
@@ -238,8 +235,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -279,8 +275,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -361,9 +356,6 @@ resolve: {
                                             marginTop: 40,
                                             marginBottom: 40,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
-                                            mobileBgColorOpacity: 1,
                                             borderColorPalette: "color7"
                                         }
                                     },
@@ -452,8 +444,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -493,8 +484,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -562,9 +552,6 @@ resolve: {
                                             marginLeft: 15,
                                             bgColorHex: "",
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "",
-                                            mobileBgColorOpacity: 1,
                                             borderColorPalette: "color3",
                                             margin: 15,
                                             marginTop: 15,

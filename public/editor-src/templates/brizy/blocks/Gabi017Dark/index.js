@@ -133,8 +133,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ]
@@ -143,9 +142,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

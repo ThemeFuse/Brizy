@@ -53,7 +53,6 @@ resolve: {
                                                                         "soundCloud"
                                                                     ],
                                                                     height: 300,
-                                                                    mobileHeight: 300,
                                                                     style: "artwork",
                                                                     showArtwork: "on"
                                                                 }
@@ -164,7 +163,6 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }
@@ -174,9 +172,6 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
                                             bgColorOpacity: 1,
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
-                                            mobileBgColorOpacity: 1,
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10,
                                             paddingRight: 60,
@@ -191,19 +186,12 @@ resolve: {
                     containerSize: 85,
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 0.9,
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 1290,
                     bgImageSrc: "7b13b52b334adb1e98a31cffb54de0acfe74f3eb.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1290,
-                    mobileBgImageSrc: "7b13b52b334adb1e98a31cffb54de0acfe74f3eb.jpeg",
                     bgPositionX: 46,
-                    bgPositionY: 89,
-                    mobileBgPositionX: 46,
-                    mobileBgPositionY: 89
+                    bgPositionY: 89
                 }
             }
         ]

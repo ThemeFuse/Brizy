@@ -68,8 +68,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 210,
-                                                                    mobileHeight: 210
+                                                                    height: 210
                                                                 }
                                                             }
                                                         ]
@@ -128,8 +127,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "left"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -150,15 +148,9 @@ resolve: {
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
                                             bgColorPalette: "color3",
-                                            mobileBgColorPalette: "color3",
-                                            mobileBgColorHex: "#239ddb",
-                                            mobileBgColorOpacity: 0.9,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1310,
                                             bgImageSrc: "1caf30f918f013539b57c85c8e0a10d9645a977f.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1310,
-                                            mobileBgImageSrc: "1caf30f918f013539b57c85c8e0a10d9645a977f.jpeg",
                                             verticalAlign: "bottom"
                                         }
                                     },
@@ -181,10 +173,7 @@ resolve: {
                                             verticalAlign: "center",
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
-                                            bgImageSrc: "14ae7dff563901c170059abba51df4ac5e5d6cae.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "14ae7dff563901c170059abba51df4ac5e5d6cae.jpeg"
+                                            bgImageSrc: "14ae7dff563901c170059abba51df4ac5e5d6cae.jpeg"
                                         }
                                     },
                                     {
@@ -207,9 +196,6 @@ resolve: {
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
                                             bgImageSrc: "6d7aa6d90e2806c9893883f67d58717543276e5c.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "6d7aa6d90e2806c9893883f67d58717543276e5c.jpeg",
                                             bgPositionX: 67,
                                             bgPositionY: 48
                                         }
@@ -233,10 +219,7 @@ resolve: {
                                             verticalAlign: "center",
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
-                                            bgImageSrc: "f5453c1904f96bf8dea5de9416df9eff2a852f29.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "f5453c1904f96bf8dea5de9416df9eff2a852f29.jpeg"
+                                            bgImageSrc: "f5453c1904f96bf8dea5de9416df9eff2a852f29.jpeg"
                                         }
                                     }
                                 ]

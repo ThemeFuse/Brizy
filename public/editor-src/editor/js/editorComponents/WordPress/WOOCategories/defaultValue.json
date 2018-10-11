@@ -2,7 +2,7 @@
   "className": "",
 
   "width": 100,
-  "mobileWidth": 100,
+  "mobileWidth": null,
 
   "number": 8,
   "orderBy": "name",

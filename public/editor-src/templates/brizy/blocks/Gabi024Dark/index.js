@@ -91,7 +91,8 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left"
+                                                                                horizontalAlign: "left",
+                                                                                mobileHorizontalAlign: "center"
                                                                             }
                                                                         }
                                                                     ],
@@ -202,12 +203,12 @@ resolve: {
                                                                                             borderRadiusType: "custom",
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
-                                                                                            mobileBorderRadius: 4,
                                                                                             tempBorderRadius: 4
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left"
+                                                                                horizontalAlign: "left",
+                                                                                mobileHorizontalAlign: "center"
                                                                             }
                                                                         }
                                                                     ],
@@ -240,9 +241,6 @@ resolve: {
                                             paddingTop: 0,
                                             verticalAlign: "center",
                                             bgColorPalette: "color3",
-                                            mobileBgColorPalette: "color3",
-                                            mobileBgColorHex: "#239ddb",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15,
@@ -364,7 +362,6 @@ resolve: {
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
                                                                                             tempBorderRadius: 4,
-                                                                                            mobileBorderRadius: 4,
                                                                                             borderColorPalette: "color8",
                                                                                             tempBorderColorPalette: "color8",
                                                                                             borderColorHex: "#ffffff",
@@ -373,7 +370,8 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "right"
+                                                                                horizontalAlign: "right",
+                                                                                mobileHorizontalAlign: "center"
                                                                             }
                                                                         }
                                                                     ],
@@ -410,13 +408,13 @@ resolve: {
                                                                                             imageWidth: 444,
                                                                                             imageHeight: 620,
                                                                                             height: 89,
-                                                                                            mobileHeight: 89,
                                                                                             resize: 95,
                                                                                             mobileResize: 60
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left"
+                                                                                horizontalAlign: "left",
+                                                                                mobileHorizontalAlign: "center"
                                                                             }
                                                                         }
                                                                     ],
@@ -446,10 +444,7 @@ resolve: {
                                             marginRight: 15,
                                             paddingRight: 0,
                                             verticalAlign: "center",
-                                            mobileBgColorHex: "#eef0f2",
-                                            mobileBgColorOpacity: 0.1,
                                             bgColorPalette: "color6",
-                                            mobileBgColorPalette: "color6",
                                             tempBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
@@ -513,7 +508,6 @@ resolve: {
                                                                                             imageWidth: 444,
                                                                                             imageHeight: 620,
                                                                                             zoom: 140,
-                                                                                            mobileZoom: 140,
                                                                                             positionX: 64,
                                                                                             positionY: 52,
                                                                                             mobilePositionY: 52,
@@ -522,7 +516,8 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left"
+                                                                                horizontalAlign: "left",
+                                                                                mobileHorizontalAlign: "center"
                                                                             }
                                                                         }
                                                                     ],
@@ -632,12 +627,12 @@ resolve: {
                                                                                             borderRadiusType: "custom",
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
-                                                                                            mobileBorderRadius: 4,
                                                                                             tempBorderRadius: 4
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left"
+                                                                                horizontalAlign: "left",
+                                                                                mobileHorizontalAlign: "center"
                                                                             }
                                                                         }
                                                                     ],
@@ -670,9 +665,6 @@ resolve: {
                                             paddingTop: 0,
                                             verticalAlign: "center",
                                             bgColorPalette: "color3",
-                                            mobileBgColorPalette: "color3",
-                                            mobileBgColorHex: "#239ddb",
-                                            mobileBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -793,7 +785,6 @@ resolve: {
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
                                                                                             tempBorderRadius: 4,
-                                                                                            mobileBorderRadius: 4,
                                                                                             borderColorPalette: "color8",
                                                                                             tempBorderColorPalette: "color8",
                                                                                             borderColorHex: "#ffffff",
@@ -802,7 +793,8 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "right"
+                                                                                horizontalAlign: "right",
+                                                                                mobileHorizontalAlign: "center"
                                                                             }
                                                                         }
                                                                     ],
@@ -839,7 +831,6 @@ resolve: {
                                                                                             imageWidth: 444,
                                                                                             imageHeight: 620,
                                                                                             height: 87,
-                                                                                            mobileHeight: 87,
                                                                                             mobileResize: 60
                                                                                         }
                                                                                     }
@@ -875,10 +866,7 @@ resolve: {
                                             paddingRight: 0,
                                             paddingBottom: 0,
                                             verticalAlign: "center",
-                                            mobileBgColorHex: "#eef0f2",
-                                            mobileBgColorOpacity: 0.1,
                                             bgColorPalette: "color6",
-                                            mobileBgColorPalette: "color6",
                                             tempBgColorOpacity: 0.1,
                                             margin: 15,
                                             marginTop: 15,
@@ -888,9 +876,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

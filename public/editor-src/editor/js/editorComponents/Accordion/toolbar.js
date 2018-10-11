@@ -13,15 +13,6 @@ export function getItemsForDesktop(v) {
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
-
   // ...
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
   const { hex: colorHex } = getOptionColor(v, "color");
@@ -75,12 +66,7 @@ export function getItemsForDesktop(v) {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },
@@ -542,8 +528,7 @@ export function getItemsForMobile(v) {
     mobileFontWeight,
     mobileLineHeight,
     mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
     {
@@ -611,7 +596,10 @@ export function getItemsForMobile(v) {
                   choices: getWeightChoices(fontFamily),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
-                    onChangeTypography({ mobileFontWeight: newMobileFontWeight }, v)
+                    onChangeTypography(
+                      { mobileFontWeight: newMobileFontWeight },
+                      v
+                    )
                 },
                 {
                   id: "mobileLetterSpacing",

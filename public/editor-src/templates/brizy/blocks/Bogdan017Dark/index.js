@@ -105,8 +105,6 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
-                                                                                mobileSize: "small",
-                                                                                mobileCustomSize: 32,
                                                                                 name: "pin-add",
                                                                                 colorHex: "#ffffff",
                                                                                 colorPalette: "",
@@ -156,8 +154,6 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
-                                                                                mobileSize: "small",
-                                                                                mobileCustomSize: 32,
                                                                                 name: "mobile-button",
                                                                                 colorHex: "#ffffff",
                                                                                 colorPalette: "",
@@ -208,8 +204,6 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
-                                                                                mobileSize: "small",
-                                                                                mobileCustomSize: 32,
                                                                                 name: "at-sign",
                                                                                 colorHex: "#ffffff",
                                                                                 colorPalette: "",
@@ -245,9 +239,6 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
                                             bgColorOpacity: 0.1,
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
-                                            mobileBgColorOpacity: 0.1,
                                             tempBgColorOpacity: 0.1,
                                             borderRadiusType: "ungrouped",
                                             borderTopLeftRadius: 10,
@@ -277,8 +268,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -318,8 +308,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20,
-                                                                    mobileHeight: 20
+                                                                    height: 20
                                                                 }
                                                             }
                                                         ]
@@ -332,9 +321,6 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
                                             bgColorOpacity: 0.1,
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
-                                            mobileBgColorOpacity: 0.1,
                                             tempBgColorOpacity: 0.1,
                                             borderRadiusType: "ungrouped",
                                             borderTopRightRadius: 10,
@@ -346,9 +332,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

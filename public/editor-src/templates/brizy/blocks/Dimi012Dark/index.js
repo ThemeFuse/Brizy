@@ -161,8 +161,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10,
-                                                                    mobileHeight: 10
+                                                                    height: 10
                                                                 }
                                                             }
                                                         ]
@@ -329,8 +328,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10,
-                                                                    mobileHeight: 10
+                                                                    height: 10
                                                                 }
                                                             }
                                                         ]
@@ -497,8 +495,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10,
-                                                                    mobileHeight: 10
+                                                                    height: 10
                                                                 }
                                                             }
                                                         ]
@@ -580,9 +577,6 @@ resolve: {
                                             marginLeft: 15,
                                             bgColorHex: "#ffffff",
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
-                                            mobileBgColorOpacity: 1,
                                             borderColorPalette: "color7",
                                             margin: 15,
                                             marginTop: 15,
@@ -674,8 +668,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10,
-                                                                    mobileHeight: 10
+                                                                    height: 10
                                                                 }
                                                             }
                                                         ]
@@ -760,9 +753,7 @@ resolve: {
                                 ]
                             }
                         }
-                    ],
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1
+                    ]
                 }
             }
         ]

@@ -92,7 +92,6 @@ resolve: {
                                             tempBorderRadiusType: "custom",
                                             borderRadius: 27,
                                             borderColorOpacity: 1,
-                                            mobileBorderRadius: 27,
                                             tempBorderRadius: 27,
                                             hoverBgColorPalette: "color2",
                                             hoverBorderColorPalette: "",
@@ -140,7 +139,6 @@ resolve: {
                                                 "line"
                                             ],
                                             width: 100,
-                                            mobileWidth: 100,
                                             borderColorOpacity: 0.2
                                         }
                                     }
@@ -211,8 +209,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -272,8 +268,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -333,8 +327,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -365,12 +357,7 @@ resolve: {
                     ],
                     bgImageWidth: 1920,
                     bgImageHeight: 920,
-                    bgImageSrc: "5a5fe4398354cf32eb186e6357bd85ea0c7079ad.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 920,
-                    mobileBgImageSrc: "5a5fe4398354cf32eb186e6357bd85ea0c7079ad.jpeg",
-                    mobileBgColorHex: "#ffffff",
-                    mobileBgColorOpacity: 0.9
+                    bgImageSrc: "5a5fe4398354cf32eb186e6357bd85ea0c7079ad.jpeg"
                 }
             }
         ]

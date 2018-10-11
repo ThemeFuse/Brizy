@@ -6,6 +6,6 @@
   "options": ["Option 1", "Option 2"],
   "width": 100,
   "height": 165,
-  "mobileWidth": 100,
-  "mobileHeight": 165
+  "mobileWidth": null,
+  "mobileHeight": null
 }

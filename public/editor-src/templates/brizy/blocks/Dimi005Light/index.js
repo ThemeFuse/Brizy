@@ -23,15 +23,10 @@ resolve: {
                     ],
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     bgImageWidth: 1920,
                     bgImageHeight: 1246,
                     bgImageSrc: "0041b7f7c67b70e3c737c3ce1f44c48cb4ee7a22.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1246,
-                    mobileBgImageSrc: "0041b7f7c67b70e3c737c3ce1f44c48cb4ee7a22.jpeg",
-                    mobileBgColorHex: "#ffffff",
                     items: [
                         {
                             type: "Wrapper",

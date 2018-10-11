@@ -601,8 +601,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 60,
-                                                                    mobileHeight: 60
+                                                                    height: 60
                                                                 }
                                                             }
                                                         ]
@@ -910,8 +909,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 28,
-                                                                    mobileHeight: 28
+                                                                    height: 28
                                                                 }
                                                             }
                                                         ]

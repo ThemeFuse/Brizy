@@ -24,6 +24,7 @@ import {
 } from "./styles";
 import defaultValue from "./itemDefaultValue.json";
 import { getStore } from "visual/redux/store";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class SectionItem extends EditorComponent {
   static get componentId() {
@@ -138,10 +139,7 @@ class SectionItem extends EditorComponent {
       bgMapZoom,
       bgMapAddress,
       shapeTopType,
-      shapeBottomType,
-      mobileMedia,
-      mobileBgImageSrc,
-      mobileBgColorOpacity
+      shapeBottomType
     } = v;
 
     const meta = this.getMeta(v);
@@ -151,8 +149,8 @@ class SectionItem extends EditorComponent {
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
       parallax: bgAttachment === "animated" && !meta.showSlider,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
+      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
+      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
 
     if (media === "video") {
@@ -161,7 +159,7 @@ class SectionItem extends EditorComponent {
       bgProps.bgVideoLoop = bgVideoLoop === "on";
     }
 
-    if (media === "map" || mobileMedia === "map") {
+    if (media === "map" || mobileSyncOnChange(v, "media") === "map") {
       bgProps.mapAddress = bgMapAddress;
       bgProps.mapZoom = bgMapZoom;
     }

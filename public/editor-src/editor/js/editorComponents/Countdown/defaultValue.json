@@ -22,7 +22,7 @@
   "lineHeight": 1.3,
   "letterSpacing": 0,
 
-  "mobileWidth": 100,
+  "mobileWidth": null,
 
   "mobileFontStyle": "",
   "mobileFontSize": 30,

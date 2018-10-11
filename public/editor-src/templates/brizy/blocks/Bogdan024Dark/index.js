@@ -23,8 +23,6 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -107,8 +105,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 name: "time-alarm",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -219,8 +215,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 name: "check-circle-07",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -324,8 +318,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 name: "divider",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -436,8 +428,6 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
-                                                                                mobileSize: "large",
-                                                                                mobileCustomSize: 64,
                                                                                 name: "blog",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1

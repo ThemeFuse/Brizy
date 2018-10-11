@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const aligns = {
   horizontal: {
@@ -117,8 +118,7 @@ export function styleClassName(v) {
       mobileFontSize,
       mobileLineHeight,
       mobileFontWeight,
-      mobileLetterSpacing,
-      mobileHorizontalAlign
+      mobileLetterSpacing
     } = v;
 
     glamorObj = {
@@ -172,7 +172,7 @@ export function styleClassName(v) {
           letterSpacing: `${mobileLetterSpacing}px`,
 
           "& .brz-tabs__nav": {
-            justifyContent: `${aligns.horizontal[mobileHorizontalAlign]}`
+            justifyContent: `${aligns.horizontal[mobileSyncOnChange(v, "horizontalAlign")]}`
           },
           "& .brz-tabs__nav--button": {
             borderBottomColor: hexToRgba(borderColorHex, borderColorOpacity),
@@ -230,7 +230,6 @@ export function styleCSSVars(v) {
     mobileFontWeight,
     mobileLetterSpacing,
     horizontalAlign,
-    mobileHorizontalAlign,
     paddingType,
     padding,
     paddingTop,
@@ -263,7 +262,7 @@ export function styleCSSVars(v) {
 
     // Align
     "--horizontalAlign": `${aligns.horizontal[horizontalAlign]}`,
-    "--mobileHorizontalAlign": `${aligns.horizontal[mobileHorizontalAlign]}`,
+    "--mobileHorizontalAlign": `${aligns.horizontal[mobileSyncOnChange(v, "horizontalAlign")]}`,
 
     // Border After and Before
     "--afterWidth": `calc(-100vw + ${borderWidth}px)`,

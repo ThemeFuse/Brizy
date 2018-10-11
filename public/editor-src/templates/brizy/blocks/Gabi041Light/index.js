@@ -43,8 +43,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60,
-                                            mobileHeight: 60
+                                            height: 60
                                         }
                                     }
                                 ]
@@ -177,10 +176,7 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "09fd779792857776bfafef2eeffdfbfd82d34503.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1059,
-                    mobileBgImageSrc: "09fd779792857776bfafef2eeffdfbfd82d34503.jpeg"
+                    bgImageSrc: "09fd779792857776bfafef2eeffdfbfd82d34503.jpeg"
                 }
             },
             {
@@ -211,8 +207,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60,
-                                            mobileHeight: 60
+                                            height: 60
                                         }
                                     }
                                 ]
@@ -346,9 +341,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
                     bgImageSrc: "10824bb0ba5a9233850b4cc56a1c1ac653a15c2c.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1059,
-                    mobileBgImageSrc: "10824bb0ba5a9233850b4cc56a1c1ac653a15c2c.jpeg",
                     bgPositionY: 0,
                     mobileBgPositionY: 0
                 }
@@ -381,8 +373,7 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60,
-                                            mobileHeight: 60
+                                            height: 60
                                         }
                                     }
                                 ]
@@ -515,10 +506,7 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "9835db07200dd0e462f2304e7a154fe945b81912.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 1059,
-                    mobileBgImageSrc: "9835db07200dd0e462f2304e7a154fe945b81912.jpeg"
+                    bgImageSrc: "9835db07200dd0e462f2304e7a154fe945b81912.jpeg"
                 }
             }
         ],

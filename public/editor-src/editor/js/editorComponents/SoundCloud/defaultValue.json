@@ -14,6 +14,6 @@
     "https://soundcloud.com/englicious/lord-of-the-flies-audiobook-slightly-sped-up",
   "autoPlay": "off",
 
-  "mobileWidth": 100,
-  "mobileHeight": 175
+  "mobileWidth": null,
+  "mobileHeight": null
 }

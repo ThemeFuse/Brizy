@@ -25,10 +25,6 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 360,
                     bgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
-                    mobileBgImageWidth: 1920,
-                    mobileBgImageHeight: 360,
-                    mobileBgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
-                    mobileBgColorHex: "#142850",
                     items: [
                         {
                             type: "Row",
@@ -137,7 +133,6 @@ resolve: {
                         }
                     ],
                     bgColorOpacity: 0.9,
-                    mobileBgColorOpacity: 0.9,
                     tempBgColorOpacity: 0.9,
                     containerSize: 45,
                     padding: 65,

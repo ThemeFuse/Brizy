@@ -16,8 +16,8 @@
   "colorOpacity": 1,
   "colorPalette": "",
 
-  "mobileWidth": 100,
-  "mobileItemPadding": 15,
+  "mobileWidth": null,
+  "mobileItemPadding": null,
   "mobileToggleMenu": "off",
 
   "mobileFontStyle": "",

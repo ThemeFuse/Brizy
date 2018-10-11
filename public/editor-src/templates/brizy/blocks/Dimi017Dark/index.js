@@ -25,8 +25,6 @@ resolve: {
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
                     bgAttachment: "animated",
-                    mobileBgColorHex: "#191b21",
-                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -124,7 +122,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "center"
                                                     }
                                                 }
                                             ],
@@ -147,8 +146,6 @@ resolve: {
                                             marginTop: 25,
                                             marginBottom: 25,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
                                             borderColorPalette: "color7",
                                             paddingLeft: 80,
                                             paddingRight: 80
@@ -180,7 +177,6 @@ resolve: {
                                                                     imageHeight: 1920,
                                                                     height: 70,
                                                                     mobileResize: 80,
-                                                                    mobileHeight: 70,
                                                                     mobilePositionY: 68,
                                                                     mobilePositionX: 63,
                                                                     positionY: 62,
@@ -210,8 +206,6 @@ resolve: {
                                             marginTop: 25,
                                             marginBottom: 25,
                                             bgColorPalette: "color8",
-                                            mobileBgColorPalette: "color8",
-                                            mobileBgColorHex: "#ffffff",
                                             borderColorPalette: "color7"
                                         }
                                     }

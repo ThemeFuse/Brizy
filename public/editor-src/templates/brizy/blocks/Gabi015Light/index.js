@@ -117,8 +117,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150,
-                                                                    mobileHeight: 150
+                                                                    height: 150
                                                                 }
                                                             }
                                                         ]
@@ -222,8 +221,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150,
-                                                                    mobileHeight: 150
+                                                                    height: 150
                                                                 }
                                                             }
                                                         ]
@@ -243,10 +241,7 @@ resolve: {
                                             paddingLeft: 100,
                                             bgImageWidth: 1280,
                                             bgImageHeight: 1920,
-                                            bgImageSrc: "82113f8951f40b7fde688919813e23358e0d2217.jpeg",
-                                            mobileBgImageWidth: 1280,
-                                            mobileBgImageHeight: 1920,
-                                            mobileBgImageSrc: "82113f8951f40b7fde688919813e23358e0d2217.jpeg"
+                                            bgImageSrc: "82113f8951f40b7fde688919813e23358e0d2217.jpeg"
                                         }
                                     },
                                     {
@@ -270,8 +265,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150,
-                                                                    mobileHeight: 150
+                                                                    height: 150
                                                                 }
                                                             }
                                                         ]
@@ -375,8 +369,7 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150,
-                                                                    mobileHeight: 150
+                                                                    height: 150
                                                                 }
                                                             }
                                                         ]
@@ -396,10 +389,7 @@ resolve: {
                                             paddingLeft: 100,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
-                                            bgImageSrc: "51099d3339e6661e5c487fd385a353cb42f95196.jpeg",
-                                            mobileBgImageWidth: 1920,
-                                            mobileBgImageHeight: 1280,
-                                            mobileBgImageSrc: "51099d3339e6661e5c487fd385a353cb42f95196.jpeg"
+                                            bgImageSrc: "51099d3339e6661e5c487fd385a353cb42f95196.jpeg"
                                         }
                                     }
                                 ]

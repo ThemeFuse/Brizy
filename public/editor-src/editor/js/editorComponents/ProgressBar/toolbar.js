@@ -3,7 +3,9 @@ import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import { getOptionColor } from "visual/utils/options";
 import {
   onChangeTypography,
-  onChangeTypographyMobile
+  onChangeTypographyMobile,
+  tabletSyncOnChange,
+  mobileSyncOnChange
 } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 
@@ -12,15 +14,6 @@ export function getItemsForDesktop(v) {
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
-
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   // ...
   const maxBorderRadius = Math.round(
@@ -99,11 +92,7 @@ export function getItemsForDesktop(v) {
             value: v.borderRadius
           },
           onChange: ({value: borderRadius}) => ({
-            borderRadius,
-            mobileBorderRadius:
-              v.borderRadius === v.mobileBorderRadius
-                ? borderRadius
-                : v.mobileBorderRadius
+            borderRadius
           })
         }*/
       ]
@@ -155,12 +144,7 @@ export function getItemsForDesktop(v) {
                   value: fontStyle,
                   onChange: newFontStyle => {
                     return {
-                      fontStyle: newFontStyle,
-
-                      mobileFontStyle:
-                        fontStyle === mobileFontStyle && mobileFontStyle !== ""
-                          ? newFontStyle
-                          : mobileFontStyle
+                      fontStyle: newFontStyle
                     };
                   }
                 },
@@ -423,8 +407,7 @@ export function getItemsForDesktop(v) {
           },
           onChange: ({ value: width }) => {
             return {
-              width,
-              mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
+              width
             };
           }
         }
@@ -559,7 +542,7 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileWidth
+            value: mobileSyncOnChange(v, "width")
           },
           onChange: ({ value: mobileWidth }) => {
             return {
