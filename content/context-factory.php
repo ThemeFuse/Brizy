@@ -18,6 +18,9 @@ class Brizy_Content_ContextFactory {
 	 */
 	static public function createContext( $project, $brizy_post, $wp_post, $contentHtml ) {
 		$context = new Brizy_Content_Context( $project, $brizy_post, $wp_post, $contentHtml );
+
+		$context = apply_filters( 'brizy_dynamic_content_context_create', $context, $project, $brizy_post, $wp_post, $contentHtml );
+
 		return $context;
 	}
 }
