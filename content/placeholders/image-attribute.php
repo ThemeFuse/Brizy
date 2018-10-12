@@ -29,7 +29,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 			if ( isset( $attributes['uid'] ) ) {
 				$attachmentId = $this->getAttachmentIdByByUid( $attributes['uid'], $context );
 			} elseif ( isset( $attributes['placeholder'] ) ) {
-				$attachmentId = $this->getAttachmentIdByPlaceholderName( $attributes['placeholder'], $context );
+				$attachmentId = $this->getAttachmentIdByPlaceholderName( $attributes['placeholder'], $context, $contentPlaceholder );
 			}
 
 			if ( $attachmentId ) {
@@ -44,10 +44,11 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 	/**
 	 * @param $placeholderName
 	 * @param Brizy_Content_Context $context
+	 * @param Brizy_Content_ContentPlaceholder $contentPlaceholder
 	 *
-	 * @return array|int|null|string
+	 * @return int|mixed|null|string
 	 */
-	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context ) {
+	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder  ) {
 		$attachmentId = null;
 
 		$provider = $context->getProvider();
@@ -55,7 +56,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		$placeholder = $provider->getPlaceholder( $placeholderName );
 
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
-			$attachmentId = $placeholder->getAttachmentId( $context );
+			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
 		}
 
 		return $attachmentId;
