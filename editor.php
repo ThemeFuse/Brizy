@@ -108,7 +108,14 @@ class Brizy_Editor {
 	}
 
 	public function loadCompatibilityClasses() {
-		new Brizy_Compatibilities_Gutenberg();
+
+		if ( function_exists( 'gutenberg_init' ) ) {
+			new Brizy_Compatibilities_Gutenberg();
+		}
+
+		if ( function_exists( 'autoptimize' ) ) {
+			new Brizy_Compatibilities_Autoptimize();
+		}
 	}
 
 	/**
