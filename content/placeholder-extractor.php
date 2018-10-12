@@ -36,7 +36,7 @@ class Brizy_Content_PlaceholderExtractor {
 	public function extract() {
 
 		$placeholders = array();
-		$expression   = "/(?<placeholder>{{\s*(?<placeholderName>.+?)(?<attributes>(?:\s+)((?:\w+='(?:.[^']*|)'\s*)*))?}}(?:(?<content>.*?){{\s*end_(\g{placeholderName})\s*}})?)/ims";
+		$expression   = "/(?<placeholder>{{\s*(?<placeholderName>.+?)(?<attributes>(?:\s+)((?:\w+\s*=\s*'(?:.[^']*|)'\s*)*))?}}(?:(?<content>.*?){{\s*end_(\g{placeholderName})\s*}})?)/ims";
 
 		$matches = array();
 
@@ -78,7 +78,7 @@ class Brizy_Content_PlaceholderExtractor {
 		$attrString  = trim( $attributeString );
 		$attrMatches = array();
 		$attributes  = array();
-		preg_match_all( "/(\w+)='([^']*)'/mi", $attrString, $attrMatches );
+		preg_match_all( "/(\w+)\s*=\s*'([^']*)'/mi", $attrString, $attrMatches );
 
 		if ( isset( $attrMatches[0] ) && is_array( $attrMatches[0] ) ) {
 			foreach ( $attrMatches[1] as $i => $name ) {

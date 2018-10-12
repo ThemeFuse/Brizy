@@ -22,7 +22,8 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	public function getAllPlaceholders() {
 
 		return array(
-			new Brizy_Content_Placeholders_ImageAttributes( 'Internal Image Attributes', 'brizy_dc_image_attributes' )
+			new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', 'brizy_dc_image_title' ),
+			new Brizy_Content_Placeholders_ImageAltAttribute( 'Internal Alt Attributes', 'brizy_dc_image_alt' )
 		);
 	}
 }
