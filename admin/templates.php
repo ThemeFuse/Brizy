@@ -568,7 +568,7 @@ class Brizy_Admin_Templates {
 
 		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
 
-		echo $compiled_page->get_body();
+		echo do_shortcode( $compiled_page->get_body() );
 	}
 
 	/**
