@@ -144,7 +144,7 @@ class Brizy_Editor_Project implements Serializable {
 			'created'       => new DateTime(),
 			'updated'       => new DateTime(),
 			'languages'     => array(),
-			'pluginVersion'       => BRIZY_VERSION,
+			'pluginVersion' => BRIZY_VERSION,
 			'editorVersion' => BRIZY_EDITOR_VERSION,
 			'signature'     => Brizy_Editor_Signature::get(),
 		);
@@ -230,6 +230,25 @@ class Brizy_Editor_Project implements Serializable {
 		$this->post->post_content = md5( serialize( $this->storage->get_storage() ) );
 		wp_update_post( $this->post );
 	}
+
+
+	/**
+	 * @param $key
+	 */
+	public function removeMetaValue( $key ) {
+
+		if ( is_null( $key ) ) {
+			throw new InvalidArgumentException( 'The key parameter should not be null' );
+		}
+
+		$this->storage->delete( $key );
+
+		// create project revision
+		// md5 it to make sure no one will use this data-- we need it only to make the revision
+		$this->post->post_content = md5( serialize( $this->storage->get_storage() ) );
+		wp_update_post( $this->post );
+	}
+
 
 	/**
 	 * @param $key
