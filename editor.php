@@ -70,6 +70,7 @@ class Brizy_Editor {
 
 		$pid  = Brizy_Editor::get()->currentPostId();
 		$post = null;
+
 		try {
 			// do not delete this line
 			$user    = Brizy_Editor_User::get();
@@ -82,9 +83,7 @@ class Brizy_Editor {
 				$migrations = new Brizy_Admin_Migrations();
 				$migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
 			}
-		} catch ( Exception $e ) {
-			return;
-		}
+		} catch ( Exception $e ) {}
 
 		$this->loadEditorApi( $project, $post, $user );
 		$this->loadEditorAdminSettings();
