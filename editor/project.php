@@ -105,9 +105,9 @@ class Brizy_Editor_Project implements Serializable {
 		global $wpdb;
 
 		$row = $wpdb->get_results(
-			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} p 
-									JOIN {$wpdb->postmeta} pm ON p.ID=pm.post_id  
-									WHERE p.post_type = %s  ORDER BY ID DESC LIMIT 1 ", self::BRIZY_PROJECT ),
+			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} p
+									WHERE p.post_type = %s and p.post_status='publish' 
+									ORDER BY ID DESC LIMIT 1 ", self::BRIZY_PROJECT ),
 			OBJECT
 		);
 
@@ -272,7 +272,12 @@ class Brizy_Editor_Project implements Serializable {
 		return $this->api_project;
 	}
 
-
+	/**
+	 * @return WP_Post
+	 */
+	public function getWpPost() {
+		return $this->post;
+	}
 
 // =======================================================================================================================================
 // =======================================================================================================================================
