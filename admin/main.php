@@ -433,23 +433,28 @@ class Brizy_Admin_Main {
 			$projectData = json_decode( base64_decode( $projectMeta['globals'] ) );
 
 			// merge savedBlocks
-			$currentProjectGlobals->project->savedBlocks = array_merge( (array) $currentProjectGlobals->project->savedBlocks, (array) $projectData->project->savedBlocks );
+			$currentProjectGlobals->project->savedBlocks = array_merge(
+				(array) ( isset( $currentProjectGlobals->project->savedBlocks ) ? $currentProjectGlobals->project->savedBlocks : array() ),
+				(array) ( isset( $projectData->project->savedBlocks ) ? $projectData->project->savedBlocks : array() ) );
 
 			// merge global blocks
-			$currentProjectGlobals->project->globalBlocks = (object) array_merge( (array) $currentProjectGlobals->project->globalBlocks, (array) $projectData->project->globalBlocks );
+			$currentProjectGlobals->project->globalBlocks = (object) array_merge(
+				(array) ( isset( $currentProjectGlobals->project->globalBlocks ) ? $currentProjectGlobals->project->globalBlocks : array() ),
+				(array) ( isset( $projectData->project->globalBlocks ) ? $projectData->project->globalBlocks : array() )
+			);
 
 			// MERGE STYLES
 			// 1. merge extra fonts
 			$currentProjectGlobals->project->extraFonts = array_unique(
 				array_merge(
-					(array) $currentProjectGlobals->project->extraFonts,
-					(array) $projectData->project->extraFonts
+					(array) ( isset( $currentProjectGlobals->project->extraFonts ) ? $currentProjectGlobals->project->extraFonts : array() ),
+					(array) ( isset( $projectData->project->extraFonts ) ? $projectData->project->extraFonts : array() )
 				)
 			);
 			// 2. merge extra fonts styles
 			$currentProjectGlobals->project->styles->_extraFontStyles = array_merge(
-				(array) $currentProjectGlobals->project->styles->_extraFontStyles,
-				(array) $projectData->project->styles->_extraFontStyles
+				(array) ( isset( $currentProjectGlobals->project->styles->_extraFontStyles ) ? $currentProjectGlobals->project->styles->_extraFontStyles : array() ),
+				(array) ( isset( $projectData->project->styles->_extraFontStyles ) ? $projectData->project->styles->_extraFontStyles : array() )
 			);
 
 			$selected                                          = $projectData->project->styles->_selected;
