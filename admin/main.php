@@ -66,6 +66,7 @@ class Brizy_Admin_Main {
 		add_filter( 'save_post', array( $this, 'save_post' ), 10, 2 );
 
 		add_filter( 'wp_import_existing_post', array( $this, 'handleNewProjectPostImport' ), 10, 2 );
+		add_filter( 'wp_import_post_meta', array( $this, 'handleNewProjectMetaImport' ), 10, 3 );
 	}
 
 	/**
@@ -411,11 +412,6 @@ class Brizy_Admin_Main {
 			$currentProjectPostId  = $currentProject->getWpPost()->ID;
 			$currentProjectStorage = Brizy_Editor_Storage_Project::instance( $currentProjectPostId );
 
-			// create project data backup
-			$data = $currentProjectStorage->get_storage();
-			update_post_meta( $currentProjectPostId, 'brizy-project-import-backup-' . md5( time() ), $data );
-			//---------------------------------------------------------
-
 			$projectMeta = null;
 
 			foreach ( $post['postmeta'] as $meta ) {
@@ -461,11 +457,24 @@ class Brizy_Admin_Main {
 			$currentProjectGlobals->project->styles->_selected = $selected;
 			$currentProjectGlobals->project->styles->$selected = $projectData->project->styles->$selected;
 
+			// create project data backup
+			$data = $currentProjectStorage->get_storage();
+			update_post_meta( $currentProjectPostId, 'brizy-project-import-backup-' . md5( time() ), $data );
+			//---------------------------------------------------------
+
 			$currentProject->setGlobals( $currentProjectGlobals );
 
 			return $currentProjectPostId;
 		}
 
 		return $existing;
+	}
+
+	public function handleNewProjectMetaImport( $postMeta, $post_id, $post ) {
+		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
+			return null;
+		}
+
+		return $postMeta;
 	}
 }
