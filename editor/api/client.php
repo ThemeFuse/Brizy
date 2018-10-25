@@ -191,7 +191,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		$body             = apply_filters('brizy_compiler_params', array(
 			'template_slug'         => 'brizy',
 			'template_version'      => $template_version,
-			'template_download_url' => $url_builder->external_asset_url( '/visual/export.js' )."",
+			'download_url'          => 'https://static.brizy.io',
 			'config_json'           => json_encode( $config ), // ???
 			'pages_json'            => json_encode( array(
 				array(
