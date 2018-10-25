@@ -65,7 +65,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$postId = (int) $this->param( 'post' );
 
 		if ( ! $postId ) {
-			return wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
+			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
 
 		$rules = $this->manager->getRules( $postId );
@@ -82,11 +82,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$postId = (int) $this->param( 'post' );
 
 		if ( ! $postId ) {
-			return wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
+			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
 
 		$ruleData = $this->param( 'rule' );
-		$rule = Brizy_Admin_Rule::createFromRequestData($ruleData);
+		$rule     = Brizy_Admin_Rule::createFromRequestData($ruleData);
 
 		// validate rule
 		$ruleSet = $this->manager->getAllRulesSet();
