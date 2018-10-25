@@ -47,7 +47,7 @@ class Brizy_Admin_Main {
 				'action_change_template'
 			) ); // action to change template from editor
 
-            add_action( 'edit_form_after_title', array(
+			add_action( 'edit_form_after_title', array(
 				$this,
 				'action_add_enable_disable_buttons'
 			) ); // add button to enable disable editor
@@ -64,6 +64,9 @@ class Brizy_Admin_Main {
 		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
 
 		add_filter( 'save_post', array( $this, 'save_post' ), 10, 2 );
+
+		add_filter( 'wp_import_existing_post', array( $this, 'handleNewProjectPostImport' ), 10, 2 );
+		add_filter( 'wp_import_post_meta', array( $this, 'handleNewProjectMetaImport' ), 10, 3 );
 	}
 
 	/**
@@ -398,5 +401,80 @@ class Brizy_Admin_Main {
 		}
 
 		exit;
+	}
+
+	public function handleNewProjectPostImport( $existing, $post ) {
+
+		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
+
+			$currentProject        = Brizy_Editor_Project::get();
+			$currentProjectGlobals = $currentProject->getGlobals();
+			$currentProjectPostId  = $currentProject->getWpPost()->ID;
+			$currentProjectStorage = Brizy_Editor_Storage_Project::instance( $currentProjectPostId );
+
+			$projectMeta = null;
+
+			foreach ( $post['postmeta'] as $meta ) {
+				if ( $meta['key'] == 'brizy-project' ) {
+					$projectMeta = maybe_unserialize( $meta['value'] );
+					break;
+				}
+			}
+
+			if ( ! $projectMeta ) {
+				// force import if the project data is not found in current project.
+				return 0;
+			}
+
+			$projectData = json_decode( base64_decode( $projectMeta['globals'] ) );
+
+			// merge savedBlocks
+			$currentProjectGlobals->project->savedBlocks = array_merge(
+				(array) ( isset( $currentProjectGlobals->project->savedBlocks ) ? $currentProjectGlobals->project->savedBlocks : array() ),
+				(array) ( isset( $projectData->project->savedBlocks ) ? $projectData->project->savedBlocks : array() ) );
+
+			// merge global blocks
+			$currentProjectGlobals->project->globalBlocks = (object) array_merge(
+				(array) ( isset( $currentProjectGlobals->project->globalBlocks ) ? $currentProjectGlobals->project->globalBlocks : array() ),
+				(array) ( isset( $projectData->project->globalBlocks ) ? $projectData->project->globalBlocks : array() )
+			);
+
+			// MERGE STYLES
+			// 1. merge extra fonts
+			$currentProjectGlobals->project->extraFonts = array_unique(
+				array_merge(
+					(array) ( isset( $currentProjectGlobals->project->extraFonts ) ? $currentProjectGlobals->project->extraFonts : array() ),
+					(array) ( isset( $projectData->project->extraFonts ) ? $projectData->project->extraFonts : array() )
+				)
+			);
+			// 2. merge extra fonts styles
+			$currentProjectGlobals->project->styles->_extraFontStyles = array_merge(
+				(array) ( isset( $currentProjectGlobals->project->styles->_extraFontStyles ) ? $currentProjectGlobals->project->styles->_extraFontStyles : array() ),
+				(array) ( isset( $projectData->project->styles->_extraFontStyles ) ? $projectData->project->styles->_extraFontStyles : array() )
+			);
+
+			$selected                                          = $projectData->project->styles->_selected;
+			$currentProjectGlobals->project->styles->_selected = $selected;
+			$currentProjectGlobals->project->styles->$selected = $projectData->project->styles->$selected;
+
+			// create project data backup
+			$data = $currentProjectStorage->get_storage();
+			update_post_meta( $currentProjectPostId, 'brizy-project-import-backup-' . md5( time() ), $data );
+			//---------------------------------------------------------
+
+			$currentProject->setGlobals( $currentProjectGlobals );
+
+			return $currentProjectPostId;
+		}
+
+		return $existing;
+	}
+
+	public function handleNewProjectMetaImport( $postMeta, $post_id, $post ) {
+		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
+			return null;
+		}
+
+		return $postMeta;
 	}
 }

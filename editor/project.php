@@ -105,9 +105,9 @@ class Brizy_Editor_Project implements Serializable {
 		global $wpdb;
 
 		$row = $wpdb->get_results(
-			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} p 
-									JOIN {$wpdb->postmeta} pm ON p.ID=pm.post_id  
-									WHERE p.post_type = %s  ORDER BY ID DESC LIMIT 1 ", self::BRIZY_PROJECT ),
+			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} p
+									WHERE p.post_type = %s and p.post_status='publish' 
+									ORDER BY ID DESC LIMIT 1 ", self::BRIZY_PROJECT ),
 			OBJECT
 		);
 
@@ -144,7 +144,7 @@ class Brizy_Editor_Project implements Serializable {
 			'created'       => new DateTime(),
 			'updated'       => new DateTime(),
 			'languages'     => array(),
-			'pluginVersion'       => BRIZY_VERSION,
+			'pluginVersion' => BRIZY_VERSION,
 			'editorVersion' => BRIZY_EDITOR_VERSION,
 			'signature'     => Brizy_Editor_Signature::get(),
 		);
@@ -231,6 +231,25 @@ class Brizy_Editor_Project implements Serializable {
 		wp_update_post( $this->post );
 	}
 
+
+	/**
+	 * @param $key
+	 */
+	public function removeMetaValue( $key ) {
+
+		if ( is_null( $key ) ) {
+			throw new InvalidArgumentException( 'The key parameter should not be null' );
+		}
+
+		$this->storage->delete( $key );
+
+		// create project revision
+		// md5 it to make sure no one will use this data-- we need it only to make the revision
+		$this->post->post_content = md5( serialize( $this->storage->get_storage() ) );
+		wp_update_post( $this->post );
+	}
+
+
 	/**
 	 * @param $key
 	 *
@@ -253,7 +272,12 @@ class Brizy_Editor_Project implements Serializable {
 		return $this->api_project;
 	}
 
-
+	/**
+	 * @return WP_Post
+	 */
+	public function getWpPost() {
+		return $this->post;
+	}
 
 // =======================================================================================================================================
 // =======================================================================================================================================

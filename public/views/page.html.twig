@@ -1,4 +1,5 @@
 {% set assetsUrl = editorData.urls.assets %}
+{% set templateFontsUrl = editorData.urls.templateFonts %}
 {% spaceless %}
 <!DOCTYPE html>
 <html lang="en">
@@ -74,6 +75,13 @@
 
               document.body.innerHTML = html;
             }
+          })();
+        </script>
+        <script>
+          (function() {
+            var style = document.createElement("style");
+            style.innerHTML = "@font-face{font-family:'Nucleo Outline';src:url('{{ templateFontsUrl }}/a');src:url('{{ templateFontsUrl }}/a') format('embedded-opentype'),url('{{ templateFontsUrl }}/b') format('woff2'),url('{{ templateFontsUrl }}/c') format('woff'),url('{{ templateFontsUrl }}/d') format('truetype');font-weight:400;font-style:normal}@font-face{font-family:'Nucleo Glyph';src:url('{{ templateFontsUrl }}/a1');src:url('{{ templateFontsUrl }}/a1') format('embedded-opentype'),url('{{ templateFontsUrl }}/b1') format('woff2'),url('{{ templateFontsUrl }}/c1') format('woff'),url('{{ templateFontsUrl }}/d1') format('truetype');font-weight:400;font-style:normal}";
+            document.head.appendChild(style);
           })();
         </script>
         <div class="brz-ed-page-curtain"><div class="brz-ed-page-spinner"></div></div>

@@ -70,6 +70,7 @@ class Brizy_Editor {
 
 		$pid  = Brizy_Editor::get()->currentPostId();
 		$post = null;
+
 		try {
 			// do not delete this line
 			$user    = Brizy_Editor_User::get();
@@ -82,9 +83,7 @@ class Brizy_Editor {
 				$migrations = new Brizy_Admin_Migrations();
 				$migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
 			}
-		} catch ( Exception $e ) {
-			return;
-		}
+		} catch ( Exception $e ) {}
 
 		$this->loadEditorApi( $project, $post, $user );
 		$this->loadEditorAdminSettings();
@@ -108,10 +107,16 @@ class Brizy_Editor {
 	}
 
 	public function loadCompatibilityClasses() {
-		new Brizy_Compatibilities_Gutenberg();
-
 		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
 			new Brizy_Compatibilities_Wtc();
+    }
+
+		if ( function_exists( 'gutenberg_init' ) ) {
+			new Brizy_Compatibilities_Gutenberg();
+		}
+
+		if ( function_exists( 'autoptimize' ) ) {
+			new Brizy_Compatibilities_Autoptimize();
 		}
 	}
 
