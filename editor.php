@@ -107,6 +107,9 @@ class Brizy_Editor {
 	}
 
 	public function loadCompatibilityClasses() {
+		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
+			new Brizy_Compatibilities_Wtc();
+    }
 
 		if ( function_exists( 'gutenberg_init' ) ) {
 			new Brizy_Compatibilities_Gutenberg();
