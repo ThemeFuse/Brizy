@@ -1,17 +1,18 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import SortableElement from "visual/component-new/Sortable/SortableElement";
 import SortableHandle from "visual/component-new/Sortable/SortableHandle";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import FloatingButton from "visual/component-new/FloatingButton";
 import Animation from "visual/component-new/Animation";
+import { Roles, currentUserRole } from "visual/component-new/Roles";
 import Toolbar from "visual/component-new/Toolbar";
-import { Roles } from "visual/component-new/Roles";
-import Items from "./items";
-import { percentageToPixels } from "visual/utils/meta";
-import { currentUserRole } from "visual/component-new/Roles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
+import ContextMenu from "visual/component-new/ContextMenu";
+import contextMenuConfig from "./contextMenu";
+import { percentageToPixels } from "visual/utils/meta";
 import {
   styleClassName,
   containerStyleClassName,
@@ -204,20 +205,31 @@ class Wrapper extends EditorComponent {
         : null;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      containerClassName: containerStyleClassName(v),
-      meta: this.getMeta(v),
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
-        allowExtend: true,
-        extendFilter: toolbarExtendFilter
-      }),
       itemProps: {
+        meta: this.getMeta(v),
+        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
+          allowExtend: true,
+          extendFilter: toolbarExtendFilter
+        }),
         onToolbarEnter: this.handleToolbarEnter,
         onToolbarLeave: this.handleToolbarLeave,
         extendParentToolbar: this.handleExtendParentToolbar
       }
     });
 
-    return <Items {...itemsProps} />;
+    const componentId =
+      v.items[0].type === "Posts" || v.items[0].type === "Carousel"
+        ? "Row"
+        : v.items[0].type;
+    return (
+      <ContextMenu
+        {...this.makeContextMenuProps(contextMenuConfig, { componentId })}
+      >
+        <div className={containerStyleClassName(v)}>
+          <EditorArrayComponent {...itemsProps} />
+        </div>
+      </ContextMenu>
+    );
   }
 
   renderForEdit(v) {

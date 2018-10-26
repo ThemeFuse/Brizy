@@ -38,6 +38,11 @@ class Draggable extends React.Component {
   };
 
   handleMouseDown = e => {
+    // left click only
+    if (e.button !== 0) {
+      return;
+    }
+
     global.BRZ_IS_DRAGGING = true;
 
     this.isMouseDown = true;

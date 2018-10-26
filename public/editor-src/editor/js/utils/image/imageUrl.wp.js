@@ -4,7 +4,10 @@ import { objectToQueryString } from "visual/utils/url";
 import nonWPImageUrl, { getFilter } from "./imageUrl.js";
 
 const { pageAttachments } = Config.get("wp");
+const siteUrl = Config.get("urls").site;
+
 const pendingRequests = {};
+const imageUrlPrefix = siteUrl.includes("?") ? `${siteUrl}&` : `${siteUrl}/?`;
 
 export default function imageUrl(
   imageSrc,
@@ -29,7 +32,7 @@ export default function imageUrl(
         brizy_post: Config.get("wp").page
       });
 
-      return `${Config.get("urls").site}/?${queryString}`;
+      return imageUrlPrefix + queryString;
     } else {
       if (!pendingRequests[imageSrc]) {
         pendingRequests[imageSrc] = true;
@@ -50,6 +53,6 @@ export default function imageUrl(
       brizy_post: Config.get("wp").page
     });
 
-    return `${Config.get("urls").site}/?${queryString}`;
+    return imageUrlPrefix + queryString;
   }
 }

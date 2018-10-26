@@ -32,10 +32,10 @@ class EmbedCode extends EditorComponent {
   renderForEdit(v) {
     const { code } = v;
     const content = !code ? (
-      <Placeholder icon="nc-iframe" />
+      <Placeholder icon="iframe" />
     ) : (
       <div
-        className={classnames({ "brz-ed-blocked": IS_EDITOR })}
+        className={classnames({ "brz-blocked": IS_EDITOR })}
         dangerouslySetInnerHTML={{ __html: code }}
       />
     );

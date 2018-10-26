@@ -8,13 +8,15 @@ import ContainerBorder from "visual/component-new/ContainerBorder";
 import FloatingButton from "visual/component-new/FloatingButton";
 import SortableHandle from "visual/component-new/Sortable/SortableHandle";
 import Animation from "visual/component-new/Animation";
-import Toolbar from "visual/component-new/Toolbar";
 import { Roles } from "visual/component-new/Roles";
+import Toolbar from "visual/component-new/Toolbar";
+import * as toolbarConfig from "./toolbar";
+import ContextMenu from "visual/component-new/ContextMenu";
+import contextMenuConfig from "./contextMenu";
 import { wInMobilePage, minWinColumn } from "visual/config/columns";
 import ColumnResizer from "./components/ColumnResizer";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./Items";
-import * as toolbarConfig from "./toolbar";
 import {
   bgStyleClassName,
   bgStyleCSSVars,
@@ -284,9 +286,11 @@ class Column extends EditorComponent {
     };
 
     return (
-      <Background {...bgProps}>
-        <Items {...itemsProps} />
-      </Background>
+      <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+        <Background {...bgProps}>
+          <Items {...itemsProps} />
+        </Background>
+      </ContextMenu>
     );
   }
 

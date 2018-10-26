@@ -44,7 +44,7 @@ class WOOProducts extends EditorComponent {
         <WPShortcode
           name="products"
           attributes={attributes}
-          placeholderIcon="nc-woo-2"
+          placeholderIcon="woo-2"
           placeholderContainerWidth={this.props.meta.desktopW}
           className={styleClassName(v)}
           style={styleCSSVars(v)}

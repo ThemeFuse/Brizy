@@ -10,6 +10,10 @@
 
     &__wrap {
       height: 100%;
+
+      & > div {
+        align-items: center;
+      }
     }
   }
   &-clone__item {

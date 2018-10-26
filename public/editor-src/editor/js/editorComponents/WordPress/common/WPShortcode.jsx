@@ -160,7 +160,7 @@ class Inner extends Component {
 
     return shortcodeHTML ? (
       <div
-        className="brz-ed-blocked"
+        className="brz-blocked"
         dangerouslySetInnerHTML={{ __html: shortcodeHTML }}
       />
     ) : (

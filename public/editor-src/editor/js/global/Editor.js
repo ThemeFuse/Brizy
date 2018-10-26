@@ -3,7 +3,7 @@ import { applyFilter } from "visual/utils/filters";
 let components = {};
 let notFoundComponent;
 let blocks = {};
-let templates;
+let templates = {};
 let templateThumbnailUrlHandlers = [];
 let shortcodes = {};
 let styles = [];
@@ -63,16 +63,8 @@ const Editor = {
 
   // templates
 
-  registerTemplates(templatesConfig, { thumbnailUrlHandler } = {}) {
-    if (thumbnailUrlHandler) {
-      templateThumbnailUrlHandlers.push(thumbnailUrlHandler);
-    }
-
-    templates = templatesConfig;
-  },
-
   getTemplates() {
-    return templates;
+    return applyFilter("getTemplates", templates);
   },
 
   getTemplateThumbnailUrlHandlers() {
@@ -96,11 +88,11 @@ const Editor = {
   },
 
   getStyles() {
-    return styles;
+    return applyFilter("getStyles", styles);
   },
 
   getStyle(id) {
-    return styles.find(style => style.id === id);
+    return this.getStyles().find(style => style.id === id);
   }
 };
 

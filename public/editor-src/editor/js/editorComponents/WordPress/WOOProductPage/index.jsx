@@ -27,7 +27,7 @@ class WOOProductPage extends EditorComponent {
         <WPShortcode
           name="product_page"
           attributes={attributes}
-          placeholderIcon="nc-woo-2"
+          placeholderIcon="woo-2"
           className={styleClassName(v)}
           style={styleCSSVars(v)}
           resizerPoints={resizerPoints}

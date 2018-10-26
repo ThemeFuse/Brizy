@@ -93,7 +93,11 @@ class SectionItems extends EditorArrayComponent {
       toolbarExtendSettings
     );
 
-    return { meta, toolbarExtend, showSlider };
+    return {
+      meta,
+      toolbarExtend,
+      showSlider
+    };
   }
 
   renderItemWrapper(item, itemKey) {

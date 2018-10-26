@@ -116,6 +116,20 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                     min: 100,
                     max: 200
                   },
+                  input: {
+                    show: true,
+                    min: 100,
+                    max: 200
+                  },
+                  suffix: {
+                    show: true,
+                    choices: [
+                      {
+                        title: "%",
+                        value: "%"
+                      }
+                    ]
+                  },
                   value: {
                     value: v.zoom
                   },
@@ -131,7 +145,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   value: v.linkLightBox
                 }
               ]
-            },
+            }
           ]
         }
       ]

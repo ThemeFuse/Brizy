@@ -29,6 +29,8 @@ import {
   makeRichTextFontStylesCSS
 } from "visual/utils/fonts";
 import {
+  tabletSyncOnChange,
+  mobileSyncOnChange,
   onChangeTypography,
   onChangeTypographyMobile
 } from "visual/utils/onChange";
@@ -62,6 +64,11 @@ global.Brizy = {
     getWeightChoices,
     makeFontsUrl,
     makeRichTextFontFamiliesCSS,
-    makeRichTextFontStylesCSS
+    makeRichTextFontStylesCSS,
+
+    tabletSyncOnChange,
+    mobileSyncOnChange,
+    onChangeTypography,
+    onChangeTypographyMobile
   }
 };

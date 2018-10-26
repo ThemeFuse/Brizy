@@ -1,18 +1,12 @@
-import Editor from "visual/global/Editor";
+import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
-
-const defaultTemplateThumbnailUrl = template =>
-  assetUrl(`template/img-template-thumbs/${template.id}.jpg`);
+import { applyFilter } from "visual/utils/filters";
 
 export function templateThumbnailUrl(template) {
-  const registeredUrlHandlers = Editor.getTemplateThumbnailUrlHandlers();
+  const configUrl = Config.get("urls").templateThumbnails;
+  const url = configUrl
+    ? `${configUrl}/${template.id}.jpg`
+    : assetUrl(`template/img-template-thumbs/${template.id}.jpg`);
 
-  if (registeredUrlHandlers.length === 0) {
-    return defaultTemplateThumbnailUrl(template);
-  }
-
-  return registeredUrlHandlers.reduce(
-    (acc, f) => template => f(template, acc),
-    defaultTemplateThumbnailUrl
-  )(template);
+  return applyFilter("templateThumbnailUrl", url, template);
 }

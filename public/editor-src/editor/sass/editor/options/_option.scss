@@ -104,6 +104,7 @@
     .brz-ed-option__label {
       flex-basis: 100%;
       color: inherit;
+      font-weight: 600;
       margin: 0;
       margin-left: 9px;
       cursor: pointer;
@@ -120,6 +121,7 @@
     font-family: $font-family-1;
     font-size: $options-item-font-size;
     color: $options-label-color;
+    font-weight: 600;
     flex-basis: auto;
     margin-right: 17px;
     display: flex;

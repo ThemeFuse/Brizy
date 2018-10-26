@@ -44,7 +44,7 @@ class WPSidebar extends EditorComponent {
         <WPShortcode
           name="brizy_sidebar"
           attributes={attributes}
-          placeholderIcon="nc-wp-shortcode"
+          placeholderIcon="wp-shortcode"
           placeholderContainerWidth={this.props.meta.desktopW}
           className={styleClassName(v)}
           style={styleCSSVars(v)}

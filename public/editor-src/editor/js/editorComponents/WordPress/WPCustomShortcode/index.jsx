@@ -22,7 +22,7 @@ class WPCustomShortcode extends EditorComponent {
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
         <WPShortcode
           raw={v.shortcode}
-          placeholderIcon="nc-wp-shortcode"
+          placeholderIcon="wp-shortcode"
           className={styleClassName(v)}
           style={styleCSSVars(v)}
           resizerPoints={resizerPoints}
