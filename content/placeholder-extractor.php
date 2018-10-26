@@ -9,18 +9,25 @@
 class Brizy_Content_PlaceholderExtractor {
 
 	/**
-	 * @var Brizy_Content_Context
+	 * @var BrizyPro_Content_Context
 	 */
 	private $context;
+
+	/**
+	 * @var BrizyPro_Content_Providers_AbstractProvider
+	 */
+	private $provider;
 
 
 	/**
 	 * BrizyPro_Content_PlaceholderExtractor constructor.
 	 *
-	 * @param Brizy_Content_Context $context
+	 * @param BrizyPro_Content_Context $context
+	 * @param BrizyPro_Content_Providers_AbstractProvider $provider
 	 */
-	public function __construct( $context ) {
-		$this->context = $context;
+	public function __construct( $context, $provider ) {
+		$this->context  = $context;
+		$this->provider = $provider;
 	}
 
 	/**
@@ -53,6 +60,11 @@ class Brizy_Content_PlaceholderExtractor {
 				$this->getPlaceholderAttributes( $matches['attributes'][ $i ] ),
 				$matches['content'][ $i ]
 			);
+
+			$hasPlaceholder = $this->provider->getPlaceholder( $placeholder->getName() );
+
+			// ignore unknown placeholders
+			if( !$hasPlaceholder ) continue;
 
 			//$content = str_replace( $placeholder->getPlaceholder(), $placeholder->getUid(), $this->context->getContent(), 1 );
 			$content = $this->context->getContent();

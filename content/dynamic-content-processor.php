@@ -32,7 +32,7 @@ class Brizy_Content_DynamicContentProcessor implements Brizy_Editor_Content_Proc
 		$context = apply_filters( 'brizy_context_create', $context, $this->post->get_wp_post() );
 
 		$placeholderProvider = new Brizy_Content_PlaceholderProvider( $context );
-		$extractor           = new Brizy_Content_PlaceholderExtractor( $context );
+		$extractor           = new Brizy_Content_PlaceholderExtractor( $context, $placeholderProvider );
 
 		$replacer = new Brizy_Content_PlaceholderReplacer( $context, $placeholderProvider, $extractor );
 
