@@ -38,11 +38,13 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 	public function process_external_asset_urls( $content ) {
 
-		$site_url = home_url();
+		$site_url = str_replace( array( 'http://', 'https://' ), '', home_url() );
+
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
 		$project  = Brizy_Editor_Project::get();
 
 		preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $content;

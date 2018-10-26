@@ -16,13 +16,21 @@ class Brizy_Editor {
 	 */
 	private function __construct() {
 
+		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
+
+		try {
+			$this->runMigrations();
+		} catch ( Brizy_Admin_Migrations_UpgradeRequiredException $e ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Please upgrade Brizy to the latest version.' );
+			return;
+		}
+
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
 
 	public function initialize() {
 
 		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 1500 );
-		add_action( 'init', array( $this, 'runMigrations' ), - 1000 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
@@ -32,6 +40,7 @@ class Brizy_Editor {
 		}
 
 		add_filter( "brizy:templates", array( $this, 'filterPublicTemplates' ) );
+
 	}
 
 	public function runMigrations() {
@@ -61,6 +70,7 @@ class Brizy_Editor {
 
 		$pid  = Brizy_Editor::get()->currentPostId();
 		$post = null;
+
 		try {
 			// do not delete this line
 			$user    = Brizy_Editor_User::get();
@@ -73,9 +83,7 @@ class Brizy_Editor {
 				$migrations = new Brizy_Admin_Migrations();
 				$migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
 			}
-		} catch ( Exception $e ) {
-			return;
-		}
+		} catch ( Exception $e ) {}
 
 		$this->loadEditorApi( $project, $post, $user );
 		$this->loadEditorAdminSettings();
@@ -99,7 +107,17 @@ class Brizy_Editor {
 	}
 
 	public function loadCompatibilityClasses() {
-		new Brizy_Compatibilities_Gutenberg();
+		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
+			new Brizy_Compatibilities_Wtc();
+    }
+
+		if ( function_exists( 'gutenberg_init' ) ) {
+			new Brizy_Compatibilities_Gutenberg();
+		}
+
+		if ( function_exists( 'autoptimize' ) ) {
+			new Brizy_Compatibilities_Autoptimize();
+		}
 	}
 
 	/**
@@ -192,7 +210,7 @@ class Brizy_Editor {
 			if ( is_admin() ) {
 				Brizy_Admin_Main::instance();
 				Brizy_Admin_Settings::_init();
-				Brizy_Admin_Flash::instance()->initialize(); // initialize flash
+
 			}
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
@@ -277,13 +295,11 @@ class Brizy_Editor {
 		return $pid;
 	}
 
-	public
-	static function get() {
+	public static function get() {
 		return self::$instance ? self::$instance : self::$instance = new self();
 	}
 
-	public
-	static function is_administrator() {
+	public static function is_administrator() {
 
 		if ( ! is_user_logged_in() ) {
 			return false;
@@ -294,8 +310,7 @@ class Brizy_Editor {
 		return in_array( 'administrator', (array) $user->roles );
 	}
 
-	public
-	static function is_subscriber() {
+	public static function is_subscriber() {
 
 		if ( ! is_user_logged_in() ) {
 			return false;
@@ -306,8 +321,7 @@ class Brizy_Editor {
 		return in_array( 'subscriber', (array) $user->roles );
 	}
 
-	public
-	static function is_user_allowed() {
+	public static function is_user_allowed() {
 
 		if ( ! is_user_logged_in() ) {
 			return false;
@@ -321,62 +335,53 @@ class Brizy_Editor {
 			self::$is_allowed_for_current_user =
 				(
 					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
-				    current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
+					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
 				);
 		}
 
 		return self::$is_allowed_for_current_user;
 	}
 
-	public
-	function get_path(
+	public function get_path(
 		$rel = '/'
 	) {
 
 		return BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . ltrim( $rel, DIRECTORY_SEPARATOR );
 	}
 
-	public
-	function get_url(
+	public function get_url(
 		$rel = ''
 	) {
 		return BRIZY_PLUGIN_URL . "/" . ltrim( $rel, "/" );
 	}
 
-	public
-	function get_domain() {
+	public function get_domain() {
 		return 'brizy';
 	}
 
-	public
-	function get_version() {
+	public function get_version() {
 		return BRIZY_VERSION;
 	}
 
-	public
-	function get_slug() {
+	public function get_slug() {
 		return 'brizy';
 	}
 
-	public
-	function supported_post_types() {
+	public function supported_post_types() {
 		$types = $this->get_post_types();
 
 		return apply_filters( 'brizy_supported_post_types', apply_filters( 'brizy:post_types', $types ) );
 	}
 
-	public
-	function default_supported_post_types() {
+	public function default_supported_post_types() {
 		return array( 'page', 'post' );
 	}
 
-	public
-	function get_name() {
+	public function get_name() {
 		return 'Brizy';
 	}
 
-	protected
-	function get_post_types() {
+	protected function get_post_types() {
 		try {
 			return Brizy_Editor_Storage_Common::instance()->get( self::$settings_key );
 		} catch ( Brizy_Editor_Exceptions_NotFound $exception ) {

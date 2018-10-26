@@ -125,6 +125,7 @@ class Brizy_Editor_Editor_Editor {
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
 				'assets'              => $this->urlBuilder->editor_asset_url(),
 				'pageAssets'          => $this->urlBuilder->page_upload_url(),
+				'templateFonts'       => 'https://app.brizy.io/fonts/public?path='.BRIZY_EDITOR_VERSION,
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ) . "",
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
@@ -180,7 +181,7 @@ class Brizy_Editor_Editor_Editor {
 					'iframeUrl' => $this->urlBuilder->application_form_url(),
 					'apiUrl'    => Brizy_Config::BRIZY_APPLICATION_INTEGRATION_URL,
 					'wpApiUrl'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-					'submitUrl' => set_url_scheme( admin_url( 'admin-ajax.php' ) ) . "?action=brizy_submit_form"
+					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),
 		);

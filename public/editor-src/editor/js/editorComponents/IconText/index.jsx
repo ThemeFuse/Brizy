@@ -1,7 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Cloneable from "../Cloneable";
 import * as toolbarExtendConfigIcon from "./extendToolbarIcon";
 import * as toolbarExtendConfigText from "./extendToolbarText";
 import * as toolbarExtendConfigButton from "./extendToolbarButton";

@@ -66,27 +66,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 		return true;
 	}
 
-	/**
-	 * Make sure the $asset_path is an existing file.
-	 *
-	 * @param $asset_path
-	 * @param $post_id
-	 * @param null $uid
-	 *
-	 * @return bool|int|WP_Error
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function attach_to_post( $asset_path, $post_id, $uid = null ) {
-
-		if ( ! $post_id ) {
-			return false;
-		}
-		if ( ! file_exists( $asset_path ) ) {
-			return false;
-		}
-
-		$bpost = Brizy_Editor_Post::get( $post_id );
-
+	protected function create_attachment( $madia_name, $asset_path, $post_id = null, $uid = null ) {
 		$filetype = wp_check_filetype( $asset_path );
 
 		$attachment = array(
@@ -102,8 +82,8 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			return false;
 		}
 
+		update_post_meta( $attachment_id, 'brizy_external_media_name', $madia_name );
 		update_post_meta( $attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5( $attachment_id . time() ) );
-		update_post_meta( $attachment_id, 'brizy_post_uid', $bpost->get_uid() );
 
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
 			include_once ABSPATH . "/wp-admin/includes/image.php";
@@ -112,8 +92,27 @@ abstract class Brizy_Editor_Asset_StaticFile {
 		$attach_data = wp_generate_attachment_metadata( $attachment_id, $asset_path );
 		wp_update_attachment_metadata( $attachment_id, $attach_data );
 
-
 		return $attachment_id;
+	}
+
+	/**
+	 * @param $attachmentId
+	 * @param $post_id
+	 * @param $madia_name
+	 *
+	 * @return bool
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	public function attach_to_post( $attachmentId, $post_id, $madia_name ) {
+
+		if ( ! $post_id ) {
+			return false;
+		}
+		$bpost = Brizy_Editor_Post::get( $post_id );
+
+		update_post_meta( $attachmentId, 'brizy_post_uid', $bpost->get_uid() );
+
+		return $attachmentId;
 	}
 
 	/**
@@ -125,9 +124,9 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			$content = file_get_contents( $filename );
 
 			// send headers
-			$headers                   = array();
-			$headers['Content-Type']   = $this->get_mime( $filename, 1 );
-			$headers['Cache-Control']  = 'max-age=600';
+			$headers                  = array();
+			$headers['Content-Type']  = $this->get_mime( $filename, 1 );
+			$headers['Cache-Control'] = 'max-age=600';
 
 			foreach ( $headers as $key => $val ) {
 				if ( is_array( $val ) ) {

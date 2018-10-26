@@ -5,6 +5,11 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component-new/Sortable";
 import SortableElement from "visual/component-new/Sortable/SortableElement";
 import { hideToolbar } from "visual/component-new/Toolbar/index";
+import ContextMenu, {
+  ContextMenuExtend
+} from "visual/component-new/ContextMenu";
+import contextMenuConfig from "./contextMenu";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
 
 class Items extends EditorArrayComponent {
@@ -96,32 +101,51 @@ class Items extends EditorArrayComponent {
     );
   }
 
-  renderItemWrapperDiv(item, itemKey) {
+  renderItemWrapperDiv(item, itemKey, itemIndex) {
     const { itemClassName } = this.props;
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
     return (
-      <SortableElement type="shortcode" key={itemKey}>
-        <div className={this.props.itemClassName}>{item}</div>
-      </SortableElement>
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
+        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+          <SortableElement type="shortcode">
+            <div className={itemClassName}>{item}</div>
+          </SortableElement>
+        </ContextMenu>
+      </ContextMenuExtend>
     );
   }
 
-  renderItemWrapperList(item, itemKey) {
+  renderItemWrapperList(item, itemKey, itemIndex) {
     const className = classnames(
       "brz-li brz-list__item",
       this.props.itemClassName
     );
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
     return (
-      <li key={itemKey} className={className}>
-        {item}
-      </li>
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
+        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+          <SortableElement type="shortcode">
+            <li key={itemKey} className={className}>
+              {item}
+            </li>
+          </SortableElement>
+        </ContextMenu>
+      </ContextMenuExtend>
     );
   }
 
   renderItemWrapper(item, itemKey, itemIndex, itemData, items) {
     return this.props.blockType === "div"
-      ? this.renderItemWrapperDiv(item, itemIndex)
-      : this.renderItemWrapperList(item, itemIndex);
+      ? this.renderItemWrapperDiv(item, itemKey, itemIndex, itemData, items)
+      : this.renderItemWrapperList(item, itemKey, itemIndex, itemData, items);
   }
 }
 

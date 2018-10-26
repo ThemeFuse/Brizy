@@ -48,6 +48,7 @@ class Brizy_Admin_Templates {
 		if ( is_admin() ) {
 			add_filter( 'post_updated_messages', array( $this, 'filterTemplateMessages' ) );
 			add_action( 'add_meta_boxes', array( $this, 'registerTemplateMetaBox' ), 9 );
+			add_action( 'transition_post_status', array( $this, 'actionTransitionPostStatus' ), 10, 3 );
 			add_action( 'wp_ajax_' . self::RULE_LIST_VEIW, array( $this, 'getTemplateRuleBox' ) );
 			add_action( 'wp_ajax_' . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
 			add_filter( 'post_row_actions', array( $this, 'removeRowActions' ), 10, 1 );
@@ -271,7 +272,7 @@ class Brizy_Admin_Templates {
 			                     ->render( 'rules-box.html.twig', $context );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->error( $e->getMessage(), array( 'exception' => $e ) );
-			?>Unable to show the rule box.<?php
+			esc_html_e( 'Unable to show the rule box.', 'brizy' );
 		}
 	}
 
@@ -568,7 +569,7 @@ class Brizy_Admin_Templates {
 
 		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
 
-		echo $compiled_page->get_body();
+		echo do_shortcode( $compiled_page->get_body() );
 	}
 
 	/**
@@ -613,4 +614,46 @@ class Brizy_Admin_Templates {
 
 		return $compiled_page->get_body();
 	}
+
+	/**
+	 * Check for rules conflicts on transition post from trash to another post status.
+     * If we have some conflicts between the rules from the transition post rules and other rules from existing posts,
+     * then we remove conflicting rules from the restored post.
+	 *
+	 * @param string  $new_status  New post status.
+	 * @param string  $old_status  Old post status.
+	 * @param WP_Post $post        Transition post.
+	 */
+	public function actionTransitionPostStatus( $new_status, $old_status, $post ) {
+
+		if ( 'trash' !== $old_status || self::CP_TEMPLATE !== $post->post_type ) {
+			return;
+		}
+
+		$post_id      = $post->ID;
+		$rule_manager = new Brizy_Admin_Rules_Manager();
+		$post_rules   = $rule_manager->getRules( $post_id );
+
+		if ( ! $post_rules ) {
+		    return;
+        }
+
+        $all_rules     = $rule_manager->getAllRulesSet( array( 'post__not_in' => array( $post_id ) ) )->getRules();
+		$has_conflicts = false;
+
+		foreach ( $post_rules as $post_rule ) {
+
+			foreach ( $all_rules as $arule ) {
+
+				if ( $post_rule->isEqual( $arule ) ) {
+					$rule_manager->deleteRule( $post_id, $post_rule->getId() );
+					$has_conflicts = true;
+				}
+			}
+        }
+
+        if ( $has_conflicts ) {
+	        Brizy_Admin_Flash::instance()->add_error( 'Conflict of rules: Some rules have been deleted for restored posts. Please check them.' );
+        }
+    }
 }

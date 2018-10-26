@@ -134,7 +134,7 @@ export default {
   "component": __("component", "brizy"),
 
   // Popover
-  "Add new column": __("Add new column", "brizy"),
+  "Add New Column": __("Add New Column", "brizy"),
   //-> Bg
   "Background": __("Background", "brizy"),
   "Bg Size": __("Bg Size", "brizy"),

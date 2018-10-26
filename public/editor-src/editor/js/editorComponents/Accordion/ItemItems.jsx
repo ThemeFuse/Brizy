@@ -2,6 +2,10 @@ import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component-new/Toolbar/index";
 import Sortable from "visual/component-new/Sortable";
+import Editor from "visual/global/Editor";
+import { ContextMenuExtend } from "visual/component-new/ContextMenu";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
+import { t } from "visual/utils/i18n";
 
 class AccordionItemItems extends EditorArrayComponent {
   static get componentId() {
@@ -47,6 +51,7 @@ class AccordionItemItems extends EditorArrayComponent {
         {
           id: "duplicate",
           type: "button",
+          title: t("Duplicate"),
           icon: "nc-duplicate",
           position: 200,
           onChange: () => {
@@ -56,6 +61,7 @@ class AccordionItemItems extends EditorArrayComponent {
         {
           id: "remove",
           type: "button",
+          title: t("Delete"),
           icon: "nc-trash",
           position: 210,
           onChange: () => {
@@ -68,7 +74,10 @@ class AccordionItemItems extends EditorArrayComponent {
     };
     const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
 
-    return { meta: this.props.meta, toolbarExtend };
+    return {
+      meta: this.props.meta,
+      toolbarExtend
+    };
   }
 
   renderItemsContainer(items) {
@@ -88,6 +97,19 @@ class AccordionItemItems extends EditorArrayComponent {
       >
         {sortableContent}
       </Sortable>
+    );
+  }
+
+  renderItemWrapper(item, itemKey, itemIndex) {
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
+    return (
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
+        {item}
+      </ContextMenuExtend>
     );
   }
 }

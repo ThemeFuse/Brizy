@@ -188,10 +188,10 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		$template_version = BRIZY_EDITOR_VERSION;
 		$url_builder      = new Brizy_Editor_UrlBuilder( $project );
-		$body             = array(
+		$body             = apply_filters('brizy_compiler_params', array(
 			'template_slug'         => 'brizy',
 			'template_version'      => $template_version,
-			'template_download_url' => $url_builder->external_asset_url( '/visual/export.js' )."",
+			'download_url'          => 'https://static.brizy.io',
 			'config_json'           => json_encode( $config ), // ???
 			'pages_json'            => json_encode( array(
 				array(
@@ -202,8 +202,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 			) ), // ???
 			'globals_json'          => $project->getGlobalsAsJson(),
 			'page_id'               => 1
-		);
-
+		));
 		$page = parent::request( $compiler_url, array( 'body' => $body ), 'POST' )->get_response_body();
 
 		$template_context = array(

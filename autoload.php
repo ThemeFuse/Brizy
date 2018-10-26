@@ -35,7 +35,9 @@ function brizy_autoload( $class_name ) {
 		$include_path .= ".php";
 	}
 
-	include_once $include_path;
+	if ( file_exists( $include_path ) ) {
+		include_once $include_path;
+	}
 }
 
 spl_autoload_register( 'brizy_autoload' );

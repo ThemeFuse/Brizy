@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.39<br>
+Stable tag: 1.0.40<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,26 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.40 - 2018-10-26 ###
+* New: Added context (right click) menu for most elements
+* Improved: Button and Icon groups are now vertically centered
+* Improved: Toolbar options styling
+* Improved: Added percentage to Image toolbar zoom option
+* Fixed: Import posts/projects
+* Fixed: Execute do_shortcodes on page content
+* Fixed: Brizy Menu for unsupported posts
+* Fixed: Compatibility fixes for gutemberg, autoptimize and w3-total-cache
+* Fixed: Class autoloader fix
+* Fixed: Updated project API
+* Fixed: Image url problems when using WPML
+* Fixed: Image missing alt and title attributes
+* Fixed: CSS Corrupted file compression issue with Siteground
+* Fixed: Forms stop sending other requests if one is already in progress
+* Fixed: Nucleo icon font issue
+* Fixed: Duplicate media
+* Fixed: Ignore template rules for deleted templates
+* Fixed: Fixed template rules for deleted templates
 
 ### 1.0.39 - 2018-10-11 ###
 * Fixed: Section background image for mobil

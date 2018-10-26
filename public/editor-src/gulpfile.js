@@ -26,49 +26,43 @@ const webpackConfigPro = require("./webpack.config.pro");
 var babel = require("rollup-plugin-babel");
 
 // postcss
-const postcssReporter = require("postcss-reporter");
+const sass = require("@csstools/postcss-sass");
 const postcssSCSS = require("postcss-scss");
-const stylelint = require("stylelint");
 const autoprefixer = require("autoprefixer");
+const clean = require("postcss-clean");
+
+const { argvVars } = require("./build-utils");
 
 // flags
-const argv = require("minimist")(process.argv.slice(2));
-const TEMPLATE_NAME = "brizy";
-const TARGET = argv.target || argv.t || "none";
-const IS_PRODUCTION = Boolean(argv.production);
-const IS_EXPORT = Boolean(argv.export || argv.e);
-const IS_PRO = Boolean(argv.pro || argv.p);
-const BUILD_DIR = argv["build-dir"];
-const BUILD_DIR_PRO = argv["build-dir-pro"];
-const NO_WATCH = Boolean(argv["no-watch"]);
+const {
+  TEMPLATE_NAME,
+  TARGET,
+  IS_PRODUCTION,
+  IS_EXPORT,
+  IS_PRO,
+  BUILD_DIR,
+  BUILD_DIR_PRO,
+  NO_WATCH,
+  paths
+} = argvVars(process.argv);
 let ABORTED = false;
 
-const paths = {
-  editor: path.resolve(__dirname, "./editor"),
-  template: path.resolve(__dirname, `./templates/${TEMPLATE_NAME}`),
-  build: BUILD_DIR
-    ? path.isAbsolute(BUILD_DIR)
-      ? BUILD_DIR
-      : path.resolve(__dirname, BUILD_DIR)
-    : TARGET === "WP" && !IS_PRODUCTION
-      ? path.resolve(
-          __dirname,
-          "../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
-        )
-      : path.resolve(__dirname, `./build/${TEMPLATE_NAME}`),
-  buildPro: BUILD_DIR_PRO
-    ? path.isAbsolute(BUILD_DIR_PRO)
-      ? BUILD_DIR_PRO
-      : path.resolve(__dirname, BUILD_DIR_PRO)
-    : TARGET === "WP" && !IS_PRODUCTION
-      ? path.resolve(
-          __dirname,
-          "../../apache/wordpress/wp-content/plugins/brizy-pro/public/editor-build"
-        )
-      : path.resolve(__dirname, `./build/${TEMPLATE_NAME}/pro`)
-};
-
-const supportedBrowsers = ["last 2 versions"];
+const postsCssProcessors = [
+  sass({
+    includePaths: [paths.template],
+    errLogToConsole: true
+  }),
+  autoprefixer({
+    browsers: ["last 2 versions"]
+  }),
+  clean({
+    format: {
+      breaks: {
+        afterRuleEnds: true
+      }
+    }
+  })
+];
 
 gulp.task(
   "build",
@@ -82,7 +76,6 @@ gulp.task(
 
     const tasks = [
       "clean",
-      "scss-lint",
       "editor",
       "template",
       ...(IS_EXPORT ? ["export"] : []),
@@ -164,35 +157,12 @@ gulp.task("assignPaths", () => {
   }
 });
 
-gulp.task("clean", ["clean.free", "clean.pro"]);
+gulp.task("clean", ["clean.free", ...(IS_PRO ? ["clean.pro"] : [])]);
 gulp.task("clean.free", () => {
   del.sync(paths.build + "/*", { force: true });
 });
 gulp.task("clean.pro", () => {
   del.sync(paths.buildPro + "/*", { force: true });
-});
-
-gulp.task("scss-lint", () => {
-  const src = [
-    paths.editor + "/sass/**/*.scss",
-    // paths.editor + '/js/**/*.scss',
-    paths.template + "/assets/sass/**/*.scss",
-
-    // Ignore Files
-    "!/**/fonts/*.scss", // template
-    "!/**/skins/**/*.scss" // template
-  ];
-  const processors = [
-    //stylelint(),
-    postcssReporter({
-      clearMessages: true,
-      throwError: true
-    })
-  ];
-
-  return gulp
-    .src(src)
-    .pipe(gulpPlugins.postcss(processors, { syntax: postcssSCSS }));
 });
 
 gulp.task(
@@ -272,20 +242,19 @@ gulp.task("editor.css", () => {
   ];
   const dest = paths.build + "/editor/css";
 
-  const processors = [autoprefixer({ browsers: supportedBrowsers })];
   gulp
     .src(src, { base: paths.editor })
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.init()))
     .pipe(
       gulpPlugins
-        .sass({
-          includePaths: ["node_modules", paths.template],
-          errLogToConsole: true
+        .postcss(postsCssProcessors, {
+          syntax: postcssSCSS,
+          failOnError: false
         })
-        .on("error", gulpPlugins.sass.logError)
+        .on("error", err => {
+          console.log("Sass Syntax Error", err);
+        })
     )
-    .pipe(gulpPlugins.postcss(processors))
-    .pipe(gulpPlugins.minifyCss({ rebase: false }))
     .pipe(gulpPlugins.concat("editor.css"))
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
@@ -368,34 +337,40 @@ gulp.task("editor.js.legacyExport", done => {
     .on("end", done);
 });
 
-gulp.task("template", ["template.assets", "template.blocksImg"]);
-gulp.task("template.assets", done => {
-  const src =
-    IS_PRODUCTION && IS_EXPORT
-      ? paths.template + "/assets/{icons,img}/**/*"
-      : paths.template + "/assets/icons/**/*"; // WARNING: "/assets/{fonts}/**/*" does not work
-  const dest = paths.build + "/template/";
+gulp.task("template", [
+  ...(IS_PRODUCTION && IS_EXPORT
+    ? ["template.icons", "template.media"]
+    : ["template.icons"]),
+  "template.blocksImg"
+]);
+gulp.task("template.media", done => {
+  const src = paths.template + "/assets/img/*";
+  const dest = paths.build + "/media";
 
   gulp
-    .src(src, { base: paths.template + "/assets" })
+    .src(src)
     .pipe(gulp.dest(dest))
     .on("end", () => {
       done();
     });
 });
-gulp.task("template.assets", done => {
-  const src =
-    IS_PRODUCTION && IS_EXPORT
-      ? paths.template + "/assets/{icons,img}/**/*"
-      : paths.template + "/assets/icons/**/*"; // WARNING: "/assets/{fonts}/**/*" does not work
+gulp.task("template.icons", done => {
+  const src = paths.template + "/assets/icons/**/*";
   const dest = paths.build + "/template/";
+  const { encrypt } = require(paths.editor +
+    "/js/component-new/ThemeIcon/utils.node.js");
+
+  const svgEncrypt = content => {
+    const base64 = Buffer.from(content).toString("base64");
+
+    return encrypt(base64);
+  };
 
   gulp
     .src(src, { base: paths.template + "/assets" })
+    .pipe(gulpPlugins.change(svgEncrypt))
     .pipe(gulp.dest(dest))
-    .on("end", () => {
-      done();
-    });
+    .on("end", done);
 });
 gulp.task("template.blocksImg", done => {
   const src = paths.template + "/blocks/**/Preview.jpg";
@@ -425,19 +400,18 @@ gulp.task("export.css", done => {
   ];
   const dest = paths.build + "/editor/css";
 
-  const processors = [autoprefixer({ browsers: supportedBrowsers })];
   gulp
     .src(src, { base: paths.editor })
     .pipe(
       gulpPlugins
-        .sass({
-          includePaths: ["node_modules"],
-          errLogToConsole: true
+        .postcss(postsCssProcessors, {
+          syntax: postcssSCSS,
+          failOnError: false
         })
-        .on("error", gulpPlugins.sass.logError)
+        .on("error", err => {
+          console.log("Sass Syntax Error", err);
+        })
     )
-    .pipe(gulpPlugins.postcss(processors))
-    .pipe(gulpPlugins.minifyCss({ rebase: false }))
     .pipe(gulpPlugins.concat("preview.css"))
     .pipe(gulp.dest(dest))
     .on("end", () => {
@@ -598,7 +572,12 @@ gulp.task("stats", () => {
   );
 });
 
-gulp.task("pro", ["pro.js", "pro.img.blocks", "pro.img.templates"]);
+gulp.task("pro", [
+  "pro.js",
+  "pro.block-thumbs",
+  "pro.template-thumbs",
+  ...(IS_PRODUCTION && IS_EXPORT ? ["pro.media"] : [])
+]);
 gulp.task("pro.js", done => {
   const options = {
     TEMPLATE_NAME,
@@ -628,7 +607,7 @@ gulp.task("pro.js", done => {
     }
   });
 });
-gulp.task("pro.img.blocks", done => {
+gulp.task("pro.block-thumbs", done => {
   const src = paths.template + "/pro/blocks/**/Preview.jpg";
   const dest = paths.buildPro + "/img-block-thumbs";
   gulp
@@ -644,7 +623,7 @@ gulp.task("pro.img.blocks", done => {
       done();
     });
 });
-gulp.task("pro.img.templates", done => {
+gulp.task("pro.template-thumbs", done => {
   const src = paths.template + "/pro/templates/**/Preview.jpg";
   const dest = paths.buildPro + "/img-template-thumbs";
 
@@ -660,6 +639,15 @@ gulp.task("pro.img.templates", done => {
     .on("end", () => {
       done();
     });
+});
+gulp.task("pro.media", done => {
+  const src = paths.template + "/pro/media/*";
+  const dest = paths.buildPro + "/media";
+
+  gulp
+    .src(src)
+    .pipe(gulp.dest(dest))
+    .on("end", done);
 });
 
 gulp.task("open-source", done => {
@@ -703,7 +691,6 @@ gulp.task("watch", () => {
 
   // editor css
   const coreCSSPath = paths.editor + "/**/*.scss";
-  //gulp.watch(coreCSSPath, ['scss-lint', 'editor.css']).on('change', handleChange);
   gulp
     .watch(coreCSSPath, ["editor.css", ...(IS_EXPORT ? ["export.css"] : [])])
     .on("change", handleChange);
@@ -716,7 +703,6 @@ gulp.task("watch", () => {
     paths.template + "/assets/**/*",
     "!" + paths.template + "/assets/icons/**"
   ];
-  //gulp.watch(templateMiscPath, ['scss-lint', 'template']).on('change', handleChange);
   gulp
     .watch(templateMiscPath, ["template", "editor.css"])
     .on("change", handleChange);

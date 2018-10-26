@@ -28,7 +28,7 @@ class WOOAddToCart extends EditorComponent {
         <WPShortcode
           name="add_to_cart"
           attributes={attributes}
-          placeholderIcon="nc-woo-2"
+          placeholderIcon="woo-2"
           className={styleClassName(v)}
           style={styleCSSVars(v)}
           resizerPoints={resizerPoints}

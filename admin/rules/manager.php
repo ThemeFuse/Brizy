@@ -93,13 +93,17 @@ class Brizy_Admin_Rules_Manager {
 		return new Brizy_Admin_RuleSet( $this->getRules( $postId ) );
 	}
 
-	public function getAllRulesSet() {
-		$templates = get_posts( array(
+	public function getAllRulesSet( $args = array() ) {
+
+		$defaults = array(
 			'post_type'      => Brizy_Admin_Templates::CP_TEMPLATE,
-			'numberposts'    => - 1,
-			'posts_per_page' => - 1,
-			'post_status'    => 'any'
-		) );
+			'posts_per_page' => -1,
+			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
+		);
+
+		$r = wp_parse_args( $args, $defaults );
+
+		$templates = get_posts( $r );
 
 		$rules = array();
 

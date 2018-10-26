@@ -81,6 +81,9 @@
   &:active {
     background-color: transparent;
     color: $options-label-color;
+    box-shadow: none;
+    border: none;
+    outline: 0;
   }
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {

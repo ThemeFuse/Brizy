@@ -6,6 +6,8 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component-new/Sortable";
 import EditorIcon from "visual/component-new/EditorIcon";
 import { hideToolbar } from "visual/component-new/Toolbar/index";
+import { ContextMenuExtend } from "visual/component-new/ContextMenu";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
 import { templateIconUrl } from "visual/utils/icons";
 import { setDataSortable, normalizeCarouselColumns } from "./utils";
@@ -103,7 +105,7 @@ class Items extends EditorArrayComponent {
             id: "emptyItem",
             type: "button",
             icon: "nc-add",
-            title: t("Add new column"),
+            title: t("Add New Column"),
             position: 100,
             onChange: () => {
               const emptyItemData = {
@@ -253,6 +255,19 @@ class Items extends EditorArrayComponent {
           {this.renderSlider(content)}
         </div>
       </Sortable>
+    );
+  }
+
+  renderItemWrapper(item, itemKey, itemIndex) {
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
+    return (
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
+        {item}
+      </ContextMenuExtend>
     );
   }
 }

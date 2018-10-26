@@ -348,6 +348,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$asset_processors = apply_filters( 'brizy_content_processors', $asset_processors, $project, $post );
 
+		array_unshift( $asset_processors, new Brizy_Content_DynamicContentProcessor( $project, $post ) );
+
 		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 
 		return self::$compiled_page = $brizy_editor_compiled_html;

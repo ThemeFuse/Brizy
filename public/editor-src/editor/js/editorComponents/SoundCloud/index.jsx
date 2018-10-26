@@ -51,7 +51,7 @@ class SoundCloud extends EditorComponent {
 
   renderForEdit(v) {
     const wrapperClassName = classnames("brz-iframe", {
-      "brz-ed-blocked": IS_EDITOR
+      "brz-blocked": IS_EDITOR
     });
     let { url, autoPlay, showArtwork, width, height } = v;
     autoPlay = autoPlay === "on";
@@ -59,7 +59,7 @@ class SoundCloud extends EditorComponent {
     const src = `https://w.soundcloud.com/player/?url=${url}&amp;auto_play=${autoPlay}&amp;how_teaser=true&amp;visual=${showArtwork}&amp;`;
 
     const content = !url ? (
-      <Placeholder icon="nc-sound-cloud" />
+      <Placeholder icon="sound-cloud" />
     ) : (
       <iframe
         className={wrapperClassName}
