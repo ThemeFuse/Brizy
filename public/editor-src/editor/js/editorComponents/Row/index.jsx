@@ -6,12 +6,14 @@ import ContainerBorder from "visual/component-new/ContainerBorder";
 import FloatingButton from "visual/component-new/FloatingButton";
 import Background from "visual/component-new/Background";
 import Animation from "visual/component-new/Animation";
-import Toolbar from "visual/component-new/Toolbar";
 import { Roles } from "visual/component-new/Roles";
+import Toolbar from "visual/component-new/Toolbar";
+import * as toolbarConfig from "./toolbar";
+import ContextMenu from "visual/component-new/ContextMenu";
+import contextMenuConfig from "./contextMenu";
 import { videoData as getVideoData } from "visual/utils/video";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./Items";
-import * as toolbarConfig from "./toolbar";
 import {
   bgStyleClassName,
   bgStyleCSSVars,
@@ -199,7 +201,7 @@ class Row extends EditorComponent {
       bgColorOpacity,
       bgVideo,
       bgMapZoom,
-      bgMapAddress,
+      bgMapAddress
     } = v;
 
     let bgProps = {
@@ -226,9 +228,11 @@ class Row extends EditorComponent {
     });
 
     return (
-      <Background {...bgProps}>
-        <Items {...itemsProps} />
-      </Background>
+      <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+        <Background {...bgProps}>
+          <Items {...itemsProps} />
+        </Background>
+      </ContextMenu>
     );
   }
 

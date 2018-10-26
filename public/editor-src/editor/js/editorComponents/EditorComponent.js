@@ -4,6 +4,7 @@ import {
   mergeOptions,
   optionTraverse
 } from "visual/component-new/Options/utils";
+import { uuid } from "visual/utils/uuid";
 import { getStore } from "visual/redux/store";
 import { currentStyleSelector } from "visual/redux/selectors";
 import { applyFilter } from "visual/utils/filters";
@@ -183,12 +184,25 @@ export class EditorComponent extends React.Component {
 
     return {
       ...otherProps,
+      _id: `${this.getId()}-${bindWithKey}`,
       path: [...this.getPath(), bindWithKey],
       defaultValue: defaultValue && defaultValue[bindWithKey],
       dbValue: dbValue && dbValue[bindWithKey],
       reduxState: this.getReduxState(),
       reduxDispatch: this.getReduxDispatch(),
       onChange: onChange
+    };
+  }
+
+  makeContextMenuProps(config, extraProps = {}) {
+    const componentId = this.constructor.componentId;
+    const v = this.getValue();
+
+    return {
+      id: uuid(3),
+      componentId,
+      items: config.getItems(v, this),
+      ...extraProps
     };
   }
 

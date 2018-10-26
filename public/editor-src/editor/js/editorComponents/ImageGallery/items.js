@@ -1,6 +1,11 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component-new/Toolbar";
+import ContextMenu, {
+  ContextMenuExtend
+} from "visual/component-new/ContextMenu";
+import contextMenuConfig from "./contextMenu";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
 
 class Items extends EditorArrayComponent {
@@ -50,11 +55,22 @@ class Items extends EditorArrayComponent {
     };
   }
 
-  renderItemWrapper(item, itemKey) {
+  renderItemWrapper(item, itemKey, itemIndex) {
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
     return (
-      <div key={itemKey} className="brz-image__gallery-item">
-        {item}
-      </div>
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
+        <ContextMenu
+          {...this.makeContextMenuProps(contextMenuConfig, { id: itemKey })}
+        >
+          <div key={itemKey} className="brz-image__gallery-item">
+            {item}
+          </div>
+        </ContextMenu>
+      </ContextMenuExtend>
     );
   }
 }

@@ -521,14 +521,24 @@ class Image extends EditorComponent {
 
     let content;
     if (imagePopulation || imageSrc) {
+      // this is needed for wp dynamic attributes like alt and title
+      const extraImgProps = this.getExtraImageProps
+        ? this.getExtraImageProps(v)
+        : {};
+
       content = (
         <picture>
           <source srcSet={sourceSrcSet} media="(min-width: 992px)" />
-          <img className="brz-img" src={desktopSrc} srcSet={mobileSrc} />
+          <img
+            {...extraImgProps}
+            className="brz-img"
+            src={desktopSrc}
+            srcSet={mobileSrc}
+          />
         </picture>
       );
     } else {
-      content = <Placeholder icon="nc-img" />;
+      content = <Placeholder icon="img" />;
     }
 
     const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;

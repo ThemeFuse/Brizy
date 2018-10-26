@@ -1,6 +1,8 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component-new/Sortable";
+import { ContextMenuExtend } from "visual/component-new/ContextMenu";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { hideToolbar } from "visual/component-new/Toolbar";
 import { t } from "visual/utils/i18n";
 
@@ -44,7 +46,23 @@ class SectionItemItems extends EditorArrayComponent {
     };
     const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
 
-    return { meta, toolbarExtend };
+    return {
+      meta,
+      toolbarExtend
+    };
+  }
+
+  renderItemWrapper(item, itemKey, itemIndex) {
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
+    return (
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
+        {item}
+      </ContextMenuExtend>
+    );
   }
 
   renderItemsContainer(items) {

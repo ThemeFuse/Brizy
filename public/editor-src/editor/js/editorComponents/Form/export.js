@@ -48,6 +48,9 @@ function initForm($component) {
     }
 
     var data = [];
+    var $submit = $this.find(".brz-btn");
+
+    $submit.addClass("brz-blocked");
     $this.find("input, textarea").each(function() {
       var $elem = $(this);
       var name = $elem.attr("name");
@@ -83,6 +86,9 @@ function initForm($component) {
       .fail(function() {
         $this.addClass("brz-form__send--fail");
         showFormMessage($this, getFormMessage("error", errorMessage));
+      })
+      .always(function() {
+        $submit.removeClass("brz-blocked");
       });
   });
 }

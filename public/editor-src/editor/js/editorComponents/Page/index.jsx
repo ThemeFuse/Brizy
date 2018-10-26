@@ -2,6 +2,7 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import UIEvents from "visual/global/UIEvents";
 import Blocks from "./Blocks";
+import { uuid } from "visual/utils/uuid";
 import { changeValueAfterDND } from "./utils";
 import defaultValue from "./defaultValue.json";
 
@@ -11,6 +12,20 @@ class Page extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  getDBValue() {
+    const dbValue = super.getDBValue();
+
+    if (dbValue._id) {
+      return dbValue;
+    } else {
+      if (!this._id) {
+        this._id = uuid();
+      }
+
+      return { ...dbValue, _id: this._id };
+    }
+  }
 
   componentDidMount() {
     UIEvents.on("dnd.sort", this.handleDNDSort);

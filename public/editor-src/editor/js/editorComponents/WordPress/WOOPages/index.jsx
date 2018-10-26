@@ -22,7 +22,7 @@ class WOOPages extends EditorComponent {
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
         <WPShortcode
           name={v.shortcode}
-          placeholderIcon="nc-woo-2"
+          placeholderIcon="woo-2"
           placeholderContainerWidth={this.props.meta.desktopW}
           className={styleClassName(v)}
           style={styleCSSVars(v)}

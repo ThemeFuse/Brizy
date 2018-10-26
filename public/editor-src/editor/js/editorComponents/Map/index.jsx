@@ -81,10 +81,10 @@ class Map extends EditorComponent {
     const src = `${URL}?key=${KEY}&q=${address}&zoom=${zoom}`;
 
     const content = !address ? (
-      <Placeholder icon="nc-pin" />
+      <Placeholder icon="pin" />
     ) : (
       <iframe
-        className={classnames("brz-iframe", { "brz-ed-blocked": IS_EDITOR })}
+        className={classnames("brz-iframe", { "brz-blocked": IS_EDITOR })}
         src={src}
       />
     );

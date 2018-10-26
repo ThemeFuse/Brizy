@@ -1,6 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import SectionItemItems from "./ItemItems";
+import Items from "./items";
 import Background from "visual/component-new/Background";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import PaddingResizer from "visual/component-new/PaddingResizer";
@@ -22,7 +22,7 @@ import {
   containerStyleCSSVars,
   contentStyleClassName
 } from "./styles";
-import defaultValue from "./itemDefaultValue.json";
+import defaultValue from "./defaultValue.json";
 import { getStore } from "visual/redux/store";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
@@ -182,7 +182,7 @@ class SectionItem extends EditorComponent {
       <Background {...bgProps}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
           <div className={containerStyleClassName(v)}>
-            <SectionItemItems {...itemsProps} />
+            <Items {...itemsProps} />
           </div>
         </PaddingResizer>
       </Background>

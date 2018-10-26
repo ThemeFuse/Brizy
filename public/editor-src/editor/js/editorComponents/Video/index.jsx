@@ -69,7 +69,7 @@ class Video extends EditorComponent {
 
     if (!videoSrc && !coverImageSrc) {
       content = (
-        <Placeholder icon="nc-play" />
+        <Placeholder icon="play" />
       );
     }
 

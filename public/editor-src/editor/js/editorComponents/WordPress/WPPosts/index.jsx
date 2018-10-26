@@ -36,7 +36,7 @@ class WPPosts extends EditorComponent {
         <WPShortcode
           name="brizy_posts"
           attributes={attributes}
-          placeholderIcon="nc-wp-shortcode"
+          placeholderIcon="wp-shortcode"
           placeholderContainerWidth={this.props.meta.desktopW}
           className={styleClassName(v)}
           style={styleCSSVars(v)}

@@ -1,12 +1,36 @@
 import $ from "jquery";
 
 function getArrow(src, className) {
+  $.ajax({
+    method: "GET",
+    url: src,
+    dataType: "text"
+  })
+    .done(function(base64) {
+      var svg = "";
+
+      try {
+        svg = atob(base64.replace("MC43NDQwMzkxMDQwNjc4MDM0", ""));
+      } catch (e) {
+        if (/^<svg/.test(base64)) {
+          svg = base64;
+        } else {
+          console.warn(e);
+        }
+      }
+
+      $('svg[data-href="' + src + '"]').html(svg);
+    })
+    .fail(function(jqXHR, textStatus) {
+      console.warn("Request failed: " + textStatus);
+    });
+
   return (
     '<div class="brz-slick-slider__arrow ' +
     className +
-    '"><svg class="brz-icon-svg"><use xlink:href=' +
+    '"><svg class="brz-icon-svg" data-href="' +
     src +
-    " /></svg></div>"
+    '"></svg></div>"'
   );
 }
 

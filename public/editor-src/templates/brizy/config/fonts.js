@@ -7,19 +7,43 @@ export default [
   "playfair_display",
   "roboto",
 
-  // Molino
-  "yeseva_one",
-  "open_sans",
-  "lora",
-
-  // Creed
+  // custom
+  "quattrocento_sans",
+  "reem_kufi",
+  "arvo",
+  "prata",
+  "spinnaker",
+  "eb_garamond",
+  "muli",
+  "changa_one",
+  "marck_script",
+  "barlow",
+  "kanit",
+  "alegreya",
+  "pt_sans",
   "catamaran",
   "average_sans",
   "crimson_text",
-
-  // TheParlor
+  "great_vibes",
+  "raleway",
+  "rozha_one",
+  "pacifico",
+  "varela_round",
+  "merriweather",
+  "cabin",
+  "lora",
+  "cormorant_garamond",
+  "yeseva_one",
+  "open_sans",
+  "monoton",
   "saira",
   "saira_extra_condensed",
-  "great_vibes",
-  "quattrocento_sans"
+  "josefin_sans",
+  "noto_sans",
+  "alegreya_sans",
+  "source_sans_pro",
+  "molengo",
+  "palanquin",
+  "ntr",
+  "yesteryear"
 ];

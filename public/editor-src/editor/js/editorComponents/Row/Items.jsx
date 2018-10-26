@@ -7,6 +7,8 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component-new/Sortable";
 import { hideToolbar } from "visual/component-new/Toolbar/index";
 import { MIN_COL_WIDTH } from "visual/config/columns";
+import { ContextMenuExtend } from "visual/component-new/ContextMenu";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { normalizeRowColumns } from "./utils";
 import { t } from "visual/utils/i18n";
 
@@ -115,20 +117,16 @@ class Items extends EditorArrayComponent {
     });
     const cloneRemoveConfig = {
       getItemsForDesktop: () => [
-        ...(items.length < MAX_ITEMS_IN_ROW
+        ...(this.canAddColumn()
           ? [
               {
                 id: "emptyItem",
                 type: "button",
                 icon: "nc-add",
-                title: t("Add new column"),
+                title: t("Add New Column"),
                 position: 100,
                 onChange: () => {
-                  const emptyItemData = {
-                    ...itemData,
-                    value: { ...itemData.value, items: [] }
-                  };
-                  this.insertItem(itemIndex + 1, emptyItemData);
+                  this.addColumn(itemIndex + 1);
                 }
               },
               {
@@ -203,6 +201,37 @@ class Items extends EditorArrayComponent {
 
     return [firstColumnWidth, secondColumnWidth];
   };
+
+  canAddColumn() {
+    const v = this.getValue();
+
+    return v.length < MAX_ITEMS_IN_ROW;
+  }
+
+  addColumn(index) {
+    const v = this.getValue();
+    const itemData = {
+      ...v[0],
+      value: {
+        items: []
+      }
+    };
+
+    this.insertItem(index, itemData);
+  }
+
+  renderItemWrapper(item, itemKey, itemIndex) {
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
+    return (
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
+        {item}
+      </ContextMenuExtend>
+    );
+  }
 
   renderItemsContainer(items) {
     if (IS_PREVIEW) {

@@ -1,6 +1,6 @@
 import Page from "./Page";
 import Section from "./Section";
-import SectionItem from "./Section/Item";
+import SectionItem from "./Section/SectionItem";
 import Row from "./Row";
 import Column from "./Column";
 import Form from "./Form";
