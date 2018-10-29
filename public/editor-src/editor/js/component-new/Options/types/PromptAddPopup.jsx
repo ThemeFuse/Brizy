@@ -47,6 +47,7 @@ class PromptAddPopupOptionType extends React.Component {
   handleCreate = () => {
     UIState.set("prompt", {
       prompt: "blocks",
+      templatesConfig: {}, // this disables the "Pages" tab
       blocksConfig: getBlocksConfig(),
       filterUI: {
         categories: false

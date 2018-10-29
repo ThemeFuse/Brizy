@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
 import DataFilter from "./common/DataFilter";
 import Select from "./common/Select";
@@ -9,51 +10,23 @@ import { templateThumbnailUrl } from "visual/utils/templates";
 import { t } from "visual/utils/i18n";
 
 export default class Templates extends React.Component {
-  static shouldRender() {
-    const templatesConfig = Editor.getTemplates();
+  static shouldRender(props) {
+    const templatesConfig = props.templatesConfig || Editor.getTemplates();
 
     return templatesConfig.templates && templatesConfig.templates.length > 0;
   }
 
-  // COMMENTED OUT UNTIL IT WILL BE MORE CLEAR
-  // ON HOW SHOULD TEMPLATES REALLY WORk
+  static defaultProps = {
+    templatesConfig: null,
+    onAddBlocks: _.noop,
+    onClose: _.noop
+  };
 
-  // handleThumbnailAdd = thumbnailData => {
-  //   const { onAddBlocks, onClose } = this.props;
-  //   const {
-  //     id: templateId,
-  //     requireStyle: templateRequireStyle,
-  //     resolve: { blocks: templateBlocks, globals: templateGlobals }
-  //   } = thumbnailData;
-  //   const globals = getStore().getState().globals;
+  constructor(...args) {
+    super(...args);
 
-  //   // extra fonts
-  //   const templateExtraFonts = templateGlobals.project.extraFonts;
-  //   if (templateExtraFonts) {
-  //     const globalsExtraFonts = globals.project.extraFonts || [];
-  //     const newExtraFonts = _.union(globalsExtraFonts, templateExtraFonts);
-  //     const meta = {
-  //       addedFonts: _.difference(templateExtraFonts, globalsExtraFonts)
-  //     };
-  //     getStore().dispatch(updateGlobals("extraFonts", newExtraFonts, meta));
-  //   }
-
-  //   // styles
-  //   const templateDefaultStyles =
-  //     templateGlobals.project.styles && templateGlobals.project.styles.default;
-  //   if (templateDefaultStyles) {
-  //     const globalsStyles = globals.project.styles || {};
-  //     const newStyles = {
-  //       ...globalsStyles,
-  //       [templateId]: templateDefaultStyles
-  //       // _selected: templateId
-  //     };
-  //     getStore().dispatch(updateGlobals("styles", newStyles));
-  //   }
-
-  //   onAddBlocks(templateBlocks);
-  //   onClose();
-  // };
+    this.templatesConfig = this.props.templatesConfig || Editor.getTemplates();
+  }
 
   handleThumbnailAdd = thumbnailData => {
     const { onAddBlocks, onClose } = this.props;
@@ -66,8 +39,7 @@ export default class Templates extends React.Component {
   };
 
   render() {
-    const templatesConfig = Editor.getTemplates();
-    const thumbnails = templatesConfig.templates.map(template => ({
+    const thumbnails = this.templatesConfig.templates.map(template => ({
       ...template,
       thumbnailSrc: templateThumbnailUrl(template)
     }));
@@ -92,7 +64,7 @@ export default class Templates extends React.Component {
         id: "*",
         title: t("All Categories")
       }
-    ].concat(templatesConfig.categories);
+    ].concat(this.templatesConfig.categories);
 
     return (
       <DataFilter

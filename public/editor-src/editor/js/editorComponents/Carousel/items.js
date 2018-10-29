@@ -153,13 +153,24 @@ class Items extends EditorArrayComponent {
     };
   }
 
-  renderItemWrapper(item, itemKey) {
-    return IS_PREVIEW ? (
-      <div key={itemKey} className="brz-carousel__item">
+  renderItemWrapper(item, itemKey, itemIndex) {
+    if (IS_PREVIEW) {
+      return (
+        <div key={itemKey} className="brz-carousel__item">
+          {item}
+        </div>
+      );
+    }
+
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
+    return (
+      <ContextMenuExtend
+        key={itemKey}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
+      >
         {item}
-      </div>
-    ) : (
-      item
+      </ContextMenuExtend>
     );
   }
 
@@ -255,19 +266,6 @@ class Items extends EditorArrayComponent {
           {this.renderSlider(content)}
         </div>
       </Sortable>
-    );
-  }
-
-  renderItemWrapper(item, itemKey, itemIndex) {
-    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
-
-    return (
-      <ContextMenuExtend
-        key={itemKey}
-        {...this.makeContextMenuProps(contextMenuExtendConfig)}
-      >
-        {item}
-      </ContextMenuExtend>
     );
   }
 }
