@@ -9,12 +9,7 @@
 class Brizy_Content_PlaceholderExtractor {
 
 	/**
-	 * @var BrizyPro_Content_Context
-	 */
-	private $context;
-
-	/**
-	 * @var BrizyPro_Content_Providers_AbstractProvider
+	 * @var Brizy_Content_Providers_AbstractProvider
 	 */
 	private $provider;
 
@@ -22,35 +17,28 @@ class Brizy_Content_PlaceholderExtractor {
 	/**
 	 * BrizyPro_Content_PlaceholderExtractor constructor.
 	 *
-	 * @param BrizyPro_Content_Context $context
-	 * @param BrizyPro_Content_Providers_AbstractProvider $provider
+	 * @param Brizy_Content_Providers_AbstractProvider $provider
 	 */
-	public function __construct( $context, $provider ) {
-		$this->context  = $context;
+	public function __construct( $provider ) {
 		$this->provider = $provider;
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getContent() {
-		return $this->content;
-	}
-
-	/**
+	 * @param $content
+	 *
 	 * @return array
 	 */
-	public function extract() {
+	public function extract( $content ) {
 
 		$placeholders = array();
 		$expression   = "/(?<placeholder>{{\s*(?<placeholderName>.+?)(?<attributes>(?:\s+)((?:\w+\s*=\s*'(?:.[^']*|)'\s*)*))?}}(?:(?<content>.*?){{\s*end_(\g{placeholderName})\s*}})?)/ims";
 
 		$matches = array();
 
-		preg_match_all( $expression, $this->context->getContent(), $matches );
+		preg_match_all( $expression, $content, $matches );
 
 		if ( count( $matches['placeholder'] ) == 0 ) {
-			return $placeholders;
+			return array($placeholders, $content);
 		}
 
 		foreach ( $matches['placeholder'] as $i => $name ) {
@@ -64,19 +52,18 @@ class Brizy_Content_PlaceholderExtractor {
 			$hasPlaceholder = $this->provider->getPlaceholder( $placeholder->getName() );
 
 			// ignore unknown placeholders
-			if( !$hasPlaceholder ) continue;
-
-			//$content = str_replace( $placeholder->getPlaceholder(), $placeholder->getUid(), $this->context->getContent(), 1 );
-			$content = $this->context->getContent();
-			$pos = strpos($content, $placeholder->getPlaceholder());
-			if ($pos !== false) {
-				$content = substr_replace($content, $placeholder->getUid(), $pos, strlen($placeholder->getPlaceholder()));
+			if ( ! $hasPlaceholder ) {
+				continue;
 			}
 
-			$this->context->setContent( $content );
+			$pos     = strpos( $content, $placeholder->getPlaceholder() );
+			if ( $pos !== false ) {
+				$content = substr_replace( $content, $placeholder->getUid(), $pos, strlen( $placeholder->getPlaceholder() ) );
+			}
+
 		}
 
-		return $placeholders;
+		return array( $placeholders, $content );
 	}
 
 	/**

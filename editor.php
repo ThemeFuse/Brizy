@@ -293,6 +293,8 @@ class Brizy_Editor {
 		} elseif
 		( ( $apid = get_queried_object_id() ) && ( is_single() || is_page() ) && $wp_query->queried_object instanceof WP_Post ) {
 			$pid = (int) $apid;
+		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
+			$pid = wc_get_page_id( 'shop' );
 		}
 
 		return $pid;

@@ -37,19 +37,21 @@ class Brizy_Content_PlaceholderReplacer {
 	}
 
 	/**
+	 * @param $placeholders
+	 * @param $content
+	 *
 	 * @return mixed
 	 */
-	public function getContent() {
+	public function replacePlaceholders( $placeholders, $content ) {
 
-		$placeholders        = $this->placeholderExtractor->extract();
 		$toReplace           = array();
 		$toReplaceWithValues = array();
+
 
 		foreach ( $placeholders as $contentPlaceholder ) {
 			try {
 				$placeholder = $this->placeholderProvider->getPlaceholder( $contentPlaceholder->getName() );
-
-				$toReplace[]           = $contentPlaceholder->getUid();
+				$toReplace[] = $contentPlaceholder->getUid();
 
 				if ( $placeholder ) {
 					$toReplaceWithValues[] = $placeholder->getValue( $this->context, $contentPlaceholder );
@@ -62,11 +64,9 @@ class Brizy_Content_PlaceholderReplacer {
 			}
 		}
 
-		$content = str_replace( $toReplace, $toReplaceWithValues, $this->context->getContent() );
+		$content = str_replace( $toReplace, $toReplaceWithValues, $content );
 
-		$this->context->setContent( $content );
-
-		return $this->context->getContent();
+		return $content;
 	}
 
 }

@@ -24,13 +24,12 @@ class Brizy_Editor_Asset_StripTagsProcessor implements Brizy_Editor_Content_Proc
 	}
 
 	/**
-	 * Find and cache all assets and replace the urls with new local ones.
+	 * @param string $content
+	 * @param Brizy_Content_Context $context
 	 *
-	 * @param $content
-	 *
-	 * @return string
+	 * @return mixed|string
 	 */
-	public function process( $content ) {
+	public function process( $content, Brizy_Content_Context  $context ) {
 
 		foreach ( $this->tags as $tag ) {
 			//$content = $this->strip_tags_content( $content, $tag );

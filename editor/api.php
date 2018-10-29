@@ -527,7 +527,7 @@ class Brizy_Editor_API {
 			//$post->compile_page();
 			$this->post->save();
 
-			$brizy_compiled_page = $this->post->get_compiled_page( Brizy_Editor_Project::get() );
+			$brizy_compiled_page = $this->post->get_compiled_page( );
 
 			wp_update_post( array(
 				'ID'           => $this->post->get_parent_id(),
