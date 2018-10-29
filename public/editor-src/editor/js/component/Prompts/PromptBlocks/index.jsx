@@ -55,7 +55,7 @@ class PromptBlocks extends Component {
 
         return (
           typeof shouldRender === "undefined" ||
-          (typeof shouldRender === "function" && shouldRender())
+          (typeof shouldRender === "function" && shouldRender(this.props))
         );
       })
       .map(tab => {
