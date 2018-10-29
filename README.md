@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.40<br>
+Stable tag: 1.0.41<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,11 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.41 - 2018-10-29 ###
+* New: Added mobile body class
+* Fixed: Preview url for all pages template
+* Fixed: Carousel at export
 
 ### 1.0.40 - 2018-10-26 ###
 * New: Added context (right click) menu for most elements
