@@ -125,7 +125,7 @@ class Brizy_Editor_Editor_Editor {
 				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
 				'assets'              => $this->urlBuilder->editor_asset_url(),
 				'pageAssets'          => $this->urlBuilder->page_upload_url(),
-				'templateFonts'       => 'https://app.brizy.io/fonts/public?path='.BRIZY_EDITOR_VERSION,
+				'templateFonts'       => 'https://app.brizy.io/fonts/public?path=' . BRIZY_EDITOR_VERSION,
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ) . "",
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
@@ -303,20 +303,18 @@ class Brizy_Editor_Editor_Editor {
 
 						foreach ( $array as $p ) {
 
-							switch ( $p->post_type ) {
-								case 'attachment':
-									return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
-									break;
-								default:
-									if ( ! Brizy_Editor_Post::checkIfPostTypeIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
-										$wp_post = $p;
-										break;
-									}
-									break;
+							if ( $p->post_typ == 'attachment' ) {
+								return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
 							}
+
+							if ( ! Brizy_Editor_Post::checkIfPostTypeIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+								$wp_post = $p;
+								break;
+							}
+
 						}
 						break;
-					case  Brizy_Admin_Rule::TAXONOMY :
+					case Brizy_Admin_Rule::TAXONOMY :
 						$args = array(
 							'taxonomy'   => $rule->getEntityType(),
 							'hide_empty' => false,
