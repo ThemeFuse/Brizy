@@ -75,9 +75,9 @@ class Brizy_Admin_Templates {
 
 	function action_register_static() {
 
-	    if ( is_customize_preview() || get_post_type() !== Brizy_Admin_Templates::CP_TEMPLATE ) {
-	        return;
-        }
+		if ( is_customize_preview() || get_post_type() !== Brizy_Admin_Templates::CP_TEMPLATE ) {
+			return;
+		}
 
 		wp_enqueue_script(
 			Brizy_Editor::get()->get_slug() . '-hyperapp-js',
@@ -392,9 +392,11 @@ class Brizy_Admin_Templates {
 			$entityType     = $wp_query->queried_object->taxonomy;
 			$entityValues[] = $wp_query->queried_object_id;
 		} elseif ( is_archive() ) {
-			$applyFor   = Brizy_Admin_Rule::ARCHIVE;
-			//$entityType = $wp_query->queried_object->name;
-		} elseif ( ($wp_query->queried_object instanceof WP_Post || $wp_query->post instanceof WP_Post) && get_queried_object() ) {
+			$applyFor = Brizy_Admin_Rule::ARCHIVE;
+			if ( $wp_query->queried_object ) {
+				$entityType = $wp_query->queried_object->name;
+			}
+		} elseif ( ( $wp_query->queried_object instanceof WP_Post || $wp_query->post instanceof WP_Post ) && get_queried_object() ) {
 			$applyFor       = Brizy_Admin_Rule::POSTS;
 			$entityType     = get_queried_object()->post_type;
 			$entityValues[] = get_queried_object_id();
@@ -617,12 +619,12 @@ class Brizy_Admin_Templates {
 
 	/**
 	 * Check for rules conflicts on transition post from trash to another post status.
-     * If we have some conflicts between the rules from the transition post rules and other rules from existing posts,
-     * then we remove conflicting rules from the restored post.
+	 * If we have some conflicts between the rules from the transition post rules and other rules from existing posts,
+	 * then we remove conflicting rules from the restored post.
 	 *
-	 * @param string  $new_status  New post status.
-	 * @param string  $old_status  Old post status.
-	 * @param WP_Post $post        Transition post.
+	 * @param string $new_status New post status.
+	 * @param string $old_status Old post status.
+	 * @param WP_Post $post Transition post.
 	 */
 	public function actionTransitionPostStatus( $new_status, $old_status, $post ) {
 
@@ -635,10 +637,10 @@ class Brizy_Admin_Templates {
 		$post_rules   = $rule_manager->getRules( $post_id );
 
 		if ( ! $post_rules ) {
-		    return;
-        }
+			return;
+		}
 
-        $all_rules     = $rule_manager->getAllRulesSet( array( 'post__not_in' => array( $post_id ) ) )->getRules();
+		$all_rules     = $rule_manager->getAllRulesSet( array( 'post__not_in' => array( $post_id ) ) )->getRules();
 		$has_conflicts = false;
 
 		foreach ( $post_rules as $post_rule ) {
@@ -650,10 +652,10 @@ class Brizy_Admin_Templates {
 					$has_conflicts = true;
 				}
 			}
-        }
+		}
 
-        if ( $has_conflicts ) {
-	        Brizy_Admin_Flash::instance()->add_error( 'Conflict of rules: Some rules have been deleted for restored posts. Please check them.' );
-        }
-    }
+		if ( $has_conflicts ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Conflict of rules: Some rules have been deleted for restored posts. Please check them.' );
+		}
+	}
 }
