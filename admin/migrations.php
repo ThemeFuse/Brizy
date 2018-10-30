@@ -105,7 +105,7 @@ class Brizy_Admin_Migrations {
 		} );
 
 		$migrations = array_filter( $migrations, function ( $migration ) {
-			return in_array( version_compare( $migration->getVersion(), BRIZY_VERSION ), [ - 1, 0 ] );
+			return in_array( version_compare( $migration->getVersion(), BRIZY_VERSION ), array( - 1, 0 ) );
 		} );
 
 		return $this->existinMigrations = $migrations;
