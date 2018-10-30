@@ -42,25 +42,26 @@ class Brizy_Content_PlaceholderReplacer {
 	 *
 	 * @return mixed
 	 */
-	public function replacePlaceholders( $placeholders, $content ) {
+	public function getContent( $placeholders = null, $content = null ) {
 
 		$toReplace           = array();
 		$toReplaceWithValues = array();
 
+		if ( $placeholders ) {
+			foreach ( $placeholders as $contentPlaceholder ) {
+				try {
+					$placeholder = $this->placeholderProvider->getPlaceholder( $contentPlaceholder->getName() );
+					$toReplace[] = $contentPlaceholder->getUid();
 
-		foreach ( $placeholders as $contentPlaceholder ) {
-			try {
-				$placeholder = $this->placeholderProvider->getPlaceholder( $contentPlaceholder->getName() );
-				$toReplace[] = $contentPlaceholder->getUid();
+					if ( $placeholder ) {
+						$toReplaceWithValues[] = $placeholder->getValue( $this->context, $contentPlaceholder );
+					} else {
+						$toReplaceWithValues[] = '';
+					}
 
-				if ( $placeholder ) {
-					$toReplaceWithValues[] = $placeholder->getValue( $this->context, $contentPlaceholder );
-				} else {
-					$toReplaceWithValues[] = '';
+				} catch ( Exception $e ) {
+					continue;
 				}
-
-			} catch ( Exception $e ) {
-				continue;
 			}
 		}
 

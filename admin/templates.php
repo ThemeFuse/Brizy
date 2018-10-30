@@ -567,7 +567,7 @@ class Brizy_Admin_Templates {
 
 		//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $post );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post,null );
 
 		$mainProcessor = new Brizy_Content_MainProcessor( $context );
 
@@ -603,7 +603,7 @@ class Brizy_Admin_Templates {
 			$post = get_post( $pid );
 		}
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $post->get_wp_post() );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post->get_wp_post(),null );
 
 		$compiled_page = $this->template->get_compiled_page();
 
@@ -628,7 +628,7 @@ class Brizy_Admin_Templates {
 		$pid       = Brizy_Editor::get()->currentPostId();
 		$brizyPost = get_post( $pid );
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $brizyPost );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $brizyPost, null );
 
 		$compiled_page = $this->template->get_compiled_page();
 

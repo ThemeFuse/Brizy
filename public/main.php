@@ -336,15 +336,15 @@ class Brizy_Public_Main {
 			$params['content'] = $compiled_html_head;
 
 		} else {
-			$compiled_page = $this->post->get_compiled_page(  );
+			$compiled_page = $this->post->get_compiled_page();
 			//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 			$head = $compiled_page->get_head();
 
 			$params['content'] = $head;
 		}
 
-		$context            = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $this->post->get_wp_post() );
-		$mainProcessor      = new Brizy_Content_MainProcessor( $context );
+		$context           = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $this->post->get_wp_post(), null );
+		$mainProcessor     = new Brizy_Content_MainProcessor( $context );
 		$params['content'] = $mainProcessor->process( $params['content'] );
 
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
@@ -372,13 +372,13 @@ class Brizy_Public_Main {
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
 			$this->post->set_needs_compile( true )->save();
 		} else {
-			$compiled_page = $this->post->get_compiled_page(  );
+			$compiled_page = $this->post->get_compiled_page();
 			$content       = $compiled_page->get_body();
 		}
 
-		$context            = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $this->post->get_wp_post() );
-		$mainProcessor      = new Brizy_Content_MainProcessor( $context );
-		$content = $mainProcessor->process( $content );
+		$context       = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $this->post->get_wp_post(), null );
+		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+		$content       = $mainProcessor->process( $content );
 
 		return $content;
 	}
