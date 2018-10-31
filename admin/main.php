@@ -449,7 +449,7 @@ class Brizy_Admin_Main {
 			);
 			// 2. merge extra fonts styles
 
-			if ( !isset( $currentProjectGlobals->project->styles ) ) {
+			if ( ! isset( $currentProjectGlobals->project->styles ) ) {
 				$currentProjectGlobals->project->styles = (object) array( '_extraFontStyles' => array() );
 			}
 
@@ -459,12 +459,12 @@ class Brizy_Admin_Main {
 			);
 
 
-			if ( $projectData->project->styles && !isset( $projectData->project->styles->_selected ) ) {
+			$currentProjectGlobals->project->styles->default = $projectData->project->styles->default;
+
+			if ( $projectData->project->styles && isset( $projectData->project->styles->_selected ) ) {
 				$selected                                          = $projectData->project->styles->_selected;
 				$currentProjectGlobals->project->styles->_selected = $selected;
-
-				if($selected)
-				{
+				if ( $selected ) {
 					$currentProjectGlobals->project->styles->$selected = $projectData->project->styles->$selected;
 				}
 			}
