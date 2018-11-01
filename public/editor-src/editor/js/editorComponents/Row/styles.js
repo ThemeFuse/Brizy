@@ -11,7 +11,7 @@ const aligns = {
 };
 
 export function bgStyleClassName(v) {
-  const { showOnDesktop, showOnMobile, customClassName } = v;
+  const { showOnDesktop, showOnTablet, showOnMobile, customClassName } = v;
 
   let glamorObj;
   if (IS_EDITOR) {
@@ -34,7 +34,7 @@ export function bgStyleClassName(v) {
         borderTopRightRadius: "var(--borderTopRightRadius)",
         borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
         borderBottomRightRadius: "var(--borderBottomRightRadius)",
-        boxShadow: "var(--boxShadow)",
+        boxShadow: "var(--boxShadow)"
       },
       "> .brz-bg-content": {
         borderTopWidth: "var(--borderTopWidth)",
@@ -64,6 +64,23 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-map": {
           display: "var(--mediaBg)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        ...(showOnTablet === "on" ? null : blurred),
+        marginTop: "var(--tabletMarginTop)",
+        marginBottom: "var(--tabletMarginBottom)",
+
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage: "var(--tabletBackgroundImage)",
+          backgroundPositionX: "var(--tabletBackgroundPositionX)",
+          backgroundPositionY: "var(--tabletBackgroundPositionY)"
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: "var(--tabletBackgroundColor)"
+        },
+        "> .brz-bg-media > .brz-bg-map": {
+          display: "var(--tabletMediaBg)"
         }
       },
       ".brz-ed--mobile &": {
@@ -125,6 +142,17 @@ export function bgStyleClassName(v) {
       boxShadowSpread,
       boxShadowVertical,
       boxShadowHorizontal,
+
+      // Tablet
+      tabletMarginType,
+      tabletMargin,
+      tabletMarginSuffix,
+      tabletMarginTop,
+      tabletMarginTopSuffix,
+      tabletMarginBottom,
+      tabletMarginBottomSuffix,
+
+      // Mobile
       mobileMarginType,
       mobileMargin,
       mobileMarginSuffix,
@@ -136,9 +164,9 @@ export function bgStyleClassName(v) {
     const boxShadowStyle =
       boxShadow === "on"
         ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
+            boxShadowColorHex,
+            boxShadowColorOpacity
+          )}`
         : "none";
 
     glamorObj = {
@@ -190,7 +218,7 @@ export function bgStyleClassName(v) {
           borderRadiusType === "grouped"
             ? `${borderRadius}px`
             : `${borderBottomRightRadius}px`,
-        boxShadow: boxShadowStyle,
+        boxShadow: boxShadowStyle
       },
       "> .brz-bg-content": {
         borderTopWidth:
@@ -226,6 +254,42 @@ export function bgStyleClassName(v) {
       "> .brz-bg-media > .brz-bg-map": {
         display: media === "map" ? "block" : "none"
       },
+      "@media (max-width: 991px)": {
+        marginTop:
+          tabletMarginType === "grouped"
+            ? tabletMargin + tabletMarginSuffix
+            : tabletMarginTop + tabletMarginTopSuffix,
+        marginBottom:
+          tabletMarginType === "grouped"
+            ? tabletMargin + tabletMarginSuffix
+            : tabletMarginBottom + tabletMarginBottomSuffix,
+
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage:
+            tabletSyncOnChange(v, "bgImageSrc") &&
+            tabletSyncOnChange(v, "media") !== "map"
+              ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
+              : "none",
+          backgroundPosition: `
+            ${tabletSyncOnChange(v, "bgPositionX")}%
+            ${tabletSyncOnChange(v, "bgPositionY")}%
+          `
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: hexToRgba(
+            tabletSyncOnChange(v, "bgColorHex"),
+            tabletSyncOnChange(v, "bgColorOpacity")
+          )
+        },
+        "> .brz-bg-media > .brz-bg-map": {
+          display: tabletSyncOnChange(v, "media") === "map" ? "block" : "none"
+        }
+      },
+      "@media (max-width: 991px) and (min-width: 768px)": {
+        ".brz &": {
+          display: showOnTablet === "off" && "none"
+        }
+      },
       "@media (max-width: 767px)": {
         marginTop:
           mobileMarginType === "grouped"
@@ -253,7 +317,7 @@ export function bgStyleClassName(v) {
           display: mobileSyncOnChange(v, "media") === "map" ? "block" : "none"
         }
       },
-      "@media (min-width: 768px)": {
+      "@media (min-width: 992px)": {
         ".brz &": {
           display: showOnDesktop === "off" && "none",
           alignItems: `${aligns[verticalAlign]}`,
@@ -319,6 +383,17 @@ export function bgStyleCSSVars(v) {
     boxShadowSpread,
     boxShadowVertical,
     boxShadowHorizontal,
+
+    // Tablet
+    tabletMarginType,
+    tabletMargin,
+    tabletMarginSuffix,
+    tabletMarginTop,
+    tabletMarginTopSuffix,
+    tabletMarginBottom,
+    tabletMarginBottomSuffix,
+
+    // Mobile
     mobileMarginType,
     mobileMargin,
     mobileMarginSuffix,
@@ -331,9 +406,9 @@ export function bgStyleCSSVars(v) {
   const boxShadowStyle =
     boxShadow === "on"
       ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-        boxShadowColorHex,
-        boxShadowColorOpacity
-      )}`
+          boxShadowColorHex,
+          boxShadowColorOpacity
+        )}`
       : "none";
 
   return {
@@ -392,6 +467,29 @@ export function bgStyleCSSVars(v) {
     "--zIndex": zIndex === 0 ? "auto" : zIndex,
     "--boxShadow": boxShadowStyle,
 
+    // Tablet
+    "--tabletMediaBg":
+      tabletSyncOnChange(v, "media") === "map" ? "block" : "none",
+    "--tabletBackgroundImage":
+      tabletSyncOnChange(v, "bgImageSrc") &&
+      tabletSyncOnChange(v, "media") !== "map"
+        ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
+        : "none",
+    "--tabletBackgroundPositionX": `${tabletSyncOnChange(v, "bgPositionX")}%`,
+    "--tabletBackgroundPositionY": `${tabletSyncOnChange(v, "bgPositionY")}%`,
+    "--tabletBackgroundColor": hexToRgba(
+      tabletSyncOnChange(v, "bgColorHex"),
+      tabletSyncOnChange(v, "bgColorOpacity")
+    ),
+    "--tabletMarginTop":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginTop + tabletMarginTopSuffix,
+    "--tabletMarginBottom":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginBottom + tabletMarginBottomSuffix,
+
     // Mobile
     "--mobileMediaBg": mobileSyncOnChange(v, "media") === "map" ? "block" : "none",
     "--mobileBackgroundImage":
@@ -427,6 +525,12 @@ export function containerStyleClassName(v, isInnerRow) {
         paddingBottom: "var(--paddingBottom)",
         paddingLeft: "var(--paddingLeft)"
       },
+      ".brz-ed--tablet &": {
+        paddingTop: "var(--tabletPaddingTop)",
+        paddingRight: "var(--tabletPaddingRight)",
+        paddingBottom: "var(--tabletPaddingBottom)",
+        paddingLeft: "var(--tabletPaddingLeft)"
+      },
       ".brz-ed--mobile &": {
         paddingTop: "var(--mobilePaddingTop)",
         paddingRight: "var(--mobilePaddingRight)",
@@ -447,6 +551,21 @@ export function containerStyleClassName(v, isInnerRow) {
       paddingBottomSuffix,
       paddingLeft,
       paddingLeftSuffix,
+
+      // Tablet
+      tabletPaddingType,
+      tabletPadding,
+      tabletPaddingSuffix,
+      tabletPaddingTop,
+      tabletPaddingTopSuffix,
+      tabletPaddingRight,
+      tabletPaddingRightSuffix,
+      tabletPaddingBottom,
+      tabletPaddingBottomSuffix,
+      tabletPaddingLeft,
+      tabletPaddingLeftSuffix,
+
+      // Mobile
       mobilePaddingType,
       mobilePadding,
       mobilePaddingSuffix,
@@ -477,6 +596,25 @@ export function containerStyleClassName(v, isInnerRow) {
         paddingType === "grouped"
           ? padding + paddingSuffix
           : paddingLeft + paddingLeftSuffix,
+
+      "@media (max-width: 991px)": {
+        paddingTop:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingTop + tabletPaddingTopSuffix,
+        paddingRight:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingRight + tabletPaddingRightSuffix,
+        paddingBottom:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingBottom + tabletPaddingBottomSuffix,
+        paddingLeft:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingLeft + tabletPaddingLeftSuffix
+      },
 
       "@media (max-width: 767px)": {
         paddingTop:
@@ -519,6 +657,21 @@ export function containerStyleCSSVars(v, isInnerRow) {
     paddingBottomSuffix,
     paddingLeft,
     paddingLeftSuffix,
+
+    // Tablet
+    tabletPaddingType,
+    tabletPadding,
+    tabletPaddingSuffix,
+    tabletPaddingTop,
+    tabletPaddingTopSuffix,
+    tabletPaddingRight,
+    tabletPaddingRightSuffix,
+    tabletPaddingBottom,
+    tabletPaddingBottomSuffix,
+    tabletPaddingLeft,
+    tabletPaddingLeftSuffix,
+
+    // Mobile
     mobilePaddingType,
     mobilePadding,
     mobilePaddingSuffix,
@@ -549,6 +702,26 @@ export function containerStyleCSSVars(v, isInnerRow) {
       paddingType === "grouped"
         ? padding + paddingSuffix
         : paddingLeft + paddingLeftSuffix,
+
+    // Tablet
+    "--tabletPaddingTop":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingTop + tabletPaddingTopSuffix,
+    "--tabletPaddingRight":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingRight + tabletPaddingRightSuffix,
+    "--tabletPaddingBottom":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingBottom + tabletPaddingBottomSuffix,
+    "--tabletPaddingLeft":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingLeft + tabletPaddingLeftSuffix,
+
+    // Mobile
     "--mobilePaddingTop":
       mobilePaddingType === "grouped"
         ? mobilePadding + mobilePaddingSuffix

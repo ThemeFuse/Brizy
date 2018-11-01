@@ -28,6 +28,19 @@
   }
 }
 
+// Tablet
+&.brz-ed--tablet {
+  .brz-text-sm-left {
+    @include align-left;
+  }
+  .brz-text-sm-right {
+    @include align-right;
+  }
+  .brz-text-sm-center {
+    @include align-center;
+  }
+}
+
 // Mobile
 &.brz-ed--mobile {
   .brz-text-xs-left {

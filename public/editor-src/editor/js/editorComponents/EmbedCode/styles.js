@@ -11,6 +11,9 @@ export function styleClassName(v) {
       ".brz-ed--desktop &": {
         width: "var(--width)"
       },
+      ".brz-ed--tablet &": {
+        width: "var(--tabletWidth)"
+      },
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)"
       }
@@ -21,6 +24,11 @@ export function styleClassName(v) {
     glamorObj = {
       ".brz &": {
         width: `${width}%`
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          width: `${tabletSyncOnChange(v, "width")}%`
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
@@ -42,6 +50,11 @@ export function styleCSSVars(v) {
 
   return {
     "--width": `${width}%`,
+
+    // Tablet
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+
+    // Mobile
     "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`
   };
 }

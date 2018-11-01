@@ -79,7 +79,7 @@ class Sortable extends React.Component {
           ui: { deviceMode }
         } = getStore().getState();
 
-        if (deviceMode === "mobile") {
+        if (deviceMode === "mobile" || deviceMode === "tablet") {
           e.preventDefault();
         }
       },

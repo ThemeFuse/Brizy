@@ -3,6 +3,12 @@
 @include generate-stepwise-classes(0, 100, 1, brz-mt-lg, margin, top);
 @include generate-stepwise-classes(0, 100, 1, brz-mb-lg, margin, bottom);
 
+// Tablet
+@include media-breakpoint-between(sm, sm) {
+  @include generate-stepwise-classes(0, 100, 1, brz-mt-sm, margin, top);
+  @include generate-stepwise-classes(0, 100, 1, brz-mb-sm, margin, bottom);
+}
+
 // Mobile
 @include media-breakpoint-down(ms) {
   @include generate-stepwise-classes(0, 100, 1, brz-mt-xs, margin, top);

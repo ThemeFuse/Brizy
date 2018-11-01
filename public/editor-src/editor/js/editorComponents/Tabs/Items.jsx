@@ -104,6 +104,7 @@ class TabsItems extends EditorArrayComponent {
             }
           }
         ],
+        getItemsForTablet: () => [],
         getItemsForMobile: () => []
       };
 
@@ -162,6 +163,7 @@ class TabsItems extends EditorArrayComponent {
 
     const toolbarExtend = {
       getItemsForDesktop: () => [],
+      getItemsForTablet: () => [],
       getItemsForMobile: () => []
     };
 

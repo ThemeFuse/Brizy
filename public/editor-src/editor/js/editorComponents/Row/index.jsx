@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import SortableElement from "visual/component-new/Sortable/SortableElement";
 import SortableHandle from "visual/component-new/Sortable/SortableHandle";
@@ -94,6 +95,15 @@ class Row extends EditorComponent {
       borderLeftWidth,
       borderRightWidth,
 
+      // Tablet Padding
+      tabletPadding,
+      tabletPaddingType,
+      tabletPaddingSuffix,
+      tabletPaddingLeft,
+      tabletPaddingLeftSuffix,
+      tabletPaddingRight,
+      tabletPaddingRightSuffix,
+
       // Mobile Padding
       mobilePadding,
       mobilePaddingType,
@@ -117,6 +127,26 @@ class Row extends EditorComponent {
         ? Number(borderWidth) * 2
         : Number(borderLeftWidth) + Number(borderRightWidth);
 
+    // Tablet Padding
+    const tabletPaddingW =
+      tabletPaddingType === "grouped"
+        ? percentageToPixels(
+          tabletPadding * 2,
+          tabletPaddingSuffix,
+          meta.tabletW
+        )
+        : percentageToPixels(
+          tabletPaddingLeft,
+          tabletPaddingLeftSuffix,
+          meta.tabletW
+        ) +
+        percentageToPixels(
+          tabletPaddingRight,
+          tabletPaddingRightSuffix,
+          meta.tabletW
+        );
+
+    // Mobile Padding
     const mobilePaddingW =
       mobilePaddingType === "grouped"
         ? percentageToPixels(
@@ -136,9 +166,12 @@ class Row extends EditorComponent {
           );
 
     const externalSpacing = paddingW + borderWidthW;
+    const externalTabletSpacing = tabletPaddingW + borderWidthW;
     const externalMobileSpacing = mobilePaddingW + borderWidthW;
 
     const desktopW = Math.round((containerWidth - externalSpacing) * 10) / 10;
+    const tabletW =
+      Math.round((meta.tabletW - externalTabletSpacing) * 10) / 10;
     const mobileW =
       Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
 
@@ -149,6 +182,7 @@ class Row extends EditorComponent {
       },
       inGrid: true,
       mobileW,
+      tabletW,
       desktopW
     });
   }
@@ -192,6 +226,7 @@ class Row extends EditorComponent {
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
@@ -208,6 +243,8 @@ class Row extends EditorComponent {
       className: bgStyleClassName(v),
       imageSrc: bgImageSrc,
       colorOpacity: bgColorOpacity,
+      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
+      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
       mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
       mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
@@ -216,7 +253,7 @@ class Row extends EditorComponent {
       bgProps.video = getVideoData(bgVideo);
     }
 
-    if (media === "map" || mobileSyncOnChange(v, "media") === "map") {
+    if (media === "map" || mobileSyncOnChange(v, "media") === "map" || tabletSyncOnChange(v, "media") === "map") {
       bgProps.mapAddress = bgMapAddress;
       bgProps.mapZoom = bgMapZoom;
     }
@@ -241,6 +278,7 @@ class Row extends EditorComponent {
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

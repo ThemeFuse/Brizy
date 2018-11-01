@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import FormItemItems from "./ItemItems";
 import * as toolbarExtendConfigItems from "./extendToolbarItems";
@@ -19,6 +18,7 @@ class FormItem extends EditorComponent {
       _v.colorPalette && `${_v.colorPalette}__color`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
+      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
     ]);
     const itemsProps = this.makeSubcomponentProps({

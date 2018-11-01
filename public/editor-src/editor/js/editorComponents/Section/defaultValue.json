@@ -26,5 +26,6 @@
 
   "zIndex": 0,
 
+  "showOnTablet": "on",
   "showOnMobile": "on"
 }

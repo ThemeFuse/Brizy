@@ -35,17 +35,21 @@
         display: block;
         margin: 0;
         padding: 0;
-
-        a {
-          display: block;
-          line-height: 1.2em;
-          padding: 10px 12%;
-        }
       }
       .sub-menu {
         display: none;
         left: 100%;
         top: 0;
+      }
+      a {
+        display: block;
+        line-height: 1.2em;
+        padding: 10px 12%;
+        color: #fcfcfc;
+
+        &:hover {
+          background: rgba(36, 36, 53, 0.94);
+        }
       }
     }
     & > .menu-item {
@@ -116,7 +120,7 @@
       }
     }
   }
-  &__btn {
+  #brz-wp-shortcode__menu__btn {
     display: none;
 
     &:checked ~ div .menu {
@@ -155,66 +159,92 @@
       width: auto;
       text-align: center;
 
-      &__toggle .menu {
-        display: none;
-        flex-flow: column nowrap;
-        max-height: 0;
-        align-items: flex-start;
-        transition: max-height 0.2s ease-out;
+      &__toggle--mobile {
+        .menu {
+          display: none;
+          flex-flow: column nowrap;
+          max-height: 0;
+          align-items: flex-start;
+          transition: max-height 0.2s ease-out;
 
-        .sub-menu {
-          position: relative;
-          display: block;
-          width: 100%;
-          left: 15px;
-          background-color: transparent;
+          .sub-menu {
+            position: relative;
+            display: block;
+            width: 100%;
+            left: 15px;
+            background-color: transparent;
 
-          .menu-item a {
-            padding: 5px;
+            .menu-item a {
+              padding: 5px;
 
-            &:hover {
-              background-color: transparent;
+              &:hover {
+                background-color: transparent;
+              }
+            }
+            .sub-menu {
+              display: block;
+              left: 15px;
             }
           }
-          .sub-menu {
-            display: block;
-            left: 15px;
+          & > .menu-item {
+            padding: 0;
+
+            & > .sub-menu {
+              top: 100%;
+              padding: 5px 0;
+            }
           }
         }
-        & > .menu-item {
-          padding: 0;
-
-          & > .sub-menu {
-            top: 100%;
-            padding: 5px 0;
-          }
-        }
-      }
-      &__icon {
-        display: inline-block;
-      }
-
-      & > div:not(.brz-wp-shortcode__menu__toggle) {
-        .menu .sub-menu .menu-item a {
-          color: #fcfcfc;
-
-          &:hover {
-            color: #fff;
-            background: rgba(36, 36, 53, 0.94);
-          }
+        .brz-wp-shortcode__menu__icon {
+          display: inline-block;
         }
       }
     }
   }
 
-  @include media-breakpoint-up(sm) {
+  @include media-breakpoint-between(sm, sm) {
     .brz-wp-shortcode__menu {
-      .menu .sub-menu .menu-item a {
-        color: #fcfcfc;
+      width: auto;
+      text-align: center;
 
-        &:hover {
-          color: #fff;
-          background: rgba(36, 36, 53, 0.94);
+      &__toggle--tablet {
+        .menu {
+          display: none;
+          flex-flow: column nowrap;
+          max-height: 0;
+          align-items: flex-start;
+          transition: max-height 0.2s ease-out;
+
+          .sub-menu {
+            position: relative;
+            display: block;
+            width: 100%;
+            left: 15px;
+            background-color: transparent;
+
+            .menu-item a {
+              padding: 5px;
+
+              &:hover {
+                background-color: transparent;
+              }
+            }
+            .sub-menu {
+              display: block;
+              left: 15px;
+            }
+          }
+          & > .menu-item {
+            padding: 0;
+
+            & > .sub-menu {
+              top: 100%;
+              padding: 5px 0;
+            }
+          }
+        }
+        .brz-wp-shortcode__menu__icon {
+          display: inline-block;
         }
       }
     }

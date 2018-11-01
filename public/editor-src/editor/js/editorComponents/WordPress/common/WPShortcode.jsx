@@ -16,7 +16,8 @@ export class WPShortcode extends Component {
     resizerValue: null,
     resizerOnChange: null,
     renderHTMLInEditor: true,
-    toggleMenu: false,
+    mobileToggleMenu: false,
+    tabletToggleMenu: false,
     className: "",
     style: {}
   };
@@ -29,17 +30,25 @@ export class WPShortcode extends Component {
       resizerMeta,
       resizerValue,
       resizerOnChange,
-      toggleMenu,
+      mobileToggleMenu,
+      tabletToggleMenu,
       ...innerProps
     } = this.props;
 
     const className = classnames("brz-wp-shortcode", _className);
+    const toggleClassName = classnames(
+      "brz-wp-shortcode__menu__toggle",
+      {
+        "brz-wp-shortcode__menu__toggle--mobile": mobileToggleMenu,
+        "brz-wp-shortcode__menu__toggle--tablet": tabletToggleMenu,
+      }
+    );
     let content = <Inner {...innerProps} />;
 
-    if (toggleMenu) {
+    if (mobileToggleMenu || tabletToggleMenu) {
       content = (
-        <div className="brz-wp-shortcode__menu__toggle">
-          <input className="brz-wp-shortcode__menu__btn" type="checkbox" id="brz-wp-shortcode__menu__btn" />
+        <div className={toggleClassName}>
+          <input id="brz-wp-shortcode__menu__btn" type="checkbox" />
           <label className="brz-wp-shortcode__menu__icon" htmlFor="brz-wp-shortcode__menu__btn">
             <span className="brz-wp-shortcode__menu__icon--bars"></span>
           </label>

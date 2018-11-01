@@ -91,9 +91,7 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.width
           },
-          onChange: ({ value: width }) => ({
-            width
-          })
+          onChange: ({ value: width }) => ({ width })
         },
         {
           id: "height",
@@ -118,9 +116,71 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.height
           },
-          onChange: ({ value: height }) => ({
-            height
-          })
+          onChange: ({ value: height }) => ({ height })
+        }
+      ]
+    }
+  ];
+}
+
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      title: t("Settings"),
+      position: 110,
+      options: [
+        {
+          id: "tabletWidth",
+          label: t("Width"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 100
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "width")
+          },
+          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
+        },
+        {
+          id: "tabletHeight",
+          label: t("Height"),
+          type: "slider",
+          slider: {
+            min: v.smallHeight,
+            max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "height")
+          },
+          onChange: ({ value: tabletHeight }) => ({ tabletHeight })
         }
       ]
     }
@@ -160,11 +220,7 @@ export function getItemsForMobile(v) {
           value: {
             value: mobileSyncOnChange(v, "width")
           },
-          onChange: ({ value: mobileWidth }) => {
-            return {
-              mobileWidth
-            };
-          }
+          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
         },
         {
           id: "mobileHeight",
@@ -189,11 +245,7 @@ export function getItemsForMobile(v) {
           value: {
             value: mobileSyncOnChange(v, "height")
           },
-          onChange: ({ value: mobileHeight }) => {
-            return {
-              mobileHeight
-            };
-          }
+          onChange: ({ value: mobileHeight }) => ({ mobileHeight })
         }
       ]
     }

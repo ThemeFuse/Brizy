@@ -86,5 +86,9 @@
   "tempMobilePadding": 20,
 
   "mobileBorderRadius": null,
-  "tempMobileBorderRadius": 4
+  "tempMobileBorderRadius": 4,
+
+  "tabletSize": null,
+  "tabletCustomSize": null,
+  "tabletPadding": null
 }

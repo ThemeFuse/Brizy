@@ -6,14 +6,30 @@
   @include generateFontWeight($font-weight-min, $font-weight-max, lg);
 }
 
+// Tablet
+&.brz-ed--tablet {
+  @include generateFontSize($font-size-min, $font-size-max, large, sm);
+  @include generateLineHeight($line-height-min, $line-height-max, sm);
+  @include generateFontWeight($font-weight-min, $font-weight-max, sm);
+  @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, sm);
+
+  // Intermediate for tablet
+  @include generateFontSize($font-size-min, $font-size-max, large, sm-im);
+  @include generateLineHeight($line-height-min, $line-height-max, sm-im);
+  @include generateFontWeight($font-weight-min, $font-weight-max, sm-im);
+  @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, sm-im);
+}
+
 // Mobile
 &.brz-ed--mobile {
-  @include generateFontSize($font-size-min, $font-size-max, large, im);
   @include generateFontSize($font-size-min, $font-size-max, large, xs);
-  @include generateLineHeight($line-height-min, $line-height-max, im);
   @include generateLineHeight($line-height-min, $line-height-max, xs);
-  @include generateFontWeight($font-weight-min, $font-weight-max, im);
   @include generateFontWeight($font-weight-min, $font-weight-max, xs);
-  @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, im);
   @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, xs);
+
+  // Intermediate for mobile
+  @include generateFontSize($font-size-min, $font-size-max, large, xs-im);
+  @include generateLineHeight($line-height-min, $line-height-max, xs-im);
+  @include generateFontWeight($font-weight-min, $font-weight-max, xs-im);
+  @include generateLetterSpacing($letter-spacing-min, $letter-spacing-max, xs-im);
 }

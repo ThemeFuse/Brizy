@@ -7,6 +7,7 @@ import PaddingResizer from "visual/component-new/PaddingResizer";
 import SectionHeaderItemItems from "./items";
 import {
   wInBoxedPage,
+  wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
@@ -21,6 +22,7 @@ import {
   containerStyleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class SectionHeaderItem extends EditorComponent {
   static get componentId() {
@@ -74,11 +76,13 @@ class SectionHeaderItem extends EditorComponent {
             (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
           ) / 10;
 
+    const tabletW = wInTabletPage - borderWidthW;
     const mobileW = wInMobilePage - borderWidthW;
 
     return {
       ...meta,
       mobileW,
+      tabletW,
       desktopW
     };
   }
@@ -101,14 +105,15 @@ class SectionHeaderItem extends EditorComponent {
     );
   }
 
-  renderItems(v) {
-    const {
-      bgImageSrc,
-      bgColorOpacity,
-      bgPopulation,
-      mobileBgImageSrc,
-      mobileBgColorOpacity
-    } = v;
+  renderItems(_v) {
+    const v = this.applyRulesToValue(_v, [
+      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+    ]);
+
+    const { bgImageSrc, bgColorOpacity, bgPopulation } = v;
 
     const meta = this.getMeta(v);
 
@@ -116,8 +121,10 @@ class SectionHeaderItem extends EditorComponent {
       className: bgStyleClassName(v, this.props),
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
+      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
+      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
+      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
+      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
 
     const itemsProps = this.makeSubcomponentProps({
@@ -141,6 +148,7 @@ class SectionHeaderItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
@@ -173,6 +181,7 @@ class SectionHeaderItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

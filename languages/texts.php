@@ -72,7 +72,9 @@ class Brizy_Languages_Texts
 			"New Style #%s" => __("New Style #%s", "brizy"),
 			//-> Device Mode
 			"Mobile view" => __("Mobile view", "brizy"),
+			"Tablet view" => __("Tablet view", "brizy"),
 			"Desktop" => __("Desktop", "brizy"),
+			"Tablet" => __("Tablet", "brizy"),
 			"Mobile" => __("Mobile", "brizy"),
 			//-> More
 			"More" => __("More", "brizy"),
@@ -95,7 +97,9 @@ class Brizy_Languages_Texts
 			"Advanced" => __("Advanced", "brizy"),
 			"Show on Desktop" => __("Show on Desktop", "brizy"),
 			"Disable on Mobile" => __("Disable on Mobile", "brizy"),
+			"Disable on Tablet" => __("Disable on Tablet", "brizy"),
 			"Enable on Mobile" => __("Enable on Mobile", "brizy"),
+			"Enable on Tablet" => __("Enable on Tablet", "brizy"),
 			"Z-index" => __("Z-index", "brizy"),
 			"CSS Class" => __("CSS Class", "brizy"),
 		  
@@ -255,7 +259,7 @@ class Brizy_Languages_Texts
 			"Font Family" => __("Font Family", "brizy"),
 			"Size" => __("Size", "brizy"),
 			"Line Hgt." => __("Line Hgt.", "brizy"),
-			"Letter Spc." => __("Letter Spc.", "brizy"),
+			"Letter Sp." => __("Letter Sp.", "brizy"),
 			"List" => __("List", "brizy"),
 			"Bold" => __("Bold", "brizy"),
 			"Italic" => __("Italic", "brizy"),

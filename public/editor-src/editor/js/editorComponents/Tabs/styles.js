@@ -25,16 +25,16 @@ export function styleClassName(v) {
         "& .brz-tabs__nav--button, & .brz-tabs__items": {
           color: "var(--color)",
           backgroundColor: "var(--backgroundColor)",
-          borderColor: "var(--borderColor)",
+          borderColor: "var(--borderColor)"
         },
         "& .brz-tabs__items": {
-          borderWidth: "var(--borderWidth)",
+          borderWidth: "var(--borderWidth)"
         },
         "& .brz-tabs__nav--active .brz-tabs__nav--button": {
-          borderBottomColor: "var(--backgroundColor)",
+          borderBottomColor: "var(--backgroundColor)"
         },
         "& .brz-tabs__nav--active::after, & .brz-tabs__nav--active::before": {
-          backgroundColor: "var(--borderColor)",
+          backgroundColor: "var(--borderColor)"
         },
         "& .brz-tabs__nav--active::after": {
           right: "var(--afterWidth)"
@@ -51,18 +51,38 @@ export function styleClassName(v) {
         letterSpacing: "var(--letterSpacing)",
 
         "& .brz-tabs__nav": {
-          justifyContent: "var(--horizontalAlign)",
+          justifyContent: "var(--horizontalAlign)"
         },
         "& .brz-tabs__nav--button": {
           borderWidth: "var(--borderWidth)",
-          borderBottomColor: "transparent",
+          borderBottomColor: "transparent"
         },
         "& .brz-tabs__item--content": {
           paddingTop: "var(--paddingTop)",
           paddingRight: "var(--paddingRight)",
           paddingBottom: "var(--paddingBottom)",
           paddingLeft: "var(--paddingLeft)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        fontSize: "var(--tabletFontSize)",
+        lineHeight: "var(--tabletLineHeight)",
+        fontWeight: "var(--tabletFontWeight)",
+        letterSpacing: "var(--tabletLetterSpacing)",
+
+        "& .brz-tabs__nav--button": {
+          borderBottomColor: "var(--borderColor)",
+          borderWidth: 0
         },
+        "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
+          borderBottomWidth: "var(--borderWidth)"
+        },
+        "& .brz-tabs__item--content": {
+          paddingTop: "var(--tabletPaddingTop)",
+          paddingRight: "var(--tabletPaddingRight)",
+          paddingBottom: "var(--tabletPaddingBottom)",
+          paddingLeft: "var(--tabletPaddingLeft)"
+        }
       },
       ".brz-ed--mobile &": {
         fontSize: "var(--mobileFontSize)",
@@ -70,22 +90,19 @@ export function styleClassName(v) {
         fontWeight: "var(--mobileFontWeight)",
         letterSpacing: "var(--mobileLetterSpacing)",
 
-        "& .brz-tabs__nav": {
-          justifyContent: "var(--mobileHorizontalAlign)",
-        },
         "& .brz-tabs__nav--button": {
           borderBottomColor: "var(--borderColor)",
-          borderWidth: 0,
+          borderWidth: 0
         },
         "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
-          borderBottomWidth: "var(--borderWidth)",
+          borderBottomWidth: "var(--borderWidth)"
         },
         "& .brz-tabs__item--content": {
           paddingTop: "var(--mobilePaddingTop)",
           paddingRight: "var(--mobilePaddingRight)",
           paddingBottom: "var(--mobilePaddingBottom)",
           paddingLeft: "var(--mobilePaddingLeft)"
-        },
+        }
       }
     };
   } else {
@@ -109,6 +126,20 @@ export function styleClassName(v) {
       paddingRight,
       paddingBottom,
       paddingLeft,
+
+      // Tablet
+      tabletPaddingType,
+      tabletPadding,
+      tabletPaddingTop,
+      tabletPaddingRight,
+      tabletPaddingBottom,
+      tabletPaddingLeft,
+      tabletFontSize,
+      tabletLineHeight,
+      tabletFontWeight,
+      tabletLetterSpacing,
+
+      // Mobile
       mobilePaddingType,
       mobilePadding,
       mobilePaddingTop,
@@ -130,7 +161,7 @@ export function styleClassName(v) {
         letterSpacing,
 
         "& .brz-tabs__nav": {
-          justifyContent: `${aligns.horizontal[horizontalAlign]}`,
+          justifyContent: `${aligns.horizontal[horizontalAlign]}`
         },
         "& .brz-tabs__item--content": {
           paddingTop:
@@ -140,28 +171,65 @@ export function styleClassName(v) {
           paddingBottom:
             paddingType === "grouped" ? `${padding}px` : `${paddingBottom}px`,
           paddingLeft:
-            paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`,
+            paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`
         },
         "& .brz-tabs__nav--button, & .brz-tabs__items": {
           color: hexToRgba(colorHex, colorOpacity),
           backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
           borderColor: hexToRgba(borderColorHex, borderColorOpacity),
-          borderWidth,
+          borderWidth
         },
         "& .brz-tabs__nav--button": {
-          borderBottomColor: "transparent",
+          borderBottomColor: "transparent"
         },
         "& .brz-tabs__nav--active .brz-tabs__nav--button": {
-          borderBottomColor: hexToRgba(bgColorHex, bgColorOpacity),
+          borderBottomColor: hexToRgba(bgColorHex, bgColorOpacity)
         },
         "& .brz-tabs__nav--active::after, & .brz-tabs__nav--active::before": {
-          backgroundColor: hexToRgba(borderColorHex, borderColorOpacity),
+          backgroundColor: hexToRgba(borderColorHex, borderColorOpacity)
         },
         "& .brz-tabs__nav--active::after": {
           right: `calc(-100vw + ${borderWidth}px)`
         },
         "& .brz-tabs__nav--active::before": {
           left: `calc(-100vw + ${borderWidth}px)`
+        }
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          fontSize: `${tabletFontSize}px`,
+          lineHeight: tabletLineHeight,
+          fontWeight: tabletFontWeight,
+          letterSpacing: `${tabletLetterSpacing}px`,
+      
+          "& .brz-tabs__nav": {
+            justifyContent: `${aligns.horizontal[tabletSyncOnChange(v, "horizontalAlign")]}`
+          },
+          "& .brz-tabs__nav--button": {
+            borderBottomColor: hexToRgba(borderColorHex, borderColorOpacity),
+            borderWidth: 0
+          },
+          "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
+            borderBottomWidth: `${borderWidth}px`
+          },
+          "& .brz-tabs__item--content": {
+            paddingTop:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingTop}px`,
+            paddingRight:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingRight}px`,
+            paddingBottom:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingBottom}px`,
+            paddingLeft:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingLeft}px`
+          }
         }
       },
       "@media (max-width: 767px)": {
@@ -176,10 +244,10 @@ export function styleClassName(v) {
           },
           "& .brz-tabs__nav--button": {
             borderBottomColor: hexToRgba(borderColorHex, borderColorOpacity),
-            borderWidth: 0,
+            borderWidth: 0
           },
           "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
-            borderBottomWidth: `${borderWidth}px`,
+            borderBottomWidth: `${borderWidth}px`
           },
           "& .brz-tabs__item--content": {
             paddingTop:
@@ -198,8 +266,8 @@ export function styleClassName(v) {
               mobilePaddingType === "grouped"
                 ? `${mobilePadding}px`
                 : `${mobilePaddingLeft}px`
-          },
-        },
+          }
+        }
       }
     };
   }
@@ -225,10 +293,6 @@ export function styleCSSVars(v) {
     borderWidth,
     borderColorHex,
     borderColorOpacity,
-    mobileFontSize,
-    mobileLineHeight,
-    mobileFontWeight,
-    mobileLetterSpacing,
     horizontalAlign,
     paddingType,
     padding,
@@ -236,12 +300,30 @@ export function styleCSSVars(v) {
     paddingRight,
     paddingBottom,
     paddingLeft,
+
+    // Tablet
+    tabletPaddingType,
+    tabletPadding,
+    tabletPaddingTop,
+    tabletPaddingRight,
+    tabletPaddingBottom,
+    tabletPaddingLeft,
+    tabletFontSize,
+    tabletLineHeight,
+    tabletFontWeight,
+    tabletLetterSpacing,
+
+    // Mobile
     mobilePaddingType,
     mobilePadding,
     mobilePaddingTop,
     mobilePaddingRight,
     mobilePaddingBottom,
-    mobilePaddingLeft
+    mobilePaddingLeft,
+    mobileFontSize,
+    mobileLineHeight,
+    mobileFontWeight,
+    mobileLetterSpacing
   } = v;
 
   return {
@@ -263,6 +345,7 @@ export function styleCSSVars(v) {
     // Align
     "--horizontalAlign": `${aligns.horizontal[horizontalAlign]}`,
     "--mobileHorizontalAlign": `${aligns.horizontal[mobileSyncOnChange(v, "horizontalAlign")]}`,
+    "--tabletHorizontalAlign": `${aligns.horizontal[tabletSyncOnChange(v, "horizontalAlign")]}`,
 
     // Border After and Before
     "--afterWidth": `calc(-100vw + ${borderWidth}px)`,
@@ -277,6 +360,34 @@ export function styleCSSVars(v) {
       paddingType === "grouped" ? `${padding}px` : `${paddingBottom}px`,
     "--paddingLeft":
       paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`,
+
+    // Tablet
+    "--tabletFontSize": `${tabletFontSize}px`,
+    "--tabletLineHeight": tabletLineHeight,
+    "--tabletFontWeight": tabletFontWeight,
+    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+    "--tabletPaddingTop":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingTop}px`,
+    "--tabletPaddingRight":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingRight}px`,
+    "--tabletPaddingBottom":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingBottom}px`,
+    "--tabletPaddingLeft":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingLeft}px`,
+
+    // Mobile
+    "--mobileFontSize": `${mobileFontSize}px`,
+    "--mobileLineHeight": mobileLineHeight,
+    "--mobileFontWeight": mobileFontWeight,
+    "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
     "--mobilePaddingTop":
       mobilePaddingType === "grouped"
         ? `${mobilePadding}px`
@@ -292,12 +403,6 @@ export function styleCSSVars(v) {
     "--mobilePaddingLeft":
       mobilePaddingType === "grouped"
         ? `${mobilePadding}px`
-        : `${mobilePaddingLeft}px`,
-
-    // Mobile
-    "--mobileFontSize": `${mobileFontSize}px`,
-    "--mobileLineHeight": mobileLineHeight,
-    "--mobileFontWeight": mobileFontWeight,
-    "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
+        : `${mobilePaddingLeft}px`
   };
 }

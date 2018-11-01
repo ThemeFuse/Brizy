@@ -37,6 +37,17 @@ export function styleClassName(v) {
         paddingLeft: "var(--paddingLeft)",
         borderRadius: "var(--borderRadius)"
       },
+      ".brz-ed--tablet &": {
+        fontSize: "var(--tabletFontSize)",
+        fontWeight: "var(--tabletFontWeight)",
+        lineHeight: "var(--tabletLineHeight)",
+        letterSpacing: "var(--tabletLetterSpacing)",
+        paddingTop: "var(--tabletPaddingTop)",
+        paddingRight: "var(--tabletPaddingRight)",
+        paddingBottom: "var(--tabletPaddingBottom)",
+        paddingLeft: "var(--tabletPaddingLeft)",
+        borderRadius: "var(--tabletBorderRadius)"
+      },
       ".brz-ed--mobile &": {
         fontSize: "var(--mobileFontSize)",
         fontWeight: "var(--mobileFontWeight)",
@@ -84,6 +95,18 @@ export function styleClassName(v) {
       boxShadowSpread,
       boxShadowVertical,
       boxShadowHorizontal,
+
+      // Tablet
+      tabletFontSize,
+      tabletFontWeight,
+      tabletLineHeight,
+      tabletLetterSpacing,
+      tabletPaddingTop,
+      tabletPaddingRight,
+      tabletPaddingBottom,
+      tabletPaddingLeft,
+
+      // Mobile
       mobileFontSize,
       mobileFontWeight,
       mobileLineHeight,
@@ -97,38 +120,59 @@ export function styleClassName(v) {
     const boxShadowStyle =
       boxShadow === "on"
         ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-        boxShadowColorHex,
-        boxShadowColorOpacity
-        )}`
+            boxShadowColorHex,
+            boxShadowColorOpacity
+          )}`
         : "none";
 
-    // calculations copied from toolbar
+    // the same code (calculation) like in editor
+    let tabletContentHeight =
+      v.iconSize === "custom" &&
+      tabletFontSize * tabletLineHeight >= v.iconCustomSize
+        ? tabletFontSize * tabletLineHeight
+        : v.iconSize === "custom" &&
+          tabletFontSize * tabletLineHeight < v.iconCustomSize
+          ? v.iconCustomSize
+          : v.iconSize !== "custom" &&
+            tabletFontSize * tabletLineHeight >= v[`${v.iconSize}IconSize`]
+            ? tabletFontSize * tabletLineHeight
+            : v[`${v.iconSize}IconSize`];
+    let maxTabletBorderRadius = Math.round(
+      (tabletContentHeight + v.tabletPaddingTop * 2 + v.tempBorderWidth * 2) / 2
+    );
+
     let mobileContentHeight =
-    v.iconSize === "custom" &&
-    mobileFontSize * mobileLineHeight >= v.iconCustomSize
-      ? mobileFontSize * mobileLineHeight
-      : v.iconSize === "custom" &&
-        mobileFontSize * mobileLineHeight < v.iconCustomSize
-        ? v.iconCustomSize
-        : v.iconSize !== "custom" &&
-          mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
-          ? mobileFontSize * mobileLineHeight
-          : v[`${v.iconSize}IconSize`];
+      v.iconSize === "custom" &&
+      mobileFontSize * mobileLineHeight >= v.iconCustomSize
+        ? mobileFontSize * mobileLineHeight
+        : v.iconSize === "custom" &&
+          mobileFontSize * mobileLineHeight < v.iconCustomSize
+          ? v.iconCustomSize
+          : v.iconSize !== "custom" &&
+            mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
+            ? mobileFontSize * mobileLineHeight
+            : v[`${v.iconSize}IconSize`];
     let maxMobileBorderRadius = Math.round(
       (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
     );
 
-    let mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+    let tabletBorderRadius = v.tempTabletBorderRadius;
+    let mobileBorderRadius = v.tempMobileBorderRadius;
 
     if (borderRadiusType === "square") {
-      // old method (get border radius from tempBorderRadius)
-      mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+      // old method (get border radius from desktop tempBorderRadius)
+      tabletBorderRadius = v.tempTabletBorderRadius;
+      mobileBorderRadius = v.tempMobileBorderRadius;
     } else if (borderRadiusType === "rounded") {
+      tabletBorderRadius = maxTabletBorderRadius;
       mobileBorderRadius = maxMobileBorderRadius;
     } else if (borderRadiusType === "custom") {
       // now the border radius come from desktop
+      tabletBorderRadius = tabletSyncOnChange(v, "borderRadius");
       mobileBorderRadius = mobileSyncOnChange(v, "borderRadius");
     }
+    // end the same code (calculation) like in editor
+
     glamorObj = {
       ".brz &": {
         flexFlow: iconPosition !== "left" ? "row-reverse nowrap" : "row nowrap",
@@ -155,6 +199,19 @@ export function styleClassName(v) {
         backgroundColor: hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
         boxShadow: boxShadowStyle
       },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          fontSize: `${tabletFontSize}px`,
+          fontWeight: tabletFontWeight,
+          lineHeight: tabletLineHeight,
+          letterSpacing: `${tabletLetterSpacing}px`,
+          paddingTop: `${tabletPaddingTop}px`,
+          paddingRight: `${tabletPaddingRight}px`,
+          paddingBottom: `${tabletPaddingBottom}px`,
+          paddingLeft: `${tabletPaddingLeft}px`,
+          borderRadius: `${tabletBorderRadius}px`
+        }
+      },
       "@media (max-width: 767px)": {
         ".brz &": {
           fontSize: `${mobileFontSize}px`,
@@ -165,7 +222,7 @@ export function styleClassName(v) {
           paddingRight: `${mobilePaddingRight}px`,
           paddingBottom: `${mobilePaddingBottom}px`,
           paddingLeft: `${mobilePaddingLeft}px`,
-          borderRadius: mobileBorderRadius
+          borderRadius: `${mobileBorderRadius}px`
         }
       }
     };
@@ -198,8 +255,8 @@ export function styleCSSVars(v) {
     paddingRight,
     paddingBottom,
     paddingLeft,
-    borderRadius,
     borderRadiusType,
+    borderRadius,
     hoverColorHex,
     hoverColorOpacity,
     hoverBgColorHex,
@@ -213,6 +270,18 @@ export function styleCSSVars(v) {
     boxShadowSpread,
     boxShadowVertical,
     boxShadowHorizontal,
+
+    // Tablet
+    tabletFontSize,
+    tabletFontWeight,
+    tabletLineHeight,
+    tabletLetterSpacing,
+    tabletPaddingTop,
+    tabletPaddingRight,
+    tabletPaddingBottom,
+    tabletPaddingLeft,
+
+    // Mobile
     mobileFontSize,
     mobileFontWeight,
     mobileLineHeight,
@@ -226,12 +295,27 @@ export function styleCSSVars(v) {
   const boxShadowStyle =
     boxShadow === "on"
       ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-      boxShadowColorHex,
-      boxShadowColorOpacity
-      )}`
+          boxShadowColorHex,
+          boxShadowColorOpacity
+        )}`
       : "none";
 
   // calculations copied from toolbar
+  let tabletContentHeight =
+    v.iconSize === "custom" &&
+    tabletFontSize * tabletLineHeight >= v.iconCustomSize
+      ? tabletFontSize * tabletLineHeight
+      : v.iconSize === "custom" &&
+        tabletFontSize * tabletLineHeight < v.iconCustomSize
+        ? v.iconCustomSize
+        : v.iconSize !== "custom" &&
+          tabletFontSize * tabletLineHeight >= v[`${v.iconSize}IconSize`]
+          ? tabletFontSize * tabletLineHeight
+          : v[`${v.iconSize}IconSize`];
+  let maxTabletBorderRadius = Math.round(
+    (tabletContentHeight + v.tabletPaddingTop * 2 + v.tempBorderWidth * 2) / 2
+  );
+
   let mobileContentHeight =
     v.iconSize === "custom" &&
     mobileFontSize * mobileLineHeight >= v.iconCustomSize
@@ -247,15 +331,19 @@ export function styleCSSVars(v) {
     (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
   );
 
-  let mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+  let tabletBorderRadius = v.tempTabletBorderRadius;
+  let mobileBorderRadius = v.tempMobileBorderRadius;
 
   if (borderRadiusType === "square") {
-      // old method (get border radius from tempBorderRadius)
-      mobileBorderRadius = mobileSyncOnChange(v, "tempBorderRadius");
+      // old method (get border radius from desktop tempBorderRadius)
+      tabletBorderRadius = v.tempTabletBorderRadius;
+      mobileBorderRadius = v.tempMobileBorderRadius;
   } else if (borderRadiusType === "rounded") {
+      tabletBorderRadius = maxTabletBorderRadius;
       mobileBorderRadius = maxMobileBorderRadius;
   } else if (borderRadiusType === "custom") {
       // now the border radius come from desktop
+      tabletBorderRadius = tabletSyncOnChange(v, "borderRadius");
       mobileBorderRadius = mobileSyncOnChange(v, "borderRadius");
   }
 
@@ -284,6 +372,19 @@ export function styleCSSVars(v) {
       hoverBorderColorOpacity
     ),
     "--hoverBgColor": hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
+
+    // Tablet
+    "--tabletFontSize": `${tabletFontSize}px`,
+    "--tabletFontWeight": tabletFontWeight,
+    "--tabletLineHeight": tabletLineHeight,
+    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+    "--tabletPaddingTop": `${tabletPaddingTop}px`,
+    "--tabletPaddingRight": `${tabletPaddingRight}px`,
+    "--tabletPaddingBottom": `${tabletPaddingBottom}px`,
+    "--tabletPaddingLeft": `${tabletPaddingLeft}px`,
+    "--tabletBorderRadius": `${tabletBorderRadius}px`,
+
+    // Mobile
     "--mobileFontSize": `${mobileFontSize}px`,
     "--mobileFontWeight": mobileFontWeight,
     "--mobileLineHeight": mobileLineHeight,
@@ -333,7 +434,9 @@ export function iconStyleClassName(v) {
                   iconCustomSize > 48 &&
                   iconCustomSize <= 64
                   ? 2.3
-                  : iconType === "outline" && iconCustomSize > 64 ? 3 : 0
+                  : iconType === "outline" && iconCustomSize > 64
+                    ? 3
+                    : 0
       }
     };
   }
@@ -366,6 +469,8 @@ export function iconStyleCSSVars(v) {
               iconCustomSize > 48 &&
               iconCustomSize <= 64
               ? 2.3
-              : iconType === "outline" && iconCustomSize > 64 ? 3 : 0
+              : iconType === "outline" && iconCustomSize > 64
+                ? 3
+                : 0
   };
 }

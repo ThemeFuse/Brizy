@@ -119,10 +119,17 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
       ? getFirstValue(formatHeight).replace("_", ".")
       : String(height),
     horizontalAlign: format.horizontalAlign || align,
-    intermediateHeight: format.intermediateHeight || null,
-    intermediateSize: format.intermediateSize || null,
-    intermediateLetterSpacing: format.intermediateLetterSpacing || null,
-    intermediateWeight: format.intermediateWeight || null,
+    intermediateTabletHeight: format.intermediateTabletHeight || null,
+    intermediateMobileHeight: format.intermediateMobileHeight || null,
+    intermediateTabletSize: format.intermediateTabletSize || null,
+    intermediateMobileSize: format.intermediateMobileSize || null,
+    intermediateTabletLetterSpacing:
+      format.intermediateTabletLetterSpacing || null,
+    intermediateMobileLetterSpacing:
+      format.intermediateMobileLetterSpacing || null,
+    intermediateTabletWeight: format.intermediateTabletWeight || null,
+    intermediateMobileWeight: format.intermediateMobileWeight || null,
+
     letterSpacing: formatLetterSpacing
       ? getFirstValue(formatLetterSpacing)
           .replace("m_", "-")
@@ -132,8 +139,11 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     list: format.list ? getFirstValue(format.list) : null,
     marginBottom: marginBottom ? getFirstValue(marginBottom) : cssMarginBottom,
     marginTop: marginTop ? getFirstValue(marginTop) : cssMarginTop,
+    tabletHeight: format.tabletHeight || null,
     mobileHeight: format.mobileHeight || null,
+    tabletHorizontalAlign: format.tabletHorizontalAlign || align,
     mobileHorizontalAlign: format.mobileHorizontalAlign || align,
+    tabletSize: format.tabletSize || null,
     mobileSize: format.mobileSize || null,
     population: format.population
       ? {
@@ -144,6 +154,8 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     prepopulation: format.prepopulation
       ? $elem.closest(".brz-pre-population-visible").text()
       : null,
+    tabletWeight: format.tabletWeight || null,
+    mobileWeight: format.mobileWeight || null,
     size: formatSize ? getFirstValue(formatSize) : size,
     tagName: getTagName(format, $elem),
     weight: formatWeight ? getFirstValue(formatWeight) : String(weight)

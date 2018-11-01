@@ -29,6 +29,12 @@
   background-size: cover;
 }
 
+&.brz-is-mobile {
+  & .brz-bg-media > .brz-bg-image {
+    background-attachment: scroll;
+  }
+}
+
 // Video & Map
 .brz-iframe.brz-bg-video__cover,
 .brz-iframe.brz-bg-map__cover {
@@ -81,7 +87,7 @@
 }
 
 // Responsive
-@include media-breakpoint-down(ms) {
+@include media-breakpoint-down(sm) {
   .brz-bg-video {
     .brz-iframe {
       display: none !important;

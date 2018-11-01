@@ -9,14 +9,22 @@ export function styleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       ".brz & iframe": {
-        width: `100%`,
+        width: `100%`
       },
       ".brz-ed--desktop &": {
         width: "var(--width)",
         height: "var(--height)",
 
         "& iframe": {
-          height: "var(--height)",
+          height: "var(--height)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        width: "var(--tabletWidth)",
+        height: "var(--tabletHeight)",
+
+        "& iframe": {
+          height: "var(--tabletHeight)"
         }
       },
       ".brz-ed--mobile &": {
@@ -24,16 +32,12 @@ export function styleClassName(v) {
         height: "var(--mobileHeight)",
 
         "& iframe": {
-          height: "var(--mobileHeight)",
+          height: "var(--mobileHeight)"
         }
       }
     };
   } else {
-    const {
-      url,
-      width,
-      height
-    } = v;
+    const { url, width, height } = v;
 
     glamorObj = {
       ".brz &": {
@@ -43,6 +47,16 @@ export function styleClassName(v) {
         "& iframe": {
           width: `100%`,
           height: `${height}px`
+        }
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          width: `${tabletSyncOnChange(v, "width")}%`,
+          height: !url ? `${tabletSyncOnChange(v, "height")}px` : null,
+
+          "& iframe": {
+            height: `${tabletSyncOnChange(v, "height")}px`
+          }
         }
       },
       "@media (max-width: 767px)": {
@@ -66,14 +80,17 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    width,
-    height
-  } = v;
+  const { width, height } = v;
 
   return {
     "--width": `${width}%`,
     "--height": `${height}px`,
+
+    // Tablet
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+    "--tabletHeight": `${tabletSyncOnChange(v, "height")}px`,
+
+    // Mobile
     "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
     "--mobileHeight": `${mobileSyncOnChange(v, "height")}px`
   };

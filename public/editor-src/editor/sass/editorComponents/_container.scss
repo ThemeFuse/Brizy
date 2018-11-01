@@ -14,7 +14,7 @@ $containers-width: map-get($container-max-widths, "lg");
 }
 
 // Mobile
-@include media-breakpoint-down(ms) {
+@include media-breakpoint-down(sm) {
   .brz-container__wrap,
   .brz-container__wrap--fluid {
     padding-left: 15px;

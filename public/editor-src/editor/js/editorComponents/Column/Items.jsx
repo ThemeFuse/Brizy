@@ -81,6 +81,7 @@ class Items extends EditorArrayComponent {
           }
         }
       ],
+      getItemsForTablet: () => [],
       getItemsForMobile: () => []
     };
     const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);

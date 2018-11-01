@@ -86,6 +86,7 @@ class SectionItems extends EditorArrayComponent {
       : [];
     const toolbarExtendSettings = {
       getItemsForDesktop: () => desktopItems,
+      getItemsForTablet: () => [],
       getItemsForMobile: () => []
     };
 
@@ -162,6 +163,16 @@ class SectionItems extends EditorArrayComponent {
           sliderArrows !== "none" &&
           templateIconUrl("editor", `right-arrow-${sliderArrows}`);
 
+        const responsive = [
+          {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ];
+
         ret = (
           <div
             className="brz-slick-slider"
@@ -177,6 +188,7 @@ class SectionItems extends EditorArrayComponent {
             data-auto-play={sliderAutoPlay}
             data-auto-play-speed={sliderAutoPlaySpeed * 1000}
             data-swipe={false}
+            data-responsive={encodeURIComponent(JSON.stringify(responsive))}
           >
             {items}
           </div>

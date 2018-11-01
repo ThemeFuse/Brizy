@@ -32,6 +32,15 @@
   "paddingBottom": 5,
   "paddingLeft": 15,
 
+  "tabletFontStyle": "",
+  "tabletFontSize": 14,
+  "tabletFontWeight": 400,
+  "tabletLineHeight": 1.3,
+  "tabletLetterSpacing": 0,
+
+  "tabletWidth": null,
+  "tabletBorderRadius": null,
+
   "mobileFontStyle": "",
   "mobileFontSize": 13,
   "mobileFontWeight": 400,

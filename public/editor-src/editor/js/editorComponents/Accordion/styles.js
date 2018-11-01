@@ -2,6 +2,10 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import {
+  tabletSyncOnChange,
+  mobileSyncOnChange
+} from "visual/utils/onChange";
 
 // Accordion Style
 export function styleClassName(v) {
@@ -35,6 +39,19 @@ export function styleClassName(v) {
           paddingRight: "var(--paddingRight)",
           paddingBottom: "var(--paddingBottom)",
           paddingLeft: "var(--paddingLeft)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        fontSize: "var(--tabletFontSize)",
+        lineHeight: "var(--tabletLineHeight)",
+        fontWeight: "var(--tabletFontWeight)",
+        letterSpacing: "var(--tabletLetterSpacing)",
+
+        "& .brz-accordion__content": {
+          paddingTop: "var(--tabletPaddingTop)",
+          paddingRight: "var(--tabletPaddingRight)",
+          paddingBottom: "var(--tabletPaddingBottom)",
+          paddingLeft: "var(--tabletPaddingLeft)"
         }
       },
       ".brz-ed--mobile &": {
@@ -71,6 +88,20 @@ export function styleClassName(v) {
       paddingRight,
       paddingBottom,
       paddingLeft,
+
+      // Tablet
+      tabletPaddingType,
+      tabletPadding,
+      tabletPaddingTop,
+      tabletPaddingRight,
+      tabletPaddingBottom,
+      tabletPaddingLeft,
+      tabletFontSize,
+      tabletLineHeight,
+      tabletFontWeight,
+      tabletLetterSpacing,
+
+      // Mobile
       mobilePaddingType,
       mobilePadding,
       mobilePaddingTop,
@@ -107,6 +138,33 @@ export function styleClassName(v) {
           backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
           borderColor: hexToRgba(borderColorHex, borderColorOpacity),
           borderWidth
+        }
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          fontSize: `${tabletFontSize}px`,
+          lineHeight: tabletLineHeight,
+          fontWeight: tabletFontWeight,
+          letterSpacing: `${tabletLetterSpacing}px`,
+      
+          "& .brz-accordion__content": {
+            paddingTop:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingTop}px`,
+            paddingRight:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingRight}px`,
+            paddingBottom:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingBottom}px`,
+            paddingLeft:
+              tabletPaddingType === "grouped"
+                ? `${tabletPadding}px`
+                : `${tabletPaddingLeft}px`
+          }
         }
       },
       "@media (max-width: 767px)": {
@@ -160,22 +218,36 @@ export function styleCSSVars(v) {
     borderWidth,
     borderColorHex,
     borderColorOpacity,
-    mobileFontSize,
-    mobileLineHeight,
-    mobileFontWeight,
-    mobileLetterSpacing,
     paddingType,
     padding,
     paddingTop,
     paddingRight,
     paddingBottom,
     paddingLeft,
+
+    // Tablet
+    tabletPaddingType,
+    tabletPadding,
+    tabletPaddingTop,
+    tabletPaddingRight,
+    tabletPaddingBottom,
+    tabletPaddingLeft,
+    tabletFontSize,
+    tabletLineHeight,
+    tabletFontWeight,
+    tabletLetterSpacing,
+
+    // Mobile
     mobilePaddingType,
     mobilePadding,
     mobilePaddingTop,
     mobilePaddingRight,
     mobilePaddingBottom,
-    mobilePaddingLeft
+    mobilePaddingLeft,
+    mobileFontSize,
+    mobileLineHeight,
+    mobileFontWeight,
+    mobileLetterSpacing
   } = v;
 
   return {
@@ -204,6 +276,34 @@ export function styleCSSVars(v) {
       paddingType === "grouped" ? `${padding}px` : `${paddingBottom}px`,
     "--paddingLeft":
       paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`,
+
+    // Tablet
+    "--tabletFontSize": `${tabletFontSize}px`,
+    "--tabletLineHeight": tabletLineHeight,
+    "--tabletFontWeight": tabletFontWeight,
+    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+    "--tabletPaddingTop":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingTop}px`,
+    "--tabletPaddingRight":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingRight}px`,
+    "--tabletPaddingBottom":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingBottom}px`,
+    "--tabletPaddingLeft":
+      tabletPaddingType === "grouped"
+        ? `${tabletPadding}px`
+        : `${tabletPaddingLeft}px`,
+
+    // Mobile
+    "--mobileFontSize": `${mobileFontSize}px`,
+    "--mobileLineHeight": mobileLineHeight,
+    "--mobileFontWeight": mobileFontWeight,
+    "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
     "--mobilePaddingTop":
       mobilePaddingType === "grouped"
         ? `${mobilePadding}px`
@@ -219,12 +319,6 @@ export function styleCSSVars(v) {
     "--mobilePaddingLeft":
       mobilePaddingType === "grouped"
         ? `${mobilePadding}px`
-        : `${mobilePaddingLeft}px`,
-
-    // Mobile
-    "--mobileFontSize": `${mobileFontSize}px`,
-    "--mobileLineHeight": mobileLineHeight,
-    "--mobileFontWeight": mobileFontWeight,
-    "--mobileLetterSpacing": `${mobileLetterSpacing}px`
+        : `${mobilePaddingLeft}px`
   };
 }

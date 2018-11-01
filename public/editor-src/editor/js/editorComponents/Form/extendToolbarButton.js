@@ -110,6 +110,43 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "showOnTablet",
+      type: "toggle",
+      disabled: true
+    },
+    {
+      id: "tabletHorizontalAlign",
+      type: "toggle",
+      choices: [
+        {
+          icon: "nc-text-align-left",
+          title: t("Align"),
+          value: "left"
+        },
+        {
+          icon: "nc-text-align-center",
+          title: t("Align"),
+          value: "center"
+        },
+        {
+          icon: "nc-text-align-right",
+          title: t("Align"),
+          value: "right"
+        }
+      ],
+      value: tabletSyncOnChange(v, "horizontalAlign")
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      disabled: true
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {

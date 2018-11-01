@@ -231,9 +231,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.paddingSuffix
                         },
                         onChange: ({
-                          value: padding,
-                          suffix: paddingSuffix
-                        }) => {
+                                     value: padding,
+                                     suffix: paddingSuffix
+                                   }) => {
                           return {
                             padding,
                             paddingSuffix,
@@ -276,9 +276,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.paddingTopSuffix
                         },
                         onChange: ({
-                          value: paddingTop,
-                          suffix: paddingTopSuffix
-                        }) => {
+                                     value: paddingTop,
+                                     suffix: paddingTopSuffix
+                                   }) => {
                           return {
                             paddingTop,
                             paddingTopSuffix,
@@ -321,9 +321,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.paddingRightSuffix
                         },
                         onChange: ({
-                          value: paddingRight,
-                          suffix: paddingRightSuffix
-                        }) => {
+                                     value: paddingRight,
+                                     suffix: paddingRightSuffix
+                                   }) => {
                           return {
                             paddingRight,
                             paddingRightSuffix,
@@ -366,9 +366,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.paddingBottomSuffix
                         },
                         onChange: ({
-                          value: paddingBottom,
-                          suffix: paddingBottomSuffix
-                        }) => {
+                                     value: paddingBottom,
+                                     suffix: paddingBottomSuffix
+                                   }) => {
                           return {
                             paddingBottom,
                             paddingBottomSuffix,
@@ -411,9 +411,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.paddingLeftSuffix
                         },
                         onChange: ({
-                          value: paddingLeft,
-                          suffix: paddingLeftSuffix
-                        }) => {
+                                     value: paddingLeft,
+                                     suffix: paddingLeftSuffix
+                                   }) => {
                           return {
                             paddingLeft,
                             paddingLeftSuffix,
@@ -520,9 +520,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.marginTopSuffix
                         },
                         onChange: ({
-                          value: marginTop,
-                          suffix: marginTopSuffix
-                        }) => {
+                                     value: marginTop,
+                                     suffix: marginTopSuffix
+                                   }) => {
                           return {
                             marginTop,
                             marginTopSuffix,
@@ -564,9 +564,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.marginRightSuffix
                         },
                         onChange: ({
-                          value: marginRight,
-                          suffix: marginRightSuffix
-                        }) => {
+                                     value: marginRight,
+                                     suffix: marginRightSuffix
+                                   }) => {
                           return {
                             marginRight,
                             marginRightSuffix,
@@ -608,9 +608,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.marginBottomSuffix
                         },
                         onChange: ({
-                          value: marginBottom,
-                          suffix: marginBottomSuffix
-                        }) => {
+                                     value: marginBottom,
+                                     suffix: marginBottomSuffix
+                                   }) => {
                           return {
                             marginBottom,
                             marginBottomSuffix,
@@ -652,9 +652,9 @@ export function getItemsForDesktop(v) {
                           suffix: v.marginLeftSuffix
                         },
                         onChange: ({
-                          value: marginLeft,
-                          suffix: marginLeftSuffix
-                        }) => {
+                                     value: marginLeft,
+                                     suffix: marginLeftSuffix
+                                   }) => {
                           return {
                             marginLeft,
                             marginLeftSuffix,
@@ -736,6 +736,553 @@ export function getItemsForDesktop(v) {
               ]
             }
           ]
+        }
+      ]
+    }
+  ];
+}
+
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "showOnTablet",
+      type: "toggle",
+      position: 10,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: t("Disable on Tablet"),
+          value: "on"
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: t("Enable on Tablet"),
+          value: "off"
+        }
+      ],
+      value: v.showOnTablet
+    },
+    {
+      id: "tabletHorizontalAlign",
+      type: "toggle",
+      position: 100,
+      choices: [
+        {
+          icon: "nc-text-align-left",
+          title: t("Align"),
+          value: "left"
+        },
+        {
+          icon: "nc-text-align-center",
+          title: t("Align"),
+          value: "center"
+        },
+        {
+          icon: "nc-text-align-right",
+          title: t("Align"),
+          value: "right"
+        }
+      ],
+      value: tabletSyncOnChange(v, "horizontalAlign")
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      icon: "nc-cog",
+      title: t("Setting"),
+      position: 110,
+      options: [
+        {
+          id: "padding",
+          type: "multiPicker",
+          picker: {
+            id: "tabletPaddingType",
+            label: t("Padding"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "grouped",
+                icon: "nc-styling-all"
+              },
+              {
+                value: "ungrouped",
+                icon: "nc-styling-individual"
+              }
+            ],
+            value: v.tabletPaddingType
+          },
+          choices: {
+            grouped: [
+              {
+                id: "tabletPadding",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPadding,
+                  suffix: v.tabletPaddingSuffix
+                },
+                onChange: ({
+                             value: tabletPadding,
+                             suffix: tabletPaddingSuffix
+                           }) => {
+                  return {
+                    tabletPadding,
+                    tabletPaddingSuffix,
+                    tabletPaddingTop: tabletPadding,
+                    tabletPaddingRight: tabletPadding,
+                    tabletPaddingBottom: tabletPadding,
+                    tabletPaddingLeft: tabletPadding
+                  };
+                }
+              }
+            ],
+            ungrouped: [
+              {
+                id: "tabletPaddingTop",
+                icon: "nc-styling-top",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingTop,
+                  suffix: v.tabletPaddingTopSuffix
+                },
+                onChange: ({
+                             value: tabletPaddingTop,
+                             suffix: tabletPaddingTopSuffix
+                           }) => {
+                  return {
+                    tabletPaddingTop,
+                    tabletPaddingTopSuffix,
+                    tabletPadding:
+                      tabletPaddingTop === v.tabletPaddingRight &&
+                      tabletPaddingTop === v.tabletPaddingLeft &&
+                      tabletPaddingTop === v.tabletPaddingBottom
+                        ? tabletPaddingTop
+                        : v.tabletPadding
+                  };
+                }
+              },
+              {
+                id: "tabletPaddingRight",
+                icon: "nc-styling-right",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingRight,
+                  suffix: v.tabletPaddingRightSuffix
+                },
+                onChange: ({
+                             value: tabletPaddingRight,
+                             suffix: tabletPaddingRightSuffix
+                           }) => {
+                  return {
+                    tabletPaddingRight,
+                    tabletPaddingRightSuffix,
+                    tabletPadding:
+                      tabletPaddingRight === v.tabletPaddingTop &&
+                      tabletPaddingRight === v.tabletPaddingLeft &&
+                      tabletPaddingRight === v.tabletPaddingBottom
+                        ? tabletPaddingRight
+                        : v.tabletPadding
+                  };
+                }
+              },
+              {
+                id: "tabletPaddingBottom",
+                icon: "nc-styling-bottom",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingBottom,
+                  suffix: v.tabletPaddingBottomSuffix
+                },
+                onChange: ({
+                             value: tabletPaddingBottom,
+                             suffix: tabletPaddingBottomSuffix
+                           }) => {
+                  return {
+                    tabletPaddingBottom,
+                    tabletPaddingBottomSuffix,
+                    tabletPadding:
+                      tabletPaddingBottom === v.tabletPaddingTop &&
+                      tabletPaddingBottom === v.tabletPaddingLeft &&
+                      tabletPaddingBottom === v.tabletPaddingRight
+                        ? tabletPaddingBottom
+                        : v.tabletPadding
+                  };
+                }
+              },
+              {
+                id: "tabletPaddingLeft",
+                icon: "nc-styling-left",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingLeft,
+                  suffix: v.tabletPaddingLeftSuffix
+                },
+                onChange: ({
+                             value: tabletPaddingLeft,
+                             suffix: tabletPaddingLeftSuffix
+                           }) => {
+                  return {
+                    tabletPaddingLeft,
+                    tabletPaddingLeftSuffix,
+                    tabletPadding:
+                      tabletPaddingLeft === v.tabletPaddingTop &&
+                      tabletPaddingLeft === v.tabletPaddingBottom &&
+                      tabletPaddingLeft === v.tabletPaddingRight
+                        ? tabletPaddingLeft
+                        : v.tabletPadding
+                  };
+                }
+              }
+            ]
+          }
+        },
+        {
+          id: "margin",
+          type: "multiPicker",
+          picker: {
+            id: "tabletMarginType",
+            label: t("Margin"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "grouped",
+                icon: "nc-styling-all"
+              },
+              {
+                value: "ungrouped",
+                icon: "nc-styling-individual"
+              }
+            ],
+            value: v.tabletMarginType
+          },
+          choices: {
+            grouped: [
+              {
+                id: "tabletMargin",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMargin,
+                  suffix: v.tabletMarginSuffix
+                },
+                onChange: ({
+                             value: tabletMargin,
+                             suffix: tabletMarginSuffix
+                           }) => {
+                  return {
+                    tabletMargin,
+                    tabletMarginSuffix,
+                    tabletMarginTop: tabletMargin,
+                    tabletMarginRight: tabletMargin,
+                    tabletMarginBottom: tabletMargin,
+                    tabletMarginLeft: tabletMargin
+                  };
+                }
+              }
+            ],
+            ungrouped: [
+              {
+                id: "tabletMarginTop",
+                icon: "nc-styling-top",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginTop,
+                  suffix: v.tabletMarginTopSuffix
+                },
+                onChange: ({
+                             value: tabletMarginTop,
+                             suffix: tabletMarginTopSuffix
+                           }) => {
+                  return {
+                    tabletMarginTop,
+                    tabletMarginTopSuffix,
+                    tabletMargin:
+                      tabletMarginTop === v.tabletMarginBottom &&
+                      tabletMarginTop === v.tabletMarginRight &&
+                      tabletMarginTop === v.tabletMarginLeft
+                        ? tabletMarginTop
+                        : v.tabletMargin
+                  };
+                }
+              },
+              {
+                id: "tabletMarginRight",
+                icon: "nc-styling-right",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginRight,
+                  suffix: v.tabletMarginRightSuffix
+                },
+                onChange: ({
+                             value: tabletMarginRight,
+                             suffix: tabletMarginRightSuffix
+                           }) => {
+                  return {
+                    tabletMarginRight,
+                    tabletMarginRightSuffix,
+                    tabletMargin:
+                      tabletMarginRight === v.tabletMarginBottom &&
+                      tabletMarginRight === v.tabletMarginTop &&
+                      tabletMarginRight === v.tabletMarginLeft
+                        ? tabletMarginRight
+                        : v.tabletMargin
+                  };
+                }
+              },
+              {
+                id: "tabletMarginBottom",
+                icon: "nc-styling-bottom",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginBottom,
+                  suffix: v.tabletMarginBottomSuffix
+                },
+                onChange: ({
+                             value: tabletMarginBottom,
+                             suffix: tabletMarginBottomSuffix
+                           }) => {
+                  return {
+                    tabletMarginBottom,
+                    tabletMarginBottomSuffix,
+                    tabletMargin:
+                      tabletMarginBottom === v.tabletMarginRight &&
+                      tabletMarginBottom === v.tabletMarginTop &&
+                      tabletMarginBottom === v.tabletMarginLeft
+                        ? tabletMarginBottom
+                        : v.tabletMargin
+                  };
+                }
+              },
+              {
+                id: "tabletMarginLeft",
+                icon: "nc-styling-left",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginLeft,
+                  suffix: v.tabletMarginLeftSuffix
+                },
+                onChange: ({
+                             value: tabletMarginLeft,
+                             suffix: tabletMarginLeftSuffix
+                           }) => {
+                  return {
+                    tabletMarginLeft,
+                    tabletMarginLeftSuffix,
+                    tabletMargin:
+                      tabletMarginLeft === v.tabletMarginRight &&
+                      tabletMarginLeft === v.tabletMarginTop &&
+                      tabletMarginLeft === v.tabletMarginBottom
+                        ? tabletMarginLeft
+                        : v.tabletMargin
+                  };
+                }
+              }
+            ]
+          }
         }
       ]
     }

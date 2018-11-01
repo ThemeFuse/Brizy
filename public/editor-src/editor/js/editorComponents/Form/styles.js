@@ -12,6 +12,9 @@ export function styleClassName(v) {
       ".brz-ed--desktop &": {
         textAlign: "var(--horizontalAlign)"
       },
+      ".brz-ed--tablet &": {
+        textAlign: "var(--tabletHorizontalAlign)"
+      },
       ".brz-ed--mobile &": {
         textAlign: "var(--mobileHorizontalAlign)"
       }
@@ -22,6 +25,9 @@ export function styleClassName(v) {
     glamorObj = {
       textAlign: horizontalAlign,
 
+      "@media (max-width: 991px)": {
+        textAlign: tabletSyncOnChange(v, "horizontalAlign")
+      },
       "@media (max-width: 767px)": {
         textAlign: mobileSyncOnChange(v, "horizontalAlign")
       }
@@ -39,6 +45,7 @@ export function styleCSSVars(v) {
 
   return {
     "--horizontalAlign": horizontalAlign,
+    "--tabletHorizontalAlign": tabletSyncOnChange(v, "horizontalAlign"),
     "--mobileHorizontalAlign": mobileSyncOnChange(v, "horizontalAlign")
   };
 }
@@ -80,6 +87,19 @@ export function fieldsStyleClassName(v) {
         paddingBottom: "var(--paddingBottom)",
         paddingLeft: "var(--paddingLeft)"
       },
+      ".brz-ed--tablet &.brz-form__fields": {
+        marginRight: "var(--tabletMarginRight)",
+        marginLeft: "var(--tabletMarginLeft)"
+      },
+      ".brz-ed--tablet & .brz-form__item": {
+        fontSize: "var(--tabletFontSize)",
+        lineHeight: "var(--tabletLineHeight)",
+        fontWeight: "var(--tabletFontWeight)",
+        letterSpacing: "var(--tabletLetterSpacing)",
+        paddingRight: "var(--tabletPaddingRight)",
+        paddingBottom: "var(--tabletPaddingBottom)",
+        paddingLeft: "var(--tabletPaddingLeft)"
+      },
       ".brz-ed--mobile &.brz-form__fields": {
         marginRight: "var(--mobileMarginRight)",
         marginLeft: "var(--mobileMarginLeft)"
@@ -115,6 +135,14 @@ export function fieldsStyleClassName(v) {
       paddingRight,
       paddingBottom,
       paddingLeft,
+
+      // Tablet
+      tabletFontSize,
+      tabletLineHeight,
+      tabletFontWeight,
+      tabletLetterSpacing,
+
+      // Mobile
       mobileFontSize,
       mobileLineHeight,
       mobileFontWeight,
@@ -151,6 +179,21 @@ export function fieldsStyleClassName(v) {
       ".brz & .form-alert": {
         fontFamily: getFontById(fontFamily).family
       },
+      "@media (max-width: 991px)": {
+        ".brz &.brz-form__fields": {
+          marginRight: `-${tabletSyncOnChange(v, "paddingRight") / 2}px`,
+          marginLeft: `-${tabletSyncOnChange(v, "paddingLeft") / 2}px`
+        },
+        ".brz & .brz-form__item": {
+          fontSize: `${tabletFontSize}px`,
+          lineHeight: tabletLineHeight,
+          fontWeight: tabletFontWeight,
+          letterSpacing: `${tabletLetterSpacing}px`,
+          paddingRight: `${tabletSyncOnChange(v, "paddingRight") / 2}px`,
+          paddingBottom: `${tabletSyncOnChange(v, "paddingBottom")}px`,
+          paddingLeft: `${tabletSyncOnChange(v, "paddingLeft") / 2}px`
+        }
+      },
       "@media (max-width: 767px)": {
         ".brz &.brz-form__fields": {
           marginRight: `-${mobileSyncOnChange(v, "paddingRight") / 2}px`,
@@ -183,7 +226,6 @@ export function fieldsStyleCSSVars(v) {
     fontWeight,
     lineHeight,
     letterSpacing,
-    marginBottom,
     colorHex,
     colorOpacity,
     bgColorHex,
@@ -197,6 +239,14 @@ export function fieldsStyleCSSVars(v) {
     paddingRight,
     paddingBottom,
     paddingLeft,
+
+    // Tablet
+    tabletFontSize,
+    tabletLineHeight,
+    tabletFontWeight,
+    tabletLetterSpacing,
+
+    // Mobile
     mobileFontSize,
     mobileLineHeight,
     mobileFontWeight,
@@ -227,6 +277,20 @@ export function fieldsStyleCSSVars(v) {
     "--borderWidth": `${borderWidth}px`,
     "--borderStyle": borderStyle,
     "--borderRadius": `${borderRadius}px`,
+
+    // Tablet
+    "--tabletFontSize": `${tabletFontSize}px`,
+    "--tabletLineHeight": tabletLineHeight,
+    "--tabletFontWeight": tabletFontWeight,
+    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+    "--tabletBorderRadius": `${tabletSyncOnChange(v, "borderRadius")}px`, // this key is used only here, but no div use this variable
+
+    "--tabletPaddingTop": `${tabletSyncOnChange(v, "paddingTop")}px`,
+    "--tabletPaddingRight": `${tabletSyncOnChange(v, "paddingRight") / 2}px`,
+    "--tabletPaddingBottom": `${tabletSyncOnChange(v, "paddingBottom")}px`,
+    "--tabletPaddingLeft": `${tabletSyncOnChange(v, "paddingLeft") / 2}px`,
+    "--tabletMarginRight": `-${tabletSyncOnChange(v, "paddingRight") / 2}px`,
+    "--tabletMarginLeft": `-${tabletSyncOnChange(v, "paddingLeft") / 2}px`,
 
     // Mobile
     "--mobileFontSize": `${mobileFontSize}px`,

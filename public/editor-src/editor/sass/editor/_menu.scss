@@ -4,44 +4,92 @@
     width: auto;
     text-align: center;
 
-    &__toggle .menu {
-      display: none;
-      flex-flow: column nowrap;
-      max-height: 0;
-      align-items: flex-start;
-      transition: max-height .2s ease-out;
+    &__toggle--mobile {
+      .menu {
+        display: none;
+        flex-flow: column nowrap;
+        max-height: 0;
+        align-items: flex-start;
+        transition: max-height .2s ease-out;
 
-      .sub-menu {
-        position: relative;
-        display: block;
-        width: 100%;
-        left: 15px;
-        background-color: transparent;
+        .sub-menu {
+          position: relative;
+          display: block;
+          width: 100%;
+          left: 15px;
+          background-color: transparent;
 
-        .menu-item a {
-          padding: 5px;
+          .menu-item a {
+            padding: 5px;
 
-          &:hover {
-            background-color: transparent;
+            &:hover {
+              background-color: transparent;
+            }
+          }
+          .sub-menu {
+            display: block;
+            left: 15px;
           }
         }
-        .sub-menu {
-          display: block;
-          left: 15px;
+        & > .menu-item {
+          padding: 0;
+
+          & > .sub-menu {
+            top: 100%;
+            padding: 5px 0;
+          }
         }
       }
-      & > .menu-item {
-        padding: 0;
-
-        & > .sub-menu {
-          display: none;
-          top: 100%;
-          padding: 5px 0;
-        }
+      .brz-wp-shortcode__menu__icon {
+        display: inline-block;
       }
     }
-    &__icon {
-      display: inline-block;
+  }
+}
+&.brz-ed--tablet {
+  .brz-wp-shortcode__menu {
+    width: auto;
+    text-align: center;
+
+    &__toggle--tablet {
+      .menu {
+        display: none;
+        flex-flow: column nowrap;
+        max-height: 0;
+        align-items: flex-start;
+        transition: max-height .2s ease-out;
+
+        .sub-menu {
+          position: relative;
+          display: block;
+          width: 100%;
+          left: 15px;
+          background-color: transparent;
+
+          .menu-item a {
+            padding: 5px;
+
+            &:hover {
+              background-color: transparent;
+            }
+          }
+          .sub-menu {
+            display: block;
+            left: 15px;
+          }
+        }
+        & > .menu-item {
+          padding: 0;
+
+          & > .sub-menu {
+            top: 100%;
+            padding: 5px 0;
+          }
+        }
+      }
+      .brz-wp-shortcode__menu__icon {
+        display: inline-block;
+      }
     }
   }
 }

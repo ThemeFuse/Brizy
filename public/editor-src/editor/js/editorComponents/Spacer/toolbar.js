@@ -55,6 +55,59 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      title: t("Settings"),
+      position: 110,
+      options: [
+        {
+          id: "tabletHeight",
+          label: t("Height"),
+          type: "slider",
+          slider: {
+            min: 10,
+            max: 200
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "height")
+          },
+          onChange: ({ value: tabletHeight }) => {
+            return {
+              tabletHeight
+            };
+          }
+        },
+        {
+          id: "tabletAdvancedSettings",
+          type: "advancedSettings",
+          disabled: true
+        }
+      ]
+    },
+    {
+      id: "tabletHorizontalAlign",
+      type: "toggle",
+      disabled: true
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {

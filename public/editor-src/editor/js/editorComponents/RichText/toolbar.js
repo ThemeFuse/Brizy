@@ -43,7 +43,7 @@ const getColor = ({ hex, opacity, isChanged }) => {
   };
 };
 
-const getcolorPalette = value => {
+const getColorPalette = value => {
   return {
     color: null,
     colorPalette: value
@@ -66,18 +66,24 @@ const getDesktopFontStyles = (fontStyle, value) => {
 
   return {
     desktopHeight: String(styles.lineHeight).replace(".", "_"),
-    intermediateHeight: String(styles.mobileLineHeight).replace(".", "_"),
+    intermediateTabletHeight: String(styles.tabletLineHeight).replace(".", "_"),
+    intermediateMobileHeight: String(styles.mobileLineHeight).replace(".", "_"),
     desktopSize: String(styles.fontSize),
-    intermediateSize: String(styles.mobileFontSize),
+    intermediateTabletSize: String(styles.tabletFontSize),
+    intermediateMobileSize: String(styles.mobileFontSize),
     desktopLetterSpacing: String(styles.letterSpacing)
       .replace(".", "_")
       .replace("-", "m_"),
-    intermediateLetterSpacing: String(styles.mobileLetterSpacing)
+    intermediateTabletLetterSpacing: String(styles.tabletLetterSpacing)
+      .replace(".", "_")
+      .replace("-", "m_"),
+    intermediateMobileLetterSpacing: String(styles.mobileLetterSpacing)
       .replace(".", "_")
       .replace("-", "m_"),
     font: String(styles.fontFamily),
     desktopWeight: String(styles.fontWeight),
-    intermediateWeight: String(styles.mobileFontWeight),
+    intermediateTabletWeight: String(styles.tabletFontWeight),
+    intermediateMobileWeight: String(styles.mobileFontWeight),
     fontStyle: null,
     ...value
   };
@@ -110,6 +116,7 @@ const MAX_LETTER_SPACING = 15;
 
 export default (v, onChange) => ({
   getItemsForDesktop: getItemsForDesktop(v, onChange),
+  getItemsForTablet: getItemsForTablet(v, onChange),
   getItemsForMobile: getItemsForMobile(v, onChange)
 });
 
@@ -123,18 +130,26 @@ const getItemsForDesktop = (
     font,
     fontStyle,
     height,
-    intermediateHeight,
+    intermediateTabletHeight,
+    intermediateMobileHeight,
+    tabletHeight,
     mobileHeight,
     italic,
     list,
     letterSpacing,
-    intermediateLetterSpacing,
+    intermediateTabletLetterSpacing,
+    intermediateMobileLetterSpacing,
+    tabletLetterSpacing,
     mobileLetterSpacing,
     size,
-    intermediateSize,
+    intermediateTabletSize,
+    intermediateMobileSize,
+    tabletSize,
     mobileSize,
     weight,
-    intermediateWeight,
+    intermediateTabletWeight,
+    intermediateMobileWeight,
+    tabletWeight,
     mobileWeight,
     linkType,
     linkAnchor,
@@ -180,7 +195,8 @@ const getItemsForDesktop = (
                     let newWeight = {};
                     if (!mobileWeight) {
                       newWeight = {
-                        intermediateWeight: mewFont.desktopWeight
+                        intermediateTabletWeight: mewFont.desktopWeight,
+                        intermediateMobileWeight: mewFont.desktopWeight
                       };
                     }
 
@@ -223,10 +239,14 @@ const getItemsForDesktop = (
                               desktopHeight: null,
                               desktopWeight: null,
                               desktopLetterSpacing: null,
-                              intermediateSize: null,
-                              intermediateHeight: null,
-                              intermediateLetterSpacing: null,
-                              intermediateWeight: null
+                              intermediateTabletSize: null,
+                              intermediateMobileSize: null,
+                              intermediateTabletHeight: null,
+                              intermediateMobileHeight: null,
+                              intermediateTabletLetterSpacing: null,
+                              intermediateMobileLetterSpacing: null,
+                              intermediateTabletWeight: null,
+                              intermediateMobileWeight: null
                             });
                           }
                         }
@@ -255,23 +275,37 @@ const getItemsForDesktop = (
                             });
 
                             let newSize = {
-                              intermediateSize: null
+                              intermediateTabletSize: null,
+                              intermediateMobileSize: null
                             };
                             if (!mobileSize) {
-                              intermediateSize =
-                                intermediateSize || styles.intermediateSize;
+                              intermediateMobileSize =
+                                intermediateMobileSize ||
+                                styles.intermediateMobileSize;
 
-                              newSize = {
-                                intermediateSize: calcIntermediateStyle(
-                                  size,
-                                  value,
-                                  intermediateSize,
-                                  {
-                                    min: MIN_SIZE,
-                                    max: MAX_SIZE
-                                  }
-                                )
-                              };
+                              newSize.intermediateMobileSize = calcIntermediateStyle(
+                                size,
+                                value,
+                                intermediateMobileSize,
+                                {
+                                  min: MIN_SIZE,
+                                  max: MAX_SIZE
+                                }
+                              );
+                            }
+                            if (!tabletSize) {
+                              intermediateTabletSize =
+                                intermediateTabletSize ||
+                                styles.intermediateTabletSize;
+                              newSize.intermediateTabletSize = calcIntermediateStyle(
+                                size,
+                                value,
+                                intermediateTabletSize,
+                                {
+                                  min: MIN_SIZE,
+                                  max: MAX_SIZE
+                                }
+                              );
                             }
 
                             onChange({
@@ -295,28 +329,43 @@ const getItemsForDesktop = (
                             });
 
                             let newHeight = {
-                              intermediateHeight: null
+                              intermediateTabletHeight: null,
+                              intermediateMobileHeight: null
                             };
                             if (!mobileHeight) {
-                              intermediateHeight =
-                                intermediateHeight || styles.intermediateHeight;
-
-                              newHeight = {
-                                intermediateHeight: String(
-                                  calcIntermediateStyle(
-                                    height,
-                                    value,
-                                    intermediateHeight.replace("_", "."),
-                                    {
-                                      toDec: true,
-                                      min: MIN_HEIGHT,
-                                      max: MAX_HEIGHT
-                                    }
-                                  )
-                                ).replace(".", "_")
-                              };
+                              intermediateMobileHeight =
+                                intermediateMobileHeight ||
+                                styles.intermediateMobileHeight;
+                              newHeight.intermediateMobileHeight = String(
+                                calcIntermediateStyle(
+                                  height,
+                                  value,
+                                  intermediateMobileHeight.replace("_", "."),
+                                  {
+                                    toDec: true,
+                                    min: MIN_HEIGHT,
+                                    max: MAX_HEIGHT
+                                  }
+                                )
+                              ).replace(".", "_");
                             }
-
+                            if (!tabletHeight) {
+                              intermediateTabletHeight =
+                                intermediateTabletHeight ||
+                                styles.intermediateTabletHeight;
+                              newHeight.intermediateTabletHeight = String(
+                                calcIntermediateStyle(
+                                  height,
+                                  value,
+                                  intermediateTabletHeight.replace("_", "."),
+                                  {
+                                    toDec: true,
+                                    min: MIN_HEIGHT,
+                                    max: MAX_HEIGHT
+                                  }
+                                )
+                              ).replace(".", "_");
+                            }
                             onChange({
                               ...styles,
                               ...newHeight
@@ -340,8 +389,16 @@ const getItemsForDesktop = (
                           value: String(weight),
                           onChange: desktopWeight => {
                             let newWeight = {
-                              intermediateWeight: null
+                              intermediateTabletWeight: null,
+                              intermediateMobileWeight: null
                             };
+
+                            if (!mobileWeight) {
+                              newWeight.intermediateMobileWeight = desktopWeight;
+                            }
+                            if (!tabletWeight) {
+                              newWeight.intermediateTabletWeight = desktopWeight;
+                            }
 
                             if (!mobileWeight) {
                               newWeight = {
@@ -359,7 +416,7 @@ const getItemsForDesktop = (
                         },
                         {
                           id: "letterSpacing",
-                          label: t("Letter Spc."),
+                          label: t("Letter Sp."),
                           type: "stepper",
                           display: "block",
                           min: MIN_LETTER_SPACING,
@@ -383,27 +440,44 @@ const getItemsForDesktop = (
                             });
 
                             let newLetterSpacing = {
-                              intermediateLetterSpacing: null
+                              intermediateTabletLetterSpacing: null,
+                              intermediateMobileLetterSpacing: null
                             };
 
                             if (!mobileLetterSpacing) {
-                              intermediateLetterSpacing =
-                                intermediateLetterSpacing ||
-                                styles.intermediateLetterSpacing;
+                              intermediateMobileLetterSpacing =
+                                intermediateMobileLetterSpacing ||
+                                styles.intermediateMobileLetterSpacing;
                               const newNumberLetterSpacing = calcIntermediateStyle(
                                 letterSpacing,
                                 value,
-                                toNumber(intermediateLetterSpacing),
+                                toNumber(intermediateMobileLetterSpacing),
                                 {
                                   min: MIN_LETTER_SPACING,
                                   max: MAX_LETTER_SPACING
                                 }
                               );
-                              newLetterSpacing = {
-                                intermediateLetterSpacing: toString(
-                                  newNumberLetterSpacing
-                                )
-                              };
+                              newLetterSpacing.intermediateMobileLetterSpacing = toString(
+                                newNumberLetterSpacing
+                              );
+                            }
+
+                            if (!tabletLetterSpacing) {
+                              intermediateTabletLetterSpacing =
+                                intermediateTabletLetterSpacing ||
+                                styles.intermediateTabletLetterSpacing;
+                              const newNumberLetterSpacing = calcIntermediateStyle(
+                                letterSpacing,
+                                value,
+                                toNumber(intermediateTabletLetterSpacing),
+                                {
+                                  min: MIN_LETTER_SPACING,
+                                  max: MAX_LETTER_SPACING
+                                }
+                              );
+                              newLetterSpacing.intermediateTabletLetterSpacing = toString(
+                                newNumberLetterSpacing
+                              );
                             }
 
                             onChange({
@@ -456,7 +530,7 @@ const getItemsForDesktop = (
           type: "colorPalette",
           position: 20,
           value: colorPalette,
-          onChange: value => onChange(getcolorPalette(value))
+          onChange: value => onChange(getColorPalette(value))
         }
       ]
     },
@@ -789,6 +863,197 @@ const getItemsForDesktop = (
   ];
 };
 
+export const getItemsForTablet = (
+  {
+    horizontalAlign,
+    font,
+    fontStyle,
+    height,
+    letterSpacing,
+    weight,
+    size,
+    marginTop,
+    marginBottom
+  },
+  onChange
+) => () => [
+  {
+    id: "toolbarFont",
+    type: "popover",
+    icon: "nc-font",
+    title: t("Typography"),
+    size: "auto",
+    position: 20,
+    options: [
+      {
+        type: "grid",
+        columns: [
+          {
+            width: 50,
+            className: "brz-ed-popover__typography--small",
+            options: [
+              {
+                id: "size",
+                label: t("Size"),
+                type: "stepper",
+                display: "block",
+                min: 6,
+                max: 99,
+                step: 1,
+                value: size,
+                onChange: value =>
+                  onChange({
+                    tabletSize: String(value),
+                    intermediateTabletSize: null
+                  })
+              },
+              {
+                id: "height",
+                label: t("Line Hgt."),
+                type: "stepper",
+                display: "block",
+                min: 1,
+                max: 5,
+                step: 0.1,
+                value: height,
+                onChange: value =>
+                  onChange({
+                    tabletHeight: String(value).replace(".", "_"),
+                    intermediateTabletHeight: null
+                  })
+              }
+            ]
+          },
+          {
+            width: 50,
+            className: "brz-ed-popover__typography--small",
+            options: [
+              {
+                id: "weight",
+                label: t("Weight"),
+                type: "select",
+                display: "block",
+                choices: getWeightChoices(font).map(item => ({
+                  ...item,
+                  value: String(item.value)
+                })),
+                value: String(weight),
+                onChange: value =>
+                  onChange({
+                    tabletWeight: String(value),
+                    intermediateTabletWeight: null
+                  })
+              },
+              {
+                id: "letterSpacing",
+                label: t("Letter Sp."),
+                type: "stepper",
+                display: "block",
+                min: MIN_LETTER_SPACING,
+                max: MAX_LETTER_SPACING,
+                step: 0.5,
+                value: letterSpacing,
+                onChange: value =>
+                  onChange({
+                    tabletLetterSpacing: String(value)
+                      .replace(".", "_")
+                      .replace("-", "m_"),
+                    intermediateTabletLetterSpacing: null
+                  })
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "tabletHorizontalAlign",
+    label: t("Align"),
+    type: "toggle",
+    position: 30,
+    choices: [
+      {
+        icon: "nc-text-align-left",
+        title: t("Align"),
+        value: "left"
+      },
+      {
+        icon: "nc-text-align-center",
+        title: t("Align"),
+        value: "center"
+      },
+      {
+        icon: "nc-text-align-right",
+        title: t("Align"),
+        value: "right"
+      }
+    ],
+    value: horizontalAlign,
+    onChange: value => onChange({ tabletHorizontalAlign: String(value) })
+  },
+  {
+    id: "tabletToolbarSettings",
+    type: "popover",
+    title: t("Settings"),
+    position: 110,
+    options: [
+      {
+        id: "marginTop",
+        label: t("Gap Above"),
+        type: "slider",
+        slider: {
+          min: 0,
+          max: 100
+        },
+        input: {
+          show: true
+        },
+        suffix: {
+          show: true,
+          choices: [
+            {
+              title: "px",
+              value: "px"
+            }
+          ]
+        },
+        value: {
+          value: marginTop
+        },
+        onChange: ({ value: marginTop }) =>
+          onChange({ tabletMarginTop: String(marginTop) })
+      },
+      {
+        id: "marginBottom",
+        label: t("Gap Below"),
+        type: "slider",
+        slider: {
+          min: 0,
+          max: 100
+        },
+        input: {
+          show: true
+        },
+        suffix: {
+          show: true,
+          choices: [
+            {
+              title: "px",
+              value: "px"
+            }
+          ]
+        },
+        value: {
+          value: marginBottom
+        },
+        onChange: ({ value: marginBottom }) =>
+          onChange({ tabletMarginBottom: String(marginBottom) })
+      }
+    ]
+  }
+];
+
 export const getItemsForMobile = (
   {
     horizontalAlign,
@@ -817,7 +1082,7 @@ export const getItemsForMobile = (
         columns: [
           {
             width: 50,
-            className: "brz-ed-popover__typography--mobile",
+            className: "brz-ed-popover__typography--small",
             options: [
               {
                 id: "size",
@@ -831,7 +1096,7 @@ export const getItemsForMobile = (
                 onChange: value =>
                   onChange({
                     mobileSize: String(value),
-                    intermediateSize: null
+                    intermediateMobileSize: null
                   })
               },
               {
@@ -846,14 +1111,14 @@ export const getItemsForMobile = (
                 onChange: value =>
                   onChange({
                     mobileHeight: String(value).replace(".", "_"),
-                    intermediateHeight: null
+                    intermediateMobileHeight: null
                   })
               }
             ]
           },
           {
             width: 50,
-            className: "brz-ed-popover__typography--mobile",
+            className: "brz-ed-popover__typography--small",
             options: [
               {
                 id: "weight",
@@ -868,12 +1133,12 @@ export const getItemsForMobile = (
                 onChange: value =>
                   onChange({
                     mobileWeight: String(value),
-                    intermediateWeight: null
+                    intermediateMobileWeight: null
                   })
               },
               {
                 id: "letterSpacing",
-                label: t("Letter Spc."),
+                label: t("Letter Sp."),
                 type: "stepper",
                 display: "block",
                 min: MIN_LETTER_SPACING,
@@ -885,7 +1150,7 @@ export const getItemsForMobile = (
                     mobileLetterSpacing: String(value)
                       .replace(".", "_")
                       .replace("-", "m_"),
-                    intermediateLetterSpacing: null
+                    intermediateMobileLetterSpacing: null
                   })
               }
             ]

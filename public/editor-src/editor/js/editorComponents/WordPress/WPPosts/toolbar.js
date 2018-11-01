@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
   return [
@@ -194,12 +195,45 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.width
           },
-          onChange: ({ value: width }) => {
-            return {
-              width,
-              mobileWidth: v.width === v.mobileWidth ? width : v.mobileWidth
-            };
-          }
+          onChange: ({ value: width }) => ({ width })
+        }
+      ]
+    }
+  ];
+}
+
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      position: 110,
+      options: [
+        {
+          id: "tabletWidth",
+          label: t("Width"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 100
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "width")
+          },
+          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
         }
       ]
     }
@@ -235,13 +269,9 @@ export function getItemsForMobile(v) {
             ]
           },
           value: {
-            value: v.mobileWidth
+            value: mobileSyncOnChange(v, "width")
           },
-          onChange: ({ value: mobileWidth }) => {
-            return {
-              mobileWidth
-            };
-          }
+          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
         }
       ]
     }

@@ -61,15 +61,27 @@
   "containerSize": 100,
   "items": [],
 
-  "mobileBgImageWidth": 0,
-  "mobileBgImageHeight": 0,
-  "mobileBgImageSrc": "",
-  "mobileBgPositionY": 50,
-  "mobileBgPositionX": 50,
+  "tabletBgImageWidth": null,
+  "tabletBgImageHeight": null,
+  "tabletBgImageSrc": null,
+  "tabletBgPositionY": null,
+  "tabletBgPositionX": null,
 
-  "mobileBgColorHex": "#000000",
-  "mobileBgColorOpacity": 0,
-  "mobileBgColorPalette": "",
+  "tabletBgColorHex": null,
+  "tabletBgColorOpacity": null,
+  "tabletBgColorPalette": null,
+  "tempTabletBgColorOpacity": 1,
+  "tempTabletBgColorPalette": "",
+
+  "mobileBgImageWidth": null,
+  "mobileBgImageHeight": null,
+  "mobileBgImageSrc": null,
+  "mobileBgPositionY": null,
+  "mobileBgPositionX": null,
+
+  "mobileBgColorHex": null,
+  "mobileBgColorOpacity": null,
+  "mobileBgColorPalette": null,
   "tempMobileBgColorOpacity": 1,
   "tempMobileBgColorPalette": ""
 }

@@ -48,6 +48,7 @@ class Section extends EditorComponent {
   renderItems(v) {
     const {
       showOnMobile,
+      showOnTablet,
       slider,
       sliderDots,
       sliderArrows,
@@ -57,7 +58,8 @@ class Section extends EditorComponent {
     } = v;
     const meta = Object.assign({}, this.props.meta, {
       section: {
-        showOnMobile: showOnMobile === "on"
+        showOnMobile: showOnMobile === "on",
+        showOnTablet: showOnTablet === "on",
       }
     });
     const itemsProps = this.makeSubcomponentProps({

@@ -13,6 +13,19 @@
   @include align-justify;
 }
 
+// Tablet
+@include media-breakpoint-between(sm, sm) {
+  .brz-text-sm-left {
+    @include align-left;
+  }
+  .brz-text-sm-right {
+    @include align-right;
+  }
+  .brz-text-sm-center {
+    @include align-center;
+  }
+}
+
 // Mobile
 @include media-breakpoint-down(ms) {
   .brz-text-xs-left {

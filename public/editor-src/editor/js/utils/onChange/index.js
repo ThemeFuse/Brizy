@@ -1,3 +1,11 @@
-export { onChangeTypography, onChangeTypographyMobile } from "./typography";
-export { tabletSyncOnChange, mobileSyncOnChange } from "./device";
+export {
+  onChangeTypography,
+  onChangeTypographyTablet,
+  onChangeTypographyMobile
+} from "./typography";
 
+export {
+  tabletSyncOnChange,
+  mobileSyncOnChange,
+  keySyncOnChange
+} from "./device";

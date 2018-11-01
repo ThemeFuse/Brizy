@@ -5,5 +5,9 @@
   "lightBox": "off",
   "items": [],
 
+  "tabletGridColumn": 2,
+  "tabletSpacing": null,
+
+  "mobileGridColumn": 1,
   "mobileSpacing": null
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import BoxResizer from "visual/component-new/BoxResizer";
@@ -31,6 +30,14 @@ const resizerRestrictions = {
     min: 5,
     max: 100
   },
+  tabletHeight: {
+    min: 25,
+    max: Infinity
+  },
+  tabletWidth: {
+    min: 5,
+    max: 100
+  },
   mobileHeight: {
     min: 25,
     max: Infinity
@@ -41,10 +48,11 @@ const resizerRestrictions = {
   }
 };
 const resizerTransformValue = v => {
-  const { size, mobileSize, ...rest } = v;
+  const { size, tabletSize, mobileSize, ...rest } = v;
 
   return {
     width: size,
+    tabletWidth: tabletSize,
     mobileWidth: mobileSize,
     ...rest
   };
@@ -53,6 +61,11 @@ const resizerTransformPatch = patch => {
   if (patch.width) {
     patch.size = patch.width;
     delete patch.width;
+  }
+
+  if (patch.tabletWidth) {
+    patch.tabletSize = patch.tabletWidth;
+    delete patch.tabletWidth;
   }
 
   if (patch.mobileWidth) {

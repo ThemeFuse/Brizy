@@ -12,6 +12,10 @@ const resizerRestrictions = {
     min: 10,
     max: Infinity
   },
+  tabletHeight: {
+    min: 10,
+    max: Infinity
+  },
   mobileHeight: {
     min: 10,
     max: Infinity

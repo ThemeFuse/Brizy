@@ -3,6 +3,7 @@ import { getOptionColor } from "visual/utils/options";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import {
   onChangeTypography,
+  onChangeTypographyTablet,
   onChangeTypographyMobile,
   tabletSyncOnChange,
   mobileSyncOnChange
@@ -162,7 +163,7 @@ export function getItemsForDesktop(v) {
                         },
                         {
                           id: "letterSpacing",
-                          label: t("Letter Spc."),
+                          label: t("Letter Sp."),
                           type: "stepper",
                           display: "block",
                           min: -20,
@@ -341,6 +342,150 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  // Typography
+  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+
+  const tabletFontStyle = v.tabletFontStyle;
+  const {
+    tabletFontSize,
+    tabletFontWeight,
+    tabletLineHeight,
+    tabletLetterSpacing
+  } =
+    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+
+  return [
+    {
+      id: "tabletToolbarCurrentShortcode",
+      type: "popover",
+      icon: "nc-form-left",
+      title: t("Field"),
+      position: 60,
+      options: [
+        {
+          id: "tabletPadding",
+          label: t("Spacing"),
+          type: "slider",
+          position: 50,
+          slider: {
+            min: 0,
+            max: 100
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "padding")
+          },
+          onChange: ({ value: tabletPadding }) => {
+            return {
+              tabletPadding,
+              tabletPaddingRight: tabletPadding,
+              tabletPaddingBottom: tabletPadding,
+              tabletPaddingLeft: tabletPadding
+            };
+          }
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarTypography",
+      type: "popover",
+      icon: "nc-font",
+      size: "auto",
+      title: t("Typography"),
+      position: 70,
+      options: [
+        {
+          type: "grid",
+          columns: [
+            {
+              width: 50,
+              className: "brz-ed-popover__typography--small",
+              options: [
+                {
+                  id: "tabletFontSize",
+                  label: t("Size"),
+                  type: "stepper",
+                  display: "block",
+                  min: 1,
+                  max: 100,
+                  step: 1,
+                  value: tabletFontSize,
+                  onChange: newTabletFontSize =>
+                    onChangeTypographyTablet(
+                      { tabletFontSize: newTabletFontSize },
+                      v
+                    )
+                },
+                {
+                  id: "tabletLineHeight",
+                  label: t("Line Hgt."),
+                  type: "stepper",
+                  display: "block",
+                  min: 1,
+                  max: 10,
+                  step: 0.1,
+                  value: tabletLineHeight,
+                  onChange: newTabletLineHeight =>
+                    onChangeTypographyTablet(
+                      { tabletLineHeight: newTabletLineHeight },
+                      v
+                    )
+                }
+              ]
+            },
+            {
+              width: 50,
+              className: "brz-ed-popover__typography--small",
+              options: [
+                {
+                  id: "tabletFontWeight",
+                  label: t("Weight"),
+                  type: "select",
+                  display: "block",
+                  choices: getWeightChoices(fontFamily),
+                  value: tabletFontWeight,
+                  onChange: newTabletFontWeight =>
+                    onChangeTypographyTablet(
+                      { tabletFontWeight: newTabletFontWeight },
+                      v
+                    )
+                },
+                {
+                  id: "tabletLetterSpacing",
+                  label: t("Letter Sp."),
+                  type: "stepper",
+                  display: "block",
+                  min: -20,
+                  max: 20,
+                  step: 0.5,
+                  value: tabletLetterSpacing,
+                  onChange: newTabletLetterSpacing =>
+                    onChangeTypographyTablet(
+                      { tabletLetterSpacing: newTabletLetterSpacing },
+                      v
+                    )
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
@@ -412,7 +557,7 @@ export function getItemsForMobile(v) {
           columns: [
             {
               width: 50,
-              className: "brz-ed-popover__typography--mobile",
+              className: "brz-ed-popover__typography--small",
               options: [
                 {
                   id: "mobileFontSize",
@@ -448,7 +593,7 @@ export function getItemsForMobile(v) {
             },
             {
               width: 50,
-              className: "brz-ed-popover__typography--mobile",
+              className: "brz-ed-popover__typography--small",
               options: [
                 {
                   id: "mobileFontWeight",
@@ -458,11 +603,14 @@ export function getItemsForMobile(v) {
                   choices: getWeightChoices(fontFamily),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
-                    onChangeTypography({ mobileFontWeight: newMobileFontWeight }, v)
+                    onChangeTypographyMobile(
+                      { mobileFontWeight: newMobileFontWeight },
+                      v
+                    )
                 },
                 {
                   id: "mobileLetterSpacing",
-                  label: t("Letter Spc."),
+                  label: t("Letter Sp."),
                   type: "stepper",
                   display: "block",
                   min: -20,
@@ -470,7 +618,7 @@ export function getItemsForMobile(v) {
                   step: 0.5,
                   value: mobileLetterSpacing,
                   onChange: newMobileLetterSpacing =>
-                    onChangeTypography(
+                    onChangeTypographyMobile(
                       { mobileLetterSpacing: newMobileLetterSpacing },
                       v
                     )

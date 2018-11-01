@@ -8,6 +8,7 @@ import { Roles } from "visual/component-new/Roles";
 import { videoData as getVideoData } from "visual/utils/video";
 import {
   wInBoxedPage,
+  wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
@@ -42,17 +43,22 @@ class SectionItem extends EditorComponent {
     const {
       showSlider,
       meta: {
-        section: { showOnMobile }
+        section: { showOnMobile, showOnTablet }
       }
     } = this.props;
     const {
       meta: {
-        section: { showOnMobile: newShowOnMobile }
+        section: {
+          showOnMobile: newShowOnMobile,
+          showOnTablet: newShowOnTablet
+        }
       }
     } = nextProps;
     const { deviceMode } = getStore().getState().ui;
     const deviceUpdate =
-      deviceMode === "mobile" && showOnMobile !== newShowOnMobile;
+      deviceMode === "mobile" || deviceMode === "tablet"
+      && showOnMobile || showOnTablet
+      !== newShowOnMobile || newShowOnTablet;
 
     return showSlider || deviceUpdate || this.optionalSCU(nextProps);
   }
@@ -93,11 +99,13 @@ class SectionItem extends EditorComponent {
             (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
           ) / 10;
 
-    const mobileW = wInMobilePage - borderWidthW - 30; // 30 px is padding default for iframe
+    const mobileW = wInMobilePage - borderWidthW - 30; // 30 is iframe default padding
+    const tabletW = wInTabletPage - borderWidthW - 30; // 30 is iframe default padding
 
     return {
       ...meta,
       mobileW,
+      tabletW,
       desktopW
     };
   }
@@ -124,6 +132,7 @@ class SectionItem extends EditorComponent {
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
@@ -150,7 +159,9 @@ class SectionItem extends EditorComponent {
       colorOpacity: bgColorOpacity,
       parallax: bgAttachment === "animated" && !meta.showSlider,
       mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
-      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
+      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity"),
+      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
+      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity")
     };
 
     if (media === "video") {
@@ -159,7 +170,7 @@ class SectionItem extends EditorComponent {
       bgProps.bgVideoLoop = bgVideoLoop === "on";
     }
 
-    if (media === "map" || mobileSyncOnChange(v, "media") === "map") {
+    if (media === "map" || mobileSyncOnChange(v, "media") === "map" || tabletSyncOnChange(v, "media") === "map" ) {
       bgProps.mapAddress = bgMapAddress;
       bgProps.mapZoom = bgMapZoom;
     }
@@ -196,6 +207,7 @@ class SectionItem extends EditorComponent {
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

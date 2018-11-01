@@ -42,6 +42,7 @@ class FormItemItems extends EditorArrayComponent {
               }
         ]
       ],
+      getItemsForTablet: () => [],
       getItemsForMobile: () => []
     };
 

@@ -51,11 +51,46 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.width
           },
-          onChange: ({ value: width }) => {
-            return {
-              width
-            };
-          }
+          onChange: ({ value: width }) => ({ width })
+        }
+      ]
+    }
+  ];
+}
+
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      title: t("Settings"),
+      position: 110,
+      options: [
+        {
+          id: "tabletWidth",
+          label: t("Width"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 100
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "width")
+          },
+          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
         }
       ]
     }

@@ -1,35 +1,41 @@
 import classnames from "classnames";
 import { css } from "glamor";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function styleClassName(v) {
   const { className } = v;
   let glamorObj;
 
-  if(IS_EDITOR) {
+  if (IS_EDITOR) {
     glamorObj = {
       ".brz-ed--desktop &": {
-        maxWidth: "var(--width)",
+        maxWidth: "var(--width)"
+      },
+      ".brz-ed--tablet &": {
+        maxWidth: "var(--tabletWidth)"
       },
       ".brz-ed--mobile &": {
-        maxWidth: "var(--mobileWidth)",
+        maxWidth: "var(--mobileWidth)"
       }
-    }
+    };
   } else {
-    const {
-      width,
-      mobileWidth
-    } = v;
+    const { width } = v;
 
     glamorObj = {
       ".brz &": {
-        maxWidth: `${width}%`,
+        maxWidth: `${width}%`
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          maxWidth: `${tabletSyncOnChange(v, "width")}%`
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          maxWidth: `${mobileWidth}%`
+          maxWidth: `${mobileSyncOnChange(v, "width")}%`
         }
       }
-    }
+    };
   }
 
   const glamorClassName = String(css(glamorObj));
@@ -40,13 +46,11 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    width,
-    mobileWidth
-  } = v;
+  const { width } = v;
 
   return {
     "--width": `${width}%`,
-    "--mobileWidth": `${mobileWidth}%`,
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`
   };
 }

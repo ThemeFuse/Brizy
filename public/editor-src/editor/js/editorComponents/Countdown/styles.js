@@ -16,7 +16,7 @@ export function styleClassName(v) {
     glamorObj = {
       ".brz &": {
         color: "var(--color)",
-        fontFamily: "var(--fontFamily)",
+        fontFamily: "var(--fontFamily)"
       },
       ".brz-ed--desktop &": {
         width: "var(--width)",
@@ -27,6 +27,17 @@ export function styleClassName(v) {
 
         "& .brz-countdown__label": {
           fontSize: "var(--labelFontSize)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        width: "var(--tabletWidth)",
+        fontSize: "var(--tabletFontSize)",
+        lineHeight: "var(--tabletLineHeight)",
+        fontWeight: "var(--tabletFontWeight)",
+        letterSpacing: "var(--tabletLetterSpacing)",
+
+        "& .brz-countdown__label": {
+          fontSize: "var(--tabletLabelFontSize)"
         }
       },
       ".brz-ed--mobile &": {
@@ -51,6 +62,14 @@ export function styleClassName(v) {
       width,
       colorHex,
       colorOpacity,
+
+      // Tablet
+      tabletFontSize,
+      tabletLineHeight,
+      tabletFontWeight,
+      tabletLetterSpacing,
+
+      // Mobile
       mobileFontSize,
       mobileLineHeight,
       mobileFontWeight,
@@ -58,26 +77,40 @@ export function styleClassName(v) {
     } = v;
 
     const labelFontSize = getLabelSize(fontSize);
+    const tabletLabelFontSize = getLabelSize(tabletFontSize);
     const mobileLabelFontSize = getLabelSize(mobileFontSize);
 
     glamorObj = {
       ".brz &": {
         width: `${width}%`,
         color: hexToRgba(colorHex, colorOpacity),
-        fontSize: fontSize,
-        lineHeight: lineHeight,
         fontFamily: getFontById(fontFamily).family,
-        fontWeight: fontWeight,
-        letterSpacing: letterSpacing,
+        fontSize,
+        lineHeight,
+        fontWeight,
+        letterSpacing,
 
         "& .brz-countdown__label": {
           fontSize: `calc(${fontSize}px - ${labelFontSize}%)`
         }
       },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          width: `${tabletSyncOnChange(v, "width")}%`,
+          fontSize: `${tabletFontSize}px`,
+          lineHeight: tabletLineHeight,
+          fontWeight: tabletFontWeight,
+          letterSpacing: `${tabletLetterSpacing}px`,
+
+          "& .brz-countdown__label": {
+            fontSize: `calc(${tabletFontSize}px - ${tabletLabelFontSize}%)`
+          }
+        }
+      },
       "@media (max-width: 767px)": {
         ".brz &": {
           width: `${mobileSyncOnChange(v, "width")}%`,
-          fontSize: mobileFontSize,
+          fontSize: `${mobileFontSize}px`,
           lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
           letterSpacing: `${mobileLetterSpacing}px`,
@@ -107,6 +140,14 @@ export function styleCSSVars(v) {
     width,
     colorHex,
     colorOpacity,
+
+    // Tablet
+    tabletFontSize,
+    tabletLineHeight,
+    tabletFontWeight,
+    tabletLetterSpacing,
+
+    // Mobile
     mobileFontSize,
     mobileLineHeight,
     mobileFontWeight,
@@ -114,22 +155,33 @@ export function styleCSSVars(v) {
   } = v;
 
   const labelFontSize = getLabelSize(fontSize);
+  const tabletLabelFontSize = getLabelSize(tabletFontSize);
   const mobileLabelFontSize = getLabelSize(mobileFontSize);
 
   return {
+    "--width": `${width}%`,
     "--fontSize": `${fontSize}px`,
     "--labelFontSize": `calc(${fontSize}px - ${labelFontSize}%)`,
     "--fontFamily": getFontById(fontFamily).family,
     "--fontWeight": fontWeight,
     "--lineHeight": lineHeight,
     "--letterSpacing": `${letterSpacing}px`,
+    "--color": hexToRgba(colorHex, colorOpacity),
+
+    // Tablet
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+    "--tabletFontSize": `${tabletFontSize}px`,
+    "--tabletLabelFontSize": `calc(${tabletFontSize}px - ${tabletLabelFontSize}%)`,
+    "--tabletLineHeight": tabletLineHeight,
+    "--tabletFontWeight": tabletFontWeight,
+    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+
+    // Mobile
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
     "--mobileFontSize": `${mobileFontSize}px`,
     "--mobileLabelFontSize": `calc(${mobileFontSize}px - ${mobileLabelFontSize}%)`,
     "--mobileLineHeight": mobileLineHeight,
     "--mobileFontWeight": mobileFontWeight,
-    "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
-    "--width": `${width}%`,
-    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
-    "--color": hexToRgba(colorHex, colorOpacity)
+    "--mobileLetterSpacing": `${mobileLetterSpacing}px`
   };
 }
