@@ -141,6 +141,7 @@ class Items extends EditorArrayComponent {
               ]
             : [])
         ],
+        getItemsForTablet: () => [],
         getItemsForMobile: () => []
       };
 
@@ -182,13 +183,31 @@ class Items extends EditorArrayComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderDots,
-      swipe
+      swipe,
+      tabletSlidesToShow
     } = this.props;
 
     if (IS_PREVIEW) {
       const arrowIcon =
         sliderArrows !== "none" &&
         templateIconUrl("editor", `right-arrow-${sliderArrows}`);
+
+      const responsive = [
+        {
+          breakpoint: 991,
+          settings: {
+            slidesToShow: tabletSlidesToShow,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ];
 
       return (
         <div
@@ -203,6 +222,7 @@ class Items extends EditorArrayComponent {
           data-auto-play={sliderAutoPlay === "on"}
           data-auto-play-speed={sliderAutoPlaySpeed * 1000}
           data-swipe={swipe === "on"}
+          data-responsive={encodeURIComponent(JSON.stringify(responsive))}
         >
           {content}
         </div>
@@ -234,6 +254,13 @@ class Items extends EditorArrayComponent {
         dots={sliderDots !== "none"}
         dotsClass={`brz-slick-slider__dots brz-slick-slider__dots--${sliderDots}`}
         responsive={[
+          {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: tabletSlidesToShow,
+              slidesToScroll: 1
+            }
+          },
           {
             breakpoint: 767,
             settings: {

@@ -18,8 +18,17 @@ import Editor from "visual/component-new/Editor";
 import "../registerEditorParts";
 
 const appDiv = document.querySelector("#brz-ed-root");
+const pageCurtain = window.parent.document.querySelector(
+  ".brz-ed-page-curtain"
+);
 
 Promise.resolve()
+  .then(() => {
+    if (!appDiv) {
+      pageCurtain.classList.add("has-load-error");
+      throw new Error("could not find #brz-ed-root");
+    }
+  })
   .then(() => {
     // start fetching data needed for the render
     return Promise.all([getPages(), getGlobals()]).then(([pages, globals]) => {
@@ -61,15 +70,7 @@ Promise.resolve()
       </Provider>,
       appDiv,
       () => {
-        if (window.parent !== window) {
-          const pageCurtain = window.parent.document.querySelector(
-            ".brz-ed-page-curtain"
-          );
-
-          if (pageCurtain) {
-            pageCurtain.parentElement.removeChild(pageCurtain);
-          }
-        }
+        pageCurtain.parentElement.removeChild(pageCurtain);
       }
     );
   })

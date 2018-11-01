@@ -90,6 +90,32 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "showOnTablet",
+      type: "toggle",
+      disabled: true
+    },
+    {
+      id: "tabletHorizontalAlign",
+      type: "toggle",
+      disabled: true
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      options: [
+        {
+          id: "tabletAdvancedSettings",
+          type: "advancedSettings",
+          disabled: true
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {

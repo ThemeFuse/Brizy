@@ -17,6 +17,10 @@
   "paginationTempColorOpacity": 1,
   "paginationTempColorPalette": "color3",
 
+  "tabletGridColumn": 2,
+  "tabletPadding": null,
+  "tabletPaginationSpacing": null,
+
   "mobilePadding": null,
   "mobilePaginationSpacing": null
 }

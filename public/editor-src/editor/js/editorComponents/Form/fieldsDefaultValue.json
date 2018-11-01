@@ -31,6 +31,19 @@
   "borderWidth": 1,
   "borderStyle": "solid",
 
+  "tabletFontStyle": "",
+  "tabletFontSize": 14,
+  "tabletLineHeight": 1.5,
+  "tabletLetterSpacing": 0,
+  "tabletFontWeight": 400,
+  "tabletBorderRadius": null,
+
+  "tabletPadding": null,
+  "tabletPaddingTop": null,
+  "tabletPaddingRight": null,
+  "tabletPaddingBottom": null,
+  "tabletPaddingLeft": null,
+
   "mobileFontStyle": "",
   "mobileFontSize": 14,
   "mobileLineHeight": 1.5,

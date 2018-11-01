@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import Animation from "visual/component-new/Animation";
@@ -76,6 +77,24 @@ class Cloneable extends EditorComponent {
       paddingRight,
       paddingRightSuffix,
 
+      // Tablet Padding
+      tabletPadding,
+      tabletPaddingType,
+      tabletPaddingSuffix,
+      tabletPaddingLeft,
+      tabletPaddingLeftSuffix,
+      tabletPaddingRight,
+      tabletPaddingRightSuffix,
+
+      // Tablet margin
+      tabletMargin,
+      tabletMarginType,
+      tabletMarginSuffix,
+      tabletMarginLeft,
+      tabletMarginLeftSuffix,
+      tabletMarginRight,
+      tabletMarginRightSuffix,
+
       // Mobile Padding
       mobilePadding,
       mobilePaddingType,
@@ -106,6 +125,39 @@ class Cloneable extends EditorComponent {
         : percentageToPixels(paddingLeft, paddingLeftSuffix, meta.desktopW) +
           percentageToPixels(paddingRight, paddingRightSuffix, meta.desktopW);
 
+    // Tablet
+    const tabletPaddingW =
+      tabletPaddingType === "grouped"
+        ? percentageToPixels(
+          tabletPadding * 2,
+          tabletPaddingSuffix,
+          meta.tabletW
+        )
+        : percentageToPixels(
+          tabletPaddingLeft,
+          tabletPaddingLeftSuffix,
+          meta.tabletW
+        ) +
+        percentageToPixels(
+          tabletPaddingRight,
+          tabletPaddingRightSuffix,
+          meta.tabletW
+        );
+    const tabletMarginW =
+      tabletMarginType === "grouped"
+        ? percentageToPixels(tabletMargin * 2, tabletMarginSuffix, meta.tabletW)
+        : percentageToPixels(
+          tabletMarginLeft,
+          tabletMarginLeftSuffix,
+          meta.tabletW
+        ) +
+        percentageToPixels(
+          tabletMarginRight,
+          tabletMarginRightSuffix,
+          meta.tabletW
+        );
+
+    // Mobile
     const mobilePaddingW =
       mobilePaddingType === "grouped"
         ? percentageToPixels(
@@ -138,12 +190,14 @@ class Cloneable extends EditorComponent {
           );
 
     const externalSpacing = marginW + paddingW;
+    const externalTabletSpacing = tabletMarginW + tabletPaddingW;
     const externalMobileSpacing = mobileMarginW + mobilePaddingW;
-    const mobileW =
-      Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
+
+    const mobileW = Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
+    const tabletW = Math.round((meta.tabletW - externalTabletSpacing) * 10) / 10;
     const desktopW = Math.round((meta.desktopW - externalSpacing) * 10) / 10;
 
-    return { ...meta, mobileW, desktopW, inCloneable: true };
+    return _.extend({}, meta, { mobileW, tabletW, desktopW, inCloneable: true });
   }
 
   renderContent(v) {

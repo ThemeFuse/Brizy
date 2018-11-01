@@ -33,6 +33,7 @@ class WPNavigation extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.colorPalette && `${_v.colorPalette}__color`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
+      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
     ]);
     const attributes = {
@@ -48,7 +49,8 @@ class WPNavigation extends EditorComponent {
           placeholderIcon="wp-shortcode"
           className={styleClassName(v)}
           style={styleCSSVars(v)}
-          toggleMenu={v.mobileToggleMenu === "on"}
+          mobileToggleMenu={v.mobileToggleMenu === "on"}
+          tabletToggleMenu={v.tabletToggleMenu === "on"}
         />
       </Toolbar>
     );

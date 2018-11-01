@@ -69,7 +69,6 @@ export default {
   Accordion,
   AccordionItem,
   GlobalBlock,
-  SectionFooter,
   ImageGallery,
   SectionPopup,
   Carousel

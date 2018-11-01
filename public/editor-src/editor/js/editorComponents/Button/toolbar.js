@@ -3,6 +3,7 @@ import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import {
   onChangeTypography,
+  onChangeTypographyTablet,
   onChangeTypographyMobile,
   tabletSyncOnChange,
   mobileSyncOnChange
@@ -938,7 +939,7 @@ export function getItemsForDesktop(v) {
                         },
                         {
                           id: "letterSpacing",
-                          label: t("Letter Spc."),
+                          label: t("Letter Sp."),
                           type: "stepper",
                           display: "block",
                           min: -20,
@@ -2016,6 +2017,332 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  // Typography
+  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+
+  const tabletFontStyle = v.tabletFontStyle;
+  const {
+    tabletFontSize,
+    tabletFontWeight,
+    tabletLineHeight,
+    tabletLetterSpacing
+  } =
+    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+
+  return [
+    {
+      id: "tabletToolbarCurrentShortcode",
+      type: "popover",
+      icon: "nc-button",
+      title: t("Button"),
+      position: 60,
+      options: [
+        {
+          type: "multiPicker",
+          picker: {
+            id: "size",
+            label: t("Size"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "small",
+                icon: "nc-small"
+              },
+              {
+                value: "medium",
+                icon: "nc-medium"
+              },
+              {
+                value: "large",
+                icon: "nc-large"
+              },
+              {
+                value: "custom",
+                icon: "nc-more"
+              }
+            ],
+            value: v.tabletSize,
+            onChange: tabletSize => {
+              return {
+                tabletSize,
+
+                tabletFontSize:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}FontSize`]
+                    : v.tabletFontSize,
+
+                tabletPaddingTB:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}PaddingY`]
+                    : v.tabletPaddingTB,
+
+                tabletPaddingTop:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}PaddingY`]
+                    : v.tabletPaddingTop,
+
+                tabletPaddingBottom:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}PaddingY`]
+                    : v.tabletPaddingBottom,
+
+                tempTabletPaddingTB:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}PaddingY`]
+                    : v.tempTabletPaddingTB,
+
+                tempTabletPaddingTop:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}PaddingY`]
+                    : v.tempTabletPaddingTop,
+
+                tempTabletPaddingBottom:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}PaddingY`]
+                    : v.tempTabletPaddingBottom,
+
+                tabletPaddingRL:
+                  tabletSize !== "custom" && v.fillType === "default"
+                    ? 0
+                    : tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tabletPaddingRL,
+
+                tabletPaddingRight:
+                  tabletSize !== "custom" && v.fillType === "default"
+                    ? 0
+                    : tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tabletPaddingRight,
+
+                tabletPaddingLeft:
+                  tabletSize !== "custom" && v.fillType === "default"
+                    ? 0
+                    : tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tabletPaddingLeft,
+
+                tempTabletPaddingRL:
+                  tabletSize !== "custom" && v.fillType !== "default"
+                    ? v[`${tabletSize}PaddingX`]
+                    : v.tempTabletPaddingRL,
+
+                tempTabletPaddingRight:
+                  tabletSize !== "custom" && v.fillType !== "default"
+                    ? v[`${tabletSize}PaddingX`]
+                    : v.tempTabletPaddingRight,
+
+                tempTabletPaddingLeft:
+                  tabletSize !== "custom" && v.fillType !== "default"
+                    ? v[`${tabletSize}PaddingX`]
+                    : v.tempTabletPaddingLeft,
+
+                tabletBorderRadius:
+                  v.borderRadiusType === "rounded" &&
+                  tabletSize !== "custom" &&
+                  v[`${tabletSize}FontSize`] * v.tabletLineHeight >=
+                    v.iconCustomSize
+                    ? Math.round(
+                        (v[`${tabletSize}FontSize`] * v.tabletLineHeight +
+                          v[`${tabletSize}PaddingY`] * 2 +
+                          v.borderWidth * 2) /
+                          2
+                      )
+                    : v.borderRadiusType === "rounded" &&
+                      tabletSize !== "custom" &&
+                      v[`${tabletSize}FontSize`] * v.tabletLineHeight <
+                        v.iconCustomSize
+                      ? Math.round(
+                          (v.iconCustomSize +
+                            v[`${tabletSize}PaddingY`] * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : tabletSyncOnChange(v, "borderRadius")
+              };
+            }
+          },
+          choices: {
+            custom: [
+              {
+                id: "tabletPaddingRL",
+                label: t("Width"),
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingRL
+                },
+                onChange: ({ value: tabletPaddingRL }) => {
+                  return {
+                    tabletPaddingRL,
+                    tabletPaddingRight: tabletPaddingRL,
+                    tabletPaddingLeft: tabletPaddingRL,
+                    tempTabletPaddingRight: tabletPaddingRL,
+                    tempTabletPaddingLeft: tabletPaddingRL
+                  };
+                }
+              },
+              {
+                id: "tabletPaddingTB",
+                label: t("Height"),
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingTB
+                },
+                onChange: ({ value: tabletPaddingTB }) => {
+                  return {
+                    tabletPaddingTB,
+                    tabletPaddingTop: tabletPaddingTB,
+                    tabletPaddingBottom: tabletPaddingTB,
+                    tempTabletPaddingTop: tabletPaddingTB,
+                    tempTabletPaddingBottom: tabletPaddingTB,
+
+                    tabletBorderRadius:
+                      v.borderRadiusType === "rounded" &&
+                      tabletFontSize * tabletLineHeight >= v.iconCustomSize
+                        ? Math.round(
+                            (tabletFontSize * tabletLineHeight +
+                              tabletPaddingTB * 2 +
+                              v.borderWidth * 2) /
+                              2
+                          )
+                        : v.borderRadiusType === "rounded" &&
+                          tabletFontSize * tabletLineHeight < v.iconCustomSize
+                          ? Math.round(
+                              (v.iconCustomSize +
+                                tabletPaddingTB * 2 +
+                                v.borderWidth * 2) /
+                                2
+                            )
+                          : tabletSyncOnChange(v, "borderRadius")
+                  };
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarTypography",
+      type: "popover",
+      icon: "nc-font",
+      size: "auto",
+      title: t("Typography"),
+      position: 70,
+      options: [
+        {
+          type: "grid",
+          columns: [
+            {
+              width: 50,
+              className: "brz-ed-popover__typography--small",
+              options: [
+                {
+                  id: "tabletFontSize",
+                  label: t("Size"),
+                  type: "stepper",
+                  display: "block",
+                  min: 1,
+                  max: 100,
+                  step: 1,
+                  value: tabletFontSize,
+                  onChange: newTabletFontSize =>
+                    onChangeTypographyTablet(
+                      { tabletFontSize: newTabletFontSize },
+                      v
+                    )
+                },
+                {
+                  id: "tabletLineHeight",
+                  label: t("Line Hgt."),
+                  type: "stepper",
+                  display: "block",
+                  min: 1,
+                  max: 10,
+                  step: 0.1,
+                  value: tabletLineHeight,
+                  onChange: newTabletLineHeight =>
+                    onChangeTypographyTablet(
+                      { tabletLineHeight: newTabletLineHeight },
+                      v
+                    )
+                }
+              ]
+            },
+            {
+              width: 50,
+              className: "brz-ed-popover__typography--small",
+              options: [
+                {
+                  id: "tabletFontWeight",
+                  label: t("Weight"),
+                  type: "select",
+                  display: "block",
+                  choices: getWeightChoices(fontFamily),
+                  value: tabletFontWeight,
+                  onChange: newTabletFontWeight =>
+                    onChangeTypographyTablet(
+                      { tabletFontWeight: newTabletFontWeight },
+                      v
+                    )
+                },
+                {
+                  id: "tabletLetterSpacing",
+                  label: t("Letter Sp."),
+                  type: "stepper",
+                  display: "block",
+                  min: -20,
+                  max: 20,
+                  step: 0.5,
+                  value: tabletLetterSpacing,
+                  onChange: newTabletLetterSpacing =>
+                    onChangeTypographyTablet(
+                      { tabletLetterSpacing: newTabletLetterSpacing },
+                      v
+                    )
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
@@ -2268,7 +2595,7 @@ export function getItemsForMobile(v) {
           columns: [
             {
               width: 50,
-              className: "brz-ed-popover__typography--mobile",
+              className: "brz-ed-popover__typography--small",
               options: [
                 {
                   id: "mobileFontSize",
@@ -2304,7 +2631,7 @@ export function getItemsForMobile(v) {
             },
             {
               width: 50,
-              className: "brz-ed-popover__typography--mobile",
+              className: "brz-ed-popover__typography--small",
               options: [
                 {
                   id: "mobileFontWeight",
@@ -2314,14 +2641,14 @@ export function getItemsForMobile(v) {
                   choices: getWeightChoices(fontFamily),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
-                    onChangeTypography(
+                    onChangeTypographyMobile(
                       { mobileFontWeight: newMobileFontWeight },
                       v
                     )
                 },
                 {
                   id: "mobileLetterSpacing",
-                  label: t("Letter Spc."),
+                  label: t("Letter Sp."),
                   type: "stepper",
                   display: "block",
                   min: -20,
@@ -2329,7 +2656,7 @@ export function getItemsForMobile(v) {
                   step: 0.5,
                   value: mobileLetterSpacing,
                   onChange: newMobileLetterSpacing =>
-                    onChangeTypography(
+                    onChangeTypographyMobile(
                       { mobileLetterSpacing: newMobileLetterSpacing },
                       v
                     )

@@ -358,6 +358,59 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarPosts",
+      type: "popover",
+      icon: "nc-wp-shortcode",
+      title: t("Posts"),
+      roles: ["admin"],
+      position: 80,
+      options: [
+        {
+          id: "tabletGridColumn",
+          label: t("Columns"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 6
+          },
+          input: {
+            show: true,
+            min: 1,
+            max: 6
+          },
+          value: {
+            value: v.tabletGridColumn
+          },
+          onChange: ({ value: tabletGridColumn }) => ({ tabletGridColumn })
+        },
+        {
+          id: "tabletPadding",
+          label: t("Spacing"),
+          type: "slider",
+          slider: {
+            min: 0,
+            max: 100
+          },
+          input: {
+            show: true,
+            min: 0,
+            max: 100
+          },
+          value: {
+            value: tabletSyncOnChange(v, "padding")
+          },
+          onChange: ({ value: tabletPadding }) => ({
+            tabletPadding
+          })
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {

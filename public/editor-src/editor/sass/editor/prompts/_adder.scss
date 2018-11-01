@@ -38,7 +38,8 @@
 }
 
 // Hide adder when device mode is Mobile
-&.brz-ed--mobile {
+&.brz-ed--mobile,
+&.brz-ed--tablet {
   .brz-ed-container-adder {
     display: none;
   }

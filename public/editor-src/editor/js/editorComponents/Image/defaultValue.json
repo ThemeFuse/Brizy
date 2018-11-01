@@ -40,6 +40,14 @@
   "boxShadowHorizontal": 1,
   "tempBoxShadowColorOpacity": 1,
 
+  "tabletResize": null,
+  "tabletZoom": null,
+  "tabletWidth": null,
+  "tabletHeight": null,
+
+  "tabletPositionY": null,
+  "tabletPositionX": null,
+
   "mobileResize": null,
   "mobileZoom": null,
   "mobileWidth": null,

@@ -60,6 +60,9 @@ export const currentStyleSelector = createSelector(globalsSelector, globals => {
       [`${color.id}__paginationColor`]: {
         paginationColorHex: color.hex
       },
+      [`${color.id}__tabletBg`]: {
+        tabletBgColorHex: color.hex
+      },
       [`${color.id}__mobileBg`]: {
         mobileBgColorHex: color.hex
       }
@@ -75,6 +78,12 @@ export const currentStyleSelector = createSelector(globalsSelector, globals => {
         fontWeight: font.fontWeight,
         lineHeight: font.lineHeight,
         letterSpacing: font.letterSpacing
+      },
+      [`${font.id}__fsTablet`]: {
+        tabletFontSize: font.tabletFontSize,
+        tabletFontWeight: font.tabletFontWeight,
+        tabletLineHeight: font.tabletLineHeight,
+        tabletLetterSpacing: font.tabletLetterSpacing
       },
       [`${font.id}__fsMobile`]: {
         mobileFontSize: font.mobileFontSize,

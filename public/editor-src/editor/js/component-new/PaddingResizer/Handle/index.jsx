@@ -8,6 +8,7 @@ export default class PaddingResizerHandle extends Component {
   static defaultProps = {
     position: "",
     value: "",
+    tabletValue: "",
     mobileValue: "",
     onDrag: _.noop,
     onDragEnd: _.noop
@@ -71,7 +72,7 @@ export default class PaddingResizerHandle extends Component {
   };
 
   render() {
-    const { position, value, mobileValue } = this.props;
+    const { position, value, tabletValue, mobileValue } = this.props;
     const className = classnames("brz-ed-draggable__padding", {
       "brz-ed-draggable__padding--top": position === "top",
       "brz-ed-draggable__padding--bottom": position === "bottom",
@@ -79,6 +80,7 @@ export default class PaddingResizerHandle extends Component {
     });
     const style = {
       "--height": value,
+      "--tabletHeight": tabletValue,
       "--mobileHeight": mobileValue
     };
 
@@ -98,6 +100,9 @@ export default class PaddingResizerHandle extends Component {
         >
           <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--desktop-value">
             {value}
+          </span>
+          <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--tablet-value">
+            {tabletValue}
           </span>
           <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--mobile-value">
             {mobileValue}

@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.41
+Stable tag: 1.0.42
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,11 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.42 - 2018-11-01 =
+* New: Added tablet mode
+* Improved: Added warning when the theme does not use the_content filter
+* Fixed: Typography toolbar styles
 
 = 1.0.41 - 2018-10-29 =
 * New: Added mobile body class

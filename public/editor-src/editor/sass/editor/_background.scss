@@ -4,7 +4,8 @@
     @extend .brz-bg-image-parallax;
   }
 }
-&.brz-ed--mobile {
+&.brz-ed--mobile,
+&.brz-ed--tablet {
   .brz-bg-video {
     .brz-iframe {
       display: none !important;

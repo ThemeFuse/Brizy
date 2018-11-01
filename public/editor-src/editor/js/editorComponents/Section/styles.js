@@ -3,7 +3,14 @@ import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 
 export function sectionStyleClassName(v) {
-  const { showOnDesktop, showOnMobile, className, customClassName, slider } = v;
+  const {
+    showOnDesktop,
+    showOnTablet,
+    showOnMobile,
+    className,
+    customClassName,
+    slider
+  } = v;
   const sliderFullHeight = slider === "on" ? "height" : "minHeight";
 
   let glamorObj;
@@ -26,6 +33,9 @@ export function sectionStyleClassName(v) {
       },
       ".brz-ed--desktop & .brz-container__wrap": {
         ...(showOnDesktop === "on" ? null : blurred)
+      },
+      ".brz-ed--tablet & .brz-container__wrap": {
+        ...(showOnTablet === "on" ? null : blurred)
       },
       ".brz-ed--mobile & .brz-container__wrap": {
         ...(showOnMobile === "on" ? null : blurred)
@@ -57,6 +67,14 @@ export function sectionStyleClassName(v) {
         color: hexToRgba(sliderArrowsColorHex, sliderArrowsColorOpacity)
       },
 
+      // Tablet
+      "@media (max-width: 991px) and (min-width: 768px)": {
+        ".brz &": {
+          display: showOnTablet === "on" ? "block" : "none"
+        }
+      },
+
+      // Mobile
       "@media (max-width: 767px)": {
         ".brz &": {
           display: showOnMobile === "on" ? "block" : "none"

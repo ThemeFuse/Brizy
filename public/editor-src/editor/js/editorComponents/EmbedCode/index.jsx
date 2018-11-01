@@ -14,6 +14,10 @@ const resizerRestrictions = {
     min: 5,
     max: 100
   },
+  tabletWidth: {
+    min: 5,
+    max: 100
+  },
   mobileWidth: {
     min: 5,
     max: 100

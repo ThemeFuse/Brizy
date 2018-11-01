@@ -69,6 +69,7 @@ class TabItems extends EditorArrayComponent {
           }
         }
       ],
+      getItemsForTablet: () => [],
       getItemsForMobile: () => []
     };
     const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);

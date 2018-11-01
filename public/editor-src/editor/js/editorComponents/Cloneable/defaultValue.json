@@ -41,12 +41,40 @@
 
   "zIndex": 0,
 
-  "showOnMobile": "on",
-
   "animationName": "none",
   "tempAnimationName": "none",
   "animationDuration": 1000,
   "animationDelay": 1000,
+
+  "showOnTablet": "on",
+
+  "tabletHorizontalAlign": null,
+
+  "tabletPaddingType": "grouped",
+  "tabletPadding": 0,
+  "tabletPaddingSuffix": "px",
+  "tabletPaddingTop": 0,
+  "tabletPaddingTopSuffix": "px",
+  "tabletPaddingRight": 0,
+  "tabletPaddingRightSuffix": "px",
+  "tabletPaddingBottom": 0,
+  "tabletPaddingBottomSuffix": "px",
+  "tabletPaddingLeft": 0,
+  "tabletPaddingLeftSuffix": "px",
+
+  "tabletMarginType": "ungrouped",
+  "tabletMargin": 0,
+  "tabletMarginSuffix": "px",
+  "tabletMarginTop": 10,
+  "tabletMarginTopSuffix": "px",
+  "tabletMarginRight": 0,
+  "tabletMarginRightSuffix": "px",
+  "tabletMarginBottom": 10,
+  "tabletMarginBottomSuffix": "px",
+  "tabletMarginLeft": 0,
+  "tabletMarginLeftSuffix": "px",
+
+  "showOnMobile": "on",
 
   "mobileHorizontalAlign": null,
 

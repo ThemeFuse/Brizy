@@ -6,6 +6,10 @@ const generateStyles = ({
   fontWeight,
   letterSpacing,
   lineHeight,
+  tabletFontSize,
+  tabletFontWeight,
+  tabletLetterSpacing,
+  tabletLineHeight,
   mobileFontSize,
   mobileFontWeight,
   mobileLetterSpacing,
@@ -21,6 +25,13 @@ const generateStyles = ({
     `line-height: ${lineHeight}em;`
   ].join("");
 
+  const tablet = [
+    `font-size: ${tabletFontSize}px;`,
+    `font-weight: ${tabletFontWeight};`,
+    `letter-spacing: ${tabletLetterSpacing}px;`,
+    `line-height: ${tabletLineHeight}em;`
+  ].join("");
+
   const mobile = [
     `font-size: ${mobileFontSize}px;`,
     `font-weight: ${mobileFontWeight};`,
@@ -30,6 +41,7 @@ const generateStyles = ({
 
   return {
     desktop,
+    tablet,
     mobile
   };
 };
@@ -39,16 +51,18 @@ export const makeRichTextFontStylesCSS = value => {
     .map(item => {
       const { id, ...styles } = item;
 
-      const { desktop, mobile } = generateStyles(styles);
+      const { desktop, tablet, mobile } = generateStyles(styles);
       const className = `.brz-tp-${id.toLowerCase()}`;
 
       return IS_EDITOR
         ? [
             `.brz-ed--desktop ${className}, ${className} { ${desktop} }`,
+            `.brz-ed--tablet ${className} { ${tablet} }`,
             `.brz-ed--mobile ${className} { ${mobile} }`
           ].join("\n")
         : [
             `.brz ${className} { ${desktop} }`,
+            `@media (max-width: 991px) {.brz ${className} { ${tablet} } }`,
             `@media (max-width: 767px) {.brz ${className} { ${mobile} } }`
           ].join("\n");
     })

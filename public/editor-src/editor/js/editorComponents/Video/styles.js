@@ -23,6 +23,10 @@ export function styleClassName(v, props) {
         maxWidth: "var(--maxWidth)",
         height: "var(--height)"
       },
+      ".brz-ed--tablet &": {
+        maxWidth: "var(--tabletMaxWidth)",
+        height: "var(--tabletHeight)"
+      },
       ".brz-ed--mobile &": {
         maxWidth: "var(--mobileMaxWidth)",
         height: "var(--mobileHeight)"
@@ -46,7 +50,7 @@ export function styleClassName(v, props) {
       saturation
     } = v;
     const {
-      meta: { desktopW }
+      meta: { desktopW, tabletW, mobileW }
     } = props;
     const src = getVideoData(video);
 
@@ -55,11 +59,17 @@ export function styleClassName(v, props) {
         ? Math.round((((desktopW / 16) * 9) / 100) * size)
         : Math.round((((desktopW / 4) * 3) / 100) * size);
 
-    const mobileSize   = mobileSyncOnChange(v, "size");
+    const tabletSize = tabletSyncOnChange(v, "size");
+    const tabletHeight =
+      ratio === "16:9"
+        ? Math.round((((tabletW / 16) * 9) / 100) * tabletSize)
+        : Math.round((((tabletW / 4) * 3) / 100) * tabletSize);
+
+    const mobileSize = mobileSyncOnChange(v, "size");
     const mobileHeight =
       ratio === "16:9"
-        ? Math.round((((370 / 16) * 9) / 100) * mobileSize)
-        : Math.round((((370 / 4) * 3) / 100) * mobileSize);
+        ? Math.round((((mobileW / 16) * 9) / 100) * mobileSize)
+        : Math.round((((mobileW / 4) * 3) / 100) * mobileSize);
 
     const boxShadowStyle =
       boxShadow === "on"
@@ -78,6 +88,12 @@ export function styleClassName(v, props) {
 
         "& .brz-iframe, & .brz-video__cover::before": {
           filter: `brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%)`
+        }
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          maxWidth: `${tabletSize}%`,
+          height: !src ? `${tabletHeight}px` : null
         }
       },
       "@media (max-width: 767px)": {
@@ -115,7 +131,7 @@ export function styleCSSVars(v, props) {
   } = v;
 
   const {
-    meta: { desktopW }
+    meta: { desktopW, tabletW, mobileW }
   } = props;
   const src = getVideoData(video);
 
@@ -124,11 +140,17 @@ export function styleCSSVars(v, props) {
       ? Math.round((((desktopW / 16) * 9) / 100) * size)
       : Math.round((((desktopW / 4) * 3) / 100) * size);
 
-  const mobileSize   = mobileSyncOnChange(v, "size");
+  const tabletSize = tabletSyncOnChange(v, "size");
+  const tabletHeight =
+    ratio === "16:9"
+      ? Math.round((((tabletW / 16) * 9) / 100) * tabletSize)
+      : Math.round((((tabletW / 4) * 3) / 100) * tabletSize);
+
+  const mobileSize = mobileSyncOnChange(v, "size");
   const mobileHeight =
     ratio === "16:9"
-      ? Math.round((((370 / 16) * 9) / 100) * mobileSize)
-      : Math.round((((370 / 4) * 3) / 100) * mobileSize);
+      ? Math.round((((mobileW / 16) * 9) / 100) * mobileSize)
+      : Math.round((((mobileW / 4) * 3) / 100) * mobileSize);
 
   const boxShadowStyle =
     boxShadow === "on"
@@ -143,6 +165,12 @@ export function styleCSSVars(v, props) {
     "--maxWidth": `${size}%`,
     "--height": !src ? `${height}px` : "auto",
     "--boxShadow": boxShadowStyle,
+
+    // Tablet
+    "--tabletMaxWidth": `${tabletSize}%`,
+    "--tabletHeight": !src ? `${tabletHeight}px` : "auto",
+
+    // Mobile
     "--mobileMaxWidth": `${mobileSize}%`,
     "--mobileHeight": !src ? `${mobileHeight}px` : "auto",
     "--videoFilter": `brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%)`

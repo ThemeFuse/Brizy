@@ -7,7 +7,7 @@ export function styleClassName(v) {
   const { className } = v;
   let glamorObj;
 
-  if(IS_EDITOR) {
+  if (IS_EDITOR) {
     glamorObj = {
       ".brz & .brz-hr": {
         borderTopStyle: "var(--borderTopStyle)",
@@ -17,17 +17,24 @@ export function styleClassName(v) {
         width: "var(--width)",
 
         "& .brz-hr": {
-          borderTopWidth: "var(--borderWidth)",
+          borderTopWidth: "var(--borderWidth)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        width: "var(--tabletWidth)",
+
+        "& .brz-hr": {
+          borderTopWidth: "var(--tabletBorderWidth)"
         }
       },
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)",
 
         "& .brz-hr": {
-          borderTopWidth: "var(--mobileBorderWidth)",
+          borderTopWidth: "var(--mobileBorderWidth)"
         }
       }
-    }
+    };
   } else {
     const {
       width,
@@ -47,6 +54,15 @@ export function styleClassName(v) {
           borderTopColor: hexToRgba(borderColorHex, borderColorOpacity)
         }
       },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          width: `${tabletSyncOnChange(v, "width")}%`,
+
+          "& .brz-hr": {
+            borderTopWidth: `${tabletSyncOnChange(v, "borderWidth")}px`
+          }
+        }
+      },
       "@media (max-width: 767px)": {
         ".brz &": {
           width: `${mobileSyncOnChange(v, "width")}%`,
@@ -56,7 +72,7 @@ export function styleClassName(v) {
           }
         }
       }
-    }
+    };
   }
 
   const glamorClassName = String(css(glamorObj));
@@ -77,10 +93,16 @@ export function styleCSSVars(v) {
 
   return {
     "--width": `${width}%`,
-    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
     "--borderWidth": `${borderWidth}px`,
-    "--mobileBorderWidth": `${mobileSyncOnChange(v, "borderWidth")}px`,
     "--borderTopStyle": borderStyle,
-    "--borderTopColor": hexToRgba(borderColorHex, borderColorOpacity)
+    "--borderTopColor": hexToRgba(borderColorHex, borderColorOpacity),
+
+    // Tablet
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+    "--tabletBorderWidth": `${tabletSyncOnChange(v, "borderWidth")}px`,
+
+    // Mobile
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
+    "--mobileBorderWidth": `${mobileSyncOnChange(v, "borderWidth")}px`
   };
 }

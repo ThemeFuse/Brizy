@@ -707,6 +707,331 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarCarousel",
+      type: "popover",
+      icon: "nc-carousel",
+      title: t("Carousel"),
+      roles: ["admin"],
+      disabled: v.sliderArrows === "none",
+      position: 70,
+      options: [
+        {
+          id: "tabletSlidesToShow",
+          type: "slider",
+          label: t("Columns"),
+          input: {
+            show: true,
+            min: 1,
+            max: 6
+          },
+          slider: {
+            min: 1,
+            max: 6
+          },
+          value: {
+            value: v.tabletSlidesToShow
+          },
+          onChange: ({ value: tabletSlidesToShow }) => ({ tabletSlidesToShow })
+        },
+        {
+          id: "tabletSliderArrowsSpacing",
+          label: t("Arrows Spacing"),
+          type: "slider",
+          slider: {
+            min: 0,
+            max: 100
+          },
+          input: {
+            show: true,
+            min: 0
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "sliderArrowsSpacing")
+          },
+          onChange: ({ value: tabletSliderArrowsSpacing }) => ({
+            tabletSliderArrowsSpacing
+          })
+        }
+      ]
+    },
+    {
+      id: "tabletAdvancedSettings",
+      type: "advancedSettings",
+      roles: ["admin"],
+      options: [
+        {
+          id: "padding",
+          type: "multiPicker",
+          disabled: true
+        },
+        {
+          id: "tabletSliderPaddingType",
+          type: "multiPicker",
+          value: v.tabletSliderPaddingType,
+          position: 50,
+          picker: {
+            id: "tabletSliderPaddingType",
+            label: t("Padding"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "grouped",
+                icon: "nc-styling-all"
+              },
+              {
+                value: "ungrouped",
+                icon: "nc-styling-individual"
+              }
+            ],
+            value: v.tabletSliderPaddingType
+          },
+          choices: {
+            grouped: [
+              {
+                id: "tabletSliderPadding",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletSliderPadding,
+                  suffix: v.tabletSliderPaddingSuffix
+                },
+                onChange: ({
+                  value: tabletSliderPadding,
+                  suffix: tabletSliderPaddingSuffix
+                }) => {
+                  return {
+                    tabletSliderPadding,
+                    tabletSliderPaddingSuffix,
+                    tabletSliderPaddingTop: tabletSliderPadding,
+                    tabletSliderPaddingRight: tabletSliderPadding,
+                    tabletSliderPaddingBottom: tabletSliderPadding,
+                    tabletSliderPaddingLeft: tabletSliderPadding
+                  };
+                }
+              }
+              ],
+              ungrouped: [
+                {
+                  id: "tabletSliderPaddingTop",
+                  icon: "nc-styling-top",
+                  type: "slider",
+                  slider: {
+                    min: 0,
+                    max: 100
+                  },
+                  input: {
+                    show: true,
+                    min: 0
+                  },
+                  suffix: {
+                    show: true,
+                    choices: [
+                      {
+                        title: "px",
+                        value: "px"
+                      },
+                      {
+                        title: "%",
+                        value: "%"
+                      }
+                    ]
+                  },
+                  value: {
+                    value: v.tabletSliderPaddingTop,
+                    suffix: v.tabletSliderPaddingTopSuffix
+                  },
+                  onChange: ({
+                    value: tabletSliderPaddingTop,
+                    suffix: tabletSliderPaddingTopSuffix
+                  }) => {
+                    return {
+                      tabletSliderPaddingTop,
+                      tabletSliderPaddingTopSuffix,
+                      tabletSliderPadding:
+                        tabletSliderPaddingTop === v.tabletSliderPaddingRight &&
+                        tabletSliderPaddingTop === v.tabletSliderPaddingLeft &&
+                        tabletSliderPaddingTop === v.tabletSliderPaddingBottom
+                          ? tabletSliderPaddingTop
+                          : v.tabletSliderPadding
+                    };
+                  }
+                },
+                  {
+                    id: "tabletSliderPaddingRight",
+                    icon: "nc-styling-right",
+                    type: "slider",
+                    slider: {
+                      min: 0,
+                      max: 100
+                    },
+                    input: {
+                      show: true,
+                      min: 0
+                    },
+                    suffix: {
+                      show: true,
+                      choices: [
+                        {
+                          title: "px",
+                          value: "px"
+                        },
+                        {
+                          title: "%",
+                          value: "%"
+                        }
+                      ]
+                    },
+                    value: {
+                      value: v.tabletSliderPaddingRight,
+                      suffix: v.tabletSliderPaddingRightSuffix
+                    },
+                    onChange: ({
+                      value: tabletSliderPaddingRight,
+                      suffix: tabletSliderPaddingRightSuffix
+                    }) => {
+                      return {
+                        tabletSliderPaddingRight,
+                        tabletSliderPaddingRightSuffix,
+                        tabletSliderPadding:
+                          tabletSliderPaddingRight === v.tabletSliderPaddingTop &&
+                          tabletSliderPaddingRight === v.tabletSliderPaddingLeft &&
+                          tabletSliderPaddingRight === v.tabletSliderPaddingBottom
+                            ? tabletSliderPaddingRight
+                            : v.tabletSliderPadding
+                      };
+                    }
+                  },
+                  {
+                    id: "tabletSliderPaddingBottom",
+                    icon: "nc-styling-bottom",
+                    type: "slider",
+                    slider: {
+                      min: 0,
+                      max: 100
+                    },
+                    input: {
+                      show: true,
+                      min: 0
+                    },
+                    suffix: {
+                      show: true,
+                      choices: [
+                        {
+                          title: "px",
+                          value: "px"
+                        },
+                        {
+                          title: "%",
+                          value: "%"
+                        }
+                      ]
+                    },
+                    value: {
+                      value: v.tabletSliderPaddingBottom,
+                      suffix: v.tabletSliderPaddingBottomSuffix
+                    },
+                    onChange: ({
+                      value: tabletSliderPaddingBottom,
+                      suffix: tabletSliderPaddingBottomSuffix
+                    }) => {
+                      return {
+                        tabletSliderPaddingBottom,
+                        tabletSliderPaddingBottomSuffix,
+                        tabletSliderPadding:
+                          tabletSliderPaddingBottom ===
+                          v.tabletSliderPaddingRight &&
+                          tabletSliderPaddingBottom === v.tabletSliderPaddingLeft &&
+                          tabletSliderPaddingBottom === v.tabletSliderPaddingTop
+                            ? tabletSliderPaddingBottom
+                            : v.tabletSliderPadding
+                      };
+                    }
+                  },
+                  {
+                    id: "tabletSliderPaddingLeft",
+                    icon: "nc-styling-left",
+                    type: "slider",
+                    slider: {
+                      min: 0,
+                      max: 100
+                    },
+                    input: {
+                      show: true,
+                      min: 0
+                    },
+                    suffix: {
+                      show: true,
+                      choices: [
+                        {
+                          title: "px",
+                          value: "px"
+                        },
+                        {
+                          title: "%",
+                          value: "%"
+                        }
+                      ]
+                    },
+                    value: {
+                      value: v.tabletSliderPaddingLeft,
+                      suffix: v.tabletSliderPaddingLeftSuffix
+                    },
+                    onChange: ({
+                      value: tabletSliderPaddingLeft,
+                      suffix: tabletSliderPaddingLeftSuffix
+                    }) => {
+                      return {
+                        tabletSliderPaddingLeft,
+                        tabletSliderPaddingLeftSuffix,
+                        tabletSliderPadding:
+                          tabletSliderPaddingLeft === v.tabletSliderPaddingRight &&
+                          tabletSliderPaddingLeft === v.tabletSliderPaddingTop &&
+                          tabletSliderPaddingLeft === v.tabletSliderPaddingBottom
+                            ? tabletSliderPaddingLeft
+                            : v.tabletSliderPadding
+                      };
+                    }
+                  }
+              ]
+          }
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {

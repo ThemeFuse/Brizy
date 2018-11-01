@@ -36,6 +36,22 @@ const RESTRICTIONS = {
     min: 3,
     max: 100
   },
+
+  // Tablet
+  tabletHeight: {
+    min: 3,
+    max: Infinity
+  },
+  tabletSize: {
+    min: 3,
+    max: 100
+  },
+  tabletWidth: {
+    min: 3,
+    max: 100
+  },
+
+  // Mobile
   mobileHeight: {
     min: 3,
     max: Infinity
@@ -177,7 +193,7 @@ class BoxResizer extends Component {
 
     const patch = patchData.reduce((acc, [key, delta]) => {
       const normalizedKey = normalizeKeyForCurrentDeviceMode(key);
-      const startValue = this.startValue[normalizedKey];
+      const startValue = this.startValue[normalizedKey] || this.startValue[key];
       let startRectValue = this.startRect[key];
 
       let deltaInPercent;

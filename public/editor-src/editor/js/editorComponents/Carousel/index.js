@@ -38,6 +38,14 @@ class Carousel extends EditorComponent {
       sliderPaddingLeftSuffix,
       sliderPaddingRight,
       sliderPaddingRightSuffix,
+      tabletSlidesToShow,
+      tabletSliderPaddingType,
+      tabletSliderPadding,
+      tabletSliderPaddingSuffix,
+      tabletSliderPaddingLeft,
+      tabletSliderPaddingLeftSuffix,
+      tabletSliderPaddingRight,
+      tabletSliderPaddingRightSuffix,
       mobileSliderPaddingType,
       mobileSliderPadding,
       mobileSliderPaddingSuffix,
@@ -64,6 +72,25 @@ class Carousel extends EditorComponent {
             sliderPaddingRightSuffix,
             meta.desktopW
           );
+
+      const tabletPaddingW =
+        tabletSliderPaddingType === "grouped"
+          ? percentageToPixels(
+          tabletSliderPadding * 2,
+          tabletSliderPaddingSuffix,
+          meta.tabletW
+          )
+          : percentageToPixels(
+          tabletSliderPaddingLeft,
+          tabletSliderPaddingLeftSuffix,
+          meta.tabletW
+          ) +
+          percentageToPixels(
+            tabletSliderPaddingRight,
+            tabletSliderPaddingRightSuffix,
+            meta.tabletW
+          );
+
     const mobilePaddingW =
       mobileSliderPaddingType === "grouped"
         ? percentageToPixels(
@@ -82,10 +109,12 @@ class Carousel extends EditorComponent {
             meta.mobileW
           );
     const desktopW = meta.desktopW - (spacing + paddingW);
+    const tabletW  = meta.tabletW - (spacing + tabletPaddingW);
 
     return {
       ...meta,
       desktopW: Math.round((desktopW / slidesToShow) * 10) / 10,
+      tabletW: Math.round((tabletW / tabletSlidesToShow) * 10) / 10,
       mobileW: Math.round((meta.mobileW - mobilePaddingW) * 10) / 10,
       inCarousel: true,
       inGrid: false
@@ -111,7 +140,8 @@ class Carousel extends EditorComponent {
       taxonomy,
       taxonomyId,
       orderBy,
-      order
+      order,
+      tabletSlidesToShow
     } = v;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -133,7 +163,8 @@ class Carousel extends EditorComponent {
       taxonomy,
       taxonomyId,
       orderBy,
-      order
+      order,
+      tabletSlidesToShow
     });
 
     return <Items {...itemsProps} />;

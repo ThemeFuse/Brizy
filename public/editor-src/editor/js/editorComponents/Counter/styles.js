@@ -11,27 +11,32 @@ export function styleClassName(v) {
     glamorObj = {
       ".brz &": {
         fontFamily: "var(--fontFamily)",
-        color: "var(--color)",
+        color: "var(--color)"
       },
       ".brz-ed--desktop &": {
         fontSize: "var(--fontSize)",
         lineHeight: "var(--lineHeight)",
         fontWeight: "var(--fontWeight)",
-        letterSpacing: "var(--letterSpacing)",
+        letterSpacing: "var(--letterSpacing)"
+      },
+      ".brz-ed--tablet &": {
+        fontSize: "var(--tabletFontSize)",
+        lineHeight: "var(--tabletLineHeight)",
+        fontWeight: "var(--tabletFontWeight)",
+        letterSpacing: "var(--tabletLetterSpacing)"
       },
       ".brz-ed--mobile &": {
         fontSize: "var(--mobileFontSize)",
         lineHeight: "var(--mobileLineHeight)",
         fontWeight: "var(--mobileFontWeight)",
-        letterSpacing: "var(--mobileLetterSpacing)",
+        letterSpacing: "var(--mobileLetterSpacing)"
       },
       ".brz &:hover": {
-        color: "var(--hoverColor)",
+        color: "var(--hoverColor)"
       }
     };
   } else {
     const {
-      endNumber,
       fontSize,
       fontFamily,
       lineHeight,
@@ -41,6 +46,14 @@ export function styleClassName(v) {
       colorOpacity,
       hoverColorHex,
       hoverColorOpacity,
+
+      // Tablet
+      tabletFontSize,
+      tabletLineHeight,
+      tabletFontWeight,
+      tabletLetterSpacing,
+
+      // Mobile
       mobileFontSize,
       mobileLineHeight,
       mobileFontWeight,
@@ -49,22 +62,30 @@ export function styleClassName(v) {
 
     glamorObj = {
       ".brz &": {
-        fontSize: fontSize,
-        lineHeight: lineHeight,
-        fontFamily: getFontById(fontFamily).family,
-        fontWeight: fontWeight,
-        letterSpacing: letterSpacing,
         color: hexToRgba(colorHex, colorOpacity),
+        fontFamily: getFontById(fontFamily).family,
+        fontSize,
+        lineHeight,
+        fontWeight,
+        letterSpacing
       },
       ".brz &:hover": {
-        color: hexToRgba(hoverColorHex, hoverColorOpacity),
+        color: hexToRgba(hoverColorHex, hoverColorOpacity)
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          fontSize: `${tabletFontSize}px`,
+          lineHeight: tabletLineHeight,
+          fontWeight: tabletFontWeight,
+          letterSpacing: `${tabletLetterSpacing}px`
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          fontSize: mobileFontSize,
+          fontSize: `${mobileFontSize}px`,
           lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
-          letterSpacing: `${mobileLetterSpacing}px`,
+          letterSpacing: `${mobileLetterSpacing}px`
         }
       }
     };
@@ -88,6 +109,14 @@ export function styleCSSVars(v) {
     colorOpacity,
     hoverColorHex,
     hoverColorOpacity,
+
+    // Tablet
+    tabletFontSize,
+    tabletLineHeight,
+    tabletFontWeight,
+    tabletLetterSpacing,
+
+    // Mobile
     mobileFontSize,
     mobileLineHeight,
     mobileFontWeight,
@@ -101,10 +130,18 @@ export function styleCSSVars(v) {
     "--lineHeight": lineHeight,
     "--letterSpacing": `${letterSpacing}px`,
     "--color": hexToRgba(colorHex, colorOpacity),
+    "--hoverColor": hexToRgba(hoverColorHex, hoverColorOpacity),
+
+    // Tablet
+    "--tabletFontSize": `${tabletFontSize}px`,
+    "--tabletLineHeight": tabletLineHeight,
+    "--tabletFontWeight": tabletFontWeight,
+    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+
+    // Mobile
     "--mobileFontSize": `${mobileFontSize}px`,
     "--mobileLineHeight": mobileLineHeight,
     "--mobileFontWeight": mobileFontWeight,
-    "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
-    "--hoverColor": hexToRgba(hoverColorHex, hoverColorOpacity)
+    "--mobileLetterSpacing": `${mobileLetterSpacing}px`
   };
 }

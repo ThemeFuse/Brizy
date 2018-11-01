@@ -46,6 +46,12 @@
 
   "items": [],
 
+  "tabletBgImageWidth": 0,
+  "tabletBgImageHeight": 0,
+  "tabletBgImageSrc": "",
+  "tabletBgPositionY": 50,
+  "tabletBgPositionX": 50,
+
   "mobileBgImageWidth": 0,
   "mobileBgImageHeight": 0,
   "mobileBgImageSrc": "",

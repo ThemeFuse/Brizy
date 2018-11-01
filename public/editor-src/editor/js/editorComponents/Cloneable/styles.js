@@ -10,19 +10,25 @@ const aligns = {
 };
 
 export function styleClassName(v, props) {
-  const { customClassName, showOnDesktop, showOnMobile } = v;
+  const { customClassName, showOnDesktop, showOnTablet, showOnMobile } = v;
   const { className: propsClassName } = props;
   let glamorObj;
 
   if (IS_PREVIEW) {
     glamorObj = {
       ".brz &": {
-        display: showOnDesktop === "on" ? "block" : "none"
+        display: showOnDesktop === "off" && "none"
+      },
+
+      "@media (max-width: 991px) and (min-width: 768px)": {
+        ".brz &": {
+          display: showOnTablet === "off" && "none"
+        }
       },
 
       "@media (max-width: 767px)": {
         ".brz &": {
-          display: showOnMobile === "on" ? "block" : "none"
+          display: showOnMobile === "off" && "none"
         }
       }
     };
@@ -42,7 +48,8 @@ export function wrapStyleClassName(v) {
   let glamorObj;
 
   if (IS_EDITOR) {
-    const { showOnDesktop, showOnMobile } = v;
+    const { showOnDesktop, showOnTablet, showOnMobile } = v;
+
     const blurred = {
       filter: "blur(3px)",
       opacity: 0.9
@@ -58,6 +65,12 @@ export function wrapStyleClassName(v) {
         marginRight: "var(--marginRight)",
         marginBottom: "var(--marginBottom)",
         marginLeft: "var(--marginLeft)"
+      },
+      ".brz-ed--tablet &": {
+        marginTop: "var(--tabletMarginTop)",
+        marginBottom: "var(--tabletMarginBottom)",
+        marginLeft: "var(--tabletMarginLeft)",
+        ...(showOnTablet === "on" ? null : blurred)
       },
       ".brz-ed--mobile &": {
         ...(showOnMobile === "on" ? null : blurred),
@@ -81,6 +94,21 @@ export function wrapStyleClassName(v) {
       marginLeft,
       marginLeftSuffix,
       zIndex,
+
+      // Tablet
+      tabletMarginType,
+      tabletMargin,
+      tabletMarginSuffix,
+      tabletMarginTop,
+      tabletMarginTopSuffix,
+      tabletMarginRight,
+      tabletMarginRightSuffix,
+      tabletMarginBottom,
+      tabletMarginBottomSuffix,
+      tabletMarginLeft,
+      tabletMarginLeftSuffix,
+
+      // Mobile
       mobileMarginType,
       mobileMargin,
       mobileMarginSuffix,
@@ -113,6 +141,25 @@ export function wrapStyleClassName(v) {
         marginType === "grouped"
           ? margin + marginSuffix
           : marginLeft + marginLeftSuffix,
+
+      "@media (max-width: 991px)": {
+        marginTop:
+          tabletMarginType === "grouped"
+            ? tabletMargin + tabletMarginSuffix
+            : tabletMarginTop + tabletMarginTopSuffix,
+        marginRight:
+          tabletMarginType === "grouped"
+            ? tabletMargin + tabletMarginSuffix
+            : tabletMarginRight + tabletMarginRightSuffix,
+        marginBottom:
+          tabletMarginType === "grouped"
+            ? tabletMargin + tabletMarginSuffix
+            : tabletMarginBottom + tabletMarginBottomSuffix,
+        marginLeft:
+          tabletMarginType === "grouped"
+            ? tabletMargin + tabletMarginSuffix
+            : tabletMarginLeft + tabletMarginLeftSuffix
+      },
 
       "@media (max-width: 767px)": {
         marginTop:
@@ -156,6 +203,21 @@ export function wrapStyleCSSVars(v) {
     marginBottomSuffix,
     marginLeft,
     marginLeftSuffix,
+
+    // Tablet
+    tabletMarginType,
+    tabletMargin,
+    tabletMarginSuffix,
+    tabletMarginTop,
+    tabletMarginTopSuffix,
+    tabletMarginRight,
+    tabletMarginRightSuffix,
+    tabletMarginBottom,
+    tabletMarginBottomSuffix,
+    tabletMarginLeft,
+    tabletMarginLeftSuffix,
+
+    // Mobile
     mobileMarginType,
     mobileMargin,
     mobileMarginSuffix,
@@ -188,6 +250,26 @@ export function wrapStyleCSSVars(v) {
       marginType === "grouped"
         ? margin + marginSuffix
         : marginLeft + marginLeftSuffix,
+
+    // Tablet
+    "--tabletMarginTop":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginTop + tabletMarginTopSuffix,
+    "--tabletMarginRight":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginRight + tabletMarginRightSuffix,
+    "--tabletMarginBottom":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginBottom + tabletMarginBottomSuffix,
+    "--tabletMarginLeft":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginLeft + tabletMarginLeftSuffix,
+
+    // Mobile
     "--mobileMarginTop":
       mobileMarginType === "grouped"
         ? mobileMargin + mobileMarginSuffix
@@ -226,6 +308,13 @@ export function containerStyleClassName(v) {
         paddingBottom: "var(--paddingBottom)",
         paddingLeft: "var(--paddingLeft)"
       },
+      ".brz-ed--tablet &": {
+        justifyContent: "var(--tabletHorizontalAlign)",
+        paddingTop: "var(--tabletPaddingTop)",
+        paddingRight: "var(--tabletPaddingRight)",
+        paddingBottom: "var(--tabletPaddingBottom)",
+        paddingLeft: "var(--tabletPaddingLeft)"
+      },
       ".brz-ed--mobile &": {
         justifyContent: "var(--mobileHorizontalAlign)",
         paddingTop: "var(--mobilePaddingTop)",
@@ -252,6 +341,21 @@ export function containerStyleClassName(v) {
       itemPaddingRight,
       itemPaddingBottom,
       itemPaddingLeft,
+
+      // Tablet
+      tabletPaddingType,
+      tabletPadding,
+      tabletPaddingSuffix,
+      tabletPaddingTop,
+      tabletPaddingTopSuffix,
+      tabletPaddingRight,
+      tabletPaddingRightSuffix,
+      tabletPaddingBottom,
+      tabletPaddingBottomSuffix,
+      tabletPaddingLeft,
+      tabletPaddingLeftSuffix,
+
+      // Mobile
       mobilePaddingType,
       mobilePadding,
       mobilePaddingSuffix,
@@ -288,6 +392,26 @@ export function containerStyleClassName(v) {
       marginRight: `${parseFloat(-itemPaddingRight / 2)}px`,
       marginBottom: `${-itemPaddingBottom}px`,
       marginLeft: `${parseFloat(-itemPaddingLeft / 2)}px`,
+
+      "@media (max-width: 991px)": {
+        justifyContent: aligns[tabletSyncOnChange(v, "horizontalAlign")],
+        paddingTop:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingTop + tabletPaddingTopSuffix,
+        paddingRight:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingRight + tabletPaddingRightSuffix,
+        paddingBottom:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingBottom + tabletPaddingBottomSuffix,
+        paddingLeft:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingLeft + tabletPaddingLeftSuffix
+      },
 
       "@media (max-width: 767px)": {
         justifyContent: aligns[mobileSyncOnChange(v, "horizontalAlign")],
@@ -340,6 +464,21 @@ export function containerStyleCSSVars(v) {
     itemPaddingRight,
     itemPaddingBottom,
     itemPaddingLeft,
+
+    // Tablet
+    tabletPaddingType,
+    tabletPadding,
+    tabletPaddingSuffix,
+    tabletPaddingTop,
+    tabletPaddingTopSuffix,
+    tabletPaddingRight,
+    tabletPaddingRightSuffix,
+    tabletPaddingBottom,
+    tabletPaddingBottomSuffix,
+    tabletPaddingLeft,
+    tabletPaddingLeftSuffix,
+
+    // Mobile
     mobilePaddingType,
     mobilePadding,
     mobilePaddingSuffix,
@@ -375,6 +514,27 @@ export function containerStyleCSSVars(v) {
     "--itemMarginRight": `${parseFloat(-itemPaddingRight / 2)}px`,
     "--itemMarginBottom": `${-itemPaddingBottom}px`,
     "--itemMarginLeft": `${parseFloat(-itemPaddingLeft / 2)}px`,
+
+    // Tablet
+    "--tabletHorizontalAlign": aligns[tabletSyncOnChange(v, "horizontalAlign")],
+    "--tabletPaddingTop":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingTop + tabletPaddingTopSuffix,
+    "--tabletPaddingRight":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingRight + tabletPaddingRightSuffix,
+    "--tabletPaddingBottom":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingBottom + tabletPaddingBottomSuffix,
+    "--tabletPaddingLeft":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingLeft + tabletPaddingLeftSuffix,
+
+    // Mobile
     "--mobileHorizontalAlign": aligns[mobileSyncOnChange(v, "horizontalAlign")],
     "--mobilePaddingTop":
       mobilePaddingType === "grouped"

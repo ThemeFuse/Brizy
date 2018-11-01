@@ -31,6 +31,31 @@ const DeviceModeMobile = {
   }
 };
 
+const DeviceModeTablet = {
+  id: "tablet",
+  type: "link",
+  label: "Tablet",
+  icon: "nc-tablet",
+  extraProps: () => {
+    return {
+      className: classnames({
+        "brz-ed-sidebar__popover__item--active":
+        getCurrentDeviceMode() === "tablet"
+      }),
+      onClick: () => {
+        if (getCurrentDeviceMode() === "tablet") {
+          return;
+        }
+
+        getStore().dispatch(setDeviceMode("tablet"));
+        setTimeout(() => {
+          UIEvents.emit("deviceMode.change", "tablet");
+        }, 300);
+      }
+    };
+  }
+};
+
 const DeviceModeDesktop = {
   id: "desktop",
   type: "link",
@@ -61,10 +86,11 @@ export const DeviceModes = {
   type: "popover",
   title: t("Mobile view"),
   className: "brz-ed-sidebar__popover--deviceMode",
-  options: [DeviceModeDesktop, DeviceModeMobile],
+  options: [DeviceModeDesktop, DeviceModeTablet, DeviceModeMobile],
   extraProps: () => {
     const icon =
-      getCurrentDeviceMode() === "mobile" ? "nc-phone" : "nc-desktop";
+      getCurrentDeviceMode() === "mobile" ? "nc-phone" :
+      getCurrentDeviceMode() === "tablet" ? "nc-tablet" : "nc-desktop";
     return {
       icon
     };

@@ -44,6 +44,11 @@
   "saturation": 100,
   "contrast": 100,
 
+  "tabletSize": null,
+
+  "tabletCoverImageWidth": null,
+  "tabletCoverImageHeight": null,
+
   "mobileSize": null,
 
   "mobileCoverImageWidth": null,

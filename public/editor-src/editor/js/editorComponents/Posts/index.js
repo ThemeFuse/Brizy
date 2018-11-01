@@ -4,6 +4,7 @@ import Items from "./items";
 import { styleClassName, styleCSSVars } from "./styles";
 import * as parentToolbarExtend from "./parentToolbarExtend";
 import defaultValue from "./defaultValue.json";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class Posts extends EditorComponent {
   static get componentId() {
@@ -21,12 +22,16 @@ class Posts extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const { gridColumn, padding } = v;
+    const { gridColumn, padding, tabletGridColumn } = v;
     const desktopW = meta.desktopW / gridColumn;
+    const tabletW = meta.tabletW / tabletGridColumn;
+
+    const tabletPadding = tabletSyncOnChange(v, "padding");
 
     return {
       ...meta,
       desktopW: Math.round((desktopW - padding) * 10) / 10,
+      tabletW: Math.round((tabletW - tabletPadding) * 10) / 10,
       inGrid: false,
       posts: true
     };

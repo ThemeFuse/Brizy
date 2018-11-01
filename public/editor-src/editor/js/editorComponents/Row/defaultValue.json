@@ -93,22 +93,62 @@
   "columnsHeight": 400,
   "items": [],
 
-  "mobileMedia": null,
-
   "zIndex": 0,
-
-  "showOnMobile": "on",
 
   "animationName": "none",
   "tempAnimationName": "none",
   "animationDuration": 1000,
   "animationDelay": 1000,
 
+  "showOnTablet": "on",
+
+  "tabletMedia": null,
+  "tabletBgImageWidth": null,
+  "tabletBgImageHeight": null,
+  "tabletBgImageSrc": null,
+  "tabletBgPositionX": null,
+  "tabletBgPositionY": null,
+  "tabletBgMapZoom": null,
+
+  "tabletBgColorHex": null,
+  "tabletBgColorOpacity": null,
+  "tabletBgColorPalette": null,
+
+  "tabletPaddingType": "ungrouped",
+  "tabletPadding": 0,
+  "tabletPaddingSuffix": "px",
+  "tabletPaddingTop": 0,
+  "tabletPaddingTopSuffix": "px",
+  "tabletPaddingRight": 0,
+  "tabletPaddingRightSuffix": "px",
+  "tabletPaddingBottom": 0,
+  "tabletPaddingBottomSuffix": "px",
+  "tabletPaddingLeft": 0,
+  "tabletPaddingLeftSuffix": "px",
+
+  "tempTabletPadding": 10,
+  "tempTabletPaddingTop": 10,
+  "tempTabletPaddingRight": 10,
+  "tempTabletPaddingBottom": 10,
+  "tempTabletPaddingLeft": 10,
+
+  "tabletMarginType": "grouped",
+  "tabletMargin": 0,
+  "tabletMarginSuffix": "px",
+  "tabletMarginTop": 10,
+  "tabletMarginTopSuffix": "px",
+  "tabletMarginBottom": 10,
+  "tabletMarginBottomSuffix": "px",
+
+  "showOnMobile": "on",
+
+  "mobileMedia": null,
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,
   "mobileBgImageSrc": null,
-  "mobileBgPositionY": null,
   "mobileBgPositionX": null,
+  "mobileBgPositionY": null,
+  "mobileBgMapZoom": null,
 
   "mobilePaddingType": "ungrouped",
   "mobilePadding": 0,
@@ -140,7 +180,5 @@
   "mobileMarginTop": 10,
   "mobileMarginTopSuffix": "px",
   "mobileMarginBottom": 10,
-  "mobileMarginBottomSuffix": "px",
-
-  "mobileBgMapZoom": null
+  "mobileMarginBottomSuffix": "px"
 }

@@ -11,6 +11,9 @@
   "borderWidth": 2,
   "borderStyle": "solid",
 
+  "tabletWidth": null,
+  "tabletBorderWidth": null,
+
   "mobileWidth": null,
   "mobileBorderWidth": null
 }

@@ -41,10 +41,12 @@ const resizerPoints = {
 };
 
 const resizerTransformValue = v => {
+
   const { resize, ...rest } = v;
 
   return {
     size: resize,
+    tabletSize: tabletSyncOnChange(v, "resize"),
     mobileSize: mobileSyncOnChange(v, "resize"),
     ...rest
   };
@@ -53,6 +55,11 @@ const resizerTransformPatch = patch => {
   if (patch.size) {
     patch.resize = patch.size;
     delete patch.size;
+  }
+
+  if (patch.tabletSize) {
+    patch.tabletResize = patch.tabletSize;
+    delete patch.tabletSize;
   }
 
   if (patch.mobileSize) {
@@ -77,9 +84,12 @@ class Image extends EditorComponent {
 
   constructor(props) {
     super(props);
-    const { desktopW: containerWidth, mobileW } = this.props.meta;
+    const { desktopW: containerWidth, tabletW, mobileW } = this.props.meta;
     const maxDesktopContainerWidth = Math.round(
       this.getMaxContainerWidth(containerWidth)
+    );
+    const maxTabletContainerWidth = Math.round(
+      this.getMaxContainerWidth(tabletW, "tablet")
     );
     const maxMobileContainerWidth = Math.round(
       this.getMaxContainerWidth(mobileW, "mobile")
@@ -88,6 +98,7 @@ class Image extends EditorComponent {
     this.state = {
       containerWidth,
       maxDesktopContainerWidth,
+      maxTabletContainerWidth,
       maxMobileContainerWidth
     };
   }
@@ -138,15 +149,19 @@ class Image extends EditorComponent {
       return;
     }
 
-    const { mobileW } = this.props.meta;
+    const { tabletW, mobileW } = this.props.meta;
 
     const {
       containerWidth,
       maxDesktopContainerWidth: oldMaxDesktopContainerWidth,
+      maxTabletContainerWidth: oldMaxTabletContainerWidth,
       maxMobileContainerWidth: oldMaxMobileContainerWidth
     } = this.state;
     const maxDesktopContainerWidth = Math.round(
       this.getMaxContainerWidth(containerWidth)
+    );
+    const maxTabletContainerWidth = Math.round(
+      this.getMaxContainerWidth(tabletW, "tablet")
     );
     const maxMobileContainerWidth = Math.round(
       this.getMaxContainerWidth(mobileW, "mobile")
@@ -154,9 +169,14 @@ class Image extends EditorComponent {
 
     if (
       maxDesktopContainerWidth > oldMaxDesktopContainerWidth ||
+      maxTabletContainerWidth > oldMaxTabletContainerWidth ||
       maxMobileContainerWidth > oldMaxMobileContainerWidth
     ) {
-      this.setState({ maxDesktopContainerWidth, maxMobileContainerWidth });
+      this.setState({
+        maxDesktopContainerWidth,
+        maxTabletContainerWidth,
+        maxMobileContainerWidth
+      });
     }
   }, 2000);
 
@@ -202,7 +222,7 @@ class Image extends EditorComponent {
       width,
       height
     } = v;
-    const { mobileW } = this.props.meta;
+    const { tabletW, mobileW } = this.props.meta;
     const desktopValue = {
       imageWidth,
       imageHeight,
@@ -212,6 +232,16 @@ class Image extends EditorComponent {
       zoom,
       width,
       height
+    };
+    const tabletValue = {
+      imageWidth,
+      imageHeight,
+      positionX: tabletSyncOnChange(v, "positionX"),
+      positionY: tabletSyncOnChange(v, "positionY"),
+      resize: tabletSyncOnChange(v, "resize"),
+      zoom: tabletSyncOnChange(v, "zoom"),
+      width,
+      height: tabletSyncOnChange(v, "height")
     };
     const mobileValue = {
       imageWidth,
@@ -226,6 +256,7 @@ class Image extends EditorComponent {
 
     return {
       desktop: calcImageSizes(containerWidth, desktopValue),
+      tablet: calcImageSizes(tabletW, tabletValue),
       mobile: calcImageSizes(mobileW, mobileValue)
     };
   };
@@ -271,15 +302,17 @@ class Image extends EditorComponent {
       linkExternalType,
       linkPopup
     } = v;
-    const { desktopW, mobileW, inGallery = false } = this.props.meta;
+    const { desktopW, tabletW, mobileW, inGallery = false } = this.props.meta;
     const {
       containerWidth,
       maxDesktopContainerWidth,
+      maxTabletContainerWidth,
       maxMobileContainerWidth
     } = this.state;
 
     const imageSizes = this.getImageSizes(v, containerWidth);
 
+    // Mobile
     const mobileImageOptions = { iW: maxMobileContainerWidth, iH: "any" };
     const mobileImageOptions2X = { iW: maxMobileContainerWidth * 2, iH: "any" };
     const mobileSrcSet = `${imageUrl(
@@ -287,6 +320,15 @@ class Image extends EditorComponent {
       mobileImageOptions
     )} 1x, ${imageUrl(imageSrc, mobileImageOptions2X)} 2x`;
 
+    // Tablet
+    const tabletImageOptions = { iW: maxTabletContainerWidth, iH: "any" };
+    const tabletImageOptions2X = { iW: maxTabletContainerWidth * 2, iH: "any" };
+    const tabletSrcSet = `${imageUrl(
+      imageSrc,
+      tabletImageOptions
+    )} 1x, ${imageUrl(imageSrc, tabletImageOptions2X)} 2x`;
+
+    // Desktop
     const desktopImageOptions = { iW: maxDesktopContainerWidth, iH: "any" };
     const desktopImageOptions2X = {
       iW: maxDesktopContainerWidth * 2,
@@ -305,6 +347,7 @@ class Image extends EditorComponent {
       content = (
         <picture>
           <source srcSet={desktopSrcSet} media="(min-width: 992px)" />
+          <source srcSet={tabletSrcSet} media="(min-width: 768px)" />
           <img
             className={imgStyleClassName(v)}
             style={imgStyleCSSVars(v, imageSizes)}
@@ -351,6 +394,17 @@ class Image extends EditorComponent {
       width,
       height
     };
+    const tabletValue = {
+      imageSrc,
+      imageWidth,
+      imageHeight,
+      positionX: tabletSyncOnChange(v, "positionX"),
+      positionY: tabletSyncOnChange(v, "positionY"),
+      resize: tabletSyncOnChange(v, "resize"),
+      zoom: tabletSyncOnChange(v, "zoom"),
+      width,
+      height: tabletSyncOnChange(v, "height")
+    };
     const mobileValue = {
       imageSrc,
       imageWidth,
@@ -364,11 +418,14 @@ class Image extends EditorComponent {
     };
     const wrapperSizes = {
       desktop: calcWrapperSizes(containerWidth, desktopValue),
+      tablet: calcWrapperSizes(tabletW, tabletValue),
       mobile: calcWrapperSizes(mobileW, mobileValue)
     };
     const toolbarConfig = toolbarConfigFn({
       desktopWrapperSizes: wrapperSizes.desktop,
       desktopContainerWidth: containerWidth,
+      tabletWrapperSizes: wrapperSizes.tablet,
+      tabletContainerWidth: tabletW,
       mobileWrapperSizes: wrapperSizes.mobile,
       mobileContainerWidth: mobileW,
       inGallery
@@ -437,9 +494,18 @@ class Image extends EditorComponent {
       linkExternalType,
       linkPopup
     } = v;
-    const { desktopW, mobileW } = this.props.meta;
+
+    const { desktopW, tabletW, mobileW } = this.props.meta;
+
     const wrapperSizes = {
       desktop: calcWrapperSizes(desktopW, v),
+      tablet: calcWrapperSizes(tabletW, {
+        imageWidth,
+        imageHeight,
+        resize: tabletSyncOnChange(v, "resize"),
+        width: tabletSyncOnChange(v, "width"),
+        height: tabletSyncOnChange(v, "height")
+      }),
       mobile: calcWrapperSizes(mobileW, {
         imageWidth,
         imageHeight,
@@ -450,6 +516,7 @@ class Image extends EditorComponent {
     };
     const imageSizes = this.getImageSizes(v, desktopW);
 
+    // Desktop
     const { width: cW, height: cH } = wrapperSizes.desktop;
     let {
       width: iW,
@@ -457,6 +524,38 @@ class Image extends EditorComponent {
       marginLeft: oX,
       marginTop: oY
     } = imageSizes.desktop;
+
+    oX = Math.abs(oX);
+    oY = Math.abs(oY);
+    const options = { iW, iH, oX, oY, cW, cH };
+    const imageOptions = this.getImageOptions(options, imagePopulation);
+    const imageOptions2X = this.getImageOptions(options, imagePopulation, 2);
+
+    // Tablet
+    const { width: tCW, height: tCH } = wrapperSizes.tablet;
+    let {
+      width: tIW,
+      height: tIH,
+      marginLeft: tOX,
+      marginTop: tOY
+    } = imageSizes.tablet;
+
+    tOX = Math.abs(tOX);
+    tOY = Math.abs(tOY);
+    const tOptions = {
+      iW: tIW,
+      iH: tIH,
+      oX: tOX,
+      oY: tOY,
+      cW: tCW,
+      cH: tCH
+    };
+    const tabletImageOptions = this.getImageOptions(tOptions, imagePopulation);
+    const tabletImageOptions2X = this.getImageOptions(
+      tOptions,
+      imagePopulation,
+      2
+    );
 
     // Mobile
     const { width: mCW, height: mCH } = wrapperSizes.mobile;
@@ -466,12 +565,6 @@ class Image extends EditorComponent {
       marginLeft: mOX,
       marginTop: mOY
     } = imageSizes.mobile;
-
-    oX = Math.abs(oX);
-    oY = Math.abs(oY);
-    const options = { iW, iH, oX, oY, cW, cH };
-    const imageOptions = this.getImageOptions(options, imagePopulation);
-    const imageOptions2X = this.getImageOptions(options, imagePopulation, 2);
 
     mOX = Math.abs(mOX);
     mOY = Math.abs(mOY);
@@ -492,6 +585,7 @@ class Image extends EditorComponent {
 
     let sourceSrcSet;
     let desktopSrc;
+    let tabletSrc;
     let mobileSrc;
     if (imagePopulation) {
       sourceSrcSet = `${imagePopulationUrl(
@@ -500,6 +594,11 @@ class Image extends EditorComponent {
       )} 1x, ${imagePopulationUrl(imagePopulation, imageOptions2X)} 2x`;
 
       desktopSrc = imagePopulationUrl(imagePopulation, mobileImageOptions);
+
+      tabletSrc = `${imagePopulationUrl(
+        imagePopulation,
+        tabletImageOptions
+      )} 1x, ${imagePopulationUrl(imagePopulation, tabletImageOptions2X)} 2x`;
 
       mobileSrc = `${imagePopulationUrl(
         imagePopulation,
@@ -512,6 +611,11 @@ class Image extends EditorComponent {
       )} 2x`;
 
       desktopSrc = imageUrl(imageSrc, mobileImageOptions);
+
+      tabletSrc = `${imageUrl(imageSrc, tabletImageOptions)} 1x, ${imageUrl(
+        imageSrc,
+        tabletImageOptions2X
+      )} 2x`;
 
       mobileSrc = `${imageUrl(imageSrc, mobileImageOptions)} 1x, ${imageUrl(
         imageSrc,
@@ -529,6 +633,7 @@ class Image extends EditorComponent {
       content = (
         <picture>
           <source srcSet={sourceSrcSet} media="(min-width: 992px)" />
+          <source srcSet={tabletSrc} media="(min-width: 768px)" />
           <img
             {...extraImgProps}
             className="brz-img"

@@ -8,6 +8,11 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [];
+}
+
+
 export function getItemsForMobile(v) {
   return [];
 }

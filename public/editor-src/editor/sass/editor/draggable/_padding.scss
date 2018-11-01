@@ -21,20 +21,34 @@
     height: var(--height);
   }
   .brz-ed-draggable__padding--desktop-value {
-    visibility: visible;
+    display: block;
   }
+  .brz-ed-draggable__padding--tablet-value,
   .brz-ed-draggable__padding--mobile-value {
-    visibility: hidden;
+    display: none;
+  }
+}
+&.brz-ed--tablet {
+  .brz-ed-draggable__padding {
+    height: var(--tabletHeight);
+  }
+  .brz-ed-draggable__padding--tablet-value {
+    display: block;
+  }
+  .brz-ed-draggable__padding--desktop-value,
+  .brz-ed-draggable__padding--mobile-value {
+    display: none;
   }
 }
 &.brz-ed--mobile {
   .brz-ed-draggable__padding {
     height: var(--mobileHeight);
   }
-  .brz-ed-draggable__padding--desktop-value {
-    visibility: hidden;
+  .brz-ed-draggable__padding--desktop-value,
+  .brz-ed-draggable__padding--tablet-value {
+    display: none;
   }
   .brz-ed-draggable__padding--mobile-value {
-    visibility: visible;
+    display: block;
   }
 }

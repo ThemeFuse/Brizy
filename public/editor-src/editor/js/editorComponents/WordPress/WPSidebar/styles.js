@@ -9,10 +9,13 @@ export function styleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       ".brz-ed--desktop &": {
-        maxWidth: "var(--maxWidth)",
+        maxWidth: "var(--width)"
+      },
+      ".brz-ed--tablet &": {
+        maxWidth: "var(--tabletWidth)"
       },
       ".brz-ed--mobile &": {
-        maxWidth: "var(--mobileMaxWidth)",
+        maxWidth: "var(--mobileWidth)"
       }
     };
   } else {
@@ -20,11 +23,16 @@ export function styleClassName(v) {
 
     glamorObj = {
       ".brz &": {
-        maxWidth: `${width}%`,
+        maxWidth: `${width}%`
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          maxWidth: `${tabletSyncOnChange(v, "width")}%`
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          maxWidth: `${mobileSyncOnChange(v, "width")}%`,
+          maxWidth: `${mobileSyncOnChange(v, "width")}%`
         }
       }
     };
@@ -41,7 +49,8 @@ export function styleCSSVars(v) {
   const { width } = v;
 
   return {
-    "--maxWidth": `${width}%`,
-    "--mobileMaxWidth": `${mobileSyncOnChange(v, "width")}%`,
+    "--width": `${width}%`,
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`
   };
 }

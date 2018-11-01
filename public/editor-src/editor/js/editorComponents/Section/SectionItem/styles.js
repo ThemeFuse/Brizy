@@ -63,6 +63,30 @@ export function bgStyleClassName(v, props) {
           height: "var(--shapeBottomHeight)"
         }
       },
+      ".brz-ed--tablet &": {
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage: "var(--tabletBackgroundImage)",
+          backgroundPositionX: "var(--tabletBackgroundPositionX)",
+          backgroundPositionY: "var(--tabletBackgroundPositionY)",
+          backgroundAttachment: "var(--tabletBackgroundAttachment)"
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: "var(--tabletBackgroundColor)"
+        },
+        "> .brz-bg-media > .brz-bg-map": {
+          display: "var(--tabletMediaBg)"
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: "var(--tabletShapeTopBackgroundSize)",
+          height: "var(--tabletShapeTopHeight)"
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: "var(--tabletShapeBottomBackgroundSize)",
+          height: "var(--tabletShapeBottomHeight)"
+        }
+      },
       ".brz-ed--mobile &": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage: "var(--mobileBackgroundImage)",
@@ -70,6 +94,13 @@ export function bgStyleClassName(v, props) {
           backgroundPositionY: "var(--mobileBackgroundPositionY)",
           backgroundAttachment: "var(--mobileBackgroundAttachment)"
         },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: "var(--mobileBackgroundColor)"
+        },
+        "> .brz-bg-media > .brz-bg-map": {
+          display: "var(--mobileMediaBg)"
+        },
+
         // Shape
         "> .brz-bg-media > .brz-bg-shape__top": {
           backgroundSize: "var(--mobileShapeTopBackgroundSize)",
@@ -78,12 +109,6 @@ export function bgStyleClassName(v, props) {
         "> .brz-bg-media > .brz-bg-shape__bottom": {
           backgroundSize: "var(--mobileShapeBottomBackgroundSize)",
           height: "var(--mobileShapeBottomHeight)"
-        },
-        "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--mobileBackgroundColor)"
-        },
-        "> .brz-bg-media > .brz-bg-map": {
-          display: "var(--mobileMediaBg)"
         }
       }
     };
@@ -124,8 +149,7 @@ export function bgStyleClassName(v, props) {
       shapeTopIndex,
       shapeBottomIndex,
       shapeTopType,
-      shapeBottomType,
-      mobileBgAttachment
+      shapeBottomType
     } = v;
     const { showSlider } = props.meta;
 
@@ -133,10 +157,28 @@ export function bgStyleClassName(v, props) {
       ? imagePopulationUrl(bgPopulation)
       : imageUrl(bgImageSrc);
 
+    const tabletBgImage = bgPopulation
+      ? imagePopulationUrl(bgPopulation)
+      : imageUrl(tabletSyncOnChange(v, "bgImageSrc"));
+
     const mobileBgImage = bgPopulation
       ? imagePopulationUrl(bgPopulation)
       : imageUrl(mobileSyncOnChange(v, "bgImageSrc"));
 
+    // Tablet Shape
+    const tabletShapeTopHeight = tabletSyncOnChange(v, "shapeTopHeight");
+    const tabletShapeBottomHeight = tabletSyncOnChange(v, "shapeBottomHeight");
+
+    const tabletShapeTopHeightSuffix = tabletSyncOnChange(
+      v,
+      "shapeTopHeightSuffix"
+    );
+    const tabletShapeBottomHeightSuffix = tabletSyncOnChange(
+      v,
+      "shapeBottomHeightSuffix"
+    );
+
+    // Mobile Shape
     const mobileShapeTopHeight = mobileSyncOnChange(v, "shapeTopHeight");
     const mobileShapeBottomHeight = mobileSyncOnChange(v, "shapeBottomHeight");
 
@@ -203,6 +245,8 @@ export function bgStyleClassName(v, props) {
       "> .brz-bg-media > .brz-bg-map": {
         display: media === "map" ? "block" : "none"
       },
+      
+      // Shape
       "> .brz-bg-media > .brz-bg-shape__top": {
         backgroundImage:
           shapeTopType === "none"
@@ -235,6 +279,45 @@ export function bgStyleClassName(v, props) {
         height: shapeBottomHeight + shapeBottomHeightSuffix,
         zIndex: shapeBottomIndex
       },
+      
+      // Tablet
+      "@media (max-width: 991px)": {
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage:
+            (tabletSyncOnChange(v, "bgImageSrc") || bgPopulation) &&
+            tabletSyncOnChange(v, "media") !== "map"
+              ? `url(${tabletBgImage})`
+              : "none",
+          backgroundPosition: bgPopulation
+            ? "0% 0%"
+            : `${tabletSyncOnChange(v, "bgPositionX")}% ${tabletSyncOnChange(
+                v,
+                "bgPositionY"
+              )}%`
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: hexToRgba(
+            tabletSyncOnChange(v, "bgColorHex"),
+            tabletSyncOnChange(v, "bgColorOpacity")
+          )
+        },
+        "> .brz-bg-media > .brz-bg-map": {
+          display: tabletSyncOnChange(v, "media") === "map" ? "block" : "none"
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: `100% ${tabletShapeTopHeight +
+          tabletShapeTopHeightSuffix}`,
+          height: tabletShapeTopHeight + tabletShapeTopHeightSuffix
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: `100% ${tabletShapeBottomHeight +
+          tabletShapeBottomHeightSuffix}`,
+          height: tabletShapeBottomHeight + tabletShapeBottomHeightSuffix
+        }
+      },
+      // Mobile
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
@@ -247,9 +330,7 @@ export function bgStyleClassName(v, props) {
             : `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(
                 v,
                 "bgPositionY"
-              )}%`,
-          backgroundAttachment:
-            backgroundAttachment[showSlider ? "none" : mobileBgAttachment]
+              )}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: hexToRgba(
@@ -260,6 +341,7 @@ export function bgStyleClassName(v, props) {
         "> .brz-bg-media > .brz-bg-map": {
           display: mobileSyncOnChange(v, "media") === "map" ? "block" : "none"
         },
+        
         // Shape
         "> .brz-bg-media > .brz-bg-shape__top": {
           backgroundSize: `100% ${mobileShapeTopHeight +
@@ -318,11 +400,24 @@ export function bgStyleCSSVars(v, props) {
     shapeTopHorizontal,
     shapeBottomHorizontal,
     shapeTopIndex,
-    shapeBottomIndex,
-    mobileBgAttachment
+    shapeBottomIndex
   } = v;
   const { showSlider } = props.meta;
+  
+  // Tablet Shape
+  const tabletShapeTopHeight = tabletSyncOnChange(v, "shapeTopHeight");
+  const tabletShapeBottomHeight = tabletSyncOnChange(v, "shapeBottomHeight");
 
+  const tabletShapeTopHeightSuffix = tabletSyncOnChange(
+    v,
+    "shapeTopHeightSuffix"
+  );
+  const tabletShapeBottomHeightSuffix = tabletSyncOnChange(
+    v,
+    "shapeBottomHeightSuffix"
+  );
+  
+  // Mobile Shape
   const mobileShapeTopHeight = mobileSyncOnChange(v, "shapeTopHeight");
   const mobileShapeBottomHeight = mobileSyncOnChange(v, "shapeBottomHeight");
 
@@ -412,14 +507,36 @@ export function bgStyleCSSVars(v, props) {
     "--shapeBottomBackgroundSize": `100% ${shapeBottomHeight +
       shapeBottomHeightSuffix}`,
 
+    // Tablet
+    "--tabletMediaBg":
+      tabletSyncOnChange(v, "media") === "map" ? "block" : "none",
+    "--tabletBackgroundImage":
+      tabletSyncOnChange(v, "bgImageSrc") &&
+      tabletSyncOnChange(v, "media") !== "map" &&
+      !bgPopulation
+        ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
+        : "none",
+    "--tabletBackgroundPositionX": bgPopulation
+      ? "0%"
+      : `${tabletSyncOnChange(v, "bgPositionX")}%`,
+    "--tabletBackgroundPositionY": bgPopulation
+      ? "0%"
+      : `${tabletSyncOnChange(v, "bgPositionY")}%`,
+    "--tabletBackgroundColor": hexToRgba(
+      tabletSyncOnChange(v, "bgColorHex"),
+      tabletSyncOnChange(v, "bgColorOpacity")
+    ),
+    
+    // Tablet Shape
+    "--tabletShapeTopHeight": tabletShapeTopHeight + tabletShapeTopHeightSuffix,
+    "--tabletShapeBottomHeight":
+      tabletShapeBottomHeight + tabletShapeBottomHeightSuffix,
+    "--tabletShapeTopBackgroundSize": `${100}% ${tabletShapeTopHeight +
+    tabletShapeTopHeightSuffix}`,
+    "--tabletShapeBottomBackgroundSize": `${100}% ${tabletShapeBottomHeight +
+    tabletShapeBottomHeightSuffix}`,
+
     // Mobile
-    "--mobileShapeTopHeight": mobileShapeTopHeight + mobileShapeTopHeightSuffix,
-    "--mobileShapeBottomHeight":
-      mobileShapeBottomHeight + mobileShapeBottomHeightSuffix,
-    "--mobileShapeTopBackgroundSize": `${100}% ${mobileShapeTopHeight +
-      mobileShapeTopHeightSuffix}`,
-    "--mobileShapeBottomBackgroundSize": `${100}% ${mobileShapeBottomHeight +
-      mobileShapeBottomHeightSuffix}`,
     "--mobileMediaBg":
       mobileSyncOnChange(v, "media") === "map" ? "block" : "none",
     "--mobileBackgroundImage":
@@ -434,12 +551,19 @@ export function bgStyleCSSVars(v, props) {
     "--mobileBackgroundPositionY": bgPopulation
       ? "0%"
       : `${mobileSyncOnChange(v, "bgPositionY")}%`,
-    "--mobileBackgroundAttachment":
-      backgroundAttachment[showSlider ? "none" : mobileBgAttachment],
     "--mobileBackgroundColor": hexToRgba(
       mobileSyncOnChange(v, "bgColorHex"),
       mobileSyncOnChange(v, "bgColorOpacity")
-    )
+    ),
+    
+    // Mobile Shape
+    "--mobileShapeTopHeight": mobileShapeTopHeight + mobileShapeTopHeightSuffix,
+    "--mobileShapeBottomHeight":
+      mobileShapeBottomHeight + mobileShapeBottomHeightSuffix,
+    "--mobileShapeTopBackgroundSize": `${100}% ${mobileShapeTopHeight +
+    mobileShapeTopHeightSuffix}`,
+    "--mobileShapeBottomBackgroundSize": `${100}% ${mobileShapeBottomHeight +
+    mobileShapeBottomHeightSuffix}`,
   };
 }
 
@@ -491,7 +615,7 @@ export function itemsStyleClassName(v) {
       borderColor: "transparent",
       borderStyle: "solid",
 
-      "@media (min-width: 768px)": {
+      "@media (min-width: 992px)": {
         maxWidth: containerType === "boxed" ? `${containerSize}%` : `100%`
       }
     };
@@ -553,6 +677,17 @@ export function containerStyleClassName(v) {
       paddingTopSuffix,
       paddingBottom,
       paddingBottomSuffix,
+
+      // Tablet
+      tabletPaddingType,
+      tabletPadding,
+      tabletPaddingSuffix,
+      tabletPaddingTop,
+      tabletPaddingTopSuffix,
+      tabletPaddingBottom,
+      tabletPaddingBottomSuffix,
+
+      // Mobile
       mobilePaddingType,
       mobilePadding,
       mobilePaddingSuffix,
@@ -572,6 +707,17 @@ export function containerStyleClassName(v) {
         paddingType === "grouped"
           ? padding + paddingSuffix
           : paddingBottom + paddingBottomSuffix,
+
+      "@media (max-width: 991px)": {
+        paddingTop:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingTop + tabletPaddingTopSuffix,
+        paddingBottom:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingBottom + tabletPaddingBottomSuffix
+      },
 
       "@media (max-width: 767px)": {
         paddingTop:

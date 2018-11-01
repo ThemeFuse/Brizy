@@ -40,11 +40,7 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.zoom
           },
-          onChange: ({ value: zoom }) => {
-            return {
-              zoom
-            };
-          }
+          onChange: ({ value: zoom }) => ({ zoom })
         }
       ]
     },
@@ -79,11 +75,7 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.size
           },
-          onChange: ({ value: size }) => {
-            return {
-              size
-            };
-          }
+          onChange: ({ value: size }) => ({ size })
         },
         {
           id: "height",
@@ -108,11 +100,7 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.height
           },
-          onChange: ({ value: height }) => {
-            return {
-              height
-            };
-          }
+          onChange: ({ value: height }) => ({ height })
         },
         {
           id: "advancedSettings",
@@ -368,6 +356,70 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      title: t("Settings"),
+      position: 110,
+      options: [
+        {
+          id: "tabletSize",
+          label: t("Width"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 100
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "size")
+          },
+          onChange: ({ value: tabletSize }) => ({ tabletSize })
+        },
+        {
+          id: "tabletHeight",
+          label: t("Height"),
+          type: "slider",
+          slider: {
+            min: 5,
+            max: 500
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "height")
+          },
+          onChange: ({ value: tabletHeight }) => ({ tabletHeight })
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {
@@ -401,11 +453,7 @@ export function getItemsForMobile(v) {
           value: {
             value: mobileSyncOnChange(v, "size")
           },
-          onChange: ({ value: mobileSize }) => {
-            return {
-              mobileSize
-            };
-          }
+          onChange: ({ value: mobileSize }) => ({ mobileSize })
         },
         {
           id: "mobileHeight",
@@ -430,11 +478,7 @@ export function getItemsForMobile(v) {
           value: {
             value: mobileSyncOnChange(v, "height")
           },
-          onChange: ({ value: mobileHeight }) => {
-            return {
-              mobileHeight
-            };
-          }
+          onChange: ({ value: mobileHeight }) => ({ mobileHeight })
         }
       ]
     }

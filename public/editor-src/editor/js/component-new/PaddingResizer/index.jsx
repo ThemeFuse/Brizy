@@ -20,6 +20,14 @@ class PaddingResizer extends Component {
 
     type = v.paddingType === "grouped" ? "padding" : type;
 
+    if (deviceMode === "tablet") {
+      type = v.tabletPaddingType === "grouped" ? "padding" : type;
+
+      const capitalizedFirstLetter =
+        type.charAt(0).toUpperCase() + type.slice(1);
+      type = `tablet${capitalizedFirstLetter}`;
+    }
+
     if (deviceMode === "mobile") {
       type = v.mobilePaddingType === "grouped" ? "padding" : type;
 
@@ -45,6 +53,18 @@ class PaddingResizer extends Component {
           paddingBottom: value
         };
         break;
+      case "tabletPaddingTop":
+        newValue = {
+          tabletPaddingType: "ungrouped",
+          tabletPaddingTop: value
+        };
+        break;
+      case "tabletPaddingBottom":
+        newValue = {
+          tabletPaddingType: "ungrouped",
+          tabletPaddingBottom: value
+        };
+        break;
       case "mobilePaddingTop":
         newValue = {
           mobilePaddingType: "ungrouped",
@@ -62,6 +82,14 @@ class PaddingResizer extends Component {
           paddingType: "ungrouped",
           paddingTop: v[type],
           paddingBottom: v[type],
+          [type]: value
+        };
+        break;
+      case "tabletPadding":
+        newValue = {
+          tabletPaddingType: "ungrouped",
+          tabletPaddingTop: v[type],
+          tabletPaddingBottom: v[type],
           [type]: value
         };
         break;
@@ -85,17 +113,24 @@ class PaddingResizer extends Component {
   renderForEdit() {
     let {
       padding,
+      tabletPadding,
       mobilePadding,
       paddingType,
+      tabletPaddingType,
       mobilePaddingType,
       paddingTop,
       paddingBottom,
+      tabletPaddingTop,
+      tabletPaddingBottom,
       mobilePaddingTop,
       mobilePaddingBottom
     } = this.props.value;
 
     if (paddingType === "grouped") {
       paddingTop = paddingBottom = padding;
+    }
+    if (tabletPaddingType === "grouped") {
+      tabletPaddingTop = tabletPaddingBottom = tabletPadding;
     }
     if (mobilePaddingType === "grouped") {
       mobilePaddingTop = mobilePaddingBottom = mobilePadding;
@@ -107,6 +142,7 @@ class PaddingResizer extends Component {
           onDrag={this.handleTopDrag}
           onDragEnd={this.handleDragEnd}
           value={`${paddingTop}px`}
+          tabletValue={`${tabletPaddingTop}px`}
           mobileValue={`${mobilePaddingTop}px`}
         />
         {this.props.children}
@@ -115,6 +151,7 @@ class PaddingResizer extends Component {
           onDrag={this.handleBottomDrag}
           onDragEnd={this.handleDragEnd}
           value={`${paddingBottom}px`}
+          tabletValue={`${tabletPaddingBottom}px`}
           mobileValue={`${mobilePaddingBottom}px`}
         />
       </React.Fragment>
@@ -136,17 +173,24 @@ export default rolesHOC({
   fallbackRender: ({ value, children }) => {
     let {
       padding,
-      mobilePadding,
       paddingType,
-      mobilePaddingType,
       paddingTop,
       paddingBottom,
+      tabletPadding,
+      tabletPaddingType,
+      tabletPaddingTop,
+      tabletPaddingBottom,
+      mobilePadding,
+      mobilePaddingType,
       mobilePaddingTop,
       mobilePaddingBottom
     } = value;
 
     if (paddingType === "grouped") {
       paddingTop = paddingBottom = padding;
+    }
+    if (tabletPaddingType === "grouped") {
+      tabletPaddingTop = tabletPaddingBottom = tabletPadding;
     }
     if (mobilePaddingType === "grouped") {
       mobilePaddingTop = mobilePaddingBottom = mobilePadding;
@@ -155,11 +199,13 @@ export default rolesHOC({
     const topStyle = {
       visibility: "hidden",
       "--height": `${paddingTop}px`,
+      "--tabletHeight": `${tabletPaddingTop}px`,
       "--mobileHeight": `${mobilePaddingTop}px`
     };
     const bottomStyle = {
       visibility: "hidden",
       "--height": `${paddingBottom}px`,
+      "--tabletHeight": `${tabletPaddingBottom}px`,
       "--mobileHeight": `${mobilePaddingBottom}px`
     };
 

@@ -13,6 +13,10 @@ const textsByDeviceMode = {
     title: t("START BUILDING YOUR PAGE"),
     description: t("Press the button above to add blocks")
   },
+  tablet: {
+    title: "SWITCH TO DESKTOP",
+    description: "Switch to desktop to add blocks"
+  },
   mobile: {
     title: t("SWITCH TO DESKTOP"),
     description: t("Switch to desktop to add blocks")
@@ -42,8 +46,8 @@ class FirstBlockAdder extends React.Component {
     const { deviceMode } = this.props;
     const { title, description } = textsByDeviceMode[deviceMode];
     const roundPlusProps = {
-      icon: deviceMode === "mobile" ? "nc-desktop" : null,
-      className: deviceMode === "mobile" ? "floating-action-button--icon" : null
+      icon: deviceMode === "mobile" || deviceMode === "tablet" ? "nc-desktop" : null,
+      className: deviceMode === "mobile" || deviceMode === "tablet" ? "floating-action-button--icon" : null
     };
 
     return (

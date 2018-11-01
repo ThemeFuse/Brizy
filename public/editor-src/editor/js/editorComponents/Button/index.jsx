@@ -96,6 +96,7 @@ class Button extends EditorComponent {
       _v.hoverBorderColorPalette &&
         `${_v.hoverBorderColorPalette}__hoverBorder`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
+      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
     ]);
 
