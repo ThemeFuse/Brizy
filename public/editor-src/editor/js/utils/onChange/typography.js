@@ -23,6 +23,27 @@ export function onChangeTypography (newValues, currentValues) {
   };
 };
 
+export function onChangeTypographyTablet (newValues, currentValues) {
+  const {
+    tabletFontSize,
+    tabletLineHeight,
+    tabletLetterSpacing,
+    tabletFontWeight
+  } =
+    currentValues.tabletFontStyle === ""
+      ? currentValues
+      : getFontStyle(currentValues.tabletFontStyle);
+
+  return {
+    tabletFontSize,
+    tabletLineHeight,
+    tabletLetterSpacing,
+    tabletFontWeight,
+    tabletFontStyle: "",
+    ...newValues
+  };
+};
+
 export function onChangeTypographyMobile (newValues, currentValues) {
   const {
     mobileFontSize,

@@ -16,7 +16,13 @@ const isInnerRow = meta => {
 };
 
 export function bgStyleClassName(v, props) {
-  const { showOnDesktop, showOnMobile, customClassName, items } = v;
+  const {
+    showOnDesktop,
+    showOnTablet,
+    showOnMobile,
+    customClassName,
+    items
+  } = v;
   const hasItems = items.length >= 1;
 
   let glamorObj;
@@ -38,6 +44,22 @@ export function bgStyleClassName(v, props) {
       marginBottom: "var(--marginBottom)",
       marginLeft: "var(--marginLeft)"
     };
+
+    const tabletPaddingStyle = {
+      "& > .brz-bg-content": {
+        paddingTop: "var(--tabletPaddingTop)",
+        paddingRight: "var(--tabletPaddingRight)",
+        paddingBottom: "var(--tabletPaddingBottom)",
+        paddingLeft: "var(--tabletPaddingLeft)"
+      }
+    };
+    const tabletMarginStyle = {
+      marginTop: "var(--tabletMarginTop)",
+      marginRight: "var(--tabletMarginRight)",
+      marginBottom: "var(--tabletMarginBottom)",
+      marginLeft: "var(--tabletMarginLeft)"
+    };
+
     const mobilePaddingStyle = {
       "& > .brz-bg-content": {
         paddingTop: "var(--mobilePaddingTop)",
@@ -90,6 +112,21 @@ export function bgStyleClassName(v, props) {
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: "var(--backgroundColor)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        ...(showOnTablet === "on" ? null : blurred),
+        ...(hasItems ? tabletPaddingStyle : null),
+        ...(hasItems ? tabletMarginStyle : null),
+        ...(hasItems ? { alignItems: "var(--verticalAlign)" } : null),
+
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage: "var(--tabletBackgroundImage)",
+          backgroundPositionX: "var(--tabletBackgroundPositionX)",
+          backgroundPositionY: "var(--tabletBackgroundPositionY)"
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: "var(--tabletBackgroundColor)"
         }
       },
       ".brz-ed--mobile &": {
@@ -159,6 +196,32 @@ export function bgStyleClassName(v, props) {
       marginLeft,
       marginLeftSuffix,
       zIndex,
+
+      // Tablet
+      tabletMarginType,
+      tabletMargin,
+      tabletMarginSuffix,
+      tabletMarginTop,
+      tabletMarginTopSuffix,
+      tabletMarginRight,
+      tabletMarginRightSuffix,
+      tabletMarginBottom,
+      tabletMarginBottomSuffix,
+      tabletMarginLeft,
+      tabletMarginLeftSuffix,
+      tabletPaddingType,
+      tabletPadding,
+      tabletPaddingSuffix,
+      tabletPaddingTop,
+      tabletPaddingTopSuffix,
+      tabletPaddingRight,
+      tabletPaddingRightSuffix,
+      tabletPaddingBottom,
+      tabletPaddingBottomSuffix,
+      tabletPaddingLeft,
+      tabletPaddingLeftSuffix,
+
+      // Mobile
       mobileMarginType,
       mobileMargin,
       mobileMarginSuffix,
@@ -218,6 +281,48 @@ export function bgStyleClassName(v, props) {
           ? margin + marginSuffix
           : marginLeft + marginLeftSuffix
     };
+
+    // Tablet
+    const tabletPaddingStyle = {
+      "& > .brz-bg-content": {
+        paddingTop:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingTop + tabletPaddingTopSuffix,
+        paddingRight:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingRight + tabletPaddingRightSuffix,
+        paddingBottom:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingBottom + tabletPaddingBottomSuffix,
+        paddingLeft:
+          tabletPaddingType === "grouped"
+            ? tabletPadding + tabletPaddingSuffix
+            : tabletPaddingLeft + tabletPaddingLeftSuffix
+      }
+    };
+    const tabletMarginStyle = {
+      marginTop:
+        tabletMarginType === "grouped"
+          ? tabletMargin + tabletMarginSuffix
+          : tabletMarginTop + tabletMarginTopSuffix,
+      marginBottom:
+        tabletMarginType === "grouped"
+          ? tabletMargin + tabletMarginSuffix
+          : tabletMarginBottom + tabletMarginBottomSuffix,
+      marginLeft:
+        tabletMarginType === "grouped"
+          ? tabletMargin + tabletMarginSuffix
+          : tabletMarginLeft + tabletMarginLeftSuffix,
+      marginRight:
+        tabletMarginType === "grouped"
+          ? tabletMargin + tabletMarginSuffix
+          : tabletMarginRight + tabletMarginRightSuffix
+    };
+
+    // Mobile
     const mobilePaddingStyle = {
       "& > .brz-bg-content": {
         paddingTop:
@@ -337,11 +442,29 @@ export function bgStyleClassName(v, props) {
       "> .brz-bg-media > .brz-bg-color": {
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
       },
+      "@media (max-width: 991px)": {
+        ...(hasItems ? tabletMarginStyle : null),
+        ...(hasItems ? tabletPaddingStyle : null),
 
-      "@media (min-width: 768px)": {
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage: tabletSyncOnChange(v, "bgImageSrc")
+            ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
+            : "none",
+          backgroundPosition: `
+            ${tabletSyncOnChange(v, "bgPositionX")}%
+            ${tabletSyncOnChange(v, "bgPositionY")}%
+          `
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: hexToRgba(
+            tabletSyncOnChange(v, "bgColorHex"),
+            tabletSyncOnChange(v, "bgColorOpacity")
+          )
+        }
+      },
+      "@media (max-width: 991px) and (min-width: 768px)": {
         ".brz &": {
-          display: showOnDesktop === "off" && "none",
-          alignItems: hasItems && `${aligns[verticalAlign]}`
+          display: showOnTablet === "off" && "none"
         }
       },
       "@media (max-width: 767px)": {
@@ -355,10 +478,26 @@ export function bgStyleClassName(v, props) {
           backgroundImage: mobileSyncOnChange(v, "bgImageSrc")
             ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
             : "none",
-          backgroundPosition: `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(v, "bgPositionY")}%`
+          backgroundPosition: `
+            ${mobileSyncOnChange(v, "bgPositionX")}%
+            ${mobileSyncOnChange(v, "bgPositionY")}%
+          `
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
+          backgroundColor: hexToRgba(
+            mobileSyncOnChange(v, "bgColorHex"),
+            mobileSyncOnChange(v, "bgColorOpacity")
+          )
+        }
+      },
+      "@media (min-width: 768px)": {
+        ".brz &": {
+          alignItems: hasItems && `${aligns[verticalAlign]}`
+        }
+      },
+      "@media (min-width: 992px)": {
+        ".brz &": {
+          display: showOnDesktop === "off" && "none"
         }
       }
     };
@@ -423,6 +562,32 @@ export function bgStyleCSSVars(v, props) {
     marginLeft,
     marginLeftSuffix,
     zIndex,
+
+    // Tablet
+    tabletMarginType,
+    tabletMargin,
+    tabletMarginSuffix,
+    tabletMarginTop,
+    tabletMarginTopSuffix,
+    tabletMarginRight,
+    tabletMarginRightSuffix,
+    tabletMarginBottom,
+    tabletMarginBottomSuffix,
+    tabletMarginLeft,
+    tabletMarginLeftSuffix,
+    tabletPaddingType,
+    tabletPadding,
+    tabletPaddingSuffix,
+    tabletPaddingTop,
+    tabletPaddingTopSuffix,
+    tabletPaddingRight,
+    tabletPaddingRightSuffix,
+    tabletPaddingBottom,
+    tabletPaddingBottomSuffix,
+    tabletPaddingLeft,
+    tabletPaddingLeftSuffix,
+
+    // Mobile
     mobileMarginType,
     mobileMargin,
     mobileMarginSuffix,
@@ -531,6 +696,51 @@ export function bgStyleCSSVars(v, props) {
         : paddingLeft + paddingLeftSuffix,
     "--zIndex": zIndex === 0 ? "auto" : zIndex,
     "--boxShadow": boxShadowStyle,
+
+    // Tablet
+    "--tabletBackgroundImage": tabletSyncOnChange(v, "bgImageSrc")
+      ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
+      : "none",
+    "--tabletBackgroundPositionX": `${tabletSyncOnChange(v, "bgPositionX")}%`,
+    "--tabletBackgroundPositionY": `${tabletSyncOnChange(v, "bgPositionY")}%`,
+    "--tabletBackgroundColor": hexToRgba(
+      tabletSyncOnChange(v, "bgColorHex"),
+      tabletSyncOnChange(v, "bgColorOpacity")
+    ),
+    "--tabletMarginTop":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginTop + tabletMarginTopSuffix,
+    "--tabletMarginBottom":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginBottom + tabletMarginBottomSuffix,
+    "--tabletMarginLeft":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginLeft + tabletMarginLeftSuffix,
+    "--tabletMarginRight":
+      tabletMarginType === "grouped"
+        ? tabletMargin + tabletMarginSuffix
+        : tabletMarginRight + tabletMarginRightSuffix,
+    "--tabletPaddingTop":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingTop + tabletPaddingTopSuffix,
+    "--tabletPaddingRight":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingRight + tabletPaddingRightSuffix,
+    "--tabletPaddingBottom":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingBottom + tabletPaddingBottomSuffix,
+    "--tabletPaddingLeft":
+      tabletPaddingType === "grouped"
+        ? tabletPadding + tabletPaddingSuffix
+        : tabletPaddingLeft + tabletPaddingLeftSuffix,
+
+    // Mobile
     "--mobileBackgroundImage": mobileSyncOnChange(v, "bgImageSrc")
       ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
       : "none",
@@ -584,6 +794,11 @@ export function styleClassName(v, props) {
   if (IS_EDITOR) {
     glamorObj = {
       ".brz-ed--desktop &": {
+        willChange: "flex, max-width",
+        flex: "1 1 var(--width)",
+        maxWidth: "var(--width)"
+      },
+      ".brz-ed--tablet &": {
         willChange: "flex, max-width",
         flex: "1 1 var(--width)",
         maxWidth: "var(--width)"

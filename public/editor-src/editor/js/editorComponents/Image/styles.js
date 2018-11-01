@@ -11,16 +11,18 @@ export function imageStylesClassName(v, sizes, props) {
     linkLightBox
   } = v;
   const {
-    meta: { desktopW, mobileW, inGallery }
+    meta: { desktopW, tabletW, mobileW, inGallery }
   } = props;
   let glamorObj = {};
 
   if (IS_PREVIEW) {
     const {
       desktop: { width: dW, height: dH },
+      tablet: { width: tW, height: tH },
       mobile: { width: mW, height: mH }
     } = sizes;
     const maxBorderRadius = Math.round(Math.min(dW, dH) / 2);
+    const maxTabletBorderRadius = Math.round(Math.min(tW, tH) / 2);
     const maxMobileBorderRadius = Math.round(Math.min(mW, mH) / 2);
     const {
       imageBrightness,
@@ -52,7 +54,16 @@ export function imageStylesClassName(v, sizes, props) {
         filter: `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`,
         boxShadow: boxShadowStyle
       },
-      "@media (max-width: 768px)": {
+
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          maxWidth: `${Math.round(Math.abs((tW * 100) / tabletW))}%`,
+          height: !imageSrc && !imagePopulation ? `${tH}px` : "auto",
+          borderRadius: `${Math.min(borderRadius, maxTabletBorderRadius)}px`
+        }
+      },
+
+      "@media (max-width: 767px)": {
         ".brz &": {
           maxWidth: `${Math.round(Math.abs((mW * 100) / mobileW))}%`,
           height: !imageSrc && !imagePopulation ? `${mH}px` : "auto",
@@ -88,11 +99,16 @@ export function imageStylesCSSVars(v) {
     "--imageFilter": `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`
   };
 }
+
 export function contentStyleClassName(v) {
   const glamorObj = {
     ".brz-ed--desktop &": {
       maxWidth: "var(--maxWidth)",
       height: "var(--height)"
+    },
+    ".brz-ed--tablet &": {
+      maxWidth: "var(--tabletMaxWidth)",
+      height: "var(--tabletHeight)"
     },
     ".brz-ed--mobile &": {
       maxWidth: "var(--mobileMaxWidth)",
@@ -108,21 +124,30 @@ export function contentStyleCSSVars(v, sizes) {
   const { borderRadius } = v;
   const {
     desktop: { width: dW, height: dH },
+    tablet: { width: tW, height: tH },
     mobile: { width: mW, height: mH }
   } = sizes;
   const maxBorderRadius = Math.round(Math.min(dW, dH) / 2);
+  const maxTabletBorderRadius = Math.round(Math.min(tW, tH) / 2);
   const maxMobileBorderRadius = Math.round(Math.min(mW, mH) / 2);
 
   return {
-    "--borderRadius": `${Math.min(borderRadius, maxBorderRadius)}px`,
-    "--mobileBorderRadius": `${Math.min(
-      borderRadius,
-      maxMobileBorderRadius
-    )}px`,
     "--maxWidth": `${dW}px`,
     "--height": `${dH}px`,
+    "--borderRadius": `${Math.min(borderRadius, maxBorderRadius)}px`,
+
+    // Tablet
+    "--tabletMaxWidth": `${tW}px`,
+    "--tabletHeight": `${tH}px`,
+    "--tabletBorderRadius": `${Math.min(
+      borderRadius,
+      maxTabletBorderRadius
+    )}px`,
+
+    // Mobile
     "--mobileMaxWidth": `${mW}px`,
-    "--mobileHeight": `${mH}px`
+    "--mobileHeight": `${mH}px`,
+    "--mobileBorderRadius": `${Math.min(borderRadius, maxMobileBorderRadius)}px`
   };
 }
 
@@ -136,6 +161,11 @@ export function wrapperStyleClassName(v) {
       width: "var(--width)",
       height: "var(--height)",
       borderRadius: "var(--borderRadius)"
+    },
+    ".brz-ed--tablet &": {
+      width: "var(--tabletWidth)",
+      height: "var(--tabletHeight)",
+      borderRadius: "var(--tabletBorderRadius)"
     },
     ".brz-ed--mobile &": {
       width: "var(--mobileWidth)",
@@ -151,6 +181,7 @@ export function wrapperStyleClassName(v) {
 export function wrapperStyleCSSVars(v, sizes) {
   const {
     desktop: { width: dW, height: dH },
+    tablet: { width: tW, height: tH },
     mobile: { width: mW, height: mH }
   } = sizes;
 
@@ -176,6 +207,12 @@ export function wrapperStyleCSSVars(v, sizes) {
     "--width": `${dW}px`,
     "--height": `${dH}px`,
     "--boxShadow": boxShadowStyle,
+
+    // Tablet
+    "--tabletWidth": `${tW}px`,
+    "--tabletHeight": `${tH}px`,
+
+    // Mobile
     "--mobileWidth": `${mW}px`,
     "--mobileHeight": `${mH}px`
   };
@@ -192,6 +229,12 @@ export function imgStyleClassName(v) {
       marginLeft: "var(--marginLeft)",
       marginTop: "var(--marginTop)"
     },
+    ".brz-ed--tablet &": {
+      width: "var(--tabletWidth)",
+      height: "var(--tabletHeight)",
+      marginLeft: "var(--tabletMarginLeft)",
+      marginTop: "var(--tabletMarginTop)"
+    },
     ".brz-ed--mobile &": {
       width: "var(--mobileWidth)",
       height: "var(--mobileHeight)",
@@ -207,6 +250,7 @@ export function imgStyleClassName(v) {
 export function imgStyleCSSVars(v, sizes) {
   const {
     desktop: { width: dW, height: dH, marginLeft: dML, marginTop: dMT },
+    tablet: { width: tW, height: tH, marginLeft: tML, marginTop: tMT },
     mobile: { width: mW, height: mH, marginLeft: mML, marginTop: mMT }
   } = sizes;
 
@@ -215,6 +259,14 @@ export function imgStyleCSSVars(v, sizes) {
     "--height": `${dH}px`,
     "--marginLeft": `${dML}px`,
     "--marginTop": `${dMT}px`,
+
+    // Tablet
+    "--tabletWidth": `${tW}px`,
+    "--tabletHeight": `${tH}px`,
+    "--tabletMarginLeft": `${tML}px`,
+    "--tabletMarginTop": `${tMT}px`,
+
+    // Mobile
     "--mobileWidth": `${mW}px`,
     "--mobileHeight": `${mH}px`,
     "--mobileMarginLeft": `${mML}px`,

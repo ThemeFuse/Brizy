@@ -8,7 +8,7 @@ export function containerStyleClassName(v) {
   const { className } = v;
   let glamorObj;
 
-  if(IS_EDITOR) {
+  if (IS_EDITOR) {
     glamorObj = {
       ".brz &": {
         backgroundColor: "var(--bg2Color)"
@@ -17,11 +17,15 @@ export function containerStyleClassName(v) {
         width: "var(--width)",
         borderRadius: "var(--borderRadius)"
       },
+      ".brz-ed--tablet &": {
+        width: "var(--tabletWidth)",
+        borderRadius: "var(--tabletBorderRadius)"
+      },
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)",
         borderRadius: "var(--mobileBorderRadius)"
       }
-    }
+    };
   } else {
     const {
       // General
@@ -39,13 +43,19 @@ export function containerStyleClassName(v) {
         borderRadius: `${borderRadius}px`,
         backgroundColor: hexToRgba(bg2ColorHex, bg2ColorOpacity)
       },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          width: `${tabletSyncOnChange(v, "width")}%`,
+          borderRadius: `${tabletSyncOnChange(v, "borderRadius")}px`
+        }
+      },
       "@media (max-width: 767px)": {
         ".brz &": {
           width: `${mobileSyncOnChange(v, "width")}%`,
           borderRadius: `${mobileSyncOnChange(v, "borderRadius")}px`
         }
       }
-    }
+    };
   }
 
   const glamorClassName = String(css(glamorObj));
@@ -68,17 +78,23 @@ export function containerStyleCSSVars(v) {
 
   return {
     "--width": `${width}%`,
-    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
     "--borderRadius": `${borderRadius}px`,
-    "--mobileBorderRadius": `${mobileSyncOnChange(v, "borderRadius")}px`,
     "--bg2Color": hexToRgba(bg2ColorHex, bg2ColorOpacity),
+
+    // Tablet
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+    "--tabletBorderRadius": `${tabletSyncOnChange(v, "borderRadius")}px`,
+
+    // Mobile
+    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
+    "--mobileBorderRadius": `${mobileSyncOnChange(v, "borderRadius")}px`
   };
 }
 
 export function styleClassName(v) {
   let glamorObj;
 
-  if(IS_EDITOR) {
+  if (IS_EDITOR) {
     glamorObj = {
       ".brz &": {
         maxWidth: "var(--percentage)",
@@ -98,6 +114,13 @@ export function styleClassName(v) {
         letterSpacing: "var(--letterSpacing)",
         borderRadius: "var(--borderRadius)"
       },
+      ".brz-ed--tablet &": {
+        fontSize: "var(--tabletFontSize)",
+        lineHeight: "var(--tabletLineHeight)",
+        fontWeight: "var(--tabletFontWeight)",
+        letterSpacing: "var(--tabletLetterSpacing)",
+        borderRadius: "var(--tabletBorderRadius)"
+      },
       ".brz-ed--mobile &": {
         fontSize: "var(--mobileFontSize)",
         lineHeight: "var(--mobileLineHeight)",
@@ -105,7 +128,7 @@ export function styleClassName(v) {
         letterSpacing: "var(--mobileLetterSpacing)",
         borderRadius: "var(--mobileBorderRadius)"
       }
-    }
+    };
   } else {
     const {
       percentage,
@@ -130,6 +153,12 @@ export function styleClassName(v) {
       paddingBottom,
       paddingLeft,
 
+      // Tablet
+      tabletFontSize,
+      tabletLineHeight,
+      tabletFontWeight,
+      tabletLetterSpacing,
+
       // Mobile
       mobileFontSize,
       mobileLineHeight,
@@ -144,26 +173,35 @@ export function styleClassName(v) {
         borderRadius: `${borderRadius}px`,
 
         // Typography
-        fontSize: `${fontSize}px`,
         fontFamily: getFontById(fontFamily).family,
-        lineHeight: lineHeight,
-        fontWeight: fontWeight,
-        letterSpacing: `${letterSpacing}px`,
+        fontSize,
+        lineHeight,
+        fontWeight,
+        letterSpacing,
 
         // Color
         color: hexToRgba(colorHex, colorOpacity),
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
       },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          fontSize: `${tabletFontSize}px`,
+          lineHeight: tabletLineHeight,
+          fontWeight: tabletFontWeight,
+          letterSpacing: `${tabletLetterSpacing}px`,
+          borderRadius: `${tabletSyncOnChange(v, "borderRadius")}px`
+        }
+      },
       "@media (max-width: 767px)": {
         ".brz &": {
           fontSize: `${mobileFontSize}px`,
-          lineHeight: `${mobileLineHeight}`,
+          lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
           letterSpacing: `${mobileLetterSpacing}px`,
           borderRadius: `${mobileSyncOnChange(v, "borderRadius")}px`
         }
       }
-    }
+    };
   }
 
   const glamorClassName = String(css(glamorObj));
@@ -203,6 +241,12 @@ export function styleCSSVars(v) {
     paddingBottom,
     paddingLeft,
 
+    // Tablet
+    tabletFontSize,
+    tabletLineHeight,
+    tabletFontWeight,
+    tabletLetterSpacing,
+
     // Mobile
     mobileFontSize,
     mobileLineHeight,
@@ -226,6 +270,13 @@ export function styleCSSVars(v) {
     // Color
     "--color": hexToRgba(colorHex, colorOpacity),
     "--bgColor": hexToRgba(bgColorHex, bgColorOpacity),
+
+    // Tablet
+    "--tabletFontSize": `${tabletFontSize}px`,
+    "--tabletLineHeight": `${tabletLineHeight}`,
+    "--tabletFontWeight": tabletFontWeight,
+    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+    "--tabletBorderRadius": `${tabletSyncOnChange(v, "borderRadius")}px`,
 
     // Mobile
     "--mobileFontSize": `${mobileFontSize}px`,

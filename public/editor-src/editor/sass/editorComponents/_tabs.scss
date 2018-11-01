@@ -69,7 +69,7 @@
 }
 
 /// Responsive
-@include media-breakpoint-down(ms) {
+@include media-breakpoint-down(sm) {
   .brz-tabs {
     // Mobile
     &__nav--mobile {

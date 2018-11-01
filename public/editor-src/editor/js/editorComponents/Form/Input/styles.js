@@ -13,7 +13,15 @@ export function fieldStyleClassName(v) {
         flexBasis: "var(--width)",
 
         "& .brz-textarea": {
-          height: "var(--height)",
+          height: "var(--height)"
+        }
+      },
+      ".brz-ed--tablet &": {
+        maxWidth: "var(--tabletWidth)",
+        flexBasis: "var(--tabletWidth)",
+
+        "& .brz-textarea": {
+          height: "var(--tabletHeight)"
         }
       },
       ".brz-ed--mobile &": {
@@ -21,7 +29,7 @@ export function fieldStyleClassName(v) {
         flexBasis: "var(--mobileWidth)",
 
         "& .brz-textarea": {
-          height: "var(--mobileHeight)",
+          height: "var(--mobileHeight)"
         }
       }
     };
@@ -38,7 +46,20 @@ export function fieldStyleClassName(v) {
         flexBasis: `${width}%`,
 
         "& .brz-textarea": {
-          height: type === "Paragraph" ? `${height}px` : null,
+          height: type === "Paragraph" ? `${height}px` : null
+        }
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          maxWidth: `${tabletSyncOnChange(v, "width")}%`,
+          flexBasis: `${tabletSyncOnChange(v, "width")}%`,
+
+          "& .brz-textarea": {
+            height:
+              type === "Paragraph"
+                ? `${tabletSyncOnChange(v, "height")}px`
+                : null
+          }
         }
       },
       "@media (max-width: 767px)": {
@@ -47,9 +68,9 @@ export function fieldStyleClassName(v) {
           flexBasis: `${mobileSyncOnChange(v, "width")}%`,
 
           "& .brz-textarea": {
-            height: type === "Paragraph" ? `${mobileSyncOnChange(v, "height")}px` : null,
+            height: type === "Paragraph" ? `${mobileSyncOnChange(v, "height")}px` : null
           }
-        },
+        }
       }
     };
   }
@@ -71,7 +92,15 @@ export function fieldStyleCSSVars(v) {
   return {
     "--width": `${width}%`,
     "--height": type === "Paragraph" ? `${height}px` : "auto",
+
+    // Tablet
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
+    "--tabletHeight":
+      type === "Paragraph" ? `${tabletSyncOnChange(v, "height")}px` : "auto",
+
+    // Mobile
     "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
-    "--mobileHeight": type === "Paragraph" ? `${mobileSyncOnChange(v, "height")}px` : "auto"
+    "--mobileHeight":
+      type === "Paragraph" ? `${mobileSyncOnChange(v, "height")}px` : "auto"
   };
 }

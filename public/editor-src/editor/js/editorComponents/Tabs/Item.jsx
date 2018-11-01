@@ -20,6 +20,8 @@ class Tab extends EditorComponent {
       customClassName,
       bgImageSrc,
       bgColorOpacity,
+      tabletBgImageSrc,
+      tabletBgColorOpacity,
       mobileBgImageSrc,
       mobileBgColorOpacity
     } = v;
@@ -34,6 +36,8 @@ class Tab extends EditorComponent {
       className: customClassName,
       imageSrc: bgImageSrc,
       colorOpacity: bgColorOpacity,
+      tabletImageSrc: tabletBgImageSrc,
+      tabletColorOpacity: tabletBgColorOpacity,
       mobileImageSrc: mobileBgImageSrc,
       mobileColorOpacity: mobileBgColorOpacity
     };

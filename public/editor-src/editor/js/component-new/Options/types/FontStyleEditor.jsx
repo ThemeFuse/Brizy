@@ -19,6 +19,10 @@ class FontStyle extends React.Component {
     fontWeight: 300,
     lineHeight: 1,
     letterSpacing: 1,
+    tabletFontSize: 12,
+    tabletFontWeight: 300,
+    tabletLineHeight: 1,
+    tabletLetterSpacing: 1,
     mobileFontSize: 12,
     mobileFontWeight: 300,
     mobileLineHeight: 1,
@@ -60,6 +64,10 @@ class FontStyle extends React.Component {
       fontWeight,
       lineHeight,
       letterSpacing,
+      tabletFontSize,
+      tabletFontWeight,
+      tabletLineHeight,
+      tabletLetterSpacing,
       mobileFontSize,
       mobileFontWeight,
       mobileLineHeight,
@@ -73,7 +81,8 @@ class FontStyle extends React.Component {
     });
     const sampleStyle = {
       fontFamily: getFontById(fontFamily).family,
-      fontWeight: device === "desktop" ? fontWeight : mobileFontWeight
+      fontWeight: device === "desktop" ? fontWeight :
+                  device === "tablet" ? tabletFontWeight : mobileFontWeight
     };
     const getToolbarItems = () => [
       {
@@ -169,6 +178,82 @@ class FontStyle extends React.Component {
                                     value: letterSpacing,
                                     onChange: letterSpacing =>
                                       onChange("letterSpacing", letterSpacing)
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        id: "tablet",
+                        tabIcon: "nc-tablet",
+                        options: [
+                          {
+                            type: "grid",
+                            columns: [
+                              {
+                                width: 50,
+                                options: [
+                                  {
+                                    id: "tabletFontSize",
+                                    label: "Size",
+                                    type: "stepper",
+                                    display: "block",
+                                    min: 1,
+                                    max: 100,
+                                    step: 1,
+                                    value: tabletFontSize,
+                                    onChange: tabletFontSize =>
+                                      onChange("tabletFontSize", tabletFontSize)
+                                  },
+                                  {
+                                    id: "tabletLineHeight",
+                                    label: "Line Hgt.",
+                                    type: "stepper",
+                                    display: "block",
+                                    min: 1,
+                                    max: 10,
+                                    step: 0.1,
+                                    value: tabletLineHeight,
+                                    onChange: tabletLineHeight =>
+                                      onChange(
+                                        "tabletLineHeight",
+                                        tabletLineHeight
+                                      )
+                                  }
+                                ]
+                              },
+                              {
+                                width: 50,
+                                options: [
+                                  {
+                                    id: "tabletFontWeight",
+                                    label: "Weight",
+                                    type: "select",
+                                    display: "block",
+                                    choices: getWeightChoices(fontFamily),
+                                    value: tabletFontWeight,
+                                    onChange: tabletFontWeight =>
+                                      onChange(
+                                        "tabletFontWeight",
+                                        tabletFontWeight
+                                      )
+                                  },
+                                  {
+                                    id: "tabletLetterSpacing",
+                                    label: "Letter Spc.",
+                                    type: "stepper",
+                                    display: "block",
+                                    min: -20,
+                                    max: 20,
+                                    step: 0.5,
+                                    value: tabletLetterSpacing,
+                                    onChange: tabletLetterSpacing =>
+                                      onChange(
+                                        "tabletLetterSpacing",
+                                        tabletLetterSpacing
+                                      )
                                   }
                                 ]
                               }

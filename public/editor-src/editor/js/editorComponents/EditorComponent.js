@@ -226,13 +226,17 @@ export class EditorComponent extends React.Component {
 
       if (process.env.NODE_ENV === "development") {
         if (!config[getItemsFnName]) {
-          throw new Error(`${getItemsFnName} not found in toolbarConfig`);
+          console.warn(
+            `${
+              this.constructor.componentId
+            }. ${getItemsFnName} not found in toolbarConfig`
+          );
         }
       }
 
       const getItemsFn = config[getItemsFnName];
       const v = this.getValue();
-      let items = this.bindToolbarItems(getItemsFn(v, this));
+      let items = this.bindToolbarItems(getItemsFn ? getItemsFn(v, this) : []);
 
       // allow extend from parent
       if (this.props.toolbarExtend && allowExtend) {
@@ -259,7 +263,7 @@ export class EditorComponent extends React.Component {
         `toolbarItemsExtend_${this.constructor.componentId}`,
         null
       );
-      if (filterToolbarExtend) {
+      if (filterToolbarExtend && filterToolbarExtend[getItemsFnName]) {
         const filterItems = this.bindToolbarItems(
           filterToolbarExtend[getItemsFnName](v, this)
         );

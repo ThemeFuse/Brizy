@@ -6,6 +6,7 @@ import ContainerBorder from "visual/component-new/ContainerBorder";
 import PaddingResizer from "visual/component-new/PaddingResizer";
 import {
   wInBoxedPage,
+  wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
@@ -20,6 +21,7 @@ import {
   containerStyleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class SectionHeaderStickyItem extends EditorComponent {
   static get componentId() {
@@ -73,10 +75,12 @@ class SectionHeaderStickyItem extends EditorComponent {
             (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
           ) / 10;
 
+    const tabletW = wInTabletPage - borderWidthW;
     const mobileW = wInMobilePage - borderWidthW;
 
     return {
       ...meta,
+      tabletW,
       mobileW,
       desktopW
     };
@@ -96,13 +100,7 @@ class SectionHeaderStickyItem extends EditorComponent {
   }
 
   renderItems(v) {
-    const {
-      bgImageSrc,
-      bgColorOpacity,
-      bgPopulation,
-      mobileBgImageSrc,
-      mobileBgColorOpacity
-    } = v;
+    const { bgImageSrc, bgColorOpacity, bgPopulation } = v;
 
     const meta = this.getMeta(v);
 
@@ -117,8 +115,10 @@ class SectionHeaderStickyItem extends EditorComponent {
       style: styles,
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
+      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
+      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
+      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
+      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
 
     const itemsProps = this.makeSubcomponentProps({
@@ -142,6 +142,7 @@ class SectionHeaderStickyItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
@@ -166,6 +167,7 @@ class SectionHeaderStickyItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

@@ -23,18 +23,31 @@
   "borderColorPalette": "",
   "borderWidth": 2,
 
-  "mobileFontStyle": "",
-  "mobileFontSize": 14,
-  "mobileLineHeight": 1.5,
-  "mobileFontWeight": 400,
-  "mobileLetterSpacing": 0,
-
   "paddingType": "ungrouped",
   "padding": 0,
   "paddingTop": 0,
   "paddingRight": 10,
   "paddingBottom": 0,
   "paddingLeft": 10,
+
+  "tabletFontStyle": "",
+  "tabletFontSize": 14,
+  "tabletLineHeight": 1.5,
+  "tabletFontWeight": 400,
+  "tabletLetterSpacing": 0,
+
+  "tabletPaddingType": "ungrouped",
+  "tabletPadding": 0,
+  "tabletPaddingTop": 0,
+  "tabletPaddingRight": 10,
+  "tabletPaddingBottom": 0,
+  "tabletPaddingLeft": 10,
+
+  "mobileFontStyle": "",
+  "mobileFontSize": 14,
+  "mobileLineHeight": 1.5,
+  "mobileFontWeight": 400,
+  "mobileLetterSpacing": 0,
 
   "mobilePaddingType": "ungrouped",
   "mobilePadding": 0,

@@ -22,6 +22,14 @@
   "lineHeight": 1.3,
   "letterSpacing": 0,
 
+  "tabletWidth": null,
+
+  "tabletFontStyle": "",
+  "tabletFontSize": 30,
+  "tabletFontWeight": 700,
+  "tabletLineHeight": 1,
+  "tabletLetterSpacing": 1,
+
   "mobileWidth": null,
 
   "mobileFontStyle": "",

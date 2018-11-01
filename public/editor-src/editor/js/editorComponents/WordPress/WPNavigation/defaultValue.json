@@ -16,6 +16,16 @@
   "colorOpacity": 1,
   "colorPalette": "",
 
+  "tabletWidth": null,
+  "tabletItemPadding": null,
+  "tabletToggleMenu": "off",
+
+  "tabletFontStyle": "",
+  "tabletFontSize": 14,
+  "tabletLineHeight": 1.3,
+  "tabletFontWeight": 600,
+  "tabletLetterSpacing": 0,
+
   "mobileWidth": null,
   "mobileItemPadding": null,
   "mobileToggleMenu": "off",

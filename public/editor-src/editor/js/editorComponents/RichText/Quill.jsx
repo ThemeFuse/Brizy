@@ -17,8 +17,8 @@ const DEFAULT = {
   fontStyle: null,
   height: 1.6,
   horizontalAlign: "left",
-  intermediateHeight: null,
-  intermediateSize: null,
+  intermediateMobileHeight: null,
+  intermediateMobileSize: null,
   italic: false,
   letterSpacing: null,
   linkType: "anchor",
@@ -26,7 +26,6 @@ const DEFAULT = {
   linkExternal: "",
   linkExternalBlank: "off",
   linkExternalRel: "off",
-  linkType: "anchor",
   linkPopulation: "",
   linkExternalType: "external",
   linkPopup: "",
@@ -155,11 +154,9 @@ export default class QuillComponent extends React.Component {
     const { index, length } = this.quill.getSelection(true);
     // it's small hack for triple click
     this.restoreSelection(index, length);
-    const [
-      {
-        parent: { domNode: $selectedDomNode }
-      }
-    ] = this.quill.getLeaf(index + length);
+    const [{ parent: { domNode: $selectedDomNode } }] = this.quill.getLeaf(
+      index + length
+    );
     const quillFormat = this.quill.getFormat();
     const formats = getFormats(
       jQuery($selectedDomNode),

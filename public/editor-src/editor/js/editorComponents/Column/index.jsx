@@ -13,9 +13,13 @@ import Toolbar from "visual/component-new/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import ContextMenu from "visual/component-new/ContextMenu";
 import contextMenuConfig from "./contextMenu";
-import { wInMobilePage, minWinColumn } from "visual/config/columns";
 import ColumnResizer from "./components/ColumnResizer";
 import { percentageToPixels } from "visual/utils/meta";
+import {
+  wInMobilePage,
+  wInTabletPage,
+  minWinColumn
+} from "visual/config/columns";
 import Items from "./Items";
 import {
   bgStyleClassName,
@@ -41,7 +45,9 @@ class Column extends EditorComponent {
   static defaultValue = defaultValue;
 
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    const { meta } = this.props;
+
+    return meta.posts || meta.inCarousel || this.optionalSCU(nextProps);
   }
 
   handleToolbarOpen = () => {
@@ -103,6 +109,24 @@ class Column extends EditorComponent {
       borderLeftWidth,
       borderRightWidth,
 
+      // Tablet Padding
+      tabletPadding,
+      tabletPaddingType,
+      tabletPaddingSuffix,
+      tabletPaddingLeft,
+      tabletPaddingLeftSuffix,
+      tabletPaddingRight,
+      tabletPaddingRightSuffix,
+
+      // Tablet margin
+      tabletMargin,
+      tabletMarginType,
+      tabletMarginSuffix,
+      tabletMarginLeft,
+      tabletMarginLeftSuffix,
+      tabletMarginRight,
+      tabletMarginRightSuffix,
+
       // Mobile Padding
       mobilePadding,
       mobilePaddingType,
@@ -126,6 +150,7 @@ class Column extends EditorComponent {
     if (meta.row && meta.row.isInner && meta.desktopW <= wInMobilePage) {
       wInMobileCol = meta.mobileW * (columnWidth / 100);
     }
+    const wInTabletCol = meta.tabletW * (columnWidth / 100);
     const wInDesktopCol = meta.desktopW * (columnWidth / 100);
 
     const marginW =
@@ -143,6 +168,39 @@ class Column extends EditorComponent {
         ? Number(borderWidth) * 2
         : Number(borderLeftWidth) + Number(borderRightWidth);
 
+    // Tablet
+    const tabletPaddingW =
+      tabletPaddingType === "grouped"
+        ? percentageToPixels(
+          tabletPadding * 2,
+          tabletPaddingSuffix,
+          wInTabletCol
+        )
+        : percentageToPixels(
+          tabletPaddingLeft,
+          tabletPaddingLeftSuffix,
+          wInTabletCol
+        ) +
+        percentageToPixels(
+          tabletPaddingRight,
+          tabletPaddingRightSuffix,
+          wInTabletCol
+        );
+    const tabletMarginW =
+      tabletMarginType === "grouped"
+        ? percentageToPixels(tabletMargin * 2, tabletMarginSuffix, wInTabletCol)
+        : percentageToPixels(
+          tabletMarginLeft,
+          tabletMarginLeftSuffix,
+          wInTabletCol
+        ) +
+        percentageToPixels(
+          tabletMarginRight,
+          tabletMarginRightSuffix,
+          wInTabletCol
+        );
+
+    // Mobile
     const mobilePaddingW =
       mobilePaddingType === "grouped"
         ? percentageToPixels(
@@ -175,9 +233,12 @@ class Column extends EditorComponent {
           );
 
     const externalSpacing = marginW + paddingW + borderWidthW;
+    const externalTabletSpacing = tabletMarginW + tabletPaddingW + borderWidthW;
     const externalMobileSpacing = mobileMarginW + mobilePaddingW + borderWidthW;
 
     let mobileW = Math.round((wInMobileCol - externalMobileSpacing) * 10) / 10;
+    const tabletW =
+      Math.round((wInTabletCol - externalTabletSpacing) * 10) / 10;
     const desktopW = Math.round((wInDesktopCol - externalSpacing) * 10) / 10;
 
     if (IS_PREVIEW && desktopW >= minWinColumn) {
@@ -189,6 +250,7 @@ class Column extends EditorComponent {
         width: columnWidth
       },
       mobileW,
+      tabletW,
       desktopW
     });
   }
@@ -263,6 +325,7 @@ class Column extends EditorComponent {
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
@@ -281,6 +344,8 @@ class Column extends EditorComponent {
       className: bgStyleClassName(v, this.props),
       imageSrc: bgImageSrc,
       colorOpacity: bgColorOpacity,
+      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
+      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
       mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
       mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
@@ -299,6 +364,7 @@ class Column extends EditorComponent {
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

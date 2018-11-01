@@ -30,6 +30,9 @@
     .slick-slide {
       outline: none;
     }
+    .slick-track {
+      flex-wrap: nowrap;
+    }
   }
   .brz-rich-text *,
   .brz-icon-svg {

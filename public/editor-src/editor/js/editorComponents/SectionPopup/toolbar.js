@@ -1,6 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 const imageDynamicContentChoices = getDynamicContentChoices("image");
 
@@ -73,41 +74,7 @@ export function getItemsForDesktop(v, component) {
               tempBgColorOpacity:
                 src !== "" && v.bgColorOpacity === 1
                   ? 0.9
-                  : v.tempBgColorOpacity,
-
-              // Mobile
-              mobileBgImageWidth:
-                v.bgImageWidth === v.mobileBgImageWidth
-                  ? width
-                  : v.mobileBgImageWidth,
-
-              mobileBgImageHeight:
-                v.bgImageHeight === v.mobileBgImageHeight
-                  ? height
-                  : v.mobileBgImageHeight,
-
-              mobileBgImageSrc:
-                v.bgImageSrc === v.mobileBgImageSrc ? src : v.mobileBgImageSrc,
-
-              mobileBgPositionX:
-                v.bgPositionX === v.mobileBgPositionX ? x : v.mobileBgPositionX,
-
-              mobileBgPositionY:
-                v.bgPositionX === v.mobileBgPositionX ? y : v.mobileBgPositionY,
-
-              mobileBgColorOpacity:
-                src !== "" &&
-                v.bgImageSrc === v.mobileBgImageSrc &&
-                v.mobileBgColorOpacity === 1
-                  ? 0.9
-                  : v.mobileBgColorOpacity,
-
-              tempMobileBgColorOpacity:
-                src !== "" &&
-                v.bgImageSrc === v.mobileBgImageSrc &&
-                v.mobileBgColorOpacity === 1
-                  ? 0.9
-                  : v.tempMobileBgColorOpacity
+                  : v.tempBgColorOpacity
             };
           }
         }
@@ -151,28 +118,7 @@ export function getItemsForDesktop(v, component) {
                       bgColorHex: hex,
                       bgColorOpacity: bgColorOpacity,
                       bgColorPalette:
-                        isChanged === "hex" ? "" : v.bgColorPalette,
-
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
-
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? bgColorOpacity
-                          : v.mobileBgColorOpacity,
-
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette,
-
-                      tempBgColorOpacity:
-                        bgColorOpacity > 0 && opacityDragEnd
-                          ? bgColorOpacity
-                          : v.tempBgColorOpacity
+                        isChanged === "hex" ? "" : v.bgColorPalette
                     };
                   }
                 },
@@ -187,22 +133,7 @@ export function getItemsForDesktop(v, component) {
                     bgColorOpacity:
                       v.bgColorOpacity === 0
                         ? v.tempBgColorOpacity
-                        : v.bgColorOpacity,
-
-                    mobileBgColorPalette:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? value
-                        : v.mobileBgColorPalette,
-
-                    mobileBgColorHex:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? ""
-                        : v.mobileBgColorHex,
-
-                    mobileBgColorOpacity:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? v.tempBgColorOpacity
-                        : v.mobileBgColorOpacity
+                        : v.bgColorOpacity
                   })
                 },
                 {
@@ -223,23 +154,7 @@ export function getItemsForDesktop(v, component) {
                       bgColorPalette:
                         isChanged === "hex" ? "" : v.bgColorPalette,
                       bgColorHex: hex,
-                      bgColorOpacity: bgColorOpacity,
-
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
-
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? bgColorOpacity
-                          : v.mobileBgColorOpacity,
-
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette
+                      bgColorOpacity: bgColorOpacity
                     };
                   }
                 }
@@ -335,8 +250,146 @@ export function getItemsForDesktop(v, component) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  const { hex: tabletBgColorHex } =
+    v.tabletBgColorHex !== null
+      ? getOptionColor(v, "tabletBgColor")
+      : getOptionColor(v, "bgColor");
+
+  return [
+    {
+      id: "tabletToolbarMedia",
+      type: "popover",
+      icon: "nc-background",
+      title: t("Background"),
+      position: 90,
+      options: [
+        {
+          id: "tabletImage",
+          label: t("Image"),
+          type: "imageSetter",
+          population: {
+            show: imageDynamicContentChoices.length > 0,
+            choices: imageDynamicContentChoices
+          },
+          value: {
+            width: tabletSyncOnChange(v, "bgImageWidth"),
+            height: tabletSyncOnChange(v, "bgImageHeight"),
+            src: tabletSyncOnChange(v, "bgImageSrc"),
+            x: tabletSyncOnChange(v, "bgPositionX"),
+            y: tabletSyncOnChange(v, "bgPositionY"),
+            population: v.bgPopulation
+          },
+          onChange: ({ width, height, src, x, y, population }) => {
+            if (population) {
+              return {
+                bgPopulation: population
+              };
+            }
+
+            return {
+              tabletBgImageWidth: width,
+              tabletBgImageHeight: height,
+              tabletBgImageSrc: src,
+              tabletBgPositionX: x,
+              tabletBgPositionY: y,
+              bgPopulation: "",
+
+              tabletBgColorOpacity:
+                src !== "" && tabletSyncOnChange(v, "bgColorOpacity") === 1
+                  ? 0.9
+                  : tabletSyncOnChange(v, "bgColorOpacity"),
+
+              tempTabletBgColorOpacity:
+                src !== "" && tabletSyncOnChange(v, "bgColorOpacity") === 1
+                  ? 0.9
+                  : v.tempTabletBgColorOpacity
+            };
+          }
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarColor",
+      type: "popover",
+      size: "auto",
+      title: t("Colors"),
+      position: 100,
+      icon: {
+        style: {
+          backgroundColor: hexToRgba(
+            tabletBgColorHex,
+            tabletSyncOnChange(v, "bgColorOpacity")
+          )
+        }
+      },
+      options: [
+        {
+          id: "tabletBgColor",
+          type: "colorPicker",
+          position: 10,
+          value: {
+            hex: tabletBgColorHex,
+            opacity: tabletSyncOnChange(v, "bgColorOpacity")
+          },
+          onChange: ({ hex, opacity, isChanged }) => {
+            const bgColorOpacity =
+              hex !== tabletBgColorHex &&
+              tabletSyncOnChange(v, "bgColorOpacity") === 0
+                ? v.tempBgColorOpacity
+                : opacity;
+
+            return {
+              tabletBgColorHex: hex,
+              tabletBgColorOpacity: bgColorOpacity,
+              tabletBgColorPalette:
+                isChanged === "hex"
+                  ? ""
+                  : tabletSyncOnChange(v, "bgColorPalette")
+            };
+          }
+        },
+        {
+          id: "tabletBgColorPalette",
+          type: "colorPalette",
+          position: 20,
+          value: tabletSyncOnChange(v, "bgColorPalette"),
+          onChange: value => ({
+            tabletBgColorPalette: value,
+            tabletBgColorHex: "",
+            tabletBgColorOpacity:
+              tabletSyncOnChange(v, "bgColorOpacity") === 0
+                ? v.tempBgColorOpacity
+                : tabletSyncOnChange(v, "bgColorOpacity")
+          })
+        },
+        {
+          id: "tabletBgColorFields",
+          type: "colorFields",
+          position: 30,
+          value: {
+            hex: tabletBgColorHex,
+            opacity: tabletSyncOnChange(v, "bgColorOpacity")
+          },
+          onChange: ({ hex, opacity, isChanged }) => ({
+            tabletBgColorPalette:
+              isChanged === "hex"
+                ? ""
+                : tabletSyncOnChange(v, "bgColorPalette"),
+            tabletBgColorHex: hex,
+            tabletBgColorOpacity: opacity
+          })
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
-  const { hex: mobileBgColorHex } = getOptionColor(v, "mobileBgColor");
+  const { hex: mobileBgColorHex } =
+    v.mobileBgColorHex !== null
+      ? getOptionColor(v, "mobileBgColor")
+      : getOptionColor(v, "bgColor");
 
   return [
     {
@@ -355,11 +408,11 @@ export function getItemsForMobile(v) {
             choices: imageDynamicContentChoices
           },
           value: {
-            width: v.mobileBgImageWidth,
-            height: v.mobileBgImageHeight,
-            src: v.mobileBgImageSrc,
-            x: v.mobileBgPositionX,
-            y: v.mobileBgPositionY,
+            width: mobileSyncOnChange(v, "bgImageWidth"),
+            height: mobileSyncOnChange(v, "bgImageHeight"),
+            src: mobileSyncOnChange(v, "bgImageSrc"),
+            x: mobileSyncOnChange(v, "bgPositionX"),
+            y: mobileSyncOnChange(v, "bgPositionY"),
             population: v.bgPopulation
           },
           onChange: ({ width, height, src, x, y, population }) => {
@@ -378,12 +431,12 @@ export function getItemsForMobile(v) {
               bgPopulation: "",
 
               mobileBgColorOpacity:
-                src !== "" && v.mobileBgColorOpacity === 1
+                src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
                   ? 0.9
-                  : v.mobileBgColorOpacity,
+                  : mobileSyncOnChange(v, "bgColorOpacity"),
 
               tempMobileBgColorOpacity:
-                src !== "" && v.mobileBgColorOpacity === 1
+                src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
                   ? 0.9
                   : v.tempMobileBgColorOpacity
             };
@@ -399,7 +452,10 @@ export function getItemsForMobile(v) {
       position: 100,
       icon: {
         style: {
-          backgroundColor: hexToRgba(mobileBgColorHex, v.mobileBgColorOpacity)
+          backgroundColor: hexToRgba(
+            mobileBgColorHex,
+            mobileSyncOnChange(v, "bgColorOpacity")
+          )
         }
       },
       options: [
@@ -409,11 +465,12 @@ export function getItemsForMobile(v) {
           position: 10,
           value: {
             hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
+            opacity: mobileSyncOnChange(v, "bgColorOpacity")
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
-              hex !== v.mobileBgColorHex && v.mobileBgColorOpacity === 0
+              hex !== mobileBgColorHex &&
+              mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
                 : opacity;
 
@@ -421,7 +478,9 @@ export function getItemsForMobile(v) {
               mobileBgColorHex: hex,
               mobileBgColorOpacity: bgColorOpacity,
               mobileBgColorPalette:
-                isChanged === "hex" ? "" : v.mobileBgColorPalette
+                isChanged === "hex"
+                  ? ""
+                  : mobileSyncOnChange(v, "bgColorPalette")
             };
           }
         },
@@ -429,14 +488,14 @@ export function getItemsForMobile(v) {
           id: "mobileBgColorPalette",
           type: "colorPalette",
           position: 20,
-          value: v.mobileBgColorPalette,
+          value: mobileSyncOnChange(v, "bgColorPalette"),
           onChange: value => ({
             mobileBgColorPalette: value,
             mobileBgColorHex: "",
             mobileBgColorOpacity:
-              v.mobileBgColorOpacity === 0
+              mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
-                : v.mobileBgColorOpacity
+                : mobileSyncOnChange(v, "bgColorOpacity")
           })
         },
         {
@@ -445,11 +504,13 @@ export function getItemsForMobile(v) {
           position: 30,
           value: {
             hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
+            opacity: mobileSyncOnChange(v, "bgColorOpacity")
           },
           onChange: ({ hex, opacity, isChanged }) => ({
             mobileBgColorPalette:
-              isChanged === "hex" ? "" : v.mobileBgColorPalette,
+              isChanged === "hex"
+                ? ""
+                : mobileSyncOnChange(v, "bgColorPalette"),
             mobileBgColorHex: hex,
             mobileBgColorOpacity: opacity
           })

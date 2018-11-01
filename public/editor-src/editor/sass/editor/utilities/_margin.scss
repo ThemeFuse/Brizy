@@ -8,6 +8,12 @@
   @include generate-stepwise-classes(0, 100, 1, brz-mb-lg, margin, bottom);
 }
 
+// Tablet
+&.brz-ed--tablet {
+  @include generate-stepwise-classes(0, 100, 1, brz-mt-sm, margin, top);
+  @include generate-stepwise-classes(0, 100, 1, brz-mb-sm, margin, bottom);
+}
+
 // Mobile
 &.brz-ed--mobile {
   @include generate-stepwise-classes(0, 100, 1, brz-mt-xs, margin, top);

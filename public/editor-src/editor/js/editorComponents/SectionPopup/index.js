@@ -14,6 +14,7 @@ import { uuid } from "visual/utils/uuid";
 import { stripIds } from "visual/utils/models";
 import {
   wInBoxedPage,
+  wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
@@ -31,6 +32,7 @@ import {
   sectionStyleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export let SectionPopupInstances = new Map();
 
@@ -102,10 +104,12 @@ class SectionPopup extends EditorComponent {
             (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
           ) / 10;
 
+    const tabletW = wInTabletPage - borderWidthW;
     const mobileW = wInMobilePage - borderWidthW;
 
     return {
       ...meta,
+      tabletW,
       mobileW,
       desktopW,
       sectionPopup: true
@@ -130,19 +134,15 @@ class SectionPopup extends EditorComponent {
   }
 
   renderItems(v) {
-    const {
-      bgImageSrc,
-      bgColorOpacity,
-      bgPopulation,
-      mobileBgImageSrc,
-      mobileBgColorOpacity
-    } = v;
+    const { bgImageSrc, bgColorOpacity, bgPopulation } = v;
     let bgProps = {
       className: bgStyleClassName(v),
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
+      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
+      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
+      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
+      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
     };
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -173,6 +173,7 @@ class SectionPopup extends EditorComponent {
       _v.colorPalette && `${_v.colorPalette}__color`,
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
@@ -217,6 +218,7 @@ class SectionPopup extends EditorComponent {
       _v.colorPalette && `${_v.colorPalette}__color`,
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 

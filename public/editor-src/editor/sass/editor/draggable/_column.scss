@@ -68,7 +68,8 @@ $resize-width: 20px;
 }
 
 // Hide Resize when device mode is Mobile
-&.brz-ed--mobile {
+&.brz-ed--mobile,
+&.brz-ed--tablet {
   .brz-ed-border__column > .brz-ed-draggable {
     display: none;
   }

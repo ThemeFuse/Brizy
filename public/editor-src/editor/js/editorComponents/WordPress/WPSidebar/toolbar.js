@@ -9,6 +9,7 @@ export default sidebars => {
 
   return {
     getItemsForDesktop: getItemsForDesktop(sidebarsList),
+    getItemsForTablet,
     getItemsForMobile
   };
 };
@@ -59,11 +60,43 @@ const getItemsForDesktop = sidebars => v => [
         value: {
           value: v.width
         },
-        onChange: ({ value: width }) => {
-          return {
-            width
-          };
-        }
+        onChange: ({ value: width }) => ({ width })
+      }
+    ]
+  }
+];
+
+const getItemsForTablet = v => [
+  {
+    id: "tabletToolbarSettings",
+    type: "popover",
+    icon: "nc-cog",
+    position: 110,
+    options: [
+      {
+        id: "tabletWidth",
+        label: t("Width"),
+        type: "slider",
+        slider: {
+          min: 1,
+          max: 100
+        },
+        input: {
+          show: true
+        },
+        suffix: {
+          show: true,
+          choices: [
+            {
+              title: "%",
+              value: "%"
+            }
+          ]
+        },
+        value: {
+          value: tabletSyncOnChange(v, "width")
+        },
+        onChange: ({ value: tabletWidth }) => ({ tabletWidth })
       }
     ]
   }
@@ -100,11 +133,7 @@ const getItemsForMobile = v => [
         value: {
           value: mobileSyncOnChange(v, "width")
         },
-        onChange: ({ value: mobileWidth }) => {
-          return {
-            mobileWidth
-          };
-        }
+        onChange: ({ value: mobileWidth }) => ({ mobileWidth })
       }
     ]
   }

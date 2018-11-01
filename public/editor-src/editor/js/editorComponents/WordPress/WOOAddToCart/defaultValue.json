@@ -2,7 +2,8 @@
   "className": "",
 
   "width": 100,
-  "mobileWidth": 100,
+  "tabletWidth": null,
+  "mobileWidth": null,
 
   "productID": "",
   "style": ""

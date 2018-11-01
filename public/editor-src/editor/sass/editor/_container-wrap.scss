@@ -341,7 +341,8 @@
 }
 
 // Hide when device mode is mobile
-&.brz-ed--mobile {
+&.brz-ed--mobile,
+&.brz-ed--tablet {
   .brz-ed-container-plus {
     display: none;
   }

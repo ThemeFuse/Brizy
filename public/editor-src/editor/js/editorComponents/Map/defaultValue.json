@@ -16,6 +16,9 @@
   "boxShadowHorizontal": 1,
   "tempBoxShadowColorOpacity": 1,
 
+  "tabletSize": null,
+  "tabletHeight": null,
+
   "mobileSize": null,
   "mobileHeight": null
 }

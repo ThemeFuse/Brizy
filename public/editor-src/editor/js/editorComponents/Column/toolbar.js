@@ -116,7 +116,11 @@ export function getItemsForDesktop(v) {
             tempBgColorOpacity:
               src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.tempBgColorOpacity,
 
-            // mobile
+            // Tablet
+            tabletPaddingRight: !src ? 0 : v.tempMobilePaddingRight,
+            tabletPaddingLeft: !src ? 0 : v.tempMobilePaddingLeft,
+
+            // Mobile
             // this 2 values are used for view the result of the bg color or image when you have a image in a column for example
             mobilePaddingRight: !src ? 0 : v.tempMobilePaddingRight,
             mobilePaddingLeft: !src ? 0 : v.tempMobilePaddingLeft
@@ -203,6 +207,22 @@ export function getItemsForDesktop(v) {
                             ? v.tempBorderBottomLeftRadius
                             : v.borderBottomLeftRadius,
 
+                      // Tablet
+                      tabletPaddingRight:
+                        bgColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || bgColorOpacity > 0
+                            ? v.tempTabletPaddingRight
+                            : v.tabletPaddingRight,
+
+                      tabletPaddingLeft:
+                        bgColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || bgColorOpacity > 0
+                            ? v.tempTabletPaddingLeft
+                            : v.tabletPaddingLeft,
+
+                      // Mobile
                       mobilePaddingRight:
                         bgColorOpacity === 0
                           ? 0
@@ -232,6 +252,18 @@ export function getItemsForDesktop(v) {
                         ? v.tempBgColorOpacity
                         : v.bgColorOpacity,
 
+                    // Tablet
+                    tabletPaddingRight:
+                      bgColorPalette !== ""
+                        ? v.tempTabletPaddingRight
+                        : v.tabletPaddingRight,
+
+                    tabletPaddingLeft:
+                      bgColorPalette !== ""
+                        ? v.tempTabletPaddingLeft
+                        : v.tabletPaddingLeft,
+
+                    // Mobile
                     mobilePaddingRight:
                       bgColorPalette !== ""
                         ? v.tempMobilePaddingRight
@@ -263,6 +295,22 @@ export function getItemsForDesktop(v) {
                       bgColorHex: hex,
                       bgColorOpacity: bgColorOpacity,
 
+                      // Tablet
+                      tabletPaddingRight:
+                        bgColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || bgColorOpacity > 0
+                            ? v.tempTabletPaddingRight
+                            : v.tabletPaddingRight,
+
+                      tabletPaddingLeft:
+                        bgColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || bgColorOpacity > 0
+                            ? v.tempTabletPaddingLeft
+                            : v.tabletPaddingLeft,
+
+                      // Mobile
                       mobilePaddingRight:
                         bgColorOpacity === 0
                           ? 0
@@ -379,6 +427,22 @@ export function getItemsForDesktop(v) {
                             ? v.tempBorderBottomLeftRadius
                             : v.borderBottomLeftRadius,
 
+                      // Tablet
+                      tabletPaddingRight:
+                        borderColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || borderColorOpacity > 0
+                            ? v.tempTabletPaddingRight
+                            : v.tabletPaddingRight,
+
+                      tabletPaddingLeft:
+                        borderColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || borderColorOpacity > 0
+                            ? v.tempTabletPaddingLeft
+                            : v.tabletPaddingLeft,
+
+                      // Mobile
                       mobilePaddingRight:
                         borderColorOpacity === 0
                           ? 0
@@ -413,6 +477,18 @@ export function getItemsForDesktop(v) {
                         ? v.tempBorderWidth
                         : v.borderWidth,
 
+                    // Tablet
+                    tabletPaddingRight:
+                      value !== ""
+                        ? v.tempTabletPaddingRight
+                        : v.tabletPaddingRight,
+
+                    tabletPaddingLeft:
+                      value !== ""
+                        ? v.tempTabletPaddingLeft
+                        : v.tabletPaddingLeft,
+
+                    // Mobile
                     mobilePaddingRight:
                       value !== ""
                         ? v.tempMobilePaddingRight
@@ -449,6 +525,22 @@ export function getItemsForDesktop(v) {
                           ? v.tempBorderWidth
                           : v.borderWidth,
 
+                      // Tablet
+                      tabletPaddingRight:
+                        borderColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || borderColorOpacity > 0
+                            ? v.tempTabletPaddingRight
+                            : v.tabletPaddingRight,
+
+                      tabletPaddingLeft:
+                        borderColorOpacity === 0
+                          ? 0
+                          : isChanged === "hex" || borderColorOpacity > 0
+                            ? v.tempTabletPaddingLeft
+                            : v.tabletPaddingLeft,
+
+                      // Mobile
                       mobilePaddingRight:
                         borderColorOpacity === 0
                           ? 0
@@ -1860,9 +1952,15 @@ export function getItemsForDesktop(v) {
                                   hex: boxShadowColorHex,
                                   opacity: v.boxShadowColorOpacity
                                 },
-                                onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
+                                onChange: ({
+                                  hex,
+                                  opacity,
+                                  isChanged,
+                                  opacityDragEnd
+                                }) => {
                                   const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
                                       : opacity;
 
@@ -1872,7 +1970,7 @@ export function getItemsForDesktop(v) {
                                     boxShadowColorPalette:
                                       isChanged === "hex"
                                         ? ""
-                                        : v.boxShadowColorPalette,
+                                        : v.boxShadowColorPalette
                                   };
                                 }
                               },
@@ -1887,7 +1985,7 @@ export function getItemsForDesktop(v) {
                                   boxShadowColorOpacity:
                                     v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
-                                      : v.boxShadowColorOpacity,
+                                      : v.boxShadowColorOpacity
                                 })
                               },
                               {
@@ -1900,7 +1998,8 @@ export function getItemsForDesktop(v) {
                                 },
                                 onChange: ({ hex, opacity, isChanged }) => {
                                   const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex && v.boxShadowColorOpacity === 0
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
                                       ? v.tempBoxShadowColorOpacity
                                       : opacity;
 
@@ -1944,7 +2043,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -1976,7 +2075,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -2009,7 +2108,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           },
                           {
@@ -2042,7 +2141,7 @@ export function getItemsForDesktop(v) {
                               boxShadowColorOpacity:
                                 v.boxShadowColorOpacity === 0
                                   ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity,
+                                  : v.boxShadowColorOpacity
                             })
                           }
                         ]
@@ -2116,6 +2215,680 @@ export function getItemsForDesktop(v) {
               ]
             }
           ]
+        }
+      ]
+    }
+  ];
+}
+
+export function getItemsForTablet(v) {
+  const { hex: tabletBgColorHex } =
+    v.tabletBgColorHex !== null
+      ? getOptionColor(v, "tabletBgColor")
+      : getOptionColor(v, "bgColor");
+
+  return [
+    {
+      id: "showOnTablet",
+      type: "toggle",
+      position: 10,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: t("Disable on Tablet"),
+          value: "on"
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: t("Enable on Tablet"),
+          value: "off"
+        }
+      ],
+      value: v.showOnTablet
+    },
+    {
+      id: "tabletToolbarMedia",
+      type: "popover",
+      position: 80,
+      icon: "nc-background",
+      title: t("Background"),
+      options: [
+        {
+          id: "tabletImage",
+          label: t("Image"),
+          type: "imageSetter",
+          value: {
+            width: tabletSyncOnChange(v, "bgImageWidth"),
+            height: tabletSyncOnChange(v, "bgImageHeight"),
+            src: tabletSyncOnChange(v, "bgImageSrc"),
+            x: tabletSyncOnChange(v, "bgPositionX"),
+            y: tabletSyncOnChange(v, "bgPositionY")
+          },
+          onChange: ({ width, height, src, x, y }) => ({
+            tabletBgImageWidth: width,
+            tabletBgImageHeight: height,
+            tabletBgImageSrc: src,
+            tabletBgPositionX: x,
+            tabletBgPositionY: y,
+
+            tabletBgColorOpacity:
+              src !== "" && tabletSyncOnChange(v, "bgColorOpacity") === 1
+                ? 0.9
+                : tabletSyncOnChange(v, "bgColorOpacity"),
+
+            tempTabletBgColorOpacity:
+              src !== "" && tabletSyncOnChange(v, "bgColorOpacity") === 1
+                ? 0.9
+                : v.tempTabletBgColorOpacity,
+
+            tabletPaddingRight: !src ? 0 : v.tempTabletPaddingRight,
+            tabletPaddingLeft: !src ? 0 : v.tempTabletPaddingLeft
+          })
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarColor",
+      type: "popover",
+      size: "auto",
+      title: t("Colors"),
+      position: 90,
+      icon: {
+        style: {
+          backgroundColor: hexToRgba(tabletBgColorHex, tabletSyncOnChange(v, "bgColorOpacity"))
+        }
+      },
+      options: [
+        {
+          id: "tabletBgColor",
+          type: "colorPicker",
+          position: 10,
+          value: {
+            hex: tabletBgColorHex,
+            opacity: tabletSyncOnChange(v, "bgColorOpacity")
+          },
+          onChange: ({ hex, opacity, isChanged }) => {
+            const bgColorOpacity =
+              hex !== tabletBgColorHex && tabletSyncOnChange(v, "bgColorOpacity") === 0
+                ? v.tempBgColorOpacity
+                : opacity;
+
+            return {
+              tabletBgColorHex: hex,
+              tabletBgColorOpacity: bgColorOpacity,
+              tabletBgColorPalette:
+                isChanged === "hex" ? "" : tabletSyncOnChange(v, "bgColorPalette"),
+
+              tabletPaddingRight:
+                bgColorOpacity === 0
+                  ? 0
+                  : isChanged === "hex" || bgColorOpacity > 0
+                    ? v.tempTabletPaddingRight
+                    : v.tabletPaddingRight,
+
+              tabletPaddingLeft:
+                bgColorOpacity === 0
+                  ? 0
+                  : isChanged === "hex" || bgColorOpacity > 0
+                    ? v.tempTabletPaddingLeft
+                    : v.tabletPaddingLeft
+            };
+          }
+        },
+        {
+          id: "tabletBgColorPalette",
+          type: "colorPalette",
+          position: 20,
+          value: tabletSyncOnChange(v, "bgColorPalette"),
+          onChange: value => ({
+            tabletBgColorPalette: value,
+            tabletBgColorHex: "",
+            tabletBgColorOpacity:
+              tabletSyncOnChange(v, "bgColorOpacity") === 0
+                ? v.tempBgColorOpacity
+                : tabletSyncOnChange(v, "bgColorOpacity"),
+
+            tabletPaddingRight:
+              value !== "" ? v.tempTabletPaddingRight : v.tabletPaddingRight,
+
+            tabletPaddingLeft:
+              value !== "" ? v.tempTabletPaddingLeft : v.tabletPaddingLeft
+          })
+        },
+        {
+          id: "tabletBgColorFields",
+          type: "colorFields",
+          position: 30,
+          value: {
+            hex: tabletBgColorHex,
+            opacity: tabletSyncOnChange(v, "bgColorOpacity")
+          },
+          onChange: ({ hex, opacity, isChanged }) => {
+            const bgColorOpacity =
+              hex !== tabletBgColorHex && tabletSyncOnChange(v, "bgColorOpacity") === 0
+                ? v.tempBgColorOpacity
+                : opacity;
+
+            return {
+              tabletBgColorPalette:
+                isChanged === "hex" ? "" : tabletSyncOnChange(v, "bgColorPalette"),
+              tabletBgColorHex: hex,
+              tabletBgColorOpacity: bgColorOpacity,
+
+              tabletPaddingRight:
+                bgColorOpacity === 0
+                  ? 0
+                  : isChanged === "hex" || bgColorOpacity > 0
+                    ? v.tempTabletPaddingRight
+                    : v.tabletPaddingRight,
+
+              tabletPaddingLeft:
+                bgColorOpacity === 0
+                  ? 0
+                  : isChanged === "hex" || bgColorOpacity > 0
+                    ? v.tempTabletPaddingLeft
+                    : v.tabletPaddingLeft
+            };
+          }
+        }
+      ]
+    },
+    {
+      id: "tabletAdvancedSettings",
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      icon: "nc-cog",
+      title: t("Settings"),
+      position: 110,
+      options: [
+        {
+          type: "multiPicker",
+          picker: {
+            id: "tabletPaddingType",
+            label: t("Padding"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "grouped",
+                icon: "nc-styling-all"
+              },
+              {
+                value: "ungrouped",
+                icon: "nc-styling-individual"
+              }
+            ],
+            value: v.tabletPaddingType
+          },
+          choices: {
+            grouped: [
+              {
+                id: "tabletPadding",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPadding,
+                  suffix: v.tabletPaddingSuffix
+                },
+                onChange: ({
+                  value: tabletPadding,
+                  suffix: tabletPaddingSuffix
+                }) => {
+                  return {
+                    tabletPadding,
+                    tabletPaddingSuffix,
+                    tabletPaddingTop: tabletPadding,
+                    tabletPaddingRight: tabletPadding,
+                    tabletPaddingBottom: tabletPadding,
+                    tabletPaddingLeft: tabletPadding
+                  };
+                }
+              }
+            ],
+            ungrouped: [
+              {
+                id: "tabletPaddingTop",
+                icon: "nc-styling-top",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingTop,
+                  suffix: v.tabletPaddingTopSuffix
+                },
+                onChange: ({
+                  value: tabletPaddingTop,
+                  suffix: tabletPaddingTopSuffix
+                }) => {
+                  return {
+                    tabletPaddingTop,
+                    tabletPaddingTopSuffix,
+                    tabletPadding:
+                      tabletPaddingTop === v.tabletPaddingRight &&
+                      tabletPaddingTop === v.tabletPaddingLeft &&
+                      tabletPaddingTop === v.tabletPaddingBottom
+                        ? tabletPaddingTop
+                        : v.tabletPadding
+                  };
+                }
+              },
+              {
+                id: "tabletPaddingRight",
+                icon: "nc-styling-right",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingRight,
+                  suffix: v.tabletPaddingRightSuffix
+                },
+                onChange: ({
+                  value: tabletPaddingRight,
+                  suffix: tabletPaddingRightSuffix
+                }) => {
+                  return {
+                    tabletPaddingRight,
+                    tabletPaddingRightSuffix,
+                    tabletPadding:
+                      tabletPaddingRight === v.tabletPaddingTop &&
+                      tabletPaddingRight === v.tabletPaddingLeft &&
+                      tabletPaddingRight === v.tabletPaddingBottom
+                        ? tabletPaddingRight
+                        : v.tabletPadding
+                  };
+                }
+              },
+              {
+                id: "tabletPaddingBottom",
+                icon: "nc-styling-bottom",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingBottom,
+                  suffix: v.tabletPaddingBottomSuffix
+                },
+                onChange: ({
+                  value: tabletPaddingBottom,
+                  suffix: tabletPaddingBottomSuffix
+                }) => {
+                  return {
+                    tabletPaddingBottom,
+                    tabletPaddingBottomSuffix,
+                    tabletPadding:
+                      tabletPaddingBottom === v.tabletPaddingTop &&
+                      tabletPaddingBottom === v.tabletPaddingLeft &&
+                      tabletPaddingBottom === v.tabletPaddingRight
+                        ? tabletPaddingBottom
+                        : v.tabletPadding
+                  };
+                }
+              },
+              {
+                id: "tabletPaddingLeft",
+                icon: "nc-styling-left",
+                type: "slider",
+                slider: {
+                  min: 0,
+                  max: 100
+                },
+                input: {
+                  show: true,
+                  min: 0
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletPaddingLeft,
+                  suffix: v.tabletPaddingLeftSuffix
+                },
+                onChange: ({
+                  value: tabletPaddingLeft,
+                  suffix: tabletPaddingLeftSuffix
+                }) => {
+                  return {
+                    tabletPaddingLeft,
+                    tabletPaddingLeftSuffix,
+                    tabletPadding:
+                      tabletPaddingLeft === v.tabletPaddingTop &&
+                      tabletPaddingLeft === v.tabletPaddingBottom &&
+                      tabletPaddingLeft === v.tabletPaddingRight
+                        ? tabletPaddingLeft
+                        : v.tabletPadding
+                  };
+                }
+              }
+            ]
+          }
+        },
+        {
+          type: "multiPicker",
+          picker: {
+            id: "tabletMarginType",
+            label: t("Margin"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "grouped",
+                icon: "nc-styling-all"
+              },
+              {
+                value: "ungrouped",
+                icon: "nc-styling-individual"
+              }
+            ],
+            value: v.tabletMarginType
+          },
+          choices: {
+            grouped: [
+              {
+                id: "tabletMargin",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMargin,
+                  suffix: v.tabletMarginSuffix
+                },
+                onChange: ({
+                  value: tabletMargin,
+                  suffix: tabletMarginSuffix
+                }) => {
+                  return {
+                    tabletMargin,
+                    tabletMarginSuffix,
+                    tabletMarginTop: tabletMargin,
+                    tabletMarginRight: tabletMargin,
+                    tabletMarginBottom: tabletMargin,
+                    tabletMarginLeft: tabletMargin
+                  };
+                }
+              }
+            ],
+            ungrouped: [
+              {
+                id: "tabletMarginTop",
+                icon: "nc-styling-top",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginTop,
+                  suffix: v.tabletMarginTopSuffix
+                },
+                onChange: ({
+                  value: tabletMarginTop,
+                  suffix: tabletMarginTopSuffix
+                }) => {
+                  return {
+                    tabletMarginTop,
+                    tabletMarginTopSuffix,
+                    tabletMargin:
+                      tabletMarginTop === v.tabletMarginBottom &&
+                      tabletMarginTop === v.tabletMarginRight &&
+                      tabletMarginTop === v.tabletMarginLeft
+                        ? tabletMarginTop
+                        : v.tabletMargin
+                  };
+                }
+              },
+              {
+                id: "tabletMarginRight",
+                icon: "nc-styling-right",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginRight,
+                  suffix: v.tabletMarginRightSuffix
+                },
+                onChange: ({
+                  value: tabletMarginRight,
+                  suffix: tabletMarginRightSuffix
+                }) => {
+                  return {
+                    tabletMarginRight,
+                    tabletMarginRightSuffix,
+                    tabletMargin:
+                      tabletMarginRight === v.tabletMarginBottom &&
+                      tabletMarginRight === v.tabletMarginTop &&
+                      tabletMarginRight === v.tabletMarginLeft
+                        ? tabletMarginRight
+                        : v.tabletMargin
+                  };
+                }
+              },
+              {
+                id: "tabletMarginBottom",
+                icon: "nc-styling-bottom",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginBottom,
+                  suffix: v.tabletMarginBottomSuffix
+                },
+                onChange: ({
+                  value: tabletMarginBottom,
+                  suffix: tabletMarginBottomSuffix
+                }) => {
+                  return {
+                    tabletMarginBottom,
+                    tabletMarginBottomSuffix,
+                    tabletMargin:
+                      tabletMarginBottom === v.tabletMarginRight &&
+                      tabletMarginBottom === v.tabletMarginTop &&
+                      tabletMarginBottom === v.tabletMarginLeft
+                        ? tabletMarginBottom
+                        : v.tabletMargin
+                  };
+                }
+              },
+              {
+                id: "tabletMarginLeft",
+                icon: "nc-styling-left",
+                type: "slider",
+                slider: {
+                  min: -100,
+                  max: 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: v.tabletMarginLeft,
+                  suffix: v.tabletMarginLeftSuffix
+                },
+                onChange: ({
+                  value: tabletMarginLeft,
+                  suffix: tabletMarginLeftSuffix
+                }) => {
+                  return {
+                    tabletMarginLeft,
+                    tabletMarginLeftSuffix,
+                    tabletMargin:
+                      tabletMarginLeft === v.tabletMarginRight &&
+                      tabletMarginLeft === v.tabletMarginTop &&
+                      tabletMarginLeft === v.tabletMarginBottom
+                        ? tabletMarginLeft
+                        : v.tabletMargin
+                  };
+                }
+              }
+            ]
+          }
         }
       ]
     }

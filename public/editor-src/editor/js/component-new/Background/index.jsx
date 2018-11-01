@@ -20,6 +20,10 @@ class Background extends React.Component {
     shapeTopType: "",
     shapeBottomType: "",
 
+    // Tablet
+    tabletImageSrc: "",
+    tabletColorOpacity: 0,
+
     // Mobile
     mobileImageSrc: "",
     mobileColorOpacity: 0,
@@ -35,7 +39,7 @@ class Background extends React.Component {
   }
 
   componentDidMount() {
-    const { imageSrc, video, parallax, deviceMode } = this.props;
+    const { imageSrc, video, parallax } = this.props;
     const hasImage = Boolean(imageSrc);
     const hasVideo = Boolean(video);
     const currentDeviceMode = getStore().getState().ui.deviceMode;
@@ -71,7 +75,7 @@ class Background extends React.Component {
 
   handleDeviceModeChange = mode => {
     if (this.parallaxPluginInited) {
-      if (mode === "mobile") {
+      if (mode === "mobile" || mode === "tablet") {
         this.destroyParallax();
       }
 
@@ -81,7 +85,7 @@ class Background extends React.Component {
     }
 
     if (this.videoPluginInited) {
-      if (mode === "mobile") {
+      if (mode === "mobile" || mode === "tablet") {
         this.destroyVideoPlayer();
       }
 
@@ -100,7 +104,7 @@ class Background extends React.Component {
   };
 
   updateBackground = () => {
-    const { imageSrc, video, parallax, deviceMode } = this.props;
+    const { imageSrc, video, parallax } = this.props;
     const hasImage = Boolean(imageSrc);
     const hasVideo = Boolean(video);
     const currentDeviceMode = getStore().getState().ui.deviceMode;
@@ -184,6 +188,8 @@ class Background extends React.Component {
       colorOpacity,
       parallax,
       video,
+      tabletColorOpacity,
+      tabletImageSrc,
       mobileColorOpacity,
       mobileImageSrc
     } = this.props;
@@ -191,6 +197,7 @@ class Background extends React.Component {
     const bailRender = !(
       IS_EDITOR ||
       (colorOpacity !== 1 && imageSrc) ||
+      (tabletColorOpacity !== 1 && tabletImageSrc) ||
       (mobileColorOpacity !== 1 && mobileImageSrc)
     );
 

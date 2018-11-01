@@ -84,3 +84,12 @@
     }
   }
 }
+// Responsive
+@include media-breakpoint-down(sm) {
+  &.brz-ed .brz-section__header {
+    &--animated {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}

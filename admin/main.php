@@ -448,14 +448,26 @@ class Brizy_Admin_Main {
 				)
 			);
 			// 2. merge extra fonts styles
+
+			if ( ! isset( $currentProjectGlobals->project->styles ) ) {
+				$currentProjectGlobals->project->styles = (object) array( '_extraFontStyles' => array() );
+			}
+
 			$currentProjectGlobals->project->styles->_extraFontStyles = array_merge(
 				(array) ( isset( $currentProjectGlobals->project->styles->_extraFontStyles ) ? $currentProjectGlobals->project->styles->_extraFontStyles : array() ),
 				(array) ( isset( $projectData->project->styles->_extraFontStyles ) ? $projectData->project->styles->_extraFontStyles : array() )
 			);
 
-			$selected                                          = $projectData->project->styles->_selected;
-			$currentProjectGlobals->project->styles->_selected = $selected;
-			$currentProjectGlobals->project->styles->$selected = $projectData->project->styles->$selected;
+
+			$currentProjectGlobals->project->styles->default = $projectData->project->styles->default;
+
+			if ( $projectData->project->styles && isset( $projectData->project->styles->_selected ) ) {
+				$selected                                          = $projectData->project->styles->_selected;
+				$currentProjectGlobals->project->styles->_selected = $selected;
+				if ( $selected ) {
+					$currentProjectGlobals->project->styles->$selected = $projectData->project->styles->$selected;
+				}
+			}
 
 			// create project data backup
 			$data = $currentProjectStorage->get_storage();

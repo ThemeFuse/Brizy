@@ -5,6 +5,7 @@ import { t } from "visual/utils/i18n";
 
 const toolbarConfig = {
   getItemsForDesktop: () => [],
+  getItemsForTablet: () => [],
   getItemsForMobile: () => []
 };
 const toolbarExtendFilter = items => items.filter(item => item.id === "remove"); // leave only delete

@@ -6,30 +6,36 @@ export function styleClassName(v) {
   const { className } = v;
   let glamorObj;
 
-  if(IS_EDITOR) {
+  if (IS_EDITOR) {
     glamorObj = {
       ".brz-ed--desktop &": {
-        height: "var(--height)",
+        height: "var(--height)"
+      },
+      ".brz-ed--tablet &": {
+        height: "var(--tabletHeight)"
       },
       ".brz-ed--mobile &": {
-        height: "var(--mobileHeight)",
+        height: "var(--mobileHeight)"
       }
-    }
+    };
   } else {
-    const {
-      height
-    } = v;
+    const { height } = v;
 
     glamorObj = {
       ".brz &": {
-        height: `${height}px`,
+        height: `${height}px`
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          height: `${tabletSyncOnChange(v, "height")}px`
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
           height: `${mobileSyncOnChange(v, "height")}px`
         }
       }
-    }
+    };
   }
 
   const glamorClassName = String(css(glamorObj));
@@ -40,12 +46,11 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    height
-  } = v;
+  const { height } = v;
 
   return {
     "--height": `${height}px`,
-    "--mobileHeight": `${mobileSyncOnChange(v, "height")}px`,
+    "--tabletHeight": `${tabletSyncOnChange(v, "height")}px`,
+    "--mobileHeight": `${mobileSyncOnChange(v, "height")}px`
   };
 }

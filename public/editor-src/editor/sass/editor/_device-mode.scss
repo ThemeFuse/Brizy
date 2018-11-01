@@ -29,3 +29,7 @@ $containers-width: map-get($container-max-widths, "lg");
   max-width: $mobile-width;
   // box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.1); // temporary bug chrome (blink)
 }
+.brz-ed-iframe--tablet {
+  min-width: $tablet-width;
+  max-width: $tablet-width;
+}

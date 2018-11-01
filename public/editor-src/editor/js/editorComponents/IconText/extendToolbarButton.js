@@ -13,6 +13,26 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "showOnTablet",
+      type: "toggle",
+      disabled: true
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      disabled: true
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "advancedSettings",
+      disabled: true
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {

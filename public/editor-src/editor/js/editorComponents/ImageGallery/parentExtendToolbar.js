@@ -65,6 +65,64 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarGallery",
+      type: "popover",
+      icon: "nc-gallery",
+      title: t("Gallery"),
+      position: 80,
+      options: [
+        {
+          id: "tabletGridColumn",
+          label: t("Columns"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 6
+          },
+          input: {
+            show: true,
+            max: 6
+          },
+          value: {
+            value: v.tabletGridColumn
+          },
+          onChange: ({ value: tabletGridColumn }) => ({ tabletGridColumn })
+        },
+        {
+          id: "tabletSpacing",
+          label: t("Spacing"),
+          type: "slider",
+          slider: {
+            min: 0,
+            max: 20
+          },
+          input: {
+            show: true,
+            min: 0,
+            max: 20
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "spacing")
+          },
+          onChange: ({ value: tabletSpacing }) => ({ tabletSpacing })
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {
@@ -74,6 +132,23 @@ export function getItemsForMobile(v) {
       title: t("Gallery"),
       position: 80,
       options: [
+        {
+          id: "mobileGridColumn",
+          label: t("Columns"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 3
+          },
+          input: {
+            show: true,
+            max: 3
+          },
+          value: {
+            value: v.mobileGridColumn
+          },
+          onChange: ({ value: mobileGridColumn }) => ({ mobileGridColumn })
+        },
         {
           id: "mobileSpacing",
           label: t("Spacing"),

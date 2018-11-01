@@ -47,6 +47,7 @@ class AccordionItems extends EditorArrayComponent {
           }
         }
       ],
+      getItemsForTablet: () => [],
       getItemsForMobile: () => []
     };
     const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);

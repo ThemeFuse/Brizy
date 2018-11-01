@@ -23,6 +23,12 @@
   "tempHoverColorOpacity": 1,
   "tempHoverColorPalette": "color3",
 
+  "tabletFontStyle": "",
+  "tabletFontSize": 56,
+  "tabletFontWeight": 400,
+  "tabletLineHeight": 1.3,
+  "tabletLetterSpacing": 0,
+
   "mobileFontStyle": "",
   "mobileFontSize": 56,
   "mobileFontWeight": 400,

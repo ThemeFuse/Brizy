@@ -1452,6 +1452,118 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarCurrentShortcode",
+      type: "popover",
+      icon: "nc-star",
+      title: t("Icon"),
+      position: 70,
+      options: [
+        {
+          type: "multiPicker",
+          picker: {
+            id: "tabletSize",
+            label: t("Size"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "small",
+                icon: "nc-32"
+              },
+              {
+                value: "medium",
+                icon: "nc-48"
+              },
+              {
+                value: "large",
+                icon: "nc-64"
+              },
+              {
+                value: "custom",
+                icon: "nc-more"
+              }
+            ],
+            value: tabletSyncOnChange(v, "size"),
+            onChange: tabletSize => {
+              return {
+                tabletSize,
+
+                tabletCustomSize:
+                  tabletSize !== "custom"
+                    ? v[`${tabletSize}Size`]
+                    : v.tabletCustomSize
+              };
+            }
+          },
+          choices: {
+            custom: [
+              {
+                id: "tabletCustomSize",
+                type: "slider",
+                slider: {
+                  min: 14,
+                  max: 180
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    }
+                  ]
+                },
+                value: {
+                  value: tabletSyncOnChange(v, "customSize")
+                },
+                onChange: ({ value: tabletCustomSize }) => ({
+                  tabletCustomSize
+                })
+              }
+            ]
+          }
+        },
+        {
+          id: "tabletPadding",
+          label: t("Bg Size"),
+          type: "slider",
+          slider: {
+            min: 0,
+            max: 180
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          disabled: v.fillType === "default",
+          value: {
+            value: tabletSyncOnChange(v, "padding")
+          },
+          onChange: ({ value: tabletPadding }) => ({ tabletPadding })
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      disabled: true
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {
@@ -1522,11 +1634,9 @@ export function getItemsForMobile(v) {
                 value: {
                   value: mobileSyncOnChange(v, "customSize")
                 },
-                onChange: ({ value: mobileCustomSize }) => {
-                  return {
-                    mobileCustomSize
-                  };
-                }
+                onChange: ({ value: mobileCustomSize }) => ({
+                  mobileCustomSize
+                })
               }
             ]
           }
@@ -1555,11 +1665,7 @@ export function getItemsForMobile(v) {
           value: {
             value: mobileSyncOnChange(v, "padding")
           },
-          onChange: ({ value: mobilePadding }) => {
-            return {
-              mobilePadding
-            };
-          }
+          onChange: ({ value: mobilePadding }) => ({ mobilePadding })
         }
       ]
     },

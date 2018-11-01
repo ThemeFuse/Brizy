@@ -100,6 +100,73 @@ export function getItemsForDesktop(v) {
   ];
 }
 
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarCurrentShortcode",
+      type: "popover",
+      icon: "nc-form-left",
+      title: t("Field"),
+      position: 60,
+      options: [
+        {
+          id: "tabletWidth",
+          label: t("Width"),
+          type: "slider",
+          position: 30,
+          slider: {
+            min: 1,
+            max: 100
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "width")
+          },
+          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
+        },
+        {
+          id: "tabletHeight",
+          label: t("Height"),
+          type: "slider",
+          disabled: v.type !== "Paragraph",
+          position: 40,
+          slider: {
+            min: 1,
+            max: 300
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "height")
+          },
+          onChange: ({ value: tabletHeight }) => ({ tabletHeight })
+        }
+      ]
+    }
+  ];
+}
+
 export function getItemsForMobile(v) {
   return [
     {
@@ -133,11 +200,7 @@ export function getItemsForMobile(v) {
           value: {
             value: mobileSyncOnChange(v, "width")
           },
-          onChange: ({ value: mobileWidth }) => {
-            return {
-              mobileWidth
-            };
-          }
+          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
         },
         {
           id: "mobileHeight",
@@ -164,11 +227,7 @@ export function getItemsForMobile(v) {
           value: {
             value: mobileSyncOnChange(v, "height")
           },
-          onChange: ({ value: mobileHeight }) => {
-            return {
-              mobileHeight
-            };
-          }
+          onChange: ({ value: mobileHeight }) => ({ mobileHeight })
         }
       ]
     }

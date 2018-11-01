@@ -5,6 +5,9 @@
   "height": 250,
   "code": "",
 
+  "tabletWidth": null,
+  "tabletHeight": null,
+
   "mobileWidth": null,
   "mobileHeight": null
 }

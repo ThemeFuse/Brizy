@@ -38,6 +38,22 @@ export function styleClassName(v) {
           right: "var(--arrowsSpacing)"
         }
       },
+      ".brz-ed--tablet &": {
+        "& > .slick-slider": {
+          paddingLeft: "var(--tabletPaddingLeft)",
+          paddingRight: "var(--tabletPaddingRight)"
+        },
+        "& > .slick-slider > .slick-list": {
+          paddingTop: "var(--tabletPaddingTop)",
+          paddingBottom: "var(--tabletPaddingBottom)"
+        },
+        "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+          left: "var(--tabletArrowsSpacing)"
+        },
+        "& > .slick-slider > .brz-slick-slider__arrow-next": {
+          right: "var(--tabletArrowsSpacing)"
+        }
+      },
       ".brz-ed--mobile &": {
         "& > .slick-slider": {
           paddingLeft: "var(--mobilePaddingLeft)",
@@ -75,6 +91,18 @@ export function styleClassName(v) {
       sliderPaddingBottomSuffix,
       sliderPaddingLeft,
       sliderPaddingLeftSuffix,
+      tabletSlidesToShow,
+      tabletSliderPaddingType,
+      tabletSliderPadding,
+      tabletSliderPaddingSuffix,
+      tabletSliderPaddingTop,
+      tabletSliderPaddingTopSuffix,
+      tabletSliderPaddingRight,
+      tabletSliderPaddingRightSuffix,
+      tabletSliderPaddingBottom,
+      tabletSliderPaddingBottomSuffix,
+      tabletSliderPaddingLeft,
+      tabletSliderPaddingLeftSuffix,
       mobileSliderPaddingType,
       mobileSliderPadding,
       mobileSliderPaddingSuffix,
@@ -88,6 +116,7 @@ export function styleClassName(v) {
       mobileSliderPaddingLeftSuffix
     } = v;
 
+    const tabletSliderArrowsSpacing = tabletSyncOnChange(v, "sliderArrowsSpacing");
     const mobileSliderArrowsSpacing = mobileSyncOnChange(v, "sliderArrowsSpacing");
 
     glamorObj = {
@@ -138,7 +167,40 @@ export function styleClassName(v) {
       "& > .slick-slider > .brz-slick-slider__arrow-next": {
         right: `${sliderArrowsSpacing}px`
       },
-
+      "@media (max-width: 991px)": {
+        "& > .slick-slider": {
+          paddingLeft:
+            tabletSliderPaddingType === "grouped"
+              ? tabletSliderPadding + tabletSliderPaddingSuffix
+              : tabletSliderPaddingLeft + tabletSliderPaddingLeftSuffix,
+          paddingRight:
+            tabletSliderPaddingType === "grouped"
+              ? tabletSliderPadding + tabletSliderPaddingSuffix
+              : tabletSliderPaddingRight + tabletSliderPaddingRightSuffix
+        },
+        "& > .slick-slider > .slick-list": {
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingTop:
+            tabletSliderPaddingType === "grouped"
+              ? tabletSliderPadding + tabletSliderPaddingSuffix
+              : tabletSliderPaddingTop + tabletSliderPaddingTopSuffix,
+            paddingBottom:
+              tabletSliderPaddingType === "grouped"
+                ? tabletSliderPadding + tabletSliderPaddingSuffix
+                : tabletSliderPaddingBottom + tabletSliderPaddingBottomSuffix
+        },
+        "& > .slick-slider > .slick-list > .slick-track > .slick-slide": {
+          paddingLeft: 0,
+          paddingRight: 0
+        },
+        "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+          left: `${tabletSliderArrowsSpacing}px`
+        },
+        "& > .slick-slider > .brz-slick-slider__arrow-next": {
+          right: `${tabletSliderArrowsSpacing}px`
+        }
+      },
       "@media (max-width: 767px)": {
         "& > .slick-slider": {
           paddingLeft:
@@ -202,6 +264,17 @@ export function styleCSSVars(v) {
     sliderPaddingBottomSuffix,
     sliderPaddingLeft,
     sliderPaddingLeftSuffix,
+    tabletSliderPaddingType,
+    tabletSliderPadding,
+    tabletSliderPaddingSuffix,
+    tabletSliderPaddingTop,
+    tabletSliderPaddingTopSuffix,
+    tabletSliderPaddingRight,
+    tabletSliderPaddingRightSuffix,
+    tabletSliderPaddingBottom,
+    tabletSliderPaddingBottomSuffix,
+    tabletSliderPaddingLeft,
+    tabletSliderPaddingLeftSuffix,
     mobileSliderPaddingType,
     mobileSliderPadding,
     mobileSliderPaddingSuffix,
@@ -215,6 +288,7 @@ export function styleCSSVars(v) {
     mobileSliderPaddingLeftSuffix
   } = v;
 
+  const tabletSliderArrowsSpacing = tabletSyncOnChange(v, "sliderArrowsSpacing");
   const mobileSliderArrowsSpacing = mobileSyncOnChange(v, "sliderArrowsSpacing");
 
   return {
@@ -239,6 +313,23 @@ export function styleCSSVars(v) {
       sliderPaddingType === "grouped"
         ? sliderPadding + sliderPaddingSuffix
         : sliderPaddingLeft + sliderPaddingLeftSuffix,
+    "--tabletArrowsSpacing": `${tabletSliderArrowsSpacing}px`,
+    "--tabletPaddingTop":
+      tabletSliderPaddingType === "grouped"
+        ? tabletSliderPadding + tabletSliderPaddingSuffix
+        : tabletSliderPaddingTop + tabletSliderPaddingTopSuffix,
+    "--tabletPaddingRight":
+      tabletSliderPaddingType === "grouped"
+        ? tabletSliderPadding + tabletSliderPaddingSuffix
+        : tabletSliderPaddingRight + tabletSliderPaddingRightSuffix,
+    "--tabletPaddingBottom":
+      tabletSliderPaddingType === "grouped"
+        ? tabletSliderPadding + tabletSliderPaddingSuffix
+        : tabletSliderPaddingBottom + tabletSliderPaddingBottomSuffix,
+    "--tabletPaddingLeft":
+      tabletSliderPaddingType === "grouped"
+        ? tabletSliderPadding + tabletSliderPaddingSuffix
+        : tabletSliderPaddingLeft + tabletSliderPaddingLeftSuffix,
     "--mobileArrowsSpacing": `${mobileSliderArrowsSpacing}px`,
     "--mobilePaddingTop":
       mobileSliderPaddingType === "grouped"

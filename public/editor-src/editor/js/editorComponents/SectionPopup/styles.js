@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export function sectionStyleClassName(v, state) {
   const { className, customClassName } = v;
@@ -80,6 +81,16 @@ export function bgStyleClassName(v) {
           backgroundColor: "var(--backgroundColor)"
         }
       },
+      ".brz-ed--tablet &": {
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage: "var(--tabletBackgroundImage)",
+          backgroundPositionX: "var(--tabletBackgroundPositionX)",
+          backgroundPositionY: "var(--tabletBackgroundPositionY)"
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: "var(--tabletBackgroundColor)"
+        }
+      },
       ".brz-ed--mobile &": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage: "var(--mobileBackgroundImage)",
@@ -112,16 +123,19 @@ export function bgStyleClassName(v) {
       borderTopLeftRadius,
       borderTopRightRadius,
       borderBottomLeftRadius,
-      borderBottomRightRadius,
-      mobileBgImageSrc,
-      mobileBgPositionX,
-      mobileBgPositionY,
-      mobileBgColorHex,
-      mobileBgColorOpacity
+      borderBottomRightRadius
     } = v;
     const bgImage = bgPopulation
       ? imagePopulationUrl(bgPopulation)
       : imageUrl(bgImageSrc);
+
+    const tabletBgImage = bgPopulation
+      ? imagePopulationUrl(bgPopulation)
+      : imageUrl(tabletSyncOnChange(v, "bgImageSrc"));
+
+    const mobileBgImage = bgPopulation
+      ? imagePopulationUrl(bgPopulation)
+      : imageUrl(mobileSyncOnChange(v, "bgImageSrc"));
 
     glamorObj = {
       height: "100%",
@@ -172,16 +186,44 @@ export function bgStyleClassName(v) {
       "> .brz-bg-media > .brz-bg-color": {
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
       },
+      "@media (max-width: 991px)": {
+        "> .brz-bg-media > .brz-bg-image": {
+          backgroundImage:
+            tabletSyncOnChange(v, "bgImageSrc") || bgPopulation
+              ? `url(${tabletBgImage})`
+              : "none",
+          backgroundPosition: bgPopulation
+            ? "0% 0%"
+            : `${tabletSyncOnChange(v, "bgPositionX")}% ${tabletSyncOnChange(
+                v,
+                "bgPositionY"
+              )}%`
+        },
+        "> .brz-bg-media > .brz-bg-color": {
+          backgroundColor: hexToRgba(
+            tabletSyncOnChange(v, "bgColorHex"),
+            tabletSyncOnChange(v, "bgColorOpacity")
+          )
+        }
+      },
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
-            mobileBgImageSrc || bgPopulation ? `url(${bgImage})` : "none",
+            mobileSyncOnChange(v, "bgImageSrc") || bgPopulation
+              ? `url(${mobileBgImage})`
+              : "none",
           backgroundPosition: bgPopulation
             ? "0% 0%"
-            : `${mobileBgPositionX}% ${mobileBgPositionY}%`
+            : `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(
+                v,
+                "bgPositionY"
+              )}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+          backgroundColor: hexToRgba(
+            mobileSyncOnChange(v, "bgColorHex"),
+            mobileSyncOnChange(v, "bgColorOpacity")
+          )
         }
       }
     };
@@ -220,12 +262,7 @@ export function bgStyleCSSVars(v) {
     borderTopLeftRadius,
     borderTopRightRadius,
     borderBottomLeftRadius,
-    borderBottomRightRadius,
-    mobileBgImageSrc,
-    mobileBgPositionX,
-    mobileBgPositionY,
-    mobileBgColorHex,
-    mobileBgColorOpacity
+    borderBottomRightRadius
   } = v;
 
   return {
@@ -268,17 +305,38 @@ export function bgStyleCSSVars(v) {
       borderRadiusType === "grouped"
         ? `${borderRadius}px`
         : `${borderBottomRightRadius}px`,
+
+    // Tablet
+    "--tabletBackgroundImage":
+      tabletSyncOnChange(v, "bgImageSrc") && !bgPopulation
+        ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
+        : "none",
+    "--tabletBackgroundPositionX": bgPopulation
+      ? "0%"
+      : `${tabletSyncOnChange(v, "bgPositionX")}%`,
+    "--tabletBackgroundPositionY": bgPopulation
+      ? "0%"
+      : `${tabletSyncOnChange(v, "bgPositionY")}%`,
+    "--tabletBackgroundColor": hexToRgba(
+      tabletSyncOnChange(v, "bgColorHex"),
+      tabletSyncOnChange(v, "bgColorOpacity")
+    ),
+
+    // Mobile
     "--mobileBackgroundImage":
-      mobileBgImageSrc && !bgPopulation
-        ? `url(${imageUrl(mobileBgImageSrc)})`
+      mobileSyncOnChange(v, "bgImageSrc") && !bgPopulation
+        ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
         : "none",
     "--mobileBackgroundPositionX": bgPopulation
       ? "0%"
-      : `${mobileBgPositionX}%`,
+      : `${mobileSyncOnChange(v, "bgPositionX")}%`,
     "--mobileBackgroundPositionY": bgPopulation
       ? "0%"
-      : `${mobileBgPositionY}%`,
-    "--mobileBackgroundColor": hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+      : `${mobileSyncOnChange(v, "bgPositionY")}%`,
+    "--mobileBackgroundColor": hexToRgba(
+      mobileSyncOnChange(v, "bgColorHex"),
+      mobileSyncOnChange(v, "bgColorOpacity")
+    )
   };
 }
 
@@ -329,7 +387,7 @@ export function itemsStyleClassName(v) {
       borderColor: "transparent",
       borderStyle: "solid",
 
-      "@media (min-width: 768px)": {
+      "@media (min-width: 992px)": {
         maxWidth: `${containerSize}%`
       }
     };

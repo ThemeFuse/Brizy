@@ -8,7 +8,9 @@
     margin-bottom: 0;
     padding: 6px 10px;
   }
-  &--mobile {
+
+  // Small
+  &--small {
     .brz-ed-popover__option,
     .brz-ed-grid__option {
       padding-right: 10px;
@@ -24,7 +26,7 @@
   }
 }
 .brz-ed-popover__typography,
-.brz-ed-popover__typography--mobile {
+.brz-ed-popover__typography--small {
   .brz-control__select,
   .brz-control__select-current,
   .brz-ed-control__stepper {

@@ -1,6 +1,4 @@
-import { hideToolbar } from "visual/component-new/Toolbar";
 import { getOptionColor } from "visual/utils/options";
-import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 
 const getSliderTabs = (v, component) => {
@@ -422,6 +420,29 @@ export function getItemsForDesktop(v, component) {
           ]
         }
       ]
+    }
+  ];
+}
+
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "showOnTablet",
+      type: "toggle",
+      position: 10,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: t("Disable on Tablet"),
+          value: "on"
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: t("Enable on Tablet"),
+          value: "off"
+        }
+      ],
+      value: v.showOnTablet
     }
   ];
 }

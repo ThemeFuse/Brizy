@@ -58,11 +58,7 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.borderWidth
           },
-          onChange: ({ value: borderWidth }) => {
-            return {
-              borderWidth
-            };
-          }
+          onChange: ({ value: borderWidth }) => ({ borderWidth })
         }
       ]
     },
@@ -162,11 +158,80 @@ export function getItemsForDesktop(v) {
           value: {
             value: v.width
           },
-          onChange: ({ value: width }) => {
-            return {
-              width
-            };
-          }
+          onChange: ({ value: width }) => ({ width })
+        }
+      ]
+    }
+  ];
+}
+
+export function getItemsForTablet(v) {
+  return [
+    {
+      id: "tabletToolbarLine",
+      type: "popover",
+      icon: "nc-divider",
+      title: t("Line"),
+      position: 90,
+      options: [
+        {
+          id: "tabletBorderWidth",
+          label: t("Size"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 10
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "borderWidth")
+          },
+          onChange: ({ value: tabletBorderWidth }) => ({ tabletBorderWidth })
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      title: t("Settings"),
+      position: 110,
+      options: [
+        {
+          id: "tabletWidth",
+          label: t("Width"),
+          type: "slider",
+          slider: {
+            min: 1,
+            max: 100
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "width")
+          },
+          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
         }
       ]
     }

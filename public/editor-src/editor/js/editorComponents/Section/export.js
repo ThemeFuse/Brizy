@@ -49,6 +49,7 @@ $(".brz-slick-slider, .brz-carousel__slider").each(function() {
   var autoPlay = data.autoPlay;
   var autoPlaySpeed = data.autoPlaySpeed;
   var swipe = data.swipe;
+  var responsive = JSON.parse(decodeURIComponent(data.responsive));
 
   $this.slick({
     slidesToShow: slidesToShow,
@@ -64,14 +65,6 @@ $(".brz-slick-slider, .brz-carousel__slider").each(function() {
     vertical: vertical,
     autoplay: autoPlay,
     autoplaySpeed: autoPlaySpeed,
-    responsive: [
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+    responsive: responsive
   });
 });

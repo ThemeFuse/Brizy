@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ assetsUrl }}/editor/css/editor.css?ver={{ editorVersion }}">
-        <style id="brz-ed-page-curtain-style">@keyframes spin{100%{transform:rotate(360deg)}}.brz-ed-page-curtain{position:fixed;left:0;right:0;top:0;bottom:0;background-color:#141923;z-index:1000}.brz-ed-page-spinner,.brz-ed-page-spinner:after,.brz-ed-page-spinner:before{content:'';position:absolute;top:50%;left:50%;border:3px solid transparent;border-radius:50%;animation:spin 1s linear infinite}.brz-ed-page-spinner{width:100px;height:100px;margin:-50px 0 0 -50px;border-top-color:#22b0da;animation-duration:2.5s}.brz-ed-page-spinner:after{width:80px;height:80px;margin:-40px 0 0 -40px;border-right-color:#ed2164;animation-duration:2s}.brz-ed-page-spinner:before{width:60px;height:60px;margin:-30px 0 0 -30px;border-bottom-color:#fff}</style>
+        <style id="brz-ed-page-curtain-style">@keyframes spin{100%{transform:rotate(360deg)}}.brz-ed-page-curtain{position:fixed;left:0;right:0;top:0;bottom:0;background-color:#141923;z-index:1000}.brz-ed-page-spinner,.brz-ed-page-spinner:after,.brz-ed-page-spinner:before{content:"";position:absolute;top:50%;left:50%;border:3px solid transparent;border-radius:50%;animation:spin 1s linear infinite}.brz-ed-page-spinner{width:100px;height:100px;margin:-50px 0 0 -50px;border-top-color:#22b0da;animation-duration:2.5s}.brz-ed-page-spinner:after{width:80px;height:80px;margin:-40px 0 0 -40px;border-right-color:#ed2164;animation-duration:2s}.brz-ed-page-spinner:before{width:60px;height:60px;margin:-30px 0 0 -30px;border-bottom-color:#fff}.brz-ed-load-error{display:none;width:70%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;text-align:center}.brz-ed-load-error p:first-child{font-size:30px;margin-bottom:20px}.brz-ed-load-error p:last-child{font-size:18px}.brz-ed-load-error code{background-color:gray;padding:1px;font-size:15px}.brz-ed-page-curtain.has-load-error .brz-ed-page-spinner{display:none}.brz-ed-page-curtain.has-load-error .brz-ed-load-error{display:block}</style>
         <style id="brz-ed-page-blocked-style">.brz-ed-page-blocked{display:flex;position:fixed;left:0;right:0;top:0;bottom:0;background-color:#141923;z-index:1070;align-items:center;justify-content:center;flex-wrap:wrap;flex-direction:column;text-align:center;font-family:pn,"Open Sans",Arial,sans-serif;padding:10px}.brz-ed-page-blocked .brz-icon-svg{color:rgba(255,255,255,.2);font-size:72px;margin-bottom:39px}.brz-ed-page-blocked .brz-h1{color:#dbdbde;font-size:21px;margin-bottom:26px}.brz-ed-page-blocked .brz-p{color:#929497;font-size:15px;line-height:24px}@media (min-width:992px){.brz-ed-page-blocked .brz-p{max-width:400px}}</style>
     </head>
     <body class="brz brz-ed" style="margin: 0;">
@@ -84,7 +84,13 @@
             document.head.appendChild(style);
           })();
         </script>
-        <div class="brz-ed-page-curtain"><div class="brz-ed-page-spinner"></div></div>
+        <div class="brz-ed-page-curtain">
+          <div class="brz-ed-page-spinner"></div>
+          <div class="brz-ed-load-error">
+            <p>Sorry, Brizy could not load</p>
+            <p>Your theme must use the <code>the_content</code> filter in order for Brizy to work</p>
+          </div>
+        </div>
         <iframe id="brz-ed-iframe" class="brz-iframe brz-ed-iframe--desktop" style="border: 0; width: 100%; min-height: 100vh; margin: 0 auto;" src="{{ iframe_url }}"></iframe>
     </body>
 </html>

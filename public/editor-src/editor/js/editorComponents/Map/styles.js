@@ -10,13 +10,16 @@ export function styleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       ".brz &": {
-        boxShadow: "var(--boxShadow)",
+        boxShadow: "var(--boxShadow)"
       },
       ".brz-ed--desktop &": {
         width: "var(--width)",
-        height: "var(--height)",
+        height: "var(--height)"
       },
-
+      ".brz-ed--tablet &": {
+        width: "var(--tabletWidth)",
+        height: "var(--tabletHeight)"
+      },
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)",
         height: "var(--mobileHeight)"
@@ -38,16 +41,22 @@ export function styleClassName(v) {
     const boxShadowStyle =
       boxShadow === "on"
         ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
+            boxShadowColorHex,
+            boxShadowColorOpacity
+          )}`
         : "none";
 
     glamorObj = {
       ".brz &": {
         width: `${size}%`,
         height: `${height}px`,
-        boxShadow: boxShadowStyle,
+        boxShadow: boxShadowStyle
+      },
+      "@media (max-width: 991px)": {
+        ".brz &": {
+          width: `${tabletSyncOnChange(v, "size")}%`,
+          height: `${tabletSyncOnChange(v, "height")}px`
+        }
       },
       "@media (max-width: 767px)": {
         ".brz &": {
@@ -81,15 +90,21 @@ export function styleCSSVars(v) {
   const boxShadowStyle =
     boxShadow === "on"
       ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-        boxShadowColorHex,
-        boxShadowColorOpacity
-      )}`
+          boxShadowColorHex,
+          boxShadowColorOpacity
+        )}`
       : "none";
 
   return {
     "--width": `${size}%`,
     "--height": `${height}px`,
     "--boxShadow": boxShadowStyle,
+
+    // Tablet
+    "--tabletWidth": `${tabletSyncOnChange(v, "size")}%`,
+    "--tabletHeight": `${tabletSyncOnChange(v, "height")}px`,
+
+    // Mobile
     "--mobileWidth": `${mobileSyncOnChange(v, "size")}%`,
     "--mobileHeight": `${mobileSyncOnChange(v, "height")}px`
   };

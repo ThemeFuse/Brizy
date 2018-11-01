@@ -38,6 +38,14 @@ class SoundCloud extends EditorComponent {
         min: 5,
         max: 100
       },
+      tabletHeight: {
+        min: 5,
+        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+      },
+      tabletWidth: {
+        min: 5,
+        max: 100
+      },
       mobileHeight: {
         min: 5,
         max: v.style === "basic" ? v.mediumHeight : v.largeHeight
@@ -53,7 +61,7 @@ class SoundCloud extends EditorComponent {
     const wrapperClassName = classnames("brz-iframe", {
       "brz-blocked": IS_EDITOR
     });
-    let { url, autoPlay, showArtwork, width, height } = v;
+    let { url, autoPlay, showArtwork } = v;
     autoPlay = autoPlay === "on";
     showArtwork = showArtwork === "on";
     const src = `https://w.soundcloud.com/player/?url=${url}&amp;auto_play=${autoPlay}&amp;how_teaser=true&amp;visual=${showArtwork}&amp;`;

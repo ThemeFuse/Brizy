@@ -21,6 +21,8 @@ const imageDynamicContentChoices = getDynamicContentChoices("image");
 export default ({
   desktopWrapperSizes,
   desktopContainerWidth,
+  tabletWrapperSizes,
+  tabletContainerWidth,
   mobileWrapperSizes,
   mobileContainerWidth,
   inGallery
@@ -28,6 +30,11 @@ export default ({
   getItemsForDesktop: getItemsForDesktop(
     desktopWrapperSizes,
     desktopContainerWidth,
+    inGallery
+  ),
+  getItemsForTablet: getItemsForTablet(
+    tabletWrapperSizes,
+    tabletContainerWidth,
     inGallery
   ),
   getItemsForMobile: getItemsForMobile(
@@ -94,13 +101,15 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                     const newHeight =
                       src === v.imageSrc
                         ? v.height
-                        : (wrapperSizes.height / newWrapperSize.height) * 100;
+                        : Math.round(
+                            (wrapperSizes.height / newWrapperSize.height) * 100
+                          );
 
                     return {
                       imageWidth: width,
                       imageHeight: height,
                       imageSrc: src,
-                      height: Math.round(newHeight),
+                      height: newHeight,
                       positionX: x,
                       positionY: y,
                       imagePopulation: ""
@@ -608,6 +617,127 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
   ];
 };
 
+export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
+  return [
+    {
+      id: "toolbarImage",
+      type: "popover",
+      icon: "nc-img",
+      title: t("Image"),
+      position: 80,
+      options: [
+        {
+          id: "tabletImage",
+          label: t("Image"),
+          type: "imageSetter",
+          onlyPointer: true,
+          population: {
+            show: imageDynamicContentChoices.length > 0 && !inGallery,
+            choices: imageDynamicContentChoices
+          },
+          value: {
+            width: v.imageWidth,
+            height: v.imageHeight,
+            src: v.imageSrc,
+            x: tabletSyncOnChange(v, "positionX"),
+            y: tabletSyncOnChange(v, "positionY")
+          },
+          onChange: ({ width, height, x, y }) => {
+            width = width || DEFAULT_IMAGE_SIZES.width;
+            height = height || DEFAULT_IMAGE_SIZES.height;
+            const newWrapperSize = calcWrapperSizes(cW, {
+              imageWidth: width,
+              imageHeight: height,
+              resize: tabletSyncOnChange(v, "resize"),
+              width: tabletSyncOnChange(v, "width"),
+              height: 100
+            });
+            const newHeight = Math.round(
+              (wrapperSizes.height / newWrapperSize.height) * 100
+            );
+
+            return {
+              imageWidth: width,
+              imageHeight: height,
+              tabletPositionX: x,
+              tabletPositionY: y,
+              tabletHeight: newHeight
+            };
+          }
+        },
+        {
+          id: "tabletZoom",
+          label: t("Zoom"),
+          type: "slider",
+          slider: {
+            min: 100,
+            max: 200
+          },
+          value: {
+            value: tabletSyncOnChange(v, "zoom")
+          },
+          onChange: ({ value: tabletZoom }) => ({ tabletZoom })
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      title: t("Settings"),
+      position: 110,
+      disabled: inGallery,
+      options: [
+        {
+          id: "tabletResize",
+          label: t("Size"),
+          type: "slider",
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "resize")
+          },
+          onChange: ({ value: tabletResize }) => ({ tabletResize })
+        },
+        {
+          id: "tabletHeight",
+          label: t("Height"),
+          type: "slider",
+          slider: {
+            max: getMaxHeight(cW, v)
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          },
+          value: {
+            value: tabletSyncOnChange(v, "height")
+          },
+          onChange: ({ value: tabletHeight }) => ({ tabletHeight })
+        }
+      ]
+    }
+  ];
+};
+
 export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
   return [
     {
@@ -658,15 +788,16 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                       width: mobileSyncOnChange(v, "width"),
                       height: 100
                     });
-                    const newHeight =
-                      (wrapperSizes.height / newWrapperSize.height) * 100;
+                    const newHeight = Math.round(
+                      (wrapperSizes.height / newWrapperSize.height) * 100
+                    );
 
                     return {
                       imageWidth: width,
                       imageHeight: height,
                       mobilePositionX: x,
                       mobilePositionY: y,
-                      mobileHeight: Math.round(newHeight),
+                      mobileHeight: newHeight,
                       imagePopulation: ""
                     };
                   }
