@@ -8,6 +8,19 @@
 
 class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 
+	private $config;
+
+	/**
+	 * Brizy_Editor_Asset_Storage constructor.
+	 *
+	 * @param $url_builder
+	 * @param $config
+	 */
+	public function __construct( $url_builder, $config ) {
+		parent::__construct( $url_builder );
+		$this->config = $config;
+	}
+
 
 	/**
 	 * Get the asset and store it somewhere in uploads and return the new local url.

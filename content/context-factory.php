@@ -16,11 +16,16 @@ class Brizy_Content_ContextFactory {
 	 *
 	 * @return Brizy_Content_Context
 	 */
-	static public function createContext( $project, $brizy_post, $wp_post, $contentHtml ) {
-		$context = new Brizy_Content_Context( $project, $brizy_post, $wp_post, $contentHtml );
+	static public function createContext(  $project, $brizy_post, $wp_post, $contentHtml ) {
+		$context = new Brizy_Content_Context( $project, null, $wp_post,null );
 
-		$context = apply_filters( 'brizy_dynamic_content_context_create', $context, $project, $brizy_post, $wp_post, $contentHtml );
+		if ( $wp_post ) {
+			$context->setAuthor( $wp_post->post_author );
+		}
 
-		return $context;
+		/**
+		 * We send here the $wp_post for compatibility
+		 */
+		return apply_filters( 'brizy_context_create', $context, $wp_post );
 	}
 }

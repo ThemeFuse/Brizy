@@ -180,18 +180,18 @@ class Brizy_Public_Main {
 			return;
 		}
 
-		$type = $this->post->get_wp_post()->post_type;
-		$postTypeLabel = $wp_post_types[$type]->labels->singular_name;
-		$args = array(
+		$type          = $this->post->get_wp_post()->post_type;
+		$postTypeLabel = $wp_post_types[ $type ]->labels->singular_name;
+		$args          = array(
 			'id'    => 'brizy_Edit_page_link',
-			'title' => __( "Edit ".$postTypeLabel." with Brizy" ),
+			'title' => __( "Edit " . $postTypeLabel . " with Brizy" ),
 			'href'  => $this->post->edit_url(),
 			'meta'  => array()
 		);
 		$wp_admin_bar->add_node( $args );
 	}
 
-	public function templateIncludeForEditor($template) {
+	public function templateIncludeForEditor( $template ) {
 		global $post;
 
 		if ( ! $post ) {
@@ -239,7 +239,7 @@ class Brizy_Public_Main {
 	public function body_class_frontend( $classes ) {
 
 		$classes[] = 'brz';
-		$classes[] = ( function_exists('wp_is_mobile') && wp_is_mobile() ) ? 'brz-is-mobile' : '';
+		$classes[] = ( function_exists( 'wp_is_mobile' ) && wp_is_mobile() ) ? 'brz-is-mobile' : '';
 
 		return $classes;
 	}
@@ -278,7 +278,7 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_view_page() {
-		return ! is_admin() && $this->post->uses_editor() && !isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && !isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] );
+		return ! is_admin() && $this->post->uses_editor() && ! isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && ! isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] );
 	}
 
 	/**
@@ -323,7 +323,8 @@ class Brizy_Public_Main {
 	 */
 	public function insert_page_head() {
 
-		$context = array( 'content' => '' );
+		$params = array( 'content' => '' );
+
 		if ( ! $this->post->get_compiled_html() ) {
 
 			$compiled_html_head = $this->post->get_compiled_html_head();
@@ -332,20 +333,22 @@ class Brizy_Public_Main {
 			$this->post->set_needs_compile( true )
 			           ->save();
 
-			$context['content'] = $compiled_html_head;
+			$params['content'] = $compiled_html_head;
 
 		} else {
-			$compiled_page = $this->post->get_compiled_page( $this->project );
-
-			$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
-
+			$compiled_page = $this->post->get_compiled_page();
+			//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 			$head = $compiled_page->get_head();
 
-			$context['content'] = $head;
+			$params['content'] = $head;
 		}
 
+		$context           = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $this->post->get_wp_post(), null );
+		$mainProcessor     = new Brizy_Content_MainProcessor( $context );
+		$params['content'] = $mainProcessor->process( $params['content'] );
+
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
-		                     ->render( 'head-partial.html.twig', $context );
+		                     ->render( 'head-partial.html.twig', $params );
 
 		return;
 	}
@@ -360,7 +363,7 @@ class Brizy_Public_Main {
 
 		global $post;
 
-		if ( false === strpos( $content, 'brz-root__container' ) || ( $post && $post->ID !== $this->post->get_id() )) {
+		if ( false === strpos( $content, 'brz-root__container' ) || ( $post && $post->ID !== $this->post->get_id() ) ) {
 			return $content;
 		}
 
@@ -369,9 +372,13 @@ class Brizy_Public_Main {
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
 			$this->post->set_needs_compile( true )->save();
 		} else {
-			$compiled_page = $this->post->get_compiled_page( $this->project );
+			$compiled_page = $this->post->get_compiled_page();
 			$content       = $compiled_page->get_body();
 		}
+
+		$context       = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $this->post->get_wp_post(), null );
+		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+		$content       = $mainProcessor->process( $content );
 
 		return $content;
 	}

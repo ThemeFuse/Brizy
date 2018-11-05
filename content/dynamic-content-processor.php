@@ -3,39 +3,22 @@
 class Brizy_Content_DynamicContentProcessor implements Brizy_Editor_Content_ProcessorInterface {
 
 	/**
-	 * @var Brizy_Editor_Post
-	 */
-	private $post;
-
-	/**
-	 * @var Brizy_Editor_Project
-	 */
-	private $project;
-
-	/**
-	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_Post $post
-	 */
-	public function __construct( $project, $post = null ) {
-		$this->post    = $post;
-		$this->project = $project;
-	}
-
-	/**
-	 * @param $content
+	 * @param string $content
+	 * @param Brizy_Content_Context $context
 	 *
 	 * @return mixed
 	 */
-	public function process( $content ) {
-
-		$context = Brizy_Content_ContextFactory::createContext( $this->project, $this->post, $this->post->get_wp_post(), $content );
-		$context = apply_filters( 'brizy_context_create', $context, $this->post->get_wp_post() );
+	public function process( $content, Brizy_Content_Context $context ) {
 
 		$placeholderProvider = new Brizy_Content_PlaceholderProvider( $context );
-		$extractor           = new Brizy_Content_PlaceholderExtractor( $context, $placeholderProvider );
+		$extractor           = new Brizy_Content_PlaceholderExtractor( $placeholderProvider );
+
+		list( $placeholders, $content ) = $extractor->extract( $content );
 
 		$replacer = new Brizy_Content_PlaceholderReplacer( $context, $placeholderProvider, $extractor );
 
-		return $replacer->getContent();
+		$content = $replacer->getContent( $placeholders, $content );
+
+		return $content;
 	}
 }

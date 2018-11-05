@@ -325,32 +325,15 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return true;
 	}
 
-	public function get_compiled_page( $project, $post = null ) {
+	/**
+	 * @return Brizy_Editor_CompiledHtml
+	 */
+	public function get_compiled_page( ) {
 
 		if ( self::$compiled_page ) {
 			return self::$compiled_page;
 		}
-
-		if ( is_null( $post ) ) {
-			$post = $this;
-		}
-
-		$brizy_editor_editor_editor = Brizy_Editor_Editor_Editor::get( $project, $this );
-		$config                     = $brizy_editor_editor_editor->config();
-		$asset_storage              = new Brizy_Editor_Asset_AssetProxyStorage( $project, $post, $config );
-		$media_storage              = new Brizy_Editor_Asset_MediaProxyStorage( $project, $post, $config );
-
-		$asset_processors[] = new Brizy_Editor_Asset_DomainProcessor();
-		$asset_processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
-		$asset_processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
-
 		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
-
-		$asset_processors = apply_filters( 'brizy_content_processors', $asset_processors, $project, $post );
-
-		array_unshift( $asset_processors, new Brizy_Content_DynamicContentProcessor( $project, $post ) );
-
-		$brizy_editor_compiled_html->setProcessors( $asset_processors );
 
 		return self::$compiled_page = $brizy_editor_compiled_html;
 	}

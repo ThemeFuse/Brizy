@@ -23,13 +23,12 @@ class Brizy_Editor_Asset_AssetProxyProcessor implements Brizy_Editor_Content_Pro
 	}
 
 	/**
-	 * Find and cache all assets and replace the urls with new local ones.
+	 * @param string $content
+	 * @param Brizy_Content_Context $context
 	 *
-	 * @param $content
-	 *
-	 * @return string
+	 * @return mixed|string
 	 */
-	public function process( $content ) {
+	public function process( $content, Brizy_Content_Context $context ) {
 
 		preg_match_all( '/"(.[^"]*(?:\?|&|&amp;)brizy=(.[^"]*))"/im', $content, $matches );
 

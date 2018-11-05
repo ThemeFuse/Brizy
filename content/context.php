@@ -61,14 +61,10 @@ class Brizy_Content_Context {
 	 * BrizyPro_Content_Context constructor.
 	 *
 	 * @param $project
-	 * @param $brizy_post
 	 * @param $wp_post
-	 * @param $contentHtml
 	 */
 	public function __construct( $project, $brizy_post, $wp_post, $contentHtml ) {
-		$this->setContent( $contentHtml );
 		$this->setProject( $project );
-		$this->setPost( $brizy_post );
 		$this->setWpPost( $wp_post );
 	}
 }

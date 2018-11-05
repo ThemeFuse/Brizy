@@ -6,23 +6,7 @@
  * Time: 10:46 AM
  */
 
-abstract class Brizy_Editor_Asset_AbstractStorage  extends  Brizy_Editor_Asset_StaticFile {
-
-	/**
-	 * @var Brizy_Editor_Project
-	 */
-	protected $project;
-
-
-	/**
-	 * @var Brizy_Editor_Post
-	 */
-	protected $post;
-
-	/**
-	 * @var array
-	 */
-	protected $config;
+abstract class Brizy_Editor_Asset_AbstractStorage extends Brizy_Editor_Asset_StaticFile {
 
 	/**
 	 * @var Brizy_Editor_UrlBuilder
@@ -32,17 +16,11 @@ abstract class Brizy_Editor_Asset_AbstractStorage  extends  Brizy_Editor_Asset_S
 	/**
 	 * Brizy_Editor_Asset_AbstractStorage constructor.
 	 *
-	 * @param $project
-	 * @param Brizy_Editor_Post $post
-	 * @param $config
+	 * @param $url_builder
 	 */
-	public function __construct( $project, $post, $config ) {
-		$this->project     = $project;
-		$this->post        = $post;
-		$this->config      = $config;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post->get_parent_id() );
+	public function __construct( $url_builder ) {
+		$this->url_builder = $url_builder;
 	}
-
 
 	/**
 	 * Get the asset and store it somewhere in uploads and return the new local url.

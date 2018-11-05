@@ -474,7 +474,6 @@ class Brizy_Admin_Templates {
 		} catch ( Exception $e ) {
 
 		}
-
 		try {
 
 			if ( is_null( $pid ) || ! $is_using_brizy ) {
@@ -494,6 +493,10 @@ class Brizy_Admin_Templates {
 					}
 				}
 
+				if ( $pid ) {
+					$this->pid = $pid;
+				}
+
 				remove_filter( 'the_content', 'wpautop' );
 
 				// insert the compiled head and content
@@ -509,70 +512,6 @@ class Brizy_Admin_Templates {
 		}
 	}
 
-
-	public function bodyClassFrontend( $classes ) {
-
-		$classes[] = 'brz';
-
-		return $classes;
-	}
-
-	/**
-	 *  Show the compiled page head content
-	 */
-	public function insertPageHead() {
-
-		if ( ! $this->template ) {
-			return;
-		}
-		$pid = Brizy_Editor::get()->currentPostId();
-
-		$brizyPost = $this->template;
-
-		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid, false ) ) {
-			$brizyPost = Brizy_Editor_Post::get( $pid );
-		}
-
-		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
-
-		$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
-
-		$head = $compiled_page->get_head();
-
-		?>
-        <!-- BRIZY HEAD -->
-		<?php echo $head; ?>
-        <!-- END BRIZY HEAD -->
-		<?php
-
-		return;
-	}
-
-
-	/**
-	 * @param $content
-	 *
-	 * @return null|string|string[]
-	 * @throws Exception
-	 */
-	public function insertPageContent() {
-
-		if ( ! $this->template ) {
-			return;
-		}
-
-		$pid = Brizy_Editor::get()->currentPostId();
-
-		$brizyPost = $this->template;
-
-		if ( $pid && Brizy_Editor_Post::checkIfPostTypeIsSupported( $pid, false ) ) {
-			$brizyPost = Brizy_Editor_Post::get( $pid );
-		}
-
-		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get(), $brizyPost );
-
-		echo do_shortcode( $compiled_page->get_body() );
-	}
 
 	/**
 	 * @internal
@@ -600,6 +539,81 @@ class Brizy_Admin_Templates {
 	}
 
 
+	public function bodyClassFrontend( $classes ) {
+
+		$classes[] = 'brz';
+
+		return $classes;
+	}
+
+	/**
+	 *  Show the compiled page head content
+	 */
+	public function insertPageHead() {
+
+		if ( ! $this->template ) {
+			return;
+		}
+		$pid = Brizy_Editor::get()->currentPostId();
+
+		$post = $this->template->get_wp_post();
+
+		if ( $pid ) {
+			$post = get_post( $pid );
+		}
+
+
+		$compiled_page = $this->template->get_compiled_page();
+
+		//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
+
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post,null );
+
+		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+
+		$head = $mainProcessor->process( $compiled_page->get_head() );
+
+		?>
+        <!-- BRIZY HEAD -->
+		<?php echo $head; ?>
+        <!-- END BRIZY HEAD -->
+		<?php
+
+		return;
+	}
+
+
+	/**
+	 * @param $content
+	 *
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
+	public function insertPageContent() {
+
+		if ( ! $this->template ) {
+			return;
+		}
+
+		$pid = Brizy_Editor::get()->currentPostId();
+
+		$post = $this->template;
+
+		if ( $pid ) {
+			$post = get_post( $pid );
+		}
+
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post->get_wp_post(),null );
+
+		$compiled_page = $this->template->get_compiled_page();
+
+		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+
+		$content = $mainProcessor->process( $compiled_page->get_body() );
+
+		echo do_shortcode( $content );
+	}
+
 	/**
 	 * @param $content
 	 *
@@ -611,10 +625,16 @@ class Brizy_Admin_Templates {
 		if ( ! $this->template ) {
 			return $content;
 		}
+		$pid       = Brizy_Editor::get()->currentPostId();
+		$brizyPost = get_post( $pid );
 
-		$compiled_page = $this->template->get_compiled_page( Brizy_Editor_Project::get() );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $brizyPost, null );
 
-		return $compiled_page->get_body();
+		$compiled_page = $this->template->get_compiled_page();
+
+		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+
+		return $mainProcessor->process( $compiled_page->get_body() );
 	}
 
 	/**

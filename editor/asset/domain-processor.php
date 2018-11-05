@@ -10,13 +10,12 @@ class Brizy_Editor_Asset_DomainProcessor implements Brizy_Editor_Content_Process
 
 
 	/**
-	 * Find and cache all assets and replace the urls with new local ones.
+	 * @param string $content
+	 * @param Brizy_Content_Context $context
 	 *
-	 * @param $content
-	 *
-	 * @return string
+	 * @return mixed|null|string|string[]
 	 */
-	public function process( $content ) {
+	public function process( $content, Brizy_Content_Context $context ) {
 
 		$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
 
