@@ -1,6 +1,6 @@
 export default {
 id: "Gabi012Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 404,
 title: "Gabi012Dark", 
@@ -8,6 +8,7 @@ title: "Gabi012Dark",
 keywords: "map, contact, phone, email, info, social, icons, address, directions",
 cat: [0, 15, 11],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -79,7 +82,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -125,7 +129,8 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left"
+                                horizontalAlign: "left",
+                                mobileHorizontalAlign: "left"
                             }
                         },
                         {
@@ -143,7 +148,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -175,7 +180,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -206,7 +211,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -308,12 +313,13 @@ resolve: {
                                                                     hoverBorderColorHex: "#bde1f4",
                                                                     hoverBgColorOpacity: 1,
                                                                     mobilePadding: 20,
-                                                                    tempBgColorOpacity: 0.07
+                                                                    tempBgColorOpacity: 0.070000000000000006661338147750939242541790008544921875
                                                                 }
                                                             }
                                                         ],
                                                         marginRight: 10,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ]

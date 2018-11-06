@@ -1,13 +1,14 @@
 export default {
 id: "Dimi019Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 328,
 title: "Dimi019Light",
 
 keywords: "pricing, call to action, three columns, button",
-cat: [0, 13, 3],
+cat: [0, 13, 4],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -25,6 +26,8 @@ resolve: {
                     bgColorHex: "#eef0f2",
                     bgColorOpacity: 1,
                     bgAttachment: "animated",
+                    mobileBgColorHex: "#eef0f2",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -121,15 +124,14 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
                                             padding: 0,
                                             verticalAlign: "center",
                                             borderColorHex: "#73777f",
-                                            tempBorderColorOpacity: 0.1,
+                                            tempBorderColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             tempBorderWidth: 3,
                                             tempBorderTopWidth: 3,
                                             tempBorderRightWidth: 3,
@@ -145,6 +147,8 @@ resolve: {
                                             marginTop: 25,
                                             marginBottom: 25,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
                                             borderColorPalette: "color7",
                                             paddingLeft: 80,
                                             paddingRight: 80
@@ -235,7 +239,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -275,7 +280,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -326,8 +332,8 @@ resolve: {
                                             padding: 0,
                                             verticalAlign: "center",
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.1,
-                                            tempBorderColorOpacity: 0.1,
+                                            borderColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            tempBorderColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderWidth: 3,
                                             borderTopWidth: 3,
                                             borderRightWidth: 3,
@@ -356,6 +362,9 @@ resolve: {
                                             marginTop: 40,
                                             marginBottom: 40,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
+                                            mobileBgColorOpacity: 1,
                                             borderColorPalette: "color7"
                                         }
                                     },
@@ -444,7 +453,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -484,7 +494,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -552,6 +563,9 @@ resolve: {
                                             marginLeft: 15,
                                             bgColorHex: "",
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             borderColorPalette: "color3",
                                             margin: 15,
                                             marginTop: 15,

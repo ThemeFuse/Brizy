@@ -1,6 +1,6 @@
 export default {
 id: "Gabi006Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 231,
 title: "Gabi006Dark", 
@@ -8,6 +8,7 @@ title: "Gabi006Dark",
 keywords: "testimonial, icon, image, team, member",
 cat: [0, 8],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -113,10 +116,10 @@ resolve: {
                                                                     customSize: 64,
                                                                     type: "outline",
                                                                     bgColorHex: "#009900",
-                                                                    tempBgColorOpacity: 0.8,
+                                                                    tempBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                                                                     tempFillType: "outline",
                                                                     hoverBorderColorHex: "#009900",
-                                                                    hoverBorderColorOpacity: 0.8,
+                                                                    hoverBorderColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                                                                     tempPadding: 10,
                                                                     mobilePadding: 10,
                                                                     tempBorderWidth: 1,
@@ -127,8 +130,7 @@ resolve: {
                                                         ],
                                                         horizontalAlign: "right",
                                                         mobileMarginBottom: 0,
-                                                        mobileMarginTop: 0,
-                                                        mobileHorizontalAlign: "center"
+                                                        mobileMarginTop: 0
                                                     }
                                                 }
                                             ],

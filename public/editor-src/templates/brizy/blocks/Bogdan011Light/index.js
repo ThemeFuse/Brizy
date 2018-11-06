@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan011Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 490,
 title: "Bogdan011Light",
 
 keywords: "Gallery, team, members, grid, images, features, services, three columns",
-cat: [0, 9, 10, 2],
+cat: [0, 9, 10, 3],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -64,7 +65,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -157,6 +158,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -168,7 +172,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -261,6 +265,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -272,7 +279,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -365,6 +372,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -388,7 +398,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -476,6 +486,9 @@ resolve: {
                                             paddingBottom: 0,
                                             paddingTop: 0,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -487,7 +500,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -575,6 +588,9 @@ resolve: {
                                             paddingBottom: 0,
                                             paddingTop: 0,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -586,7 +602,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -674,6 +690,9 @@ resolve: {
                                             paddingBottom: 0,
                                             paddingTop: 0,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -682,7 +701,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#eef0f2",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

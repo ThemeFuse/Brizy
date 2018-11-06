@@ -1,13 +1,14 @@
 export default {
 id: "Gabi027Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 287,
 title: "Gabi027Light",
 
 keywords: "services, projects, text, three columns, image background",
-cat: [0, 7, 4],
+cat: [0, 7, 5],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,11 +23,11 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     paddingBottom: 90,
                     paddingType: "ungrouped",
                     padding: 90,
-                    tempBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     items: [
                         {
                             type: "Wrapper",
@@ -107,7 +108,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 5.8,
+                                            width: 5.79999999999999982236431605997495353221893310546875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -132,7 +133,7 @@ resolve: {
                                             ],
                                             verticalAlign: "center",
                                             bgColorHex: "#ffffff",
-                                            tempBgColorOpacity: 0.23,
+                                            tempBgColorOpacity: 0.2300000000000000099920072216264088638126850128173828125,
                                             marginType: "ungrouped",
                                             marginRight: -50,
                                             marginLeft: 20
@@ -222,8 +223,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -236,13 +236,13 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 0,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
                                             borderBottomLeftRadius: 4,
                                             borderBottomRightRadius: 4,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             tempBorderTopLeftRadius: 4,
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
@@ -263,7 +263,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 5.1,
+                                            width: 5.0999999999999996447286321199499070644378662109375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -288,7 +288,7 @@ resolve: {
                                             ],
                                             verticalAlign: "center",
                                             bgColorHex: "#ffffff",
-                                            tempBgColorOpacity: 0.99,
+                                            tempBgColorOpacity: 0.9899999999999999911182158029987476766109466552734375,
                                             marginType: "ungrouped",
                                             marginRight: -60
                                         }
@@ -377,8 +377,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -391,13 +390,13 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 0,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
                                             borderBottomLeftRadius: 4,
                                             borderBottomRightRadius: 4,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             tempBorderTopLeftRadius: 4,
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
@@ -418,7 +417,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 5.1,
+                                            width: 5.0999999999999996447286321199499070644378662109375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -443,7 +442,7 @@ resolve: {
                                             ],
                                             verticalAlign: "center",
                                             bgColorHex: "#ffffff",
-                                            tempBgColorOpacity: 0.99,
+                                            tempBgColorOpacity: 0.9899999999999999911182158029987476766109466552734375,
                                             marginType: "ungrouped",
                                             marginRight: -60
                                         }
@@ -532,8 +531,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -546,13 +544,13 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 0,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
                                             borderBottomLeftRadius: 4,
                                             borderBottomRightRadius: 4,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             tempBorderTopLeftRadius: 4,
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
@@ -575,7 +573,12 @@ resolve: {
                     ],
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
-                    bgImageSrc: "497e747cd8ae166381d471f943450fe4e021c21c.jpeg"
+                    bgImageSrc: "497e747cd8ae166381d471f943450fe4e021c21c.jpeg",
+                    mobileBgImageWidth: 1996,
+                    mobileBgImageHeight: 1331,
+                    mobileBgImageSrc: "497e747cd8ae166381d471f943450fe4e021c21c.jpeg",
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625
                 }
             }
         ]

@@ -1,13 +1,14 @@
 export default {
 id: "Dimi006Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 340,
 title: "Dimi006Light",
 
 keywords: "features, services, news, two columns, icons",
-cat: [0, 2, 7, 6],
+cat: [0, 3, 7, 6],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorOpacity: 1,
                     bgColorHex: "#ffffff",
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -51,6 +54,8 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
+                                                        mobileSize: "large",
+                                                        mobileCustomSize: 64,
                                                         hoverColorOpacity: 1
                                                     }
                                                 },
@@ -156,8 +161,9 @@ resolve: {
                                             _styles: [
                                                 "line"
                                             ],
-                                            borderColorOpacity: 0.2,
-                                            width: 84
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            width: 84,
+                                            mobileWidth: 84
                                         }
                                     }
                                 ],
@@ -193,6 +199,8 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
+                                                        mobileSize: "large",
+                                                        mobileCustomSize: 64,
                                                         hoverColorOpacity: 1
                                                     }
                                                 },

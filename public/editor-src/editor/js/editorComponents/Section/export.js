@@ -1,30 +1,7 @@
 import $ from "jquery";
+import Brizy from "Brizy";
 
 function getArrow(src, className) {
-  $.ajax({
-    method: "GET",
-    url: src,
-    dataType: "text"
-  })
-    .done(function(base64) {
-      var svg = "";
-
-      try {
-        svg = atob(base64.replace("MC43NDQwMzkxMDQwNjc4MDM0", ""));
-      } catch (e) {
-        if (/^<svg/.test(base64)) {
-          svg = base64;
-        } else {
-          console.warn(e);
-        }
-      }
-
-      $('svg[data-href="' + src + '"]').html(svg);
-    })
-    .fail(function(jqXHR, textStatus) {
-      console.warn("Request failed: " + textStatus);
-    });
-
   return (
     '<div class="brz-slick-slider__arrow ' +
     className +
@@ -35,6 +12,7 @@ function getArrow(src, className) {
 }
 
 $(".brz-slick-slider, .brz-carousel__slider").each(function() {
+  var _this = this;
   var $this = $(this);
   var data = $this.data();
   var slidesToShow = data.slidesToShow;
@@ -50,6 +28,10 @@ $(".brz-slick-slider, .brz-carousel__slider").each(function() {
   var autoPlaySpeed = data.autoPlaySpeed;
   var swipe = data.swipe;
   var responsive = JSON.parse(decodeURIComponent(data.responsive));
+
+  $this.on("init", function() {
+    Brizy.utils.correctIcons(_this);
+  });
 
   $this.slick({
     slidesToShow: slidesToShow,

@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan008Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 362,
 title: "Bogdan008Light",
 
 keywords: "header, features, call to action, services, icons, icon box, button, three columns, hero, image background, cover",
-cat: [0, 1, 2, 3, 7],
+cat: [0, 2, 3, 4, 7],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,10 +23,10 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     paddingTop: 100,
                     paddingBottom: 100,
-                    tempBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     padding: 100,
                     items: [
                         {
@@ -92,6 +93,7 @@ resolve: {
                                             tempBorderRadiusType: "custom",
                                             borderRadius: 27,
                                             borderColorOpacity: 1,
+                                            mobileBorderRadius: 27,
                                             tempBorderRadius: 27,
                                             hoverBgColorPalette: "color2",
                                             hoverBorderColorPalette: "",
@@ -139,7 +141,8 @@ resolve: {
                                                 "line"
                                             ],
                                             width: 100,
-                                            borderColorOpacity: 0.2
+                                            mobileWidth: 100,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125
                                         }
                                     }
                                 ]
@@ -209,6 +212,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -268,6 +273,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -327,6 +334,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -357,7 +366,12 @@ resolve: {
                     ],
                     bgImageWidth: 1920,
                     bgImageHeight: 920,
-                    bgImageSrc: "5a5fe4398354cf32eb186e6357bd85ea0c7079ad.jpeg"
+                    bgImageSrc: "5a5fe4398354cf32eb186e6357bd85ea0c7079ad.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 920,
+                    mobileBgImageSrc: "5a5fe4398354cf32eb186e6357bd85ea0c7079ad.jpeg",
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625
                 }
             }
         ]

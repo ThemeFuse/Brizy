@@ -1,13 +1,14 @@
 export default {
 id: "Gabi008Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 399,
 title: "Gabi008Dark", 
 
 keywords: "features, services, image, grid, full width",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -97,7 +98,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 30
+                                                                    height: 30,
+                                                                    mobileHeight: 30
                                                                 }
                                                             }
                                                         ],
@@ -238,7 +240,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 30
+                                                                    height: 30,
+                                                                    mobileHeight: 30
                                                                 }
                                                             }
                                                         ],
@@ -407,7 +410,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

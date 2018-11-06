@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan019Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 270,
 title: "Bogdan019Light",
@@ -8,6 +8,7 @@ title: "Bogdan019Light",
 keywords: "team, services, images, button, three columns, list, avatar",
 cat: [0, 10, 7],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -504,12 +505,12 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
+                                                                    mobileBorderRadius: 4,
                                                                     borderWidth: 0
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],

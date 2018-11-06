@@ -1,13 +1,14 @@
 export default {
 id: "Dimi013Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 361,
 title: "Dimi013Dark", 
 
 keywords: "features, services, grid, icons, icon box, button, text",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -25,7 +26,7 @@ resolve: {
                     bgColorOpacity: 1,
                     bgAttachment: "animated",
                     borderColorHex: "#997272",
-                    tempBorderColorOpacity: 0.8,
+                    tempBorderColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     tempBorderWidth: 10,
                     tempBorderTopWidth: 10,
                     tempBorderRightWidth: 10,
@@ -78,8 +79,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -162,8 +162,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -208,8 +207,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -292,8 +290,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -338,8 +335,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -422,8 +418,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -502,8 +497,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -586,8 +580,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -632,8 +625,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -716,8 +708,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -762,8 +753,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -846,8 +836,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -862,7 +851,9 @@ resolve: {
                     ],
                     padding: 65,
                     paddingTop: 65,
-                    paddingBottom: 65
+                    paddingBottom: 65,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

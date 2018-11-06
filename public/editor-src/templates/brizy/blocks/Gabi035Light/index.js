@@ -1,6 +1,6 @@
 export default {
 id: "Gabi035Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 287,
 title: "Gabi035Light",
@@ -8,6 +8,7 @@ title: "Gabi035Light",
 keywords: "forms, contact",
 cat: [0, 11, 16],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -79,7 +80,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20
+                                            height: 20,
+                                            mobileHeight: 20
                                         }
                                     }
                                 ],
@@ -114,7 +116,8 @@ resolve: {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
-                                                                    width: 50
+                                                                    width: 50,
+                                                                    mobileWidth: 50
                                                                 }
                                                             },
                                                             {
@@ -127,6 +130,7 @@ resolve: {
                                                                         "Option 2"
                                                                     ],
                                                                     width: 50,
+                                                                    mobileWidth: 50,
                                                                     type: "Email"
                                                                 }
                                                             },
@@ -153,21 +157,22 @@ resolve: {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
-                                                                    height: 140
+                                                                    height: 140,
+                                                                    mobileHeight: 140
                                                                 }
                                                             }
                                                         ],
                                                         fontStyle: "paragraph",
                                                         fontWeight: 300,
-                                                        lineHeight: 1.7,
+                                                        lineHeight: 1.6999999999999999555910790149937383830547332763671875,
                                                         mobileFontStyle: "paragraph",
                                                         mobileFontSize: 15,
-                                                        mobileLineHeight: 1.6,
+                                                        mobileLineHeight: 1.600000000000000088817841970012523233890533447265625,
                                                         bgColorPalette: "color8",
                                                         colorPalette: "color7",
                                                         borderColorPalette: "color7",
                                                         borderColorHex: "#73777f",
-                                                        borderColorOpacity: 0.2
+                                                        borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125
                                                     }
                                                 },
                                                 {
@@ -198,6 +203,8 @@ resolve: {
                             }
                         }
                     ],
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1,
                     containerSize: 60
                 }
             }

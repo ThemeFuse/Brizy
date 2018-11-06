@@ -1,13 +1,14 @@
 export default {
 id: "Gabi009Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 382,
 title: "Gabi009Light",
 
 keywords: "header, hero, cover, icon , text, call to action, video",
-cat: [0, 1],
+cat: [0, 2],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,11 +23,11 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.15,
+                    bgColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
                     paddingTop: 200,
                     paddingBottom: 200,
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
-                    tempBgColorOpacity: 0.15,
+                    tempBgColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
                     padding: 200,
                     items: [
                         {
@@ -43,7 +44,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -110,7 +112,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorHex: "#ffffff",
@@ -176,6 +178,9 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
                     bgImageSrc: "bb2e1eb56e2d9f65d7f79001c7cb295faf8a77d5.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "bb2e1eb56e2d9f65d7f79001c7cb295faf8a77d5.jpeg",
                     containerSize: 60
                 }
             }

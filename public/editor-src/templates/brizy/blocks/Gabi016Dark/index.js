@@ -1,13 +1,14 @@
 export default {
 id: "Gabi016Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 219,
 title: "Gabi016Dark", 
 
 keywords: "call to action, contact, button, text, partners, logos, social",
-cat: [0, 3, 11],
+cat: [0, 4, 11],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -80,7 +81,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -142,7 +144,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20
+                                            height: 20,
+                                            mobileHeight: 20
                                         }
                                     }
                                 ]
@@ -331,6 +334,8 @@ resolve: {
                             }
                         }
                     ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     containerSize: 90
                 }
             }

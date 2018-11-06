@@ -1,13 +1,14 @@
 export default {
 id: "Gabi044Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 417,
 title: "Gabi044Light",
 
 keywords: "tabs, images, two columns, portfolio, text",
-cat: [0, 7, 9, 2],
+cat: [0, 7, 9, 3],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -78,7 +79,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 40
+                                            height: 40,
+                                            mobileHeight: 40
                                         }
                                     }
                                 ],
@@ -124,6 +126,9 @@ resolve: {
                                                                                 bgImageWidth: 1920,
                                                                                 bgImageHeight: 1266,
                                                                                 bgImageSrc: "e4a5d1aeb42faa67d3ca8d6f292a1183899b5ce0.jpeg",
+                                                                                mobileBgImageWidth: 1920,
+                                                                                mobileBgImageHeight: 1266,
+                                                                                mobileBgImageSrc: "e4a5d1aeb42faa67d3ca8d6f292a1183899b5ce0.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 width: 50
@@ -226,7 +231,8 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left"
+                                                                                            horizontalAlign: "left",
+                                                                                            mobileHorizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -236,6 +242,9 @@ resolve: {
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "",
                                                                                 bgColorOpacity: 1,
+                                                                                mobileBgColorPalette: "color8",
+                                                                                mobileBgColorHex: "",
+                                                                                mobileBgColorOpacity: 1,
                                                                                 paddingTop: 70,
                                                                                 paddingBottom: 70,
                                                                                 borderColorPalette: "color8",
@@ -359,7 +368,8 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left"
+                                                                                            horizontalAlign: "left",
+                                                                                            mobileHorizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -369,6 +379,9 @@ resolve: {
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "",
                                                                                 bgColorOpacity: 1,
+                                                                                mobileBgColorPalette: "color8",
+                                                                                mobileBgColorHex: "",
+                                                                                mobileBgColorOpacity: 1,
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 paddingTop: 70,
@@ -386,6 +399,9 @@ resolve: {
                                                                                 bgImageWidth: 1920,
                                                                                 bgImageHeight: 1280,
                                                                                 bgImageSrc: "d6a6c8c324e76ca8108376efd3240f4102e7803f.jpeg",
+                                                                                mobileBgImageWidth: 1920,
+                                                                                mobileBgImageHeight: 1280,
+                                                                                mobileBgImageSrc: "d6a6c8c324e76ca8108376efd3240f4102e7803f.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 bgPositionX: 0,
@@ -423,6 +439,9 @@ resolve: {
                                                                                 bgImageWidth: 1920,
                                                                                 bgImageHeight: 1280,
                                                                                 bgImageSrc: "2cbbf849f80cc1ddaf7383c1a7d3c02c2a94de69.jpeg",
+                                                                                mobileBgImageWidth: 1920,
+                                                                                mobileBgImageHeight: 1280,
+                                                                                mobileBgImageSrc: "2cbbf849f80cc1ddaf7383c1a7d3c02c2a94de69.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 width: 50
@@ -525,7 +544,8 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left"
+                                                                                            horizontalAlign: "left",
+                                                                                            mobileHorizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -535,6 +555,9 @@ resolve: {
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "",
                                                                                 bgColorOpacity: 1,
+                                                                                mobileBgColorPalette: "color8",
+                                                                                mobileBgColorHex: "",
+                                                                                mobileBgColorOpacity: 1,
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 paddingTop: 70,
@@ -659,7 +682,8 @@ resolve: {
                                                                                                     }
                                                                                                 }
                                                                                             ],
-                                                                                            horizontalAlign: "left"
+                                                                                            horizontalAlign: "left",
+                                                                                            mobileHorizontalAlign: "left"
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -669,6 +693,9 @@ resolve: {
                                                                                 bgColorPalette: "color8",
                                                                                 bgColorHex: "",
                                                                                 bgColorOpacity: 1,
+                                                                                mobileBgColorPalette: "color8",
+                                                                                mobileBgColorHex: "",
+                                                                                mobileBgColorOpacity: 1,
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 paddingTop: 70,
@@ -685,6 +712,9 @@ resolve: {
                                                                                 bgImageWidth: 1928,
                                                                                 bgImageHeight: 1285,
                                                                                 bgImageSrc: "892a9084fbf9486ef022389cb78a17e4c7dc6881.jpeg",
+                                                                                mobileBgImageWidth: 1928,
+                                                                                mobileBgImageHeight: 1285,
+                                                                                mobileBgImageSrc: "892a9084fbf9486ef022389cb78a17e4c7dc6881.jpeg",
                                                                                 mobilePaddingRight: 10,
                                                                                 mobilePaddingLeft: 10,
                                                                                 width: 50
@@ -711,6 +741,7 @@ resolve: {
                                             colorHex: "#142850",
                                             colorOpacity: 1,
                                             horizontalAlign: "center",
+                                            mobileHorizontalAlign: "center",
                                             borderColorPalette: "color8",
                                             paddingRight: 0,
                                             paddingLeft: 0,
@@ -723,9 +754,11 @@ resolve: {
                         }
                     ],
                     bgColorHex: "#eef0f2",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
-                    tempMobileBgColorOpacity: 0.9
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#eef0f2",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempMobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625
                 }
             }
         ]

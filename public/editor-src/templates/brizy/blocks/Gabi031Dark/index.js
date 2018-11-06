@@ -1,13 +1,14 @@
 export default {
 id: "Gabi031Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 310,
 title: "Gabi031Dark", 
 
 keywords: "features, services , news, icons , icon box, four columns, button",
-cat: [0, 2, 7, 6],
+cat: [0, 3, 7, 6],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -58,11 +59,13 @@ resolve: {
                                                                     imageHeight: 1280,
                                                                     imageSrc: "3387c015e4b54f8ac6e19f88145d684de9f43876.jpeg",
                                                                     height: 143,
-                                                                    resize: 88
+                                                                    resize: 88,
+                                                                    mobileResize: 88
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -206,6 +209,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         itemPadding: 40,
                                                         itemPaddingRight: 40,
                                                         itemPaddingLeft: 40
@@ -233,8 +237,9 @@ resolve: {
                                             _styles: [
                                                 "line"
                                             ],
-                                            borderColorOpacity: 0.29,
-                                            width: 98
+                                            borderColorOpacity: 0.289999999999999980015985556747182272374629974365234375,
+                                            width: 98,
+                                            mobileWidth: 98
                                         }
                                     }
                                 ],
@@ -278,7 +283,7 @@ resolve: {
                                                                     hoverColorOpacity: 1,
                                                                     tempPadding: 0,
                                                                     hoverBgColorHex: "#239ddb",
-                                                                    tempBorderColorOpacity: 0.01,
+                                                                    tempBorderColorOpacity: 0.01000000000000000020816681711721685132943093776702880859375,
                                                                     hoverBorderColorHex: "#bde1f4"
                                                                 }
                                                             }
@@ -441,7 +446,7 @@ resolve: {
                                                                     hoverColorOpacity: 1,
                                                                     tempPadding: 0,
                                                                     hoverBorderColorHex: "#bde1f4",
-                                                                    tempBgColorOpacity: 0.01,
+                                                                    tempBgColorOpacity: 0.01000000000000000020816681711721685132943093776702880859375,
                                                                     hoverBgColorHex: "#239ddb"
                                                                 }
                                                             }
@@ -580,7 +585,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

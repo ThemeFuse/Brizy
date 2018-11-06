@@ -1,13 +1,14 @@
 export default {
 id: "Gabi008Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 399,
 title: "Gabi008Light",
 
 keywords: "features, services, image, grid, full width",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,7 +23,7 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.2,
+                    bgColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                     containerType: "fullWidth",
                     items: [
                         {
@@ -97,7 +98,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 30
+                                                                    height: 30,
+                                                                    mobileHeight: 30
                                                                 }
                                                             }
                                                         ],
@@ -164,7 +166,7 @@ resolve: {
                                                                     ],
                                                                     paddingLeft: 0,
                                                                     paddingRight: 40,
-                                                                    width: 49.9
+                                                                    width: 49.89999999999999857891452847979962825775146484375
                                                                 }
                                                             },
                                                             {
@@ -218,7 +220,7 @@ resolve: {
                                                                     ],
                                                                     paddingLeft: 20,
                                                                     paddingRight: 40,
-                                                                    width: 50.1
+                                                                    width: 50.10000000000000142108547152020037174224853515625
                                                                 }
                                                             }
                                                         ]
@@ -238,7 +240,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 30
+                                                                    height: 30,
+                                                                    mobileHeight: 30
                                                                 }
                                                             }
                                                         ],

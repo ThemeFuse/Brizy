@@ -1,13 +1,14 @@
 export default {
 id: "Gabi041Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 402,
 title: "Gabi041Dark", 
 
 keywords: "slider, call to action, image background, header, cover, hero, promo, icon, video",
-cat: [0, 1, 3, 17],
+cat: [0, 2, 4, 17],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,12 +23,14 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#142850",
-                    bgColorOpacity: 0.82,
+                    bgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     paddingTop: 200,
                     paddingBottom: 200,
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
-                    tempBgColorOpacity: 0.82,
+                    tempBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     padding: 200,
+                    mobileBgColorHex: "#142850",
+                    mobileBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     items: [
                         {
                             type: "Wrapper",
@@ -43,7 +46,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -110,7 +114,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorOpacity: 1,
@@ -174,7 +178,10 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "64829c29ed31d316cd173dcebd8f7925c919d363.jpeg"
+                    bgImageSrc: "64829c29ed31d316cd173dcebd8f7925c919d363.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "64829c29ed31d316cd173dcebd8f7925c919d363.jpeg"
                 }
             },
             {
@@ -184,12 +191,14 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#142850",
-                    bgColorOpacity: 0.82,
+                    bgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     paddingTop: 200,
                     paddingBottom: 200,
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
-                    tempBgColorOpacity: 0.82,
+                    tempBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     padding: 200,
+                    mobileBgColorHex: "#142850",
+                    mobileBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     items: [
                         {
                             type: "Wrapper",
@@ -205,7 +214,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -272,7 +282,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorOpacity: 1,
@@ -336,7 +346,10 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "34f8d5bfea6869ce410f93ea140ab9e13d027738.jpeg"
+                    bgImageSrc: "34f8d5bfea6869ce410f93ea140ab9e13d027738.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "34f8d5bfea6869ce410f93ea140ab9e13d027738.jpeg"
                 }
             },
             {
@@ -346,12 +359,14 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#142850",
-                    bgColorOpacity: 0.82,
+                    bgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     paddingTop: 200,
                     paddingBottom: 200,
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
-                    tempBgColorOpacity: 0.82,
+                    tempBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     padding: 200,
+                    mobileBgColorHex: "#142850",
+                    mobileBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     items: [
                         {
                             type: "Wrapper",
@@ -367,7 +382,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -434,7 +450,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorOpacity: 1,
@@ -498,7 +514,10 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "491d3f59bc7e612ab0817df7705b44ffe0668b1e.jpeg"
+                    bgImageSrc: "491d3f59bc7e612ab0817df7705b44ffe0668b1e.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "491d3f59bc7e612ab0817df7705b44ffe0668b1e.jpeg"
                 }
             }
         ],

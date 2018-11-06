@@ -1,13 +1,14 @@
 export default {
 id: "Gabi029Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 380,
 title: "Gabi029Light",
 
 keywords: "services, features, contact, two columns, images, button, address, phone, email, info",
-cat: [0, 7, 2, 11],
+cat: [0, 7, 3, 11],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -81,7 +82,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 40
+                                            height: 40,
+                                            mobileHeight: 40
                                         }
                                     }
                                 ],
@@ -120,7 +122,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 21.1,
+                                                                    width: 21.10000000000000142108547152020037174224853515625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -162,7 +164,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 78.9,
+                                                                    width: 78.900000000000005684341886080801486968994140625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -251,7 +253,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 21.1,
+                                                                    width: 21.10000000000000142108547152020037174224853515625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -294,7 +296,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 78.9,
+                                                                    width: 78.900000000000005684341886080801486968994140625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -383,7 +385,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 21.1,
+                                                                    width: 21.10000000000000142108547152020037174224853515625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -425,7 +427,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 78.9,
+                                                                    width: 78.900000000000005684341886080801486968994140625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -520,7 +522,8 @@ resolve: {
                                                                                             _styles: [
                                                                                                 "spacer"
                                                                                             ],
-                                                                                            height: 20
+                                                                                            height: 20,
+                                                                                            mobileHeight: 20
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -543,8 +546,10 @@ resolve: {
                                                                                             name: "phone-call",
                                                                                             type: "outline",
                                                                                             size: "custom",
+                                                                                            mobileSize: "custom",
                                                                                             customSize: 56,
-                                                                                            borderRadius: 5
+                                                                                            borderRadius: 5,
+                                                                                            mobileCustomSize: 56
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -699,7 +704,8 @@ resolve: {
                                                                                             _styles: [
                                                                                                 "spacer"
                                                                                             ],
-                                                                                            height: 20
+                                                                                            height: 20,
+                                                                                            mobileHeight: 20
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -721,7 +727,7 @@ resolve: {
                                                                     tempBorderRightWidth: 2,
                                                                     tempBorderBottomWidth: 2,
                                                                     tempBorderLeftWidth: 2,
-                                                                    borderColorOpacity: 0.7,
+                                                                    borderColorOpacity: 0.6999999999999999555910790149937383830547332763671875,
                                                                     borderTopLeftRadius: 8,
                                                                     borderTopRightRadius: 8,
                                                                     borderBottomLeftRadius: 8,
@@ -731,7 +737,7 @@ resolve: {
                                                                     tempBorderBottomRightRadius: 8,
                                                                     tempBorderBottomLeftRadius: 8,
                                                                     borderColorHex: "#73777f",
-                                                                    tempBorderColorOpacity: 0.7,
+                                                                    tempBorderColorOpacity: 0.6999999999999999555910790149937383830547332763671875,
                                                                     paddingTop: 25,
                                                                     paddingBottom: 25,
                                                                     borderRadius: 8,
@@ -757,16 +763,19 @@ resolve: {
                                             tempBorderBottomLeftRadius: 8,
                                             bgColorOpacity: 1,
                                             borderColorHex: "#73777f",
-                                            tempBorderColorOpacity: 0.3,
+                                            tempBorderColorOpacity: 0.299999999999999988897769753748434595763683319091796875,
                                             paddingType: "grouped",
                                             padding: 5,
                                             paddingRight: 5,
                                             paddingLeft: 5,
                                             bgColorHex: "",
                                             verticalAlign: "center",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             borderRadius: 8,
                                             tempBorderRadius: 8,
-                                            bgColorPalette: "color1"
+                                            bgColorPalette: "color1",
+                                            mobileBgColorPalette: "color1"
                                         }
                                     }
                                 ]

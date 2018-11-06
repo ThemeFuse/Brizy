@@ -1,13 +1,14 @@
 export default {
 id: "Gabi043Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 417,
 title: "Gabi043Dark", 
 
 keywords: "slider, image background, header, cover, two columns, button, call to action, address, phone, info, forms, contact",
-cat: [0, 1, 17, 16, 11],
+cat: [0, 2, 17, 16, 11],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -58,7 +59,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10
+                                            height: 10,
+                                            mobileHeight: 10
                                         }
                                     }
                                 ]
@@ -98,7 +100,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -126,6 +129,7 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
+                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color8",
                                             hoverBorderColorPalette: "color8",
                                             tempHoverBorderColorPalette: "",
@@ -136,19 +140,25 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left"
+                                horizontalAlign: "left",
+                                mobileHorizontalAlign: "left"
                             }
                         }
                     ],
                     bgColorHex: "#191b21",
-                    tempBgColorOpacity: 0.9,
+                    mobileBgColorHex: "#191b21",
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     padding: 250,
                     paddingTop: 250,
                     paddingBottom: 250,
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
-                    bgImageSrc: "1de17fb1a2fa8999f3f22ebe28de7a2fc7686a37.jpeg"
+                    bgImageSrc: "1de17fb1a2fa8999f3f22ebe28de7a2fc7686a37.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 893,
+                    mobileBgImageSrc: "1de17fb1a2fa8999f3f22ebe28de7a2fc7686a37.jpeg"
                 }
             },
             {
@@ -194,7 +204,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -269,21 +280,22 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 100
+                                                                                            height: 100,
+                                                                                            mobileHeight: 100
                                                                                         }
                                                                                     }
                                                                                 ],
                                                                                 fontStyle: "paragraph",
                                                                                 fontWeight: 300,
-                                                                                lineHeight: 1.7,
+                                                                                lineHeight: 1.6999999999999999555910790149937383830547332763671875,
                                                                                 mobileFontStyle: "paragraph",
                                                                                 mobileFontSize: 15,
-                                                                                mobileLineHeight: 1.6,
+                                                                                mobileLineHeight: 1.600000000000000088817841970012523233890533447265625,
                                                                                 bgColorPalette: "color8",
                                                                                 colorPalette: "color7",
                                                                                 borderColorPalette: "color7",
                                                                                 borderColorHex: "#73777f",
-                                                                                bgColorOpacity: 0.05,
+                                                                                bgColorOpacity: 0.05000000000000000277555756156289135105907917022705078125,
                                                                                 colorOpacity: 1,
                                                                                 borderColorOpacity: 0.5
                                                                             }
@@ -472,14 +484,19 @@ resolve: {
                         }
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     padding: 250,
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
-                    bgImageSrc: "2cec3c59572276c14bd0a19d114185bba59c4340.jpeg"
+                    bgImageSrc: "2cec3c59572276c14bd0a19d114185bba59c4340.jpeg",
+                    mobileBgImageWidth: 1996,
+                    mobileBgImageHeight: 1331,
+                    mobileBgImageSrc: "2cec3c59572276c14bd0a19d114185bba59c4340.jpeg"
                 }
             }
         ],

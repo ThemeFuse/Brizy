@@ -1,13 +1,14 @@
 export default {
 id: "Dimi015Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 368,
 title: "Dimi015Light",
 
 keywords: "header, call to action, hero, cover, button, icon, image background",
-cat: [0, 1, 3],
+cat: [0, 2, 4],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -28,6 +29,7 @@ resolve: {
                     mobilePadding: 60,
                     mobilePaddingTop: 60,
                     mobilePaddingBottom: 60,
+                    mobileBgColorHex: "#239ddb",
                     items: [
                         {
                             type: "Wrapper",
@@ -193,7 +195,8 @@ resolve: {
                                             customSize: 25,
                                             borderRadius: 2,
                                             mobileSize: "custom",
-                                            mobileCustomSize: 19
+                                            mobileCustomSize: 19,
+                                            mobileBorderRadius: 2
                                         }
                                     }
                                 ],
@@ -201,12 +204,16 @@ resolve: {
                             }
                         }
                     ],
-                    tempBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     paddingType: "ungrouped",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
-                    bgImageSrc: "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg"
+                    bgImageSrc: "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 881,
+                    mobileBgImageSrc: "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg"
                 }
             }
         ]

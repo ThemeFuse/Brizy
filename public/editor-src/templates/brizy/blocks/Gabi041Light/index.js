@@ -1,13 +1,14 @@
 export default {
 id: "Gabi041Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 402,
 title: "Gabi041Light",
 
 keywords: "slider, call to action, image background, header, cover, hero, promo, icon, video",
-cat: [0, 1, 3, 17],
+cat: [0, 2, 4, 17],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -43,7 +44,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -110,7 +112,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorHex: "#ffffff",
@@ -176,7 +178,10 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "09fd779792857776bfafef2eeffdfbfd82d34503.jpeg"
+                    bgImageSrc: "09fd779792857776bfafef2eeffdfbfd82d34503.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "09fd779792857776bfafef2eeffdfbfd82d34503.jpeg"
                 }
             },
             {
@@ -186,11 +191,11 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.35,
+                    bgColorOpacity: 0.34999999999999997779553950749686919152736663818359375,
                     paddingTop: 200,
                     paddingBottom: 200,
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
-                    tempBgColorOpacity: 0.35,
+                    tempBgColorOpacity: 0.34999999999999997779553950749686919152736663818359375,
                     padding: 200,
                     items: [
                         {
@@ -207,7 +212,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -274,7 +280,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorHex: "#ffffff",
@@ -341,6 +347,9 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
                     bgImageSrc: "10824bb0ba5a9233850b4cc56a1c1ac653a15c2c.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "10824bb0ba5a9233850b4cc56a1c1ac653a15c2c.jpeg",
                     bgPositionY: 0,
                     mobileBgPositionY: 0
                 }
@@ -352,11 +361,11 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.35,
+                    bgColorOpacity: 0.34999999999999997779553950749686919152736663818359375,
                     paddingTop: 200,
                     paddingBottom: 200,
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
-                    tempBgColorOpacity: 0.35,
+                    tempBgColorOpacity: 0.34999999999999997779553950749686919152736663818359375,
                     padding: 200,
                     items: [
                         {
@@ -373,7 +382,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -440,7 +450,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorHex: "#ffffff",
@@ -506,7 +516,10 @@ resolve: {
                     containerSize: 60,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
-                    bgImageSrc: "9835db07200dd0e462f2304e7a154fe945b81912.jpeg"
+                    bgImageSrc: "9835db07200dd0e462f2304e7a154fe945b81912.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "9835db07200dd0e462f2304e7a154fe945b81912.jpeg"
                 }
             }
         ],

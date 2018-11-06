@@ -1,6 +1,6 @@
 export default {
 id: "Dimi012Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 310,
 title: "Dimi012Dark", 
@@ -8,6 +8,7 @@ title: "Dimi012Dark",
 keywords: "pricing, four columns, button, icon, grid",
 cat: [0, 13],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -161,7 +162,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10
+                                                                    height: 10,
+                                                                    mobileHeight: 10
                                                                 }
                                                             }
                                                         ]
@@ -328,7 +330,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10
+                                                                    height: 10,
+                                                                    mobileHeight: 10
                                                                 }
                                                             }
                                                         ]
@@ -495,7 +498,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10
+                                                                    height: 10,
+                                                                    mobileHeight: 10
                                                                 }
                                                             }
                                                         ]
@@ -577,6 +581,9 @@ resolve: {
                                             marginLeft: 15,
                                             bgColorHex: "#ffffff",
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
+                                            mobileBgColorOpacity: 1,
                                             borderColorPalette: "color7",
                                             margin: 15,
                                             marginTop: 15,
@@ -668,7 +675,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 10
+                                                                    height: 10,
+                                                                    mobileHeight: 10
                                                                 }
                                                             }
                                                         ]
@@ -753,7 +761,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

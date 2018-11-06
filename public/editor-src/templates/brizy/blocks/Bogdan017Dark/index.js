@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan017Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 345,
 title: "Bogdan017Dark", 
@@ -8,6 +8,7 @@ title: "Bogdan017Dark",
 keywords: "map, address, phone, email, info, icons, icon box, two columns",
 cat: [0, 15, 11],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -105,6 +106,8 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
+                                                                                mobileSize: "small",
+                                                                                mobileCustomSize: 32,
                                                                                 name: "pin-add",
                                                                                 colorHex: "#ffffff",
                                                                                 colorPalette: "",
@@ -154,6 +157,8 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
+                                                                                mobileSize: "small",
+                                                                                mobileCustomSize: 32,
                                                                                 name: "mobile-button",
                                                                                 colorHex: "#ffffff",
                                                                                 colorPalette: "",
@@ -204,6 +209,8 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
+                                                                                mobileSize: "small",
+                                                                                mobileCustomSize: 32,
                                                                                 name: "at-sign",
                                                                                 colorHex: "#ffffff",
                                                                                 colorPalette: "",
@@ -238,8 +245,11 @@ resolve: {
                                             marginType: "ungrouped",
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
-                                            bgColorOpacity: 0.1,
-                                            tempBgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderRadiusType: "ungrouped",
                                             borderTopLeftRadius: 10,
                                             tempBorderTopLeftRadius: 10,
@@ -268,7 +278,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -308,7 +319,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -320,8 +332,11 @@ resolve: {
                                             paddingRight: 100,
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
-                                            bgColorOpacity: 0.1,
-                                            tempBgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderRadiusType: "ungrouped",
                                             borderTopRightRadius: 10,
                                             tempBorderTopRightRadius: 10,
@@ -332,7 +347,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

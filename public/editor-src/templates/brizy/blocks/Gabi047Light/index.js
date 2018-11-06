@@ -1,13 +1,14 @@
 export default {
 id: "Gabi047Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 190,
 title: "Gabi047Light",
 
 keywords: "image background, two columns, soundcloud, audio, text",
-cat: [0, 2],
+cat: [0, 3],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -53,6 +54,7 @@ resolve: {
                                                                         "soundCloud"
                                                                     ],
                                                                     height: 300,
+                                                                    mobileHeight: 300,
                                                                     style: "artwork",
                                                                     showArtwork: "on"
                                                                 }
@@ -163,6 +165,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }
@@ -172,6 +175,9 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
                                             bgColorOpacity: 1,
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
+                                            mobileBgColorOpacity: 1,
                                             mobilePaddingRight: 10,
                                             mobilePaddingLeft: 10,
                                             paddingRight: 60,
@@ -185,13 +191,20 @@ resolve: {
                     ],
                     containerSize: 85,
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 1290,
                     bgImageSrc: "7b13b52b334adb1e98a31cffb54de0acfe74f3eb.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1290,
+                    mobileBgImageSrc: "7b13b52b334adb1e98a31cffb54de0acfe74f3eb.jpeg",
                     bgPositionX: 46,
-                    bgPositionY: 89
+                    bgPositionY: 89,
+                    mobileBgPositionX: 46,
+                    mobileBgPositionY: 89
                 }
             }
         ]

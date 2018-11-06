@@ -1,6 +1,6 @@
 export default {
 id: "Gabi036Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 363,
 title: "Gabi036Dark", 
@@ -8,6 +8,7 @@ title: "Gabi036Dark",
 keywords: "forms, contact, two columns, text, directions, map",
 cat: [0, 11, 16, 15],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -82,7 +83,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -205,10 +207,10 @@ resolve: {
                                                                                 ],
                                                                                 fontStyle: "paragraph",
                                                                                 fontWeight: 300,
-                                                                                lineHeight: 1.7,
+                                                                                lineHeight: 1.6999999999999999555910790149937383830547332763671875,
                                                                                 mobileFontStyle: "paragraph",
                                                                                 mobileFontSize: 15,
-                                                                                mobileLineHeight: 1.6
+                                                                                mobileLineHeight: 1.600000000000000088817841970012523233890533447265625
                                                                             }
                                                                         },
                                                                         {
@@ -242,7 +244,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

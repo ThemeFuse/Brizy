@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan018Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 163,
 title: "Bogdan018Light",
@@ -8,6 +8,7 @@ title: "Bogdan018Light",
 keywords: "testimonial, team, image, member, text, image background, two columns",
 cat: [0, 8, 10],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,7 +23,7 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     items: [
                         {
                             type: "Row",
@@ -126,10 +127,15 @@ resolve: {
                             }
                         }
                     ],
-                    tempBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 360,
                     bgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 360,
+                    mobileBgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     containerSize: 85
                 }
             }

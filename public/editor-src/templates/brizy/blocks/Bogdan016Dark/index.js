@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan016Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 417,
 title: "Bogdan016Dark", 
@@ -8,6 +8,7 @@ title: "Bogdan016Dark",
 keywords: "map, address, phone, email, info",
 cat: [0, 15, 11],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -82,7 +83,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -123,7 +125,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -145,7 +148,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -180,7 +183,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -214,7 +217,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -247,6 +250,8 @@ resolve: {
                             }
                         }
                     ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     containerSize: 80
                 }
             }

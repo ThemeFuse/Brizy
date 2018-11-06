@@ -1,13 +1,14 @@
 export default {
 id: "Gabi045Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 191,
 title: "Gabi045Dark", 
 
 keywords: "image background, icons, counter, info, four columns",
-cat: [0, 2],
+cat: [0, 3],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -90,12 +91,15 @@ resolve: {
                                                                                 borderColorPalette: 0,
                                                                                 bgColorOpacity: 1,
                                                                                 bgColorPalette: "color6",
-                                                                                hoverBgColorOpacity: 0.97,
+                                                                                hoverBgColorOpacity: 0.9699999999999999733546474089962430298328399658203125,
                                                                                 hoverBgColorPalette: "color6",
                                                                                 hoverBorderColorPalette: "color3",
                                                                                 mobilePadding: 20,
+                                                                                mobileBorderRadius: 30,
                                                                                 size: "custom",
                                                                                 customSize: 24,
+                                                                                mobileSize: "custom",
+                                                                                mobileCustomSize: 24,
                                                                                 tempPadding: 15,
                                                                                 tempBgColorPalette: "color6",
                                                                                 hoverBgColorHex: "#239ddb",
@@ -147,7 +151,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -387,14 +392,21 @@ resolve: {
                         }
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
                     bgImageSrc: "45fc8316bf524157f27db1d26f6eec98a43dd212.jpeg",
-                    tempBgColorOpacity: 0.9,
-                    tempMobileBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "45fc8316bf524157f27db1d26f6eec98a43dd212.jpeg",
+                    tempMobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgPositionY: 93,
-                    bgPositionX: 51
+                    mobileBgPositionY: 93,
+                    bgPositionX: 51,
+                    mobileBgPositionX: 51
                 }
             }
         ]

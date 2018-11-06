@@ -1,6 +1,6 @@
 export default {
 id: "Gabi010Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 356,
 title: "Gabi010Light",
@@ -8,6 +8,7 @@ title: "Gabi010Light",
 keywords: "pricing, three columns, button",
 cat: [0, 13],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -102,7 +103,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Row",
@@ -391,7 +392,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Row",
@@ -601,7 +602,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 60
+                                                                    height: 60,
+                                                                    mobileHeight: 60
                                                                 }
                                                             }
                                                         ]
@@ -675,7 +677,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Row",
@@ -909,7 +911,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 28
+                                                                    height: 28,
+                                                                    mobileHeight: 28
                                                                 }
                                                             }
                                                         ]

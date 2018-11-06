@@ -1,6 +1,6 @@
 export default {
 id: "Gabi038Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 261,
 title: "Gabi038Light",
@@ -8,6 +8,7 @@ title: "Gabi038Light",
 keywords: "forms, contact, two columns, address, phone, info, image background",
 cat: [0, 11, 16],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,7 +23,7 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     items: [
                         {
                             type: "Wrapper",
@@ -59,7 +60,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -134,21 +136,22 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 100
+                                                                                            height: 100,
+                                                                                            mobileHeight: 100
                                                                                         }
                                                                                     }
                                                                                 ],
                                                                                 fontStyle: "paragraph",
                                                                                 fontWeight: 300,
-                                                                                lineHeight: 1.7,
+                                                                                lineHeight: 1.6999999999999999555910790149937383830547332763671875,
                                                                                 mobileFontStyle: "paragraph",
                                                                                 mobileFontSize: 15,
-                                                                                mobileLineHeight: 1.6,
+                                                                                mobileLineHeight: 1.600000000000000088817841970012523233890533447265625,
                                                                                 bgColorPalette: "color8",
                                                                                 colorPalette: "color7",
                                                                                 borderColorPalette: "color7",
                                                                                 borderColorHex: "#73777f",
-                                                                                bgColorOpacity: 0.3,
+                                                                                bgColorOpacity: 0.299999999999999988897769753748434595763683319091796875,
                                                                                 colorOpacity: 1,
                                                                                 borderColorOpacity: 0.5
                                                                             }
@@ -339,11 +342,14 @@ resolve: {
                     mobilePadding: 0,
                     mobilePaddingTop: 0,
                     mobilePaddingBottom: 0,
-                    tempBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     containerSize: 90,
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
-                    bgImageSrc: "d8e7dc2fc2cf51872acaeeb229cc1c207fb0e98c.jpeg"
+                    bgImageSrc: "d8e7dc2fc2cf51872acaeeb229cc1c207fb0e98c.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 893,
+                    mobileBgImageSrc: "d8e7dc2fc2cf51872acaeeb229cc1c207fb0e98c.jpeg"
                 }
             }
         ]

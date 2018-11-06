@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan019Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 269,
 title: "Bogdan019Dark", 
@@ -8,6 +8,7 @@ title: "Bogdan019Dark",
 keywords: "team, services, images, button, three columns, list, avatar",
 cat: [0, 10, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -504,6 +505,7 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
+                                                                    mobileBorderRadius: 4,
                                                                     bgColorHex: "#ffffff",
                                                                     colorPalette: "color3",
                                                                     tempHoverBorderColorPalette: "",
@@ -511,8 +513,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -526,7 +527,9 @@ resolve: {
                     ],
                     mobilePadding: 0,
                     mobilePaddingTop: 0,
-                    mobilePaddingBottom: 0
+                    mobilePaddingBottom: 0,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

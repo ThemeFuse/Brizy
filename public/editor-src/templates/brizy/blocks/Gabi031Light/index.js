@@ -1,13 +1,14 @@
 export default {
 id: "Gabi031Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 310,
 title: "Gabi031Light",
 
 keywords: "features, services , news, icons , icon box, four columns, button",
-cat: [0, 2, 7, 6],
+cat: [0, 3, 7, 6],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,8 +23,8 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.7,
-                    tempBgColorOpacity: 0.7,
+                    bgColorOpacity: 0.6999999999999999555910790149937383830547332763671875,
+                    tempBgColorOpacity: 0.6999999999999999555910790149937383830547332763671875,
                     items: [
                         {
                             type: "Row",
@@ -59,11 +60,13 @@ resolve: {
                                                                     imageHeight: 1280,
                                                                     imageSrc: "3387c015e4b54f8ac6e19f88145d684de9f43876.jpeg",
                                                                     height: 143,
-                                                                    resize: 88
+                                                                    resize: 88,
+                                                                    mobileResize: 88
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -208,6 +211,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         itemPadding: 40,
                                                         itemPaddingRight: 40,
                                                         itemPaddingLeft: 40
@@ -235,8 +239,9 @@ resolve: {
                                             _styles: [
                                                 "line"
                                             ],
-                                            borderColorOpacity: 0.29,
-                                            width: 98
+                                            borderColorOpacity: 0.289999999999999980015985556747182272374629974365234375,
+                                            width: 98,
+                                            mobileWidth: 98
                                         }
                                     }
                                 ],
