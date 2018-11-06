@@ -1,6 +1,6 @@
 export default {
 id: "Gabi024Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 362,
 title: "Gabi024Light",
@@ -8,6 +8,7 @@ title: "Gabi024Light",
 keywords: "news, gallery, two columns, images, button",
 cat: [0, 6, 9],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -91,8 +92,7 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left",
-                                                                                mobileHorizontalAlign: "center"
+                                                                                horizontalAlign: "left"
                                                                             }
                                                                         }
                                                                     ],
@@ -203,12 +203,12 @@ resolve: {
                                                                                             borderRadiusType: "custom",
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
+                                                                                            mobileBorderRadius: 4,
                                                                                             tempBorderRadius: 4
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left",
-                                                                                mobileHorizontalAlign: "center"
+                                                                                horizontalAlign: "left"
                                                                             }
                                                                         }
                                                                     ],
@@ -224,8 +224,8 @@ resolve: {
                                                 }
                                             ],
                                             bgColorHex: "#239ddb",
-                                            bgColorOpacity: 0.1,
-                                            tempBgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
                                             borderBottomRightRadius: 4,
@@ -241,6 +241,9 @@ resolve: {
                                             paddingTop: 0,
                                             verticalAlign: "center",
                                             bgColorPalette: "color3",
+                                            mobileBgColorPalette: "color3",
+                                            mobileBgColorHex: "#239ddb",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -268,7 +271,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 56.9,
+                                                                    width: 56.89999999999999857891452847979962825775146484375,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -362,6 +365,7 @@ resolve: {
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
                                                                                             tempBorderRadius: 4,
+                                                                                            mobileBorderRadius: 4,
                                                                                             borderColorPalette: "color2",
                                                                                             tempBorderColorPalette: "color2",
                                                                                             borderColorHex: "#ffffff",
@@ -372,8 +376,7 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "right",
-                                                                                mobileHorizontalAlign: "center"
+                                                                                horizontalAlign: "right"
                                                                             }
                                                                         }
                                                                     ],
@@ -390,7 +393,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 43.1,
+                                                                    width: 43.10000000000000142108547152020037174224853515625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -410,13 +413,13 @@ resolve: {
                                                                                             imageWidth: 444,
                                                                                             imageHeight: 620,
                                                                                             height: 89,
+                                                                                            mobileHeight: 89,
                                                                                             resize: 95,
                                                                                             mobileResize: 60
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left",
-                                                                                mobileHorizontalAlign: "center"
+                                                                                horizontalAlign: "left"
                                                                             }
                                                                         }
                                                                     ],
@@ -446,7 +449,10 @@ resolve: {
                                             marginRight: 15,
                                             paddingRight: 0,
                                             verticalAlign: "center",
+                                            mobileBgColorHex: "#eef0f2",
+                                            mobileBgColorOpacity: 1,
                                             bgColorPalette: "color6",
+                                            mobileBgColorPalette: "color6",
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -486,7 +492,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 42.1,
+                                                                    width: 42.10000000000000142108547152020037174224853515625,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -508,6 +514,7 @@ resolve: {
                                                                                             imageWidth: 444,
                                                                                             imageHeight: 620,
                                                                                             zoom: 140,
+                                                                                            mobileZoom: 140,
                                                                                             positionX: 64,
                                                                                             positionY: 52,
                                                                                             mobilePositionY: 52,
@@ -516,8 +523,7 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left",
-                                                                                mobileHorizontalAlign: "center"
+                                                                                horizontalAlign: "left"
                                                                             }
                                                                         }
                                                                     ],
@@ -534,7 +540,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 57.9,
+                                                                    width: 57.89999999999999857891452847979962825775146484375,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -627,12 +633,12 @@ resolve: {
                                                                                             borderRadiusType: "custom",
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
+                                                                                            mobileBorderRadius: 4,
                                                                                             tempBorderRadius: 4
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "left",
-                                                                                mobileHorizontalAlign: "center"
+                                                                                horizontalAlign: "left"
                                                                             }
                                                                         }
                                                                     ],
@@ -648,8 +654,8 @@ resolve: {
                                                 }
                                             ],
                                             bgColorHex: "#239ddb",
-                                            bgColorOpacity: 0.1,
-                                            tempBgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
                                             borderBottomRightRadius: 4,
@@ -665,6 +671,9 @@ resolve: {
                                             paddingTop: 0,
                                             verticalAlign: "center",
                                             bgColorPalette: "color3",
+                                            mobileBgColorPalette: "color3",
+                                            mobileBgColorHex: "#239ddb",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -692,7 +701,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 56.2,
+                                                                    width: 56.2000000000000028421709430404007434844970703125,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -786,6 +795,7 @@ resolve: {
                                                                                             tempBorderRadiusType: "custom",
                                                                                             borderRadius: 4,
                                                                                             tempBorderRadius: 4,
+                                                                                            mobileBorderRadius: 4,
                                                                                             borderColorPalette: "color2",
                                                                                             tempBorderColorPalette: "color2",
                                                                                             borderColorHex: "#ffffff",
@@ -796,8 +806,7 @@ resolve: {
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                horizontalAlign: "right",
-                                                                                mobileHorizontalAlign: "center"
+                                                                                horizontalAlign: "right"
                                                                             }
                                                                         }
                                                                     ],
@@ -814,7 +823,7 @@ resolve: {
                                                                     _styles: [
                                                                         "column"
                                                                     ],
-                                                                    width: 43.8,
+                                                                    width: 43.7999999999999971578290569595992565155029296875,
                                                                     items: [
                                                                         {
                                                                             type: "Wrapper",
@@ -834,6 +843,7 @@ resolve: {
                                                                                             imageWidth: 444,
                                                                                             imageHeight: 620,
                                                                                             height: 87,
+                                                                                            mobileHeight: 87,
                                                                                             mobileResize: 60
                                                                                         }
                                                                                     }
@@ -869,7 +879,10 @@ resolve: {
                                             paddingRight: 0,
                                             paddingBottom: 0,
                                             verticalAlign: "center",
+                                            mobileBgColorHex: "#eef0f2",
+                                            mobileBgColorOpacity: 1,
                                             bgColorPalette: "color6",
+                                            mobileBgColorPalette: "color6",
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -878,7 +891,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

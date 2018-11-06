@@ -1,13 +1,14 @@
 export default {
 id: "Dimi002Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 320,
 title: "Dimi002Dark", 
 
 keywords: "features, projects, button, image, two columns",
-cat: [0, 2, 4],
+cat: [0, 3, 5],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -66,8 +69,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileMarginBottom: 0,
-                                                        mobileHorizontalAlign: "center"
+                                                        mobileMarginBottom: 0
                                                     }
                                                 }
                                             ]
@@ -173,7 +175,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],

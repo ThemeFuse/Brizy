@@ -1,6 +1,6 @@
 export default {
 id: "Dimi007Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 85,
 title: "Dimi007Dark", 
@@ -8,6 +8,7 @@ title: "Dimi007Dark",
 keywords: "contact, footer, icons, icon box, address, phone, email, info",
 cat: [0, 11, 12],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -26,6 +27,8 @@ resolve: {
                     padding: 50,
                     paddingTop: 50,
                     paddingBottom: 50,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -42,7 +45,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -71,7 +74,9 @@ resolve: {
                                                                                 hoverColorOpacity: 1,
                                                                                 size: "large",
                                                                                 customSize: 64,
-                                                                                borderRadius: 5
+                                                                                borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64
                                                                             }
                                                                         },
                                                                         {
@@ -99,7 +104,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -128,7 +133,9 @@ resolve: {
                                                                                 hoverColorOpacity: 1,
                                                                                 size: "large",
                                                                                 customSize: 64,
-                                                                                borderRadius: 5
+                                                                                borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64
                                                                             }
                                                                         },
                                                                         {
@@ -156,7 +163,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -185,7 +192,9 @@ resolve: {
                                                                                 hoverColorOpacity: 1,
                                                                                 size: "large",
                                                                                 customSize: 64,
-                                                                                borderRadius: 5
+                                                                                borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64
                                                                             }
                                                                         },
                                                                         {

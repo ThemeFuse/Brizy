@@ -1,13 +1,14 @@
 export default {
 id: "Gabi046Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 193,
 title: "Gabi046Light",
 
 keywords: "progress, button, two columns, features",
-cat: [0, 2],
+cat: [0, 3],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -138,7 +139,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -180,7 +182,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 },
                                                 {

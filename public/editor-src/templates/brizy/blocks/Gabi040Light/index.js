@@ -1,13 +1,14 @@
 export default {
 id: "Gabi040Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 375,
 title: "Gabi040Light",
 
 keywords: "slider, call to action, image background, header, cover, hero, promo, button",
-cat: [0, 1, 3, 17],
+cat: [0, 2, 4, 17],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -59,7 +60,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10
+                                            height: 10,
+                                            mobileHeight: 10
                                         }
                                     }
                                 ]
@@ -99,7 +101,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -127,6 +130,7 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
+                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color2",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -136,19 +140,25 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left"
+                                horizontalAlign: "left",
+                                mobileHorizontalAlign: "left"
                             }
                         }
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     padding: 250,
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgImageWidth: 1920,
                     bgImageHeight: 1280,
-                    bgImageSrc: "ad09ef4d07c08374f0e13ede6f0d3c05cd9bba47.jpeg"
+                    bgImageSrc: "ad09ef4d07c08374f0e13ede6f0d3c05cd9bba47.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1280,
+                    mobileBgImageSrc: "ad09ef4d07c08374f0e13ede6f0d3c05cd9bba47.jpeg"
                 }
             },
             {
@@ -194,7 +204,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10
+                                            height: 10,
+                                            mobileHeight: 10
                                         }
                                     }
                                 ]
@@ -234,7 +245,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -262,6 +274,7 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
+                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color2",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -275,14 +288,19 @@ resolve: {
                         }
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     padding: 250,
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
-                    bgImageSrc: "3715ae7da78bcde1fe3d0fe9f129cfd86edb0d76.jpeg"
+                    bgImageSrc: "3715ae7da78bcde1fe3d0fe9f129cfd86edb0d76.jpeg",
+                    mobileBgImageWidth: 1996,
+                    mobileBgImageHeight: 1331,
+                    mobileBgImageSrc: "3715ae7da78bcde1fe3d0fe9f129cfd86edb0d76.jpeg"
                 }
             },
             {
@@ -328,7 +346,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10
+                                            height: 10,
+                                            mobileHeight: 10
                                         }
                                     }
                                 ]
@@ -368,7 +387,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -396,6 +416,7 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
+                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color2",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -405,19 +426,25 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "right"
+                                horizontalAlign: "right",
+                                mobileHorizontalAlign: "right"
                             }
                         }
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     padding: 250,
                     paddingTop: 250,
                     paddingBottom: 250,
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
-                    bgImageSrc: "7c627a8c2eece4831ff43399b8edad32eab7e561.jpeg"
+                    bgImageSrc: "7c627a8c2eece4831ff43399b8edad32eab7e561.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 881,
+                    mobileBgImageSrc: "7c627a8c2eece4831ff43399b8edad32eab7e561.jpeg"
                 }
             }
         ],

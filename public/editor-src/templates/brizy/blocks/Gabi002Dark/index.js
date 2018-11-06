@@ -1,13 +1,14 @@
 export default {
 id: "Gabi002Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 417,
 title: "Gabi002Dark", 
 
 keywords: "features, projects, news, two columns, portfolio, grid, masonry",
-cat: [0, 2, 4, 6],
+cat: [0, 3, 5, 6],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,7 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
                     items: [
                         {
                             type: "Row",
@@ -64,7 +66,8 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -173,13 +176,16 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
                                             width: 60,
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
                                             paddingTop: 30,
                                             paddingRight: 65,
                                             paddingLeft: 65,
@@ -231,7 +237,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -348,13 +355,16 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
                                             width: 60,
                                             bgColorPalette: "color8",
                                             bgColorHex: "#ffffff",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
                                             paddingTop: 30,
                                             paddingRight: 65,
                                             paddingLeft: 65,
@@ -419,6 +429,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "right",
+                                                        mobileHorizontalAlign: "right",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }

@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan022Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 429,
 title: "Bogdan022Light",
@@ -8,6 +8,7 @@ title: "Bogdan022Light",
 keywords: "news, grid , two  columns, images , image box",
 cat: [0, 6, 7],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorHex: "#eef0f2",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#eef0f2",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -80,7 +83,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 35
+                                            height: 35,
+                                            mobileHeight: 35
                                         }
                                     }
                                 ],
@@ -125,7 +129,9 @@ resolve: {
                                                                     height: 101,
                                                                     mobileHeight: 80,
                                                                     positionY: 51,
-                                                                    positionX: 43
+                                                                    mobilePositionY: 51,
+                                                                    positionX: 43,
+                                                                    mobilePositionX: 43
                                                                 }
                                                             }
                                                         ],
@@ -234,6 +240,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -277,8 +284,8 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.15,
-                                            tempBorderColorOpacity: 0.15,
+                                            borderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
+                                            tempBorderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
                                             borderWidth: 1,
                                             borderTopWidth: 1,
                                             borderRightWidth: 1,
@@ -290,6 +297,9 @@ resolve: {
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -324,7 +334,9 @@ resolve: {
                                                                     height: 101,
                                                                     mobileHeight: 80,
                                                                     positionY: 47,
-                                                                    positionX: 65
+                                                                    mobilePositionY: 47,
+                                                                    positionX: 65,
+                                                                    mobilePositionX: 65
                                                                 }
                                                             }
                                                         ],
@@ -433,6 +445,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -472,8 +485,8 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.15,
-                                            tempBorderColorOpacity: 0.15,
+                                            borderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
+                                            tempBorderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
                                             borderWidth: 1,
                                             borderTopWidth: 1,
                                             borderRightWidth: 1,
@@ -489,6 +502,9 @@ resolve: {
                                             borderBottomRightRadius: 26,
                                             borderBottomLeftRadius: 26,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15

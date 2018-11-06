@@ -1,13 +1,14 @@
 export default {
 id: "Dimi016Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 114,
 title: "Dimi016Dark", 
 
 keywords: "features, services, text, icons, four columns",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -25,7 +26,7 @@ resolve: {
                     bgColorOpacity: 1,
                     bgAttachment: "animated",
                     borderColorHex: "#997272",
-                    tempBorderColorOpacity: 0.8,
+                    tempBorderColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     tempBorderWidth: 10,
                     tempBorderTopWidth: 10,
                     tempBorderRightWidth: 10,
@@ -296,7 +297,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#142850",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

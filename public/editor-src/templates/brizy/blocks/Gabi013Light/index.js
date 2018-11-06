@@ -1,13 +1,14 @@
 export default {
 id: "Gabi013Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 312,
 title: "Gabi013Light",
 
 keywords: "header, call to action, hero, cover, button, text, image background",
-cat: [0, 1, 3],
+cat: [0, 2, 4],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,10 +23,10 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#eef0f2",
-                    bgColorOpacity: 0.81,
+                    bgColorOpacity: 0.810000000000000053290705182007513940334320068359375,
                     paddingTop: 150,
                     paddingBottom: 150,
-                    tempBgColorOpacity: 0.81,
+                    tempBgColorOpacity: 0.810000000000000053290705182007513940334320068359375,
                     paddingType: "ungrouped",
                     padding: 150,
                     items: [
@@ -64,7 +65,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -106,7 +108,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -158,7 +161,7 @@ resolve: {
                                             tempPaddingLeft: 58,
                                             borderColorHex: "#142850",
                                             borderColorOpacity: 1,
-                                            hoverBorderColorOpacity: 0.8
+                                            hoverBorderColorOpacity: 0.8000000000000000444089209850062616169452667236328125
                                         }
                                     },
                                     {
@@ -196,7 +199,7 @@ resolve: {
                                             colorPalette: "color3",
                                             hoverBgColorOpacity: 1,
                                             tempHoverBgColorOpacity: 1,
-                                            hoverBorderColorOpacity: 0.8
+                                            hoverBorderColorOpacity: 0.8000000000000000444089209850062616169452667236328125
                                         }
                                     }
                                 ]
@@ -206,6 +209,9 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
                     bgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 893,
+                    mobileBgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
                     containerSize: 60
                 }
             }

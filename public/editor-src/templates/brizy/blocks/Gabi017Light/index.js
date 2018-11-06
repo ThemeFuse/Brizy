@@ -1,13 +1,14 @@
 export default {
 id: "Gabi017Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 155,
 title: "Gabi017Light",
 
 keywords: "news, text, button, call to action",
-cat: [0, 6, 3],
+cat: [0, 6, 4],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,7 +23,7 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.2,
+                    bgColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                     items: [
                         {
                             type: "Row",
@@ -134,7 +135,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ]

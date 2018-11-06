@@ -1,13 +1,14 @@
 export default {
 id: "Gabi009Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 382,
 title: "Gabi009Dark", 
 
 keywords: "header, hero, cover, icon , text, call to action, video",
-cat: [0, 1],
+cat: [0, 2],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,15 +23,20 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#142850",
-                    bgColorOpacity: 0.82,
+                    bgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     paddingTop: 200,
                     paddingBottom: 200,
                     bgVideo: "https://www.youtube.com/watch?v=8lQB3Had90A",
-                    tempBgColorOpacity: 0.82,
+                    tempBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     padding: 200,
                     bgImageWidth: 1920,
                     bgImageHeight: 1059,
                     bgImageSrc: "bb2e1eb56e2d9f65d7f79001c7cb295faf8a77d5.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1059,
+                    mobileBgImageSrc: "bb2e1eb56e2d9f65d7f79001c7cb295faf8a77d5.jpeg",
+                    mobileBgColorHex: "#142850",
+                    mobileBgColorOpacity: 0.81999999999999995115018691649311222136020660400390625,
                     items: [
                         {
                             type: "Wrapper",
@@ -46,7 +52,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 60
+                                            height: 60,
+                                            mobileHeight: 60
                                         }
                                     }
                                 ]
@@ -113,7 +120,7 @@ resolve: {
                                             bgColorOpacity: 1,
                                             bgColorHex: "#239ddb",
                                             hoverBorderColorHex: "#239DDB",
-                                            hoverBorderColorOpacity: 0.92,
+                                            hoverBorderColorOpacity: 0.92000000000000003996802888650563545525074005126953125,
                                             hoverBgColorHex: "#142850",
                                             hoverBgColorOpacity: 1,
                                             hoverColorOpacity: 1,

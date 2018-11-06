@@ -1,6 +1,6 @@
 export default {
 id: "Gabi022Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 275,
 title: "Gabi022Light",
@@ -8,6 +8,7 @@ title: "Gabi022Light",
 keywords: "testimonial, team, members, avatar, images, three columns",
 cat: [0, 8, 10],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -80,7 +81,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 25
+                                            height: 25,
+                                            mobileHeight: 25
                                         }
                                     }
                                 ]
@@ -141,6 +143,7 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
+                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 38,
                                                                     imageSrc: "13b4294bbc3d79a44913ecdd72bb317b1a03ee5e.jpeg"
@@ -204,7 +207,7 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderTopLeftRadius: 3,
                                             borderTopRightRadius: 3,
                                             borderBottomLeftRadius: 3,
@@ -214,7 +217,7 @@ resolve: {
                                             tempBorderBottomRightRadius: 3,
                                             tempBorderBottomLeftRadius: 3,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             verticalAlign: "center",
                                             paddingTop: 25,
                                             padding: 25,
@@ -273,6 +276,7 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
+                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 38,
                                                                     imageSrc: "271d1f6f75d39b619be9e317fa3823fa9dae0b4f.jpeg"
@@ -336,7 +340,7 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderTopLeftRadius: 3,
                                             borderTopRightRadius: 3,
                                             borderBottomLeftRadius: 3,
@@ -346,7 +350,7 @@ resolve: {
                                             tempBorderBottomRightRadius: 3,
                                             tempBorderBottomLeftRadius: 3,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             verticalAlign: "center",
                                             paddingTop: 25,
                                             padding: 25,
@@ -405,6 +409,7 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 26,
+                                                                    mobileResize: 26,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 40,
                                                                     imageSrc: "182511c469294bad878d06871b2fcd8505457b9d.jpeg"
@@ -468,7 +473,7 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderTopLeftRadius: 3,
                                             borderTopRightRadius: 3,
                                             borderBottomLeftRadius: 3,
@@ -478,7 +483,7 @@ resolve: {
                                             tempBorderBottomRightRadius: 3,
                                             tempBorderBottomLeftRadius: 3,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             verticalAlign: "center",
                                             paddingTop: 25,
                                             padding: 25,

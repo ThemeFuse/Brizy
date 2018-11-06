@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan006Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 380,
 title: "Bogdan006Light",
 
 keywords: "header, call to action, cover, image background, button, promo",
-cat: [0, 1, 3],
+cat: [0, 2, 4],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,11 +23,11 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.8,
+                    bgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     paddingTop: 250,
                     paddingBottom: 250,
                     padding: 250,
-                    tempBgColorOpacity: 0.8,
+                    tempBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     items: [
                         {
                             type: "Wrapper",
@@ -113,6 +114,7 @@ resolve: {
                                             borderColorOpacity: 1,
                                             borderRadius: 4,
                                             tempBorderRadius: 4,
+                                            mobileBorderRadius: 4,
                                             hoverBgColorPalette: "color2",
                                             hoverBorderColorPalette: "",
                                             tempHoverBorderColorPalette: "",
@@ -122,16 +124,22 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left"
+                                horizontalAlign: "left",
+                                mobileHorizontalAlign: "left"
                             }
                         }
                     ],
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
                     bgImageSrc: "93e14abf0cc64763ebe549dfa33067c92f05c32d.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 881,
+                    mobileBgImageSrc: "93e14abf0cc64763ebe549dfa33067c92f05c32d.jpeg",
                     mobilePadding: 60,
                     mobilePaddingTop: 60,
-                    mobilePaddingBottom: 60
+                    mobilePaddingBottom: 60,
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125
                 }
             }
         ]

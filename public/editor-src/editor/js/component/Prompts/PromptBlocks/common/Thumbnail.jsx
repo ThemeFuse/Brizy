@@ -1,13 +1,11 @@
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import LazyLoadImage from "visual/component-new/LazyLoadImage";
 import EditorIcon from "visual/component-new/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
 import { t } from "visual/utils/i18n";
 
 const MAX_CONTAINER_WIDTH = 292;
-const MAX_THUMBNAIL_RATIO = 85;
 
 export default class Thumbnail extends React.Component {
   static defaultProps = {
@@ -58,13 +56,12 @@ export default class Thumbnail extends React.Component {
         thumbnailHeight,
         MAX_CONTAINER_WIDTH
       );
-      const ratio = Math.round((height / width) * 100 * 10) / 10;
-      const className = classnames("brz-figure brz-ed-popup-block-item", {
-        "brz-ed-popup-block-item--big": ratio >= MAX_THUMBNAIL_RATIO
-      });
 
       thumbnail = (
-        <figure className={className} onClick={this.handleClick}>
+        <figure
+          className="brz-figure brz-ed-popup-block-item"
+          onClick={this.handleClick}
+        >
           <LazyLoadImage
             observerRootSelector=".brz-ed-popup-blocks-body"
             src={thumbnailSrc}

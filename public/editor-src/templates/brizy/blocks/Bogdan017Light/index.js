@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan017Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 345,
 title: "Bogdan017Light",
@@ -8,6 +8,7 @@ title: "Bogdan017Light",
 keywords: "map, address, phone, email, info, icons, icon box, two columns",
 cat: [0, 15, 11],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -105,6 +106,8 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
+                                                                                mobileSize: "small",
+                                                                                mobileCustomSize: 32,
                                                                                 name: "pin-add",
                                                                                 hoverColorOpacity: 1
                                                                             }
@@ -151,6 +154,8 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
+                                                                                mobileSize: "small",
+                                                                                mobileCustomSize: 32,
                                                                                 name: "mobile-button",
                                                                                 hoverColorOpacity: 1
                                                                             }
@@ -197,6 +202,8 @@ resolve: {
                                                                                 size: "small",
                                                                                 customSize: 32,
                                                                                 borderRadius: 3,
+                                                                                mobileSize: "small",
+                                                                                mobileCustomSize: 32,
                                                                                 name: "at-sign",
                                                                                 hoverColorOpacity: 1
                                                                             }
@@ -228,6 +235,9 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             borderRadiusType: "ungrouped",
                                             borderTopLeftRadius: 10,
                                             tempBorderTopLeftRadius: 10,
@@ -256,7 +266,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -296,7 +307,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -309,6 +321,9 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             borderRadiusType: "ungrouped",
                                             borderTopRightRadius: 10,
                                             tempBorderTopRightRadius: 10,
@@ -320,7 +335,8 @@ resolve: {
                             }
                         }
                     ],
-                    mobileBgColorHex: "#ffffff"
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

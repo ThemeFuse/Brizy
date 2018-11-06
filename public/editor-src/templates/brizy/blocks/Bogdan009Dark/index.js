@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan009Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 375,
 title: "Bogdan009Dark", 
 
 keywords: "header, cover, hero, call to action, image background, button",
-cat: [0, 1, 3],
+cat: [0, 2, 4],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,10 +23,10 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.85,
+                    bgColorOpacity: 0.84999999999999997779553950749686919152736663818359375,
                     paddingTop: 150,
                     paddingBottom: 0,
-                    tempBgColorOpacity: 0.85,
+                    tempBgColorOpacity: 0.84999999999999997779553950749686919152736663818359375,
                     padding: 150,
                     paddingType: "ungrouped",
                     items: [
@@ -116,7 +117,7 @@ resolve: {
                                             hoverBgColorPalette: "color2",
                                             tempHoverBorderColorPalette: "",
                                             hoverBgColorHex: "#142850",
-                                            hoverBgColorOpacity: 0.99,
+                                            hoverBgColorOpacity: 0.9899999999999999911182158029987476766109466552734375,
                                             borderWidth: 0
                                         }
                                     },
@@ -142,7 +143,7 @@ resolve: {
                                             colorPalette: "color2",
                                             bgColorHex: "#ffffff",
                                             borderColorHex: "#ffffff",
-                                            hoverBgColorOpacity: 0.03,
+                                            hoverBgColorOpacity: 0.0299999999999999988897769753748434595763683319091796875,
                                             tempHoverBgColorOpacity: 1,
                                             borderColorOpacity: 1,
                                             hoverBorderColorPalette: "color8"
@@ -192,7 +193,8 @@ resolve: {
                                             imageSrc: "8085a9b59494ea66f252cfde1405f6039fb9a424.jpeg",
                                             imageWidth: 970,
                                             imageHeight: 330,
-                                            resize: 90
+                                            resize: 90,
+                                            mobileResize: 90
                                         }
                                     }
                                 ],
@@ -205,6 +207,11 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
                     bgImageSrc: "014861fb4ee85e752356c52e1937261cedb41e61.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 881,
+                    mobileBgImageSrc: "014861fb4ee85e752356c52e1937261cedb41e61.jpeg",
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.84999999999999997779553950749686919152736663818359375,
                     mobilePadding: 0,
                     mobilePaddingBottom: 0,
                     mobilePaddingType: "ungrouped"

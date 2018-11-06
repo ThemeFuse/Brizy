@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan023Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 247,
 title: "Bogdan023Light",
 
 keywords: "features, services, icons, icon box, three columns, button",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -129,6 +130,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -188,7 +191,7 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.3
+                                            width: 33.2999999999999971578290569595992565155029296875
                                         }
                                     },
                                     {
@@ -197,7 +200,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -226,6 +229,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -293,7 +298,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -322,6 +327,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -386,7 +393,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

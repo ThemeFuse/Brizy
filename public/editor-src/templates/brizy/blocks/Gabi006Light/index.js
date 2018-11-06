@@ -1,6 +1,6 @@
 export default {
 id: "Gabi006Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 231,
 title: "Gabi006Light",
@@ -8,6 +8,7 @@ title: "Gabi006Light",
 keywords: "testimonial, icon, image, team, member",
 cat: [0, 8],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -111,24 +112,25 @@ resolve: {
                                                                     name: "a-edit",
                                                                     type: "outline",
                                                                     bgColorHex: "#009900",
-                                                                    tempBgColorOpacity: 0.8,
+                                                                    tempBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                                                                     tempFillType: "outline",
                                                                     hoverBorderColorHex: "#009900",
-                                                                    hoverBorderColorOpacity: 0.8,
+                                                                    hoverBorderColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                                                                     tempPadding: 10,
                                                                     mobilePadding: 10,
                                                                     tempBorderWidth: 1,
                                                                     hoverBgColorHex: "#216fbd",
                                                                     hoverColorOpacity: 1,
                                                                     size: "large",
-                                                                    customSize: 64
+                                                                    customSize: 64,
+                                                                    mobileSize: "large",
+                                                                    mobileCustomSize: 64
                                                                 }
                                                             }
                                                         ],
                                                         horizontalAlign: "right",
                                                         mobileMarginBottom: 0,
-                                                        mobileMarginTop: 0,
-                                                        mobileHorizontalAlign: "center"
+                                                        mobileMarginTop: 0
                                                     }
                                                 }
                                             ],

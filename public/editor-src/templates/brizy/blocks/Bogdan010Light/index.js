@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan010Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 498,
 title: "Bogdan010Light",
 
 keywords: "gallery, grid, features, projects, image background, masonry",
-cat: [0, 9, 4],
+cat: [0, 9, 5],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,8 +23,8 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.8,
-                    tempBgColorOpacity: 0.8,
+                    bgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
+                    tempBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     items: [
                         {
                             type: "Wrapper",
@@ -109,7 +110,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -143,7 +144,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 66.7,
+                                            width: 66.7000000000000028421709430404007434844970703125,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -189,7 +190,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 66.7,
+                                            width: 66.7000000000000028421709430404007434844970703125,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -222,7 +223,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -256,7 +257,12 @@ resolve: {
                     ],
                     bgImageWidth: 1920,
                     bgImageHeight: 1172,
-                    bgImageSrc: "a0d5ebb6803aba335e8e4b72c7bc721ce40c52ff.jpeg"
+                    bgImageSrc: "a0d5ebb6803aba335e8e4b72c7bc721ce40c52ff.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1172,
+                    mobileBgImageSrc: "a0d5ebb6803aba335e8e4b72c7bc721ce40c52ff.jpeg",
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125
                 }
             }
         ]

@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan021Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 366,
 title: "Bogdan021Dark", 
@@ -8,6 +8,7 @@ title: "Bogdan021Dark",
 keywords: "news, grid , three columns, images , image box",
 cat: [0, 6, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -39,7 +40,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -185,6 +186,7 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
+                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -192,7 +194,7 @@ resolve: {
                                                                     hoverBorderColorPalette: "color2",
                                                                     tempHoverBorderColorPalette: "",
                                                                     hoverBgColorHex: "#ffffff",
-                                                                    hoverBgColorOpacity: 0.93,
+                                                                    hoverBgColorOpacity: 0.93000000000000004884981308350688777863979339599609375,
                                                                     hoverBorderColorHex: "#142850",
                                                                     tempHoverBgColorOpacity: 1,
                                                                     tempHoverBgColorPalette: "",
@@ -202,6 +204,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -228,7 +231,7 @@ resolve: {
                                                 }
                                             ],
                                             bgColorHex: "",
-                                            bgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderTopLeftRadius: 6,
                                             borderTopRightRadius: 6,
                                             borderBottomRightRadius: 6,
@@ -245,8 +248,8 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.15,
-                                            tempBorderColorOpacity: 0.15,
+                                            borderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
+                                            tempBorderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
                                             borderWidth: 1,
                                             borderTopWidth: 1,
                                             borderRightWidth: 1,
@@ -257,8 +260,11 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
-                                            tempBgColorOpacity: 0.1,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -270,7 +276,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -391,6 +397,7 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
+                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -398,7 +405,7 @@ resolve: {
                                                                     hoverBorderColorPalette: "color2",
                                                                     tempHoverBorderColorPalette: "",
                                                                     hoverBgColorHex: "#ffffff",
-                                                                    hoverBgColorOpacity: 0.99,
+                                                                    hoverBgColorOpacity: 0.9899999999999999911182158029987476766109466552734375,
                                                                     hoverBorderColorHex: "#142850",
                                                                     tempHoverBgColorOpacity: 1,
                                                                     tempHoverBgColorPalette: "",
@@ -408,6 +415,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -458,7 +466,7 @@ resolve: {
                                                 }
                                             ],
                                             bgColorHex: "",
-                                            bgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             tempBorderTopLeftRadius: 26,
                                             tempBorderTopRightRadius: 26,
                                             tempBorderBottomRightRadius: 26,
@@ -471,8 +479,8 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.15,
-                                            tempBorderColorOpacity: 0.15,
+                                            borderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
+                                            tempBorderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
                                             borderWidth: 1,
                                             borderTopWidth: 1,
                                             borderRightWidth: 1,
@@ -487,8 +495,11 @@ resolve: {
                                             borderTopRightRadius: 26,
                                             borderBottomRightRadius: 26,
                                             borderBottomLeftRadius: 26,
-                                            tempBgColorOpacity: 0.1,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -500,7 +511,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -646,6 +657,7 @@ resolve: {
                                                                     tempBorderRadiusType: "custom",
                                                                     borderRadius: 4,
                                                                     tempBorderRadius: 4,
+                                                                    mobileBorderRadius: 4,
                                                                     text: "LEARN MORE",
                                                                     iconName: "",
                                                                     iconType: "",
@@ -653,7 +665,7 @@ resolve: {
                                                                     hoverBorderColorPalette: "color2",
                                                                     tempHoverBorderColorPalette: "",
                                                                     hoverBgColorHex: "#ffffff",
-                                                                    hoverBgColorOpacity: 0.99,
+                                                                    hoverBgColorOpacity: 0.9899999999999999911182158029987476766109466552734375,
                                                                     hoverBorderColorHex: "#142850",
                                                                     tempHoverBgColorOpacity: 1,
                                                                     tempHoverBgColorPalette: "",
@@ -663,6 +675,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginLeft: 50
                                                     }
                                                 },
@@ -689,7 +702,7 @@ resolve: {
                                                 }
                                             ],
                                             bgColorHex: "",
-                                            bgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
                                             borderBottomRightRadius: 4,
@@ -706,8 +719,8 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.15,
-                                            tempBorderColorOpacity: 0.15,
+                                            borderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
+                                            tempBorderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375,
                                             borderWidth: 1,
                                             borderTopWidth: 1,
                                             borderRightWidth: 1,
@@ -718,8 +731,11 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
-                                            tempBgColorOpacity: 0.1,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -728,7 +744,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

@@ -1,13 +1,14 @@
 export default {
 id: "Dimi009Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 337,
 title: "Dimi009Dark", 
 
 keywords: "features, services, icons, icon box, image background, button, text, call to action",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,9 +23,9 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     paddingTop: 55,
-                    tempBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     items: [
                         {
                             type: "Wrapper",
@@ -126,12 +127,13 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
+                                                                    mobileSize: "large",
+                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -231,12 +233,13 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
+                                                                    mobileSize: "large",
+                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -336,12 +339,13 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
+                                                                    mobileSize: "large",
+                                                                    mobileCustomSize: 64,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -499,7 +503,12 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 1290,
                     bgImageSrc: "dc02ac8cfadc01ac3a0ff940acea0e3a3b6a3633.jpeg",
-                    paddingType: "ungrouped"
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1290,
+                    mobileBgImageSrc: "dc02ac8cfadc01ac3a0ff940acea0e3a3b6a3633.jpeg",
+                    paddingType: "ungrouped",
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625
                 }
             }
         ]

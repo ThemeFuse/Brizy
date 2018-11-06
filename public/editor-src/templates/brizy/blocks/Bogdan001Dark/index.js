@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan001Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 382,
 title: "Bogdan001Dark", 
 
 keywords: "header, features, button, icons, image background, cover",
-cat: [0, 1, 2, 3],
+cat: [0, 2, 3, 4],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,10 +23,10 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.8,
+                    bgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     paddingTop: 120,
                     paddingBottom: 120,
-                    tempBgColorOpacity: 0.8,
+                    tempBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     padding: 120,
                     items: [
                         {
@@ -180,8 +181,9 @@ resolve: {
                                             _styles: [
                                                 "line"
                                             ],
-                                            borderColorOpacity: 0.29,
-                                            borderWidth: 1
+                                            borderColorOpacity: 0.289999999999999980015985556747182272374629974365234375,
+                                            borderWidth: 1,
+                                            mobileBorderWidth: 1
                                         }
                                     }
                                 ]
@@ -560,8 +562,13 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 900,
                     bgImageSrc: "024b135312585dcbe3373dafc1d10d3e581e7b41.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 900,
+                    mobileBgImageSrc: "024b135312585dcbe3373dafc1d10d3e581e7b41.jpeg",
                     bgPositionX: 52,
-                    mobileBgPositionX: 52
+                    mobileBgPositionX: 52,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125
                 }
             }
         ]

@@ -1,6 +1,6 @@
 export default {
 id: "Dimi011Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 444,
 title: "Dimi011Dark", 
@@ -8,6 +8,7 @@ title: "Dimi011Dark",
 keywords: "pricing, four columns, button, icon, grid",
 cat: [0, 13],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -101,8 +102,11 @@ resolve: {
                                                                                 hoverBgColorPalette: "color8",
                                                                                 hoverBorderColorPalette: "color8",
                                                                                 mobilePadding: 20,
+                                                                                mobileBorderRadius: 30,
                                                                                 size: "custom",
                                                                                 customSize: 24,
+                                                                                mobileSize: "custom",
+                                                                                mobileCustomSize: 24,
                                                                                 tempPadding: 15,
                                                                                 tempBgColorPalette: "color7",
                                                                                 colorPalette: "color8",
@@ -257,7 +261,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -297,7 +302,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -348,8 +354,8 @@ resolve: {
                                             padding: 0,
                                             verticalAlign: "center",
                                             borderColorHex: "#ffffff",
-                                            borderColorOpacity: 0.2,
-                                            tempBorderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderWidth: 3,
                                             borderTopWidth: 3,
                                             borderRightWidth: 3,
@@ -378,8 +384,11 @@ resolve: {
                                             marginBottom: 40,
                                             borderColorPalette: "color8",
                                             bgColorPalette: "color8",
-                                            bgColorOpacity: 0.1,
-                                            tempBgColorOpacity: 0.1
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625
                                         }
                                     },
                                     {
@@ -467,7 +476,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -507,7 +517,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -558,8 +569,8 @@ resolve: {
                                             padding: 0,
                                             verticalAlign: "center",
                                             borderColorHex: "#ffffff",
-                                            borderColorOpacity: 0.2,
-                                            tempBorderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderWidth: 3,
                                             borderTopWidth: 3,
                                             borderRightWidth: 3,
@@ -578,7 +589,7 @@ resolve: {
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
-                                            bgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             paddingTop: 40,
                                             paddingBottom: 60,
                                             marginType: "ungrouped",
@@ -588,8 +599,11 @@ resolve: {
                                             marginTop: 40,
                                             marginBottom: 40,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderColorPalette: "color8",
-                                            tempBgColorOpacity: 0.1
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625
                                         }
                                     },
                                     {
@@ -677,7 +691,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -717,7 +732,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -778,15 +794,18 @@ resolve: {
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
-                                            bgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             paddingTop: 40,
                                             paddingBottom: 60,
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorHex: "",
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderColorPalette: "color3",
-                                            tempBgColorOpacity: 0.1,
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -877,7 +896,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -917,7 +937,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -968,8 +989,8 @@ resolve: {
                                             padding: 0,
                                             verticalAlign: "center",
                                             borderColorHex: "#ffffff",
-                                            borderColorOpacity: 0.2,
-                                            tempBorderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderWidth: 3,
                                             borderTopWidth: 3,
                                             borderRightWidth: 3,
@@ -988,7 +1009,7 @@ resolve: {
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
-                                            bgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             paddingTop: 40,
                                             paddingBottom: 60,
                                             marginType: "ungrouped",
@@ -998,14 +1019,19 @@ resolve: {
                                             marginTop: 40,
                                             marginBottom: 40,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "#ffffff",
+                                            mobileBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             borderColorPalette: "color8",
-                                            tempBgColorOpacity: 0.1
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625
                                         }
                                     }
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

@@ -1,13 +1,14 @@
 export default {
 id: "Gabi017Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 155,
 title: "Gabi017Dark", 
 
 keywords: "news, text, button, call to action",
-cat: [0, 6, 3],
+cat: [0, 6, 4],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -133,7 +134,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ]
@@ -142,7 +144,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

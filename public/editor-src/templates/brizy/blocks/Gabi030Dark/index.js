@@ -1,6 +1,6 @@
 export default {
 id: "Gabi030Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 337,
 title: "Gabi030Dark", 
@@ -8,6 +8,7 @@ title: "Gabi030Dark",
 keywords: "testimonial, team, partners, avatar, images, logos",
 cat: [0, 8, 10],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -117,6 +118,7 @@ resolve: {
                                                                     imageHeight: 512,
                                                                     height: 101,
                                                                     resize: 22,
+                                                                    mobileResize: 22,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 37,
                                                                     imageSrc: "f101666fa5750721a6cda37628779c0b6efe41b2.jpeg"
@@ -166,7 +168,7 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             paddingRight: 30,
                                             paddingLeft: 30
                                         }
@@ -195,6 +197,7 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 22,
+                                                                    mobileResize: 22,
                                                                     height: 101,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 37,
@@ -245,7 +248,7 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             paddingRight: 30,
                                             paddingLeft: 30
                                         }
@@ -274,6 +277,7 @@ resolve: {
                                                                     imageWidth: 512,
                                                                     imageHeight: 512,
                                                                     resize: 22,
+                                                                    mobileResize: 22,
                                                                     height: 101,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 37,
@@ -324,7 +328,7 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             paddingRight: 30,
                                             paddingLeft: 30
                                         }
@@ -385,25 +389,26 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "19f264df2d56685c8ce435afc2fe08ab995d8190.png",
                                                                     height: 91,
-                                                                    resize: 90
+                                                                    resize: 90,
+                                                                    mobileResize: 90
                                                                 }
                                                             }
                                                         ]
                                                     }
                                                 }
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             tempBorderTopWidth: 0,
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 0,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderRightWidth: 1,
                                             borderBottomWidth: 1,
                                             borderColorPalette: "color7",
                                             borderColorHex: "#73777f",
                                             borderWidth: 1,
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             tempBorderWidth: 1,
                                             borderWidthType: "ungrouped"
                                         }
@@ -433,24 +438,25 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "c5c14d6a259b25f81e5bd0a1f85e628f82565117.png",
                                                                     height: 97,
-                                                                    resize: 85
+                                                                    resize: 85,
+                                                                    mobileResize: 85
                                                                 }
                                                             }
                                                         ]
                                                     }
                                                 }
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             borderBottomWidth: 1,
                                             tempBorderRightWidth: 1,
                                             tempBorderTopWidth: 0,
                                             tempBorderLeftWidth: 0,
                                             tempBorderBottomWidth: 1,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderColorPalette: "color7",
                                             borderColorHex: "#73777f",
                                             borderWidth: 4,
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderRightWidth: 1,
                                             borderWidthType: "ungrouped"
                                         }
@@ -480,7 +486,8 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "9f26c3a67df3033e7bcca9255b3924fc9de8579c.png",
                                                                     height: 91,
-                                                                    resize: 80
+                                                                    resize: 80,
+                                                                    mobileResize: 80
                                                                 }
                                                             }
                                                         ],
@@ -488,18 +495,18 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             borderWidthType: "ungrouped",
                                             borderBottomWidth: 1,
                                             tempBorderRightWidth: 0,
                                             tempBorderTopWidth: 0,
                                             tempBorderLeftWidth: 0,
                                             tempBorderBottomWidth: 1,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderColorPalette: "color7",
                                             borderColorHex: "#73777f",
                                             borderWidth: 4,
-                                            tempBorderColorOpacity: 0.2
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125
                                         }
                                     }
                                 ]
@@ -539,7 +546,8 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "a55155a23287558af1dd620ffdcbcefd9cf33594.png",
                                                                     height: 81,
-                                                                    resize: 70
+                                                                    resize: 70,
+                                                                    mobileResize: 70
                                                                 }
                                                             }
                                                         ]
@@ -552,11 +560,11 @@ resolve: {
                                             tempBorderLeftWidth: 0,
                                             tempBorderBottomWidth: 0,
                                             tempBorderTopWidth: 0,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderColorPalette: "color7",
                                             borderColorHex: "#73777f",
                                             borderWidth: 1,
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             marginType: "ungrouped",
                                             tempBorderWidth: 1,
                                             borderWidthType: "ungrouped"
@@ -587,7 +595,8 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "0c77993836b3abee962578e95ded62de930b4c1c.png",
                                                                     height: 111,
-                                                                    resize: 70
+                                                                    resize: 70,
+                                                                    mobileResize: 70
                                                                 }
                                                             }
                                                         ]
@@ -601,11 +610,11 @@ resolve: {
                                             tempBorderLeftWidth: 0,
                                             tempBorderBottomWidth: 0,
                                             tempBorderTopWidth: 0,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderColorPalette: "color7",
                                             borderColorHex: "#73777f",
                                             borderWidth: 4,
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             marginType: "ungrouped"
                                         }
                                     },
@@ -633,7 +642,8 @@ resolve: {
                                                                     imageWidth: 220,
                                                                     imageHeight: 65,
                                                                     imageSrc: "fea22e5e1f7a6f052bc480627ff48eda92a75181.png",
-                                                                    resize: 70
+                                                                    resize: 70,
+                                                                    mobileResize: 70
                                                                 }
                                                             }
                                                         ]
@@ -647,11 +657,11 @@ resolve: {
                                             tempBorderLeftWidth: 0,
                                             tempBorderBottomWidth: 0,
                                             tempBorderTopWidth: 0,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderColorPalette: "color7",
                                             borderColorHex: "#73777f",
                                             borderWidth: 4,
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             marginType: "ungrouped"
                                         }
                                     },
@@ -680,7 +690,8 @@ resolve: {
                                                                     imageHeight: 65,
                                                                     imageSrc: "caaa8e29cae9d770e721f92a9898d96ecd2d6ceb.png",
                                                                     height: 120,
-                                                                    resize: 53
+                                                                    resize: 53,
+                                                                    mobileResize: 53
                                                                 }
                                                             }
                                                         ]
@@ -695,7 +706,9 @@ resolve: {
                         }
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 1
+                    bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

@@ -1,6 +1,6 @@
 export default {
 id: "Dimi010Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 313,
 title: "Dimi010Light",
@@ -8,6 +8,7 @@ title: "Dimi010Light",
 keywords: "pricing, three columns, button",
 cat: [0, 13],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -83,7 +84,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -206,8 +207,8 @@ resolve: {
                                             ],
                                             padding: 0,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.2,
-                                            tempBorderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderWidth: 2,
                                             borderTopWidth: 2,
                                             borderRightWidth: 2,
@@ -242,7 +243,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -365,8 +366,8 @@ resolve: {
                                             ],
                                             padding: 0,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.2,
-                                            tempBorderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderWidth: 2,
                                             borderTopWidth: 2,
                                             borderRightWidth: 2,
@@ -401,7 +402,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -524,8 +525,8 @@ resolve: {
                                             ],
                                             padding: 0,
                                             borderColorHex: "#73777f",
-                                            borderColorOpacity: 0.2,
-                                            tempBorderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderWidth: 2,
                                             borderTopWidth: 2,
                                             borderRightWidth: 2,
@@ -558,6 +559,8 @@ resolve: {
                             }
                         }
                     ],
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1,
                     paddingType: "ungrouped",
                     paddingBottom: 90
                 }

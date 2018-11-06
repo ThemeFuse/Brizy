@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan012Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 105,
 title: "Bogdan012Dark", 
 
 keywords: "social, button, icons",
-cat: [0, 14, 3],
+cat: [0, 14, 4],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -131,7 +132,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]
