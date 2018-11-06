@@ -1,13 +1,14 @@
 export default {
 id: "Gabi015Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 392,
 title: "Gabi015Light",
 
 keywords: "features, projects, call to action, services, button, two columns",
-cat: [0, 2, 4, 3, 7],
+cat: [0, 3, 5, 4, 7],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -117,7 +118,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150
+                                                                    height: 150,
+                                                                    mobileHeight: 150
                                                                 }
                                                             }
                                                         ]
@@ -221,15 +223,16 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150
+                                                                    height: 150,
+                                                                    mobileHeight: 150
                                                                 }
                                                             }
                                                         ]
                                                     }
                                                 }
                                             ],
-                                            bgColorOpacity: 0.65,
-                                            tempBgColorOpacity: 0.65,
+                                            bgColorOpacity: 0.65000000000000002220446049250313080847263336181640625,
+                                            tempBgColorOpacity: 0.65000000000000002220446049250313080847263336181640625,
                                             bgColorHex: "#191b21",
                                             borderRadius: 4,
                                             borderTopLeftRadius: 4,
@@ -241,7 +244,10 @@ resolve: {
                                             paddingLeft: 100,
                                             bgImageWidth: 1280,
                                             bgImageHeight: 1920,
-                                            bgImageSrc: "82113f8951f40b7fde688919813e23358e0d2217.jpeg"
+                                            bgImageSrc: "82113f8951f40b7fde688919813e23358e0d2217.jpeg",
+                                            mobileBgImageWidth: 1280,
+                                            mobileBgImageHeight: 1920,
+                                            mobileBgImageSrc: "82113f8951f40b7fde688919813e23358e0d2217.jpeg"
                                         }
                                     },
                                     {
@@ -265,7 +271,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150
+                                                                    height: 150,
+                                                                    mobileHeight: 150
                                                                 }
                                                             }
                                                         ]
@@ -369,15 +376,16 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 150
+                                                                    height: 150,
+                                                                    mobileHeight: 150
                                                                 }
                                                             }
                                                         ]
                                                     }
                                                 }
                                             ],
-                                            bgColorOpacity: 0.65,
-                                            tempBgColorOpacity: 0.65,
+                                            bgColorOpacity: 0.65000000000000002220446049250313080847263336181640625,
+                                            tempBgColorOpacity: 0.65000000000000002220446049250313080847263336181640625,
                                             bgColorHex: "#191b21",
                                             borderTopRightRadius: 4,
                                             borderBottomRightRadius: 4,
@@ -389,7 +397,10 @@ resolve: {
                                             paddingLeft: 100,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
-                                            bgImageSrc: "51099d3339e6661e5c487fd385a353cb42f95196.jpeg"
+                                            bgImageSrc: "51099d3339e6661e5c487fd385a353cb42f95196.jpeg",
+                                            mobileBgImageWidth: 1920,
+                                            mobileBgImageHeight: 1280,
+                                            mobileBgImageSrc: "51099d3339e6661e5c487fd385a353cb42f95196.jpeg"
                                         }
                                     }
                                 ]

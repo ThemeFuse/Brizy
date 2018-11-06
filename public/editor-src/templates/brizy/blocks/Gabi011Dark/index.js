@@ -1,13 +1,14 @@
 export default {
 id: "Gabi011Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 487,
 title: "Gabi011Dark", 
 
 keywords: "projects, news, gallery, three columns, image background",
-cat: [0, 4, 6, 9],
+cat: [0, 5, 6, 9],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -144,7 +145,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 200
+                                                                    height: 200,
+                                                                    mobileHeight: 200
                                                                 }
                                                             }
                                                         ]
@@ -202,10 +204,16 @@ resolve: {
                                             bgImageWidth: 1928,
                                             bgImageHeight: 1285,
                                             bgImageSrc: "ea944af6d6e6cabf8d5e7dc90f4bd798f00dad86.jpeg",
+                                            mobileBgImageWidth: 1928,
+                                            mobileBgImageHeight: 1285,
+                                            mobileBgImageSrc: "ea944af6d6e6cabf8d5e7dc90f4bd798f00dad86.jpeg",
                                             bgColorPalette: "color1",
                                             bgColorHex: "#191b21",
-                                            bgColorOpacity: 0.35,
-                                            tempBgColorOpacity: 0.35,
+                                            bgColorOpacity: 0.34999999999999997779553950749686919152736663818359375,
+                                            mobileBgColorPalette: "color1",
+                                            mobileBgColorHex: "#191b21",
+                                            mobileBgColorOpacity: 0.34999999999999997779553950749686919152736663818359375,
+                                            tempBgColorOpacity: 0.34999999999999997779553950749686919152736663818359375,
                                             marginType: "ungrouped",
                                             marginRight: 15,
                                             marginLeft: 15
@@ -228,7 +236,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20
+                                            height: 20,
+                                            mobileHeight: 20
                                         }
                                     }
                                 ]
@@ -249,7 +258,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -304,7 +313,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -324,7 +333,8 @@ resolve: {
                                                                     imageWidth: 1920,
                                                                     imageHeight: 1280,
                                                                     height: 90,
-                                                                    zoom: 108
+                                                                    zoom: 108,
+                                                                    mobileZoom: 108
                                                                 }
                                                             }
                                                         ]
@@ -359,7 +369,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -380,6 +390,7 @@ resolve: {
                                                                     imageHeight: 1280,
                                                                     height: 90,
                                                                     zoom: 163,
+                                                                    mobileZoom: 163,
                                                                     mobileHeight: 105
                                                                 }
                                                             }
@@ -413,7 +424,9 @@ resolve: {
                             }
                         }
                     ],
-                    containerSize: 85
+                    containerSize: 85,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

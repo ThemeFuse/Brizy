@@ -1,13 +1,14 @@
 export default {
 id: "Gabi007Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 281,
 title: "Gabi007Dark", 
 
 keywords: "features, services, icons, grid, text",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -110,7 +111,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -132,7 +134,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -161,6 +163,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -193,7 +197,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -222,6 +226,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -253,7 +259,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -282,6 +288,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -324,7 +332,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -346,7 +355,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -375,6 +384,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -406,7 +417,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -435,6 +446,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -466,7 +479,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -495,6 +508,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -537,7 +552,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],
@@ -559,7 +575,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -588,6 +604,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -619,7 +637,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -648,6 +666,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -679,7 +699,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -708,6 +728,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 hoverColorOpacity: 1,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8"
@@ -736,7 +758,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

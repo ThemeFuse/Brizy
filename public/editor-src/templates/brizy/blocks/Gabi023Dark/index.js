@@ -1,6 +1,6 @@
 export default {
 id: "Gabi023Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 276,
 title: "Gabi023Dark", 
@@ -8,6 +8,7 @@ title: "Gabi023Dark",
 keywords: "pricing, three columns, list, icons",
 cat: [0, 13],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -128,7 +129,9 @@ resolve: {
                                                                                 ],
                                                                                 name: "check-circle-07",
                                                                                 size: "custom",
+                                                                                mobileSize: "custom",
                                                                                 customSize: 40,
+                                                                                mobileCustomSize: 40,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -165,9 +168,11 @@ resolve: {
                                                                     _styles: [
                                                                         "line"
                                                                     ],
-                                                                    borderColorOpacity: 0.2,
+                                                                    borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                                                     borderWidth: 1,
-                                                                    width: 80
+                                                                    mobileBorderWidth: 1,
+                                                                    width: 80,
+                                                                    mobileWidth: 80
                                                                 }
                                                             }
                                                         ]
@@ -197,7 +202,9 @@ resolve: {
                                                                                 ],
                                                                                 name: "check-circle-07",
                                                                                 size: "custom",
+                                                                                mobileSize: "custom",
                                                                                 customSize: 40,
+                                                                                mobileCustomSize: 40,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -234,9 +241,11 @@ resolve: {
                                                                     _styles: [
                                                                         "line"
                                                                     ],
-                                                                    borderColorOpacity: 0.2,
+                                                                    borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                                                     borderWidth: 1,
-                                                                    width: 80
+                                                                    mobileBorderWidth: 1,
+                                                                    width: 80,
+                                                                    mobileWidth: 80
                                                                 }
                                                             }
                                                         ]
@@ -266,7 +275,9 @@ resolve: {
                                                                                 ],
                                                                                 name: "check-circle-07",
                                                                                 size: "custom",
+                                                                                mobileSize: "custom",
                                                                                 customSize: 40,
+                                                                                mobileCustomSize: 40,
                                                                                 hoverColorOpacity: 1
                                                                             }
                                                                         },
@@ -300,14 +311,14 @@ resolve: {
                                             tempBorderBottomRightRadius: 3,
                                             tempBorderBottomLeftRadius: 3,
                                             borderColorHex: "#73777f",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             verticalAlign: "center",
                                             paddingTop: 25,
                                             padding: 25,
                                             paddingBottom: 25,
                                             paddingLeft: 30,
                                             bgColorHex: "#ffffff",
-                                            tempBgColorOpacity: 0.04
+                                            tempBgColorOpacity: 0.040000000000000000832667268468867405317723751068115234375
                                         }
                                     },
                                     {
@@ -355,7 +366,8 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    borderColorOpacity: 0.2
+                                                                    mobileBorderWidth: 1,
+                                                                    borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125
                                                                 }
                                                             }
                                                         ],
@@ -500,7 +512,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -565,7 +578,7 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderRadius: 4,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
@@ -576,18 +589,21 @@ resolve: {
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
-                                            bgColorOpacity: 0.04,
+                                            bgColorOpacity: 0.040000000000000000832667268468867405317723751068115234375,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             paddingTop: 10,
                                             padding: 25,
                                             paddingRight: 0,
                                             paddingBottom: 30,
                                             paddingLeft: 0,
                                             bgColorHex: "",
-                                            tempBgColorOpacity: 0.04,
+                                            tempBgColorOpacity: 0.040000000000000000832667268468867405317723751068115234375,
                                             borderColorPalette: "color4",
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.040000000000000000832667268468867405317723751068115234375,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -638,7 +654,8 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     borderWidth: 1,
-                                                                    borderColorOpacity: 0.2
+                                                                    mobileBorderWidth: 1,
+                                                                    borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125
                                                                 }
                                                             }
                                                         ],
@@ -783,7 +800,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -848,7 +866,7 @@ resolve: {
                                             tempBorderRightWidth: 1,
                                             tempBorderBottomWidth: 1,
                                             tempBorderLeftWidth: 1,
-                                            borderColorOpacity: 0.2,
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             borderRadius: 4,
                                             borderTopLeftRadius: 4,
                                             borderTopRightRadius: 4,
@@ -859,18 +877,21 @@ resolve: {
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
-                                            bgColorOpacity: 0.04,
+                                            bgColorOpacity: 0.040000000000000000832667268468867405317723751068115234375,
                                             borderColorHex: "",
-                                            tempBorderColorOpacity: 0.2,
+                                            tempBorderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
                                             paddingTop: 10,
                                             padding: 25,
                                             paddingRight: 0,
                                             paddingBottom: 10,
                                             paddingLeft: 0,
                                             bgColorHex: "",
-                                            tempBgColorOpacity: 0.04,
+                                            tempBgColorOpacity: 0.040000000000000000832667268468867405317723751068115234375,
                                             borderColorPalette: "color4",
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.040000000000000000832667268468867405317723751068115234375,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -879,7 +900,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

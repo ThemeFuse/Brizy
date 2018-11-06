@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan004Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 328,
 title: "Bogdan004Dark", 
 
 keywords: "promo, features, services, icons , icon box, image",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -67,7 +68,8 @@ resolve: {
                                             imageSrc: "3f530b5c8b286d47d8a5612550d6d4ce93e495e1.jpeg",
                                             imageWidth: 1920,
                                             imageHeight: 573,
-                                            resize: 97
+                                            resize: 97,
+                                            mobileResize: 97
                                         }
                                     }
                                 ]
@@ -133,8 +135,10 @@ resolve: {
                                                                                     "iconText--icon"
                                                                                 ],
                                                                                 size: "custom",
+                                                                                mobileSize: "custom",
                                                                                 customSize: 56,
                                                                                 borderRadius: 5,
+                                                                                mobileCustomSize: 56,
                                                                                 name: "navigation",
                                                                                 type: "outline",
                                                                                 colorHex: "#1b6489",
@@ -159,7 +163,7 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.3
+                                            width: 33.2999999999999971578290569595992565155029296875
                                         }
                                     },
                                     {
@@ -168,7 +172,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -193,8 +197,10 @@ resolve: {
                                                                                     "iconText--icon"
                                                                                 ],
                                                                                 size: "custom",
+                                                                                mobileSize: "custom",
                                                                                 customSize: 56,
                                                                                 borderRadius: 5,
+                                                                                mobileCustomSize: 56,
                                                                                 name: "pulse-watch",
                                                                                 type: "outline",
                                                                                 colorHex: "#1b6489",
@@ -227,7 +233,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -252,8 +258,10 @@ resolve: {
                                                                                     "iconText--icon"
                                                                                 ],
                                                                                 size: "custom",
+                                                                                mobileSize: "custom",
                                                                                 customSize: 56,
                                                                                 borderRadius: 5,
+                                                                                mobileCustomSize: 56,
                                                                                 name: "desktop-screen",
                                                                                 type: "outline",
                                                                                 colorHex: "#1b6489",
@@ -283,7 +291,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

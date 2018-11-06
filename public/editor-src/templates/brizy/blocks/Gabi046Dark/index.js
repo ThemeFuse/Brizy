@@ -1,13 +1,14 @@
 export default {
 id: "Gabi046Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 193,
 title: "Gabi046Dark", 
 
 keywords: "progress, button, two columns, features",
-cat: [0, 2],
+cat: [0, 3],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -130,11 +131,12 @@ resolve: {
                                                                     iconName: "square-download",
                                                                     hoverBgColorPalette: "color8",
                                                                     hoverColorPalette: "color2",
-                                                                    hoverBorderColorOpacity: 0.8
+                                                                    hoverBorderColorOpacity: 0.8000000000000000444089209850062616169452667236328125
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -177,7 +179,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 },
                                                 {
@@ -295,7 +298,9 @@ resolve: {
                     ],
                     containerSize: 90,
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 1
+                    bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

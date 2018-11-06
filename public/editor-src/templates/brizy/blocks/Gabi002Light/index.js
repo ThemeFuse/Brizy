@@ -1,13 +1,14 @@
 export default {
 id: "Gabi002Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 417,
 title: "Gabi002Light",
 
 keywords: "features, projects, news, two columns, portfolio, grid, masonry",
-cat: [0, 2, 4, 6],
+cat: [0, 3, 5, 6],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,7 @@ resolve: {
                     ],
                     bgColorHex: "#eef0f2",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#eef0f2",
                     items: [
                         {
                             type: "Row",
@@ -64,7 +66,8 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -174,7 +177,8 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -182,6 +186,8 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
                                             paddingTop: 30,
                                             paddingRight: 65,
                                             paddingLeft: 65,
@@ -211,7 +217,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -329,7 +336,8 @@ resolve: {
                                                         ],
                                                         marginTop: 0,
                                                         marginBottom: 0,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -337,6 +345,8 @@ resolve: {
                                             bgColorPalette: "color8",
                                             bgColorHex: "",
                                             bgColorOpacity: 1,
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
                                             paddingTop: 30,
                                             paddingRight: 65,
                                             paddingLeft: 65,
@@ -379,6 +389,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "right",
+                                                        mobileHorizontalAlign: "right",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }

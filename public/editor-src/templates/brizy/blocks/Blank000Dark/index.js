@@ -1,6 +1,6 @@
 export default {
 id: "Blank000Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 311,
 title: "Blank000Dark", 
@@ -8,6 +8,7 @@ blank: "blank",
 keywords: "blank",
 cat: [0],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {

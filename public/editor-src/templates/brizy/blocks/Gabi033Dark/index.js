@@ -1,6 +1,6 @@
 export default {
 id: "Gabi033Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 315,
 title: "Gabi033Dark", 
@@ -8,6 +8,7 @@ title: "Gabi033Dark",
 keywords: "forms, contact, two columns",
 cat: [0, 11, 16],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -69,8 +72,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
-                                                        mobileMarginBottom: 0,
-                                                        mobileHorizontalAlign: "center"
+                                                        mobileMarginBottom: 0
                                                     }
                                                 }
                                             ]
@@ -139,7 +141,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 30
+                                                                    height: 30,
+                                                                    mobileHeight: 30
                                                                 }
                                                             }
                                                         ]
@@ -197,16 +200,17 @@ resolve: {
                                                                                                 "Option 1",
                                                                                                 "Option 2"
                                                                                             ],
-                                                                                            height: 130
+                                                                                            height: 130,
+                                                                                            mobileHeight: 130
                                                                                         }
                                                                                     }
                                                                                 ],
                                                                                 fontStyle: "paragraph",
                                                                                 fontWeight: 300,
-                                                                                lineHeight: 1.7,
+                                                                                lineHeight: 1.6999999999999999555910790149937383830547332763671875,
                                                                                 mobileFontStyle: "paragraph",
                                                                                 mobileFontSize: 15,
-                                                                                mobileLineHeight: 1.6,
+                                                                                mobileLineHeight: 1.600000000000000088817841970012523233890533447265625,
                                                                                 bgColorPalette: "color2",
                                                                                 colorPalette: "color7",
                                                                                 borderColorPalette: "color7",

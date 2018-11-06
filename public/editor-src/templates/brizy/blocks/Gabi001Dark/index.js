@@ -1,13 +1,14 @@
 export default {
 id: "Gabi001Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 324,
 title: "Gabi001Dark", 
 
 keywords: "features, devices, phone, smartphone, icons, application, two columns, image background, icon box",
-cat: [0, 2, 5],
+cat: [0, 3],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -25,8 +26,13 @@ resolve: {
                     bgImageWidth: 1996,
                     bgImageHeight: 1331,
                     bgImageSrc: "a69f2b6b6db1078e7736b06ee6c9da52ac1be101.jpeg",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    mobileBgImageWidth: 1996,
+                    mobileBgImageHeight: 1331,
+                    mobileBgImageSrc: "a69f2b6b6db1078e7736b06ee6c9da52ac1be101.jpeg",
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorHex: "#191b21",
                     items: [
                         {
                             type: "Row",
@@ -69,6 +75,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 name: "path-minus",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -106,7 +114,8 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     width: 90,
-                                                                    borderColorOpacity: 0.15
+                                                                    mobileWidth: 90,
+                                                                    borderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375
                                                                 }
                                                             }
                                                         ]
@@ -137,6 +146,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 name: "tablet",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -174,7 +185,8 @@ resolve: {
                                                                         "line"
                                                                     ],
                                                                     width: 90,
-                                                                    borderColorOpacity: 0.15
+                                                                    mobileWidth: 90,
+                                                                    borderColorOpacity: 0.1499999999999999944488848768742172978818416595458984375
                                                                 }
                                                             }
                                                         ]
@@ -205,6 +217,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 name: "money-time",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -258,8 +272,7 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left",
-                                                        mobileHorizontalAlign: "center"
+                                                        horizontalAlign: "left"
                                                     }
                                                 }
                                             ],

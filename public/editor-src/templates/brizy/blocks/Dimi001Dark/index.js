@@ -1,13 +1,14 @@
 export default {
 id: "Dimi001Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 397,
 title: "Dimi001Dark", 
 
 keywords: "features, projects, icons, image background",
-cat: [0, 2, 4],
+cat: [0, 3, 5],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,11 +23,16 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 1280,
                     bgImageSrc: "dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg",
-                    tempBgColorOpacity: 0.9,
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1280,
+                    mobileBgImageSrc: "dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg",
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     items: [
                         {
                             type: "Row",
@@ -130,6 +136,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8",
                                                                                 name: "dashboard-29",
@@ -168,7 +176,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 25
+                                                                    height: 25,
+                                                                    mobileHeight: 25
                                                                 }
                                                             }
                                                         ]
@@ -199,6 +208,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 colorPalette: "color8",
                                                                                 hoverColorPalette: "color8",
                                                                                 name: "donut",
@@ -270,7 +281,9 @@ resolve: {
                         }
                     ],
                     bgPositionY: 93,
-                    bgPositionX: 52
+                    mobileBgPositionY: 93,
+                    bgPositionX: 52,
+                    mobileBgPositionX: 52
                 }
             }
         ]

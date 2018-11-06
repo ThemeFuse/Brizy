@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan020Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 253,
 title: "Bogdan020Dark", 
@@ -8,6 +8,7 @@ title: "Bogdan020Dark",
 keywords: "testimonial, image, avatar",
 cat: [0, 8],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -79,7 +80,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20
+                                            height: 20,
+                                            mobileHeight: 20
                                         }
                                     }
                                 ],
@@ -121,7 +123,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20
+                                            height: 20,
+                                            mobileHeight: 20
                                         }
                                     }
                                 ],
@@ -168,7 +171,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 10
+                                            height: 10,
+                                            mobileHeight: 10
                                         }
                                     }
                                 ]
@@ -223,6 +227,8 @@ resolve: {
                             }
                         }
                     ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     containerSize: 60
                 }
             }

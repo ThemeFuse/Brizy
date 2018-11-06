@@ -1,13 +1,14 @@
 export default {
 id: "Gabi032Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 390,
 title: "Gabi032Dark", 
 
 keywords: "news, projects, images",
-cat: [0, 6, 4],
+cat: [0, 6, 5],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,8 +23,10 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    tempMobileBgColorOpacity: 0.9,
+                    mobileBgColorHex: "#191b21",
+                    tempMobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgColorOpacity: 1,
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Row",
@@ -49,7 +52,10 @@ resolve: {
                                             padding: 0,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
-                                            bgImageSrc: "32e337b41879df109a4cc8b1be35e8bb581772c9.jpeg"
+                                            bgImageSrc: "32e337b41879df109a4cc8b1be35e8bb581772c9.jpeg",
+                                            mobileBgImageWidth: 1920,
+                                            mobileBgImageHeight: 1280,
+                                            mobileBgImageSrc: "32e337b41879df109a4cc8b1be35e8bb581772c9.jpeg"
                                         }
                                     },
                                     {
@@ -141,6 +147,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }
@@ -148,10 +155,12 @@ resolve: {
                                             ],
                                             bgColorPalette: "color4",
                                             bgColorHex: "#66738d",
-                                            tempBgColorOpacity: 0.1,
+                                            mobileBgColorPalette: "color4",
+                                            mobileBgColorHex: "#66738d",
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             paddingRight: 50,
                                             paddingLeft: 50,
-                                            bgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             verticalAlign: "center",
                                             paddingTop: 30,
                                             paddingBottom: 30
@@ -174,7 +183,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -205,6 +215,9 @@ resolve: {
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1280,
                                             bgImageSrc: "a5bbdeab4982089f49a221146659a19505a40f5d.jpeg",
+                                            mobileBgImageWidth: 1920,
+                                            mobileBgImageHeight: 1280,
+                                            mobileBgImageSrc: "a5bbdeab4982089f49a221146659a19505a40f5d.jpeg",
                                             bgPositionX: 0,
                                             bgPositionY: 45
                                         }
@@ -296,6 +309,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }
@@ -303,8 +317,10 @@ resolve: {
                                             ],
                                             bgColorPalette: "color4",
                                             bgColorHex: "#66738d",
-                                            bgColorOpacity: 0.1,
-                                            tempBgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            mobileBgColorPalette: "color4",
+                                            mobileBgColorHex: "#66738d",
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             paddingRight: 50,
                                             paddingLeft: 50,
                                             verticalAlign: "center",
@@ -329,7 +345,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -359,7 +376,10 @@ resolve: {
                                             padding: 0,
                                             bgImageWidth: 1920,
                                             bgImageHeight: 1266,
-                                            bgImageSrc: "e87a1945a807932aac959161cda05e364a7c2670.jpeg"
+                                            bgImageSrc: "e87a1945a807932aac959161cda05e364a7c2670.jpeg",
+                                            mobileBgImageWidth: 1920,
+                                            mobileBgImageHeight: 1266,
+                                            mobileBgImageSrc: "e87a1945a807932aac959161cda05e364a7c2670.jpeg"
                                         }
                                     },
                                     {
@@ -449,6 +469,7 @@ resolve: {
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left",
                                                         marginTop: 0,
                                                         marginBottom: 0
                                                     }
@@ -456,8 +477,10 @@ resolve: {
                                             ],
                                             bgColorPalette: "color4",
                                             bgColorHex: "#66738d",
-                                            bgColorOpacity: 0.1,
-                                            tempBgColorOpacity: 0.1,
+                                            bgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
+                                            mobileBgColorPalette: "color4",
+                                            mobileBgColorHex: "#66738d",
+                                            tempBgColorOpacity: 0.1000000000000000055511151231257827021181583404541015625,
                                             paddingRight: 50,
                                             paddingLeft: 50,
                                             verticalAlign: "center",

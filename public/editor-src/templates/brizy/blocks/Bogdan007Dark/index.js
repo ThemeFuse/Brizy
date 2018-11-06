@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan007Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 359,
 title: "Bogdan007Dark", 
 
 keywords: "header, call to action, cover, image background, button, promo",
-cat: [0, 1, 3],
+cat: [0, 2, 4],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,11 +23,11 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.8,
+                    bgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     paddingTop: 250,
                     paddingBottom: 250,
                     padding: 250,
-                    tempBgColorOpacity: 0.8,
+                    tempBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     items: [
                         {
                             type: "Wrapper",
@@ -131,9 +132,14 @@ resolve: {
                     mobilePadding: 60,
                     mobilePaddingTop: 60,
                     mobilePaddingBottom: 60,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.8000000000000000444089209850062616169452667236328125,
                     bgImageWidth: 1920,
                     bgImageHeight: 881,
                     bgImageSrc: "3f0ed29e6e534e6b8be61f7513463cbd7d8492e9.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 881,
+                    mobileBgImageSrc: "3f0ed29e6e534e6b8be61f7513463cbd7d8492e9.jpeg",
                     containerSize: 90
                 }
             }

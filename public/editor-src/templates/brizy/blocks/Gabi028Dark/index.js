@@ -1,13 +1,14 @@
 export default {
 id: "Gabi028Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 382,
 title: "Gabi028Dark", 
 
 keywords: "gallery, features, services, grid, images, three columns, icons, icon box",
-cat: [0, 9, 2, 7],
+cat: [0, 9, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -42,7 +43,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -103,7 +104,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -124,7 +125,8 @@ resolve: {
                                                                     imageSrc: "147d8513024141d5096fa092543df0a5e3d318d3.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90
+                                                                    height: 90,
+                                                                    mobileHeight: 90
                                                                 }
                                                             }
                                                         ]
@@ -140,7 +142,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -161,7 +163,8 @@ resolve: {
                                                                     imageSrc: "80dc91c2d62894a53b15a2a5f5742b7b9253c10c.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90
+                                                                    height: 90,
+                                                                    mobileHeight: 90
                                                                 }
                                                             }
                                                         ]
@@ -188,7 +191,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20
+                                            height: 20,
+                                            mobileHeight: 20
                                         }
                                     }
                                 ]
@@ -209,7 +213,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -230,7 +234,8 @@ resolve: {
                                                                     imageSrc: "55bc5c8474d726ab0a17c8f7d745a99d5b3bab55.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90
+                                                                    height: 90,
+                                                                    mobileHeight: 90
                                                                 }
                                                             }
                                                         ]
@@ -246,7 +251,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -267,7 +272,8 @@ resolve: {
                                                                     imageSrc: "fd5920cf260b05ddc8c049d7f499d9c3ac4b8835.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90
+                                                                    height: 90,
+                                                                    mobileHeight: 90
                                                                 }
                                                             }
                                                         ]
@@ -283,7 +289,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -304,7 +310,8 @@ resolve: {
                                                                     imageSrc: "111a8c1bcf828e9962dd6da636944f99927bf156.jpeg",
                                                                     imageWidth: 1000,
                                                                     imageHeight: 660,
-                                                                    height: 90
+                                                                    height: 90,
+                                                                    mobileHeight: 90
                                                                 }
                                                             }
                                                         ]
@@ -331,9 +338,11 @@ resolve: {
                                             _styles: [
                                                 "line"
                                             ],
-                                            borderColorOpacity: 0.3,
+                                            borderColorOpacity: 0.299999999999999988897769753748434595763683319091796875,
                                             borderWidth: 1,
-                                            width: 95
+                                            mobileBorderWidth: 1,
+                                            width: 95,
+                                            mobileWidth: 95
                                         }
                                     }
                                 ],
@@ -358,7 +367,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Cloneable",
@@ -377,6 +386,8 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
+                                                                    mobileSize: "large",
+                                                                    mobileCustomSize: 64,
                                                                     name: "remix",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -440,7 +451,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Cloneable",
@@ -459,6 +470,8 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
+                                                                    mobileSize: "large",
+                                                                    mobileCustomSize: 64,
                                                                     name: "window-dev",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -520,7 +533,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Cloneable",
@@ -539,6 +552,8 @@ resolve: {
                                                                     size: "large",
                                                                     customSize: 64,
                                                                     borderRadius: 5,
+                                                                    mobileSize: "large",
+                                                                    mobileCustomSize: 64,
                                                                     name: "css3",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -602,7 +617,9 @@ resolve: {
                     ],
                     mobilePadding: 0,
                     mobilePaddingTop: 0,
-                    mobilePaddingBottom: 0
+                    mobilePaddingBottom: 0,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

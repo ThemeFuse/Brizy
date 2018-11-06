@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan018Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 162,
 title: "Bogdan018Dark", 
@@ -8,6 +8,7 @@ title: "Bogdan018Dark",
 keywords: "testimonial, team, image, member, text, image background, two columns",
 cat: [0, 8, 10],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,7 +23,7 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     items: [
                         {
                             type: "Row",
@@ -58,6 +59,7 @@ resolve: {
                                                                     imageWidth: 800,
                                                                     imageHeight: 800,
                                                                     resize: 99,
+                                                                    mobileResize: 99,
                                                                     height: 99,
                                                                     borderRadiusType: "rounded",
                                                                     borderRadius: 83,
@@ -128,10 +130,15 @@ resolve: {
                             }
                         }
                     ],
-                    tempBgColorOpacity: 0.9,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 360,
                     bgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 360,
+                    mobileBgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     containerSize: 85
                 }
             }

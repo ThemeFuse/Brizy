@@ -1,13 +1,14 @@
 export default {
 id: "Dimi004Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 345,
 title: "Dimi004Dark", 
 
 keywords: "features, services, icons, icon box, button, four columns, text",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorHex: "#191b21",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -128,8 +131,10 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 58,
                                                                     name: "drag",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -208,8 +213,10 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 58,
                                                                     name: "window-dev",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -287,8 +294,10 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 58,
                                                                     name: "time-countdown",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -366,8 +375,10 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 58,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 58,
                                                                     name: "cake-13",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1

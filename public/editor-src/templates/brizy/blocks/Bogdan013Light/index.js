@@ -1,6 +1,6 @@
 export default {
 id: "Bogdan013Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 148,
 title: "Bogdan013Light",
@@ -8,6 +8,7 @@ title: "Bogdan013Light",
 keywords: "footer, links, social, icons, text, four columns, contact, address, phone, email",
 cat: [0, 12, 14],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -232,8 +233,10 @@ resolve: {
                                                                     ],
                                                                     name: "logo-fb-simple",
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 22,
-                                                                    borderRadius: 2
+                                                                    borderRadius: 2,
+                                                                    mobileCustomSize: 22
                                                                 }
                                                             },
                                                             {
@@ -244,8 +247,10 @@ resolve: {
                                                                     ],
                                                                     name: "logo-google-plus",
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 22,
-                                                                    borderRadius: 2
+                                                                    borderRadius: 2,
+                                                                    mobileCustomSize: 22
                                                                 }
                                                             },
                                                             {
@@ -256,16 +261,17 @@ resolve: {
                                                                     ],
                                                                     name: "logo-twitter",
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 22,
-                                                                    borderRadius: 2
+                                                                    borderRadius: 2,
+                                                                    mobileCustomSize: 22
                                                                 }
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
                                                         itemPadding: 15,
                                                         itemPaddingRight: 15,
-                                                        itemPaddingLeft: 15,
-                                                        mobileHorizontalAlign: "center"
+                                                        itemPaddingLeft: 15
                                                     }
                                                 }
                                             ]
@@ -275,6 +281,8 @@ resolve: {
                             }
                         }
                     ],
+                    mobileBgColorHex: "#eef0f2",
+                    mobileBgColorOpacity: 1,
                     containerSize: 85
                 }
             }

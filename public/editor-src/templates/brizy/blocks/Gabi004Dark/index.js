@@ -1,13 +1,14 @@
 export default {
 id: "Gabi004Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 270,
 title: "Gabi004Dark", 
 
 keywords: "cover, header, call to action, image background, promo, testimonial",
-cat: [0, 1, 3, 8],
+cat: [0, 2, 4, 8],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,13 +24,18 @@ resolve: {
                     ],
                     paddingTop: 150,
                     paddingBottom: 150,
-                    tempBgColorOpacity: 0.01,
+                    tempBgColorOpacity: 0.01000000000000000020816681711721685132943093776702880859375,
                     padding: 150,
                     bgImageWidth: 1928,
                     bgImageHeight: 1285,
                     bgImageSrc: "1555b7780f05b38a6937204bb4e42a48cbd8fdc0.jpeg",
+                    mobileBgImageWidth: 1928,
+                    mobileBgImageHeight: 1285,
+                    mobileBgImageSrc: "1555b7780f05b38a6937204bb4e42a48cbd8fdc0.jpeg",
                     bgColorPalette: "color1",
                     bgColorHex: "#191b21",
+                    mobileBgColorPalette: "color1",
+                    mobileBgColorHex: "#191b21",
                     items: [
                         {
                             type: "Row",
@@ -72,8 +78,8 @@ resolve: {
                                             verticalAlign: "center",
                                             marginType: "ungrouped",
                                             bgColorHex: "",
-                                            bgColorOpacity: 0.85,
-                                            tempBgColorOpacity: 0.85,
+                                            bgColorOpacity: 0.84999999999999997779553950749686919152736663818359375,
+                                            tempBgColorOpacity: 0.84999999999999997779553950749686919152736663818359375,
                                             paddingRight: 70,
                                             padding: 80,
                                             paddingLeft: 70,
@@ -83,7 +89,10 @@ resolve: {
                                             tempBorderTopRightRadius: 4,
                                             tempBorderBottomRightRadius: 4,
                                             tempBorderBottomLeftRadius: 4,
-                                            bgColorPalette: "color1"
+                                            bgColorPalette: "color1",
+                                            mobileBgColorPalette: "color1",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 0.84999999999999997779553950749686919152736663818359375
                                         }
                                     }
                                 ]

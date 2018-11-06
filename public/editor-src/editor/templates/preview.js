@@ -10,6 +10,10 @@ var i18n = {
   }
 };
 
+var Brizy = {
+  utils: {}
+};
+
 <!-- inject:components -->
 <!-- endinject -->
 

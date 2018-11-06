@@ -1,6 +1,6 @@
 export default {
 id: "Gabi012Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 404,
 title: "Gabi012Light",
@@ -8,6 +8,7 @@ title: "Gabi012Light",
 keywords: "map, contact, phone, email, info, social, icons, address, directions",
 cat: [0, 15, 11],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorHex: "#ffffff",
                     bgColorOpacity: 1,
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -79,7 +82,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -125,7 +129,8 @@ resolve: {
                                         }
                                     }
                                 ],
-                                horizontalAlign: "left"
+                                horizontalAlign: "left",
+                                mobileHorizontalAlign: "left"
                             }
                         },
                         {
@@ -165,7 +170,7 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             paddingLeft: 0
                                         }
                                     },
@@ -197,7 +202,7 @@ resolve: {
                                                     }
                                                 }
                                             ],
-                                            width: 33.3
+                                            width: 33.2999999999999971578290569595992565155029296875
                                         }
                                     },
                                     {
@@ -206,7 +211,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -272,9 +277,9 @@ resolve: {
                                                                     hoverColorOpacity: 1,
                                                                     hoverBgColorHex: "#216fbd",
                                                                     hoverBorderColorHex: "#bde1f4",
-                                                                    tempBorderColorOpacity: 0.01,
+                                                                    tempBorderColorOpacity: 0.01000000000000000020816681711721685132943093776702880859375,
                                                                     mobilePadding: 20,
-                                                                    tempBgColorOpacity: 0.44
+                                                                    tempBgColorOpacity: 0.440000000000000002220446049250313080847263336181640625
                                                                 }
                                                             },
                                                             {
@@ -299,12 +304,13 @@ resolve: {
                                                                     hoverBorderColorHex: "#bde1f4",
                                                                     hoverBgColorOpacity: 1,
                                                                     mobilePadding: 20,
-                                                                    tempBgColorOpacity: 0.01
+                                                                    tempBgColorOpacity: 0.01000000000000000020816681711721685132943093776702880859375
                                                                 }
                                                             }
                                                         ],
                                                         marginRight: 10,
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ]

@@ -1,6 +1,6 @@
 export default {
 id: "Gabi019Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 407,
 title: "Gabi019Dark", 
@@ -8,6 +8,7 @@ title: "Gabi019Dark",
 keywords: "news, services, images, article, grid",
 cat: [0, 6, 7],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -60,7 +61,9 @@ resolve: {
                                                                     imageHeight: 1280,
                                                                     height: 82,
                                                                     positionX: 48,
-                                                                    positionY: 66
+                                                                    mobilePositionX: 48,
+                                                                    positionY: 66,
+                                                                    mobilePositionY: 66
                                                                 }
                                                             }
                                                         ]
@@ -152,7 +155,7 @@ resolve: {
                                                                     iconType: "",
                                                                     tempBorderColorPalette: "",
                                                                     bgColorOpacity: 0,
-                                                                    tempBgColorOpacity: 0.99,
+                                                                    tempBgColorOpacity: 0.9899999999999999911182158029987476766109466552734375,
                                                                     borderRadiusType: "",
                                                                     fillType: "default",
                                                                     hoverBgColorOpacity: 0,
@@ -161,7 +164,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -186,7 +190,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -284,7 +289,7 @@ resolve: {
                                                                     iconType: "",
                                                                     tempBorderColorPalette: "",
                                                                     bgColorOpacity: 0,
-                                                                    tempBgColorOpacity: 0.99,
+                                                                    tempBgColorOpacity: 0.9899999999999999911182158029987476766109466552734375,
                                                                     borderRadiusType: "",
                                                                     fillType: "default",
                                                                     hoverBgColorOpacity: 0,
@@ -293,7 +298,8 @@ resolve: {
                                                                 }
                                                             }
                                                         ],
-                                                        horizontalAlign: "left"
+                                                        horizontalAlign: "left",
+                                                        mobileHorizontalAlign: "left"
                                                     }
                                                 }
                                             ],
@@ -327,7 +333,8 @@ resolve: {
                                                                     imageWidth: 1920,
                                                                     imageHeight: 1280,
                                                                     height: 82,
-                                                                    zoom: 144
+                                                                    zoom: 144,
+                                                                    mobileZoom: 144
                                                                 }
                                                             }
                                                         ]
@@ -339,7 +346,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

@@ -1,13 +1,14 @@
 export default {
 id: "Gabi016Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 219,
 title: "Gabi016Light",
 
 keywords: "call to action, contact, button, text, partners, logos, social",
-cat: [0, 3, 11],
+cat: [0, 4, 11],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -80,7 +81,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -141,7 +143,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 20
+                                            height: 20,
+                                            mobileHeight: 20
                                         }
                                     }
                                 ]

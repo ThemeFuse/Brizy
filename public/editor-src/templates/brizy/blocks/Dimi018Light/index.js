@@ -1,13 +1,14 @@
 export default {
 id: "Dimi018Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 216,
 title: "Dimi018Light",
 
 keywords: "call to action, icon, video, cover, image background, hero",
-cat: [0, 3],
+cat: [0, 4],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -25,6 +26,10 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 360,
                     bgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 360,
+                    mobileBgImageSrc: "1ba72536c654aaa6a09052f03d2e3cba53c931c4.jpeg",
+                    mobileBgColorHex: "#bde1f4",
                     items: [
                         {
                             type: "Row",
@@ -132,8 +137,9 @@ resolve: {
                             }
                         }
                     ],
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     containerSize: 45,
                     padding: 65,
                     paddingTop: 65,

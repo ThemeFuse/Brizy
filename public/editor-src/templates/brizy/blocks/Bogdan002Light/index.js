@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan002Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 308,
 title: "Bogdan002Light",
 
 keywords: "features, icons, text, three columns",
-cat: [0, 2],
+cat: [0, 3],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -78,7 +79,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -137,16 +139,17 @@ resolve: {
                                                                     name: "3d-model",
                                                                     type: "outline",
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 56,
                                                                     hoverColorOpacity: 1
                                                                 }
                                                             }
                                                         ],
                                                         horizontalAlign: "left",
                                                         marginBottom: 0,
-                                                        marginTop: 5,
-                                                        mobileHorizontalAlign: "center"
+                                                        marginTop: 5
                                                     }
                                                 },
                                                 {
@@ -207,7 +210,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -228,8 +232,10 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 56,
                                                                     name: "window-dev",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -238,8 +244,7 @@ resolve: {
                                                         ],
                                                         horizontalAlign: "left",
                                                         marginBottom: 0,
-                                                        marginTop: 5,
-                                                        mobileHorizontalAlign: "center"
+                                                        marginTop: 5
                                                     }
                                                 },
                                                 {
@@ -313,8 +318,10 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 56,
                                                                     name: "browser-chrome",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -323,8 +330,7 @@ resolve: {
                                                         ],
                                                         horizontalAlign: "left",
                                                         marginBottom: 0,
-                                                        marginTop: 5,
-                                                        mobileHorizontalAlign: "center"
+                                                        marginTop: 5
                                                     }
                                                 },
                                                 {
@@ -387,7 +393,8 @@ resolve: {
                                                                     _styles: [
                                                                         "spacer"
                                                                     ],
-                                                                    height: 20
+                                                                    height: 20,
+                                                                    mobileHeight: 20
                                                                 }
                                                             }
                                                         ]
@@ -408,8 +415,10 @@ resolve: {
                                                                         "icon"
                                                                     ],
                                                                     size: "custom",
+                                                                    mobileSize: "custom",
                                                                     customSize: 56,
                                                                     borderRadius: 5,
+                                                                    mobileCustomSize: 56,
                                                                     name: "css3",
                                                                     type: "outline",
                                                                     hoverColorOpacity: 1
@@ -418,8 +427,7 @@ resolve: {
                                                         ],
                                                         horizontalAlign: "left",
                                                         marginBottom: 0,
-                                                        marginTop: 5,
-                                                        mobileHorizontalAlign: "center"
+                                                        marginTop: 5
                                                     }
                                                 },
                                                 {
@@ -474,7 +482,9 @@ resolve: {
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    mobileBgColorHex: "#ffffff",
+                    mobileBgColorOpacity: 1
                 }
             }
         ]

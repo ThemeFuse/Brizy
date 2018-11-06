@@ -1,13 +1,14 @@
 export default {
 id: "Dimi006Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 340,
 title: "Dimi006Dark", 
 
 keywords: "features, services, news, two columns, icons",
-cat: [0, 2, 7, 6],
+cat: [0, 3, 7, 6],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -23,6 +24,8 @@ resolve: {
                     ],
                     bgColorOpacity: 1,
                     bgColorHex: "#191b21",
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 1,
                     items: [
                         {
                             type: "Wrapper",
@@ -51,6 +54,8 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
+                                                        mobileSize: "large",
+                                                        mobileCustomSize: 64,
                                                         colorPalette: "color7",
                                                         hoverColorOpacity: 1,
                                                         hoverColorPalette: "color7"
@@ -158,8 +163,9 @@ resolve: {
                                             _styles: [
                                                 "line"
                                             ],
-                                            borderColorOpacity: 0.2,
-                                            width: 84
+                                            borderColorOpacity: 0.200000000000000011102230246251565404236316680908203125,
+                                            width: 84,
+                                            mobileWidth: 84
                                         }
                                     }
                                 ],
@@ -195,6 +201,8 @@ resolve: {
                                                         size: "large",
                                                         customSize: 64,
                                                         borderRadius: 5,
+                                                        mobileSize: "large",
+                                                        mobileCustomSize: 64,
                                                         colorPalette: "color7",
                                                         hoverColorPalette: "color7",
                                                         hoverColorHex: "#73777f",

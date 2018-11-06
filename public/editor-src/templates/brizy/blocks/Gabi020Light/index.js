@@ -1,13 +1,14 @@
 export default {
 id: "Gabi020Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 469,
 title: "Gabi020Light",
 
 keywords: "gallery, projects, images , grid, three columns, button",
-cat: [0, 9, 4],
+cat: [0, 9, 5],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -80,7 +81,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 35
+                                            height: 35,
+                                            mobileHeight: 35
                                         }
                                     }
                                 ]
@@ -101,7 +103,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -124,7 +126,9 @@ resolve: {
                                                                     imageHeight: 1920,
                                                                     height: 54,
                                                                     positionY: 32,
-                                                                    positionX: 55
+                                                                    mobilePositionY: 32,
+                                                                    positionX: 55,
+                                                                    mobilePositionX: 55
                                                                 }
                                                             }
                                                         ]
@@ -169,6 +173,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -180,7 +187,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -244,6 +251,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -255,7 +265,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -276,7 +286,8 @@ resolve: {
                                                                     imageSrc: "e56d84636cb6ef8f29561e37c9d4b9e199c69f38.jpeg",
                                                                     imageWidth: 1920,
                                                                     imageHeight: 1280,
-                                                                    zoom: 200
+                                                                    zoom: 200,
+                                                                    mobileZoom: 200
                                                                 }
                                                             }
                                                         ]
@@ -320,6 +331,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -343,7 +357,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -364,7 +378,8 @@ resolve: {
                                                                     imageSrc: "3b98e2255077c0264852a07333bfc726d54237f8.jpeg",
                                                                     imageWidth: 1920,
                                                                     imageHeight: 1271,
-                                                                    zoom: 131
+                                                                    zoom: 131,
+                                                                    mobileZoom: 131
                                                                 }
                                                             }
                                                         ]
@@ -409,6 +424,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -420,7 +438,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.3,
+                                            width: 33.2999999999999971578290569595992565155029296875,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -485,6 +503,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15
@@ -496,7 +517,7 @@ resolve: {
                                             _styles: [
                                                 "column"
                                             ],
-                                            width: 33.4,
+                                            width: 33.39999999999999857891452847979962825775146484375,
                                             items: [
                                                 {
                                                     type: "Wrapper",
@@ -560,6 +581,9 @@ resolve: {
                                             marginRight: 15,
                                             marginLeft: 15,
                                             bgColorPalette: "color8",
+                                            mobileBgColorPalette: "color8",
+                                            mobileBgColorHex: "",
+                                            mobileBgColorOpacity: 1,
                                             margin: 15,
                                             marginTop: 15,
                                             marginBottom: 15

@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan024Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 347,
 title: "Bogdan024Light",
 
 keywords: "features, services, icons, icon box, two columns, button",
-cat: [0, 2, 7],
+cat: [0, 3, 7],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -105,6 +106,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 name: "time-alarm",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -214,6 +217,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 name: "check-circle-07",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -316,6 +321,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 name: "divider",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1
@@ -425,6 +432,8 @@ resolve: {
                                                                                 size: "large",
                                                                                 customSize: 64,
                                                                                 borderRadius: 5,
+                                                                                mobileSize: "large",
+                                                                                mobileCustomSize: 64,
                                                                                 name: "blog",
                                                                                 type: "outline",
                                                                                 hoverColorOpacity: 1

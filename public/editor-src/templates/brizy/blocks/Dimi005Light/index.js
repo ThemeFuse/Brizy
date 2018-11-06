@@ -1,13 +1,14 @@
 export default {
 id: "Dimi005Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 220,
 title: "Dimi005Light",
 
 keywords: "testimonial, call to action, text, button, image background",
-cat: [0, 8, 3],
+cat: [0, 8, 4],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,11 +23,16 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#ffffff",
-                    bgColorOpacity: 0.9,
-                    tempBgColorOpacity: 0.9,
+                    bgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    mobileBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
+                    tempBgColorOpacity: 0.90000000000000002220446049250313080847263336181640625,
                     bgImageWidth: 1920,
                     bgImageHeight: 1246,
                     bgImageSrc: "0041b7f7c67b70e3c737c3ce1f44c48cb4ee7a22.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 1246,
+                    mobileBgImageSrc: "0041b7f7c67b70e3c737c3ce1f44c48cb4ee7a22.jpeg",
+                    mobileBgColorHex: "#ffffff",
                     items: [
                         {
                             type: "Wrapper",

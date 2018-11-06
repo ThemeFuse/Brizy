@@ -1,13 +1,14 @@
 export default {
 id: "Bogdan005Light",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 520,
 title: "Bogdan005Light",
 
 keywords: "gallery, projects, images, portfolio, grid, button",
-cat: [0, 9, 4],
+cat: [0, 9, 5],
 type: 0,
+
 resolve: {
     type: "Section",
     value: {
@@ -150,7 +151,8 @@ resolve: {
                                                                     imageSrc: "0d3c5e68fe37910554a0ee7b748b78b1ae03dcd0.jpeg",
                                                                     imageWidth: 720,
                                                                     imageHeight: 798,
-                                                                    height: 96
+                                                                    height: 96,
+                                                                    mobileHeight: 96
                                                                 }
                                                             }
                                                         ]
@@ -262,7 +264,8 @@ resolve: {
                                                                     imageSrc: "80e3efa8e818001685a55159671d3ba28f650a05.jpeg",
                                                                     imageWidth: 720,
                                                                     imageHeight: 798,
-                                                                    height: 96
+                                                                    height: 96,
+                                                                    mobileHeight: 96
                                                                 }
                                                             }
                                                         ]
@@ -288,7 +291,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ],

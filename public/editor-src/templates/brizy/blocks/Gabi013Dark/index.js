@@ -1,13 +1,14 @@
 export default {
 id: "Gabi013Dark",
-thumbnailSrc: require("./Preview.jpg"),
+
 thumbnailWidth: 600,
 thumbnailHeight: 312,
 title: "Gabi013Dark", 
 
 keywords: "header, call to action, hero, cover, button, text, image background",
-cat: [0, 1, 3],
+cat: [0, 2, 4],
 type: 1,
+
 resolve: {
     type: "Section",
     value: {
@@ -22,10 +23,10 @@ resolve: {
                         "section-item"
                     ],
                     bgColorHex: "#191b21",
-                    bgColorOpacity: 0.81,
+                    bgColorOpacity: 0.810000000000000053290705182007513940334320068359375,
                     paddingTop: 150,
                     paddingBottom: 150,
-                    tempBgColorOpacity: 0.81,
+                    tempBgColorOpacity: 0.810000000000000053290705182007513940334320068359375,
                     paddingType: "ungrouped",
                     padding: 150,
                     items: [
@@ -64,7 +65,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 30
+                                            height: 30,
+                                            mobileHeight: 30
                                         }
                                     }
                                 ]
@@ -106,7 +108,8 @@ resolve: {
                                             _styles: [
                                                 "spacer"
                                             ],
-                                            height: 40
+                                            height: 40,
+                                            mobileHeight: 40
                                         }
                                     }
                                 ]
@@ -134,6 +137,7 @@ resolve: {
                                             borderRadiusType: "custom",
                                             tempBorderRadiusType: "custom",
                                             borderRadius: 27,
+                                            mobileBorderRadius: 27,
                                             tempBorderRadius: 27,
                                             size: "custom",
                                             fontSize: 13,
@@ -150,7 +154,7 @@ resolve: {
                                             tempPaddingRight: 62,
                                             tempPaddingLeft: 62,
                                             colorPalette: "color2",
-                                            hoverBgColorOpacity: 0.91,
+                                            hoverBgColorOpacity: 0.91000000000000003108624468950438313186168670654296875,
                                             tempHoverBorderColorPalette: "",
                                             tempHoverBgColorOpacity: 1,
                                             borderWidth: 0
@@ -168,6 +172,7 @@ resolve: {
                                             borderRadiusType: "custom",
                                             tempBorderRadiusType: "custom",
                                             borderRadius: 27,
+                                            mobileBorderRadius: 27,
                                             tempBorderRadius: 27,
                                             size: "custom",
                                             fontSize: 13,
@@ -199,6 +204,11 @@ resolve: {
                     bgImageWidth: 1920,
                     bgImageHeight: 893,
                     bgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
+                    mobileBgImageWidth: 1920,
+                    mobileBgImageHeight: 893,
+                    mobileBgImageSrc: "cb7f93f2ad863736ec5f0a0a6763f8f8f8e641b2.jpeg",
+                    mobileBgColorHex: "#191b21",
+                    mobileBgColorOpacity: 0.810000000000000053290705182007513940334320068359375,
                     containerSize: 60
                 }
             }
