@@ -52,7 +52,9 @@ class Brizy_Editor {
 
 	public function wordpressInit() {
 
+		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
+
 
 		$this->loadShortcodes();
 		$this->registerCustomPostTemplates();
@@ -188,6 +190,7 @@ class Brizy_Editor {
 	public function registerCustomPostTemplates() {
 		Brizy_Editor_Project::registerCustomPostType();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
+		Brizy_Admin_FormEntries::registerCustomPostTemplate();
 	}
 
 	/**
@@ -228,6 +231,7 @@ class Brizy_Editor {
 		try {
 			new Brizy_Editor_API( $project, $post );
 			new Brizy_Editor_BlockScreenshotApi( $project, $post );
+			new Brizy_Editor_Forms_Api( $project, $post );
 
 			// for other apis
 			do_action( 'brizy_register_api_methods', $user, $project, $post );
@@ -243,7 +247,6 @@ class Brizy_Editor {
 			if ( is_admin() ) {
 				Brizy_Admin_Main::instance();
 				Brizy_Admin_Settings::_init();
-
 			}
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );

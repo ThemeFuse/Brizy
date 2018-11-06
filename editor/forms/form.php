@@ -13,20 +13,11 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 */
 	protected $id;
 
-	/**
-	 * @var string
-	 */
-	protected $emailTo;
 
 	/**
-	 * @var string
+	 * @var Brizy_Editor_Forms_AbstractIntegration[]
 	 */
-	protected $subject;
-
-	/**
-	 * @var bool
-	 */
-	protected $hasIntegrations;
+	protected $integrations = array();
 
 	/**
 	 * @return string
@@ -37,9 +28,8 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 	public function jsonSerialize() {
 		$get_object_vars = array(
-			'id'      => $this->id,
-			'emailTo' => $this->emailTo,
-			'subject' => $this->subject,
+			'id'           => $this->id,
+			'integrations' => $this->integrations,
 		);
 
 		return $get_object_vars;
@@ -47,17 +37,15 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 	public function convertToOptionValue() {
 		return array(
-			'id'      => $this->id,
-			'emailTo' => $this->emailTo,
-			'subject' => $this->subject,
+			'id'           => $this->id,
+			'integrations' => $this->integrations,
 		);
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$instance          = new self();
-		$instance->id      = $data['id'];
-		$instance->emailTo = $data['emailTo'];
-		$instance->subject = $data['subject'];
+		$instance               = new self();
+		$instance->id           = $data['id'];
+		$instance->integrations = $data['integrations'];
 
 		return $instance;
 	}
@@ -82,42 +70,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getEmailTo() {
-		return $this->emailTo;
-	}
-
-	/**
-	 * @param string $emailTo
-	 *
-	 * @return Brizy_Editor_Forms_Form
-	 */
-	public function setEmailTo( $emailTo ) {
-		$this->emailTo = $emailTo;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getSubject() {
-		return $this->subject;
-	}
-
-	/**
-	 * @param string $subject
-	 *
-	 * @return Brizy_Editor_Forms_Form
-	 */
-	public function setSubject( $subject ) {
-		$this->subject = $subject;
-
-		return $this;
-	}
-
-	/**
 	 * @return Brizy_Editor_Forms_Form
 	 * @throws Exception
 	 */
@@ -137,12 +89,38 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 			$instance->setId( $_POST['form']['id'] );
 		}
 
-		if ( isset( $_POST['form']['emailTo'] ) ) {
-			$instance->setEmailTo( $_POST['form']['emailTo'] );
+		return $instance;
+	}
+
+
+	/**
+	 * @return Brizy_Editor_Forms_Form
+	 * @throws Exception
+	 */
+	public static function createFromJson( $json_obj ) {
+		$instance = new self();
+
+		if ( ! isset( $json_obj ) ) {
+			throw new Exception( 'Bad Request', 400 );
 		}
 
-		if ( isset( $_POST['form']['subject'] ) ) {
-			$instance->setSubject( $_POST['form']['subject'] );
+		if ( is_object( $json_obj ) ) {
+
+			$instance->setId( $json_obj->id );
+
+
+			// add uncompleted wordpress integration
+			$current_user   = wp_get_current_user();
+			$an_integration = new Brizy_Editor_Forms_WordpressIntegration();
+			$an_integration->setEmailTo( $current_user->user_email );
+
+			$instance->addIntegration( $an_integration );
+
+			foreach ( (array) $json_obj->integrations as $integration ) {
+				if ( is_object( $integration ) ) {
+					$instance->addIntegration( Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( $integration ) );
+				}
+			}
 		}
 
 		return $instance;
@@ -159,14 +137,8 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		$errors = array();
 
-		if ( $target == 'update' ) {
-			if ( ! $this->getId() ) {
-				$errors['fromEmail'] = 'Invalid form id';
-			}
-		}
-
-		if ( ! $this->getEmailTo() || ! filter_var( $this->getEmailTo(), FILTER_VALIDATE_EMAIL ) ) {
-			$errors['emailTo'] = 'Invalid email provided';
+		if ( ! $this->getId() ) {
+			$errors['id'] = 'Invalid form id';
 		}
 
 		if ( count( $errors ) ) {
@@ -176,23 +148,81 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 		return true;
 	}
 
+	public function getIntegrations() {
+		return $this->integrations;
+	}
+
 	/**
+	 * @param $id
+	 *
+	 * @return Brizy_Editor_Forms_AbstractIntegration|null
+	 */
+	public function getIntegration( $id ) {
+
+		foreach ( $this->integrations as $integration ) {
+			if ( $integration->getId() == $id ) {
+				return $integration;
+			}
+		}
+
+		return null;
+	}
+
+	public function addIntegration( Brizy_Editor_Forms_AbstractIntegration $anIntegration ) {
+
+		if ( ! $anIntegration ) {
+			return false;
+		}
+
+		if ( $this->getIntegration( $anIntegration->getId() ) ) {
+			return false;
+		}
+
+		$this->integrations[] = $anIntegration;
+
+		return true;
+	}
+
+	/**+
+	 * @param $anIntegration
+	 *
 	 * @return bool
 	 */
-	public function hasIntegrations() {
-		return $this->hasIntegrations;
+	public function updateIntegration( Brizy_Editor_Forms_AbstractIntegration $anIntegration ) {
+
+		if ( ! $anIntegration ) {
+			return false;
+		}
+
+		foreach ( $this->integrations as $k => $integration ) {
+			if ( $integration->getId() == $anIntegration->getId() ) {
+				$this->integrations[ $k ] = $anIntegration;
+
+				return true;
+			}
+		}
+
+		return false;
 	}
+
 
 	/**
-	 * @param bool $hasIntegrations
+	 * @param $id
 	 *
-	 * @return Brizy_Editor_Forms_Form
+	 * @return bool
 	 */
-	public function setHasIntegrations( $hasIntegrations ) {
-		$this->hasIntegrations = $hasIntegrations;
+	public function deleteIntegration( $id ) {
 
-		return $this;
+		foreach ( $this->integrations as $k => $integration ) {
+			if ( $integration->getId() == $id ) {
+				unset( $this->integrations[ $k ] );
+				$this->integrations = array_values( $this->integrations );
+
+				return true;
+			}
+		}
+
+		return false;
 	}
-
 
 }

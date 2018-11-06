@@ -32,7 +32,7 @@ class Brizy_Config {
 	const BRIZY_APPLICATION_INTEGRATION_URL = 'http://ec2-52-203-33-55.compute-1.amazonaws.com';
 	const BRIZY_APPLICATION_FORM_ID = '4_4sh251774pwkgswwcow4ssgkkgosk4wowgss00k8w0ggs8808o';
 	const BRIZY_APPLICATION_FORM_URL = 'http://www.brizy.org/client_id/%s?multipass_url=%s';
-	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = '/form/submit';
+	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = 'http://cloud.bodnar.site/form/submit';
 	const BRIZY_PLATFORM_MULTIPASS_LOGIN = '/multipass/login/%s/%s?email=%s';
 
 	const PLATFORM_CLIENT_ID = "5_3nneq7brm50k4s4s4g0owk0088k8wco80cg4kc88o8wg0ks4w0";

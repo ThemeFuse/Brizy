@@ -79,6 +79,7 @@ class Brizy_Admin_Templates {
 			return;
 		}
 
+		//  hyperapp.js is also used in PRO
 		wp_enqueue_script(
 			Brizy_Editor::get()->get_slug() . '-hyperapp-js',
 			Brizy_Editor::get()->get_url( 'admin/static/js/hyperapp.js' ),

@@ -203,6 +203,20 @@ class Brizy_Editor_Editor_Editor {
 					'createRules'                => Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
 					'deleteRule'                 => Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
 					'getRuleList'                => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
+					//'getDefaultForm'             => Brizy_Editor_Forms_Api::AJAX_GET_DEFAULT_FORM,
+
+					'getForm'           => Brizy_Editor_Forms_Api::AJAX_GET_FORM,
+					'createForm'        => Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
+					'deleteForm'        => Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
+					'submitForm'        => Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM,
+					'getIntegration'    => Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
+					'createIntegration' => Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
+					'updateIntegration' => Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
+					'deleteIntegration' => Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
+
+					'storeRecaptchaAccount' => Brizy_Editor_Forms_Api::AJAX_SET_RECAPTCHA_ACCOUNT,
+					'getRecaptchaAccount'   => Brizy_Editor_Forms_Api::AJAX_GET_RECAPTCHA_ACCOUNT,
+
 				),
 				'plugins'         => array(
 					'dummy'       => true,
@@ -215,9 +229,6 @@ class Brizy_Editor_Editor_Editor {
 			),
 			'applications'    => array(
 				'form' => array(
-					'iframeUrl' => $this->urlBuilder->application_form_url(),
-					'apiUrl'    => Brizy_Config::BRIZY_APPLICATION_INTEGRATION_URL,
-					'wpApiUrl'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),

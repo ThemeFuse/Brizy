@@ -329,7 +329,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	/**
 	 * @return Brizy_Editor_CompiledHtml
 	 */
-	public function get_compiled_page( ) {
+	public function get_compiled_page() {
 
 		if ( self::$compiled_page ) {
 			return self::$compiled_page;
