@@ -121,6 +121,10 @@ class Brizy_Editor {
 		if ( function_exists( 'autoptimize' ) ) {
 			new Brizy_Compatibilities_Autoptimize();
 		}
+
+		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
+			new Brizy_Compatibilities_WPML();
+		}
 	}
 
 	/**
