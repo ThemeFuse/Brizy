@@ -65,7 +65,46 @@ export const currentStyleSelector = createSelector(globalsSelector, globals => {
       },
       [`${color.id}__mobileBg`]: {
         mobileBgColorHex: color.hex
-      }
+      },
+      [`${color.id}__subMenuColor`]: {
+        subMenuColorHex: color.hex
+      },
+      [`${color.id}__subMenuHoverColor`]: {
+        subMenuHoverColorHex: color.hex
+      },
+      [`${color.id}__subMenuBgColor`]: {
+        subMenuBgColorHex: color.hex
+      },
+      [`${color.id}__subMenuHoverBgColor`]: {
+        subMenuHoverBgColorHex: color.hex
+      },
+      [`${color.id}__subMenuBorderColor`]: {
+        subMenuBorderColorHex: color.hex
+      },
+      [`${color.id}__subMenuHoverBorderColor`]: {
+        subMenuHoverBorderColorHex: color.hex
+      },
+      [`${color.id}__mMenuColor`]: {
+        mMenuColorHex: color.hex
+      },
+      [`${color.id}__mMenuHoverColor`]: {
+        mMenuHoverColorHex: color.hex
+      },
+      [`${color.id}__mMenuBgColor`]: {
+        mMenuBgColorHex: color.hex
+      },
+      [`${color.id}__mMenuBorderColor`]: {
+        mMenuBorderColorHex: color.hex
+      },
+      [`${color.id}__mMenuIconColor`]: {
+        mMenuIconColorHex: color.hex
+      },
+      [`${color.id}__tabletMMenuIconColor`]: {
+        tabletMMenuIconColorHex: color.hex
+      },
+      [`${color.id}__mobileMMenuIconColor`]: {
+        mobileMMenuIconColorHex: color.hex
+      },
     }),
     {}
   );
@@ -90,6 +129,44 @@ export const currentStyleSelector = createSelector(globalsSelector, globals => {
         mobileFontWeight: font.mobileFontWeight,
         mobileLineHeight: font.mobileLineHeight,
         mobileLetterSpacing: font.mobileLetterSpacing
+      },
+      [`${font.id}__subMenuFsDesktop`]: {
+        subMenuFontFamily: font.fontFamily,
+        subMenuFontSize: font.fontSize,
+        subMenuFontWeight: font.fontWeight,
+        subMenuLineHeight: font.lineHeight,
+        subMenuLetterSpacing: font.letterSpacing
+      },
+      [`${font.id}__subMenuFsTablet`]: {
+        tabletSubMenuFontSize: font.tabletFontSize,
+        tabletSubMenuFontWeight: font.tabletFontWeight,
+        tabletSubMenuLineHeight: font.tabletLineHeight,
+        tabletSubMenuLetterSpacing: font.tabletLetterSpacing
+      },
+      [`${font.id}__subMenuFsMobile`]: {
+        mobileSubMenuFontSize: font.mobileFontSize,
+        mobileSubMenuFontWeight: font.mobileFontWeight,
+        mobileSubMenuLineHeight: font.mobileLineHeight,
+        mobileSubMenuLetterSpacing: font.mobileLetterSpacing
+      },
+      [`${font.id}__mMenuFsDesktop`]: {
+        mMenuFontFamily: font.fontFamily,
+        mMenuFontSize: font.fontSize,
+        mMenuFontWeight: font.fontWeight,
+        mMenuLineHeight: font.lineHeight,
+        mMenuLetterSpacing: font.letterSpacing
+      },
+      [`${font.id}__mMenuFsTablet`]: {
+        tabletMMenuFontSize: font.tabletFontSize,
+        tabletMMenuFontWeight: font.tabletFontWeight,
+        tabletMMenuLineHeight: font.tabletLineHeight,
+        tabletMMenuLetterSpacing: font.tabletLetterSpacing
+      },
+      [`${font.id}__mMenuFsMobile`]: {
+        mobileMMenuFontSize: font.mobileFontSize,
+        mobileMMenuFontWeight: font.mobileFontWeight,
+        mobileMMenuLineHeight: font.mobileLineHeight,
+        mobileMMenuLetterSpacing: font.mobileLetterSpacing
       }
     }),
     {}

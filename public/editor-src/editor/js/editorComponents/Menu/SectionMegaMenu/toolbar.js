@@ -1,62 +1,93 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { getOptionColor } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 
-const imageDynamicContentChoices = getDynamicContentChoices("image");
-
-export function getItemsForDesktop(v, meta) {
+export function getItemsForDesktop(v) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
   const { hex: borderColorHex } = getOptionColor(v, "borderColor");
 
   return [
     {
+      id: "toolbarFooter",
+      type: "popover",
+      icon: "nc-menu-3",
+      title: "Footer",
+      disabled: true,
+      position: 70,
+      options: [
+        {
+          id: "multiPage",
+          label: t("MultiPage"),
+          type: "switch",
+          value: v.multiPage
+        }
+      ]
+    },
+    {
       id: "toolbarMedia",
       type: "popover",
       icon: "nc-background",
       title: t("Background"),
-      position: 20,
+      position: 80,
       options: [
         {
           id: "bgImage",
           label: t("Image"),
           type: "imageSetter",
-          population: {
-            show: imageDynamicContentChoices.length > 0,
-            choices: imageDynamicContentChoices
-          },
           value: {
             width: v.bgImageWidth,
             height: v.bgImageHeight,
             src: v.bgImageSrc,
             x: v.bgPositionX,
-            y: v.bgPositionY,
-            population: v.bgPopulation
+            y: v.bgPositionY
           },
-          onChange: ({ width, height, src, x, y, population }) => {
-            if (population) {
-              return {
-                bgPopulation: population
-              };
-            }
+          onChange: ({ width, height, src, x, y }) => ({
+            bgImageWidth: width,
+            bgImageHeight: height,
+            bgImageSrc: src,
+            bgPositionX: x,
+            bgPositionY: y,
 
-            return {
-              bgImageWidth: width,
-              bgImageHeight: height,
-              bgImageSrc: src,
-              bgPositionX: x,
-              bgPositionY: y,
-              bgPopulation: "",
+            bgColorOpacity:
+              src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.bgColorOpacity,
 
-              bgColorOpacity:
-                src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.bgColorOpacity,
+            tempBgColorOpacity:
+              src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.tempBgColorOpacity,
 
-              tempBgColorOpacity:
-                src !== "" && v.bgColorOpacity === 1
-                  ? 0.9
-                  : v.tempBgColorOpacity
-            };
-          }
+            // Mobile
+            mobileBgImageWidth:
+              v.bgImageWidth === v.mobileBgImageWidth
+                ? width
+                : v.mobileBgImageWidth,
+
+            mobileBgImageHeight:
+              v.bgImageHeight === v.mobileBgImageHeight
+                ? height
+                : v.mobileBgImageHeight,
+
+            mobileBgImageSrc:
+              v.bgImageSrc === v.mobileBgImageSrc ? src : v.mobileBgImageSrc,
+
+            mobileBgPositionX:
+              v.bgPositionX === v.mobileBgPositionX ? x : v.mobileBgPositionX,
+
+            mobileBgPositionY:
+              v.bgPositionX === v.mobileBgPositionX ? y : v.mobileBgPositionY,
+
+            mobileBgColorOpacity:
+              src !== "" &&
+              v.bgImageSrc === v.mobileBgImageSrc &&
+              v.mobileBgColorOpacity === 1
+                ? 0.9
+                : v.mobileBgColorOpacity,
+
+            tempMobileBgColorOpacity:
+              src !== "" &&
+              v.bgImageSrc === v.mobileBgImageSrc &&
+              v.mobileBgColorOpacity === 1
+                ? 0.9
+                : v.tempMobileBgColorOpacity
+          })
         }
       ]
     },
@@ -65,7 +96,7 @@ export function getItemsForDesktop(v, meta) {
       type: "popover",
       size: "auto",
       title: t("Colors"),
-      position: 20,
+      position: 90,
       icon: {
         style: {
           backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
@@ -99,6 +130,22 @@ export function getItemsForDesktop(v, meta) {
                       bgColorPalette:
                         isChanged === "hex" ? "" : v.bgColorPalette,
 
+                      mobileBgColorHex:
+                        v.bgColorHex === v.mobileBgColorHex
+                          ? hex
+                          : v.mobileBgColorHex,
+
+                      mobileBgColorOpacity:
+                        v.bgColorOpacity === v.mobileBgColorOpacity
+                          ? bgColorOpacity
+                          : v.mobileBgColorOpacity,
+
+                      mobileBgColorPalette:
+                        v.bgColorPalette === v.mobileBgColorPalette &&
+                        isChanged === "hex"
+                          ? ""
+                          : v.mobileBgColorPalette,
+
                       tempBgColorOpacity:
                         bgColorOpacity > 0 && opacityDragEnd
                           ? bgColorOpacity
@@ -117,7 +164,22 @@ export function getItemsForDesktop(v, meta) {
                     bgColorOpacity:
                       v.bgColorOpacity === 0
                         ? v.tempBgColorOpacity
-                        : v.bgColorOpacity
+                        : v.bgColorOpacity,
+
+                    mobileBgColorPalette:
+                      v.bgColorPalette === v.mobileBgColorPalette
+                        ? value
+                        : v.mobileBgColorPalette,
+
+                    mobileBgColorHex:
+                      v.bgColorPalette === v.mobileBgColorPalette
+                        ? ""
+                        : v.mobileBgColorHex,
+
+                    mobileBgColorOpacity:
+                      v.bgColorPalette === v.mobileBgColorPalette
+                        ? v.tempBgColorOpacity
+                        : v.mobileBgColorOpacity
                   })
                 },
                 {
@@ -138,7 +200,23 @@ export function getItemsForDesktop(v, meta) {
                       bgColorPalette:
                         isChanged === "hex" ? "" : v.bgColorPalette,
                       bgColorHex: hex,
-                      bgColorOpacity: bgColorOpacity
+                      bgColorOpacity: bgColorOpacity,
+
+                      mobileBgColorHex:
+                        v.bgColorHex === v.mobileBgColorHex
+                          ? hex
+                          : v.mobileBgColorHex,
+
+                      mobileBgColorOpacity:
+                        v.bgColorOpacity === v.mobileBgColorOpacity
+                          ? bgColorOpacity
+                          : v.mobileBgColorOpacity,
+
+                      mobileBgColorPalette:
+                        v.bgColorPalette === v.mobileBgColorPalette &&
+                        isChanged === "hex"
+                          ? ""
+                          : v.mobileBgColorPalette
                     };
                   }
                 }
@@ -176,36 +254,36 @@ export function getItemsForDesktop(v, meta) {
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                          ? v.tempBorderWidth
-                          : v.borderWidth,
+                            ? v.tempBorderWidth
+                            : v.borderWidth,
 
                       borderTopWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                          ? v.tempBorderTopWidth
-                          : v.borderTopWidth,
+                            ? v.tempBorderTopWidth
+                            : v.borderTopWidth,
 
                       borderRightWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                          ? v.tempBorderRightWidth
-                          : v.borderRightWidth,
+                            ? v.tempBorderRightWidth
+                            : v.borderRightWidth,
 
                       borderBottomWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                          ? v.tempBorderBottomWidth
-                          : v.borderBottomWidth,
+                            ? v.tempBorderBottomWidth
+                            : v.borderBottomWidth,
 
                       borderLeftWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                          ? v.tempBorderLeftWidth
-                          : v.borderLeftWidth
+                            ? v.tempBorderLeftWidth
+                            : v.borderLeftWidth
                     };
                   }
                 },
@@ -276,11 +354,11 @@ export function getItemsForDesktop(v, meta) {
             type: "select",
             choices: [
               {
-                title: "Boxed",
+                title: t("Boxed"),
                 value: "boxed"
               },
               {
-                title: "Full",
+                title: t("Full"),
                 value: "fullWidth"
               }
             ],
@@ -532,8 +610,8 @@ export function getItemsForDesktop(v, meta) {
                                   borderWidth === 0
                                     ? 0
                                     : borderWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity,
+                                      ? v.tempBorderColorOpacity
+                                      : v.borderColorOpacity,
 
                                 borderBottomRightRadius:
                                   borderWidth === 0 && v.bgColorOpacity === 0
@@ -542,8 +620,8 @@ export function getItemsForDesktop(v, meta) {
                                       v.borderTopLeftRadius === 0 &&
                                       v.borderTopRightRadius === 0 &&
                                       v.borderBottomLeftRadius === 0
-                                    ? v.tempBorderBottomRightRadius
-                                    : v.borderBottomRightRadius
+                                      ? v.tempBorderBottomRightRadius
+                                      : v.borderBottomRightRadius
                               };
                             }
                           }
@@ -619,8 +697,8 @@ export function getItemsForDesktop(v, meta) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderTopWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
+                                      ? v.tempBorderColorOpacity
+                                      : v.borderColorOpacity
                               };
                             }
                           },
@@ -694,8 +772,8 @@ export function getItemsForDesktop(v, meta) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderRightWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
+                                      ? v.tempBorderColorOpacity
+                                      : v.borderColorOpacity
                               };
                             }
                           },
@@ -769,8 +847,8 @@ export function getItemsForDesktop(v, meta) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderBottomWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
+                                      ? v.tempBorderColorOpacity
+                                      : v.borderColorOpacity
                               };
                             }
                           },
@@ -844,8 +922,8 @@ export function getItemsForDesktop(v, meta) {
                                   v.borderBottomWidth === 0
                                     ? 0
                                     : borderLeftWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
+                                      ? v.tempBorderColorOpacity
+                                      : v.borderColorOpacity
                               };
                             }
                           }
@@ -860,16 +938,17 @@ export function getItemsForDesktop(v, meta) {
                   tabIcon: "nc-cog",
                   options: [
                     {
+                      id: "showOnDesktop",
+                      label: t("Show on Desktop"),
+                      type: "switch",
+                      value: v.showOnDesktop
+                    },
+                    {
                       id: "customClassName",
                       label: t("CSS Class"),
                       type: "input",
                       inputSize: "auto",
-                      value: {
-                        value: v.customClassName
-                      },
-                      onChange: ({ value: customClassName }) => ({
-                        customClassName
-                      })
+                      value: v.customClassName
                     }
                   ]
                 }
@@ -883,329 +962,66 @@ export function getItemsForDesktop(v, meta) {
 }
 
 export function getItemsForTablet(v) {
-  const { hex: tabletBgColorHex } =
-    v.tabletBgColorHex !== null
-      ? getOptionColor(v, "tabletBgColor")
-      : getOptionColor(v, "bgColor");
-
-  return [
-    {
-      id: "tabletToolbarMedia",
-      type: "popover",
-      icon: "nc-background",
-      title: t("Background"),
-      position: 20,
-      options: [
-        {
-          id: "tabletImage",
-          label: t("Image"),
-          type: "imageSetter",
-          population: {
-            show: imageDynamicContentChoices.length > 0,
-            choices: imageDynamicContentChoices
-          },
-          value: {
-            width: tabletSyncOnChange(v, "bgImageWidth"),
-            height: tabletSyncOnChange(v, "bgImageHeight"),
-            src: tabletSyncOnChange(v, "bgImageSrc"),
-            x: tabletSyncOnChange(v, "bgPositionX"),
-            y: tabletSyncOnChange(v, "bgPositionY"),
-            population: v.bgPopulation
-          },
-          onChange: ({ width, height, src, x, y, population }) => {
-            if (population) {
-              return {
-                bgPopulation: population
-              };
-            }
-
-            return {
-              tabletBgImageWidth: width,
-              tabletBgImageHeight: height,
-              tabletBgImageSrc: src,
-              tabletBgPositionX: x,
-              tabletBgPositionY: y,
-              bgPopulation: "",
-
-              tabletBgColorOpacity:
-                src !== "" && tabletSyncOnChange(v, "bgColorOpacity") === 1
-                  ? 0.9
-                  : tabletSyncOnChange(v, "bgColorOpacity"),
-
-              tempTabletBgColorOpacity:
-                src !== "" && tabletSyncOnChange(v, "bgColorOpacity") === 1
-                  ? 0.9
-                  : v.tempTabletBgColorOpacity
-            };
-          }
-        }
-      ]
-    },
-    {
-      id: "tabletToolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      position: 30,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(
-            tabletBgColorHex,
-            tabletSyncOnChange(v, "bgColorOpacity")
-          )
-        }
-      },
-      options: [
-        {
-          id: "tabletBgColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: tabletBgColorHex,
-            opacity: tabletSyncOnChange(v, "bgColorOpacity")
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            const bgColorOpacity =
-              hex !== tabletBgColorHex &&
-              tabletSyncOnChange(v, "bgColorOpacity") === 0
-                ? v.tempBgColorOpacity
-                : opacity;
-
-            return {
-              tabletBgColorHex: hex,
-              tabletBgColorOpacity: bgColorOpacity,
-              tabletBgColorPalette:
-                isChanged === "hex"
-                  ? ""
-                  : tabletSyncOnChange(v, "bgColorPalette")
-            };
-          }
-        },
-        {
-          id: "tabletBgColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: tabletSyncOnChange(v, "bgColorPalette"),
-          onChange: value => ({
-            tabletBgColorPalette: value,
-            tabletBgColorHex: "",
-            tabletBgColorOpacity:
-              tabletSyncOnChange(v, "bgColorOpacity") === 0
-                ? v.tempBgColorOpacity
-                : tabletSyncOnChange(v, "bgColorOpacity")
-          })
-        },
-        {
-          id: "tabletBgColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: tabletBgColorHex,
-            opacity: tabletSyncOnChange(v, "bgColorOpacity")
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            tabletBgColorPalette:
-              isChanged === "hex"
-                ? ""
-                : tabletSyncOnChange(v, "bgColorPalette"),
-            tabletBgColorHex: hex,
-            tabletBgColorOpacity: opacity
-          })
-        }
-      ]
-    },
-    {
-      id: "tabletAdvancedSettings",
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
-      title: t("Settings"),
-      options: [
-        {
-          type: "multiPicker",
-          picker: {
-            id: "tabletPaddingType",
-            label: t("Padding"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "grouped",
-                icon: "nc-styling-all"
-              },
-              {
-                value: "ungrouped",
-                icon: "nc-styling-individual"
-              }
-            ],
-            value: v.tabletPaddingType
-          },
-          choices: {
-            grouped: [
-              {
-                id: "tabletPadding",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.tabletPadding
-                },
-                onChange: ({ value: tabletPadding }) => {
-                  return {
-                    tabletPadding,
-                    tabletPaddingTop: tabletPadding,
-                    tabletPaddingBottom: tabletPadding
-                  };
-                }
-              }
-            ],
-            ungrouped: [
-              {
-                id: "tabletPaddingTop",
-                icon: "nc-styling-top",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.tabletPaddingTop
-                },
-                onChange: ({ value: tabletPaddingTop }) => {
-                  return {
-                    tabletPaddingTop,
-                    tabletPadding:
-                      tabletPaddingTop === v.tabletPaddingBottom
-                        ? tabletPaddingTop
-                        : v.tabletPadding
-                  };
-                }
-              },
-              {
-                id: "tabletPaddingBottom",
-                icon: "nc-styling-bottom",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.tabletPaddingBottom
-                },
-                onChange: ({ value: tabletPaddingBottom }) => {
-                  return {
-                    tabletPaddingBottom,
-                    tabletPadding:
-                      tabletPaddingBottom === v.tabletPaddingTop
-                        ? tabletPaddingBottom
-                        : v.tabletPadding
-                  };
-                }
-              }
-            ]
-          }
-        }
-      ]
-    }
-  ];
+  return [];
 }
 
 export function getItemsForMobile(v) {
-  const { hex: mobileBgColorHex } =
-    v.mobileBgColorHex !== null
-      ? getOptionColor(v, "mobileBgColor")
-      : getOptionColor(v, "bgColor");
+  const { hex: mobileBgColorHex } = getOptionColor(v, "mobileBgColor");
 
   return [
+    {
+      id: "showOnMobile",
+      type: "toggle",
+      position: 80,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: t("Disable on Mobile"),
+          value: "on"
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: t("Enable on Mobile"),
+          value: "off"
+        }
+      ],
+      value: v.showOnMobile
+    },
     {
       id: "mobileToolbarMedia",
       type: "popover",
       icon: "nc-background",
       title: t("Background"),
-      position: 20,
+      position: 90,
       options: [
         {
           id: "mobileImage",
           label: t("Image"),
           type: "imageSetter",
-          population: {
-            show: imageDynamicContentChoices.length > 0,
-            choices: imageDynamicContentChoices
-          },
           value: {
-            width: mobileSyncOnChange(v, "bgImageWidth"),
-            height: mobileSyncOnChange(v, "bgImageHeight"),
-            src: mobileSyncOnChange(v, "bgImageSrc"),
-            x: mobileSyncOnChange(v, "bgPositionX"),
-            y: mobileSyncOnChange(v, "bgPositionY"),
-            population: v.bgPopulation
+            width: v.mobileBgImageWidth,
+            height: v.mobileBgImageHeight,
+            src: v.mobileBgImageSrc,
+            x: v.mobileBgPositionX,
+            y: v.mobileBgPositionY
           },
-          onChange: ({ width, height, src, x, y, population }) => {
-            if (population) {
-              return {
-                bgPopulation: population
-              };
-            }
+          onChange: ({ width, height, src, x, y }) => ({
+            mobileBgImageWidth: width,
+            mobileBgImageHeight: height,
+            mobileBgImageSrc: src,
+            mobileBgPositionX: x,
+            mobileBgPositionY: y,
 
-            return {
-              mobileBgImageWidth: width,
-              mobileBgImageHeight: height,
-              mobileBgImageSrc: src,
-              mobileBgPositionX: x,
-              mobileBgPositionY: y,
-              bgPopulation: "",
+            mobileBgColorOpacity:
+              src !== "" && v.mobileBgColorOpacity === 1
+                ? 0.9
+                : v.mobileBgColorOpacity,
 
-              mobileBgColorOpacity:
-                src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
-                  ? 0.9
-                  : mobileSyncOnChange(v, "bgColorOpacity"),
-
-              tempMobileBgColorOpacity:
-                src !== "" && mobileSyncOnChange(v, "bgColorOpacity") === 1
-                  ? 0.9
-                  : v.tempMobileBgColorOpacity
-            };
-          }
+            tempMobileBgColorOpacity:
+              src !== "" && v.mobileBgColorOpacity === 1
+                ? 0.9
+                : v.tempMobileBgColorOpacity
+          })
         }
       ]
     },
@@ -1214,13 +1030,10 @@ export function getItemsForMobile(v) {
       type: "popover",
       size: "auto",
       title: t("Colors"),
-      position: 30,
+      position: 100,
       icon: {
         style: {
-          backgroundColor: hexToRgba(
-            mobileBgColorHex,
-            mobileSyncOnChange(v, "bgColorOpacity")
-          )
+          backgroundColor: hexToRgba(mobileBgColorHex, v.mobileBgColorOpacity)
         }
       },
       options: [
@@ -1230,12 +1043,11 @@ export function getItemsForMobile(v) {
           position: 10,
           value: {
             hex: mobileBgColorHex,
-            opacity: mobileSyncOnChange(v, "bgColorOpacity")
+            opacity: v.mobileBgColorOpacity
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
-              hex !== mobileBgColorHex &&
-              mobileSyncOnChange(v, "bgColorOpacity") === 0
+              hex !== v.mobileBgColorHex && v.mobileBgColorOpacity === 0
                 ? v.tempBgColorOpacity
                 : opacity;
 
@@ -1243,9 +1055,7 @@ export function getItemsForMobile(v) {
               mobileBgColorHex: hex,
               mobileBgColorOpacity: bgColorOpacity,
               mobileBgColorPalette:
-                isChanged === "hex"
-                  ? ""
-                  : mobileSyncOnChange(v, "bgColorPalette")
+                isChanged === "hex" ? "" : v.mobileBgColorPalette
             };
           }
         },
@@ -1253,14 +1063,14 @@ export function getItemsForMobile(v) {
           id: "mobileBgColorPalette",
           type: "colorPalette",
           position: 20,
-          value: mobileSyncOnChange(v, "bgColorPalette"),
+          value: v.mobileBgColorPalette,
           onChange: value => ({
             mobileBgColorPalette: value,
             mobileBgColorHex: "",
             mobileBgColorOpacity:
-              mobileSyncOnChange(v, "bgColorOpacity") === 0
+              v.mobileBgColorOpacity === 0
                 ? v.tempBgColorOpacity
-                : mobileSyncOnChange(v, "bgColorOpacity")
+                : v.mobileBgColorOpacity
           })
         },
         {
@@ -1269,13 +1079,11 @@ export function getItemsForMobile(v) {
           position: 30,
           value: {
             hex: mobileBgColorHex,
-            opacity: mobileSyncOnChange(v, "bgColorOpacity")
+            opacity: v.mobileBgColorOpacity
           },
           onChange: ({ hex, opacity, isChanged }) => ({
             mobileBgColorPalette:
-              isChanged === "hex"
-                ? ""
-                : mobileSyncOnChange(v, "bgColorPalette"),
+              isChanged === "hex" ? "" : v.mobileBgColorPalette,
             mobileBgColorHex: hex,
             mobileBgColorOpacity: opacity
           })
@@ -1287,6 +1095,7 @@ export function getItemsForMobile(v) {
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       icon: "nc-cog",
+      position: 110,
       title: t("Settings"),
       options: [
         {

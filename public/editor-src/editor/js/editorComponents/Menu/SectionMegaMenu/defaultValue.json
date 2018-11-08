@@ -1,26 +1,23 @@
 {
   "className": "",
-  "customClassName": "",
-
-  "media": "image",
+  "showOnDesktop": "on",
 
   "bgImageWidth": 0,
   "bgImageHeight": 0,
   "bgImageSrc": "",
   "bgPositionY": 50,
   "bgPositionX": 50,
-  "bgPopulation": "",
 
-  "bgColorHex": "#ffffff",
+  "bgColorHex": "#000000",
   "bgColorOpacity": 1,
   "bgColorPalette": "",
   "tempBgColorOpacity": 1,
   "tempBgColorPalette": "",
 
   "paddingType": "grouped",
-  "padding": 10,
-  "paddingTop": 10,
-  "paddingBottom": 10,
+  "padding": 15,
+  "paddingTop": 15,
+  "paddingBottom": 15,
 
   "borderColorHex": "#66738d",
   "borderColorOpacity": 0,
@@ -59,32 +56,16 @@
   "containerSize": 100,
   "items": [],
 
-  "tabletBgImageWidth": null,
-  "tabletBgImageHeight": null,
-  "tabletBgImageSrc": null,
-  "tabletBgPositionY": null,
-  "tabletBgPositionX": null,
+  "showOnMobile": "on",
+  "mobileBgImageWidth": 0,
+  "mobileBgImageHeight": 0,
+  "mobileBgImageSrc": "",
+  "mobileBgPositionY": 50,
+  "mobileBgPositionX": 50,
 
-  "tabletBgColorHex": null,
-  "tabletBgColorOpacity": null,
-  "tabletBgColorPalette": null,
-  "tempTabletBgColorOpacity": 1,
-  "tempTabletBgColorPalette": "",
-
-  "tabletPaddingType": "grouped",
-  "tabletPadding": 10,
-  "tabletPaddingTop": 10,
-  "tabletPaddingBottom": 10,
-
-  "mobileBgImageWidth": null,
-  "mobileBgImageHeight": null,
-  "mobileBgImageSrc": null,
-  "mobileBgPositionY": null,
-  "mobileBgPositionX": null,
-
-  "mobileBgColorHex": null,
-  "mobileBgColorOpacity": null,
-  "mobileBgColorPalette": null,
+  "mobileBgColorHex": "#000000",
+  "mobileBgColorOpacity": 0,
+  "mobileBgColorPalette": "",
   "tempMobileBgColorOpacity": 1,
   "tempMobileBgColorPalette": "",
 

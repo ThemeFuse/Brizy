@@ -4,6 +4,7 @@ import SectionFooterItems from "./Items";
 import Background from "visual/component-new/Background";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import PaddingResizer from "visual/component-new/PaddingResizer";
+import { Roles } from "visual/component-new/Roles";
 import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { uuid } from "visual/utils/uuid";
@@ -110,11 +111,7 @@ class SectionFooter extends EditorComponent {
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
-    const {
-      bgImageSrc,
-      bgColorOpacity,
-      bgPopulation
-    } = v;
+    const { bgImageSrc, bgColorOpacity, bgPopulation } = v;
 
     const meta = this.getMeta(v);
 
@@ -166,19 +163,21 @@ class SectionFooter extends EditorComponent {
         data-block-id={this.props.blockId}
         style={styles}
       >
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {this.renderToolbar(v)}
-          {this.renderItems(v)}
-        </ContainerBorder>
+        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+          <ContainerBorder
+            ref={el => {
+              this.containerBorder = el;
+            }}
+            borderStyle="none"
+            activeBorderStyle="none"
+            reactToClick={false}
+            showBorders={false}
+            path={this.getPath()}
+          >
+            {this.renderToolbar(v)}
+            {this.renderItems(v)}
+          </ContainerBorder>
+        </Roles>
       </footer>
     );
   }

@@ -4,6 +4,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import Background from "visual/component-new/Background";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import PaddingResizer from "visual/component-new/PaddingResizer";
+import { Roles } from "visual/component-new/Roles";
 import SectionHeaderItemItems from "./items";
 import {
   wInBoxedPage,
@@ -160,19 +161,21 @@ class SectionHeaderItem extends EditorComponent {
 
     return (
       <div className={this.getSectionClassName(v)} style={styles}>
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {this.renderToolbar(v)}
-          {this.renderItems(v)}
-        </ContainerBorder>
+        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+          <ContainerBorder
+            ref={el => {
+              this.containerBorder = el;
+            }}
+            borderStyle="none"
+            activeBorderStyle="none"
+            reactToClick={false}
+            showBorders={false}
+            path={this.getPath()}
+          >
+            {this.renderToolbar(v)}
+            {this.renderItems(v)}
+          </ContainerBorder>
+        </Roles>
       </div>
     );
   }

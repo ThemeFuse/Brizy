@@ -55,6 +55,7 @@ class Brizy_Languages_Texts
 			"Products" => __("Products", "brizy"),
 			"Shortcode" => __("Shortcode", "brizy"),
 			"Menu" => __("Menu", "brizy"),
+			"WP Menu" => __("WP Menu", "brizy"),
 			"Posts" => __("Posts", "brizy"),
 			"Archives" => __("Archives", "brizy"),
 			"Taxonomy" => __("Taxonomy", "brizy"),
@@ -93,7 +94,6 @@ class Brizy_Languages_Texts
 		  
 			// Right SideBar
 			"More Settings" => __("More Settings", "brizy"),
-			"Styling" => __("Styling", "brizy"),
 			"Advanced" => __("Advanced", "brizy"),
 			"Show on Desktop" => __("Show on Desktop", "brizy"),
 			"Disable on Mobile" => __("Disable on Mobile", "brizy"),
@@ -145,18 +145,15 @@ class Brizy_Languages_Texts
 			//-> Bg
 			"Background" => __("Background", "brizy"),
 			"Bg Size" => __("Bg Size", "brizy"),
-			"Image" => __("Image", "brizy"),
 			"Parallax" => __("Parallax", "brizy"),
 			"Fixed" => __("Fixed", "brizy"),
 			"Animated" => __("Animated", "brizy"),
-			"Video" => __("Video", "brizy"),
 			"URL" => __("URL", "brizy"),
 			"YouTube or Vimeo" => __("YouTube or Vimeo", "brizy"),
 			"Quality" => __("Quality", "brizy"),
 			"1080p" => __("1080p", "brizy"),
 			"720p" => __("720p", "brizy"),
 			"Loop" => __("Loop", "brizy"),
-			"Map" => __("Map", "brizy"),
 			"Address" => __("Address", "brizy"),
 			"Enter address" => __("Enter address", "brizy"),
 			"Zoom" => __("Zoom", "brizy"),
@@ -280,11 +277,9 @@ class Brizy_Languages_Texts
 			"Anchor" => __("Anchor", "brizy"),
 			"Link to" => __("Link to", "brizy"),
 			"Open In New Tab" => __("Open In New Tab", "brizy"),
-			"Open In New Tab" => __("Open In New Tab", "brizy"),
 		  
 			// Option Style Element: padding, margin, border etc
 			"Padding" => __("Padding", "brizy"),
-			"Border" => __("Border", "brizy"),
 			"Margin" => __("Margin", "brizy"),
 			"Corner" => __("Corner", "brizy"),
 			"Fill" => __("Fill", "brizy"),
@@ -356,8 +351,7 @@ class Brizy_Languages_Texts
 			"Number" => __("Number", "brizy"),
 			"Paragraph" => __("Paragraph", "brizy"),
 			"Select" => __("Select", "brizy"),
-			"No matches found" => __("No matches found", "brizy"),
-			"Text" => __("Text", "brizy"),
+		  
 			//-> Image
 			"Style" => __("Style", "brizy"),
 			"Opacity" => __("Opacity", "brizy"),
@@ -406,7 +400,6 @@ class Brizy_Languages_Texts
 			"Products Count" => __("Products Count", "brizy"),
 			"Layout" => __("Layout", "brizy"),
 			"Style Add to Cart" => __("Style Add to Cart", "brizy"),
-			"Columns" => __("Columns", "brizy"),
 			"Categories Count" => __("Categories Count", "brizy"),
 			"Order" => __("Order", "brizy"),
 			"Asc" => __("Asc", "brizy"),
@@ -454,7 +447,6 @@ class Brizy_Languages_Texts
 			"Block" => __("Block", "brizy"),
 			"Make it Global" => __("Make it Global", "brizy"),
 			"Save" => __("Save", "brizy"),
-			"Pages" => __("Pages", "brizy"),
 			"Blocks" => __("Blocks", "brizy"),
 			"Saved" => __("Saved", "brizy"),
 			"Global" => __("Global", "brizy"),
@@ -474,6 +466,7 @@ class Brizy_Languages_Texts
 			"Dividers" => __("Dividers", "brizy"),
 			"Arrangement" => __("Arrangement", "brizy"),
 			"Repeat" => __("Repeat", "brizy"),
+			"Make it Hamburger" => __("Make it Hamburger", "brizy")
 		);
 	}
 

@@ -1,19 +1,20 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import SectionHeaderStickyItemItems from "./Items";
 import Background from "visual/component-new/Background";
 import ContainerBorder from "visual/component-new/ContainerBorder";
 import PaddingResizer from "visual/component-new/PaddingResizer";
-import { Roles } from "visual/component-new/Roles";
+import SortableZIndex from "visual/component-new/Sortable/SortableZIndex";
+import SectionMegaMenuItems from "./items";
 import {
   wInBoxedPage,
-  wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
 import { CollapsibleToolbar } from "visual/component-new/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
+  sectionStyleClassName,
+  sectionStyleCSSVars,
   bgStyleClassName,
   bgStyleCSSVars,
   itemsStyleClassName,
@@ -22,11 +23,10 @@ import {
   containerStyleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
-class SectionHeaderStickyItem extends EditorComponent {
+class SectionMegaMenu extends EditorComponent {
   static get componentId() {
-    return "SectionHeaderStickyItem";
+    return "SectionMegaMenu";
   }
 
   static defaultProps = {
@@ -44,7 +44,6 @@ class SectionHeaderStickyItem extends EditorComponent {
       this.containerBorder.setActive(true);
     }
   };
-
   handleToolbarClose = () => {
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
@@ -76,12 +75,10 @@ class SectionHeaderStickyItem extends EditorComponent {
             (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
           ) / 10;
 
-    const tabletW = wInTabletPage - borderWidthW;
     const mobileW = wInMobilePage - borderWidthW;
 
     return {
       ...meta,
-      tabletW,
       mobileW,
       desktopW
     };
@@ -95,31 +92,32 @@ class SectionHeaderStickyItem extends EditorComponent {
         animation="rightToLeft"
         onOpen={this.handleToolbarOpen}
         onClose={this.handleToolbarClose}
-        outSideExceptions={[".portal-menu__sticky"]}
       />
     );
   }
 
-  renderItems(v) {
-    const { bgImageSrc, bgColorOpacity, bgPopulation } = v;
+  renderItems(_v) {
+    const v = this.applyRulesToValue(_v, [
+      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+    ]);
+
+    const {
+      bgImageSrc,
+      bgColorOpacity,
+      mobileBgImageSrc,
+      mobileBgColorOpacity
+    } = v;
 
     const meta = this.getMeta(v);
 
-    const styles = {
-      ...bgStyleCSSVars(v, this.props),
-      ...itemsStyleCSSVars(v),
-      ...containerStyleCSSVars(v)
-    };
-
     let bgProps = {
-      className: bgStyleClassName(v, this.props),
-      style: styles,
-      imageSrc: bgImageSrc || bgPopulation,
+      className: bgStyleClassName(v),
+      imageSrc: bgImageSrc,
       colorOpacity: bgColorOpacity,
-      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
-      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
-      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
-      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
+      mobileImageSrc: mobileBgImageSrc,
+      mobileColorOpacity: mobileBgColorOpacity
     };
 
     const itemsProps = this.makeSubcomponentProps({
@@ -132,7 +130,7 @@ class SectionHeaderStickyItem extends EditorComponent {
       <Background {...bgProps}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
           <div className={containerStyleClassName(v)}>
-            <SectionHeaderStickyItemItems {...itemsProps} />
+            <SectionMegaMenuItems {...itemsProps} />
           </div>
         </PaddingResizer>
       </Background>
@@ -143,39 +141,43 @@ class SectionHeaderStickyItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
+    const styles = {
+      ...bgStyleCSSVars(v),
+      ...itemsStyleCSSVars(v),
+      ...containerStyleCSSVars(v)
+    };
+
     return (
-      <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {this.renderToolbar(v)}
-          {this.renderItems(v)}
-        </ContainerBorder>
-      </Roles>
+      <SortableZIndex zindex={1}>
+        <div className={sectionStyleClassName(v)} style={styles}>
+          <ContainerBorder
+            ref={el => {
+              this.containerBorder = el;
+            }}
+            borderStyle="none"
+            activeBorderStyle="none"
+            reactToClick={false}
+            showBorders={false}
+            path={this.getPath()}
+          >
+            {this.renderToolbar(v)}
+            {this.renderItems(v)}
+          </ContainerBorder>
+        </div>
+      </SortableZIndex>
     );
   }
 
-  renderForView(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
-
-    return this.renderItems(v);
+  renderForView(v) {
+    return (
+      <div id={this.getId()} className={sectionStyleClassName(v)}>
+        {this.renderItems(v)}
+      </div>
+    );
   }
 }
 
-export default SectionHeaderStickyItem;
+export default SectionMegaMenu;

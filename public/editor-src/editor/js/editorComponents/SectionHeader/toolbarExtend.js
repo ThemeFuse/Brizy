@@ -6,11 +6,12 @@ export function getItemsForDesktop(v, component) {
       id: "toolbarSticky",
       type: "popover",
       icon: "nc-sticky-menu",
+      title: t("Menu"),
       position: 10,
       options: [
         {
           id: "type",
-          label: t("Type"),
+          label: t("Header"),
           type: "select",
           choices: [
             {

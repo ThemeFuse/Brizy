@@ -1,0 +1,323 @@
+// Shortcode Menu
+$menuWidth: 300px;
+$menuColor: #000;
+
+// --
+.brz-menu {
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: inherit;
+
+    .brz-mm-menu__icon:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__ul {
+    &--has-dropdown {
+      .mm-listitem_opened > .mm-panel {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &:not(.mm-menu) {
+    position: relative;
+    width: 100%;
+    justify-content: inherit;
+
+    .brz-menu__item {
+      list-style: none;
+      padding-left: 5px;
+      padding-right: 5px;
+      display: flex;
+      align-items: center;
+
+      > .brz-a {
+        color: inherit;
+        font-weight: inherit;
+        font-family: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        font-size: inherit;
+        display: inherit;
+        align-items: inherit;
+      }
+    }
+
+    // Ul
+    .brz-menu__ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: inherit;
+      padding: 0;
+
+      > .brz-menu__item-dropdown {
+        > .brz-menu__dropdown-left {
+          left: 0;
+          padding-left: 0;
+
+          &:after {
+            left: 15px;
+          }
+        }
+        > .brz-menu__dropdown-right {
+          right: 0;
+          padding-right: 0;
+
+          &:after {
+            right: 15px;
+          }
+        }
+        > .brz-menu__dropdown {
+          width: $menuWidth;
+          top: 100%;
+          padding-top: 10px;
+          transform: translateX(0);
+
+          &:after {
+            top: 4px;
+            transform: translateX(0);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom-width: 6px;
+            border-bottom-style: solid;
+            border-top: none;
+          }
+        }
+      }
+    }
+
+    // SubMenu Dropdown
+    .brz-menu__item-dropdown {
+      position: relative;
+
+      .brz-menu__item {
+        padding: 0;
+        transition: background-color 0.2s linear,
+          border-bottom-color 0.2s linear;
+
+        .brz-a {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          padding: 15px;
+        }
+      }
+      & > .brz-menu__sub-menu {
+        top: 0;
+      }
+    }
+
+    // DropDown
+    .brz-menu__dropdown {
+      margin: 0;
+      width: $menuWidth;
+      position: absolute;
+      top: 100%;
+      visibility: hidden;
+      opacity: 0;
+      z-index: -1;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 25px;
+        transform: translateY(-50%);
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+      }
+      &-left {
+        left: 100%;
+        padding-left: 20px;
+        width: $menuWidth + 20px;
+        transform: translateX(-10px);
+
+        &:after {
+          left: 0;
+          border-left-width: 6px;
+          border-left-style: solid;
+        }
+      }
+      &-right {
+        width: $menuWidth + 20px;
+        right: 100%;
+        padding-right: 20px;
+        transform: translateX(10px);
+
+        &:after {
+          right: 0;
+          border-right-width: 6px;
+          border-right-style: solid;
+        }
+      }
+    }
+
+    // Mega Menu
+    .brz-mega-menu {
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      visibility: hidden;
+      opacity: 0;
+      z-index: -1;
+      transition: 0.2s visibility linear, 0.2s z-index linear,
+        0.2s opacity linear;
+    }
+  }
+
+  &.mm-menu {
+    &.mm-menu_opened {
+      display: block;
+    }
+    .mm-navbar a,
+    .mm-navbar > * {
+      color: inherit;
+    }
+    .mm-listview {
+      display: block;
+      transform: none;
+      padding: 0;
+      position: static;
+      left: auto;
+      top: auto;
+      visibility: visible;
+      opacity: 1;
+      width: auto;
+
+      &:after {
+        display: none;
+      }
+      & > .mm-navbar {
+        border-bottom: inherit;
+      }
+    }
+    .mm-listitem_vertical > .mm-panel {
+      padding: 0 10px;
+    }
+    .mm-listitem_opened > .brz-a {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-bottom: 1px solid;
+      }
+    }
+    .brz-menu__item {
+      padding: 0;
+    }
+    .mm-btn_next {
+      background: none;
+
+      &:before {
+        content: none;
+      }
+    }
+
+    // MMenu Item
+    .brz-mm-menu__item {
+      > .brz-a {
+        color: inherit;
+        font-weight: inherit;
+        font-family: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        font-size: inherit;
+        display: flex;
+        align-items: center;
+        padding-right: 20px;
+      }
+      .mm-btn_next + .brz-a {
+        margin-right: 0;
+      }
+      &:after {
+        left: 0;
+      }
+    }
+  }
+
+  // Navbar Title
+  .mm-navbar__title {
+    line-height: 20px;
+    font-size: 13px;
+    padding-right: 20px;
+  }
+
+  // MMenu has dropdown
+  &--has-dropdown {
+    .mm-listview > .brz-mm-menu__item > .brz-a {
+      padding-right: 50px;
+    }
+    .mm-navbar {
+      padding: 0;
+
+      &__title {
+        padding: 10px 50px 10px 20px;
+      }
+    }
+  }
+
+  // Custom Navbar title in Editor Mode
+  &__editor {
+    .mm-panel_has-navbar {
+      padding-top: 0;
+
+      & > .mm-navbar {
+        display: none;
+      }
+    }
+  }
+
+  // Menu links
+  .brz-a,
+  .mm-btn_next {
+    transition: color 0.2s linear;
+
+    @include hover-focus-active {
+      outline: none;
+    }
+  }
+}
+
+// Active without Editor
+&:not(.brz-ed) {
+  .brz-menu {
+    .brz-menu__item:hover > {
+      .brz-menu__sub-menu,
+      .brz-mega-menu {
+        visibility: visible;
+        opacity: 1;
+        z-index: z("mega-menu");
+        transition: 0.2s visibility linear, 0.2s z-index linear,
+          0.2s opacity linear, transform 0.2s linear;
+      }
+      .brz-menu__sub-menu {
+        transform: translateX(0);
+      }
+    }
+    &:not(.brz-menu--has-dropdown) .mm-navbar__title {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+// Rewrite css rules for root div
+.brz-root__container {
+  &.mm-page {
+    position: relative;
+    background: inherit;
+  }
+  &.mm-slideout {
+    transition: transform 0.4s ease;
+    z-index: 1;
+  }
+}

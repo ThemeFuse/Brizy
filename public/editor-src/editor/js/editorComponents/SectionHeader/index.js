@@ -47,6 +47,8 @@ class SectionHeader extends EditorComponent {
     height: "auto"
   };
 
+  isSticky = false;
+
   shouldComponentUpdate(nextProps, nextState) {
     const stateUpdate = this.state.height !== nextState.height;
 
@@ -55,6 +57,7 @@ class SectionHeader extends EditorComponent {
 
   componentDidUpdate() {
     const { type } = this.getValue();
+
     if (type !== "fixed") {
       fixedContainerPlus({
         fixed: false,
@@ -84,11 +87,23 @@ class SectionHeader extends EditorComponent {
         node: this.sectionNode,
         height: this.state.height
       });
+      this.isSticky = isSticky;
+
+      // Rerenders because state maybe old
+      this.forceUpdate();
+    } else {
+      this.isSticky = false;
     }
   };
 
   handleUpdateHeight = () => {
     const { height } = this.stickyNode.getBoundingClientRect();
+
+    fixedContainerPlus({
+      fixed: this.isSticky,
+      node: this.sectionNode,
+      height
+    });
 
     if (height !== this.state.height) {
       this.setState({

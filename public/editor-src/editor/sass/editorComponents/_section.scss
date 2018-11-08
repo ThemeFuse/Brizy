@@ -66,11 +66,13 @@
     left: 0;
     width: 100%;
     transform: translate3d(0, -100%, 0);
-    transition: transform 0.2s linear;
+    opacity: 0;
+    transition: transform 0.2s linear, opacity 0.2s linear;
 
     &-opened {
       transform: translate3d(0, 0, 0);
-      transition: transform 0.2s linear;
+      opacity: 1;
+      transition: transform 0.2s linear, opacity 0.2s linear;
     }
   }
   &--fixed {
