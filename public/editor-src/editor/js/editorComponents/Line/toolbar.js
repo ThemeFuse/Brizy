@@ -172,6 +172,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       icon: "nc-divider",
       title: t("Line"),
+      roles: ["admin"],
       position: 90,
       options: [
         {
@@ -206,6 +207,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
+      roles: ["admin"],
       position: 110,
       options: [
         {

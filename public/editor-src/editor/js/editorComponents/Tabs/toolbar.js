@@ -568,6 +568,7 @@ export function getItemsForTablet(v) {
       icon: "nc-font",
       size: "auto",
       title: t("Typography"),
+      roles: ["admin"],
       position: 70,
       options: [
         {
@@ -658,6 +659,7 @@ export function getItemsForTablet(v) {
       sidebarLabel: t("More Settings"),
       position: 110,
       title: t("Settings"),
+      roles: ["admin"],
       icon: "nc-cog",
       options: [
         {

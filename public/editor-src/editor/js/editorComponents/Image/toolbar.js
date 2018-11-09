@@ -685,6 +685,7 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
+      roles: ["admin"],
       position: 110,
       disabled: inGallery,
       options: [

@@ -704,6 +704,7 @@ export function getItemsForTablet(v) {
       id: "showOnTablet",
       type: "toggle",
       position: 10,
+      roles: ["admin"],
       choices: [
         {
           icon: "nc-eye-17",

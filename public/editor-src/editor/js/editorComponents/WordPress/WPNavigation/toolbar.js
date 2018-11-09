@@ -269,6 +269,7 @@ const getItemsForTablet = v => {
       id: "tabletToolbarWPNavigation",
       type: "popover",
       icon: "nc-wp-shortcode",
+      roles: ["admin"],
       position: 60,
       options: [
         {
@@ -310,6 +311,7 @@ const getItemsForTablet = v => {
       icon: "nc-font",
       size: "auto",
       title: t("Typography"),
+      roles: ["admin"],
       position: 70,
       options: [
         {
