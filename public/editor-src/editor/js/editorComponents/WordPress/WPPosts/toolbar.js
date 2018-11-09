@@ -170,6 +170,7 @@ export function getItemsForDesktop(v) {
       id: "toolbarSettings",
       type: "popover",
       icon: "nc-cog",
+      roles: ["admin"],
       position: 110,
       options: [
         {
@@ -208,6 +209,7 @@ export function getItemsForTablet(v) {
       id: "tabletToolbarSettings",
       type: "popover",
       icon: "nc-cog",
+      roles: ["admin"],
       position: 110,
       options: [
         {
@@ -246,6 +248,7 @@ export function getItemsForMobile(v) {
       id: "mobileToolbarSettings",
       type: "popover",
       icon: "nc-cog",
+      roles: ["admin"],
       position: 110,
       options: [
         {

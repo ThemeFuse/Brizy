@@ -1459,6 +1459,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       icon: "nc-star",
       title: t("Icon"),
+      roles: ["admin"],
       position: 70,
       options: [
         {

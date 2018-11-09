@@ -71,6 +71,7 @@ const getItemsForTablet = v => [
     id: "tabletToolbarSettings",
     type: "popover",
     icon: "nc-cog",
+    roles: ["admin"],
     position: 110,
     options: [
       {

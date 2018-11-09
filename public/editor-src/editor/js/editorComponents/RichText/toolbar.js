@@ -883,6 +883,7 @@ export const getItemsForTablet = (
     icon: "nc-font",
     title: t("Typography"),
     size: "auto",
+    roles: ["admin"],
     position: 20,
     options: [
       {
@@ -996,6 +997,7 @@ export const getItemsForTablet = (
     id: "tabletToolbarSettings",
     type: "popover",
     title: t("Settings"),
+    roles: ["admin"],
     position: 110,
     options: [
       {

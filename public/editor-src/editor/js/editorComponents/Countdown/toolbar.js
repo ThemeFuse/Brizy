@@ -424,6 +424,7 @@ export function getItemsForTablet(v) {
       icon: "nc-font",
       size: "auto",
       title: t("Typography"),
+      roles: ["admin"],
       position: 70,
       options: [
         {
@@ -508,6 +509,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
+      roles: ["admin"],
       position: 110,
       options: [
         {
