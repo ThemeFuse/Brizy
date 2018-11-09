@@ -14,7 +14,7 @@ class Brizy_Admin_Migrations_GlobalVersionsMigration implements Brizy_Admin_Migr
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.44';
+		return '1.0.45';
 	}
 
 	/**
