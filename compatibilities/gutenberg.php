@@ -10,7 +10,7 @@ class Brizy_Compatibilities_Gutenberg {
 	}
 
 	public function filter_the_content( $content ) {
-		remove_filter( 'the_content', 'gutenberg_wpautop', 8 );
+		remove_filter( 'the_content', 'gutenberg_wpautop', 6 );
 		return $content;
 	}
 

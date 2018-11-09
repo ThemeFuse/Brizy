@@ -67,6 +67,44 @@ class Brizy_Admin_Main {
 
 		add_filter( 'wp_import_existing_post', array( $this, 'handleNewProjectPostImport' ), 10, 2 );
 		add_filter( 'wp_import_post_meta', array( $this, 'handleNewProjectMetaImport' ), 10, 3 );
+
+		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
+
+		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
+
+	}
+
+	public function addFocalPoint( $content, $postId, $thumbId ) {
+
+		if ( ! $thumbId ) {
+			return $content;
+		}
+
+		$post             = get_post( $postId );
+		$post_type_object = get_post_type_object( $post->post_type );
+
+		$twigEngine = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/admin/views/" );
+
+		$focalPoint = get_post_meta( $postId, 'brizy_attachment_focal_point', true );
+
+		if ( ! $focalPoint ) {
+			$focalPoint = array( 'x' => 50, 'y' => 50 );
+		}
+
+		$params = array(
+			'focalPoint'        => $focalPoint,
+			'thumbnailId'       => $thumbId,
+			'thumbnailSrc'      => wp_get_attachment_image_src( $thumbId, 'original' ),
+			'postId'            => $postId,
+			'edit_update_label' => __( 'Edit or Update Image' ),
+			'remove_label'      => $post_type_object->labels->remove_featured_image,
+			'pluginUrl'         => BRIZY_PLUGIN_URL
+		);
+
+
+		return $twigEngine->render( 'featured-image.html.twig', $params );
+
+		return $content;
 	}
 
 	/**
@@ -126,6 +164,30 @@ class Brizy_Admin_Main {
 				if ( $brizy_post->uses_editor() ) {
 					$brizy_post->save( $post_id );
 				}
+			}
+
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->exception( $e );
+
+			return;
+		}
+	}
+
+
+	/**
+	 * @param $post_id
+	 * @param $post
+	 */
+	public function save_focal_point( $post_id, $post ) {
+		try {
+
+			if ( $post_id && isset( $_REQUEST['_thumbnail_focal_point_x'] ) && isset( $_REQUEST['_thumbnail_focal_point_y'] ) ) {
+				update_post_meta( $post_id, 'brizy_attachment_focal_point', array(
+					'x' => (int) $_REQUEST['_thumbnail_focal_point_x'],
+					'y' => (int) $_REQUEST['_thumbnail_focal_point_y']
+				) );
+			} else {
+				delete_post_meta( $post_id, 'brizy_attachment_focal_point' );
 			}
 
 		} catch ( Exception $e ) {

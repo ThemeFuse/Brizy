@@ -95,6 +95,7 @@ export function getItemsForTablet(v) {
     {
       id: "tabletToolbarSettings",
       type: "popover",
+      roles: ["admin"],
       icon: "nc-cog",
       position: 110,
       options: [

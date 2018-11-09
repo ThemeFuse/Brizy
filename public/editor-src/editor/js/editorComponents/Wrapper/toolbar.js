@@ -666,6 +666,7 @@ export function getItemsForTablet(v) {
     {
       id: "showOnTablet",
       type: "toggle",
+      roles: ["admin"],
       position: 10,
       choices: [
         {
@@ -686,6 +687,7 @@ export function getItemsForTablet(v) {
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       icon: "nc-cog",
+      roles: ["admin"],
       position: 110,
       title: t("Settings"),
       options: [

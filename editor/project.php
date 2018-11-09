@@ -225,6 +225,10 @@ class Brizy_Editor_Project implements Serializable {
 
 		$this->storage->set( $key, $value );
 
+		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
+		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
+		$this->storage->set( 'updated', new DateTime() );
+
 		// create project revision
 		// md5 it to make sure no one will use this data-- we need it only to make the revision
 		$this->post->post_content = md5( serialize( $this->storage->get_storage() ) );
@@ -242,6 +246,9 @@ class Brizy_Editor_Project implements Serializable {
 		}
 
 		$this->storage->delete( $key );
+		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
+		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
+		$this->storage->set( 'updated', new DateTime() );
 
 		// create project revision
 		// md5 it to make sure no one will use this data-- we need it only to make the revision

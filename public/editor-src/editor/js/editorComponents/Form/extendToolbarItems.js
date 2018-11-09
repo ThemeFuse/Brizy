@@ -361,6 +361,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       icon: "nc-form-left",
       title: t("Field"),
+      roles: ["admin"],
       position: 60,
       options: [
         {
@@ -404,6 +405,7 @@ export function getItemsForTablet(v) {
       icon: "nc-font",
       size: "auto",
       title: t("Typography"),
+      roles: ["admin"],
       position: 70,
       options: [
         {
