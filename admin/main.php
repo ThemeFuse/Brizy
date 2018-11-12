@@ -240,11 +240,15 @@ class Brizy_Admin_Main {
 
 		wp_enqueue_style(
 			Brizy_Editor::get()->get_slug() . '-admin-css',
-			Brizy_Editor::get()->get_url( 'admin/static/css/style.css' )
+			Brizy_Editor::get()->get_url( 'admin/static/css/style.css' ),
+			array(),
+			true
 		);
 		wp_enqueue_style(
 			Brizy_Editor::get()->get_slug() . '-select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css'
+			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css',
+			array(),
+			true
 		);
 
 		wp_enqueue_script(
