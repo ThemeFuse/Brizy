@@ -41,6 +41,7 @@ class Brizy_Editor {
 		}
 
 		add_filter( "brizy:templates", array( $this, 'filterPublicTemplates' ) );
+		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
 
 	}
 
@@ -107,6 +108,18 @@ class Brizy_Editor {
 
 		add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
 		add_action( 'pre_get_posts', array( $this, 'remove_templates_from_search' ) );
+	}
+
+	public function revisionsToKeep( $num, $post ) {
+		try {
+			if(Brizy_Editor_Post::get($post)->uses_editor()) {
+				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
+			}
+		} catch ( Exception $e ) {
+
+		}
+
+		return $num;
 	}
 
 	public function loadCompatibilityClasses() {

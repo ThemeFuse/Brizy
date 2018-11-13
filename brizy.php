@@ -26,6 +26,7 @@ define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
+define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 100 );
 
 include_once 'autoload.php';
 
