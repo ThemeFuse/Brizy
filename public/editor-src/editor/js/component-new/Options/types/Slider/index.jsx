@@ -17,14 +17,15 @@ class SliderOptionType extends React.Component {
     icon: "",
     attr: {},
     slider: {
-      min: 1,
+      min: 0,
       max: 100,
       step: 1
     },
     input: {
       show: false,
-      min: -9999,
-      max: 9999
+      min: null,
+      max: 9999,
+      step: null
     },
     suffix: {
       show: false,
@@ -103,32 +104,57 @@ class SliderOptionType extends React.Component {
   }
 
   renderInput() {
+    const defaultProps = this.constructor.defaultProps;
+    const props = this.props;
     const {
-      step,
-      suffix: { show: suffixShow = false, choices: suffixChoices },
-      input: { min = -9999, max = 9999 }
+      suffix: {
+        show: suffixShow = defaultProps.suffix.show,
+        choices: suffixChoices = defaultProps.suffix.choices
+      },
+      input: {
+        min = defaultProps.input.min != null
+          ? defaultProps.input.min
+          : props.slider.min != null
+            ? props.slider.min
+            : defaultProps.slider.min,
+        max = defaultProps.input.max != null
+          ? defaultProps.input.max
+          : props.slider.max != null
+            ? props.slider.max
+            : defaultProps.slider.max,
+        step = defaultProps.input.step != null
+          ? defaultProps.input.step
+          : props.slider.step != null
+            ? props.slider.step
+            : defaultProps.slider.step
+      }
     } = this.props;
-    const { value, suffix } = this.state;
+    const { value, suffix: suffixValue } = this.state;
 
     return (
       <TextBox
-        min={min}
-        max={max}
-        step={step}
+        min={Number(min)}
+        max={Number(max)}
+        step={Number(step)}
         suffixes={suffixShow ? suffixChoices : []}
-        suffixValue={suffixShow ? suffix : null}
-        value={value}
+        suffixValue={suffixShow ? suffixValue : null}
+        value={Number(value)}
         onChange={this.handleInputChange}
       />
     );
   }
 
   render() {
+    const defaultProps = this.constructor.defaultProps;
     const {
       className: _className,
       label,
       display,
-      slider: { min = 0, max = 100, step = 1 },
+      slider: {
+        min = defaultProps.slider.min,
+        max = defaultProps.slider.max,
+        step = defaultProps.slider.step
+      },
       input,
       suffix,
       helper,
@@ -149,7 +175,7 @@ class SliderOptionType extends React.Component {
       <div className={className} {...attr}>
         {label || helper ? this.renderLabel() : null}
         <div className="brz-ed-option__slider__content">
-          {icon && this.renderIcon(icon)}
+          {icon && this.renderIcon()}
           <Slider
             id={this.props.id}
             min={Number(min)}

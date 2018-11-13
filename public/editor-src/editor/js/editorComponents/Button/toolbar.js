@@ -1728,11 +1728,10 @@ export function getItemsForDesktop(v) {
                     value: v.linkExternal,
                     population: v.linkPopulation
                   },
-                  onChange: ({
-                    value: linkExternal,
-                    population: linkPopulation,
-                    changed
-                  }) => {
+                  onChange: (
+                    { value: linkExternal, population: linkPopulation },
+                    { changed }
+                  ) => {
                     return {
                       linkExternal,
                       linkPopulation,
@@ -2027,8 +2026,7 @@ export function getItemsForTablet(v) {
     tabletFontWeight,
     tabletLineHeight,
     tabletLetterSpacing
-  } =
-    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+  } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   return [
     {

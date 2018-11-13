@@ -2,8 +2,9 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component-new/EditorIcon";
-import PopulationSelect from "./common/PopulationSelect";
-import PopulationInput from "./common/PopulationInput";
+import Population from "./common/Population";
+
+const DEBOUNCE_WAIT = 1000;
 
 class InputOptionType extends React.Component {
   static defaultProps = {
@@ -12,7 +13,6 @@ class InputOptionType extends React.Component {
     placeholder: "",
     helper: false,
     helperContent: "",
-    attr: {},
     value: {
       value: "",
       population: ""
@@ -27,61 +27,75 @@ class InputOptionType extends React.Component {
   };
 
   state = {
-    inputValue: this.props.value.value
+    value: this.props.value.value
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.value.value !== this.state.inputValue) {
-      this.setState({
-        inputValue: nextProps.value.value
-      });
-    }
+  isFocused = false;
+
+  componentWillUnmount() {
+    this.isFocused && this.handleInputBlur();
   }
 
-  onChangeDebounced = _.debounce(value => {
-    this.props.onChange(value);
-  }, 1000);
+  handleInputChange = e => {
+    const value = e.target.value;
+
+    this.setState({ value }, () => {
+      this.debouncedHandleChange();
+
+      // 12.11.2018
+      // see how it will go and uncomment if it will
+      // be needed to opt out out type === "text"
+      // if (this.props.inputType !== "text") {
+      //   this.debouncedHandleChange();
+      // }
+    });
+  };
+
+  handlePopulationChange = population => {
+    this.setState({ value: "" }, () => {
+      const valueExtend = { population };
+      const metaExtend = { changed: "population" };
+
+      this.handleChange(valueExtend, metaExtend);
+    });
+  };
+
+  handleChange = (valueExtend = {}, metaExtend = {}) => {
+    const value = {
+      value: this.state.value,
+      population: this.props.value.population,
+      ...valueExtend
+    };
+    const meta = {
+      changed: "value",
+      changeEvent: "change",
+      ...metaExtend
+    };
+
+    this.props.onChange(value, meta);
+  };
+
+  debouncedHandleChange = _.debounce(
+    (...args) => this.isFocused && this.handleChange(...args),
+    DEBOUNCE_WAIT
+  );
 
   handleInputFocus = () => {
-    this.input.focus();
+    this.isFocused = true;
   };
 
-  handleInputChange = event => {
-    const {
-      inputType,
-      value: { population }
-    } = this.props;
-    const value =
-      inputType === "number" ? Number(event.target.value) : event.target.value;
+  handleInputBlur = () => {
+    this.isFocused = false;
 
-    this.setState({
-      inputValue: value
-    });
-    this.onChangeDebounced({
-      changed: "value",
-      value,
-      population
-    });
-  };
+    if (this.props.value.value !== this.state.value) {
+      const valueExtend = {};
+      const metaExtend = {
+        changed: "value",
+        changeEvent: "blur"
+      };
 
-  handlePopulationChange = value => {
-    const { inputValue } = this.state;
-
-    this.props.onChange({
-      changed: "population",
-      population: value,
-      value: inputValue
-    });
-  };
-
-  handlePopulationClear = () => {
-    const { inputValue } = this.state;
-
-    this.props.onChange({
-      changed: "population",
-      population: "",
-      value: inputValue
-    });
+      this.handleChange(valueExtend, metaExtend);
+    }
   };
 
   renderLabel() {
@@ -101,100 +115,53 @@ class InputOptionType extends React.Component {
     );
   }
 
-  renderInput() {
-    const { placeholder, inputSize, inputType } = this.props;
-    const { inputValue } = this.state;
-    const checkedValue =
-      inputType === "number" ? Number(inputValue) : String(inputValue);
+  renderInput = () => {
+    const { inputSize, inputType, placeholder } = this.props;
+    const inputClassName = classnames(
+      "brz-input brz-ed-control__input",
+      `brz-ed-control__input--${inputSize}`
+    );
 
     return (
       <input
-        ref={el => {
-          this.input = el;
-        }}
-        type={inputType}
-        className={`brz-input brz-ed-control__input brz-ed-control__input--${inputSize}`}
+        className={inputClassName}
         placeholder={placeholder}
-        value={checkedValue}
-        onClick={this.handleInputFocus}
+        type={inputType}
+        value={this.state.value}
         onChange={this.handleInputChange}
+        onFocus={this.handleInputFocus}
+        onBlur={this.handleInputBlur}
       />
     );
-  }
-
-  renderPopulationInput() {
-    const {
-      population: { choices },
-      value: { population },
-      inputSize
-    } = this.props;
-    const { title = "" } = choices.find(el => el.value === population) || {};
-
-    return (
-      <PopulationInput
-        className={`brz-ed-control__input--${inputSize}`}
-        value={title}
-        onClear={this.handlePopulationClear}
-      />
-    );
-  }
-
-  renderPopulationSelect() {
-    const {
-      population: { choices },
-      value: { population }
-    } = this.props;
-
-    return (
-      <PopulationSelect
-        defaultValue={population}
-        choices={choices}
-        onChange={this.handlePopulationChange}
-      />
-    );
-  }
+  };
 
   render() {
     const {
-      label,
       className: _className,
       helper,
-      attr,
-      population,
-      value
+      label,
+      population: { choices: populationChoices, show: populationShow },
+      value: { population: populationValue }
     } = this.props;
     const className = classnames(
       "brz-ed-option__input",
       "brz-ed-option__inline",
-      _className,
-      attr.className
+      _className
     );
-    const hasPopulation = population && population.show;
-    let content;
 
-    if (hasPopulation) {
-      const hasPopulationValue = Boolean(value.population);
-
-      content = (
-        <React.Fragment>
-          <div className="brz-ed-option__input-container">
-            {hasPopulationValue
-              ? this.renderPopulationInput()
-              : this.renderInput()}
-          </div>
-          {this.renderPopulationSelect()}
-        </React.Fragment>
-      );
-    } else {
-      content = (
-        <div className="brz-ed-option__input-container">
-          {this.renderInput()}
-        </div>
-      );
-    }
+    const content = populationShow ? (
+      <Population
+        choices={populationChoices}
+        value={populationValue}
+        renderUnset={this.renderInput}
+        onChange={this.handlePopulationChange}
+      />
+    ) : (
+      this.renderInput()
+    );
 
     return (
-      <div {...attr} className={className}>
+      <div className={className}>
         {(label || helper) && this.renderLabel()}
         {content}
       </div>

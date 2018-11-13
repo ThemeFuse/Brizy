@@ -21,7 +21,8 @@ class RichText extends EditorComponent {
   state = {
     prepopulation: null,
     population: null,
-    selectionCoords: null
+    selectionCoords: null,
+    isToolbarOpen: false
   };
 
   componentDidMount() {
@@ -42,17 +43,22 @@ class RichText extends EditorComponent {
     this.quill = el;
   };
 
-  handleSelectionChange = ({ prepopulation, population }, selectionCoords) => {
+  handleSelectionChange = (formats, selectionCoords) => {
+    this.formats = formats;
     this.toolbar.show({
       getProps: this.getToolbarProps
     });
 
     if (
-      this.state.prepopulation !== prepopulation ||
+      this.state.prepopulation !== formats.prepopulation ||
       (selectionCoords && this.state.selectionCoords !== selectionCoords) ||
-      population
+      formats.population
     ) {
-      this.setState({ prepopulation, population, selectionCoords });
+      this.setState({
+        prepopulation: formats.prepopulation,
+        population: formats.population,
+        selectionCoords
+      });
     }
   };
 
@@ -72,17 +78,37 @@ class RichText extends EditorComponent {
     });
   };
 
+  handleToolbarOpen = () => {
+    this.setState({
+      isToolbarOpen: true
+    });
+  };
+
+  handleToolbarClose = () => {
+    this.setState({
+      isToolbarOpen: false
+    });
+  };
+
   getToolbarProps = () => {
-    const formats = this.quill.getSelectionFormat();
     const onChange = values => {
+      // after Quill applies formatting it steals the focus to itself,
+      // we try to fight back by remembering the previous focused element
+      // and restoring it's focus after Quill steals it
+      const prevActive = document.activeElement;
+
       _.forEach(values, (value, type) => this.quill.format(type, value));
+
+      if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
+        prevActive.focus && prevActive.focus();
+      }
     };
 
     return {
       node: ReactDOM.findDOMNode(this),
       offsetTop: 14,
       ...this.makeToolbarPropsFromConfig(
-        toolbarConfig({ ...formats }, onChange)
+        toolbarConfig({ ...this.formats }, onChange)
       )
     };
   };
@@ -127,13 +153,14 @@ class RichText extends EditorComponent {
   }
 
   renderForEdit(v) {
-    const { prepopulation, population } = this.state;
+    const { prepopulation, population, isToolbarOpen } = this.state;
     const {
       meta: { globalBlockId: isGlobalBlock },
       onToolbarEnter,
       onToolbarLeave
     } = this.props;
     const { historyTravelling } = this.getReduxState();
+    const forceUpdate = (isGlobalBlock || historyTravelling) && !isToolbarOpen;
 
     return (
       <React.Fragment>
@@ -142,12 +169,14 @@ class RichText extends EditorComponent {
           manualControl={true}
           onMouseEnter={onToolbarEnter}
           onMouseLeave={onToolbarLeave}
+          onOpen={this.handleToolbarOpen}
+          onClose={this.handleToolbarClose}
         >
           <div className={this.getClassName(v)}>
             <Quill
               ref={this.handleQuillRef}
               value={v.text}
-              forceUpdate={isGlobalBlock || historyTravelling}
+              forceUpdate={forceUpdate}
               onSelectionChange={this.handleSelectionChange}
               onTextChange={this.handleTextChange}
             />

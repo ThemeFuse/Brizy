@@ -28,7 +28,10 @@ export default class BrizyFields extends Component {
   }
 
   onHexChange = ({ target: { value: hex } }) => {
-    const { value: { opacity }, onChange } = this.props;
+    const {
+      value: { opacity },
+      onChange
+    } = this.props;
 
     this.setState({ hex });
     if (hex.length < 6 || !color.isValidHex(hex)) return;
@@ -45,10 +48,18 @@ export default class BrizyFields extends Component {
     return (
       <div className="brz-ed-control__colorPicker__footer">
         <div className="brz-ed-control__colorPicker__group">
-          <label htmlFor="hex" className="brz-label brz-ed-control__colorPicker__label">
+          <label
+            htmlFor="hex"
+            className="brz-label brz-ed-control__colorPicker__label"
+          >
             Hex:{" "}
           </label>
-          <input className="brz-input" value={this.state.hex} onChange={this.onHexChange} />
+          <input
+            id="hex"
+            className="brz-input"
+            value={this.state.hex}
+            onChange={this.onHexChange}
+          />
         </div>
       </div>
     );

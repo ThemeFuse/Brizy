@@ -39,6 +39,9 @@
   .brz-text-sm-center {
     @include align-center;
   }
+  .brz-text-sm-justify {
+    @include align-justify;
+  }
 }
 
 // Mobile

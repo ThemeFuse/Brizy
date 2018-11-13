@@ -1163,11 +1163,10 @@ export function getItemsForDesktop(v) {
                     value: v.linkExternal,
                     population: v.linkPopulation
                   },
-                  onChange: ({
-                    value: linkExternal,
-                    population: linkPopulation,
-                    changed
-                  }) => {
+                  onChange: (
+                    { value: linkExternal, population: linkPopulation },
+                    { changed }
+                  ) => {
                     return {
                       linkExternal,
                       linkPopulation,
