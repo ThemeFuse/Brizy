@@ -138,8 +138,9 @@ class Brizy_Public_Main {
 		$config_json   = json_encode( $config_object );
 
 		wp_enqueue_style( 'brizy-editor', "${assets_url}/editor/css/editor.css", array(), BRIZY_EDITOR_VERSION );
+		wp_register_script( 'brizy-editor-polyfill', "https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry", array(), null, true );
 		wp_register_script( 'brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array( 'jquery' ), BRIZY_EDITOR_VERSION, true );
-		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", array( 'brizy-editor-vendor' ), BRIZY_EDITOR_VERSION, true );
+		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", array( 'brizy-editor-polyfill', 'brizy-editor-vendor' ), BRIZY_EDITOR_VERSION, true );
 		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_editor_enqueue_scripts' );
@@ -163,10 +164,7 @@ class Brizy_Public_Main {
 
 		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), BRIZY_EDITOR_VERSION );
 		wp_register_script( 'brizy-preview-polyfill', "https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry", array(), null, true );
-		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array(
-			'jquery',
-			'brizy-preview-polyfill'
-		), BRIZY_EDITOR_VERSION, true );
+		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array( 'jquery', 'brizy-preview-polyfill' ), BRIZY_EDITOR_VERSION, true );
 		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_preview_enqueue_scripts' );
