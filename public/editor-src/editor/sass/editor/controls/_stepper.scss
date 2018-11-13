@@ -14,6 +14,7 @@
 .brz-ed-control__stepper--value,
 .brz-ed-control__stepper--arrows {
   position: relative;
+  min-width: 0;
 }
 .brz-ed-control__stepper--value {
   font-family: $font-family-1;
@@ -24,6 +25,12 @@
   flex-basis: 65%;
   padding-left: $control-padding;
   padding-top: 2px;
+  max-width: 100%;
+
+  .brz-ed-control__input {
+    max-width: 100%;
+    padding: 0;
+  }
 }
 .brz-ed-control__stepper--arrows {
   width: 35%;

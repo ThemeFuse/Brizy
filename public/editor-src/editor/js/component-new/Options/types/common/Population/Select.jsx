@@ -2,18 +2,13 @@ import React from "react";
 import classnames from "classnames";
 import Select from "visual/component/controls/Select";
 import SelectItem from "visual/component/controls/Select/SelectItem";
-import EditorIcon from "visual/component-new/EditorIcon";
 
-export default function PopulationSelect({
-  choices,
-  defaultValue,
-  ...selectProps
-}) {
+export default function PopulationSelect({ choices, value, onChange }) {
   const className = classnames(
     "brz-control__select--dark",
     "brz-control__select__auto",
     "brz-control__select-population",
-    { "brz-control__select--active": Boolean(defaultValue) }
+    { "brz-control__select--active": Boolean(value) }
   );
   const items = choices.map(({ title, icon, value }) => {
     return (
@@ -26,12 +21,12 @@ export default function PopulationSelect({
 
   return (
     <Select
-      {...selectProps}
       className={className}
-      defaultValue={defaultValue}
+      defaultValue={value}
       itemHeight={30}
       labelType="icon"
       labelIcon="nc-dynamic"
+      onChange={onChange}
     >
       {items}
     </Select>

@@ -202,11 +202,10 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                     population: v.linkPopulation,
                     value: v.linkExternal
                   },
-                  onChange: ({
-                    value: linkExternal,
-                    population: linkPopulation,
-                    changed
-                  }) => {
+                  onChange: (
+                    { value: linkExternal, population: linkPopulation },
+                    { changed }
+                  ) => {
                     return {
                       linkExternal,
                       linkPopulation,

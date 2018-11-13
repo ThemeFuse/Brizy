@@ -47,7 +47,7 @@ export default class QuillComponent extends React.Component {
   }
 
   componentWillReceiveProps({ forceUpdate, value }) {
-    if (!this.quill.hasFocus() && (forceUpdate || this.props.value !== value)) {
+    if (!this.quill.hasFocus() && forceUpdate) {
       this.destroyPlugin();
       this.contentEditable.innerHTML = value;
       this.initPlugin();
@@ -116,7 +116,6 @@ export default class QuillComponent extends React.Component {
       return new Delta().insert(node.textContent, attributers);
     });
 
-    window.quill = this.quill;
     // we add just one listener for all instances
     // because otherwise we would end up with tens of
     // listeners on the document
@@ -248,6 +247,17 @@ export default class QuillComponent extends React.Component {
     }
 
     if (!selection.length) {
+      if (type === "link") {
+        let [leafBlot] = this.quill.getLeaf(selection.index);
+        this.quill.formatText(
+          leafBlot.parent.offset(),
+          leafBlot.parent.length(),
+          type,
+          value
+        );
+        return;
+      }
+
       const newValue = value || false;
       this.quill.formatText(
         lineBlot.offset(),

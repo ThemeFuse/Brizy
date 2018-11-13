@@ -1,11 +1,11 @@
-export function clamp(value, min, max) {
-  if (value < min) {
+export function clamp(number, min, max) {
+  if (number < min) {
     return min;
   }
 
-  if (value > max) {
+  if (number > max) {
     return max;
   }
 
-  return value;
+  return number;
 }

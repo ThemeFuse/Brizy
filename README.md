@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.45<br>
+Stable tag: 1.0.46<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,18 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.46 - 2018-11-13 ###
+* Updated: Removed browser restriction overlay
+* Improved: Typography inputs can now be edited using the keyboard
+* Improved: Added revision limits for brizy posts. By default we store 100 revisions.
+* Fixed: Cursor jumping when editing RichText url
+* Fixed: Crash when changing device mode with certain themes
+* Fixed: Removed title attribute from images
+* Fixed: ImagePicker option styling
+* Fixed: Added missing justify option to RichText alignment on tablet
+* Fixed: Editor config
+* Fixed: Added versioning for plugin assets
 
 ### 1.0.45 - 2018-11-09 ###
 * Fixed: Fixed editor and plugin version in project
