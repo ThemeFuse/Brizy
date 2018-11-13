@@ -41,7 +41,6 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.4.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
-
 		return;
 	}
 
