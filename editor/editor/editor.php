@@ -186,7 +186,7 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),
-			'menuData'        => $this->get_menu_data()
+			//'menuData'        => $this->get_menu_data()
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -444,6 +444,7 @@ class Brizy_Editor_Editor_Editor {
 			}
 
 			$menu_uid = get_post_meta( $item->ID, 'brizy_post_uid', true );
+
 			if ( ! $menu_uid ) {
 				$menu_uid = md5( $item->ID . time() );
 				update_post_meta( $item->ID, 'brizy_post_uid', $menu_uid );

@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.45
+Stable tag: 1.0.46
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,18 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.46 - 2018-11-13 =
+* Updated: Removed browser restriction overlay
+* Improved: Typography inputs can now be edited using the keyboard
+* Improved: Added revision limits for brizy posts. By default we store 100 revisions.
+* Fixed: Cursor jumping when editing RichText url
+* Fixed: Crash when changing device mode with certain themes
+* Fixed: Removed title attribute from images
+* Fixed: ImagePicker option styling
+* Fixed: Added missing justify option to RichText alignment on tablet
+* Fixed: Editor config
+* Fixed: Added versioning for plugin assets
 
 = 1.0.45 - 2018-11-09 =
 * Fixed: Fixed editor and plugin version in project

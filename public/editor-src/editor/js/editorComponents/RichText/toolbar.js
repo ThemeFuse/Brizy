@@ -660,23 +660,25 @@ const getItemsForDesktop = (
                     value: linkExternal,
                     population: linkPopulation
                   },
-                  onChange: ({
-                    value: linkExternal,
-                    population: linkPopulation,
-                    changed
-                  }) =>
-                    onChange({
-                      link: formatStringFromLink(linkType, {
-                        anchor: linkAnchor ? `#${linkAnchor}` : "",
-                        external: linkExternal,
-                        externalBlank: linkExternalBlank,
-                        externalRel: linkExternalRel,
-                        externalType:
-                          changed === "value" ? "external" : "population",
-                        population: linkPopulation,
-                        popup: linkPopup ? `#${linkPopup}` : ""
-                      })
-                    })
+                  onChange: (
+                    { value: linkExternal, population: linkPopulation },
+                    { changed, changeEvent }
+                  ) => {
+                    if (changeEvent === "blur" || changed === "population") {
+                      onChange({
+                        link: formatStringFromLink(linkType, {
+                          anchor: linkAnchor ? `#${linkAnchor}` : "",
+                          external: linkExternal,
+                          externalBlank: linkExternalBlank,
+                          externalRel: linkExternalRel,
+                          externalType:
+                            changed === "value" ? "external" : "population",
+                          population: linkPopulation,
+                          popup: linkPopup ? `#${linkPopup}` : ""
+                        })
+                      });
+                    }
+                  }
                 },
                 {
                   id: "linkExternalBlank",
@@ -988,6 +990,11 @@ export const getItemsForTablet = (
         icon: "nc-text-align-right",
         title: t("Align"),
         value: "right"
+      },
+      {
+        icon: "nc-text-align-justify",
+        title: t("Align"),
+        value: "justify"
       }
     ],
     value: horizontalAlign,

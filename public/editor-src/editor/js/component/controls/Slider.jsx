@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import RCSlider, { Range } from "rc-slider";
+import RCSlider from "rc-slider";
 
 export default class Slider extends Component {
   static defaultProps = {
@@ -14,16 +14,13 @@ export default class Slider extends Component {
   };
 
   render() {
-    const { value, min, max, step } = this.props;
-    const className = classnames(
-      "brz-ed-control__slider",
-      this.props.className
-    );
+    const { className: _className, value, min, max, step } = this.props;
+    const className = classnames("brz-ed-control__slider", _className);
 
     return (
       <div className={className}>
         <RCSlider
-          value={Number(value)}
+          value={value}
           min={min}
           max={max}
           step={step}

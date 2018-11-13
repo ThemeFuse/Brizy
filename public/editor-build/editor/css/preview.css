@@ -3574,7 +3574,8 @@ body.brz::after,body.brz::before{display:none}
 .brz .brz-text-lg-justify{text-align:justify!important}
 @media (min-width:768px) and (max-width:991px){.brz .brz-text-sm-left{text-align:left!important;-webkit-box-pack:start!important;-ms-flex-pack:start!important;justify-content:flex-start!important}
 .brz .brz-text-sm-right{text-align:right!important;-webkit-box-pack:end!important;-ms-flex-pack:end!important;justify-content:flex-end!important}
-.brz .brz-text-sm-center{text-align:center!important;-webkit-box-pack:center!important;-ms-flex-pack:center!important;justify-content:center!important}}@media (max-width:767px){.brz .brz-text-xs-left{text-align:left!important;-webkit-box-pack:start!important;-ms-flex-pack:start!important;justify-content:flex-start!important}
+.brz .brz-text-sm-center{text-align:center!important;-webkit-box-pack:center!important;-ms-flex-pack:center!important;justify-content:center!important}
+.brz .brz-text-sm-justify{text-align:justify!important}}@media (max-width:767px){.brz .brz-text-xs-left{text-align:left!important;-webkit-box-pack:start!important;-ms-flex-pack:start!important;justify-content:flex-start!important}
 .brz .brz-text-xs-right{text-align:right!important;-webkit-box-pack:end!important;-ms-flex-pack:end!important;justify-content:flex-end!important}
 .brz .brz-text-xs-center{text-align:center!important;-webkit-box-pack:center!important;-ms-flex-pack:center!important;justify-content:center!important}
 .brz .brz-text-xs-justify{text-align:justify!important}}.brz .brz-animated{opacity:0}

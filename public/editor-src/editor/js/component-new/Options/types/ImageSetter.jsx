@@ -3,8 +3,7 @@ import _ from "underscore";
 import classnames from "classnames";
 import ImageSetter from "visual/component/controls/ImageSetter";
 import EditorIcon from "visual/component-new/EditorIcon";
-import PopulationSelect from "./common/PopulationSelect";
-import PopulationInput from "./common/PopulationInput";
+import Population from "./common/Population";
 
 class FocalPointOptionType extends React.Component {
   static defaultProps = {
@@ -23,13 +22,9 @@ class FocalPointOptionType extends React.Component {
     onChange: _.noop
   };
 
-  handlePopulationChange = value => {
-    this.props.onChange({ population: value });
-  };
-
-  handlePopulationClear = () => {
+  handlePopulationChange = population => {
     const { value, onChange } = this.props;
-    onChange({ ...value, population: "" });
+    onChange({ ...value, population });
   };
 
   renderLabel() {
@@ -49,40 +44,13 @@ class FocalPointOptionType extends React.Component {
     );
   }
 
-  renderImageSetter() {
+  renderImageSetter = () => {
     const { value, onlyPointer, onChange } = this.props;
 
     return (
       <ImageSetter {...value} onlyPointer={onlyPointer} onChange={onChange} />
     );
-  }
-
-  renderPopulationInput() {
-    const {
-      population: { choices },
-      value: { population }
-    } = this.props;
-    const { title = "" } = choices.find(el => el.value === population) || {};
-
-    return (
-      <PopulationInput value={title} onClear={this.handlePopulationClear} />
-    );
-  }
-
-  renderPopulationSelect() {
-    const {
-      population: { choices },
-      value: { population }
-    } = this.props;
-
-    return (
-      <PopulationSelect
-        defaultValue={population}
-        choices={choices}
-        onChange={this.handlePopulationChange}
-      />
-    );
-  }
+  };
 
   render() {
     const {
@@ -90,9 +58,9 @@ class FocalPointOptionType extends React.Component {
       label,
       attr,
       display,
-      value,
       helper,
-      population
+      population: { choices: populationChoices, show: populationShow },
+      value: { population: populationValue }
     } = this.props;
     const className = classnames(
       "brz-ed-option__focal-point",
@@ -100,27 +68,21 @@ class FocalPointOptionType extends React.Component {
       _className,
       attr.className
     );
-    const hasPopulation = population && population.show;
-    let content;
 
-    if (hasPopulation) {
-      const hasPopulationValue = Boolean(value.population);
-
-      content = (
-        <React.Fragment>
-          {hasPopulationValue
-            ? this.renderPopulationInput()
-            : this.renderImageSetter()}
-          {this.renderPopulationSelect()}
-        </React.Fragment>
-      );
-    } else {
-      content = this.renderImageSetter();
-    }
+    const content = populationShow ? (
+      <Population
+        choices={populationChoices}
+        value={populationValue}
+        renderUnset={this.renderImageSetter}
+        onChange={this.handlePopulationChange}
+      />
+    ) : (
+      this.renderImageSetter()
+    );
 
     return (
       <div {...attr} className={className}>
-        {label || helper ? this.renderLabel() : null}
+        {(label || helper) && this.renderLabel()}
         {content}
       </div>
     );
