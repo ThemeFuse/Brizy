@@ -186,7 +186,7 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),
-			//'menuData'        => $this->get_menu_data()
+			'menuData'        => $this->get_menu_data()
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -439,7 +439,7 @@ class Brizy_Editor_Editor_Editor {
 		$result_items = array();
 
 		foreach ( $items as $item ) {
-			if ( $item->menu_item_parent != $parent ) {
+			if ( (int) $item->menu_item_parent !== $parent ) {
 				continue;
 			}
 
