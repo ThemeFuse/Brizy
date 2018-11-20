@@ -462,7 +462,7 @@ class Brizy_Editor_Editor_Editor {
 				'megaMenuItems' => $megaMenuItems,
 				'description'   => $item->post_content,
 				'position'      => $item->menu_order,
-				'attr-title'    => $item->post_excerpt,
+				'attrTitle'    => $item->post_excerpt,
 				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
 				'classes'       => get_post_meta( $item->ID, '_menu_item_classes', true ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
