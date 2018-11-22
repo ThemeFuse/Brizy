@@ -1,8 +1,8 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import ThemeIcon from "visual/component-new/ThemeIcon";
-import Link from "visual/component-new/Link";
-import Toolbar from "visual/component-new/Toolbar";
+import ThemeIcon from "visual/component/ThemeIcon";
+import Link from "visual/component/Link";
+import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";

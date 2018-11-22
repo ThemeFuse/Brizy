@@ -1,6 +1,6 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component-new/Sortable";
+import Sortable from "visual/component/Sortable";
 
 class Items extends EditorArrayComponent {
   static get componentId() {

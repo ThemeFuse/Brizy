@@ -2,12 +2,12 @@ import _ from "underscore";
 import React from "react";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component-new/Sortable";
-import SortableElement from "visual/component-new/Sortable/SortableElement";
-import { hideToolbar } from "visual/component-new/Toolbar/index";
+import Sortable from "visual/component/Sortable";
+import SortableElement from "visual/component/Sortable/SortableElement";
+import { hideToolbar } from "visual/component/Toolbar/index";
 import ContextMenu, {
   ContextMenuExtend
-} from "visual/component-new/ContextMenu";
+} from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";

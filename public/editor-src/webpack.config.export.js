@@ -30,12 +30,12 @@ module.exports = options => {
           }
         },
         {
-          test: /Preview\.jpg$/,
-          include: [path.resolve(__dirname, "templates")],
+          test: /quill|isotope-layout|magnific-popup|slick-carousel/,
           loader: "null-loader"
         },
         {
-          test: /quill/,
+          test: /[\\/]lib[\\/]/,
+          include: [path.resolve(__dirname, "editor")],
           loader: "null-loader"
         }
       ]
@@ -47,7 +47,8 @@ module.exports = options => {
         ),
         TARGET: JSON.stringify(options.TARGET),
         IS_EDITOR: false,
-        IS_PREVIEW: true
+        IS_PREVIEW: true,
+        window: "undefined"
       })
     ],
     devtool: false,

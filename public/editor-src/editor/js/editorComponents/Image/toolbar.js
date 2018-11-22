@@ -149,7 +149,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                 {
                   id: "linkLightBox",
                   disabled: inGallery,
-                  label: t("Open in LightBox"),
+                  label: t("Open in Lightbox"),
                   type: "switch",
                   value: v.linkLightBox
                 }

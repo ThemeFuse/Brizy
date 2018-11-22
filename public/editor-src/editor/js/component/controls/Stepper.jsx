@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import AutoCorrectingInput from "./AutoCorrectingInput";
 
 export default class Stepper extends React.Component {

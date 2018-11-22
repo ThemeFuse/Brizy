@@ -1,13 +1,13 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import BoxResizer from "visual/component-new/BoxResizer";
-import Placeholder from "visual/component-new/Placeholder";
+import BoxResizer from "visual/component/BoxResizer";
+import Placeholder from "visual/component/Placeholder";
 import {
   videoData as getVideoData,
   videoUrl as getVideoUrl
 } from "visual/utils/video";
-import Toolbar from "visual/component-new/Toolbar";
-import ThemeIcon from "visual/component-new/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import ThemeIcon from "visual/component/ThemeIcon";
 import * as toolbarConfig from "./toolbar";
 import {
   styleClassName,

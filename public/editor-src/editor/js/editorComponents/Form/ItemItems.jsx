@@ -1,6 +1,6 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component-new/Toolbar";
+import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 class FormItemItems extends EditorArrayComponent {

@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 
 export default class IconToggleItem extends React.Component {
   static defaultProps = {

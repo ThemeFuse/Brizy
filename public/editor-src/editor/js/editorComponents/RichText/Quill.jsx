@@ -46,8 +46,8 @@ export default class QuillComponent extends React.Component {
     this.initPlugin();
   }
 
-  componentWillReceiveProps({ forceUpdate, value }) {
-    if (!this.quill.hasFocus() && forceUpdate) {
+  componentWillReceiveProps({ value }) {
+    if (!this.quill.hasFocus() && value !== this.props.value) {
       this.destroyPlugin();
       this.contentEditable.innerHTML = value;
       this.initPlugin();
@@ -153,9 +153,11 @@ export default class QuillComponent extends React.Component {
     const { index, length } = this.quill.getSelection(true);
     // it's small hack for triple click
     this.restoreSelection(index, length);
-    const [{ parent: { domNode: $selectedDomNode } }] = this.quill.getLeaf(
-      index + length
-    );
+    const [
+      {
+        parent: { domNode: $selectedDomNode }
+      }
+    ] = this.quill.getLeaf(index + length);
     const quillFormat = this.quill.getFormat();
     const formats = getFormats(
       jQuery($selectedDomNode),
@@ -215,7 +217,11 @@ export default class QuillComponent extends React.Component {
 
   setPopulation(selection, value) {
     let [leafBlot, offset] = this.quill.getLeaf(selection.index);
-    let { label } = getDynamicContentByPlaceholder("richText", value);
+    const lineBlot = this.quill.getLine(selection.index)[0];
+    let { label, display = "inline" } = getDynamicContentByPlaceholder(
+      "richText",
+      value
+    );
     label = `#${label}`;
     const formats = this.quill.getFormat();
     let { index, length } = selection;
@@ -226,13 +232,46 @@ export default class QuillComponent extends React.Component {
     const population = value.replace("{{", "").replace("}}", "");
 
     this.quill.deleteText(index, length);
-    this.quill.insertText(index, String(label), {
-      ...formats,
-      population
-    });
-    this.quill.insertText(index + String(label).length, " ", {});
 
-    this.quill.setSelection(index + String(label).length + 1, 0);
+    let newFormats = {
+      ...formats,
+      population,
+      div: false
+    };
+    if (display === "inline") {
+      this.quill.insertText(index, label, newFormats);
+      // hack. {div: true} in previous line doesn't work
+      this.quill.format("div", false);
+      this.quill.insertText(index + label.length, " ", {
+        population: null
+      });
+      index += 1;
+    } else {
+      newFormats.div = true;
+      const paragraphLength = lineBlot.domNode.innerText;
+
+      if (!paragraphLength.trim().length) {
+        // dynamic Content is alone in the paragraph
+        this.quill.insertText(index, label, newFormats);
+        this.quill.format("div", true);
+      } else if (lineBlot.offset() + paragraphLength.length === index) {
+        // dynamicContent is in the end of paragraph
+        this.quill.insertText(index, "\n");
+        index += 1;
+        this.quill.insertText(index, label, newFormats);
+        this.quill.format("div", true);
+      } else if (lineBlot.offset() === index) {
+        // dynamicContent is in the begin of paragraph
+        this.quill.insertText(index, `${label}\n`, newFormats);
+      } else {
+        // dynamicContent is in paragraph
+        this.quill.insertText(index, "\n");
+        index += 1;
+        this.quill.insertText(index, `${label}\n`, newFormats);
+      }
+    }
+
+    this.quill.setSelection(index + label.length, 0);
   }
 
   // api

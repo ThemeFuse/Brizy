@@ -1,7 +1,7 @@
 import React from "react";
-import jQuery from "jquery";
 import _ from "underscore";
 import { mergeIn } from "timm";
+import Isotope from "isotope-layout";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Items from "./items";
 import * as parentToolbarExtend from "./parentExtendToolbar";
@@ -39,7 +39,7 @@ class ImageGallery extends EditorComponent {
 
   handleResizeImage = () => {
     if (this.node) {
-      jQuery(this.node).isotope("layout");
+      this.isotope.layout();
     }
   };
 
@@ -61,12 +61,7 @@ class ImageGallery extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      spacing,
-      gridColumn,
-      tabletGridColumn,
-      mobileGridColumn,
-    } = v;
+    const { spacing, gridColumn, tabletGridColumn, mobileGridColumn } = v;
     const desktopW = meta.desktopW / gridColumn;
     const tabletW = meta.tabletW / tabletGridColumn;
     const mobileW = meta.mobileW / mobileGridColumn;
@@ -100,7 +95,7 @@ class ImageGallery extends EditorComponent {
   }
 
   initIsotope() {
-    jQuery(this.node).isotope({
+    this.isotope = new Isotope(this.node, {
       itemSelector: ".brz-image__gallery-item",
       masonry: {
         columnWidth: ".brz-image__gallery-item"
@@ -109,7 +104,7 @@ class ImageGallery extends EditorComponent {
   }
 
   destroyIsotope() {
-    jQuery(this.node).isotope("destroy");
+    this.isotope.destroy();
   }
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import Notifications from "visual/global/Notifications";
 import Draggable from "./Draggable";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import {
   uploadImage,
   preloadImage,

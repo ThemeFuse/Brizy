@@ -1,7 +1,7 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { WPShortcode } from "../common/WPShortcode";
-import Toolbar from "visual/component-new/Toolbar";
+import Toolbar from "visual/component/Toolbar";
 import toolbarConfigFn from "./toolbar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";

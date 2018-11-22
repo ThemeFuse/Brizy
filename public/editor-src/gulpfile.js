@@ -20,10 +20,8 @@ const runSequence = require("run-sequence");
 const webpack = require("webpack");
 const webpackConfigEditor = require("./webpack.config.editor");
 const webpackConfigExport = require("./webpack.config.export");
+const webpackConfigPreview = require("./webpack.config.preview");
 const webpackConfigPro = require("./webpack.config.pro");
-
-// rollup
-var babel = require("rollup-plugin-babel");
 
 // postcss
 const sass = require("@csstools/postcss-sass");
@@ -49,7 +47,7 @@ let ABORTED = false;
 
 const postsCssProcessors = [
   sass({
-    includePaths: [paths.template],
+    includePaths: [paths.template, "node_modules"],
     errLogToConsole: true
   }),
   autoprefixer({
@@ -168,7 +166,6 @@ gulp.task("clean.pro", () => {
 gulp.task(
   "editor",
   [
-    "editor.js.lib",
     "editor.js.compile",
     "editor.css",
     "editor.fonts",
@@ -176,34 +173,15 @@ gulp.task(
     "editor.twig"
   ],
   done => {
-    const tasks = ["editor.js.vendor.concat"];
-
     if (IS_PRODUCTION) {
-      tasks.push("editor.js.sourcemap");
+      const tasks = ["editor.js.sourcemap"];
 
-      if (IS_EXPORT) {
-        tasks.push("editor.js.legacyExport");
-      }
+      runSequence(tasks, done);
+    } else {
+      done();
     }
-
-    runSequence(tasks, done);
   }
 );
-gulp.task("editor.js.lib", done => {
-  const src = [
-    paths.editor + "/lib/editor/*/*.js",
-    paths.editor + "/lib/common/*/*.js"
-  ];
-  const dest = paths.build + "/editor/js";
-
-  gulp
-    .src(src)
-    .pipe(gulpPlugins.concat("editor.vendor.lib.js"))
-    .pipe(gulp.dest(dest))
-    .on("end", () => {
-      done();
-    });
-});
 gulp.task("editor.js.compile", done => {
   const options = {
     TEMPLATE_NAME,
@@ -215,10 +193,7 @@ gulp.task("editor.js.compile", done => {
     BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH
   };
-  const config = [
-    webpackConfigEditor(options),
-    ...(IS_EXPORT ? [webpackConfigExport(options)] : [])
-  ];
+  const config = webpackConfigEditor(options);
 
   let doneCalled = false;
   webpack(config, (err, stats) => {
@@ -297,22 +272,6 @@ gulp.task("editor.twig", done => {
       done();
     });
 });
-gulp.task("editor.js.vendor.concat", done => {
-  const src = [
-    paths.build + "/editor/js/editor.vendor.lib.js",
-    paths.build + "/editor/js/editor.vendor.bundle.js"
-  ];
-  const dest = paths.build + "/editor/js";
-
-  gulp
-    .src(src)
-    .pipe(gulpPlugins.concat("editor.vendor.js"))
-    .pipe(gulp.dest(dest))
-    .on("end", () => {
-      del.sync(src, { force: true });
-      done();
-    });
-});
 gulp.task("editor.js.sourcemap", done => {
   const src = paths.build + "/editor/js/editor.js";
   const dest = paths.build + "/editor/js";
@@ -324,15 +283,6 @@ gulp.task("editor.js.sourcemap", done => {
     .pipe(gulp.dest(dest))
     .pipe(gulpPlugins.replace(sourceMapRegex, ""))
     .pipe(gulpPlugins.rename("editor.js"))
-    .pipe(gulp.dest(dest))
-    .on("end", done);
-});
-gulp.task("editor.js.legacyExport", done => {
-  const src = paths.build + "/editor/js/export.js";
-  const dest = paths.build + "/visual";
-
-  gulp
-    .src(src)
     .pipe(gulp.dest(dest))
     .on("end", done);
 });
@@ -358,7 +308,7 @@ gulp.task("template.icons", done => {
   const src = paths.template + "/assets/icons/**/*";
   const dest = paths.build + "/template/";
   const { encrypt } = require(paths.editor +
-    "/js/component-new/ThemeIcon/utils.node.js");
+    "/js/component/ThemeIcon/utils.js");
 
   const svgEncrypt = content => {
     const base64 = Buffer.from(content).toString("base64");
@@ -419,110 +369,31 @@ gulp.task("export.css", done => {
     });
 });
 gulp.task("export.js", done => {
-  const src = paths.editor + "/templates/preview.js";
-  const dest = paths.build + "/editor/js";
+  const options = {
+    TEMPLATE_NAME,
+    TEMPLATE_PATH: paths.template,
+    TARGET,
+    IS_PRODUCTION,
+    IS_EXPORT,
+    BUILD_PATH: paths.build,
+    BUILD_DIR_PRO: paths.buildPro,
+    NO_WATCH
+  };
+  const config = [webpackConfigPreview(options), webpackConfigExport(options)];
 
-  const libs = [
-    paths.editor + "/lib/common/*/*.js",
-    paths.editor + "/lib/export/*/*.js"
-  ];
-  const libsStream = gulp.src(libs);
+  let doneCalled = false;
+  webpack(config, (err, stats) => {
+    if (stats.hasErrors()) {
+      gulpPlugins.util.log("[webpack] error", stats.toString("errors-only"));
+    } else {
+      gulpPlugins.util.log("[webpack] success");
+    }
 
-  // Need review because has problems from export with typeOf and json.stringify
-  // const babelConfig = {
-  //   presets: [
-  //     [
-  //       "env",
-  //       {
-  //         modules: false
-  //       }
-  //     ]
-  //   ],
-  //   runtimeHelpers: true
-  // };
-
-  const componentsExport = [
-    paths.editor + "/js/component-new/*/export.js",
-    paths.editor + "/js/component/controls/*/export.js",
-    paths.editor + "/js/component/*/export.js"
-  ];
-  const componentsStream = gulp.src(componentsExport).pipe(
-    gulpPlugins.betterRollup(
-      // { plugins: [babel(babelConfig)] },
-      {
-        external: ["jquery", "Brizy"],
-        globals: {
-          jquery: "jQuery",
-          Brizy: "Brizy"
-        }
-      },
-      {
-        format: "iife",
-        name: "dummy" // without this rollup crashes because the filename is export (reserved name)
-      }
-    )
-  );
-
-  const editorComponentsExport =
-    paths.editor + "/js/editorComponents/*/export.js";
-  const editorComponentsStream = gulp.src(editorComponentsExport).pipe(
-    gulpPlugins.betterRollup(
-      // { plugins: [babel(babelConfig)] },
-      {
-        external: ["jquery", "Brizy"],
-        globals: {
-          jquery: "jQuery",
-          Brizy: "Brizy"
-        }
-      },
-      {
-        format: "iife",
-        name: "dummy" // without this rollup crashes because the filename is export (reserved name)
-      }
-    )
-  );
-
-  gulp
-    .src(src)
-    .pipe(
-      gulpPlugins.inject(libsStream, {
-        starttag: "<!-- inject:libs -->",
-        endTag: "<!-- endinject -->",
-        removeTags: true,
-        transform: (filePath, file) => {
-          return file.contents.toString("utf8");
-        }
-      })
-    )
-    .pipe(
-      gulpPlugins.inject(componentsStream, {
-        starttag: "<!-- inject:components -->",
-        endTag: "<!-- endinject -->",
-        removeTags: true,
-        transform: (filePath, file) => {
-          return file.contents.toString("utf8");
-        }
-      })
-    )
-    .pipe(
-      gulpPlugins.inject(editorComponentsStream, {
-        starttag: "<!-- inject:editorComponents -->",
-        endTag: "<!-- endinject -->",
-        removeTags: true,
-        transform: (filePath, file) => {
-          return file.contents.toString("utf8");
-        }
-      })
-    )
-    // if some parts are absent
-    // we need to remove the placeholders
-    .pipe(gulpPlugins.replace(/<!-- inject:.* -->/g, ""))
-    .pipe(gulpPlugins.replace("<!-- endinject -->", ""))
-    .pipe(gulpPlugins.if(IS_PRODUCTION, gulpPlugins.uglify()))
-    .pipe(gulp.dest(dest))
-    .on("end", () => {
+    if (!doneCalled) {
+      doneCalled = true;
       done();
-    });
+    }
+  });
 });
 gulp.task("export.twig", done => {
   const src =

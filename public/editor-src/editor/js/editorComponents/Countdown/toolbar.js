@@ -1,7 +1,6 @@
 import _ from "underscore";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
-import { getArrayLanguages } from "./languages";
 import { getFontStyle, getWeight, getWeightChoices } from "visual/utils/fonts";
 import {
   onChangeTypography,
@@ -178,7 +177,36 @@ export function getItemsForDesktop(v) {
           id: "language",
           label: t("Language"),
           type: "select",
-          choices: getArrayLanguages(),
+          choices: [
+            {
+              title: t("German"),
+              value: "de"
+            },
+            {
+              title: t("English"),
+              value: "en"
+            },
+            {
+              title: t("Spanish"),
+              value: "es"
+            },
+            {
+              title: t("French"),
+              value: "fr"
+            },
+            {
+              title: t("Italian"),
+              value: "it"
+            },
+            {
+              title: t("Dutch"),
+              value: "nl"
+            },
+            {
+              title: t("Russian"),
+              value: "ru"
+            }
+          ],
           value: v.language
         }
       ]
@@ -414,8 +442,7 @@ export function getItemsForTablet(v) {
     tabletFontWeight,
     tabletLineHeight,
     tabletLetterSpacing
-  } =
-    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+  } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   return [
     {
@@ -552,8 +579,7 @@ export function getItemsForMobile(v) {
     mobileFontWeight,
     mobileLineHeight,
     mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
     {

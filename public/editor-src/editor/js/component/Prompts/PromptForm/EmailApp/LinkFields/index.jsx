@@ -4,7 +4,7 @@ import _ from "underscore";
 import classnames from "classnames";
 import { replaceAt } from "timm";
 import AutoGenerateFields from "./AutoGenerateFields";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import CustomFields from "./CustomFields";
 import { updateWpFormIntegrations } from "visual/utils/api/integrations";
 import {

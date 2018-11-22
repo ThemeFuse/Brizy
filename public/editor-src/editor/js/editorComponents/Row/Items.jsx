@@ -4,13 +4,15 @@ import _ from "underscore";
 import { setIn } from "timm";
 import deepMerge from "deepmerge";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component-new/Sortable";
-import { hideToolbar } from "visual/component-new/Toolbar/index";
+import Sortable from "visual/component/Sortable";
+import { hideToolbar } from "visual/component/Toolbar/index";
 import { MIN_COL_WIDTH } from "visual/config/columns";
-import { ContextMenuExtend } from "visual/component-new/ContextMenu";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
+import { clamp } from "visual/utils/math";
 import { normalizeRowColumns } from "./utils";
 import { t } from "visual/utils/i18n";
+import { getStore } from "visual/redux/store";
 
 const MAX_ITEMS_IN_ROW = 6;
 
@@ -27,13 +29,9 @@ class Items extends EditorArrayComponent {
     itemProps: {}
   };
 
-  firstColumnIndex = null;
+  columnWidths = null;
 
-  firstColumnWidth = null;
-
-  secondColumnIndex = null;
-
-  secondColumnWidth = null;
+  popoverData = null;
 
   handleValueChange(value, meta = {}) {
     const { arrayOperation } = meta;
@@ -44,53 +42,89 @@ class Items extends EditorArrayComponent {
     super.handleValueChange(newValue, meta);
   }
 
-  handleColumnResize = (index, position, x) => {
-    this.columnWidths = this.columnWidths || this.getResizingColumns();
+  handleColumnResize = (index, deltaX, position) => {
+    const { deviceMode } = getStore().getState().ui;
 
-    this.firstColumnIndex = index;
-    this.secondColumnIndex = index + 1;
+    switch (deviceMode) {
+      case "desktop":
+        this.handleDesktopColumnResize(index, deltaX, position);
+        break;
+      case "tablet":
+        this.handleTabletColumnResize(index, deltaX, position);
+        break;
+      default:
+        console.error("Invalid Column Resize. This should not happen");
+    }
+  };
+
+  handleDesktopColumnResize = (index, deltaX, position) => {
+    this.columnWidths = this.columnWidths || this.getColumnWidthsInPx();
+
+    let col1Index = index;
+    let col2Index = index + 1;
 
     if (position === "left") {
-      this.firstColumnIndex = index - 1;
-      this.secondColumnIndex = index;
+      col1Index = index - 1;
+      col2Index = index;
     }
 
-    let col1Width = this.columnWidths[this.firstColumnIndex] + x; // when x is negative, adding results to subtracting
-    let col2Width = this.columnWidths[this.secondColumnIndex] - x; // when x is negative, subtracting results to adding because of double minus
-
-    const sum = _.reduce(this.columnWidths, (memo, num) => memo + num, 0);
-
-    const widthOtherColumns = _.reduce(
-      _.reject(
-        this.columnWidths,
-        (item, key) =>
-          key === this.firstColumnIndex || key == this.secondColumnIndex
-      ),
+    const allColumnsWidth = _.reduce(
+      this.columnWidths,
       (memo, num) => memo + num,
       0
     );
+    const restColumnsWidth =
+      allColumnsWidth -
+      this.columnWidths[col1Index] -
+      this.columnWidths[col2Index];
+    const maxColumnWidth = allColumnsWidth - restColumnsWidth - MIN_COL_WIDTH;
 
-    col1Width = Math.min(
-      Math.max(MIN_COL_WIDTH, col1Width),
-      sum - widthOtherColumns - MIN_COL_WIDTH
+    const col1WidthPx = clamp(
+      this.columnWidths[col1Index] + deltaX, // when deltaX is negative, adding results to subtracting
+      MIN_COL_WIDTH,
+      maxColumnWidth
     );
-    col2Width = Math.min(
-      Math.max(MIN_COL_WIDTH, col2Width),
-      sum - widthOtherColumns - MIN_COL_WIDTH
+    const col2WidthPx = clamp(
+      this.columnWidths[col2Index] - deltaX, // when x is negative, subtracting results to adding because of double minus
+      MIN_COL_WIDTH,
+      maxColumnWidth
+    );
+    const col1WidthPercent = toDecimalTen(
+      (col1WidthPx * 100) / allColumnsWidth
+    );
+    const col2WidthPercent = toDecimalTen(
+      (col2WidthPx * 100) / allColumnsWidth
     );
 
-    this.firstColumnWidth = toDecimalTen((col1Width * 100) / sum);
-    this.secondColumnWidth = toDecimalTen((col2Width * 100) / sum);
+    this.popoverData = [col1WidthPercent, col2WidthPercent];
 
     let newValue = setIn(
       this.getDBValue(),
-      [this.firstColumnIndex, "value", "width"],
-      this.firstColumnWidth
+      [col1Index, "value", "width"],
+      col1WidthPercent
     );
-    newValue = setIn(
-      newValue,
-      [this.secondColumnIndex, "value", "width"],
-      this.secondColumnWidth
+    newValue = setIn(newValue, [col2Index, "value", "width"], col2WidthPercent);
+
+    this.handleValueChange(newValue);
+  };
+
+  handleTabletColumnResize = (index, deltaX) => {
+    const { tabletW } = this.props.meta;
+    this.columnWidths = this.columnWidths || this.getColumnWidthsInPx();
+
+    const colWidthPx = clamp(
+      this.columnWidths[index] + deltaX,
+      MIN_COL_WIDTH,
+      tabletW
+    );
+    const colWidthPercent = toDecimalTen((colWidthPx * 100) / tabletW);
+
+    this.popoverData = [colWidthPercent];
+
+    let newValue = setIn(
+      this.getDBValue(),
+      [index, "value", "tabletWidth"],
+      colWidthPercent
     );
 
     this.handleValueChange(newValue);
@@ -98,10 +132,7 @@ class Items extends EditorArrayComponent {
 
   handleColumnResizeEnd = () => {
     this.columnWidths = null;
-    this.firstColumnIndex = null;
-    this.firstColumnWidth = null;
-    this.secondColumnIndex = null;
-    this.secondColumnWidth = null;
+    this.popoverData = null;
   };
 
   getItemProps(itemData, itemIndex, items) {
@@ -163,8 +194,8 @@ class Items extends EditorArrayComponent {
       meta,
       toolbarExtend,
       popoverData: this.getPopoverData,
-      onResize: (position, x) =>
-        this.handleColumnResize(itemIndex, position, x),
+      onResize: (deltaX, position) =>
+        this.handleColumnResize(itemIndex, deltaX, position),
       onResizeEnd: this.handleColumnResizeEnd
     };
   }
@@ -188,19 +219,14 @@ class Items extends EditorArrayComponent {
     return sameNode || (acceptsElement && hasEnoughSpace);
   };
 
-  getResizingColumns = () => {
+  getColumnWidthsInPx = () => {
     const node = ReactDOM.findDOMNode(this);
 
     return _.map(node.children, elem => elem.getBoundingClientRect().width);
   };
 
   getPopoverData = () => {
-    const firstColumnWidth =
-      this.firstColumnWidth === null ? "0" : this.firstColumnWidth.toFixed(1);
-    const secondColumnWidth =
-      this.secondColumnWidth === null ? "0" : this.secondColumnWidth.toFixed(1);
-
-    return [firstColumnWidth, secondColumnWidth];
+    return this.popoverData;
   };
 
   canAddColumn() {

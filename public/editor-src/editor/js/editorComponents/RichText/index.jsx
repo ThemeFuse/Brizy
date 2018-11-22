@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import _ from "underscore";
 import classNames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component-new/Toolbar";
-import ClickOutside from "visual/component-new/ClickOutside";
-import ListBox from "visual/component/controls/ListBox";
+import Toolbar from "visual/component/Toolbar";
+import ClickOutside from "visual/component/ClickOutside";
+import ListBox from "visual/component/Controls/ListBox";
 import { getDynamicContentChoices } from "visual/utils/options";
 import Quill from "./Quill";
 import toolbarConfig from "./toolbar";
@@ -21,8 +21,7 @@ class RichText extends EditorComponent {
   state = {
     prepopulation: null,
     population: null,
-    selectionCoords: null,
-    isToolbarOpen: false
+    selectionCoords: null
   };
 
   componentDidMount() {
@@ -75,18 +74,6 @@ class RichText extends EditorComponent {
     this.setState({
       prepopulation: null,
       population: null
-    });
-  };
-
-  handleToolbarOpen = () => {
-    this.setState({
-      isToolbarOpen: true
-    });
-  };
-
-  handleToolbarClose = () => {
-    this.setState({
-      isToolbarOpen: false
     });
   };
 
@@ -153,14 +140,8 @@ class RichText extends EditorComponent {
   }
 
   renderForEdit(v) {
-    const { prepopulation, population, isToolbarOpen } = this.state;
-    const {
-      meta: { globalBlockId: isGlobalBlock },
-      onToolbarEnter,
-      onToolbarLeave
-    } = this.props;
-    const { historyTravelling } = this.getReduxState();
-    const forceUpdate = (isGlobalBlock || historyTravelling) && !isToolbarOpen;
+    const { prepopulation, population } = this.state;
+    const { onToolbarEnter, onToolbarLeave } = this.props;
 
     return (
       <React.Fragment>
@@ -169,14 +150,11 @@ class RichText extends EditorComponent {
           manualControl={true}
           onMouseEnter={onToolbarEnter}
           onMouseLeave={onToolbarLeave}
-          onOpen={this.handleToolbarOpen}
-          onClose={this.handleToolbarClose}
         >
           <div className={this.getClassName(v)}>
             <Quill
               ref={this.handleQuillRef}
               value={v.text}
-              forceUpdate={forceUpdate}
               onSelectionChange={this.handleSelectionChange}
               onTextChange={this.handleTextChange}
             />

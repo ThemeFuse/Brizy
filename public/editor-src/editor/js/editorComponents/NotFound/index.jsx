@@ -1,6 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component-new/Toolbar";
+import Toolbar from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 const toolbarConfig = {

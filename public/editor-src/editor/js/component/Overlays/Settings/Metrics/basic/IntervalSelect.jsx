@@ -1,7 +1,7 @@
 var _ = require("underscore"),
   React = require("react"),
-  Select = require("visual/component/controls/Select"),
-  SelectItem = require("visual/component/controls/Select/SelectItem");
+  Select = require("visual/component/Controls/Select"),
+  SelectItem = require("visual/component/Controls/Select/SelectItem");
 
 class IntervalSelect extends React.Component {
   static defaultProps = {

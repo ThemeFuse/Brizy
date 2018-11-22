@@ -10,6 +10,7 @@ import { addClass, removeClass } from "visual/utils/dom/classNames";
 import { currentStyleSelector } from "../selectors";
 import { HYDRATE, UPDATE_GLOBALS, UPDATE_UI } from "../actionTypes";
 import { ActionTypes as HistoryActionTypes } from "../reducers/historyEnhancer";
+import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 
 const { UNDO, REDO } = HistoryActionTypes;
 
@@ -143,9 +144,19 @@ function handleDeviceModeChange(config, store, action, done) {
     `brz-ed--${mode}`
   );
 
+  const scrollWidth = blocksIframe.offsetWidth - document.body.offsetWidth;
+  let iframeMaxWidth = "";
+
+  if (scrollWidth > 0 && (mode === "mobile" || mode === "tablet")) {
+    const wInPage = mode === "mobile" ? wInMobilePage : wInTabletPage;
+    const extraSpace = scrollWidth + 30; // 30 is padding
+    iframeMaxWidth = `${wInPage + extraSpace}px`;
+  }
+
   requestAnimationFrame(() => {
     blocksIframe.className = newIframeClassName;
     brz.className = newBrzClassName;
+    blocksIframe.style.maxWidth = iframeMaxWidth;
   });
 }
 

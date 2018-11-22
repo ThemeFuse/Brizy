@@ -1,6 +1,5 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import ContainerBorder from "visual/component-new/ContainerBorder";
 import Items from "./Items";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";

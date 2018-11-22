@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "@babel/polyfill";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -14,7 +14,7 @@ import { hydrate } from "visual/redux/actionCreators";
 
 import styles from "visual-template/styles/default";
 
-import Editor from "visual/component-new/Editor";
+import Editor from "visual/component/Editor";
 import "../registerEditorParts";
 
 const appDiv = document.querySelector("#brz-ed-root");

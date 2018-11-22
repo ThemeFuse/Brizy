@@ -3,7 +3,7 @@ import _ from "underscore";
 import ReactDOM from "react-dom";
 import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component-new/Toolbar";
+import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";
