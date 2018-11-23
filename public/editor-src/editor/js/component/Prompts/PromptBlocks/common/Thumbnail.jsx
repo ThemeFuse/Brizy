@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "underscore";
-import LazyLoadImage from "visual/component-new/LazyLoadImage";
-import EditorIcon from "visual/component-new/EditorIcon";
+import LazyLoadImage from "visual/component/LazyLoadImage";
+import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
 import { t } from "visual/utils/i18n";
 

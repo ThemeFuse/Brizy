@@ -27,6 +27,19 @@
   }
 }
 
+// Tablet
+&.brz-ed--tablet .brz-columns {
+  &:first-child {
+    > .brz-ed-border {
+      > .brz-ed-border__inner-1:before,
+      > .brz-ed-border__inner-1:after,
+      > .brz-ed-border__inner-2:after {
+        left: 0;
+      }
+    }
+  }
+}
+
 // When is device mode mobile
 &.brz-ed--mobile .brz-columns {
   > .brz-ed-border {

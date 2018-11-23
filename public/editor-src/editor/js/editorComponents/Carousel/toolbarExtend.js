@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { hideToolbar } from "visual/component-new/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar/index";
 
 export function getItemsForDesktop(v) {
   return [

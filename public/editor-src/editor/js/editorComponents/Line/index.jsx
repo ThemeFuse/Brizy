@@ -1,10 +1,10 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { styleClassName, styleCSSVars } from "./styles";
-import Toolbar from "visual/component-new/Toolbar";
+import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
-import BoxResizer from "visual/component-new/BoxResizer";
+import BoxResizer from "visual/component/BoxResizer";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 

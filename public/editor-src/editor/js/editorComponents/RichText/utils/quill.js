@@ -2,6 +2,7 @@ import Quill from "quill";
 import Link from "./formats/Link";
 import Population from "./formats/Population";
 import Pre from "./formats/Pre";
+import Div from "./formats/Div";
 
 if (IS_EDITOR) {
   let Parchment = Quill.import("parchment");
@@ -68,6 +69,7 @@ if (IS_EDITOR) {
   Quill.register(Population);
   Quill.register(Link);
   Quill.register(Pre, true);
+  Quill.register(Div);
 }
 
 export const Delta = Quill.import("delta");

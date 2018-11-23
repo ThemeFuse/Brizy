@@ -2,8 +2,8 @@ import React from "react";
 import SlickSlider from "react-slick";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import EditorIcon from "visual/component-new/EditorIcon";
-import { hideToolbar } from "visual/component-new/Toolbar";
+import EditorIcon from "visual/component/EditorIcon";
+import { hideToolbar } from "visual/component/Toolbar";
 import { templateIconUrl } from "visual/utils/icons";
 import { t } from "visual/utils/i18n";
 

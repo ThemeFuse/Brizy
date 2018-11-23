@@ -1,4 +1,4 @@
-import { hideToolbar } from "visual/component-new/Toolbar";
+import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 export default itemIndex => ({

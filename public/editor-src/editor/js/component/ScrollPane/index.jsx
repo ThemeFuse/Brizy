@@ -46,7 +46,7 @@ export default class ScrollPane extends Component {
     const rect = track.getBoundingClientRect();
     const mouse = event.clientX - rect.left;
     const shift = mouse - this._wide.thumb / 2;
-    const position = shift / this._wide.piece * this._wide.overflow;
+    const position = (shift / this._wide.piece) * this._wide.overflow;
     if (event.target === track) {
       ReactDOM.findDOMNode(this.scrollable).scrollLeft = position;
     }
@@ -57,7 +57,7 @@ export default class ScrollPane extends Component {
     const rect = track.getBoundingClientRect();
     const mouse = event.clientY - rect.top;
     const shift = mouse - this._tall.thumb / 2;
-    const position = shift / this._tall.piece * this._tall.overflow;
+    const position = (shift / this._tall.piece) * this._tall.overflow;
     if (event.target === track) {
       ReactDOM.findDOMNode(this.scrollable).scrollTop = position;
       this.handleChange({
@@ -71,7 +71,7 @@ export default class ScrollPane extends Component {
       this._start = parseInt(this.wideThumb.style.left);
     }
     const shift = offset.left + this._start;
-    const position = shift / this._wide.piece * this._wide.overflow;
+    const position = (shift / this._wide.piece) * this._wide.overflow;
     ReactDOM.findDOMNode(this.scrollable).scrollLeft = position;
     this.handleChange({
       left: position
@@ -83,7 +83,7 @@ export default class ScrollPane extends Component {
       this._start = parseInt(this.tallThumb.style.top);
     }
     const shift = offset.top + this._start;
-    const position = shift / this._tall.piece * this._tall.overflow;
+    const position = (shift / this._tall.piece) * this._tall.overflow;
     ReactDOM.findDOMNode(this.scrollable).scrollTop = position;
     this.handleChange({
       top: Math.min(this._tall.overflow, Math.max(0, position))

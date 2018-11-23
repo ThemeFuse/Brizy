@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
-import Select from "visual/component/controls/Select";
-import SelectItem from "visual/component/controls/Select/SelectItem";
+import Select from "visual/component/Controls/Select";
+import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { getFields, isMaxFields, substrString } from "../utils";
 
 class AutoGenerateFields extends Component {

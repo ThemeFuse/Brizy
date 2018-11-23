@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
 export default class SearchInput extends React.Component {

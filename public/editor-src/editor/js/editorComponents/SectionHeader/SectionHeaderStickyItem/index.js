@@ -1,16 +1,16 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import SectionHeaderStickyItemItems from "./Items";
-import Background from "visual/component-new/Background";
-import ContainerBorder from "visual/component-new/ContainerBorder";
-import PaddingResizer from "visual/component-new/PaddingResizer";
+import Background from "visual/component/Background";
+import ContainerBorder from "visual/component/ContainerBorder";
+import PaddingResizer from "visual/component/PaddingResizer";
 import {
   wInBoxedPage,
   wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
-import { CollapsibleToolbar } from "visual/component-new/Toolbar";
+import { CollapsibleToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
   bgStyleClassName,

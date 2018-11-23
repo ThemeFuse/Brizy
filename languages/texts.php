@@ -367,7 +367,7 @@ class Brizy_Languages_Texts
 			"Saturation" => __("Saturation", "brizy"),
 			//-> LightBox
 			"LightBox" => __("LightBox", "brizy"),
-			"Open in LightBox" => __("Open in LightBox", "brizy"),
+			"Open in Lightbox" => __("Open in Lightbox", "brizy"),
 			//-> Gallery
 			"Gallery" => __("Gallery", "brizy"),
 			//-> ProgressBar

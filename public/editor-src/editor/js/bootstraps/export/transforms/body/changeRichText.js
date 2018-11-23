@@ -61,6 +61,25 @@ export default function changeRichText($) {
     .each(function() {
       const $this = $(this);
       const population = $this.attr("data-population");
-      $this.html(`{{${population}}}`);
+      const $blockDynamicContentElem = $this.closest(".brz-tp__dc-block");
+      let $elem;
+      if ($blockDynamicContentElem.length) {
+        $elem = $blockDynamicContentElem;
+        const classNames = $elem
+          .attr("class")
+          .split(" ")
+          .filter(
+            className =>
+              className.startsWith("brz-tp__dc-block") ||
+              className.startsWith("brz-mt") ||
+              className.startsWith("brz-mb")
+          )
+          .join(" ");
+        $elem.attr("class", classNames);
+      } else {
+        $elem = $this;
+      }
+
+      $elem.html(`{{${population}}}`);
     });
 }

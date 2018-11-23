@@ -5,4 +5,8 @@ export { getFontStyle } from "./getFontStyle";
 export { weightTypes, getWeight, getWeightChoices } from "./getFontWeight";
 export { makeFontsUrl } from "./makeFontsUrl";
 export { makeRichTextFontFamiliesCSS } from "./makeRichTextFontFamiliesCSS";
-export { makeRichTextFontStylesCSS } from "./makeRichTextFontStylesCSS";
+export {
+  dynamicStyleIds,
+  makeRichTextFontStylesCSS,
+  makeRichTextDynamicFontStylesCSS
+} from "./makeRichTextFontStylesCSS";

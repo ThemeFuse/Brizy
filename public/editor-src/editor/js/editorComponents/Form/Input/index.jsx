@@ -1,6 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component-new/Toolbar";
+import Toolbar from "visual/component/Toolbar";
 import * as types from "./types/index";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue";

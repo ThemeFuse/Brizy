@@ -1,9 +1,9 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component-new/Toolbar";
+import { hideToolbar } from "visual/component/Toolbar";
 import ContextMenu, {
   ContextMenuExtend
-} from "visual/component-new/ContextMenu";
+} from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";

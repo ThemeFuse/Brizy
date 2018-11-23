@@ -1,26 +1,51 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import Draggable from "visual/component-new/Draggable";
+import Draggable from "visual/component/Draggable";
 
 class ColumnResizer extends Component {
-  renderPopover = () => {
-    const [leftValue, rightValue] = this.props.popoverData();
+  handleDrag = ({ deltaX }) => {
+    const { position, onResize } = this.props;
 
-    return (
-      <div className="brz-ed-draggable__column-popover">
-        <span className="brz-ed-draggable__column-popover__percent">
-          {leftValue}%
+    onResize(deltaX, position);
+  };
+
+  handleDragEnd = () => {
+    const { onResizeEnd } = this.props;
+
+    onResizeEnd();
+  };
+
+  renderPopover = () => {
+    const widths = this.props.popoverData();
+    const content = widths.reduce((acc, width, index) => {
+      if (index > 0) {
+        acc.push(
+          <span
+            key={`${index}-divider`}
+            className="brz-ed-draggable__column-popover__divider"
+          >
+            /
+          </span>
+        );
+      }
+
+      acc.push(
+        <span
+          key={`${index}-value`}
+          className="brz-ed-draggable__column-popover__percent"
+        >
+          {width.toFixed(1)}%
         </span>
-        <span className="brz-ed-draggable__column-popover__divider">/</span>
-        <span className="brz-ed-draggable__column-popover__percent">
-          {rightValue}%
-        </span>
-      </div>
-    );
+      );
+
+      return acc;
+    }, []);
+
+    return <div className="brz-ed-draggable__column-popover">{content}</div>;
   };
 
   render() {
-    const { children, position, color, onResize, onResizeEnd } = this.props;
+    const { position, color } = this.props;
     const className = classnames(
       "brz-ed-draggable__column",
       `brz-ed-draggable__column--${position}`,
@@ -31,8 +56,8 @@ class ColumnResizer extends Component {
       <Draggable
         className={className}
         renderPopover={this.renderPopover}
-        onDrag={onResize}
-        onDragEnd={onResizeEnd}
+        onDrag={this.handleDrag}
+        onDragEnd={this.handleDragEnd}
       >
         <div className="brz-ed-draggable__column--item" />
       </Draggable>

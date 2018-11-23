@@ -370,8 +370,6 @@ export function bgStyleClassName(v, props) {
         : "none";
 
     glamorObj = {
-      zIndex: zIndex === 0 ? "auto" : zIndex,
-
       ...(hasItems ? marginStyle : null),
 
       "> .brz-bg-content": {
@@ -800,8 +798,8 @@ export function styleClassName(v, props) {
       },
       ".brz-ed--tablet &": {
         willChange: "flex, max-width",
-        flex: "1 1 var(--width)",
-        maxWidth: "var(--width)"
+        flex: "1 1 var(--tabletWidth)",
+        maxWidth: "var(--tabletWidth)"
       },
       ".brz-ed--mobile &": {
         willChange: "flex, max-width",
@@ -817,14 +815,24 @@ export function styleClassName(v, props) {
       };
     }
   } else {
-    const { width } = v;
+    const { width, zIndex } = v;
 
     glamorObj = {
-      "@media (min-width: 768px)": {
+      ".brz &": {
+        zIndex: zIndex === 0 ? "auto" : zIndex,
+      },
+      "@media (min-width: 992px)": {
         ".brz &": {
           willChange: "flex, max-width",
           flex: `1 1 ${width}%`,
           maxWidth: `${width}%`
+        }
+      },
+      "@media (max-width: 991px) and (min-width: 768px)": {
+        ".brz &": {
+          willChange: "flex, max-width",
+          flex: `1 1 ${tabletSyncOnChange(v, "width")}%`,
+          maxWidth: `${tabletSyncOnChange(v, "width")}%`
         }
       }
     };
@@ -866,6 +874,7 @@ export function styleCSSVars(v, props) {
 
   return {
     "--width": `${width}%`,
+    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
     "--mobileWidth": needMobileWidth ? `${width}%` : "100%"
   };
 }

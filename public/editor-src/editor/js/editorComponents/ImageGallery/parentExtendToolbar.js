@@ -56,7 +56,7 @@ export function getItemsForDesktop(v) {
         },
         {
           id: "lightBox",
-          label: t("LightBox"),
+          label: t("Open in Lightbox"),
           type: "switch",
           value: v.lightBox
         }

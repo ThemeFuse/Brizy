@@ -4,9 +4,9 @@ import {
   FirstBlockAdder,
   MiddleBlockAdder,
   LastBlockAdder
-} from "visual/component-new/BlockAdders";
+} from "visual/component/BlockAdders";
 import BlockErrorBoundary from "./BlockErrorBoundary";
-import { hideToolbar } from "visual/component-new/Toolbar";
+import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 class Blocks extends EditorArrayComponent {

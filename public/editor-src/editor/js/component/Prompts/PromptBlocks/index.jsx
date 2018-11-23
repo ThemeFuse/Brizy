@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 import Fixed from "visual/component/Prompts/Fixed";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
 import Templates from "./Templates";

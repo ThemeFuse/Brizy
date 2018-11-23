@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "@babel/polyfill";
 
 import React from "react";
 import ReactDOMServer from "react-dom/server";
@@ -22,8 +22,8 @@ import changeRichText from "./transforms/body/changeRichText";
 
 export default function main(pageId, pages, globals) {
   const convertedPages = pages.map(converter.pageFromBackend);
-  const page = convertedPages.find(
-    page => (pageId ? page.id === pageId : page.index)
+  const page = convertedPages.find(page =>
+    pageId ? page.id === pageId : page.index
   );
 
   if (!page) {

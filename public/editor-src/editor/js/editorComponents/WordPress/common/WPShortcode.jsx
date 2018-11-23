@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import Placeholder from "visual/component-new/Placeholder";
+import Placeholder from "visual/component/Placeholder";
 import * as Api from "visual/utils/api/editor";
-import BoxResizer from "visual/component-new/BoxResizer";
+import BoxResizer from "visual/component/BoxResizer";
 
 export class WPShortcode extends Component {
   static defaultProps = {

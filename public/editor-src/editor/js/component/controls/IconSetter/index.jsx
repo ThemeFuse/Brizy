@@ -1,8 +1,8 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import EditorIcon from "visual/component-new/EditorIcon";
-import ThemeIcon from "visual/component-new/ThemeIcon";
+import EditorIcon from "visual/component/EditorIcon";
+import ThemeIcon from "visual/component/ThemeIcon";
 import UIState from "visual/global/UIState";
 import Config from "visual/global/Config";
 

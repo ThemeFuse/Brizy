@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 
 class AppsList extends Component {
   static get title() {

@@ -29,12 +29,10 @@ module.exports = options => {
     resolve: {
       alias: {
         visual: path.resolve(__dirname, "editor/js"),
+        lib: path.resolve(__dirname, "editor/lib"),
         "visual-template": options.TEMPLATE_PATH
       },
       extensions: getExtensions(options.TARGET)
-    },
-    externals: {
-      jquery: "jQuery"
     },
     module: {
       rules: [
@@ -42,11 +40,6 @@ module.exports = options => {
           test: /\.jsx?$/,
           include: [path.resolve(__dirname, "editor")],
           loader: "babel-loader"
-        },
-        {
-          test: /Preview\.jpg$/,
-          include: [path.resolve(__dirname, "templates")],
-          loader: "null-loader"
         }
       ]
     },
@@ -67,7 +60,7 @@ module.exports = options => {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             priority: -10,
-            name: "editor.vendor.bundle"
+            name: "editor.vendor"
           }
         }
       }

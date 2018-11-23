@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import { removeAt } from "timm";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component-new/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar/index";
 import { t } from "visual/utils/i18n";
 
 class AccordionItems extends EditorArrayComponent {

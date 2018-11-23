@@ -1,9 +1,9 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component-new/Sortable";
-import { ContextMenuExtend } from "visual/component-new/ContextMenu";
+import Sortable from "visual/component/Sortable";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
-import { hideToolbar } from "visual/component-new/Toolbar";
+import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 class SectionItemItems extends EditorArrayComponent {

@@ -2,12 +2,12 @@ import React from "react";
 import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Background from "visual/component-new/Background";
-import ContainerBorder from "visual/component-new/ContainerBorder";
-import EditorIcon from "visual/component-new/EditorIcon";
-import ThemeIcon from "visual/component-new/ThemeIcon";
-import SortableZIndex from "visual/component-new/Sortable/SortableZIndex";
-import { Roles } from "visual/component-new/Roles";
+import Background from "visual/component/Background";
+import ContainerBorder from "visual/component/ContainerBorder";
+import EditorIcon from "visual/component/EditorIcon";
+import ThemeIcon from "visual/component/ThemeIcon";
+import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { Roles } from "visual/component/Roles";
 import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { uuid } from "visual/utils/uuid";
@@ -18,7 +18,7 @@ import {
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
-import { CollapsibleToolbar } from "visual/component-new/Toolbar";
+import { CollapsibleToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
 import {
