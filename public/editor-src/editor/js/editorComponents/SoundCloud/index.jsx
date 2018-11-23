@@ -1,9 +1,9 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import BoxResizer from "visual/component-new/BoxResizer";
-import Placeholder from "visual/component-new/Placeholder";
-import Toolbar from "visual/component-new/Toolbar";
+import BoxResizer from "visual/component/BoxResizer";
+import Placeholder from "visual/component/Placeholder";
+import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";

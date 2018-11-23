@@ -160,7 +160,9 @@ const getItemsForDesktop = (
     linkExternalRel,
     linkPopup,
     marginTop,
-    marginBottom
+    marginBottom,
+    population,
+    prepopulation
   },
   onChange
 ) => (v, component) => {
@@ -175,6 +177,7 @@ const getItemsForDesktop = (
       title: t("Typography"),
       roles: ["admin"],
       position: 10,
+      disabled: population && population.display === "block",
       options: [
         {
           type: "grid",
@@ -503,6 +506,7 @@ const getItemsForDesktop = (
       title: t("Colors"),
       roles: ["admin"],
       position: 20,
+      disabled: population && population.display === "block",
       icon: {
         style: {
           backgroundColor: getColorValue(color)
@@ -539,6 +543,7 @@ const getItemsForDesktop = (
       label: t("Align"),
       type: "toggle",
       position: 30,
+      disabled: population && population.display === "block",
       choices: [
         {
           icon: "nc-text-align-left",
@@ -568,6 +573,7 @@ const getItemsForDesktop = (
       id: "list",
       type: "toggle",
       position: 40,
+      disabled: population && population.display === "block",
       choices: [
         {
           icon: "nc-list-numbers",
@@ -594,6 +600,7 @@ const getItemsForDesktop = (
       icon: "nc-bold",
       title: t("Bold"),
       position: 50,
+      disabled: population && population.display === "block",
       value: bold,
       onChange: bold => onChange({ bold })
     },
@@ -603,6 +610,7 @@ const getItemsForDesktop = (
       icon: "nc-italic",
       title: t("Italic"),
       position: 60,
+      disabled: population && population.display === "block",
       value: italic,
       onChange: italic => onChange({ italic })
     },
@@ -613,6 +621,7 @@ const getItemsForDesktop = (
       size: "medium",
       title: t("Link"),
       position: 80,
+      disabled: population && population.display === "block",
       options: [
         {
           id: "linkType",
@@ -823,6 +832,7 @@ const getItemsForDesktop = (
           label: t("HTML Tag"),
           type: "select",
           className: "brz-control__select--small",
+          disabled: population && population.display === "block",
           choices: [
             {
               title: t("P"),

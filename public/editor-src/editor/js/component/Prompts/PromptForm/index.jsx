@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Fixed from "visual/component/Prompts/Fixed";
 import ScrollPane from "visual/component/ScrollPane";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import AppsList from "./AppsList";
 import AppComponents from "./Apps";
 import globalApps from "./globalApps.json";

@@ -1,6 +1,9 @@
 import { isHex } from "visual/utils/color";
 import { getUsedFonts } from "visual/utils/fonts";
+import { getDynamicContentByPlaceholder } from "visual/utils/options";
 import { formatLinkFromString } from "./link";
+
+const DEFAULT_LINE_HEIGHT = 1.5;
 
 const rgbTohex = (rgb = "rgb(0, 0, 0)") => {
   rgb = rgb.match(
@@ -82,7 +85,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
   const cssMarginBottom = parseFloat($blockElement.css("marginBottom"));
   const cssHeight = parseFloat($elem.css("lineHeight"));
   const letterSpacing = parseFloat($elem.css("letterSpacing"));
-  const height = cssHeight / size;
+  const height = isNaN(cssHeight) ? DEFAULT_LINE_HEIGHT : cssHeight / size;
   const cssAlign = $elem.css("textAlign");
   const align = ["left", "center", "right", "justify"].includes(cssAlign)
     ? cssAlign
@@ -148,7 +151,11 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     population: format.population
       ? {
           population: format.population,
-          label: $elem.closest("[data-population]").text()
+          label: $elem.closest("[data-population]").text(),
+          display: getDynamicContentByPlaceholder(
+            "richText",
+            `{{${format.population}}}`
+          ).display
         }
       : null,
     prepopulation: format.prepopulation

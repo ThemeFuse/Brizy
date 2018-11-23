@@ -97,6 +97,7 @@
   "animationDelay": 1000,
 
   "showOnTablet": "on",
+  "tabletWidth": null,
 
   "tabletBgImageWidth": null,
   "tabletBgImageHeight": null,

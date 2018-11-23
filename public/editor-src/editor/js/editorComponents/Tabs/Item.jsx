@@ -1,6 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Background from "visual/component-new/Background";
+import Background from "visual/component/Background";
 import ItemItems from "./ItemItems";
 import defaultValue from "./itemDefaultValue.json";
 

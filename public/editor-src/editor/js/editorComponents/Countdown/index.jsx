@@ -3,13 +3,15 @@ import _ from "underscore";
 import jQuery from "jquery";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component-new/Toolbar";
+import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";
-import { getTime, getServerTimestamp, formatDate } from "./utils";
-import getLanguage from "./languages";
-import BoxResizer from "visual/component-new/BoxResizer";
+import { getTime, getServerTimestamp, formatDate, getLanguage } from "./utils";
+import BoxResizer from "visual/component/BoxResizer";
+
+// lib
+import "./lib/jquery.countdown.js";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 

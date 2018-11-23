@@ -11,6 +11,7 @@ class Brizy_Compatibilities_Gutenberg {
 
 	public function filter_the_content( $content ) {
 		remove_filter( 'the_content', 'gutenberg_wpautop', 6 );
+
 		return $content;
 	}
 
@@ -23,19 +24,19 @@ class Brizy_Compatibilities_Gutenberg {
 		), set_url_scheme( admin_url( 'edit.php' ) ) );
 
 		?>
-		<script type="text/javascript">
-			document.addEventListener('DOMContentLoaded', function () {
-				var dropdown = document.querySelector('#split-page-title-action .dropdown');
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                var dropdown = document.querySelector('#split-page-title-action .dropdown');
 
-				if (!dropdown) {
-					return;
-				}
+                if (!dropdown) {
+                    return;
+                }
 
-				var url = '<?php echo esc_attr( $new_post_url ); ?>';
+                var url = '<?php echo esc_attr( $new_post_url ); ?>';
 
-				dropdown.insertAdjacentHTML('afterbegin', '<a href="' + url + '">Brizy</a>');
-			});
-		</script>
+                dropdown.insertAdjacentHTML('afterbegin', '<a href="' + url + '">Brizy</a>');
+            });
+        </script>
 		<?php
 	}
 
@@ -62,27 +63,43 @@ class Brizy_Compatibilities_Gutenberg {
 
 	public function print_admin_footer_tpls() {
 
-        global $pagenow;
+		global $pagenow;
 
-        if ( ! in_array( $pagenow, array( 'post-new.php', 'post.php' ) ) ) {
-            return;
-        }
-
-		if ( ! in_array( get_post_type(), Brizy_Editor::get()->supported_post_types() ) ) {
-		    return;
+		if ( ! in_array( $pagenow, array( 'post-new.php', 'post.php' ) ) ) {
+			return;
 		}
 
-		$log_dir  = BRIZY_PLUGIN_URL . '/admin/static/img/';
-		$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . get_the_ID() ) );
+		if ( ! in_array( get_post_type(), Brizy_Editor::get()->supported_post_types() ) ) {
+			return;
+		}
 
-		echo
-			'<script id="brizy-gutenberg-btn-switch-mode" type="text/html">
+		$log_dir = BRIZY_PLUGIN_URL . '/admin/static/img/';
+
+		try {
+			$post = Brizy_Editor_Post::get( get_the_ID() );
+
+			if ( $post->uses_editor() ) {
+				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_disable&post=' . get_the_ID() ) );
+				echo
+					'<script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                 <div class="brizy-buttons" style="margin-top:15px;">
                     <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="' . $edit_url . '" style="padding:5px 27px 5px;">' .
-                        esc_html__( 'Edit with', 'brizy' ) .
-                        '<img src="' . $log_dir . 'brizy.png" srcset="' . $log_dir . 'brizy.png' . ' 1x, ' . $log_dir . 'brizy-2x.png 2x" class="brizy-logo">
+					'<img src="' . plugins_url( '../admin/static/img/arrow.png', __FILE__ ) . '" class="brizy-button--arrow"/> ' . __( 'Back to WordPress Editor', 'brizy' ) . '</a></div>
+            </script>';
+			} else {
+				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . get_the_ID() ) );
+				echo
+					'<script id="brizy-gutenberg-btn-switch-mode" type="text/html">
+                <div class="brizy-buttons" style="margin-top:15px;">
+                    <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="' . $edit_url . '" style="padding:5px 27px 5px;">' .
+					esc_html__( 'Edit with', 'brizy' ) .
+					'<img src="' . $log_dir . 'brizy.png" srcset="' . $log_dir . 'brizy.png' . ' 1x, ' . $log_dir . 'brizy-2x.png 2x" class="brizy-logo">
                      </a>
                 </div>
             </script>';
+			}
+		} catch ( Exception $e ) {
+
+		}
 	}
 }

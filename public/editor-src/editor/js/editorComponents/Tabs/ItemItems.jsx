@@ -1,8 +1,8 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component-new/Toolbar/index";
-import Sortable from "visual/component-new/Sortable";
-import { ContextMenuExtend } from "visual/component-new/ContextMenu";
+import { hideToolbar } from "visual/component/Toolbar/index";
+import Sortable from "visual/component/Sortable";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
 

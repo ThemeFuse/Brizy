@@ -1,8 +1,8 @@
 var _ = require('underscore'),
   React = require('react'),
   Model = require('visual/Model'),
-  SelectControl = require('visual/component/controls/Select'),
-  SelectControlItem = require('visual/component/controls/Select/SelectItem'),
+  SelectControl = require('visual/component/Controls/Select'),
+  SelectControlItem = require('visual/component/Controls/Select/SelectItem'),
   getPageById = require('visual/global/Pages').getPageById,
   getActivePageId = require('visual/global/Router').getActivePageId;
 

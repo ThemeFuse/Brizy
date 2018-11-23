@@ -305,13 +305,20 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
-            mobileSyncOnChange(v, "bgImageSrc") && mobileSyncOnChange(v, "media") !== "map"
+            mobileSyncOnChange(v, "bgImageSrc") &&
+            mobileSyncOnChange(v, "media") !== "map"
               ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
               : "none",
-          backgroundPosition: `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(v, "bgPositionY")}%`
+          backgroundPosition: `${mobileSyncOnChange(
+            v,
+            "bgPositionX"
+          )}% ${mobileSyncOnChange(v, "bgPositionY")}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
+          backgroundColor: hexToRgba(
+            mobileSyncOnChange(v, "bgColorHex"),
+            mobileSyncOnChange(v, "bgColorOpacity")
+          )
         },
         "> .brz-bg-media > .brz-bg-map": {
           display: mobileSyncOnChange(v, "media") === "map" ? "block" : "none"
@@ -491,9 +498,11 @@ export function bgStyleCSSVars(v) {
         : tabletMarginBottom + tabletMarginBottomSuffix,
 
     // Mobile
-    "--mobileMediaBg": mobileSyncOnChange(v, "media") === "map" ? "block" : "none",
+    "--mobileMediaBg":
+      mobileSyncOnChange(v, "media") === "map" ? "block" : "none",
     "--mobileBackgroundImage":
-      mobileSyncOnChange(v, "bgImageSrc") && mobileSyncOnChange(v, "media") !== "map"
+      mobileSyncOnChange(v, "bgImageSrc") &&
+      mobileSyncOnChange(v, "media") !== "map"
         ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
         : "none",
     "--mobileBackgroundPositionX": `${mobileSyncOnChange(v, "bgPositionX")}%`,
@@ -639,7 +648,12 @@ export function containerStyleClassName(v, isInnerRow) {
 
   const glamorClassName = String(css(glamorObj));
 
-  return classnames("brz-row", className, glamorClassName);
+  return classnames(
+    "brz-row",
+    { "brz-row--inner": isInnerRow },
+    className,
+    glamorClassName
+  );
 }
 
 export function containerStyleCSSVars(v, isInnerRow) {

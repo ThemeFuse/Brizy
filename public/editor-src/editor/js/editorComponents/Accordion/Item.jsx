@@ -2,7 +2,7 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import ItemItems from "./ItemItems";
 import defaultValue from "./itemDefaultValue.json";
-import Toolbar from "visual/component-new/Toolbar";
+import Toolbar from "visual/component/Toolbar";
 import TextEditor from "visual/editorComponents/Text/Editor";
 
 class AccordionItem extends EditorComponent {

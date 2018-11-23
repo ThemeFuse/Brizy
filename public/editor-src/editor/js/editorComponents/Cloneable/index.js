@@ -1,8 +1,8 @@
 import React from "react";
 import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import ContainerBorder from "visual/component-new/ContainerBorder";
-import Animation from "visual/component-new/Animation";
+import ContainerBorder from "visual/component/ContainerBorder";
+import Animation from "visual/component/Animation";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./items";
 import * as toolbarExtendConfig from "./extendToolbar";

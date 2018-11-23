@@ -2,16 +2,16 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import SortableElement from "visual/component-new/Sortable/SortableElement";
-import Background from "visual/component-new/Background";
-import ContainerBorder from "visual/component-new/ContainerBorder";
-import FloatingButton from "visual/component-new/FloatingButton";
-import SortableHandle from "visual/component-new/Sortable/SortableHandle";
-import Animation from "visual/component-new/Animation";
-import { Roles } from "visual/component-new/Roles";
-import Toolbar from "visual/component-new/Toolbar";
+import SortableElement from "visual/component/Sortable/SortableElement";
+import Background from "visual/component/Background";
+import ContainerBorder from "visual/component/ContainerBorder";
+import FloatingButton from "visual/component/FloatingButton";
+import SortableHandle from "visual/component/Sortable/SortableHandle";
+import Animation from "visual/component/Animation";
+import { Roles } from "visual/component/Roles";
+import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
-import ContextMenu from "visual/component-new/ContextMenu";
+import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import ColumnResizer from "./components/ColumnResizer";
 import { percentageToPixels } from "visual/utils/meta";
@@ -146,11 +146,12 @@ class Column extends EditorComponent {
       mobileMarginRightSuffix
     } = v;
 
+    const tabletColumnWidth = tabletSyncOnChange(v, "width");
     let wInMobileCol = meta.mobileW;
     if (meta.row && meta.row.isInner && meta.desktopW <= wInMobilePage) {
       wInMobileCol = meta.mobileW * (columnWidth / 100);
     }
-    const wInTabletCol = meta.tabletW * (columnWidth / 100);
+    const wInTabletCol = meta.tabletW * (tabletColumnWidth / 100);
     const wInDesktopCol = meta.desktopW * (columnWidth / 100);
 
     const marginW =
@@ -172,33 +173,33 @@ class Column extends EditorComponent {
     const tabletPaddingW =
       tabletPaddingType === "grouped"
         ? percentageToPixels(
-          tabletPadding * 2,
-          tabletPaddingSuffix,
-          wInTabletCol
-        )
+            tabletPadding * 2,
+            tabletPaddingSuffix,
+            wInTabletCol
+          )
         : percentageToPixels(
-          tabletPaddingLeft,
-          tabletPaddingLeftSuffix,
-          wInTabletCol
-        ) +
-        percentageToPixels(
-          tabletPaddingRight,
-          tabletPaddingRightSuffix,
-          wInTabletCol
-        );
+            tabletPaddingLeft,
+            tabletPaddingLeftSuffix,
+            wInTabletCol
+          ) +
+          percentageToPixels(
+            tabletPaddingRight,
+            tabletPaddingRightSuffix,
+            wInTabletCol
+          );
     const tabletMarginW =
       tabletMarginType === "grouped"
         ? percentageToPixels(tabletMargin * 2, tabletMarginSuffix, wInTabletCol)
         : percentageToPixels(
-          tabletMarginLeft,
-          tabletMarginLeftSuffix,
-          wInTabletCol
-        ) +
-        percentageToPixels(
-          tabletMarginRight,
-          tabletMarginRightSuffix,
-          wInTabletCol
-        );
+            tabletMarginLeft,
+            tabletMarginLeftSuffix,
+            wInTabletCol
+          ) +
+          percentageToPixels(
+            tabletMarginRight,
+            tabletMarginRightSuffix,
+            wInTabletCol
+          );
 
     // Mobile
     const mobilePaddingW =
@@ -247,7 +248,8 @@ class Column extends EditorComponent {
 
     return _.extend({}, meta, {
       column: {
-        width: columnWidth
+        width: columnWidth,
+        tabletWidth: tabletColumnWidth
       },
       mobileW,
       tabletW,
@@ -290,7 +292,7 @@ class Column extends EditorComponent {
     );
   }
 
-  renderResizer = position => {
+  renderResizer(position) {
     const {
       meta: { row, inGrid },
       popoverData,
@@ -302,10 +304,10 @@ class Column extends EditorComponent {
       return null;
     }
 
-    const { isFirst, isLast } = row.item;
+    const { isFirst } = row.item;
     const isInnerRow = this.isInnerRow();
 
-    if ((isFirst && position === "left") || (isLast && position === "right")) {
+    if (isFirst && position === "left") {
       return null;
     }
 
@@ -314,11 +316,11 @@ class Column extends EditorComponent {
         popoverData={popoverData}
         position={position}
         color={isInnerRow && inGrid ? "red" : "blue"}
-        onResize={({ deltaX }) => onResize(position, deltaX)}
+        onResize={onResize}
         onResizeEnd={onResizeEnd}
       />
     );
-  };
+  }
 
   renderContent(_v) {
     const v = this.applyRulesToValue(_v, [
@@ -329,10 +331,7 @@ class Column extends EditorComponent {
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
-    const {
-      bgImageSrc,
-      bgColorOpacity
-    } = v;
+    const { bgImageSrc, bgColorOpacity } = v;
 
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -380,7 +379,7 @@ class Column extends EditorComponent {
     };
 
     const borderClassName = classnames("brz-ed-border__column", {
-      "brz-ed-border__column--empty": items.length == 0
+      "brz-ed-border__column--empty": items.length === 0
     });
 
     return (

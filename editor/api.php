@@ -240,7 +240,6 @@ class Brizy_Editor_API {
 	}
 
 
-
 	public function default_form() {
 		try {
 
@@ -598,7 +597,7 @@ class Brizy_Editor_API {
 			//$post->compile_page();
 			$this->post->save();
 
-			$brizy_compiled_page = $this->post->get_compiled_page( );
+			$brizy_compiled_page = $this->post->get_compiled_page();
 
 			wp_update_post( array(
 				'ID'           => $this->post->get_parent_id(),
@@ -720,6 +719,7 @@ class Brizy_Editor_API {
 		$links = array();
 		$links = array_merge( $links, $this->get_post_link_list( $search_term ) );
 		$links = array_merge( $links, $this->get_term_link_list( $search_term ) );
+		$links = array_merge( $links, $this->get_author_link_list( $search_term ) );
 
 		wp_send_json( array( 'filter_term' => $search_term, 'links' => $links ), 200 );
 	}
@@ -836,6 +836,23 @@ class Brizy_Editor_API {
 				'url'      => get_term_link( $term ),
 				'taxonomy' => $term->taxonomy
 			);
+		}
+
+		return $links;
+	}
+
+	private function get_author_link_list( $search_term ) {
+		$authors = get_users( array( 'name_like' => $search_term ) );
+		$links   = array();
+		foreach ( $authors as $user ) {
+			$user_nicename = $user->user_nicename;
+			if ( stripos( $user_nicename, $search_term ) !== false ) {
+				$links[] = (object) array(
+					'label'  => $user_nicename,
+					'url'    => get_author_posts_url( $user->ID ),
+					'author' => true
+				);
+			}
 		}
 
 		return $links;

@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.46<br>
+Stable tag: 1.0.47<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,17 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.47 - 2018-11-23 ###
+* New: Added Column resize in tablet mode
+* Fixed: NaN showing in RichText toolbar line-height option in tablet and mobile modes
+* Fixed: Animations z-index issues on preview
+* Fixed: Iframe with scroll css issue in tablet and mobile modes
+* Fixed: Fixed css that made deleting Global and Saved blocks or very hard
+* Fixed: Fixed notices layout
+* Fixed: Added author list in internal url list
+* Fixed: Added display type on placeholders
+* Fixed: Fixed compatibility with WP 5.0
 
 ### 1.0.46 - 2018-11-13 ###
 * Updated: Removed browser restriction overlay

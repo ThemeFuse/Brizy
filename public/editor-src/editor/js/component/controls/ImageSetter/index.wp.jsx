@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import Config from "visual/global/Config";
 import ImageSetter from "./index.jsx";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import { getImageUid } from "visual/utils/api/editor";
 
 const { pageAttachments } = Config.get("wp");

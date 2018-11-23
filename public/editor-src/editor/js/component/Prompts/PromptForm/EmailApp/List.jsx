@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
-import Radio from "visual/component/controls/Radio";
-import RadioItem from "visual/component/controls/Radio/RadioItem";
+import Radio from "visual/component/Controls/Radio";
+import RadioItem from "visual/component/Controls/Radio/RadioItem";
 import { updateIntegration } from "visual/utils/api/integrations";
 import { substrString } from "./utils";
 

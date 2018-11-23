@@ -8,16 +8,19 @@ class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstr
 	protected $value;
 
 	/**
-	 * Brizy_Editor_Content_GenericPlaceHolder constructor.
+	 * Brizy_Content_Placeholders_Simple constructor.
 	 *
-	 * @param string $label
-	 * @param string $placeholder
-	 * @param string|array $value
+	 * @param $label
+	 * @param $placeholder
+	 * @param $value
+	 * @param string $display
 	 */
-	public function __construct( $label, $placeholder, $value ) {
-		$this->label       = $label;
-		$this->placeholder = $placeholder;
-		$this->value       = $value;
+	public function __construct( $label, $placeholder, $value, $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE ) {
+		$this->setLabel( $label );
+		$this->setPlaceholder( $placeholder );
+		$this->setDisplay( $display );
+
+		$this->value = $value;
 	}
 
 	/**

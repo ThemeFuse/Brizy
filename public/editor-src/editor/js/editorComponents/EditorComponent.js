@@ -3,7 +3,7 @@ import _ from "underscore";
 import {
   mergeOptions,
   optionTraverse
-} from "visual/component-new/Options/utils";
+} from "visual/component/Options/utils";
 import { uuid } from "visual/utils/uuid";
 import { getStore } from "visual/redux/store";
 import { currentStyleSelector } from "visual/redux/selectors";

@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
-import Portal from "visual/component-new/Portal";
-import ClickOutside from "visual/component-new/ClickOutside";
+import Portal from "visual/component/Portal";
+import ClickOutside from "visual/component/ClickOutside";
 import Content from "./Content";
 
 export let currentTooltip = null;

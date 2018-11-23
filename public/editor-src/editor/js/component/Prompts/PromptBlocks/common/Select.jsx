@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
-import SelectControl from "visual/component/controls/Select";
-import SelectControlItem from "visual/component/controls/Select/SelectItem";
+import SelectControl from "visual/component/Controls/Select";
+import SelectControlItem from "visual/component/Controls/Select/SelectItem";
 
 export default function Select({
   className: _className,

@@ -2,10 +2,10 @@ import React from "react";
 import classnames from "classnames";
 import { mergeIn, removeAt } from "timm";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import ContainerBorder from "visual/component-new/ContainerBorder";
-import Toolbar from "visual/component-new/Toolbar";
+import ContainerBorder from "visual/component/ContainerBorder";
+import Toolbar from "visual/component/Toolbar";
 import TextEditor from "visual/editorComponents/Text/Editor";
-import { hideToolbar } from "visual/component-new/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar/index";
 import { t } from "visual/utils/i18n";
 
 class TabsItems extends EditorArrayComponent {

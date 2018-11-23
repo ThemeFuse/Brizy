@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import Config from "visual/global/Config";
 import Fixed from "visual/component/Prompts/Fixed";
-import Select from "visual/component/controls/Select";
-import SelectItem from "visual/component/controls/Select/SelectItem";
+import Select from "visual/component/Controls/Select";
+import SelectItem from "visual/component/Controls/Select/SelectItem";
 import SmartGrid from "visual/component/Prompts/common/SmartGrid";
-import EditorIcon from "visual/component-new/EditorIcon";
+import EditorIcon from "visual/component/EditorIcon";
 
 const { categories: CATEGORIES, types: TYPES, list: ICONS } = Config.get(
   "icons"

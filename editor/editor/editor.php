@@ -129,7 +129,8 @@ class Brizy_Editor_Editor_Editor {
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ) . "",
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
-				'upgradeToPro'        => apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL )
+				'upgradeToPro'        => apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ),
+				'dashboardNavMenu'    => admin_url('nav-menus.php')
 			),
 			'user'            => array( 'role' => 'admin' ),
 			'wp'              => array(
@@ -186,7 +187,7 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),
-			//'menuData'        => $this->get_menu_data()
+			'menuData'        => $this->get_menu_data()
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -439,7 +440,7 @@ class Brizy_Editor_Editor_Editor {
 		$result_items = array();
 
 		foreach ( $items as $item ) {
-			if ( $item->menu_item_parent != $parent ) {
+			if ( (int) $item->menu_item_parent !== $parent ) {
 				continue;
 			}
 
@@ -458,7 +459,13 @@ class Brizy_Editor_Editor_Editor {
 				'id'            => $menu_uid,
 				'title'         => $item->title,
 				'url'           => $item->url,
-				'megaMenuItems' => $megaMenuItems
+				'megaMenuItems' => $megaMenuItems,
+				'description'   => $item->post_content,
+				'position'      => $item->menu_order,
+				'attrTitle'    => $item->post_excerpt,
+				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
+				'classes'       => get_post_meta( $item->ID, '_menu_item_classes', true ),
+				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
 			);
 
 			$an_item = (object) array(

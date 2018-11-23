@@ -67,9 +67,30 @@ $resize-width: 20px;
   }
 }
 
-// Hide Resize when device mode is Mobile
-&.brz-ed--mobile,
+// Hide Resize for last-child on desktop
+&.brz-ed--desktop {
+  .brz-columns:last-child .brz-ed-draggable__column--right {
+    display: none;
+  }
+}
+
+// Hide Resize on tablet
 &.brz-ed--tablet {
+  .brz-ed-draggable__column-popover {
+    min-width: 85px;
+  }
+  .brz-ed-draggable__column--left {
+    display: none;
+  }
+  .brz-row--inner {
+    .brz-ed-border__column > .brz-ed-draggable {
+      display: none;
+    }
+  }
+}
+
+// Hide Resize when device mode is Mobile
+&.brz-ed--mobile {
   .brz-ed-border__column > .brz-ed-draggable {
     display: none;
   }

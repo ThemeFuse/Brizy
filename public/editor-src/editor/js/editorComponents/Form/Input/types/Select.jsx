@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import { replaceAt, addLast, removeAt } from "timm";
 import _ from "underscore";
 import TextField from "./common/TextField";
-import EditorIcon from "visual/component-new/EditorIcon";
-import ClickOutside from "visual/component-new/ClickOutside";
-import SelectControl from "visual/component/controls/Select";
+import EditorIcon from "visual/component/EditorIcon";
+import ClickOutside from "visual/component/ClickOutside";
+import SelectControl from "visual/component/Controls/Select";
 import ScrollPane from "visual/component/ScrollPane";
-import SelectControlItem from "visual/component/controls/Select/SelectItem";
+import SelectControlItem from "visual/component/Controls/Select/SelectItem";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 

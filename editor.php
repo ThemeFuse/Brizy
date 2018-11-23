@@ -112,7 +112,7 @@ class Brizy_Editor {
 
 	public function revisionsToKeep( $num, $post ) {
 		try {
-			if(Brizy_Editor_Post::get($post)->uses_editor()) {
+			if ( Brizy_Editor_Post::get( $post )->uses_editor() ) {
 				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
 			}
 		} catch ( Exception $e ) {
@@ -123,11 +123,14 @@ class Brizy_Editor {
 	}
 
 	public function loadCompatibilityClasses() {
+
+		global $wp_version;
+
 		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
 			new Brizy_Compatibilities_Wtc();
 		}
 
-		if ( function_exists( 'gutenberg_init' ) ) {
+		if ( function_exists( 'gutenberg_init' ) || version_compare( $wp_version, '5.0' ) < 0 ) {
 			new Brizy_Compatibilities_Gutenberg();
 		}
 

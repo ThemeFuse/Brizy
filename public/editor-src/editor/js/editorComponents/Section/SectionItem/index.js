@@ -1,10 +1,10 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Items from "./items";
-import Background from "visual/component-new/Background";
-import ContainerBorder from "visual/component-new/ContainerBorder";
-import PaddingResizer from "visual/component-new/PaddingResizer";
-import { Roles } from "visual/component-new/Roles";
+import Background from "visual/component/Background";
+import ContainerBorder from "visual/component/ContainerBorder";
+import PaddingResizer from "visual/component/PaddingResizer";
+import { Roles } from "visual/component/Roles";
 import { videoData as getVideoData } from "visual/utils/video";
 import {
   wInBoxedPage,
@@ -12,7 +12,7 @@ import {
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
-import { CollapsibleToolbar } from "visual/component-new/Toolbar";
+import { CollapsibleToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
   bgStyleClassName,

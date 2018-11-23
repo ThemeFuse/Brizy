@@ -1,5 +1,6 @@
 import _ from "underscore";
 import Config from "visual/global/Config";
+import * as languages from "./languages";
 
 const pageLoadTime = Math.floor(Date.now());
 
@@ -55,4 +56,8 @@ export function getTime(date, hours, minutes) {
     ? new Date(`${date} ${hour}:${minutes} ${suffix}`).getTime() -
         timeZoneOffset
     : new Date(0).getTime();
+}
+
+export function getLanguage(id = "en") {
+  return languages[id];
 }

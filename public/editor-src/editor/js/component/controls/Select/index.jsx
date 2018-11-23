@@ -2,8 +2,8 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import ScrollPane from "visual/component/ScrollPane";
-import EditorIcon from "visual/component-new/EditorIcon";
-import ClickOutside from "visual/component-new/ClickOutside";
+import EditorIcon from "visual/component/EditorIcon";
+import ClickOutside from "visual/component/ClickOutside";
 
 function getDropdownHeight(itemsCount, itemHeight, minItems, maxItems) {
   const minHeight = itemHeight * minItems;

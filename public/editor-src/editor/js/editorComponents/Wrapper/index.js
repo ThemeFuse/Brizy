@@ -1,16 +1,16 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import SortableElement from "visual/component-new/Sortable/SortableElement";
-import SortableHandle from "visual/component-new/Sortable/SortableHandle";
-import ContainerBorder from "visual/component-new/ContainerBorder";
-import FloatingButton from "visual/component-new/FloatingButton";
-import Animation from "visual/component-new/Animation";
-import { Roles, currentUserRole } from "visual/component-new/Roles";
-import Toolbar from "visual/component-new/Toolbar";
+import SortableElement from "visual/component/Sortable/SortableElement";
+import SortableHandle from "visual/component/Sortable/SortableHandle";
+import ContainerBorder from "visual/component/ContainerBorder";
+import FloatingButton from "visual/component/FloatingButton";
+import Animation from "visual/component/Animation";
+import { Roles, currentUserRole } from "visual/component/Roles";
+import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
-import ContextMenu from "visual/component-new/ContextMenu";
+import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import { percentageToPixels } from "visual/utils/meta";
 import {

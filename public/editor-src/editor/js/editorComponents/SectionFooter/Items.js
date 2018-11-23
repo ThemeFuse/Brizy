@@ -1,7 +1,7 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component-new/Sortable";
-import { hideToolbar } from "visual/component-new/Toolbar";
+import Sortable from "visual/component/Sortable";
+import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 class SectionFooterItems extends EditorArrayComponent {
