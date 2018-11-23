@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.46
+Stable tag: 1.0.47
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,17 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.47 - 2018-11-23 =
+* New: Added Column resize in tablet mode
+* Fixed: NaN showing in RichText toolbar line-height option in tablet and mobile modes
+* Fixed: Animations z-index issues on preview
+* Fixed: Iframe with scroll css issue in tablet and mobile modes
+* Fixed: Fixed css that made deleting Global and Saved blocks or very hard
+* Fixed: Fixed notices layout
+* Fixed: Added author list in internal url list
+* Fixed: Added display type on placeholders
+* Fixed: Fixed compatibility with WP 5.0
 
 = 1.0.46 - 2018-11-13 =
 * Updated: Removed browser restriction overlay
