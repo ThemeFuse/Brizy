@@ -161,6 +161,7 @@ class Brizy_Editor_Editor_Editor {
 					'getInternalLinks'           => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS,
 					'getMenus'                   => Brizy_Editor_API::AJAX_GET_MENU_LIST,
 					'updatePost'                 => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
+					'getPostObjects'             => Brizy_Editor_API::AJAX_GET_POST_OBJECTS,
 					'savePage'                   => Brizy_Editor_API::AJAX_SAVE_TRIGGER,
 					'getTerms'                   => Brizy_Editor_API::AJAX_GET_TERMS,
 					'getTaxonomies'              => Brizy_Editor_API::AJAX_GET_TAXONOMIES,
