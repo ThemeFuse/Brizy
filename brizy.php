@@ -28,7 +28,7 @@ define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
 define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 100 );
 
-include_once 'autoload.php';
+include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/autoload.php';
 
 
 add_action( 'plugins_loaded', 'brizy_load' );
@@ -41,6 +41,7 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.4.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
+
 		return;
 	}
 
