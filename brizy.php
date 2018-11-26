@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.47
+ * Version: 1.0.48
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -20,7 +20,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.47' );
+define( 'BRIZY_VERSION', '1.0.48' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.73' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
@@ -28,7 +28,7 @@ define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
 define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 100 );
 
-include_once 'autoload.php';
+include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/autoload.php';
 
 
 add_action( 'plugins_loaded', 'brizy_load' );
@@ -41,6 +41,7 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.4.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
+
 		return;
 	}
 
