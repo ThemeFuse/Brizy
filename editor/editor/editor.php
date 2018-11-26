@@ -96,6 +96,7 @@ class Brizy_Editor_Editor_Editor {
 
 		$post_thumbnail = $this->getThumbnailData( $wp_post_id );
 
+		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Templates::getCurrentPageGroupAndType();
 
 		$config = array(
 			'hosts'           => array(
@@ -130,12 +131,13 @@ class Brizy_Editor_Editor_Editor {
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
 				'upgradeToPro'        => apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ),
-				'dashboardNavMenu'    => admin_url('nav-menus.php')
+				'dashboardNavMenu'    => admin_url( 'nav-menus.php' )
 			),
 			'user'            => array( 'role' => 'admin' ),
 			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
+				'ruleMatch'       => array( 'group' => $applyFor, 'type' => $entityType, 'values' => $entityValues ),
 				'featuredImage'   => $post_thumbnail,
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
@@ -169,6 +171,7 @@ class Brizy_Editor_Editor_Editor {
 					'removeFeaturedImage'        => Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
 					'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA,
 					'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA,
+					'getRuleGroupList'           => Brizy_Admin_Templates::RULE_GROUP_LIST,
 				),
 				'plugins'         => array(
 					'dummy'       => true,
@@ -462,7 +465,7 @@ class Brizy_Editor_Editor_Editor {
 				'megaMenuItems' => $megaMenuItems,
 				'description'   => $item->post_content,
 				'position'      => $item->menu_order,
-				'attrTitle'    => $item->post_excerpt,
+				'attrTitle'     => $item->post_excerpt,
 				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
 				'classes'       => get_post_meta( $item->ID, '_menu_item_classes', true ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
