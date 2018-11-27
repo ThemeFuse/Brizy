@@ -356,12 +356,7 @@ class Brizy_Admin_Templates {
 		);
 	}
 
-	/**
-	 * @return Brizy_Editor_Post|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function getTemplateForCurrentPage() {
-
+	static function getCurrentPageGroupAndType() {
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) || is_admin() ) {
@@ -401,6 +396,19 @@ class Brizy_Admin_Templates {
 			$entityType     = get_queried_object()->post_type;
 			$entityValues[] = get_queried_object_id();
 		}
+
+		return array( $applyFor, $entityType, $entityValues );
+
+	}
+
+
+	/**
+	 * @return Brizy_Editor_Post|null
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	public function getTemplateForCurrentPage() {
+
+		list( $applyFor, $entityType, $entityValues ) = self::getCurrentPageGroupAndType();
 
 		$is_preview = is_preview();
 
@@ -567,7 +575,7 @@ class Brizy_Admin_Templates {
 
 		//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post,null );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
 
 		$mainProcessor = new Brizy_Content_MainProcessor( $context );
 
@@ -603,7 +611,7 @@ class Brizy_Admin_Templates {
 			$post = get_post( $pid );
 		}
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post->get_wp_post(),null );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post->get_wp_post(), null );
 
 		$compiled_page = $this->template->get_compiled_page();
 
