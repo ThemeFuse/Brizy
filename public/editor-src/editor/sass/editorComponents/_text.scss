@@ -124,6 +124,10 @@
       }
     }
   }
+
+  .brz-tp__dc-block {
+    @include clearfix;
+  }
 }
 
 // Simple text

@@ -108,7 +108,7 @@ export default class Animation extends Component {
     const isActive = isVisible && hasName;
     const className = classnames("brz-observer__animation", _className, {
       "brz-animated": hasName,
-      [`brz-animated__${name}`]: isActive,
+      [`${name}`]: isActive,
       "brz-animate": isActive
     });
     const style = {
@@ -137,7 +137,7 @@ export default class Animation extends Component {
       }),
       ...(hasName
         ? {
-            "data-animate-name": `brz-animated__${name}`,
+            "data-animate-name": name,
             "data-animate-delay": delay,
             "data-animate-duration": duration
           }

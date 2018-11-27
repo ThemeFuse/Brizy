@@ -5139,7 +5139,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-icon-svg.glyph{fill:currentColor;stroke:none}
 .brz .brz-icon-svg.outline{stroke:currentColor;fill:none}
 .brz .brz-icon-svg.outline.stroke-2{stroke-width:2px}
-.brz .brz-section{background-color:#fff;position:relative;margin:0}
+.brz .brz-section{background-color:#fff;position:relative;margin:0;overflow:visible}
 .brz .brz-section__content{position:relative;width:100%}
 .brz .brz-section__content>.brz-bg{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%}
 .brz .brz-section__items{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;width:100%}
@@ -5271,7 +5271,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-image-fix-4-3{padding-top:75%}
 .brz .brz-image-fix-9-16{padding-top:177.8%}
 .brz .brz-image-fix-16-9{padding-top:56.25%}
-.brz:not(.brz-ed) .brz-image .brz-a,.brz:not(.brz-ed) .brz-image .brz-img,.brz:not(.brz-ed) .brz-image picture{width:100%}
+.brz:not(.brz-ed) .brz-image .brz-a,.brz:not(.brz-ed) .brz-image .brz-img,.brz:not(.brz-ed) .brz-image picture{width:100%;height:auto}
 .brz:not(.brz-ed) .brz-image__lightbox *{cursor:-webkit-zoom-in;cursor:zoom-in}
 .brz .mfp-figure:after,.brz .mfp-iframe-scaler iframe{-webkit-box-shadow:0 0 40px rgba(0,0,0,.35);box-shadow:0 0 40px rgba(0,0,0,.35)}
 .brz .brz-video{position:relative;width:100%;display:inline-block;vertical-align:middle}
@@ -5306,6 +5306,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-rich-text a[href]:hover{color:#1aabd8;text-decoration:none}
 .brz .brz-rich-text .link--anchor:not(.is-empty),.brz .brz-rich-text .link--external:not(.is-empty){color:#3dbfe8}
 .brz .brz-rich-text .link--anchor:not(.is-empty):hover,.brz .brz-rich-text .link--external:not(.is-empty):hover{color:#1aabd8}
+.brz .brz-rich-text .brz-tp__dc-block:after{content:"";display:table;clear:both}
 .brz .brz-text__editor{min-width:10px}
 .brz .brz-text__editor:empty:before{content:"\00a0\00a0"}
 .brz .brz-counter{-webkit-transition:all .3s ease;transition:all .3s ease;cursor:default;text-align:center;display:inline-block}
@@ -5334,6 +5335,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-slick-slider .brz-icon-svg,.brz .brz-slick-slider .brz-rich-text *{-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .brz .brz-slick-slider .brz-bg-media{width:calc(100% + 1px)}
 .brz .brz-slick-slider .brz-bg-color,.brz .brz-slick-slider .brz-bg-content{-webkit-transform:translateZ(0);transform:translateZ(0)}
+.brz .brz-slick-slider .brz-section__items,.brz .brz-slick-slider .slick-slide>div{height:100%}
 .brz .brz-slick-slider--fade .slick-slide{height:auto;visibility:hidden}
 .brz .brz-slick-slider--fade .slick-slide.slick-active{visibility:visible}
 .brz .slick-initialized .slick-slide{display:block}
@@ -10186,7 +10188,6 @@ to{-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,.3);box-shadow:0 0 10px 0 rgba(0,0,0
 .brz-ed .brz-ed-border__wrapper{height:auto}
 .brz-ed .brz-ed-slider__spinner{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(3,8,15,.75);color:rgba(255,255,255,.75);font-size:30px;z-index:2}
 .brz-ed .brz-ed-slider__spinner .brz-icon-svg{position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}
-.brz-ed .brz-slick-slider .brz-section__items,.brz-ed .brz-slick-slider .slick-slide>div{height:100%}
 .brz-ed .brz-slick-slider .brz-ed-border__inner-1:after,.brz-ed .brz-slick-slider .brz-ed-border__inner-1:before,.brz-ed .brz-slick-slider .brz-ed-border__inner-2:after,.brz-ed .brz-slick-slider .brz-ed-border__inner-2:before{z-index:auto}
 .brz-ed .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div>.brz-columns>.brz-ed-border>.brz-ed-border__inner-1:after{top:0}
 .brz-ed .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div>.brz-columns>.brz-ed-border>.brz-ed-border__inner-2:after{bottom:0}
