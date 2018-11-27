@@ -73,7 +73,10 @@ import $ from "jquery";
     this.settings = $.extend({}, defaultSettings, settings);
 
     // handlers
-    this._handleIframeLoad = this._updateSettings.bind(this);
+    this._handleIframeLoad = function() {
+      this._updateSettings();
+      this._resizePlayer();
+    }.bind(this);
     this.handleVisibilitychange = this._updateSettings.bind(this);
     this._handleWindowResize = function() {
       this.refresh();

@@ -89,6 +89,10 @@
   .brz-bg-content {
     transform: translateZ(0);
   }
+  .slick-slide > div,
+  .brz-section__items {
+    height: 100%;
+  }
 
   // Animation
   &--fade {
