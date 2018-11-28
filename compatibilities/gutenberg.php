@@ -3,7 +3,7 @@
 class Brizy_Compatibilities_Gutenberg {
 
 	public function __construct() {
-		add_filter( 'the_content', array( $this, 'filter_the_content' ), 7 );
+		add_filter( 'the_content', array( $this, 'filter_the_content' ), 5 );
 		add_action( 'admin_print_scripts-edit.php', array( $this, 'add_edit_button_to_gutenberg' ), 12 );
 		add_action( 'admin_init', array( $this, 'action_disable_gutenberg' ) );
 		add_action( 'admin_footer', array( $this, 'print_admin_footer_tpls' ) );
