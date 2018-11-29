@@ -210,9 +210,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function convertToOptionValue() {
 
 		return array(
-			'compiled_html'                    => $this->get_compiled_html(),
-			'compiled_html_body'               => $this->get_compiled_html_body(),
-			'compiled_html_head'               => $this->get_compiled_html_head(),
+			'compiled_html'                    => base64_encode( $this->get_compiled_html() ),
+			'compiled_html_body'               => base64_encode( $this->get_compiled_html_body() ),
+			'compiled_html_head'               => base64_encode( $this->get_compiled_html_head() ),
 			'needs_compile'                    => $this->needs_compile,
 			'editor_version'                   => $this->editor_version,
 			'compiler_version'                 => $this->compiler_version,
@@ -224,15 +224,15 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	public function loadStorageData( $data ) {
 		if ( isset( $data['compiled_html'] ) ) {
-			$this->compiled_html = $data['compiled_html'];
+			$this->compiled_html = base64_decode( $data['compiled_html'] );
 		}
 
 		if ( isset( $data['compiled_html_body'] ) ) {
-			$this->compiled_html_body = $data['compiled_html_body'];
+			$this->compiled_html_body = base64_decode( $data['compiled_html_body'] );
 		}
 
 		if ( isset( $data['compiled_html_head'] ) ) {
-			$this->compiled_html_head = $data['compiled_html_head'];
+			$this->compiled_html_head = base64_decode( $data['compiled_html_head'] );
 		}
 
 		$this->needs_compile = $data['needs_compile'];
@@ -328,7 +328,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	/**
 	 * @return Brizy_Editor_CompiledHtml
 	 */
-	public function get_compiled_page( ) {
+	public function get_compiled_page() {
 
 		if ( self::$compiled_page ) {
 			return self::$compiled_page;
