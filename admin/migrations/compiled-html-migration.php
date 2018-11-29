@@ -14,7 +14,7 @@ class Brizy_Admin_Migrations_CompiledHtmlMigration implements Brizy_Admin_Migrat
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.47';
+		return '1.0.48';
 	}
 
 	/**
