@@ -117,12 +117,6 @@ class Brizy_Public_Main {
 	 * @internal
 	 */
 	public function _action_enqueue_editor_assets() {
-		if ( wp_script_is( 'jquery' ) === false ) {
-			wp_register_script( 'jquery-core', "/wp-includes/js/jquery/jquery.js" );
-			wp_register_script( 'jquery-migrate', "/wp-includes/js/jquery/jquery-migrate.min.js" );
-			wp_register_script( 'jquery', false, array( 'jquery-core', 'jquery-migrate' ) );
-		}
-
 		if ( wp_script_is( 'wp-mediaelement' ) === false ) {
 			wp_register_script( 'wp-mediaelement', "/wp-includes/js/mediaelement/wp-mediaelement.min.js", array( 'mediaelement' ), false, 1 );
 		}
@@ -139,7 +133,7 @@ class Brizy_Public_Main {
 
 		wp_enqueue_style( 'brizy-editor', "${assets_url}/editor/css/editor.css", array(), BRIZY_EDITOR_VERSION );
 		wp_register_script( 'brizy-editor-polyfill', "https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry", array(), null, true );
-		wp_register_script( 'brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array( 'jquery' ), BRIZY_EDITOR_VERSION, true );
+		wp_register_script( 'brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array(), BRIZY_EDITOR_VERSION, true );
 		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", array( 'brizy-editor-polyfill', 'brizy-editor-vendor' ), BRIZY_EDITOR_VERSION, true );
 		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${config_json};", 'before' );
 
@@ -150,12 +144,6 @@ class Brizy_Public_Main {
 	 * @internal
 	 */
 	public function _action_enqueue_preview_assets() {
-		if ( wp_script_is( 'jquery' ) === false ) {
-			wp_register_script( 'jquery-core', "/wp-includes/js/jquery/jquery.js" );
-			wp_register_script( 'jquery-migrate', "/wp-includes/js/jquery/jquery-migrate.min.js" );
-			wp_register_script( 'jquery', false, array( 'jquery-core', 'jquery-migrate' ) );
-		}
-
 		$config_object = $this->getConfigObject();
 		$assets_url    = $config_object->urls->assets;
 		$config_json   = json_encode( array(
@@ -164,7 +152,7 @@ class Brizy_Public_Main {
 
 		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), BRIZY_EDITOR_VERSION );
 		wp_register_script( 'brizy-preview-polyfill', "https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry", array(), null, true );
-		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array( 'jquery', 'brizy-preview-polyfill' ), BRIZY_EDITOR_VERSION, true );
+		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array( 'brizy-preview-polyfill' ), BRIZY_EDITOR_VERSION, true );
 		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_preview_enqueue_scripts' );
