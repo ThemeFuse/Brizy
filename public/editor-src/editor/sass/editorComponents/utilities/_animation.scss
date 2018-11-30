@@ -3,6 +3,7 @@
 // Animation for Shortcodes
 .brz-animated {
   opacity: 0;
+  animation-fill-mode: both;
 
   // When .animate
   &.brz-animate {
