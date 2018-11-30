@@ -55,13 +55,13 @@ const getCurrentFont = font => {
 const getLink = value => {
   const {
     type,
-    anchor,
+    anchor = "",
     external,
     externalBlank,
     externalRel,
     population,
     externalType,
-    popup
+    popup = ""
   } = formatLinkFromString(value);
 
   return {

@@ -289,7 +289,7 @@ export default class QuillComponent extends React.Component {
       if (type === "link") {
         let [leafBlot] = this.quill.getLeaf(selection.index);
         this.quill.formatText(
-          leafBlot.parent.offset(),
+          this.quill.getIndex(leafBlot.parent),
           leafBlot.parent.length(),
           type,
           value

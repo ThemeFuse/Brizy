@@ -663,7 +663,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .animated.faster{-webkit-animation-duration:.5s;animation-duration:.5s}
 .brz .animated.slow{-webkit-animation-duration:2s;animation-duration:2s}
 .brz .animated.slower{-webkit-animation-duration:3s;animation-duration:3s}
-@media (prefers-reduced-motion){.brz .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}.brz .brz-animated{opacity:0}
+@media (prefers-reduced-motion){.brz .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}.brz .brz-animated{opacity:0;-webkit-animation-fill-mode:both;animation-fill-mode:both}
 .brz .brz-animated.brz-animate{opacity:1}
 .brz .brz-icon-svg{display:inline-block;width:1em;height:1em;stroke:none;position:relative;fill:currentColor;color:currentColor}
 .brz .brz-icon-svg use{fill:inherit}
@@ -4005,7 +4005,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .animated.faster{-webkit-animation-duration:.5s;animation-duration:.5s}
 .brz .animated.slow{-webkit-animation-duration:2s;animation-duration:2s}
 .brz .animated.slower{-webkit-animation-duration:3s;animation-duration:3s}
-@media (prefers-reduced-motion){.brz .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}.brz .brz-animated{opacity:0}
+@media (prefers-reduced-motion){.brz .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}.brz .brz-animated{opacity:0;-webkit-animation-fill-mode:both;animation-fill-mode:both}
 .brz .brz-animated.brz-animate{opacity:1}
 .brz .admin-bar .wp-env .visual-sidebar{top:32px;left:0}
 .brz .admin-bar .wp-env .visual-wrap-block-wrap{margin-left:0;padding-bottom:0}
