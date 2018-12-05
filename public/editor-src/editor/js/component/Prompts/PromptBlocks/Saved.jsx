@@ -6,7 +6,10 @@ import Select from "./common/Select";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
-import { blockThumbnailUrl } from "visual/utils/blocks";
+import {
+  blockThumbnailUrl,
+  placeholderBlockThumbnailUrl
+} from "visual/utils/blocks";
 import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
@@ -47,31 +50,51 @@ export default class Saved extends React.Component {
     const savedBlocks = getStore().getState().globals.project.savedBlocks || [];
     const thumbnails = savedBlocks.reduce((acc, block) => {
       const blockData = Editor.getBlock(block.blockId);
+      let thumbnailData;
+
       if (!blockData) {
-        return acc;
+        if (
+          !this.blocksConfig.allowMissing ||
+          !this.blocksConfig.allowMissing(block)
+        ) {
+          return acc;
+        }
+
+        thumbnailData = {
+          thumbnailSrc: placeholderBlockThumbnailUrl(),
+          thumbnailWidth: 500,
+          thumbnailHeight: 200,
+          showRemoveIcon: true,
+          keywords: "",
+          cat: [],
+          type: -1,
+          resolve: block
+        };
+      } else {
+        const inCategories =
+          this.blocksConfig.categories.find(cat =>
+            blockData.cat.includes(cat.id)
+          ) !== undefined;
+        if (!inCategories) {
+          return acc;
+        }
+
+        const { thumbnailWidth, thumbnailHeight, keywords, cat } = blockData;
+
+        thumbnailData = {
+          id: block.blockId,
+          thumbnailSrc: blockThumbnailUrl(blockData),
+          thumbnailWidth,
+          thumbnailHeight,
+          showRemoveIcon: true,
+          keywords,
+          cat,
+          type: this.id,
+          resolve: block
+        };
       }
 
-      const inCategories =
-        this.blocksConfig.categories.find(cat =>
-          blockData.cat.includes(cat.id)
-        ) !== undefined;
-      if (!inCategories) {
-        return acc;
-      }
-
-      const { thumbnailWidth, thumbnailHeight, keywords, cat } = blockData;
-
-      acc.push({
-        id: block.blockId,
-        thumbnailSrc: blockThumbnailUrl(blockData),
-        thumbnailWidth,
-        thumbnailHeight,
-        showRemoveIcon: true,
-        keywords,
-        cat,
-        type: this.id,
-        resolve: block
-      });
+      acc.push(thumbnailData);
 
       return acc;
     }, []);

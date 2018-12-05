@@ -6,7 +6,7 @@ thumbnailHeight: 105,
 title: "Bogdan012Dark", 
 
 keywords: "social, button, icons",
-cat: [0, 14, 4],
+cat: [0, 13, 4],
 type: 1,
 
 resolve: {

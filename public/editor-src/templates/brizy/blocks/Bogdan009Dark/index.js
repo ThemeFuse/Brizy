@@ -5,7 +5,7 @@ thumbnailWidth: 600,
 thumbnailHeight: 375,
 title: "Bogdan009Dark", 
 
-keywords: "header, cover, hero, call to action, image background, button",
+keywords: "cover, hero, call to action, image background, button",
 cat: [0, 2, 4],
 type: 1,
 

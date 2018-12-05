@@ -1,0 +1,12 @@
+&.brz-ed--tablet,
+&.brz-ed--mobile {
+  // Added adition padding in mobile and tablet
+  // The exact as body
+  .brz-section__header {
+    &--fixed-opened,
+    &--animated-opened {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}

@@ -70,3 +70,4 @@ function parseRgba(colorString) {
 export { getColorPaletteColors } from "./getColorPaletteColors";
 export { getColorPaletteColor } from "./getColorPaletteColor";
 export { makeRichTextColorPaletteCSS } from "./makeRichTextColorPaletteCSS";
+export { makeRichTextDCColorCSS } from "./makeRichTextDCColorCSS";

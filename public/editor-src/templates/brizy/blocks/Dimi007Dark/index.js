@@ -5,8 +5,8 @@ thumbnailWidth: 600,
 thumbnailHeight: 85,
 title: "Dimi007Dark", 
 
-keywords: "contact, footer, icons, icon box, address, phone, email, info",
-cat: [0, 11, 12],
+keywords: "contact, icons, icon box, address, phone, email, info",
+cat: [0, 11],
 type: 1,
 
 resolve: {

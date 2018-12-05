@@ -6,7 +6,10 @@ import Select from "./common/Select";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
-import { blockThumbnailUrl } from "visual/utils/blocks";
+import {
+  blockThumbnailUrl,
+  placeholderBlockThumbnailUrl
+} from "visual/utils/blocks";
 import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
@@ -55,40 +58,60 @@ export default class Global extends React.Component {
       getStore().getState().globals.project.globalBlocks || {};
     const thumbnails = Object.entries(globalBlocks).reduce(
       (acc, [globalBlockId, block]) => {
-        if (block.deleted) {
-          return acc;
-        }
-
         const blockData = Editor.getBlock(block.blockId);
+        let thumbnailData;
+
         if (!blockData) {
-          return acc;
-        }
-
-        const inCategories =
-          this.blocksConfig.categories.find(cat =>
-            blockData.cat.includes(cat.id)
-          ) !== undefined;
-        if (!inCategories) {
-          return acc;
-        }
-
-        const { thumbnailWidth, thumbnailHeight, keywords, cat } = blockData;
-
-        acc.push({
-          id: block.blockId,
-          thumbnailSrc: blockThumbnailUrl(blockData),
-          thumbnailWidth,
-          thumbnailHeight,
-          showRemoveIcon: true,
-          keywords,
-          cat,
-          type: this.id,
-          resolve: {
-            type: "GlobalBlock",
-            blockId: block.blockId,
-            value: { globalBlockId }
+          if (
+            !this.blocksConfig.allowMissing ||
+            !this.blocksConfig.allowMissing(block)
+          ) {
+            return acc;
           }
-        });
+
+          thumbnailData = {
+            thumbnailSrc: placeholderBlockThumbnailUrl(),
+            thumbnailWidth: 500,
+            thumbnailHeight: 200,
+            showRemoveIcon: true,
+            keywords: "",
+            cat: [],
+            type: -1,
+            resolve: {
+              type: "GlobalBlock",
+              blockId: block.blockId,
+              value: { globalBlockId }
+            }
+          };
+        } else {
+          const inCategories =
+            this.blocksConfig.categories.find(cat =>
+              blockData.cat.includes(cat.id)
+            ) !== undefined;
+          if (!inCategories) {
+            return acc;
+          }
+
+          const { thumbnailWidth, thumbnailHeight, keywords, cat } = blockData;
+
+          thumbnailData = {
+            id: block.blockId,
+            thumbnailSrc: blockThumbnailUrl(blockData),
+            thumbnailWidth,
+            thumbnailHeight,
+            showRemoveIcon: true,
+            keywords,
+            cat,
+            type: this.id,
+            resolve: {
+              type: "GlobalBlock",
+              blockId: block.blockId,
+              value: { globalBlockId }
+            }
+          };
+        }
+
+        acc.push(thumbnailData);
 
         return acc;
       },

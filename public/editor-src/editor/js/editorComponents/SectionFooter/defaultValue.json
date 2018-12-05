@@ -53,10 +53,39 @@
   "tempBorderBottomRightRadius": 0,
   "tempBorderBottomLeftRadius": 0,
 
+  "boxShadow": "off",
+  "boxShadowColorHex": "#000000",
+  "boxShadowColorOpacity": 1,
+  "boxShadowColorPalette": "",
+  "boxShadowBlur": 4,
+  "boxShadowSpread": 0,
+  "boxShadowVertical": 2,
+  "boxShadowHorizontal": 1,
+  "tempBoxShadowColorOpacity": 1,
+
   "containerClassName": "",
   "containerType": "boxed",
   "containerSize": 100,
   "items": [],
+
+  "shape": "top",
+  "shapeTopColorHex": "#000000",
+  "shapeTopColorOpacity": 1,
+  "shapeTopColorPalette": "",
+  "shapeBottomColorHex": "#000000",
+  "shapeBottomColorOpacity": 1,
+  "shapeBottomColorPalette": "",
+  "tempShapeColorOpacity": 1,
+  "shapeTopHeight": 100,
+  "shapeTopHeightSuffix": "px",
+  "shapeBottomHeight": 100,
+  "shapeBottomHeightSuffix": "px",
+  "shapeTopType": "none",
+  "shapeBottomType": "none",
+  "shapeTopIndex": "auto",
+  "shapeBottomIndex": "auto",
+  "shapeTopHorizontal": "off",
+  "shapeBottomHorizontal": "off",
 
   "showOnTablet": "on",
   "tabletBgImageWidth": null,
@@ -76,6 +105,12 @@
   "tabletPaddingTop": 25,
   "tabletPaddingBottom": 25,
 
+  "tabletShape": null,
+  "tabletShapeTopHeight": null,
+  "tabletShapeTopHeightSuffix": null,
+  "tabletShapeBottomHeight": null,
+  "tabletShapeBottomHeightSuffix": null,
+
   "showOnMobile": "on",
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,
@@ -92,5 +127,11 @@
   "mobilePaddingType": "grouped",
   "mobilePadding": 25,
   "mobilePaddingTop": 25,
-  "mobilePaddingBottom": 25
+  "mobilePaddingBottom": 25,
+
+  "mobileShape": null,
+  "mobileShapeTopHeight": null,
+  "mobileShapeTopHeightSuffix": null,
+  "mobileShapeBottomHeight": null,
+  "mobileShapeBottomHeightSuffix": null
 }

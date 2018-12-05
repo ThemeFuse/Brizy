@@ -4,6 +4,7 @@ import SectionFooterItems from "./Items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
+import { Roles } from "visual/component/Roles";
 import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { uuid } from "visual/utils/uuid";
@@ -102,26 +103,23 @@ class SectionFooter extends EditorComponent {
     );
   }
 
-  renderItems(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
-
+  renderItems(v) {
     const {
       bgImageSrc,
       bgColorOpacity,
-      bgPopulation
+      bgPopulation,
+      shapeTopType,
+      shapeBottomType
     } = v;
 
     const meta = this.getMeta(v);
 
-    let bgProps = {
+    const bgProps = {
       className: bgStyleClassName(v),
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
+      shapeTopType: shapeTopType !== "none" && shapeTopType,
+      shapeBottomType: shapeBottomType !== "none" && shapeBottomType,
       tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
       tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
       mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
@@ -149,6 +147,10 @@ class SectionFooter extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
@@ -166,24 +168,37 @@ class SectionFooter extends EditorComponent {
         data-block-id={this.props.blockId}
         style={styles}
       >
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {this.renderToolbar(v)}
-          {this.renderItems(v)}
-        </ContainerBorder>
+        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+          <ContainerBorder
+            ref={el => {
+              this.containerBorder = el;
+            }}
+            borderStyle="none"
+            activeBorderStyle="none"
+            reactToClick={false}
+            showBorders={false}
+            path={this.getPath()}
+          >
+            {this.renderToolbar(v)}
+            {this.renderItems(v)}
+          </ContainerBorder>
+        </Roles>
       </footer>
     );
   }
 
-  renderForView(v) {
+  renderForView(_v) {
+    const v = this.applyRulesToValue(_v, [
+      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+    ]);
+
     return (
       <footer id={this.getId()} className={sectionStyleClassName(v)}>
         {this.renderItems(v)}

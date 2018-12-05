@@ -3,6 +3,7 @@ import SlickSlider from "react-slick";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorIcon from "visual/component/EditorIcon";
+import ThemeIcon from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import { templateIconUrl } from "visual/utils/icons";
 import { t } from "visual/utils/i18n";
@@ -10,7 +11,7 @@ import { t } from "visual/utils/i18n";
 // className is added by react-slick
 const SliderArrow = ({ className, extraClassName, onClick, icon }) => (
   <div className={classnames(className, extraClassName)} onClick={onClick}>
-    <EditorIcon icon={icon} />
+    <ThemeIcon name={icon} type="editor" />
   </div>
 );
 
@@ -136,13 +137,13 @@ class SectionItems extends EditorArrayComponent {
             arrows={sliderArrows !== "none"}
             nextArrow={
               <SliderArrow
-                icon={`nc-right-arrow-${sliderArrows}`}
+                icon={`right-arrow-${sliderArrows}`}
                 extraClassName="brz-slick-slider__arrow brz-slick-slider__arrow-next"
               />
             }
             prevArrow={
               <SliderArrow
-                icon={`nc-right-arrow-${sliderArrows}`}
+                icon={`right-arrow-${sliderArrows}`}
                 extraClassName="brz-slick-slider__arrow brz-slick-slider__arrow-prev"
               />
             }

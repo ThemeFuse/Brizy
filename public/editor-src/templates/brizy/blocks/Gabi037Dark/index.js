@@ -6,7 +6,7 @@ thumbnailHeight: 417,
 title: "Gabi037Dark", 
 
 keywords: "forms, contact, three columns, email, phone, social icons, info",
-cat: [0, 11, 16, 14],
+cat: [0, 11, 15, 13],
 type: 1,
 
 resolve: {

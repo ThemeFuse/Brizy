@@ -6,7 +6,7 @@ thumbnailHeight: 444,
 title: "Dimi011Light",
 
 keywords: "pricing, four columns, button, icon, grid",
-cat: [0, 13],
+cat: [0, 12],
 type: 0,
 
 resolve: {

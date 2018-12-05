@@ -74,6 +74,7 @@
     -moz-osx-font-smoothing: grayscale;
 
     .brz-root__container.brz-reset-all {
+      display: block;
       overflow: hidden;
     }
   }
@@ -181,6 +182,10 @@
       box-shadow: none;
       cursor: pointer;
     }
+  }
+
+  @include hover-focus-active {
+    outline: none;
   }
 }
 

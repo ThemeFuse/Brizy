@@ -72,14 +72,10 @@ import Dimi012Dark from "./Dimi012Dark";
 import Dimi012Light from "./Dimi012Light";
 import Gabi012Dark from "./Gabi012Dark";
 import Gabi012Light from "./Gabi012Light";
-import Bogdan013Dark from "./Bogdan013Dark";
-import Bogdan013Light from "./Bogdan013Light";
 import Dimi013Dark from "./Dimi013Dark";
 import Dimi013Light from "./Dimi013Light";
 import Gabi013Dark from "./Gabi013Dark";
 import Gabi013Light from "./Gabi013Light";
-import Bogdan014Dark from "./Bogdan014Dark";
-import Bogdan014Light from "./Bogdan014Light";
 import Dimi014Dark from "./Dimi014Dark";
 import Dimi014Light from "./Dimi014Light";
 import Gabi014Dark from "./Gabi014Dark";
@@ -271,14 +267,10 @@ export default {
     Dimi012Light,
     Gabi012Dark,
     Gabi012Light,
-    Bogdan013Dark,
-    Bogdan013Light,
     Dimi013Dark,
     Dimi013Light,
     Gabi013Dark,
     Gabi013Light,
-    Bogdan014Dark,
-    Bogdan014Light,
     Dimi014Dark,
     Dimi014Light,
     Gabi014Dark,
@@ -383,7 +375,7 @@ export default {
   categories: [
     { id: 0, slug: "blank", title: "Blank", hidden: true },
     { id: 1, slug: "popup", title: "Popup" },
-    { id: 2, slug: "header", title: "Header" },
+    { id: 2, slug: "cover", title: "Cover" },
     { id: 3, slug: "features", title: "Features" },
     { id: 4, slug: "call-to-action", title: "Call to Action" },
     { id: 5, slug: "projects", title: "Projects" },
@@ -393,15 +385,14 @@ export default {
     { id: 9, slug: "gallery", title: "Gallery" },
     { id: 10, slug: "team", title: "Team" },
     { id: 11, slug: "contact", title: "Contact" },
-    { id: 12, slug: "footer", title: "Footer" },
-    { id: 13, slug: "pricing", title: "Pricing" },
-    { id: 14, slug: "social", title: "Social" },
-    { id: 15, slug: "map", title: "Map" },
-    { id: 16, slug: "forms", title: "Forms" },
-    { id: 17, slug: "slider", title: "Slider" },
-    { id: 18, slug: "post", title: "Post" },
-    { id: 19, slug: "blog", title: "Blog" },
-    { id: 20, slug: "author", title: "Author" },
-    { id: 21, slug: "content", title: "Content" }
+    { id: 12, slug: "pricing", title: "Pricing" },
+    { id: 13, slug: "social", title: "Social" },
+    { id: 14, slug: "map", title: "Map" },
+    { id: 15, slug: "forms", title: "Forms" },
+    { id: 16, slug: "slider", title: "Slider" },
+    { id: 17, slug: "post", title: "Post" },
+    { id: 18, slug: "blog", title: "Blog" },
+    { id: 19, slug: "author", title: "Author" },
+    { id: 20, slug: "content", title: "Content" }
   ]
 };

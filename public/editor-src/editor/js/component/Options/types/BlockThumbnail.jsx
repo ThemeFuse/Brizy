@@ -4,7 +4,10 @@ import Editor from "visual/global/Editor";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
-import { blockThumbnailUrl } from "visual/utils/blocks";
+import {
+  blockThumbnailUrl,
+  placeholderBlockThumbnailUrl
+} from "visual/utils/blocks";
 import { getStore } from "visual/redux/store";
 
 const MAX_CONTAINER_WIDTH = 140;
@@ -57,14 +60,27 @@ class BlockThumbnail extends React.Component {
         value: { _id }
       } = block;
       const blockData = Editor.getBlock(blockId);
+      const thumbnailData = {
+        url: blockData
+          ? blockThumbnailUrl(blockData)
+          : placeholderBlockThumbnailUrl(),
+        width:
+          blockData && blockData.thumbnailWidth
+            ? blockData.thumbnailWidth
+            : 500,
+        height:
+          blockData && blockData.thumbnailHeight
+            ? blockData.thumbnailHeight
+            : 200
+      };
+      const { width, height } = imageWrapperSize(
+        thumbnailData.width,
+        thumbnailData.height,
+        MAX_CONTAINER_WIDTH
+      );
       const className = classnames("brz-figure", {
         active: _id === value
       });
-      const { width, height } = imageWrapperSize(
-        blockData.thumbnailWidth,
-        blockData.thumbnailHeight,
-        MAX_CONTAINER_WIDTH
-      );
 
       return (
         <figure
@@ -81,11 +97,7 @@ class BlockThumbnail extends React.Component {
           <div className="brz-ed-option__block-thumbnail-loading">
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
           </div>
-          <img
-            className="brz-img"
-            src={blockThumbnailUrl(blockData)}
-            alt={blockData.title}
-          />
+          <img className="brz-img" src={thumbnailData.url} />
         </figure>
       );
     });

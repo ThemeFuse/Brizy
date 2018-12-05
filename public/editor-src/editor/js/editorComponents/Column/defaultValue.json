@@ -142,6 +142,7 @@
   "tabletMarginLeftSuffix": "px",
 
   "showOnMobile": "on",
+  "mobileWidth": 100,
 
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,

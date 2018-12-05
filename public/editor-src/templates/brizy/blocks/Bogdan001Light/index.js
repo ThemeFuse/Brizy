@@ -5,7 +5,7 @@ thumbnailWidth: 600,
 thumbnailHeight: 382,
 title: "Bogdan001Light",
 
-keywords: "header, features, button, icons, image background, cover",
+keywords: "features, button, icons, image background, cover",
 cat: [0, 2, 3, 4],
 type: 0,
 

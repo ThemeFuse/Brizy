@@ -6,7 +6,7 @@ thumbnailHeight: 276,
 title: "Gabi023Light",
 
 keywords: "pricing, three columns, list, icons",
-cat: [0, 13],
+cat: [0, 12],
 type: 0,
 
 resolve: {

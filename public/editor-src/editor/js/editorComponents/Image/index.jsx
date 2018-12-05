@@ -41,7 +41,6 @@ const resizerPoints = {
 };
 
 const resizerTransformValue = v => {
-
   const { resize, ...rest } = v;
 
   return {
@@ -342,7 +341,7 @@ class Image extends EditorComponent {
     let content;
 
     if (imagePopulation) {
-      content = <Placeholder icon="nc-dynamic-img" />;
+      content = <Placeholder icon="dynamic-img" />;
     } else if (imageSrc) {
       content = (
         <picture>
@@ -358,7 +357,7 @@ class Image extends EditorComponent {
         </picture>
       );
     } else {
-      content = <Placeholder icon="nc-img" />;
+      content = <Placeholder icon="img" />;
     }
 
     const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;

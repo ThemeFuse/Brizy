@@ -6,7 +6,7 @@ thumbnailHeight: 354,
 title: "Bogdan015Light",
 
 keywords: "pricing, four columns, button, table",
-cat: [0, 13],
+cat: [0, 12],
 type: 0,
 
 resolve: {

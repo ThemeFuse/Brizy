@@ -5,7 +5,7 @@ thumbnailWidth: 600,
 thumbnailHeight: 382,
 title: "Gabi009Dark", 
 
-keywords: "header, hero, cover, icon , text, call to action, video",
+keywords: "hero, cover, icon , text, call to action, video",
 cat: [0, 2],
 type: 1,
 

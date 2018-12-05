@@ -1,0 +1,395 @@
+// Shortcode Menu
+$menuWidth: 300px;
+$menuColor: #000;
+$dropdown-arrow-size: 7px;
+
+// Menu
+.brz-menu {
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: inherit;
+
+    .brz-mm-menu__icon:hover {
+      cursor: pointer;
+    }
+  }
+
+  // Menu
+  &:not(.mm-menu) {
+    position: relative;
+    width: 100%;
+    justify-content: inherit;
+
+    .brz-menu__item {
+      list-style: none;
+      padding-left: 5px;
+      padding-right: 5px;
+      display: flex;
+      align-items: center;
+
+      > .brz-a {
+        color: inherit;
+        font-weight: inherit;
+        font-family: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        font-size: inherit;
+        display: inherit;
+        align-items: inherit;
+      }
+    }
+
+    // Ul
+    .brz-menu__ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: inherit;
+      padding: 0;
+
+      > .brz-menu__item-dropdown {
+        > .brz-menu__dropdown-left {
+          left: 0;
+          padding-left: 0;
+
+          &:after {
+            left: 15px;
+          }
+        }
+        > .brz-menu__dropdown-right {
+          right: 0;
+          padding-right: 0;
+
+          &:after {
+            right: 15px;
+          }
+        }
+        > .brz-menu__dropdown {
+          width: $menuWidth;
+          top: calc(100% + 5px);
+          transform: translateX(0);
+
+          &:before {
+            top: -5px;
+            left: 0;
+            right: 0;
+          }
+        }
+      }
+    }
+
+    // SubMenu Dropdown
+    .brz-menu__item-dropdown {
+      position: relative;
+
+      .brz-menu__item {
+        padding: 0;
+        transition: background-color 0.2s linear,
+          border-bottom-color 0.2s linear;
+
+        .brz-a {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          padding: 15px 35px 15px 15px;
+
+          @include word-wrap;
+        }
+      }
+      & > .brz-menu__sub-menu {
+        top: 5px;
+      }
+    }
+
+    // DropDown
+    .brz-menu__dropdown {
+      margin: 0;
+      width: $menuWidth;
+      position: absolute;
+      top: 100%;
+      visibility: hidden;
+      opacity: 0;
+      z-index: -1;
+
+      &-left,
+      &-right {
+        top: 0;
+        width: $menuWidth + 5px;
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: -5px;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: -1;
+        }
+      }
+      &-left {
+        left: calc(100% + 5px);
+        transform: translateX(-5px);
+
+        &:before {
+          left: -5px;
+        }
+      }
+      &-right {
+        right: calc(100% + 5px);
+        transform: translateX(5px);
+
+        &:before {
+          right: -5px;
+        }
+      }
+
+      // Item
+      .brz-menu__item:first-child {
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+      }
+      .brz-menu__item:last-child {
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+      }
+
+      // Item Dropdown
+      .brz-menu__item-dropdown {
+        position: relative;
+
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 23px;
+          bottom: 0;
+          left: auto;
+          width: $dropdown-arrow-size;
+          height: $dropdown-arrow-size;
+          border: 2px solid #fff;
+          border-right-style: none;
+          border-bottom-style: none;
+          margin: auto;
+          transform: rotate(135deg);
+          box-sizing: content-box;
+          transition: border-color 0.2s linear;
+        }
+      }
+    }
+
+    // Mega Menu
+    .brz-mega-menu {
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      visibility: hidden;
+      opacity: 0;
+      z-index: -1;
+      transition: 0.2s visibility linear, 0.2s z-index linear,
+        0.2s opacity linear;
+    }
+  }
+
+  // Custom Navbar title in Editor Mode
+  &__editor {
+    .mm-panel_has-navbar {
+      padding-top: 0;
+
+      & > .mm-navbar {
+        display: none;
+      }
+    }
+  }
+
+  // MMenu Styles
+  &.mm-menu {
+    text-transform: initial;
+
+    &.mm-menu_opened {
+      display: block;
+      z-index: z("brz-ed-fixed");
+    }
+    .mm-navbar {
+      a,
+      > * {
+        color: inherit;
+      }
+      &:not(.mm-listitem) {
+        height: 44px;
+        background-color: transparent;
+      }
+    }
+    .brz-menu__ul {
+      & > .mm-navbar {
+        height: 44px;
+        border-bottom: inherit;
+        background-color: transparent;
+      }
+      .mm-listitem_opened > .mm-panel {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      &--has-dropdown {
+        .mm-listitem_opened > .mm-panel {
+          background-color: transparent;
+        }
+      }
+    }
+
+    // MMenu Item
+    .brz-mm-menu__item {
+      display: flex;
+      transform: none;
+      padding: 0;
+      position: relative;
+      left: auto;
+      top: auto;
+      visibility: visible;
+      opacity: 1;
+      width: auto;
+
+      &.mm-listitem_vertical {
+        > .mm-panel {
+          padding: 0 10px;
+        }
+      }
+      &.mm-listitem_opened {
+        > .mm-listitem__text {
+          position: relative;
+
+          &:after {
+            content: "";
+            position: absolute;
+            display: block;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-bottom: 1px solid;
+          }
+        }
+      }
+      .mm-listitem__text {
+        color: inherit;
+        font-weight: inherit;
+        font-family: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        font-size: inherit;
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+      }
+      .mm-btn_next {
+        position: absolute;
+        right: 0;
+        left: auto;
+        background: none;
+        padding: 0;
+        width: 50px;
+        border: 0;
+        color: inherit;
+
+        &:after {
+          border-color: inherit;
+          width: $dropdown-arrow-size;
+          height: $dropdown-arrow-size;
+        }
+      }
+    }
+  }
+
+  // MMenu Navbar Title
+  .mm-navbar__title {
+    line-height: 20px;
+    font-size: 13px;
+    padding: 12px 20px;
+  }
+
+  // MMenu has dropdown
+  &--has-dropdown {
+    &.mm-menu {
+      .mm-navbar {
+        padding: 0;
+
+        &__title {
+          padding: 12px 50px 12px 20px;
+        }
+      }
+      .brz-mm-menu__item > .mm-listitem__text {
+        padding-right: 50px;
+      }
+    }
+  }
+
+  // Menu links
+  .brz-a,
+  .mm-btn_next {
+    transition: color 0.2s linear;
+
+    @include hover-focus-active {
+      outline: none;
+    }
+  }
+
+  // Error
+  &--error {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 10px;
+    background-color: lightgrey;
+
+    &--not-found {
+      .brz-a {
+        text-decoration: underline;
+        margin-right: 1ch;
+      }
+    }
+  }
+
+  // Animation
+  &.mm-menu_opened ~ .mm-wrapper__blocker {
+    transition-delay: 0s;
+  }
+}
+
+// Active without Editor
+&:not(.brz-ed) {
+  .brz-menu {
+    .brz-menu__item:hover > {
+      .brz-menu__sub-menu,
+      .brz-mega-menu {
+        visibility: visible;
+        opacity: 1;
+        z-index: z("mega-menu");
+        transition: 0.2s visibility linear, 0.2s z-index linear,
+          0.2s opacity linear, transform 0.2s linear;
+      }
+      .brz-menu__sub-menu {
+        transform: translateX(0);
+      }
+    }
+    &:not(.brz-menu--has-dropdown) .mm-navbar__title {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .mm-panel_has-navbar {
+      padding-top: 44px;
+    }
+  }
+}
+
+// Rewrite css rules for root div
+.brz-root__container {
+  &.mm-page {
+    position: relative;
+    background: inherit;
+  }
+  &.mm-slideout {
+    transition: transform 0.4s ease;
+  }
+}
+.mm-wrapper__blocker.mm-slideout {
+  z-index: 1099; // mmenu has 1100
+}

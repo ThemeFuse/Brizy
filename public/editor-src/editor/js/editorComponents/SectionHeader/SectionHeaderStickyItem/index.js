@@ -4,6 +4,7 @@ import SectionHeaderStickyItemItems from "./Items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
+import { Roles } from "visual/component/Roles";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -87,11 +88,14 @@ class SectionHeaderStickyItem extends EditorComponent {
   }
 
   renderToolbar(_v) {
+    const { globalBlockId } = this.props.meta;
+
     return (
       <CollapsibleToolbar
         {...this.makeToolbarPropsFromConfig(toolbarConfig)}
         className="brz-ed-collapsible__section brz-ed-collapsible--big"
         animation="rightToLeft"
+        badge={Boolean(globalBlockId)}
         onOpen={this.handleToolbarOpen}
         onClose={this.handleToolbarClose}
         outSideExceptions={[".portal-menu__sticky"]}
@@ -100,7 +104,13 @@ class SectionHeaderStickyItem extends EditorComponent {
   }
 
   renderItems(v) {
-    const { bgImageSrc, bgColorOpacity, bgPopulation } = v;
+    const {
+      bgImageSrc,
+      bgColorOpacity,
+      bgPopulation,
+      shapeTopType,
+      shapeBottomType
+    } = v;
 
     const meta = this.getMeta(v);
 
@@ -115,6 +125,8 @@ class SectionHeaderStickyItem extends EditorComponent {
       style: styles,
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
+      shapeTopType: shapeTopType !== "none" && shapeTopType,
+      shapeBottomType: shapeBottomType !== "none" && shapeBottomType,
       tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
       tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
       mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
@@ -142,24 +154,29 @@ class SectionHeaderStickyItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
     return (
-      <ContainerBorder
-        ref={el => {
-          this.containerBorder = el;
-        }}
-        borderStyle="none"
-        activeBorderStyle="none"
-        reactToClick={false}
-        showBorders={false}
-        path={this.getPath()}
-      >
-        {this.renderToolbar(v)}
-        {this.renderItems(v)}
-      </ContainerBorder>
+      <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+        <ContainerBorder
+          ref={el => {
+            this.containerBorder = el;
+          }}
+          borderStyle="none"
+          activeBorderStyle="none"
+          reactToClick={false}
+          showBorders={false}
+          path={this.getPath()}
+        >
+          {this.renderToolbar(v)}
+          {this.renderItems(v)}
+        </ContainerBorder>
+      </Roles>
     );
   }
 
@@ -167,6 +184,9 @@ class SectionHeaderStickyItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);

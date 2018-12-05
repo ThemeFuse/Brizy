@@ -5,7 +5,7 @@ thumbnailWidth: 600,
 thumbnailHeight: 368,
 title: "Dimi015Light",
 
-keywords: "header, call to action, hero, cover, button, icon, image background",
+keywords: "call to action, hero, cover, button, icon, image background",
 cat: [0, 2, 4],
 type: 0,
 

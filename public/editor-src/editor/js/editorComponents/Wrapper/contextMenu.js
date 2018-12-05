@@ -24,7 +24,8 @@ const translationsMap = {
   WPCustomShortcode: t("Shortcode"),
   WPNavigation: t("Menu"),
   Posts: t("Posts"),
-  Archives: t("Archives")
+  Archives: t("Archives"),
+  Menu: t("Menu"),
 };
 
 export default {

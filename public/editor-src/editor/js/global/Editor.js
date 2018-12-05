@@ -1,3 +1,4 @@
+import _ from "underscore";
 import { applyFilter } from "visual/utils/filters";
 
 let components = {};
@@ -49,9 +50,16 @@ const Editor = {
     blocks = config;
   },
 
-  getBlocks() {
-    return applyFilter("getBlocks", blocks);
-  },
+  getBlocks: _.memoize(() => {
+    const filteredBlocks = applyFilter("getBlocks", blocks);
+
+    filteredBlocks.blocks = _.sortBy(
+      filteredBlocks.blocks,
+      block => block.position || 10
+    );
+
+    return filteredBlocks;
+  }),
 
   getBlock(id) {
     return this.getBlocks().blocks.find(block => block.id === id);

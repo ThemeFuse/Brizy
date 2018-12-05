@@ -20,6 +20,7 @@ export const getBlocksConfig = _.memoize(() => {
   return {
     ...blocksConfig,
     categories,
-    blocks
+    blocks,
+    allowMissing: block => block.type !== "SectionPopup"
   };
 });

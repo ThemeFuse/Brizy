@@ -1,9 +1,9 @@
 import Config from "visual/global/Config";
-import { hexToRgba } from "visual/utils/color";
 import { getWeight, getWeightChoices } from "visual/utils/fonts";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { formatStringFromLink } from "./utils/link";
+import { encodeToString } from "visual/utils/string";
 import { getFontStyles } from "visual/utils/fonts";
+import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
 
 const proEnabled = Boolean(Config.get("pro"));
@@ -26,28 +26,6 @@ const getBlockTag = value => {
         header: value
       };
   }
-};
-
-const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
-
-const getColor = ({ hex, opacity, isChanged }) => {
-  if (isChanged === "hex") {
-    return {
-      color: hex,
-      colorPalette: null
-    };
-  }
-
-  return {
-    opacity
-  };
-};
-
-const getColorPalette = value => {
-  return {
-    color: null,
-    colorPalette: value
-  };
 };
 
 const getFont = (value, settings) => {
@@ -162,11 +140,13 @@ const getItemsForDesktop = (
     marginTop,
     marginBottom,
     population,
+    populationColor,
     prepopulation
   },
   onChange
 ) => (v, component) => {
   const inPopup = Boolean(component.props.meta.sectionPopup);
+  const isPopulationBlock = population && population.display === "block";
 
   return [
     {
@@ -177,7 +157,7 @@ const getItemsForDesktop = (
       title: t("Typography"),
       roles: ["admin"],
       position: 10,
-      disabled: population && population.display === "block",
+      disabled: isPopulationBlock,
       options: [
         {
           type: "grid",
@@ -499,51 +479,16 @@ const getItemsForDesktop = (
         }
       ]
     },
-    {
-      id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 20,
-      disabled: population && population.display === "block",
-      icon: {
-        style: {
-          backgroundColor: getColorValue(color)
-        }
-      },
-      options: [
-        {
-          id: "color",
-          type: "colorPicker",
-          position: 10,
-          value: color,
-          onChange: value => onChange(getColor(value))
-        },
-        {
-          id: "bgColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            ...color
-          },
-          onChange: value => onChange(getColor(value))
-        },
-        {
-          id: "bgColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: colorPalette,
-          onChange: value => onChange(getColorPalette(value))
-        }
-      ]
-    },
+    getColorToolbar(
+      { color, populationColor, colorPalette, isPopulationBlock },
+      onChange
+    ),
     {
       id: "horizontalAlign",
       label: t("Align"),
       type: "toggle",
       position: 30,
-      disabled: population && population.display === "block",
+      disabled: isPopulationBlock,
       choices: [
         {
           icon: "nc-text-align-left",
@@ -573,7 +518,7 @@ const getItemsForDesktop = (
       id: "list",
       type: "toggle",
       position: 40,
-      disabled: population && population.display === "block",
+      disabled: isPopulationBlock,
       choices: [
         {
           icon: "nc-list-numbers",
@@ -600,7 +545,7 @@ const getItemsForDesktop = (
       icon: "nc-bold",
       title: t("Bold"),
       position: 50,
-      disabled: population && population.display === "block",
+      disabled: isPopulationBlock,
       value: bold,
       onChange: bold => onChange({ bold })
     },
@@ -610,7 +555,7 @@ const getItemsForDesktop = (
       icon: "nc-italic",
       title: t("Italic"),
       position: 60,
-      disabled: population && population.display === "block",
+      disabled: isPopulationBlock,
       value: italic,
       onChange: italic => onChange({ italic })
     },
@@ -621,7 +566,7 @@ const getItemsForDesktop = (
       size: "medium",
       title: t("Link"),
       position: 80,
-      disabled: population && population.display === "block",
+      disabled: isPopulationBlock,
       options: [
         {
           id: "linkType",
@@ -639,7 +584,8 @@ const getItemsForDesktop = (
                   value: linkAnchor,
                   onChange: linkAnchor =>
                     onChange({
-                      link: formatStringFromLink(linkType, {
+                      link: encodeToString({
+                        type: linkType,
                         anchor: linkAnchor ? `#${linkAnchor}` : "",
                         external: linkExternal,
                         externalBlank: linkExternalBlank,
@@ -675,7 +621,8 @@ const getItemsForDesktop = (
                   ) => {
                     if (changeEvent === "blur" || changed === "population") {
                       onChange({
-                        link: formatStringFromLink(linkType, {
+                        link: encodeToString({
+                          type: linkType,
                           anchor: linkAnchor ? `#${linkAnchor}` : "",
                           external: linkExternal,
                           externalBlank: linkExternalBlank,
@@ -696,7 +643,8 @@ const getItemsForDesktop = (
                   value: linkExternalBlank,
                   onChange: linkExternalBlank =>
                     onChange({
-                      link: formatStringFromLink(linkType, {
+                      link: encodeToString({
+                        type: linkType,
                         anchor: linkAnchor ? `#${linkAnchor}` : "",
                         external: linkExternal,
                         externalBlank: linkExternalBlank,
@@ -714,7 +662,8 @@ const getItemsForDesktop = (
                   value: linkExternalRel,
                   onChange: linkExternalRel =>
                     onChange({
-                      link: formatStringFromLink(linkType, {
+                      link: encodeToString({
+                        type: linkType,
                         anchor: linkAnchor ? `#${linkAnchor}` : "",
                         external: linkExternal,
                         externalBlank: linkExternalBlank,
@@ -739,7 +688,8 @@ const getItemsForDesktop = (
                   value: linkPopup,
                   onChange: linkPopup =>
                     onChange({
-                      link: formatStringFromLink(linkType, {
+                      link: encodeToString({
+                        type: linkType,
                         anchor: linkAnchor ? `#${linkAnchor}` : "",
                         external: linkExternal,
                         externalBlank: linkExternalBlank,
@@ -755,7 +705,8 @@ const getItemsForDesktop = (
           ],
           onChange: linkType =>
             onChange({
-              link: formatStringFromLink(linkType, {
+              link: encodeToString({
+                type: linkType,
                 anchor: linkAnchor ? `#${linkAnchor}` : "",
                 external: linkExternal,
                 externalBlank: linkExternalBlank,
@@ -832,7 +783,7 @@ const getItemsForDesktop = (
           label: t("HTML Tag"),
           type: "select",
           className: "brz-control__select--small",
-          disabled: population && population.display === "block",
+          disabled: isPopulationBlock,
           choices: [
             {
               title: t("P"),

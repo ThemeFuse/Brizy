@@ -60,22 +60,29 @@
 
 // Section Menu
 .brz-section__header {
+  > .brz-section__menu-item {
+    position: relative;
+    z-index: z("section-menu");
+  }
   &--animated {
     position: fixed;
-    z-index: z("section-menu");
+    z-index: z("section-menu") + 1;
     top: 0;
     left: 0;
     width: 100%;
     transform: translate3d(0, -100%, 0);
-    transition: transform 0.2s linear;
+    opacity: 0;
+    transition: transform 0.2s linear, opacity 0.2s linear;
 
     &-opened {
       transform: translate3d(0, 0, 0);
-      transition: transform 0.2s linear;
+      opacity: 1;
+      transition: transform 0.2s linear, opacity 0.2s linear;
     }
   }
   &--fixed {
     position: relative;
+    z-index: z("section-menu");
 
     &-opened {
       position: fixed;
