@@ -611,7 +611,7 @@ class Brizy_Admin_Templates {
 			$post = get_post( $pid );
 		}
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post->get_wp_post(), null );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
 
 		$compiled_page = $this->template->get_compiled_page();
 

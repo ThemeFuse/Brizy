@@ -31,7 +31,7 @@ class Brizy_Content_MainProcessor {
 		$this->processors[] = new Brizy_Editor_Asset_DomainProcessor();
 		$this->processors[] = new Brizy_Content_DynamicContentProcessor();
 
-		$urlBuilder    = new Brizy_Editor_UrlBuilder( $context->getProject(), $context->getWpPost()->ID );
+		$urlBuilder    = new Brizy_Editor_UrlBuilder( $context->getProject(), $context->getWpPost() ? $context->getWpPost()->ID : null );
 		$asset_storage = new Brizy_Editor_Asset_AssetProxyStorage( $urlBuilder );
 		$media_storage = new Brizy_Editor_Asset_MediaProxyStorage( $urlBuilder );
 
