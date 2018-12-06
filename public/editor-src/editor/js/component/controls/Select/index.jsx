@@ -3,6 +3,7 @@ import _ from "underscore";
 import classnames from "classnames";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
+import ThemeIcon from "visual/component/ThemeIcon";
 import ClickOutside from "visual/component/ClickOutside";
 
 function getDropdownHeight(itemsCount, itemHeight, minItems, maxItems) {
@@ -22,7 +23,8 @@ class Select extends React.Component {
     minItems: 1,
     maxItems: 5,
     itemHeight: 38,
-    arrowIcon: "nc-stre-down",
+    /** @deprecated */
+    arrowIcon: "nc-arrow-down",
     onChange: _.noop
   };
 
@@ -140,7 +142,7 @@ class Select extends React.Component {
   }
 
   renderLabelInput() {
-    const { arrowIcon, children } = this.props;
+    const { children } = this.props;
     const { currentValue } = this.state;
     let selectedItem;
 
@@ -161,13 +163,26 @@ class Select extends React.Component {
         selectedItem = child;
       }
     });
+    /**
+     * we are using EditorIcon in editor mode because select is widely used
+     * in toolbars and there is a noticeable delay when using ThemeIcon because
+     * it fetches the icon in componentDidMount and renders after that causing
+     * an unpleasant user experience
+     */
+    const arrowIcon = IS_EDITOR ? (
+      <EditorIcon icon="nc-stre-down" className="brz-control__select--arrow" />
+    ) : (
+      <ThemeIcon
+        name="arrow-down"
+        type="editor"
+        className="brz-control__select--arrow"
+      />
+    );
 
     return (
       <React.Fragment>
         {selectedItem || this.findFirstItem()}
-        {arrowIcon && (
-          <EditorIcon icon={arrowIcon} className="brz-control__select--arrow" />
-        )}
+        {arrowIcon}
       </React.Fragment>
     );
   }

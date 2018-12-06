@@ -6,7 +6,7 @@ thumbnailHeight: 404,
 title: "Gabi012Light",
 
 keywords: "map, contact, phone, email, info, social, icons, address, directions",
-cat: [0, 15, 11],
+cat: [0, 14, 11],
 type: 0,
 
 resolve: {

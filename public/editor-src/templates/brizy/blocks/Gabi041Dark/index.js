@@ -5,8 +5,8 @@ thumbnailWidth: 600,
 thumbnailHeight: 402,
 title: "Gabi041Dark", 
 
-keywords: "slider, call to action, image background, header, cover, hero, promo, icon, video",
-cat: [0, 2, 4, 17],
+keywords: "slider, call to action, image background, cover, hero, promo, icon, video",
+cat: [0, 2, 4, 16],
 type: 1,
 
 resolve: {

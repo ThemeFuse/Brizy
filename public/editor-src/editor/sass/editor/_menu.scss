@@ -10,7 +10,7 @@
         flex-flow: column nowrap;
         max-height: 0;
         align-items: flex-start;
-        transition: max-height .2s ease-out;
+        transition: max-height 0.2s ease-out;
 
         .sub-menu {
           position: relative;
@@ -57,7 +57,7 @@
         flex-flow: column nowrap;
         max-height: 0;
         align-items: flex-start;
-        transition: max-height .2s ease-out;
+        transition: max-height 0.2s ease-out;
 
         .sub-menu {
           position: relative;
@@ -90,6 +90,34 @@
       .brz-wp-shortcode__menu__icon {
         display: inline-block;
       }
+    }
+  }
+
+  // Editor Shortcode Menu
+  .brz-mm-menu--tablet {
+    position: fixed;
+  }
+}
+&.brz-ed--desktop {
+  // Editor Shortcode Menu
+  .brz-mm-menu--desktop {
+    position: fixed;
+  }
+}
+
+// Editor Shortcode Menu
+.brz-menu__editor {
+  .brz-menu__item--opened > {
+    .brz-menu__sub-menu,
+    .brz-mega-menu {
+      visibility: visible;
+      opacity: 1;
+      z-index: z("mega-menu");
+      transition: 0.2s visibility linear, 0.2s opacity linear,
+        0.2s transform linear;
+    }
+    .brz-menu__sub-menu {
+      transform: translateX(0);
     }
   }
 }

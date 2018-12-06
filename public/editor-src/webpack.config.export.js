@@ -30,7 +30,7 @@ module.exports = options => {
           }
         },
         {
-          test: /quill|isotope-layout|magnific-popup|slick-carousel/,
+          test: /quill|isotope-layout|magnific-popup|slick-carousel|jquery.mmenu/,
           loader: "null-loader"
         },
         {

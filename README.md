@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.50<br>
+Stable tag: 1.0.51<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,13 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.51 - 2018-12-06 ###
+* New: Columns can now be resizes in mobile device mode
+* Fixed: Tempate fixes
+* Fixed: Dynamic content fixes
+* Fixed: Removed wpautop filter
+* Fixed: Added favicon
 
 ### 1.0.50 - 2018-11-30 ###
 * Fixed: RichText error in certain blocks

@@ -8,6 +8,7 @@ const imageDynamicContentChoices = getDynamicContentChoices("image");
 export function getItemsForDesktop(v, component) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
   const { hex: borderColorHex } = getOptionColor(v, "borderColor");
+  const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
 
   return [
     {
@@ -196,36 +197,36 @@ export function getItemsForDesktop(v, component) {
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderWidth
-                            : v.borderWidth,
+                          ? v.tempBorderWidth
+                          : v.borderWidth,
 
                       borderTopWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderTopWidth
-                            : v.borderTopWidth,
+                          ? v.tempBorderTopWidth
+                          : v.borderTopWidth,
 
                       borderRightWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderRightWidth
-                            : v.borderRightWidth,
+                          ? v.tempBorderRightWidth
+                          : v.borderRightWidth,
 
                       borderBottomWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderBottomWidth
-                            : v.borderBottomWidth,
+                          ? v.tempBorderBottomWidth
+                          : v.borderBottomWidth,
 
                       borderLeftWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderLeftWidth
-                            : v.borderLeftWidth
+                          ? v.tempBorderLeftWidth
+                          : v.borderLeftWidth
                     };
                   }
                 },
@@ -563,8 +564,8 @@ export function getItemsForDesktop(v, component) {
                                   borderWidth === 0
                                     ? 0
                                     : borderWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity,
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity,
 
                                 borderBottomRightRadius:
                                   borderWidth === 0 && v.bgColorOpacity === 0
@@ -573,8 +574,8 @@ export function getItemsForDesktop(v, component) {
                                       v.borderTopLeftRadius === 0 &&
                                       v.borderTopRightRadius === 0 &&
                                       v.borderBottomLeftRadius === 0
-                                      ? v.tempBorderBottomRightRadius
-                                      : v.borderBottomRightRadius
+                                    ? v.tempBorderBottomRightRadius
+                                    : v.borderBottomRightRadius
                               };
                             }
                           }
@@ -650,8 +651,8 @@ export function getItemsForDesktop(v, component) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderTopWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
                           },
@@ -725,8 +726,8 @@ export function getItemsForDesktop(v, component) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderRightWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
                           },
@@ -800,8 +801,8 @@ export function getItemsForDesktop(v, component) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderBottomWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
                           },
@@ -875,10 +876,206 @@ export function getItemsForDesktop(v, component) {
                                   v.borderBottomWidth === 0
                                     ? 0
                                     : borderLeftWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      type: "multiPicker",
+                      picker: {
+                        id: "boxShadow",
+                        label: t("Shadow"),
+                        type: "switch",
+                        value: v.boxShadow
+                      },
+                      choices: {
+                        on: [
+                          {
+                            id: "boxShadowColors",
+                            type: "popover",
+                            size: "auto",
+                            label: t("Color"),
+                            title: t("Color"),
+                            icon: {
+                              style: {
+                                backgroundColor: hexToRgba(
+                                  boxShadowColorHex,
+                                  v.boxShadowColorOpacity
+                                )
+                              }
+                            },
+                            options: [
+                              {
+                                id: "boxShadowColor",
+                                type: "colorPicker",
+                                value: {
+                                  hex: boxShadowColorHex,
+                                  opacity: v.boxShadowColorOpacity
+                                },
+                                onChange: ({
+                                  hex,
+                                  opacity,
+                                  isChanged,
+                                  opacityDragEnd
+                                }) => {
+                                  const boxShadowColorOpacity =
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
+                                      ? v.tempBoxShadowColorOpacity
+                                      : opacity;
+
+                                  return {
+                                    boxShadowColorHex: hex,
+                                    boxShadowColorOpacity: boxShadowColorOpacity,
+                                    boxShadowColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.boxShadowColorPalette
+                                  };
+                                }
+                              },
+                              {
+                                id: "boxShadowColorPalette",
+                                type: "colorPalette",
+                                position: 20,
+                                value: v.boxShadowColorPalette,
+                                onChange: boxShadowColorPalette => ({
+                                  boxShadowColorPalette,
+                                  boxShadowColorHex: "",
+                                  boxShadowColorOpacity:
+                                    v.boxShadowColorOpacity === 0
+                                      ? v.tempBoxShadowColorOpacity
+                                      : v.boxShadowColorOpacity
+                                })
+                              },
+                              {
+                                id: "boxShadowColorFields",
+                                type: "colorFields",
+                                position: 30,
+                                value: {
+                                  hex: boxShadowColorHex,
+                                  opacity: v.boxShadowColorOpacity
+                                },
+                                onChange: ({ hex, opacity, isChanged }) => {
+                                  const boxShadowColorOpacity =
+                                    hex !== v.boxShadowColorHex &&
+                                    v.boxShadowColorOpacity === 0
+                                      ? v.tempBoxShadowColorOpacity
+                                      : opacity;
+
+                                  return {
+                                    boxShadowColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.boxShadowColorPalette,
+                                    boxShadowColorHex: hex,
+                                    boxShadowColorOpacity: boxShadowColorOpacity
+                                  };
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            id: "boxShadowBlur",
+                            type: "slider",
+                            icon: "nc-blur",
+                            slider: {
+                              min: 0
+                            },
+                            input: {
+                              show: true,
+                              min: 0
+                            },
+                            suffix: {
+                              show: true,
+                              choices: [
+                                {
+                                  title: "px",
+                                  value: "px"
+                                }
+                              ]
+                            },
+                            value: {
+                              value: v.boxShadowBlur
+                            },
+                            onChange: ({ value: boxShadowBlur }) => ({
+                              boxShadowBlur,
+                              boxShadowColorOpacity:
+                                v.boxShadowColorOpacity === 0
+                                  ? v.tempBoxShadowColorOpacity
+                                  : v.boxShadowColorOpacity
+                            })
+                          },
+                          {
+                            id: "boxShadowVertical",
+                            type: "slider",
+                            icon: "nc-vertical",
+                            slider: {
+                              min: -100,
+                              max: 100
+                            },
+                            input: {
+                              show: true,
+                              min: -100,
+                              max: 100
+                            },
+                            suffix: {
+                              show: true,
+                              choices: [
+                                {
+                                  title: "px",
+                                  value: "px"
+                                }
+                              ]
+                            },
+                            value: {
+                              value: v.boxShadowVertical
+                            },
+                            onChange: ({ value: boxShadowVertical }) => ({
+                              boxShadowVertical,
+                              boxShadowColorOpacity:
+                                v.boxShadowColorOpacity === 0
+                                  ? v.tempBoxShadowColorOpacity
+                                  : v.boxShadowColorOpacity
+                            })
+                          },
+                          {
+                            id: "boxShadowHorizontal",
+                            type: "slider",
+                            disabled: true,
+                            icon: "nc-horizontal",
+                            slider: {
+                              min: -100,
+                              max: 100
+                            },
+                            input: {
+                              show: true,
+                              min: -100,
+                              max: 100
+                            },
+                            suffix: {
+                              show: true,
+                              choices: [
+                                {
+                                  title: "px",
+                                  value: "px"
+                                }
+                              ]
+                            },
+                            value: {
+                              value: v.boxShadowHorizontal
+                            },
+                            onChange: ({ value: boxShadowHorizontal }) => ({
+                              boxShadowHorizontal,
+                              boxShadowColorOpacity:
+                                v.boxShadowColorOpacity === 0
+                                  ? v.tempBoxShadowColorOpacity
+                                  : v.boxShadowColorOpacity
+                            })
                           }
                         ]
                       }
@@ -990,7 +1187,10 @@ export function getItemsForTablet(v) {
       position: 100,
       icon: {
         style: {
-          backgroundColor: hexToRgba(tabletBgColorHex, tabletSyncOnChange(v, "bgColorOpacity"))
+          backgroundColor: hexToRgba(
+            tabletBgColorHex,
+            tabletSyncOnChange(v, "bgColorOpacity")
+          )
         }
       },
       options: [
@@ -1004,7 +1204,8 @@ export function getItemsForTablet(v) {
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
-              hex !== tabletBgColorHex && tabletSyncOnChange(v, "bgColorOpacity") === 0
+              hex !== tabletBgColorHex &&
+              tabletSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
                 : opacity;
 
@@ -1012,7 +1213,9 @@ export function getItemsForTablet(v) {
               tabletBgColorHex: hex,
               tabletBgColorOpacity: bgColorOpacity,
               tabletBgColorPalette:
-                isChanged === "hex" ? "" : tabletSyncOnChange(v, "bgColorPalette")
+                isChanged === "hex"
+                  ? ""
+                  : tabletSyncOnChange(v, "bgColorPalette")
             };
           }
         },
@@ -1040,7 +1243,9 @@ export function getItemsForTablet(v) {
           },
           onChange: ({ hex, opacity, isChanged }) => ({
             tabletBgColorPalette:
-              isChanged === "hex" ? "" : tabletSyncOnChange(v, "bgColorPalette"),
+              isChanged === "hex"
+                ? ""
+                : tabletSyncOnChange(v, "bgColorPalette"),
             tabletBgColorHex: hex,
             tabletBgColorOpacity: opacity
           })
@@ -1269,7 +1474,10 @@ export function getItemsForMobile(v) {
       position: 100,
       icon: {
         style: {
-          backgroundColor: hexToRgba(mobileBgColorHex, mobileSyncOnChange(v, "bgColorOpacity"))
+          backgroundColor: hexToRgba(
+            mobileBgColorHex,
+            mobileSyncOnChange(v, "bgColorOpacity")
+          )
         }
       },
       options: [
@@ -1283,7 +1491,8 @@ export function getItemsForMobile(v) {
           },
           onChange: ({ hex, opacity, isChanged }) => {
             const bgColorOpacity =
-              hex !== mobileBgColorHex && mobileSyncOnChange(v, "bgColorOpacity") === 0
+              hex !== mobileBgColorHex &&
+              mobileSyncOnChange(v, "bgColorOpacity") === 0
                 ? v.tempBgColorOpacity
                 : opacity;
 
@@ -1291,7 +1500,9 @@ export function getItemsForMobile(v) {
               mobileBgColorHex: hex,
               mobileBgColorOpacity: bgColorOpacity,
               mobileBgColorPalette:
-                isChanged === "hex" ? "" : mobileSyncOnChange(v, "bgColorPalette")
+                isChanged === "hex"
+                  ? ""
+                  : mobileSyncOnChange(v, "bgColorPalette")
             };
           }
         },
@@ -1319,7 +1530,9 @@ export function getItemsForMobile(v) {
           },
           onChange: ({ hex, opacity, isChanged }) => ({
             mobileBgColorPalette:
-              isChanged === "hex" ? "" : mobileSyncOnChange(v, "bgColorPalette"),
+              isChanged === "hex"
+                ? ""
+                : mobileSyncOnChange(v, "bgColorPalette"),
             mobileBgColorHex: hex,
             mobileBgColorOpacity: opacity
           })

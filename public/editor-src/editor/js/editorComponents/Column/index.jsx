@@ -84,6 +84,7 @@ class Column extends EditorComponent {
     const { meta } = this.props;
     const {
       width: columnWidth,
+      mobileWidth: mobileColumnWidth,
 
       // Margin
       marginType,
@@ -147,10 +148,8 @@ class Column extends EditorComponent {
     } = v;
 
     const tabletColumnWidth = tabletSyncOnChange(v, "width");
-    let wInMobileCol = meta.mobileW;
-    if (meta.row && meta.row.isInner && meta.desktopW <= wInMobilePage) {
-      wInMobileCol = meta.mobileW * (columnWidth / 100);
-    }
+
+    const wInMobileCol = meta.mobileW * (mobileColumnWidth / 100);
     const wInTabletCol = meta.tabletW * (tabletColumnWidth / 100);
     const wInDesktopCol = meta.desktopW * (columnWidth / 100);
 
@@ -249,7 +248,8 @@ class Column extends EditorComponent {
     return _.extend({}, meta, {
       column: {
         width: columnWidth,
-        tabletWidth: tabletColumnWidth
+        tabletWidth: tabletColumnWidth,
+        mobileWidth: mobileColumnWidth
       },
       mobileW,
       tabletW,

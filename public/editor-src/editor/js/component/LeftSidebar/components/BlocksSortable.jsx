@@ -4,22 +4,28 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { removeAt, insert } from "timm";
 import Editor from "visual/global/Editor";
 import EditorIcon from "visual/component/EditorIcon";
-import { blockThumbnailUrl } from "visual/utils/blocks";
+import {
+  blockThumbnailUrl,
+  placeholderBlockThumbnailUrl
+} from "visual/utils/blocks";
 import { updatePage } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
 
 const SortableItem = SortableElement(({ item, onRemove }) => {
-  const blockId = item.blockId;
-  const blockData = Editor.getBlock(blockId);
-
   if (item.value._blockVisibility === "unlisted") {
     return <div hidden />;
   }
 
+  const blockId = item.blockId;
+  const blockData = Editor.getBlock(blockId);
+  const thumbUrl = blockData
+    ? blockThumbnailUrl(blockData)
+    : placeholderBlockThumbnailUrl();
+
   return (
     <div className="brz-ed-sidebar-block-item">
       <div className="brz-ed-sidebar-block-image">
-        <img className="brz-img" src={blockThumbnailUrl(blockData)} />
+        <img className="brz-img" src={thumbUrl} />
         <div className="brz-ed-sidebar-block-layout">
           <span className="brz-span brz-ed-sidebar-block-drag">
             {t("Drag to reorder")}

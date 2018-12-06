@@ -2,10 +2,39 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
+import { svgToUri } from "visual/utils/icons";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
+const getShadows = ({
+  boxShadow,
+  boxShadowVertical: vertical,
+  boxShadowBlur: blur,
+  boxShadowColorHex: hex,
+  boxShadowColorOpacity: opacity
+}) => {
+  if (boxShadow === "none") {
+    return "none";
+  }
+
+  const diff = vertical < 0 ? -blur : blur;
+  const color = hexToRgba(hex, opacity);
+  const inBoth = vertical === 0;
+
+  return inBoth
+    ? `inset 0 ${vertical + diff}px ${blur}px -${blur}px ${color},
+    inset 0 -${vertical + diff}px ${blur}px -${blur}px ${color}`
+    : `inset 0 ${vertical + diff}px ${blur}px -${blur}px ${color},
+    inset 0 0 0 0 ${color}`;
+};
+
 export function sectionStyleClassName(v) {
-  const { showOnDesktop, showOnTablet, showOnMobile, className, customClassName } = v;
+  const {
+    showOnDesktop,
+    showOnTablet,
+    showOnMobile,
+    className,
+    customClassName
+  } = v;
 
   let glamorObj;
   if (IS_EDITOR) {
@@ -58,7 +87,20 @@ export function bgStyleClassName(v) {
         borderTopLeftRadius: "var(--borderTopLeftRadius)",
         borderTopRightRadius: "var(--borderTopRightRadius)",
         borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
-        borderBottomRightRadius: "var(--borderBottomRightRadius)"
+        borderBottomRightRadius: "var(--borderBottomRightRadius)",
+        boxShadow: "var(--boxShadow)",
+
+        // Shape
+        "& > .brz-bg-shape__top": {
+          transform: "var(--shapeTopFlip)",
+          backgroundImage: "var(--shapeTopType)",
+          zIndex: "var(--shapeTopIndex)"
+        },
+        "& > .brz-bg-shape__bottom": {
+          transform: "var(--shapeBottomFlip)",
+          backgroundImage: "var(--shapeBottomType)",
+          zIndex: "var(--shapeBottomIndex)"
+        }
       },
       ".brz-ed--desktop &": {
         "> .brz-bg-media > .brz-bg-image": {
@@ -68,6 +110,16 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: "var(--backgroundColor)"
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: "var(--shapeTopBackgroundSize)",
+          height: "var(--shapeTopHeight)"
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: "var(--shapeBottomBackgroundSize)",
+          height: "var(--shapeBottomHeight)"
         }
       },
       ".brz-ed--tablet &": {
@@ -78,6 +130,16 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: "var(--tabletBackgroundColor)"
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: "var(--tabletShapeTopBackgroundSize)",
+          height: "var(--tabletShapeTopHeight)"
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: "var(--tabletShapeBottomBackgroundSize)",
+          height: "var(--tabletShapeBottomHeight)"
         }
       },
       ".brz-ed--mobile &": {
@@ -88,6 +150,16 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-color": {
           backgroundColor: "var(--mobileBackgroundColor)"
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: "var(--mobileShapeTopBackgroundSize)",
+          height: "var(--mobileShapeTopHeight)"
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: "var(--mobileShapeBottomBackgroundSize)",
+          height: "var(--mobileShapeBottomHeight)"
         }
       }
     };
@@ -112,7 +184,21 @@ export function bgStyleClassName(v) {
       borderTopLeftRadius,
       borderTopRightRadius,
       borderBottomLeftRadius,
-      borderBottomRightRadius
+      borderBottomRightRadius,
+      shapeTopHorizontal,
+      shapeBottomHorizontal,
+      shapeTopHeight,
+      shapeBottomHeight,
+      shapeTopHeightSuffix,
+      shapeBottomHeightSuffix,
+      shapeTopColorHex,
+      shapeTopColorOpacity,
+      shapeBottomColorHex,
+      shapeBottomColorOpacity,
+      shapeTopIndex,
+      shapeBottomIndex,
+      shapeTopType,
+      shapeBottomType
     } = v;
     const bgImage = bgPopulation
       ? imagePopulationUrl(bgPopulation)
@@ -125,6 +211,30 @@ export function bgStyleClassName(v) {
     const mobileBgImage = bgPopulation
       ? imagePopulationUrl(bgPopulation)
       : imageUrl(mobileSyncOnChange(v, "bgImageSrc"));
+
+    // Tablet Shape
+    const tabletShapeTopHeight = tabletSyncOnChange(v, "shapeTopHeight");
+    const tabletShapeBottomHeight = tabletSyncOnChange(v, "shapeBottomHeight");
+    const tabletShapeTopHeightSuffix = tabletSyncOnChange(
+      v,
+      "shapeTopHeightSuffix"
+    );
+    const tabletShapeBottomHeightSuffix = tabletSyncOnChange(
+      v,
+      "shapeBottomHeightSuffix"
+    );
+
+    // Mobile Shape
+    const mobileShapeTopHeight = mobileSyncOnChange(v, "shapeTopHeight");
+    const mobileShapeBottomHeight = mobileSyncOnChange(v, "shapeBottomHeight");
+    const mobileShapeTopHeightSuffix = mobileSyncOnChange(
+      v,
+      "shapeTopHeightSuffix"
+    );
+    const mobileShapeBottomHeightSuffix = mobileSyncOnChange(
+      v,
+      "shapeBottomHeightSuffix"
+    );
 
     glamorObj = {
       "> .brz-bg-media": {
@@ -161,7 +271,8 @@ export function bgStyleClassName(v) {
         borderBottomRightRadius:
           borderRadiusType === "grouped"
             ? `${borderRadius}px`
-            : `${borderBottomRightRadius}px`
+            : `${borderBottomRightRadius}px`,
+        boxShadow: getShadows(v)
       },
       "> .brz-bg-media > .brz-bg-image": {
         backgroundImage:
@@ -173,26 +284,97 @@ export function bgStyleClassName(v) {
       "> .brz-bg-media > .brz-bg-color": {
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
       },
+
+      // Shape
+      "> .brz-bg-media > .brz-bg-shape__top": {
+        backgroundImage:
+          shapeTopType === "none"
+            ? "none"
+            : `url('${svgToUri(
+                shapeTopType,
+                hexToRgba(shapeTopColorHex, shapeTopColorOpacity)
+              )}')`,
+        backgroundSize: `100% ${shapeTopHeight}${shapeTopHeightSuffix}`,
+        transform:
+          shapeTopHorizontal === "on"
+            ? "rotateX(0deg) rotateY(-180deg)"
+            : "rotateX(0deg) rotateY(0deg)",
+        height: `${shapeTopHeight}${shapeTopHeightSuffix}`,
+        zIndex: shapeTopIndex
+      },
+      "> .brz-bg-media > .brz-bg-shape__bottom": {
+        backgroundImage:
+          shapeBottomType === "none"
+            ? "none"
+            : `url('${svgToUri(
+                shapeBottomType,
+                hexToRgba(shapeBottomColorHex, shapeBottomColorOpacity)
+              )}')`,
+        backgroundSize: `100% ${shapeBottomHeight}${shapeBottomHeightSuffix}`,
+        transform:
+          shapeBottomHorizontal === "on"
+            ? "rotateX(-180deg) rotateY(0deg)"
+            : "rotateX(-180deg) rotateY(-180deg)",
+        height: `${shapeBottomHeight}${shapeBottomHeightSuffix}`,
+        zIndex: shapeBottomIndex
+      },
+
       "@media (max-width: 991px)": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
-            tabletSyncOnChange(v, "bgImageSrc") || bgPopulation ? `url(${tabletBgImage})` : "none",
-          backgroundPosition: `${tabletSyncOnChange(v, "bgPositionX")}% ${tabletSyncOnChange(v, "bgPositionY")}%`
+            tabletSyncOnChange(v, "bgImageSrc") || bgPopulation
+              ? `url(${tabletBgImage})`
+              : "none",
+          backgroundPosition: `${tabletSyncOnChange(
+            v,
+            "bgPositionX"
+          )}% ${tabletSyncOnChange(v, "bgPositionY")}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(tabletSyncOnChange(v, "bgColorHex"), tabletSyncOnChange(v, "bgColorOpacity"))
+          backgroundColor: hexToRgba(
+            tabletSyncOnChange(v, "bgColorHex"),
+            tabletSyncOnChange(v, "bgColorOpacity")
+          )
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: `100% ${tabletShapeTopHeight}${tabletShapeTopHeightSuffix}`,
+          height: `${tabletShapeTopHeight}${tabletShapeTopHeightSuffix}`
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: `100% ${tabletShapeBottomHeight}${tabletShapeBottomHeightSuffix}`,
+          height: `${tabletShapeBottomHeight}${tabletShapeBottomHeightSuffix}`
         }
       },
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage:
-            mobileSyncOnChange(v, "bgImageSrc") || bgPopulation ? `url(${mobileBgImage})` : "none",
+            mobileSyncOnChange(v, "bgImageSrc") || bgPopulation
+              ? `url(${mobileBgImage})`
+              : "none",
           backgroundPosition: bgPopulation
             ? "0% 0%"
-            : `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(v, "bgPositionY")}%`
+            : `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(
+                v,
+                "bgPositionY"
+              )}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
+          backgroundColor: hexToRgba(
+            mobileSyncOnChange(v, "bgColorHex"),
+            mobileSyncOnChange(v, "bgColorOpacity")
+          )
+        },
+
+        // Shape
+        "> .brz-bg-media > .brz-bg-shape__top": {
+          backgroundSize: `100% ${mobileShapeTopHeight}${mobileShapeTopHeightSuffix}`,
+          height: `${mobileShapeTopHeight}${mobileShapeTopHeightSuffix}`
+        },
+        "> .brz-bg-media > .brz-bg-shape__bottom": {
+          backgroundSize: `100% ${mobileShapeBottomHeight}${mobileShapeBottomHeightSuffix}`,
+          height: `${mobileShapeBottomHeight}${mobileShapeBottomHeightSuffix}`
         }
       }
     };
@@ -225,8 +407,46 @@ export function bgStyleCSSVars(v) {
     borderTopLeftRadius,
     borderTopRightRadius,
     borderBottomLeftRadius,
-    borderBottomRightRadius
+    borderBottomRightRadius,
+    shapeTopType,
+    shapeBottomType,
+    shapeTopColorHex,
+    shapeTopColorOpacity,
+    shapeBottomColorHex,
+    shapeBottomColorOpacity,
+    shapeTopHeight,
+    shapeBottomHeight,
+    shapeTopHeightSuffix,
+    shapeBottomHeightSuffix,
+    shapeTopHorizontal,
+    shapeBottomHorizontal,
+    shapeTopIndex,
+    shapeBottomIndex
   } = v;
+
+  // Tablet Shape
+  const tabletShapeTopHeight = tabletSyncOnChange(v, "shapeTopHeight");
+  const tabletShapeBottomHeight = tabletSyncOnChange(v, "shapeBottomHeight");
+  const tabletShapeTopHeightSuffix = tabletSyncOnChange(
+    v,
+    "shapeTopHeightSuffix"
+  );
+  const tabletShapeBottomHeightSuffix = tabletSyncOnChange(
+    v,
+    "shapeBottomHeightSuffix"
+  );
+
+  // Mobile Shape
+  const mobileShapeTopHeight = mobileSyncOnChange(v, "shapeTopHeight");
+  const mobileShapeBottomHeight = mobileSyncOnChange(v, "shapeBottomHeight");
+  const mobileShapeTopHeightSuffix = mobileSyncOnChange(
+    v,
+    "shapeTopHeightSuffix"
+  );
+  const mobileShapeBottomHeightSuffix = mobileSyncOnChange(
+    v,
+    "shapeBottomHeightSuffix"
+  );
 
   return {
     "--backgroundImage":
@@ -268,6 +488,37 @@ export function bgStyleCSSVars(v) {
       borderRadiusType === "grouped"
         ? `${borderRadius}px`
         : `${borderBottomRightRadius}px`,
+    "--boxShadow": getShadows(v),
+
+    // Shape
+    "--shapeTopHeight": `${shapeTopHeight}${shapeTopHeightSuffix}`,
+    "--shapeBottomHeight": `${shapeBottomHeight}${shapeBottomHeightSuffix}`,
+    "--shapeTopFlip":
+      shapeTopHorizontal === "on"
+        ? "rotateX(0deg) rotateY(-180deg)"
+        : "rotateX(0deg) rotateY(0deg)",
+    "--shapeBottomFlip":
+      shapeBottomHorizontal === "on"
+        ? "rotateX(-180deg) rotateY(0deg)"
+        : "rotateX(-180deg) rotateY(-180deg)",
+    "--shapeTopIndex": shapeTopIndex,
+    "--shapeBottomIndex": shapeBottomIndex,
+    "--shapeTopType":
+      shapeTopType === "none"
+        ? "none"
+        : `url('${svgToUri(
+            shapeTopType,
+            hexToRgba(shapeTopColorHex, shapeTopColorOpacity)
+          )}')`,
+    "--shapeTopBackgroundSize": `100% ${shapeTopHeight}${shapeTopHeightSuffix}`,
+    "--shapeBottomType":
+      shapeBottomType === "none"
+        ? "none"
+        : `url('${svgToUri(
+            shapeBottomType,
+            hexToRgba(shapeBottomColorHex, shapeBottomColorOpacity)
+          )}')`,
+    "--shapeBottomBackgroundSize": `100% ${shapeBottomHeight}${shapeBottomHeightSuffix}`,
 
     // Tablet
     "--tabletBackgroundImage":
@@ -275,12 +526,21 @@ export function bgStyleCSSVars(v) {
         ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
         : "none",
     "--tabletBackgroundPositionX": bgPopulation
-        ? "0%"
-        : `${tabletSyncOnChange(v, "bgPositionX")}%`,
+      ? "0%"
+      : `${tabletSyncOnChange(v, "bgPositionX")}%`,
     "--tabletBackgroundPositionY": bgPopulation
-        ? "0%"
-        : `${tabletSyncOnChange(v, "bgPositionY")}%`,
-    "--tabletBackgroundColor": hexToRgba(tabletSyncOnChange(v, "bgColorHex"), tabletSyncOnChange(v, "bgColorOpacity")),
+      ? "0%"
+      : `${tabletSyncOnChange(v, "bgPositionY")}%`,
+    "--tabletBackgroundColor": hexToRgba(
+      tabletSyncOnChange(v, "bgColorHex"),
+      tabletSyncOnChange(v, "bgColorOpacity")
+    ),
+
+    // Tablet Shape
+    "--tabletShapeTopHeight": `${tabletShapeTopHeight}${tabletShapeTopHeightSuffix}`,
+    "--tabletShapeBottomHeight": `${tabletShapeBottomHeight}${tabletShapeBottomHeightSuffix}`,
+    "--tabletShapeTopBackgroundSize": `100% ${tabletShapeTopHeight}${tabletShapeTopHeightSuffix}`,
+    "--tabletShapeBottomBackgroundSize": `100% ${tabletShapeBottomHeight}${tabletShapeBottomHeightSuffix}`,
 
     // Mobile
     "--mobileBackgroundImage":
@@ -293,7 +553,16 @@ export function bgStyleCSSVars(v) {
     "--mobileBackgroundPositionY": bgPopulation
       ? "0%"
       : `${mobileSyncOnChange(v, "bgPositionY")}%`,
-    "--mobileBackgroundColor": hexToRgba(mobileSyncOnChange(v, "bgColorHex"), mobileSyncOnChange(v, "bgColorOpacity"))
+    "--mobileBackgroundColor": hexToRgba(
+      mobileSyncOnChange(v, "bgColorHex"),
+      mobileSyncOnChange(v, "bgColorOpacity")
+    ),
+
+    // Mobile Shape
+    "--mobileShapeTopHeight": `${mobileShapeTopHeight}${mobileShapeTopHeightSuffix}`,
+    "--mobileShapeBottomHeight": `${mobileShapeBottomHeight}${mobileShapeBottomHeightSuffix}`,
+    "--mobileShapeTopBackgroundSize": `100% ${mobileShapeTopHeight}${mobileShapeTopHeightSuffix}`,
+    "--mobileShapeBottomBackgroundSize": `100 ${mobileShapeBottomHeight}${mobileShapeBottomHeightSuffix}`
   };
 }
 

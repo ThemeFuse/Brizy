@@ -5,8 +5,8 @@ thumbnailWidth: 600,
 thumbnailHeight: 417,
 title: "Gabi043Light",
 
-keywords: "slider, image background, header, cover, two columns, button, call to action, address, phone, info, forms, contact",
-cat: [0, 2, 17, 16, 11],
+keywords: "slider, image background, cover, two columns, button, call to action, address, phone, info, forms, contact",
+cat: [0, 2, 16, 15, 11],
 type: 0,
 
 resolve: {

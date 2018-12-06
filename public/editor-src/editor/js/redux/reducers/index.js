@@ -9,6 +9,7 @@ import {
 } from "../actionTypes";
 
 // page
+
 export function page(state = {}, action) {
   switch (action.type) {
     case HYDRATE:

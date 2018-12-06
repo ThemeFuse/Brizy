@@ -8,7 +8,10 @@ class Link extends Component {
     href: "",
     target: null,
     type: "external", // external | anchor | lightBox | popup
-    rel: null
+    rel: null,
+    attr: {
+      title: ""
+    }
   };
 
   handleClick = e => {
@@ -51,12 +54,24 @@ class Link extends Component {
     return type === "external" && target === "on" ? "_blank" : null;
   }
 
+  getAttr() {
+    const { attr } = this.props;
+
+    return Object.keys(attr)
+      .filter(key => attr[key] !== "")
+      .reduce((obj, key) => {
+        obj[key] = attr[key];
+        return obj;
+      }, {});
+  }
+
   render() {
     const { type, style, children } = this.props;
     const className = this.getClassName();
     const href = this.getHref();
     const target = this.getTarget();
     const rel = this.getRel();
+    const attr = this.getAttr();
 
     return (
       <a
@@ -67,6 +82,7 @@ class Link extends Component {
         style={style}
         data-brz-link-type={type}
         onClick={this.handleClick}
+        {...attr}
       >
         {children}
       </a>

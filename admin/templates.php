@@ -605,13 +605,13 @@ class Brizy_Admin_Templates {
 
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = $this->template;
+		$post = $this->template->get_wp_post();
 
 		if ( $pid ) {
 			$post = get_post( $pid );
 		}
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post->get_wp_post(), null );
+		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
 
 		$compiled_page = $this->template->get_compiled_page();
 

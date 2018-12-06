@@ -50,6 +50,7 @@ class Brizy_Public_Main {
 			// When some plugins want to redirect to their templates.
 			remove_all_actions( 'template_redirect' );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 10000 );
+
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor::is_user_allowed() ) {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			add_filter( 'show_admin_bar', '__return_false' );
@@ -205,11 +206,19 @@ class Brizy_Public_Main {
 			get_permalink( $this->post->get_wp_post()->ID )
 		);
 
+		$favicon = '';
+		if ( has_site_icon() ) {
+			ob_start(); ob_clean();
+				wp_site_icon();
+			$favicon = ob_get_clean();
+		}
+
 		$context = array(
 			'editorData'    => $config_object,
 			'editorVersion' => BRIZY_EDITOR_VERSION,
 			'iframe_url'    => $iframe_url,
-			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title, $this->post->get_wp_post()->ID )
+			'page_title'    => apply_filters( 'the_title', $this->post->get_wp_post()->post_title, $this->post->get_wp_post()->ID ),
+			'favicon'       => $favicon
 		);
 
 		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {

@@ -5,7 +5,7 @@ thumbnailWidth: 600,
 thumbnailHeight: 362,
 title: "Bogdan008Light",
 
-keywords: "header, features, call to action, services, icons, icon box, button, three columns, hero, image background, cover",
+keywords: "features, call to action, services, icons, icon box, button, three columns, hero, image background, cover",
 cat: [0, 2, 3, 4, 7],
 type: 0,
 

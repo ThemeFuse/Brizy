@@ -13,7 +13,13 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
-    <?php wp_head(); ?>
+	<?php
+        if ( ! current_theme_supports( 'title-tag' ) ) {
+            echo '<title>' . wp_get_document_title() . '</title>';
+        }
+
+        wp_head();
+	?>
 </head>
 <body <?php body_class(); ?>>
 <?php while (have_posts()) : the_post() ?>

@@ -72,6 +72,7 @@ export default function changeRichText($) {
             className =>
               className.startsWith("brz-tp__dc-block") ||
               className.startsWith("brz-mt") ||
+              className.startsWith("dc-color") ||
               className.startsWith("brz-mb")
           )
           .join(" ");

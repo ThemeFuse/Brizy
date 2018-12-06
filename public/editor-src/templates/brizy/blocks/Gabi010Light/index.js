@@ -6,7 +6,7 @@ thumbnailHeight: 356,
 title: "Gabi010Light",
 
 keywords: "pricing, three columns, button",
-cat: [0, 13],
+cat: [0, 12],
 type: 0,
 
 resolve: {

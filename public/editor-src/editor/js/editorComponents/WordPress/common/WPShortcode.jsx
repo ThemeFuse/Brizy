@@ -10,7 +10,7 @@ export class WPShortcode extends Component {
     name: "",
     attributes: {},
     raw: null,
-    placeholderIcon: "nc-wp-shortcode",
+    placeholderIcon: "wp-shortcode",
     resizerPoints: null,
     resizerMeta: null,
     resizerValue: null,
@@ -36,25 +36,25 @@ export class WPShortcode extends Component {
     } = this.props;
 
     const className = classnames("brz-wp-shortcode", _className);
-    const toggleClassName = classnames(
-      "brz-wp-shortcode__menu__toggle",
-      {
-        "brz-wp-shortcode__menu__toggle--mobile": mobileToggleMenu,
-        "brz-wp-shortcode__menu__toggle--tablet": tabletToggleMenu,
-      }
-    );
+    const toggleClassName = classnames("brz-wp-shortcode__menu__toggle", {
+      "brz-wp-shortcode__menu__toggle--mobile": mobileToggleMenu,
+      "brz-wp-shortcode__menu__toggle--tablet": tabletToggleMenu
+    });
     let content = <Inner {...innerProps} />;
 
     if (mobileToggleMenu || tabletToggleMenu) {
       content = (
         <div className={toggleClassName}>
           <input id="brz-wp-shortcode__menu__btn" type="checkbox" />
-          <label className="brz-wp-shortcode__menu__icon" htmlFor="brz-wp-shortcode__menu__btn">
-            <span className="brz-wp-shortcode__menu__icon--bars"></span>
+          <label
+            className="brz-wp-shortcode__menu__icon"
+            htmlFor="brz-wp-shortcode__menu__btn"
+          >
+            <span className="brz-wp-shortcode__menu__icon--bars" />
           </label>
           {content}
         </div>
-      )
+      );
     }
 
     if (resizerValue !== null) {
@@ -83,7 +83,7 @@ class Inner extends Component {
     name: "",
     attributes: {},
     raw: null,
-    placeholderIcon: "nc-wp-shortcode",
+    placeholderIcon: "wp-shortcode",
     renderHTMLInEditor: true
   };
 
@@ -160,11 +160,7 @@ class Inner extends Component {
   }
 
   renderForEdit() {
-    const {
-      className: _className,
-      style,
-      placeholderIcon,
-    } = this.props;
+    const { className: _className, style, placeholderIcon } = this.props;
     const { shortcodeHTML } = this.state;
 
     return shortcodeHTML ? (

@@ -1,1 +1,4 @@
-export { blockThumbnailUrl } from "./blockThumbnailUrl";
+export {
+  blockThumbnailUrl,
+  placeholderBlockThumbnailUrl
+} from "./blockThumbnailUrl";

@@ -4,6 +4,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
+import { Roles } from "visual/component/Roles";
 import SectionHeaderItemItems from "./items";
 import {
   wInBoxedPage,
@@ -94,26 +95,28 @@ class SectionHeaderItem extends EditorComponent {
   }
 
   renderToolbar() {
+    const { globalBlockId } = this.props.meta;
+
     return (
       <CollapsibleToolbar
         {...this.makeToolbarPropsFromConfig(toolbarConfig)}
         className="brz-ed-collapsible__section brz-ed-collapsible--big"
         animation="rightToLeft"
+        badge={Boolean(globalBlockId)}
         onOpen={this.handleToolbarOpen}
         onClose={this.handleToolbarClose}
       />
     );
   }
 
-  renderItems(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
-
-    const { bgImageSrc, bgColorOpacity, bgPopulation } = v;
+  renderItems(v) {
+    const {
+      bgImageSrc,
+      bgColorOpacity,
+      bgPopulation,
+      shapeTopType,
+      shapeBottomType
+    } = v;
 
     const meta = this.getMeta(v);
 
@@ -121,6 +124,8 @@ class SectionHeaderItem extends EditorComponent {
       className: bgStyleClassName(v, this.props),
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
+      shapeTopType: shapeTopType !== "none" && shapeTopType,
+      shapeBottomType: shapeBottomType !== "none" && shapeBottomType,
       tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
       tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
       mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
@@ -148,6 +153,9 @@ class SectionHeaderItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
@@ -160,19 +168,21 @@ class SectionHeaderItem extends EditorComponent {
 
     return (
       <div className={this.getSectionClassName(v)} style={styles}>
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {this.renderToolbar(v)}
-          {this.renderItems(v)}
-        </ContainerBorder>
+        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+          <ContainerBorder
+            ref={el => {
+              this.containerBorder = el;
+            }}
+            borderStyle="none"
+            activeBorderStyle="none"
+            reactToClick={false}
+            showBorders={false}
+            path={this.getPath()}
+          >
+            {this.renderToolbar(v)}
+            {this.renderItems(v)}
+          </ContainerBorder>
+        </Roles>
       </div>
     );
   }
@@ -181,6 +191,9 @@ class SectionHeaderItem extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
+      _v.shapeBottomColorPalette &&
+        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);

@@ -230,6 +230,9 @@ export default {
     "wrapper--imageGallery": {
       showToolbar: "on"
     },
+    "wrapper--menu": {
+      showToolbar: "on"
+    },
     "wrapper--spacer": {
       marginTop: 0,
       marginBottom: 0,

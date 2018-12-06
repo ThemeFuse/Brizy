@@ -34,6 +34,9 @@ import SectionHeaderStickyItem from "./SectionHeader/SectionHeaderStickyItem";
 import ImageGallery from "./ImageGallery";
 import SectionPopup from "./SectionPopup";
 import Carousel from "./Carousel";
+import Menu from "./Menu";
+import MenuItem from "./Menu/MenuItem";
+// import SectionMegaMenu from "./Menu/SectionMegaMenu";
 
 export default {
   Page,
@@ -71,7 +74,10 @@ export default {
   GlobalBlock,
   ImageGallery,
   SectionPopup,
-  Carousel
+  Carousel,
+  Menu,
+  MenuItem
+  // SectionMegaMenu
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

@@ -10,3 +10,7 @@ export function blockThumbnailUrl(block) {
 
   return applyFilter("blockThumbnailUrl", url, block);
 }
+
+export function placeholderBlockThumbnailUrl() {
+  return assetUrl("editor/img/block-placeholder.jpg");
+}

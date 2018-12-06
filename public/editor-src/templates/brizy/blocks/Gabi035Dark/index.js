@@ -6,7 +6,7 @@ thumbnailHeight: 287,
 title: "Gabi035Dark", 
 
 keywords: "forms, contact",
-cat: [0, 11, 16],
+cat: [0, 11, 15],
 type: 1,
 
 resolve: {

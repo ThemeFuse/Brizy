@@ -6,7 +6,7 @@ thumbnailHeight: 345,
 title: "Bogdan017Dark", 
 
 keywords: "map, address, phone, email, info, icons, icon box, two columns",
-cat: [0, 15, 11],
+cat: [0, 14, 11],
 type: 1,
 
 resolve: {

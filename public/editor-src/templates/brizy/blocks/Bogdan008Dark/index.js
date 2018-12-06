@@ -5,7 +5,7 @@ thumbnailWidth: 600,
 thumbnailHeight: 363,
 title: "Bogdan008Dark", 
 
-keywords: "header, features, call to action, services, icons, icon box, button, three columns, hero, image background, cover",
+keywords: "features, call to action, services, icons, icon box, button, three columns, hero, image background, cover",
 cat: [0, 2, 3, 4, 7],
 type: 1,
 
