@@ -99,24 +99,26 @@ class Brizy_Editor_Editor_Editor {
 
 
 		if ( $isTemplate ) {
-			$rule_manager = new Brizy_Admin_Rules_Manager();
-			$template_rules   = $rule_manager->getRules( $wp_post_id );
+			$rule_manager   = new Brizy_Admin_Rules_Manager();
+			$template_rules = $rule_manager->getRules( $wp_post_id );
 
-			foreach($template_rules as $rule) {
+			foreach ( $template_rules as $rule ) {
 				/**
-				 * @var Brizy_Admin_Rule $rule;
+				 * @var Brizy_Admin_Rule $rule ;
 				 */
 				$ruleMatches[] = array(
-					'group'  => $rule->getType(),
-					'type'   => $rule->getEntityType(),
-					'values' => $rule->getEntityValues()
+					'type'       => $rule->getType(),
+					'group'      => $rule->getAppliedFor(),
+					'entityType' => $rule->getEntityType(),
+					'values'     => $rule->getEntityValues()
 				);
 			}
 		} else {
 			$ruleMatches[] = array(
-				'group'  => Brizy_Admin_Rule::POSTS,
-				'type'   => $this->post->get_wp_post()->post_type,
-				'values' => array( $wp_post_id )
+				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
+				'group'      => Brizy_Admin_Rule::POSTS,
+				'entityType' => $this->post->get_wp_post()->post_type,
+				'values'     => array( $wp_post_id )
 			);
 		}
 
