@@ -84,6 +84,7 @@ class Brizy_Editor_Editor_Editor {
 		$change_template_url = null;
 		$templates           = null;
 		$isTemplate          = false;
+		$ruleMatches         = array();
 
 		if ( ! is_null( $this->post ) ) {
 			$wp_post_id        = $this->post->get_wp_post()->ID;
@@ -96,7 +97,29 @@ class Brizy_Editor_Editor_Editor {
 
 		$post_thumbnail = $this->getThumbnailData( $wp_post_id );
 
-		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Templates::getCurrentPageGroupAndType();
+
+		if ( $isTemplate ) {
+			$rule_manager = new Brizy_Admin_Rules_Manager();
+			$template_rules   = $rule_manager->getRules( $wp_post_id );
+
+			foreach($template_rules as $rule) {
+				/**
+				 * @var Brizy_Admin_Rule $rule;
+				 */
+				$ruleMatches[] = array(
+					'group'  => $rule->getType(),
+					'type'   => $rule->getEntityType(),
+					'values' => $rule->getEntityValues()
+				);
+			}
+		} else {
+			$ruleMatches[] = array(
+				'group'  => Brizy_Admin_Rule::POSTS,
+				'type'   => $this->post->get_wp_post()->post_type,
+				'values' => array( $wp_post_id )
+			);
+		}
+
 
 		$config = array(
 			'hosts'           => array(
@@ -137,7 +160,7 @@ class Brizy_Editor_Editor_Editor {
 			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
-				'ruleMatch'       => array( 'group' => $applyFor, 'type' => $entityType, 'values' => $entityValues ),
+				'ruleMatches'     => $ruleMatches,
 				'featuredImage'   => $post_thumbnail,
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
