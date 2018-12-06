@@ -6,7 +6,7 @@ thumbnailHeight: 363,
 title: "Gabi036Light",
 
 keywords: "forms, contact, two columns, text, directions, map",
-cat: [0, 11, 16, 15],
+cat: [0, 11, 15, 14],
 type: 0,
 
 resolve: {

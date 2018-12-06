@@ -6,7 +6,7 @@ thumbnailHeight: 216,
 title: "Gabi034Light",
 
 keywords: "forms, contact, two columns, icon box, icons, address, phone, email, info, image background",
-cat: [0, 11, 16],
+cat: [0, 11, 15],
 type: 0,
 
 resolve: {

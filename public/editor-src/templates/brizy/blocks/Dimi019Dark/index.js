@@ -6,7 +6,7 @@ thumbnailHeight: 328,
 title: "Dimi019Dark", 
 
 keywords: "pricing, call to action, three columns, button",
-cat: [0, 13, 4],
+cat: [0, 12, 4],
 type: 1,
 
 resolve: {

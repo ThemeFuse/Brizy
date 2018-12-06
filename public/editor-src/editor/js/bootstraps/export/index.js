@@ -19,6 +19,7 @@ import addFonts from "./transforms/head/addFonts";
 import addColorPaletteCSS from "./transforms/head/addColorPaletteCSS";
 import addFontStylesCSS from "./transforms/head/addFontStylesCSS";
 import changeRichText from "./transforms/body/changeRichText";
+import changeRichTextDCColor from "./transforms/body/changeRichTextDCColor";
 
 export default function main(pageId, pages, globals) {
   const convertedPages = pages.map(converter.pageFromBackend);
@@ -62,6 +63,8 @@ function getPageBlocks(page, globals) {
   const $pageHTML = cheerio.load(
     `<html><head><style>${glamorCSS}</style></head><body>${html}</body></html>`
   );
+
+  changeRichTextDCColor($pageHTML);
 
   return {
     head: getPageHeadBlock($pageHTML),

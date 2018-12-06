@@ -6,7 +6,7 @@ thumbnailHeight: 315,
 title: "Gabi033Light",
 
 keywords: "forms, contact, two columns",
-cat: [0, 11, 16],
+cat: [0, 11, 15],
 type: 0,
 
 resolve: {

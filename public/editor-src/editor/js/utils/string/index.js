@@ -5,3 +5,11 @@ export const printf = (s, ...replacements) => {
 
   return s.replace(/%s/g, () => replacements[i++]);
 };
+
+export const encodeToString = value => {
+  return encodeURIComponent(JSON.stringify(value));
+};
+
+export const decodeFromString = value => {
+  return JSON.parse(decodeURIComponent(value));
+};

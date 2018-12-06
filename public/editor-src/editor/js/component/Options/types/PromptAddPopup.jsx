@@ -10,7 +10,10 @@ import { getStore } from "visual/redux/store";
 import { updatePage } from "visual/redux/actionCreators";
 import { setIds } from "visual/utils/models";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup";
-import { blockThumbnailUrl } from "visual/utils/blocks";
+import {
+  blockThumbnailUrl,
+  placeholderBlockThumbnailUrl
+} from "visual/utils/blocks";
 import { imageWrapperSize } from "visual/utils/image";
 
 const getBlocksConfig = _.memoize(() => {
@@ -28,7 +31,8 @@ const getBlocksConfig = _.memoize(() => {
   return {
     ...blocksConfig,
     categories,
-    blocks
+    blocks,
+    allowMissing: block => block.type === "SectionPopup"
   };
 });
 
@@ -138,10 +142,19 @@ class PromptAddPopupOptionType extends React.Component {
     const blocks = getStore().getState().page.data.items;
     const { blockId } = blocks.find(el => el.value._id === value);
     const blockData = Editor.getBlock(blockId);
+    const thumbnailData = {
+      src: blockData
+        ? blockThumbnailUrl(blockData)
+        : placeholderBlockThumbnailUrl(),
+      width:
+        blockData && blockData.thumbnailWidth ? blockData.thumbnailWidth : 500,
+      height:
+        blockData && blockData.thumbnailHeight ? blockData.thumbnailHeight : 200
+    };
     const MAX_CONTAINER_WIDTH = 140;
     const { width, height } = imageWrapperSize(
-      blockData.thumbnailWidth,
-      blockData.thumbnailHeight,
+      thumbnailData.width,
+      thumbnailData.height,
       MAX_CONTAINER_WIDTH
     );
 
@@ -154,7 +167,7 @@ class PromptAddPopupOptionType extends React.Component {
         }}
       >
         <img
-          src={blockThumbnailUrl(blockData)}
+          src={thumbnailData.src}
           className="brz-img"
           onClick={this.handleEdit}
           alt="Popup Thumbnail"

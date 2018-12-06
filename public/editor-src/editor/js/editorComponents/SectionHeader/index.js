@@ -47,6 +47,9 @@ class SectionHeader extends EditorComponent {
     height: "auto"
   };
 
+  isSticky = false;
+  isUpdated = false;
+
   shouldComponentUpdate(nextProps, nextState) {
     const stateUpdate = this.state.height !== nextState.height;
 
@@ -54,13 +57,33 @@ class SectionHeader extends EditorComponent {
   }
 
   componentDidUpdate() {
+    if (this.isUpdated) {
+      return;
+    }
+
     const { type } = this.getValue();
+
     if (type !== "fixed") {
       fixedContainerPlus({
         fixed: false,
         node: this.sectionNode
       });
     }
+  }
+
+  handleValueChange(newValue, meta) {
+    if (meta.patch.type && meta.patch.type !== "fixed") {
+      this.isUpdated = true;
+
+      this.setState(
+        {
+          height: "auto"
+        },
+        () => (this.isUpdated = false)
+      );
+    }
+
+    this.props.onChange(newValue, meta);
   }
 
   handleSectionRef = el => {
@@ -84,11 +107,23 @@ class SectionHeader extends EditorComponent {
         node: this.sectionNode,
         height: this.state.height
       });
+      this.isSticky = isSticky;
+
+      // Rerenders because state maybe old
+      this.forceUpdate();
+    } else {
+      this.isSticky = false;
     }
   };
 
   handleUpdateHeight = () => {
     const { height } = this.stickyNode.getBoundingClientRect();
+
+    fixedContainerPlus({
+      fixed: this.isSticky,
+      node: this.sectionNode,
+      height
+    });
 
     if (height !== this.state.height) {
       this.setState({
@@ -112,11 +147,11 @@ class SectionHeader extends EditorComponent {
     );
 
     if (IS_EDITOR) {
+      // Render in #brz-ed-root because have problems with mmenu z-index
+      const node = document.getElementById("brz-ed-root");
+
       sticky = (
-        <Portal
-          node={document.body}
-          className="brz-ed-portal-section-header__sticky"
-        >
+        <Portal node={node} className="brz-ed-portal-section-header__sticky">
           {sticky}
         </Portal>
       );
@@ -138,7 +173,8 @@ class SectionHeader extends EditorComponent {
       bindWithKey: "items",
       sliceStartIndex: STICKY_ITEM_INDEX,
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig)
+        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig),
+        meta: this.props.meta
       }
     });
 
@@ -188,7 +224,8 @@ class SectionHeader extends EditorComponent {
       sliceStartIndex: 0,
       sliceEndIndex: STICKY_ITEM_INDEX,
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig)
+        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig),
+        meta: this.props.meta
       }
     });
 

@@ -6,7 +6,7 @@ thumbnailHeight: 417,
 title: "Bogdan016Dark", 
 
 keywords: "map, address, phone, email, info",
-cat: [0, 15, 11],
+cat: [0, 14, 11],
 type: 1,
 
 resolve: {

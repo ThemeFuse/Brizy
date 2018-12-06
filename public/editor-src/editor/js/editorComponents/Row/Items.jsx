@@ -52,6 +52,9 @@ class Items extends EditorArrayComponent {
       case "tablet":
         this.handleTabletColumnResize(index, deltaX, position);
         break;
+      case "mobile":
+        this.handleMobileColumnResize(index, deltaX, position);
+        break;
       default:
         console.error("Invalid Column Resize. This should not happen");
     }
@@ -124,6 +127,28 @@ class Items extends EditorArrayComponent {
     let newValue = setIn(
       this.getDBValue(),
       [index, "value", "tabletWidth"],
+      colWidthPercent
+    );
+
+    this.handleValueChange(newValue);
+  };
+
+  handleMobileColumnResize = (index, deltaX) => {
+    const { mobileW } = this.props.meta;
+    this.columnWidths = this.columnWidths || this.getColumnWidthsInPx();
+
+    const colWidthPx = clamp(
+      this.columnWidths[index] + deltaX,
+      MIN_COL_WIDTH,
+      mobileW
+    );
+    const colWidthPercent = toDecimalTen((colWidthPx * 100) / mobileW);
+
+    this.popoverData = [colWidthPercent];
+
+    let newValue = setIn(
+      this.getDBValue(),
+      [index, "value", "mobileWidth"],
       colWidthPercent
     );
 

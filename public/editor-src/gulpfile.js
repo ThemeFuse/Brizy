@@ -170,6 +170,7 @@ gulp.task(
     "editor.css",
     "editor.fonts",
     "editor.icons",
+    "editor.img",
     "editor.twig"
   ],
   done => {
@@ -246,6 +247,12 @@ gulp.task("editor.fonts", () => {
 gulp.task("editor.icons", () => {
   const src = paths.editor + "/sass/editor/icons/*";
   const dest = paths.build + "/editor/icons";
+
+  gulp.src(src).pipe(gulp.dest(dest));
+});
+gulp.task("editor.img", () => {
+  const src = paths.editor + "/img/*";
+  const dest = paths.build + "/editor/img";
 
   gulp.src(src).pipe(gulp.dest(dest));
 });

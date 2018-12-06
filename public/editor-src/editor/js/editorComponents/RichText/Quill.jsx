@@ -13,6 +13,43 @@ const DEFAULT = {
   color: "#000",
   colorPalette: null,
   population: null,
+  populationColor: {
+    p: {
+      hex: null,
+      opacity: 1,
+      colorPalette: null
+    },
+    h1: {
+      hex: null,
+      opacity: 1,
+      colorPalette: null
+    },
+    h2: {
+      hex: null,
+      opacity: 1,
+      colorPalette: null
+    },
+    h3: {
+      hex: null,
+      opacity: 1,
+      colorPalette: null
+    },
+    h4: {
+      hex: null,
+      opacity: 1,
+      colorPalette: null
+    },
+    h5: {
+      hex: null,
+      opacity: 1,
+      colorPalette: null
+    },
+    h6: {
+      hex: null,
+      opacity: 1,
+      colorPalette: null
+    }
+  },
   font: null,
   fontStyle: null,
   height: 1.6,
@@ -236,30 +273,32 @@ export default class QuillComponent extends React.Component {
     let newFormats = {
       ...formats,
       population,
-      div: false
+      dcBlock: false,
+      populationColor: false
     };
     if (display === "inline") {
       this.quill.insertText(index, label, newFormats);
-      // hack. {div: true} in previous line doesn't work
-      this.quill.format("div", false);
+      // hack. {dcBlock: false} in previous line doesn't work
+      this.quill.format("dcBlock", false);
+      this.quill.format("populationColor", false);
       this.quill.insertText(index + label.length, " ", {
         population: null
       });
       index += 1;
     } else {
-      newFormats.div = true;
+      newFormats.dcBlock = true;
       const paragraphLength = lineBlot.domNode.innerText;
 
       if (!paragraphLength.trim().length) {
         // dynamic Content is alone in the paragraph
         this.quill.insertText(index, label, newFormats);
-        this.quill.format("div", true);
+        this.quill.format("dcBlock", true);
       } else if (lineBlot.offset() + paragraphLength.length === index) {
         // dynamicContent is in the end of paragraph
         this.quill.insertText(index, "\n");
         index += 1;
         this.quill.insertText(index, label, newFormats);
-        this.quill.format("div", true);
+        this.quill.format("dcBlock", true);
       } else if (lineBlot.offset() === index) {
         // dynamicContent is in the begin of paragraph
         this.quill.insertText(index, `${label}\n`, newFormats);

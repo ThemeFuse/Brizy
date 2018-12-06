@@ -1,7 +1,7 @@
 import { isHex } from "visual/utils/color";
 import { getUsedFonts } from "visual/utils/fonts";
 import { getDynamicContentByPlaceholder } from "visual/utils/options";
-import { formatLinkFromString } from "./link";
+import { decodeFromString } from "visual/utils/string";
 
 const DEFAULT_LINE_HEIGHT = 1.5;
 
@@ -62,7 +62,7 @@ const getLink = value => {
     population,
     externalType,
     popup = ""
-  } = formatLinkFromString(value);
+  } = decodeFromString(value);
 
   return {
     linkType: type,
@@ -101,6 +101,9 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
   const marginBottom = format[`${deviceMode}MarginBottom`];
 
   const link = format.link ? getLink(format.link) : {};
+  const populationColor = format.populationColor
+    ? { populationColor: decodeFromString(format.populationColor) }
+    : {};
 
   let hex = format.color ? getFirstValue(format.color) : cssColor;
 
@@ -139,6 +142,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
           .replace("_", ".")
       : String(letterSpacing),
     ...link,
+    ...populationColor,
     list: format.list ? getFirstValue(format.list) : null,
     marginBottom: marginBottom ? getFirstValue(marginBottom) : cssMarginBottom,
     marginTop: marginTop ? getFirstValue(marginTop) : cssMarginTop,

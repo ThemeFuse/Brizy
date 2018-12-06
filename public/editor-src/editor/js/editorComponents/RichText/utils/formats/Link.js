@@ -1,5 +1,5 @@
 import Quill from "quill";
-import { formatLinkFromString, formatStringFromLink } from "../link";
+import { decodeFromString } from "visual/utils/string";
 const Link = Quill.import("formats/link");
 
 export default class linkType extends Link {
@@ -14,7 +14,7 @@ export default class linkType extends Link {
     return domNode.getAttribute("data-href");
   }
   static setAttributes(node, link) {
-    const value = formatLinkFromString(link);
+    const value = decodeFromString(link);
     const { type } = value;
 
     node.removeAttribute("href");

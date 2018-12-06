@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { wInMobilePage } from "visual/config/columns";
 import { imageUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
@@ -9,10 +8,6 @@ const aligns = {
   top: "flex-start",
   center: "center",
   bottom: "flex-end"
-};
-
-const isInnerRow = meta => {
-  return meta.row && meta.row.isInner;
 };
 
 export function bgStyleClassName(v, props) {
@@ -815,11 +810,11 @@ export function styleClassName(v, props) {
       };
     }
   } else {
-    const { width, zIndex } = v;
+    const { width, mobileWidth, zIndex } = v;
 
     glamorObj = {
       ".brz &": {
-        zIndex: zIndex === 0 ? "auto" : zIndex,
+        zIndex: zIndex === 0 ? "auto" : zIndex
       },
       "@media (min-width: 992px)": {
         ".brz &": {
@@ -834,18 +829,15 @@ export function styleClassName(v, props) {
           flex: `1 1 ${tabletSyncOnChange(v, "width")}%`,
           maxWidth: `${tabletSyncOnChange(v, "width")}%`
         }
-      }
-    };
-
-    if (isInnerRow(meta) && meta.desktopW <= wInMobilePage) {
-      glamorObj["@media (min-width: 320px)"] = {
+      },
+      "@media (max-width: 767px)": {
         ".brz &": {
           willChange: "flex, max-width",
-          flex: `1 1 ${width}%`,
-          maxWidth: `${width}%`
+          flex: `1 1 ${mobileWidth}%`,
+          maxWidth: `${mobileWidth}%`
         }
-      };
-    }
+      }
+    };
     if (items.length === 0) {
       glamorObj["& > .brz-ed-border"] = {
         flex: 1,
@@ -868,13 +860,11 @@ export function styleClassName(v, props) {
 export function styleCSSVars(v, props) {
   if (IS_PREVIEW) return;
 
-  const { width } = v;
-  const { meta } = props;
-  const needMobileWidth = isInnerRow(meta) && meta.desktopW <= wInMobilePage;
+  const { width, mobileWidth } = v;
 
   return {
     "--width": `${width}%`,
     "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
-    "--mobileWidth": needMobileWidth ? `${width}%` : "100%"
+    "--mobileWidth": `${mobileWidth}%`
   };
 }

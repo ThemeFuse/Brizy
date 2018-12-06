@@ -1,4 +1,8 @@
 // --- Toolbar
+#brz-toolbar-portal {
+  // Added Position Static for Portal becouse has problems with mmenu
+  position: static;
+}
 .brz-ed-toolbar {
   position: absolute;
   top: 0;

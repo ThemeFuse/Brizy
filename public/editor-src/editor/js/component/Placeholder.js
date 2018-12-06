@@ -1,6 +1,5 @@
 import React from "react";
 import classnames from "classnames";
-import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 
 export default class Placeholder extends React.Component {
@@ -9,18 +8,7 @@ export default class Placeholder extends React.Component {
     icon: ""
   };
 
-  renderForEdit() {
-    const { className: _className, icon } = this.props;
-    const className = classnames("brz-shortcode__placeholder", _className);
-
-    return (
-      <div className={className}>
-        <EditorIcon icon={icon} />
-      </div>
-    );
-  }
-
-  renderForView() {
+  render() {
     const { className: _className, icon } = this.props;
     const className = classnames("brz-shortcode__placeholder", _className);
 
@@ -29,9 +17,5 @@ export default class Placeholder extends React.Component {
         <ThemeIcon name={icon} type="editor" />
       </div>
     );
-  }
-
-  render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
   }
 }

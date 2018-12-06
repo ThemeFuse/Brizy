@@ -4,7 +4,6 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
-import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
@@ -192,7 +191,7 @@ class SectionPopup extends EditorComponent {
         data-block-id={this.props.blockId}
       >
         <div className="brz-popup__close" onClick={this.handleDropClick}>
-          <EditorIcon icon="nc-close-popup" />
+          <ThemeIcon name="close-popup" type="editor" />
         </div>
         <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
           <ContainerBorder

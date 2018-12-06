@@ -5,7 +5,7 @@ thumbnailWidth: 600,
 thumbnailHeight: 270,
 title: "Gabi004Dark", 
 
-keywords: "cover, header, call to action, image background, promo, testimonial",
+keywords: "cover, call to action, image background, promo, testimonial",
 cat: [0, 2, 4, 8],
 type: 1,
 
