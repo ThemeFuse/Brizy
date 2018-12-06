@@ -10322,6 +10322,7 @@ to{-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,.3);box-shadow:0 0 10px 0 rgba(0,0,0
 .brz-ed .brz-ed-sidebar-row .brz-ed-options-field{margin-bottom:15px}
 .brz-ed .brz-ed-sidebar-row .brz-ed-options-field:last-child{margin-bottom:0}
 .brz-ed .brz-ed-sidebar__right__option .brz-control__select-option{max-width:106px;overflow:hidden;text-overflow:ellipsis}
+.brz-ed #brz-toolbar-portal{position:static}
 .brz-ed .brz-ed-toolbar{position:absolute;top:0;left:0;z-index:1070;will-change:top,right,bottom,left}
 .brz-ed .brz-ed-toolbar__items{background-color:rgba(3,8,15,.92);-webkit-box-shadow:0 0 5px 0 rgba(0,0,0,.5);box-shadow:0 0 5px 0 rgba(0,0,0,.5);border-radius:42px;padding-left:6px;padding-right:6px}
 .brz-ed .brz-ed-toolbar__item{position:relative;height:42px;font-size:16px;line-height:1;color:#fff;border-left:1px solid rgba(255,255,255,.15);margin-left:-1px;-webkit-transition:.15s linear color;transition:.15s linear color}
