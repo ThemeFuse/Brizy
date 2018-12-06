@@ -177,7 +177,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return int
 	 */
 	public function getType() {
-		return $this->type;
+		return (int)$this->type;
 	}
 
 	/**
