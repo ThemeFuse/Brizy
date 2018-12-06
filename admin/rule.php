@@ -231,7 +231,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string[]
 	 */
 	public function getEntityValues() {
-		return is_null( $this->entityValues ) ? array() : $this->entityValues;
+		return is_null( $this->entityValues ) ? array() : array_map( function ( $id ) {
+			return (int) $id;
+		}, $this->entityValues );
 	}
 
 	/**
@@ -290,7 +292,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			$values[] = $this->getEntityType();
 		}
 
-		$weight += count($values);
+		$weight += count( $values );
 
 		if ( $this->getType() == self::TYPE_EXCLUDE ) {
 			$weight += 10;
