@@ -55,7 +55,6 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 			if ( $rule->isMatching( $applyFor, $entityType, $entityValues ) ) {
 				return $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ? true : false;
 			}
-
 		}
 
 		return false;

@@ -159,6 +159,7 @@ var actions = {
 
 var RuleTypeField = function (params) {
     return function (state, action) {
+        console.log(params);
         return h(
             "span",
             {class: "brizy-rule-select"},
@@ -390,7 +391,7 @@ var RuleApplyGroupField = function (params) {
 var RuleForm = function (params) {
     var elements = [
         h("h4", {}, "Add New Condition"),
-        h(RuleTypeField, {value: params.rule.type}),
+        h(RuleTypeField, {value: String(params.rule.type)}),
         h(RuleApplyGroupField, {rule: params.rule, groups: params.groups}),
         h("input", {
             type: "button",
@@ -409,7 +410,7 @@ var RuleForm = function (params) {
 
 var RuleListItem = function (params) {
     return h("div", {class: "rule", key: params.index}, [
-        h(RuleTypeField, {value: params.rule.type, disabled: true}),
+        h(RuleTypeField, {value: String(params.rule.type), disabled: true}),
         h(RuleApplyGroupField, {
             rule: params.rule,
             groups: params.groups,
