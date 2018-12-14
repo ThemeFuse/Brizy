@@ -9,64 +9,64 @@ export function styleClassName(v) {
 
   if (IS_EDITOR) {
     glamorObj = {
-      "& > .slick-slider > .brz-slick-slider__dots": {
+      "& > .brz-carousel__slider > .brz-slick-slider__dots": {
         color: "var(--colorDots)"
       },
-      "& > .slick-slider > .brz-slick-slider__arrow": {
+      "& > .brz-carousel__slider > .brz-slick-slider__arrow": {
         color: "var(--colorArrows)"
       },
 
       ".brz-ed--desktop &": {
-        "& > .slick-slider": {
+        "& > .brz-carousel__slider": {
           paddingLeft: "var(--paddingLeft)",
           paddingRight: "var(--paddingRight)"
         },
-        "& > .slick-slider > .slick-list": {
+        "& > .brz-carousel__slider > .slick-list": {
           marginLeft: "var(--sliderMargin)",
           marginRight: "var(--sliderMargin)",
           paddingTop: "var(--paddingTop)",
           paddingBottom: "var(--paddingBottom)"
         },
-        "& > .slick-slider > .slick-list > .slick-track > .slick-slide": {
+        "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
           paddingLeft: "var(--spacing)",
           paddingRight: "var(--spacing)"
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: "var(--arrowsSpacing)"
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-next": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-next": {
           right: "var(--arrowsSpacing)"
         }
       },
       ".brz-ed--tablet &": {
-        "& > .slick-slider": {
+        "& > .brz-carousel__slider": {
           paddingLeft: "var(--tabletPaddingLeft)",
           paddingRight: "var(--tabletPaddingRight)"
         },
-        "& > .slick-slider > .slick-list": {
+        "& > .brz-carousel__slider > .slick-list": {
           paddingTop: "var(--tabletPaddingTop)",
           paddingBottom: "var(--tabletPaddingBottom)"
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: "var(--tabletArrowsSpacing)"
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-next": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-next": {
           right: "var(--tabletArrowsSpacing)"
         }
       },
       ".brz-ed--mobile &": {
-        "& > .slick-slider": {
+        "& > .brz-carousel__slider": {
           paddingLeft: "var(--mobilePaddingLeft)",
           paddingRight: "var(--mobilePaddingRight)"
         },
-        "& > .slick-slider > .slick-list": {
+        "& > .brz-carousel__slider > .slick-list": {
           paddingTop: "var(--mobilePaddingTop)",
           paddingBottom: "var(--mobilePaddingBottom)"
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: "var(--mobileArrowsSpacing)"
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-next": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-next": {
           right: "var(--mobileArrowsSpacing)"
         }
       }
@@ -116,8 +116,14 @@ export function styleClassName(v) {
       mobileSliderPaddingLeftSuffix
     } = v;
 
-    const tabletSliderArrowsSpacing = tabletSyncOnChange(v, "sliderArrowsSpacing");
-    const mobileSliderArrowsSpacing = mobileSyncOnChange(v, "sliderArrowsSpacing");
+    const tabletSliderArrowsSpacing = tabletSyncOnChange(
+      v,
+      "sliderArrowsSpacing"
+    );
+    const mobileSliderArrowsSpacing = mobileSyncOnChange(
+      v,
+      "sliderArrowsSpacing"
+    );
 
     glamorObj = {
       // Hide slideItems before slick-slide initialized
@@ -129,7 +135,7 @@ export function styleClassName(v) {
           display: "none"
         }
       },
-      "& > .slick-slider": {
+      "& > .brz-carousel__slider": {
         paddingLeft:
           sliderPaddingType === "grouped"
             ? sliderPadding + sliderPaddingSuffix
@@ -139,7 +145,7 @@ export function styleClassName(v) {
             ? sliderPadding + sliderPaddingSuffix
             : sliderPaddingRight + sliderPaddingRightSuffix
       },
-      "& > .slick-slider > .slick-list": {
+      "& > .brz-carousel__slider > .slick-list": {
         marginLeft: `-${spacing / 2}px`,
         marginRight: `-${spacing / 2}px`,
         paddingTop:
@@ -151,24 +157,24 @@ export function styleClassName(v) {
             ? sliderPadding + sliderPaddingSuffix
             : sliderPaddingBottom + sliderPaddingBottomSuffix
       },
-      "& > .slick-slider > .slick-list > .slick-track > .slick-slide": {
+      "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
         paddingLeft: `${spacing / 2}px`,
         paddingRight: `${spacing / 2}px`
       },
-      "& > .slick-slider > .brz-slick-slider__dots": {
+      "& > .brz-carousel__slider > .brz-slick-slider__dots": {
         color: hexToRgba(sliderDotsColorHex, sliderDotsColorOpacity)
       },
-      "& > .slick-slider > .brz-slick-slider__arrow": {
+      "& > .brz-carousel__slider > .brz-slick-slider__arrow": {
         color: hexToRgba(sliderArrowsColorHex, sliderArrowsColorOpacity)
       },
-      "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+      "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
         left: `${sliderArrowsSpacing}px`
       },
-      "& > .slick-slider > .brz-slick-slider__arrow-next": {
+      "& > .brz-carousel__slider > .brz-slick-slider__arrow-next": {
         right: `${sliderArrowsSpacing}px`
       },
       "@media (max-width: 991px)": {
-        "& > .slick-slider": {
+        "& > .brz-carousel__slider": {
           paddingLeft:
             tabletSliderPaddingType === "grouped"
               ? tabletSliderPadding + tabletSliderPaddingSuffix
@@ -178,31 +184,31 @@ export function styleClassName(v) {
               ? tabletSliderPadding + tabletSliderPaddingSuffix
               : tabletSliderPaddingRight + tabletSliderPaddingRightSuffix
         },
-        "& > .slick-slider > .slick-list": {
+        "& > .brz-carousel__slider > .slick-list": {
           marginLeft: "auto",
           marginRight: "auto",
           paddingTop:
             tabletSliderPaddingType === "grouped"
               ? tabletSliderPadding + tabletSliderPaddingSuffix
               : tabletSliderPaddingTop + tabletSliderPaddingTopSuffix,
-            paddingBottom:
-              tabletSliderPaddingType === "grouped"
-                ? tabletSliderPadding + tabletSliderPaddingSuffix
-                : tabletSliderPaddingBottom + tabletSliderPaddingBottomSuffix
+          paddingBottom:
+            tabletSliderPaddingType === "grouped"
+              ? tabletSliderPadding + tabletSliderPaddingSuffix
+              : tabletSliderPaddingBottom + tabletSliderPaddingBottomSuffix
         },
-        "& > .slick-slider > .slick-list > .slick-track > .slick-slide": {
+        "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
           paddingLeft: 0,
           paddingRight: 0
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: `${tabletSliderArrowsSpacing}px`
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-next": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-next": {
           right: `${tabletSliderArrowsSpacing}px`
         }
       },
       "@media (max-width: 767px)": {
-        "& > .slick-slider": {
+        "& > .brz-carousel__slider": {
           paddingLeft:
             mobileSliderPaddingType === "grouped"
               ? mobileSliderPadding + mobileSliderPaddingSuffix
@@ -212,7 +218,7 @@ export function styleClassName(v) {
               ? mobileSliderPadding + mobileSliderPaddingSuffix
               : mobileSliderPaddingRight + mobileSliderPaddingRightSuffix
         },
-        "& > .slick-slider > .slick-list": {
+        "& > .brz-carousel__slider > .slick-list": {
           marginLeft: "auto",
           marginRight: "auto",
           paddingTop:
@@ -224,14 +230,14 @@ export function styleClassName(v) {
               ? mobileSliderPadding + mobileSliderPaddingSuffix
               : mobileSliderPaddingBottom + mobileSliderPaddingBottomSuffix
         },
-        "& > .slick-slider > .slick-list > .slick-track > .slick-slide": {
+        "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
           paddingLeft: 0,
           paddingRight: 0
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-prev": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: `${mobileSliderArrowsSpacing}px`
         },
-        "& > .slick-slider > .brz-slick-slider__arrow-next": {
+        "& > .brz-carousel__slider > .brz-slick-slider__arrow-next": {
           right: `${mobileSliderArrowsSpacing}px`
         }
       }
@@ -288,8 +294,14 @@ export function styleCSSVars(v) {
     mobileSliderPaddingLeftSuffix
   } = v;
 
-  const tabletSliderArrowsSpacing = tabletSyncOnChange(v, "sliderArrowsSpacing");
-  const mobileSliderArrowsSpacing = mobileSyncOnChange(v, "sliderArrowsSpacing");
+  const tabletSliderArrowsSpacing = tabletSyncOnChange(
+    v,
+    "sliderArrowsSpacing"
+  );
+  const mobileSliderArrowsSpacing = mobileSyncOnChange(
+    v,
+    "sliderArrowsSpacing"
+  );
 
   return {
     "--spacing": `${spacing / 2}px`,

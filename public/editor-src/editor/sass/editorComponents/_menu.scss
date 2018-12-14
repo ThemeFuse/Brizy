@@ -118,7 +118,7 @@ $dropdown-arrow-size: 7px;
         width: $menuWidth + 5px;
 
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           top: -5px;
           right: 0;
@@ -202,6 +202,11 @@ $dropdown-arrow-size: 7px;
         display: none;
       }
     }
+  }
+
+  // MMenu
+  &.brz-menu__mmenu:not(.mm-menu) {
+    display: none;
   }
 
   // MMenu Styles
