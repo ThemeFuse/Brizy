@@ -13,23 +13,30 @@ const getMenuChoices = () => {
 
   return menus.length ? menus : [{ title: "-", value: "-" }];
 };
-const getMenu = v => [
-  {
-    id: "menuSelected",
-    type: "select",
-    label: t("WP Menu"),
-    position: 10,
-    choices: getMenuChoices(),
-    value: v.menuSelected,
-    onChange: menuSelected => {
-      if (menuSelected === "-") {
-        return;
-      }
+const getMenu = ({ menuSelected }) => {
+  const menuChoices = getMenuChoices();
+  const hasMenu = menuChoices.some(({ value }) => value === menuSelected);
 
-      return { menuSelected };
+  return [
+    {
+      id: "menuSelected",
+      type: "select",
+      label: t("WP Menu"),
+      position: 10,
+      choices: hasMenu
+        ? menuChoices
+        : [{ title: t("Select a Menu"), value: "-" }, ...menuChoices],
+      value: hasMenu ? menuSelected : "-",
+      onChange: menuSelected => {
+        if (menuSelected === "-") {
+          return;
+        }
+
+        return { menuSelected };
+      }
     }
-  }
-];
+  ];
+};
 
 export function getItemsForDesktop(v) {
   const { hex: mMenuIconColorHex } = getOptionColor(v, "mMenuIconColor");

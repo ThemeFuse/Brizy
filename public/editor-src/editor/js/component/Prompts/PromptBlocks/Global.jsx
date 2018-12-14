@@ -58,6 +58,10 @@ export default class Global extends React.Component {
       getStore().getState().globals.project.globalBlocks || {};
     const thumbnails = Object.entries(globalBlocks).reduce(
       (acc, [globalBlockId, block]) => {
+        if (block.deleted) {
+          return acc;
+        }
+
         const blockData = Editor.getBlock(block.blockId);
         let thumbnailData;
 

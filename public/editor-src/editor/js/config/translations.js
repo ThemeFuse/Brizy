@@ -144,6 +144,7 @@ export default {
   "Bg Size": __("Bg Size", "brizy"),
   "Parallax": __("Parallax", "brizy"),
   "Fixed": __("Fixed", "brizy"),
+  "Animated": __("Animated", "brizy"),
   "Sticky": __("Sticky", "brizy"),
   "URL": __("URL", "brizy"),
   "YouTube or Vimeo": __("YouTube or Vimeo", "brizy"),
@@ -468,6 +469,8 @@ export default {
   "Repeat": __("Repeat", "brizy"),
   "Make it Hamburger": __("Make it Hamburger", "brizy"),
   "Add a Menu": __("Add a Menu", "brizy"),
+  "Please select a menu": __("Please select a menu", "brizy"),
+  "Select a Menu": __("Select a Menu", "brizy"),
   "in your WordPress admin": __("in your WordPress admin", "brizy"),
   "Drawer Position": __("Drawer Position", "brizy"),
 };

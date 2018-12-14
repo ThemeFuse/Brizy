@@ -232,13 +232,13 @@ export function styleMenuClassName(v, hasMMenu) {
         "& .brz-menu__dropdown > .brz-menu__item:not(:last-child)": {
           borderBottomWidth: "var(--subMenuBorderWidth)",
           borderBottomStyle: "var(--subMenuBorderStyle)",
-          borderBottomColor: "var(--subMenuBorderColor)",
+          borderBottomColor: "var(--subMenuBorderColor)"
         },
 
         // MMenu Style
         "&.mm-menu.mm-menu_theme-dark": {
           "& .mm-panels, & .mm-panels > .mm-panel": {
-            backgroundColor: "var(--mMenuBgColor)",
+            backgroundColor: "var(--mMenuBgColor)"
           },
           "& .mm-navbar.mm-listitem, & .mm-listitem_opened > .mm-listitem__text:after": {
             borderColor: "var(--mMenuBorderColor)"
@@ -296,8 +296,8 @@ export function styleMenuClassName(v, hasMMenu) {
           paddingTop: "var(--itemPaddingTop)",
           marginRight: "var(--itemPaddingRight)",
           paddingBottom: "var(--itemPaddingBottom)",
-          marginLeft: "var(--itemPaddingLeft)",
-        },
+          marginLeft: "var(--itemPaddingLeft)"
+        }
       },
       ".brz-ed--tablet &": {
         fontSize: "var(--tabletFontSize)",
@@ -350,8 +350,8 @@ export function styleMenuClassName(v, hasMMenu) {
           paddingTop: "var(--tabletItemPaddingTop)",
           marginRight: "var(--tabletItemPaddingRight)",
           paddingBottom: "var(--tabletItemPaddingBottom)",
-          marginLeft: "var(--tabletItemPaddingLeft)",
-        },
+          marginLeft: "var(--tabletItemPaddingLeft)"
+        }
       },
       ".brz-ed--mobile &": {
         fontSize: "var(--mobileFontSize)",
@@ -404,8 +404,8 @@ export function styleMenuClassName(v, hasMMenu) {
           paddingTop: "var(--mobileItemPaddingTop)",
           marginRight: "var(--mobileItemPaddingRight)",
           paddingBottom: "var(--mobileItemPaddingBottom)",
-          marginLeft: "var(--mobileItemPaddingLeft)",
-        },
+          marginLeft: "var(--mobileItemPaddingLeft)"
+        }
       }
     };
   } else {
@@ -510,15 +510,15 @@ export function styleMenuClassName(v, hasMMenu) {
       mobileItemPaddingTop,
       mobileItemPaddingRight,
       mobileItemPaddingBottom,
-      mobileItemPaddingLeft,
+      mobileItemPaddingLeft
     } = v;
 
     const boxShadowStyle =
       boxShadow === "on"
         ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-        boxShadowColorHex,
-        boxShadowColorOpacity
-        )}`
+            boxShadowColorHex,
+            boxShadowColorOpacity
+          )}`
         : "none";
 
     glamorObj = {
@@ -573,8 +573,7 @@ export function styleMenuClassName(v, hasMMenu) {
           },
           "& .mm-listitem__text": {
             justifyContent: aligns[mMenuItemHorizontalAlign]
-          },
-
+          }
         },
         "& .mm-navbar": {
           color: hexToRgba(mMenuColorHex, mMenuColorOpacity),
@@ -583,7 +582,7 @@ export function styleMenuClassName(v, hasMMenu) {
           fontWeight: mMenuFontWeight,
           lineHeight: mMenuLineHeight,
           letterSpacing: `${mMenuLetterSpacing}`,
-          borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity),
+          borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity)
         },
         // Spacing for 0 level menu item
         "& .brz-menu__ul:not(.mm-listview)": {
@@ -633,7 +632,10 @@ export function styleMenuClassName(v, hasMMenu) {
             borderColor: hexToRgba(subMenuColorHex, subMenuColorOpacity)
           },
           "&:hover:after": {
-            borderColor: hexToRgba(subMenuHoverColorHex, subMenuHoverColorOpacity)
+            borderColor: hexToRgba(
+              subMenuHoverColorHex,
+              subMenuHoverColorOpacity
+            )
           }
         },
 
@@ -644,16 +646,16 @@ export function styleMenuClassName(v, hasMMenu) {
           borderBottomColor: hexToRgba(
             subMenuBorderColorHex,
             subMenuBorderColorOpacity
-          ),
+          )
         },
 
         // MMenu Style
         "&.mm-menu.mm-menu_theme-dark": {
           "& .mm-panels, & .mm-panels > .mm-panel": {
-            backgroundColor: hexToRgba(mMenuBgColorHex, mMenuBgColorOpacity),
+            backgroundColor: hexToRgba(mMenuBgColorHex, mMenuBgColorOpacity)
           },
           "& .mm-navbar.mm-listitem, & .mm-listitem_opened > .mm-listitem__text:after": {
-            borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity),
+            borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity)
           }
         },
         "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
@@ -712,8 +714,8 @@ export function styleMenuClassName(v, hasMMenu) {
             paddingTop: `${tabletItemPaddingTop}px`,
             marginRight: `${parseFloat(tabletItemPaddingRight / 2)}px`,
             paddingBottom: `${tabletItemPaddingBottom}px`,
-            marginLeft: `${parseFloat(tabletItemPaddingLeft / 2)}px`,
-          },
+            marginLeft: `${parseFloat(tabletItemPaddingLeft / 2)}px`
+          }
         }
       },
       "@media (max-width: 767px)": {
@@ -768,8 +770,8 @@ export function styleMenuClassName(v, hasMMenu) {
             paddingTop: `${mobileItemPaddingTop}px`,
             marginRight: `${parseFloat(mobileItemPaddingRight / 2)}px`,
             paddingBottom: `${mobileItemPaddingBottom}px`,
-            marginLeft: `${parseFloat(mobileItemPaddingLeft / 2)}px`,
-          },
+            marginLeft: `${parseFloat(mobileItemPaddingLeft / 2)}px`
+          }
         }
       }
     };
@@ -780,6 +782,7 @@ export function styleMenuClassName(v, hasMMenu) {
   return classnames(
     "brz-menu",
     {
+      "brz-menu__mmenu": hasMMenu,
       "brz-menu--has-dropdown":
         hasMMenu && items.some(({ value: { items } }) => items.length)
     },
@@ -895,15 +898,15 @@ export function styleMenuCSSVars(v) {
     mobileItemPaddingTop,
     mobileItemPaddingRight,
     mobileItemPaddingBottom,
-    mobileItemPaddingLeft,
+    mobileItemPaddingLeft
   } = v;
 
   const boxShadowStyle =
     boxShadow === "on"
       ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-      boxShadowColorHex,
-      boxShadowColorOpacity
-      )}`
+          boxShadowColorHex,
+          boxShadowColorOpacity
+        )}`
       : "none";
 
   return {
@@ -1051,6 +1054,6 @@ export function styleMenuCSSVars(v) {
     "--mobileItemMarginTop": `${-mobileItemPaddingTop}px`,
     "--mobileItemMarginRight": `${parseFloat(-mobileItemPaddingRight / 2)}px`,
     "--mobileItemMarginBottom": `${-mobileItemPaddingBottom}px`,
-    "--mobileItemMarginLeft": `${parseFloat(-mobileItemPaddingLeft / 2)}px`,
+    "--mobileItemMarginLeft": `${parseFloat(-mobileItemPaddingLeft / 2)}px`
   };
 }
