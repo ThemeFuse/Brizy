@@ -241,7 +241,7 @@ export default class Menu extends EditorComponent {
     if (!errMsg) {
       const selectedMenu = configMenus.find(menu => menu.id === v.menuSelected);
       if (!selectedMenu) {
-        errMsg = t("Could not find the menu. It was probably deleted");
+        errMsg = t("Please select a menu");
       } else if (selectedMenu.items.length === 0) {
         errMsg = printf(
           t("%s does not have any menu items"),

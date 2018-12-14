@@ -599,11 +599,3 @@ svg:not(:root) {
   appearance: none;
 }
 
-// Setup min-width and min-height and fixed carousel bug for width
-@include media-breakpoint-down(ms) {
-  // Only Preview
-  &.brz:not(.brz-ed) * {
-    min-width: 0;
-    min-height: 0;
-  }
-}
