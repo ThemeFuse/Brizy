@@ -35,6 +35,8 @@ class Brizy_Public_Main {
 		$this->project     = $project;
 		$this->post        = $post;
 		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post->get_parent_id() );
+
+		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
 
 	public function initialize_wordpress_editor() {
@@ -45,6 +47,7 @@ class Brizy_Public_Main {
 	}
 
 	public function initialize_front_end() {
+
 
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
 			// When some plugins want to redirect to their templates.
@@ -84,6 +87,14 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			$this->plugin_live_composer_fixes();
 		}
+	}
+
+	public function brizy_content( $content, $project, $wpPost ) {
+
+		$context       = Brizy_Content_ContextFactory::createContext( $project, null, $wpPost, null );
+		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+
+		return $mainProcessor->process( $content );
 	}
 
 	/**
@@ -135,7 +146,10 @@ class Brizy_Public_Main {
 		wp_enqueue_style( 'brizy-editor', "${assets_url}/editor/css/editor.css", array(), BRIZY_EDITOR_VERSION );
 		wp_register_script( 'brizy-editor-polyfill', "https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry", array(), null, true );
 		wp_register_script( 'brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array(), BRIZY_EDITOR_VERSION, true );
-		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", array( 'brizy-editor-polyfill', 'brizy-editor-vendor' ), BRIZY_EDITOR_VERSION, true );
+		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", array(
+			'brizy-editor-polyfill',
+			'brizy-editor-vendor'
+		), BRIZY_EDITOR_VERSION, true );
 		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_editor_enqueue_scripts' );
@@ -208,8 +222,9 @@ class Brizy_Public_Main {
 
 		$favicon = '';
 		if ( has_site_icon() ) {
-			ob_start(); ob_clean();
-				wp_site_icon();
+			ob_start();
+			ob_clean();
+			wp_site_icon();
 			$favicon = ob_get_clean();
 		}
 
@@ -329,22 +344,16 @@ class Brizy_Public_Main {
 			           ->save();
 
 			$params['content'] = $compiled_html_head;
-
 		} else {
 			$compiled_page = $this->post->get_compiled_page();
 			//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 			$head = $compiled_page->get_head();
-
 			$params['content'] = $head;
 		}
 
-		$context           = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $this->post->get_wp_post(), null );
-		$mainProcessor     = new Brizy_Content_MainProcessor( $context );
-		$params['content'] = $mainProcessor->process( $params['content'] );
-
+		//$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post() );
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
 		                     ->render( 'head-partial.html.twig', $params );
-
 		return;
 	}
 
@@ -371,9 +380,7 @@ class Brizy_Public_Main {
 			$content       = $compiled_page->get_body();
 		}
 
-		$context       = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $this->post->get_wp_post(), null );
-		$mainProcessor = new Brizy_Content_MainProcessor( $context );
-		$content       = $mainProcessor->process( $content );
+		//$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->get_wp_post() );
 
 		return $content;
 	}
