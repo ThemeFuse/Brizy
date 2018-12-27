@@ -107,7 +107,6 @@ class Brizy_Editor {
 		}
 
 		add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
-		add_action( 'pre_get_posts', array( $this, 'remove_templates_from_search' ) );
 	}
 
 	public function revisionsToKeep( $num, $post ) {
@@ -415,30 +414,6 @@ class Brizy_Editor {
 			Brizy_Editor_Storage_Common::instance()->set( self::$settings_key, $this->default_supported_post_types() );
 
 			return $this->default_supported_post_types();
-		}
-	}
-
-	/**
-	 * @param $query
-	 */
-	public function remove_templates_from_search( $query ) {
-
-		if ( is_admin() || ! $query->is_main_query() ) {
-			return;
-		}
-
-		if ( $query->is_search() ) {
-
-			$post_type_to_remove   = Brizy_Admin_Templates::CP_TEMPLATE;
-			$searchable_post_types = get_post_types( array( 'exclude_from_search' => false ) );
-
-			/* make sure you got the proper results, and that your post type is in the results */
-			if ( is_array( $searchable_post_types ) && in_array( $post_type_to_remove, $searchable_post_types ) ) {
-				/* remove the post type from the array */
-				unset( $searchable_post_types[ $post_type_to_remove ] );
-				/* set the query to the remaining searchable post types */
-				$query->set( 'post_type', $searchable_post_types );
-			}
 		}
 	}
 }
