@@ -26,12 +26,12 @@ class Brizy_Editor {
 			return;
 		}
 
+		add_action( 'after_setup_theme', array( $this, 'loadCompatibilityClasses' ), - 2000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
 
 	public function initialize() {
 
-		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 1500 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
@@ -129,7 +129,7 @@ class Brizy_Editor {
 			new Brizy_Compatibilities_Wtc();
 		}
 
-        $version_compare = version_compare($wp_version, '5.0.0');
+		$version_compare = version_compare( $wp_version, '5.0.0' );
 
         if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
 			new Brizy_Compatibilities_Gutenberg();
@@ -141,6 +141,10 @@ class Brizy_Editor {
 
 		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
 			new Brizy_Compatibilities_WPML();
+		}
+
+		if ( class_exists( 'LiteSpeed_Cache_Config' ) ) {
+			new Brizy_Compatibilities_LiteSpeed();
 		}
 	}
 
