@@ -26,12 +26,12 @@ class Brizy_Editor {
 			return;
 		}
 
+		add_action( 'after_setup_theme', array( $this, 'loadCompatibilityClasses' ), - 2000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
 
 	public function initialize() {
 
-		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 1500 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
