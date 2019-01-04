@@ -243,17 +243,6 @@ class Brizy_Editor_Editor_Editor {
 		return (object) $attachment_data;
 	}
 
-//	public function get_asset_url( $template_version = null ) {
-//
-//		$upload_dir_info = wp_upload_dir( null, true );
-//
-//		if ( is_null( $template_version ) ) {
-//			$template_version = BRIZY_EDITOR_VERSION;
-//		}
-//
-//		return $upload_dir_info['baseurl'] . sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH, $template_version );
-//	}
-
 	private function get_woocomerce_plugin_info() {
 		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {
 			return array( 'version' => WooCommerce::instance()->version );
