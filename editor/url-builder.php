@@ -136,31 +136,31 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	/**
-	 * @param null $path
+	 * @param $path
 	 *
 	 * @return string
 	 */
-	public function page_asset_path( $path = null ) {
+	public function brizy_upload_path( $path = null ) {
 
 		if ( $path ) {
-			$path = "/" . ltrim( $path, "/" );
+			$path = ltrim( $path, DIRECTORY_SEPARATOR );
 		}
 
-		return $this->page_upload_path( 'assets' . $path );
+		return $this->upload_path( sprintf( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $path ) );
 	}
 
 	/**
-	 * @param null $path
+	 * @param $path
 	 *
 	 * @return string
 	 */
-	public function page_asset_url( $path = null ) {
+	public function brizy_upload_url( $path = null ) {
 
 		if ( $path ) {
-			$path = "/" . ltrim( $path, "/" );
+			$path = ltrim( $path, "/" );
 		}
 
-		return $this->page_upload_url( 'assets' . $path );
+		return $this->upload_url( sprintf( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $path ) );
 	}
 
 	/**
@@ -179,10 +179,10 @@ class Brizy_Editor_UrlBuilder {
 		}
 
 		if ( $path ) {
-			$path = "/" . ltrim( $path, "/" );
+			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
 		}
 
-		return sprintf( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL . $path, $post_id );
+		return $this->brizy_upload_path( "{$post_id}{$path}" );
 	}
 
 	/**
@@ -196,10 +196,8 @@ class Brizy_Editor_UrlBuilder {
 		return $this->upload_url( $this->page_upload_path( $path, $post_id ) );
 	}
 
+
 	/**
-	 * This will return the relative path to the upload dir.
-	 * ex: /brizy/editor/x.jpg
-	 *
 	 * @param null $path
 	 *
 	 * @return string
@@ -207,26 +205,45 @@ class Brizy_Editor_UrlBuilder {
 	public function editor_asset_path( $path = null ) {
 
 		if ( $path ) {
-			$path = "/" . ltrim( $path, "/" );
+			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
 		}
 
-		return sprintf( Brizy_Config::BRIZY_WP_EDITOR_ASSET_PATH . $path );
+		return $this->brizy_upload_path( 'editor' . $path );
 	}
 
+	/**
+	 * @param null $path
+	 *
+	 * @return string
+	 */
 	public function editor_asset_url() {
 		return BRIZY_PLUGIN_URL . '/public/editor-build';
 	}
 
 	/**
-	 * This will return the relative path to the upload dir.
-	 * ex: /brizy/media/media_file.jpg
-	 *
 	 * @param null $path
 	 *
 	 * @return string
 	 */
 	public function media_asset_path( $path = null ) {
-		return Brizy_Config::LOCAL_PAGE_MEDIA_STATIC_URL . $path;
+		if ( $path ) {
+			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+		}
+
+		return $this->brizy_upload_path( "media" . $path );
+	}
+
+	/**
+	 * @param null $path
+	 *
+	 * @return string
+	 */
+	public function media_asset_url( $path = null ) {
+		if ( $path ) {
+			$path = "/" . ltrim( $path, "/" );
+		}
+
+		return $this->brizy_upload_url( "media" . $path );
 	}
 
 	/**

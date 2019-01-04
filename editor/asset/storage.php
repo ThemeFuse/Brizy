@@ -34,10 +34,9 @@ class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 		$asset_url = html_entity_decode( $asset_url );
 
 		if ( $this->isEditorUrl( $asset_url ) ) {
-			$sufix_url     = $this->getAssetPart( $asset_url, $this->config['urls']['assets'] );
-			$tmp_asset_url = $this->url_builder->editor_asset_path( $sufix_url );
-			$new_url       = $this->url_builder->upload_url( $tmp_asset_url );
-			$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
+			$sufix_url = $this->getAssetPart( $asset_url, $this->config['urls']['assets'] );
+			$new_path  = $this->url_builder->editor_asset_path( $sufix_url );
+			$new_url   = $this->url_builder->upload_url( $new_path );
 
 			if ( $this->store_file( $asset_url, $new_path ) ) {
 				$asset_url = $new_url;
@@ -46,10 +45,9 @@ class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 		}
 
 		if ( $this->isStaticUrl( $asset_url ) ) {
-			$sufix_url     = $this->getAssetPart( $asset_url, $this->config['urls']['static'] );
-			$tmp_asset_url = $this->url_builder->page_upload_path( $sufix_url );
-			$new_url       = $this->url_builder->upload_url( $tmp_asset_url );
-			$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
+			$sufix_url = $this->getAssetPart( $asset_url, $this->config['urls']['static'] );
+			$new_path  = $this->url_builder->page_upload_path( $sufix_url );
+			$new_url   = $this->url_builder->page_upload_url( $sufix_url );
 
 			if ( $this->store_file( $asset_url, $new_path ) ) {
 				$asset_url = $new_url;
@@ -57,10 +55,9 @@ class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 		}
 
 		if ( $this->isMediaUrl( $asset_url ) ) {
-			$sufix_url     = $this->getAssetPart( $asset_url, $this->config['urls']['image'] );
-			$tmp_asset_url = $this->url_builder->media_asset_path( $sufix_url );
-			$new_url       = $this->url_builder->upload_url( $tmp_asset_url );
-			$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
+			$sufix_url = $this->getAssetPart( $asset_url, $this->config['urls']['image'] );
+			$new_path  = $this->url_builder->media_asset_path( $sufix_url );
+			$new_url   = $this->url_builder->media_asset_url( $sufix_url );
 
 			if ( $this->store_file( $asset_url, $new_path ) ) {
 				$asset_url = $new_url;
