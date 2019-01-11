@@ -193,7 +193,15 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	public function page_upload_url( $path = null, $post_id = null ) {
 
-		return $this->upload_url( $this->page_upload_path( $path, $post_id ) );
+        if ( is_null( $post_id ) && $this->post_id ) {
+            $post_id = (int) $this->post_id;
+        }
+
+        if ( $path ) {
+            $path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+        }
+
+        return $this->brizy_upload_url("{$post_id}{$path}");
 	}
 
 
