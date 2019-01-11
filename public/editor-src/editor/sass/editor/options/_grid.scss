@@ -5,4 +5,42 @@
 }
 .brz-ed-grid__option {
   @extend .brz-ed-popover__option;
+
+  &__color {
+    width: 231px;
+    min-height: auto !important;
+    padding: 0 17px;
+    padding-bottom: 0 !important;
+    background: rgba(255, 255, 255, 0);
+
+    .brz-ed-grid__option {
+      padding-top: 0 !important;
+      padding-right: 0 !important;
+      padding-bottom: 13px !important;
+      padding-left: 0 !important;
+      min-height: auto !important;
+    }
+    .brz-input {
+      color: #6f777e !important;
+    }
+    .brz-ed-control__input--small {
+      max-width: 30px;
+      height: auto;
+      text-align: center;
+      padding: 0 0 1px 0;
+      background: transparent;
+      border-bottom: 1px solid;
+      border-radius: 0;
+    }
+    .brz-ed-control__colorPicker__footer {
+      margin-top: -3px;
+    }
+    .brz-ed-grid__option {
+      justify-content: flex-start;
+
+      .brz-ed-option__input__label {
+        margin-right: 4px;
+      }
+    }
+  }
 }

@@ -1,7 +1,14 @@
 import { createSelector } from "reselect";
 import Editor from "visual/global/Editor";
 
-const globalsSelector = state => state.globals.project;
+export const pageDataSelector = state => state.page.data || {};
+
+export const pageBlocksSelector = createSelector(
+  pageDataSelector,
+  pageData => pageData.items || []
+);
+
+export const globalsSelector = state => state.globals.project;
 
 export const currentStyleSelector = createSelector(globalsSelector, globals => {
   const { styles: globalStyles = {} } = globals;
@@ -184,3 +191,13 @@ export const currentStyleSelector = createSelector(globalsSelector, globals => {
     rules
   };
 });
+
+export const savedBlocksSelector = createSelector(
+  globalsSelector,
+  globals => globals.savedBlocks || []
+);
+
+export const globalBlocksSelector = createSelector(
+  globalsSelector,
+  globals => globals.globalBlocks || {}
+);

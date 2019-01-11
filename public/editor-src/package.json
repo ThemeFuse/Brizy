@@ -36,7 +36,8 @@
     "slick-carousel": "^1.8.1",
     "timm": "^1.4.1",
     "tinycolor2": "1.4.1",
-    "underscore": "^1.9.0"
+    "underscore": "^1.9.0",
+    "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
@@ -84,7 +85,8 @@
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^17.0.0",
     "twig": "^1.10.5",
-    "webpack": "^4.25.1"
+    "webpack": "^4.25.1",
+    "worker-plugin": "^1.1.1"
   },
   "scripts": {
     "build": "npm-run-all --parallel \"build:brizy -- {@}\" \"server -- {@}\" --",

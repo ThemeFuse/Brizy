@@ -252,7 +252,11 @@ class SectionHeader extends EditorComponent {
     let content = this[`render${capitalize(v.type)}`]();
 
     return (
-      <section id={this.getId()} className="brz-section__header">
+      <section
+        id={v.anchorName || this.getId()}
+        className="brz-section__header"
+        data-uid={this.getId()}
+      >
         {content}
       </section>
     );

@@ -1,6 +1,11 @@
 import _ from "underscore";
-import { HYDRATE, UPDATE_PAGE, UPDATE_GLOBALS, UPDATE_UI } from "./actionTypes";
-import { page as pageReducer, globals as globalsReducer } from "./reducers";
+import {
+  HYDRATE,
+  EDITOR_RENDERED,
+  UPDATE_PAGE,
+  UPDATE_GLOBALS,
+  UPDATE_UI
+} from "./actionTypes";
 
 export function hydrate({ page, globals, styles }) {
   try {
@@ -14,6 +19,12 @@ export function hydrate({ page, globals, styles }) {
     page,
     globals,
     styles
+  };
+}
+
+export function editorRendered() {
+  return {
+    type: EDITOR_RENDERED
   };
 }
 

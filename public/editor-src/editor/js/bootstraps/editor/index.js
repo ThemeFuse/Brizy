@@ -1,3 +1,5 @@
+import "./webpack-public-path";
+
 import "@babel/polyfill";
 
 import React from "react";
@@ -6,16 +8,16 @@ import { Provider } from "react-redux";
 
 import { getPages, addPage, getGlobals } from "visual/utils/api/editor";
 import { makePageData } from "visual/utils/pages";
+import { applyAsyncFilter } from "visual/utils/filters";
 
 import { createStore } from "visual/redux/store";
-import thunk from "redux-thunk";
-import { api, sideEffects } from "visual/redux/middleware";
-import { hydrate } from "visual/redux/actionCreators";
-
-import styles from "visual-template/styles/default";
+import middleware from "./middleware";
+import { hydrate, editorRendered } from "visual/redux/actionCreators";
 
 import Editor from "visual/component/Editor";
 import "../registerEditorParts";
+
+import "visual/experimental/screenshots";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
@@ -44,22 +46,25 @@ Promise.resolve()
       }
     });
   })
-  .then(([pages, globals]) => {
+  .then(async ([pages, globals]) => {
     if (process.env.NODE_ENV === "development") {
       console.log("Pages loaded", pages);
       console.log("Globals loaded", globals);
     }
 
-    const indexPage = pages.find(page => page.index);
     const store = createStore({
-      middleware: [
-        thunk,
-        api,
-        sideEffects({ document, parentDocument: window.parent.document })
-      ]
+      middleware: await applyAsyncFilter(
+        "bootstraps.editor.middleware",
+        middleware
+      )
     });
-    store.dispatch(hydrate({ page: indexPage, globals, styles }));
 
+    const indexPage = pages.find(page => page.index);
+    store.dispatch(hydrate({ page: indexPage, globals }));
+
+    return store;
+  })
+  .then(store => {
     // if (process.env.NODE_ENV === "development") {
     global.brzStore = store; // think about putting it in development mode later
     // }
@@ -71,6 +76,8 @@ Promise.resolve()
       appDiv,
       () => {
         pageCurtain.parentElement.removeChild(pageCurtain);
+
+        store.dispatch(editorRendered());
       }
     );
   })

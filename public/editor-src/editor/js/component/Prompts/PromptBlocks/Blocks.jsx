@@ -6,7 +6,7 @@ import Select from "./common/Select";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
-import { blockThumbnailUrl } from "visual/utils/blocks";
+import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 
 export default class Blocks extends React.Component {
@@ -36,7 +36,7 @@ export default class Blocks extends React.Component {
 
     const thumbnails = this.blocksConfig.blocks.map(block => ({
       ...block,
-      thumbnailSrc: blockThumbnailUrl(block)
+      thumbnailSrc: blockTemplateThumbnailUrl(block)
     }));
     const filterFn = (item, cf) => {
       const typeMatch = cf.type === item.type;

@@ -100,7 +100,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
   const marginTop = format[`${deviceMode}MarginTop`];
   const marginBottom = format[`${deviceMode}MarginBottom`];
 
-  const link = format.link ? getLink(format.link) : {};
+  const link = format.link ? getLink(getFirstValue(format.link)) : {};
   const populationColor = format.populationColor
     ? { populationColor: decodeFromString(format.populationColor) }
     : {};

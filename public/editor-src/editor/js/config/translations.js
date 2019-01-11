@@ -473,4 +473,5 @@ export default {
   "Select a Menu": __("Select a Menu", "brizy"),
   "in your WordPress admin": __("in your WordPress admin", "brizy"),
   "Drawer Position": __("Drawer Position", "brizy"),
+  "anchor name": __("anchor name", "brizy"),
 };

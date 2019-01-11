@@ -2,36 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { removeAt, insert } from "timm";
-import Editor from "visual/global/Editor";
 import EditorIcon from "visual/component/EditorIcon";
-import {
-  blockThumbnailUrl,
-  placeholderBlockThumbnailUrl
-} from "visual/utils/blocks";
 import { updatePage } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
+import BlockThumbnail from "./BlockThumbnail";
 
 const SortableItem = SortableElement(({ item, onRemove }) => {
-  if (item.value._blockVisibility === "unlisted") {
-    return <div hidden />;
-  }
-
-  const blockId = item.blockId;
-  const blockData = Editor.getBlock(blockId);
-  const thumbUrl = blockData
-    ? blockThumbnailUrl(blockData)
-    : placeholderBlockThumbnailUrl();
-
   return (
     <div className="brz-ed-sidebar-block-item">
-      <div className="brz-ed-sidebar-block-image">
-        <img className="brz-img" src={thumbUrl} />
-        <div className="brz-ed-sidebar-block-layout">
-          <span className="brz-span brz-ed-sidebar-block-drag">
-            {t("Drag to reorder")}
-          </span>
-        </div>
-      </div>
+      <BlockThumbnail blockData={item} />
       <div className="brz-ed-sidebar-block-remove" onClick={onRemove}>
         <EditorIcon icon="nc-circle-remove-2" className="brz-ed-bar-icon" />
       </div>
@@ -39,18 +18,28 @@ const SortableItem = SortableElement(({ item, onRemove }) => {
   );
 });
 
-const SortableList = SortableContainer(({ items, onItemRemove }) => (
-  <div className="brz-ed-sidebar-ordering">
-    {items.map((item, index) => (
+const SortableList = SortableContainer(({ items, onItemRemove }) => {
+  const filteredItems = [];
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+
+    if (item.value._blockVisibility === "unlisted") {
+      continue;
+    }
+
+    filteredItems.push(
       <SortableItem
-        key={index}
-        index={index}
+        key={item.value._id}
         item={item}
-        onRemove={() => onItemRemove(index)}
+        index={i}
+        onRemove={() => onItemRemove(i)}
       />
-    ))}
-  </div>
-));
+    );
+  }
+
+  return <div className="brz-ed-sidebar-ordering">{filteredItems}</div>;
+});
 
 class DrawerComponent extends React.Component {
   static defaultProps = {

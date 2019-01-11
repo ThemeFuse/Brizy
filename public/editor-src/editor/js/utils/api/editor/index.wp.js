@@ -5,7 +5,9 @@ import Config from "visual/global/Config";
 import Notifications from "visual/global/Notifications";
 import converter from "./converter";
 
-function request(action, data) {
+export { converter };
+
+export function request(action, data) {
   const apiConfig = Config.get("wp");
   const hash = apiConfig.api.hash;
   const requestUrl = apiConfig.api.url;
@@ -35,7 +37,7 @@ function request(action, data) {
   );
 }
 
-function persistentRequest(ajaxSettings) {
+export function persistentRequest(ajaxSettings) {
   const apiConfig = Config.get("wp");
 
   const hash = apiConfig.api.hash;
@@ -81,8 +83,6 @@ function persistentRequest(ajaxSettings) {
     );
   });
 }
-
-export { converter };
 
 export function ping() {
   const apiConfig = Config.get("wp").api;
