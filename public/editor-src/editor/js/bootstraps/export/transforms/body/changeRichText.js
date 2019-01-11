@@ -1,3 +1,5 @@
+import { getBlockById } from "visual/utils/blocks";
+
 const linkClassNames = ["link--anchor", "link--external", "is-empty"];
 
 export default function changeRichText($) {
@@ -24,7 +26,7 @@ export default function changeRichText($) {
           ? externalLink[data.externalType]
           : externalLink.external
       };
-      const url = newData[data.type];
+
       const target =
         newData.type === "external" && newData.externalBlank === "on"
           ? `target="_blank"`
@@ -34,10 +36,11 @@ export default function changeRichText($) {
           ? `rel="nofollow"`
           : "";
 
+      let url = newData[data.type];
       if (url) {
         $this.replaceWith(
           `<a
-            href="${url}"
+            href="${getLinkContentByType(data.type, url)}"
             ${target}
             ${rel}
             style="${style}"
@@ -83,4 +86,21 @@ export default function changeRichText($) {
 
       $elem.html(`{{${population}}}`);
     });
+}
+
+function getLinkContentByType(type, href) {
+  switch (type) {
+    case "anchor":
+      href = href.replace("#", "");
+      const block = getBlockById(href);
+      const anchorName = (block && block.value.anchorName) || href;
+
+      return `#${anchorName}`;
+    case "popup":
+    case "lightBox":
+    case "external":
+      return href;
+  }
+
+  return href;
 }

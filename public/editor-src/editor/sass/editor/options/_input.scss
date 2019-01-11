@@ -35,3 +35,14 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.brz-ed-control__colorPicker__footer {
+  .brz-input {
+    border: 0;
+    border-bottom: 1px solid;
+    max-width: 55px;
+    text-align: left;
+    margin-left: 2px;
+    padding-bottom: 2px;
+    text-align: center;
+  }
+}

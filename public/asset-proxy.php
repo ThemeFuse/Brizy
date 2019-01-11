@@ -14,22 +14,9 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 	/**
 	 * @return string
 	 */
-	protected function get_endpoint_key() {
-		return self::ENDPOINT;
+	protected function get_endpoint_keys() {
+		return array( self::ENDPOINT, self::ENDPOINT_POST );
 	}
-
-	/**
-	 * @param $vars
-	 *
-	 * @return array
-	 */
-	public function query_vars( $vars ) {
-		$vars   = parent::query_vars( $vars );
-		$vars[] = self::ENDPOINT_POST;
-
-		return $vars;
-	}
-
 
 	public function process_query() {
 		global $wp_query;
@@ -47,17 +34,16 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 		$brizyPost = Brizy_Editor_Post::get( (int) $vars[ self::ENDPOINT_POST ] );
 
 		if ( $brizyPost->uses_editor() ) {
-			$this->url_builder->set_post_id( $brizyPost->get_parent_id() );
+			$this->urlBuilder->set_post_id( $brizyPost->get_parent_id() );
 		}
 
 		$endpoint_value = $wp_query->query_vars[ self::ENDPOINT ];
 
 		// clean endpoint value
-		$asset_path = "/".ltrim( $endpoint_value, "/" );
-		$asset_url  = $this->url_builder->external_asset_url( $asset_path );
+		$asset_path = "/" . ltrim( $endpoint_value, "/" );
+		$asset_url  = $this->urlBuilder->external_asset_url( $asset_path );
 
-		$tmp_asset_url = $this->url_builder->page_asset_path( "icons/".basename( $asset_path ) ) ;
-		$new_path      = $this->url_builder->upload_path( $tmp_asset_url );
+		$new_path = $this->urlBuilder->page_upload_path( "assets/icons/" . basename( $asset_path ) );
 
 		if ( ! file_exists( $new_path ) ) {
 			$store_result = $this->store_file( $asset_url, $new_path );

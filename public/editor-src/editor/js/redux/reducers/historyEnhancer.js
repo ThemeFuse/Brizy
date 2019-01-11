@@ -2,10 +2,10 @@ import React from "react";
 import _ from "underscore";
 
 const HISTORY_UPDATE_FREQUENCY = 2000;
-const MAX_HISTORY_LENGTH = 11; // 10 undo states + initial state
+const MAX_HISTORY_LENGTH = 10;
 
-let history = [];
-let currentHistoryIndex = -1;
+let history = new Array(MAX_HISTORY_LENGTH).fill(null);
+let currentHistoryIndex = 0;
 let lastSnapshotTimestamp = 0;
 let canUndo = false;
 let canRedo = false;
@@ -18,7 +18,10 @@ const createHistorySnapshot = (state, keysToTrack) =>
 
 const updateFlags = () => {
   canUndo = currentHistoryIndex > 0;
-  canRedo = currentHistoryIndex < history.length - 1;
+  canRedo = Boolean(
+    history[currentHistoryIndex + 1] &&
+      history[currentHistoryIndex + 1] !== null
+  );
 };
 const undoHistory = () => {
   currentHistoryIndex--;
@@ -30,54 +33,55 @@ const redoHistory = () => {
   updateFlags();
   return history[currentHistoryIndex];
 };
-const updateHistory = (state, keysToTrack) => {
-  let updateHistory = false;
-
-  if (history.length === 0) {
-    updateHistory = true;
-  } else {
-    const lastSnapshot = history[currentHistoryIndex];
-
-    for (const key of keysToTrack) {
-      if (state[key] !== lastSnapshot[key]) {
-        updateHistory = true;
-        break;
-      }
-    }
+const updateHistory = (state, keysToTrack, options) => {
+  // the first (initial) snapshot
+  if (currentHistoryIndex === 0 && history[currentHistoryIndex] === null) {
+    history[currentHistoryIndex] = createHistorySnapshot(state, keysToTrack);
+    updateFlags();
+    lastSnapshotTimestamp = Date.now();
+    return;
   }
 
-  if (updateHistory) {
+  let newStateIsDifferent = keysToTrack.some(
+    key => state[key] !== history[currentHistoryIndex][key]
+  );
+
+  if (newStateIsDifferent) {
     const nextSnapshot = createHistorySnapshot(state, keysToTrack);
     const currentTimestamp = Date.now();
 
-    if (currentHistoryIndex < history.length - 1) {
+    if (options.replacePresent) {
+      history[currentHistoryIndex] = nextSnapshot;
+    } else if (
+      history[currentHistoryIndex + 1] &&
+      history[currentHistoryIndex + 1] !== null
+    ) {
       // shifted history mode
       // when user is not at the latest snapshot
+      // and altered history from that point
       currentHistoryIndex++;
-      history = [...history.slice(0, currentHistoryIndex), nextSnapshot];
+      history[currentHistoryIndex] = nextSnapshot;
+      for (let i = currentHistoryIndex + 1; i <= history.length - 1; i++) {
+        history[i] = null;
+      }
     } else {
       const enoughTimePassed =
         currentTimestamp - lastSnapshotTimestamp > HISTORY_UPDATE_FREQUENCY;
 
       if (enoughTimePassed) {
-        const historyIsFull = history.length >= MAX_HISTORY_LENGTH;
+        const historyIsFull = currentHistoryIndex === history.length - 1;
 
         if (historyIsFull) {
-          // history.shift();
-          // history.push(nextSnapshot);
-
-          history = [...history.slice(1), nextSnapshot];
+          for (let i = 0; i <= history.length - 2; i++) {
+            history[i] = history[i + 1];
+          }
+          history[history.length - 1] = nextSnapshot;
         } else {
-          // history.push(nextSnapshot);
-          // currentHistoryIndex++;
-
-          history = [...history, nextSnapshot];
           currentHistoryIndex++;
+          history[currentHistoryIndex] = nextSnapshot;
         }
       } else {
-        // history[history.length - 1] = nextSnapshot;
-
-        history = [...history.slice(0, -1), nextSnapshot];
+        history[currentHistoryIndex] = nextSnapshot;
       }
     }
 
@@ -113,7 +117,9 @@ export default function historyEnhancer(reducer, keysToTrack) {
         const newState = reducer(state, action);
 
         if (action.type !== "@@redux/INIT") {
-          updateHistory(newState, keysToTrack);
+          updateHistory(newState, keysToTrack, {
+            replacePresent: action.meta && action.meta.historyReplacePresent
+          });
         }
 
         return newState;

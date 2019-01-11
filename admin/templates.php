@@ -224,7 +224,7 @@ class Brizy_Admin_Templates {
 				//'map_meta_cap'        => true,
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
-				'exclude_from_search' => false,
+				'exclude_from_search' => true,
 				'supports'            => array( 'title', 'revisions', 'page-attributes' )
 			)
 		);

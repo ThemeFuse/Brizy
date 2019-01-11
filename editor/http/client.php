@@ -57,23 +57,26 @@ class Brizy_Editor_Http_Client {
 		if ( is_string( $url ) ) {
 			Brizy_Logger::instance()->notice( "{$method} request to {$url}", array( 'options' => $options ) );
 			$wp_response = $this->getHttp()->request( $url, $options );
+
+			if ( is_wp_error( $wp_response ) ) {
+				throw new Brizy_Editor_API_Exceptions_Exception( $wp_response->get_error_message() );
+			}
+
+			$response = new Brizy_Editor_Http_Response( $wp_response );
+
 		} else {
+
 			foreach ( $url as $aurl ) {
 				$wp_response = $this->getHttp()->request( $aurl, $options );
+				$response    = new Brizy_Editor_Http_Response( $wp_response );
 
-				if ( is_wp_error( $wp_response ) ) {
+				if ( is_wp_error( $wp_response ) || ! $response->is_ok() ) {
 					continue;
 				} else {
 					break;
 				}
 			}
 		}
-
-		if ( is_wp_error( $wp_response ) ) {
-			throw new Brizy_Editor_API_Exceptions_Exception( $wp_response->get_error_message() );
-		}
-
-		$response = new Brizy_Editor_Http_Response( $wp_response );
 
 		Brizy_Logger::instance()->debug( "Request {{$url}} status " . $response->get_status_code(), array(
 			'status'   => $response->get_status_code(),

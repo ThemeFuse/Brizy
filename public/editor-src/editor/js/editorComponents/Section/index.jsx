@@ -59,7 +59,7 @@ class Section extends EditorComponent {
     const meta = Object.assign({}, this.props.meta, {
       section: {
         showOnMobile: showOnMobile === "on",
-        showOnTablet: showOnTablet === "on",
+        showOnTablet: showOnTablet === "on"
       }
     });
     const itemsProps = this.makeSubcomponentProps({
@@ -105,7 +105,11 @@ class Section extends EditorComponent {
     ]);
 
     return (
-      <section id={this.getId()} className={sectionStyleClassName(v)}>
+      <section
+        id={v.anchorName || this.getId()}
+        className={sectionStyleClassName(v)}
+        data-uid={this.getId()}
+      >
         {this.renderItems(v)}
       </section>
     );

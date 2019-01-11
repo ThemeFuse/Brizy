@@ -23,7 +23,7 @@ class SliderOptionType extends React.Component {
     },
     input: {
       show: false,
-      min: null,
+      min: -9999,
       max: 9999,
       step: null
     },
@@ -115,18 +115,18 @@ class SliderOptionType extends React.Component {
         min = defaultProps.input.min != null
           ? defaultProps.input.min
           : props.slider.min != null
-            ? props.slider.min
-            : defaultProps.slider.min,
+          ? props.slider.min
+          : defaultProps.slider.min,
         max = defaultProps.input.max != null
           ? defaultProps.input.max
           : props.slider.max != null
-            ? props.slider.max
-            : defaultProps.slider.max,
+          ? props.slider.max
+          : defaultProps.slider.max,
         step = defaultProps.input.step != null
           ? defaultProps.input.step
           : props.slider.step != null
-            ? props.slider.step
-            : defaultProps.slider.step
+          ? props.slider.step
+          : defaultProps.slider.step
       }
     } = this.props;
     const { value, suffix: suffixValue } = this.state;

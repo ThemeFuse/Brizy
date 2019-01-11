@@ -26,12 +26,12 @@ class Brizy_Editor {
 			return;
 		}
 
+		add_action( 'after_setup_theme', array( $this, 'loadCompatibilityClasses' ), - 2000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
 
 	public function initialize() {
 
-		add_action( 'init', array( $this, 'loadCompatibilityClasses' ), - 1500 );
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
@@ -107,7 +107,6 @@ class Brizy_Editor {
 		}
 
 		add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
-		add_action( 'pre_get_posts', array( $this, 'remove_templates_from_search' ) );
 	}
 
 	public function revisionsToKeep( $num, $post ) {
@@ -130,7 +129,7 @@ class Brizy_Editor {
 			new Brizy_Compatibilities_Wtc();
 		}
 
-        $version_compare = version_compare($wp_version, '5.0.0');
+		$version_compare = version_compare( $wp_version, '5.0.0' );
 
         if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
 			new Brizy_Compatibilities_Gutenberg();
@@ -142,6 +141,14 @@ class Brizy_Editor {
 
 		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
 			new Brizy_Compatibilities_WPML();
+		}
+
+		if ( class_exists( 'LiteSpeed_Cache_Config' ) ) {
+			new Brizy_Compatibilities_LiteSpeed();
+		}
+
+		if ( function_exists( 'fvm_cachepath' ) ) {
+			new Brizy_Compatibilities_FastVelocityMinify();
 		}
 	}
 
@@ -220,6 +227,7 @@ class Brizy_Editor {
 	private function loadEditorApi( $project, $post, $user ) {
 		try {
 			new Brizy_Editor_API( $project, $post );
+			new Brizy_Editor_BlockScreenshotApi( $project, $post );
 
 			// for other apis
 			do_action( 'brizy_register_api_methods', array( $user, $project, $post ) );
@@ -278,9 +286,11 @@ class Brizy_Editor {
 			$project     = Brizy_Editor_Project::get();
 			$url_builder = new Brizy_Editor_UrlBuilder( $project );
 
-			$config    = null;
-			$proxy     = new Brizy_Public_AssetProxy( $url_builder, $config );
-			$crop_roxy = new Brizy_Public_CropProxy( $url_builder, $config );
+			$config          = null;
+			$proxy           = new Brizy_Public_AssetProxy( $url_builder, $config );
+			$crop_roxy       = new Brizy_Public_CropProxy( $url_builder, $config );
+			$screenshot_roxy = new Brizy_Public_BlockScreenshotProxy( new Brizy_Editor_UrlBuilder( $project ), $config );
+			$screenshot_roxy = new Brizy_Public_FileProxy( new Brizy_Editor_UrlBuilder( $project ), $config );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
@@ -415,30 +425,6 @@ class Brizy_Editor {
 			Brizy_Editor_Storage_Common::instance()->set( self::$settings_key, $this->default_supported_post_types() );
 
 			return $this->default_supported_post_types();
-		}
-	}
-
-	/**
-	 * @param $query
-	 */
-	public function remove_templates_from_search( $query ) {
-
-		if ( is_admin() || ! $query->is_main_query() ) {
-			return;
-		}
-
-		if ( $query->is_search() ) {
-
-			$post_type_to_remove   = Brizy_Admin_Templates::CP_TEMPLATE;
-			$searchable_post_types = get_post_types( array( 'exclude_from_search' => false ) );
-
-			/* make sure you got the proper results, and that your post type is in the results */
-			if ( is_array( $searchable_post_types ) && in_array( $post_type_to_remove, $searchable_post_types ) ) {
-				/* remove the post type from the array */
-				unset( $searchable_post_types[ $post_type_to_remove ] );
-				/* set the query to the remaining searchable post types */
-				$query->set( 'post_type', $searchable_post_types );
-			}
 		}
 	}
 }

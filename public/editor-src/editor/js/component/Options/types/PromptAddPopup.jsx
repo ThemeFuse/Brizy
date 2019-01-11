@@ -10,11 +10,10 @@ import { getStore } from "visual/redux/store";
 import { updatePage } from "visual/redux/actionCreators";
 import { setIds } from "visual/utils/models";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup";
-import {
-  blockThumbnailUrl,
-  placeholderBlockThumbnailUrl
-} from "visual/utils/blocks";
+import { blockThumbnailData } from "visual/utils/blocks";
 import { imageWrapperSize } from "visual/utils/image";
+
+const MAX_CONTAINER_WIDTH = 140;
 
 const getBlocksConfig = _.memoize(() => {
   const blocksConfig = Editor.getBlocks();
@@ -140,34 +139,25 @@ class PromptAddPopupOptionType extends React.Component {
   renderThumbnail() {
     const { value } = this.props;
     const blocks = getStore().getState().page.data.items;
-    const { blockId } = blocks.find(el => el.value._id === value);
-    const blockData = Editor.getBlock(blockId);
-    const thumbnailData = {
-      src: blockData
-        ? blockThumbnailUrl(blockData)
-        : placeholderBlockThumbnailUrl(),
-      width:
-        blockData && blockData.thumbnailWidth ? blockData.thumbnailWidth : 500,
-      height:
-        blockData && blockData.thumbnailHeight ? blockData.thumbnailHeight : 200
-    };
-    const MAX_CONTAINER_WIDTH = 140;
-    const { width, height } = imageWrapperSize(
-      thumbnailData.width,
-      thumbnailData.height,
+    const block = blocks.find(el => el.value._id === value);
+    const { url, width, height } = blockThumbnailData(block);
+    const { width: wrapperWidth, height: wrapperHeight } = imageWrapperSize(
+      width,
+      height,
       MAX_CONTAINER_WIDTH
     );
+    const style = {
+      width: `${wrapperWidth}px`,
+      height: `${wrapperHeight}px`
+    };
 
     return (
       <figure
         className="brz-figure brz-ed-option__prompt-popup__image"
-        style={{
-          width: `${width}px`,
-          height: `${height}px`
-        }}
+        style={style}
       >
         <img
-          src={thumbnailData.src}
+          src={url}
           className="brz-img"
           onClick={this.handleEdit}
           alt="Popup Thumbnail"

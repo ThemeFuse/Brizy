@@ -7,6 +7,35 @@
  */
 
 abstract class Brizy_Editor_Asset_StaticFile {
+
+	protected function get_asset_content( $asset_source ) {
+		$http        = new WP_Http();
+		$wp_response = null;
+		if ( is_string( $asset_source ) ) {
+			$wp_response = $http->request( $asset_source, array( 'timeout' => 30 ) );
+		} else {
+			foreach ( $asset_source as $url ) {
+				$wp_response = $http->request( $url, array( 'timeout' => 30 ) );
+
+				if ( is_wp_error( $wp_response ) ) {
+					continue;
+				}
+
+				break;
+			}
+		}
+
+		$code = wp_remote_retrieve_response_code( $wp_response );
+
+		if ( is_wp_error( $wp_response ) || ! ( $code >= 200 && $code < 300 ) ) {
+			return false;
+		}
+
+		$content = wp_remote_retrieve_body( $wp_response );
+
+		return $content;
+	}
+
 	/**
 	 * @param $asset_source
 	 * @param $asset_path
@@ -27,32 +56,13 @@ abstract class Brizy_Editor_Asset_StaticFile {
 				@mkdir( $dir_path, 0755, true );
 			}
 
-			$http = new WP_Http();
+			$content = self::get_asset_content( $asset_source );
 
-
-			if ( is_string( $asset_source ) ) {
-				$wp_response = $http->request( $asset_source, array( 'timeout' => 30 ) );
+			if($content!==false) {
+				file_put_contents( $asset_path, $content );
 			} else {
-				foreach ( $asset_source as $url ) {
-					$wp_response = $http->request( $url, array( 'timeout' => 30 ) );
-
-					if ( is_wp_error( $wp_response ) ) {
-						continue;
-					}
-
-					break;
-				}
-			}
-
-			$code = wp_remote_retrieve_response_code( $wp_response );
-
-			if ( is_wp_error( $wp_response ) || ! ( $code >= 200 && $code < 300 ) ) {
 				return false;
 			}
-
-			$content = wp_remote_retrieve_body( $wp_response );
-
-			file_put_contents( $asset_path, $content );
 
 		} catch ( Exception $e ) {
 			// clean up
@@ -117,16 +127,20 @@ abstract class Brizy_Editor_Asset_StaticFile {
 
 	/**
 	 * @param $filename
+	 * @param array $headers
 	 */
-	public function send_file( $filename ) {
+	public function send_file( $filename, $headers = array() ) {
 		if ( file_exists( $filename ) ) {
+
+			$defaultHeaders = array(
+				'Content-Type'  => $this->get_mime( $filename, 1 ),
+				'Cache-Control' => 'max-age=600'
+			);
 
 			$content = file_get_contents( $filename );
 
 			// send headers
-			$headers                  = array();
-			$headers['Content-Type']  = $this->get_mime( $filename, 1 );
-			$headers['Cache-Control'] = 'max-age=600';
+			$headers = array_merge( $defaultHeaders, $headers );
 
 			foreach ( $headers as $key => $val ) {
 				if ( is_array( $val ) ) {

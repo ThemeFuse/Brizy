@@ -68,9 +68,7 @@ class Video extends EditorComponent {
     );
 
     if (!videoSrc && !coverImageSrc) {
-      content = (
-        <Placeholder icon="play" />
-      );
+      content = <Placeholder icon="play" />;
     }
 
     const style = { ...styleCSSVars(v, this.props), ...wrapperStyleCSSVars(v) };

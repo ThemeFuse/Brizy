@@ -15,16 +15,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	/**
 	 * @return string
 	 */
-	protected function get_endpoint_key() {
-		return self::ENDPOINT;
-	}
-
-	public function query_vars( $vars ) {
-		$vars   = parent::query_vars( $vars );
-		$vars[] = self::ENDPOINT_FILTER;
-		$vars[] = self::ENDPOINT_POST;
-
-		return $vars;
+	protected function get_endpoint_keys() {
+		return array( self::ENDPOINT, self::ENDPOINT_FILTER, self::ENDPOINT_POST );
 	}
 
 	/**

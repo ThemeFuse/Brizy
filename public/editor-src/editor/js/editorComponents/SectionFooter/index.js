@@ -200,7 +200,11 @@ class SectionFooter extends EditorComponent {
     ]);
 
     return (
-      <footer id={this.getId()} className={sectionStyleClassName(v)}>
+      <footer
+        id={v.anchorName || this.getId()}
+        className={sectionStyleClassName(v)}
+        data-uid={this.getId()}
+      >
         {this.renderItems(v)}
       </footer>
     );

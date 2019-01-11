@@ -3,7 +3,7 @@ import $ from "jquery";
 export default function() {
   $(document).on(
     "click",
-    ".brz-anchor, .brz-wp-shortcode__menu .menu-item a",
+    ".brz-anchor, .link--anchor, .brz-wp-shortcode__menu .menu-item a",
     function(event) {
       var anchorHash = this.hash;
       var $target = $(document.getElementById(anchorHash.slice(1)));

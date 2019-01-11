@@ -17,7 +17,7 @@ const hardcodedAjaxSettings = {
   }
 };
 
-function request(ajaxSettings) {
+export function request(ajaxSettings) {
   return new Promise(function(resolve, reject) {
     jQuery.ajax(
       _.extend({}, hardcodedAjaxSettings, ajaxSettings, {
@@ -35,12 +35,9 @@ function request(ajaxSettings) {
       })
     );
   });
-  return Promise.resolve(
-    jQuery.ajax(_.extend({}, hardcodedAjaxSettings, ajaxSettings))
-  );
 }
 
-function persistentRequest(ajaxSettings) {
+export function persistentRequest(ajaxSettings) {
   return new Promise(function(resolve, reject) {
     jQuery.ajax(
       _.extend({}, hardcodedAjaxSettings, ajaxSettings, {

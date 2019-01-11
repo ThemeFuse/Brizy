@@ -79,6 +79,4 @@ class Brizy_Editor_CompiledHtml {
 
 		return $content;
 	}
-
-
 }
