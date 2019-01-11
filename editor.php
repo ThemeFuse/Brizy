@@ -146,6 +146,10 @@ class Brizy_Editor {
 		if ( class_exists( 'LiteSpeed_Cache_Config' ) ) {
 			new Brizy_Compatibilities_LiteSpeed();
 		}
+
+		if ( function_exists( 'fvm_cachepath' ) ) {
+			new Brizy_Compatibilities_FastVelocityMinify();
+		}
 	}
 
 	/**
