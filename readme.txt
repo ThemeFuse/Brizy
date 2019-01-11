@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.53
+Stable tag: 1.0.54
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,18 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.54 - 2019-01-11 =
+* New: Added block screenshots in browsers that support it
+* New: Possibility to add custom names to anchor links
+* New: Compatibility litespeed plugin
+* New: Added api methods to get/save block screenshots
+* Fixed: Impossible to add global colors to RichText links
+* Fixed: Impossible to change margin to less than -100
+* Fixed: Lightbox z-index conflict with header blocks
+* Fixed: Remove actions that play with js scripts
+* Fixed: Check every request for multiple urls by Brizy_Editor_Http_Response
+* Fixed: Fixed the regexp for head extraction
 
 = 1.0.53 - 2018-12-14 =
 * Fixed: Unable to delete Global blocks

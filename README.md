@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.53<br>
+Stable tag: 1.0.54<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,18 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.54 - 2019-01-11 ###
+* New: Added block screenshots in browsers that support it
+* New: Possibility to add custom names to anchor links
+* New: Compatibility litespeed plugin
+* New: Added api methods to get/save block screenshots
+* Fixed: Impossible to add global colors to RichText links
+* Fixed: Impossible to change margin to less than -100
+* Fixed: Lightbox z-index conflict with header blocks
+* Fixed: Remove actions that play with js scripts
+* Fixed: Check every request for multiple urls by Brizy_Editor_Http_Response
+* Fixed: Fixed the regexp for head extraction
 
 ### 1.0.53 - 2018-12-14 ###
 * Fixed: Unable to delete Global blocks
