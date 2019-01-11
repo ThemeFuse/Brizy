@@ -351,7 +351,7 @@ class Brizy_Public_Main {
 			$params['content'] = $head;
 		}
 
-		//$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post() );
+		$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post() );
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
 		                     ->render( 'head-partial.html.twig', $params );
 		return;
@@ -380,7 +380,7 @@ class Brizy_Public_Main {
 			$content       = $compiled_page->get_body();
 		}
 
-		//$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->get_wp_post() );
+		$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->get_wp_post() );
 
 		return $content;
 	}
