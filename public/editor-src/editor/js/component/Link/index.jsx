@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import { getBlockById } from "visual/utils/blocks";
 
 class Link extends Component {
   static defaultProps = {
@@ -30,6 +31,14 @@ class Link extends Component {
 
     switch (type) {
       case "anchor":
+        if (IS_EDITOR) {
+          href = `#${_href}`;
+        } else {
+          const block = getBlockById(_href);
+          const anchorName = (block && block.value.anchorName) || _href;
+          href = `#${anchorName}`;
+        }
+        break;
       case "popup":
         href = `#${_href}`;
         break;

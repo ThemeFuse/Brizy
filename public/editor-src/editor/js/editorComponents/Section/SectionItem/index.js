@@ -56,9 +56,8 @@ class SectionItem extends EditorComponent {
     } = nextProps;
     const { deviceMode } = getStore().getState().ui;
     const deviceUpdate =
-      deviceMode === "mobile" || deviceMode === "tablet"
-      && showOnMobile || showOnTablet
-      !== newShowOnMobile || newShowOnTablet;
+      (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
+      (deviceMode === "tablet" && showOnTablet !== newShowOnTablet);
 
     return showSlider || deviceUpdate || this.optionalSCU(nextProps);
   }
@@ -170,7 +169,11 @@ class SectionItem extends EditorComponent {
       bgProps.bgVideoLoop = bgVideoLoop === "on";
     }
 
-    if (media === "map" || mobileSyncOnChange(v, "media") === "map" || tabletSyncOnChange(v, "media") === "map" ) {
+    if (
+      media === "map" ||
+      mobileSyncOnChange(v, "media") === "map" ||
+      tabletSyncOnChange(v, "media") === "map"
+    ) {
       bgProps.mapAddress = bgMapAddress;
       bgProps.mapZoom = bgMapZoom;
     }

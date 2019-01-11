@@ -7,13 +7,18 @@ class GridOptionType extends React.Component {
   static defaultProps = {
     className: "",
     location: "",
+    attr: {},
     toolbar: null,
     columns: []
   };
 
   render() {
-    const { columns, location, toolbar } = this.props;
+    const { attr, columns, location, toolbar } = this.props;
 
+    const className = classnames(
+      "brz-d-xs-flex brz-flex-xs-no-wrap",
+      attr.className
+    );
     const renderedColumns = _.map(columns, (column, index) => {
       const style = {
         width: `${column.width}%`,
@@ -38,7 +43,9 @@ class GridOptionType extends React.Component {
     });
 
     return (
-      <div className="brz-d-xs-flex brz-flex-xs-no-wrap">{renderedColumns}</div>
+      <div {...attr} className={className}>
+        {renderedColumns}
+      </div>
     );
   }
 }

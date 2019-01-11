@@ -305,45 +305,9 @@
           opacity: 1;
         }
       }
-      &-missing {
-        &:after {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          content: "Error";
-          font-size: 20px;
-        }
-        &:hover {
-          &:after {
-            display: none;
-          }
-        }
-      }
-      &-feedback {
-        border-top: 0;
-        opacity: 0.65;
-
-        .brz-ed-sidebar-block-layout {
-          opacity: 0;
-        }
-      }
 
       &.brz-ed-sidebar-block-item-helper {
         z-index: 99999999999;
-      }
-
-      // Ordering Placeholder
-      &.brz-ed-sidebar-block-item-placeholder,
-      &.brz-ed-sidebar-block-item-placeholder-fix
-      ~ .brz-ed-sidebar-block-item:hover {
-        border-top-color: rgba(0, 0, 0, 0);
-        border-bottom-color: rgba(0, 0, 0, 0);
-
-        .brz-ed-sidebar-block-layout,
-        .brz-ed-sidebar-block-remove {
-          display: none;
-        }
       }
     }
 
@@ -357,25 +321,23 @@
       background-size: cover;
       background-position: center;
 
+      &-loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #474c55;
+        color: white;
+      }
+
       > .brz-img {
+        position: relative;
         display: block;
         max-width: 100%;
-      }
-      .brz-ed-sidebar-block-item.brz-ed-sidebar-block-item-placeholder & {
-        background-image: none !important;
-        border-color: rgba(0, 0, 0, 0);
-
-        &:after {
-          position: absolute;
-          left: 0;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          content: "";
-          display: block;
-          border: 1px dashed #286b85;
-          border-radius: 5px;
-        }
       }
     }
 
@@ -424,8 +386,7 @@
     }
 
     // Drag and Drop
-    &-drag,
-    &-drop {
+    &-drag {
       display: block;
       height: 32px;
       width: 132px;
@@ -435,51 +396,6 @@
       line-height: 32px;
       text-align: center;
       letter-spacing: 0.01em;
-    }
-  }
-
-  // x-Styling
-  &__x-styling {
-    padding: 30px;
-
-    &__row {
-      position: relative;
-      padding: 15px 0;
-      border-bottom: 1px solid $sidebar-item-separator-2;
-
-      &:first-child {
-        padding-top: 0;
-      }
-    }
-    &__label {
-      font-size: 13px;
-      line-height: 1;
-      margin: 0 0 10px;
-      color: $options-label-color;
-    }
-
-    // Select
-    .brz-control__select {
-      width: 100%;
-    }
-    .brz-control__select-current {
-      .brz-control__select-option {
-        width: calc(100% - 30px);
-      }
-    }
-    .brz-control__select-option {
-      letter-spacing: 0.25px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      width: 100%;
-    }
-    .brz-control__select-color {
-      position: relative;
-      width: 16px;
-      height: 16px;
-      border-radius: 2px;
-      margin-right: 10px;
     }
   }
 

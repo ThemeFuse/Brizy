@@ -7,7 +7,7 @@ import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
 import {
-  blockThumbnailUrl,
+  blockThumbnailData,
   placeholderBlockThumbnailUrl
 } from "visual/utils/blocks";
 import { getStore } from "visual/redux/store";
@@ -79,13 +79,14 @@ export default class Saved extends React.Component {
           return acc;
         }
 
-        const { thumbnailWidth, thumbnailHeight, keywords, cat } = blockData;
+        const { keywords, cat } = blockData;
+        const { url, width, height } = blockThumbnailData(block);
 
         thumbnailData = {
           id: block.blockId,
-          thumbnailSrc: blockThumbnailUrl(blockData),
-          thumbnailWidth,
-          thumbnailHeight,
+          thumbnailSrc: url,
+          thumbnailWidth: width,
+          thumbnailHeight: height,
           showRemoveIcon: true,
           keywords,
           cat,

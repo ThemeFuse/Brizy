@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const WorkerPlugin = require("worker-plugin");
 
 const getExtensions = target => {
   const defaultExtensions = [".js", ".jsx", ".json"];
@@ -51,7 +52,8 @@ module.exports = options => {
         TARGET: JSON.stringify(options.TARGET),
         IS_EDITOR: true,
         IS_PREVIEW: false
-      })
+      }),
+      new WorkerPlugin()
     ],
     optimization: {
       splitChunks: {

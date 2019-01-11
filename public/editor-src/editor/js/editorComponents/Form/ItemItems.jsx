@@ -25,10 +25,9 @@ class FormItemItems extends EditorArrayComponent {
             this.cloneItem(itemIndex);
           }
         },
-        ...[
-          items.length === 1
-            ? ""
-            : {
+        ...(items.length > 1
+          ? [
+              {
                 id: "remove",
                 type: "button",
                 icon: "nc-trash",
@@ -40,7 +39,8 @@ class FormItemItems extends EditorArrayComponent {
                   this.removeItem(itemIndex);
                 }
               }
-        ]
+            ]
+          : [])
       ],
       getItemsForTablet: () => [],
       getItemsForMobile: () => []

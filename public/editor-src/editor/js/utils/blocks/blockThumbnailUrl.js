@@ -1,16 +1,12 @@
-import Config from "visual/global/Config";
-import { assetUrl } from "visual/utils/asset";
+import Editor from "visual/global/Editor";
+import { blockTemplateThumbnailUrl } from "./blockTemplateThumbnailUrl";
 import { applyFilter } from "visual/utils/filters";
 
 export function blockThumbnailUrl(block) {
-  const configUrl = Config.get("urls").blockThumbnails;
-  const url = configUrl
-    ? `${configUrl}/${block.id}.jpg`
-    : assetUrl(`template/img-block-thumbs/${block.id}.jpg`);
+  const blockTemplateId = block.blockId;
+  const url = blockTemplateThumbnailUrl(Editor.getBlock(blockTemplateId));
 
-  return applyFilter("blockThumbnailUrl", url, block);
-}
-
-export function placeholderBlockThumbnailUrl() {
-  return assetUrl("editor/img/block-placeholder.jpg");
+  // "blockThumbnailUrl__real" is temporary to avoid breaking change
+  // and will be replaced with "blockThumbnailUrl" within the next few releases
+  return applyFilter("blockThumbnailUrl__real", url, block);
 }

@@ -9,16 +9,73 @@
       right: -10px;
     }
   }
+
   .brz-figure {
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     max-width: 140px;
     position: relative;
     cursor: pointer;
+    padding: 4px;
+    margin: 2px 0;
 
     img {
       max-width: 100%;
       position: relative;
     }
+
+    .brz-ed-option__block-thumbnail-anchor {
+      display: none;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      width: 118px;
+      height: 22px;
+      padding: 0px 0 0 5px;
+      background: #3dbfe8;
+      color: white;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 13px;
+      font-weight: 600;
+
+      input {
+        width: 90px;
+        padding: 0px 7px 0 5px;
+        border: none;
+        background: none;
+        color: white;
+        text-align: left;
+        font-family: pn, "Open Sans", Arial, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          color: white;
+          font-family: pn, "Open Sans", Arial, sans-serif;
+          font-size: 13px;
+          font-weight: 600;
+          font-style: italic;
+        }
+      }
+
+      svg {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    &.active {
+      .brz-ed-option__block-thumbnail-anchor {
+        display: flex;
+      }
+    }
+
     &:after {
       content: "";
       position: absolute;

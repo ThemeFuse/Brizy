@@ -189,6 +189,12 @@
   }
 }
 
+.brz-a.brz-btn {
+  &[href] {
+    text-decoration: none;
+  }
+}
+
 //
 // Figures
 //
@@ -598,4 +604,3 @@ svg:not(:root) {
   -ms-appearance: none;
   appearance: none;
 }
-
