@@ -14,6 +14,6 @@ class Brizy_Admin_UrlIterator extends ArrayIterator {
 	 * @return mixed
 	 */
 	public function __toString() {
-		return $this->current();
+		return (string)$this->current();
 	}
 }
