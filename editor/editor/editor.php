@@ -199,6 +199,9 @@ class Brizy_Editor_Editor_Editor {
 					'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA,
 					'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA,
 					'getRuleGroupList'           => Brizy_Admin_Templates::RULE_GROUP_LIST,
+					'createRule'                 => Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
+					'deleteRule'                 => Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
+					'getRuleList'                => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 				),
 				'plugins'         => array(
 					'dummy'       => true,

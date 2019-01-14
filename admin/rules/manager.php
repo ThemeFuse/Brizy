@@ -20,7 +20,6 @@ class Brizy_Admin_Rules_Manager {
 
 		$meta_value = get_post_meta( (int) $postId, 'brizy-rules', true );
 
-
 		// fallback if the migration was not run
 		if ( ! $meta_value ) {
 			$meta_value = get_post_meta( (int) $postId, 'brizy-template-rules', true );
