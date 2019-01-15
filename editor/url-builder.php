@@ -119,7 +119,7 @@ class Brizy_Editor_UrlBuilder {
 			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
 		}
 
-		return $this->upload_dir['basedir'] . $path;
+		return wp_normalize_path($this->upload_dir['basedir'] . $path );
 	}
 
 	/**

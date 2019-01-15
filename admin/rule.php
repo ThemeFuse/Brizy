@@ -68,12 +68,19 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @param array $entities
 	 */
 	public function __construct( $id, $type, $applied_for, $entity_type, $entities ) {
-		$this->setId( $id );
+
+		if ( ! $id ) {
+			$this->setId( $this->generateId( $type, $applied_for, $entity_type, $this->getEntitiesAsString() ) );
+		} else {
+			$this->setId( $id );
+		}
+
 		$this->setType( $type );
 		$this->setAppliedFor( $applied_for );
 		$this->setEntityType( $entity_type );
 		$this->setEntityValues( array_filter( (array) $entities, array( $this, 'filter' ) ) );
-		$this->setId( $this->generateId( $type, $applied_for, $entity_type, $this->getEntitiesAsString() ) );
+
+
 	}
 
 	function filter( $v ) {
@@ -177,7 +184,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return int
 	 */
 	public function getType() {
-		return (int)$this->type;
+		return (int) $this->type;
 	}
 
 	/**

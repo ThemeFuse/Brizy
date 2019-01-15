@@ -129,7 +129,7 @@ class Brizy_Editor {
 			new Brizy_Compatibilities_Wtc();
 		}
 
-		$version_compare = version_compare( $wp_version, '5.0.0' );
+		$version_compare = version_compare( $wp_version, '5' );
 
         if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
 			new Brizy_Compatibilities_Gutenberg();
