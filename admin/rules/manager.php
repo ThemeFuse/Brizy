@@ -4,6 +4,36 @@ class Brizy_Admin_Rules_Manager {
 
 
 	/**
+	 * @param $jsonString
+	 * @param string $postType
+	 *
+	 * @return Brizy_Admin_Rule
+	 * @throws Exception
+	 */
+	public function createRuleFromJson( $jsonString, $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
+		$ruleJson = json_decode( $jsonString );
+		$rule     = Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
+
+		return $rule;
+	}
+
+	public function createRulesFromJson( $jsonString, $postType = Brizy_Admin_Templates::CP_TEMPLATE, $forceValidation = true ) {
+		$rulesJson = json_decode( $jsonString );
+		$rules     = array();
+		foreach ( $rulesJson as $ruleJson ) {
+			$rules[] = Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
+		}
+
+		if ( $forceValidation ) {
+			if ( $this->validateRules( $postType, $rules ) ) {
+				throw new Exception( 'One or more rules are already used' );
+			}
+		}
+
+		return $rules;
+	}
+
+	/**
 	 * @param int $postId
 	 *
 	 * @return array
@@ -78,10 +108,17 @@ class Brizy_Admin_Rules_Manager {
 	 * @param Brizy_Admin_Rule[] $rules
 	 */
 	public function addRules( $postId, $rules ) {
-		$current_rules = $this->getRuleSet( $postId );
+		$current_rules = $this->getRules( $postId );
 		$result_rules  = array_merge( $current_rules, $rules );
 		$this->saveRules( $postId, $result_rules );
+	}
 
+	/**
+	 * @param $postId
+	 * @param Brizy_Admin_Rule[] $rules
+	 */
+	public function setRules( $postId, $rules ) {
+		$this->saveRules( $postId, $rules );
 	}
 
 	/**
@@ -137,5 +174,54 @@ class Brizy_Admin_Rules_Manager {
 		} );
 
 		return $rules;
+	}
+
+	/**
+	 * @param $postType
+	 * @param Brizy_Admin_Rule $rule
+	 *
+	 * @return object|null
+	 */
+	public function validateRule( $postType, Brizy_Admin_Rule $rule ) {
+		$ruleSet = $this->getAllRulesSet( array(), $postType );
+		foreach ( $ruleSet->getRules() as $arule ) {
+
+			if ( $rule->isEqual( $arule ) ) {
+				return (object) array(
+					'message' => 'The rule is already used',
+					'rule'    => $arule->getId()
+				);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param $postType
+	 * @param array $rules
+	 *
+	 * @return array
+	 */
+	public function validateRules( $postType, array $rules ) {
+		// validate rule
+		$ruleSet = $this->getAllRulesSet( array(), $postType );
+		$errors  = array();
+		foreach ( $ruleSet->getRules() as $arule ) {
+			foreach ( $rules as $newRule ) {
+				if ( $newRule->isEqual( $arule ) ) {
+					$errors[] = (object) array(
+						'message' => 'The rule is already used',
+						'rule'    => $arule->getId()
+					);
+				}
+			}
+		}
+
+		if ( count( $errors ) > 0 ) {
+			return $errors;
+		}
+
+		return array();
 	}
 }

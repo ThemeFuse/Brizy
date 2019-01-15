@@ -531,7 +531,7 @@ class Brizy_Admin_Templates {
 		}
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
-		$assets_url = $urlBuilder->editor_asset_url();
+		$assets_url = $urlBuilder->editor_build_url();
 
 
 		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), BRIZY_EDITOR_VERSION );

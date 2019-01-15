@@ -39,7 +39,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 	public function convertToOptionValue() {
 		$get_object_vars = array(
-			'id'           => $this->id,
+			'id' => $this->id,
 		);
 
 		foreach ( $this->integrations as $integration ) {

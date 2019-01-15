@@ -59,7 +59,8 @@ class Brizy_Public_Main {
 				return;
 			}
 
-			$this->compilePage();
+			$this->preparePost();
+
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			remove_filter( 'the_content', 'wpautop' );
 			// insert the compiled head and content
@@ -330,13 +331,14 @@ class Brizy_Public_Main {
 		} else {
 			$compiled_page = $this->post->get_compiled_page();
 			//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
-			$head = $compiled_page->get_head();
+			$head              = $compiled_page->get_head();
 			$params['content'] = $head;
 		}
 
 		$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post() );
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
 		                     ->render( 'head-partial.html.twig', $params );
+
 		return;
 	}
 
@@ -350,7 +352,7 @@ class Brizy_Public_Main {
 
 		global $post;
 
-		if ( false === strpos( $content, 'brz-root__container' ) || ( $post && $post->ID !== $this->post->get_id() ) ) {
+		if ( false === strpos( $content, 'brz-root__container' ) || ( $post && $post->ID !== $this->post->get_parent_id() ) ) {
 			return $content;
 		}
 
@@ -386,21 +388,32 @@ class Brizy_Public_Main {
 		return $config_object;
 	}
 
-	private function compilePage() {
+	private function preparePost() {
 		$is_preview    = is_preview() || isset( $_GET['preview'] );
 		$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
 
-		if ( $is_preview || $needs_compile ) {
-			try {
-				$this->post->compile_page();
+		if ( $is_preview ) {
+			$user_id      = get_current_user_id();
+			$postParentId = $this->post->get_parent_id();
+			$autosaveId = Brizy_Editor_Post::getAutoSavePost( $postParentId, $user_id );
 
-				if ( ! $is_preview && $needs_compile ) {
-					$this->post->save();
-				}
-
-			} catch ( Exception $e ) {
-				Brizy_Logger::instance()->exception( $e );
+			if ( $autosaveId ) {
+				$this->post    = Brizy_Editor_Post::get( $autosaveId );
+				$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
 			}
+		}
+
+		if ( $is_preview || $needs_compile ) {
+			$this->post->compile_page();
+		}
+
+		try {
+			if ( ! $is_preview && $needs_compile ) {
+				$this->post->save();
+			}
+
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->exception( $e );
 		}
 	}
 

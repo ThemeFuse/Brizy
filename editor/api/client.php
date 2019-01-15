@@ -188,21 +188,23 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		$template_version = BRIZY_EDITOR_VERSION;
 		$url_builder      = new Brizy_Editor_UrlBuilder( $project );
-		$body             = apply_filters('brizy_compiler_params', array(
-			'template_slug'         => 'brizy',
-			'template_version'      => $template_version,
-			'download_url'          => 'https://static.brizy.io',
-			'config_json'           => json_encode( $config ), // ???
-			'pages_json'            => json_encode( array(
+		$body             = apply_filters( 'brizy_compiler_params', array(
+			'template_slug'    => 'brizy',
+			'template_version' => $template_version,
+			'download_url'     => 'https://static.brizy.io',
+			'config_json'      => json_encode( $config ), // ???
+			'pages_json'       => json_encode( array(
 				array(
 					'id'       => 1,
 					'data'     => $page_data,
 					'is_index' => true
 				)
 			) ), // ???
-			'globals_json'          => $project->getGlobalsAsJson(),
-			'page_id'               => 1
-		));
+			'globals_json'     => json_encode( apply_filters( 'brizy_global_data', $project->getDecodedGlobals() ) ),
+			'page_id'          => 1
+		) );
+
+
 		$page = parent::request( $compiler_url, array( 'body' => $body ), 'POST' )->get_response_body();
 
 		$template_context = array(
@@ -218,7 +220,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 
 		return Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/public/editor-build/editor/views/" )
 		                       ->render( 'static.html.twig', $template_context );
-
 	}
 
 	/**

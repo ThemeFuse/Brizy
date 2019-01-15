@@ -32,6 +32,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 		if ( isset( $vars[ self::ENDPOINT ] ) && is_string( $vars[ self::ENDPOINT ] ) && ! empty( $vars[ self::ENDPOINT ] ) ) {
 
+			session_write_close();
+
 			try {
 				// Set artificially high because GD uses uncompressed images in memory.
 				wp_raise_memory_limit( 'image' );

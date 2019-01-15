@@ -8,9 +8,7 @@ class Brizy_Config {
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor';
-	const EDITOR_INTEGRATION_URL = 'http://integration.bitblox.site';
 	const MEDIA_IMAGE_URL = '/storage/media';
-	const EDITOR_ORIGIN_URL = 'http://testblox.info';
 
 	const EDITOR_HOST_API = 'api.testblox.info';
 	const EDITOR_HOST_BASE = 'www.testblox.info';

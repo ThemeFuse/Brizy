@@ -22,6 +22,7 @@ class Brizy_Public_FileProxy extends Brizy_Public_AbstractProxy {
 		$vars = $wp_query->query_vars;
 
 		if ( isset( $vars[ self::ENDPOINT ] ) && is_string( $vars[ self::ENDPOINT ] ) && ! empty( $vars[ self::ENDPOINT ] ) ) {
+			session_write_close();
 
 			try {
 				// Set artificially high because GD uses uncompressed images in memory.

@@ -5,27 +5,25 @@ include_once dirname( __FILE__ ) . "/vendor/autoload.php";
 /**.
  * @param $class_name
  */
-function brizy_autoload( $class_name ) {
+function brizyAutoload( $class_name ) {
 
 	$class_parts = explode( '_', $class_name );
 	$last_part   = end( $class_parts );
 	$path_parts  = array_slice( $class_parts, 1, count( $class_parts ) - 2 );
-	$path        = strtolower( implode( DIRECTORY_SEPARATOR, $path_parts ) );
-	$abs_path    = dirname( __FILE__ );
+
+	foreach ( $path_parts as $i => $path_part ) {
+		$path_parts[ $i ] = camelCaseToPath( $path_part );
+	}
+
+	$path     = strtolower( implode( DIRECTORY_SEPARATOR, $path_parts ) );
+	$abs_path = dirname( __FILE__ );
 
 	// works only for brizy
 	if ( $class_parts[0] != 'Brizy' ) {
 		return;
 	}
 
-	$matches = array();
-	preg_match_all( '/(.[a-z]+|.[A-Z]+|.[A-Z].[a-z]+)/', $last_part, $matches );
-
-	if ( count( $matches[1] ) > 1 ) {
-		$file_name = strtolower( implode( '-', $matches[1] ) );
-	} else {
-		$file_name = strtolower( $matches[1][0] );
-	}
+	$file_name = camelCaseToPath( $last_part );
 
 	$include_path = $abs_path . DIRECTORY_SEPARATOR . ( $path ? $path . DIRECTORY_SEPARATOR : "" ) . $file_name;
 
@@ -40,4 +38,21 @@ function brizy_autoload( $class_name ) {
 	}
 }
 
-spl_autoload_register( 'brizy_autoload' );
+function camelCaseToPath( $apath ) {
+	$matches = array();
+	preg_match_all( '/(.[a-z]+|.[A-Z]+|.[A-Z].[a-z]+)/', $apath, $matches );
+	$path = null;
+
+	if ( isset($matches[1]) && count( $matches[1] ) > 1 ) {
+		$path = strtolower( implode( '-', $matches[1] ) );
+	} else {
+		if(isset($matches[1][0]))
+		{
+			$path = strtolower( $matches[1][0] );
+		}
+	}
+
+	return $path;
+}
+
+spl_autoload_register( 'brizyAutoload' );
