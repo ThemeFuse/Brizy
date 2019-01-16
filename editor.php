@@ -230,7 +230,7 @@ class Brizy_Editor {
 			new Brizy_Editor_BlockScreenshotApi( $project, $post );
 
 			// for other apis
-			do_action( 'brizy_register_api_methods', array( $user, $project, $post ) );
+			do_action( 'brizy_register_api_methods', $user, $project, $post );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
