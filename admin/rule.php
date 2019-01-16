@@ -314,6 +314,11 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule|void
 	 */
 	static public function createFromSerializedData( $data ) {
+
+		if ( is_null( $data ) ) {
+			throw new Exception( 'Invalid parameter provided' );
+		}
+
 		return new self(
 			isset( $data['id'] ) ? $data['id'] : null,
 			isset( $data['type'] ) ? $data['type'] : null,
@@ -329,12 +334,32 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule|void
 	 */
 	static public function createFromRequestData( $data ) {
+
+		if ( is_null( $data ) || ! $data ) {
+			throw new Exception( 'Invalid parameter provided' );
+		}
+
 		return new self(
 			isset( $data['id'] ) ? $data['id'] : null,
 			isset( $data['type'] ) ? $data['type'] : null,
 			isset( $data['appliedFor'] ) ? $data['appliedFor'] : null,
 			isset( $data['entityType'] ) ? $data['entityType'] : null,
 			isset( $data['entityValues'] ) ? $data['entityValues'] : null
+		);
+	}
+
+	static public function createFromJsonObject( $json ) {
+
+		if ( is_null( $json ) ) {
+			throw new Exception( 'Invalid parameter provided' );
+		}
+
+		return new self(
+			isset( $json->id ) ? $json->id : null,
+			isset( $json->type ) ? $json->type : null,
+			isset( $json->appliedFor ) ? $json->appliedFor : null,
+			isset( $json->entityType ) ? $json->entityType : null,
+			isset( $json->entityValues ) ? $json->entityValues : null
 		);
 	}
 

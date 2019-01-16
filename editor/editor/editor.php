@@ -200,6 +200,7 @@ class Brizy_Editor_Editor_Editor {
 					'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA,
 					'getRuleGroupList'           => Brizy_Admin_Templates::RULE_GROUP_LIST,
 					'createRule'                 => Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
+					'createRules'                => Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
 					'deleteRule'                 => Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
 					'getRuleList'                => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 				),
