@@ -479,7 +479,6 @@ class Brizy_Languages_Texts
 			"anchor name" => __("anchor name", "brizy"),
 		);
 
-
 		return apply_filters('brizy_editor_config_texts', $texts);
 	}
 
