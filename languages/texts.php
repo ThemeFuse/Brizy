@@ -4,7 +4,7 @@ class Brizy_Languages_Texts
 
 	public static function get_editor_texts()
 	{
-		return array(
+		$texts =  array(
 			// First Block Adder
 			"START BUILDING YOUR PAGE" => __("START BUILDING YOUR PAGE", "brizy"),
 			"Press the button above to add blocks" => __(
@@ -478,6 +478,9 @@ class Brizy_Languages_Texts
 			"Drawer Position" => __("Drawer Position", "brizy"),
 			"anchor name" => __("anchor name", "brizy"),
 		);
+
+
+		return apply_filters('brizy_editor_config_texts', $texts);
 	}
 
 }
