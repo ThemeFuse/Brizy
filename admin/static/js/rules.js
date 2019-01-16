@@ -73,14 +73,14 @@ var api = {
     createRule: function (rule) {
 
         var url = new URL(Brizy_Admin_Rules.url);
-        url.searchParams.append('action', 'brizy_add_rules');
+        url.searchParams.append('action', 'brizy_add_rule');
         url.searchParams.append('hash', Brizy_Admin_Rules.hash);
         url.searchParams.append('post', Brizy_Admin_Rules.id);
 
         return jQuery.ajax({
             type: "POST",
             url: url.toString(),
-            data: JSON.stringify([rule]),
+            data: JSON.stringify(rule),
             contentType: "application/json; charset=utf-8"
         });
     },
