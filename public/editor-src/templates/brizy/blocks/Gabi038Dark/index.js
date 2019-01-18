@@ -106,6 +106,7 @@ resolve: {
                                                                                     {
                                                                                         type: "FormField",
                                                                                         value: {
+                                                                                            type: "Text",
                                                                                             label: "Full Name",
                                                                                             required: false,
                                                                                             options: [

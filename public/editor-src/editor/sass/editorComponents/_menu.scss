@@ -38,6 +38,11 @@ $dropdown-arrow-size: 7px;
         font-size: inherit;
         display: inherit;
         align-items: inherit;
+        text-decoration: $link-decoration;
+
+        @include hover {
+          text-decoration: $link-decoration;
+        }
       }
     }
 

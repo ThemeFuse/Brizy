@@ -68,12 +68,19 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @param array $entities
 	 */
 	public function __construct( $id, $type, $applied_for, $entity_type, $entities ) {
-		$this->setId( $id );
+
+		if ( ! $id ) {
+			$this->setId( $this->generateId( $type, $applied_for, $entity_type, $this->getEntitiesAsString() ) );
+		} else {
+			$this->setId( $id );
+		}
+
 		$this->setType( $type );
 		$this->setAppliedFor( $applied_for );
 		$this->setEntityType( $entity_type );
 		$this->setEntityValues( array_filter( (array) $entities, array( $this, 'filter' ) ) );
-		$this->setId( $this->generateId( $type, $applied_for, $entity_type, $this->getEntitiesAsString() ) );
+
+
 	}
 
 	function filter( $v ) {
@@ -177,7 +184,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return int
 	 */
 	public function getType() {
-		return (int)$this->type;
+		return (int) $this->type;
 	}
 
 	/**
@@ -307,6 +314,11 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule|void
 	 */
 	static public function createFromSerializedData( $data ) {
+
+		if ( is_null( $data ) ) {
+			throw new Exception( 'Invalid parameter provided' );
+		}
+
 		return new self(
 			isset( $data['id'] ) ? $data['id'] : null,
 			isset( $data['type'] ) ? $data['type'] : null,
@@ -322,12 +334,32 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule|void
 	 */
 	static public function createFromRequestData( $data ) {
+
+		if ( is_null( $data ) || ! $data ) {
+			throw new Exception( 'Invalid parameter provided' );
+		}
+
 		return new self(
 			isset( $data['id'] ) ? $data['id'] : null,
 			isset( $data['type'] ) ? $data['type'] : null,
 			isset( $data['appliedFor'] ) ? $data['appliedFor'] : null,
 			isset( $data['entityType'] ) ? $data['entityType'] : null,
 			isset( $data['entityValues'] ) ? $data['entityValues'] : null
+		);
+	}
+
+	static public function createFromJsonObject( $json ) {
+
+		if ( is_null( $json ) ) {
+			throw new Exception( 'Invalid parameter provided' );
+		}
+
+		return new self(
+			isset( $json->id ) ? $json->id : null,
+			isset( $json->type ) ? $json->type : null,
+			isset( $json->appliedFor ) ? $json->appliedFor : null,
+			isset( $json->entityType ) ? $json->entityType : null,
+			isset( $json->entityValues ) ? $json->entityValues : null
 		);
 	}
 

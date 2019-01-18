@@ -19,6 +19,7 @@ class RichText extends EditorComponent {
   static defaultValue = defaultValue;
 
   state = {
+    isActiveToolbar: false,
     prepopulation: null,
     population: null,
     selectionCoords: null
@@ -75,6 +76,14 @@ class RichText extends EditorComponent {
       prepopulation: null,
       population: null
     });
+  };
+
+  handleToolbarOpen = () => {
+    this.setState({ isActiveToolbar: true });
+  };
+
+  handleToolbarClose = () => {
+    this.setState({ isActiveToolbar: false });
   };
 
   getToolbarProps = () => {
@@ -140,7 +149,7 @@ class RichText extends EditorComponent {
   }
 
   renderForEdit(v) {
-    const { prepopulation, population } = this.state;
+    const { prepopulation, population, isActiveToolbar } = this.state;
     const { onToolbarEnter, onToolbarLeave } = this.props;
 
     return (
@@ -150,11 +159,14 @@ class RichText extends EditorComponent {
           manualControl={true}
           onMouseEnter={onToolbarEnter}
           onMouseLeave={onToolbarLeave}
+          onOpen={this.handleToolbarOpen}
+          onClose={this.handleToolbarClose}
         >
           <div className={this.getClassName(v)}>
             <Quill
               ref={this.handleQuillRef}
               value={v.text}
+              forceUpdate={!isActiveToolbar}
               onSelectionChange={this.handleSelectionChange}
               onTextChange={this.handleTextChange}
             />

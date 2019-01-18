@@ -71,11 +71,17 @@ var api = {
         });
     },
     createRule: function (rule) {
-        return jQuery.post(Brizy_Admin_Rules.url, {
-            action: "brizy_add_rule",
-            rule: rule,
-            hash: Brizy_Admin_Rules.hash,
-            post: Brizy_Admin_Rules.id
+
+        var url = new URL(Brizy_Admin_Rules.url);
+        url.searchParams.append('action', 'brizy_add_rule');
+        url.searchParams.append('hash', Brizy_Admin_Rules.hash);
+        url.searchParams.append('post', Brizy_Admin_Rules.id);
+
+        return jQuery.ajax({
+            type: "POST",
+            url: url.toString(),
+            data: JSON.stringify(rule),
+            contentType: "application/json; charset=utf-8"
         });
     },
 
@@ -113,25 +119,21 @@ var actions = {
     rule: {
         setType: function (value) {
             return function (state) {
-                console.log('setType');
                 return {type: value};
             };
         },
         setAppliedFor: function (value) {
             return function (state) {
-                console.log('setAppliedFor');
                 return {appliedFor: value};
             };
         },
         setEntityType: function (value) {
             return function (state) {
-                console.log('setEntityType');
                 return {entityType: value};
             };
         },
         setEntityValues: function (value) {
             return function (state) {
-                console.log('setEntityValues');
                 return {entityValues: value};
             };
         }
@@ -159,7 +161,6 @@ var actions = {
 
 var RuleTypeField = function (params) {
     return function (state, action) {
-        console.log(params);
         return h(
             "span",
             {class: "brizy-rule-select"},
@@ -195,6 +196,8 @@ var RuleTypeField = function (params) {
 };
 
 BrzSelect2 = function (params) {
+    console.log(params);
+
     var oncreate = function (element) {
         var el = jQuery(element);
         if (!params.disabled) {
@@ -238,7 +241,7 @@ var PostSelect2Field = function (params) {
     var convertResponseToOptions = function (data) {
         var options = [new Option("All", null, false, false)];
         data.posts.forEach(function (post) {
-            var selected = params.value.includes(post.ID + "");
+            var selected = params.value.includes(post.ID + "") || params.value.includes(post.ID);
             options.push(new Option(post.title, post.ID, false, selected));
         });
         return options;
@@ -279,7 +282,7 @@ var RuleTaxonomySearchField = function (params) {
     var convertResponseToOptions = function (data) {
         var options = [new Option("All", null, false, false)];
         data.forEach(function (term) {
-            var selected = params.rule.entityValues && params.rule.entityValues.includes(term.term_id + "");
+            var selected = params.rule.entityValues && (params.rule.entityValues.includes(term.term_id + "") || params.rule.entityValues.includes(term.term_id));
             options.push(new Option(term.name, term.term_id, false, selected));
         });
         return options;
@@ -290,7 +293,9 @@ var RuleTaxonomySearchField = function (params) {
         {
             id: "taxonomies-" + params.taxonomy,
             style: params.style ? params.style : {width: "200px"},
-            optionRequest: function () { return api.getTerms(params.taxonomy); },
+            optionRequest: function () {
+                return api.getTerms(params.taxonomy);
+            },
             convertResponseToOptions: convertResponseToOptions,
             onChange: params.onChange,
             disabled: params.disabled
@@ -405,7 +410,7 @@ var RuleForm = function (params) {
         elements.push(h("p", {class: "error"}, params.errors));
     }
 
-    return h("div", { class: "brizy-rule-new-condition" }, elements);
+    return h("div", {class: "brizy-rule-new-condition"}, elements);
 };
 
 var RuleListItem = function (params) {
@@ -421,7 +426,7 @@ var RuleListItem = function (params) {
             type: "button",
             value: "Delete",
             onclick: function (e) {
-                if(confirm('Are you sure you want to delete?'))
+                if (confirm('Are you sure you want to delete?'))
                     params.onDelete(params.rule);
             }
         })

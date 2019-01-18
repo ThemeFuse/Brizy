@@ -160,6 +160,7 @@ resolve: {
                                                                                     {
                                                                                         type: "FormField",
                                                                                         value: {
+                                                                                            type: "Text",
                                                                                             label: "Name",
                                                                                             required: false,
                                                                                             options: [

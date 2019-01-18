@@ -62,6 +62,10 @@
     text-shadow: none;
     text-transform: initial;
     text-decoration: initial;
+
+    &:before {
+      display: none;
+    }
   }
   p,
   span {
@@ -113,13 +117,12 @@
     }
   }
   .link--anchor,
-  .link--external {
-    &:not(.is-empty) {
-      text-decoration: $link-decoration;
+  .link--external,
+  .link--popup {
+    text-decoration: $link-decoration;
 
-      @include hover {
-        text-decoration: $link-hover-decoration;
-      }
+    @include hover {
+      text-decoration: $link-hover-decoration;
     }
   }
 

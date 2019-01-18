@@ -64,7 +64,7 @@ class Video extends EditorComponent {
     let content = coverImageSrc ? (
       this.renderCover(videoSrc)
     ) : (
-      <iframe className="brz-iframe" src={videoSrc} />
+      <iframe allowFullScreen={true} className="brz-iframe" src={videoSrc} />
     );
 
     if (!videoSrc && !coverImageSrc) {

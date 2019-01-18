@@ -129,7 +129,7 @@ class Brizy_Editor {
 			new Brizy_Compatibilities_Wtc();
 		}
 
-		$version_compare = version_compare( $wp_version, '5.0.0' );
+		$version_compare = version_compare( $wp_version, '5' );
 
         if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
 			new Brizy_Compatibilities_Gutenberg();
@@ -230,7 +230,7 @@ class Brizy_Editor {
 			new Brizy_Editor_BlockScreenshotApi( $project, $post );
 
 			// for other apis
-			do_action( 'brizy_register_api_methods', array( $user, $project, $post ) );
+			do_action( 'brizy_register_api_methods', $user, $project, $post );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}

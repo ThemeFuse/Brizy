@@ -313,6 +313,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		Brizy_Logger::instance()->notice( 'Compile page', array( $this ) );
 
 		$compiled_html = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
+		$compiled_html = Brizy_SiteUrlReplacer::hideSiteUrl( $compiled_html );
 
 		$this->set_compiled_html( $compiled_html );
 
