@@ -9,6 +9,7 @@ export default function() {
     if (src) {
       var iframe = jQuery("<iframe/>", {
         class: "brz-iframe",
+        allowfullscreen: true,
         src: src
       });
 

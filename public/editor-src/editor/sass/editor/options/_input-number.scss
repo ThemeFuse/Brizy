@@ -1,0 +1,39 @@
+// Input Number with autocorections
+.brz-ed-option__input-number {
+  &-wrap {
+    position: relative;
+    font-weight: 400;
+    width: 44px;
+    border-bottom: 1px solid $brand-options-border;
+    padding: 0 0 4px;
+  }
+  .brz-input {
+    background-color: transparent;
+    color: $options-label-color;
+    font-weight: 400;
+    border: none;
+    outline: 0;
+    padding: 0;
+    line-height: 1;
+    -moz-appearance: textfield; // Remove spin button on Firefox
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 105%;
+    height: 100%;
+
+    &:focus,
+    &:active {
+      background-color: transparent;
+      color: $options-label-color;
+      box-shadow: none;
+      border: none;
+      outline: 0;
+    }
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

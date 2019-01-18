@@ -69,7 +69,15 @@ export function css(node, property, value) {
     style += ";";
   }
 
-  if (property && value) {
+  if (typeof property === "object") {
+    const styleStr = Object.entries(property)
+      .map(([key, value]) => `${key}: ${value};`)
+      .join(" ");
+    node.setAttribute("style", `${style} ${styleStr}`);
+    return;
+  }
+
+  if (property && value && typeof property === "string") {
     node.setAttribute("style", `${style} ${property}: ${value};`);
     return;
   }

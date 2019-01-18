@@ -28,6 +28,7 @@ import Stepper from "./Stepper";
 import Switch from "./Switch";
 import Tabs from "./Tabs";
 import Toggle from "./Toggle";
+import InputNumber from "./InputNumber";
 
 export default {
   advancedSettings: AdvancedSettings,
@@ -59,5 +60,6 @@ export default {
   stepper: Stepper,
   switch: Switch,
   tabs: Tabs,
-  toggle: Toggle
+  toggle: Toggle,
+  inputNumber: InputNumber
 };

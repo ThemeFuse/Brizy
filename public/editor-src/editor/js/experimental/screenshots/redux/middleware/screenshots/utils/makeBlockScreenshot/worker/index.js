@@ -26,6 +26,7 @@ onmessage = async e => {
   removeUnwantedNodes(node);
   transformPictureToImg(node);
   await inlineImages(node, { proxyUrl });
+  deactivateBackgroundParallax(node);
   replaceIframesWithPlaceholders(node);
   deactivatePaddingDraggable(node);
   removeUnwantedAttributes(node);
@@ -222,9 +223,25 @@ async function inlineImages(node, { proxyUrl }) {
   return Promise.all(promises);
 }
 
+function deactivateBackgroundParallax(node) {
+  const bgWithParallax = getElementsByClassName(node, "brz-bg-image-parallax");
+
+  bgWithParallax.forEach(node =>
+    // make the image static (no parallax or fixed)
+    css(node, {
+      transform: "none",
+      position: "absolute",
+      top: "0",
+      left: "0",
+      width: "100%",
+      height: "100%"
+    })
+  );
+}
+
 function makeForeignObjectSvg(nodeString, options) {
   const { width, height } = options;
-  const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%">${nodeString}</foreignObject>`;
+  const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%" style="background-color: white;">${nodeString}</foreignObject>`;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">${foreignObject}</svg>`;
 
   return svg;
@@ -232,7 +249,7 @@ function makeForeignObjectSvg(nodeString, options) {
 
 function makeSvgDataUri(nodeString, options) {
   const { width, height } = options;
-  const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%">${nodeString}</foreignObject>`;
+  const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%" style="background-color: white;">${nodeString}</foreignObject>`;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">${foreignObject}</svg>`;
 
   return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);

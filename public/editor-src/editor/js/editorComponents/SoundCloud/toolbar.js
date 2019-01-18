@@ -1,7 +1,16 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+
+import {
+  toolbarElementSoundCloudLink,
+  toolbarElementSoundCloudAutoPlay,
+  toolbarElementSoundCloudStyle,
+  toolbarSizeWidthWidthPercent,
+  toolbarSizeHeightHeightPx
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
+
   return [
     {
       id: "toolbarSoundCloud",
@@ -10,54 +19,9 @@ export function getItemsForDesktop(v) {
       title: t("SoundCloud"),
       position: 90,
       options: [
-        {
-          id: "url",
-          label: t("Link"),
-          type: "input",
-          placeholder: t("SoundCloud Link"),
-          value: {
-            value: v.url
-          },
-          onChange: ({ value: url }) => ({
-            url
-          })
-        },
-        {
-          id: "autoPlay",
-          label: t("Auto Play"),
-          type: "switch",
-          value: v.autoPlay
-        },
-        {
-          type: "multiPicker",
-          roles: ["admin"],
-          picker: {
-            id: "style",
-            label: t("Style"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "basic",
-                icon: "nc-sndcloud-style-1"
-              },
-              {
-                value: "artwork",
-                icon: "nc-sndcloud-style-2"
-              }
-            ],
-            value: v.style,
-            onChange: style => ({
-              style,
-              showArtwork: style === "basic" ? "off" : "on",
-              height:
-                style === "basic"
-                  ? v.mediumHeight
-                  : style === "artwork"
-                    ? v.largeHeight
-                    : v.height
-            })
-          }
-        }
+        toolbarElementSoundCloudLink({ v }),
+        toolbarElementSoundCloudAutoPlay({ v }),
+        toolbarElementSoundCloudStyle({ v })
       ]
     },
     {
@@ -68,62 +32,27 @@ export function getItemsForDesktop(v) {
       roles: ["admin"],
       position: 110,
       options: [
-        {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        },
-        {
-          id: "height",
-          label: t("Height"),
-          type: "slider",
-          slider: {
-            min: v.smallHeight,
-            max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: v.height
-          },
-          onChange: ({ value: height }) => ({ height })
-        }
+        toolbarSizeWidthWidthPercent({ v, device, state: "normal" }),
+        toolbarSizeHeightHeightPx({
+          v,
+          device,
+          state: "normal",
+          config: {
+            slider: {
+              min: v.smallHeight,
+              max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
+            }
+          }
+        })
       ]
     }
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
+  const state = "normal";
+
   return [
     {
       id: "tabletToolbarSettings",
@@ -133,62 +62,27 @@ export function getItemsForTablet(v) {
       roles: ["admin"],
       position: 110,
       options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        },
-        {
-          id: "tabletHeight",
-          label: t("Height"),
-          type: "slider",
-          slider: {
-            min: v.smallHeight,
-            max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "height")
-          },
-          onChange: ({ value: tabletHeight }) => ({ tabletHeight })
-        }
+        toolbarSizeWidthWidthPercent({ v, device, state }),
+        toolbarSizeHeightHeightPx({
+          v,
+          device,
+          state,
+          config: {
+            slider: {
+              min: v.smallHeight,
+              max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
+            }
+          }
+        })
       ]
     }
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
+  const state = "normal";
+
   return [
     {
       id: "mobileToolbarSettings",
@@ -198,56 +92,18 @@ export function getItemsForMobile(v) {
       roles: ["admin"],
       position: 110,
       options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
-        },
-        {
-          id: "mobileHeight",
-          label: t("Height"),
-          type: "slider",
-          slider: {
-            min: v.smallHeight,
-            max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "height")
-          },
-          onChange: ({ value: mobileHeight }) => ({ mobileHeight })
-        }
+        toolbarSizeWidthWidthPercent({ v, device, state }),
+        toolbarSizeHeightHeightPx({
+          v,
+          device,
+          state,
+          config: {
+            slider: {
+              min: v.smallHeight,
+              max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
+            }
+          }
+        })
       ]
     }
   ];

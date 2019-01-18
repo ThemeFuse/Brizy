@@ -83,8 +83,8 @@ export default class QuillComponent extends React.Component {
     this.initPlugin();
   }
 
-  componentWillReceiveProps({ value }) {
-    if (!this.quill.hasFocus() && value !== this.props.value) {
+  componentWillReceiveProps({ value, forceUpdate }) {
+    if (forceUpdate && value !== this.props.value) {
       this.destroyPlugin();
       this.contentEditable.innerHTML = value;
       this.initPlugin();
