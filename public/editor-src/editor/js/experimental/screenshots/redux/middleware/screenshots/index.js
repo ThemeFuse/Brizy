@@ -38,8 +38,8 @@ const getBlocksMap = blocks =>
   }, {});
 const blockIsInThePage = (blockId, store) =>
   Boolean(getBlocksMap(getPageBlocks(store.getState()))[blockId]);
-const blockIsInSaved = (blockId, store) =>
-  Boolean(getBlocksMap(getSavedBlocks(store.getState()))[blockId]);
+const blockIsInSaved = (block, store) =>
+  getSavedBlocks(store.getState()).includes(block); // saved blocks do not have their own uuid so we look by reference
 
 export default store => next => action => {
   const prevState = store.getState();
@@ -230,7 +230,7 @@ async function enqueueTasks(changedBlocks, store, next) {
     };
   });
   const savedBlockTasks = changedBlocks.saved.map(block => {
-    const blockId = block.value._id;
+    const blockId = uuid();
 
     return {
       id: blockId,
@@ -239,14 +239,11 @@ async function enqueueTasks(changedBlocks, store, next) {
         // console.log("saved block screen cb", blockId);
 
         // make screenshot
-        if (!blockIsInThePage(blockId, store)) {
-          return;
-        }
-        const screenshotId = uuid();
+        const screenshotId = blockId;
         const screenshot = await makeBlockScreenshot(block);
 
         // upload screenshot
-        if (!blockIsInSaved(blockId, store)) {
+        if (!blockIsInSaved(block, store)) {
           return;
         }
         await uploadBlockScreenshot({
@@ -256,19 +253,19 @@ async function enqueueTasks(changedBlocks, store, next) {
         });
 
         // update store (saved blocks)
-        if (!blockIsInSaved(blockId, store)) {
+        if (!blockIsInSaved(block, store)) {
           return;
         }
         const savedBlocks = getSavedBlocks(store.getState());
-        const updatedBlocks = savedBlocks.map(block => {
-          return block.value._id === blockId
+        const updatedBlocks = savedBlocks.map(block_ => {
+          return block_ === block
             ? updateBlockWithScreenshotInfo({
                 block,
                 src: screenshotId,
                 width: screenshot.width,
                 height: screenshot.height
               })
-            : block;
+            : block_;
         });
         next(updateGlobals("savedBlocks", updatedBlocks, historyMeta));
       }

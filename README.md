@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.54<br>
+Stable tag: 1.0.56<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,26 @@ A good bug report includes full details to easily understand the issue you are h
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.56 - 2019-01-18 ###
+* New: Added block screenshots in browsers that support it (Chrome, Firefox, Safari to a lesser extent)
+* New: Possibility to add custom names to anchor links
+* New: Compatibility Litespeed plugin
+* New: Added API methods to get/save block screenshots
+* Improved: Changed the rule manager to work with different posts
+* Improved: Changed the rule api to accept json instead of form-urlencoded values
+* Fixed: Remove actions that play with js scripts
+* Fixed: Fixed the regexp for head extraction
+* Fixed: Fixed page assets url
+* Fixed: Used hideSiteUrl on save compiled html to db
+* Fixed: Video not being able to go fullscreen
+* Fixed: Impossible to add global colors to RichText links
+* Fixed: Impossible to change margin to less than -100
+* Fixed: Lightbox z-index conflict with header blocks
+* Fixed: Check every request for multiple urls by Brizy_Editor_Http_Response
+* Fixed: Changed signature of do_action of register API methods brizy_register_api_methods
+* Fixed: Added config texts filter
+* Fixed: Version check for Gutenberg compatibility 
 
 ### 1.0.54 - 2019-01-11 ###
 * New: Added block screenshots in browsers that support it

@@ -3,6 +3,8 @@ import { uuid } from "visual/utils/uuid";
 import { urlContainsQueryString } from "visual/utils/url";
 import { cloneAndInlineStyles } from "./cloneAndInlineStyles.js";
 
+const SCREENSHOT_MAX_WIDTH = 600;
+
 const promises = {};
 
 const worker = new Worker("./worker/index.js", { type: "module" });
@@ -20,17 +22,26 @@ worker.onmessage = async e => {
 
   const image = document.createElement("img");
   image.onload = async () => {
+    let canvasWidth = image.width;
+    let canvasHeight = image.height;
+    if (canvasWidth > SCREENSHOT_MAX_WIDTH) {
+      canvasHeight = Math.floor(
+        (SCREENSHOT_MAX_WIDTH * canvasHeight) / canvasWidth
+      );
+      canvasWidth = SCREENSHOT_MAX_WIDTH;
+    }
+
     const canvas = document.createElement("canvas");
-    canvas.width = options.width;
-    canvas.height = options.height;
-    canvas.getContext("2d").drawImage(image, 0, 0);
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    canvas.getContext("2d").drawImage(image, 0, 0, canvasWidth, canvasHeight);
 
     const canvasBase64 = canvas.toDataURL("image/jpeg", 1);
 
     resolve({
       src: canvasBase64,
-      width: image.width,
-      height: image.height
+      width: canvasWidth,
+      height: canvasHeight
     });
   };
   image.onerror = reject;
@@ -55,7 +66,7 @@ export async function makeBlockScreenshot(block, options = {}) {
     console.error("cloneinline", e);
   }
 
-  const options_ = calcOptions(options, node);
+  const options_ = calcOptions(node);
   const blob = new Blob([cloned.outerHTML], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
 
@@ -73,17 +84,10 @@ export async function makeBlockScreenshot(block, options = {}) {
   });
 }
 
-function calcOptions(options, node) {
-  let rect;
+function calcOptions(node) {
+  let { width, height } = node.getBoundingClientRect();
 
-  if (!options.width || !options.height) {
-    rect = node.getBoundingClientRect();
-  }
-
-  return {
-    width: options.width || rect.width,
-    height: options.height || rect.height
-  };
+  return { width, height };
 }
 
 function proxyUrl() {

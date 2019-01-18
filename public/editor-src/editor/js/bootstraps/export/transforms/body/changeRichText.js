@@ -46,15 +46,18 @@ export default function changeRichText($) {
             style="${style}"
             class="${className}"
             data-brz-link-type="${data.type}"
-          >
-            ${html}
-          </a>`
+          >${html}</a>`
         );
       } else {
         const classNames = linkClassNames.join(" ");
-        $this.replaceWith(`<span class="brz-span">${html}</span>`);
-        $this.removeClass(classNames);
-        $this.removeAttr("data-href");
+        const newClassNames = className
+          .split(" ")
+          .filter(name => !linkClassNames.includes(name))
+          .join(" ");
+
+        $this.replaceWith(
+          `<span class="${newClassNames} brz-span" style="${style}">${html}</span>`
+        );
       }
     });
 

@@ -90,6 +90,8 @@ $body-bg: #f3f3f3 !default;
 // Links
 //
 // Style anchor elements.
+$link-is-empty: none !default;
+$link-is-not-empty: underline !default;
 $link-decoration: none !default;
 $link-hover-decoration: underline !default;
 

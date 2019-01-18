@@ -30,9 +30,8 @@
       bottom: 0;
       left: 0;
       z-index: 1;
-      width: 118px;
+      width: 140px;
       height: 22px;
-      padding: 0px 0 0 5px;
       background: #3dbfe8;
       color: white;
       font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
@@ -40,9 +39,16 @@
       font-size: 13px;
       font-weight: 600;
 
+      .brz-span {
+        font-size: 12px;
+        opacity: 0.9;
+        font-style: italic;
+        margin-left: 5px;
+      }
+
       input {
-        width: 90px;
-        padding: 0px 7px 0 5px;
+        width: 108px;
+        padding: 0px 5px;
         border: none;
         background: none;
         color: white;
@@ -57,6 +63,7 @@
 
         &::placeholder {
           color: white;
+          opacity: 0.6;
           font-family: pn, "Open Sans", Arial, sans-serif;
           font-size: 13px;
           font-weight: 600;
@@ -64,15 +71,29 @@
         }
       }
 
-      svg {
-        width: 8px;
-        height: 8px;
+      label {
+        color: #ffffff;
+        cursor: pointer;
+        margin: 3px 0 0 0;
+      }
+
+      .brz-icon-svg {
+        width: 18px;
+        height: 18px;
+        padding: 5px;
+      }
+
+      .brz-icon-svg:hover {
+        color: #03080f;
+        opacity: 0.92;
       }
     }
 
     &.active {
       .brz-ed-option__block-thumbnail-anchor {
         display: flex;
+        flex-direction: row;
+        align-items: center;
       }
     }
 

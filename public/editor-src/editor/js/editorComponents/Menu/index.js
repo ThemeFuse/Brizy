@@ -5,7 +5,6 @@ import "jquery.mmenu";
 import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Portal from "visual/component/Portal";
 import { setIds } from "visual/utils/models";
@@ -215,7 +214,7 @@ export default class Menu extends EditorComponent {
         {this.renderMenu(v)}
 
         <div className="brz-mm-menu__icon" onClick={this.openMMenu}>
-          <EditorIcon icon="nc-menu-3" />
+          <ThemeIcon name="menu-3" type="editor" />
         </div>
       </React.Fragment>
     );

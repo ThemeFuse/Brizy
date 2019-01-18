@@ -13,17 +13,23 @@ export default class BlockThumbnail extends Component {
   state = {
     blockData: this.props.blockData,
     imageFetched: false,
-    showSpinner: false
+    showSpinner: true
   };
 
   componentDidMount() {
     this.mounted = true;
     this.cancelCurrentPreload = this.preloadThumbnail(this.state.blockData);
-    this.showSpinnerTimeout = setTimeout(() => {
-      if (this.mounted && !this.state.imageFetched) {
-        this.setState({ showSpinner: true });
-      }
-    }, this.props.spinnerDelay);
+
+    // because the main thread gets busy
+    // the spinner can take significantly
+    // longer then the props value
+    // commenting for now and displaying
+    // the spinner without any delay
+    // this.showSpinnerTimeout = setTimeout(() => {
+    //   if (this.mounted && !this.state.imageFetched) {
+    //     this.setState({ showSpinner: true });
+    //   }
+    // }, this.props.spinnerDelay);
   }
 
   componentDidUpdate() {
@@ -63,25 +69,23 @@ export default class BlockThumbnail extends Component {
       width: thumbnailWidth,
       height: thumbnailHeight
     } = blockThumbnailData(blockData);
-    let containerStyle = {};
 
-    if (!imageFetched) {
-      const resizedThumbnailWidth = 175; // this is from css. 185px - (10px border)
-      const resizedThumbnailHeight =
-        (resizedThumbnailWidth * thumbnailHeight) / thumbnailWidth;
-
-      containerStyle = {
-        paddingTop: `${resizedThumbnailHeight}px`
-      };
-    }
+    const resizedThumbnailWidth = 175; // this is from css. 185px - (10px border)
+    const resizedThumbnailHeight =
+      (resizedThumbnailWidth * thumbnailHeight) / thumbnailWidth;
+    const containerStyle = {
+      paddingTop: `${resizedThumbnailHeight}px`
+    };
+    const spinnerStyle = showSpinner ? {} : { display: "none" };
 
     return (
       <div className="brz-ed-sidebar-block-image" style={containerStyle}>
-        {showSpinner && (
-          <div className="brz-ed-sidebar-block-image-loading">
-            <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-          </div>
-        )}
+        <div
+          className="brz-ed-sidebar-block-image-loading"
+          style={spinnerStyle}
+        >
+          <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
+        </div>
         {imageFetched && <img className="brz-img" src={url} />}
         <div className="brz-ed-sidebar-block-layout">
           <span className="brz-span brz-ed-sidebar-block-drag">

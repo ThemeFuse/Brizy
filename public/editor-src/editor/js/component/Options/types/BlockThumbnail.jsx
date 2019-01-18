@@ -145,9 +145,18 @@ class BlockThumbnail extends React.Component {
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
           </div>
           <img className="brz-img" src={url} style={imgStyle} />
+
           <AnchorInput
-            ref={el => (this.anchorInputRefs[_id] = el)}
+            ref={el => {
+              // when the component unmounts this function is also called
+              // with el being null and this.anchorInputRefs is also null from componentWillUnmount
+              // thus causing property of null error if not guarded
+              if (el) {
+                this.anchorInputRefs[_id] = el;
+              }
+            }}
             value={inputValue}
+            id={_id}
             onChange={value => this.handleInputChange(value, _id)}
           />
         </figure>
@@ -206,6 +215,9 @@ class AnchorInput extends React.Component {
   };
 
   render() {
+    const { id } = this.props;
+    const inputID = `anchor-${id}`;
+
     return (
       <div
         className="brz-ed-option__block-thumbnail-anchor"
@@ -215,11 +227,15 @@ class AnchorInput extends React.Component {
         <input
           className="brz-input"
           type="text"
-          placeholder={t("anchor name")}
+          autoComplete="off"
+          placeholder={t("anchor-name")}
           value={this.state.inputValue}
           onChange={this.handleInputChange}
+          id={inputID}
         />
-        <EditorIcon icon="nc-pen" />
+        <label htmlFor={inputID}>
+          <EditorIcon icon="nc-pen" />
+        </label>
       </div>
     );
   }
