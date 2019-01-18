@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.54
+Stable tag: 1.0.56
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,26 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.56 - 2019-01-18 =
+* New: Added block screenshots in browsers that support it (Chrome, Firefox, Safari to a lesser extent)
+* New: Possibility to add custom names to anchor links
+* New: Compatibility Litespeed plugin
+* New: Added API methods to get/save block screenshots
+* Improved: Changed the rule manager to work with different posts
+* Improved: Changed the rule api to accept json instead of form-urlencoded values
+* Fixed: Remove actions that play with js scripts
+* Fixed: Fixed the regexp for head extraction
+* Fixed: Fixed page assets url
+* Fixed: Used hideSiteUrl on save compiled html to db
+* Fixed: Video not being able to go fullscreen
+* Fixed: Impossible to add global colors to RichText links
+* Fixed: Impossible to change margin to less than -100
+* Fixed: Lightbox z-index conflict with header blocks
+* Fixed: Check every request for multiple urls by Brizy_Editor_Http_Response
+* Fixed: Changed signature of do_action of register API methods brizy_register_api_methods
+* Fixed: Added config texts filter
+* Fixed: Version check for Gutenberg compatibility 
 
 = 1.0.54 - 2019-01-11 =
 * New: Added block screenshots in browsers that support it
