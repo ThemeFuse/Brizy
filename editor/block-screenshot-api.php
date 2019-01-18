@@ -176,6 +176,10 @@ class Brizy_Editor_BlockScreenshotApi {
 	private function resizeImage( $thumbnailFullPath ) {
 		try {
 			$imageEditor = wp_get_image_editor( $thumbnailFullPath );
+			
+			if($imageEditor instanceof WP_Error)
+				throw new Exception($imageEditor->get_error_message());
+
 			$imageEditor->resize( 600, 600 );
 			$result = $imageEditor->save( $thumbnailFullPath );
 
