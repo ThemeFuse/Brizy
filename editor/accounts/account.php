@@ -49,8 +49,6 @@ class Brizy_Editor_Accounts_Account extends Brizy_Editor_Accounts_AbstractAccoun
 		}
 
 		if ( is_object( $json_obj ) ) {
-			$json_obj->group = Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP;
-
 			return Brizy_Editor_Accounts_AbstractAccount::createFromJson( get_object_vars( $json_obj ) );
 		}
 

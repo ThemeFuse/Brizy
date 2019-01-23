@@ -18,10 +18,6 @@ class Brizy_Editor_Forms_Api {
 	const AJAX_UPDATE_INTEGRATION = 'brizy_update_integration';
 	const AJAX_DELETE_INTEGRATION = 'brizy_delete_integration';
 
-	const AJAX_SET_RECAPTCHA_ACCOUNT = 'brizy_set_recaptcha_account';
-	const AJAX_GET_RECAPTCHA_ACCOUNT = 'brizy_get_recaptcha_account';
-
-
 	const AJAX_AUTHENTICATION_CALLBACK = 'brizy_authentication_callback';
 
 	/**
@@ -73,9 +69,6 @@ class Brizy_Editor_Forms_Api {
 			add_action( 'wp_ajax_' . self::AJAX_GET_INTEGRATION, array( $this, 'getIntegration' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE_INTEGRATION, array( $this, 'updateIntegration' ) );
 			add_action( 'wp_ajax_' . self::AJAX_DELETE_INTEGRATION, array( $this, 'deleteIntegration' ) );
-
-			add_action( 'wp_ajax_' . self::AJAX_SET_RECAPTCHA_ACCOUNT, array( $this, 'setRecaptchaAccount' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_RECAPTCHA_ACCOUNT, array( $this, 'getRecaptchaAccount' ) );
 		}
 
 		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
@@ -94,41 +87,6 @@ class Brizy_Editor_Forms_Api {
 		if ( ! wp_verify_nonce( $_REQUEST['hash'], Brizy_Editor_API::nonce ) ) {
 			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
 		}
-	}
-
-	public function setRecaptchaAccount() {
-		$this->authorize();
-
-		try {
-			$manager  = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
-			$instance = Brizy_Editor_Accounts_RecaptchaAccount::createFromJson( json_decode( file_get_contents( 'php://input' ) ) );
-			$manager->addAccount( $instance );
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
-			exit;
-		}
-	}
-
-	public function getRecaptchaAccount() {
-		$this->authorize();
-		try {
-			$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
-			$account = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP );
-
-			if ( isset($account[0]) ) {
-				$this->success( $account[0] );
-			}
-
-			$this->error( 404, '' );
-
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
-			exit;
-		}
-
-		wp_send_json_error( array( 'code' => 404, 'message' => 'No stored accounts' ), 400 );
 	}
 
 	public function get_form() {

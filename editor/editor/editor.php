@@ -213,10 +213,6 @@ class Brizy_Editor_Editor_Editor {
 					'createIntegration' => Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
 					'updateIntegration' => Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
 					'deleteIntegration' => Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
-
-					'storeRecaptchaAccount' => Brizy_Editor_Forms_Api::AJAX_SET_RECAPTCHA_ACCOUNT,
-					'getRecaptchaAccount'   => Brizy_Editor_Forms_Api::AJAX_GET_RECAPTCHA_ACCOUNT,
-
 				),
 				'plugins'         => array(
 					'dummy'       => true,

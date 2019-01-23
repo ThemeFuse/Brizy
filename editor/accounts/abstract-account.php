@@ -9,7 +9,6 @@
 abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Serializable {
 
 	const INTEGRATIONS_GROUP = 'form-integration';
-	const RECAPTCHA_GROUP = 'recaptcha';
 
 
 	use Brizy_Editor_Forms_DynamicPropsAware;
@@ -138,8 +137,6 @@ abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Seriali
 				default:
 				case self::INTEGRATIONS_GROUP:
 					return new Brizy_Editor_Accounts_Account( $data );
-				case self::RECAPTCHA_GROUP:
-					return new Brizy_Editor_Accounts_RecaptchaAccount( $data );
 			}
 
 		throw new Exception( 'Invalid account group.' );
