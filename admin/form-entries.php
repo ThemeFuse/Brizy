@@ -174,7 +174,7 @@ class Brizy_Admin_FormEntries {
 		if ( self::CP_FORM_ENTRY == $screen->post_type ) {
 			?>
             <style>
-                .subsubsub .publish {
+                .subsubsub {
                     display: none;
                 }
             </style>
