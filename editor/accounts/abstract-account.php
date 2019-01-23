@@ -62,7 +62,7 @@ abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Seriali
 			if ( $key == 'id' ) {
 				continue;
 			}
-			if ( $aData[ $key ] != $val ) {
+			if ( !isset($aData[ $key ]) || $aData[ $key ] != $val ) {
 				return false;
 			}
 		}
