@@ -32,9 +32,10 @@ class Brizy_Admin_FormEntries {
 	 */
 	public function __construct() {
 
-		add_action( 'admin_init', array( $this, 'addSubmenuPage' ) );
+		add_action( 'admin_menu', array( $this, 'addSubmenuPage' ) );
 		//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
 		//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
+		add_action( 'admin_footer', array( $this, 'customStylesForList' ) );
 
 		add_filter( 'post_row_actions', array( $this, 'filterRowActions' ), 10, 2 );
 		add_filter( 'manage_' . self::CP_FORM_ENTRY . '_posts_columns', array( $this, 'replaceTitleColumn' ) );
@@ -158,6 +159,24 @@ class Brizy_Admin_FormEntries {
                     background: green !important;
                     color: white !important;
                 }
+
+                .subsubsub .publish {
+                    display: none;
+                }
+            </style>
+			<?php
+		}
+	}
+
+	public function customStylesForList() {
+		$screen = get_current_screen();
+
+		if ( self::CP_FORM_ENTRY == $screen->post_type ) {
+			?>
+            <style>
+                .subsubsub .publish {
+                    display: none;
+                }
             </style>
 			<?php
 		}
@@ -220,13 +239,17 @@ class Brizy_Admin_FormEntries {
 				'show_in_menu'        => false, //Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => self::CP_FORM_ENTRY ),
-				'capability_type'     => 'page',
 				//'map_meta_cap'        => true,
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
 				'exclude_from_search' => true,
 				'supports'            => array( 'title' ),
 				'menu_position'       => 15,
+				'capability_type'     => 'post',
+				'capabilities'        => array(
+					'create_posts' => 'do_not_allow', // false < WP 4.5, credit @Ewout
+				),
+				'map_meta_cap'        => true,
 			)
 		);
 	}
