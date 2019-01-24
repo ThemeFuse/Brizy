@@ -219,6 +219,8 @@ class Brizy_Editor_Project implements Serializable {
 	 */
 	public function setMetaValue( $key, $value ) {
 
+		wp_raise_memory_limit( 'image' );
+
 		if ( is_null( $key ) ) {
 			throw new InvalidArgumentException( 'The key parameter should not be null' );
 		}

@@ -43,6 +43,7 @@ class Brizy_Admin_FormEntries {
 			$this,
 			'manageCustomColumns'
 		), 10, 2 );
+
 		$this->enableLog = get_option( self::OPTION_SUBMIT_LOG, true );
 
 		if ( $this->enableLog ) {
