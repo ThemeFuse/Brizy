@@ -72,6 +72,13 @@ class Brizy_TwigEngine {
 	}
 
 	/**
+	 * @return Twig_Environment
+	 */
+	public function getEnvironment() {
+		return $this->environment;
+	}
+
+	/**
 	 * @param $template_name
 	 * @param array $context
 	 *
