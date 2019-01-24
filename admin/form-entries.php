@@ -32,7 +32,7 @@ class Brizy_Admin_FormEntries {
 	 */
 	public function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 10 );
+		add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
 		//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
 		//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
 		add_action( 'admin_footer', array( $this, 'customStylesForList' ) );
