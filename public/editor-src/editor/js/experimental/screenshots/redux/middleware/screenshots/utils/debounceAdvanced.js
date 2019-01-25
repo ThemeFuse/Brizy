@@ -36,7 +36,7 @@ export function debounceAdvanced({
       onFirstCallCalled = false;
 
       fn(...finalArgs);
-      onAfterFnCall();
+      onAfterFnCall({ fnArgs: finalArgs });
     }, wait);
   };
 }

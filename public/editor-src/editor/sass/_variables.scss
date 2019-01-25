@@ -26,6 +26,7 @@ $desktop-paddings: 48px;
 // z indexes map
 // $z-indexes is used in functions/_z-index.scss
 $z-indexes: (
+  "select-portal": 1110,
   "brz-ed-fixed": 1100,
   "notification": 1090,
   "popup-overlay": 1080,

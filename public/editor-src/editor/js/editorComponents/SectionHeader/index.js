@@ -6,7 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Portal from "visual/component/Portal";
 import Sticky from "visual/component/Sticky";
-import SortableZIndex from "visual/component//Sortable/SortableZIndex";
+import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import { currentTooltip } from "visual/component/Controls/Tooltip";
 import { getStore } from "visual/redux/store";

@@ -15,8 +15,7 @@
 
     {{ blocks.head | raw }}
   </head>
-  <body class="brz">
-    {{ blocks.body | raw }}
+  <body class="brz">{% endspaceless %}{{ blocks.body | raw }}{% spaceless %}
 
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry"></script>
 

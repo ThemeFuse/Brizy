@@ -5,6 +5,7 @@ import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import ClickOutside from "visual/component/ClickOutside";
+import Portal from "visual/component/Portal";
 
 function getDropdownHeight(itemsCount, itemHeight, minItems, maxItems) {
   const minHeight = itemHeight * minItems;
@@ -25,6 +26,8 @@ class Select extends React.Component {
     itemHeight: 38,
     /** @deprecated */
     arrowIcon: "nc-arrow-down",
+    inPortal: false,
+    clickOutsideExceptions: [],
     onChange: _.noop
   };
 
@@ -35,15 +38,15 @@ class Select extends React.Component {
   };
 
   componentDidMount() {
-    this.reposition();
+    if (!this.props.inPortal) {
+      this.reposition();
+    }
   }
 
   componentDidUpdate() {
-    if (this.isRepositioning) {
-      return;
+    if (!this.props.inPortal && !this.isRepositioning) {
+      this.reposition();
     }
-
-    this.reposition();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,6 +96,10 @@ class Select extends React.Component {
       currentValue: value
     });
     this.props.onChange(value);
+  };
+
+  handleContentRef = node => {
+    this.content = node;
   };
 
   handleDropdownNode = node => {
@@ -208,12 +215,58 @@ class Select extends React.Component {
     });
   }
 
+  renderDropDown() {
+    const { inPortal, className: _className } = this.props;
+
+    if (!inPortal) {
+      return (
+        <div
+          className="brz-control__select-options"
+          ref={this.handleDropdownNode}
+        >
+          <ScrollPane
+            className="brz-ed-scroll-pane"
+            style={this.getScrollPaneStyle()}
+          >
+            {this.renderItems()}
+          </ScrollPane>
+        </div>
+      );
+    } else if (this.state.isOpen && inPortal) {
+      const { top, left, height, width } = this.content.getBoundingClientRect();
+      const { scrollLeft } = this.content.ownerDocument.documentElement;
+      const className = classnames(
+        "brz-control__portal-select brz-control__select",
+        _className
+      );
+      const dropDownStyle = {
+        top: top + height + 3,
+        left: left + scrollLeft,
+        width
+      };
+
+      return (
+        <Portal node={this.content.ownerDocument.body} className={className}>
+          <div className="brz-control__select-options" style={dropDownStyle}>
+            <ScrollPane
+              className="brz-ed-scroll-pane"
+              style={this.getScrollPaneStyle()}
+            >
+              {this.renderItems()}
+            </ScrollPane>
+          </div>
+        </Portal>
+      );
+    }
+  }
+
   render() {
     const {
       className: _className,
       labelType,
       currentValue,
-      inputAttributes
+      inputAttributes,
+      clickOutsideExceptions: _clickOutsideExceptions
     } = this.props;
     const { position, isOpen } = this.state;
     const className = classnames(
@@ -222,24 +275,24 @@ class Select extends React.Component {
       _className,
       { opened: isOpen }
     );
+    const clickOutsideExceptions = [
+      ..._clickOutsideExceptions,
+      ".brz-control__portal-select"
+    ];
 
     return (
-      <ClickOutside onClickOutside={this.onClickOutside}>
-        <div className={className}>
+      <ClickOutside
+        exceptions={clickOutsideExceptions}
+        onClickOutside={this.onClickOutside}
+      >
+        <div className={className} ref={this.handleContentRef}>
           <div
             className={`brz-control__select-current brz-control__select-current__${labelType}`}
             onClick={this.handleLabelClick}
           >
             {this.renderLabel()}
           </div>
-          <div
-            ref={this.handleDropdownNode}
-            className="brz-control__select-options"
-          >
-            <ScrollPane style={this.getScrollPaneStyle()}>
-              {this.renderItems()}
-            </ScrollPane>
-          </div>
+          {this.renderDropDown()}
           <input type="hidden" value={currentValue} {...inputAttributes} />
         </div>
       </ClickOutside>

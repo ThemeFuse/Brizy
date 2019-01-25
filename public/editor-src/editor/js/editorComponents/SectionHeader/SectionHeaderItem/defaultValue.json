@@ -2,6 +2,7 @@
   "className": "",
   "customClassName": "",
 
+  "tabsCurrentElement": "tabCurrentElement",
   "media": "image",
 
   "bgImageWidth": 0,
@@ -11,22 +12,9 @@
   "bgPositionX": 50,
   "bgPopulation": "",
 
-  "bgColorHex": "#000000",
-  "bgColorOpacity": 0,
-  "bgColorPalette": "",
-  "tempBgColorOpacity": 1,
-  "tempBgColorPalette": "",
+  "borderStyle": "",
 
-  "paddingType": "grouped",
-  "padding": 75,
-  "paddingTop": 75,
-  "paddingBottom": 75,
-
-  "borderColorHex": "#66738d",
-  "borderColorOpacity": 0,
-  "borderColorPalette": "",
-  "tempBorderColorOpacity": 1,
-  "tempBorderColorPalette": "",
+  "tempBorderStyle": "solid",
 
   "borderWidthType": "grouped",
   "borderWidth": 0,
@@ -54,6 +42,28 @@
   "tempBorderBottomRightRadius": 0,
   "tempBorderBottomLeftRadius": 0,
 
+  "bgColorHex": "#000000",
+  "bgColorOpacity": 0,
+  "bgColorPalette": "",
+
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "",
+
+  "borderColorHex": "#66738d",
+  "borderColorOpacity": 0,
+  "borderColorPalette": "",
+
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "",
+
+  "containerType": "boxed",
+  "containerSize": 100,
+
+  "paddingType": "grouped",
+  "padding": 75,
+  "paddingTop": 75,
+  "paddingBottom": 75,
+
   "boxShadow": "off",
   "boxShadowColorHex": "#000000",
   "boxShadowColorOpacity": 1,
@@ -62,12 +72,10 @@
   "boxShadowSpread": 0,
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
+
   "tempBoxShadowColorOpacity": 1,
 
   "containerClassName": "",
-  "containerType": "boxed",
-  "containerSize": 100,
-  "items": [],
 
   "shape": "top",
   "shapeTopColorHex": "#000000",
@@ -91,14 +99,27 @@
   "tabletBgImageWidth": null,
   "tabletBgImageHeight": null,
   "tabletBgImageSrc": null,
-  "tabletBgPositionY": null,
   "tabletBgPositionX": null,
+  "tabletBgPositionY": null,
 
   "tabletBgColorHex": null,
   "tabletBgColorOpacity": null,
   "tabletBgColorPalette": null,
-  "tempTabletBgColorOpacity": 1,
-  "tempTabletBgColorPalette": "",
+  "tempTabletBgColorOpacity": null,
+  "tempTabletBgColorPalette": null,
+
+  "tabletBorderRadiusType": null,
+  "tabletBorderRadius": null,
+  "tabletBorderTopLeftRadius": null,
+  "tabletBorderTopRightRadius": null,
+  "tabletBorderBottomLeftRadius": null,
+  "tabletBorderBottomRightRadius": null,
+
+  "tempTabletBorderRadius": null,
+  "tempTabletBorderTopLeftRadius": null,
+  "tempTabletBorderTopRightRadius": null,
+  "tempTabletBorderBottomLeftRadius": null,
+  "tempTabletBorderBottomRightRadius": null,
 
   "tabletPaddingType": "grouped",
   "tabletPadding": 50,
@@ -114,14 +135,28 @@
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,
   "mobileBgImageSrc": null,
-  "mobileBgPositionY": null,
   "mobileBgPositionX": null,
+  "mobileBgPositionY": null,
 
   "mobileBgColorHex": null,
   "mobileBgColorOpacity": null,
   "mobileBgColorPalette": null,
-  "tempMobileBgColorOpacity": 1,
-  "tempMobileBgColorPalette": "",
+
+  "tempMobileBgColorOpacity": null,
+  "tempMobileBgColorPalette": null,
+
+  "mobileBorderRadiusType": null,
+  "mobileBorderRadius": null,
+  "mobileBorderTopLeftRadius": null,
+  "mobileBorderTopRightRadius": null,
+  "mobileBorderBottomLeftRadius": null,
+  "mobileBorderBottomRightRadius": null,
+
+  "tempMobileBorderRadius": null,
+  "tempMobileBorderTopLeftRadius": null,
+  "tempMobileBorderTopRightRadius": null,
+  "tempMobileBorderBottomLeftRadius": null,
+  "tempMobileBorderBottomRightRadius": null,
 
   "mobilePaddingType": "grouped",
   "mobilePadding": 25,
@@ -132,5 +167,7 @@
   "mobileShapeTopHeight": null,
   "mobileShapeTopHeightSuffix": null,
   "mobileShapeBottomHeight": null,
-  "mobileShapeBottomHeightSuffix": null
+  "mobileShapeBottomHeightSuffix": null,
+
+  "items": []
 }

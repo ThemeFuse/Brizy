@@ -1,9 +1,17 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  toolbarElementLineBorderStyle,
+  toolbarElementLineBorderWidth,
+  toolbarBorderColorHexAndOpacity,
+  toolbarBorderColorPalette,
+  toolbarBorderColorFields,
+  toolbarSizeWidthWidthPercent
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
   const { hex: borderColorHex } = getOptionColor(v, "borderColor");
 
   return [
@@ -14,52 +22,8 @@ export function getItemsForDesktop(v) {
       title: t("Line"),
       position: 80,
       options: [
-        {
-          id: "borderStyle",
-          label: t("Style"),
-          type: "radioGroup",
-          choices: [
-            {
-              value: "solid",
-              icon: "nc-solid"
-            },
-            {
-              value: "dashed",
-              icon: "nc-dashed"
-            },
-            {
-              value: "dotted",
-              icon: "nc-dotted"
-            }
-          ],
-          value: v.borderStyle
-        },
-        {
-          id: "borderWidth",
-          label: t("Size"),
-          type: "slider",
-          roles: ["admin"],
-          slider: {
-            min: 1,
-            max: 10
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: v.borderWidth
-          },
-          onChange: ({ value: borderWidth }) => ({ borderWidth })
-        }
+        toolbarElementLineBorderStyle({ v }),
+        toolbarElementLineBorderWidth({ v, device })
       ]
     },
     {
@@ -75,56 +39,30 @@ export function getItemsForDesktop(v) {
         }
       },
       options: [
-        {
-          id: "borderColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: borderColorHex,
-            opacity: v.borderColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            opacity =
-              hex !== v.borderColorHex && v.borderColorOpacity === 0
-                ? v.tempBorderColorOpacity
-                : opacity;
-
-            return {
-              borderColorHex: hex,
-              borderColorOpacity: opacity,
-              borderColorPalette:
-                isChanged === "hex" ? "" : v.borderColorPalette
-            };
-          }
-        },
-        {
-          id: "borderColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: v.borderColorPalette,
-          onChange: borderColorPalette => ({
-            borderColorPalette,
-
-            borderColorOpacity:
-              v.borderColorOpacity === 0
-                ? v.tempBorderColorOpacity
-                : v.borderColorOpacity
-          })
-        },
-        {
-          id: "borderColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: borderColorHex,
-            opacity: v.borderColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            borderColorPalette: isChanged === "hex" ? "" : v.borderColorPalette,
-            borderColorHex: hex,
-            borderColorOpacity: opacity
-          })
-        }
+        toolbarBorderColorHexAndOpacity({
+          v,
+          device,
+          onChange: [
+            "onChangeBorderColorHexAndOpacity",
+            "onChangeBorderColorHexAndOpacityPalette"
+          ]
+        }),
+        toolbarBorderColorPalette({
+          v,
+          device,
+          onChange: [
+            "onChangeBorderColorPalette",
+            "onChangeBorderColorPaletteOpacity"
+          ]
+        }),
+        toolbarBorderColorFields({
+          v,
+          device,
+          onChange: [
+            "onChangeBorderColorHexAndOpacity",
+            "onChangeBorderColorHexAndOpacityPalette"
+          ]
+        })
       ]
     },
     {
@@ -134,38 +72,13 @@ export function getItemsForDesktop(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device })]
     }
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
   return [
     {
       id: "tabletToolbarLine",
@@ -174,33 +87,7 @@ export function getItemsForTablet(v) {
       title: t("Line"),
       roles: ["admin"],
       position: 90,
-      options: [
-        {
-          id: "tabletBorderWidth",
-          label: t("Size"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 10
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "borderWidth")
-          },
-          onChange: ({ value: tabletBorderWidth }) => ({ tabletBorderWidth })
-        }
-      ]
+      options: [toolbarElementLineBorderWidth({ v, device })]
     },
     {
       id: "tabletToolbarSettings",
@@ -209,38 +96,13 @@ export function getItemsForTablet(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device })]
     }
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
   return [
     {
       id: "mobileToolbarLine",
@@ -249,33 +111,7 @@ export function getItemsForMobile(v) {
       title: t("Line"),
       roles: ["admin"],
       position: 90,
-      options: [
-        {
-          id: "mobileBorderWidth",
-          label: t("Size"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 10
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "borderWidth")
-          },
-          onChange: ({ value: mobileBorderWidth }) => ({ mobileBorderWidth })
-        }
-      ]
+      options: [toolbarElementLineBorderWidth({ v, device })]
     },
     {
       id: "mobileToolbarSettings",
@@ -284,33 +120,7 @@ export function getItemsForMobile(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device })]
     }
   ];
 }

@@ -1,8 +1,18 @@
 {
+  "//3": "La Box Shadow Color nu lucreaza corect ar trebui de adaugat in ca un key",
+  "//4": "La animation tot trebuei de uitata. In general in modulelemai noi trebuei de uitata la tot",
+  "//5": "Poate la tablet si mobile trebuei sa fie grouped:   \"tabletMarginType\": \"ungrouped\",",
+  "//6": "Valorile papaddign tablet si mobile sunt corecte ???? si de ce sunt diferite???",
+  "//7": "Valorile  margin tablet si mobile sunt corecte ???? si de ce sunt diferite???",
+  "//8": "  \"tempMobilePadding\": 10,  \"tempMobilePaddingRight\": 10,  \"tempMobilePaddingBottom\": 10,  \"tempMobilePaddingLeft\": 10, -- se foloseste in functia de desktop de a sybcroniza cu alte devices tablet sau mobile mai multe detalii se pot gasi in onChangeBgColorHexAndOpacityColumnAndRowSyncTablet  ",
+
   "className": "",
-  "verticalAlign": "top",
-  "showOnDesktop": "on",
-  "customClassName": "",
+
+  "width": 50,
+
+  "tabsCurrentElement": "tabCurrentElement",
+
+  "media": "image",
 
   "bgImageWidth": 0,
   "bgImageHeight": 0,
@@ -14,41 +24,12 @@
   "bgVideoQuality": 1080,
   "bgVideoLoop": "off",
 
-  "bgColorHex": "#000000",
-  "bgColorOpacity": 0,
-  "bgColorPalette": "",
-  "tempBgColorOpacity": 1,
-  "tempBgColorPalette": "",
+  "bgMapAddress": "Wall Street",
+  "bgMapZoom": 15,
 
-  "paddingType": "ungrouped",
-  "padding": 15,
-  "paddingSuffix": "px",
-  "paddingTop": 5,
-  "paddingTopSuffix": "px",
-  "paddingRight": 15,
-  "paddingRightSuffix": "px",
-  "paddingBottom": 5,
-  "paddingBottomSuffix": "px",
-  "paddingLeft": 15,
-  "paddingLeftSuffix": "px",
+  "borderStyle": "solid",
 
-  "marginType": "grouped",
-  "margin": 0,
-  "marginSuffix": "px",
-  "marginTop": 0,
-  "marginTopSuffix": "px",
-  "marginRight": 0,
-  "marginRightSuffix": "px",
-  "marginBottom": 0,
-  "marginBottomSuffix": "px",
-  "marginLeft": 0,
-  "marginLeftSuffix": "px",
-
-  "borderColorHex": "#66738d",
-  "borderColorOpacity": 0,
-  "borderColorPalette": "",
-  "tempBorderColorOpacity": 1,
-  "tempBorderColorPalette": "",
+  "tempBorderStyle": "solid",
 
   "borderWidthType": "grouped",
   "borderWidth": 0,
@@ -76,6 +57,48 @@
   "tempBorderBottomRightRadius": 0,
   "tempBorderBottomLeftRadius": 0,
 
+  "tabsColor": "tabOverlay",
+
+  "bgColorHex": "#000000",
+  "bgColorOpacity": 0,
+  "bgColorPalette": "",
+
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "",
+
+  "borderColorHex": "#66738d",
+  "borderColorOpacity": 0,
+  "borderColorPalette": "",
+
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "",
+
+  "verticalAlign": "top",
+
+  "paddingType": "ungrouped",
+  "padding": 15,
+  "paddingSuffix": "px",
+  "paddingTop": 5,
+  "paddingTopSuffix": "px",
+  "paddingRight": 15,
+  "paddingRightSuffix": "px",
+  "paddingBottom": 5,
+  "paddingBottomSuffix": "px",
+  "paddingLeft": 15,
+  "paddingLeftSuffix": "px",
+
+  "marginType": "grouped",
+  "margin": 0,
+  "marginSuffix": "px",
+  "marginTop": 0,
+  "marginTopSuffix": "px",
+  "marginRight": 0,
+  "marginRightSuffix": "px",
+  "marginBottom": 0,
+  "marginBottomSuffix": "px",
+  "marginLeft": 0,
+  "marginLeftSuffix": "px",
+
   "boxShadow": "off",
   "boxShadowColorHex": "#000000",
   "boxShadowColorOpacity": 1,
@@ -84,12 +107,14 @@
   "boxShadowSpread": 0,
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
+
   "tempBoxShadowColorOpacity": 1,
 
-  "width": 50,
-  "items": [],
+  "showOnDesktop": "on",
 
   "zIndex": 0,
+
+  "customClassName": "",
 
   "animationName": "none",
   "tempAnimationName": "none",
@@ -97,19 +122,53 @@
   "animationDelay": 1000,
 
   "showOnTablet": "on",
+
+  "tabletMedia": null,
+
   "tabletWidth": null,
 
   "tabletBgImageWidth": null,
   "tabletBgImageHeight": null,
   "tabletBgImageSrc": null,
-  "tabletBgPositionY": null,
   "tabletBgPositionX": null,
+  "tabletBgPositionY": null,
+
+  "tabletBgMapZoom": null,
 
   "tabletBgColorHex": null,
   "tabletBgColorOpacity": null,
   "tabletBgColorPalette": null,
-  "tempTabletBgColorOpacity": 1,
-  "tempTabletBgColorPalette": "",
+
+  "tempTabletBgColorOpacity": null,
+  "tempTabletBgColorPalette": null,
+
+  "tabletBorderWidthType": null,
+  "tabletBorderWidth": null,
+  "tabletBorderTopWidth": null,
+  "tabletBorderRightWidth": null,
+  "tabletBorderBottomWidth": null,
+  "tabletBorderLeftWidth": null,
+
+  "tempTabletBorderWidth": null,
+  "tempTabletBorderTopWidth": null,
+  "tempTabletBorderRightWidth": null,
+  "tempTabletBorderBottomWidth": null,
+  "tempTabletBorderLeftWidth": null,
+
+  "tabletBorderRadiusType": null,
+  "tabletBorderRadius": null,
+  "tabletBorderTopLeftRadius": null,
+  "tabletBorderTopRightRadius": null,
+  "tabletBorderBottomLeftRadius": null,
+  "tabletBorderBottomRightRadius": null,
+
+  "tempTabletBorderRadius": null,
+  "tempTabletBorderTopLeftRadius": null,
+  "tempTabletBorderTopRightRadius": null,
+  "tempTabletBorderBottomLeftRadius": null,
+  "tempTabletBorderBottomRightRadius": null,
+
+  "tabletVerticalAlign": null,
 
   "tabletPaddingType": "ungrouped",
   "tabletPadding": 15,
@@ -142,13 +201,53 @@
   "tabletMarginLeftSuffix": "px",
 
   "showOnMobile": "on",
+
+  "mobileMedia": null,
+
   "mobileWidth": 100,
 
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,
   "mobileBgImageSrc": null,
-  "mobileBgPositionY": null,
   "mobileBgPositionX": null,
+  "mobileBgPositionY": null,
+
+  "mobileBgMapZoom": null,
+
+  "mobileBgColorHex": null,
+  "mobileBgColorOpacity": null,
+  "mobileBgColorPalette": null,
+
+  "tempMobileBgColorOpacity": null,
+  "tempMobileBgColorPalette": null,
+
+  "mobileBorderWidthType": null,
+  "mobileBorderWidth": null,
+  "mobileBorderTopWidth": null,
+  "mobileBorderRightWidth": null,
+  "mobileBorderBottomWidth": null,
+  "mobileBorderLeftWidth": null,
+
+  "tempMobileBorderWidth": null,
+  "tempMobileBorderTopWidth": null,
+  "tempMobileBorderRightWidth": null,
+  "tempMobileBorderBottomWidth": null,
+  "tempMobileBorderLeftWidth": null,
+
+  "mobileBorderRadiusType": null,
+  "mobileBorderRadius": null,
+  "mobileBorderTopLeftRadius": null,
+  "mobileBorderTopRightRadius": null,
+  "mobileBorderBottomLeftRadius": null,
+  "mobileBorderBottomRightRadius": null,
+
+  "tempMobileBorderRadius": null,
+  "tempMobileBorderTopLeftRadius": null,
+  "tempMobileBorderTopRightRadius": null,
+  "tempMobileBorderBottomLeftRadius": null,
+  "tempMobileBorderBottomRightRadius": null,
+
+  "mobileVerticalAlign": null,
 
   "mobilePaddingType": "ungrouped",
   "mobilePadding": 0,
@@ -168,12 +267,6 @@
   "tempMobilePaddingBottom": 10,
   "tempMobilePaddingLeft": 10,
 
-  "mobileBgColorHex": null,
-  "mobileBgColorOpacity": null,
-  "mobileBgColorPalette": null,
-  "tempMobileBgColorOpacity": 1,
-  "tempMobileBgColorPalette": "",
-
   "mobileMarginType": "ungrouped",
   "mobileMargin": 10,
   "mobileMarginSuffix": "px",
@@ -184,5 +277,7 @@
   "mobileMarginBottom": 10,
   "mobileMarginBottomSuffix": "px",
   "mobileMarginLeft": 0,
-  "mobileMarginLeftSuffix": "px"
+  "mobileMarginLeftSuffix": "px",
+
+  "items": []
 }

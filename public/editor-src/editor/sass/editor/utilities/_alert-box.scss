@@ -9,11 +9,19 @@
   border-left: 4px solid #df3c3c;
   color: #df3c3c;
   background-color: rgba(#df3c3c, 0.1);
+
+  .brz-span {
+    color: #df3c3c !important;
+  }
 }
 .brz-ed-alert-success {
   border-left: 4px solid #6ab504;
   color: #6ab504;
   background-color: #eff5e8;
+
+  .brz-span {
+    color: #6ab504 !important;
+  }
 }
 .brz-ed-alert-info {
   border-left: 4px solid #47a9c8;
@@ -25,6 +33,9 @@
     margin: 0 15px 5px 0;
     color: #47a9c8;
     border-color: #47a9c8;
+  }
+  .brz-span {
+    color: #47a9c8 !important;
   }
 }
 .popup-icon-info {

@@ -372,8 +372,7 @@ export function getItemsForTablet(v) {
     tabletFontWeight,
     tabletLineHeight,
     tabletLetterSpacing
-  } =
-    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+  } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   return [
     {
@@ -484,8 +483,7 @@ export function getItemsForMobile(v) {
     mobileFontWeight,
     mobileLineHeight,
     mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
     {

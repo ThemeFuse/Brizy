@@ -1,6 +1,8 @@
 // Defaul Buttons for BrizyEditor
 .brz-ed-btn {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid transparent;
   text-align: center;
   vertical-align: middle;
@@ -19,7 +21,9 @@
   &:active {
     outline: 0;
     background-image: none;
-    box-shadow: inset 0 3px 5px rgba(#000, 0.1);
+  }
+  &:focus {
+    outline: none;
   }
 
   // Button with icon
@@ -39,9 +43,14 @@
       margin-right: 10px;
     }
   }
+
   // Loading
   &--loading {
+    pointer-events: none !important;
+    transition: none;
+
     .brz-icon-svg {
+      margin: 0;
       animation-name: spin;
       animation-duration: 1s;
       animation-iteration-count: infinite;
@@ -53,7 +62,7 @@
   border-radius: 3px;
 }
 .brz-ed-btn-sm {
-  padding: 10px 17px 11px;
+  padding: 11px 17px;
   font-size: 14px;
 
   &.brz-ed-btn-icon {
@@ -63,8 +72,8 @@
   }
   &.brz-ed-btn--loading {
     font-size: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 .brz-ed-btn-full {

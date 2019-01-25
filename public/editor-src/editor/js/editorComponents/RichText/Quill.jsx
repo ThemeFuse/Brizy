@@ -84,7 +84,11 @@ export default class QuillComponent extends React.Component {
   }
 
   componentWillReceiveProps({ value, forceUpdate }) {
-    if (forceUpdate && value !== this.props.value) {
+    const reInitPlugin =
+      value !== this.props.value &&
+      (forceUpdate || getStore().getState().historyTravelling);
+
+    if (reInitPlugin) {
       this.destroyPlugin();
       this.contentEditable.innerHTML = value;
       this.initPlugin();
@@ -139,11 +143,7 @@ export default class QuillComponent extends React.Component {
       const range = this.quill.getSelection(true);
       const format = this.getSelectionFormat();
       this.props.onSelectionChange(format, this.getCoords(range));
-      const html = this.quill.root.innerHTML.replace(
-        /(?=^|>)(\s+)|(\s+)(?=<|$)/g,
-        "&nbsp;"
-      );
-      this.save(html);
+      this.save(this.quill.root.innerHTML);
     });
 
     this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {

@@ -1,19 +1,24 @@
 {
   "className": "",
 
+  "borderStyle": "solid",
+
+  "borderWidth": 2,
+
   "borderColorHex": "#73777f",
   "borderColorOpacity": 0.75,
-  "tempBorderColorOpacity": 0.75,
   "borderColorPalette": "color7",
+
+  "tempBorderColorOpacity": 0.75,
   "tempBorderColorPalette": "color7",
 
   "width": 75,
-  "borderWidth": 2,
-  "borderStyle": "solid",
 
-  "tabletWidth": null,
   "tabletBorderWidth": null,
 
-  "mobileWidth": null,
-  "mobileBorderWidth": null
+  "tabletWidth": null,
+
+  "mobileBorderWidth": null,
+
+  "mobileWidth": null
 }
