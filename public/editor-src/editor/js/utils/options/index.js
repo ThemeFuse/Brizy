@@ -1,4 +1,4 @@
-export { getOptionColor } from "./getOptionColor";
+export { getOptionColor, getOptionColorHexByPalette } from "./getOptionColor";
 export { getAnimations } from "./getAnimations";
 export { getDynamicContentChoices } from "./getDynamicContentChoices";
 export {

@@ -3,16 +3,16 @@ import classnames from "classnames";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
-import { imageWrapperSize } from "visual/utils/image";
 import { blockThumbnailData } from "visual/utils/blocks";
+import { preloadImage } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
 import { pageDataSelector, pageBlocksSelector } from "visual/redux/selectors";
 import { updatePage } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
 
-const MAX_CONTAINER_WIDTH = 132;
+const MAX_THUMBNAIL_WIDTH = 132;
 
-class BlockThumbnail extends React.Component {
+export default class BlockThumbnail extends React.Component {
   static defaultProps = {
     label: "",
     className: "",
@@ -115,37 +115,18 @@ class BlockThumbnail extends React.Component {
 
     return blocks.map(block => {
       const { _id, anchorName } = block.value;
-      const {
-        url,
-        width: thumbnailWidth,
-        height: thumbnailHeight
-      } = blockThumbnailData(block);
-      const { width, height } = imageWrapperSize(
-        thumbnailWidth,
-        thumbnailHeight,
-        MAX_CONTAINER_WIDTH
-      );
-
-      const figureClassName = classnames("brz-figure", {
+      const className = classnames("brz-ed-option__block-thumbnail-item", {
         active: _id === value
       });
-      const imgStyle = {
-        width: `${width}px`,
-        height: `${height}px`
-      };
       const inputValue = anchorName ? decodeURIComponent(anchorName) : "";
 
       return (
-        <figure
+        <div
           key={_id}
-          className={figureClassName}
+          className={className}
           onClick={() => this.handleThumbnailClick(_id)}
         >
-          <div className="brz-ed-option__block-thumbnail-loading">
-            <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-          </div>
-          <img className="brz-img" src={url} style={imgStyle} />
-
+          <BlockThumbnailImage blockData={block} />
           <AnchorInput
             ref={el => {
               // when the component unmounts this function is also called
@@ -155,18 +136,17 @@ class BlockThumbnail extends React.Component {
                 this.anchorInputRefs[_id] = el;
               }
             }}
-            value={inputValue}
             id={_id}
+            value={inputValue}
             onChange={value => this.handleInputChange(value, _id)}
           />
-        </figure>
+        </div>
       );
     });
   }
 
   render() {
     const { className: _className, attr, label, helper, display } = this.props;
-
     const className = classnames(
       "brz-ed-option__block-thumbnail",
       `brz-ed-option__${display}`,
@@ -183,6 +163,58 @@ class BlockThumbnail extends React.Component {
         >
           {this.renderThumbnails()}
         </ScrollPane>
+      </div>
+    );
+  }
+}
+
+class BlockThumbnailImage extends React.Component {
+  state = {
+    blockData: this.props.blockData,
+    imageFetched: false,
+    showSpinner: true
+  };
+
+  componentDidMount() {
+    this.mounted = true;
+    this.preloadThumbnail(this.state.blockData);
+  }
+
+  preloadThumbnail(blockData) {
+    let canceled = false;
+    const { url } = blockThumbnailData(blockData);
+
+    preloadImage(url).then(() => {
+      if (this.mounted && !canceled) {
+        this.setState({
+          imageFetched: true,
+          showSpinner: false,
+          blockData: blockData
+        });
+      }
+    });
+
+    return () => (canceled = true);
+  }
+
+  render() {
+    const { blockData, imageFetched, showSpinner } = this.state;
+    const { url, width, height } = blockThumbnailData(blockData);
+    const style = {
+      width: MAX_THUMBNAIL_WIDTH,
+      height: (MAX_THUMBNAIL_WIDTH * height) / width
+    };
+    const spinnerStyle = showSpinner ? {} : { display: "none" };
+
+    return (
+      <div className="brz-ed-option__block-thumbnail-image" style={style}>
+        <div
+          className="brz-ed-option__block-thumbnail-loading"
+          style={spinnerStyle}
+        >
+          <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
+        </div>
+        {imageFetched && <img className="brz-img" src={url} />}
       </div>
     );
   }
@@ -233,12 +265,10 @@ class AnchorInput extends React.Component {
           onChange={this.handleInputChange}
           id={inputID}
         />
-        <label htmlFor={inputID}>
+        <label className="brz-label" htmlFor={inputID}>
           <EditorIcon icon="nc-pen" />
         </label>
       </div>
     );
   }
 }
-
-export default BlockThumbnail;

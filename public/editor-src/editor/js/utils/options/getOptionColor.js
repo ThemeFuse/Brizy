@@ -11,3 +11,12 @@ export function getOptionColor(v, prefix) {
 
   return { hex };
 }
+
+export function getOptionColorHexByPalette(hex, palette) {
+  if (palette) {
+    const paletteColor = getColorPaletteColor(palette);
+    hex = paletteColor.hex;
+  }
+
+  return { hex };
+}

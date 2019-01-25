@@ -225,7 +225,6 @@ gulp.task("editor.css", () => {
       gulpPlugins
         .postcss(postsCssProcessors, {
           syntax: postcssSCSS,
-          failOnError: false
         })
         .on("error", err => {
           console.log("Sass Syntax Error", err);

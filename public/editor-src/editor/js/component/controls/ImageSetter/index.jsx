@@ -55,7 +55,7 @@ export default class ImageSetter extends React.Component {
   handleChangePosition = value => {
     const newValue = this.getNewValue(value);
     this.setState(newValue);
-    this.props.onChange(newValue);
+    this.props.onChange(newValue, { isChanged: "pointer" });
   };
 
   handleImageChange = e => {
@@ -82,7 +82,7 @@ export default class ImageSetter extends React.Component {
           if (this.mounted) {
             this.setState(newValue);
           }
-          this.props.onChange(newValue);
+          this.props.onChange(newValue, { isChanged: "image" });
         });
       },
       onError: e => {
@@ -103,7 +103,7 @@ export default class ImageSetter extends React.Component {
   handleRemove = () => {
     const newValue = this.getNewValue(this.constructor.defaultProps);
     this.setState(newValue);
-    this.props.onChange(newValue);
+    this.props.onChange(newValue, { isChanged: "image" });
   };
 
   renderDraggable() {

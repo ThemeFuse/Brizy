@@ -21,9 +21,9 @@ export default {
                     {
                       type: "FormField",
                       value: {
-                        type: "Text",
-                        label: "Input",
-                        required: "off",
+                        type: "Email",
+                        label: "Email",
+                        required: "on",
                         options: ["Option 1", "Option 2"]
                       }
                     },

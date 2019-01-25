@@ -22,7 +22,7 @@ class Options extends React.Component {
     const { data, className, optionClassName, toolbar, location } = this.props;
     const options = filterOptionsData(data).map((optionData, index) => (
       <Option
-        key={index}
+        key={optionData.id || index}
         className={optionClassName}
         toolbar={toolbar}
         data={optionData}

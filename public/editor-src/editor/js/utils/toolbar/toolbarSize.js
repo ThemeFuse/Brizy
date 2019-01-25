@@ -1,6 +1,36 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
+export function toolbarSizeSizeSizePercent({ v, device }) {
+  return {
+    id: defaultValueKey({ key: "size", device }),
+    label: t("Size"),
+    type: "slider",
+    slider: {
+      min: 1,
+      max: 100
+    },
+    input: {
+      show: true
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "%",
+          value: "%"
+        }
+      ]
+    },
+    value: {
+      value: defaultValueValue({ v, key: "size", device })
+    },
+    onChange: ({ value }) => ({
+      [defaultValueKey({ key: "size", device })]: value
+    })
+  };
+}
+
 export function toolbarSizeWidthWidthPercent({ v, device, state }) {
   return {
     id: defaultValueKey({ key: "width", device, state }),

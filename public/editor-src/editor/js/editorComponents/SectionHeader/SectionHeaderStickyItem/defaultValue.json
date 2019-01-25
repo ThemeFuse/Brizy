@@ -1,7 +1,7 @@
 {
   "className": "",
-  "customClassName": "",
 
+  "tabsCurrentElement": "tabCurrentElement",
   "media": "image",
 
   "bgImageWidth": 0,
@@ -11,22 +11,9 @@
   "bgPositionX": 50,
   "bgPopulation": "",
 
-  "bgColorHex": "#ffffff",
-  "bgColorOpacity": 1,
-  "bgColorPalette": "",
-  "tempBgColorOpacity": 1,
-  "tempBgColorPalette": "",
+  "borderStyle": "",
 
-  "paddingType": "grouped",
-  "padding": 10,
-  "paddingTop": 10,
-  "paddingBottom": 10,
-
-  "borderColorHex": "#66738d",
-  "borderColorOpacity": 0,
-  "borderColorPalette": "",
-  "tempBorderColorOpacity": 1,
-  "tempBorderColorPalette": "",
+  "tempBorderStyle": "solid",
 
   "borderWidthType": "grouped",
   "borderWidth": 0,
@@ -54,6 +41,28 @@
   "tempBorderBottomRightRadius": 0,
   "tempBorderBottomLeftRadius": 0,
 
+  "bgColorHex": "#FFFFFF",
+  "bgColorOpacity": 1,
+  "bgColorPalette": "",
+
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "",
+
+  "containerType": "boxed",
+  "containerSize": 100,
+
+  "paddingType": "grouped",
+  "padding": 10,
+  "paddingTop": 10,
+  "paddingBottom": 10,
+
+  "borderColorHex": "#66738d",
+  "borderColorOpacity": 0,
+  "borderColorPalette": "",
+
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "",
+
   "boxShadow": "off",
   "boxShadowColorHex": "#000000",
   "boxShadowColorOpacity": 1,
@@ -62,12 +71,8 @@
   "boxShadowSpread": 0,
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
-  "tempBoxShadowColorOpacity": 1,
 
-  "containerClassName": "",
-  "containerType": "boxed",
-  "containerSize": 100,
-  "items": [],
+  "tempBoxShadowColorOpacity": 1,
 
   "shape": "top",
   "shapeTopColorHex": "#000000",
@@ -88,17 +93,21 @@
   "shapeTopHorizontal": "off",
   "shapeBottomHorizontal": "off",
 
+  "containerClassName": "",
+  "customClassName": "",
+
   "tabletBgImageWidth": null,
   "tabletBgImageHeight": null,
   "tabletBgImageSrc": null,
-  "tabletBgPositionY": null,
   "tabletBgPositionX": null,
+  "tabletBgPositionY": null,
 
   "tabletBgColorHex": null,
   "tabletBgColorOpacity": null,
   "tabletBgColorPalette": null,
-  "tempTabletBgColorOpacity": 1,
-  "tempTabletBgColorPalette": "",
+
+  "tempTabletBgColorOpacity": null,
+  "tempTabletBgColorPalette": null,
 
   "tabletPaddingType": "grouped",
   "tabletPadding": 10,
@@ -111,17 +120,43 @@
   "tabletShapeBottomHeight": null,
   "tabletShapeBottomHeightSuffix": null,
 
+  "tabletBorderRadiusType": null,
+  "tabletBorderRadius": null,
+  "tabletBorderTopLeftRadius": null,
+  "tabletBorderTopRightRadius": null,
+  "tabletBorderBottomLeftRadius": null,
+  "tabletBorderBottomRightRadius": null,
+
+  "tempTabletBorderRadius": null,
+  "tempTabletBorderTopLeftRadius": null,
+  "tempTabletBorderTopRightRadius": null,
+  "tempTabletBorderBottomRightRadius": null,
+  "tempTabletBorderBottomLeftRadius": null,
+
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,
   "mobileBgImageSrc": null,
-  "mobileBgPositionY": null,
   "mobileBgPositionX": null,
+  "mobileBgPositionY": null,
 
   "mobileBgColorHex": null,
   "mobileBgColorOpacity": null,
   "mobileBgColorPalette": null,
-  "tempMobileBgColorOpacity": 1,
-  "tempMobileBgColorPalette": "",
+  "tempMobileBgColorOpacity": null,
+  "tempMobileBgColorPalette": null,
+
+  "mobileBorderRadiusType": null,
+  "mobileBorderRadius": null,
+  "mobileBorderTopLeftRadius": null,
+  "mobileBorderTopRightRadius": null,
+  "mobileBorderBottomLeftRadius": null,
+  "mobileBorderBottomRightRadius": null,
+
+  "tempMobileBorderRadius": null,
+  "tempMobileBorderTopLeftRadius": null,
+  "tempMobileBorderTopRightRadius": null,
+  "tempMobileBorderBottomLeftRadius": null,
+  "tempMobileBorderBottomRightRadius": null,
 
   "mobilePaddingType": "grouped",
   "mobilePadding": 10,
@@ -132,5 +167,7 @@
   "mobileShapeTopHeight": null,
   "mobileShapeTopHeightSuffix": null,
   "mobileShapeBottomHeight": null,
-  "mobileShapeBottomHeightSuffix": null
+  "mobileShapeBottomHeightSuffix": null,
+
+  "items": []
 }

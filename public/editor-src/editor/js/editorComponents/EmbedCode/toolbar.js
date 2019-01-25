@@ -1,7 +1,11 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  toolbarElementEmbedCode,
+  toolbarSizeWidthWidthPercent
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
   return [
     {
       id: "toolbarCode",
@@ -11,14 +15,7 @@ export function getItemsForDesktop(v) {
       title: t("Embed"),
       roles: ["admin"],
       position: 90,
-      options: [
-        {
-          id: "code",
-          type: "textarea",
-          placeholder: t("Paste your code here..."),
-          value: v.code
-        }
-      ]
+      options: [toolbarElementEmbedCode({ v })]
     },
     {
       id: "toolbarSettings",
@@ -27,38 +24,14 @@ export function getItemsForDesktop(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device, state: "normal" })]
     }
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
+  const state = "normal";
   return [
     {
       id: "tabletToolbarSettings",
@@ -67,38 +40,14 @@ export function getItemsForTablet(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device, state })]
     }
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
+  const state = "normal";
   return [
     {
       id: "mobileToolbarSettings",
@@ -107,33 +56,7 @@ export function getItemsForMobile(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device, state })]
     }
   ];
 }
