@@ -1,7 +1,13 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  toolbarSizeHeightHeightPx,
+  toolbarDisabledHorizontalAlign,
+  toolbarDisabledAdvancedSettings
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
+
   return [
     {
       id: "toolbarSettings",
@@ -11,51 +17,28 @@ export function getItemsForDesktop(v) {
       roles: ["admin"],
       position: 110,
       options: [
-        {
-          id: "height",
-          label: t("Height"),
-          type: "slider",
-          slider: {
-            min: 10,
-            max: 200
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: v.height
-          },
-          onChange: ({ value: height }) => {
-            return {
-              height
-            };
+        toolbarSizeHeightHeightPx({
+          v,
+          device,
+          state: "normal",
+          config: {
+            slider: {
+              min: 10,
+              max: 200
+            }
           }
-        },
-        {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          disabled: true
-        }
+        }),
+        toolbarDisabledAdvancedSettings({ device })
       ]
     },
-    {
-      id: "horizontalAlign",
-      type: "toggle",
-      disabled: true
-    }
+    toolbarDisabledHorizontalAlign({ device })
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
+  const state = "normal";
+
   return [
     {
       id: "tabletToolbarSettings",
@@ -65,51 +48,28 @@ export function getItemsForTablet(v) {
       roles: ["admin"],
       position: 110,
       options: [
-        {
-          id: "tabletHeight",
-          label: t("Height"),
-          type: "slider",
-          slider: {
-            min: 10,
-            max: 200
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "height")
-          },
-          onChange: ({ value: tabletHeight }) => {
-            return {
-              tabletHeight
-            };
+        toolbarSizeHeightHeightPx({
+          v,
+          device,
+          state,
+          config: {
+            slider: {
+              min: 10,
+              max: 200
+            }
           }
-        },
-        {
-          id: "tabletAdvancedSettings",
-          type: "advancedSettings",
-          disabled: true
-        }
+        }),
+        toolbarDisabledAdvancedSettings({ device })
       ]
     },
-    {
-      id: "tabletHorizontalAlign",
-      type: "toggle",
-      disabled: true
-    }
+    toolbarDisabledHorizontalAlign({ device })
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
+  const state = "normal";
+
   return [
     {
       id: "mobileToolbarSettings",
@@ -119,46 +79,20 @@ export function getItemsForMobile(v) {
       roles: ["admin"],
       position: 110,
       options: [
-        {
-          id: "mobileHeight",
-          label: t("Height"),
-          type: "slider",
-          slider: {
-            min: 10,
-            max: 200
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "height")
-          },
-          onChange: ({ value: mobileHeight }) => {
-            return {
-              mobileHeight
-            };
+        toolbarSizeHeightHeightPx({
+          v,
+          device,
+          state,
+          config: {
+            slider: {
+              min: 10,
+              max: 200
+            }
           }
-        },
-        {
-          id: "mobileAdvancedSettings",
-          type: "advancedSettings",
-          disabled: true
-        }
+        }),
+        toolbarDisabledAdvancedSettings({ device })
       ]
     },
-    {
-      id: "mobileHorizontalAlign",
-      type: "toggle",
-      disabled: true
-    }
+    toolbarDisabledHorizontalAlign({ device })
   ];
 }

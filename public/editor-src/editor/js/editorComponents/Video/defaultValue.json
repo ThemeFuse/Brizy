@@ -1,33 +1,44 @@
 {
   "className": "",
 
-  "size": 100,
+  "video": "",
+
+  "ratio": "16:9",
 
   "controls": "on",
-  "ratio": "16:9",
-  "video": "",
 
   "coverImageWidth": 0,
   "coverImageHeight": 0,
   "coverImageSrc": "",
   "coverPositionY": 50,
   "coverPositionX": 50,
+
   "coverZoom": 100,
+
   "iconSize": 80,
   "iconSizeWidth": 80,
   "iconSizeHeight": 80,
 
+  "brightness": 100,
+  "hue": 0,
+  "saturation": 100,
+  "contrast": 100,
+
   "bgColorHex": "#d62b63",
   "bgColorOpacity": 0.75,
   "bgColorPalette": "",
+
   "tempBgColorOpacity": 0.75,
   "tempBgColorPalette": "",
 
   "hoverBgColorHex": "#239ddb",
   "hoverBgColorOpacity": 0.75,
   "hoverBgColorPalette": "",
+
   "tempHoverBgColorOpacity": 0.75,
   "tempHoverBgColorPalette": "",
+
+  "size": 100,
 
   "boxShadow": "off",
   "boxShadowColorHex": "#000000",
@@ -37,20 +48,17 @@
   "boxShadowSpread": 0,
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
+
   "tempBoxShadowColorOpacity": 1,
-
-  "brightness": 100,
-  "hue": 0,
-  "saturation": 100,
-  "contrast": 100,
-
-  "tabletSize": null,
+  "tempBoxShadowColorPalette": 1,
 
   "tabletCoverImageWidth": null,
   "tabletCoverImageHeight": null,
 
-  "mobileSize": null,
+  "tabletSize": null,
 
   "mobileCoverImageWidth": null,
-  "mobileCoverImageHeight": null
+  "mobileCoverImageHeight": null,
+
+  "mobileSize": null
 }

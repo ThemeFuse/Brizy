@@ -103,6 +103,10 @@ class Background extends React.Component {
     this.video = el;
   };
 
+  handleImageRef = el => {
+    this.image = el;
+  };
+
   handleMediaRef = el => {
     this.media = el;
   };
@@ -143,6 +147,7 @@ class Background extends React.Component {
   };
 
   initParallax = () => {
+    jQuery(this.image).addClass("brz-bg-image-parallax");
     jQuery(this.media).parallax({
       bgClass: "brz-bg-image", // WARNING: intentionally not `brz-bg-image-parallax`
       wheelIgnoreClass: [
@@ -158,6 +163,7 @@ class Background extends React.Component {
   };
 
   destroyParallax = () => {
+    jQuery(this.image).removeClass("brz-bg-image-parallax");
     jQuery(this.media).parallax("destroy");
   };
 
@@ -209,12 +215,7 @@ class Background extends React.Component {
       return null;
     }
 
-    const hasVideo = Boolean(video);
-    const className = classnames("brz-bg-image", {
-      "brz-bg-image-parallax": parallax && !hasVideo
-    });
-
-    return <div className={className} />;
+    return <div ref={this.handleImageRef} className="brz-bg-image" />;
   };
 
   renderVideo = () => {

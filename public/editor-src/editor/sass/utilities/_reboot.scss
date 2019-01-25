@@ -246,6 +246,9 @@ svg:not(:root) {
 //
 // Forms
 //
+.brz-form {
+  margin: 0;
+}
 .brz-label {
   // Allow labels to use `margin` for spacing.
   display: inline-block;

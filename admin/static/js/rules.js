@@ -138,23 +138,20 @@ var actions = {
             };
         }
     },
+
     resetRule: function () {
         return function (state) {
             return {errors: "", rule: defaultRule};
-            //return deepmerge(state, {errors: '', rule: defaultRule}, {arrayMerge: arrayMerge});
         };
     },
     addFormErrors: function (errors) {
         return function (state) {
             return {errors: errors};
-            //return deepmerge(state, {errors: errors}, {arrayMerge: arrayMerge});
         };
     },
     setRuleList: function (rules) {
         return function (state) {
             return {rules: rules};
-            //var d = deepmerge(state, rules, {arrayMerge: arrayMerge});
-            //return d;
         };
     }
 };

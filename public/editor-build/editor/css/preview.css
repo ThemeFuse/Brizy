@@ -499,6 +499,7 @@ body.brz::after,body.brz::before{display:none}
 .brz .brz-table{border-collapse:collapse}
 .brz .brz-caption{padding-top:.75rem;padding-bottom:.75rem;color:#9da8b1;text-align:left;caption-side:bottom}
 .brz .brz-th{text-align:left}
+.brz .brz-form{margin:0}
 .brz .brz-label{display:inline-block;margin-bottom:0;font-weight:400}
 .brz .brz-button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color}
 .brz .brz-button,.brz .brz-input,.brz .brz-optgroup,.brz .brz-select,.brz .brz-textarea{padding:0;margin:0;font-family:inherit;font-size:inherit;line-height:inherit}

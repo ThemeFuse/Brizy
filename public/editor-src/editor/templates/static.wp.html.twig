@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{ blocks.head | raw }}
   </head>
-  <body class="brz">
-    {{ blocks.body | raw }}
+  <body class="brz">{% endspaceless %}{{ blocks.body | raw }}{% spaceless %}
   </body>
 </html>
 {% endspaceless %}

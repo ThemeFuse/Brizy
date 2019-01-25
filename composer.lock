@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98a23204bab6a75dc0cb0c0eb015f02b",
+    "content-hash": "5f231573af135526617210950eb30342",
     "packages": [
         {
             "name": "twig/twig",
@@ -71,7 +71,7 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,

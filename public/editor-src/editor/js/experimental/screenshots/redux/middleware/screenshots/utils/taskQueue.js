@@ -70,15 +70,18 @@ export function makeTaskQueue(options) {
 
       setTimeout(async () => {
         if (this._running && this._tasks.length > 0) {
-          const task = this._tasks[0];
+          const task = this._tasks.shift();
 
           try {
-            await task.cb();
-            this._tasks.shift();
+            const enqueueAgain = () => (enqueueAgain.called = true);
+            await task.cb(enqueueAgain);
+
+            if (enqueueAgain.called) {
+              this._tasks.push(task);
+            }
           } catch (e) {
             // not sure how to deal with this yet
             // maybe add some retry mechanism later
-            this._tasks.shift();
           }
 
           if (this._tasks.length > 0) {

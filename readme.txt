@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.56
+Stable tag: 1.0.57
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,12 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.57 - 2019-01-25 =
+* New: Forms and Form Integration support
+* Fixed: Block screenshots being made on mobile device mode
+* Fixed: Block screenshots not aligning properly in the anchor link option
+* Fixed: Backgrounds with parallax not working in editor when in mobile device
 
 = 1.0.56 - 2019-01-18 =
 * New: Added block screenshots in browsers that support it (Chrome, Firefox, Safari to a lesser extent)

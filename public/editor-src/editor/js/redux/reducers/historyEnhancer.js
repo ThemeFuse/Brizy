@@ -52,41 +52,43 @@ const updateHistory = (state, keysToTrack, options) => {
 
     if (options.replacePresent) {
       history[currentHistoryIndex] = nextSnapshot;
-    } else if (
-      history[currentHistoryIndex + 1] &&
-      history[currentHistoryIndex + 1] !== null
-    ) {
-      // shifted history mode
-      // when user is not at the latest snapshot
-      // and altered history from that point
-      currentHistoryIndex++;
-      history[currentHistoryIndex] = nextSnapshot;
-      for (let i = currentHistoryIndex + 1; i <= history.length - 1; i++) {
-        history[i] = null;
-      }
     } else {
-      const enoughTimePassed =
-        currentTimestamp - lastSnapshotTimestamp > HISTORY_UPDATE_FREQUENCY;
-
-      if (enoughTimePassed) {
-        const historyIsFull = currentHistoryIndex === history.length - 1;
-
-        if (historyIsFull) {
-          for (let i = 0; i <= history.length - 2; i++) {
-            history[i] = history[i + 1];
-          }
-          history[history.length - 1] = nextSnapshot;
-        } else {
-          currentHistoryIndex++;
-          history[currentHistoryIndex] = nextSnapshot;
+      if (
+        history[currentHistoryIndex + 1] &&
+        history[currentHistoryIndex + 1] !== null
+      ) {
+        // shifted history mode
+        // when user is not at the latest snapshot
+        // and altered history from that point
+        currentHistoryIndex++;
+        history[currentHistoryIndex] = nextSnapshot;
+        for (let i = currentHistoryIndex + 1; i <= history.length - 1; i++) {
+          history[i] = null;
         }
       } else {
-        history[currentHistoryIndex] = nextSnapshot;
-      }
-    }
+        const enoughTimePassed =
+          currentTimestamp - lastSnapshotTimestamp > HISTORY_UPDATE_FREQUENCY;
 
-    updateFlags();
-    lastSnapshotTimestamp = currentTimestamp;
+        if (enoughTimePassed) {
+          const historyIsFull = currentHistoryIndex === history.length - 1;
+
+          if (historyIsFull) {
+            for (let i = 0; i <= history.length - 2; i++) {
+              history[i] = history[i + 1];
+            }
+            history[history.length - 1] = nextSnapshot;
+          } else {
+            currentHistoryIndex++;
+            history[currentHistoryIndex] = nextSnapshot;
+          }
+        } else {
+          history[currentHistoryIndex] = nextSnapshot;
+        }
+      }
+
+      updateFlags();
+      lastSnapshotTimestamp = currentTimestamp;
+    }
   }
 };
 
@@ -149,8 +151,10 @@ export class HistoryButtons extends React.Component {
 
     if (e.metaKey || e.ctrlKey) {
       if (e.keyCode === Z_KEY_CODE) {
+        e.preventDefault();
         this.triggerUndo();
       } else if (e.keyCode === Y_KEY_CODE) {
+        e.preventDefault();
         this.triggerRedo();
       }
     }

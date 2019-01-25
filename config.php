@@ -28,10 +28,10 @@ class Brizy_Config {
 	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-template.php';
 
-	const BRIZY_APPLICATION_INTEGRATION_URL = 'https://integrations.brizy.io';
+	const BRIZY_APPLICATION_INTEGRATION_URL = 'https://forms.brizy.io';
 	const BRIZY_APPLICATION_FORM_ID = '6_5968m8wd3r8kcwww8o480w4c4c84sc8gw4kwk80s4k0c48ogkc';
 	const BRIZY_APPLICATION_FORM_URL = '/client_id/%s?multipass_url=%s';
-	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = '/form/submit';
+	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = 'http://cloud.bodnar.site/form/submit';
 	const BRIZY_PLATFORM_MULTIPASS_LOGIN = '/multipass/login/%s/%s?email=%s';
 
 	const PLATFORM_CLIENT_ID = "2_5to57xuihv48c4s400sk0wgwcw0gg4s4ggwccos4g4c4444occ";

@@ -62,7 +62,7 @@ class SliderOptionType extends React.Component {
   };
 
   handleInputChange = ({ value, suffixValue }) => {
-    this.handleChange({ value, suffix: suffixValue }, { sliderDragEnd: false });
+    this.handleChange({ value, suffix: suffixValue }, { sliderDragEnd: true });
   };
 
   handleChange = (value, others) => {

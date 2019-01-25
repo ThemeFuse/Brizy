@@ -131,20 +131,20 @@ class Row extends EditorComponent {
     const tabletPaddingW =
       tabletPaddingType === "grouped"
         ? percentageToPixels(
-          tabletPadding * 2,
-          tabletPaddingSuffix,
-          meta.tabletW
-        )
+            tabletPadding * 2,
+            tabletPaddingSuffix,
+            meta.tabletW
+          )
         : percentageToPixels(
-          tabletPaddingLeft,
-          tabletPaddingLeftSuffix,
-          meta.tabletW
-        ) +
-        percentageToPixels(
-          tabletPaddingRight,
-          tabletPaddingRightSuffix,
-          meta.tabletW
-        );
+            tabletPaddingLeft,
+            tabletPaddingLeftSuffix,
+            meta.tabletW
+          ) +
+          percentageToPixels(
+            tabletPaddingRight,
+            tabletPaddingRightSuffix,
+            meta.tabletW
+          );
 
     // Mobile Padding
     const mobilePaddingW =
@@ -253,7 +253,11 @@ class Row extends EditorComponent {
       bgProps.video = getVideoData(bgVideo);
     }
 
-    if (media === "map" || mobileSyncOnChange(v, "media") === "map" || tabletSyncOnChange(v, "media") === "map") {
+    if (
+      media === "map" ||
+      mobileSyncOnChange(v, "media") === "map" ||
+      tabletSyncOnChange(v, "media") === "map"
+    ) {
       bgProps.mapAddress = bgMapAddress;
       bgProps.mapZoom = bgMapZoom;
     }

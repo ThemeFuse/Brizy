@@ -3,7 +3,8 @@ import { uuid } from "visual/utils/uuid";
 import {
   EDITOR_RENDERED,
   UPDATE_PAGE,
-  UPDATE_GLOBALS
+  UPDATE_GLOBALS,
+  UPDATE_UI
 } from "visual/redux/actionTypes";
 import { ActionTypes as HistoryActionTypes } from "visual/redux/reducers/historyEnhancer";
 import { updatePage, updateGlobals } from "visual/redux/actionCreators";
@@ -11,7 +12,8 @@ import {
   pageDataSelector as getPageData,
   pageBlocksSelector as getPageBlocks,
   savedBlocksSelector as getSavedBlocks,
-  globalBlocksSelector as getGlobalBlocks
+  globalBlocksSelector as getGlobalBlocks,
+  deviceModeSelector
 } from "visual/redux/selectors";
 import {
   makeBlockScreenshot,
@@ -40,14 +42,19 @@ const blockIsInThePage = (blockId, store) =>
   Boolean(getBlocksMap(getPageBlocks(store.getState()))[blockId]);
 const blockIsInSaved = (block, store) =>
   getSavedBlocks(store.getState()).includes(block); // saved blocks do not have their own uuid so we look by reference
+const isDesktopMode = store =>
+  deviceModeSelector(store.getState()) === "desktop";
 
 export default store => next => action => {
   const prevState = store.getState();
   next(action);
 
-  const { ui } = store.getState();
-  if (ui.deviceMode !== "desktop") {
-    return;
+  if (action.type === UPDATE_UI && action.key === "deviceMode") {
+    if (action.value === "desktop") {
+      taskQueue.start();
+    } else {
+      taskQueue.stop();
+    }
   }
 
   if (
@@ -55,6 +62,10 @@ export default store => next => action => {
     (action.type === UPDATE_GLOBALS && action.key === "styles")
   ) {
     allBlocksDebounced(store, next);
+  }
+
+  if (!isDesktopMode(store)) {
+    return;
   }
 
   if (
@@ -162,7 +173,11 @@ const changedBlocksDebounced = debounceAdvanced({
   wait: DEBOUNCE_INTERVAL,
   memoizeArgs: [0],
   onFirstCall: () => taskQueue.stop(),
-  onAfterFnCall: () => taskQueue.start()
+  onAfterFnCall: ({ fnArgs: [, store] }) => {
+    if (isDesktopMode(store)) {
+      taskQueue.start();
+    }
+  }
 });
 
 async function enqueueTasks(changedBlocks, store, next) {
@@ -175,7 +190,7 @@ async function enqueueTasks(changedBlocks, store, next) {
     return {
       id: blockId,
       priority: taskQueue.taskPriorities.NORMAL,
-      cb: async () => {
+      cb: async enqueueAgain => {
         // console.log("block screen cb", blockId);
 
         // make screenshot
@@ -192,6 +207,10 @@ async function enqueueTasks(changedBlocks, store, next) {
 
         // upload screenshot
         if (!blockIsInThePage(blockId, store)) {
+          return;
+        }
+        if (!isDesktopMode(store)) {
+          enqueueAgain();
           return;
         }
         await uploadBlockScreenshot({
@@ -235,7 +254,7 @@ async function enqueueTasks(changedBlocks, store, next) {
     return {
       id: blockId,
       priority: taskQueue.taskPriorities.IMMEDIATE,
-      cb: async () => {
+      cb: async enqueueAgain => {
         // console.log("saved block screen cb", blockId);
 
         // make screenshot
@@ -244,6 +263,10 @@ async function enqueueTasks(changedBlocks, store, next) {
 
         // upload screenshot
         if (!blockIsInSaved(block, store)) {
+          return;
+        }
+        if (!isDesktopMode(store)) {
+          enqueueAgain();
           return;
         }
         await uploadBlockScreenshot({
@@ -275,7 +298,7 @@ async function enqueueTasks(changedBlocks, store, next) {
     return {
       id: globalBlockId,
       priority: taskQueue.taskPriorities.NORMAL,
-      cb: async () => {
+      cb: async enqueueAgain => {
         // console.log("global block screen cb", globalBlockId);
 
         const refBlock = getPageBlocks(store.getState()).find(
@@ -294,6 +317,10 @@ async function enqueueTasks(changedBlocks, store, next) {
         const screenshot = await makeBlockScreenshot(refBlock);
 
         // upload screenshot
+        if (!isDesktopMode(store)) {
+          enqueueAgain();
+          return;
+        }
         await uploadBlockScreenshot({
           blockType: "global",
           screenshotId,

@@ -3,6 +3,28 @@ import { css } from "glamor";
 import { imageUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  styleBgImage,
+  styleBgPositionX,
+  styleBgPositionY,
+  styleBorderStyle,
+  styleBorderWidth,
+  styleBorderRadius,
+  styleBgColor,
+  styleBorderColor,
+  styleVerticalAlign,
+  stylePadding,
+  styleMargin,
+  styleBoxShadow,
+  styleSizeWidth,
+  styleShowOnDesktopFilter,
+  styleShowOnDesktopOpacity,
+  styleShowOnTabletFilter,
+  styleShowOnTabletOpacity,
+  styleShowOnMobileFilter,
+  styleShowOnMobileOpacity,
+  styleZIndex
+} from "visual/utils/style";
 
 const aligns = {
   top: "flex-start",
@@ -23,53 +45,6 @@ export function bgStyleClassName(v, props) {
   let glamorObj;
 
   if (IS_EDITOR) {
-    const blurred = {
-      filter: "blur(3px)",
-      opacity: 0.9
-    };
-    const paddingStyle = {
-      paddingTop: "var(--paddingTop)",
-      paddingRight: "var(--paddingRight)",
-      paddingBottom: "var(--paddingBottom)",
-      paddingLeft: "var(--paddingLeft)"
-    };
-    const marginStyle = {
-      marginTop: "var(--marginTop)",
-      marginRight: "var(--marginRight)",
-      marginBottom: "var(--marginBottom)",
-      marginLeft: "var(--marginLeft)"
-    };
-
-    const tabletPaddingStyle = {
-      "& > .brz-bg-content": {
-        paddingTop: "var(--tabletPaddingTop)",
-        paddingRight: "var(--tabletPaddingRight)",
-        paddingBottom: "var(--tabletPaddingBottom)",
-        paddingLeft: "var(--tabletPaddingLeft)"
-      }
-    };
-    const tabletMarginStyle = {
-      marginTop: "var(--tabletMarginTop)",
-      marginRight: "var(--tabletMarginRight)",
-      marginBottom: "var(--tabletMarginBottom)",
-      marginLeft: "var(--tabletMarginLeft)"
-    };
-
-    const mobilePaddingStyle = {
-      "& > .brz-bg-content": {
-        paddingTop: "var(--mobilePaddingTop)",
-        paddingRight: "var(--mobilePaddingRight)",
-        paddingBottom: "var(--mobilePaddingBottom)",
-        paddingLeft: "var(--mobilePaddingLeft)"
-      }
-    };
-    const mobileMarginStyle = {
-      marginTop: "var(--mobileMarginTop)",
-      marginRight: "var(--mobileMarginRight)",
-      marginBottom: "var(--mobileMarginBottom)",
-      marginLeft: "var(--mobileMarginLeft)"
-    };
-
     glamorObj = {
       zIndex: "var(--zIndex)",
 
@@ -86,6 +61,7 @@ export function bgStyleClassName(v, props) {
         borderBottomRightRadius: "var(--borderBottomRightRadius)",
         boxShadow: "var(--boxShadow)"
       },
+
       "> .brz-bg-content": {
         borderTopWidth: "var(--borderTopWidth)",
         borderRightWidth: "var(--borderRightWidth)",
@@ -94,11 +70,22 @@ export function bgStyleClassName(v, props) {
         borderColor: "transparent",
         borderStyle: "solid"
       },
+
       ".brz-ed--desktop &": {
-        ...(showOnDesktop === "on" ? null : blurred),
-        ...(hasItems ? paddingStyle : null),
-        ...(hasItems ? { alignItems: "var(--verticalAlign)" } : null),
-        ...(hasItems ? marginStyle : null),
+        filter: "var(--filter)",
+        opacity: "var(--opacity)",
+
+        paddingTop: "var(--paddingTop)",
+        paddingRight: "var(--paddingRight)",
+        paddingBottom: "var(--paddingBottom)",
+        paddingLeft: "var(--paddingLeft)",
+
+        alignItems: "var(--verticalAlign)",
+
+        marginTop: "var(--marginTop)",
+        marginRight: "var(--marginRight)",
+        marginBottom: "var(--marginBottom)",
+        marginLeft: "var(--marginLeft)",
 
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage: "var(--backgroundImage)",
@@ -110,10 +97,22 @@ export function bgStyleClassName(v, props) {
         }
       },
       ".brz-ed--tablet &": {
-        ...(showOnTablet === "on" ? null : blurred),
-        ...(hasItems ? tabletPaddingStyle : null),
-        ...(hasItems ? tabletMarginStyle : null),
-        ...(hasItems ? { alignItems: "var(--verticalAlign)" } : null),
+        filter: "var(--tabletFilter)",
+        opacity: "var(--tabletOpacity)",
+
+        alignItems: "var(--tabletVerticalAlign)",
+
+        marginTop: "var(--tabletMarginTop)",
+        marginRight: "var(--tabletMarginRight)",
+        marginBottom: "var(--tabletMarginBottom)",
+        marginLeft: "var(--tabletMarginLeft)",
+
+        "& > .brz-bg-content": {
+          paddingTop: "var(--tabletPaddingTop)",
+          paddingRight: "var(--tabletPaddingRight)",
+          paddingBottom: "var(--tabletPaddingBottom)",
+          paddingLeft: "var(--tabletPaddingLeft)"
+        },
 
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage: "var(--tabletBackgroundImage)",
@@ -125,9 +124,20 @@ export function bgStyleClassName(v, props) {
         }
       },
       ".brz-ed--mobile &": {
-        ...(showOnMobile === "on" ? null : blurred),
-        ...(hasItems ? mobilePaddingStyle : null),
-        ...(hasItems ? mobileMarginStyle : null),
+        filter: "var(--mobileFilter)",
+        opacity: "var(--mobileOpacity)",
+
+        marginTop: "var(--mobileMarginTop)",
+        marginRight: "var(--mobileMarginRight)",
+        marginBottom: "var(--mobileMarginBottom)",
+        marginLeft: "var(--mobileMarginLeft)",
+
+        "& > .brz-bg-content": {
+          paddingTop: "var(--mobilePaddingTop)",
+          paddingRight: "var(--mobilePaddingRight)",
+          paddingBottom: "var(--mobilePaddingBottom)",
+          paddingLeft: "var(--mobilePaddingLeft)"
+        },
 
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage: "var(--mobileBackgroundImage)",
@@ -502,279 +512,324 @@ export function bgStyleClassName(v, props) {
 }
 
 export function bgStyleCSSVars(v, props) {
+  const { items } = v;
+  const hasItems = items.length >= 1;
+
   if (IS_PREVIEW) return;
 
-  const {
-    verticalAlign,
-    bgImageSrc,
-    bgColorHex,
-    bgColorOpacity,
-    bgPositionX,
-    bgPositionY,
-    borderWidthType,
-    borderWidth,
-    borderTopWidth,
-    borderRightWidth,
-    borderBottomWidth,
-    borderLeftWidth,
-    borderColorHex,
-    borderColorOpacity,
-    borderRadiusType,
-    borderRadius,
-    borderTopLeftRadius,
-    borderTopRightRadius,
-    borderBottomLeftRadius,
-    borderBottomRightRadius,
-    boxShadow,
-    boxShadowColorHex,
-    boxShadowColorOpacity,
-    boxShadowBlur,
-    boxShadowSpread,
-    boxShadowVertical,
-    boxShadowHorizontal,
-    paddingType,
-    padding,
-    paddingSuffix,
-    paddingTop,
-    paddingTopSuffix,
-    paddingRight,
-    paddingRightSuffix,
-    paddingBottom,
-    paddingBottomSuffix,
-    paddingLeft,
-    paddingLeftSuffix,
-    marginType,
-    margin,
-    marginSuffix,
-    marginTop,
-    marginTopSuffix,
-    marginRight,
-    marginRightSuffix,
-    marginBottom,
-    marginBottomSuffix,
-    marginLeft,
-    marginLeftSuffix,
-    zIndex,
-
-    // Tablet
-    tabletMarginType,
-    tabletMargin,
-    tabletMarginSuffix,
-    tabletMarginTop,
-    tabletMarginTopSuffix,
-    tabletMarginRight,
-    tabletMarginRightSuffix,
-    tabletMarginBottom,
-    tabletMarginBottomSuffix,
-    tabletMarginLeft,
-    tabletMarginLeftSuffix,
-    tabletPaddingType,
-    tabletPadding,
-    tabletPaddingSuffix,
-    tabletPaddingTop,
-    tabletPaddingTopSuffix,
-    tabletPaddingRight,
-    tabletPaddingRightSuffix,
-    tabletPaddingBottom,
-    tabletPaddingBottomSuffix,
-    tabletPaddingLeft,
-    tabletPaddingLeftSuffix,
-
-    // Mobile
-    mobileMarginType,
-    mobileMargin,
-    mobileMarginSuffix,
-    mobileMarginTop,
-    mobileMarginTopSuffix,
-    mobileMarginRight,
-    mobileMarginRightSuffix,
-    mobileMarginBottom,
-    mobileMarginBottomSuffix,
-    mobileMarginLeft,
-    mobileMarginLeftSuffix,
-    mobilePaddingType,
-    mobilePadding,
-    mobilePaddingSuffix,
-    mobilePaddingTop,
-    mobilePaddingTopSuffix,
-    mobilePaddingRight,
-    mobilePaddingRightSuffix,
-    mobilePaddingBottom,
-    mobilePaddingBottomSuffix,
-    mobilePaddingLeft,
-    mobilePaddingLeftSuffix
-  } = v;
-
-  const boxShadowStyle =
-    boxShadow === "on"
-      ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
-      : "none";
-
   return {
-    "--verticalAlign": aligns[verticalAlign],
-    "--backgroundImage": Boolean(bgImageSrc)
-      ? `url(${imageUrl(bgImageSrc)})`
-      : "none",
-    "--backgroundPositionX": `${bgPositionX}%`,
-    "--backgroundPositionY": `${bgPositionY}%`,
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
-    "--borderTopWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderTopWidth}px`,
-    "--borderRightWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderRightWidth}px`,
-    "--borderBottomWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderBottomWidth}px`,
-    "--borderLeftWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderLeftWidth}px`,
-    "--borderColor": `${hexToRgba(borderColorHex, borderColorOpacity)}`,
-    "--borderStyle": "solid",
-    "--borderTopLeftRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderTopLeftRadius}px`,
-    "--borderTopRightRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderTopRightRadius}px`,
-    "--borderBottomLeftRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderBottomLeftRadius}px`,
-    "--borderBottomRightRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderBottomRightRadius}px`,
-    "--marginTop":
-      marginType === "grouped"
-        ? margin + marginSuffix
-        : marginTop + marginTopSuffix,
-    "--marginRight":
-      marginType === "grouped"
-        ? margin + marginSuffix
-        : marginRight + marginRightSuffix,
-    "--marginBottom":
-      marginType === "grouped"
-        ? margin + marginSuffix
-        : marginBottom + marginBottomSuffix,
-    "--marginLeft":
-      marginType === "grouped"
-        ? margin + marginSuffix
-        : marginLeft + marginLeftSuffix,
-    "--paddingTop":
-      paddingType === "grouped"
-        ? padding + paddingSuffix
-        : paddingTop + paddingTopSuffix,
-    "--paddingRight":
-      paddingType === "grouped"
-        ? padding + paddingSuffix
-        : paddingRight + paddingRightSuffix,
-    "--paddingBottom":
-      paddingType === "grouped"
-        ? padding + paddingSuffix
-        : paddingBottom + paddingBottomSuffix,
-    "--paddingLeft":
-      paddingType === "grouped"
-        ? padding + paddingSuffix
-        : paddingLeft + paddingLeftSuffix,
-    "--zIndex": zIndex === 0 ? "auto" : zIndex,
-    "--boxShadow": boxShadowStyle,
+    "--backgroundImage": styleBgImage({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--backgroundPositionX": styleBgPositionX({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--backgroundPositionY": styleBgPositionY({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--borderTopWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderTopWidth"
+    }),
+    "--borderRightWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderRightWidth"
+    }),
+    "--borderBottomWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderBottomWidth"
+    }),
+    "--borderLeftWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderLeftWidth"
+    }),
+    "--borderStyle": styleBorderStyle({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--borderTopLeftRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderTopLeftRadius"
+    }),
+    "--borderTopRightRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderTopRightRadius"
+    }),
+    "--borderBottomLeftRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderBottomLeftRadius"
+    }),
+    "--borderBottomRightRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderBottomRightRadius"
+    }),
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--verticalAlign": styleVerticalAlign({
+      v,
+      device: "desktop",
+      state: "normal",
+      hasItems
+    }),
+    "--paddingTop": stylePadding({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "paddingTop",
+      hasItems
+    }),
+    "--paddingRight": stylePadding({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "paddingRight",
+      hasItems
+    }),
+    "--paddingBottom": stylePadding({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "paddingBottom",
+      hasItems
+    }),
+    "--paddingLeft": stylePadding({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "paddingLeft",
+      hasItems
+    }),
+    "--marginTop": styleMargin({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "marginTop",
+      hasItems
+    }),
+    "--marginRight": styleMargin({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "marginRight",
+      hasItems
+    }),
+    "--marginBottom": styleMargin({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "marginBottom",
+      hasItems
+    }),
+    "--marginLeft": styleMargin({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "marginLeft",
+      hasItems
+    }),
+    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
+    "--filter": styleShowOnDesktopFilter({ v }),
+    "--opacity": styleShowOnDesktopOpacity({ v }),
+    "--zIndex": styleZIndex({ v }),
 
     // Tablet
-    "--tabletBackgroundImage": tabletSyncOnChange(v, "bgImageSrc")
-      ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
-      : "none",
-    "--tabletBackgroundPositionX": `${tabletSyncOnChange(v, "bgPositionX")}%`,
-    "--tabletBackgroundPositionY": `${tabletSyncOnChange(v, "bgPositionY")}%`,
-    "--tabletBackgroundColor": hexToRgba(
-      tabletSyncOnChange(v, "bgColorHex"),
-      tabletSyncOnChange(v, "bgColorOpacity")
-    ),
-    "--tabletMarginTop":
-      tabletMarginType === "grouped"
-        ? tabletMargin + tabletMarginSuffix
-        : tabletMarginTop + tabletMarginTopSuffix,
-    "--tabletMarginBottom":
-      tabletMarginType === "grouped"
-        ? tabletMargin + tabletMarginSuffix
-        : tabletMarginBottom + tabletMarginBottomSuffix,
-    "--tabletMarginLeft":
-      tabletMarginType === "grouped"
-        ? tabletMargin + tabletMarginSuffix
-        : tabletMarginLeft + tabletMarginLeftSuffix,
-    "--tabletMarginRight":
-      tabletMarginType === "grouped"
-        ? tabletMargin + tabletMarginSuffix
-        : tabletMarginRight + tabletMarginRightSuffix,
-    "--tabletPaddingTop":
-      tabletPaddingType === "grouped"
-        ? tabletPadding + tabletPaddingSuffix
-        : tabletPaddingTop + tabletPaddingTopSuffix,
-    "--tabletPaddingRight":
-      tabletPaddingType === "grouped"
-        ? tabletPadding + tabletPaddingSuffix
-        : tabletPaddingRight + tabletPaddingRightSuffix,
-    "--tabletPaddingBottom":
-      tabletPaddingType === "grouped"
-        ? tabletPadding + tabletPaddingSuffix
-        : tabletPaddingBottom + tabletPaddingBottomSuffix,
-    "--tabletPaddingLeft":
-      tabletPaddingType === "grouped"
-        ? tabletPadding + tabletPaddingSuffix
-        : tabletPaddingLeft + tabletPaddingLeftSuffix,
+    "--tabletFilter": styleShowOnTabletFilter({ v }),
+    "--tabletOpacity": styleShowOnTabletOpacity({ v }),
+    "--tabletBackgroundImage": styleBgImage({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+    "--tabletBackgroundPositionX": styleBgPositionX({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+    "--tabletBackgroundPositionY": styleBgPositionY({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+    "--tabletBackgroundColor": styleBgColor({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+    "--tabletPaddingTop": stylePadding({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "paddingTop",
+      hasItems
+    }),
+    "--tabletPaddingRight": stylePadding({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "paddingRight",
+      hasItems
+    }),
+    "--tabletPaddingBottom": stylePadding({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "paddingBottom",
+      hasItems
+    }),
+    "--tabletPaddingLeft": stylePadding({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "paddingLeft",
+      hasItems
+    }),
+    "--tabletMarginTop": styleMargin({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "marginTop",
+      hasItems
+    }),
+    "--tabletMarginBottom": styleMargin({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "marginBottom",
+      hasItems
+    }),
+    "--tabletMarginLeft": styleMargin({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "marginLeft",
+      hasItems
+    }),
+    "--tabletMarginRight": styleMargin({
+      v,
+      device: "tablet",
+      state: "normal",
+      current: "marginRight",
+      hasItems
+    }),
+    "--tabletVerticalAlign": styleVerticalAlign({
+      v,
+      device: "tablet",
+      state: "normal",
+      hasItems
+    }),
 
     // Mobile
-    "--mobileBackgroundImage": mobileSyncOnChange(v, "bgImageSrc")
-      ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
-      : "none",
-    "--mobileBackgroundPositionX": `${mobileSyncOnChange(v, "bgPositionX")}%`,
-    "--mobileBackgroundPositionY": `${mobileSyncOnChange(v, "bgPositionY")}%`,
-    "--mobileBackgroundColor": hexToRgba(
-      mobileSyncOnChange(v, "bgColorHex"),
-      mobileSyncOnChange(v, "bgColorOpacity")
-    ),
-    "--mobileMarginTop":
-      mobileMarginType === "grouped"
-        ? mobileMargin + mobileMarginSuffix
-        : mobileMarginTop + mobileMarginTopSuffix,
-    "--mobileMarginBottom":
-      mobileMarginType === "grouped"
-        ? mobileMargin + mobileMarginSuffix
-        : mobileMarginBottom + mobileMarginBottomSuffix,
-    "--mobileMarginLeft":
-      mobileMarginType === "grouped"
-        ? mobileMargin + mobileMarginSuffix
-        : mobileMarginLeft + mobileMarginLeftSuffix,
-    "--mobileMarginRight":
-      mobileMarginType === "grouped"
-        ? mobileMargin + mobileMarginSuffix
-        : mobileMarginRight + mobileMarginRightSuffix,
-    "--mobilePaddingTop":
-      mobilePaddingType === "grouped"
-        ? mobilePadding + mobilePaddingSuffix
-        : mobilePaddingTop + mobilePaddingTopSuffix,
-    "--mobilePaddingRight":
-      mobilePaddingType === "grouped"
-        ? mobilePadding + mobilePaddingSuffix
-        : mobilePaddingRight + mobilePaddingRightSuffix,
-    "--mobilePaddingBottom":
-      mobilePaddingType === "grouped"
-        ? mobilePadding + mobilePaddingSuffix
-        : mobilePaddingBottom + mobilePaddingBottomSuffix,
-    "--mobilePaddingLeft":
-      mobilePaddingType === "grouped"
-        ? mobilePadding + mobilePaddingSuffix
-        : mobilePaddingLeft + mobilePaddingLeftSuffix
+    "--mobileFilter": styleShowOnMobileFilter({ v }),
+    "--mobileOpacity": styleShowOnMobileOpacity({ v }),
+
+    "--mobileBackgroundImage": styleBgImage({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+    "--mobileBackgroundPositionX": styleBgPositionX({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+    "--mobileBackgroundPositionY": styleBgPositionY({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+    "--mobileBackgroundColor": styleBgColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+    "--mobilePaddingTop": stylePadding({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "paddingTop",
+      hasItems
+    }),
+    "--mobilePaddingRight": stylePadding({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "paddingRight",
+      hasItems
+    }),
+    "--mobilePaddingBottom": stylePadding({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "paddingBottom",
+      hasItems
+    }),
+    "--mobilePaddingLeft": stylePadding({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "paddingLeft",
+      hasItems
+    }),
+    "--mobileMarginTop": styleMargin({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "marginTop",
+      hasItems
+    }),
+    "--mobileMarginBottom": styleMargin({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "marginBottom",
+      hasItems
+    }),
+    "--mobileMarginLeft": styleMargin({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "marginLeft",
+      hasItems
+    }),
+    "--mobileMarginRight": styleMargin({
+      v,
+      device: "mobile",
+      state: "normal",
+      current: "marginRight",
+      hasItems
+    })
   };
 }
 
@@ -860,11 +915,18 @@ export function styleClassName(v, props) {
 export function styleCSSVars(v, props) {
   if (IS_PREVIEW) return;
 
-  const { width, mobileWidth } = v;
-
   return {
-    "--width": `${width}%`,
-    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
-    "--mobileWidth": `${mobileWidth}%`
+    "--width": styleSizeWidth({
+      v,
+      device: "desktop"
+    }),
+    "--tabletWidth": styleSizeWidth({
+      v,
+      device: "tablet"
+    }),
+    "--mobileWidth": styleSizeWidth({
+      v,
+      device: "mobile"
+    })
   };
 }

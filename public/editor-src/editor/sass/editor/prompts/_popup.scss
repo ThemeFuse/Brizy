@@ -196,6 +196,13 @@
   line-height: 1;
   margin: 20px auto 8px;
 }
+.brz-ed-popup-tab-image {
+  padding: 19px;
+
+  .brz-img {
+    max-width: 100%;
+  }
+}
 .brz-ed-popup-tab-name {
   font-family: $font-family-1;
   font-size: 10px;

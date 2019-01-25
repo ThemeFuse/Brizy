@@ -1,0 +1,20 @@
+<ul class="formData">
+    {% for field in data.formData %}
+        <li>
+            <label for="{{ field.name }}">{{ field.label }}</label>:
+            <span id="{{ field.name }}">{{ field.value }}</span>
+        </li>
+    {% endfor %}
+</ul>
+<style>
+    .formData{
+        margin: 0;
+    }
+    .formData label{
+        font-weight: bold;
+    }
+
+    .formData span{
+        vertical-align: middle;
+    }
+</style>
