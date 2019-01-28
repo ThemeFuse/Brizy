@@ -3,5 +3,5 @@
 vendor/
 nohup.out
 **/node_modules/
-editor-build/template
-editor-build/pro
+public/editor-build/template
+public/editor-build/pro
