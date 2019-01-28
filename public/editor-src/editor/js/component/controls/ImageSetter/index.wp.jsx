@@ -53,7 +53,7 @@ export default class WPImageSetter extends ImageSetter {
           if (this.mounted) {
             this.setState(newValue);
           }
-          this.props.onChange(newValue);
+          this.props.onChange(newValue, { isChanged: "image" });
         })
         .catch(e => {
           console.error("failed to get attachment uid", e);
