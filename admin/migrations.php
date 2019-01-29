@@ -135,7 +135,7 @@ class Brizy_Admin_Migrations {
 
 		$latest = $this->globalStorage->latestMigration();
 
-		if ( ! $latest ) {
+		if ( ! $latest instanceof Brizy_Admin_Migrations_MigrationInterface ) {
 			$latest = new Brizy_Admin_Migrations_NullMigration();
 		}
 
