@@ -170,19 +170,11 @@ class Brizy_Editor_Forms_Api {
 
 
 			foreach ( $form->getIntegrations() as $integration ) {
-				if ( ! $integration->isCompleted() || $integration->getId() == 'wordpress' ) {
+				if ( ! $integration->isCompleted() ) {
 					continue;
 				}
 
 				try {
-					/**
-					 * @var \BrizyForms\Service\Service $service ;
-					 */
-					$service = \BrizyForms\ServiceFactory::getInstance( $integration->getId() );
-
-					if ( ! ( $service instanceof \BrizyForms\Service\Service ) ) {
-						$this->error( 400, "Invalid integration service" );
-					}
 
 					if ( $integration instanceof Brizy_Editor_Forms_WordpressIntegration ) {
 
@@ -199,14 +191,28 @@ class Brizy_Editor_Forms_Api {
 						$headers    = apply_filters( 'brizy_form_email_headers', $headers, $form, $fields );
 						$email_body = apply_filters( 'brizy_form_email_body', $email_body, $form, $fields );
 
+						if ( ! function_exists( 'wp_mail' ) ) {
+							throw new Exception( 'Please check your wordpress configuration.' );
+						}
+
 						$result = wp_mail(
-							$form->getEmailTo(),
-							$form->getSubject(),
+							$integration->getEmailTo(),
+							$integration->getSubject(),
 							$email_body,
 							$headers
 						);
 
 					} else {
+
+						/**
+						 * @var \BrizyForms\Service\Service $service ;
+						 */
+						$service = \BrizyForms\ServiceFactory::getInstance( $integration->getId() );
+
+						if ( ! ( $service instanceof \BrizyForms\Service\Service ) ) {
+							$this->error( 400, "Invalid integration service" );
+						}
+
 						do_action( 'brizy_submit_form', $service, $form, $fields, $integration );
 					}
 				} catch ( Exception $e ) {
