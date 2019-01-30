@@ -89,6 +89,27 @@ A good bug report includes full details to easily understand the issue you are h
 3. Go to Pages > Add New
 4. Press the 'Edit with Brizy' button.
 
+### How to integration in your plugin
+The content from post_content is updated only to support some seo plugins.
+
+To correctly get the compiled post html use the code below:
+
+```
+$post    = Brizy_Editor_Post::get( $post_id );
+$html = new Brizy_Editor_CompiledHtml( $post->get_compiled_html() );
+
+// the <head> content
+// the $headHtml contains all the assets the page needs
+$headHtml = apply_filters( 'brizy_content', $html->get_head(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+
+// the <body> content
+$bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+```
+
+
+
+
+
 ### Terms of Service
 
 [Terms of use](https://brizy.io/terms/)
