@@ -90,7 +90,8 @@ A good bug report includes full details to easily understand the issue you are h
 4. Press the 'Edit with Brizy' button.
 
 ### How to integration in your plugin
-The content from post_content is updated only to support some seo plugins.
+Do not use the html from post_content.
+That content is updated only to support some seo plugins.
 
 To correctly get the compiled post html use the code below:
 
