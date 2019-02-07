@@ -21,6 +21,51 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	}
 
 	/**
+	 * @param Brizy_Editor_Forms_Form $form
+	 * @param $fields
+	 *
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	public function handleSubmit( Brizy_Editor_Forms_Form $form, $fields ) {
+
+		$recipients = explode( ',', $this->getEmailTo() );
+
+		$headers   = array();
+		$headers[] = 'Content-type: text/html; charset=UTF-8';
+
+		if ( count( $recipients ) > 1 ) {
+			foreach ( $recipients as $i => $recipient ) {
+				if ( $i == 0 ) {
+					continue;
+				}
+				$headers[] = 'Bcc: ' . trim( $recipient );
+			}
+		}
+
+		$field_string = array();
+		foreach ( $fields as $field ) {
+			$field_string[] = "{$field->label}: " . esc_html( $field->value );
+		}
+
+		$email_body = $form->getEmailTemplateContent( $fields );
+
+		$headers    = apply_filters( 'brizy_form_email_headers', $headers, $fields, $form );
+		$email_body = apply_filters( 'brizy_form_email_body', $email_body, $fields, $form );
+
+		if ( ! function_exists( 'wp_mail' ) ) {
+			throw new Exception( 'Please check your wordpress configuration.' );
+		}
+
+		return wp_mail(
+			$recipients[0],
+			$this->getSubject(),
+			$email_body,
+			$headers
+		);
+	}
+
+	/**
 	 * @return array|mixed
 	 */
 	public function jsonSerialize() {
@@ -49,6 +94,13 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function serialize() {
+		return serialize( $this->jsonSerialize() );
 	}
 
 	/**

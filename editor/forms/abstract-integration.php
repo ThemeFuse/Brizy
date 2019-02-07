@@ -24,6 +24,14 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 	}
 
 	/**
+	 * @param Brizy_Editor_Forms_Form $form
+	 * @param $fields
+	 *
+	 * @return mixed
+	 */
+	abstract public function handleSubmit( Brizy_Editor_Forms_Form $form, $fields );
+
+	/**
 	 * @return bool
 	 */
 	public function isCompleted() {
@@ -69,10 +77,26 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 	public static function createInstanceFromJson( $json_obj ) {
 		$instance = null;
 		if ( is_object( $json_obj ) ) {
-			if ( ( isset( $json_obj->subject ) && isset( $json_obj->emailTo ) ) || $json_obj->id == 'wordpress' ) {
-				$instance = Brizy_Editor_Forms_WordpressIntegration::createFromJson( $json_obj );
-			} else {
-				$instance = apply_filters( 'brizy_create_integration_from_json', $json_obj );
+
+			switch ( $json_obj->id ) {
+				case 'wordpress':
+					$instance = Brizy_Editor_Forms_WordpressIntegration::createFromJson( $json_obj );
+					break;
+				case 'smtp':
+					if ( class_exists( 'Brizy_Editor_Forms_SmtpIntegration' ) ) {
+						$instance = Brizy_Editor_Forms_SmtpIntegration::createFromJson( $json_obj );
+					}
+					break;
+				case 'gmail_smtp':
+					if ( class_exists( 'Brizy_Editor_Forms_GmailSmtpIntegration' ) ) {
+						$instance = Brizy_Editor_Forms_GmailSmtpIntegration::createFromJson( $json_obj );
+					}
+					break;
+				default:
+					if ( class_exists( 'Brizy_Editor_Forms_ServiceIntegration' ) ) {
+						$instance = Brizy_Editor_Forms_ServiceIntegration::createFromJson( $json_obj );
+					}
+					break;
 			}
 
 			if ( $instance ) {

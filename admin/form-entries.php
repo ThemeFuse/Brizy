@@ -188,10 +188,16 @@ class Brizy_Admin_FormEntries {
 
 		$title = '';
 
-		foreach ( $fields as $field ) {
+		foreach ( $fields as $i=>$field ) {
 			if ( strtolower( $field->type ) == 'email' ) {
 				$title = $field->value;
 			}
+
+			if($field->name=='g-recaptcha-response')
+            {
+                unset($fields[$i]);
+	            $fields = array_values($fields);
+            }
 		}
 
 		$params = array(
@@ -200,6 +206,7 @@ class Brizy_Admin_FormEntries {
 			'post_status'  => 'publish',
 			'post_content' => json_encode( array( 'formId' => $form->getId(), 'formData' => $fields ) )
 		);
+
 		wp_insert_post( $params );
 
 		return $fields;

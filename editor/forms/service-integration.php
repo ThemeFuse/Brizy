@@ -52,6 +52,26 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	 */
 	protected $usedFolder;
 
+
+	/**
+	 * @param $fields
+	 *
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	public function handleSubmit(Brizy_Editor_Forms_Form $form, $fields ) {
+		/**
+		 * @var \BrizyForms\Service\Service $service ;
+		 */
+		$service = \BrizyForms\ServiceFactory::getInstance( $this->getId() );
+
+		if ( ! ( $service instanceof \BrizyForms\Service\Service ) ) {
+			$this->error( 400, "Invalid integration service" );
+		}
+
+		do_action( 'brizy_submit_form', $service, $fields, $this );
+	}
+
 	/**
 	 * @return array|mixed
 	 */
@@ -99,10 +119,14 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 				}
 			}
 			if ( isset( $json_obj->lists ) ) {
-				foreach ( $json_obj->lists as $lists ) {
-					$instance->addList( Brizy_Editor_Forms_Group::createFromJson( $lists ) );
+				foreach ( $json_obj->lists as $list ) {
+					if( !$list instanceof Brizy_Editor_Forms_Group)
+						$instance->addList( Brizy_Editor_Forms_Group::createFromJson( $list ) );
+					else
+						$instance->addList($list);
 				}
 			}
+
 			if ( isset( $json_obj->usedAccount ) ) {
 				$instance->setUsedAccount( $json_obj->usedAccount );
 			}
