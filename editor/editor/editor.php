@@ -223,22 +223,27 @@ class Brizy_Editor_Editor_Editor {
 					'setFeaturedImageFocalPoint' => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT,
 					'removeFeaturedImage'        => Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
 
-					//'getDefaultForm'             => Brizy_Editor_Forms_Api::AJAX_GET_DEFAULT_FORM, // ???
-					'getForm'                    => Brizy_Editor_Forms_Api::AJAX_GET_FORM,
-					'createForm'                 => Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
-					'deleteForm'                 => Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
-					//'submitForm'        => Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM, // ???
-					'getIntegration'             => Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
-					'createIntegration'          => Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
-					'updateIntegration'          => Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
-					'deleteIntegration'          => Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
+					'getForm'           => Brizy_Editor_Forms_Api::AJAX_GET_FORM,
+					'createForm'        => Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
+					'updateForm'        => Brizy_Editor_Forms_Api::AJAX_UPDATE_FORM,
+					'deleteForm'        => Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
+					'getIntegration'    => Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
+					'createIntegration' => Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
+					'updateIntegration' => Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
+					'deleteIntegration' => Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
 
 					'createFont' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
 					'deleteFont' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
 					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION
 
-					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA, // ???
-					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA, // ???
+					'getAccount'    => Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNT,
+					'getAccounts'   => Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNTS,
+					'addAccount'    => Brizy_Editor_Accounts_Api::BRIZY_ADD_ACCOUNT,
+					'updateAccount' => Brizy_Editor_Accounts_Api::BRIZY_UPDATE_ACCOUNT,
+					'deleteAccount' => Brizy_Editor_Accounts_Api::BRIZY_DELETE_ACCOUNT,
+
+					'validateRecaptchaAccount' => Brizy_Editor_Forms_Api::AJAX_VALIDATE_RECAPTCHA_ACCOUNT,
+
 				),
 				'plugins'         => array(
 					'dummy'       => true,
@@ -254,11 +259,20 @@ class Brizy_Editor_Editor_Editor {
 			'applications'    => array(
 				'form' => array(
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
-				)
+				),
+			),
+			'server'          => array(
+				'maxUploadSize' => $this->fileUploadMaxSize()
 			),
 			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
 			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
+
+		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
+
+		$config = $this->addRecaptchaAccounts( $manager, $config );
+
+		$config = $this->addSocialAccounts( $manager, $config );
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
 	}
@@ -562,6 +576,73 @@ class Brizy_Editor_Editor_Editor {
 				'value' => (object) array( 'items' => array() )
 			) )
 		);
+	}
+
+	/**
+	 * @param Brizy_Editor_Accounts_ServiceAccountManager $manager
+	 * @param array $config
+	 *
+	 * @return array
+	 */
+	private function addRecaptchaAccounts( Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config ) {
+		$accounts = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP );
+
+		if ( isset( $accounts[0] ) && $accounts[0] instanceof Brizy_Editor_Accounts_RecaptchaAccount ) {
+			$config['applications']['form']['recaptcha']['siteKey'] = $accounts[0]->getSiteKey();
+		}
+
+		return $config;
+	}
+
+	/**
+	 * @param Brizy_Editor_Accounts_ServiceAccountManager $manager
+	 * @param array $config
+	 *
+	 * @return array
+	 */
+	private function addSocialAccounts( Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config ) {
+		$accounts = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::SOCIAL_GROUP );
+
+		foreach ( $accounts as $account ) {
+			if ( isset( $account ) && $account instanceof Brizy_Editor_Accounts_SocialAccount ) {
+				$config['applications'][ $account->getGroup() ][] = $account->convertToOptionValue();
+			}
+		}
+
+		return $config;
+	}
+
+
+	private function fileUploadMaxSize() {
+		static $max_size = - 1;
+
+		if ( $max_size < 0 ) {
+			// Start with post_max_size.
+			$post_max_size = $this->parseSize( ini_get( 'post_max_size' ) );
+			if ( $post_max_size > 0 ) {
+				$max_size = number_format( $post_max_size / 1048576, 2 );
+			}
+
+			// If upload_max_size is less, then reduce. Except if upload_max_size is
+			// zero, which indicates no limit.
+			$upload_max = $this->parseSize( ini_get( 'upload_max_filesize' ) );
+			if ( $upload_max > 0 && $upload_max < $max_size ) {
+				$max_size = number_format( $upload_max / 1048576, 2 );
+			}
+		}
+
+		return $max_size;
+	}
+
+	private function parseSize( $size ) {
+		$unit = preg_replace( '/[^bkmgtpezy]/i', '', $size ); // Remove the non-unit characters from the size.
+		$size = preg_replace( '/[^0-9\.]/', '', $size ); // Remove the non-numeric characters from the size.
+		if ( $unit ) {
+			// Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+			return round( $size * pow( 1024, stripos( 'bkmgtpezy', $unit[0] ) ) );
+		} else {
+			return round( $size );
+		}
 	}
 
 	/**

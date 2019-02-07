@@ -1,22 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: alex
+ * Date: 11/26/18
+ * Time: 5:00 PM
+ */
 
-
-class Brizy_Editor_Accounts_Account extends Brizy_Editor_Accounts_AbstractAccount {
+class Brizy_Editor_Accounts_SocialAccount extends Brizy_Editor_Accounts_Account {
 
 	/**
 	 * @return mixed
 	 */
 	public function getGroup() {
-		return Brizy_Editor_Accounts_AbstractAccount::INTEGRATIONS_GROUP;
+		return Brizy_Editor_Accounts_AbstractAccount::SOCIAL_GROUP;
 	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getService() {
-		return $this->data['service'];
-	}
-
 
 	/**
 	 * @param $data
@@ -26,7 +23,7 @@ class Brizy_Editor_Accounts_Account extends Brizy_Editor_Accounts_AbstractAccoun
 	 */
 	static public function createFromSerializedData( $data ) {
 
-		$data['group'] = Brizy_Editor_Accounts_AbstractAccount::INTEGRATIONS_GROUP;
+		$data['group'] = Brizy_Editor_Accounts_AbstractAccount::SOCIAL_GROUP;
 
 		return Brizy_Editor_Accounts_AbstractAccount::createFromSerializedData( $data );
 	}
@@ -44,10 +41,12 @@ class Brizy_Editor_Accounts_Account extends Brizy_Editor_Accounts_AbstractAccoun
 		}
 
 		if ( is_object( $json_obj ) ) {
+
+			$json_obj->group = Brizy_Editor_Accounts_AbstractAccount::SOCIAL_GROUP;
+
 			return Brizy_Editor_Accounts_AbstractAccount::createFromSerializedData( get_object_vars( $json_obj ) );
 		}
 
 		throw new Exception( 'Invalid json provided.' );
 	}
-
 }
