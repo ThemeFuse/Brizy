@@ -152,6 +152,10 @@ class Brizy_Editor {
 		if ( function_exists( 'fvm_cachepath' ) ) {
 			new Brizy_Compatibilities_FastVelocityMinify();
 		}
+
+		if ( class_exists( 'WCL_Plugin' ) ) {
+			new Brizy_Compatibilities_WebcrafticClearfy();
+		}
 	}
 
 	/**
