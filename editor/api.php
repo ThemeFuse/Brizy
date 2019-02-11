@@ -724,7 +724,7 @@ class Brizy_Editor_API {
 			switch ( $post->post_type ) {
 				case 'revision':
 				case 'nav_menu_item':
-					continue;
+					continue 2;
 				case 'page':
 					$permalink = get_page_link( $post->ID );
 					break;
