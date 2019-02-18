@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.59<br>
+Stable tag: 1.0.60<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -89,12 +89,44 @@ A good bug report includes full details to easily understand the issue you are h
 3. Go to Pages > Add New
 4. Press the 'Edit with Brizy' button.
 
+### How to integration in your plugin
+Do not use the html from post_content.
+That content is updated only to support some seo plugins.
+
+To correctly get the compiled post html use the code below:
+
+```
+$post    = Brizy_Editor_Post::get( $post_id );
+$html = new Brizy_Editor_CompiledHtml( $post->get_compiled_html() );
+
+// the <head> content
+// the $headHtml contains all the assets the page needs
+$headHtml = apply_filters( 'brizy_content', $html->get_head(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+
+// the <body> content
+$bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+```
+
+
+
+
+
 ### Terms of Service
 
 [Terms of use](https://brizy.io/terms/)
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.60 - 2019-02-18 ###
+* New: Added gradient to backgrounds
+* New: Added hover to backgrounds
+* Fixed: Background parallax at preview
+* Fixed: RichText sometimes removing newline characters
+* Fixed: Disabled Row duplicate and delete when inside popup via context menu
+* Fixed: Access to rule api
+* Fixed: Compatibility with WebCraftic Clearfy plugin
+* Fixed: Fixed group options for template rules
 
 ### 1.0.59 - 2019-01-29 ###
 * Fixed: Wordpress integration for forms

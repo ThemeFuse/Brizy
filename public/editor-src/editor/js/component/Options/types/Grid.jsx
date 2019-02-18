@@ -2,7 +2,6 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import Options from "visual/component/Options";
-
 class GridOptionType extends React.Component {
   static defaultProps = {
     className: "",
@@ -11,13 +10,17 @@ class GridOptionType extends React.Component {
     toolbar: null,
     columns: []
   };
-
   render() {
-    const { attr, columns, location, toolbar } = this.props;
-
+    const {
+      className: _className,
+      attr,
+      columns,
+      location,
+      toolbar
+    } = this.props;
     const className = classnames(
-      "brz-d-xs-flex brz-flex-xs-no-wrap",
-      attr.className
+      "brz-d-xs-flex brz-flex-xs-no-wrap brz-ed-grid",
+      _className
     );
     const renderedColumns = _.map(columns, (column, index) => {
       const style = {
@@ -41,7 +44,6 @@ class GridOptionType extends React.Component {
         </div>
       );
     });
-
     return (
       <div {...attr} className={className}>
         {renderedColumns}
@@ -49,5 +51,4 @@ class GridOptionType extends React.Component {
     );
   }
 }
-
 export default GridOptionType;

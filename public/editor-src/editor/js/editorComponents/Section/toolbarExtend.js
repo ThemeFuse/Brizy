@@ -1,5 +1,14 @@
-import { getOptionColor } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import {
+  toolbarSliderColorHexAndOpacity,
+  toolbarSliderColorPalette,
+  toolbarSliderColorFields,
+  toolbarShowOnDesktop,
+  toolbarShowOnTablet,
+  toolbarShowOnMobile,
+  toolbarZIndex,
+  toolbarCustomCSSClass
+} from "visual/utils/toolbar";
 
 const getSliderTabs = (v, component) => {
   const { slider } = v;
@@ -28,7 +37,7 @@ const getSliderTabs = (v, component) => {
         }
         // {
         //   id: "sliderAnimation",
-        //   label: t("Animation"),
+        //   label: t("Entrance Animation"),
         //   type: "radioGroup",
         //   disabled: slider === "off",
         //   choices: [
@@ -176,10 +185,8 @@ const getSliderTabs = (v, component) => {
   return tabs;
 };
 
-const gitSliderColorsTabs = v => {
+const getSliderColorsTabs = ({ v, state }) => {
   if (v.slider === "off") return [];
-  const { hex: sliderDotsColorHex } = getOptionColor(v, "sliderDotsColor");
-  const { hex: sliderArrowsColorHex } = getOptionColor(v, "sliderArrowsColor");
 
   return [
     {
@@ -187,56 +194,43 @@ const gitSliderColorsTabs = v => {
       label: t("Dots"),
       disabled: v.slider === "off",
       options: [
+        toolbarSliderColorHexAndOpacity({
+          v,
+          state,
+          prefix: "sliderDots",
+          onChange: [
+            "onChangeSliderColorHexAndOpacity",
+            "onChangeSliderColorHexAndOpacityPalette"
+          ]
+        }),
+        toolbarSliderColorPalette({
+          v,
+          state,
+          prefix: "sliderDots",
+          onChange: [
+            "onChangeSliderColorPalette",
+            "onChangeSliderColorPaletteOpacity"
+          ]
+        }),
         {
-          id: "sliderDotsColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: sliderDotsColorHex,
-            opacity: v.sliderDotsColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-            const sliderDotsColorOpacity =
-              hex !== v.sliderDotsColorHex && v.sliderDotsColorOpacity === 0
-                ? v.tempSliderDotsColorOpacity
-                : opacity;
-
-            return {
-              sliderDotsColorHex: hex,
-              sliderDotsColorOpacity: sliderDotsColorOpacity,
-              sliderDotsColorPalette:
-                isChanged === "hex" ? "" : v.sliderDotsColorPalette
-            };
-          }
-        },
-        {
-          id: "sliderDotsColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: v.sliderDotsColorPalette,
-          onChange: sliderDotsColorPalette => ({
-            sliderDotsColorPalette,
-
-            sliderDotsColorOpacity:
-              v.sliderDotsColorOpacity === 0
-                ? v.tempSliderDotsColorOpacity
-                : v.sliderDotsColorOpacity
-          })
-        },
-        {
-          id: "sliderDotsColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: sliderDotsColorHex,
-            opacity: v.sliderDotsColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            sliderDotsColorPalette:
-              isChanged === "hex" ? "" : v.sliderDotsColorPalette,
-            sliderDotsColorHex: hex,
-            sliderDotsColorOpacity: opacity
-          })
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                toolbarSliderColorFields({
+                  v,
+                  state,
+                  prefix: "sliderDots",
+                  onChange: [
+                    "onChangeSliderColorHexAndOpacity",
+                    "onChangeSliderColorHexAndOpacityPalette"
+                  ]
+                })
+              ]
+            }
+          ]
         }
       ]
     },
@@ -245,56 +239,43 @@ const gitSliderColorsTabs = v => {
       label: t("Arrows"),
       disabled: v.slider === "off",
       options: [
+        toolbarSliderColorHexAndOpacity({
+          v,
+          state,
+          prefix: "sliderArrows",
+          onChange: [
+            "onChangeSliderColorHexAndOpacity",
+            "onChangeSliderColorHexAndOpacityPalette"
+          ]
+        }),
+        toolbarSliderColorPalette({
+          v,
+          state,
+          prefix: "sliderArrows",
+          onChange: [
+            "onChangeSliderColorPalette",
+            "onChangeSliderColorPaletteOpacity"
+          ]
+        }),
         {
-          id: "sliderArrowsColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: sliderArrowsColorHex,
-            opacity: v.sliderArrowsColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-            const sliderArrowsColorOpacity =
-              hex !== v.sliderArrowsColorHex && v.sliderArrowsColorOpacity === 0
-                ? v.tempSliderArrowsColorOpacity
-                : opacity;
-
-            return {
-              sliderArrowsColorHex: hex,
-              sliderArrowsColorOpacity: sliderArrowsColorOpacity,
-              sliderArrowsColorPalette:
-                isChanged === "hex" ? "" : v.sliderArrowsColorPalette
-            };
-          }
-        },
-        {
-          id: "sliderArrowsColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: v.sliderArrowsColorPalette,
-          onChange: sliderArrowsColorPalette => ({
-            sliderArrowsColorPalette,
-
-            sliderArrowsColorOpacity:
-              v.sliderArrowsColorOpacity === 0
-                ? v.tempSliderArrowsColorOpacity
-                : v.sliderArrowsColorOpacity
-          })
-        },
-        {
-          id: "sliderArrowsColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: sliderArrowsColorHex,
-            opacity: v.sliderArrowsColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            sliderArrowsColorPalette:
-              isChanged === "hex" ? "" : v.sliderArrowsColorPalette,
-            sliderArrowsColorHex: hex,
-            sliderArrowsColorOpacity: opacity
-          })
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                toolbarSliderColorFields({
+                  v,
+                  state,
+                  prefix: "sliderArrows",
+                  onChange: [
+                    "onChangeSliderColorHexAndOpacity",
+                    "onChangeSliderColorHexAndOpacityPalette"
+                  ]
+                })
+              ]
+            }
+          ]
         }
       ]
     }
@@ -324,9 +305,36 @@ export function getItemsForDesktop(v, component) {
       position: 90,
       options: [
         {
-          id: "colorTabs",
+          id: "tabsState",
+          tabsPosition: "left",
           type: "tabs",
-          tabs: gitSliderColorsTabs(v)
+          value: v.tabsState,
+          tabs: [
+            {
+              id: "tabNormal",
+              tabIcon: "nc-circle",
+              title: t("Normal"),
+              options: [
+                {
+                  id: "tabsColor",
+                  type: "tabs",
+                  tabs: getSliderColorsTabs({ v, state: "normal" })
+                }
+              ]
+            },
+            {
+              id: "tabHover",
+              tabIcon: "nc-hover",
+              title: t("Hover"),
+              options: [
+                {
+                  id: "tabsColor",
+                  type: "tabs",
+                  tabs: getSliderColorsTabs({ v, state: "hover" })
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -376,43 +384,22 @@ export function getItemsForDesktop(v, component) {
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
                   options: [
+                    toolbarShowOnDesktop({ v }),
+                    toolbarZIndex({ v }),
                     {
-                      id: "showOnDesktop",
-                      label: t("Show on Desktop"),
-                      type: "switch",
-                      value: v.showOnDesktop
-                    },
-                    {
-                      type: "slider",
-                      id: "zIndex",
-                      label: t("Z-index"),
-                      slider: {
-                        min: 0,
-                        max: 100
-                      },
-                      input: {
-                        show: true,
-                        min: 0
-                      },
-                      value: {
-                        value: v.zIndex
-                      },
-                      onChange: ({ value: zIndex }) => ({
-                        zIndex
-                      })
-                    },
-                    {
-                      id: "customClassName",
-                      label: t("CSS Class"),
+                      id: "anchorName",
+                      label: t("Anchor Name"),
                       type: "input",
+                      position: 30,
                       inputSize: "auto",
                       value: {
-                        value: v.customClassName
+                        value: v.anchorName
                       },
-                      onChange: ({ value: customClassName }) => ({
-                        customClassName
+                      onChange: ({ value: anchorName }) => ({
+                        anchorName
                       })
-                    }
+                    },
+                    toolbarCustomCSSClass({ v })
                   ]
                 }
               ]
@@ -425,47 +412,9 @@ export function getItemsForDesktop(v, component) {
 }
 
 export function getItemsForTablet(v) {
-  return [
-    {
-      id: "showOnTablet",
-      type: "toggle",
-      position: 10,
-      choices: [
-        {
-          icon: "nc-eye-17",
-          title: t("Disable on Tablet"),
-          value: "on"
-        },
-        {
-          icon: "nc-eye-ban-18",
-          title: t("Enable on Tablet"),
-          value: "off"
-        }
-      ],
-      value: v.showOnTablet
-    }
-  ];
+  return [toolbarShowOnTablet({ v })];
 }
 
 export function getItemsForMobile(v) {
-  return [
-    {
-      id: "showOnMobile",
-      type: "toggle",
-      position: 10,
-      choices: [
-        {
-          icon: "nc-eye-17",
-          title: t("Disable on Mobile"),
-          value: "on"
-        },
-        {
-          icon: "nc-eye-ban-18",
-          title: t("Enable on Mobile"),
-          value: "off"
-        }
-      ],
-      value: v.showOnMobile
-    }
-  ];
+  return [toolbarShowOnMobile({ v })];
 }

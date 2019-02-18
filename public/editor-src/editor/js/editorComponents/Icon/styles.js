@@ -2,21 +2,21 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-
+import { styleBgGradient } from "visual/utils/style";
 const getIconStrokeWidth = (v, iconSize) => {
   const { type } = v;
 
   return type === "outline" && iconSize <= 24
     ? 1
     : type === "outline" && iconSize > 24 && iconSize <= 32
-      ? 1.1
-      : type === "outline" && iconSize > 32 && iconSize <= 48
-        ? 1.4
-        : type === "outline" && iconSize > 48 && iconSize <= 64
-          ? 2.3
-          : type === "outline" && iconSize > 64
-            ? 3
-            : 0;
+    ? 1.1
+    : type === "outline" && iconSize > 32 && iconSize <= 48
+    ? 1.4
+    : type === "outline" && iconSize > 48 && iconSize <= 64
+    ? 2.3
+    : type === "outline" && iconSize > 64
+    ? 3
+    : 0;
 };
 
 export function styleClassName(v) {
@@ -29,6 +29,7 @@ export function styleClassName(v) {
         color: "var(--color)",
         borderColor: "var(--borderColor)",
         backgroundColor: "var(--backgroundColor)",
+        backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
         borderStyle: "var(--borderStyle)",
         boxShadow: "var(--boxShadow)"
@@ -36,7 +37,8 @@ export function styleClassName(v) {
       ".brz &:hover": {
         color: "var(--hoverColor)",
         borderColor: "var(--hoverBorderColor)",
-        backgroundColor: "var(--hoverBgColor)"
+        backgroundColor: "var(--hoverBgColor)",
+        backgroundImage: "var(--hoverBackgroundGradient)"
       },
       ".brz-ed--desktop &": {
         width: "var(--width)",
@@ -105,18 +107,13 @@ export function styleClassName(v) {
         ? 0
         : v.fillType !== "default" && v.tempBorderRadiusType === "rounded"
         ? maxTabletBorderRadius
-        :
-        Math.round(
-          v.borderRadius /
-          Math.round(
-            v.customSize + v.padding * 2 + v.borderWidth * 2
-          ) *
-          Math.round(
-            tabletCustomSize +
-            tabletPadding * 2 +
-            v.borderWidth * 2
-          )
-        );
+        : Math.round(
+            (v.borderRadius /
+              Math.round(v.customSize + v.padding * 2 + v.borderWidth * 2)) *
+              Math.round(
+                tabletCustomSize + tabletPadding * 2 + v.borderWidth * 2
+              )
+          );
 
     // Mobile
     const mobileCustomSize = mobileSyncOnChange(v, "customSize");
@@ -131,17 +128,13 @@ export function styleClassName(v) {
       v.fillType === "default"
         ? 0
         : v.fillType !== "default" && v.tempBorderRadiusType === "rounded"
-          ? maxMobileBorderRadius
-          : Math.round(
-            v.borderRadius /
-            Math.round(
-              v.customSize + v.padding * 2 + v.borderWidth * 2
-            ) *
-            Math.round(
-              mobileCustomSize +
-              mobilePadding * 2 +
-              v.borderWidth * 2
-            )
+        ? maxMobileBorderRadius
+        : Math.round(
+            (v.borderRadius /
+              Math.round(v.customSize + v.padding * 2 + v.borderWidth * 2)) *
+              Math.round(
+                mobileCustomSize + mobilePadding * 2 + v.borderWidth * 2
+              )
           );
 
     const iconSize = Math.round(customSize + padding * 2 + borderWidth * 2);
@@ -168,6 +161,11 @@ export function styleClassName(v) {
         color: hexToRgba(colorHex, colorOpacity),
         borderColor: hexToRgba(borderColorHex, borderColorOpacity),
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
+        backgroundImage: styleBgGradient({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
         borderWidth,
         borderStyle,
         width: `${iconSize}px`,
@@ -181,7 +179,12 @@ export function styleClassName(v) {
       ".brz &:hover": {
         color: hexToRgba(hoverColorHex, hoverColorOpacity),
         borderColor: hexToRgba(hoverBorderColorHex, hoverBorderColorOpacity),
-        backgroundColor: hexToRgba(hoverBgColorHex, hoverBgColorOpacity)
+        backgroundColor: hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
+        backgroundImage: styleBgGradient({
+          v,
+          device: "desktop",
+          state: "hover"
+        })
       },
 
       "@media (max-width: 991px)": {
@@ -257,18 +260,11 @@ export function styleCSSVars(v) {
       ? 0
       : v.fillType !== "default" && v.tempBorderRadiusType === "rounded"
       ? maxTabletBorderRadius
-      :
-      Math.round(
-        v.borderRadius /
-        Math.round(
-          v.customSize + v.padding * 2 + v.borderWidth * 2
-        ) *
-        Math.round(
-          tabletCustomSize +
-          tabletPadding * 2 +
-          v.borderWidth * 2
-        )
-      );
+      : Math.round(
+          (v.borderRadius /
+            Math.round(v.customSize + v.padding * 2 + v.borderWidth * 2)) *
+            Math.round(tabletCustomSize + tabletPadding * 2 + v.borderWidth * 2)
+        );
 
   // Mobile
   const mobileCustomSize = mobileSyncOnChange(v, "customSize");
@@ -283,17 +279,11 @@ export function styleCSSVars(v) {
     v.fillType === "default"
       ? 0
       : v.fillType !== "default" && v.tempBorderRadiusType === "rounded"
-        ? maxMobileBorderRadius
-        : Math.round(
-          v.borderRadius /
-          Math.round(
-            v.customSize + v.padding * 2 + v.borderWidth * 2
-          ) *
-          Math.round(
-            mobileCustomSize +
-            mobilePadding * 2 +
-            v.borderWidth * 2
-          )
+      ? maxMobileBorderRadius
+      : Math.round(
+          (v.borderRadius /
+            Math.round(v.customSize + v.padding * 2 + v.borderWidth * 2)) *
+            Math.round(mobileCustomSize + mobilePadding * 2 + v.borderWidth * 2)
         );
 
   const iconSize = Math.round(customSize + padding * 2 + borderWidth * 2);
@@ -320,6 +310,11 @@ export function styleCSSVars(v) {
     "--color": hexToRgba(colorHex, colorOpacity),
     "--borderColor": hexToRgba(borderColorHex, borderColorOpacity),
     "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
+    "--backgroundGradient": styleBgGradient({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     "--borderWidth": `${borderWidth}px`,
     "--borderStyle": borderStyle,
     "--hoverColor": hexToRgba(hoverColorHex, hoverColorOpacity),
@@ -328,6 +323,11 @@ export function styleCSSVars(v) {
       hoverBorderColorOpacity
     ),
     "--hoverBgColor": hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
+    "--hoverBackgroundGradient": styleBgGradient({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
     "--width": `${iconSize}px`,
     "--height": `${iconSize}px`,
     "--fontSize": `${customSize}px`,

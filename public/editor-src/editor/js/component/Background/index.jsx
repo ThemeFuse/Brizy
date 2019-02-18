@@ -38,24 +38,25 @@ class Background extends React.Component {
   constructor(props) {
     super(props);
 
-    this.parallaxPluginInited = false;
-    this.videoPluginInited = false;
+    const { imageSrc, video, parallax } = this.props;
+    const currentDeviceMode = getStore().getState().ui.deviceMode;
+    const hasImage = Boolean(imageSrc);
+    const hasVideo = Boolean(video);
+    const isDesktop = currentDeviceMode === "desktop";
+
+    this.state = {
+      showParallax: hasImage && !hasVideo && parallax && isDesktop,
+      showVideo: hasVideo && isDesktop
+    };
   }
 
   componentDidMount() {
-    const { imageSrc, video, parallax } = this.props;
-    const hasImage = Boolean(imageSrc);
-    const hasVideo = Boolean(video);
-    const currentDeviceMode = getStore().getState().ui.deviceMode;
-
-    if (hasImage && !hasVideo && parallax && currentDeviceMode === "desktop") {
+    if (this.state.showParallax) {
       this.initParallax();
-      this.parallaxPluginInited = true;
     }
 
-    if (hasVideo && currentDeviceMode === "desktop") {
+    if (this.state.showVideo) {
       this.initVideoPlayer();
-      this.videoPluginInited = true;
     }
 
     UIEvents.on("deviceMode.change", this.handleDeviceModeChange);
@@ -66,11 +67,11 @@ class Background extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.parallaxPluginInited) {
+    if (this.state.showParallax) {
       this.destroyParallax();
     }
 
-    if (this.videoPluginInited) {
+    if (this.state.showVideo) {
       this.destroyVideoPlayer();
     }
 
@@ -78,7 +79,7 @@ class Background extends React.Component {
   }
 
   handleDeviceModeChange = mode => {
-    if (this.parallaxPluginInited) {
+    if (this.state.showParallax) {
       if (mode === "mobile" || mode === "tablet") {
         this.destroyParallax();
       }
@@ -88,7 +89,7 @@ class Background extends React.Component {
       }
     }
 
-    if (this.videoPluginInited) {
+    if (this.state.showVideo) {
       if (mode === "mobile" || mode === "tablet") {
         this.destroyVideoPlayer();
       }
@@ -118,35 +119,39 @@ class Background extends React.Component {
     const currentDeviceMode = getStore().getState().ui.deviceMode;
 
     if (hasImage && !hasVideo && parallax && currentDeviceMode === "desktop") {
-      if (this.parallaxPluginInited) {
+      if (this.state.showParallax) {
         this.updateParallax();
       } else {
         this.initParallax();
-        this.parallaxPluginInited = true;
+        this.setState({
+          showParallax: true
+        });
       }
     } else {
-      if (this.parallaxPluginInited) {
+      if (this.state.showParallax) {
         this.destroyParallax();
-        this.parallaxPluginInited = false;
+        this.setState({
+          showParallax: false
+        });
       }
     }
 
     if (hasVideo && currentDeviceMode === "desktop") {
-      if (this.videoPluginInited) {
+      if (this.state.showVideo) {
         this.updateVideoPlayer();
       } else {
         this.initVideoPlayer();
-        this.videoPluginInited = true;
+        this.setState({ showVideo: true });
       }
     } else {
-      if (this.videoPluginInited) {
+      if (this.state.showVideo) {
         this.destroyVideoPlayer();
-        this.videoPluginInited = false;
+        this.setState({ showVideo: false });
       }
     }
   };
 
-  initParallax = () => {
+  initParallax() {
     jQuery(this.image).addClass("brz-bg-image-parallax");
     jQuery(this.media).parallax({
       bgClass: "brz-bg-image", // WARNING: intentionally not `brz-bg-image-parallax`
@@ -156,27 +161,27 @@ class Background extends React.Component {
         "brz-content-show"
       ]
     });
-  };
+  }
 
-  updateParallax = () => {
+  updateParallax() {
     jQuery(this.media).parallax("refresh");
-  };
+  }
 
-  destroyParallax = () => {
+  destroyParallax() {
     jQuery(this.image).removeClass("brz-bg-image-parallax");
     jQuery(this.media).parallax("destroy");
-  };
+  }
 
-  updateVideoPlayer = () => {
+  updateVideoPlayer() {
     const { video, bgVideoQuality } = this.props;
     jQuery(this.video).backgroundVideo("refresh", {
       type: video.type,
       quality: bgVideoQuality,
       mute: true
     });
-  };
+  }
 
-  initVideoPlayer = () => {
+  initVideoPlayer() {
     const { video, bgVideoQuality } = this.props;
 
     jQuery(this.video).backgroundVideo({
@@ -186,13 +191,13 @@ class Background extends React.Component {
       quality: bgVideoQuality,
       mute: true
     });
-  };
+  }
 
-  destroyVideoPlayer = () => {
+  destroyVideoPlayer() {
     jQuery(this.video).backgroundVideo("destroy");
-  };
+  }
 
-  renderImage = () => {
+  renderImage() {
     const {
       imageSrc,
       colorOpacity,
@@ -215,10 +220,14 @@ class Background extends React.Component {
       return null;
     }
 
-    return <div ref={this.handleImageRef} className="brz-bg-image" />;
-  };
+    const className = classnames("brz-bg-image", {
+      "brz-bg-image-parallax": this.state.showParallax
+    });
 
-  renderVideo = () => {
+    return <div ref={this.handleImageRef} className={className} />;
+  }
+
+  renderVideo() {
     const { video, bgVideoLoop, bgVideoQuality, colorOpacity } = this.props;
     const hasVideo = Boolean(video);
     const bailRender = IS_PREVIEW && !hasVideo && colorOpacity !== 1;
@@ -263,9 +272,9 @@ class Background extends React.Component {
         />
       </div>
     );
-  };
+  }
 
-  renderMap = () => {
+  renderMap() {
     const URL = "https://www.google.com/maps/embed/v1/place";
     const KEY = "AIzaSyCcywKcxXeMZiMwLDcLgyEnNglcLOyB_qw";
     const { mapAddress, mapZoom, colorOpacity } = this.props;
@@ -297,7 +306,7 @@ class Background extends React.Component {
         />
       </div>
     );
-  };
+  }
 
   renderShape() {
     const { shapeTopType, shapeBottomType } = this.props;

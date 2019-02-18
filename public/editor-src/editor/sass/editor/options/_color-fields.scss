@@ -1,0 +1,32 @@
+// Color Fields Grid
+.brz-ed-grid__color-fileds {
+  padding-top: 0px;
+  align-items: center;
+
+  &:last-child {
+    min-height: 21px;
+  }
+
+  .brz-ed-grid__option {
+    padding: 0;
+    min-height: 21px;
+  }
+}
+
+// Color Field Hex
+.brz-ed-option__color-picker__hex {
+  @extend .brz-ed-option__input-outline;
+
+  .brz-input {
+    width: 58px;
+  }
+}
+
+// Border Size
+.brz-ed-option__input-number-wrap {
+  @extend .brz-ed-option__input-outline;
+
+  .brz-input {
+    width: 22px;
+  }
+}

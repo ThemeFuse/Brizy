@@ -1,19 +1,20 @@
 import { t } from "visual/utils/i18n";
 
-export function toolbarShowOnDesktop({ v }) {
+export function toolbarShowOnDesktop({ v, position = 10 }) {
   return {
     id: "showOnDesktop",
     label: t("Show on Desktop"),
+    position,
     type: "switch",
     value: v.showOnDesktop
   };
 }
 
-export function toolbarShowOnTablet({ v }) {
+export function toolbarShowOnTablet({ v, position = 10 }) {
   return {
     id: "showOnTablet",
     type: "toggle",
-    position: 10,
+    position,
     choices: [
       {
         icon: "nc-eye-17",
@@ -30,11 +31,11 @@ export function toolbarShowOnTablet({ v }) {
   };
 }
 
-export function toolbarShowOnMobile({ v }) {
+export function toolbarShowOnMobile({ v, position = 10 }) {
   return {
     id: "showOnMobile",
     type: "toggle",
-    position: 70,
+    position,
     choices: [
       {
         icon: "nc-eye-17",

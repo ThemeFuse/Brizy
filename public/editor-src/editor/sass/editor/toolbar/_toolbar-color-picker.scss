@@ -42,7 +42,6 @@
   }
   &__footer {
     position: relative;
-    padding-top: 3px;
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
@@ -60,9 +59,13 @@
     .brz-input {
       background-color: transparent;
       text-transform: uppercase;
-      color: $options-label-color;
+      // color: $options-label-color;
       outline: none;
       float: none;
+
+      &:focus {
+        border-bottom: 1px solid #33beea;
+      }
     }
   }
   &__opacity {

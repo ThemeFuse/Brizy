@@ -37,12 +37,36 @@
   }
 }
 
-
 // Font Style Custom
 .brz-ed-popover__font-style {
   .brz-control__select,
   .brz-control__select-current,
   .brz-control__select-options {
     width: 120px;
+  }
+}
+
+// --- Font Grid
+.brz-ed-grid__typography {
+  padding: 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  .brz-ed-grid__typography {
+    padding: 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
   }
 }

@@ -36,7 +36,7 @@ class Brizy_Editor {
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
 
-		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ) {
+		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor::is_administrator() ) {
 			Brizy_Admin_Rules_Api::_init();
 		}
 
@@ -151,6 +151,10 @@ class Brizy_Editor {
 
 		if ( function_exists( 'fvm_cachepath' ) ) {
 			new Brizy_Compatibilities_FastVelocityMinify();
+		}
+
+		if ( class_exists( 'WCL_Plugin' ) ) {
+			new Brizy_Compatibilities_WebcrafticClearfy();
 		}
 	}
 

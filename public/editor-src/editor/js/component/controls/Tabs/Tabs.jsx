@@ -56,12 +56,15 @@ export default class Tabs extends React.Component {
   };
 
   renderTabContent = () => {
+    const tabsContentClassName = classnames(
+      "brz-ed-control__tab__content",
+      `brz-ed-control__tabs__content__${this.props.tabsPosition}`
+    );
+
     return React.Children.map(this.props.children, child => {
       if (this.props.value === child.props.value) {
         return (
-          <div className="brz-ed-control__tab__content">
-            {child.props.children}
-          </div>
+          <div className={tabsContentClassName}>{child.props.children}</div>
         );
       }
     });

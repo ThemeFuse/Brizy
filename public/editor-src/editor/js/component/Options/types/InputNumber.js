@@ -56,13 +56,11 @@ class InputNumberOptionType extends React.Component {
       _className,
       attr.className
     );
-    const hiddenValue = `${String(value).slice(0, -1)}9`; // changing the last digit to 9 so the width will not glitch
 
     return (
       <div {...attr} className={className}>
         {(label || helper) && this.renderLabel()}
         <div className="brz-ed-option__input-number-wrap">
-          <div className="brz-invisible">{hiddenValue}</div>
           <AutoCorrectingInput
             className="brz-input"
             min={min}

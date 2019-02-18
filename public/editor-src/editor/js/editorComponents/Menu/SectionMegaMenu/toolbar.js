@@ -1,6 +1,11 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import {
+  toolbarShowOnDesktop,
+  toolbarShowOnMobile,
+  toolbarCustomCSSClass
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
@@ -183,42 +188,53 @@ export function getItemsForDesktop(v) {
                   })
                 },
                 {
-                  id: "bgColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: bgColorHex,
-                    opacity: v.bgColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    const bgColorOpacity =
-                      hex !== v.bgColorHex && v.bgColorOpacity === 0
-                        ? v.tempBgColorOpacity
-                        : opacity;
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        {
+                          id: "bgColorFields",
+                          type: "colorFields",
+                          position: 30,
+                          value: {
+                            hex: bgColorHex,
+                            opacity: v.bgColorOpacity
+                          },
+                          onChange: ({ hex, opacity, isChanged }) => {
+                            const bgColorOpacity =
+                              hex !== v.bgColorHex && v.bgColorOpacity === 0
+                                ? v.tempBgColorOpacity
+                                : opacity;
 
-                    return {
-                      bgColorPalette:
-                        isChanged === "hex" ? "" : v.bgColorPalette,
-                      bgColorHex: hex,
-                      bgColorOpacity: bgColorOpacity,
+                            return {
+                              bgColorPalette:
+                                isChanged === "hex" ? "" : v.bgColorPalette,
+                              bgColorHex: hex,
+                              bgColorOpacity: bgColorOpacity,
 
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
+                              mobileBgColorHex:
+                                v.bgColorHex === v.mobileBgColorHex
+                                  ? hex
+                                  : v.mobileBgColorHex,
 
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? bgColorOpacity
-                          : v.mobileBgColorOpacity,
+                              mobileBgColorOpacity:
+                                v.bgColorOpacity === v.mobileBgColorOpacity
+                                  ? bgColorOpacity
+                                  : v.mobileBgColorOpacity,
 
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette
-                    };
-                  }
+                              mobileBgColorPalette:
+                                v.bgColorPalette === v.mobileBgColorPalette &&
+                                isChanged === "hex"
+                                  ? ""
+                                  : v.mobileBgColorPalette
+                            };
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -254,36 +270,36 @@ export function getItemsForDesktop(v) {
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderWidth
-                            : v.borderWidth,
+                          ? v.tempBorderWidth
+                          : v.borderWidth,
 
                       borderTopWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderTopWidth
-                            : v.borderTopWidth,
+                          ? v.tempBorderTopWidth
+                          : v.borderTopWidth,
 
                       borderRightWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderRightWidth
-                            : v.borderRightWidth,
+                          ? v.tempBorderRightWidth
+                          : v.borderRightWidth,
 
                       borderBottomWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderBottomWidth
-                            : v.borderBottomWidth,
+                          ? v.tempBorderBottomWidth
+                          : v.borderBottomWidth,
 
                       borderLeftWidth:
                         borderColorOpacity === 0
                           ? 0
                           : borderColorOpacity > 0
-                            ? v.tempBorderLeftWidth
-                            : v.borderLeftWidth
+                          ? v.tempBorderLeftWidth
+                          : v.borderLeftWidth
                     };
                   }
                 },
@@ -307,31 +323,43 @@ export function getItemsForDesktop(v) {
                   })
                 },
                 {
-                  id: "borderColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: borderColorHex,
-                    opacity: v.borderColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    const borderColorOpacity =
-                      hex !== v.borderColorHex && v.borderColorOpacity === 0
-                        ? v.tempBorderColorOpacity
-                        : opacity;
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        {
+                          id: "borderColorFields",
+                          type: "colorFields",
+                          position: 30,
+                          value: {
+                            hex: borderColorHex,
+                            opacity: v.borderColorOpacity
+                          },
+                          onChange: ({ hex, opacity, isChanged }) => {
+                            const borderColorOpacity =
+                              hex !== v.borderColorHex &&
+                              v.borderColorOpacity === 0
+                                ? v.tempBorderColorOpacity
+                                : opacity;
 
-                    return {
-                      borderColorPalette:
-                        isChanged === "hex" ? "" : v.borderColorPalette,
-                      borderColorHex: hex,
-                      borderColorOpacity: borderColorOpacity,
+                            return {
+                              borderColorPalette:
+                                isChanged === "hex" ? "" : v.borderColorPalette,
+                              borderColorHex: hex,
+                              borderColorOpacity: borderColorOpacity,
 
-                      borderWidth:
-                        v.borderColorOpacity === 0
-                          ? v.tempBorderWidth
-                          : v.borderWidth
-                    };
-                  }
+                              borderWidth:
+                                v.borderColorOpacity === 0
+                                  ? v.tempBorderWidth
+                                  : v.borderWidth
+                            };
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -610,8 +638,8 @@ export function getItemsForDesktop(v) {
                                   borderWidth === 0
                                     ? 0
                                     : borderWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity,
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity,
 
                                 borderBottomRightRadius:
                                   borderWidth === 0 && v.bgColorOpacity === 0
@@ -620,8 +648,8 @@ export function getItemsForDesktop(v) {
                                       v.borderTopLeftRadius === 0 &&
                                       v.borderTopRightRadius === 0 &&
                                       v.borderBottomLeftRadius === 0
-                                      ? v.tempBorderBottomRightRadius
-                                      : v.borderBottomRightRadius
+                                    ? v.tempBorderBottomRightRadius
+                                    : v.borderBottomRightRadius
                               };
                             }
                           }
@@ -697,8 +725,8 @@ export function getItemsForDesktop(v) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderTopWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
                           },
@@ -772,8 +800,8 @@ export function getItemsForDesktop(v) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderRightWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
                           },
@@ -847,8 +875,8 @@ export function getItemsForDesktop(v) {
                                   v.borderLeftWidth === 0
                                     ? 0
                                     : borderBottomWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
                           },
@@ -922,8 +950,8 @@ export function getItemsForDesktop(v) {
                                   v.borderBottomWidth === 0
                                     ? 0
                                     : borderLeftWidth > 0
-                                      ? v.tempBorderColorOpacity
-                                      : v.borderColorOpacity
+                                    ? v.tempBorderColorOpacity
+                                    : v.borderColorOpacity
                               };
                             }
                           }
@@ -937,19 +965,8 @@ export function getItemsForDesktop(v) {
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
                   options: [
-                    {
-                      id: "showOnDesktop",
-                      label: t("Show on Desktop"),
-                      type: "switch",
-                      value: v.showOnDesktop
-                    },
-                    {
-                      id: "customClassName",
-                      label: t("CSS Class"),
-                      type: "input",
-                      inputSize: "auto",
-                      value: v.customClassName
-                    }
+                    toolbarShowOnDesktop({ v }),
+                    toolbarCustomCSSClass({ v })
                   ]
                 }
               ]
@@ -969,24 +986,7 @@ export function getItemsForMobile(v) {
   const { hex: mobileBgColorHex } = getOptionColor(v, "mobileBgColor");
 
   return [
-    {
-      id: "showOnMobile",
-      type: "toggle",
-      position: 80,
-      choices: [
-        {
-          icon: "nc-eye-17",
-          title: t("Disable on Mobile"),
-          value: "on"
-        },
-        {
-          icon: "nc-eye-ban-18",
-          title: t("Enable on Mobile"),
-          value: "off"
-        }
-      ],
-      value: v.showOnMobile
-    },
+    toolbarShowOnMobile({ v }),
     {
       id: "mobileToolbarMedia",
       type: "popover",
@@ -1074,19 +1074,30 @@ export function getItemsForMobile(v) {
           })
         },
         {
-          id: "mobileBgColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            mobileBgColorPalette:
-              isChanged === "hex" ? "" : v.mobileBgColorPalette,
-            mobileBgColorHex: hex,
-            mobileBgColorOpacity: opacity
-          })
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                {
+                  id: "mobileBgColorFields",
+                  type: "colorFields",
+                  position: 30,
+                  value: {
+                    hex: mobileBgColorHex,
+                    opacity: v.mobileBgColorOpacity
+                  },
+                  onChange: ({ hex, opacity, isChanged }) => ({
+                    mobileBgColorPalette:
+                      isChanged === "hex" ? "" : v.mobileBgColorPalette,
+                    mobileBgColorHex: hex,
+                    mobileBgColorOpacity: opacity
+                  })
+                }
+              ]
+            }
+          ]
         }
       ]
     },

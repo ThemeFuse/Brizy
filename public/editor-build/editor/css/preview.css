@@ -497,7 +497,7 @@ body.brz::after,body.brz::before{display:none}
 .brz svg:not(:root){overflow:hidden}
 .brz .brz-button,.brz .brz-input,.brz .brz-label,.brz .brz-textarea{-ms-touch-action:manipulation;touch-action:manipulation}
 .brz .brz-table{border-collapse:collapse}
-.brz .brz-caption{padding-top:.75rem;padding-bottom:.75rem;color:#9da8b1;text-align:left;caption-side:bottom}
+.brz .brz-caption{padding-top:.75rem;padding-bottom:.75rem;color:#828b92;text-align:left;caption-side:bottom}
 .brz .brz-th{text-align:left}
 .brz .brz-form{margin:0}
 .brz .brz-label{display:inline-block;margin-bottom:0;font-weight:400}
@@ -1216,7 +1216,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-video .brz-shortcode__placeholder{position:absolute;top:0}
 .brz .brz-embed-code{position:relative;display:inline-block;width:100%;min-height:10px;height:auto;word-break:break-all;word-wrap:break-word}
 .brz .brz-embed-code .brz-shortcode__placeholder{height:250px}
-.brz .brz-rich-text{-webkit-font-smoothing:antialiased;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;min-width:0;overflow-wrap:break-word;word-wrap:break-word;word-break:break-word}
+.brz .brz-rich-text{-webkit-font-smoothing:antialiased;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;min-width:0;white-space:pre-wrap;overflow-wrap:break-word;word-wrap:break-word;word-break:break-word}
 .brz .brz-rich-text em,.brz .brz-rich-text i{font-style:italic}
 .brz .brz-rich-text ol li,.brz .brz-rich-text ul li{list-style:none;padding-left:1em}
 .brz .brz-rich-text ol li:before,.brz .brz-rich-text ul li:before{margin-left:-1em}
@@ -1280,8 +1280,8 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-slick-slider__dots--circle button{width:10px;height:10px;border-radius:10px}
 .brz .brz-slick-slider__dots--diamond button{width:10px;height:10px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
 .brz .brz-slick-slider__dots--square button{width:10px;height:10px}
-.brz .brz-slick-slider__arrow{position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);z-index:2;font-size:30px;opacity:.7;cursor:pointer;-webkit-transition:linear .2s opacity;transition:linear .2s opacity;color:#000;background-color:transparent;border:none}
-.brz .brz-slick-slider__arrow:hover{opacity:1;-webkit-transition:linear .2s opacity;transition:linear .2s opacity}
+.brz .brz-slick-slider__arrow{position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);z-index:2;font-size:30px;cursor:pointer;-webkit-transition:linear .2s opacity;transition:linear .2s opacity;color:#000;background-color:transparent;border:none}
+.brz .brz-slick-slider__arrow:hover{-webkit-transition:linear .2s opacity;transition:linear .2s opacity}
 .brz .brz-slick-slider__arrow .brz-icon-svg{display:block}
 .brz .brz-slick-slider__arrow-prev{-webkit-transform:translateY(-50%) rotate(-180deg);transform:translateY(-50%) rotate(-180deg);left:30px}
 .brz .brz-slick-slider__arrow-next{right:30px}
@@ -1362,7 +1362,8 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-carousel>.slick-slider{overflow:hidden}
 .brz .brz-carousel>.slick-slider>.slick-list{padding-top:30px;padding-bottom:30px}
 .brz .brz-carousel>.slick-slider .slick-slide{height:auto}
-.brz .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div,.brz .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div>.brz-columns{height:100%}
+.brz .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div{height:100%}
+.brz .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div>.brz-carousel__item,.brz .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div>.brz-carousel__item>.brz-columns,.brz .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div>.brz-columns{height:100%}
 .brz .brz-carousel>.slick-slider>.brz-slick-slider__arrow{opacity:1}
 .brz .brz-carousel>.slick-slider>.brz-slick-slider__dots{bottom:10px}
 .brz .brz-carousel>.slick-slider .slick-slide{outline:0}

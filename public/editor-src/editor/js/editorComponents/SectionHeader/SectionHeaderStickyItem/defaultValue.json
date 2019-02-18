@@ -11,9 +11,22 @@
   "bgPositionX": 50,
   "bgPopulation": "",
 
+  "hoverMedia": null,
+
+  "hoverBgImageWidth": null,
+  "hoverBgImageHeight": null,
+  "hoverBgImageSrc": null,
+  "hoverBgPositionY": null,
+  "hoverBgPositionX": null,
+  "hoverBgPopulation": null,
+
   "borderStyle": "",
 
   "tempBorderStyle": "solid",
+
+  "hoverBorderStyle": null,
+
+  "tempHoverBorderStyle": null,
 
   "borderWidthType": "grouped",
   "borderWidth": 0,
@@ -28,6 +41,19 @@
   "tempBorderBottomWidth": 8,
   "tempBorderLeftWidth": 8,
 
+  "hoverBorderWidthType": null,
+  "hoverBorderWidth": null,
+  "hoverBorderTopWidth": null,
+  "hoverBorderRightWidth": null,
+  "hoverBorderBottomWidth": null,
+  "hoverBorderLeftWidth": null,
+
+  "tempHoverBorderWidth": null,
+  "tempHoverBorderTopWidth": null,
+  "tempHoverBorderRightWidth": null,
+  "tempHoverBorderBottomWidth": null,
+  "tempHoverBorderLeftWidth": null,
+
   "borderRadiusType": "grouped",
   "borderRadius": 0,
   "borderTopLeftRadius": 0,
@@ -41,12 +67,86 @@
   "tempBorderBottomRightRadius": 0,
   "tempBorderBottomLeftRadius": 0,
 
+  "hoverBorderRadiusType": null,
+  "hoverBorderRadius": null,
+  "hoverBorderTopLeftRadius": null,
+  "hoverBorderTopRightRadius": null,
+  "hoverBorderBottomRightRadius": null,
+  "hoverBorderBottomLeftRadius": null,
+
+  "tempHoverBorderRadius": null,
+  "tempHoverBorderTopLeftRadius": null,
+  "tempHoverBorderTopRightRadius": null,
+  "tempHoverBorderBottomRightRadius": null,
+  "tempHoverBorderBottomLeftRadius": null,
+
+  "tabsColor": "tabOverlay",
+
+  "bgColorType": "solid",
+
+  "gradientActivePointer": "startPointer",
+  "gradientStartPointer": 0,
+  "gradientFinishPointer": 100,
+
+  "gradientType": "linear",
+
+  "gradientLinearDegree": 90,
+  "gradientRadialDegree": 90,
+
+  "hoverBgColorType": null,
+
+  "hoverGradientActivePointer": null,
+  "hoverGradientStartPointer": null,
+  "hoverGradientFinishPointer": null,
+
+  "hoverGradientType": null,
+
+  "hoverGradientLinearDegree": null,
+  "hoverGradientRadialDegree": null,
+
   "bgColorHex": "#FFFFFF",
   "bgColorOpacity": 1,
   "bgColorPalette": "",
 
   "tempBgColorOpacity": 1,
   "tempBgColorPalette": "",
+
+  "hoverBgColorHex": null,
+  "hoverBgColorOpacity": null,
+  "hoverBgColorPalette": null,
+
+  "tempHoverBgColorOpacity": null,
+  "tempHoverBgColorPalette": null,
+
+  "gradientColorHex": "#009900",
+  "gradientColorOpacity": 1,
+  "gradientColorPalette": "",
+
+  "tempGradientColorOpacity": 1,
+  "tempGradientColorPalette": "",
+
+  "hoverGradientColorHex": null,
+  "hoverGradientColorOpacity": null,
+  "hoverGradientColorPalette": null,
+
+  "tempHoverGradientColorOpacity": null,
+  "tempHoverGradientColorPalette": null,
+
+  "borderColorHex": "#66738d",
+  "borderColorOpacity": 0,
+  "borderColorPalette": "",
+
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "",
+
+  "hoverBorderColorHex": null,
+  "hoverBorderColorOpacity": null,
+  "hoverBorderColorPalette": null,
+
+  "tempHoverBorderColorOpacity": null,
+  "tempHoverBorderColorPalette": null,
+
+  "hoverTransition": 50,
 
   "containerType": "boxed",
   "containerSize": 100,
@@ -56,12 +156,9 @@
   "paddingTop": 10,
   "paddingBottom": 10,
 
-  "borderColorHex": "#66738d",
-  "borderColorOpacity": 0,
-  "borderColorPalette": "",
-
-  "tempBorderColorOpacity": 1,
-  "tempBorderColorPalette": "",
+  "paddingSuffix": "px",
+  "paddingTopSuffix": "px",
+  "paddingBottomSuffix": "px",
 
   "boxShadow": "off",
   "boxShadowColorHex": "#000000",
@@ -72,6 +169,7 @@
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
 
+  "tempBoxShadowColorPalette": "",
   "tempBoxShadowColorOpacity": 1,
 
   "shape": "top",
@@ -101,24 +199,7 @@
   "tabletBgImageSrc": null,
   "tabletBgPositionX": null,
   "tabletBgPositionY": null,
-
-  "tabletBgColorHex": null,
-  "tabletBgColorOpacity": null,
-  "tabletBgColorPalette": null,
-
-  "tempTabletBgColorOpacity": null,
-  "tempTabletBgColorPalette": null,
-
-  "tabletPaddingType": "grouped",
-  "tabletPadding": 10,
-  "tabletPaddingTop": 10,
-  "tabletPaddingBottom": 10,
-
-  "tabletShape": null,
-  "tabletShapeTopHeight": null,
-  "tabletShapeTopHeightSuffix": null,
-  "tabletShapeBottomHeight": null,
-  "tabletShapeBottomHeightSuffix": null,
+  "tabletBgPopulation": null,
 
   "tabletBorderRadiusType": null,
   "tabletBorderRadius": null,
@@ -130,20 +211,80 @@
   "tempTabletBorderRadius": null,
   "tempTabletBorderTopLeftRadius": null,
   "tempTabletBorderTopRightRadius": null,
-  "tempTabletBorderBottomRightRadius": null,
   "tempTabletBorderBottomLeftRadius": null,
+  "tempTabletBorderBottomRightRadius": null,
+
+  "tabletBgColorType": null,
+
+  "tabletGradientStartPointer": null,
+  "tabletGradientFinishPointer": null,
+  "tabletGradientActivePointer": null,
+
+  "tabletGradientType": null,
+
+  "tabletGradientLinearDegree": null,
+  "tabletGradientRadialDegree": null,
+
+  "tabletBgColorHex": null,
+  "tabletBgColorOpacity": null,
+  "tabletBgColorPalette": null,
+
+  "tempTabletBgColorOpacity": null,
+  "tempTabletBgColorPalette": null,
+
+  "tabletGradientColorHex": null,
+  "tabletGradientColorOpacity": null,
+  "tabletGradientColorPalette": null,
+
+  "tempTabletGradientColorOpacity": null,
+  "tempTabletGradientColorPalette": null,
+
+  "tabletPaddingType": "grouped",
+  "tabletPadding": 10,
+  "tabletPaddingTop": 10,
+  "tabletPaddingBottom": 10,
+
+  "tabletPaddingSuffix": "px",
+  "tabletPaddingTopSuffix": "px",
+  "tabletPaddingBottomSuffix": "px",
+
+  "tabletShape": null,
+  "tabletShapeTopHeight": null,
+  "tabletShapeTopHeightSuffix": null,
+  "tabletShapeBottomHeight": null,
+  "tabletShapeBottomHeightSuffix": null,
 
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,
   "mobileBgImageSrc": null,
   "mobileBgPositionX": null,
   "mobileBgPositionY": null,
+  "mobileBgPopulation": null,
+
+  "mobileBgColorType": null,
+
+  "mobileGradientStartPointer": null,
+  "mobileGradientFinishPointer": null,
+  "mobileGradientActivePointer": null,
+
+  "mobileGradientType": null,
+
+  "mobileGradientLinearDegree": null,
+  "mobileGradientRadialDegree": null,
 
   "mobileBgColorHex": null,
   "mobileBgColorOpacity": null,
   "mobileBgColorPalette": null,
+
   "tempMobileBgColorOpacity": null,
   "tempMobileBgColorPalette": null,
+
+  "mobileGradientColorHex": null,
+  "mobileGradientColorOpacity": null,
+  "mobileGradientColorPalette": null,
+
+  "tempMobileGradientColorOpacity": null,
+  "tempMobileGradientColorPalette": null,
 
   "mobileBorderRadiusType": null,
   "mobileBorderRadius": null,
@@ -162,6 +303,10 @@
   "mobilePadding": 10,
   "mobilePaddingTop": 10,
   "mobilePaddingBottom": 10,
+
+  "mobilePaddingSuffix": "px",
+  "mobilePaddingTopSuffix": "px",
+  "mobilePaddingBottomSuffix": "px",
 
   "mobileShape": null,
   "mobileShapeTopHeight": null,

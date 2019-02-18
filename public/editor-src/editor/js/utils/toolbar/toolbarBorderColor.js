@@ -15,18 +15,24 @@ export function toolbarBorderColorHexAndOpacity({
     defaultValueValue({ v, key: "borderColorHex", device, state }),
     defaultValueValue({ v, key: "borderColorPalette", device, state })
   );
+  const borderColorKey = defaultValueKey({
+    key: "borderColor",
+    device,
+    state
+  });
+  const borderColorOpacityValue = defaultValueValue({
+    v,
+    key: "borderColorOpacity",
+    device,
+    state
+  });
 
   return {
-    id: defaultValueKey({ key: "borderColor", device, state }),
+    id: borderColorKey,
     type: "colorPicker",
     value: {
       hex,
-      opacity: defaultValueValue({
-        v,
-        key: "borderColorOpacity",
-        device,
-        state
-      })
+      opacity: borderColorOpacityValue
     },
     onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
       const values = {
@@ -39,15 +45,22 @@ export function toolbarBorderColorHexAndOpacity({
 }
 
 export function toolbarBorderColorPalette({ v, device, state, onChange }) {
+  const borderColorPaletteKey = defaultValueKey({
+    key: "borderColorPalette",
+    device,
+    state
+  });
+  const borderColorPaletteValue = defaultValueValue({
+    v,
+    key: "borderColorPalette",
+    device,
+    state
+  });
+
   return {
-    id: defaultValueKey({ key: "borderColorPalette", device, state }),
+    id: borderColorPaletteKey,
     type: "colorPalette",
-    value: defaultValueValue({
-      v,
-      key: "borderColorPalette",
-      device,
-      state
-    }),
+    value: borderColorPaletteValue,
     onChange: palette => {
       const values = {
         ...{ v, device, state, onChange },
@@ -63,18 +76,24 @@ export function toolbarBorderColorFields({ v, device, state, onChange }) {
     defaultValueValue({ v, key: "borderColorHex", device, state }),
     defaultValueValue({ v, key: "borderColorPalette", device, state })
   );
+  const borderColorFieldsKey = defaultValueKey({
+    key: "borderColorFields",
+    device,
+    state
+  });
+  const borderColorOpacityValue = defaultValueValue({
+    v,
+    key: "borderColorOpacity",
+    device,
+    state
+  });
 
   return {
-    id: defaultValueKey({ key: "borderColorFields", device, state }),
+    id: borderColorFieldsKey,
     type: "colorFields",
     value: {
       hex,
-      opacity: defaultValueValue({
-        v,
-        key: "borderColorOpacity",
-        device,
-        state
-      })
+      opacity: borderColorOpacityValue
     },
     onChange: ({ hex }) => {
       const values = {

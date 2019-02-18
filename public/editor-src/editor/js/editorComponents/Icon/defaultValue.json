@@ -23,44 +23,112 @@
   "colorHex": "#239ddb",
   "colorOpacity": 1,
   "colorPalette": "color3",
+
+  "tempColorOpacity": 1,
+  "tempColorPalette": "color3",
+
   "hoverColorHex": "#239ddb",
   "hoverColorOpacity": 0.8,
   "hoverColorPalette": "color3",
-  "tempColorOpacity": 1,
-  "tempColorPalette": "color3",
+
   "tempHoverColorOpacity": 1,
   "tempHoverColorPalette": "color3",
+
+  "bgColorType": "solid",
+
+  "gradientActivePointer": "startPointer",
+  "gradientStartPointer": 0,
+  "gradientFinishPointer": 100,
+
+  "gradientType": "linear",
+
+  "gradientLinearDegree": 90,
+  "gradientRadialDegree": 90,
+
+  "hoverBgColorType": "solid",
+
+  "hoverGradientActivePointer": "startPointer",
+  "hoverGradientStartPointer": 0,
+  "hoverGradientFinishPointer": 100,
+
+  "hoverGradientType": "linear",
+
+  "hoverGradientLinearDegree": 90,
+  "hoverGradientRadialDegree": 90,
 
   "bgColorHex": "#bde1f4",
   "bgColorOpacity": 0,
   "bgColorPalette": "",
+
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "color5",
+
   "hoverBgColorHex": "#bde1f4",
   "hoverBgColorOpacity": 0,
   "hoverBgColorPalette": "",
-  "tempBgColorOpacity": 1,
-  "tempBgColorPalette": "color5",
+
   "tempHoverBgColorOpacity": 1,
   "tempHoverBgColorPalette": "color5",
+
+  "gradientColorHex": "#009900",
+  "gradientColorOpacity": 1,
+  "gradientColorPalette": "",
+
+  "tempGradientColorOpacity": 1,
+  "tempGradientColorPalette": "",
+
+  "hoverGradientColorHex": "#009900",
+  "hoverGradientColorOpacity": 0,
+  "hoverGradientColorPalette": "",
+
+  "tempHoverGradientColorOpacity": 1,
+  "tempHoverGradientColorPalette": "",
 
   "borderColorHex": "#239ddb",
   "borderColorOpacity": 0,
   "borderColorPalette": "",
+
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "color3",
+
   "hoverBorderColorHex": "#239ddb",
   "hoverBorderColorOpacity": 0,
   "hoverBorderColorPalette": "",
-  "tempBorderColorOpacity": 1,
-  "tempBorderColorPalette": "color3",
+
   "tempHoverBorderColorOpacity": 1,
   "tempHoverBorderColorPalette": "color3",
+
+  "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
 
   "borderRadiusType": "",
   "tempBorderRadiusType": "rounded",
 
+  "borderRadius": 0,
+  "borderTopLeftRadius": 0,
+  "borderTopRightRadius": 0,
+  "borderBottomRightRadius": 0,
+  "borderBottomLeftRadius": 0,
+
+  "tempBorderRadius": 4,
+  "tempBorderTopLeftRadius": 4,
+  "tempBorderTopRightRadius": 4,
+  "tempBorderBottomRightRadius": 4,
+  "tempBorderBottomLeftRadius": 4,
+
+  "hoverBorderRadius": 0,
+  "hoverBorderTopLeftRadius": 0,
+  "hoverBorderTopRightRadius": 0,
+  "hoverBorderBottomRightRadius": 0,
+  "hoverBorderBottomLeftRadius": 0,
+
+  "tempHoverBorderRadius": 4,
+  "tempHoverBorderTopLeftRadius": 4,
+  "tempHoverBorderTopRightRadius": 4,
+  "tempHoverBorderBottomRightRadius": 4,
+  "tempHoverBorderBottomLeftRadius": 4,
+
   "fillType": "default",
   "tempFillType": "filled",
-
-  "borderRadius": 0,
-  "tempBorderRadius": 4,
 
   "borderWidth": 0,
   "tempBorderWidth": 3,
@@ -75,6 +143,8 @@
   "boxShadowSpread": 0,
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
+
+  "tempBoxShadowColorPalette": "",
   "tempBoxShadowColorOpacity": 1,
 
   "strokeWidth": 1,

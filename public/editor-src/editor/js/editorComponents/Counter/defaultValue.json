@@ -15,11 +15,14 @@
   "colorHex": "#239ddb",
   "colorOpacity": 1,
   "colorPalette": "color3",
+
+  "tempColorOpacity": 1,
+  "tempColorPalette": "color3",
+
   "hoverColorHex": "#239ddb",
   "hoverColorOpacity": 0.8,
   "hoverColorPalette": "color3",
-  "tempColorOpacity": 1,
-  "tempColorPalette": "color3",
+
   "tempHoverColorOpacity": 1,
   "tempHoverColorPalette": "color3",
 

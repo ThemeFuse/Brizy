@@ -53,6 +53,10 @@ class SectionFooter extends EditorComponent {
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
+
+    this.patchValue({ tabsState: "tabNormal" });
+    this.patchValue({ tabsCurrentElement: "tabCurrentElement" });
+    this.patchValue({ tabsColor: "tabOverlay" });
   };
 
   handlePaddingResizerChange = patch => this.patchValue(patch);
@@ -146,7 +150,16 @@ class SectionFooter extends EditorComponent {
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
@@ -190,7 +203,16 @@ class SectionFooter extends EditorComponent {
   renderForView(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&

@@ -114,6 +114,7 @@
   "boxShadowSpread": 0,
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
+  "tempBoxShadowColorPalette": "",
   "tempBoxShadowColorOpacity": 1,
 
   "tabletSubMenuFontStyle": "button",

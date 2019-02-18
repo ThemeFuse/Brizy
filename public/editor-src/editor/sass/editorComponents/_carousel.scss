@@ -17,9 +17,14 @@
     .slick-slide {
       height: auto;
     }
-    > .slick-list > .slick-track > .slick-slide > div,
-    > .slick-list > .slick-track > .slick-slide > div > .brz-columns {
+    > .slick-list > .slick-track > .slick-slide > div {
       height: 100%;
+
+      > .brz-carousel__item,
+      > .brz-carousel__item > .brz-columns,
+      > .brz-columns {
+        height: 100%;
+      }
     }
     > .brz-slick-slider__arrow {
       opacity: 1;

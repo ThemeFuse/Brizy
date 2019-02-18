@@ -6,6 +6,16 @@ import {
   onChangeTypographyTablet,
   onChangeTypographyMobile
 } from "visual/utils/onChange";
+
+import {
+  toolbarElementCounterStart,
+  toolbarElementCounterEnd,
+  toolbarElementCounterDuration,
+  toolbarColorHexAndOpacity,
+  toolbarColorPalette,
+  toolbarColorFields
+} from "visual/utils/toolbar";
+
 import { t } from "visual/utils/i18n";
 
 export function getItemsForDesktop(v) {
@@ -16,7 +26,6 @@ export function getItemsForDesktop(v) {
 
   // ...
   const { hex: colorHex } = getOptionColor(v, "color");
-  const { hex: hoverColorHex } = getOptionColor(v, "hoverColor");
 
   return [
     {
@@ -26,62 +35,9 @@ export function getItemsForDesktop(v) {
       title: t("Counter"),
       position: 70,
       options: [
-        {
-          id: "start",
-          label: t("Start"),
-          type: "input",
-          inputType: "number",
-          inputSize: "small",
-          value: {
-            value: v.start
-          },
-          onChange: ({ value: start }) => ({
-            start
-          })
-        },
-        {
-          id: "end",
-          label: t("End"),
-          type: "input",
-          inputType: "number",
-          inputSize: "small",
-          value: {
-            value: v.end
-          },
-          onChange: ({ value: end }) => ({
-            end: end !== "" ? end : 0
-          })
-        },
-        {
-          id: "duration",
-          label: t("Duration"),
-          type: "slider",
-          slider: {
-            min: 0,
-            step: 0.5,
-            max: 25
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "sec",
-                value: "sec"
-              }
-            ]
-          },
-          value: {
-            value: v.duration
-          },
-          onChange: ({ value: duration }) => {
-            return {
-              duration
-            };
-          }
-        }
+        toolbarElementCounterStart({ v }),
+        toolbarElementCounterEnd({ v }),
+        toolbarElementCounterDuration({ v })
       ]
     },
     {
@@ -95,6 +51,7 @@ export function getItemsForDesktop(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -137,6 +94,7 @@ export function getItemsForDesktop(v) {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -227,67 +185,40 @@ export function getItemsForDesktop(v) {
               tabIcon: "nc-circle",
               title: t("Normal"),
               options: [
+                toolbarColorHexAndOpacity({
+                  v,
+                  state: "normal",
+                  onChange: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarColorPalette({
+                  v,
+                  state: "normal",
+                  onChange: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
-                  id: "color",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: colorHex,
-                    opacity: v.colorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-                    opacity =
-                      hex !== v.colorHex && v.colorOpacity === 0
-                        ? v.tempColorOpacity
-                        : opacity;
-
-                    return {
-                      colorHex: hex,
-                      colorOpacity: opacity,
-                      colorPalette: isChanged === "hex" ? "" : v.colorPalette,
-
-                      // Temporary Value changes
-                      tempColorOpacity:
-                        opacity > 0 && opacityDragEnd
-                          ? opacity
-                          : v.tempColorOpacity,
-
-                      // Normal + Hover Sync
-                      hoverColorHex:
-                        v.colorHex === v.hoverColorHex ? hex : v.hoverColorHex,
-
-                      hoverColorOpacity:
-                        v.colorOpacity === v.hoverColorOpacity
-                          ? opacity
-                          : v.hoverColorOpacity
-                    };
-                  }
-                },
-                {
-                  id: "colorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.colorPalette,
-                  onChange: colorPalette => ({
-                    colorPalette,
-
-                    colorOpacity:
-                      v.colorOpacity === 0 ? v.tempColorOpacity : v.colorOpacity
-                  })
-                },
-                {
-                  id: "colorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: colorHex,
-                    opacity: v.colorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    colorPalette: isChanged === "hex" ? "" : v.colorPalette,
-                    colorHex: hex,
-                    colorOpacity: opacity
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarColorFields({
+                          v,
+                          state: "normal",
+                          onChange: [
+                            "onChangeColorHexAndOpacity",
+                            "onChangeColorHexAndOpacityPalette"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -295,54 +226,40 @@ export function getItemsForDesktop(v) {
               tabIcon: "nc-hover",
               title: t("Hover"),
               options: [
+                toolbarColorHexAndOpacity({
+                  v,
+                  state: "hover",
+                  onChange: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarColorPalette({
+                  v,
+                  state: "hover",
+                  onChange: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
-                  id: "hoverColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: hoverColorHex,
-                    opacity: v.hoverColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    hoverColorHex: hex,
-
-                    hoverColorOpacity:
-                      hex !== v.hoverColorHex && v.hoverColorOpacity === 0
-                        ? v.tempHoverColorOpacity
-                        : opacity,
-
-                    hoverColorPalette:
-                      isChanged === "hex" ? "" : v.hoverColorPalette
-                  })
-                },
-                {
-                  id: "hoverColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.hoverColorPalette,
-                  onChange: value => ({
-                    hoverColorPalette: value,
-
-                    hoverColorOpacity:
-                      v.hoverColorOpacity === 0
-                        ? v.tempHoverColorOpacity
-                        : v.hoverColorOpacity
-                  })
-                },
-                {
-                  id: "hoverColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: hoverColorHex,
-                    opacity: v.hoverColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    hoverColorPalette:
-                      isChanged === "hex" ? "" : v.hoverColorPalette,
-                    hoverColorHex: hex,
-                    hoverColorOpacity: opacity
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarColorFields({
+                          v,
+                          state: "hover",
+                          onChange: [
+                            "onChangeColorHexAndOpacity",
+                            "onChangeColorHexAndOpacityPalette"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -386,6 +303,7 @@ export function getItemsForTablet(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -497,6 +415,7 @@ export function getItemsForMobile(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,

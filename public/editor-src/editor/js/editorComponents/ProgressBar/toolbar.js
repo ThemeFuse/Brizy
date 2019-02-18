@@ -1,16 +1,29 @@
+import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
-import { getOptionColor } from "visual/utils/options";
 import {
   onChangeTypography,
   onChangeTypographyTablet,
-  onChangeTypographyMobile,
-  tabletSyncOnChange,
-  mobileSyncOnChange
+  onChangeTypographyMobile
 } from "visual/utils/onChange";
-import { t } from "visual/utils/i18n";
+import {
+  toolbarElementProgressBarPercentage,
+  toolbarElementProgressBarShowPercentage,
+  toolbarColorHexAndOpacity,
+  toolbarColorPalette,
+  toolbarColorFields,
+  toolbarBgColorHexAndOpacity,
+  toolbarBgColorPalette,
+  toolbarBgColorFields,
+  toolbarElementProgressBarBg2ColorHexAndOpacity,
+  toolbarElementProgressBarBg2ColorPalette,
+  toolbarElementProgressBarBg2ColorFields,
+  toolbarSizeWidthWidthPercent
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
+
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
@@ -21,11 +34,6 @@ export function getItemsForDesktop(v) {
     (v.fontSize * v.lineHeight + v.paddingTop * 2) / 2
   );
 
-  // ...
-  const { hex: colorHex } = getOptionColor(v, "color");
-  const { hex: bgColorHex } = getOptionColor(v, "bgColor");
-  const { hex: bg2ColorHex } = getOptionColor(v, "bg2Color");
-
   return [
     {
       id: "toolbarProgressBar",
@@ -34,37 +42,8 @@ export function getItemsForDesktop(v) {
       title: t("Progress"),
       position: 70,
       options: [
-        {
-          id: "percentage",
-          label: t("Percentage"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.percentage
-          },
-          onChange: ({ value: percentage }) => ({ percentage })
-        },
-        {
-          id: "showPercentage",
-          label: t("Show Percentage"),
-          type: "switch",
-          value: v.showPercentage
-        }
+        toolbarElementProgressBarPercentage({ v }),
+        toolbarElementProgressBarShowPercentage({ v })
         /*{
           id: "borderRadius",
           label: t("Corner"),
@@ -105,6 +84,7 @@ export function getItemsForDesktop(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -147,6 +127,7 @@ export function getItemsForDesktop(v) {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -235,135 +216,138 @@ export function getItemsForDesktop(v) {
             {
               label: t("Text"),
               options: [
+                toolbarColorHexAndOpacity({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarColorPalette({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
-                  id: "color",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: colorHex,
-                    opacity: v.colorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    return {
-                      colorHex: hex,
-                      bgColorOpacity: opacity,
-                      colorPalette: isChanged === "hex" ? "" : v.colorPalette
-                    };
-                  }
-                },
-                {
-                  id: "colorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.colorPalette,
-                  onChange: colorPalette => ({
-                    colorPalette
-                  })
-                },
-                {
-                  id: "colorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: colorHex,
-                    opacity: v.colorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    colorHex: hex,
-                    colorOpacity: opacity,
-                    colorPalette: isChanged === "hex" ? "" : v.colorPalette
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarColorFields({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeColorHexAndOpacity",
+                            "onChangeColorHexAndOpacityPalette"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
                 }
               ]
             },
             {
               label: t("Bar"),
               options: [
+                toolbarBgColorHexAndOpacity({
+                  v,
+                  device,
+                  state: "normal",
+                  prefix: "bg",
+                  onChange: [
+                    "onChangeBgColorHexAndOpacity",
+                    "onChangeBgColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarBgColorPalette({
+                  v,
+                  device,
+                  state: "normal",
+                  prefix: "bg",
+                  onChange: [
+                    "onChangeBgColorPalette",
+                    "onChangeBgColorPaletteOpacity"
+                  ]
+                }),
                 {
-                  id: "bgColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: bgColorHex,
-                    opacity: v.bgColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    return {
-                      bgColorHex: hex,
-                      bgColorOpacity: opacity,
-                      bgColorPalette:
-                        isChanged === "hex" ? "" : v.bgColorPalette
-                    };
-                  }
-                },
-                {
-                  id: "bgColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.bgColorPalette,
-                  onChange: bgColorPalette => ({
-                    bgColorPalette
-                  })
-                },
-                {
-                  id: "bgColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: bgColorHex,
-                    opacity: v.bgColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    bgColorHex: hex,
-                    bgColorOpacity: opacity,
-                    bgColorPalette: isChanged === "hex" ? "" : v.bgColorPalette
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarBgColorFields({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "bg",
+                          disabled:
+                            v.bgColorType === "gradient" &&
+                            v.gradientActivePointer === "finishPointer",
+                          onChange: [
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
                 }
               ]
             },
             {
               label: t("Background"),
               options: [
+                toolbarElementProgressBarBg2ColorHexAndOpacity({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeElementProgressBarBg2ColorHexAndOpacity",
+                    "onChangeElementProgressBarBg2ColorHexAndOpacityPalette",
+                    "onChangeElementProgressBarBg2ColorHexAndOpacityDependencies"
+                  ]
+                }),
+                toolbarElementProgressBarBg2ColorPalette({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeElementProgressBarBg2ColorPalette",
+                    "onChangeElementProgressBarBg2ColorPaletteOpacity",
+                    "onChangeElementProgressBarBg2ColorHexAndOpacityDependencies"
+                  ]
+                }),
                 {
-                  id: "bg2Color",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: bg2ColorHex,
-                    opacity: v.bg2ColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    return {
-                      bg2ColorHex: hex,
-                      bg2ColorOpacity: opacity,
-                      bg2ColorPalette:
-                        isChanged === "hex" ? "" : v.bg2ColorPalette
-                    };
-                  }
-                },
-                {
-                  id: "bg2ColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.bg2ColorPalette,
-                  onChange: bg2ColorPalette => ({
-                    bg2ColorPalette
-                  })
-                },
-                {
-                  id: "bg2ColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: bg2ColorHex,
-                    opacity: v.bg2ColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    bg2ColorHex: hex,
-                    bg2ColorOpacity: opacity,
-                    bg2ColorPalette:
-                      isChanged === "hex" ? "" : v.bg2ColorPalette
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarElementProgressBarBg2ColorFields({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeElementProgressBarBg2ColorHexAndOpacity",
+                            "onChangeElementProgressBarBg2ColorHexAndOpacityPalette",
+                            "onChangeElementProgressBarBg2ColorHexAndOpacityDependencies"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -378,38 +362,15 @@ export function getItemsForDesktop(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device, state: "normal" })]
     }
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
+  const state = "normal";
+
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
@@ -419,8 +380,7 @@ export function getItemsForTablet(v) {
     tabletFontWeight,
     tabletLineHeight,
     tabletLetterSpacing
-  } =
-    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+  } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   return [
     {
@@ -434,6 +394,7 @@ export function getItemsForTablet(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -516,38 +477,15 @@ export function getItemsForTablet(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device, state })]
     }
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
+  const state = "normal";
+
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
@@ -557,8 +495,7 @@ export function getItemsForMobile(v) {
     mobileFontWeight,
     mobileLineHeight,
     mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
     {
@@ -572,6 +509,7 @@ export function getItemsForMobile(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -654,33 +592,7 @@ export function getItemsForMobile(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device, state })]
     }
   ];
 }

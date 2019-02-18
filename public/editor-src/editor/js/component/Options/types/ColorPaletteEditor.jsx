@@ -24,8 +24,8 @@ class ColorPalette extends React.Component {
   };
 
   handleColorChange(newValue, itemIndex) {
-    const value = this.props.value.map(
-      (el, index) => (index === itemIndex ? { ...el, hex: newValue.hex } : el)
+    const value = this.props.value.map((el, index) =>
+      index === itemIndex ? { ...el, hex: newValue.hex } : el
     );
 
     this.props.onChange(value);
@@ -80,14 +80,25 @@ class ColorPalette extends React.Component {
               onChange: value => this.handleColorChange(value, index)
             },
             {
-              id: "backgroundColorFields",
-              type: "colorFields",
-              disableOpacity: true,
-              value: {
-                hex: color.hex,
-                opacity: 1
-              },
-              onChange: value => this.handleColorChange(value, index)
+              type: "grid",
+              className: "brz-ed-grid__color-fileds",
+              columns: [
+                {
+                  width: 100,
+                  options: [
+                    {
+                      id: "backgroundColorFields",
+                      type: "colorFields",
+                      disableOpacity: true,
+                      value: {
+                        hex: color.hex,
+                        opacity: 1
+                      },
+                      onChange: value => this.handleColorChange(value, index)
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

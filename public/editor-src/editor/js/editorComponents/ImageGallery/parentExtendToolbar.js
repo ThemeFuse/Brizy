@@ -1,7 +1,12 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  toolbarElementImageGalleryGridColumn,
+  toolbarElementImageGallerySpacing,
+  toolbarElementImageGalleryLightBox
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
   return [
     {
       id: "toolbarGallery",
@@ -10,62 +15,16 @@ export function getItemsForDesktop(v) {
       title: t("Gallery"),
       position: 80,
       options: [
-        {
-          id: "gridColumn",
-          label: t("Columns"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 6
-          },
-          input: {
-            show: true,
-            max: 6
-          },
-          value: {
-            value: v.gridColumn
-          },
-          onChange: ({ value: gridColumn }) => ({ gridColumn })
-        },
-        {
-          id: "spacing",
-          label: t("Spacing"),
-          type: "slider",
-          slider: {
-            min: 0,
-            max: 20
-          },
-          input: {
-            show: true,
-            min: 0,
-            max: 20
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: v.spacing
-          },
-          onChange: ({ value: spacing }) => ({ spacing })
-        },
-        {
-          id: "lightBox",
-          label: t("Open in Lightbox"),
-          type: "switch",
-          value: v.lightBox
-        }
+        toolbarElementImageGalleryGridColumn({ v, device }),
+        toolbarElementImageGallerySpacing({ v, device }),
+        toolbarElementImageGalleryLightBox({ v, device })
       ]
     }
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
   return [
     {
       id: "tabletToolbarGallery",
@@ -74,56 +33,15 @@ export function getItemsForTablet(v) {
       title: t("Gallery"),
       position: 80,
       options: [
-        {
-          id: "tabletGridColumn",
-          label: t("Columns"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 6
-          },
-          input: {
-            show: true,
-            max: 6
-          },
-          value: {
-            value: v.tabletGridColumn
-          },
-          onChange: ({ value: tabletGridColumn }) => ({ tabletGridColumn })
-        },
-        {
-          id: "tabletSpacing",
-          label: t("Spacing"),
-          type: "slider",
-          slider: {
-            min: 0,
-            max: 20
-          },
-          input: {
-            show: true,
-            min: 0,
-            max: 20
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "spacing")
-          },
-          onChange: ({ value: tabletSpacing }) => ({ tabletSpacing })
-        }
+        toolbarElementImageGalleryGridColumn({ v, device }),
+        toolbarElementImageGallerySpacing({ v, device })
       ]
     }
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
   return [
     {
       id: "mobileToolbarGallery",
@@ -132,50 +50,8 @@ export function getItemsForMobile(v) {
       title: t("Gallery"),
       position: 80,
       options: [
-        {
-          id: "mobileGridColumn",
-          label: t("Columns"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 3
-          },
-          input: {
-            show: true,
-            max: 3
-          },
-          value: {
-            value: v.mobileGridColumn
-          },
-          onChange: ({ value: mobileGridColumn }) => ({ mobileGridColumn })
-        },
-        {
-          id: "mobileSpacing",
-          label: t("Spacing"),
-          type: "slider",
-          slider: {
-            min: 0,
-            max: 20
-          },
-          input: {
-            show: true,
-            min: 0,
-            max: 20
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "spacing")
-          },
-          onChange: ({ value: mobileSpacing }) => ({ mobileSpacing })
-        }
+        toolbarElementImageGalleryGridColumn({ v, device }),
+        toolbarElementImageGallerySpacing({ v, device })
       ]
     }
   ];

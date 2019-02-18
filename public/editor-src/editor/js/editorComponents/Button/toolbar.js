@@ -1,6 +1,7 @@
+import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
-import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
+import { getOptionColor } from "visual/utils/options";
 import {
   onChangeTypography,
   onChangeTypographyTablet,
@@ -8,11 +9,30 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
-import { t } from "visual/utils/i18n";
-
-const linkDynamicContentChoices = getDynamicContentChoices("link");
+import {
+  toolbarLinkAnchor,
+  toolbarLinkExternal,
+  toolbarLinkExternalBlank,
+  toolbarLinkExternalRel,
+  toolbarBoxShadowHexAndOpacity,
+  toolbarBoxShadowPalette,
+  toolbarBoxShadowFields,
+  toolbarBoxShadowBlur,
+  toolbarBoxShadowSpread,
+  toolbarBoxShadowVertical,
+  toolbarBoxShadowHorizontal,
+  toolbarBgColorHexAndOpacity,
+  toolbarBgColorPalette,
+  toolbarBgColorFields,
+  toolbarBgType,
+  toolbarGradientRange,
+  toolbarGradientType,
+  toolbarGradientLinearDegree,
+  toolbarGradientRadialDegree
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
@@ -122,22 +142,22 @@ export function getItemsForDesktop(v) {
                           size !== "custom" && v.fillType === "default"
                             ? 0
                             : size !== "custom" && v.fillType !== "default"
-                              ? v[`${size}PaddingX`]
-                              : v.paddingRL,
+                            ? v[`${size}PaddingX`]
+                            : v.paddingRL,
 
                         paddingRight:
                           size !== "custom" && v.fillType === "default"
                             ? 0
                             : size !== "custom" && v.fillType !== "default"
-                              ? v[`${size}PaddingX`]
-                              : v.paddingRight,
+                            ? v[`${size}PaddingX`]
+                            : v.paddingRight,
 
                         paddingLeft:
                           size !== "custom" && v.fillType === "default"
                             ? 0
                             : size !== "custom" && v.fillType !== "default"
-                              ? v[`${size}PaddingX`]
-                              : v.paddingLeft,
+                            ? v[`${size}PaddingX`]
+                            : v.paddingLeft,
 
                         tempPaddingRL:
                           size !== "custom" && v.fillType !== "default"
@@ -168,20 +188,20 @@ export function getItemsForDesktop(v) {
                               size !== "custom" &&
                               v[`${size}FontSize`] * lineHeight <
                                 v.iconCustomSize
-                              ? Math.round(
-                                  (v.iconCustomSize +
-                                    v[`${size}PaddingY`] * 2 +
-                                    v.borderWidth * 2) /
-                                    2
-                                )
-                              : v.borderRadius,
+                            ? Math.round(
+                                (v.iconCustomSize +
+                                  v[`${size}PaddingY`] * 2 +
+                                  v.borderWidth * 2) /
+                                  2
+                              )
+                            : v.borderRadius,
 
                         borderWidth:
                           size !== "custom" && v.fillType === "default"
                             ? 0
                             : size !== "custom" && v.fillType !== "default"
-                              ? v.tempBorderWidth
-                              : v.borderWidth
+                            ? v.tempBorderWidth
+                            : v.borderWidth
                       };
                     }
                   },
@@ -264,13 +284,13 @@ export function getItemsForDesktop(v) {
                                   )
                                 : v.borderRadiusType === "rounded" &&
                                   fontSize * lineHeight < v.iconCustomSize
-                                  ? Math.round(
-                                      (v.iconCustomSize +
-                                        paddingTB * 2 +
-                                        v.borderWidth * 2) /
-                                        2
-                                    )
-                                  : v.borderRadius
+                                ? Math.round(
+                                    (v.iconCustomSize +
+                                      paddingTB * 2 +
+                                      v.borderWidth * 2) /
+                                      2
+                                  )
+                                : v.borderRadius
                           };
                         }
                       }
@@ -308,22 +328,22 @@ export function getItemsForDesktop(v) {
                         fillType === "default"
                           ? 0
                           : fillType !== "default"
-                            ? v.tempPaddingRL
-                            : v.paddingRL,
+                          ? v.tempPaddingRL
+                          : v.paddingRL,
 
                       paddingRight:
                         fillType === "default"
                           ? 0
                           : fillType !== "default"
-                            ? v.tempPaddingRight
-                            : v.paddingRight,
+                          ? v.tempPaddingRight
+                          : v.paddingRight,
 
                       paddingLeft:
                         fillType === "default"
                           ? 0
                           : fillType !== "default"
-                            ? v.tempPaddingLeft
-                            : v.paddingRight,
+                          ? v.tempPaddingLeft
+                          : v.paddingRight,
 
                       paddingTB:
                         fillType !== "default" ? v.tempPaddingTB : v.paddingTB,
@@ -342,8 +362,8 @@ export function getItemsForDesktop(v) {
                         fillType === "default"
                           ? ""
                           : fillType !== "default"
-                            ? v.tempBorderRadiusType
-                            : v.borderRadiusType,
+                          ? v.tempBorderRadiusType
+                          : v.borderRadiusType,
 
                       borderRadius:
                         fillType !== "default" &&
@@ -351,64 +371,64 @@ export function getItemsForDesktop(v) {
                           ? v.tempBorderRadius
                           : fillType !== "default" &&
                             v.tempBorderRadiusType === "rounded"
-                            ? maxBorderRadius
-                            : v.borderRadius,
+                          ? maxBorderRadius
+                          : v.borderRadius,
 
                       borderWidth:
                         fillType === "default"
                           ? 0
                           : fillType !== "default"
-                            ? v.tempBorderWidth
-                            : v.borderWidth,
+                          ? v.tempBorderWidth
+                          : v.borderWidth,
 
                       borderColorOpacity:
                         fillType === "default"
                           ? 0
                           : fillType === "filled" &&
                             v.bgColorHex === v.borderColorHex
-                            ? 0
-                            : fillType === "outline"
-                              ? v.tempBorderColorOpacity
-                              : v.borderColorOpacity,
+                          ? 0
+                          : fillType === "outline"
+                          ? v.tempBorderColorOpacity
+                          : v.borderColorOpacity,
 
                       borderColorPalette:
                         fillType === "default"
                           ? ""
                           : fillType !== "default"
-                            ? v.tempBorderColorPalette
-                            : v.borderColorPalette,
+                          ? v.tempBorderColorPalette
+                          : v.borderColorPalette,
 
                       bgColorOpacity:
                         fillType === "default" || fillType === "outline"
                           ? 0
                           : fillType === "filled"
-                            ? v.tempBgColorOpacity
-                            : v.bgColorOpacity,
+                          ? v.tempBgColorOpacity
+                          : v.bgColorOpacity,
 
                       bgColorPalette:
                         fillType === "default" || fillType === "outline"
                           ? ""
                           : fillType === "filled"
-                            ? v.tempBgColorPalette
-                            : v.bgColorPalette,
+                          ? v.tempBgColorPalette
+                          : v.bgColorPalette,
 
                       // Hover
                       hoverBgColorOpacity:
                         fillType === "default"
                           ? 0
                           : fillType !== "default"
-                            ? v.tempHoverBgColorOpacity
-                            : v.hoverBgColorOpacity,
+                          ? v.tempHoverBgColorOpacity
+                          : v.hoverBgColorOpacity,
 
                       hoverBorderColorOpacity:
                         fillType === "default"
                           ? 0
                           : fillType !== "default" &&
                             v.hoverBgColorHex === v.hoverBorderColorHex
-                            ? 0
-                            : //: fillType !== "default" && v.hoverBgColorPalette === v.hoverBorderColorPalette
-                              //  ? 0
-                              v.hoverBorderColorOpacity
+                          ? 0
+                          : //: fillType !== "default" && v.hoverBgColorPalette === v.hoverBorderColorPalette
+                            //  ? 0
+                            v.hoverBorderColorOpacity
                     };
                   }
                 },
@@ -460,8 +480,8 @@ export function getItemsForDesktop(v) {
                           borderRadiusType === "square"
                             ? v.tempBorderRadius
                             : borderRadiusType === "rounded"
-                              ? maxBorderRadius
-                              : v.borderRadius,
+                            ? maxBorderRadius
+                            : v.borderRadius,
 
                         borderWidth:
                           borderRadiusType !== ""
@@ -575,40 +595,40 @@ export function getItemsForDesktop(v) {
                         borderWidth === 0 && v.bgColorOpacity === 0
                           ? ""
                           : borderWidth > 0
-                            ? v.tempBorderRadiusType
-                            : v.borderRadiusType,
+                          ? v.tempBorderRadiusType
+                          : v.borderRadiusType,
 
                       fillType:
                         borderWidth === 0 && v.bgColorOpacity === 0
                           ? "default"
                           : borderWidth > 0
-                            ? v.tempFillType
-                            : v.fillType,
+                          ? v.tempFillType
+                          : v.fillType,
 
                       borderRadius:
                         borderWidth === 0 && v.bgColorOpacity === 0
                           ? 0
                           : borderWidth > 0 &&
                             v.tempBorderRadiusType === "square"
-                            ? v.tempBorderRadius
-                            : borderWidth > 0 &&
-                              v.tempBorderRadiusType === "rounded"
-                              ? maxBorderRadius
-                              : v.borderRadius,
+                          ? v.tempBorderRadius
+                          : borderWidth > 0 &&
+                            v.tempBorderRadiusType === "rounded"
+                          ? maxBorderRadius
+                          : v.borderRadius,
 
                       borderColorOpacity:
                         borderWidth === 0
                           ? 0
                           : borderWidth > 0
-                            ? v.tempBorderColorOpacity
-                            : v.borderColorOpacity,
+                          ? v.tempBorderColorOpacity
+                          : v.borderColorOpacity,
 
                       borderColorPalette:
                         borderWidth === 0
                           ? 0
                           : borderWidth > 0
-                            ? v.tempBorderColorPalette
-                            : v.borderColorPalette,
+                          ? v.tempBorderColorPalette
+                          : v.borderColorPalette,
 
                       bgColorOpacity:
                         borderWidth > 0 && v.tempFillType === "filled"
@@ -624,8 +644,8 @@ export function getItemsForDesktop(v) {
                         borderWidth === 0 && v.bgColorOpacity === 0
                           ? 0
                           : borderWidth > 0 && v.tempFillType === "filled"
-                            ? v.tempHoverBgColorOpacity
-                            : v.hoverBgColorOpacity
+                          ? v.tempHoverBgColorOpacity
+                          : v.hoverBgColorOpacity
                     };
                   }
                 }
@@ -698,11 +718,11 @@ export function getItemsForDesktop(v) {
                           ? fontSize * lineHeight
                           : iconSize === "custom" &&
                             fontSize * lineHeight < v.iconCustomSize
-                            ? v.iconCustomSize
-                            : iconSize !== "custom" &&
-                              fontSize * lineHeight >= v[`${iconSize}IconSize`]
-                              ? fontSize * lineHeight
-                              : v[`${iconSize}IconSize`];
+                          ? v.iconCustomSize
+                          : iconSize !== "custom" &&
+                            fontSize * lineHeight >= v[`${iconSize}IconSize`]
+                          ? fontSize * lineHeight
+                          : v[`${iconSize}IconSize`];
                       let maxBorderRadius = Math.round(
                         (contentHeight +
                           v.paddingTop * 2 +
@@ -717,10 +737,10 @@ export function getItemsForDesktop(v) {
                           iconSize === "small"
                             ? v.smallIconSize
                             : iconSize === "medium"
-                              ? v.mediumIconSize
-                              : iconSize === "large"
-                                ? v.largeIconSize
-                                : v.iconCustomSize,
+                            ? v.mediumIconSize
+                            : iconSize === "large"
+                            ? v.largeIconSize
+                            : v.iconCustomSize,
 
                         borderRadius:
                           v.borderRadiusType === "rounded"
@@ -824,6 +844,7 @@ export function getItemsForDesktop(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -866,6 +887,7 @@ export function getItemsForDesktop(v) {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -999,9 +1021,34 @@ export function getItemsForDesktop(v) {
                       label: t("Background"),
                       options: [
                         {
+                          type: "grid",
+                          className: "brz-ed-grid__gradient",
+                          columns: [
+                            {
+                              width: 43,
+                              options: [
+                                toolbarBgType({ v, device, state: "normal" })
+                              ]
+                            },
+                            {
+                              width: 57,
+                              options: [
+                                toolbarGradientRange({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  disabled: v.bgColorType === "solid"
+                                })
+                              ]
+                            }
+                          ]
+                        },
+                        {
                           id: "backgroundColor",
                           type: "colorPicker",
-                          position: 10,
+                          disabled:
+                            v.bgColorType === "gradient" &&
+                            v.gradientActivePointer === "finishPointer",
                           value: {
                             hex: bgColorHex,
                             opacity: v.bgColorOpacity
@@ -1035,17 +1082,17 @@ export function getItemsForDesktop(v) {
                                 opacity === 0 && v.borderColorOpacity === 0
                                   ? ""
                                   : opacity > 0
-                                    ? v.tempBorderRadiusType
-                                    : v.borderRadiusType,
+                                  ? v.tempBorderRadiusType
+                                  : v.borderRadiusType,
 
                               fillType:
                                 opacity === 0 && v.borderColorOpacity === 0
                                   ? "default"
                                   : opacity === 0 && v.borderColorOpacity > 0
-                                    ? "outline"
-                                    : opacity > 0
-                                      ? "filled"
-                                      : v.fillType,
+                                  ? "outline"
+                                  : opacity > 0
+                                  ? "filled"
+                                  : v.fillType,
 
                               borderWidth:
                                 opacity === 0 && v.borderColorOpacity === 0
@@ -1060,8 +1107,8 @@ export function getItemsForDesktop(v) {
                                   : v.bgColorPalette === "" &&
                                     v.bgColorHex === v.borderColorHex &&
                                     v.fillType === "filled"
-                                    ? hex
-                                    : v.borderColorHex,
+                                  ? hex
+                                  : v.borderColorHex,
 
                               borderColorPalette:
                                 v.bgColorPalette !== "" &&
@@ -1084,16 +1131,16 @@ export function getItemsForDesktop(v) {
                                 v.fillType === "filled"
                                   ? 0
                                   : opacity === 0 && v.borderColorOpacity === 0
-                                    ? 0
-                                    : v.borderColorOpacity,
+                                  ? 0
+                                  : v.borderColorOpacity,
 
                               // Normal + Hover Sync
                               hoverBgColorOpacity:
                                 opacity === 0 && v.borderColorOpacity === 0
                                   ? 0
                                   : opacity > 0
-                                    ? v.tempHoverBgColorOpacity
-                                    : v.hoverBgColorOpacity,
+                                  ? v.tempHoverBgColorOpacity
+                                  : v.hoverBgColorOpacity,
 
                               hoverBorderColorHex:
                                 v.borderColorHex === v.hoverBorderColorHex
@@ -1110,7 +1157,9 @@ export function getItemsForDesktop(v) {
                         {
                           id: "bgColorPalette",
                           type: "colorPalette",
-                          position: 20,
+                          disabled:
+                            v.bgColorType === "gradient" &&
+                            v.gradientActivePointer === "finishPointer",
                           value: v.bgColorPalette,
                           onChange: bgColorPalette => ({
                             bgColorPalette,
@@ -1134,8 +1183,8 @@ export function getItemsForDesktop(v) {
                                 : v.bgColorPalette === "" &&
                                   v.bgColorHex === v.borderColorHex &&
                                   v.fillType === "filled"
-                                  ? bgColorPalette
-                                  : v.borderColorPalette,
+                                ? bgColorPalette
+                                : v.borderColorPalette,
 
                             tempBorderColorPalette:
                               v.bgColorPalette !== "" &&
@@ -1145,29 +1194,120 @@ export function getItemsForDesktop(v) {
                                 : v.bgColorPalette === "" &&
                                   v.bgColorHex === v.borderColorHex &&
                                   v.fillType === "filled"
-                                  ? bgColorPalette
-                                  : v.borderColorPalette,
+                                ? bgColorPalette
+                                : v.borderColorPalette,
 
                             // Normal + Hover Sync
                             hoverBgColorOpacity: v.tempHoverBgColorOpacity
                           })
                         },
+                        toolbarBgColorHexAndOpacity({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "gradient",
+                          disabled:
+                            v.bgColorType === "solid" ||
+                            v.gradientActivePointer === "startPointer",
+                          onChange: [
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette",
+                            "onChangeBgColorHexAndOpacityDependencies"
+                          ]
+                        }),
+                        toolbarBgColorPalette({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "gradient",
+                          disabled:
+                            v.bgColorType === "solid" ||
+                            v.gradientActivePointer === "startPointer",
+                          onChange: [
+                            "onChangeBgColorPalette",
+                            "onChangeBgColorPaletteOpacity",
+                            "onChangeBgColorHexAndOpacityDependencies"
+                          ]
+                        }),
                         {
-                          id: "bgColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: bgColorHex,
-                            opacity: v.bgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            bgColorPalette:
-                              isChanged === "hex" ? "" : v.bgColorPalette,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 30,
+                              options: [
+                                {
+                                  id: "bgColorFields",
+                                  type: "colorFields",
+                                  disabled:
+                                    v.bgColorType === "gradient" &&
+                                    v.gradientActivePointer === "finishPointer",
+                                  value: {
+                                    hex: bgColorHex,
+                                    opacity: v.bgColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    bgColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.bgColorPalette,
 
-                            bgColorHex: hex,
+                                    bgColorHex: hex,
 
-                            bgColorOpacity: opacity
-                          })
+                                    bgColorOpacity: opacity
+                                  })
+                                },
+                                toolbarBgColorFields({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  prefix: "gradient",
+                                  disabled:
+                                    v.bgColorType === "solid" ||
+                                    v.gradientActivePointer === "startPointer",
+                                  onChange: [
+                                    "onChangeBgColorHexAndOpacity",
+                                    "onChangeBgColorHexAndOpacityPalette",
+                                    "onChangeBgColorHexAndOpacityDependencies"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 52,
+                              options: [
+                                toolbarGradientType({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  className:
+                                    "brz-ed__select--transparent brz-ed__select--align-right",
+                                  disabled: v.bgColorType === "solid"
+                                })
+                              ]
+                            },
+                            {
+                              width: 18,
+                              options: [
+                                toolbarGradientLinearDegree({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  disabled:
+                                    v.bgColorType === "solid" ||
+                                    v.gradientType === "radial"
+                                }),
+                                toolbarGradientRadialDegree({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  disabled:
+                                    v.bgColorType === "solid" ||
+                                    v.gradientType === "linear"
+                                })
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -1233,20 +1373,31 @@ export function getItemsForDesktop(v) {
                           })
                         },
                         {
-                          id: "colorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: colorHex,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "colorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: colorHex,
 
-                            opacity: v.colorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            colorPalette:
-                              isChanged === "hex" ? "" : v.colorPalette,
-                            colorHex: hex,
-                            colorOpacity: opacity
-                          })
+                                    opacity: v.colorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    colorPalette:
+                                      isChanged === "hex" ? "" : v.colorPalette,
+                                    colorHex: hex,
+                                    colorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -1293,22 +1444,22 @@ export function getItemsForDesktop(v) {
                                 opacity === 0 && v.bgColorOpacity === 0
                                   ? 0
                                   : opacity > 0
-                                    ? v.tempPaddingRL
-                                    : v.paddingRL,
+                                  ? v.tempPaddingRL
+                                  : v.paddingRL,
 
                               paddingRight:
                                 opacity === 0 && v.bgColorOpacity === 0
                                   ? 0
                                   : opacity > 0
-                                    ? v.tempPaddingRight
-                                    : v.paddingRight,
+                                  ? v.tempPaddingRight
+                                  : v.paddingRight,
 
                               paddingLeft:
                                 opacity === 0 && v.bgColorOpacity === 0
                                   ? 0
                                   : opacity > 0
-                                    ? v.tempPaddingLeft
-                                    : v.paddingRight,
+                                  ? v.tempPaddingLeft
+                                  : v.paddingRight,
 
                               paddingTB:
                                 opacity === 0 && v.bgColorOpacity === 0
@@ -1329,22 +1480,22 @@ export function getItemsForDesktop(v) {
                                 opacity === 0 && v.bgColorOpacity === 0
                                   ? "default"
                                   : opacity > 0 && v.bgColorOpacity === 0
-                                    ? "outline"
-                                    : v.fillType,
+                                  ? "outline"
+                                  : v.fillType,
 
                               borderRadiusType:
                                 opacity === 0 && v.bgColorOpacity === 0
                                   ? ""
                                   : opacity > 0
-                                    ? v.tempBorderRadiusType
-                                    : v.borderRadiusType,
+                                  ? v.tempBorderRadiusType
+                                  : v.borderRadiusType,
 
                               borderWidth:
                                 opacity === 0
                                   ? 0
                                   : opacity > 0
-                                    ? v.tempBorderWidth
-                                    : v.borderWidth,
+                                  ? v.tempBorderWidth
+                                  : v.borderWidth,
 
                               bgColorOpacity:
                                 opacity > 0 && v.bgColorOpacity > 0
@@ -1361,8 +1512,8 @@ export function getItemsForDesktop(v) {
                                 opacity === 0 && v.bgColorOpacity === 0
                                   ? 0
                                   : v.bgColorOpacity === v.hoverBgColorOpacity
-                                    ? opacity
-                                    : v.hoverBgColorOpacity
+                                  ? opacity
+                                  : v.hoverBgColorOpacity
                             };
                           }
                         },
@@ -1387,8 +1538,8 @@ export function getItemsForDesktop(v) {
                               v.bgColorOpacity === 0
                                 ? "outline"
                                 : v.bgColorOpacity > 0
-                                  ? "filled"
-                                  : v.fillType,
+                                ? "filled"
+                                : v.fillType,
 
                             borderWidth: v.tempBorderWidth
 
@@ -1396,21 +1547,34 @@ export function getItemsForDesktop(v) {
                           })
                         },
                         {
-                          id: "borderColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: borderColorHex,
-                            opacity: v.borderColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            borderColorPalette:
-                              isChanged === "hex" ? "" : v.borderColorPalette,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "borderColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: borderColorHex,
+                                    opacity: v.borderColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    borderColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.borderColorPalette,
 
-                            borderColorHex: hex,
+                                    borderColorHex: hex,
 
-                            borderColorOpacity: opacity
-                          })
+                                    borderColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -1431,9 +1595,34 @@ export function getItemsForDesktop(v) {
                       label: t("Background"),
                       options: [
                         {
+                          type: "grid",
+                          className: "brz-ed-grid__gradient",
+                          columns: [
+                            {
+                              width: 43,
+                              options: [
+                                toolbarBgType({ v, device, state: "hover" })
+                              ]
+                            },
+                            {
+                              width: 57,
+                              options: [
+                                toolbarGradientRange({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  disabled: v.hoverBgColorType === "solid"
+                                })
+                              ]
+                            }
+                          ]
+                        },
+                        {
                           id: "hoverBackgroundColor",
                           type: "colorPicker",
-                          position: 10,
+                          disabled:
+                            v.hoverBgColorType === "gradient" &&
+                            v.hoverGradientActivePointer === "finishPointer",
                           value: {
                             hex: hoverBgColorHex,
                             opacity: v.hoverBgColorOpacity
@@ -1480,8 +1669,8 @@ export function getItemsForDesktop(v) {
                                     v.hoverBgColorHex ===
                                       v.hoverBorderColorHex &&
                                     v.fillType === "filled"
-                                    ? hex
-                                    : v.hoverBorderColorHex,
+                                  ? hex
+                                  : v.hoverBorderColorHex,
 
                               hoverBorderColorPalette:
                                 v.hoverBgColorPalette !== "" &&
@@ -1513,7 +1702,9 @@ export function getItemsForDesktop(v) {
                         {
                           id: "hoverBgColorPalette",
                           type: "colorPalette",
-                          position: 20,
+                          disabled:
+                            v.hoverBgColorType === "gradient" &&
+                            v.hoverGradientActivePointer === "finishPointer",
                           value: v.hoverBgColorPalette,
                           onChange: hoverBgColorPalette => ({
                             hoverBgColorPalette,
@@ -1532,8 +1723,8 @@ export function getItemsForDesktop(v) {
                                 : v.hoverBgColorPalette === "" &&
                                   v.hoverBgColorHex === v.hoverBorderColorHex &&
                                   v.fillType === "filled"
-                                  ? hoverBgColorPalette
-                                  : v.hoverBorderColorPalette,
+                                ? hoverBgColorPalette
+                                : v.hoverBorderColorPalette,
 
                             tempHoverBorderColorPalette:
                               v.hoverBgColorPalette !== "" &&
@@ -1544,24 +1735,117 @@ export function getItemsForDesktop(v) {
                                 : v.hoverBgColorPalette === "" &&
                                   v.hoverBgColorHex === v.hoverBorderColorHex &&
                                   v.fillType === "filled"
-                                  ? hoverBgColorPalette
-                                  : v.hoverBorderColorPalette
+                                ? hoverBgColorPalette
+                                : v.hoverBorderColorPalette
                           })
                         },
+                        toolbarBgColorHexAndOpacity({
+                          v,
+                          device,
+                          state: "hover",
+                          prefix: "gradient",
+                          disabled:
+                            v.hoverBgColorType === "solid" ||
+                            v.hoverGradientActivePointer === "startPointer",
+                          onChange: [
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette",
+                            "onChangeBgColorHexAndOpacityDependencies"
+                          ]
+                        }),
+                        toolbarBgColorPalette({
+                          v,
+                          device,
+                          state: "hover",
+                          prefix: "gradient",
+                          disabled:
+                            v.hoverBgColorType === "solid" ||
+                            v.hoverGradientActivePointer === "startPointer",
+                          onChange: [
+                            "onChangeBgColorPalette",
+                            "onChangeBgColorPaletteOpacity",
+                            "onChangeBgColorHexAndOpacityDependencies"
+                          ]
+                        }),
                         {
-                          id: "hoverBgColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: hoverBgColorHex,
-                            opacity: v.hoverBgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            hoverBgColorPalette:
-                              isChanged === "hex" ? "" : v.hoverBgColorPalette,
-                            hoverBgColorHex: hex,
-                            hoverBgColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 30,
+                              options: [
+                                {
+                                  id: "hoverBgColorFields",
+                                  type: "colorFields",
+                                  disabled:
+                                    v.hoverBgColorType === "gradient" &&
+                                    v.hoverGradientActivePointer ===
+                                      "finishPointer",
+                                  value: {
+                                    hex: hoverBgColorHex,
+                                    opacity: v.hoverBgColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    hoverBgColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.hoverBgColorPalette,
+                                    hoverBgColorHex: hex,
+                                    hoverBgColorOpacity: opacity
+                                  })
+                                },
+                                toolbarBgColorFields({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  prefix: "gradient",
+                                  disabled:
+                                    v.hoverBgColorType === "solid" ||
+                                    v.hoverGradientActivePointer ===
+                                      "startPointer",
+                                  onChange: [
+                                    "onChangeBgColorHexAndOpacity",
+                                    "onChangeBgColorHexAndOpacityPalette",
+                                    "onChangeBgColorHexAndOpacityDependencies"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 52,
+                              options: [
+                                toolbarGradientType({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  className:
+                                    "brz-ed__select--transparent brz-ed__select--align-right",
+                                  disabled: v.hoverBgColorType === "solid"
+                                })
+                              ]
+                            },
+                            {
+                              width: 18,
+                              options: [
+                                toolbarGradientLinearDegree({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  disabled:
+                                    v.hoverBgColorType === "solid" ||
+                                    v.hoverGradientType === "radial"
+                                }),
+                                toolbarGradientRadialDegree({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  disabled:
+                                    v.hoverBgColorType === "solid" ||
+                                    v.hoverGradientType === "linear"
+                                })
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -1602,19 +1886,32 @@ export function getItemsForDesktop(v) {
                           })
                         },
                         {
-                          id: "hoverColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: hoverColorHex,
-                            opacity: v.hoverColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            hoverColorPalette:
-                              isChanged === "hex" ? "" : v.hoverColorPalette,
-                            hoverColorHex: hex,
-                            hoverColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "hoverColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: hoverColorHex,
+                                    opacity: v.hoverColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    hoverColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.hoverColorPalette,
+                                    hoverColorHex: hex,
+                                    hoverColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -1659,21 +1956,32 @@ export function getItemsForDesktop(v) {
                           })
                         },
                         {
-                          id: "hoverBorderColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: hoverBorderColorHex,
-                            opacity: v.hoverBorderColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            hoverBorderColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.hoverBorderColorPalette,
-                            hoverBorderColorHex: hex,
-                            hoverBorderColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "hoverBorderColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: hoverBorderColorHex,
+                                    opacity: v.hoverBorderColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    hoverBorderColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.hoverBorderColorPalette,
+                                    hoverBorderColorHex: hex,
+                                    hoverBorderColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -1702,58 +2010,15 @@ export function getItemsForDesktop(v) {
             {
               id: "anchor",
               label: t("Anchor"),
-              options: [
-                {
-                  id: "linkAnchor",
-                  label: t("Anchor"),
-                  type: "blockThumbnail",
-                  value: v.linkAnchor
-                }
-              ]
+              options: [toolbarLinkAnchor({ v })]
             },
             {
               id: "external",
               label: t("URL"),
               options: [
-                {
-                  id: "linkExternal",
-                  type: "input",
-                  label: t("Link to"),
-                  placeholder: "http://",
-                  population: {
-                    show: linkDynamicContentChoices.length > 0,
-                    choices: linkDynamicContentChoices
-                  },
-                  value: {
-                    value: v.linkExternal,
-                    population: v.linkPopulation
-                  },
-                  onChange: (
-                    { value: linkExternal, population: linkPopulation },
-                    { changed }
-                  ) => {
-                    return {
-                      linkExternal,
-                      linkPopulation,
-                      linkExternalType:
-                        changed === "value" || linkPopulation === ""
-                          ? "linkExternal"
-                          : "linkPopulation"
-                    };
-                  }
-                },
-                {
-                  id: "linkExternalBlank",
-                  type: "switch",
-                  label: t("Open In New Tab"),
-                  value: v.linkExternalBlank
-                },
-                {
-                  id: "linkExternalRel",
-                  type: "switch",
-                  label: t("Make it Nofollow"),
-                  value: v.linkExternalRel
-                }
+                toolbarLinkExternal({ v }),
+                toolbarLinkExternalBlank({ v }),
+                toolbarLinkExternalRel({ v })
               ]
             }
           ]
@@ -1805,205 +2070,50 @@ export function getItemsForDesktop(v) {
                           }
                         },
                         options: [
+                          toolbarBoxShadowHexAndOpacity({
+                            v,
+                            device,
+                            state: "normal",
+                            onChange: [
+                              "onChangeBoxShadowHexAndOpacity",
+                              "onChangeBoxShadowHexAndOpacityPalette"
+                            ]
+                          }),
+                          toolbarBoxShadowPalette({
+                            v,
+                            device,
+                            state: "normal",
+                            onChange: [
+                              "onChangeBoxShadowPalette",
+                              "onChangeBoxShadowPaletteOpacity"
+                            ]
+                          }),
                           {
-                            id: "boxShadowColor",
-                            type: "colorPicker",
-                            value: {
-                              hex: boxShadowColorHex,
-                              opacity: v.boxShadowColorOpacity
-                            },
-                            onChange: ({
-                              hex,
-                              opacity,
-                              isChanged,
-                              opacityDragEnd
-                            }) => {
-                              const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex &&
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : opacity;
-
-                              return {
-                                boxShadowColorHex: hex,
-                                boxShadowColorOpacity: boxShadowColorOpacity,
-                                boxShadowColorPalette:
-                                  isChanged === "hex"
-                                    ? ""
-                                    : v.boxShadowColorPalette
-                              };
-                            }
-                          },
-                          {
-                            id: "boxShadowColorPalette",
-                            type: "colorPalette",
-                            position: 20,
-                            value: v.boxShadowColorPalette,
-                            onChange: boxShadowColorPalette => ({
-                              boxShadowColorPalette,
-                              boxShadowColorHex: "",
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowColorFields",
-                            type: "colorFields",
-                            position: 30,
-                            value: {
-                              hex: boxShadowColorHex,
-                              opacity: v.boxShadowColorOpacity
-                            },
-                            onChange: ({ hex, opacity, isChanged }) => {
-                              const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex &&
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : opacity;
-
-                              return {
-                                boxShadowColorPalette:
-                                  isChanged === "hex"
-                                    ? ""
-                                    : v.boxShadowColorPalette,
-                                boxShadowColorHex: hex,
-                                boxShadowColorOpacity: boxShadowColorOpacity
-                              };
-                            }
+                            type: "grid",
+                            className: "brz-ed-grid__color-fileds",
+                            columns: [
+                              {
+                                width: 100,
+                                options: [
+                                  toolbarBoxShadowFields({
+                                    v,
+                                    device,
+                                    state: "normal",
+                                    onChange: [
+                                      "onChangeBoxShadowHexAndOpacity",
+                                      "onChangeBoxShadowHexAndOpacityPalette"
+                                    ]
+                                  })
+                                ]
+                              }
+                            ]
                           }
                         ]
                       },
-                      {
-                        id: "boxShadowBlur",
-                        type: "slider",
-                        icon: "nc-blur",
-                        slider: {
-                          min: 0
-                        },
-                        input: {
-                          show: true,
-                          min: 0
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowBlur
-                        },
-                        onChange: ({ value: boxShadowBlur }) => ({
-                          boxShadowBlur,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      },
-                      {
-                        id: "boxShadowSpread",
-                        type: "slider",
-                        icon: "nc-size",
-                        slider: {
-                          min: -100,
-                          max: 100
-                        },
-                        input: {
-                          show: true,
-                          min: 0
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowSpread
-                        },
-                        onChange: ({ value: boxShadowSpread }) => ({
-                          boxShadowSpread,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      },
-                      {
-                        id: "boxShadowVertical",
-                        type: "slider",
-                        icon: "nc-vertical",
-                        slider: {
-                          min: -100,
-                          max: 100
-                        },
-                        input: {
-                          show: true,
-                          min: -100,
-                          max: 100
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowVertical
-                        },
-                        onChange: ({ value: boxShadowVertical }) => ({
-                          boxShadowVertical,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      },
-                      {
-                        id: "boxShadowHorizontal",
-                        type: "slider",
-                        icon: "nc-horizontal",
-                        slider: {
-                          min: -100,
-                          max: 100
-                        },
-                        input: {
-                          show: true,
-                          min: -100,
-                          max: 100
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowHorizontal
-                        },
-                        onChange: ({ value: boxShadowHorizontal }) => ({
-                          boxShadowHorizontal,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      }
+                      toolbarBoxShadowBlur({ v, device, state: "normal" }),
+                      toolbarBoxShadowSpread({ v, device, state: "normal" }),
+                      toolbarBoxShadowVertical({ v, device, state: "normal" }),
+                      toolbarBoxShadowHorizontal({ v, device, state: "normal" })
                     ]
                   }
                 }
@@ -2017,6 +2127,8 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
+
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
@@ -2105,22 +2217,22 @@ export function getItemsForTablet(v) {
                   tabletSize !== "custom" && v.fillType === "default"
                     ? 0
                     : tabletSize !== "custom" && v.fillType !== "default"
-                      ? v[`${tabletSize}PaddingX`]
-                      : v.tabletPaddingRL,
+                    ? v[`${tabletSize}PaddingX`]
+                    : v.tabletPaddingRL,
 
                 tabletPaddingRight:
                   tabletSize !== "custom" && v.fillType === "default"
                     ? 0
                     : tabletSize !== "custom" && v.fillType !== "default"
-                      ? v[`${tabletSize}PaddingX`]
-                      : v.tabletPaddingRight,
+                    ? v[`${tabletSize}PaddingX`]
+                    : v.tabletPaddingRight,
 
                 tabletPaddingLeft:
                   tabletSize !== "custom" && v.fillType === "default"
                     ? 0
                     : tabletSize !== "custom" && v.fillType !== "default"
-                      ? v[`${tabletSize}PaddingX`]
-                      : v.tabletPaddingLeft,
+                    ? v[`${tabletSize}PaddingX`]
+                    : v.tabletPaddingLeft,
 
                 tempTabletPaddingRL:
                   tabletSize !== "custom" && v.fillType !== "default"
@@ -2152,13 +2264,13 @@ export function getItemsForTablet(v) {
                       tabletSize !== "custom" &&
                       v[`${tabletSize}FontSize`] * v.tabletLineHeight <
                         v.iconCustomSize
-                      ? Math.round(
-                          (v.iconCustomSize +
-                            v[`${tabletSize}PaddingY`] * 2 +
-                            v.borderWidth * 2) /
-                            2
-                        )
-                      : tabletSyncOnChange(v, "borderRadius")
+                    ? Math.round(
+                        (v.iconCustomSize +
+                          v[`${tabletSize}PaddingY`] * 2 +
+                          v.borderWidth * 2) /
+                          2
+                      )
+                    : tabletSyncOnChange(v, "borderRadius")
               };
             }
           },
@@ -2239,13 +2351,13 @@ export function getItemsForTablet(v) {
                           )
                         : v.borderRadiusType === "rounded" &&
                           tabletFontSize * tabletLineHeight < v.iconCustomSize
-                          ? Math.round(
-                              (v.iconCustomSize +
-                                tabletPaddingTB * 2 +
-                                v.borderWidth * 2) /
-                                2
-                            )
-                          : tabletSyncOnChange(v, "borderRadius")
+                        ? Math.round(
+                            (v.iconCustomSize +
+                              tabletPaddingTB * 2 +
+                              v.borderWidth * 2) /
+                              2
+                          )
+                        : tabletSyncOnChange(v, "borderRadius")
                   };
                 }
               }
@@ -2265,6 +2377,7 @@ export function getItemsForTablet(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -2344,6 +2457,8 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
+
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
@@ -2432,22 +2547,22 @@ export function getItemsForMobile(v) {
                   mobileSize !== "custom" && v.fillType === "default"
                     ? 0
                     : mobileSize !== "custom" && v.fillType !== "default"
-                      ? v[`${mobileSize}PaddingX`]
-                      : v.mobilePaddingRL,
+                    ? v[`${mobileSize}PaddingX`]
+                    : v.mobilePaddingRL,
 
                 mobilePaddingRight:
                   mobileSize !== "custom" && v.fillType === "default"
                     ? 0
                     : mobileSize !== "custom" && v.fillType !== "default"
-                      ? v[`${mobileSize}PaddingX`]
-                      : v.mobilePaddingRight,
+                    ? v[`${mobileSize}PaddingX`]
+                    : v.mobilePaddingRight,
 
                 mobilePaddingLeft:
                   mobileSize !== "custom" && v.fillType === "default"
                     ? 0
                     : mobileSize !== "custom" && v.fillType !== "default"
-                      ? v[`${mobileSize}PaddingX`]
-                      : v.mobilePaddingLeft,
+                    ? v[`${mobileSize}PaddingX`]
+                    : v.mobilePaddingLeft,
 
                 tempMobilePaddingRL:
                   mobileSize !== "custom" && v.fillType !== "default"
@@ -2479,13 +2594,13 @@ export function getItemsForMobile(v) {
                       mobileSize !== "custom" &&
                       v[`${mobileSize}FontSize`] * v.mobileLineHeight <
                         v.iconCustomSize
-                      ? Math.round(
-                          (v.iconCustomSize +
-                            v[`${mobileSize}PaddingY`] * 2 +
-                            v.borderWidth * 2) /
-                            2
-                        )
-                      : mobileSyncOnChange(v, "borderRadius")
+                    ? Math.round(
+                        (v.iconCustomSize +
+                          v[`${mobileSize}PaddingY`] * 2 +
+                          v.borderWidth * 2) /
+                          2
+                      )
+                    : mobileSyncOnChange(v, "borderRadius")
               };
             }
           },
@@ -2566,13 +2681,13 @@ export function getItemsForMobile(v) {
                           )
                         : v.borderRadiusType === "rounded" &&
                           mobileFontSize * mobileLineHeight < v.iconCustomSize
-                          ? Math.round(
-                              (v.iconCustomSize +
-                                mobilePaddingTB * 2 +
-                                v.borderWidth * 2) /
-                                2
-                            )
-                          : mobileSyncOnChange(v, "borderRadius")
+                        ? Math.round(
+                            (v.iconCustomSize +
+                              mobilePaddingTB * 2 +
+                              v.borderWidth * 2) /
+                              2
+                          )
+                        : mobileSyncOnChange(v, "borderRadius")
                   };
                 }
               }
@@ -2592,6 +2707,7 @@ export function getItemsForMobile(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,

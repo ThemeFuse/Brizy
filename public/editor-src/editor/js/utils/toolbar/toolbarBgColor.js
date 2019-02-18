@@ -5,22 +5,41 @@ import {
   saveOnChanges
 } from "visual/utils/onChange";
 
-export function toolbarBgColorHexAndOpacity({ v, device, state, onChange }) {
+export function toolbarBgColorHexAndOpacity({
+  v,
+  device,
+  state,
+  prefix,
+  disabled = false,
+  onChange
+}) {
   const { hex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device, state }),
-    defaultValueValue({ v, key: "bgColorPalette", device, state })
+    defaultValueValue({ v, key: `${prefix}ColorHex`, device, state }),
+    defaultValueValue({ v, key: `${prefix}ColorPalette`, device, state })
   );
+  const prefixColorKey = defaultValueKey({
+    key: `${prefix}Color`,
+    device,
+    state
+  });
+  const prefixColorOpacityValue = defaultValueValue({
+    v,
+    key: `${prefix}ColorOpacity`,
+    device,
+    state
+  });
 
   return {
-    id: defaultValueKey({ key: "bgColor", device, state }),
+    id: prefixColorKey,
     type: "colorPicker",
+    disabled,
     value: {
       hex,
-      opacity: defaultValueValue({ v, key: "bgColorOpacity", device, state })
+      opacity: prefixColorOpacityValue
     },
     onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
       const values = {
-        ...{ v, device, state, onChange },
+        ...{ v, device, state, prefix, onChange },
         ...{ hex, opacity, isChanged, opacityDragEnd }
       };
       return saveOnChanges(values);
@@ -28,14 +47,34 @@ export function toolbarBgColorHexAndOpacity({ v, device, state, onChange }) {
   };
 }
 
-export function toolbarBgColorPalette({ v, device, state, onChange }) {
+export function toolbarBgColorPalette({
+  v,
+  device,
+  state,
+  prefix,
+  disabled = false,
+  onChange
+}) {
+  const prefixColorPaletteKey = defaultValueKey({
+    key: "borderColorPalette",
+    device,
+    state
+  });
+  const prefixColorPaletteValue = defaultValueValue({
+    v,
+    key: `${prefix}ColorPalette`,
+    device,
+    state
+  });
+
   return {
-    id: defaultValueKey({ key: "bgColorPalette", device, state }),
+    id: prefixColorPaletteKey,
     type: "colorPalette",
-    value: defaultValueValue({ v, key: "bgColorPalette", device, state }),
+    disabled,
+    value: prefixColorPaletteValue,
     onChange: palette => {
       const values = {
-        ...{ v, device, state, onChange },
+        ...{ v, device, state, prefix, onChange },
         ...{ palette }
       };
       return saveOnChanges(values);
@@ -43,22 +82,43 @@ export function toolbarBgColorPalette({ v, device, state, onChange }) {
   };
 }
 
-export function toolbarBgColorFields({ v, device, state, onChange }) {
+export function toolbarBgColorFields({
+  v,
+  device,
+  state,
+  prefix,
+  className = "",
+  disabled = false,
+  onChange
+}) {
   const { hex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device, state }),
-    defaultValueValue({ v, key: "bgColorPalette", device, state })
+    defaultValueValue({ v, key: `${prefix}ColorHex`, device, state }),
+    defaultValueValue({ v, key: `${prefix}ColorPalette`, device, state })
   );
+  const prefixColorFieldsKey = defaultValueKey({
+    key: `${prefix}ColorFields`,
+    device,
+    state
+  });
+  const prefixColorOpacityValue = defaultValueValue({
+    v,
+    key: `${prefix}ColorOpacity`,
+    device,
+    state
+  });
 
   return {
-    id: defaultValueKey({ key: "bgColorFields", device, state }),
+    id: prefixColorFieldsKey,
     type: "colorFields",
+    disabled,
+    className,
     value: {
       hex,
-      opacity: defaultValueValue({ v, key: "bgColorOpacity", device, state })
+      opacity: prefixColorOpacityValue
     },
     onChange: ({ hex }) => {
       const values = {
-        ...{ v, device, state, onChange },
+        ...{ v, device, state, prefix, onChange },
         ...{ hex }
       };
       return saveOnChanges(values);

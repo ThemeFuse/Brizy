@@ -2,7 +2,11 @@
 export { saveOnChanges } from "./onChange";
 
 // Main onChange Functions
-export { defaultValueKey, defaultValueValue } from "./device";
+export {
+  defaultValueKey,
+  defaultToolbarValueValue,
+  defaultValueValue
+} from "./device";
 
 // Background Image
 export {
@@ -12,6 +16,12 @@ export {
   onChangeBgImageColumnAndRowSyncTablet,
   onChangeBgImageColumnAndRowSyncMobile
 } from "./onChangeBgImage";
+
+// Border Style
+export {
+  onChangeBorderStyle,
+  onChangeBorderStyleDependencies
+} from "./onChangeBorderStyle";
 
 // Border Width
 export {
@@ -29,6 +39,14 @@ export {
   onChangeBorderRadiusUngroupedDependencies
 } from "./onChangeBorderRadius";
 
+// Color
+export {
+  onChangeColorHexAndOpacity,
+  onChangeColorHexAndOpacityPalette,
+  onChangeColorPalette,
+  onChangeColorPaletteOpacity
+} from "./onChangeColor";
+
 // Background Color
 export {
   onChangeBgColorHexAndOpacity,
@@ -39,14 +57,6 @@ export {
   onChangeBgColorPalette,
   onChangeBgColorPaletteOpacity
 } from "./onChangeBgColor";
-
-// Box Shadow
-export {
-  onChangeBoxShadowHexAndOpacity,
-  onChangeBoxShadowHexAndOpacityPalette,
-  onChangeBoxShadowPalette,
-  onChangeBoxShadowPaletteOpacity
-} from "./onChangeBoxShadow";
 
 // Border Color
 export {
@@ -59,6 +69,14 @@ export {
   onChangeBorderColorPaletteOpacity
 } from "./onChangeBorderColor";
 
+// Box Shadow
+export {
+  onChangeBoxShadowHexAndOpacity,
+  onChangeBoxShadowHexAndOpacityPalette,
+  onChangeBoxShadowPalette,
+  onChangeBoxShadowPaletteOpacity
+} from "./onChangeBoxShadow";
+
 // Padding
 export {
   onChangePaddingGrouped,
@@ -70,6 +88,23 @@ export {
   onChangeMarginGrouped,
   onChangeMarginUngrouped
 } from "./onChangeMargin";
+
+// Element Slider
+export {
+  onChangeSliderColorHexAndOpacity,
+  onChangeSliderColorHexAndOpacityPalette,
+  onChangeSliderColorPalette,
+  onChangeSliderColorPaletteOpacity
+} from "./onChangeElementSlider";
+
+// Element Progress Bar
+export {
+  onChangeElementProgressBarBg2ColorHexAndOpacity,
+  onChangeElementProgressBarBg2ColorHexAndOpacityPalette,
+  onChangeElementProgressBarBg2ColorHexAndOpacityDependencies,
+  onChangeElementProgressBarBg2ColorPalette,
+  onChangeElementProgressBarBg2ColorPaletteOpacity
+} from "./onChangeElementProgressBar";
 
 // Typography ... ToDo.. must be changes with new typography and deleted in future
 export {
