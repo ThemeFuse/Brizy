@@ -8,16 +8,38 @@
   "slider": "off",
 
   "sliderDots": "circle",
+
+  "tabsColor": "",
+
   "sliderDotsColorHex": "#000000",
   "sliderDotsColorOpacity": 1,
   "sliderDotsColorPalette": "",
+
   "tempSliderDotsColorOpacity": 1,
+  "tempSliderDotsColorPalette": "",
+
+  "hoverSliderDotsColorHex": "#000000",
+  "hoverSliderDotsColorOpacity": 1,
+  "hoverSliderDotsColorPalette": "",
+
+  "tempHoverSliderDotsColorOpacity": 1,
+  "tempHoverSliderDotsColorPalette": "",
 
   "sliderArrows": "thin",
+
   "sliderArrowsColorHex": "#000000",
-  "sliderArrowsColorOpacity": 1,
+  "sliderArrowsColorOpacity": 0.7,
   "sliderArrowsColorPalette": "",
+
   "tempSliderArrowsColorOpacity": 1,
+  "tempSliderArrowsColorPalette": "",
+
+  "hoverSliderArrowsColorHex": "#000000",
+  "hoverSliderArrowsColorOpacity": 1,
+  "hoverSliderArrowsColorPalette": "",
+
+  "tempHoverSliderArrowsColorOpacity": 1,
+  "tempHoverSliderArrowsColorPalette": "",
 
   "sliderAnimation": "none",
   "sliderAutoPlay": "off",

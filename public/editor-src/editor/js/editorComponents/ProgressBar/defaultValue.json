@@ -1,24 +1,41 @@
 {
   "className": "",
 
-  "width": 100,
-  "borderRadius": 2,
-
   "text": "My skill",
+
   "percentage": 80,
+
   "showPercentage": "on",
 
-  "colorHex": "#f1f1f1",
-  "colorOpacity": 1,
-  "colorPalette": "",
+  "borderStyle": "solid",
 
-  "bgColorHex": "#239ddb",
-  "bgColorOpacity": 1,
-  "bgColorPalette": "color3",
+  "tempBorderStyle": "solid",
 
-  "bg2ColorHex": "#cccccc",
-  "bg2ColorOpacity": 1,
-  "bg2ColorPalette": "",
+  "borderWidthType": "grouped",
+  "borderWidth": 0,
+  "borderTopWidth": 0,
+  "borderRightWidth": 0,
+  "borderBottomWidth": 0,
+  "borderLeftWidth": 0,
+
+  "tempBorderWidth": 2,
+  "tempBorderTopWidth": 2,
+  "tempBorderRightWidth": 2,
+  "tempBorderBottomWidth": 2,
+  "tempBorderLeftWidth": 2,
+
+  "borderRadiusType": "grouped",
+  "borderRadius": 2,
+  "borderTopLeftRadius": 2,
+  "borderTopRightRadius": 2,
+  "borderBottomRightRadius": 2,
+  "borderBottomLeftRadius": 2,
+
+  "tempBorderRadius": 2,
+  "tempBorderTopLeftRadius": 2,
+  "tempBorderTopRightRadius": 2,
+  "tempBorderBottomRightRadius": 2,
+  "tempBorderBottomLeftRadius": 2,
 
   "fontStyle": "",
   "fontFamily": "roboto",
@@ -27,10 +44,59 @@
   "lineHeight": 1.3,
   "letterSpacing": 0,
 
+  "colorHex": "#f1f1f1",
+  "colorOpacity": 1,
+  "colorPalette": "",
+
+  "tempColorOpacity": 1,
+  "tempColorPalette": "",
+
+  "bgColorHex": "#239ddb",
+  "bgColorOpacity": 1,
+  "bgColorPalette": "color3",
+
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "color3",
+
+  "bg2ColorHex": "#cccccc",
+  "bg2ColorOpacity": 1,
+  "bg2ColorPalette": "",
+
+  "tempBg2ColorOpacity": 1,
+  "tempBg2ColorPalette": "",
+
+  "width": 100,
+
   "paddingTop": 5,
   "paddingRight": 15,
   "paddingBottom": 5,
   "paddingLeft": 15,
+
+  "tabletBorderWidthType": null,
+  "tabletBorderWidth": null,
+  "tabletBorderTopWidth": null,
+  "tabletBorderRightWidth": null,
+  "tabletBorderBottomWidth": null,
+  "tabletBorderLeftWidth": null,
+
+  "tempTabletBorderWidth": null,
+  "tempTabletBorderTopWidth": null,
+  "tempTabletBorderRightWidth": null,
+  "tempTabletBorderBottomWidth": null,
+  "tempTabletBorderLeftWidth": null,
+
+  "tabletBorderRadiusType": null,
+  "tabletBorderRadius": null,
+  "tabletBorderTopLeftRadius": null,
+  "tabletBorderTopRightRadius": null,
+  "tabletBorderBottomLeftRadius": null,
+  "tabletBorderBottomRightRadius": null,
+
+  "tempTabletBorderRadius": null,
+  "tempTabletBorderTopLeftRadius": null,
+  "tempTabletBorderTopRightRadius": null,
+  "tempTabletBorderBottomLeftRadius": null,
+  "tempTabletBorderBottomRightRadius": null,
 
   "tabletFontStyle": "",
   "tabletFontSize": 14,
@@ -39,7 +105,32 @@
   "tabletLetterSpacing": 0,
 
   "tabletWidth": null,
-  "tabletBorderRadius": null,
+
+  "mobileBorderWidthType": null,
+  "mobileBorderWidth": null,
+  "mobileBorderTopWidth": null,
+  "mobileBorderRightWidth": null,
+  "mobileBorderBottomWidth": null,
+  "mobileBorderLeftWidth": null,
+
+  "tempMobileBorderWidth": null,
+  "tempMobileBorderTopWidth": null,
+  "tempMobileBorderRightWidth": null,
+  "tempMobileBorderBottomWidth": null,
+  "tempMobileBorderLeftWidth": null,
+
+  "mobileBorderRadiusType": null,
+  "mobileBorderRadius": null,
+  "mobileBorderTopLeftRadius": null,
+  "mobileBorderTopRightRadius": null,
+  "mobileBorderBottomLeftRadius": null,
+  "mobileBorderBottomRightRadius": null,
+
+  "tempMobileBorderRadius": null,
+  "tempMobileBorderTopLeftRadius": null,
+  "tempMobileBorderTopRightRadius": null,
+  "tempMobileBorderBottomLeftRadius": null,
+  "tempMobileBorderBottomRightRadius": null,
 
   "mobileFontStyle": "",
   "mobileFontSize": 13,
@@ -47,6 +138,5 @@
   "mobileLineHeight": 1.3,
   "mobileLetterSpacing": 0,
 
-  "mobileWidth": null,
-  "mobileBorderRadius": null
+  "mobileWidth": null
 }

@@ -3,7 +3,19 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColor } from "visual/utils/options";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
+import {
+  toolbarBoxShadowHexAndOpacity,
+  toolbarBoxShadowPalette,
+  toolbarBoxShadowFields,
+  toolbarBoxShadowBlur,
+  toolbarBoxShadowSpread,
+  toolbarBoxShadowVertical,
+  toolbarBoxShadowHorizontal
+} from "visual/utils/toolbar";
+
 export function getItemsForDesktop(v) {
+  const device = "desktop";
+
   const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
 
   return [
@@ -143,205 +155,62 @@ export function getItemsForDesktop(v) {
                               }
                             },
                             options: [
+                              toolbarBoxShadowHexAndOpacity({
+                                v,
+                                device,
+                                state: "normal",
+                                onChange: [
+                                  "onChangeBoxShadowHexAndOpacity",
+                                  "onChangeBoxShadowHexAndOpacityPalette"
+                                ]
+                              }),
+                              toolbarBoxShadowPalette({
+                                v,
+                                device,
+                                state: "normal",
+                                onChange: [
+                                  "onChangeBoxShadowPalette",
+                                  "onChangeBoxShadowPaletteOpacity"
+                                ]
+                              }),
                               {
-                                id: "boxShadowColor",
-                                type: "colorPicker",
-                                value: {
-                                  hex: boxShadowColorHex,
-                                  opacity: v.boxShadowColorOpacity
-                                },
-                                onChange: ({
-                                  hex,
-                                  opacity,
-                                  isChanged,
-                                  opacityDragEnd
-                                }) => {
-                                  const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex &&
-                                    v.boxShadowColorOpacity === 0
-                                      ? v.tempBoxShadowColorOpacity
-                                      : opacity;
-
-                                  return {
-                                    boxShadowColorHex: hex,
-                                    boxShadowColorOpacity: boxShadowColorOpacity,
-                                    boxShadowColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.boxShadowColorPalette
-                                  };
-                                }
-                              },
-                              {
-                                id: "boxShadowColorPalette",
-                                type: "colorPalette",
-                                position: 20,
-                                value: v.boxShadowColorPalette,
-                                onChange: boxShadowColorPalette => ({
-                                  boxShadowColorPalette,
-                                  boxShadowColorHex: "",
-                                  boxShadowColorOpacity:
-                                    v.boxShadowColorOpacity === 0
-                                      ? v.tempBoxShadowColorOpacity
-                                      : v.boxShadowColorOpacity
-                                })
-                              },
-                              {
-                                id: "boxShadowColorFields",
-                                type: "colorFields",
-                                position: 30,
-                                value: {
-                                  hex: boxShadowColorHex,
-                                  opacity: v.boxShadowColorOpacity
-                                },
-                                onChange: ({ hex, opacity, isChanged }) => {
-                                  const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex &&
-                                    v.boxShadowColorOpacity === 0
-                                      ? v.tempBoxShadowColorOpacity
-                                      : opacity;
-
-                                  return {
-                                    boxShadowColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.boxShadowColorPalette,
-                                    boxShadowColorHex: hex,
-                                    boxShadowColorOpacity: boxShadowColorOpacity
-                                  };
-                                }
+                                type: "grid",
+                                className: "brz-ed-grid__color-fileds",
+                                columns: [
+                                  {
+                                    width: 100,
+                                    options: [
+                                      toolbarBoxShadowFields({
+                                        v,
+                                        device,
+                                        state: "normal",
+                                        onChange: [
+                                          "onChangeBoxShadowHexAndOpacity",
+                                          "onChangeBoxShadowHexAndOpacityPalette"
+                                        ]
+                                      })
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           },
-                          {
-                            id: "boxShadowBlur",
-                            type: "slider",
-                            icon: "nc-blur",
-                            slider: {
-                              min: 0
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowBlur
-                            },
-                            onChange: ({ value: boxShadowBlur }) => ({
-                              boxShadowBlur,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowSpread",
-                            type: "slider",
-                            icon: "nc-size",
-                            slider: {
-                              min: -100,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowSpread
-                            },
-                            onChange: ({ value: boxShadowSpread }) => ({
-                              boxShadowSpread,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowVertical",
-                            type: "slider",
-                            icon: "nc-vertical",
-                            slider: {
-                              min: -100,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: -100,
-                              max: 100
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowVertical
-                            },
-                            onChange: ({ value: boxShadowVertical }) => ({
-                              boxShadowVertical,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowHorizontal",
-                            type: "slider",
-                            icon: "nc-horizontal",
-                            slider: {
-                              min: -100,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: -100,
-                              max: 100
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowHorizontal
-                            },
-                            onChange: ({ value: boxShadowHorizontal }) => ({
-                              boxShadowHorizontal,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          }
+                          toolbarBoxShadowBlur({ v, device, state: "normal" }),
+                          toolbarBoxShadowSpread({
+                            v,
+                            device,
+                            state: "normal"
+                          }),
+                          toolbarBoxShadowVertical({
+                            v,
+                            device,
+                            state: "normal"
+                          }),
+                          toolbarBoxShadowHorizontal({
+                            v,
+                            device,
+                            state: "normal"
+                          })
                         ]
                       }
                     }

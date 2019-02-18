@@ -29,6 +29,7 @@ import Switch from "./Switch";
 import Tabs from "./Tabs";
 import Toggle from "./Toggle";
 import InputNumber from "./InputNumber";
+import Range from "./Range";
 
 export default {
   advancedSettings: AdvancedSettings,
@@ -61,5 +62,6 @@ export default {
   switch: Switch,
   tabs: Tabs,
   toggle: Toggle,
-  inputNumber: InputNumber
+  inputNumber: InputNumber,
+  range: Range
 };

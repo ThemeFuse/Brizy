@@ -1,0 +1,39 @@
+// Color Fields Grid
+.brz-ed-grid__gradient {
+  min-height: 40px;
+  padding-bottom: 8px;
+  border-bottom: 0px;
+  margin-bottom: 0px;
+  align-items: center;
+}
+
+// Gradient // Unghi // Marime
+.brz-ed-grid__gradient__size,
+.brz-ed-grid__gradient__degree {
+  .brz-ed-option__input-number-wrap {
+    @extend .brz-ed-option__input-outline;
+
+    .brz-input {
+      width: 29px;
+    }
+  }
+}
+
+// Gradient // Unghi // Marime
+.brz-ed-grid__gradient__size {
+  .brz-ed-option__input-number-wrap {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      display: block;
+      border: 1px solid $options-label-color;
+      border-radius: 100%;
+      top: 1px;
+      right: -3px;
+    }
+  }
+}

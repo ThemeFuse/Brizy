@@ -1,5 +1,10 @@
 import { t } from "visual/utils/i18n";
 
+import {
+  toolbarDisabledShowOnTablet,
+  toolbarDisabledShowOnMobile
+} from "visual/utils/toolbar";
+
 export function getItemsForDesktop(v) {
   return [
     {
@@ -92,11 +97,7 @@ export function getItemsForDesktop(v) {
 
 export function getItemsForTablet(v) {
   return [
-    {
-      id: "showOnTablet",
-      type: "toggle",
-      disabled: true
-    },
+    toolbarDisabledShowOnTablet(),
     {
       id: "tabletHorizontalAlign",
       type: "toggle",
@@ -118,11 +119,7 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   return [
-    {
-      id: "showOnMobile",
-      type: "toggle",
-      disabled: true
-    },
+    toolbarDisabledShowOnMobile(),
     {
       id: "mobileHorizontalAlign",
       type: "toggle",

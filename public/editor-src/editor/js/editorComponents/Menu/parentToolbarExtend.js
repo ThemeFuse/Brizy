@@ -195,26 +195,38 @@ export function getItemsForDesktop(v) {
           })
         },
         {
-          id: "mMenuIconColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: mMenuIconColorHex,
-            opacity: v.mMenuIconColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            const mMenuIconColorOpacity =
-              hex !== v.mMenuIconColorHex && v.mMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : opacity;
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                {
+                  id: "mMenuIconColorFields",
+                  type: "colorFields",
+                  position: 30,
+                  value: {
+                    hex: mMenuIconColorHex,
+                    opacity: v.mMenuIconColorOpacity
+                  },
+                  onChange: ({ hex, opacity, isChanged }) => {
+                    const mMenuIconColorOpacity =
+                      hex !== v.mMenuIconColorHex &&
+                      v.mMenuIconColorOpacity === 0
+                        ? v.mMenuTempIconColorOpacity
+                        : opacity;
 
-            return {
-              mMenuIconColorPalette:
-                isChanged === "hex" ? "" : v.mMenuIconColorPalette,
-              mMenuIconColorHex: hex,
-              mMenuIconColorOpacity: mMenuIconColorOpacity
-            };
-          }
+                    return {
+                      mMenuIconColorPalette:
+                        isChanged === "hex" ? "" : v.mMenuIconColorPalette,
+                      mMenuIconColorHex: hex,
+                      mMenuIconColorOpacity: mMenuIconColorOpacity
+                    };
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -406,27 +418,40 @@ export function getItemsForTablet(v) {
           })
         },
         {
-          id: "tabletMMenuIconColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: tabletMMenuIconColorHex,
-            opacity: tabletSyncOnChange(v, "mMenuIconColorOpacity")
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            const tabletMMenuIconColorOpacity =
-              hex !== v.tabletMMenuIconColorHex &&
-              v.tabletMMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : opacity;
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                {
+                  id: "tabletMMenuIconColorFields",
+                  type: "colorFields",
+                  position: 30,
+                  value: {
+                    hex: tabletMMenuIconColorHex,
+                    opacity: tabletSyncOnChange(v, "mMenuIconColorOpacity")
+                  },
+                  onChange: ({ hex, opacity, isChanged }) => {
+                    const tabletMMenuIconColorOpacity =
+                      hex !== v.tabletMMenuIconColorHex &&
+                      v.tabletMMenuIconColorOpacity === 0
+                        ? v.mMenuTempIconColorOpacity
+                        : opacity;
 
-            return {
-              tabletMMenuIconColorPalette:
-                isChanged === "hex" ? "" : v.tabletMMenuIconColorPalette,
-              tabletMMenuIconColorHex: hex,
-              tabletMMenuIconColorOpacity: tabletMMenuIconColorOpacity
-            };
-          }
+                    return {
+                      tabletMMenuIconColorPalette:
+                        isChanged === "hex"
+                          ? ""
+                          : v.tabletMMenuIconColorPalette,
+                      tabletMMenuIconColorHex: hex,
+                      tabletMMenuIconColorOpacity: tabletMMenuIconColorOpacity
+                    };
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -618,27 +643,40 @@ export function getItemsForMobile(v) {
           })
         },
         {
-          id: "mobileMMenuIconColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: mobileMMenuIconColorHex,
-            opacity: mobileSyncOnChange(v, "mMenuIconColorOpacity")
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            const mobileMMenuIconColorOpacity =
-              hex !== v.mobileMMenuIconColorHex &&
-              v.mobileMMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : opacity;
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                {
+                  id: "mobileMMenuIconColorFields",
+                  type: "colorFields",
+                  position: 30,
+                  value: {
+                    hex: mobileMMenuIconColorHex,
+                    opacity: mobileSyncOnChange(v, "mMenuIconColorOpacity")
+                  },
+                  onChange: ({ hex, opacity, isChanged }) => {
+                    const mobileMMenuIconColorOpacity =
+                      hex !== v.mobileMMenuIconColorHex &&
+                      v.mobileMMenuIconColorOpacity === 0
+                        ? v.mMenuTempIconColorOpacity
+                        : opacity;
 
-            return {
-              mobileMMenuIconColorPalette:
-                isChanged === "hex" ? "" : v.mobileMMenuIconColorPalette,
-              mobileMMenuIconColorHex: hex,
-              mobileMMenuIconColorOpacity: mobileMMenuIconColorOpacity
-            };
-          }
+                    return {
+                      mobileMMenuIconColorPalette:
+                        isChanged === "hex"
+                          ? ""
+                          : v.mobileMMenuIconColorPalette,
+                      mobileMMenuIconColorHex: hex,
+                      mobileMMenuIconColorOpacity: mobileMMenuIconColorOpacity
+                    };
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },

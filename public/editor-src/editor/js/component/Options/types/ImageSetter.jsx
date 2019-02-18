@@ -24,7 +24,7 @@ class FocalPointOptionType extends React.Component {
 
   handlePopulationChange = population => {
     const { value, onChange } = this.props;
-    onChange({ ...value, population });
+    onChange({ ...value, population }, { isChanged: "population" });
   };
 
   renderLabel() {

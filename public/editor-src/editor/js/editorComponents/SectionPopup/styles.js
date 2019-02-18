@@ -1,8 +1,19 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { imageUrl, imagePopulationUrl } from "visual/utils/image";
-import { hexToRgba } from "visual/utils/color";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  styleBgImage,
+  styleExportBgImage,
+  styleBgPositionX,
+  styleBgPositionY,
+  styleBorderStyle,
+  styleBorderWidth,
+  styleBorderRadius,
+  styleBgColor,
+  styleBgGradient,
+  styleColor,
+  styleBorderColor,
+  styleSizeConatinerSizePercent
+} from "visual/utils/style";
 
 export function sectionStyleClassName(v, state) {
   const { className, customClassName } = v;
@@ -20,14 +31,19 @@ export function sectionStyleClassName(v, state) {
     glamorObj = {
       "> .brz-popup__close": {
         color: "var(--color)"
+      },
+      "> .brz-popup__close:hover ": {
+        color: "var(--hoverColor)"
       }
     };
   } else {
-    const { colorHex, colorOpacity } = v;
     objClassNames = ["brz-popup__preview"];
     glamorObj = {
       "> .brz-popup__close": {
-        color: hexToRgba(colorHex, colorOpacity)
+        color: styleColor({ v, state: "normal" })
+      },
+      "> .brz-popup__close:hover": {
+        color: styleColor({ v, state: "hover" })
       }
     };
   }
@@ -46,10 +62,11 @@ export function sectionStyleClassName(v, state) {
 export function sectionStyleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const { colorHex, colorOpacity } = v;
-
   return {
-    "--color": hexToRgba(colorHex, colorOpacity)
+    // Color
+    "--color": styleColor({ v, state: "normal" }),
+
+    "--hoverColor": styleColor({ v, state: "hover" })
   };
 }
 
@@ -60,16 +77,19 @@ export function bgStyleClassName(v) {
       height: "100%",
 
       "> .brz-bg-media": {
+        borderStyle: "var(--borderStyle)",
+
         borderTopWidth: "var(--borderTopWidth)",
         borderRightWidth: "var(--borderRightWidth)",
         borderBottomWidth: "var(--borderBottomWidth)",
         borderLeftWidth: "var(--borderLeftWidth)",
-        borderColor: "var(--borderColor)",
-        borderStyle: "var(--borderStyle)",
+
         borderTopLeftRadius: "var(--borderTopLeftRadius)",
         borderTopRightRadius: "var(--borderTopRightRadius)",
         borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
-        borderBottomRightRadius: "var(--borderBottomRightRadius)"
+        borderBottomRightRadius: "var(--borderBottomRightRadius)",
+
+        borderColor: "var(--borderColor)"
       },
       ".brz-ed--desktop &": {
         "> .brz-bg-media > .brz-bg-image": {
@@ -78,7 +98,9 @@ export function bgStyleClassName(v) {
           backgroundPositionY: "var(--backgroundPositionY)"
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--backgroundColor)"
+          backgroundColor: "var(--backgroundColor)",
+
+          backgroundImage: "var(--backgroundGradient)"
         }
       },
       ".brz-ed--tablet &": {
@@ -88,7 +110,9 @@ export function bgStyleClassName(v) {
           backgroundPositionY: "var(--tabletBackgroundPositionY)"
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--tabletBackgroundColor)"
+          backgroundColor: "var(--tabletBackgroundColor)",
+
+          backgroundImage: "var(--tabletBackgroundGradient)"
         }
       },
       ".brz-ed--mobile &": {
@@ -98,132 +122,181 @@ export function bgStyleClassName(v) {
           backgroundPositionY: "var(--mobileBackgroundPositionY)"
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--mobileBackgroundColor)"
+          backgroundColor: "var(--mobileBackgroundColor)",
+
+          backgroundImage: "var(--mobileBackgroundGradient)"
         }
       }
     };
   } else {
-    const {
-      bgImageSrc,
-      bgPositionX,
-      bgPositionY,
-      bgColorHex,
-      bgColorOpacity,
-      bgPopulation,
-      borderWidth,
-      borderWidthType,
-      borderTopWidth,
-      borderRightWidth,
-      borderBottomWidth,
-      borderLeftWidth,
-      borderColorHex,
-      borderColorOpacity,
-      borderRadius,
-      borderRadiusType,
-      borderTopLeftRadius,
-      borderTopRightRadius,
-      borderBottomLeftRadius,
-      borderBottomRightRadius
-    } = v;
-    const bgImage = bgPopulation
-      ? imagePopulationUrl(bgPopulation)
-      : imageUrl(bgImageSrc);
-
-    const tabletBgImage = bgPopulation
-      ? imagePopulationUrl(bgPopulation)
-      : imageUrl(tabletSyncOnChange(v, "bgImageSrc"));
-
-    const mobileBgImage = bgPopulation
-      ? imagePopulationUrl(bgPopulation)
-      : imageUrl(mobileSyncOnChange(v, "bgImageSrc"));
-
     glamorObj = {
       height: "100%",
 
       "> .brz-bg-media": {
-        borderTopWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderTopWidth}px`,
-        borderRightWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderRightWidth}px`,
-        borderBottomWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderBottomWidth}px`,
-        borderLeftWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderLeftWidth}px`,
-        borderColor: `${hexToRgba(borderColorHex, borderColorOpacity)}`,
-        borderStyle: "solid",
-        borderTopLeftRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderTopLeftRadius}px`,
-        borderTopRightRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderTopRightRadius}px`,
-        borderBottomLeftRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderBottomLeftRadius}px`,
-        borderBottomRightRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderBottomRightRadius}px`
+        // Border Style
+        borderStyle: styleBorderStyle({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+
+        // Border Width
+        borderTopWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderTopWidth"
+        }),
+        borderRightWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderRightWidth"
+        }),
+        borderBottomWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderBottomWidth"
+        }),
+        borderLeftWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderLeftWidth"
+        }),
+
+        // Border Radius
+        borderTopLeftRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderTopLeftRadius"
+        }),
+        borderTopRightRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderTopRightRadius"
+        }),
+        borderBottomLeftRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderBottomLeftRadius"
+        }),
+        borderBottomRightRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderBottomRightRadius"
+        }),
+
+        // Border Color
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        })
       },
       "> .brz-bg-media > .brz-bg-image": {
-        backgroundImage:
-          bgImageSrc || bgPopulation ? `url(${bgImage})` : "none",
-        backgroundPosition: bgPopulation
-          ? "0% 0%"
-          : `${bgPositionX}% ${bgPositionY}%`
+        // BG Image
+        backgroundImage: styleExportBgImage({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+        backgroundPosition: `${styleBgPositionX({
+          v,
+          device: "desktop",
+          state: "normal"
+        })} ${styleBgPositionY({
+          v,
+          device: "desktop",
+          state: "normal"
+        })}`
       },
       "> .brz-bg-media > .brz-bg-color": {
-        backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
+        // BG Color
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+
+        // BG Gradient
+        backgroundImage: styleBgGradient({
+          v,
+          device: "desktop",
+          state: "normal"
+        })
       },
       "@media (max-width: 991px)": {
         "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage:
-            tabletSyncOnChange(v, "bgImageSrc") || bgPopulation
-              ? `url(${tabletBgImage})`
-              : "none",
-          backgroundPosition: bgPopulation
-            ? "0% 0%"
-            : `${tabletSyncOnChange(v, "bgPositionX")}% ${tabletSyncOnChange(
-                v,
-                "bgPositionY"
-              )}%`
+          // BG Image
+          backgroundImage: styleExportBgImage({
+            v,
+            device: "tablet",
+            state: "normal"
+          }),
+          backgroundPosition: `${styleBgPositionX({
+            v,
+            device: "tablet",
+            state: "normal"
+          })} ${styleBgPositionY({
+            v,
+            device: "tablet",
+            state: "normal"
+          })}`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(
-            tabletSyncOnChange(v, "bgColorHex"),
-            tabletSyncOnChange(v, "bgColorOpacity")
-          )
+          // BG Color
+          backgroundColor: styleBgColor({
+            v,
+            device: "tablet",
+            state: "normal"
+          }),
+
+          // BG Gradient
+          backgroundImage: styleBgGradient({
+            v,
+            device: "tablet",
+            state: "normal"
+          })
         }
       },
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage:
-            mobileSyncOnChange(v, "bgImageSrc") || bgPopulation
-              ? `url(${mobileBgImage})`
-              : "none",
-          backgroundPosition: bgPopulation
-            ? "0% 0%"
-            : `${mobileSyncOnChange(v, "bgPositionX")}% ${mobileSyncOnChange(
-                v,
-                "bgPositionY"
-              )}%`
+          // BG Image
+          backgroundImage: styleExportBgImage({
+            v,
+            device: "mobile",
+            state: "normal"
+          }),
+          backgroundPosition: `${styleBgPositionX({
+            v,
+            device: "mobile",
+            state: "normal"
+          })} ${styleBgPositionY({
+            v,
+            device: "mobile",
+            state: "normal"
+          })}`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(
-            mobileSyncOnChange(v, "bgColorHex"),
-            mobileSyncOnChange(v, "bgColorOpacity")
-          )
+          // BG Color
+          backgroundColor: styleBgColor({
+            v,
+            device: "mobile",
+            state: "normal"
+          }),
+
+          // BG Gradient
+          backgroundImage: styleBgGradient({
+            v,
+            device: "mobile",
+            state: "normal"
+          })
         }
       }
     };
@@ -242,101 +315,171 @@ export function bgStyleClassName(v) {
 export function bgStyleCSSVars(v) {
   if (IS_PREVIEW) return null;
 
-  const {
-    bgImageSrc,
-    bgPositionX,
-    bgPositionY,
-    bgColorHex,
-    bgColorOpacity,
-    bgPopulation,
-    borderWidth,
-    borderWidthType,
-    borderTopWidth,
-    borderRightWidth,
-    borderBottomWidth,
-    borderLeftWidth,
-    borderColorHex,
-    borderColorOpacity,
-    borderRadius,
-    borderRadiusType,
-    borderTopLeftRadius,
-    borderTopRightRadius,
-    borderBottomLeftRadius,
-    borderBottomRightRadius
-  } = v;
-
   return {
-    "--backgroundImage":
-      bgImageSrc && !bgPopulation ? `url(${imageUrl(bgImageSrc)})` : "none",
-    "--backgroundPositionX": bgPopulation ? "0%" : `${bgPositionX}%`,
-    "--backgroundPositionY": bgPopulation ? "0%" : `${bgPositionY}%`,
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
-    "--borderTopWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderTopWidth}px`,
-    "--borderRightWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderRightWidth}px`,
-    "--borderBottomWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderBottomWidth}px`,
-    "--borderLeftWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderLeftWidth}px`,
-    "--borderColor": `${hexToRgba(borderColorHex, borderColorOpacity)}`,
-    "--borderStyle": "solid",
-    "--borderTopLeftRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderTopLeftRadius}px`,
-    "--borderTopRightRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderTopRightRadius}px`,
-    "--borderBottomLeftRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderBottomLeftRadius}px`,
-    "--borderBottomRightRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderBottomRightRadius}px`,
+    /* ######### DESKTOP NORMAL ######### */
 
-    // Tablet
-    "--tabletBackgroundImage":
-      tabletSyncOnChange(v, "bgImageSrc") && !bgPopulation
-        ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
-        : "none",
-    "--tabletBackgroundPositionX": bgPopulation
-      ? "0%"
-      : `${tabletSyncOnChange(v, "bgPositionX")}%`,
-    "--tabletBackgroundPositionY": bgPopulation
-      ? "0%"
-      : `${tabletSyncOnChange(v, "bgPositionY")}%`,
-    "--tabletBackgroundColor": hexToRgba(
-      tabletSyncOnChange(v, "bgColorHex"),
-      tabletSyncOnChange(v, "bgColorOpacity")
-    ),
+    // BG Image
+    "--backgroundImage": styleBgImage({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--backgroundPositionX": styleBgPositionX({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--backgroundPositionY": styleBgPositionY({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
 
-    // Mobile
-    "--mobileBackgroundImage":
-      mobileSyncOnChange(v, "bgImageSrc") && !bgPopulation
-        ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
-        : "none",
-    "--mobileBackgroundPositionX": bgPopulation
-      ? "0%"
-      : `${mobileSyncOnChange(v, "bgPositionX")}%`,
-    "--mobileBackgroundPositionY": bgPopulation
-      ? "0%"
-      : `${mobileSyncOnChange(v, "bgPositionY")}%`,
-    "--mobileBackgroundColor": hexToRgba(
-      mobileSyncOnChange(v, "bgColorHex"),
-      mobileSyncOnChange(v, "bgColorOpacity")
-    )
+    // Border Style
+    "--borderStyle": styleBorderStyle({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+
+    // Border Width
+    "--borderTopWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderTopWidth"
+    }),
+    "--borderRightWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderRightWidth"
+    }),
+    "--borderBottomWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderBottomWidth"
+    }),
+    "--borderLeftWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderLeftWidth"
+    }),
+
+    // Border Radius
+    "--borderTopLeftRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderTopLeftRadius"
+    }),
+    "--borderTopRightRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderTopRightRadius"
+    }),
+    "--borderBottomLeftRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderBottomLeftRadius"
+    }),
+    "--borderBottomRightRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderBottomRightRadius"
+    }),
+
+    // BG Color
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+
+    // BG Gradient
+    "--backgroundGradient": styleBgGradient({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+
+    // Border Color
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+
+    /* ######### TABLET NORMAL ######### */
+
+    // BG Image
+    "--tabletBackgroundImage": styleBgImage({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+    "--tabletBackgroundPositionX": styleBgPositionX({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+    "--tabletBackgroundPositionY": styleBgPositionY({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
+    // BG Color
+    "--tabletBackgroundColor": styleBgColor({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
+    // BG Gradient
+    "--tabletBackgroundGradient": styleBgGradient({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
+    /* ######### MOBILE NORMAL ######### */
+
+    // BG Image
+    "--mobileBackgroundImage": styleBgImage({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+    "--mobileBackgroundPositionX": styleBgPositionX({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+    "--mobileBackgroundPositionY": styleBgPositionY({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+
+    // BG Color
+    "--mobileBackgroundColor": styleBgColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+
+    // BG Gradient
+    "--mobileBackgroundGradient": styleBgGradient({
+      v,
+      device: "mobile",
+      state: "normal"
+    })
   };
 }
 
@@ -349,43 +492,57 @@ export function itemsStyleClassName(v) {
       ".brz-ed--desktop &": {
         maxWidth: "var(--maxWidth)"
       },
+
+      // Border Style
+      borderStyle: "var(--borderStyle)",
+
+      // Border Width
       borderTopWidth: "var(--borderTopWidth)",
       borderRightWidth: "var(--borderRightWidth)",
       borderBottomWidth: "var(--borderBottomWidth)",
       borderLeftWidth: "var(--borderLeftWidth)",
-      borderColor: "transparent",
-      borderStyle: "solid"
+
+      // Border Color
+      borderColor: "transparent"
     };
   } else {
-    const {
-      containerSize,
-      borderWidthType,
-      borderWidth,
-      borderTopWidth,
-      borderRightWidth,
-      borderBottomWidth,
-      borderLeftWidth
-    } = v;
+    const { containerSize } = v;
     glamorObj = {
-      borderTopWidth:
-        borderWidthType === "grouped"
-          ? `${borderWidth}px`
-          : `${borderTopWidth}px`,
-      borderRightWidth:
-        borderWidthType === "grouped"
-          ? `${borderWidth}px`
-          : `${borderRightWidth}px`,
-      borderBottomWidth:
-        borderWidthType === "grouped"
-          ? `${borderWidth}px`
-          : `${borderBottomWidth}px`,
-      borderLeftWidth:
-        borderWidthType === "grouped"
-          ? `${borderWidth}px`
-          : `${borderLeftWidth}px`,
+      // Border Style
+      borderStyle: styleBorderStyle({
+        v,
+        device: "desktop",
+        state: "normal"
+      }),
 
+      // Border Width
+      borderTopWidth: styleBorderWidth({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "borderTopWidth"
+      }),
+      borderRightWidth: styleBorderWidth({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "borderRightWidth"
+      }),
+      borderBottomWidth: styleBorderWidth({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "borderBottomWidth"
+      }),
+      borderLeftWidth: styleBorderWidth({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "borderLeftWidth"
+      }),
+
+      // Border Color
       borderColor: "transparent",
-      borderStyle: "solid",
 
       "@media (min-width: 992px)": {
         maxWidth: `${containerSize}%`
@@ -400,34 +557,32 @@ export function itemsStyleClassName(v) {
 export function itemsStyleCSSVars(v) {
   if (IS_PREVIEW) return null;
 
-  const {
-    containerSize,
-    borderWidthType,
-    borderWidth,
-    borderTopWidth,
-    borderRightWidth,
-    borderBottomWidth,
-    borderLeftWidth
-  } = v;
-
   return {
-    "--maxWidth": `${containerSize}%`,
-    "--borderTopWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderTopWidth}px`,
-    "--borderRightWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderRightWidth}px`,
-    "--borderBottomWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderBottomWidth}px`,
-    "--borderLeftWidth":
-      borderWidthType === "grouped"
-        ? `${borderWidth}px`
-        : `${borderLeftWidth}px`
+    "--maxWidth": styleSizeConatinerSizePercent({ v }),
+    "--borderTopWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderTopWidth"
+    }),
+    "--borderRightWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderRightWidth"
+    }),
+    "--borderBottomWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderBottomWidth"
+    }),
+    "--borderLeftWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderLeftWidth"
+    })
   };
 }
 

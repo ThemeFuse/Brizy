@@ -85,7 +85,7 @@ export function toolbarEntranceAnimation({ v }) {
     type: "multiPicker",
     picker: {
       id: "animationName",
-      label: t("Animation"),
+      label: t("Entrance Animation"),
       type: "select",
       choices: getAnimations(),
       value:

@@ -100,6 +100,7 @@ class FontStyle extends React.Component {
         options: [
           {
             type: "grid",
+            className: "brz-ed-grid__typography",
             columns: [
               {
                 width: 54,
@@ -129,6 +130,7 @@ class FontStyle extends React.Component {
                         options: [
                           {
                             type: "grid",
+                            className: "brz-ed-grid__typography",
                             columns: [
                               {
                                 width: 50,
@@ -196,6 +198,7 @@ class FontStyle extends React.Component {
                         options: [
                           {
                             type: "grid",
+                            className: "brz-ed-grid__typography",
                             columns: [
                               {
                                 width: 50,
@@ -272,6 +275,7 @@ class FontStyle extends React.Component {
                         options: [
                           {
                             type: "grid",
+                            className: "brz-ed-grid__typography",
                             columns: [
                               {
                                 width: 50,

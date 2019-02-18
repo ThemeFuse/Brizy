@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 import Options from "visual/component/Options";
 import { Tabs, Tab } from "visual/component/Controls/Tabs";
 import { currentTooltip } from "visual/component/Controls/Tooltip";
@@ -11,6 +10,7 @@ class TabsOptionType extends React.Component {
     hideHandlesWhenOne: true,
     tabs: [],
     location: "",
+    value: "",
     toolbar: null
   };
 
@@ -24,6 +24,14 @@ class TabsOptionType extends React.Component {
     };
 
     this.isControlled = Boolean(props.value);
+  }
+
+  getActiveTab() {
+    const { tabs: _tabs, value } = this.props;
+    const tabs = filterOptionsData(_tabs);
+    const hasTabByValue = tabs.some(({ id }) => id === value);
+
+    return this.isControlled && hasTabByValue ? value : this.state.activeTab;
   }
 
   handleTabChange = tab => {
@@ -51,7 +59,6 @@ class TabsOptionType extends React.Component {
       tabsClassName,
       hideHandlesWhenOne,
       align,
-      value,
       location,
       toolbar
     } = this.props;
@@ -78,15 +85,13 @@ class TabsOptionType extends React.Component {
         );
       }
     );
-    const activeTab = this.isControlled ? value : this.state.activeTab;
-    const className = classnames("brz-ed-tabs__option--inline");
 
     return (
       <Tabs
-        className={className}
+        className="brz-ed-tabs__option--inline"
         tabsClassName={tabsClassName}
         tabsPosition={tabsPosition}
-        value={activeTab}
+        value={this.getActiveTab()}
         align={align}
         hideHandlesWhenOne={hideHandlesWhenOne}
         onChange={this.handleTabChange}

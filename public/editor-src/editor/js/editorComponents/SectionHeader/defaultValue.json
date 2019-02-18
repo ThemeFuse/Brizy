@@ -1,5 +1,9 @@
 {
   "items": [],
+
   "type": "fixed",
-  "anchorName": ""
+
+  "anchorName": "",
+
+  "containerClassName": ""
 }

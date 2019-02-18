@@ -5,12 +5,14 @@ export default {
 };
 
 function getItems(v, component) {
+  const inPopup = Boolean(component.props.meta.sectionPopup);
+
   return [
     {
       id: "main",
       type: "group",
       title: t("Row"),
-      disabled: v.showToolbar === "off",
+      disabled: v.showToolbar === "off" || inPopup,
       items: []
     }
   ];

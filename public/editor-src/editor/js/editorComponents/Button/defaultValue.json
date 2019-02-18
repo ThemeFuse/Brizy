@@ -31,36 +31,81 @@
   "lineHeight": 1.8,
   "letterSpacing": 3,
 
-  "colorHex": "#ffffff",
-  "colorOpacity": 1,
-  "colorPalette": "color8",
-  "hoverColorHex": "#ffffff",
-  "hoverColorOpacity": 1,
-  "hoverColorPalette": "color8",
-  "tempColorOpacity": 1,
-  "tempColorPalette": "color8",
-  "tempHoverColorOpacity": 1,
-  "tempHoverColorPalette": "color8",
+  "bgColorType": "solid",
+
+  "gradientActivePointer": "startPointer",
+  "gradientStartPointer": 0,
+  "gradientFinishPointer": 100,
+
+  "gradientType": "linear",
+
+  "gradientLinearDegree": 90,
+  "gradientRadialDegree": 90,
+
+  "hoverBgColorType": "solid",
+
+  "hoverGradientActivePointer": "startPointer",
+  "hoverGradientStartPointer": 0,
+  "hoverGradientFinishPointer": 100,
+
+  "hoverGradientType": "linear",
+
+  "hoverGradientLinearDegree": 90,
+  "hoverGradientRadialDegree": 90,
 
   "bgColorHex": "#239ddb",
   "bgColorOpacity": 1,
   "bgColorPalette": "color3",
+
+  "tempBgColorOpacity": 1,
+  "tempBgColorPalette": "color3",
+
   "hoverBgColorHex": "#239ddb",
   "hoverBgColorOpacity": 0.8,
   "hoverBgColorPalette": "color3",
-  "tempBgColorOpacity": 1,
-  "tempBgColorPalette": "color3",
+
   "tempHoverBgColorOpacity": 0.8,
   "tempHoverBgColorPalette": "color3",
+
+  "gradientColorHex": "#009900",
+  "gradientColorOpacity": 0.8,
+  "gradientColorPalette": "",
+
+  "tempGradientColorOpacity": 0.8,
+  "tempGradientColorPalette": "",
+
+  "hoverGradientColorHex": "#009900",
+  "hoverGradientColorOpacity": 0,
+  "hoverGradientColorPalette": "",
+
+  "tempHoverGradientColorOpacity": 0.8,
+  "tempHoverGradientColorPalette": "",
+
+  "colorHex": "#ffffff",
+  "colorOpacity": 1,
+  "colorPalette": "color8",
+
+  "tempColorOpacity": 1,
+  "tempColorPalette": "color8",
+
+  "hoverColorHex": "#ffffff",
+  "hoverColorOpacity": 1,
+  "hoverColorPalette": "color8",
+
+  "tempHoverColorOpacity": 1,
+  "tempHoverColorPalette": "color8",
 
   "borderColorHex": "#239ddb",
   "borderColorOpacity": 0,
   "borderColorPalette": "color3",
+
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "color3",
+
   "hoverBorderColorHex": "#239ddb",
   "hoverBorderColorOpacity": 0,
   "hoverBorderColorPalette": "color3",
-  "tempBorderColorOpacity": 1,
-  "tempBorderColorPalette": "color3",
+
   "tempHoverBorderColorOpacity": 0.8,
   "tempHoverBorderColorPalette": "color3",
 
@@ -95,11 +140,32 @@
   "borderRadiusType": "square",
   "tempBorderRadiusType": "square",
 
+  "borderRadius": 2,
+  "borderTopLeftRadius": 2,
+  "borderTopRightRadius": 2,
+  "borderBottomRightRadius": 2,
+  "borderBottomLeftRadius": 2,
+
+  "tempBorderRadius": 2,
+  "tempBorderTopLeftRadius": 2,
+  "tempBorderTopRightRadius": 2,
+  "tempBorderBottomRightRadius": 2,
+  "tempBorderBottomLeftRadius": 2,
+
+  "hoverBorderRadius": 2,
+  "hoverBorderTopLeftRadius": 2,
+  "hoverBorderTopRightRadius": 2,
+  "hoverBorderBottomRightRadius": 2,
+  "hoverBorderBottomLeftRadius": 2,
+
+  "tempHoverBorderRadius": 2,
+  "tempHoverBorderTopLeftRadius": 2,
+  "tempHoverBorderTopRightRadius": 2,
+  "tempHoverBorderBottomRightRadius": 2,
+  "tempHoverBorderBottomLeftRadius": 2,
+
   "fillType": "filled",
   "tempFillType": "filled",
-
-  "borderRadius": 2,
-  "tempBorderRadius": 2,
 
   "borderWidth": 2,
   "tempBorderWidth": 2,
@@ -114,6 +180,7 @@
   "boxShadowSpread": 0,
   "boxShadowVertical": 2,
   "boxShadowHorizontal": 1,
+  "tempBoxShadowColorPalette": "",
   "tempBoxShadowColorOpacity": 1,
 
   "tabletSize": "small",

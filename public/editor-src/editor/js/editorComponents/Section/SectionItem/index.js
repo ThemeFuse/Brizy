@@ -33,17 +33,15 @@ class SectionItem extends EditorComponent {
   }
 
   static defaultProps = {
-    meta: {},
-    showSlider: false
+    meta: {}
   };
 
   static defaultValue = defaultValue;
 
   shouldComponentUpdate(nextProps) {
     const {
-      showSlider,
       meta: {
-        section: { showOnMobile, showOnTablet }
+        section: { isSlider, showOnMobile, showOnTablet }
       }
     } = this.props;
     const {
@@ -59,7 +57,7 @@ class SectionItem extends EditorComponent {
       (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
       (deviceMode === "tablet" && showOnTablet !== newShowOnTablet);
 
-    return showSlider || deviceUpdate || this.optionalSCU(nextProps);
+    return isSlider || deviceUpdate || this.optionalSCU(nextProps);
   }
 
   handleToolbarOpen = () => {
@@ -71,6 +69,10 @@ class SectionItem extends EditorComponent {
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
+
+    this.patchValue({ tabsState: "tabNormal" });
+    this.patchValue({ tabsCurrentElement: "tabCurrentElement" });
+    this.patchValue({ tabsColor: "tabOverlay" });
   };
 
   handlePaddingResizerChange = patch => this.patchValue(patch);
@@ -127,7 +129,16 @@ class SectionItem extends EditorComponent {
   renderItems(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
@@ -156,7 +167,7 @@ class SectionItem extends EditorComponent {
       className: bgStyleClassName(v, this.props),
       imageSrc: bgImageSrc || bgPopulation,
       colorOpacity: bgColorOpacity,
-      parallax: bgAttachment === "animated" && !meta.showSlider,
+      parallax: bgAttachment === "animated" && !meta.section.isSlider,
       mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
       mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity"),
       tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
@@ -206,7 +217,16 @@ class SectionItem extends EditorComponent {
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,

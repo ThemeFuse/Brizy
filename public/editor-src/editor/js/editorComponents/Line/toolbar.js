@@ -55,14 +55,25 @@ export function getItemsForDesktop(v) {
             "onChangeBorderColorPaletteOpacity"
           ]
         }),
-        toolbarBorderColorFields({
-          v,
-          device,
-          onChange: [
-            "onChangeBorderColorHexAndOpacity",
-            "onChangeBorderColorHexAndOpacityPalette"
+        {
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                toolbarBorderColorFields({
+                  v,
+                  device,
+                  onChange: [
+                    "onChangeBorderColorHexAndOpacity",
+                    "onChangeBorderColorHexAndOpacityPalette"
+                  ]
+                })
+              ]
+            }
           ]
-        })
+        }
       ]
     },
     {

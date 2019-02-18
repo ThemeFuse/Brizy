@@ -15,3 +15,19 @@ export function toolbarDisabledAdvancedSettings({ device }) {
     disabled: true
   };
 }
+
+export function toolbarDisabledShowOnTablet() {
+  return {
+    id: "showOnTablet",
+    type: "toggle",
+    disabled: true
+  };
+}
+
+export function toolbarDisabledShowOnMobile() {
+  return {
+    id: "showOnMobile",
+    type: "toggle",
+    disabled: true
+  };
+}

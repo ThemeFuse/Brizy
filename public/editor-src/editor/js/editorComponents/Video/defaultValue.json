@@ -50,7 +50,7 @@
   "boxShadowHorizontal": 1,
 
   "tempBoxShadowColorOpacity": 1,
-  "tempBoxShadowColorPalette": 1,
+  "tempBoxShadowColorPalette": "",
 
   "tabletCoverImageWidth": null,
   "tabletCoverImageHeight": null,

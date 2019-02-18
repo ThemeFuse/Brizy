@@ -101,6 +101,7 @@ class Brizy_Languages_Texts
 			"Enable on Mobile" => __("Enable on Mobile", "brizy"),
 			"Enable on Tablet" => __("Enable on Tablet", "brizy"),
 			"Z-index" => __("Z-index", "brizy"),
+			"Anchor Name" => __("Anchor Name", "brizy"),
 			"CSS Class" => __("CSS Class", "brizy"),
 		  
 		  
@@ -131,6 +132,7 @@ class Brizy_Languages_Texts
 			"Auto" => __("Auto", "brizy"),
 			"Custom" => __("Custom", "brizy"),
 			"Full" => __("Full", "brizy"),
+			"Hover Transition" => __("Hover Transition", "brizy"),
 		  
 			"Carousel" => __("Carousel", "brizy"),
 			"Swipe" => __("Swipe", "brizy"),
@@ -163,6 +165,10 @@ class Brizy_Languages_Texts
 			"Color" => __("Color", "brizy"),
 			"Overlay" => __("Overlay", "brizy"),
 			"Border" => __("Border", "brizy"),
+			"Solid" => __("Solid", "brizy"),
+			"Gradient" => __("Gradient", "brizy"),
+			"Linear" => __("Linear", "brizy"),
+			"Radial" => __("Radial", "brizy"),
 			//-> Settings
 			"Dynamic Content" => __("Dynamic Content", "brizy"),
 			"Settings" => __("Settings", "brizy"),
@@ -170,7 +176,7 @@ class Brizy_Languages_Texts
 			"Duplicate" => __("Duplicate", "brizy"),
 			"Delete" => __("Delete", "brizy"),
 			//-> Animation
-			"Animation" => __("Animation", "brizy"),
+			"Entrance Animation" => __("Entrance Animation", "brizy"),
 			"Duration" => __("Duration", "brizy"),
 			"Delay" => __("Delay", "brizy"),
 			"Bounce" => __("Bounce", "brizy"),

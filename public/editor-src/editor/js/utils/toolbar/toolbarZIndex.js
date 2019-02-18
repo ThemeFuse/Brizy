@@ -1,9 +1,10 @@
 import { t } from "visual/utils/i18n";
 
-export function toolbarZIndex({ v }) {
+export function toolbarZIndex({ v, position = 20 }) {
   return {
     type: "slider",
     id: "zIndex",
+    position,
     label: t("Z-index"),
     slider: {
       min: 0,

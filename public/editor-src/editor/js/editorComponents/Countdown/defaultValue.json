@@ -1,14 +1,6 @@
 {
   "className": "",
 
-  "colorHex": "#73777f",
-  "colorOpacity": 0.75,
-  "colorPalette": "color7",
-  "tempColorOpacity": 0.75,
-  "tempColorPalette": "color7",
-
-  "width": 100,
-
   "date": "",
   "hours": "10 am",
   "minutes": 30,
@@ -22,7 +14,14 @@
   "lineHeight": 1.3,
   "letterSpacing": 0,
 
-  "tabletWidth": null,
+  "colorHex": "#73777f",
+  "colorOpacity": 0.75,
+  "colorPalette": "color7",
+
+  "tempColorOpacity": 0.75,
+  "tempColorPalette": "color7",
+
+  "width": 100,
 
   "tabletFontStyle": "",
   "tabletFontSize": 30,
@@ -30,11 +29,13 @@
   "tabletLineHeight": 1,
   "tabletLetterSpacing": 1,
 
-  "mobileWidth": null,
+  "tabletWidth": null,
 
   "mobileFontStyle": "",
   "mobileFontSize": 30,
   "mobileFontWeight": 700,
   "mobileLineHeight": 1,
-  "mobileLetterSpacing": 1
+  "mobileLetterSpacing": 1,
+
+  "mobileWidth": null
 }

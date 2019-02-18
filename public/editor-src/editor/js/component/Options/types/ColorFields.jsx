@@ -17,7 +17,7 @@ class ColorPickerOptionType extends React.Component {
   render() {
     const { className: _className, attr: _attr, value, onChange } = this.props;
     const className = classnames(
-      "brz-ed-option__colorPicker__fields",
+      "brz-ed-option__color-picker__hex",
       _className,
       _attr.className
     );

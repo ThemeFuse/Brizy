@@ -1,45 +1,38 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { imageUrl } from "visual/utils/image";
-import { hexToRgba } from "visual/utils/color";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { tabletSyncOnChange } from "visual/utils/onChange";
 import {
   styleBgImage,
+  styleExportBgImage,
   styleBgPositionX,
   styleBgPositionY,
   styleBorderStyle,
   styleBorderWidth,
   styleBorderRadius,
   styleBgColor,
+  styleBgGradient,
   styleBorderColor,
-  styleVerticalAlign,
+  styleHoverTransition,
+  styleHoverTransitionProperty,
+  styleAlignVerticalAlign,
   stylePadding,
   styleMargin,
   styleBoxShadow,
-  styleSizeWidth,
+  styleSizeWidthPercent,
   styleShowOnDesktopFilter,
   styleShowOnDesktopOpacity,
   styleShowOnTabletFilter,
   styleShowOnTabletOpacity,
   styleShowOnMobileFilter,
   styleShowOnMobileOpacity,
+  styleDisplayShowOnDesktop,
+  styleDisplayShowOnTablet,
+  styleDisplayShowOnMobile,
   styleZIndex
 } from "visual/utils/style";
 
-const aligns = {
-  top: "flex-start",
-  center: "center",
-  bottom: "flex-end"
-};
-
 export function bgStyleClassName(v, props) {
-  const {
-    showOnDesktop,
-    showOnTablet,
-    showOnMobile,
-    customClassName,
-    items
-  } = v;
+  const { customClassName, items } = v;
   const hasItems = items.length >= 1;
 
   let glamorObj;
@@ -49,51 +42,103 @@ export function bgStyleClassName(v, props) {
       zIndex: "var(--zIndex)",
 
       "> .brz-bg-media": {
+        borderStyle: "var(--borderStyle)",
+
         borderTopWidth: "var(--borderTopWidth)",
         borderRightWidth: "var(--borderRightWidth)",
         borderBottomWidth: "var(--borderBottomWidth)",
         borderLeftWidth: "var(--borderLeftWidth)",
-        borderColor: "var(--borderColor)",
-        borderStyle: "var(--borderStyle)",
+
         borderTopLeftRadius: "var(--borderTopLeftRadius)",
         borderTopRightRadius: "var(--borderTopRightRadius)",
         borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
         borderBottomRightRadius: "var(--borderBottomRightRadius)",
-        boxShadow: "var(--boxShadow)"
+
+        borderColor: "var(--borderColor)",
+
+        boxShadow: "var(--boxShadow)",
+
+        transition: "var(--hoverTransition)",
+        transitionProperty: "var(--hoverTransitionProperty)"
+      },
+      "&:hover > .brz-bg-media": {
+        borderStyle: "var(--hoverBorderStyle)",
+
+        borderTopWidth: "var(--hoverBorderTopWidth)",
+        borderRightWidth: "var(--hoverBorderRightWidth)",
+        borderBottomWidth: "var(--hoverBorderBottomWidth)",
+        borderLeftWidth: "var(--hoverBorderLeftWidth)",
+
+        borderTopLeftRadius: "var(--hoverBorderTopLeftRadius)",
+        borderTopRightRadius: "var(--hoverBorderTopRightRadius)",
+        borderBottomLeftRadius: "var(--hoverBorderBottomLeftRadius)",
+        borderBottomRightRadius: "var(--hoverBorderBottomRightRadius)",
+
+        borderColor: "var(--hoverBorderColor)"
       },
 
       "> .brz-bg-content": {
+        borderStyle: "solid",
+
         borderTopWidth: "var(--borderTopWidth)",
         borderRightWidth: "var(--borderRightWidth)",
         borderBottomWidth: "var(--borderBottomWidth)",
         borderLeftWidth: "var(--borderLeftWidth)",
+
         borderColor: "transparent",
-        borderStyle: "solid"
+
+        transition: "var(--hoverTransition)",
+        transitionProperty: "var(--hoverTransitionProperty)"
+      },
+      "&:hover > .brz-bg-content": {
+        borderTopWidth: "var(--hoverBorderTopWidth)",
+        borderRightWidth: "var(--hoverBorderRightWidth)",
+        borderBottomWidth: "var(--hoverBorderBottomWidth)",
+        borderLeftWidth: "var(--hoverBorderLeftWidth)"
       },
 
       ".brz-ed--desktop &": {
-        filter: "var(--filter)",
-        opacity: "var(--opacity)",
+        alignItems: "var(--verticalAlign)",
 
         paddingTop: "var(--paddingTop)",
         paddingRight: "var(--paddingRight)",
         paddingBottom: "var(--paddingBottom)",
         paddingLeft: "var(--paddingLeft)",
 
-        alignItems: "var(--verticalAlign)",
-
         marginTop: "var(--marginTop)",
         marginRight: "var(--marginRight)",
         marginBottom: "var(--marginBottom)",
         marginLeft: "var(--marginLeft)",
 
+        filter: "var(--filter)",
+        opacity: "var(--opacity)",
+
         "> .brz-bg-media > .brz-bg-image": {
           backgroundImage: "var(--backgroundImage)",
           backgroundPositionX: "var(--backgroundPositionX)",
-          backgroundPositionY: "var(--backgroundPositionY)"
+          backgroundPositionY: "var(--backgroundPositionY)",
+
+          transition: "var(--hoverTransition)",
+          transitionProperty: "var(--hoverTransitionProperty)"
         },
+        "&:hover > .brz-bg-media > .brz-bg-image": {
+          backgroundImage: "var(--hoverBackgroundImage)",
+          backgroundPositionX: "var(--hoverBackgroundPositionX)",
+          backgroundPositionY: "var(--hoverBackgroundPositionY)"
+        },
+
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--backgroundColor)"
+          backgroundColor: "var(--backgroundColor)",
+
+          backgroundImage: "var(--backgroundGradient)",
+
+          transition: "var(--hoverTransition)",
+          transitionProperty: "var(--hoverTransitionProperty)"
+        },
+        "&:hover > .brz-bg-media > .brz-bg-color": {
+          backgroundColor: "var(--hoverBackgroundColor)",
+
+          backgroundImage: "var(--hoverBackgroundGradient)"
         }
       },
       ".brz-ed--tablet &": {
@@ -120,7 +165,9 @@ export function bgStyleClassName(v, props) {
           backgroundPositionY: "var(--tabletBackgroundPositionY)"
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--tabletBackgroundColor)"
+          backgroundColor: "var(--tabletBackgroundColor)",
+
+          backgroundImage: "var(--tabletBackgroundGradient)"
         }
       },
       ".brz-ed--mobile &": {
@@ -145,362 +192,577 @@ export function bgStyleClassName(v, props) {
           backgroundPositionY: "var(--mobileBackgroundPositionY)"
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: "var(--mobileBackgroundColor)"
+          backgroundColor: "var(--mobileBackgroundColor)",
+
+          backgroundImage: "var(--mobileBackgroundGradient)"
         }
       }
     };
   } else {
-    const {
-      verticalAlign,
-      bgImageSrc,
-      bgPositionX,
-      bgPositionY,
-      bgColorHex,
-      bgColorOpacity,
-      borderWidthType,
-      borderWidth,
-      borderTopWidth,
-      borderRightWidth,
-      borderBottomWidth,
-      borderLeftWidth,
-      borderColorHex,
-      borderColorOpacity,
-      borderRadiusType,
-      borderRadius,
-      borderTopLeftRadius,
-      borderTopRightRadius,
-      borderBottomLeftRadius,
-      borderBottomRightRadius,
-      boxShadow,
-      boxShadowColorHex,
-      boxShadowColorOpacity,
-      boxShadowBlur,
-      boxShadowSpread,
-      boxShadowVertical,
-      boxShadowHorizontal,
-      paddingType,
-      padding,
-      paddingSuffix,
-      paddingTop,
-      paddingTopSuffix,
-      paddingRight,
-      paddingRightSuffix,
-      paddingBottom,
-      paddingBottomSuffix,
-      paddingLeft,
-      paddingLeftSuffix,
-      marginType,
-      margin,
-      marginSuffix,
-      marginTop,
-      marginTopSuffix,
-      marginRight,
-      marginRightSuffix,
-      marginBottom,
-      marginBottomSuffix,
-      marginLeft,
-      marginLeftSuffix,
-      zIndex,
-
-      // Tablet
-      tabletMarginType,
-      tabletMargin,
-      tabletMarginSuffix,
-      tabletMarginTop,
-      tabletMarginTopSuffix,
-      tabletMarginRight,
-      tabletMarginRightSuffix,
-      tabletMarginBottom,
-      tabletMarginBottomSuffix,
-      tabletMarginLeft,
-      tabletMarginLeftSuffix,
-      tabletPaddingType,
-      tabletPadding,
-      tabletPaddingSuffix,
-      tabletPaddingTop,
-      tabletPaddingTopSuffix,
-      tabletPaddingRight,
-      tabletPaddingRightSuffix,
-      tabletPaddingBottom,
-      tabletPaddingBottomSuffix,
-      tabletPaddingLeft,
-      tabletPaddingLeftSuffix,
-
-      // Mobile
-      mobileMarginType,
-      mobileMargin,
-      mobileMarginSuffix,
-      mobileMarginTop,
-      mobileMarginTopSuffix,
-      mobileMarginRight,
-      mobileMarginRightSuffix,
-      mobileMarginBottom,
-      mobileMarginBottomSuffix,
-      mobileMarginLeft,
-      mobileMarginLeftSuffix,
-      mobilePaddingType,
-      mobilePadding,
-      mobilePaddingSuffix,
-      mobilePaddingTop,
-      mobilePaddingTopSuffix,
-      mobilePaddingRight,
-      mobilePaddingRightSuffix,
-      mobilePaddingBottom,
-      mobilePaddingBottomSuffix,
-      mobilePaddingLeft,
-      mobilePaddingLeftSuffix
-    } = v;
-    const paddingStyle = {
-      paddingTop:
-        paddingType === "grouped"
-          ? padding + paddingSuffix
-          : paddingTop + paddingTopSuffix,
-      paddingRight:
-        paddingType === "grouped"
-          ? padding + paddingSuffix
-          : paddingRight + paddingRightSuffix,
-      paddingBottom:
-        paddingType === "grouped"
-          ? padding + paddingSuffix
-          : paddingBottom + paddingBottomSuffix,
-      paddingLeft:
-        paddingType === "grouped"
-          ? padding + paddingSuffix
-          : paddingLeft + paddingLeftSuffix
-    };
-    const marginStyle = {
-      marginTop:
-        marginType === "grouped"
-          ? margin + marginSuffix
-          : marginTop + marginTopSuffix,
-      marginRight:
-        marginType === "grouped"
-          ? margin + marginSuffix
-          : marginRight + marginRightSuffix,
-      marginBottom:
-        marginType === "grouped"
-          ? margin + marginSuffix
-          : marginBottom + marginBottomSuffix,
-      marginLeft:
-        marginType === "grouped"
-          ? margin + marginSuffix
-          : marginLeft + marginLeftSuffix
-    };
-
-    // Tablet
-    const tabletPaddingStyle = {
-      "& > .brz-bg-content": {
-        paddingTop:
-          tabletPaddingType === "grouped"
-            ? tabletPadding + tabletPaddingSuffix
-            : tabletPaddingTop + tabletPaddingTopSuffix,
-        paddingRight:
-          tabletPaddingType === "grouped"
-            ? tabletPadding + tabletPaddingSuffix
-            : tabletPaddingRight + tabletPaddingRightSuffix,
-        paddingBottom:
-          tabletPaddingType === "grouped"
-            ? tabletPadding + tabletPaddingSuffix
-            : tabletPaddingBottom + tabletPaddingBottomSuffix,
-        paddingLeft:
-          tabletPaddingType === "grouped"
-            ? tabletPadding + tabletPaddingSuffix
-            : tabletPaddingLeft + tabletPaddingLeftSuffix
-      }
-    };
-    const tabletMarginStyle = {
-      marginTop:
-        tabletMarginType === "grouped"
-          ? tabletMargin + tabletMarginSuffix
-          : tabletMarginTop + tabletMarginTopSuffix,
-      marginBottom:
-        tabletMarginType === "grouped"
-          ? tabletMargin + tabletMarginSuffix
-          : tabletMarginBottom + tabletMarginBottomSuffix,
-      marginLeft:
-        tabletMarginType === "grouped"
-          ? tabletMargin + tabletMarginSuffix
-          : tabletMarginLeft + tabletMarginLeftSuffix,
-      marginRight:
-        tabletMarginType === "grouped"
-          ? tabletMargin + tabletMarginSuffix
-          : tabletMarginRight + tabletMarginRightSuffix
-    };
-
-    // Mobile
-    const mobilePaddingStyle = {
-      "& > .brz-bg-content": {
-        paddingTop:
-          mobilePaddingType === "grouped"
-            ? mobilePadding + mobilePaddingSuffix
-            : mobilePaddingTop + mobilePaddingTopSuffix,
-        paddingRight:
-          mobilePaddingType === "grouped"
-            ? mobilePadding + mobilePaddingSuffix
-            : mobilePaddingRight + mobilePaddingRightSuffix,
-        paddingBottom:
-          mobilePaddingType === "grouped"
-            ? mobilePadding + mobilePaddingSuffix
-            : mobilePaddingBottom + mobilePaddingBottomSuffix,
-        paddingLeft:
-          mobilePaddingType === "grouped"
-            ? mobilePadding + mobilePaddingSuffix
-            : mobilePaddingLeft + mobilePaddingLeftSuffix
-      }
-    };
-    const mobileMarginStyle = {
-      marginTop:
-        mobileMarginType === "grouped"
-          ? mobileMargin + mobileMarginSuffix
-          : mobileMarginTop + mobileMarginTopSuffix,
-      marginBottom:
-        mobileMarginType === "grouped"
-          ? mobileMargin + mobileMarginSuffix
-          : mobileMarginBottom + mobileMarginBottomSuffix,
-      marginLeft:
-        mobileMarginType === "grouped"
-          ? mobileMargin + mobileMarginSuffix
-          : mobileMarginLeft + mobileMarginLeftSuffix,
-      marginRight:
-        mobileMarginType === "grouped"
-          ? mobileMargin + mobileMarginSuffix
-          : mobileMarginRight + mobileMarginRightSuffix
-    };
-    const boxShadowStyle =
-      boxShadow === "on"
-        ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-            boxShadowColorHex,
-            boxShadowColorOpacity
-          )}`
-        : "none";
-
     glamorObj = {
-      ...(hasItems ? marginStyle : null),
+      // Margin
+      marginTop: styleMargin({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "marginTop",
+        hasItems
+      }),
+      marginRight: styleMargin({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "marginRight",
+        hasItems
+      }),
+      marginBottom: styleMargin({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "marginBottom",
+        hasItems
+      }),
+      marginLeft: styleMargin({
+        v,
+        device: "desktop",
+        state: "normal",
+        current: "marginLeft",
+        hasItems
+      }),
 
       "> .brz-bg-content": {
-        borderTopWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderTopWidth}px`,
-        borderRightWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderRightWidth}px`,
-        borderBottomWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderBottomWidth}px`,
-        borderLeftWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderLeftWidth}px`,
+        // Border Style
+        borderStyle: styleBorderStyle({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
 
+        // Border Width
+        borderTopWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderTopWidth"
+        }),
+        borderRightWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderRightWidth"
+        }),
+        borderBottomWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderBottomWidth"
+        }),
+        borderLeftWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderLeftWidth"
+        }),
+
+        // Border Color
         borderColor: "transparent",
-        borderStyle: "solid",
-        ...(hasItems ? paddingStyle : null)
+
+        // Hover Transition
+        transition: styleHoverTransition({ v }),
+        transitionProperty: styleHoverTransitionProperty(),
+
+        // Padding
+        paddingTop: stylePadding({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "paddingTop",
+          hasItems
+        }),
+        paddingRight: stylePadding({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "paddingRight",
+          hasItems
+        }),
+        paddingBottom: stylePadding({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "paddingBottom",
+          hasItems
+        }),
+        paddingLeft: stylePadding({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "paddingLeft",
+          hasItems
+        })
+      },
+      "&:hover > .brz-bg-content": {
+        // Border Style
+        borderStyle: styleBorderStyle({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
+
+        // Border Width
+        borderTopWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderTopWidth"
+        }),
+        borderRightWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderRightWidth"
+        }),
+        borderBottomWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderBottomWidth"
+        }),
+        borderLeftWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderLeftWidth"
+        })
       },
       "> .brz-bg-media": {
-        borderTopWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderTopWidth}px`,
-        borderRightWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderRightWidth}px`,
-        borderBottomWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderBottomWidth}px`,
-        borderLeftWidth:
-          borderWidthType === "grouped"
-            ? `${borderWidth}px`
-            : `${borderLeftWidth}px`,
+        // Border Style
+        borderStyle: styleBorderStyle({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
 
-        borderColor: `${hexToRgba(borderColorHex, borderColorOpacity)}`,
-        borderStyle: "solid",
+        // Border Width
+        borderTopWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderTopWidth"
+        }),
+        borderRightWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderRightWidth"
+        }),
+        borderBottomWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderBottomWidth"
+        }),
+        borderLeftWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderLeftWidth"
+        }),
 
-        borderTopLeftRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderTopLeftRadius}px`,
-        borderTopRightRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderTopRightRadius}px`,
-        borderBottomLeftRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderBottomLeftRadius}px`,
-        borderBottomRightRadius:
-          borderRadiusType === "grouped"
-            ? `${borderRadius}px`
-            : `${borderBottomRightRadius}px`,
-        boxShadow: boxShadowStyle
+        // Border Radius
+        borderTopLeftRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderTopLeftRadius"
+        }),
+        borderTopRightRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderTopRightRadius"
+        }),
+        borderBottomLeftRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderBottomLeftRadius"
+        }),
+        borderBottomRightRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "normal",
+          current: "borderBottomRightRadius"
+        }),
+
+        // Border Color
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+
+        // Hover Transition
+        transition: styleHoverTransition({ v }),
+        transitionProperty: styleHoverTransitionProperty(),
+
+        // Box Shadow
+        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
+      },
+      "&:hover > .brz-bg-media": {
+        // Border Style
+        borderStyle: styleBorderStyle({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
+
+        // Border Width
+        borderTopWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderTopWidth"
+        }),
+        borderRightWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderRightWidth"
+        }),
+        borderBottomWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderBottomWidth"
+        }),
+        borderLeftWidth: styleBorderWidth({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderLeftWidth"
+        }),
+
+        // Border Radius
+        borderTopLeftRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderTopLeftRadius"
+        }),
+        borderTopRightRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderTopRightRadius"
+        }),
+        borderBottomLeftRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderBottomLeftRadius"
+        }),
+        borderBottomRightRadius: styleBorderRadius({
+          v,
+          device: "desktop",
+          state: "hover",
+          current: "borderBottomRightRadius"
+        }),
+
+        // Border Color
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "hover"
+        })
       },
       "> .brz-bg-media > .brz-bg-image": {
-        backgroundImage: bgImageSrc ? `url(${imageUrl(bgImageSrc)})` : "none",
-        backgroundPosition: `${bgPositionX}% ${bgPositionY}%`
-      },
-      "> .brz-bg-media > .brz-bg-color": {
-        backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
-      },
-      "@media (max-width: 991px)": {
-        ...(hasItems ? tabletMarginStyle : null),
-        ...(hasItems ? tabletPaddingStyle : null),
+        // BG Image
+        backgroundImage: styleExportBgImage({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+        backgroundPosition: `${styleBgPositionX({
+          v,
+          device: "desktop",
+          state: "normal"
+        })} ${styleBgPositionY({
+          v,
+          device: "desktop",
+          state: "normal"
+        })}`,
 
+        // Hover Transition
+        transition: styleHoverTransition({ v }),
+        transitionProperty: styleHoverTransitionProperty()
+      },
+      "&:hover > .brz-bg-media > .brz-bg-image": {
+        // BG Image
+        backgroundImage: styleExportBgImage({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
+        backgroundPosition: `${styleBgPositionX({
+          v,
+          device: "desktop",
+          state: "hover"
+        })} ${styleBgPositionY({
+          v,
+          device: "desktop",
+          state: "hover"
+        })}`
+      },
+
+      "> .brz-bg-media > .brz-bg-color": {
+        // BG Color
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+
+        // BG Gradient
+        backgroundImage: styleBgGradient({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+
+        // Hover Transition
+        transition: styleHoverTransition({ v }),
+        transitionProperty: styleHoverTransitionProperty()
+      },
+      "&:hover > .brz-bg-media > .brz-bg-color": {
+        // BG Color
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
+
+        // BG Gradient
+        backgroundImage: styleBgGradient({
+          v,
+          device: "desktop",
+          state: "hover"
+        })
+      },
+
+      "@media (max-width: 991px)": {
+        // Margin
+        marginTop: styleMargin({
+          v,
+          device: "tablet",
+          state: "normal",
+          current: "marginTop",
+          hasItems
+        }),
+        marginRight: styleMargin({
+          v,
+          device: "tablet",
+          state: "normal",
+          current: "marginRight",
+          hasItems
+        }),
+        marginBottom: styleMargin({
+          v,
+          device: "tablet",
+          state: "normal",
+          current: "marginBottom",
+          hasItems
+        }),
+        marginLeft: styleMargin({
+          v,
+          device: "tablet",
+          state: "normal",
+          current: "marginLeft",
+          hasItems
+        }),
+        "& > .brz-bg-content": {
+          // Padding
+          paddingTop: stylePadding({
+            v,
+            device: "tablet",
+            state: "normal",
+            current: "paddingTop",
+            hasItems
+          }),
+          paddingRight: stylePadding({
+            v,
+            device: "tablet",
+            state: "normal",
+            current: "paddingRight",
+            hasItems
+          }),
+          paddingBottom: stylePadding({
+            v,
+            device: "tablet",
+            state: "normal",
+            current: "paddingBottom",
+            hasItems
+          }),
+          paddingLeft: stylePadding({
+            v,
+            device: "tablet",
+            state: "normal",
+            current: "paddingLeft",
+            hasItems
+          })
+        },
         "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage: tabletSyncOnChange(v, "bgImageSrc")
-            ? `url(${imageUrl(tabletSyncOnChange(v, "bgImageSrc"))})`
-            : "none",
-          backgroundPosition: `
-            ${tabletSyncOnChange(v, "bgPositionX")}%
-            ${tabletSyncOnChange(v, "bgPositionY")}%
-          `
+          // BG Image
+          backgroundImage: styleExportBgImage({
+            v,
+            device: "tablet",
+            state: "normal"
+          }),
+          backgroundPosition: `${styleBgPositionX({
+            v,
+            device: "tablet",
+            state: "normal"
+          })} ${styleBgPositionY({
+            v,
+            device: "tablet",
+            state: "normal"
+          })}`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(
-            tabletSyncOnChange(v, "bgColorHex"),
-            tabletSyncOnChange(v, "bgColorOpacity")
-          )
+          // BG Color
+          backgroundColor: styleBgColor({
+            v,
+            device: "tablet",
+            state: "normal"
+          }),
+
+          // BG Gradient
+          backgroundImage: styleBgGradient({
+            v,
+            device: "tablet",
+            state: "normal"
+          })
         }
       },
       "@media (max-width: 991px) and (min-width: 768px)": {
         ".brz &": {
-          display: showOnTablet === "off" && "none"
+          // Display
+          display: styleDisplayShowOnTablet({ v })
         }
       },
       "@media (max-width: 767px)": {
-        ...(hasItems ? mobileMarginStyle : null),
-        ...(hasItems ? mobilePaddingStyle : null),
-
+        // Margin
+        marginTop: styleMargin({
+          v,
+          device: "mobile",
+          state: "normal",
+          current: "marginTop",
+          hasItems
+        }),
+        marginRight: styleMargin({
+          v,
+          device: "mobile",
+          state: "normal",
+          current: "marginRight",
+          hasItems
+        }),
+        marginBottom: styleMargin({
+          v,
+          device: "mobile",
+          state: "normal",
+          current: "marginBottom",
+          hasItems
+        }),
+        marginLeft: styleMargin({
+          v,
+          device: "mobile",
+          state: "normal",
+          current: "marginLeft",
+          hasItems
+        }),
+        "& > .brz-bg-content": {
+          // Padding
+          paddingTop: stylePadding({
+            v,
+            device: "mobile",
+            state: "normal",
+            current: "paddingTop",
+            hasItems
+          }),
+          paddingRight: stylePadding({
+            v,
+            device: "mobile",
+            state: "normal",
+            current: "paddingRight",
+            hasItems
+          }),
+          paddingBottom: stylePadding({
+            v,
+            device: "mobile",
+            state: "normal",
+            current: "paddingBottom",
+            hasItems
+          }),
+          paddingLeft: stylePadding({
+            v,
+            device: "mobile",
+            state: "normal",
+            current: "paddingLeft",
+            hasItems
+          })
+        },
         ".brz &": {
-          display: showOnMobile === "off" && "none"
+          // Display
+          display: styleDisplayShowOnMobile({ v })
         },
         "> .brz-bg-media > .brz-bg-image": {
-          backgroundImage: mobileSyncOnChange(v, "bgImageSrc")
-            ? `url(${imageUrl(mobileSyncOnChange(v, "bgImageSrc"))})`
-            : "none",
-          backgroundPosition: `
-            ${mobileSyncOnChange(v, "bgPositionX")}%
-            ${mobileSyncOnChange(v, "bgPositionY")}%
-          `
+          // BG Image
+          backgroundImage: styleExportBgImage({
+            v,
+            device: "mobile",
+            state: "normal"
+          }),
+          backgroundPosition: `${styleBgPositionX({
+            v,
+            device: "mobile",
+            state: "normal"
+          })} ${styleBgPositionY({
+            v,
+            device: "mobile",
+            state: "normal"
+          })}`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(
-            mobileSyncOnChange(v, "bgColorHex"),
-            mobileSyncOnChange(v, "bgColorOpacity")
-          )
+          // BG Color
+          backgroundColor: styleBgColor({
+            v,
+            device: "mobile",
+            state: "normal"
+          }),
+
+          // BG Gradient
+          backgroundImage: styleBgGradient({
+            v,
+            device: "mobile",
+            state: "normal"
+          })
         }
       },
       "@media (min-width: 768px)": {
         ".brz &": {
-          alignItems: hasItems && `${aligns[verticalAlign]}`
+          // Vertical Align
+          alignItems: styleAlignVerticalAlign({
+            v,
+            device: "desktop",
+            state: "normal",
+            hasItems
+          })
         }
       },
       "@media (min-width: 992px)": {
         ".brz &": {
-          display: showOnDesktop === "off" && "none"
+          // Display
+          display: styleDisplayShowOnDesktop({ v })
         }
       }
     };
@@ -518,6 +780,9 @@ export function bgStyleCSSVars(v, props) {
   if (IS_PREVIEW) return;
 
   return {
+    /* ######### DESKTOP NORMAL ######### */
+
+    // BG Image
     "--backgroundImage": styleBgImage({
       v,
       device: "desktop",
@@ -533,6 +798,15 @@ export function bgStyleCSSVars(v, props) {
       device: "desktop",
       state: "normal"
     }),
+
+    // Border Style
+    "--borderStyle": styleBorderStyle({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+
+    // Border Width
     "--borderTopWidth": styleBorderWidth({
       v,
       device: "desktop",
@@ -557,11 +831,8 @@ export function bgStyleCSSVars(v, props) {
       state: "normal",
       current: "borderLeftWidth"
     }),
-    "--borderStyle": styleBorderStyle({
-      v,
-      device: "desktop",
-      state: "normal"
-    }),
+
+    // Border Radius
     "--borderTopLeftRadius": styleBorderRadius({
       v,
       device: "desktop",
@@ -586,23 +857,37 @@ export function bgStyleCSSVars(v, props) {
       state: "normal",
       current: "borderBottomRightRadius"
     }),
+
+    // BG Color
     "--backgroundColor": styleBgColor({
       v,
       device: "desktop",
       state: "normal"
     }),
 
+    // BG Gradient
+    "--backgroundGradient": styleBgGradient({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+
+    // Border Color
     "--borderColor": styleBorderColor({
       v,
       device: "desktop",
       state: "normal"
     }),
-    "--verticalAlign": styleVerticalAlign({
+
+    // Vertical Align
+    "--verticalAlign": styleAlignVerticalAlign({
       v,
       device: "desktop",
       state: "normal",
       hasItems
     }),
+
+    // Padding
     "--paddingTop": stylePadding({
       v,
       device: "desktop",
@@ -631,6 +916,8 @@ export function bgStyleCSSVars(v, props) {
       current: "paddingLeft",
       hasItems
     }),
+
+    // Margin
     "--marginTop": styleMargin({
       v,
       device: "desktop",
@@ -659,12 +946,122 @@ export function bgStyleCSSVars(v, props) {
       current: "marginLeft",
       hasItems
     }),
+
+    // Box Shadow
     "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
+
+    // Display on Devices
     "--filter": styleShowOnDesktopFilter({ v }),
     "--opacity": styleShowOnDesktopOpacity({ v }),
+
+    // z Index
     "--zIndex": styleZIndex({ v }),
 
-    // Tablet
+    /* ######### DESKTOP HOVER ######### */
+
+    // BG Image
+    "--hoverBackgroundImage": styleBgImage({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+    "--hoverBackgroundPositionX": styleBgPositionX({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+    "--hoverBackgroundPositionY": styleBgPositionY({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // Border Style
+    "--hoverBorderStyle": styleBorderStyle({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // Border Width
+    "--hoverBorderTopWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderTopWidth"
+    }),
+    "--hoverBorderRightWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderRightWidth"
+    }),
+    "--hoverBorderBottomWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderBottomWidth"
+    }),
+    "--hoverBorderLeftWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderLeftWidth"
+    }),
+
+    // Border Radius
+    "--hoverBorderTopLeftRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderTopLeftRadius"
+    }),
+    "--hoverBorderTopRightRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderTopRightRadius"
+    }),
+    "--hoverBorderBottomLeftRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderBottomLeftRadius"
+    }),
+    "--hoverBorderBottomRightRadius": styleBorderRadius({
+      v,
+      device: "desktop",
+      state: "hover",
+      current: "borderBottomRightRadius"
+    }),
+
+    // BG Color
+    "--hoverBackgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // BG Gradient
+    "--hoverBackgroundGradient": styleBgGradient({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // Border Color
+    "--hoverBorderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // Hover Transition
+    "--hoverTransition": styleHoverTransition({ v }),
+    "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
+
+    /* ######### TABLET NORMAL ######### */
+
     "--tabletFilter": styleShowOnTabletFilter({ v }),
     "--tabletOpacity": styleShowOnTabletOpacity({ v }),
     "--tabletBackgroundImage": styleBgImage({
@@ -683,6 +1080,11 @@ export function bgStyleCSSVars(v, props) {
       state: "normal"
     }),
     "--tabletBackgroundColor": styleBgColor({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+    "--tabletBackgroundGradient": styleBgGradient({
       v,
       device: "tablet",
       state: "normal"
@@ -743,14 +1145,15 @@ export function bgStyleCSSVars(v, props) {
       current: "marginRight",
       hasItems
     }),
-    "--tabletVerticalAlign": styleVerticalAlign({
+    "--tabletVerticalAlign": styleAlignVerticalAlign({
       v,
       device: "tablet",
       state: "normal",
       hasItems
     }),
 
-    // Mobile
+    /* ######### MOBILE NORMAL ######### */
+
     "--mobileFilter": styleShowOnMobileFilter({ v }),
     "--mobileOpacity": styleShowOnMobileOpacity({ v }),
 
@@ -770,6 +1173,11 @@ export function bgStyleCSSVars(v, props) {
       state: "normal"
     }),
     "--mobileBackgroundColor": styleBgColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+    "--mobileBackgroundGradient": styleBgGradient({
       v,
       device: "mobile",
       state: "normal"
@@ -916,15 +1324,15 @@ export function styleCSSVars(v, props) {
   if (IS_PREVIEW) return;
 
   return {
-    "--width": styleSizeWidth({
+    "--width": styleSizeWidthPercent({
       v,
       device: "desktop"
     }),
-    "--tabletWidth": styleSizeWidth({
+    "--tabletWidth": styleSizeWidthPercent({
       v,
       device: "tablet"
     }),
-    "--mobileWidth": styleSizeWidth({
+    "--mobileWidth": styleSizeWidthPercent({
       v,
       device: "mobile"
     })

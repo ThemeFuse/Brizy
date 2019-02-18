@@ -4,14 +4,27 @@ import { getOptionColor } from "visual/utils/options";
 import { getFontStyle, getWeight, getWeightChoices } from "visual/utils/fonts";
 import {
   onChangeTypography,
-  tabletSyncOnChange,
-  mobileSyncOnChange,
   onChangeTypographyTablet,
   onChangeTypographyMobile
 } from "visual/utils/onChange";
+
+import {
+  toolbarElementCountdownDate,
+  toolbarElementCountdownHour,
+  toolbarElementCountdownMinute,
+  toolbarElementCountdownTimeZone,
+  toolbarElementCountdownLanguage,
+  toolbarColorHexAndOpacity,
+  toolbarColorPalette,
+  toolbarColorFields,
+  toolbarSizeWidthWidthPercent
+} from "visual/utils/toolbar";
+
 import { t } from "visual/utils/i18n";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
+
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
@@ -28,187 +41,11 @@ export function getItemsForDesktop(v) {
       title: t("Countdown"),
       position: 70,
       options: [
-        {
-          id: "date",
-          label: t("Date"),
-          type: "input",
-          inputSize: "medium",
-          placeholder: "dd/mm/yyyy",
-          value: {
-            value: v.date
-          },
-          onChange: ({ value: date }) => ({
-            date
-          })
-        },
-        {
-          id: "hours",
-          type: "select",
-          label: t("Hour"),
-          choices: _.times(24, index => {
-            const hour = (index + 12) % 12 || 12;
-            const suffix = index >= 12 ? "pm" : "am";
-
-            return {
-              title: `${hour} ${suffix}`,
-              value: `${hour} ${suffix}`
-            };
-          }),
-          value: v.hours
-        },
-        {
-          id: "minutes",
-          type: "select",
-          label: t("Minutes"),
-          choices: _.times(6, index => {
-            const current = index * 10;
-            return {
-              title: `${index}0 m`,
-              value: current
-            };
-          }),
-          value: v.minutes
-        },
-        {
-          id: "timeZone",
-          label: t("Time Zone"),
-          type: "select",
-          choices: [
-            {
-              value: "660",
-              title: t("- 11:00 (Niue)")
-            },
-            {
-              value: "600",
-              title: t("- 10:00 (Honolulu, Papeete)")
-            },
-            {
-              value: "540",
-              title: t("- 9:00 (Anchorage)")
-            },
-            {
-              value: "480",
-              title: t("- 8:00 (Los Angeles)")
-            },
-            {
-              value: "420",
-              title: t("- 7:00 (Denver, Phoenix)")
-            },
-            {
-              value: "360",
-              title: t("- 6:00 (Chicago, Dallas)")
-            },
-            {
-              value: "300",
-              title: t("- 5:00 (New York, Miami)")
-            },
-            {
-              value: "240",
-              title: t("- 4:00 (Halifax, Manaus)")
-            },
-            {
-              value: "180",
-              title: t("- 3:00 (Brasilia, Santiago)")
-            },
-            {
-              value: "120",
-              title: t("- 2:00 (Noronha)")
-            },
-            {
-              value: "60",
-              title: t("- 1:00 (Cape Verde)")
-            },
-            {
-              value: "0",
-              title: t("00:00 (London, Dublin)")
-            },
-            {
-              value: "-60",
-              title: t("+ 1:00 (Berlin, Paris)")
-            },
-            {
-              value: "-120",
-              title: t("+ 2:00 (Athens, Istanbul)")
-            },
-            {
-              value: "-180",
-              title: t("+ 3:00 (Moscow, Baghdad)")
-            },
-            {
-              value: "-240",
-              title: t("+ 4:00 (Dubai, Baku)")
-            },
-            {
-              value: "-300",
-              title: t("+ 5:00 (Yekaterinburg)")
-            },
-            {
-              value: "-360",
-              title: t("+ 6:00 (Astana)")
-            },
-            {
-              value: "-420",
-              title: t("+ 7:00 (Bangkok, Jakarta)")
-            },
-            {
-              value: "-480",
-              title: t("+ 8:00 (Singapore, Beijing)")
-            },
-            {
-              value: "-540",
-              title: t("+ 9:00 (Tokyo, Seoul)")
-            },
-            {
-              value: "-600",
-              title: t("+ 10:00 (Sidney, Melbourne)")
-            },
-            {
-              value: "-660",
-              title: t("+ 11:00 (Ponape)")
-            },
-            {
-              value: "-720",
-              title: t("+ 12:00 (Auckland)")
-            }
-          ],
-          value: v.timeZone
-        },
-        {
-          id: "language",
-          label: t("Language"),
-          type: "select",
-          choices: [
-            {
-              title: t("German"),
-              value: "de"
-            },
-            {
-              title: t("English"),
-              value: "en"
-            },
-            {
-              title: t("Spanish"),
-              value: "es"
-            },
-            {
-              title: t("French"),
-              value: "fr"
-            },
-            {
-              title: t("Italian"),
-              value: "it"
-            },
-            {
-              title: t("Dutch"),
-              value: "nl"
-            },
-            {
-              title: t("Russian"),
-              value: "ru"
-            }
-          ],
-          value: v.language
-        }
+        toolbarElementCountdownDate({ v }),
+        toolbarElementCountdownHour({ v }),
+        toolbarElementCountdownMinute({ v }),
+        toolbarElementCountdownTimeZone({ v }),
+        toolbarElementCountdownLanguage({ v })
       ]
     },
     {
@@ -222,6 +59,7 @@ export function getItemsForDesktop(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -264,6 +102,7 @@ export function getItemsForDesktop(v) {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -345,52 +184,37 @@ export function getItemsForDesktop(v) {
         }
       },
       options: [
+        toolbarColorHexAndOpacity({
+          v,
+          state: "normal",
+          onChange: [
+            "onChangeColorHexAndOpacity",
+            "onChangeColorHexAndOpacityPalette"
+          ]
+        }),
+        toolbarColorPalette({
+          v,
+          state: "normal",
+          onChange: ["onChangeColorPalette", "onChangeColorPaletteOpacity"]
+        }),
         {
-          id: "color",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: colorHex,
-            opacity: v.colorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            opacity =
-              hex !== v.colorHex && v.colorOpacity === 0
-                ? v.tempColorOpacity
-                : opacity;
-
-            return {
-              colorHex: hex,
-              colorOpacity: opacity,
-              colorPalette: isChanged === "hex" ? "" : v.colorPalette
-            };
-          }
-        },
-        {
-          id: "colorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: v.colorPalette,
-          onChange: colorPalette => ({
-            colorPalette,
-
-            colorOpacity:
-              v.colorOpacity === 0 ? v.tempColorOpacity : v.colorOpacity
-          })
-        },
-        {
-          id: "colorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: colorHex,
-            opacity: v.colorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            colorPalette: isChanged === "hex" ? "" : v.colorPalette,
-            colorHex: hex,
-            colorOpacity: opacity
-          })
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                toolbarColorFields({
+                  v,
+                  state: "normal",
+                  onChange: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ]
+                })
+              ]
+            }
+          ]
         }
       ]
     },
@@ -401,38 +225,14 @@ export function getItemsForDesktop(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device })]
     }
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
+
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
@@ -456,6 +256,7 @@ export function getItemsForTablet(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -538,38 +339,13 @@ export function getItemsForTablet(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device })]
     }
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
@@ -593,6 +369,7 @@ export function getItemsForMobile(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -675,33 +452,7 @@ export function getItemsForMobile(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
-        }
-      ]
+      options: [toolbarSizeWidthWidthPercent({ v, device })]
     }
   ];
 }
