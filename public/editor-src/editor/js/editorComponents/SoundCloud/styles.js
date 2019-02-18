@@ -2,6 +2,8 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
+import { styleSizeWidthPercent, styleSizeHeightPx } from "visual/utils/style";
+
 export function styleClassName(v) {
   const { className } = v;
   let glamorObj;
@@ -80,18 +82,20 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const { width, height } = v;
-
   return {
-    "--width": `${width}%`,
-    "--height": `${height}px`,
+    /* ######### DESKTOP NORMAL ######### */
 
-    // Tablet
-    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
-    "--tabletHeight": `${tabletSyncOnChange(v, "height")}px`,
+    "--width": styleSizeWidthPercent({ v, device: "desktop" }),
+    "--height": styleSizeHeightPx({ v, device: "desktop" }),
 
-    // Mobile
-    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
-    "--mobileHeight": `${mobileSyncOnChange(v, "height")}px`
+    /* ######### TABLET NORMAL ######### */
+
+    "--tabletWidth": styleSizeWidthPercent({ v, device: "tablet" }),
+    "--tabletHeight": styleSizeHeightPx({ v, device: "tablet" }),
+
+    /* ######### MOBILE NORMAL ######### */
+
+    "--mobileWidth": styleSizeWidthPercent({ v, device: "mobile" }),
+    "--mobileHeight": styleSizeHeightPx({ v, device: "mobile" })
   };
 }

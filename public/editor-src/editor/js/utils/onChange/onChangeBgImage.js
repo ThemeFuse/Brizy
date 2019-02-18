@@ -9,6 +9,7 @@ export function onChangeBgImage({
   src,
   x,
   y,
+  population,
   isChanged
 }) {
   return isChanged === "image"
@@ -17,6 +18,8 @@ export function onChangeBgImage({
         [defaultValueKey({ key: "bgImageHeight", device, state })]: height,
         [defaultValueKey({ key: "bgImageSrc", device, state })]: src
       }
+    : isChanged === "population"
+    ? { [defaultValueKey({ key: "bgPopulation", device, state })]: population }
     : {
         [defaultValueKey({ key: "bgPositionX", device, state })]: x,
         [defaultValueKey({ key: "bgPositionY", device, state })]: y

@@ -76,3 +76,51 @@
     }
   }
 }
+
+// Gradient
+.brz-ed__select--transparent {
+  padding: 0px !important;
+  height: 13px !important;
+  min-height: 13px !important;
+  border-bottom: 0px;
+  margin-bottom: 0px;
+
+  .brz-control__select {
+    width: 110px;
+  }
+
+  .brz-control__select-current,
+  .brz-control__select-current:hover {
+    background-color: transparent;
+    line-height: 13px;
+    height: 13px;
+  }
+
+  .brz-control__select-current {
+    display: flex;
+
+    .brz-control__select-option {
+      line-height: 13px;
+      height: 13px;
+      padding-left: 0;
+      padding-right: 6px;
+    }
+    .brz-control__select--arrow {
+      margin-top: -0.4em;
+      position: relative;
+      right: auto;
+    }
+  }
+  .brz-control__select-options {
+    width: 112px;
+    margin-top: 10px;
+    margin-left: -10px;
+  }
+}
+
+.brz-ed__select--align-right {
+  .brz-control__select-current {
+    justify-content: flex-end;
+    margin-right: 7px;
+  }
+}

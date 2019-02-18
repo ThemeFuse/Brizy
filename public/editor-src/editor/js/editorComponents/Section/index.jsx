@@ -58,6 +58,7 @@ class Section extends EditorComponent {
     } = v;
     const meta = Object.assign({}, this.props.meta, {
       section: {
+        isSlider: slider === "on",
         showOnMobile: showOnMobile === "on",
         showOnTablet: showOnTablet === "on"
       }
@@ -65,7 +66,6 @@ class Section extends EditorComponent {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       className: "brz-section__items",
-      showSlider: slider === "on",
       sliderDots,
       sliderArrows,
       sliderAnimation,

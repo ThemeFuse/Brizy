@@ -334,20 +334,33 @@ export function getItemsForDesktop(v) {
                   })
                 },
                 {
-                  id: "paginationColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: paginationColorHex,
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        {
+                          id: "paginationColorFields",
+                          type: "colorFields",
+                          position: 30,
+                          value: {
+                            hex: paginationColorHex,
 
-                    opacity: v.paginationColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    paginationColorPalette:
-                      isChanged === "hex" ? "" : v.paginationColorPalette,
-                    paginationColorHex: hex,
-                    paginationColorOpacity: opacity
-                  })
+                            opacity: v.paginationColorOpacity
+                          },
+                          onChange: ({ hex, opacity, isChanged }) => ({
+                            paginationColorPalette:
+                              isChanged === "hex"
+                                ? ""
+                                : v.paginationColorPalette,
+                            paginationColorHex: hex,
+                            paginationColorOpacity: opacity
+                          })
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }

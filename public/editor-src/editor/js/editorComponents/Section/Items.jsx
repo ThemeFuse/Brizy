@@ -22,17 +22,19 @@ class SectionItems extends EditorArrayComponent {
 
   static defaultProps = {
     className: "",
-    showSlider: false,
     meta: {}
   };
 
   state = {
     showSpinner: false,
-    showSlider: this.props.showSlider
+    showSlider: this.props.meta.section.isSlider
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.showSlider !== nextProps.showSlider) {
+    const isSliderChanged =
+      this.props.meta.section.isSlider !== nextProps.meta.section.isSlider;
+
+    if (isSliderChanged) {
       this.setState(
         {
           showSpinner: true
@@ -41,7 +43,7 @@ class SectionItems extends EditorArrayComponent {
           setTimeout(() => {
             this.setState(
               {
-                showSlider: nextProps.showSlider
+                showSlider: nextProps.meta.section.isSlider
               },
               () => {
                 setTimeout(() => {
@@ -96,9 +98,14 @@ class SectionItems extends EditorArrayComponent {
     );
 
     return {
-      meta,
-      toolbarExtend,
-      showSlider
+      meta: {
+        ...meta,
+        section: {
+          ...meta.section,
+          isSlider: showSlider
+        }
+      },
+      toolbarExtend
     };
   }
 

@@ -80,15 +80,26 @@ function getPopulationTabs({ populationColor }, onChange) {
             })
         },
         {
-          id: "paragraphColorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: hexPalette || headerValue.hex,
-            opacity: headerValue.opacity
-          },
-          onChange: value =>
-            onChange(getPopulationColor(populationColor, key, value))
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                {
+                  id: "paragraphColorFields",
+                  type: "colorFields",
+                  position: 30,
+                  value: {
+                    hex: hexPalette || headerValue.hex,
+                    opacity: headerValue.opacity
+                  },
+                  onChange: value =>
+                    onChange(getPopulationColor(populationColor, key, value))
+                }
+              ]
+            }
+          ]
         }
       ]
     });
@@ -131,13 +142,24 @@ function getSimpleColorOptions({ color, colorPalette }, onChange) {
       onChange: value => onChange(getColor(value))
     },
     {
-      id: "bgColorFields",
-      type: "colorFields",
-      position: 30,
-      value: {
-        ...color
-      },
-      onChange: value => onChange(getColor(value))
+      type: "grid",
+      className: "brz-ed-grid__color-fileds",
+      columns: [
+        {
+          width: 100,
+          options: [
+            {
+              id: "bgColorFields",
+              type: "colorFields",
+              position: 30,
+              value: {
+                ...color
+              },
+              onChange: value => onChange(getColor(value))
+            }
+          ]
+        }
+      ]
     },
     {
       id: "bgColorPalette",

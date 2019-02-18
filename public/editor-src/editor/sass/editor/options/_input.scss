@@ -35,14 +35,28 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.brz-ed-control__colorPicker__footer {
+
+//  Input Field Transparent ( Color Fields HEX, Border size )
+.brz-ed-option__input-outline {
   .brz-input {
-    border: 0;
-    border-bottom: 1px solid;
-    max-width: 55px;
-    text-align: left;
-    margin-left: 2px;
-    padding-bottom: 2px;
+    background-color: transparent;
+    border: none;
+    outline: 0;
+
+    color: $options-label-color;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
+    text-transform: uppercase;
+
+    padding: 2px 0;
+
+    &:hover {
+      border-bottom: 1px solid $options-label-color;
+    }
+
+    &:focus,
+    &:active {
+      border-bottom: 1px solid #33beea;
+    }
   }
 }

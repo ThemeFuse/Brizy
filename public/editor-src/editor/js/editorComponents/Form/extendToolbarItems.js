@@ -76,6 +76,7 @@ export function getItemsForDesktop(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -118,6 +119,7 @@ export function getItemsForDesktop(v) {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -230,18 +232,30 @@ export function getItemsForDesktop(v) {
                   value: v.bgColorPalette
                 },
                 {
-                  id: "bgColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: bgColorHex,
-                    opacity: v.bgColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    bgColorPalette: isChanged === "hex" ? "" : v.bgColorPalette,
-                    bgColorHex: hex,
-                    bgColorOpacity: opacity
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        {
+                          id: "bgColorFields",
+                          type: "colorFields",
+                          position: 30,
+                          value: {
+                            hex: bgColorHex,
+                            opacity: v.bgColorOpacity
+                          },
+                          onChange: ({ hex, opacity, isChanged }) => ({
+                            bgColorPalette:
+                              isChanged === "hex" ? "" : v.bgColorPalette,
+                            bgColorHex: hex,
+                            bgColorOpacity: opacity
+                          })
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -269,18 +283,30 @@ export function getItemsForDesktop(v) {
                   value: v.colorPalette
                 },
                 {
-                  id: "colorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: colorHex,
-                    opacity: v.colorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    colorPalette: isChanged === "hex" ? "" : v.colorPalette,
-                    colorHex: hex,
-                    colorOpacity: opacity
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        {
+                          id: "colorFields",
+                          type: "colorFields",
+                          position: 30,
+                          value: {
+                            hex: colorHex,
+                            opacity: v.colorOpacity
+                          },
+                          onChange: ({ hex, opacity, isChanged }) => ({
+                            colorPalette:
+                              isChanged === "hex" ? "" : v.colorPalette,
+                            colorHex: hex,
+                            colorOpacity: opacity
+                          })
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -309,19 +335,30 @@ export function getItemsForDesktop(v) {
                   value: v.borderColorPalette
                 },
                 {
-                  id: "borderColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: borderColorHex,
-                    opacity: v.borderColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    borderColorPalette:
-                      isChanged === "hex" ? "" : v.borderColorPalette,
-                    borderColorHex: hex,
-                    borderColorOpacity: opacity
-                  })
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        {
+                          id: "borderColorFields",
+                          type: "colorFields",
+                          position: 30,
+                          value: {
+                            hex: borderColorHex,
+                            opacity: v.borderColorOpacity
+                          },
+                          onChange: ({ hex, opacity, isChanged }) => ({
+                            borderColorPalette:
+                              isChanged === "hex" ? "" : v.borderColorPalette,
+                            borderColorHex: hex,
+                            borderColorOpacity: opacity
+                          })
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -352,8 +389,7 @@ export function getItemsForTablet(v) {
     tabletFontWeight,
     tabletLineHeight,
     tabletLetterSpacing
-  } =
-    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+  } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   return [
     {
@@ -410,6 +446,7 @@ export function getItemsForTablet(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -498,8 +535,7 @@ export function getItemsForMobile(v) {
     mobileFontWeight,
     mobileLineHeight,
     mobileLetterSpacing
-  } =
-    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
     {
@@ -556,6 +592,7 @@ export function getItemsForMobile(v) {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,

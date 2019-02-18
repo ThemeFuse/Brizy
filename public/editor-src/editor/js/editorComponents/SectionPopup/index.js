@@ -74,6 +74,9 @@ class SectionPopup extends EditorComponent {
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
+
+    this.patchValue({ tabsState: "tabNormal" });
+    this.patchValue({ tabsColor: "tabOverlay" });
   };
 
   handleDropClick = () => {
@@ -170,8 +173,19 @@ class SectionPopup extends EditorComponent {
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.colorPalette && `${_v.colorPalette}__color`,
+      _v.hoverColorPalette && `${_v.hoverColorPalette}__hoverColor`,
+
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
@@ -215,8 +229,19 @@ class SectionPopup extends EditorComponent {
   renderForView(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.colorPalette && `${_v.colorPalette}__color`,
+      _v.hoverColorPalette && `${_v.hoverColorPalette}__hoverColor`,
+
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);

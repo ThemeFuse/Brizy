@@ -3,6 +3,7 @@ import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleBgGradient } from "visual/utils/style";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -16,6 +17,7 @@ export function styleClassName(v) {
         color: "var(--color)",
         borderColor: "var(--borderColor)",
         backgroundColor: "var(--backgroundColor)",
+        backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
         borderStyle: "var(--borderStyle)",
         boxShadow: "var(--boxShadow)"
@@ -24,7 +26,8 @@ export function styleClassName(v) {
         color: "var(--hoverColor)",
         borderColor: "var(--hoverBorderColor)",
         backgroundColor: "var(--hoverBgColor)",
-        boxShadow: "var(--boxShadow)"
+        boxShadow: "var(--boxShadow)",
+        backgroundImage: "var(--hoverBackgroundGradient)"
       },
       ".brz-ed--desktop &": {
         fontSize: "var(--fontSize)",
@@ -114,7 +117,7 @@ export function styleClassName(v) {
       mobilePaddingTop,
       mobilePaddingRight,
       mobilePaddingBottom,
-      mobilePaddingLeft  
+      mobilePaddingLeft
     } = v;
 
     const boxShadowStyle =
@@ -132,11 +135,11 @@ export function styleClassName(v) {
         ? tabletFontSize * tabletLineHeight
         : v.iconSize === "custom" &&
           tabletFontSize * tabletLineHeight < v.iconCustomSize
-          ? v.iconCustomSize
-          : v.iconSize !== "custom" &&
-            tabletFontSize * tabletLineHeight >= v[`${v.iconSize}IconSize`]
-            ? tabletFontSize * tabletLineHeight
-            : v[`${v.iconSize}IconSize`];
+        ? v.iconCustomSize
+        : v.iconSize !== "custom" &&
+          tabletFontSize * tabletLineHeight >= v[`${v.iconSize}IconSize`]
+        ? tabletFontSize * tabletLineHeight
+        : v[`${v.iconSize}IconSize`];
     let maxTabletBorderRadius = Math.round(
       (tabletContentHeight + v.tabletPaddingTop * 2 + v.tempBorderWidth * 2) / 2
     );
@@ -147,11 +150,11 @@ export function styleClassName(v) {
         ? mobileFontSize * mobileLineHeight
         : v.iconSize === "custom" &&
           mobileFontSize * mobileLineHeight < v.iconCustomSize
-          ? v.iconCustomSize
-          : v.iconSize !== "custom" &&
-            mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
-            ? mobileFontSize * mobileLineHeight
-            : v[`${v.iconSize}IconSize`];
+        ? v.iconCustomSize
+        : v.iconSize !== "custom" &&
+          mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
+        ? mobileFontSize * mobileLineHeight
+        : v[`${v.iconSize}IconSize`];
     let maxMobileBorderRadius = Math.round(
       (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
     );
@@ -184,6 +187,11 @@ export function styleClassName(v) {
         color: hexToRgba(colorHex, colorOpacity),
         borderColor: hexToRgba(borderColorHex, borderColorOpacity),
         backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
+        backgroundImage: styleBgGradient({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
         borderWidth,
         borderStyle,
         paddingTop: `${paddingTop}px`,
@@ -197,7 +205,12 @@ export function styleClassName(v) {
         color: hexToRgba(hoverColorHex, hoverColorOpacity),
         borderColor: hexToRgba(hoverBorderColorHex, hoverBorderColorOpacity),
         backgroundColor: hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
-        boxShadow: boxShadowStyle
+        boxShadow: boxShadowStyle,
+        backgroundImage: styleBgGradient({
+          v,
+          device: "desktop",
+          state: "hover"
+        })
       },
       "@media (max-width: 991px)": {
         ".brz &": {
@@ -307,11 +320,11 @@ export function styleCSSVars(v) {
       ? tabletFontSize * tabletLineHeight
       : v.iconSize === "custom" &&
         tabletFontSize * tabletLineHeight < v.iconCustomSize
-        ? v.iconCustomSize
-        : v.iconSize !== "custom" &&
-          tabletFontSize * tabletLineHeight >= v[`${v.iconSize}IconSize`]
-          ? tabletFontSize * tabletLineHeight
-          : v[`${v.iconSize}IconSize`];
+      ? v.iconCustomSize
+      : v.iconSize !== "custom" &&
+        tabletFontSize * tabletLineHeight >= v[`${v.iconSize}IconSize`]
+      ? tabletFontSize * tabletLineHeight
+      : v[`${v.iconSize}IconSize`];
   let maxTabletBorderRadius = Math.round(
     (tabletContentHeight + v.tabletPaddingTop * 2 + v.tempBorderWidth * 2) / 2
   );
@@ -322,11 +335,11 @@ export function styleCSSVars(v) {
       ? mobileFontSize * mobileLineHeight
       : v.iconSize === "custom" &&
         mobileFontSize * mobileLineHeight < v.iconCustomSize
-        ? v.iconCustomSize
-        : v.iconSize !== "custom" &&
-          mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
-          ? mobileFontSize * mobileLineHeight
-          : v[`${v.iconSize}IconSize`];
+      ? v.iconCustomSize
+      : v.iconSize !== "custom" &&
+        mobileFontSize * mobileLineHeight >= v[`${v.iconSize}IconSize`]
+      ? mobileFontSize * mobileLineHeight
+      : v[`${v.iconSize}IconSize`];
   let maxMobileBorderRadius = Math.round(
     (mobileContentHeight + v.mobilePaddingTop * 2 + v.tempBorderWidth * 2) / 2
   );
@@ -335,16 +348,16 @@ export function styleCSSVars(v) {
   let mobileBorderRadius = v.tempMobileBorderRadius;
 
   if (borderRadiusType === "square") {
-      // old method (get border radius from desktop tempBorderRadius)
-      tabletBorderRadius = v.tempTabletBorderRadius;
-      mobileBorderRadius = v.tempMobileBorderRadius;
+    // old method (get border radius from desktop tempBorderRadius)
+    tabletBorderRadius = v.tempTabletBorderRadius;
+    mobileBorderRadius = v.tempMobileBorderRadius;
   } else if (borderRadiusType === "rounded") {
-      tabletBorderRadius = maxTabletBorderRadius;
-      mobileBorderRadius = maxMobileBorderRadius;
+    tabletBorderRadius = maxTabletBorderRadius;
+    mobileBorderRadius = maxMobileBorderRadius;
   } else if (borderRadiusType === "custom") {
-      // now the border radius come from desktop
-      tabletBorderRadius = tabletSyncOnChange(v, "borderRadius");
-      mobileBorderRadius = mobileSyncOnChange(v, "borderRadius");
+    // now the border radius come from desktop
+    tabletBorderRadius = tabletSyncOnChange(v, "borderRadius");
+    mobileBorderRadius = mobileSyncOnChange(v, "borderRadius");
   }
 
   return {
@@ -358,6 +371,11 @@ export function styleCSSVars(v) {
     "--color": hexToRgba(colorHex, colorOpacity),
     "--borderColor": hexToRgba(borderColorHex, borderColorOpacity),
     "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
+    "--backgroundGradient": styleBgGradient({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     "--borderWidth": `${borderWidth}px`,
     "--borderStyle": borderStyle,
     "--borderRadius": `${borderRadius}px`,
@@ -372,6 +390,11 @@ export function styleCSSVars(v) {
       hoverBorderColorOpacity
     ),
     "--hoverBgColor": hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
+    "--hoverBackgroundGradient": styleBgGradient({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
 
     // Tablet
     "--tabletFontSize": `${tabletFontSize}px`,
@@ -425,18 +448,18 @@ export function iconStyleClassName(v) {
             : iconType === "outline" &&
               iconCustomSize > 24 &&
               iconCustomSize <= 32
-              ? 1.1
-              : iconType === "outline" &&
-                iconCustomSize > 32 &&
-                iconCustomSize <= 48
-                ? 1.4
-                : iconType === "outline" &&
-                  iconCustomSize > 48 &&
-                  iconCustomSize <= 64
-                  ? 2.3
-                  : iconType === "outline" && iconCustomSize > 64
-                    ? 3
-                    : 0
+            ? 1.1
+            : iconType === "outline" &&
+              iconCustomSize > 32 &&
+              iconCustomSize <= 48
+            ? 1.4
+            : iconType === "outline" &&
+              iconCustomSize > 48 &&
+              iconCustomSize <= 64
+            ? 2.3
+            : iconType === "outline" && iconCustomSize > 64
+            ? 3
+            : 0
       }
     };
   }
@@ -460,17 +483,13 @@ export function iconStyleCSSVars(v) {
       iconType === "outline" && iconCustomSize <= 24
         ? 1
         : iconType === "outline" && iconCustomSize > 24 && iconCustomSize <= 32
-          ? 1.1
-          : iconType === "outline" &&
-            iconCustomSize > 32 &&
-            iconCustomSize <= 48
-            ? 1.4
-            : iconType === "outline" &&
-              iconCustomSize > 48 &&
-              iconCustomSize <= 64
-              ? 2.3
-              : iconType === "outline" && iconCustomSize > 64
-                ? 3
-                : 0
+        ? 1.1
+        : iconType === "outline" && iconCustomSize > 32 && iconCustomSize <= 48
+        ? 1.4
+        : iconType === "outline" && iconCustomSize > 48 && iconCustomSize <= 64
+        ? 2.3
+        : iconType === "outline" && iconCustomSize > 64
+        ? 3
+        : 0
   };
 }

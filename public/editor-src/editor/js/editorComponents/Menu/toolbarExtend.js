@@ -8,6 +8,19 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
+
+import {
+  toolbarDisabledShowOnTablet,
+  toolbarDisabledShowOnMobile,
+  toolbarBoxShadowHexAndOpacity,
+  toolbarBoxShadowPalette,
+  toolbarBoxShadowFields,
+  toolbarBoxShadowBlur,
+  toolbarBoxShadowSpread,
+  toolbarBoxShadowVertical,
+  toolbarBoxShadowHorizontal
+} from "visual/utils/toolbar";
+
 import { t } from "visual/utils/i18n";
 
 const subMenuKeys = {
@@ -135,11 +148,11 @@ const getMMenuToolbarColor = v => {
                             opacity: v.mMenuColorOpacity
                           },
                           onChange: ({
-                                       hex,
-                                       opacity,
-                                       isChanged,
-                                       opacityDragEnd
-                                     }) => {
+                            hex,
+                            opacity,
+                            isChanged,
+                            opacityDragEnd
+                          }) => {
                             opacity =
                               hex !== v.mMenuColorHex &&
                               v.mMenuColorOpacity == 0
@@ -186,19 +199,32 @@ const getMMenuToolbarColor = v => {
                           })
                         },
                         {
-                          id: "mMenuColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: mMenuColorHex,
-                            opacity: v.mMenuColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            mMenuColorPalette:
-                              isChanged === "hex" ? "" : v.mMenuColorPalette,
-                            mMenuColorHex: hex,
-                            mMenuColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "mMenuColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: mMenuColorHex,
+                                    opacity: v.mMenuColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    mMenuColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.mMenuColorPalette,
+                                    mMenuColorHex: hex,
+                                    mMenuColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -214,11 +240,11 @@ const getMMenuToolbarColor = v => {
                             opacity: v.mMenuBgColorOpacity
                           },
                           onChange: ({
-                                       hex,
-                                       opacity,
-                                       isChanged,
-                                       opacityDragEnd
-                                     }) => {
+                            hex,
+                            opacity,
+                            isChanged,
+                            opacityDragEnd
+                          }) => {
                             opacity =
                               hex !== v.mMenuBgColorHex &&
                               v.mMenuBgColorOpacity == 0
@@ -256,19 +282,32 @@ const getMMenuToolbarColor = v => {
                           })
                         },
                         {
-                          id: "mMenuBgColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: mMenuBgColorHex,
-                            opacity: v.mMenuBgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            mMenuBgColorPalette:
-                              isChanged === "hex" ? "" : v.mMenuBgColorPalette,
-                            mMenuBgColorHex: hex,
-                            mMenuBgColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "mMenuBgColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: mMenuBgColorHex,
+                                    opacity: v.mMenuBgColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    mMenuBgColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.mMenuBgColorPalette,
+                                    mMenuBgColorHex: hex,
+                                    mMenuBgColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -284,11 +323,11 @@ const getMMenuToolbarColor = v => {
                             opacity: v.mMenuBorderColorOpacity
                           },
                           onChange: ({
-                                       hex,
-                                       opacity,
-                                       isChanged,
-                                       opacityDragEnd
-                                     }) => {
+                            hex,
+                            opacity,
+                            isChanged,
+                            opacityDragEnd
+                          }) => {
                             opacity =
                               hex !== v.mMenuBorderColorHex &&
                               v.mMenuBorderColorOpacity == 0
@@ -326,22 +365,33 @@ const getMMenuToolbarColor = v => {
                           })
                         },
                         {
-                          id: "mMenuBorderColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: mMenuBorderColorHex,
-                            opacity: v.mMenuBorderColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            mMenuBorderColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.mMenuBorderColorPalette,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "mMenuBorderColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: mMenuBorderColorHex,
+                                    opacity: v.mMenuBorderColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    mMenuBorderColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.mMenuBorderColorPalette,
 
-                            mMenuBorderColorHex: hex,
-                            mMenuBorderColorOpacity: opacity
-                          })
+                                    mMenuBorderColorHex: hex,
+                                    mMenuBorderColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -397,21 +447,32 @@ const getMMenuToolbarColor = v => {
                           })
                         },
                         {
-                          id: "mMenuHoverColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: mMenuHoverColorHex,
-                            opacity: v.mMenuHoverColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            mMenuHoverColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.mMenuHoverColorPalette,
-                            mMenuHoverColorHex: hex,
-                            mMenuHoverColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "mMenuHoverColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: mMenuHoverColorHex,
+                                    opacity: v.mMenuHoverColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    mMenuHoverColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.mMenuHoverColorPalette,
+                                    mMenuHoverColorHex: hex,
+                                    mMenuHoverColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -426,8 +487,8 @@ const getMMenuToolbarColor = v => {
           ]
         }
       ]
-    },
-  ]
+    }
+  ];
 };
 
 const getMMenuToolbar = v => {
@@ -520,6 +581,7 @@ const getMMenuToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -572,6 +634,7 @@ const getMMenuToolbar = v => {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -684,11 +747,12 @@ const getMMenuToolbar = v => {
       ],
       value: v.mMenuItemHorizontalAlign
     },
-    ...getMMenuToolbarColor(v),
+    ...getMMenuToolbarColor(v)
   ];
 };
 
 const getToolbar = v => {
+  const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
@@ -867,6 +931,7 @@ const getToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -914,6 +979,7 @@ const getToolbar = v => {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -1006,6 +1072,7 @@ const getToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -1070,6 +1137,7 @@ const getToolbar = v => {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -1254,30 +1322,41 @@ const getToolbar = v => {
                           })
                         },
                         {
-                          id: "colorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: colorHex,
-                            opacity: v.colorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            colorPalette:
-                              isChanged === "hex" ? "" : v.colorPalette,
-                            colorHex: hex,
-                            colorOpacity: opacity,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "colorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: colorHex,
+                                    opacity: v.colorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    colorPalette:
+                                      isChanged === "hex" ? "" : v.colorPalette,
+                                    colorHex: hex,
+                                    colorOpacity: opacity,
 
-                            // Normal + Hover Sync
-                            hoverColorHex:
-                              v.colorHex === v.hoverColorHex
-                                ? hex
-                                : v.hoverColorHex,
+                                    // Normal + Hover Sync
+                                    hoverColorHex:
+                                      v.colorHex === v.hoverColorHex
+                                        ? hex
+                                        : v.hoverColorHex,
 
-                            hoverColorOpacity:
-                              v.colorOpacity === v.hoverColorOpacity
-                                ? opacity
-                                : v.hoverColorOpacity
-                          })
+                                    hoverColorOpacity:
+                                      v.colorOpacity === v.hoverColorOpacity
+                                        ? opacity
+                                        : v.hoverColorOpacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -1330,19 +1409,32 @@ const getToolbar = v => {
                           })
                         },
                         {
-                          id: "hoverColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: hoverColorHex,
-                            opacity: v.hoverColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            hoverColorPalette:
-                              isChanged === "hex" ? "" : v.hoverColorPalette,
-                            hoverColorHex: hex,
-                            hoverColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "hoverColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: hoverColorHex,
+                                    opacity: v.hoverColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    hoverColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.hoverColorPalette,
+                                    hoverColorHex: hex,
+                                    hoverColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -1486,52 +1578,68 @@ const getToolbar = v => {
                           })
                         },
                         {
-                          id: "subMenuColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: subMenuColorHex,
-                            opacity: v.subMenuColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            subMenuColorPalette:
-                              isChanged === "hex" ? "" : v.subMenuColorPalette,
-                            subMenuColorHex: hex,
-                            subMenuColorOpacity: opacity,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "subMenuColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: subMenuColorHex,
+                                    opacity: v.subMenuColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    subMenuColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.subMenuColorPalette,
+                                    subMenuColorHex: hex,
+                                    subMenuColorOpacity: opacity,
 
-                            // Normal + Hover Sync
-                            subMenuHoverColorHex:
-                              v.subMenuColorHex === v.subMenuHoverColorHex
-                                ? hex
-                                : v.subMenuHoverColorHex,
+                                    // Normal + Hover Sync
+                                    subMenuHoverColorHex:
+                                      v.subMenuColorHex ===
+                                      v.subMenuHoverColorHex
+                                        ? hex
+                                        : v.subMenuHoverColorHex,
 
-                            subMenuHoverColorOpacity:
-                              v.subMenuColorOpacity ===
-                              v.subMenuHoverColorOpacity
-                                ? hex
-                                : v.subMenuHoverColorOpacity,
+                                    subMenuHoverColorOpacity:
+                                      v.subMenuColorOpacity ===
+                                      v.subMenuHoverColorOpacity
+                                        ? hex
+                                        : v.subMenuHoverColorOpacity,
 
-                            // Sync MMenu
-                            mMenuColorHex:
-                              v.subMenuColorHex === v.mMenuColorHex
-                                ? hex
-                                : v.mMenuBgColorHex,
-                            mMenuColorOpacity:
-                              v.subMenuColorOpacity === v.mMenuColorOpacity
-                                ? opacity
-                                : v.mMenuColorOpacity,
+                                    // Sync MMenu
+                                    mMenuColorHex:
+                                      v.subMenuColorHex === v.mMenuColorHex
+                                        ? hex
+                                        : v.mMenuBgColorHex,
+                                    mMenuColorOpacity:
+                                      v.subMenuColorOpacity ===
+                                      v.mMenuColorOpacity
+                                        ? opacity
+                                        : v.mMenuColorOpacity,
 
-                            // MMenu + Hover Sync
-                            mMenuHoverColorHex:
-                              v.subMenuColorHex === v.mMenuHoverColorHex
-                                ? hex
-                                : v.mMenuHoverColorHex,
+                                    // MMenu + Hover Sync
+                                    mMenuHoverColorHex:
+                                      v.subMenuColorHex === v.mMenuHoverColorHex
+                                        ? hex
+                                        : v.mMenuHoverColorHex,
 
-                            mMenuHoverColorOpacity:
-                              v.subMenuColorOpacity === v.mMenuHoverColorOpacity
-                                ? opacity
-                                : v.mMenuHoverColorOpacity
-                          })
+                                    mMenuHoverColorOpacity:
+                                      v.subMenuColorOpacity ===
+                                      v.mMenuHoverColorOpacity
+                                        ? opacity
+                                        : v.mMenuHoverColorOpacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -1625,42 +1733,55 @@ const getToolbar = v => {
                           })
                         },
                         {
-                          id: "subMenuBgColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: subMenuBgColorHex,
-                            opacity: v.subMenuBgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            subMenuBgColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.subMenuBgColorPalette,
-                            subMenuBgColorHex: hex,
-                            subMenuBgColorOpacity: opacity,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "subMenuBgColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: subMenuBgColorHex,
+                                    opacity: v.subMenuBgColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    subMenuBgColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.subMenuBgColorPalette,
+                                    subMenuBgColorHex: hex,
+                                    subMenuBgColorOpacity: opacity,
 
-                            subMenuHoverBgColorHex:
-                              v.subMenuBgColorHex === v.subMenuHoverBgColorHex
-                                ? hex
-                                : v.subMenuHoverBgColorHex,
+                                    subMenuHoverBgColorHex:
+                                      v.subMenuBgColorHex ===
+                                      v.subMenuHoverBgColorHex
+                                        ? hex
+                                        : v.subMenuHoverBgColorHex,
 
-                            subMenuHoverBgColorOpacity:
-                              v.subMenuBgColorOpacity ===
-                              v.subMenuHoverBgColorOpacity
-                                ? hex
-                                : v.subMenuHoverBgColorOpacity,
+                                    subMenuHoverBgColorOpacity:
+                                      v.subMenuBgColorOpacity ===
+                                      v.subMenuHoverBgColorOpacity
+                                        ? hex
+                                        : v.subMenuHoverBgColorOpacity,
 
-                            // Sync MMenu
-                            mMenuBgColorHex:
-                              v.subMenuBgColorHex === v.mMenuBgColorHex
-                                ? hex
-                                : v.mMenuBgColorHex,
-                            mMenuBgColorOpacity:
-                              v.subMenuBgColorOpacity === v.mMenuBgColorOpacity
-                                ? opacity
-                                : v.mMenuBgColorOpacity
-                          })
+                                    // Sync MMenu
+                                    mMenuBgColorHex:
+                                      v.subMenuBgColorHex === v.mMenuBgColorHex
+                                        ? hex
+                                        : v.mMenuBgColorHex,
+                                    mMenuBgColorOpacity:
+                                      v.subMenuBgColorOpacity ===
+                                      v.mMenuBgColorOpacity
+                                        ? opacity
+                                        : v.mMenuBgColorOpacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -1737,32 +1858,44 @@ const getToolbar = v => {
                           })
                         },
                         {
-                          id: "subMenuBorderColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: subMenuBorderColorHex,
-                            opacity: v.subMenuBorderColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            subMenuBorderColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.subMenuBorderColorPalette,
-                            subMenuBorderColorHex: hex,
-                            subMenuBorderColorOpacity: opacity,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "subMenuBorderColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: subMenuBorderColorHex,
+                                    opacity: v.subMenuBorderColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    subMenuBorderColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.subMenuBorderColorPalette,
+                                    subMenuBorderColorHex: hex,
+                                    subMenuBorderColorOpacity: opacity,
 
-                            // Sync MMenu
-                            mMenuBorderColorHex:
-                              v.subMenuBorderColorHex === v.mMenuBorderColorHex
-                                ? hex
-                                : v.mMenuBorderColorHex,
-                            mMenuBorderColorOpacity:
-                              v.subMenuBorderColorOpacity ===
-                              v.mMenuBorderColorOpacity
-                                ? opacity
-                                : v.mMenuBorderColorOpacity
-                          })
+                                    // Sync MMenu
+                                    mMenuBorderColorHex:
+                                      v.subMenuBorderColorHex ===
+                                      v.mMenuBorderColorHex
+                                        ? hex
+                                        : v.mMenuBorderColorHex,
+                                    mMenuBorderColorOpacity:
+                                      v.subMenuBorderColorOpacity ===
+                                      v.mMenuBorderColorOpacity
+                                        ? opacity
+                                        : v.mMenuBorderColorOpacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -1836,32 +1969,44 @@ const getToolbar = v => {
                           })
                         },
                         {
-                          id: "subMenuHoverColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: subMenuHoverColorHex,
-                            opacity: v.subMenuHoverColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            subMenuHoverColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.subMenuHoverColorPalette,
-                            subMenuHoverColorHex: hex,
-                            subMenuHoverColorOpacity: opacity,
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "subMenuHoverColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: subMenuHoverColorHex,
+                                    opacity: v.subMenuHoverColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    subMenuHoverColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.subMenuHoverColorPalette,
+                                    subMenuHoverColorHex: hex,
+                                    subMenuHoverColorOpacity: opacity,
 
-                            // Sync MMenu
-                            mMenuHoverColorHex:
-                              v.subMenuHoverColorHex === v.mMenuHoverColorHex
-                                ? hex
-                                : v.mMenuHoverColorHex,
-                            mMenuHoverColorOpacity:
-                              v.subMenuHoverColorOpacity ===
-                              v.mMenuHoverColorOpacity
-                                ? opacity
-                                : v.mMenuHoverColorOpacity
-                          })
+                                    // Sync MMenu
+                                    mMenuHoverColorHex:
+                                      v.subMenuHoverColorHex ===
+                                      v.mMenuHoverColorHex
+                                        ? hex
+                                        : v.mMenuHoverColorHex,
+                                    mMenuHoverColorOpacity:
+                                      v.subMenuHoverColorOpacity ===
+                                      v.mMenuHoverColorOpacity
+                                        ? opacity
+                                        : v.mMenuHoverColorOpacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
@@ -1903,24 +2048,35 @@ const getToolbar = v => {
                           })
                         },
                         {
-                          id: "subMenuHoverBgColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: subMenuHoverBgColorHex,
-                            opacity: v.subMenuHoverBgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            subMenuHoverBgColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.subMenuHoverBgColorPalette,
-                            subMenuHoverBgColorHex: hex,
-                            subMenuHoverBgColorOpacity: opacity
-                          })
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                {
+                                  id: "subMenuHoverBgColorFields",
+                                  type: "colorFields",
+                                  position: 30,
+                                  value: {
+                                    hex: subMenuHoverBgColorHex,
+                                    opacity: v.subMenuHoverBgColorOpacity
+                                  },
+                                  onChange: ({ hex, opacity, isChanged }) => ({
+                                    subMenuHoverBgColorPalette:
+                                      isChanged === "hex"
+                                        ? ""
+                                        : v.subMenuHoverBgColorPalette,
+                                    subMenuHoverBgColorHex: hex,
+                                    subMenuHoverBgColorOpacity: opacity
+                                  })
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
-                    },
+                    }
                   ]
                 }
               ]
@@ -2082,12 +2238,10 @@ const getToolbar = v => {
                                 : v.borderBottomRightRadius,
 
                             borderRadius:
+                              borderTopLeftRadius === v.borderTopRightRadius &&
                               borderTopLeftRadius ===
-                              v.borderTopRightRadius &&
-                              borderTopLeftRadius ===
-                              v.borderBottomRightRadius &&
-                              borderTopLeftRadius ===
-                              v.borderBottomLeftRadius
+                                v.borderBottomRightRadius &&
+                              borderTopLeftRadius === v.borderBottomLeftRadius
                                 ? borderTopLeftRadius
                                 : v.borderRadius,
 
@@ -2095,12 +2249,10 @@ const getToolbar = v => {
 
                             tempBorderRadius:
                               sliderDragEnd &&
+                              borderTopLeftRadius === v.borderTopRightRadius &&
                               borderTopLeftRadius ===
-                              v.borderTopRightRadius &&
-                              borderTopLeftRadius ===
-                              v.borderBottomRightRadius &&
-                              borderTopLeftRadius ===
-                              v.borderBottomLeftRadius
+                                v.borderBottomRightRadius &&
+                              borderTopLeftRadius === v.borderBottomLeftRadius
                                 ? borderTopLeftRadius
                                 : v.tempBorderRadius
                           };
@@ -2153,12 +2305,10 @@ const getToolbar = v => {
                                 : v.borderBottomRightRadius,
 
                             borderRadius:
+                              borderTopRightRadius === v.borderTopLeftRadius &&
                               borderTopRightRadius ===
-                              v.borderTopLeftRadius &&
-                              borderTopRightRadius ===
-                              v.borderBottomRightRadius &&
-                              borderTopRightRadius ===
-                              v.borderBottomLeftRadius
+                                v.borderBottomRightRadius &&
+                              borderTopRightRadius === v.borderBottomLeftRadius
                                 ? borderTopRightRadius
                                 : v.borderRadius,
 
@@ -2166,12 +2316,10 @@ const getToolbar = v => {
 
                             tempBorderRadius:
                               sliderDragEnd &&
+                              borderTopRightRadius === v.borderTopLeftRadius &&
                               borderTopRightRadius ===
-                              v.borderTopLeftRadius &&
-                              borderTopRightRadius ===
-                              v.borderBottomRightRadius &&
-                              borderTopRightRadius ===
-                              v.borderBottomLeftRadius
+                                v.borderBottomRightRadius &&
+                              borderTopRightRadius === v.borderBottomLeftRadius
                                 ? borderTopRightRadius
                                 : v.tempBorderRadius
                           };
@@ -2225,11 +2373,11 @@ const getToolbar = v => {
 
                             borderRadius:
                               borderBottomRightRadius ===
-                              v.borderTopLeftRadius &&
+                                v.borderTopLeftRadius &&
                               borderBottomRightRadius ===
-                              v.borderTopRightRadius &&
+                                v.borderTopRightRadius &&
                               borderBottomRightRadius ===
-                              v.borderBottomLeftRadius
+                                v.borderBottomLeftRadius
                                 ? borderBottomRightRadius
                                 : v.borderRadius,
 
@@ -2238,11 +2386,11 @@ const getToolbar = v => {
                             tempBorderRadius:
                               sliderDragEnd &&
                               borderBottomRightRadius ===
-                              v.borderTopLeftRadius &&
+                                v.borderTopLeftRadius &&
                               borderBottomRightRadius ===
-                              v.borderTopRightRadius &&
+                                v.borderTopRightRadius &&
                               borderBottomRightRadius ===
-                              v.borderBottomLeftRadius
+                                v.borderBottomLeftRadius
                                 ? borderBottomRightRadius
                                 : v.tempBorderRadius
                           };
@@ -2296,11 +2444,11 @@ const getToolbar = v => {
 
                             borderRadius:
                               borderBottomLeftRadius ===
-                              v.borderTopLeftRadius &&
+                                v.borderTopLeftRadius &&
                               borderBottomLeftRadius ===
-                              v.borderTopRightRadius &&
+                                v.borderTopRightRadius &&
                               borderBottomLeftRadius ===
-                              v.borderBottomRightRadius
+                                v.borderBottomRightRadius
                                 ? borderBottomLeftRadius
                                 : v.borderRadius,
 
@@ -2309,11 +2457,11 @@ const getToolbar = v => {
                             tempBorderRadius:
                               sliderDragEnd &&
                               borderBottomLeftRadius ===
-                              v.borderTopLeftRadius &&
+                                v.borderTopLeftRadius &&
                               borderBottomLeftRadius ===
-                              v.borderTopRightRadius &&
+                                v.borderTopRightRadius &&
                               borderBottomLeftRadius ===
-                              v.borderBottomRightRadius
+                                v.borderBottomRightRadius
                                 ? borderBottomLeftRadius
                                 : v.tempBorderRadius
                           };
@@ -2347,205 +2495,62 @@ const getToolbar = v => {
                           }
                         },
                         options: [
+                          toolbarBoxShadowHexAndOpacity({
+                            v,
+                            device,
+                            state: "normal",
+                            onChange: [
+                              "onChangeBoxShadowHexAndOpacity",
+                              "onChangeBoxShadowHexAndOpacityPalette"
+                            ]
+                          }),
+                          toolbarBoxShadowPalette({
+                            v,
+                            device,
+                            state: "normal",
+                            onChange: [
+                              "onChangeBoxShadowPalette",
+                              "onChangeBoxShadowPaletteOpacity"
+                            ]
+                          }),
                           {
-                            id: "boxShadowColor",
-                            type: "colorPicker",
-                            value: {
-                              hex: boxShadowColorHex,
-                              opacity: v.boxShadowColorOpacity
-                            },
-                            onChange: ({
-                                         hex,
-                                         opacity,
-                                         isChanged,
-                                         opacityDragEnd
-                                       }) => {
-                              const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex &&
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : opacity;
-
-                              return {
-                                boxShadowColorHex: hex,
-                                boxShadowColorOpacity: boxShadowColorOpacity,
-                                boxShadowColorPalette:
-                                  isChanged === "hex"
-                                    ? ""
-                                    : v.boxShadowColorPalette
-                              };
-                            }
-                          },
-                          {
-                            id: "boxShadowColorPalette",
-                            type: "colorPalette",
-                            position: 20,
-                            value: v.boxShadowColorPalette,
-                            onChange: boxShadowColorPalette => ({
-                              boxShadowColorPalette,
-                              boxShadowColorHex: "",
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowColorFields",
-                            type: "colorFields",
-                            position: 30,
-                            value: {
-                              hex: boxShadowColorHex,
-                              opacity: v.boxShadowColorOpacity
-                            },
-                            onChange: ({ hex, opacity, isChanged }) => {
-                              const boxShadowColorOpacity =
-                                hex !== v.boxShadowColorHex &&
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : opacity;
-
-                              return {
-                                boxShadowColorPalette:
-                                  isChanged === "hex"
-                                    ? ""
-                                    : v.boxShadowColorPalette,
-                                boxShadowColorHex: hex,
-                                boxShadowColorOpacity: boxShadowColorOpacity
-                              };
-                            }
+                            type: "grid",
+                            className: "brz-ed-grid__color-fileds",
+                            columns: [
+                              {
+                                width: 100,
+                                options: [
+                                  toolbarBoxShadowFields({
+                                    v,
+                                    device,
+                                    state: "normal",
+                                    onChange: [
+                                      "onChangeBoxShadowHexAndOpacity",
+                                      "onChangeBoxShadowHexAndOpacityPalette"
+                                    ]
+                                  })
+                                ]
+                              }
+                            ]
                           }
                         ]
                       },
-                      {
-                        id: "boxShadowBlur",
-                        type: "slider",
-                        icon: "nc-blur",
-                        slider: {
-                          min: 0
-                        },
-                        input: {
-                          show: true,
-                          min: 0
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowBlur
-                        },
-                        onChange: ({ value: boxShadowBlur }) => ({
-                          boxShadowBlur,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      },
-                      {
-                        id: "boxShadowSpread",
-                        type: "slider",
-                        icon: "nc-size",
-                        slider: {
-                          min: -100,
-                          max: 100
-                        },
-                        input: {
-                          show: true,
-                          min: 0
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowSpread
-                        },
-                        onChange: ({ value: boxShadowSpread }) => ({
-                          boxShadowSpread,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      },
-                      {
-                        id: "boxShadowVertical",
-                        type: "slider",
-                        icon: "nc-vertical",
-                        slider: {
-                          min: -100,
-                          max: 100
-                        },
-                        input: {
-                          show: true,
-                          min: -100,
-                          max: 100
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowVertical
-                        },
-                        onChange: ({ value: boxShadowVertical }) => ({
-                          boxShadowVertical,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      },
-                      {
-                        id: "boxShadowHorizontal",
-                        type: "slider",
-                        icon: "nc-horizontal",
-                        slider: {
-                          min: -100,
-                          max: 100
-                        },
-                        input: {
-                          show: true,
-                          min: -100,
-                          max: 100
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.boxShadowHorizontal
-                        },
-                        onChange: ({ value: boxShadowHorizontal }) => ({
-                          boxShadowHorizontal,
-                          boxShadowColorOpacity:
-                            v.boxShadowColorOpacity === 0
-                              ? v.tempBoxShadowColorOpacity
-                              : v.boxShadowColorOpacity
-                        })
-                      }
+                      toolbarBoxShadowBlur({ v, device, state: "normal" }),
+                      toolbarBoxShadowSpread({
+                        v,
+                        device,
+                        state: "normal"
+                      }),
+                      toolbarBoxShadowVertical({
+                        v,
+                        device,
+                        state: "normal"
+                      }),
+                      toolbarBoxShadowHorizontal({
+                        v,
+                        device,
+                        state: "normal"
+                      })
                     ]
                   }
                 }
@@ -2668,6 +2673,7 @@ const getTabletMMenuToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -2778,7 +2784,7 @@ const getTabletMMenuToolbar = v => {
       ],
       value: tabletSyncOnChange(v, "mMenuItemHorizontalAlign")
     },
-    ...getMMenuToolbarColor(v),
+    ...getMMenuToolbarColor(v)
   ];
 };
 
@@ -2860,6 +2866,7 @@ const getTabletToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -2946,6 +2953,7 @@ const getTabletToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -3037,7 +3045,7 @@ const getTabletToolbar = v => {
       id: "tabletHorizontalAlign",
       type: "toggle",
       disabled: true
-    },
+    }
   ];
 };
 
@@ -3051,11 +3059,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       disabled: true
     },
-    {
-      id: "showOnTablet",
-      type: "toggle",
-      disabled: true
-    }
+    toolbarDisabledShowOnTablet()
   ];
 }
 
@@ -3157,6 +3161,7 @@ const getMobileMMenuToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -3267,7 +3272,7 @@ const getMobileMMenuToolbar = v => {
       ],
       value: mobileSyncOnChange(v, "mMenuItemHorizontalAlign")
     },
-    ...getMMenuToolbarColor(v),
+    ...getMMenuToolbarColor(v)
   ];
 };
 
@@ -3349,6 +3354,7 @@ const getMobileToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -3435,6 +3441,7 @@ const getMobileToolbar = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -3526,7 +3533,7 @@ const getMobileToolbar = v => {
       id: "mobileHorizontalAlign",
       type: "toggle",
       disabled: true
-    },
+    }
   ];
 };
 
@@ -3540,10 +3547,6 @@ export function getItemsForMobile(v) {
       type: "popover",
       disabled: true
     },
-    {
-      id: "showOnMobile",
-      type: "toggle",
-      disabled: true
-    }
+    toolbarDisabledShowOnMobile()
   ];
 }

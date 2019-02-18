@@ -39,11 +39,17 @@ export const currentStyleSelector = createSelector(
         [`${color.id}__bg`]: {
           bgColorHex: color.hex
         },
-        [`${color.id}__bg2`]: {
-          bg2ColorHex: color.hex
-        },
         [`${color.id}__hoverBg`]: {
           hoverBgColorHex: color.hex
+        },
+        [`${color.id}__gradient`]: {
+          gradientColorHex: color.hex
+        },
+        [`${color.id}__hoverGradient`]: {
+          hoverGradientColorHex: color.hex
+        },
+        [`${color.id}__bg2`]: {
+          bg2ColorHex: color.hex
         },
         [`${color.id}__border`]: {
           borderColorHex: color.hex

@@ -2,6 +2,12 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  styleBorderStyle,
+  styleBorderColor,
+  styleSizeWidthPercent,
+  styleElementLineBorderWidth
+} from "visual/utils/style";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -83,26 +89,26 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    width,
-    borderWidth,
-    borderColorHex,
-    borderColorOpacity,
-    borderStyle
-  } = v;
-
   return {
-    "--width": `${width}%`,
-    "--borderWidth": `${borderWidth}px`,
-    "--borderTopStyle": borderStyle,
-    "--borderTopColor": hexToRgba(borderColorHex, borderColorOpacity),
+    "--width": styleSizeWidthPercent({ v, device: "desktop" }),
+    "--borderWidth": styleElementLineBorderWidth({ v, device: "desktop" }),
+    "--borderTopStyle": styleBorderStyle({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--borderTopColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
 
     // Tablet
-    "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
-    "--tabletBorderWidth": `${tabletSyncOnChange(v, "borderWidth")}px`,
+    "--tabletWidth": styleSizeWidthPercent({ v, device: "tablet" }),
+    "--tabletBorderWidth": styleElementLineBorderWidth({ v, device: "tablet" }),
 
     // Mobile
-    "--mobileWidth": `${mobileSyncOnChange(v, "width")}%`,
-    "--mobileBorderWidth": `${mobileSyncOnChange(v, "borderWidth")}px`
+    "--mobileWidth": styleSizeWidthPercent({ v, device: "mobile" }),
+    "--mobileBorderWidth": styleElementLineBorderWidth({ v, device: "mobile" })
   };
 }

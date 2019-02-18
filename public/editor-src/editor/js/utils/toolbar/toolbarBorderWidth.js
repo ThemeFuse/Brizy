@@ -12,6 +12,18 @@ export function toolbarBorderWidth({
   onChangeGrouped,
   onChangeUngrouped
 }) {
+  const borderWidthTypeKey = defaultValueKey({
+    key: "borderWidthType",
+    device,
+    state
+  });
+  const borderWidthTypeValue = defaultValueValue({
+    v,
+    key: "borderWidthType",
+    device,
+    state
+  });
+
   return {
     type: "multiPicker",
     /*disabled:
@@ -19,7 +31,7 @@ export function toolbarBorderWidth({
         ? true
         : false,*/
     picker: {
-      id: defaultValueKey({ key: "borderWidthType", device, state }),
+      id: borderWidthTypeKey,
       label: t("Border"),
       type: "radioGroup",
       choices: [
@@ -32,7 +44,7 @@ export function toolbarBorderWidth({
           icon: "nc-styling-individual"
         }
       ],
-      value: defaultValueValue({ v, key: "borderWidthType", device, state })
+      value: borderWidthTypeValue
     },
     choices: {
       ...toolbarBorderWidthGrouped({
@@ -52,10 +64,18 @@ export function toolbarBorderWidth({
 }
 
 export function toolbarBorderWidthGrouped({ v, device, state, onChange }) {
+  const borderWidthKey = defaultValueKey({ key: "borderWidth", device, state });
+  const borderWidthValue = defaultValueValue({
+    v,
+    key: "borderWidth",
+    device,
+    state
+  });
+
   return {
     grouped: [
       {
-        id: defaultValueKey({ key: "borderWidth", device, state }),
+        id: borderWidthKey,
         type: "slider",
         slider: {
           min: 0,
@@ -75,7 +95,7 @@ export function toolbarBorderWidthGrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: defaultValueValue({ v, key: "borderWidth", device, state })
+          value: borderWidthValue
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -90,10 +110,58 @@ export function toolbarBorderWidthGrouped({ v, device, state, onChange }) {
 }
 
 export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
+  const borderTopWidthKey = defaultValueKey({
+    key: "borderTopWidth",
+    device,
+    state
+  });
+  const borderTopWidthValue = defaultValueValue({
+    v,
+    key: "borderTopWidth",
+    device,
+    state
+  });
+
+  const borderRightWidthKey = defaultValueKey({
+    key: "borderRightWidth",
+    device,
+    state
+  });
+  const borderRightWidthValue = defaultValueValue({
+    v,
+    key: "borderRightWidth",
+    device,
+    state
+  });
+
+  const borderBottomWidthKey = defaultValueKey({
+    key: "borderBottomWidth",
+    device,
+    state
+  });
+  const borderBottomWidthValue = defaultValueValue({
+    v,
+    key: "borderBottomWidth",
+    device,
+    state
+  });
+
+  const borderLeftWidthKey = defaultValueKey({
+    key: "borderLeftWidth",
+    device,
+    state
+  });
+  const borderLeftWidthValue = defaultValueValue({
+    v,
+    key: "borderLeftWidth",
+    device,
+    state
+  });
+
   return {
     ungrouped: [
       {
-        id: defaultValueKey({ key: "borderTopWidth", device, state }),
+        id: borderTopWidthKey,
         icon: "nc-styling-top",
         type: "slider",
         slider: {
@@ -114,7 +182,7 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: defaultValueValue({ v, key: "borderTopWidth", device, state })
+          value: borderTopWidthValue
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -129,7 +197,7 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: defaultValueKey({ key: "borderRightWidth", device, state }),
+        id: borderRightWidthKey,
         icon: "nc-styling-right",
         type: "slider",
         slider: {
@@ -150,12 +218,7 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: defaultValueValue({
-            v,
-            key: "borderRightWidth",
-            device,
-            state
-          })
+          value: borderRightWidthValue
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -170,7 +233,7 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: defaultValueKey({ key: "borderBottomWidth", device, state }),
+        id: borderBottomWidthKey,
         icon: "nc-styling-bottom",
         type: "slider",
         slider: {
@@ -191,12 +254,7 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: defaultValueValue({
-            v,
-            key: "borderBottomWidth",
-            device,
-            state
-          })
+          value: borderBottomWidthValue
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -211,7 +269,7 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: defaultValueKey({ key: "borderLeftWidth", device, state }),
+        id: borderLeftWidthKey,
         icon: "nc-styling-left",
         type: "slider",
         slider: {
@@ -232,12 +290,7 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: defaultValueValue({
-            v,
-            key: "borderLeftWidth",
-            device,
-            state
-          })
+          value: borderLeftWidthValue
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -252,5 +305,40 @@ export function toolbarBorderWidthUngrouped({ v, device, state, onChange }) {
         }
       }
     ]
+  };
+}
+
+export function toolbarBorderWidthBorderColorPicker({
+  v,
+  device,
+  state,
+  onChange
+}) {
+  const borderWidthKey = defaultValueKey({
+    key: "borderWidth",
+    device,
+    state
+  });
+  const borderWidthValue = defaultValueValue({
+    v,
+    key: "borderWidth",
+    device,
+    state
+  });
+
+  return {
+    id: borderWidthKey,
+    label: t("Size"),
+    type: "inputNumber",
+    min: 0,
+    max: 360,
+    value: borderWidthValue,
+    onChange: value => {
+      const values = {
+        ...{ v, device, state, onChange },
+        ...{ value }
+      };
+      return saveOnChanges(values);
+    }
   };
 }

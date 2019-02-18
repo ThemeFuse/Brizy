@@ -46,22 +46,13 @@ export default class BrizyFields extends Component {
 
   render() {
     return (
-      <div className="brz-ed-control__colorPicker__footer">
-        <div className="brz-ed-control__colorPicker__group">
-          <label
-            htmlFor="hex"
-            className="brz-label brz-ed-control__colorPicker__label"
-          >
-            Hex:{" "}
-          </label>
-          <input
-            id="hex"
-            className="brz-input"
-            value={this.state.hex}
-            onChange={this.onHexChange}
-          />
-        </div>
-      </div>
+      <input
+        id="hex"
+        className="brz-input"
+        autoComplete="off"
+        value={this.state.hex}
+        onChange={this.onHexChange}
+      />
     );
   }
 }

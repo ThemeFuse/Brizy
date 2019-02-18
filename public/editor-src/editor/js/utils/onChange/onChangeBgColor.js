@@ -1,3 +1,4 @@
+import { capitalize } from "visual/utils/string";
 import { onChangeDependeciesGrouped } from "./onChange";
 import { defaultValueValue, defaultValueKey } from "./device";
 
@@ -5,22 +6,41 @@ export function onChangeBgColorHexAndOpacity({
   v,
   device,
   state,
+  prefix,
   hex,
   opacity = undefined,
   isChanged = "hex",
   opacityDragEnd = false
 }) {
-  opacity = onChangeBgColorOpacity({ v, device, state, opacity, isChanged });
+  const upperPrefix = capitalize(prefix);
+  opacity = onChangeBgColorOpacity({
+    v,
+    device,
+    state,
+    prefix,
+    opacity,
+    isChanged
+  });
 
   const tempOpacity =
     opacity > 0 && opacityDragEnd
       ? opacity
-      : defaultValueValue({ v, key: "tempBgColorOpacity", device, state });
+      : defaultValueValue({
+          v,
+          key: `temp${upperPrefix}ColorOpacity`,
+          device,
+          state
+        });
+
   return {
-    [defaultValueKey({ key: "bgColorHex", device, state })]: hex,
-    [defaultValueKey({ key: "bgColorOpacity", device, state })]: opacity,
+    [defaultValueKey({ key: `${prefix}ColorHex`, device, state })]: hex,
     [defaultValueKey({
-      key: "tempBgColorOpacity",
+      key: `${prefix}ColorOpacity`,
+      device,
+      state
+    })]: opacity,
+    [defaultValueKey({
+      key: `temp${upperPrefix}ColorOpacity`,
       device,
       state
     })]: tempOpacity
@@ -31,27 +51,54 @@ export function onChangeBgColorHexAndOpacityPalette({
   v,
   device,
   state,
+  prefix,
   opacity = undefined,
   isChanged = "hex"
 }) {
-  
-  opacity = onChangeBgColorOpacity({ v, device, state, opacity, isChanged });
-  
+  const upperPrefix = capitalize(prefix);
+
+  opacity = onChangeBgColorOpacity({
+    v,
+    device,
+    state,
+    prefix,
+    opacity,
+    isChanged
+  });
+
   const palette =
     isChanged === "hex" || opacity === 0
       ? ""
       : opacity > 0
-      ? defaultValueValue({ v, key: "tempBgColorPalette", device, state })
-      : defaultValueValue({ v, key: "bgColorPalette", device, state });
+      ? defaultValueValue({
+          v,
+          key: `temp${upperPrefix}ColorPalette`,
+          device,
+          state
+        })
+      : defaultValueValue({ v, key: `${prefix}ColorPalette`, device, state });
 
   const tempPalette =
     isChanged === "hex"
       ? ""
-      : defaultValueValue({ v, key: "tempBgColorPalette", device, state });
+      : defaultValueValue({
+          v,
+          key: `temp${upperPrefix}ColorPalette`,
+          device,
+          state
+        });
 
   return {
-    [defaultValueKey({ key: "bgColorPalette", device, state })]: palette,
-    [defaultValueKey({ key: "tempBgColorPalette", device, state })]: tempPalette
+    [defaultValueKey({
+      key: `${prefix}ColorPalette`,
+      device,
+      state
+    })]: palette,
+    [defaultValueKey({
+      key: `temp${upperPrefix}ColorPalette`,
+      device,
+      state
+    })]: tempPalette
   };
 }
 
@@ -59,6 +106,7 @@ export function onChangeBgColorHexAndOpacityDependencies({
   v,
   device,
   state,
+  prefix,
   opacity = undefined,
   isChanged = "hex"
 }) {
@@ -111,7 +159,14 @@ export function onChangeBgColorHexAndOpacityDependencies({
     }
   };
 
-  opacity = onChangeBgColorOpacity({ v, device, state, opacity, isChanged });
+  opacity = onChangeBgColorOpacity({
+    v,
+    device,
+    state,
+    prefix,
+    opacity,
+    isChanged
+  });
 
   return onChangeDependeciesGrouped({
     v,
@@ -125,10 +180,11 @@ export function onChangeBgColorHexAndOpacityDependencies({
 export function onChangeBgColorHexAndOpacityColumnAndRowSyncTablet({
   v,
   device,
+  prefix,
   opacity = undefined,
   isChanged = "hex"
 }) {
-  opacity = onChangeBgColorOpacity({ v, device, opacity, isChanged });
+  opacity = onChangeBgColorOpacity({ v, device, prefix, opacity, isChanged });
 
   const tabletPaddingRight =
     opacity === 0
@@ -153,10 +209,11 @@ export function onChangeBgColorHexAndOpacityColumnAndRowSyncTablet({
 export function onChangeBgColorHexAndOpacityColumnAndRowSyncMobile({
   v,
   device,
+  prefix,
   opacity = undefined,
   isChanged = "hex"
 }) {
-  opacity = onChangeBgColorOpacity({ v, device, opacity, isChanged });
+  opacity = onChangeBgColorOpacity({ v, device, prefix, opacity, isChanged });
 
   const mobilePaddingRight =
     opacity === 0
@@ -178,10 +235,20 @@ export function onChangeBgColorHexAndOpacityColumnAndRowSyncMobile({
   };
 }
 
-export function onChangeBgColorPalette({ device, state, palette }) {
+export function onChangeBgColorPalette({ device, state, prefix, palette }) {
+  const upperPrefix = capitalize(prefix);
+
   return {
-    [defaultValueKey({ key: "bgColorPalette", device, state })]: palette,
-    [defaultValueKey({ key: "tempBgColorPalette", device, state })]: palette
+    [defaultValueKey({
+      key: `${prefix}ColorPalette`,
+      device,
+      state
+    })]: palette,
+    [defaultValueKey({
+      key: `temp${upperPrefix}ColorPalette`,
+      device,
+      state
+    })]: palette
   };
 }
 
@@ -189,26 +256,57 @@ export function onChangeBgColorPaletteOpacity({
   v,
   device,
   state,
+  prefix,
   opacity = undefined,
   isChanged = "hex"
 }) {
-  opacity = onChangeBgColorOpacity({ v, device, state, opacity, isChanged });
+  const upperPrefix = capitalize(prefix);
+
+  opacity = onChangeBgColorOpacity({
+    v,
+    device,
+    state,
+    prefix,
+    opacity,
+    isChanged
+  });
 
   return {
-    [defaultValueKey({ key: "bgColorOpacity", device, state })]: opacity
+    [defaultValueKey({ key: `${prefix}ColorOpacity`, device, state })]: opacity
   };
 }
 
-function onChangeBgColorOpacity({ v, device, state, opacity, isChanged }) {
+function onChangeBgColorOpacity({
+  v,
+  device,
+  state,
+  prefix,
+  opacity,
+  isChanged
+}) {
+  const upperPrefix = capitalize(prefix);
+
   return isChanged === "hex" &&
-    defaultValueValue({ v, key: "bgColorOpacity", device, state }) === 0 &&
-    defaultValueValue({ v, key: "tempBgColorOpacity", device, state }) === 1 &&
+    defaultValueValue({ v, key: `${prefix}ColorOpacity`, device, state }) ===
+      0 &&
+    defaultValueValue({
+      v,
+      key: `temp${upperPrefix}ColorOpacity`,
+      device,
+      state
+    }) === 1 &&
     defaultValueValue({ v, key: "bgImageSrc", device, state }) !== ""
     ? 0.9
     : isChanged === "hex" &&
-      defaultValueValue({ v, key: "bgColorOpacity", device, state }) === 0
-    ? defaultValueValue({ v, key: "tempBgColorOpacity", device, state })
+      defaultValueValue({ v, key: `${prefix}ColorOpacity`, device, state }) ===
+        0
+    ? defaultValueValue({
+        v,
+        key: `temp${upperPrefix}ColorOpacity`,
+        device,
+        state
+      })
     : opacity === undefined
-    ? defaultValueValue({ v, key: "bgColorOpacity", device, state })
+    ? defaultValueValue({ v, key: `${prefix}ColorOpacity`, device, state })
     : opacity;
 }

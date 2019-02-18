@@ -1,6 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 
-export function styleMargin({ v, device, state, current, hasItems }) {
+export function styleMargin({ v, device, state, current, hasItems = true }) {
   return hasItems
     ? defaultValueValue({ v, key: "marginType", device, state }) === "grouped"
       ? `${defaultValueValue({

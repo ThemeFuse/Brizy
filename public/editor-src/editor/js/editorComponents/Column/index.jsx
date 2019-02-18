@@ -66,6 +66,10 @@ class Column extends EditorComponent {
     if (this.floatingButton) {
       this.floatingButton.setActive(false);
     }
+
+    this.patchValue({ tabsState: "tabNormal" });
+    this.patchValue({ tabsCurrentElement: "tabCurrentElement" });
+    this.patchValue({ tabsColor: "tabOverlay" });
   };
 
   handleToolbarEnter = () => {
@@ -325,7 +329,16 @@ class Column extends EditorComponent {
   renderContent(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
@@ -361,7 +374,16 @@ class Column extends EditorComponent {
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
+
+      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
+      _v.hoverGradientColorPalette &&
+        `${_v.hoverGradientColorPalette}__hoverGradient`,
+
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`

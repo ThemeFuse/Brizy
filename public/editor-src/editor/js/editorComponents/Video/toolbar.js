@@ -88,6 +88,7 @@ export function getItemsForDesktop(v) {
                   v,
                   device,
                   state: "normal",
+                  prefix: "bg",
                   onChange: [
                     "onChangeBgColorHexAndOpacity",
                     "onChangeBgColorHexAndOpacityPalette"
@@ -97,20 +98,33 @@ export function getItemsForDesktop(v) {
                   v,
                   device,
                   state: "normal",
+                  prefix: "bg",
                   onChange: [
                     "onChangeBgColorPalette",
                     "onChangeBgColorPaletteOpacity"
                   ]
                 }),
-                toolbarBgColorFields({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette"
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarBgColorFields({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "bg",
+                          onChange: [
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette"
+                          ]
+                        })
+                      ]
+                    }
                   ]
-                })
+                }
               ]
             },
             {
@@ -121,6 +135,7 @@ export function getItemsForDesktop(v) {
                   v,
                   device,
                   state: "hover",
+                  prefix: "bg",
                   onChange: [
                     "onChangeBgColorHexAndOpacity",
                     "onChangeBgColorHexAndOpacityPalette"
@@ -130,20 +145,33 @@ export function getItemsForDesktop(v) {
                   v,
                   device,
                   state: "hover",
+                  prefix: "bg",
                   onChange: [
                     "onChangeBgColorPalette",
                     "onChangeBgColorPaletteOpacity"
                   ]
                 }),
-                toolbarBgColorFields({
-                  v,
-                  device,
-                  state: "hover",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette"
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarBgColorFields({
+                          v,
+                          device,
+                          state: "hover",
+                          prefix: "bg",
+                          onChange: [
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette"
+                          ]
+                        })
+                      ]
+                    }
                   ]
-                })
+                }
               ]
             }
           ]
@@ -218,15 +246,26 @@ export function getItemsForDesktop(v) {
                                   "onChangeBoxShadowPaletteOpacity"
                                 ]
                               }),
-                              toolbarBoxShadowFields({
-                                v,
-                                device,
-                                state: "normal",
-                                onChange: [
-                                  "onChangeBoxShadowHexAndOpacity",
-                                  "onChangeBoxShadowHexAndOpacityPalette"
+                              {
+                                type: "grid",
+                                className: "brz-ed-grid__color-fileds",
+                                columns: [
+                                  {
+                                    width: 100,
+                                    options: [
+                                      toolbarBoxShadowFields({
+                                        v,
+                                        device,
+                                        state: "normal",
+                                        onChange: [
+                                          "onChangeBoxShadowHexAndOpacity",
+                                          "onChangeBoxShadowHexAndOpacityPalette"
+                                        ]
+                                      })
+                                    ]
+                                  }
                                 ]
-                              })
+                              }
                             ]
                           },
                           toolbarBoxShadowBlur({ v, device, state: "normal" }),

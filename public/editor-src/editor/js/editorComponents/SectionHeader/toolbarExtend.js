@@ -52,6 +52,55 @@ export function getItemsForDesktop(v, component) {
       onChange: () => {
         component.becomeSaved();
       }
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover",
+      position: 110,
+      options: [
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          sidebarLabel: t("More Settings"),
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  tabIcon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: [
+                    {
+                      id: "anchorName",
+                      label: t("Anchor Name"),
+                      type: "input",
+                      inputSize: "auto",
+                      position: 10,
+                      value: {
+                        value: v.anchorName
+                      },
+                      onChange: ({ value: anchorName }) => ({
+                        anchorName
+                      })
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ];
 }

@@ -161,6 +161,7 @@ const getItemsForDesktop = (
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -197,6 +198,7 @@ const getItemsForDesktop = (
               options: [
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "100",
@@ -239,6 +241,7 @@ const getItemsForDesktop = (
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: 50,
@@ -851,6 +854,7 @@ export const getItemsForTablet = (
     options: [
       {
         type: "grid",
+        className: "brz-ed-grid__typography",
         columns: [
           {
             width: 50,
@@ -1049,6 +1053,7 @@ export const getItemsForMobile = (
     options: [
       {
         type: "grid",
+        className: "brz-ed-grid__typography",
         columns: [
           {
             width: 50,

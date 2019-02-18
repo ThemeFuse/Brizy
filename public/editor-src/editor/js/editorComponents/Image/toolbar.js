@@ -4,6 +4,20 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
+import {
+  toolbarLinkAnchor,
+  toolbarImageLinkExternal,
+  toolbarLinkExternalBlank,
+  toolbarLinkExternalRel,
+  toolbarBoxShadowHexAndOpacity,
+  toolbarBoxShadowPalette,
+  toolbarBoxShadowFields,
+  toolbarBoxShadowBlur,
+  toolbarBoxShadowSpread,
+  toolbarBoxShadowVertical,
+  toolbarBoxShadowHorizontal
+} from "visual/utils/toolbar";
+
 export const getMinSize = () => 5;
 export const getMaxSize = () => 100;
 export const getMinHeight = () => 5;
@@ -15,7 +29,6 @@ export const getMaxHeight = (cW, v) => {
   return maxHeight >= 100 ? Math.round(maxHeight) : 100;
 };
 
-const linkDynamicContentChoices = getDynamicContentChoices("link");
 const imageDynamicContentChoices = getDynamicContentChoices("image");
 
 export default ({
@@ -45,6 +58,7 @@ export default ({
 });
 
 export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
+  const device = "desktop";
   const maxBorderRadius = Math.round(
     Math.min(wrapperSizes.width, wrapperSizes.height) / 2
   );
@@ -176,58 +190,15 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
             {
               id: "anchor",
               label: t("Anchor"),
-              options: [
-                {
-                  id: "linkAnchor",
-                  label: t("Anchor"),
-                  type: "blockThumbnail",
-                  value: v.linkAnchor
-                }
-              ]
+              options: [toolbarLinkAnchor({ v })]
             },
             {
               id: "external",
               label: t("URL"),
               options: [
-                {
-                  id: "linkExternal",
-                  type: "input",
-                  label: t("Link to"),
-                  placeholder: "http://",
-                  population: {
-                    show: linkDynamicContentChoices.length > 0 && !inGallery,
-                    choices: linkDynamicContentChoices
-                  },
-                  value: {
-                    population: v.linkPopulation,
-                    value: v.linkExternal
-                  },
-                  onChange: (
-                    { value: linkExternal, population: linkPopulation },
-                    { changed }
-                  ) => {
-                    return {
-                      linkExternal,
-                      linkPopulation,
-                      linkExternalType:
-                        changed === "value" || linkPopulation === ""
-                          ? "linkExternal"
-                          : "linkPopulation"
-                    };
-                  }
-                },
-                {
-                  id: "linkExternalBlank",
-                  type: "switch",
-                  label: t("Open In New Tab"),
-                  value: v.linkExternalBlank
-                },
-                {
-                  id: "linkExternalRel",
-                  type: "switch",
-                  label: t("Make it Nofollow"),
-                  value: v.linkExternalRel
-                }
+                toolbarImageLinkExternal({ v, inGallery }),
+                toolbarLinkExternalBlank({ v }),
+                toolbarLinkExternalRel({ v })
               ]
             }
           ]
@@ -325,8 +296,8 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                 borderRadiusType === "square"
                   ? v.tempBorderRadius
                   : borderRadiusType === "rounded"
-                    ? maxBorderRadius
-                    : v.borderRadius
+                  ? maxBorderRadius
+                  : v.borderRadius
             })
           },
           choices: {
@@ -403,205 +374,62 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                               }
                             },
                             options: [
+                              toolbarBoxShadowHexAndOpacity({
+                                v,
+                                device,
+                                state: "normal",
+                                onChange: [
+                                  "onChangeBoxShadowHexAndOpacity",
+                                  "onChangeBoxShadowHexAndOpacityPalette"
+                                ]
+                              }),
+                              toolbarBoxShadowPalette({
+                                v,
+                                device,
+                                state: "normal",
+                                onChange: [
+                                  "onChangeBoxShadowPalette",
+                                  "onChangeBoxShadowPaletteOpacity"
+                                ]
+                              }),
                               {
-                                id: "boxShadowColor",
-                                type: "colorPicker",
-                                value: {
-                                  hex: boxShadowColorHex,
-                                  opacity: v.boxShadowColorOpacity
-                                },
-                                onChange: ({
-                                  hex,
-                                  opacity,
-                                  isChanged,
-                                  opacityDragEnd
-                                }) => {
-                                  const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex &&
-                                    v.boxShadowColorOpacity === 0
-                                      ? v.tempBoxShadowColorOpacity
-                                      : opacity;
-
-                                  return {
-                                    boxShadowColorHex: hex,
-                                    boxShadowColorOpacity: boxShadowColorOpacity,
-                                    boxShadowColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.boxShadowColorPalette
-                                  };
-                                }
-                              },
-                              {
-                                id: "boxShadowColorPalette",
-                                type: "colorPalette",
-                                position: 20,
-                                value: v.boxShadowColorPalette,
-                                onChange: boxShadowColorPalette => ({
-                                  boxShadowColorPalette,
-                                  boxShadowColorHex: "",
-                                  boxShadowColorOpacity:
-                                    v.boxShadowColorOpacity === 0
-                                      ? v.tempBoxShadowColorOpacity
-                                      : v.boxShadowColorOpacity
-                                })
-                              },
-                              {
-                                id: "boxShadowColorFields",
-                                type: "colorFields",
-                                position: 30,
-                                value: {
-                                  hex: boxShadowColorHex,
-                                  opacity: v.boxShadowColorOpacity
-                                },
-                                onChange: ({ hex, opacity, isChanged }) => {
-                                  const boxShadowColorOpacity =
-                                    hex !== v.boxShadowColorHex &&
-                                    v.boxShadowColorOpacity === 0
-                                      ? v.tempBoxShadowColorOpacity
-                                      : opacity;
-
-                                  return {
-                                    boxShadowColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.boxShadowColorPalette,
-                                    boxShadowColorHex: hex,
-                                    boxShadowColorOpacity: boxShadowColorOpacity
-                                  };
-                                }
+                                type: "grid",
+                                className: "brz-ed-grid__color-fileds",
+                                columns: [
+                                  {
+                                    width: 100,
+                                    options: [
+                                      toolbarBoxShadowFields({
+                                        v,
+                                        device,
+                                        state: "normal",
+                                        onChange: [
+                                          "onChangeBoxShadowHexAndOpacity",
+                                          "onChangeBoxShadowHexAndOpacityPalette"
+                                        ]
+                                      })
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           },
-                          {
-                            id: "boxShadowBlur",
-                            type: "slider",
-                            icon: "nc-blur",
-                            slider: {
-                              min: 0
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowBlur
-                            },
-                            onChange: ({ value: boxShadowBlur }) => ({
-                              boxShadowBlur,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowSpread",
-                            type: "slider",
-                            icon: "nc-size",
-                            slider: {
-                              min: -100,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowSpread
-                            },
-                            onChange: ({ value: boxShadowSpread }) => ({
-                              boxShadowSpread,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowVertical",
-                            type: "slider",
-                            icon: "nc-vertical",
-                            slider: {
-                              min: -100,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: -100,
-                              max: 100
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowVertical
-                            },
-                            onChange: ({ value: boxShadowVertical }) => ({
-                              boxShadowVertical,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          },
-                          {
-                            id: "boxShadowHorizontal",
-                            type: "slider",
-                            icon: "nc-horizontal",
-                            slider: {
-                              min: -100,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: -100,
-                              max: 100
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.boxShadowHorizontal
-                            },
-                            onChange: ({ value: boxShadowHorizontal }) => ({
-                              boxShadowHorizontal,
-                              boxShadowColorOpacity:
-                                v.boxShadowColorOpacity === 0
-                                  ? v.tempBoxShadowColorOpacity
-                                  : v.boxShadowColorOpacity
-                            })
-                          }
+                          toolbarBoxShadowBlur({ v, device, state: "normal" }),
+                          toolbarBoxShadowSpread({
+                            v,
+                            device,
+                            state: "normal"
+                          }),
+                          toolbarBoxShadowVertical({
+                            v,
+                            device,
+                            state: "normal"
+                          }),
+                          toolbarBoxShadowHorizontal({
+                            v,
+                            device,
+                            state: "normal"
+                          })
                         ]
                       }
                     }
@@ -639,9 +467,16 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
             height: v.imageHeight,
             src: v.imageSrc,
             x: tabletSyncOnChange(v, "positionX"),
-            y: tabletSyncOnChange(v, "positionY")
+            y: tabletSyncOnChange(v, "positionY"),
+            population: v.imagePopulation
           },
-          onChange: ({ width, height, x, y }) => {
+          onChange: ({ width, height, x, y, population }) => {
+            if (population) {
+              return {
+                imagePopulation: population
+              };
+            }
+
             width = width || DEFAULT_IMAGE_SIZES.width;
             height = height || DEFAULT_IMAGE_SIZES.height;
             const newWrapperSize = calcWrapperSizes(cW, {
@@ -660,7 +495,8 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
               imageHeight: height,
               tabletPositionX: x,
               tabletPositionY: y,
-              tabletHeight: newHeight
+              tabletHeight: newHeight,
+              imagePopulation: ""
             };
           }
         },
@@ -668,6 +504,7 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
           id: "tabletZoom",
           label: t("Zoom"),
           type: "slider",
+          disabled: Boolean(v.imagePopulation),
           slider: {
             min: 100,
             max: 200

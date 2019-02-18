@@ -82,6 +82,7 @@ const getItemsForDesktop = menuList => v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 54,
@@ -124,6 +125,7 @@ const getItemsForDesktop = menuList => v => {
                 },
                 {
                   type: "grid",
+                  className: "brz-ed-grid__typography",
                   columns: [
                     {
                       width: "50",
@@ -225,18 +227,29 @@ const getItemsForDesktop = menuList => v => {
           value: v.colorPalette
         },
         {
-          id: "colorFields",
-          type: "colorFields",
-          position: 30,
-          value: {
-            hex: colorHex,
-            opacity: v.colorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            colorPalette: isChanged === "hex" ? "" : v.colorPalette,
-            colorHex: hex,
-            colorOpacity: opacity
-          })
+          type: "grid",
+          className: "brz-ed-grid__color-fileds",
+          columns: [
+            {
+              width: 100,
+              options: [
+                {
+                  id: "colorFields",
+                  type: "colorFields",
+                  position: 30,
+                  value: {
+                    hex: colorHex,
+                    opacity: v.colorOpacity
+                  },
+                  onChange: ({ hex, opacity, isChanged }) => ({
+                    colorPalette: isChanged === "hex" ? "" : v.colorPalette,
+                    colorHex: hex,
+                    colorOpacity: opacity
+                  })
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -316,6 +329,7 @@ const getItemsForTablet = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
@@ -467,6 +481,7 @@ const getItemsForMobile = v => {
       options: [
         {
           type: "grid",
+          className: "brz-ed-grid__typography",
           columns: [
             {
               width: 50,
