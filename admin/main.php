@@ -117,7 +117,7 @@ class Brizy_Admin_Main {
 
 			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->get_parent_id() );
 
-			$pageUploadPath = $urlBuilder->page_upload_path( "assets/images" ) ;
+			$pageUploadPath = $urlBuilder->page_upload_path( "assets/images" );
 
 			Brizy_Admin_FileSystem::deleteAllDirectories( $pageUploadPath );
 
@@ -259,6 +259,7 @@ class Brizy_Admin_Main {
 			true
 		);
 
+		$get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
 		wp_localize_script(
 			Brizy_Editor::get()->get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
@@ -266,6 +267,9 @@ class Brizy_Admin_Main {
 				'url'         => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 				'ruleApiHash' => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
 				'id'          => get_the_ID(),
+				'page'        => array(
+					'focalPoint' => $get_post_focal ? $get_post_focal : array('x'=>50,'y'=>50)
+				),
 				'actions'     => array(
 					'enable'  => '_brizy_admin_editor_enable',
 					'disable' => '_brizy_admin_editor_disable',
