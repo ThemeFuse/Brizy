@@ -92,25 +92,30 @@ class Brizy_Compatibilities_Gutenberg {
 					'<script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                         <div class="brizy-buttons" style="margin-top:15px;">
                             <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="' . $edit_url . '" style="padding:5px 27px 5px;">' .
-					'<img src="' . plugins_url( '../admin/static/img/arrow.png', __FILE__ ) . '" class="brizy-button--arrow"/> ' . __( 'Back to WordPress Editor', 'brizy' ) . '
+					        '<img src="' . plugins_url( '../admin/static/img/arrow.png', __FILE__ ) . '" class="brizy-button--arrow"/> ' . __( 'Back to WordPress Editor', 'brizy' ) . '
                             </a>
+                        </div>
+                    </script>';
+				echo
+					'<script id="brizy-gutenberg-btn-middle" type="text/html">
+                        <div class="brizy-buttons-gutenberg" style="margin-top:15px;">
                             <a class="brizy-button brizy-button--primary " type="button" href="' . $continueUrl . '" style="padding:5px 27px 5px;">'
-					. __( 'Continue to edit with ', 'brizy' ) . '&nbsp;
+					        . __( 'Continue to edit with ', 'brizy' ) . '&nbsp;
                                 <img src="' . plugins_url( '../admin/static/img/brizy.png', __FILE__ ) . '" class="brizy-button--arrow"/>
                             </a>
-                            </div>
+                        </div>
                     </script>';
 			} else {
 				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . get_the_ID() ) );
 				echo
 					'<script id="brizy-gutenberg-btn-switch-mode" type="text/html">
-                <div class="brizy-buttons" style="margin-top:15px;">
-                    <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="' . $edit_url . '" style="padding:5px 27px 5px;">' .
-					esc_html__( 'Edit with', 'brizy' ) .
-					'<img src="' . $log_dir . 'brizy.png" srcset="' . $log_dir . 'brizy.png' . ' 1x, ' . $log_dir . 'brizy-2x.png 2x" class="brizy-logo">
-                     </a>
-                </div>
-            </script>';
+                        <div class="brizy-buttons" style="margin-top:15px;">
+                            <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="' . $edit_url . '" style="padding:5px 27px 5px;">' .
+                            esc_html__( 'Edit with', 'brizy' ) .
+                            '<img src="' . $log_dir . 'brizy.png" srcset="' . $log_dir . 'brizy.png' . ' 1x, ' . $log_dir . 'brizy-2x.png 2x" class="brizy-logo">
+                             </a>
+                        </div>
+                    </script>';
 			}
 		} catch ( Exception $e ) {
 
