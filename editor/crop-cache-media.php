@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 4/19/18
- * Time: 3:48 PM
- */
 
 class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 

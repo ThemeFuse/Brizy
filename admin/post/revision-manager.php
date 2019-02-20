@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 7/13/18
- * Time: 9:41 AM
- */
+
 
 /**
  * Class Brizy_Admin_Post_RevisionManager

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 10/10/18
- * Time: 2:47 PM
- */
+
 
 class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_AbstractProvider {
 

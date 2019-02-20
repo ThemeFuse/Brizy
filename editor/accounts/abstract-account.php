@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 11/26/18
- * Time: 5:00 PM
- */
+
 
 abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Serializable {
 

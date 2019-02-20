@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 7/4/18
- * Time: 2:41 PM
- */
 
 class Brizy_TwigEngine {
 

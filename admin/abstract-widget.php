@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 3/22/18
- * Time: 11:18 AM
- */
 
 abstract class Brizy_Admin_AbstractWidget {
 

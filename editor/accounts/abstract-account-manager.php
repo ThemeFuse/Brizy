@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 5/23/18
- * Time: 10:59 AM
- */
+
 
 class Brizy_Editor_Accounts_AbstractAccountManager {
 

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 4/19/18
- * Time: 3:48 PM
- */
+
 
 class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 

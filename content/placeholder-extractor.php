@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 8/21/18
- * Time: 4:37 PM
- */
+
 
 class Brizy_Content_PlaceholderExtractor {
 

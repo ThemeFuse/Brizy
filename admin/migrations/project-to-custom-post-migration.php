@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 9/13/18
- * Time: 4:47 PM
- */
 
 class Brizy_Admin_Migrations_ProjectToCustomPostMigration implements Brizy_Admin_Migrations_MigrationInterface {
 

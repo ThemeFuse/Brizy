@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 4/18/18
- * Time: 10:46 AM
- */
+
 
 class Brizy_Editor_Asset_CssAssetProcessor implements Brizy_Editor_Content_ProcessorInterface {
 	/**

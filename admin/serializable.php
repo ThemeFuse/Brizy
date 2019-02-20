@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 3/16/18
- * Time: 3:02 PM
- */
 
 abstract class Brizy_Admin_Serializable implements Serializable, JsonSerializable {
 

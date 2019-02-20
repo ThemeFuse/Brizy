@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 3/22/18
- * Time: 3:07 PM
- */
 
 class Brizy_Admin_View {
 	public static function render( $view, array $args = array() ) {

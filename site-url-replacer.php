@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 3/26/18
- * Time: 4:27 PM
- */
 
 class Brizy_SiteUrlReplacer {
 
