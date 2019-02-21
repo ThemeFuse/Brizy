@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 10/11/17
- * Time: 2:14 PM
- */
+
 
 class Brizy_Editor_API_Platform extends Brizy_Editor_Http_Client {
 

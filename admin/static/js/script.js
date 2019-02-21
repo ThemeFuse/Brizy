@@ -1,34 +1,36 @@
-jQuery( document ).ready( function ( $ ) {
+jQuery(document).ready(function ($) {
 
-	$( '.enable-brizy-editor' ).on( 'click', function ( event ) {
-		event.preventDefault();
+    $('.enable-brizy-editor').on('click', function (event) {
+        event.preventDefault();
 
-		jQuery( window ).off( 'beforeunload.edit-post' );
+        jQuery(window).off('beforeunload.edit-post');
 
-		if ( wp.autosave ) {
-			wp.autosave.server.triggerSave();
-		}
+        if (wp.autosave) {
+            wp.autosave.server.triggerSave();
+        }
 
-		window.location = $( this ).attr( 'href' );
-	} );
+        window.location = $(this).attr('href');
+    });
 
-	var BrizyGutenberg = {
+    var BrizyGutenberg = {
 
-		insertBrizyBtn: function() {
-			$( '#editor' ).find( '.edit-post-header-toolbar' ).append( $( '#brizy-gutenberg-btn-switch-mode' ).html() );
-		},
+        insertBrizyBtn: function () {
+            $('#editor').find('.edit-post-header-toolbar').append($('#brizy-gutenberg-btn-switch-mode').html());
+            $('#editor').find('.editor-block-list__layout>*').css('display','none');
+            $('#editor').find('.editor-block-list__layout').append($('#brizy-gutenberg-btn-middle').html())
+        },
 
-		init: function() {
-			var self = this;
-			setTimeout( function() {
-				self.insertBrizyBtn();
-			}, 1 );
-		}
-	};
+        init: function () {
+            var self = this;
+            setTimeout(function () {
+                self.insertBrizyBtn();
+            }, 1);
+        }
+    };
 
-	$( function() {
-		BrizyGutenberg.init();
-	} );
-} );
+    $(function () {
+        BrizyGutenberg.init();
+    });
+});
 
 

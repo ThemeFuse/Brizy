@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 12/3/18
- * Time: 3:23 PM
- */
+
 
 trait Brizy_Editor_Forms_DynamicPropsAware  {
 	/**

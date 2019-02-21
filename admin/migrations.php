@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 9/12/18
- * Time: 4:37 PM
- */
 
 class Brizy_Admin_Migrations {
 

@@ -39,8 +39,18 @@ class SectionFooter extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   shouldComponentUpdate(nextProps) {
     return this.optionalSCU(nextProps);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   handleToolbarOpen = () => {
@@ -50,13 +60,19 @@ class SectionFooter extends EditorComponent {
   };
 
   handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
 
-    this.patchValue({ tabsState: "tabNormal" });
-    this.patchValue({ tabsCurrentElement: "tabCurrentElement" });
-    this.patchValue({ tabsColor: "tabOverlay" });
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabOverlay"
+    });
   };
 
   handlePaddingResizerChange = patch => this.patchValue(patch);

@@ -93,6 +93,9 @@ export {
   toolbarShowOnMobile
 } from "./toolbarShowOnDevices";
 
+// Revers Columns
+export { toolbarReverseColumns } from "./toolbarReverseColumns";
+
 // zIndex
 export { toolbarZIndex } from "./toolbarZIndex";
 

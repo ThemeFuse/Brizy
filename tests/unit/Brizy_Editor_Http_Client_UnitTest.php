@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 2/1/18
- * Time: 4:45 PM
- */
+
 
 use PHPUnit\Framework\TestCase;
 

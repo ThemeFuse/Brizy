@@ -296,6 +296,9 @@ export default {
   "Normal": __("Normal", "brizy"),
   "Hover": __("Hover", "brizy"),
 
+  // Reverse Columns
+  "Reverse Columns": __("Reverse Columns", "brizy"),
+
   // Other Option in Shortcode
   //-> CountDown
   "Date": __("Date", "brizy"),

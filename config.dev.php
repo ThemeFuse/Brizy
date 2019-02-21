@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 8/1/17
- * Time: 10:26 AM
- */
+
 class Brizy_Config {
 
 	const SITE_URL_PLACEHOLDER = '{@brizy_SITE_URL_PLACEHOLDER@}';
@@ -40,6 +35,7 @@ class Brizy_Config {
 	const PLATFORM_EMAIL = "admin@admin.com";
 
 	const UPGRADE_TO_PRO_URL = "https://brizy.io/pro";
+	const SUPPORT_URL = "https://github.com/ThemeFuse/Brizy/issues";
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(

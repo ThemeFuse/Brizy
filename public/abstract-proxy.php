@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 4/19/18
- * Time: 3:48 PM
- */
 
 abstract class Brizy_Public_AbstractProxy extends Brizy_Editor_Asset_StaticFile {
 

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 11/19/18
- * Time: 4:56 PM
- */
+
 
 class Brizy_Editor_Forms_Api {
 

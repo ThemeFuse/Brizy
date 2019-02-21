@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 8/3/18
- * Time: 10:08 AM
- */
 
 /**
  * @todo: move all mkdir calls here.

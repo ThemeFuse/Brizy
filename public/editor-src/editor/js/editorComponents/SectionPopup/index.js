@@ -50,7 +50,10 @@ class SectionPopup extends EditorComponent {
     isOpened: false
   };
 
+  mounted = false;
+
   componentDidMount() {
+    this.mounted = true;
     SectionPopupInstances.set(this.getId(), this);
   }
 
@@ -60,6 +63,7 @@ class SectionPopup extends EditorComponent {
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     SectionPopupInstances.delete(this.getId());
     jQuery("html").removeClass("brz-ow-hidden");
   }
@@ -71,12 +75,18 @@ class SectionPopup extends EditorComponent {
   };
 
   handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
 
-    this.patchValue({ tabsState: "tabNormal" });
-    this.patchValue({ tabsColor: "tabOverlay" });
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsColor: "tabOverlay"
+    });
   };
 
   handleDropClick = () => {

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 7/4/18
- * Time: 10:46 AM
- */
 
 class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 

@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 3/22/18
- * Time: 3:06 PM
- */
-?>
+
 <h3><b></b></h3>
 <ul>
 	<?php

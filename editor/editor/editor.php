@@ -148,7 +148,7 @@ class Brizy_Editor_Editor_Editor {
 				'pagePreview'         => $preview_post_link,
 				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'change_template_url' => $change_template_url,
-				'backToWordpress'     => get_edit_post_link( $wp_post_id, null ),
+				'backToWordPress'     => get_edit_post_link( $wp_post_id, null ),
 				'assets'              => $this->urlBuilder->editor_asset_url(),
 				'pageAssets'          => $this->urlBuilder->page_upload_url(),
 				'templateFonts'       => 'https://app.brizy.io/fonts/public?path=' . BRIZY_EDITOR_VERSION,
@@ -156,6 +156,7 @@ class Brizy_Editor_Editor_Editor {
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
 				'upgradeToPro'        => apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ),
+				'supportUrl'          => apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ),
 				'dashboardNavMenu'    => admin_url( 'nav-menus.php' )
 			),
 			'user'            => array( 'role' => 'admin' ),

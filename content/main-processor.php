@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: viorel
- * Date: 10/29/18
- * Time: 4:19 PM
- */
+
 
 class Brizy_Content_MainProcessor {
 

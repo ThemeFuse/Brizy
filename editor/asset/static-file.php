@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 5/3/18
- * Time: 4:28 PM
- */
 
 abstract class Brizy_Editor_Asset_StaticFile {
 

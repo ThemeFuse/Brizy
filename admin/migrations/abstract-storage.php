@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 9/26/18
- * Time: 10:40 AM
- */
 
 abstract class Brizy_Admin_Migrations_AbstractStorage {
 

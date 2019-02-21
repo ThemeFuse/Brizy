@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 8/17/18
- * Time: 3:18 PM
- */
+
 
 class Brizy_Content_ContextFactory {
 

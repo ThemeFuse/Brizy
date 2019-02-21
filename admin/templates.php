@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 7/3/18
- * Time: 3:11 PM
- */
 
 add_filter( 'brizy_supported_post_types', 'brizy_addTemplateSupport' );
 

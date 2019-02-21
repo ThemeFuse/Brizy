@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 7/18/18
- * Time: 10:48 AM
- */
 
 
 class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {

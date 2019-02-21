@@ -216,6 +216,8 @@
 
   "tabletMedia": null,
 
+  "tabletReverseColumns": "off",
+
   "tabletBgImageWidth": null,
   "tabletBgImageHeight": null,
   "tabletBgImageSrc": null,
@@ -307,6 +309,8 @@
   "showOnMobile": "on",
 
   "mobileMedia": null,
+
+  "mobileReverseColumns": "off",
 
   "mobileBgImageWidth": null,
   "mobileBgImageHeight": null,

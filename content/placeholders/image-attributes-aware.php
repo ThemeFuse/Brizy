@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 10/10/18
- * Time: 3:18 PM
- */
+
 
 trait Brizy_Content_Placeholders_ImageAttributesAware {
 
