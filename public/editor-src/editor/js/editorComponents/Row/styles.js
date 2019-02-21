@@ -29,6 +29,9 @@ import {
   styleDisplayShowOnDesktop,
   styleDisplayShowOnTablet,
   styleDisplayShowOnMobile,
+  styleReverseColumnsRow,
+  styleReverseColumnsWrap,
+  styleReverseColumnsJustify,
   styleZIndex
 } from "visual/utils/style";
 
@@ -160,6 +163,11 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-map": {
           display: "var(--tabletMediaBg)"
+        },
+        "> .brz-bg-content > .brz-row": {
+          flexDirection: "var(--tabletReverseColumns)",
+          flexWrap: "var(--tabletReverseColumnsWrap)",
+          justifyContent: "var(--tabletReverseColumnsJustify)"
         }
       },
       ".brz-ed--mobile &": {
@@ -181,6 +189,11 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-map": {
           display: "var(--mobileMediaBg)"
+        },
+        "> .brz-bg-content > .brz-row": {
+          flexDirection: "var(--mobileReverseColumns)",
+          flexWrap: "var(--mobileReverseColumnsWrap)",
+          justifyContent: "var(--mobileReverseColumnsJustify)"
         }
       }
     };
@@ -553,6 +566,17 @@ export function bgStyleClassName(v) {
         ".brz &": {
           // Display
           display: styleDisplayShowOnTablet({ v })
+        },
+        "> .brz-bg-content > .brz-row": {
+          flexDirection: styleReverseColumnsRow({ v, device: "tablet" }),
+          flexWrap: styleReverseColumnsWrap({
+            v,
+            device: "tablet"
+          }),
+          justifyContent: styleReverseColumnsJustify({
+            v,
+            device: "tablet"
+          })
         }
       },
       "@media (max-width: 767px)": {
@@ -608,6 +632,17 @@ export function bgStyleClassName(v) {
         },
         "> .brz-bg-media > .brz-bg-map": {
           display: styleMediaBg({ v, device: "mobile" })
+        },
+        "> .brz-bg-content > .brz-row": {
+          flexDirection: styleReverseColumnsRow({ v, device: "mobile" }),
+          flexWrap: styleReverseColumnsWrap({
+            v,
+            device: "mobile"
+          }),
+          justifyContent: styleReverseColumnsJustify({
+            v,
+            device: "mobile"
+          })
         }
       },
       "@media (min-width: 992px)": {
@@ -1140,6 +1175,15 @@ export function containerStyleCSSVars(v, isInnerRow) {
     }),
 
     // Tablet
+    "--tabletReverseColumns": styleReverseColumnsRow({ v, device: "tablet" }),
+    "--tabletReverseColumnsWrap": styleReverseColumnsWrap({
+      v,
+      device: "tablet"
+    }),
+    "--tabletReverseColumnsJustify": styleReverseColumnsJustify({
+      v,
+      device: "tablet"
+    }),
     "--tabletPaddingTop": stylePadding({
       v,
       device: "tablet",
@@ -1166,6 +1210,15 @@ export function containerStyleCSSVars(v, isInnerRow) {
     }),
 
     // Mobile
+    "--mobileReverseColumns": styleReverseColumnsRow({ v, device: "mobile" }),
+    "--mobileReverseColumnsWrap": styleReverseColumnsWrap({
+      v,
+      device: "mobile"
+    }),
+    "--mobileReverseColumnsJustify": styleReverseColumnsJustify({
+      v,
+      device: "mobile"
+    }),
     "--mobilePaddingTop": stylePadding({
       v,
       device: "mobile",

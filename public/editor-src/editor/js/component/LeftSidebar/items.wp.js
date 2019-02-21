@@ -50,7 +50,7 @@ export default {
           icon: "nc-bug",
           linkTarget: "_blank",
           label: t("Submit an Issue"),
-          link: "https://github.com/ThemeFuse/Brizy/issues"
+          link: urls.supportUrl
         },
         {
           type: "link",
@@ -71,7 +71,7 @@ export default {
           type: "link",
           icon: "nc-back",
           label: t("Back to WordPress"),
-          link: urls.backToWordpress
+          link: urls.backToWordPress
         }
       ]
     }

@@ -216,6 +216,8 @@ class Items extends EditorArrayComponent {
 
     return {
       ...this.props.itemProps,
+      tabletReversed: this.props.tabletReversed,
+      mobileReversed: this.props.mobileReversed,
       meta,
       toolbarExtend,
       popoverData: this.getPopoverData,

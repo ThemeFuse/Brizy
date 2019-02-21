@@ -15,11 +15,7 @@ import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import ColumnResizer from "./components/ColumnResizer";
 import { percentageToPixels } from "visual/utils/meta";
-import {
-  wInMobilePage,
-  wInTabletPage,
-  minWinColumn
-} from "visual/config/columns";
+import { minWinColumn } from "visual/config/columns";
 import Items from "./Items";
 import {
   bgStyleClassName,
@@ -44,10 +40,25 @@ class Column extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  shouldComponentUpdate(nextProps) {
-    const { meta } = this.props;
+  mounted = false;
 
-    return meta.posts || meta.inCarousel || this.optionalSCU(nextProps);
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { meta, tabletReversed, mobileReversed } = this.props;
+    const reversed =
+      nextProps.mobileReversed !== mobileReversed ||
+      nextProps.tabletReversed !== tabletReversed;
+
+    return (
+      meta.posts || meta.inCarousel || reversed || this.optionalSCU(nextProps)
+    );
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   handleToolbarOpen = () => {
@@ -60,6 +71,10 @@ class Column extends EditorComponent {
   };
 
   handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
@@ -67,9 +82,11 @@ class Column extends EditorComponent {
       this.floatingButton.setActive(false);
     }
 
-    this.patchValue({ tabsState: "tabNormal" });
-    this.patchValue({ tabsCurrentElement: "tabCurrentElement" });
-    this.patchValue({ tabsColor: "tabOverlay" });
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabOverlay"
+    });
   };
 
   handleToolbarEnter = () => {

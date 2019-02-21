@@ -10,6 +10,7 @@ import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendConfig from "./extendToolbar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import { videoData as getVideoData } from "visual/utils/video";
@@ -35,8 +36,18 @@ class Row extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   shouldComponentUpdate(nextProps) {
     return this.optionalSCU(nextProps);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   handleValueChange(value, meta) {
@@ -55,12 +66,18 @@ class Row extends EditorComponent {
   };
 
   handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     this.containerBorder.setActive(false);
     this.floatingButton.setActive(false);
 
-    this.patchValue({ tabsState: "tabNormal" });
-    this.patchValue({ tabsCurrentElement: "tabCurrentElement" });
-    this.patchValue({ tabsColor: "tabOverlay" });
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabOverlay"
+    });
   };
 
   handleToolbarEnter = () => {
@@ -249,7 +266,9 @@ class Row extends EditorComponent {
       bgColorOpacity,
       bgVideo,
       bgMapZoom,
-      bgMapAddress
+      bgMapAddress,
+      mobileReverseColumns,
+      tabletReverseColumns
     } = v;
 
     let bgProps = {
@@ -278,7 +297,10 @@ class Row extends EditorComponent {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       containerClassName: containerStyleClassName(v, this.isInnerRow()),
-      meta: this.getMeta(v)
+      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig),
+      meta: this.getMeta(v),
+      tabletReversed: tabletReverseColumns,
+      mobileReversed: mobileReverseColumns
     });
 
     return (
