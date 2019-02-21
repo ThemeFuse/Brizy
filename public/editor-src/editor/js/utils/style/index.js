@@ -48,6 +48,13 @@ export {
   styleAlignHorizontalAlign
 } from "./styleAlign";
 
+// ReverseColumns
+export {
+  styleReverseColumnsRow,
+  styleReverseColumnsWrap,
+  styleReverseColumnsJustify
+} from "./styleReverseColumns";
+
 // Size
 export {
   styleSizeWidthPercent,

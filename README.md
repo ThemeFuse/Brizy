@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.60<br>
+Stable tag: 1.0.61<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,15 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.61 - 2019-02-21 ###
+* New: Added column revert option for tablet and mobile device modes
+* New: Added filters for support and upgrade to pro urls
+* Fixed: Crash when making a block global
+* Fixed: Video not working at preview with certain themes
+* Fixed: Featured image focal point for Gutenberg
+* Fixed: Thumbnail for downloaded media
+* Fixed: Hide Gutenberg blocks and show the Brizy button
 
 ### 1.0.60 - 2019-02-18 ###
 * New: Added gradient to backgrounds

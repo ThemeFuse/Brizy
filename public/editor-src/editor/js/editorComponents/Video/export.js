@@ -7,7 +7,7 @@ export default function() {
     var src = $this.find("a[href]").attr("href");
 
     if (src) {
-      var iframe = jQuery("<iframe/>", {
+      var iframe = $("<iframe/>", {
         class: "brz-iframe",
         allowfullscreen: true,
         src: src

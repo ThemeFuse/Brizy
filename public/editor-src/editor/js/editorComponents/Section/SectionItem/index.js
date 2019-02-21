@@ -38,6 +38,12 @@ class SectionItem extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   shouldComponentUpdate(nextProps) {
     const {
       meta: {
@@ -60,19 +66,30 @@ class SectionItem extends EditorComponent {
     return isSlider || deviceUpdate || this.optionalSCU(nextProps);
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleToolbarOpen = () => {
     if (this.containerBorder) {
       this.containerBorder.setActive(true);
     }
   };
+
   handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     if (this.containerBorder) {
       this.containerBorder.setActive(false);
     }
 
-    this.patchValue({ tabsState: "tabNormal" });
-    this.patchValue({ tabsCurrentElement: "tabCurrentElement" });
-    this.patchValue({ tabsColor: "tabOverlay" });
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabOverlay"
+    });
   };
 
   handlePaddingResizerChange = patch => this.patchValue(patch);

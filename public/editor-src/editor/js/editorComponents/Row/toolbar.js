@@ -16,6 +16,7 @@ import {
   toolbarBgMapZoom,
   toolbarBorderStyle,
   toolbarBorderWidth,
+  toolbarBorderWidthBorderColorPicker,
   toolbarBorderRadius,
   toolbarBgType,
   toolbarGradientRange,
@@ -28,7 +29,6 @@ import {
   toolbarBorderColorHexAndOpacity,
   toolbarBorderColorPalette,
   toolbarBorderColorFields,
-  toolbarBorderWidthBorderColorPicker,
   toolbarHoverTransition,
   toolbarBoxShadowHexAndOpacity,
   toolbarBoxShadowPalette,
@@ -42,6 +42,7 @@ import {
   toolbarShowOnMobile,
   toolbarZIndex,
   toolbarCustomCSSClass,
+  toolbarEntranceAnimation,
   toolbarElementContainerTypeImageMap
 } from "visual/utils/toolbar";
 
@@ -49,83 +50,7 @@ export function getItemsForDesktop(v, component) {
   const device = "desktop";
   const { hex: bgColorHex } = getOptionColor(v, "bgColor");
   const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
-  const getAnimationChoices = () => {
-    const { animationName } = v;
-    if (animationName !== "none" || animationName === "initial") {
-      const choices =
-        animationName === "initial" ? v.tempAnimationName : animationName;
-      return {
-        [`${choices}`]: [
-          {
-            id: "animationDuration",
-            label: t("Duration"),
-            type: "slider",
-            slider: {
-              min: 0,
-              max: 5,
-              step: 0.1
-            },
-            input: {
-              show: true,
-              min: 0
-            },
-            suffix: {
-              show: true,
-              choices: [
-                {
-                  title: "s",
-                  value: "s"
-                }
-              ]
-            },
-            value: {
-              value: v.animationDuration / 1000
-            },
-            onChange: ({ value: animationDuration }, { sliderDragEnd }) => {
-              return {
-                animationName: sliderDragEnd ? v.tempAnimationName : "initial",
-                animationDuration: animationDuration * 1000
-              };
-            }
-          },
-          {
-            id: "animationDelay",
-            label: t("Delay"),
-            type: "slider",
-            slider: {
-              min: 0,
-              max: 5,
-              step: 0.1
-            },
-            input: {
-              show: true,
-              min: 0
-            },
-            suffix: {
-              show: true,
-              choices: [
-                {
-                  title: "s",
-                  value: "s"
-                }
-              ]
-            },
-            value: {
-              value: v.animationDelay / 1000
-            },
-            onChange: ({ value: animationDelay }, { sliderDragEnd }) => {
-              return {
-                animationName: sliderDragEnd ? v.tempAnimationName : "initial",
-                animationDelay: animationDelay * 1000
-              };
-            }
-          }
-        ]
-      };
-    }
 
-    return { none: [] };
-  };
   const inPopup = Boolean(component.props.meta.sectionPopup);
 
   return [
@@ -1509,26 +1434,7 @@ export function getItemsForDesktop(v, component) {
                     toolbarShowOnDesktop({ v }),
                     toolbarZIndex({ v }),
                     toolbarCustomCSSClass({ v }),
-                    {
-                      id: "animation",
-                      type: "multiPicker",
-                      position: 50,
-                      picker: {
-                        id: "animationName",
-                        label: t("Entrance Animation"),
-                        type: "select",
-                        choices: getAnimations(),
-                        value:
-                          v.animationName === "initial"
-                            ? v.tempAnimationName
-                            : v.animationName,
-                        onChange: animationName => ({
-                          animationName,
-                          tempAnimationName: animationName
-                        })
-                      },
-                      choices: getAnimationChoices()
-                    },
+                    toolbarEntranceAnimation({ v }),
                     toolbarHoverTransition({ v, position: 60 })
                   ]
                 }
