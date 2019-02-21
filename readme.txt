@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.60
+Stable tag: 1.0.61
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,15 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.61 - 2019-02-21 =
+* New: Added column revert option for tablet and mobile device modes
+* New: Added filters for support and upgrade to pro urls
+* Fixed: Crash when making a block global
+* Fixed: Video not working at preview with certain themes
+* Fixed: Featured image focal point for Gutenberg
+* Fixed: Thumbnail for downloaded media
+* Fixed: Hide Gutenberg blocks and show the Brizy button
 
 = 1.0.60 - 2019-02-18 =
 * New: Added gradient to backgrounds
