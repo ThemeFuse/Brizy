@@ -62,7 +62,13 @@ class Brizy_Editor {
 
 		$supported_post_types   = $this->supported_post_types();
 		$supported_post_types[] = Brizy_Admin_Templates::CP_TEMPLATE;
+
 		foreach ( $supported_post_types as $type ) {
+
+			if ( $type == 'post' ) {
+				continue;
+			}
+
 			add_filter( "theme_{$type}_templates", array( $this, 'registerPageTemplates' ) );
 		}
 	}
@@ -133,7 +139,7 @@ class Brizy_Editor {
 
 		$version_compare = version_compare( $wp_version, '5' );
 
-        if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
+		if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
 			new Brizy_Compatibilities_Gutenberg();
 		}
 
