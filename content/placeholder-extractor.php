@@ -51,7 +51,7 @@ class Brizy_Content_PlaceholderExtractor {
 				continue;
 			}
 
-			$pos     = strpos( $content, $placeholder->getPlaceholder() );
+			$pos     = strpos( utf8_encode($content), $placeholder->getPlaceholder() );
 			if ( $pos !== false ) {
 				$content = substr_replace( $content, $placeholder->getUid(), $pos, strlen( $placeholder->getPlaceholder() ) );
 			}
