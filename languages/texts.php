@@ -84,8 +84,8 @@ class Brizy_Languages_Texts
 			"Mobile" => __("Mobile", "brizy"),
 			//-> More
 			"More" => __("More", "brizy"),
-			"About Brizy" => __("About Brizy", "brizy"),
-			"Back to Brizy" => __("Back to Brizy", "brizy"),
+			"About Brizy" => __("About ".__bt('brizy','Brizy'), "brizy"),
+			"Back to Brizy" => __("Back to ".__bt('brizy','Brizy'), "brizy"),
 			"Plugin Settings" => __("Plugin Settings", "brizy"),
 			"Back to WordPress" => __("Back to WordPress", "brizy"),
 			"Featured Image" => __("Featured Image", "brizy"),

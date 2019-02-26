@@ -1,7 +1,7 @@
 <?php
 
-if ( ! function_exists( '__b' ) ) {
-	function __b( $key, $default, $textDomain = 'brizy' ) {
+if ( ! function_exists( '__bt' ) ) {
+	function __bt( $key, $default, $textDomain = 'brizy' ) {
 
 		$text = apply_filters( 'brizy_wl_value', array( 'key' => $key, 'default' => $default ) );
 
@@ -11,4 +11,4 @@ if ( ! function_exists( '__b' ) ) {
 
 		return __( $default, $textDomain );
 	}
-}
+};
