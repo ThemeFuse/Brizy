@@ -1,34 +1,38 @@
 def now = new Date()
 def currentDate =  now.format("yyyy-MM-dd", TimeZone.getTimeZone('UTC'))
 def changeLogs = params.changelog.replaceAll("\n","\\\\n").replaceAll("/",'\\\\/')
-def zipFileName = "Build-"+params.buildVersion+".zip"
+def zipFileName = "Build-"+params.buildVersion+"-RC.zip"
 env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
+
+if(params.gitMerge) {
+    zipFileName = "Build-"+params.buildVersion+".zip"
+}
+
 
 def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
 
-
     def buildInfo = "\nBranch: "+params.releaseBranch+"\nPlugin version: "+params.buildVersion+"\nEditor version: "+params.editorVersion+"\nChangelog\n"+params.changelog;
 
-     if ( buildResult == "SUCCESS" ) {
-       slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
+    withCredentials([string(credentialsId: 'slack', variable: 'SECRET')]) {
 
-       withCredentials([string(credentialsId: 'Slack Oauth Token', variable: 'SECRET')]) {
+         if ( buildResult == "SUCCESS" ) {
+           slackSend  channel: '#jenkins', color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
+
            sh '''
-               set +x
-               curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
+                set +x
+                curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
            '''
-       }
-
-     }
-     else if( buildResult == "FAILURE" ) {
-       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed."+buildInfo
-     }
-     else if( buildResult == "UNSTABLE" ) {
-       slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable."+buildInfo
-     }
-     else {
-       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear."+buildInfo
-     }
+         }
+         else if( buildResult == "FAILURE" ) {
+           slackSend  channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed."+buildInfo
+         }
+         else if( buildResult == "UNSTABLE" ) {
+           slackSend  channel: '#jenkins', color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable."+buildInfo
+         }
+         else {
+           slackSend channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear."+buildInfo
+         }
+    }
 }
 
 def folderExist(path){
@@ -47,7 +51,7 @@ pipeline {
                 }
 
                 git url: "git@github.com:/ThemeFuse/Brizy",
-                    credentialsId: '7ca32202-12d1-4189-9ff3-093095f8ffc3',
+                    credentialsId: 'Git',
                     branch: params.releaseBranch
 
                 sh 'git config user.name "Alex Zaharia"'
@@ -70,7 +74,6 @@ pipeline {
         }
 
         stage('Prepare SVN') {
-
             steps {
                 sh 'cd ' + params.brizySvnPath + ' && svn cleanup && svn revert . -R && svn up'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf trunk/*'
@@ -98,22 +101,22 @@ pipeline {
         }
 
         stage('Git Merge') {
-                    when {
-                        expression { return params.gitMerge }
-                    }
-                    steps {
-                        sh 'git commit -a -m "Build '+params.buildVersion+'"'
-                        sh 'git checkout -t origin/master'
-                        sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
-                        sh 'git tag '+params.buildVersion
-                        sh 'git checkout -t origin/develop'
-                        sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
+            when {
+                expression { return params.gitMerge }
+            }
+            steps {
+                sh 'git commit -a -m "Build '+params.buildVersion+'"'
+                sh 'git checkout -t origin/master'
+                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
+                sh 'git tag '+params.buildVersion
+                sh 'git checkout -t origin/develop'
+                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
 
-                        sshagent (credentials: ['7ca32202-12d1-4189-9ff3-093095f8ffc3']) {
-                            sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
-                        }
-                    }
+                sshagent (credentials: ['Git']) {
+                    sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
                 }
+            }
+        }
 
         stage('Publish') {
             when {
@@ -124,7 +127,6 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password \''+params.svnPassword+'\'  -m "Version '+params.buildVersion+'"'
             }
         }
-
     }
 
     post {
