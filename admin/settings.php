@@ -29,9 +29,15 @@ class Brizy_Admin_Settings {
 	 */
 	private function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
-		add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
-		add_action( 'admin_head', array($this,'addClassToWpNavMenu'));
+		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ));
+
+		if ( ! is_network_admin() ) {
+			add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
+		} else {
+			add_action( 'network_admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
+		}
+
+		add_action( 'admin_head', array( $this, 'addClassToWpNavMenu' ) );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
 		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
@@ -59,14 +65,14 @@ class Brizy_Admin_Settings {
 		if ( Brizy_Admin_Templates::CP_TEMPLATE == $post_type ) :
 			$submenu_file = 'edit.php?post_type=brizy_template';
 		endif;
-    }
+	}
 
 	/**
 	 * @internal
 	 */
 	function actionRegisterSettingsPage() {
 
-		if ( ! Brizy_Editor::is_user_allowed() ) {
+	    if ( ! Brizy_Editor::is_user_allowed() || is_network_admin() ) {
 			return;
 		}
 
@@ -75,7 +81,8 @@ class Brizy_Admin_Settings {
 			'read',
 			self::menu_slug(),
 			array( $this, 'render' ),
-			plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
+			__bt( 'brizy-logo', plugins_url( 'static/img/brizy-logo.svg', __FILE__ ) ),
+			//plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
 			81
 		);
 	}
@@ -244,13 +251,16 @@ class Brizy_Admin_Settings {
 	 */
 	public function render() {
 
+		if ( is_network_admin() ) {
+			return;
+		}
+
 		try {
 			echo Brizy_Admin_View::render(
 				'settings/view',
 				array()
 			);
 
-			//echo Brizy_Admin_View::render( 'settings/debug', array() );
 		} catch ( Exception $e ) {
 
 		}

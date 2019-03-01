@@ -101,9 +101,10 @@ class Brizy_Compatibilities_Gutenberg {
                 <script id="brizy-gutenberg-btn-middle" type="text/html">
                     <div class="brizy-buttons-gutenberg" style="margin-top:15px;">
                         <a class="brizy-button brizy-button--primary " type="button" href="<?php echo $continueUrl; ?>"
-                           style="padding:5px 27px 5px;"><?php echo __( 'Continue to edit with ', 'brizy' ); ?>&nbsp;
-                            <img src="<?php echo plugins_url( '../admin/static/img/brizy.png', __FILE__ ); ?>"
-                                 class="brizy-button--arrow"/>
+                           style="padding:5px 27px 5px;">
+                            <?php echo __( 'Continue to edit with ', 'brizy' ); ?>&nbsp;
+                            <img src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>" class="brizy-logo"/>
+                            <?php echo __bt( 'brizy', 'Brizy' ); ?>
                         </a>
                     </div>
                 </script>
@@ -115,7 +116,10 @@ class Brizy_Compatibilities_Gutenberg {
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                         <div class="brizy-buttons" style="margin-top:15px;">
                             <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="<?php echo $edit_url;?>" style="padding:5px 27px 5px;"><?php echo esc_html__( 'Edit with', 'brizy' ) ?>
-                                <img src="<?php echo $log_dir;?>brizy.png" srcset="<?php echo $log_dir ?>brizy.png 1x, <?php echo $log_dir;?>brizy-2x.png 2x" class="brizy-logo">
+                                <img src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>"
+                                     srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../admin/static/img/brizy-2x.png', __FILE__ ) );?> 2x"
+                                     class="brizy-logo">
+                                <?php echo __bt( 'brizy', 'Brizy' ); ?>
                              </a>
                         </div>
                     </script>

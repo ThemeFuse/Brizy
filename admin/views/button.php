@@ -13,7 +13,7 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
 ?>
     <div class="brizy-buttons">
         <a class="brizy-button <?php echo $className; ?> enable-brizy-editor brizy-button--primary" type="button"
-           href="<?php echo esc_url( set_url_scheme(admin_url( 'admin-post.php?action=_brizy_admin_editor_' . $state . '&post=' . $post->ID )) ); ?>">
+           href="<?php echo esc_url( set_url_scheme( admin_url( 'admin-post.php?action=_brizy_admin_editor_' . $state . '&post=' . $post->ID ) ) ); ?>">
 			<?php
 			if ( $is_using_brizy ) {
 				?>
@@ -22,10 +22,12 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
 				<?php
 			} else {
 				?>
-				<?php echo $label; ?> <img
-                        src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?>"
-                        srcset="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ) ?> 1x, <?php echo plugins_url( '../static/img/brizy-2x.png', __FILE__ ) ?> 2x"
-                        class="brizy-logo"/>
+				<?php echo $label; ?>
+                <img class="brizy-logo"
+                     src="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?>"
+                     srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../static/img/arrow.png', __FILE__ ) ) ?> 2x"
+                />
+				<?php echo __bt( 'brizy', 'Brizy' ); ?>
 				<?php
 			}
 			?>
@@ -42,8 +44,12 @@ if ( $is_using_brizy ) {
 
     <div class="brizy-editor">
         <a class="preview brizy-button brizy-button--primary" type="button" href="<?php echo $url; ?>">
-            <?php _e( 'Continue to edit with', 'brizy' ); ?>&nbsp;
-            <img src="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ); ?>" srcset="<?php echo plugins_url( '../static/img/brizy.png', __FILE__ ); ?> 1x, <?php echo plugins_url( '../static/img/brizy-2x.png', __FILE__ ); ?> 2x" class="brizy-logo"/>
+			<?php _e( 'Continue to edit with', 'brizy' ); ?>&nbsp;
+            <img class="brizy-logo"
+                 src="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ )) ?>"
+                 srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../static/img/arrow.png', __FILE__ ) ) ?> 2x"
+            />
+			<?php echo __bt( 'brizy', 'Brizy' ); ?>
         </a>
     </div>
 	<?php

@@ -187,6 +187,8 @@ class Brizy_Admin_Templates {
 
 	static public function registerCustomPostTemplate() {
 
+	    if(is_network_admin()) return;
+
 		$labels = array(
 			'name'               => _x( 'Templates', 'post type general name' ),
 			'singular_name'      => _x( 'Template', 'post type singular name' ),
@@ -209,7 +211,7 @@ class Brizy_Admin_Templates {
 				'labels'              => $labels,
 				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __( 'Brizy templates.' ),
+				'description'         => __( __bt('brizy','Brizy').' templates.' ),
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
 				'show_ui'             => true,
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),

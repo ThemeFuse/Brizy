@@ -33,7 +33,8 @@
 
 .brizy-logo {
     max-height: 22px;
-    margin-left: 11px;
+    margin-left: 4px;
+    margin-right: 4px;
     transform: translateY(2px);
 }
 
