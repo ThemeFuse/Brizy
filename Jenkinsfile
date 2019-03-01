@@ -16,7 +16,7 @@ def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
     withCredentials([string(credentialsId: 'slack', variable: 'SECRET')]) {
 
          if ( buildResult == "SUCCESS" ) {
-           slackSend  channel: '#jenkins', color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
+           //slackSend  channel: '#jenkins', color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
 
            sh '''
                 set +x
@@ -24,13 +24,13 @@ def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
            '''
          }
          else if( buildResult == "FAILURE" ) {
-           slackSend  channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed."+buildInfo
+           //slackSend  channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed."+buildInfo
          }
          else if( buildResult == "UNSTABLE" ) {
-           slackSend  channel: '#jenkins', color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable."+buildInfo
+           //slackSend  channel: '#jenkins', color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable."+buildInfo
          }
          else {
-           slackSend channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear."+buildInfo
+           //slackSend channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear."+buildInfo
          }
     }
 }
