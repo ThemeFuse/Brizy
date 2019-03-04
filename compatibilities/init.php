@@ -38,5 +38,9 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'Phast_Plugins_Bootstrap' ) ) {
 			new Brizy_Compatibilities_Phastpress();
 		}
+
+		if ( function_exists( 'domain_mapping_siteurl' ) ) {
+			new Brizy_Compatibilities_WordpressMuDomainMapping();
+		}
 	}
 }
