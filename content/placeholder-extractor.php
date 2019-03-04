@@ -33,7 +33,7 @@ class Brizy_Content_PlaceholderExtractor {
 		preg_match_all( $expression, $content, $matches );
 
 		if ( count( $matches['placeholder'] ) == 0 ) {
-			return array($placeholders, $content);
+			return array( $placeholders, $content );
 		}
 
 		foreach ( $matches['placeholder'] as $i => $name ) {
@@ -51,9 +51,16 @@ class Brizy_Content_PlaceholderExtractor {
 				continue;
 			}
 
-			$pos     = strpos( utf8_encode($content), $placeholder->getPlaceholder() );
+			$pos = strpos( $content, $placeholder->getPlaceholder() );
+
+			if ( function_exists( 'mb_strpos' ) ) {
+				$pos = mb_strpos( utf8_encode( $content ), $placeholder->getPlaceholder() );
+			}
+
+			$length = strlen( $placeholder->getPlaceholder() );
+
 			if ( $pos !== false ) {
-				$content = substr_replace( $content, $placeholder->getUid(), $pos, strlen( $placeholder->getPlaceholder() ) );
+				$content = substr_replace( $content, $placeholder->getUid(), $pos, $length );
 			}
 
 		}
