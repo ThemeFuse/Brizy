@@ -1,6 +1,9 @@
 <?php
 
 include_once "vendor/autoload.php";
+include_once "vendor/twig/twig/lib/Twig/Autoloader.php";
+
+Twig_Autoloader::register(true);
 
 /**.
  * @param $class_name
