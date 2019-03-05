@@ -35,21 +35,9 @@ class Brizy_Editor_API {
 	const AJAX_REMOVE_FEATURED_IMAGE = 'brizy_remove_featured_image';
 
 	/**
-	 * @var Brizy_Editor_Project
-	 */
-	private $project;
-
-	/**
 	 * @var Brizy_Editor_Post
 	 */
 	private $post;
-
-	/**
-	 * @return Brizy_Editor_Project
-	 */
-	public function get_project() {
-		return $this->project;
-	}
 
 	/**
 	 * @return Brizy_Editor_Post
@@ -64,9 +52,8 @@ class Brizy_Editor_API {
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function __construct( $project, $post ) {
+	public function __construct( $post ) {
 
-		$this->project = $project;
 		$this->post    = $post;
 
 		$this->initialize();
@@ -337,9 +324,9 @@ class Brizy_Editor_API {
 				throw new Exception( "The received global data is invalid" );
 			}
 
-
+			$project = Brizy_Editor_Project::get();
 			//$post_id = (int) $this->param( 'post' );
-			$this->project->setGlobalsAsJson( $data );
+			$project->setGlobalsAsJson( $data );
 
 			// mark all brizy post to be compiled on next view
 			Brizy_Editor_Post::clear_compiled_cache();
@@ -610,10 +597,10 @@ class Brizy_Editor_API {
 	 */
 	public function create_post_globals() {
 		$wp_post = $this->post->get_wp_post();
-
+		$project = Brizy_Editor_Project::get();
 		$globals = array(
-			'id'        => $this->project->getId(),
-			'gb'        => $this->project->getGlobals(),
+			'id'        => $project->getId(),
+			'gb'        => $project->getGlobals(),
 			'name'      => $wp_post->post_name,
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,
