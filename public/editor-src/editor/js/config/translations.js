@@ -97,9 +97,11 @@ export default {
   "Disable on Tablet": __("Disable on Tablet", "brizy"),
   "Enable on Mobile": __("Enable on Mobile", "brizy"),
   "Enable on Tablet": __("Enable on Tablet", "brizy"),
+  "Write your CSS here...": __("Write your CSS here...", "brizy"),
   "Z-index": __("Z-index", "brizy"),
   "Anchor Name": __("Anchor Name", "brizy"),
   "CSS Class": __("CSS Class", "brizy"),
+  "Custom CSS": __("Custom CSS", "brizy"),
 
 
   // Section
@@ -402,6 +404,53 @@ export default {
   // Popup
   "Popup": __("Popup", "brizy"),
   "Close": __("Close", "brizy"),
+
+  // Facebook
+  "Comments": __("Comments", "brizy"),
+  "Like": __("Like", "brizy"),
+  "Recommend": __("Recommend", "brizy"),
+  "Include Share Button": __("Include Share Button", "brizy"),
+  "Show Friends' Faces": __("Show Friends' Faces", "brizy"),
+  "Show Button Counter": __("Show Button Counter", "brizy"),
+  "Dark Scheme": __("Dark Scheme", "brizy"),
+  "Target URL": __("Target URL", "brizy"),
+  "Current Page": __("Current Page", "brizy"),
+  "Custom Page": __("Custom Page", "brizy"),
+  "Include Full Post": __("Include Full Post", "brizy"),
+  "Full Screen": __("Full Screen", "brizy"),
+  "AutoPlay": __("AutoPlay", "brizy"),
+  "Captions": __("Captions", "brizy"),
+  "Timeline": __("Timeline", "brizy"),
+  "Events": __("Events", "brizy"),
+  "Messages": __("Messages", "brizy"),
+  "Use Small Header": __("Use Small Header", "brizy"),
+  "Hide Cover Photo": __("Hide Cover Photo", "brizy"),
+  "Show Friend's Faces": __("Show Friend's Faces", "brizy"),
+  "Facebook Button": __("Facebook Button", "brizy"),
+  "Facebook Comments": __("Facebook Comments", "brizy"),
+  "Facebook Embed": __("Facebook Embed", "brizy"),
+  "Facebook Page": __("Facebook Page", "brizy"),
+
+
+
+  /*
+  "Button": __("Button", "brizy"),
+  "Embed Type": __("Embed Type", "brizy"),
+  "Page": __("Page", "brizy"),
+  "Layout": __("Layout", "brizy"),
+
+  "Size button": __("Size Button", "brizy"),
+  "Button size": __("Button Size", "brizy"),
+  "Small": __("Small", "brizy"),
+  "Large": __("Large", "brizy"),
+  "Action type": __("Action Type", "brizy"),  
+  
+  "Adapt to Container Width": __("Adapt to Container Width", "brizy"),
+  
+  "General": __("General", "brizy"),
+
+*/
+
 
   // WordPress
   "Query": __("Query", "brizy"),

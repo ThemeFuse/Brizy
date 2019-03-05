@@ -6,5 +6,7 @@
   "mobileWidth": null,
 
   "shortcode": "woocommerce_cart",
-  "currentUser": ""
+  "currentUser": "",
+
+  "customCSS": ""
 }

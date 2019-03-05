@@ -183,6 +183,8 @@
   "tempBoxShadowColorPalette": "",
   "tempBoxShadowColorOpacity": 1,
 
+  "customCSS": "",
+
   "tabletSize": "small",
   "tabletPadding": 11,
   "tabletPaddingTB": 11,

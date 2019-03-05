@@ -5,5 +5,7 @@
   "tabletWidth": null,
   "mobileWidth": null,
 
-  "shortcode": ""
+  "shortcode": "",
+
+  "customCSS": ""
 }

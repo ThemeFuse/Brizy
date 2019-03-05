@@ -63,9 +63,10 @@ class AdvancedSettingsOptionType extends React.Component {
         {helper ? (
           <div className="brz-ed-option__helper">
             <EditorIcon icon="nc-alert-circle-que" />
-            <div className="brz-ed-option__helper__content">
-              {helperContent}
-            </div>
+            <div
+              className="brz-ed-option__helper__content"
+              dangerouslySetInnerHTML={{ __html: helperContent }}
+            />
           </div>
         ) : null}
       </div>
@@ -102,7 +103,11 @@ class AdvancedSettingsOptionType extends React.Component {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.handleSidebarCloseClick}
       >
-        <div className={className} title={title} onClick={this.handleLabelClick}>
+        <div
+          className={className}
+          title={title}
+          onClick={this.handleLabelClick}
+        >
           {icon ? this.renderIcon() : null}
           {label || helper ? this.renderLabel() : null}
           <Portal

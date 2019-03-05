@@ -1,11 +1,13 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import toolbarConfigFn from "./toolbar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";
 import * as Api from "visual/utils/api/editor/index";
+import * as parentToolbarExtend from "./parentExtendToolbar";
 
 class WPNavigation extends EditorComponent {
   static get componentId() {
@@ -13,6 +15,14 @@ class WPNavigation extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  componentDidMount() {
+    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
+      allowExtend: false,
+      filterExtendName: `${this.constructor.componentId}_parent`
+    });
+    this.props.extendParentToolbar(toolbarExtend);
+  }
 
   state = {
     menus: []
@@ -43,15 +53,17 @@ class WPNavigation extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <WPShortcode
-          name="brizy_navigation"
-          attributes={attributes}
-          placeholderIcon="wp-shortcode"
-          className={styleClassName(v)}
-          style={styleCSSVars(v)}
-          mobileToggleMenu={v.mobileToggleMenu === "on"}
-          tabletToggleMenu={v.tabletToggleMenu === "on"}
-        />
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <WPShortcode
+            name="brizy_navigation"
+            attributes={attributes}
+            placeholderIcon="wp-shortcode"
+            className={styleClassName(v)}
+            style={styleCSSVars(v)}
+            mobileToggleMenu={v.mobileToggleMenu === "on"}
+            tabletToggleMenu={v.tabletToggleMenu === "on"}
+          />
+        </CustomCSS>
       </Toolbar>
     );
   }

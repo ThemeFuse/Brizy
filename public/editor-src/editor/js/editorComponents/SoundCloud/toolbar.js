@@ -5,7 +5,8 @@ import {
   toolbarElementSoundCloudAutoPlay,
   toolbarElementSoundCloudStyle,
   toolbarSizeWidthWidthPercent,
-  toolbarSizeHeightHeightPx
+  toolbarSizeHeightHeightPx,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -43,7 +44,34 @@ export function getItemsForDesktop(v) {
               max: v.showArtwork === "on" ? v.largeHeight : v.mediumHeight
             }
           }
-        })
+        }),
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  tabIcon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
+          ]
+        }
       ]
     }
   ];

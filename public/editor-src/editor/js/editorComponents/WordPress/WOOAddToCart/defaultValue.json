@@ -6,5 +6,7 @@
   "mobileWidth": null,
 
   "productID": "",
-  "style": ""
+  "style": "",
+
+  "customCSS": ""
 }

@@ -41,18 +41,8 @@
   &__option {
     padding: 15px 0;
 
-    &.brz-ed-option__input {
-      flex-direction: column;
-      align-items: flex-start !important;
-
-      .brz-ed-option__label {
-        margin-bottom: 7px;
-      }
-      .brz-ed-option__input-container,
-      .brz-ed-control__input {
-        width: 100%;
-        max-width: 100%;
-      }
+    .brz-ed-option__label {
+      margin-bottom: 7px;
     }
 
     // Tooltip MultiPicker

@@ -5,6 +5,7 @@ export { default as Sticky } from "./Sticky/export.js";
 export { default as ThemeIcon } from "./ThemeIcon/export.js";
 export { default as Link } from "./Link/export.js";
 export { default as MenuDropDown } from "./MenuDropDown/export.js";
+export { default as Facebook } from "./Facebook/export.js";
 
 // Controls
 export { default as Select } from "./Controls/Select/export.js";

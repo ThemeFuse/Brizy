@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export function toolbarHoverTransition({ v, position = 50 }) {
+export function toolbarHoverTransition({ v, position = 150 }) {
   return {
     id: "hoverTransition",
     label: t("Hover Transition"),

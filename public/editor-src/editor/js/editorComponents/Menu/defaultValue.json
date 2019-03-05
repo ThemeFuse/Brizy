@@ -19,6 +19,8 @@
   "lineHeight": 1.8,
   "letterSpacing": 3,
 
+  "customCSS": "",
+
   "tabletFontStyle": "button",
   "tabletFontSize": 11,
   "tabletFontWeight": 700,

@@ -1,16 +1,14 @@
 import Text from "./Text";
 import Video from "./Video";
-import Button from "./Button"; // nc-button
-import Icon from "./Icon"; // nc-star
-// import Social from "./Social";       // nc-link
-import Image from "./Image"; // nc-img
-import Spacer from "./Spacer"; // nc-zoom-e
-import Line from "./Line"; // nc-divider
-import Map from "./Map"; // nc-pin
-import Embed from "./Embed"; // nc-iframe
-import Form from "./Form"; // nc-form
-// import Share from "./Share";         // nc-share-2
-import IconText from "./IconText"; // nc-paragraph
+import Button from "./Button";
+import Icon from "./Icon";
+import Image from "./Image";
+import Spacer from "./Spacer";
+import Line from "./Line";
+import Map from "./Map";
+import Embed from "./Embed";
+import Form from "./Form";
+import IconText from "./IconText";
 import Row from "./Row";
 import Columns from "./Columns";
 import Tabs from "./Tabs";
@@ -40,5 +38,6 @@ export default {
     ProgressBar,
     Accordion
   ],
-  grid: [Row, Columns]
+  grid: [Row, Columns],
+  social: []
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import SectionHeaderStickyItemItems from "./Items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -191,21 +192,23 @@ class SectionHeaderStickyItem extends EditorComponent {
     ]);
 
     return (
-      <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {this.renderToolbar(v)}
-          {this.renderItems(v)}
-        </ContainerBorder>
-      </Roles>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+          <ContainerBorder
+            ref={el => {
+              this.containerBorder = el;
+            }}
+            borderStyle="none"
+            activeBorderStyle="none"
+            reactToClick={false}
+            showBorders={false}
+            path={this.getPath()}
+          >
+            {this.renderToolbar(v)}
+            {this.renderItems(v)}
+          </ContainerBorder>
+        </Roles>
+      </CustomCSS>
     );
   }
 
@@ -229,7 +232,11 @@ class SectionHeaderStickyItem extends EditorComponent {
       _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
     ]);
 
-    return this.renderItems(v);
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div>{this.renderItems(v)}</div>
+      </CustomCSS>
+    );
   }
 }
 

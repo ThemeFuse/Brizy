@@ -61,23 +61,25 @@
   align-items: flex-start;
 
   .brz-ed-control__tab {
-    width: 38px;
-    height: 41px;
+    width: 30px;
+    height: 35px;
     background-color: rgba(139, 147, 154, 0.92);
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
     display: flex;
     align-items: center;
-    padding-left: 16px;
+    padding-left: 11px;
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     margin-bottom: 1px;
+    position: relative;
+    left: 8px;
 
     &.active {
       color: $brand-primary;
-      background-color: rgba(3, 8, 15, .92);
+      background-color: rgba(3, 8, 15, 0.92);
     }
   }
 }

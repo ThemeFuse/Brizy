@@ -2,6 +2,8 @@ import _ from "underscore";
 import React from "react";
 import classnames from "classnames";
 
+export { default as RadioItem } from "./RadioItem";
+
 export default class Radio extends React.Component {
   static defaultProps = {
     name: "defaultName",
@@ -41,6 +43,7 @@ export default class Radio extends React.Component {
       return React.cloneElement(child, {
         key: index,
         active: this.state.currentValue === child.props.value,
+        name: this.props.name,
         onClick: child.props.disabled
           ? null
           : this.onItemClick.bind(null, child.props.value)
@@ -48,22 +51,30 @@ export default class Radio extends React.Component {
     });
   }
 
-  render() {
+  renderForEdit() {
     const { className: _className, name, currentValue } = this.props;
-    const className = classnames("brz-ed-control-radio", _className);
+    const className = classnames("brz-control__radio", _className);
 
     return (
       <div className={className}>
         {this.renderOptions()}
-        <div>
-          <input
-            className="brz-input"
-            name={name}
-            type="hidden"
-            value={currentValue}
-          />
-        </div>
+        <input
+          className="brz-input"
+          name={name}
+          type="hidden"
+          value={currentValue}
+        />
       </div>
     );
+  }
+
+  renderForView() {
+    const className = classnames("brz-control__radio", this.props.className);
+
+    return <div className={className}>{this.renderOptions()}</div>;
+  }
+
+  render() {
+    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
   }
 }

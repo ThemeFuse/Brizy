@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import defaultValue from "./defaultValue.json";
@@ -41,18 +42,20 @@ class WOOProducts extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <WPShortcode
-          name="products"
-          attributes={attributes}
-          placeholderIcon="woo-2"
-          placeholderContainerWidth={this.props.meta.desktopW}
-          className={styleClassName(v)}
-          style={styleCSSVars(v)}
-          resizerPoints={resizerPoints}
-          resizerMeta={this.props.meta}
-          resizerValue={v}
-          resizerOnChange={this.handleResizerChange}
-        />
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <WPShortcode
+            name="products"
+            attributes={attributes}
+            placeholderIcon="woo-2"
+            placeholderContainerWidth={this.props.meta.desktopW}
+            className={styleClassName(v)}
+            style={styleCSSVars(v)}
+            resizerPoints={resizerPoints}
+            resizerMeta={this.props.meta}
+            resizerValue={v}
+            resizerOnChange={this.handleResizerChange}
+          />
+        </CustomCSS>
       </Toolbar>
     );
   }

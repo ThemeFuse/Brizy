@@ -37,6 +37,10 @@ import Carousel from "./Carousel";
 import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
 // import SectionMegaMenu from "./Menu/SectionMegaMenu";
+import FacebookButton from "./FacebookButton";
+import FacebookComments from "./FacebookComments";
+import FacebookEmbed from "./FacebookEmbed";
+import FacebookPage from "./FacebookPage";
 
 export default {
   Page,
@@ -76,8 +80,12 @@ export default {
   SectionPopup,
   Carousel,
   Menu,
-  MenuItem
+  MenuItem,
   // SectionMegaMenu
+  FacebookButton,
+  FacebookComments,
+  FacebookEmbed,
+  FacebookPage
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

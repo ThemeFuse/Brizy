@@ -10,5 +10,7 @@
   "category": "",
   "orderBy": "name",
   "order": "ASC",
-  "ids": ""
+  "ids": "",
+
+  "customCSS": ""
 }

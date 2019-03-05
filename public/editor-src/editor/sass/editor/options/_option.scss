@@ -92,13 +92,13 @@
   &__block {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: normal;
     text-align: left;
 
     .brz-ed-option__label {
       flex-basis: auto;
-      margin-bottom: 6px;
       margin-right: 0;
+      justify-content: space-between;
     }
     &.brz-ed-option__slider {
       padding-top: 15px !important;

@@ -15,6 +15,7 @@ const del = require("del");
 const gulp = require("gulp");
 const gulpPlugins = require("gulp-load-plugins")();
 const runSequence = require("run-sequence");
+const cleanCSS = require("gulp-clean-css");
 
 // webpack
 const webpack = require("webpack");
@@ -27,7 +28,6 @@ const webpackConfigPro = require("./webpack.config.pro");
 const sass = require("@csstools/postcss-sass");
 const postcssSCSS = require("postcss-scss");
 const autoprefixer = require("autoprefixer");
-const clean = require("postcss-clean");
 
 const { argvVars } = require("./build-utils");
 
@@ -52,13 +52,6 @@ const postsCssProcessors = [
   }),
   autoprefixer({
     browsers: ["last 2 versions"]
-  }),
-  clean({
-    format: {
-      breaks: {
-        afterRuleEnds: true
-      }
-    }
   })
 ];
 
@@ -224,11 +217,20 @@ gulp.task("editor.css", () => {
     .pipe(
       gulpPlugins
         .postcss(postsCssProcessors, {
-          syntax: postcssSCSS,
+          syntax: postcssSCSS
         })
         .on("error", err => {
           console.log("Sass Syntax Error", err);
         })
+    )
+    .pipe(
+      cleanCSS({
+        format: {
+          breaks: {
+            afterRuleEnds: true
+          }
+        }
+      })
     )
     .pipe(gulpPlugins.concat("editor.css"))
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))

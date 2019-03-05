@@ -1,0 +1,14 @@
+{
+  "pageTabs": "timeline",
+  "height": "450",
+
+  "smallHeader": "off",
+  "hideCover": "off",
+  "showFacepile": "off",
+
+  "href": "https://facebook.com/brizy.io",
+
+  "className": "",
+
+  "customCSS": ""
+}

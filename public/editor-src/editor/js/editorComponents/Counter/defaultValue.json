@@ -26,6 +26,8 @@
   "tempHoverColorOpacity": 1,
   "tempHoverColorPalette": "color3",
 
+  "customCSS": "",
+
   "tabletFontStyle": "",
   "tabletFontSize": 56,
   "tabletFontWeight": 400,

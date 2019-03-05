@@ -1,9 +1,6 @@
 import React from "react";
 import _ from "underscore";
-import {
-  mergeOptions,
-  optionTraverse
-} from "visual/component/Options/utils";
+import { mergeOptions, optionTraverse } from "visual/component/Options/utils";
 import { uuid } from "visual/utils/uuid";
 import { getStore } from "visual/redux/store";
 import { currentStyleSelector } from "visual/redux/selectors";
@@ -208,7 +205,13 @@ export class EditorComponent extends React.Component {
 
   makeToolbarPropsFromConfig(
     config,
-    { allowExtend = true, extendFilter = null } = {} /* options */
+    {
+      allowExtend = true,
+      allowExtendParent = null,
+      allowExtendChild = null,
+      extendFilter = null,
+      filterExtendName = null
+    } = {} /* options */
   ) {
     const {
       onToolbarOpen,
@@ -239,7 +242,10 @@ export class EditorComponent extends React.Component {
       let items = this.bindToolbarItems(getItemsFn ? getItemsFn(v, this) : []);
 
       // allow extend from parent
-      if (this.props.toolbarExtend && allowExtend) {
+      if (
+        (allowExtendParent !== null ? allowExtendParent : allowExtend) &&
+        this.props.toolbarExtend
+      ) {
         const { getItems } = this.props.toolbarExtend;
         let extendItems = getItems(deviceMode);
 
@@ -251,7 +257,10 @@ export class EditorComponent extends React.Component {
       }
 
       // allow extend from child
-      if (this.childToolbarExtend && allowExtend) {
+      if (
+        (allowExtendChild !== null ? allowExtendChild : allowExtend) &&
+        this.childToolbarExtend
+      ) {
         const { getItems } = this.childToolbarExtend;
         const extendItems = getItems(deviceMode);
 
@@ -260,7 +269,8 @@ export class EditorComponent extends React.Component {
 
       // allow extend from filter
       const filterToolbarExtend = applyFilter(
-        `toolbarItemsExtend_${this.constructor.componentId}`,
+        `toolbarItemsExtend_${filterExtendName ||
+          this.constructor.componentId}`,
         null
       );
       if (filterToolbarExtend && filterToolbarExtend[getItemsFnName]) {
@@ -292,8 +302,8 @@ export class EditorComponent extends React.Component {
         let patch = oldOnchange
           ? oldOnchange(value, meta)
           : value !== undefined
-            ? { [id]: value }
-            : null;
+          ? { [id]: value }
+          : null;
 
         if (patch) {
           this.patchValue(patch);

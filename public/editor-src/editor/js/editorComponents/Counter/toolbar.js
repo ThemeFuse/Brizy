@@ -13,7 +13,8 @@ import {
   toolbarElementCounterDuration,
   toolbarColorHexAndOpacity,
   toolbarColorPalette,
-  toolbarColorFields
+  toolbarColorFields,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
@@ -274,7 +275,35 @@ export function getItemsForDesktop(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: []
+      options: [
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  tabIcon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ];
 }

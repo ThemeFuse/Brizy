@@ -91,6 +91,8 @@
   "containerClassName": "",
   "containerSize": 100,
 
+  "customCSS": "",
+
   "tabletBgImageWidth": null,
   "tabletBgImageHeight": null,
   "tabletBgImageSrc": null,

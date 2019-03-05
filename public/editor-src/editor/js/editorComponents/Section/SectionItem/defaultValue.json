@@ -193,6 +193,8 @@
   "shapeTopHorizontal": "off",
   "shapeBottomHorizontal": "off",
 
+  "customCSS": "",
+
   "tabletMedia": null,
 
   "tabletBgImageWidth": null,
@@ -205,6 +207,10 @@
   "tabletBgAttachment": "none",
 
   "tabletBgMapZoom": null,
+
+  "tabletBorderStyle": null,
+
+  "tempTabletBorderStyle": null,
 
   "tabletBorderWidthType": null,
   "tabletBorderWidth": null,
@@ -256,6 +262,13 @@
 
   "tempTabletGradientColorOpacity": null,
   "tempTabletGradientColorPalette": null,
+
+  "tabletBorderColorHex": null,
+  "tabletBorderColorOpacity": null,
+  "tabletBorderColorPalette": null,
+
+  "tempTabletBorderColorOpacity": null,
+  "tempTabletBorderColorPalette": null,
 
   "tabletPaddingType": "grouped",
   "tabletPadding": 50,
@@ -310,6 +323,10 @@
   "tempMobileGradientColorOpacity": null,
   "tempMobileGradientColorPalette": null,
 
+  "mobileBorderStyle": null,
+
+  "tempMobileBorderStyle": null,
+
   "mobileBorderWidthType": null,
   "mobileBorderWidth": null,
   "mobileBorderTopWidth": null,
@@ -335,6 +352,13 @@
   "tempMobileBorderTopRightRadius": null,
   "tempMobileBorderBottomLeftRadius": null,
   "tempMobileBorderBottomRightRadius": null,
+
+  "mobileBorderColorHex": null,
+  "mobileBorderColorOpacity": null,
+  "mobileBorderColorPalette": null,
+
+  "tempMobileBorderColorOpacity": null,
+  "tempMobileBorderColorPalette": null,
 
   "mobilePaddingType": "grouped",
   "mobilePadding": 25,

@@ -1,6 +1,7 @@
 import React from "react";
 import TextEditor from "visual/editorComponents/Text/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
@@ -118,9 +119,11 @@ class Button extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        {type === "link"
-          ? this.renderLink(v, content)
-          : this.renderSubmit(v, content)}
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          {type === "link"
+            ? this.renderLink(v, content)
+            : this.renderSubmit(v, content)}
+        </CustomCSS>
       </Toolbar>
     );
   }

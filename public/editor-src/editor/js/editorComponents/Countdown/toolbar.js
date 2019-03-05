@@ -17,7 +17,8 @@ import {
   toolbarColorHexAndOpacity,
   toolbarColorPalette,
   toolbarColorFields,
-  toolbarSizeWidthWidthPercent
+  toolbarSizeWidthWidthPercent,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
@@ -225,7 +226,36 @@ export function getItemsForDesktop(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [toolbarSizeWidthWidthPercent({ v, device })]
+      options: [
+        toolbarSizeWidthWidthPercent({ v, device }),
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  tabIcon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ];
 }

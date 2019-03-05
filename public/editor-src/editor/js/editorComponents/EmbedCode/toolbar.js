@@ -1,7 +1,8 @@
 import { t } from "visual/utils/i18n";
 import {
   toolbarElementEmbedCode,
-  toolbarSizeWidthWidthPercent
+  toolbarSizeWidthWidthPercent,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -24,7 +25,36 @@ export function getItemsForDesktop(v) {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [toolbarSizeWidthWidthPercent({ v, device, state: "normal" })]
+      options: [
+        toolbarSizeWidthWidthPercent({ v, device, state: "normal" }),
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  tabIcon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: [toolbarCustomCSS({ v })]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ];
 }

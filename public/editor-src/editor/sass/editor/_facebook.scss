@@ -1,0 +1,14 @@
+// Facebook Button
+.fb-like,
+.fb-comments,
+.fb-post,
+.fb-page,
+.fb-video {
+  pointer-events: none;
+}
+
+.brz-fb-comments,
+.brz-fb-embed,
+.brz-fb-page {
+  width: 100%;
+}

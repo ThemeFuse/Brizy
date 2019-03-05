@@ -34,6 +34,7 @@ import {
   onChangeTypography,
   onChangeTypographyMobile
 } from "visual/utils/onChange";
+import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 global.Brizy = {
   config: Config,
@@ -70,5 +71,8 @@ global.Brizy = {
     mobileSyncOnChange,
     onChangeTypography,
     onChangeTypographyMobile
+  },
+  toolbar: {
+    toolbarCustomCSS
   }
 };

@@ -41,6 +41,8 @@
   "tempBoxShadowColorPalette": "",
   "tempBoxShadowColorOpacity": 1,
 
+  "customCSS": "",
+
   "tabletResize": null,
   "tabletZoom": null,
   "tabletWidth": null,
