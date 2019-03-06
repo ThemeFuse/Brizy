@@ -43,6 +43,7 @@ import {
   toolbarCustomCSSClass,
   toolbarEntranceAnimation,
   toolbarBgType,
+  toolbarElementContainerTypeImageMap,
   toolbarCustomCSS
 } from "visual/utils/toolbar";
 

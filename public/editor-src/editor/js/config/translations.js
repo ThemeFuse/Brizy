@@ -431,27 +431,6 @@ export default {
   "Facebook Embed": __("Facebook Embed", "brizy"),
   "Facebook Page": __("Facebook Page", "brizy"),
 
-
-
-  /*
-  "Button": __("Button", "brizy"),
-  "Embed Type": __("Embed Type", "brizy"),
-  "Page": __("Page", "brizy"),
-  "Layout": __("Layout", "brizy"),
-
-  "Size button": __("Size Button", "brizy"),
-  "Button size": __("Button Size", "brizy"),
-  "Small": __("Small", "brizy"),
-  "Large": __("Large", "brizy"),
-  "Action type": __("Action Type", "brizy"),  
-  
-  "Adapt to Container Width": __("Adapt to Container Width", "brizy"),
-  
-  "General": __("General", "brizy"),
-
-*/
-
-
   // WordPress
   "Query": __("Query", "brizy"),
   "Product ID": __("Product ID", "brizy"),
@@ -532,4 +511,5 @@ export default {
   "in your WordPress admin": __("in your WordPress admin", "brizy"),
   "Drawer Position": __("Drawer Position", "brizy"),
   "anchor-name": __("anchor-name", "brizy"),
+  "APPS": __("APPS", "brizy"),
 };

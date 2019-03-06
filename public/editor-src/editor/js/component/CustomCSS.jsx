@@ -53,21 +53,29 @@ export default class CustomCSS extends React.Component {
     this.updateCSS();
   }
 
+  renderForEdit() {
+    const { selectorName, css, children, ...otherProps } = this.props;
+
+    // React.cloneElement is done because <CustomCSS> is often rendered
+    // inside of <SortableElement> which sends it's props that it expects
+    // to be put on the DOM
+    return React.cloneElement(React.Children.only(children), otherProps);
+  }
+
+  renderForView() {
+    const { selectorName, css, children } = this.props;
+
+    return (
+      <div
+        data-custom-id={selectorName}
+        data-custom-css={toCSS({ [selectorName]: css })}
+      >
+        {React.Children.only(children)}
+      </div>
+    );
+  }
+
   render() {
-    const { children } = this.props;
-    if (IS_PREVIEW) {
-      const { selectorName, css } = this.props;
-
-      return (
-        <div
-          data-custom-id={selectorName}
-          data-custom-css={toCSS({ [selectorName]: css })}
-        >
-          {children}
-        </div>
-      );
-    }
-
-    return children;
+    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
   }
 }

@@ -32,13 +32,13 @@ export function getItemsForDesktop(v) {
           onChange: ({ value: numPosts }, { sliderDragEnd }) => {
             return sliderDragEnd && { numPosts };
           }
-        },
-        {
+        }
+        /*{
           id: "darkScheme",
           type: "switch",
           label: t("Dark Scheme"),
           value: v.darkScheme
-        }
+        }*/
       ]
     },
     {

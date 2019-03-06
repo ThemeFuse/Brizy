@@ -329,8 +329,14 @@ class Row extends EditorComponent {
         `${_v.hoverBorderColorPalette}__hoverBorder`,
 
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const isInnerRow = this.isInnerRow();

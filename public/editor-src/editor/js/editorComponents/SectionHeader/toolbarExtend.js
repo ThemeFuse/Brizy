@@ -86,6 +86,7 @@ export function getItemsForDesktop(v, component) {
                       label: t("Anchor Name"),
                       type: "input",
                       inputSize: "auto",
+                      display: "block",
                       position: 10,
                       value: {
                         value: v.anchorName

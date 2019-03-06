@@ -183,8 +183,14 @@ class SectionFooter extends EditorComponent {
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const styles = {
@@ -238,8 +244,14 @@ class SectionFooter extends EditorComponent {
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     return (

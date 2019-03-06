@@ -62,8 +62,9 @@ class DrawerComponent extends React.Component {
   render() {
     const shortcodes = Editor.getShortcodes();
 
-    return Object.entries(shortcodes).map(
-      ([category, categoryShortcodes], index, arr) => {
+    return Object.entries(shortcodes)
+      .filter(([category, categoryShortcodes]) => categoryShortcodes.length > 0)
+      .map(([category, categoryShortcodes], index, arr) => {
         // we use _.sortBy instead of native sort
         // because native can be unstable and change
         // the order of elements with equal positions
@@ -92,8 +93,7 @@ class DrawerComponent extends React.Component {
             )}
           </React.Fragment>
         );
-      }
-    );
+      });
   }
 }
 

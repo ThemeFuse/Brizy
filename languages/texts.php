@@ -514,6 +514,7 @@ class Brizy_Languages_Texts
 			"in your WordPress admin" => __("in your WordPress admin", "brizy"),
 			"Drawer Position" => __("Drawer Position", "brizy"),
 			"anchor-name" => __("anchor-name", "brizy"),
+			"APPS" => __("APPS", "brizy"),
 		);
 
 		return apply_filters('brizy_editor_config_texts', $texts);

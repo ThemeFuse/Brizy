@@ -90,13 +90,13 @@ export function getItemsForDesktop(v) {
                   type: "switch",
                   label: t("Show Friends' Faces"),
                   value: v.showFriends
-                },
-                {
+                }
+                /*{
                   id: "darkScheme",
                   type: "switch",
                   label: t("Dark Scheme"),
                   value: v.darkScheme
-                }
+                }*/
               ]
             }
           ]
