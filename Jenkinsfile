@@ -6,7 +6,7 @@ def zipFileName = "BuildFree-"+params.buildVersion+"-RC"+buildTag+".zip"
 env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
 
 if(params.gitMerge) {
-    zipFileName = "Build-"+params.buildVersion+".zip"
+    zipFileName = "BuildFree-"+params.buildVersion+".zip"
 }
 
 
