@@ -51,10 +51,8 @@
 .brizy-buttons-gutenberg {
     height: 300px;
     border: 1px solid #dedede;
-    background:#f9f9f9;
+    background: #f9f9f9;
     margin-top: 10px;
-    margin-left: 20%;
-    margin-right: 20%;
     line-height: 300px;
     text-align: center;
 }
@@ -79,11 +77,11 @@
     color: #fff !important;
     font-style: italic;
     line-height: 1;
-    height: auto;
     display: inline-flex;
     align-items: center;
     text-decoration: none;
     transition: all 200ms linear;
+    height: 33px;
 }
 
 .brizy-button img {
@@ -102,6 +100,7 @@
 }
 
 .brizy-button--primary {
+    height: 33px;
     color: #fff !important;
     border-color: #d62c64 !important;
     background-color: #d62c64 !important;
@@ -257,6 +256,6 @@
     height: 1em;
     position: relative;
     color: #efefef;
-    fill:  #efefef;
+    fill: #efefef;
     stroke: none;
 }

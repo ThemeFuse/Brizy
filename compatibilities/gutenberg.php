@@ -92,8 +92,8 @@ class Brizy_Compatibilities_Gutenberg {
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                     <div class="brizy-buttons" style="margin-top:15px;">
                         <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button"
-                           href="<?php echo $edit_url ?>" style="padding:5px 27px 5px;">' .
-                        <img src="<?php echo plugins_url( '../admin/static/img/arrow.png', __FILE__ ) ?>"
+                           href="<?php echo $edit_url ?>" style="padding:5px 27px 5px;">
+                            <img src="<?php echo plugins_url( '../admin/static/img/arrow.png', __FILE__ ) ?>"
                              class="brizy-button--arrow"/> <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
                         </a>
                     </div>
