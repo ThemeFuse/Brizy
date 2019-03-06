@@ -2,7 +2,7 @@ import React from "react";
 import _ from "underscore";
 import UIState from "visual/global/UIState";
 import Icon from "./PromptIcon";
-// import Share from "./PromptShare";
+import Apps from "./PromptApps";
 // import Popup from "./PromptPopup";
 import Blocks from "./PromptBlocks";
 import Form from "./PromptForm";
@@ -54,8 +54,8 @@ class Prompts extends React.Component {
         case "form-integrations":
           content = <Form {...props} onClose={this.close} />;
           break;
-        case "share":
-          content = <Share {...props} onClose={this.close} />;
+        case "apps-integrations":
+          content = <Apps {...props} onClose={this.close} />;
           break;
         case "popup":
           content = <Popup {...props} onClose={this.close} />;

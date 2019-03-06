@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
 import { percentageToPixels } from "visual/utils/meta";
 import { styleClassName, styleCSSVars } from "./styles";
@@ -16,7 +17,8 @@ class Carousel extends EditorComponent {
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false
+      allowExtend: false,
+      filterExtendName: `${this.constructor.componentId}_parent`
     });
 
     this.props.extendParentToolbar(toolbarExtend);
@@ -73,17 +75,17 @@ class Carousel extends EditorComponent {
             meta.desktopW
           );
 
-      const tabletPaddingW =
-        tabletSliderPaddingType === "grouped"
-          ? percentageToPixels(
-          tabletSliderPadding * 2,
-          tabletSliderPaddingSuffix,
-          meta.tabletW
+    const tabletPaddingW =
+      tabletSliderPaddingType === "grouped"
+        ? percentageToPixels(
+            tabletSliderPadding * 2,
+            tabletSliderPaddingSuffix,
+            meta.tabletW
           )
-          : percentageToPixels(
-          tabletSliderPaddingLeft,
-          tabletSliderPaddingLeftSuffix,
-          meta.tabletW
+        : percentageToPixels(
+            tabletSliderPaddingLeft,
+            tabletSliderPaddingLeftSuffix,
+            meta.tabletW
           ) +
           percentageToPixels(
             tabletSliderPaddingRight,
@@ -109,7 +111,7 @@ class Carousel extends EditorComponent {
             meta.mobileW
           );
     const desktopW = meta.desktopW - (spacing + paddingW);
-    const tabletW  = meta.tabletW - (spacing + tabletPaddingW);
+    const tabletW = meta.tabletW - (spacing + tabletPaddingW);
 
     return {
       ...meta,
@@ -167,7 +169,11 @@ class Carousel extends EditorComponent {
       tabletSlidesToShow
     });
 
-    return <Items {...itemsProps} />;
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Items {...itemsProps} />
+      </CustomCSS>
+    );
   }
 }
 export default Carousel;

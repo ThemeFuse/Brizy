@@ -10,7 +10,8 @@ import {
   toolbarBoxShadowBlur,
   toolbarBoxShadowSpread,
   toolbarBoxShadowVertical,
-  toolbarBoxShadowHorizontal
+  toolbarBoxShadowHorizontal,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -215,6 +216,12 @@ export function getItemsForDesktop(v) {
                       }
                     }
                   ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
                 }
               ]
             }

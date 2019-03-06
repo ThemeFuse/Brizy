@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.61<br>
+Stable tag: 1.0.62<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.62 - 2019-03-06 ###
+* New: Border Styles on mobile and tablet for all containers (Sections, Row, Column)
+* New: Added wp language placeholder
+* New: Added facebook placeholders
+* Fixed: Vertical align option on mobile
+* Fixed: SectionFooter toolbar icon that shows that it’s a global block missing
+* Fixed: Increased the image quality to 100%
+* Fixed: The edit with Brizy buttons
+* Fixed: Removed template select for posts
+* Fixed: Added compatibility with phastpress
+* Fixed: Removed redirect_to_mapped_domain function handled on the hook template_redirect
 
 ### 1.0.61 - 2019-02-21 ###
 * New: Added column revert option for tablet and mobile device modes

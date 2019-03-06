@@ -139,38 +139,37 @@ class Wrapper extends EditorComponent {
         : percentageToPixels(paddingLeft, paddingLeftSuffix, meta.desktopW) +
           percentageToPixels(paddingRight, paddingRightSuffix, meta.desktopW);
 
-
     // Tablet
     const tabletPaddingW =
       tabletPaddingType === "grouped"
         ? percentageToPixels(
-          tabletPadding * 2,
-          tabletPaddingSuffix,
-          meta.tabletW
-        )
+            tabletPadding * 2,
+            tabletPaddingSuffix,
+            meta.tabletW
+          )
         : percentageToPixels(
-          tabletPaddingLeft,
-          tabletPaddingLeftSuffix,
-          meta.tabletW
-        ) +
-        percentageToPixels(
-          tabletPaddingRight,
-          tabletPaddingRightSuffix,
-          meta.tabletW
-        );
+            tabletPaddingLeft,
+            tabletPaddingLeftSuffix,
+            meta.tabletW
+          ) +
+          percentageToPixels(
+            tabletPaddingRight,
+            tabletPaddingRightSuffix,
+            meta.tabletW
+          );
     const tabletMarginW =
       tabletMarginType === "grouped"
         ? percentageToPixels(tabletMargin * 2, tabletMarginSuffix, meta.tabletW)
         : percentageToPixels(
-          tabletMarginLeft,
-          tabletMarginLeftSuffix,
-          meta.tabletW
-        ) +
-        percentageToPixels(
-          tabletMarginRight,
-          tabletMarginRightSuffix,
-          meta.tabletW
-        );
+            tabletMarginLeft,
+            tabletMarginLeftSuffix,
+            meta.tabletW
+          ) +
+          percentageToPixels(
+            tabletMarginRight,
+            tabletMarginRightSuffix,
+            meta.tabletW
+          );
 
     // Mobile
     const mobilePaddingW =
@@ -208,8 +207,10 @@ class Wrapper extends EditorComponent {
     const externalTabletSpacing = tabletMarginW + tabletPaddingW;
     const externalMobileSpacing = mobileMarginW + mobilePaddingW;
 
-    const mobileW = Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
-    const tabletW = Math.round((meta.tabletW - externalTabletSpacing) * 10) / 10;
+    const mobileW =
+      Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
+    const tabletW =
+      Math.round((meta.tabletW - externalTabletSpacing) * 10) / 10;
     const desktopW = Math.round((meta.desktopW - externalSpacing) * 10) / 10;
 
     return {
@@ -268,6 +269,7 @@ class Wrapper extends EditorComponent {
         meta: this.getMeta(v),
         toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
           allowExtend: true,
+          allowExtendChild: false,
           extendFilter: toolbarExtendFilter
         }),
         onToolbarEnter: this.handleToolbarEnter,

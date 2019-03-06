@@ -128,6 +128,8 @@ class ApiConnect extends Component {
   };
 
   handlePrev = async () => {
+    const { oldStage, onChangeProgress } = this.context;
+
     this.setState({
       error: null,
       prevLoading: true
@@ -136,11 +138,12 @@ class ApiConnect extends Component {
     // Emitted fake request
     await fakeLoading();
 
-    if (this.context.oldStage === "account") {
+    onChangeProgress({
+      showProgress: true
+    });
+
+    if (oldStage === "account") {
       this.props.onChangeNext("account");
-      this.context.onChangeProgress({
-        showProgress: true
-      });
     } else {
       this.props.onChangePrev();
     }

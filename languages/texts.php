@@ -8,22 +8,22 @@ class Brizy_Languages_Texts
 			// First Block Adder
 			"START BUILDING YOUR PAGE" => __("START BUILDING YOUR PAGE", "brizy"),
 			"Press the button above to add blocks" => __(
-			  "Press the button above to add blocks",
-			  "brizy"
+				"Press the button above to add blocks",
+				"brizy"
 			),
 			"SWITCH TO DESKTOP" => __("SWITCH TO DESKTOP", "brizy"),
 			"Switch to desktop to add blocks" => __(
-			  "Switch to desktop to add blocks",
-			  "brizy"
+				"Switch to desktop to add blocks",
+				"brizy"
 			),
-		  
+		
 			// Last Block Adder
 			"Add a new block" => __("Add a new block", "brizy"),
 			"Press the button to add blocks" => __(
-			  "Press the button to add blocks",
-			  "brizy"
+				"Press the button to add blocks",
+				"brizy"
 			),
-		  
+		
 			// Left SideBar
 			//-> Add Elements
 			"Add Elements" => __("Add Elements", "brizy"),
@@ -86,12 +86,12 @@ class Brizy_Languages_Texts
 			"Featured Image" => __("Featured Image", "brizy"),
 			"Submit an Issue" => __("Submit an Issue", "brizy"),
 			"Upgrade to Pro" => __("Upgrade to Pro", "brizy"),
-		  
+		
 			// Fixed Bottom Panel
 			"Save HTML" => __("Save HTML", "brizy"),
 			"Update" => __("Update", "brizy"),
 			"Publish" => __("Publish", "brizy"),
-		  
+		
 			// Right SideBar
 			"More Settings" => __("More Settings", "brizy"),
 			"Advanced" => __("Advanced", "brizy"),
@@ -100,11 +100,13 @@ class Brizy_Languages_Texts
 			"Disable on Tablet" => __("Disable on Tablet", "brizy"),
 			"Enable on Mobile" => __("Enable on Mobile", "brizy"),
 			"Enable on Tablet" => __("Enable on Tablet", "brizy"),
+			"Write your CSS here..." => __("Write your CSS here...", "brizy"),
 			"Z-index" => __("Z-index", "brizy"),
 			"Anchor Name" => __("Anchor Name", "brizy"),
 			"CSS Class" => __("CSS Class", "brizy"),
-		  
-		  
+			"Custom CSS" => __("Custom CSS", "brizy"),
+		
+		
 			// Section
 			"Slider" => __("Slider", "brizy"),
 			//-> Make a Slider
@@ -133,15 +135,15 @@ class Brizy_Languages_Texts
 			"Custom" => __("Custom", "brizy"),
 			"Full" => __("Full", "brizy"),
 			"Hover Transition" => __("Hover Transition", "brizy"),
-		  
+		
 			"Carousel" => __("Carousel", "brizy"),
 			"Swipe" => __("Swipe", "brizy"),
-		  
+		
 			// Not Found
 			"Missing Element" => __("Missing Element", "brizy"),
 			"Could not find" => __("Could not find", "brizy"),
 			"component" => __("component", "brizy"),
-		  
+		
 			// Popover
 			"Add New Column" => __("Add New Column", "brizy"),
 			//-> Bg
@@ -284,24 +286,24 @@ class Brizy_Languages_Texts
 			"Anchor" => __("Anchor", "brizy"),
 			"Link to" => __("Link to", "brizy"),
 			"Open In New Tab" => __("Open In New Tab", "brizy"),
-		  
+		
 			// Option Style Element: padding, margin, border etc
 			"Padding" => __("Padding", "brizy"),
 			"Margin" => __("Margin", "brizy"),
 			"Corner" => __("Corner", "brizy"),
 			"Fill" => __("Fill", "brizy"),
 			"Spacing" => __("Spacing", "brizy"),
-		  
+		
 			// Shadow
 			"Shadow" => __("Shadow","brizy"),
-		  
+		
 			// State
 			"Normal" => __("Normal", "brizy"),
 			"Hover" => __("Hover", "brizy"),
-		  
+		
 			// Reverse Columns
 			"Reverse Columns" => __("Reverse Columns", "brizy"),
-		  
+		
 			// Other Option in Shortcode
 			//-> CountDown
 			"Date" => __("Date", "brizy"),
@@ -361,7 +363,7 @@ class Brizy_Languages_Texts
 			"Number" => __("Number", "brizy"),
 			"Paragraph" => __("Paragraph", "brizy"),
 			"Select" => __("Select", "brizy"),
-		  
+		
 			//-> Image
 			"Style" => __("Style", "brizy"),
 			"Opacity" => __("Opacity", "brizy"),
@@ -387,25 +389,51 @@ class Brizy_Languages_Texts
 			"Controls" => __("Controls", "brizy"),
 			"Cover" => __("Cover", "brizy"),
 			"Play" => __("Play", "brizy"),
-		  
+		
 			// Header
 			"Header" => __("Header", "brizy"),
-		  
+		
 			// Footer
 			"Footer" => __("Footer", "brizy"),
 			"MultiPage" => __("MultiPage", "brizy"),
-		  
+		
 			// SectionMenu
 			"Type" => __("Type", "brizy"),
 			"Static" => __("Static", "brizy"),
-		  
+		
 			// No matches found
 			"No matches found" => __("No matches found", "brizy"),
-		  
+		
 			// Popup
 			"Popup" => __("Popup", "brizy"),
 			"Close" => __("Close", "brizy"),
-		  
+		
+			// Facebook
+			"Comments" => __("Comments", "brizy"),
+			"Like" => __("Like", "brizy"),
+			"Recommend" => __("Recommend", "brizy"),
+			"Include Share Button" => __("Include Share Button", "brizy"),
+			"Show Friends' Faces" => __("Show Friends' Faces", "brizy"),
+			"Show Button Counter" => __("Show Button Counter", "brizy"),
+			"Dark Scheme" => __("Dark Scheme", "brizy"),
+			"Target URL" => __("Target URL", "brizy"),
+			"Current Page" => __("Current Page", "brizy"),
+			"Custom Page" => __("Custom Page", "brizy"),
+			"Include Full Post" => __("Include Full Post", "brizy"),
+			"Full Screen" => __("Full Screen", "brizy"),
+			"AutoPlay" => __("AutoPlay", "brizy"),
+			"Captions" => __("Captions", "brizy"),
+			"Timeline" => __("Timeline", "brizy"),
+			"Events" => __("Events", "brizy"),
+			"Messages" => __("Messages", "brizy"),
+			"Use Small Header" => __("Use Small Header", "brizy"),
+			"Hide Cover Photo" => __("Hide Cover Photo", "brizy"),
+			"Show Friend's Faces" => __("Show Friend's Faces", "brizy"),
+			"Facebook Button" => __("Facebook Button", "brizy"),
+			"Facebook Comments" => __("Facebook Comments", "brizy"),
+			"Facebook Embed" => __("Facebook Embed", "brizy"),
+			"Facebook Page" => __("Facebook Page", "brizy"),
+		
 			// WordPress
 			"Query" => __("Query", "brizy"),
 			"Product ID" => __("Product ID", "brizy"),
@@ -486,6 +514,7 @@ class Brizy_Languages_Texts
 			"in your WordPress admin" => __("in your WordPress admin", "brizy"),
 			"Drawer Position" => __("Drawer Position", "brizy"),
 			"anchor-name" => __("anchor-name", "brizy"),
+			"APPS" => __("APPS", "brizy"),
 		);
 
 		return apply_filters('brizy_editor_config_texts', $texts);

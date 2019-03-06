@@ -387,6 +387,37 @@ export function getItemsForDesktop(v, component) {
       onChange: () => {
         component.becomeSaved();
       }
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover",
+      icon: "nc-cog",
+      title: t("Settings"),
+      roles: ["admin"],
+      position: 110,
+      options: [
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ];
 }

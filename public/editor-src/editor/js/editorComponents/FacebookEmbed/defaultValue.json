@@ -1,0 +1,16 @@
+{
+  "type": "post",
+
+  "postAndVideoShowText": "on",
+
+  "videoAllowFullScreen": "off",
+  "videoAutoPlay": "off",
+  "videoCaptions": "off",
+
+  "postHref": "https://www.facebook.com/brizy.io/posts/1382471355229091",
+  "videoHref": "https://www.facebook.com/brizy.io/videos/1941346902610185",
+
+  "className": "",
+
+  "customCSS": ""
+}

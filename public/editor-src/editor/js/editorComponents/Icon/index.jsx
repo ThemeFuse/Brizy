@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
@@ -71,9 +72,11 @@ class Icon extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <div className="brz-icon__container" style={style}>
-          {content}
-        </div>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div className="brz-icon__container" style={style}>
+            {content}
+          </div>
+        </CustomCSS>
       </Toolbar>
     );
   }

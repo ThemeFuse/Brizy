@@ -5,5 +5,7 @@
   "tabletWidth": null,
   "mobileWidth": null,
 
-  "productID": ""
+  "productID": "",
+
+  "customCSS": ""
 }

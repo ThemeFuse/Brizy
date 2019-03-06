@@ -18,6 +18,7 @@ import "../registerEditorParts";
 import addFonts from "./transforms/head/addFonts";
 import addColorPaletteCSS from "./transforms/head/addColorPaletteCSS";
 import addFontStylesCSS from "./transforms/head/addFontStylesCSS";
+import addCustomCSS from "./transforms/head/addCustomCSS";
 import changeRichText from "./transforms/body/changeRichText";
 import changeRichTextDCColor from "./transforms/body/changeRichTextDCColor";
 
@@ -76,6 +77,7 @@ function getPageHeadBlock($pageHTML) {
   addColorPaletteCSS($pageHTML);
   addFontStylesCSS($pageHTML);
   addFonts($pageHTML);
+  addCustomCSS($pageHTML);
 
   return $pageHTML("head").html();
 }

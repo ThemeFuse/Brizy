@@ -102,6 +102,9 @@ export { toolbarZIndex } from "./toolbarZIndex";
 // Custom CSS Class
 export { toolbarCustomCSSClass } from "./toolbarCustomCSSClass";
 
+// Custom CSS
+export { toolbarCustomCSS } from "./toolbarCustomCSS";
+
 // Entrance Animation
 export { toolbarEntranceAnimation } from "./toolbarAnimation";
 

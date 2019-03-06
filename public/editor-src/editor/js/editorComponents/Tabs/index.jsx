@@ -1,9 +1,11 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Items from "./Items";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";
+import * as parentToolbarExtend from "./parentExtendToolbar";
 
 class Tabs extends EditorComponent {
   static get componentId() {
@@ -15,6 +17,14 @@ class Tabs extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  componentDidMount() {
+    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
+      allowExtend: false,
+      filterExtendName: `${this.constructor.componentId}_parent`
+    });
+    this.props.extendParentToolbar(toolbarExtend);
+  }
 
   handleNav = activeTab => {
     this.patchValue({ activeTab });
@@ -41,7 +51,11 @@ class Tabs extends EditorComponent {
       toolbarExtend: this.makeToolbarPropsFromConfig(toolbarConfig)
     });
 
-    return <Items {...itemProps} />;
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Items {...itemProps} />
+      </CustomCSS>
+    );
   }
 }
 

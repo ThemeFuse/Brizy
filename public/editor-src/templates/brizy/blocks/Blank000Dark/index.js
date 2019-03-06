@@ -22,7 +22,7 @@ export default {
               {
                 type: "Row",
                 value: {
-                  _styles: ["row"],
+                  _styles: ["row", "hide-row-borders", "padding-0"],
                   items: [
                     {
                       type: "Column",

@@ -17,6 +17,8 @@
   "paginationTempColorOpacity": 1,
   "paginationTempColorPalette": "color3",
 
+  "customCSS": "",
+
   "tabletGridColumn": 2,
   "tabletPadding": null,
   "tabletPaginationSpacing": null,

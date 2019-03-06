@@ -1,5 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
   return [
@@ -84,6 +85,33 @@ export function getItemsForDesktop(v) {
             value: v.width
           },
           onChange: ({ value: width }) => ({ width })
+        },
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  tabIcon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
+          ]
         }
       ]
     }

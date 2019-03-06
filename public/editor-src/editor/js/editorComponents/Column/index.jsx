@@ -2,6 +2,7 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import SortableElement from "visual/component/Sortable/SortableElement";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -347,18 +348,21 @@ class Column extends EditorComponent {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
       _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-
       _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
       _v.hoverGradientColorPalette &&
         `${_v.hoverGradientColorPalette}__hoverGradient`,
-
       _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.hoverBorderColorPalette &&
         `${_v.hoverBorderColorPalette}__hoverBorder`,
-
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const { bgImageSrc, bgColorOpacity } = v;
@@ -403,7 +407,12 @@ class Column extends EditorComponent {
 
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const { animationName, animationDuration, animationDelay, items } = v;
@@ -423,31 +432,36 @@ class Column extends EditorComponent {
 
     return (
       <SortableElement type="column" useHandle={true}>
-        <Animation
-          className={styleClassName(v, this.props)}
-          style={styles}
-          name={animationName !== "none" && animationName}
-          duration={animationDuration}
-          delay={animationDelay}
-        >
-          <Roles allow={["admin"]} fallbackRender={() => this.renderContent(v)}>
-            <ContainerBorder
-              ref={input => {
-                this.containerBorder = input;
-              }}
-              className={borderClassName}
-              borderColor={isInnerRow && inGrid ? "red" : "blue"}
-              borderStyle="solid"
-              reactToClick={false}
-              path={path}
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <Animation
+            className={styleClassName(v, this.props)}
+            style={styles}
+            name={animationName !== "none" && animationName}
+            duration={animationDuration}
+            delay={animationDelay}
+          >
+            <Roles
+              allow={["admin"]}
+              fallbackRender={() => this.renderContent(v)}
             >
-              {this.renderResizer("left")}
-              {this.renderResizer("right")}
-              {this.renderToolbar(v)}
-              {this.renderContent(v)}
-            </ContainerBorder>
-          </Roles>
-        </Animation>
+              <ContainerBorder
+                ref={input => {
+                  this.containerBorder = input;
+                }}
+                className={borderClassName}
+                borderColor={isInnerRow && inGrid ? "red" : "blue"}
+                borderStyle="solid"
+                reactToClick={false}
+                path={path}
+              >
+                {this.renderResizer("left")}
+                {this.renderResizer("right")}
+                {this.renderToolbar(v)}
+                {this.renderContent(v)}
+              </ContainerBorder>
+            </Roles>
+          </Animation>
+        </CustomCSS>
       </SortableElement>
     );
   }
@@ -456,14 +470,16 @@ class Column extends EditorComponent {
     const { animationName, animationDuration, animationDelay } = v;
 
     return (
-      <Animation
-        className={styleClassName(v, this.props)}
-        name={animationName !== "none" && animationName}
-        duration={animationDuration}
-        delay={animationDelay}
-      >
-        {this.renderContent(v)}
-      </Animation>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Animation
+          className={styleClassName(v, this.props)}
+          name={animationName !== "none" && animationName}
+          duration={animationDuration}
+          delay={animationDelay}
+        >
+          {this.renderContent(v)}
+        </Animation>
+      </CustomCSS>
     );
   }
 }

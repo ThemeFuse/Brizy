@@ -3,6 +3,7 @@ import _ from "underscore";
 import ReactDOM from "react-dom";
 import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import { styleClassName, styleCSSVars } from "./styles";
@@ -65,15 +66,17 @@ class Counter extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <div
-          className={styleClassName(v)}
-          style={styleCSSVars(v)}
-          data-start={start}
-          data-end={end}
-          data-duration={duration}
-        >
-          {start}
-        </div>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div
+            className={styleClassName(v)}
+            style={styleCSSVars(v)}
+            data-start={start}
+            data-end={end}
+            data-duration={duration}
+          >
+            {start}
+          </div>
+        </CustomCSS>
       </Toolbar>
     );
   }

@@ -2,6 +2,10 @@
   "sidebar": "",
 
   "width": 100,
+
+  "customCSS": "",
+
   "tabletWidth": null,
+
   "mobileWidth": null
 }

@@ -36,6 +36,8 @@
   "sliderPaddingLeft": 70,
   "sliderPaddingLeftSuffix": "px",
 
+  "customCSS": "",
+
   "tabletSlidesToShow": 2,
   "tabletSliderArrowsSpacing": null,
   "tabletSliderPaddingType": "ungrouped",

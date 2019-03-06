@@ -4,6 +4,7 @@ import jQuery from "jquery";
 import "jquery.mmenu";
 import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Portal from "visual/component/Portal";
@@ -35,7 +36,8 @@ export default class Menu extends EditorComponent {
     const parentToolbarExtend = this.makeToolbarPropsFromConfig(
       parentToolbarExtendConfig,
       {
-        allowExtend: false
+        allowExtend: false,
+        filterExtendName: `${this.constructor.componentId}_parent`
       }
     );
     this.props.extendParentToolbar(parentToolbarExtend);
@@ -319,9 +321,11 @@ export default class Menu extends EditorComponent {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.closeMMenu}
       >
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
-          {hasMMenu ? this.renderMMenu(v) : this.renderMenu(v)}
-        </div>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div className={styleClassName(v)} style={styleCSSVars(v)}>
+            {hasMMenu ? this.renderMMenu(v) : this.renderMenu(v)}
+          </div>
+        </CustomCSS>
       </ClickOutside>
     );
   }
@@ -382,21 +386,23 @@ export default class Menu extends EditorComponent {
       : {};
 
     return (
-      <div
-        className={styleClassName(v)}
-        style={styleCSSVars(v)}
-        {...mMenuProps}
-      >
-        {this.renderMenu(v)}
-        {hasMMenu && (
-          <React.Fragment>
-            <div className="brz-mm-menu__icon">
-              <ThemeIcon name="menu-3" type="editor" />
-            </div>
-            {this.renderMenu(v, this.getId())}
-          </React.Fragment>
-        )}
-      </div>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div
+          className={styleClassName(v)}
+          style={styleCSSVars(v)}
+          {...mMenuProps}
+        >
+          {this.renderMenu(v)}
+          {hasMMenu && (
+            <React.Fragment>
+              <div className="brz-mm-menu__icon">
+                <ThemeIcon name="menu-3" type="editor" />
+              </div>
+              {this.renderMenu(v, this.getId())}
+            </React.Fragment>
+          )}
+        </div>
+      </CustomCSS>
     );
   }
 

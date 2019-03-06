@@ -3,6 +3,7 @@ import _ from "underscore";
 import { mergeIn } from "timm";
 import Isotope from "isotope-layout";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
 import * as parentToolbarExtend from "./parentExtendToolbar";
 import defaultValue from "./defaultValue.json";
@@ -19,7 +20,8 @@ class ImageGallery extends EditorComponent {
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false
+      allowExtend: false,
+      filterExtendName: `${this.constructor.componentId}_parent`
     });
     this.props.extendParentToolbar(toolbarExtend);
 
@@ -84,13 +86,15 @@ class ImageGallery extends EditorComponent {
     });
 
     return (
-      <div
-        ref={this.handleRef}
-        className={styleClassName(v)}
-        style={styleCSSVars(v)}
-      >
-        <Items {...itemProps} />
-      </div>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div
+          ref={this.handleRef}
+          className={styleClassName(v)}
+          style={styleCSSVars(v)}
+        >
+          <Items {...itemProps} />
+        </div>
+      </CustomCSS>
     );
   }
 

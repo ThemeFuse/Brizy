@@ -67,7 +67,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 				}
 			}
 
-			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path, $this->post_id, $madia_name );
+			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path, $original_asset_path_relative, $this->post_id, $madia_name );
 		}
 
 		if ( $attachmentId === 0 || is_wp_error( $attachmentId ) ) {
@@ -111,12 +111,17 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		// resize image
 		if ( $media_filter ) {
 
-			if ( ! file_exists( $resized_image_path ) ) {
+			if ( true ||  ! file_exists( $resized_image_path )  ) {
 
 				@mkdir( $resized_page_asset_path, 0755, true );
 
 				// Set artificially high because GD uses uncompressed images in memory.
 				wp_raise_memory_limit( 'image' );
+
+				$closure = function ( $arg ) {
+					return 100;
+				};
+				add_filter('jpeg_quality', $closure );
 
 				$imagine = $this->crop( $original_asset_path, $media_filter );
 
@@ -126,9 +131,10 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 					return $resized_image_path;
 				}
+
+				remove_filter('jpeg_quality', $closure );
 			}
 		}
-
 		return $resized_image_path;
 	}
 

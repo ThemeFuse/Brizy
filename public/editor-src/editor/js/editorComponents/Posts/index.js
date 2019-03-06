@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
 import { styleClassName, styleCSSVars } from "./styles";
 import * as parentToolbarExtend from "./parentToolbarExtend";
@@ -15,7 +16,8 @@ class Posts extends EditorComponent {
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false
+      allowExtend: false,
+      filterExtendName: `${this.constructor.componentId}_parent`
     });
     this.props.extendParentToolbar(toolbarExtend);
   }
@@ -66,7 +68,11 @@ class Posts extends EditorComponent {
       meta: this.getMeta(v)
     });
 
-    return <Items {...itemsProps} />;
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Items {...itemsProps} />
+      </CustomCSS>
+    );
   }
 }
 export default Posts;

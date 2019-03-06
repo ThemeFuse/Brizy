@@ -2,7 +2,8 @@ import { t } from "visual/utils/i18n";
 import {
   toolbarElementImageGalleryGridColumn,
   toolbarElementImageGallerySpacing,
-  toolbarElementImageGalleryLightBox
+  toolbarElementImageGalleryLightBox,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -18,6 +19,30 @@ export function getItemsForDesktop(v) {
         toolbarElementImageGalleryGridColumn({ v, device }),
         toolbarElementImageGallerySpacing({ v, device }),
         toolbarElementImageGalleryLightBox({ v, device })
+      ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      position: 110,
+      title: t("Settings"),
+      roles: ["admin"],
+      icon: "nc-cog",
+      options: [
+        {
+          id: "settingsTabs",
+          type: "tabs",
+          align: "start",
+          tabs: [
+            {
+              id: "moreSettingsAdvanced",
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              options: []
+            }
+          ]
+        }
       ]
     }
   ];

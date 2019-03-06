@@ -6,6 +6,8 @@
 
   "items": [],
 
+  "customCSS": "",
+
   "tabletHorizontalAlign": null,
   "mobileHorizontalAlign": null
 }

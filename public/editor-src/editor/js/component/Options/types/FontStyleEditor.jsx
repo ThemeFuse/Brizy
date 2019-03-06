@@ -176,7 +176,7 @@ class FontStyle extends React.Component {
                                   },
                                   {
                                     id: "letterSpacing",
-                                    label: "Letter Spc.",
+                                    label: "Letter Sp.",
                                     type: "stepper",
                                     display: "block",
                                     min: -20,
@@ -327,7 +327,7 @@ class FontStyle extends React.Component {
                                   },
                                   {
                                     id: "mobileLetterSpacing",
-                                    label: "Letter Spc.",
+                                    label: "Letter Sp.",
                                     type: "stepper",
                                     display: "block",
                                     min: -20,

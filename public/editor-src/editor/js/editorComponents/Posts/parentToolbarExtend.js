@@ -2,6 +2,7 @@ import { getOptionColor, getTaxonomies } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 const getToolbarArchives = v => [
   {
@@ -363,6 +364,36 @@ export function getItemsForDesktop(v) {
                   ]
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      position: 110,
+      title: t("Settings"),
+      roles: ["admin"],
+      icon: "nc-cog",
+      options: [
+        {
+          id: "settingsTabs",
+          type: "tabs",
+          align: "start",
+          tabs: [
+            {
+              id: "settingsStyling",
+              label: t("Styling"),
+              tabIcon: "nc-styling",
+              options: []
+            },
+            {
+              id: "moreSettingsAdvanced",
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              options: []
             }
           ]
         }

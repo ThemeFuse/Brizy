@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import { styleClassName, styleCSSVars } from "./styles";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
@@ -24,16 +25,18 @@ class Line extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
-          <BoxResizer
-            points={resizerPoints}
-            meta={this.props.meta}
-            value={v}
-            onChange={this.handleResizerChange}
-          >
-            <hr className="brz-hr" />
-          </BoxResizer>
-        </div>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div className={styleClassName(v)} style={styleCSSVars(v)}>
+            <BoxResizer
+              points={resizerPoints}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
+            >
+              <hr className="brz-hr" />
+            </BoxResizer>
+          </div>
+        </CustomCSS>
       </Toolbar>
     );
   }

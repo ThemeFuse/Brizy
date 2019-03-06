@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import TextEditor from "visual/editorComponents/Text/Editor";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
@@ -41,30 +42,32 @@ class ProgressBar extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <div
-          className={containerStyleClassName(v)}
-          style={containerStyleCSSVars(v)}
-        >
-          <BoxResizer
-            points={resizerPoints}
-            meta={this.props.meta}
-            value={v}
-            onChange={this.handleResizerChange}
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div
+            className={containerStyleClassName(v)}
+            style={containerStyleCSSVars(v)}
           >
-            <div
-              className={styleClassName(v)}
-              style={styleCSSVars(v)}
-              data-progress={percentage}
+            <BoxResizer
+              points={resizerPoints}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
             >
-              <TextEditor value={text} onChange={this.handleTextChange} />
-              {showPercentage === "on" && (
-                <span className="brz-span brz-progress-bar__percent">
-                  {percentage}%
-                </span>
-              )}
-            </div>
-          </BoxResizer>
-        </div>
+              <div
+                className={styleClassName(v)}
+                style={styleCSSVars(v)}
+                data-progress={percentage}
+              >
+                <TextEditor value={text} onChange={this.handleTextChange} />
+                {showPercentage === "on" && (
+                  <span className="brz-span brz-progress-bar__percent">
+                    {percentage}%
+                  </span>
+                )}
+              </div>
+            </BoxResizer>
+          </div>
+        </CustomCSS>
       </Toolbar>
     );
   }

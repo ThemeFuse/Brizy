@@ -22,7 +22,8 @@ import {
   toolbarGradientRange,
   toolbarGradientType,
   toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree
+  toolbarGradientRadialDegree,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -1431,6 +1432,12 @@ export function getItemsForDesktop(v) {
                   }
                 }
               ]
+            },
+            {
+              id: "moreSettingsAdvanced",
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              options: []
             }
           ]
         }

@@ -3,6 +3,7 @@ import _ from "underscore";
 import jQuery from "jquery";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
@@ -138,28 +139,30 @@ class Countdown extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <div
-          ref={el => {
-            this.countdown = el;
-          }}
-          className={styleClassName(v)}
-          style={styleCSSVars(v)}
-          data-end={this.endDate}
-          data-timezone={timeZone}
-          data-language={language}
-        >
-          <BoxResizer
-            points={resizerPoints}
-            meta={this.props.meta}
-            value={v}
-            onChange={this.handleResizerChange}
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div
+            ref={el => {
+              this.countdown = el;
+            }}
+            className={styleClassName(v)}
+            style={styleCSSVars(v)}
+            data-end={this.endDate}
+            data-timezone={timeZone}
+            data-language={language}
           >
-            {this.renderPart("days")}
-            {this.renderPart("hours")}
-            {this.renderPart("minutes")}
-            {this.renderPart("seconds")}
-          </BoxResizer>
-        </div>
+            <BoxResizer
+              points={resizerPoints}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
+            >
+              {this.renderPart("days")}
+              {this.renderPart("hours")}
+              {this.renderPart("minutes")}
+              {this.renderPart("seconds")}
+            </BoxResizer>
+          </div>
+        </CustomCSS>
       </Toolbar>
     );
   }

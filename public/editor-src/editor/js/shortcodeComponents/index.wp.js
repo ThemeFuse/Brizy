@@ -13,6 +13,7 @@ import { hasSidebars, pluginActivated } from "visual/utils/wp";
 
 export default {
   ...nonWP,
+  social: [],
   wp: [
     ...(hasSidebars() ? [WPSidebar] : []),
     WPCustomShortcode,

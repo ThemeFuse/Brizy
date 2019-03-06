@@ -16,8 +16,14 @@ jQuery(document).ready(function ($) {
 
         insertBrizyBtn: function () {
             $('#editor').find('.edit-post-header-toolbar').append($('#brizy-gutenberg-btn-switch-mode').html());
-            $('#editor').find('.editor-block-list__layout>*').css('display','none');
-            $('#editor').find('.editor-block-list__layout').append($('#brizy-gutenberg-btn-middle').html())
+
+            var html = $('#brizy-gutenberg-btn-middle').html();
+
+            if(html)
+            {
+                $('#editor').find('.editor-block-list__layout>*').css('display', 'none');
+                $('#editor').find('.editor-block-list__layout').append(html);
+            }
         },
 
         init: function () {
