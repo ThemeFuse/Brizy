@@ -111,7 +111,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		// resize image
 		if ( $media_filter ) {
 
-			if ( true ||  ! file_exists( $resized_image_path )  ) {
+			if (  ! file_exists( $resized_image_path )  ) {
 
 				@mkdir( $resized_page_asset_path, 0755, true );
 
@@ -121,7 +121,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 				$closure = function ( $arg ) {
 					return 100;
 				};
-				add_filter('jpeg_quality', $closure );
+				//add_filter('jpeg_quality', $closure );
 
 				$imagine = $this->crop( $original_asset_path, $media_filter );
 
@@ -132,7 +132,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 					return $resized_image_path;
 				}
 
-				remove_filter('jpeg_quality', $closure );
+				//remove_filter('jpeg_quality', $closure );
 			}
 		}
 		return $resized_image_path;
