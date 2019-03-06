@@ -15,5 +15,7 @@
   "metaKey": "",
   "metaValue": "",
   "postType": "post",
-  "postStatus": "publish"
+  "postStatus": "publish",
+
+  "customCSS": ""
 }

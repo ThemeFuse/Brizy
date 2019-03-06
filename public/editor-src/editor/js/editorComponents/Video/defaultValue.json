@@ -52,6 +52,8 @@
   "tempBoxShadowColorOpacity": 1,
   "tempBoxShadowColorPalette": "",
 
+  "customCSS": "",
+
   "tabletCoverImageWidth": null,
   "tabletCoverImageHeight": null,
 

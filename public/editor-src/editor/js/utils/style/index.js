@@ -76,7 +76,7 @@ export { stylePadding } from "./stylePadding";
 export { styleMargin } from "./styleMargin";
 
 // Box Shadow
-export { styleBoxShadow } from "./styleBoxShadow";
+export { styleBoxShadow, styleFooterBoxShadow } from "./styleBoxShadow";
 
 // Shape
 export {

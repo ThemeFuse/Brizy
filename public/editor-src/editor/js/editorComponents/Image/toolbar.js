@@ -434,6 +434,12 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                       }
                     }
                   ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
                 }
               ]
             }

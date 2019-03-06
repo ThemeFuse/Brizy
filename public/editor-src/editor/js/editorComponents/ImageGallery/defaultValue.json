@@ -5,6 +5,8 @@
   "lightBox": "off",
   "items": [],
 
+  "customCSS": "",
+
   "tabletGridColumn": 2,
   "tabletSpacing": null,
 

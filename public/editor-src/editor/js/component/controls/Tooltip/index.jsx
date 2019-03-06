@@ -11,6 +11,7 @@ export default class Tooltip extends React.Component {
     className: "",
     arrow: true,
     placement: "top-center",
+    openOnClick: true,
     overlay: "",
     size: "",
     title: "",
@@ -143,7 +144,8 @@ export default class Tooltip extends React.Component {
       title,
       toolbar,
       children,
-      clickOutsideExceptions: _clickOutsideExceptions
+      clickOutsideExceptions: _clickOutsideExceptions,
+      openOnClick
     } = this.props;
     const { isOpen } = this.state;
     const className = classnames(
@@ -156,6 +158,18 @@ export default class Tooltip extends React.Component {
       ..._clickOutsideExceptions,
       ".brz-ed-tooltip__content-portal"
     ];
+    const attributes = {
+      ref: this.handleContentRef,
+      title,
+      className: "brz-ed-tooltip__content"
+    };
+
+    if (openOnClick) {
+      attributes.onClick = this.handleContentClick;
+    } else {
+      attributes.onMouseEnter = this.handleContentClick;
+      attributes.onMouseLeave = this.handleContentClick;
+    }
 
     return (
       <ClickOutside
@@ -163,14 +177,7 @@ export default class Tooltip extends React.Component {
         exceptions={clickOutsideExceptions}
       >
         <div className={className}>
-          <div
-            ref={this.handleContentRef}
-            title={title}
-            className="brz-ed-tooltip__content"
-            onClick={this.handleContentClick}
-          >
-            {children}
-          </div>
+          <div {...attributes}>{children}</div>
           {this.renderOverlay()}
         </div>
       </ClickOutside>

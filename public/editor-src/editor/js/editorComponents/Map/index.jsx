@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
@@ -104,17 +105,19 @@ class Map extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
-          <BoxResizer
-            points={resizerPoints}
-            restrictions={resizerRestrictions}
-            meta={this.props.meta}
-            value={resizerTransformValue(v)}
-            onChange={this.handleResizerChange}
-          >
-            {content}
-          </BoxResizer>
-        </div>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div className={styleClassName(v)} style={styleCSSVars(v)}>
+            <BoxResizer
+              points={resizerPoints}
+              restrictions={resizerRestrictions}
+              meta={this.props.meta}
+              value={resizerTransformValue(v)}
+              onChange={this.handleResizerChange}
+            >
+              {content}
+            </BoxResizer>
+          </div>
+        </CustomCSS>
       </Toolbar>
     );
   }

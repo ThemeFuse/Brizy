@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { getAnimations } from "visual/utils/options";
 
-export function toolbarEntranceAnimation({ v }) {
+export function toolbarEntranceAnimation({ v, position = 60 }) {
   const getAnimationChoices = () => {
     const { animationName } = v;
     if (animationName !== "none" || animationName === "initial") {
@@ -83,6 +83,7 @@ export function toolbarEntranceAnimation({ v }) {
   return {
     id: "animation",
     type: "multiPicker",
+    position,
     picker: {
       id: "animationName",
       label: t("Entrance Animation"),

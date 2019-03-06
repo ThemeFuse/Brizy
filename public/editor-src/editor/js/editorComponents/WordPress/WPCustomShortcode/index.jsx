@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
@@ -20,16 +21,18 @@ class WPCustomShortcode extends EditorComponent {
   renderForEdit(v) {
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <WPShortcode
-          raw={v.shortcode}
-          placeholderIcon="wp-shortcode"
-          className={styleClassName(v)}
-          style={styleCSSVars(v)}
-          resizerPoints={resizerPoints}
-          resizerMeta={this.props.meta}
-          resizerValue={v}
-          resizerOnChange={this.handleResizerChange}
-        />
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <WPShortcode
+            raw={v.shortcode}
+            placeholderIcon="wp-shortcode"
+            className={styleClassName(v)}
+            style={styleCSSVars(v)}
+            resizerPoints={resizerPoints}
+            resizerMeta={this.props.meta}
+            resizerValue={v}
+            resizerOnChange={this.handleResizerChange}
+          />
+        </CustomCSS>
       </Toolbar>
     );
   }

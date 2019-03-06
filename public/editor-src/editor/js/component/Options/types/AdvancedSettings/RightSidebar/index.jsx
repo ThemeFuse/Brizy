@@ -34,7 +34,7 @@ class RightSidebar extends React.Component {
                 >
                   <Options
                     className="brz-ed-sidebar__right__tabs"
-                    optionClassName="brz-ed-sidebar__right__option brz-ed-option__inline"
+                    optionClassName="brz-ed-sidebar__right__option"
                     data={options}
                     location="rightSidebar"
                   />

@@ -31,6 +31,8 @@
   "paddingBottom": 0,
   "paddingLeft": 10,
 
+  "customCSS": "",
+
   "tabletFontStyle": "",
   "tabletFontSize": 14,
   "tabletLineHeight": 1.5,

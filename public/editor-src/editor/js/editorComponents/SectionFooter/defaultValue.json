@@ -169,7 +169,6 @@
   "paddingSuffix": "px",
   "paddingTopSuffix": "px",
   "paddingBottomSuffix": "px",
-
   "boxShadow": "off",
   "boxShadowColorHex": "#000000",
   "boxShadowColorOpacity": 1,
@@ -209,6 +208,8 @@
 
   "multiPage": "off",
 
+  "customCSS": "",
+
   "showOnTablet": "on",
 
   "tabletMedia": null,
@@ -221,6 +222,10 @@
   "tabletBgPopulation": null,
 
   "tabletBgMapZoom": null,
+
+  "tabletBorderStyle": null,
+
+  "tempTabletBorderStyle": null,
 
   "tabletBorderWidthType": null,
   "tabletBorderWidth": null,
@@ -273,6 +278,13 @@
   "tempTabletGradientColorOpacity": null,
   "tempTabletGradientColorPalette": null,
 
+  "tabletBorderColorHex": null,
+  "tabletBorderColorOpacity": null,
+  "tabletBorderColorPalette": null,
+
+  "tempTabletBorderColorOpacity": null,
+  "tempTabletBorderColorPalette": null,
+
   "tabletPaddingType": "grouped",
   "tabletPadding": 25,
   "tabletPaddingTop": 25,
@@ -312,19 +324,9 @@
   "mobileGradientLinearDegree": null,
   "mobileGradientRadialDegree": null,
 
-  "mobileBgColorHex": null,
-  "mobileBgColorOpacity": null,
-  "mobileBgColorPalette": null,
+  "mobileBorderStyle": null,
 
-  "tempMobileBgColorOpacity": null,
-  "tempMobileBgColorPalette": null,
-
-  "mobileGradientColorHex": null,
-  "mobileGradientColorOpacity": null,
-  "mobileGradientColorPalette": null,
-
-  "tempMobileGradientColorOpacity": null,
-  "tempMobileGradientColorPalette": null,
+  "tempMobileBorderStyle": null,
 
   "mobileBorderWidthType": null,
   "mobileBorderWidth": null,
@@ -351,6 +353,27 @@
   "tempMobileBorderTopRightRadius": null,
   "tempMobileBorderBottomLeftRadius": null,
   "tempMobileBorderBottomRightRadius": null,
+
+  "mobileBgColorHex": null,
+  "mobileBgColorOpacity": null,
+  "mobileBgColorPalette": null,
+
+  "tempMobileBgColorOpacity": null,
+  "tempMobileBgColorPalette": null,
+
+  "mobileGradientColorHex": null,
+  "mobileGradientColorOpacity": null,
+  "mobileGradientColorPalette": null,
+
+  "tempMobileGradientColorOpacity": null,
+  "tempMobileGradientColorPalette": null,
+
+  "mobileBorderColorHex": null,
+  "mobileBorderColorOpacity": null,
+  "mobileBorderColorPalette": null,
+
+  "tempMobileBorderColorOpacity": null,
+  "tempMobileBorderColorPalette": null,
 
   "mobilePaddingType": "grouped",
   "mobilePadding": 25,

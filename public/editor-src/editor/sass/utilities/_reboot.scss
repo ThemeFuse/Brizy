@@ -178,7 +178,6 @@
   &[href] {
     @include hover {
       color: $link-hover-color;
-      text-decoration: $link-hover-decoration;
       box-shadow: none;
       cursor: pointer;
     }

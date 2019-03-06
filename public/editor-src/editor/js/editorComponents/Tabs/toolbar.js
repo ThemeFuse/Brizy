@@ -9,7 +9,8 @@ import {
 
 import {
   toolbarDisabledShowOnTablet,
-  toolbarDisabledShowOnMobile
+  toolbarDisabledShowOnMobile,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
@@ -364,208 +365,222 @@ export function getItemsForDesktop(v) {
       icon: "nc-cog",
       options: [
         {
-          id: "padding",
-          type: "multiPicker",
-          value: v.padding,
-          picker: {
-            id: "paddingType",
-            label: t("Padding"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "grouped",
-                icon: "nc-styling-all"
-              },
-              {
-                value: "ungrouped",
-                icon: "nc-styling-individual"
-              }
-            ],
-            value: v.paddingType
-          },
-          choices: {
-            grouped: [
-              {
-                id: "padding",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.padding
-                },
-                onChange: ({ value: padding }) => {
-                  return {
-                    padding,
-                    paddingTop: padding,
-                    paddingRight: padding,
-                    paddingBottom: padding,
-                    paddingLeft: padding
-                  };
+          id: "settingsTabs",
+          type: "tabs",
+          align: "start",
+          tabs: [
+            {
+              id: "settingsStyling",
+              label: t("Styling"),
+              tabIcon: "nc-styling",
+              options: [
+                {
+                  id: "padding",
+                  type: "multiPicker",
+                  value: v.padding,
+                  picker: {
+                    id: "paddingType",
+                    label: t("Padding"),
+                    type: "radioGroup",
+                    choices: [
+                      {
+                        value: "grouped",
+                        icon: "nc-styling-all"
+                      },
+                      {
+                        value: "ungrouped",
+                        icon: "nc-styling-individual"
+                      }
+                    ],
+                    value: v.paddingType
+                  },
+                  choices: {
+                    grouped: [
+                      {
+                        id: "padding",
+                        type: "slider",
+                        slider: {
+                          min: 0,
+                          max: 100
+                        },
+                        input: {
+                          show: true,
+                          min: 0
+                        },
+                        suffix: {
+                          show: true,
+                          choices: [
+                            {
+                              title: "px",
+                              value: "px"
+                            }
+                          ]
+                        },
+                        value: {
+                          value: v.padding
+                        },
+                        onChange: ({ value: padding }) => {
+                          return {
+                            padding,
+                            paddingTop: padding,
+                            paddingRight: padding,
+                            paddingBottom: padding,
+                            paddingLeft: padding
+                          };
+                        }
+                      }
+                    ],
+                    ungrouped: [
+                      {
+                        id: "paddingTop",
+                        icon: "nc-styling-top",
+                        type: "slider",
+                        slider: {
+                          min: 0,
+                          max: 100
+                        },
+                        input: {
+                          show: true,
+                          min: 0
+                        },
+                        suffix: {
+                          show: true,
+                          choices: [
+                            {
+                              title: "px",
+                              value: "px"
+                            }
+                          ]
+                        },
+                        value: {
+                          value: v.paddingTop
+                        },
+                        onChange: ({ value: paddingTop }) => {
+                          return {
+                            paddingTop,
+                            padding:
+                              paddingTop === v.paddingRight &&
+                              paddingTop === v.paddingLeft &&
+                              paddingTop === v.paddingBottom
+                                ? paddingTop
+                                : v.padding
+                          };
+                        }
+                      },
+                      {
+                        id: "paddingRight",
+                        icon: "nc-styling-right",
+                        type: "slider",
+                        slider: {
+                          min: 0,
+                          max: 100
+                        },
+                        input: {
+                          show: true,
+                          min: 0
+                        },
+                        suffix: {
+                          show: true,
+                          choices: [
+                            {
+                              title: "px",
+                              value: "px"
+                            }
+                          ]
+                        },
+                        value: {
+                          value: v.paddingRight
+                        },
+                        onChange: ({ value: paddingRight }) => {
+                          return {
+                            paddingRight,
+                            padding:
+                              paddingRight === v.paddingTop &&
+                              paddingRight === v.paddingLeft &&
+                              paddingRight === v.paddingBottom
+                                ? paddingRight
+                                : v.padding
+                          };
+                        }
+                      },
+                      {
+                        id: "paddingBottom",
+                        icon: "nc-styling-bottom",
+                        type: "slider",
+                        slider: {
+                          min: 0,
+                          max: 100
+                        },
+                        input: {
+                          show: true,
+                          min: 0
+                        },
+                        suffix: {
+                          show: true,
+                          choices: [
+                            {
+                              title: "px",
+                              value: "px"
+                            }
+                          ]
+                        },
+                        value: {
+                          value: v.paddingBottom
+                        },
+                        onChange: ({ value: paddingBottom }) => {
+                          return {
+                            paddingBottom,
+                            padding:
+                              paddingBottom === v.paddingRight &&
+                              paddingBottom === v.paddingLeft &&
+                              paddingBottom === v.paddingTop
+                                ? paddingBottom
+                                : v.padding
+                          };
+                        }
+                      },
+                      {
+                        id: "paddingLeft",
+                        icon: "nc-styling-left",
+                        type: "slider",
+                        slider: {
+                          min: 0,
+                          max: 100
+                        },
+                        input: {
+                          show: true,
+                          min: 0
+                        },
+                        suffix: {
+                          show: true,
+                          choices: [
+                            {
+                              title: "px",
+                              value: "px"
+                            }
+                          ]
+                        },
+                        value: {
+                          value: v.paddingLeft
+                        },
+                        onChange: ({ value: paddingLeft }) => {
+                          return {
+                            paddingLeft,
+                            padding:
+                              paddingLeft === v.paddingRight &&
+                              paddingLeft === v.paddingTop &&
+                              paddingLeft === v.paddingBottom
+                                ? paddingLeft
+                                : v.padding
+                          };
+                        }
+                      }
+                    ]
+                  }
                 }
-              }
-            ],
-            ungrouped: [
-              {
-                id: "paddingTop",
-                icon: "nc-styling-top",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.paddingTop
-                },
-                onChange: ({ value: paddingTop }) => {
-                  return {
-                    paddingTop,
-                    padding:
-                      paddingTop === v.paddingRight &&
-                      paddingTop === v.paddingLeft &&
-                      paddingTop === v.paddingBottom
-                        ? paddingTop
-                        : v.padding
-                  };
-                }
-              },
-              {
-                id: "paddingRight",
-                icon: "nc-styling-right",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.paddingRight
-                },
-                onChange: ({ value: paddingRight }) => {
-                  return {
-                    paddingRight,
-                    padding:
-                      paddingRight === v.paddingTop &&
-                      paddingRight === v.paddingLeft &&
-                      paddingRight === v.paddingBottom
-                        ? paddingRight
-                        : v.padding
-                  };
-                }
-              },
-              {
-                id: "paddingBottom",
-                icon: "nc-styling-bottom",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.paddingBottom
-                },
-                onChange: ({ value: paddingBottom }) => {
-                  return {
-                    paddingBottom,
-                    padding:
-                      paddingBottom === v.paddingRight &&
-                      paddingBottom === v.paddingLeft &&
-                      paddingBottom === v.paddingTop
-                        ? paddingBottom
-                        : v.padding
-                  };
-                }
-              },
-              {
-                id: "paddingLeft",
-                icon: "nc-styling-left",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true,
-                  min: 0
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.paddingLeft
-                },
-                onChange: ({ value: paddingLeft }) => {
-                  return {
-                    paddingLeft,
-                    padding:
-                      paddingLeft === v.paddingRight &&
-                      paddingLeft === v.paddingTop &&
-                      paddingLeft === v.paddingBottom
-                        ? paddingLeft
-                        : v.padding
-                  };
-                }
-              }
-            ]
-          }
+              ]
+            }
+          ]
         }
       ]
     },

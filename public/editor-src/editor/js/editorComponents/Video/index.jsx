@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
 import {
@@ -75,16 +76,18 @@ class Video extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <div className={styleClassName(v, this.props)} style={style}>
-          <BoxResizer
-            points={resizerPoints}
-            meta={this.props.meta}
-            value={v}
-            onChange={this.handleResizerChange}
-          >
-            <div className={wrapperStyleClassName(v)}>{content}</div>
-          </BoxResizer>
-        </div>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div className={styleClassName(v, this.props)} style={style}>
+            <BoxResizer
+              points={resizerPoints}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
+            >
+              <div className={wrapperStyleClassName(v)}>{content}</div>
+            </BoxResizer>
+          </div>
+        </CustomCSS>
       </Toolbar>
     );
   }

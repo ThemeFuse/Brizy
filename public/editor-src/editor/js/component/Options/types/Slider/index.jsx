@@ -84,9 +84,10 @@ class SliderOptionType extends React.Component {
         {helper && (
           <div className="brz-ed-option__helper">
             <EditorIcon icon="nc-alert-circle-que" />
-            <div className="brz-ed-option__helper__content">
-              {helperContent}
-            </div>
+            <div
+              className="brz-ed-option__helper__content"
+              dangerouslySetInnerHTML={{ __html: helperContent }}
+            />
           </div>
         )}
       </div>

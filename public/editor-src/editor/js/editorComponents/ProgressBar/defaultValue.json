@@ -72,6 +72,8 @@
   "paddingBottom": 5,
   "paddingLeft": 15,
 
+  "customCSS": "",
+
   "tabletBorderWidthType": null,
   "tabletBorderWidth": null,
   "tabletBorderTopWidth": null,

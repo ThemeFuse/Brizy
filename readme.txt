@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.61
+Stable tag: 1.0.62
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,18 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.62 - 2019-03-06 =
+* New: Border Styles on mobile and tablet for all containers (Sections, Row, Column)
+* New: Added wp language placeholder
+* New: Added facebook placeholders
+* Fixed: Vertical align option on mobile
+* Fixed: SectionFooter toolbar icon that shows that it’s a global block missing
+* Fixed: Increased the image quality to 100%
+* Fixed: The edit with Brizy buttons
+* Fixed: Removed template select for posts
+* Fixed: Added compatibility with phastpress
+* Fixed: Removed redirect_to_mapped_domain function handled on the hook template_redirect
 
 = 1.0.61 - 2019-02-21 =
 * New: Added column revert option for tablet and mobile device modes

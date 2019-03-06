@@ -11,5 +11,7 @@
   "columns": 4,
   "hideEmpty": 0,
   "parent": "",
-  "ids": ""
+  "ids": "",
+
+  "customCSS": ""
 }

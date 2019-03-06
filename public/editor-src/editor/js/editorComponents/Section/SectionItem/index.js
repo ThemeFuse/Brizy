@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -248,7 +249,12 @@ class SectionItem extends EditorComponent {
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const styles = {
@@ -258,29 +264,33 @@ class SectionItem extends EditorComponent {
     };
 
     return (
-      <div className={contentStyleClassName(v)} style={styles}>
-        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
-          <ContainerBorder
-            ref={el => {
-              this.containerBorder = el;
-            }}
-            borderStyle="none"
-            activeBorderStyle="none"
-            reactToClick={false}
-            showBorders={false}
-            path={this.getPath()}
-          >
-            {this.renderToolbar(v)}
-            {this.renderItems(v)}
-          </ContainerBorder>
-        </Roles>
-      </div>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div className={contentStyleClassName(v)} style={styles}>
+          <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+            <ContainerBorder
+              ref={el => {
+                this.containerBorder = el;
+              }}
+              borderStyle="none"
+              activeBorderStyle="none"
+              reactToClick={false}
+              showBorders={false}
+              path={this.getPath()}
+            >
+              {this.renderToolbar(v)}
+              {this.renderItems(v)}
+            </ContainerBorder>
+          </Roles>
+        </div>
+      </CustomCSS>
     );
   }
 
   renderForView(v) {
     return (
-      <div className={contentStyleClassName(v)}>{this.renderItems(v)}</div>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div className={contentStyleClassName(v)}>{this.renderItems(v)}</div>
+      </CustomCSS>
     );
   }
 }

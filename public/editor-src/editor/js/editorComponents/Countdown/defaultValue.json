@@ -23,6 +23,8 @@
 
   "width": 100,
 
+  "customCSS": "",
+
   "tabletFontStyle": "",
   "tabletFontSize": 30,
   "tabletFontWeight": 700,

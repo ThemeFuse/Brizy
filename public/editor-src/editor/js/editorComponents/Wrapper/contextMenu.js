@@ -26,6 +26,10 @@ const translationsMap = {
   Posts: t("Posts"),
   Archives: t("Archives"),
   Menu: t("Menu"),
+  FacebookButton: t("Facebook Button"),
+  FacebookComments: t("Facebook Comments"),
+  FacebookEmbed: t("Facebook Embed"),
+  FacebookPage: t("Facebook Page"),
 };
 
 export default {

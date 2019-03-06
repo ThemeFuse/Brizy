@@ -2,6 +2,7 @@ import React from "react";
 import _ from "underscore";
 import ResizeAware from "react-resize-aware";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
 import Link from "visual/component/Link";
@@ -451,25 +452,27 @@ class Image extends EditorComponent {
         style={imageStylesCSSVars(v)}
       >
         <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-          <div
-            className={contentStyleClassName(v)}
-            style={contentStyleCSSVars(v, wrapperSizes)}
-          >
-            <BoxResizer
-              restrictions={resizerRestrictions}
-              points={resizerPoints_}
-              meta={this.props.meta}
-              value={resizerTransformValue(v)}
-              onChange={this.handleBoxResizerChange}
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <div
+              className={contentStyleClassName(v)}
+              style={contentStyleCSSVars(v, wrapperSizes)}
             >
-              <div
-                className={wrapperStyleClassName(v)}
-                style={wrapperStyleCSSVars(v, wrapperSizes)}
+              <BoxResizer
+                restrictions={resizerRestrictions}
+                points={resizerPoints_}
+                meta={this.props.meta}
+                value={resizerTransformValue(v)}
+                onChange={this.handleBoxResizerChange}
               >
-                {content}
-              </div>
-            </BoxResizer>
-          </div>
+                <div
+                  className={wrapperStyleClassName(v)}
+                  style={wrapperStyleCSSVars(v, wrapperSizes)}
+                >
+                  {content}
+                </div>
+              </BoxResizer>
+            </div>
+          </CustomCSS>
         </Toolbar>
         {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
       </div>
@@ -668,9 +671,11 @@ class Image extends EditorComponent {
     }
 
     return (
-      <div className={imageStylesClassName(v, wrapperSizes, this.props)}>
-        {content}
-      </div>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div className={imageStylesClassName(v, wrapperSizes, this.props)}>
+          {content}
+        </div>
+      </CustomCSS>
     );
   }
 }

@@ -1,0 +1,15 @@
+.fb_iframe_widget {
+  min-height: 20px;
+}
+
+.fb-page,
+.fb-page span,
+.fb-page span iframe[style],
+.fb-post,
+.fb-video,
+.fb-comments,
+.fb-comments span,
+.fb-comments span iframe[style] {
+  width: 100% !important;
+  min-width: 100% !important;
+}

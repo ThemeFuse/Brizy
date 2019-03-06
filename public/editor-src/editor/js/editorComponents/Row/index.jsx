@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import SortableElement from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -297,7 +298,9 @@ class Row extends EditorComponent {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       containerClassName: containerStyleClassName(v, this.isInnerRow()),
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig),
+      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
+        filterExtendName: `${this.constructor.componentId}_child`
+      }),
       meta: this.getMeta(v),
       tabletReversed: tabletReverseColumns,
       mobileReversed: mobileReverseColumns
@@ -326,8 +329,14 @@ class Row extends EditorComponent {
         `${_v.hoverBorderColorPalette}__hoverBorder`,
 
       _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const isInnerRow = this.isInnerRow();
@@ -355,30 +364,35 @@ class Row extends EditorComponent {
 
     return (
       <SortableElement type="row" useHandle={true}>
-        <Animation
-          className="brz-row__container"
-          style={styles}
-          name={animationName !== "none" && animationName}
-          duration={animationDuration}
-          delay={animationDelay}
-        >
-          <Roles allow={["admin"]} fallbackRender={() => this.renderContent(v)}>
-            <ContainerBorder
-              ref={input => {
-                this.containerBorder = input;
-              }}
-              className="brz-ed-border__row"
-              borderStyle="none"
-              activeBorderStyle="dotted"
-              showBorders={false}
-              reactToClick={false}
-              path={this.props.path}
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <Animation
+            className="brz-row__container"
+            style={styles}
+            name={animationName !== "none" && animationName}
+            duration={animationDuration}
+            delay={animationDelay}
+          >
+            <Roles
+              allow={["admin"]}
+              fallbackRender={() => this.renderContent(v)}
             >
-              {this.renderToolbar(v)}
-              {this.renderContent(v)}
-            </ContainerBorder>
-          </Roles>
-        </Animation>
+              <ContainerBorder
+                ref={input => {
+                  this.containerBorder = input;
+                }}
+                className="brz-ed-border__row"
+                borderStyle="none"
+                activeBorderStyle="dotted"
+                showBorders={false}
+                reactToClick={false}
+                path={this.props.path}
+              >
+                {this.renderToolbar(v)}
+                {this.renderContent(v)}
+              </ContainerBorder>
+            </Roles>
+          </Animation>
+        </CustomCSS>
       </SortableElement>
     );
   }
@@ -387,14 +401,16 @@ class Row extends EditorComponent {
     const { animationName, animationDuration, animationDelay } = v;
 
     return (
-      <Animation
-        className="brz-row__container"
-        name={animationName !== "none" && animationName}
-        duration={animationDuration}
-        delay={animationDelay}
-      >
-        {this.renderContent(v)}
-      </Animation>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Animation
+          className="brz-row__container"
+          name={animationName !== "none" && animationName}
+          duration={animationDuration}
+          delay={animationDelay}
+        >
+          {this.renderContent(v)}
+        </Animation>
+      </CustomCSS>
     );
   }
 }

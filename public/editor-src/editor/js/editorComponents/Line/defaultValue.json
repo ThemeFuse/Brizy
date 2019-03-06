@@ -12,6 +12,8 @@
   "tempBorderColorOpacity": 0.75,
   "tempBorderColorPalette": "color7",
 
+  "customCSS": "",
+
   "width": 75,
 
   "tabletBorderWidth": null,

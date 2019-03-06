@@ -2,6 +2,7 @@ import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
 import Button from "./Button";
 import ButtonTooltip from "./ButtonTooltip";
+import CodeMirror from "./CodeMirror";
 import ColorFields from "./ColorFields";
 import ColorPalette from "./ColorPalette";
 import ColorPaletteEditor from "./ColorPaletteEditor";
@@ -30,12 +31,14 @@ import Tabs from "./Tabs";
 import Toggle from "./Toggle";
 import InputNumber from "./InputNumber";
 import Range from "./Range";
+import IntegrationsApps from "./IntegrationsApps";
 
 export default {
   advancedSettings: AdvancedSettings,
   blockThumbnail: BlockThumbnail,
   button: Button,
   buttonTooltip: ButtonTooltip,
+  codeMirror: CodeMirror,
   colorFields: ColorFields,
   colorPaletteEditor: ColorPaletteEditor,
   colorPalette: ColorPalette,
@@ -63,5 +66,6 @@ export default {
   tabs: Tabs,
   toggle: Toggle,
   inputNumber: InputNumber,
-  range: Range
+  range: Range,
+  integrationsApps: IntegrationsApps
 };

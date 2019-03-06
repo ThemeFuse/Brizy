@@ -1,6 +1,7 @@
 import React from "react";
 import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -208,31 +209,33 @@ class SectionPopup extends EditorComponent {
     };
 
     return (
-      <div
-        id={this.getId()}
-        className={sectionStyleClassName(v, this.state)}
-        style={styles}
-        data-block-id={this.props.blockId}
-      >
-        <div className="brz-popup__close" onClick={this.handleDropClick}>
-          <ThemeIcon name="close-popup" type="editor" />
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div
+          id={this.getId()}
+          className={sectionStyleClassName(v, this.state)}
+          style={styles}
+          data-block-id={this.props.blockId}
+        >
+          <div className="brz-popup__close" onClick={this.handleDropClick}>
+            <ThemeIcon name="close-popup" type="editor" />
+          </div>
+          <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+            <ContainerBorder
+              ref={el => {
+                this.containerBorder = el;
+              }}
+              borderStyle="none"
+              activeBorderStyle="none"
+              reactToClick={false}
+              showBorders={false}
+              path={this.getPath()}
+            >
+              {this.renderToolbar(v)}
+              {this.renderItems(v)}
+            </ContainerBorder>
+          </Roles>
         </div>
-        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
-          <ContainerBorder
-            ref={el => {
-              this.containerBorder = el;
-            }}
-            borderStyle="none"
-            activeBorderStyle="none"
-            reactToClick={false}
-            showBorders={false}
-            path={this.getPath()}
-          >
-            {this.renderToolbar(v)}
-            {this.renderItems(v)}
-          </ContainerBorder>
-        </Roles>
-      </div>
+      </CustomCSS>
     );
   }
 
@@ -257,15 +260,17 @@ class SectionPopup extends EditorComponent {
     ]);
 
     return (
-      <div
-        className={sectionStyleClassName(v, this.state)}
-        data-brz-popup={this.getId()}
-      >
-        <div className="brz-popup__close">
-          <ThemeIcon name="close-popup" type="editor" />
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div
+          className={sectionStyleClassName(v, this.state)}
+          data-brz-popup={this.getId()}
+        >
+          <div className="brz-popup__close">
+            <ThemeIcon name="close-popup" type="editor" />
+          </div>
+          {this.renderItems(v)}
         </div>
-        {this.renderItems(v)}
-      </div>
+      </CustomCSS>
     );
   }
 

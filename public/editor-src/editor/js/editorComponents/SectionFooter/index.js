@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import SectionFooterItems from "./Items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -112,11 +113,13 @@ class SectionFooter extends EditorComponent {
   }
 
   renderToolbar(_v) {
+    const { globalBlockId } = this.props.meta;
     return (
       <CollapsibleToolbar
         {...this.makeToolbarPropsFromConfig(toolbarConfig)}
         className="brz-ed-collapsible__section brz-ed-collapsible--big"
         animation="rightToLeft"
+        badge={Boolean(globalBlockId)}
         onOpen={this.handleToolbarOpen}
         onClose={this.handleToolbarClose}
       />
@@ -180,8 +183,14 @@ class SectionFooter extends EditorComponent {
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const styles = {
@@ -191,28 +200,30 @@ class SectionFooter extends EditorComponent {
     };
 
     return (
-      <footer
-        id={this.getId()}
-        className={sectionStyleClassName(v)}
-        data-block-id={this.props.blockId}
-        style={styles}
-      >
-        <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
-          <ContainerBorder
-            ref={el => {
-              this.containerBorder = el;
-            }}
-            borderStyle="none"
-            activeBorderStyle="none"
-            reactToClick={false}
-            showBorders={false}
-            path={this.getPath()}
-          >
-            {this.renderToolbar(v)}
-            {this.renderItems(v)}
-          </ContainerBorder>
-        </Roles>
-      </footer>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <footer
+          id={this.getId()}
+          className={sectionStyleClassName(v)}
+          data-block-id={this.props.blockId}
+          style={styles}
+        >
+          <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+            <ContainerBorder
+              ref={el => {
+                this.containerBorder = el;
+              }}
+              borderStyle="none"
+              activeBorderStyle="none"
+              reactToClick={false}
+              showBorders={false}
+              path={this.getPath()}
+            >
+              {this.renderToolbar(v)}
+              {this.renderItems(v)}
+            </ContainerBorder>
+          </Roles>
+        </footer>
+      </CustomCSS>
     );
   }
 
@@ -233,18 +244,26 @@ class SectionFooter extends EditorComponent {
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     return (
-      <footer
-        id={v.anchorName || this.getId()}
-        className={sectionStyleClassName(v)}
-        data-uid={this.getId()}
-      >
-        {this.renderItems(v)}
-      </footer>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <footer
+          id={v.anchorName || this.getId()}
+          className={sectionStyleClassName(v)}
+          data-uid={this.getId()}
+        >
+          {this.renderItems(v)}
+        </footer>
+      </CustomCSS>
     );
   }
 

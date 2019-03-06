@@ -78,8 +78,14 @@ export const currentStyleSelector = createSelector(
         [`${color.id}__tabletBg`]: {
           tabletBgColorHex: color.hex
         },
+        [`${color.id}__tabletBorder`]: {
+          tabletBorderColorHex: color.hex
+        },
         [`${color.id}__mobileBg`]: {
           mobileBgColorHex: color.hex
+        },
+        [`${color.id}__mobileBorder`]: {
+          mobileBorderColorHex: color.hex
         },
         [`${color.id}__subMenuColor`]: {
           subMenuColorHex: color.hex
