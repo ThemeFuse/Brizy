@@ -97,7 +97,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + ' && rm -f Build-*'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf brizy && mkdir brizy'
                 sh 'cd ' + params.brizySvnPath + ' && cp -r ./trunk/* ./brizy/'
-                sh 'cd ' + params.brizySvnPath + ' && zip -r "'+zipFileName+'" brizy/'
+                sh 'cd ' + params.brizySvnPath + ' && zip -r "+zipFileName+" brizy/'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf ./brizy'
             }
         }
