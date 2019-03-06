@@ -84,6 +84,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -type f -name "*.dev.php" -delete'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf  ./bin ./tests *.dist *.xml *.lock *.json *.yml .gitignore'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/test'
+                sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/.git'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/ext/twig'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/doc'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf'
