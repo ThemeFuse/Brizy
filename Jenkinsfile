@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     if(folderExist(params.brizySvnPath+"/tags/"+params.buildVersion)) {
-                        error("Build failed because this version is alread built.")
+                        error("Build failed because this version is already built.")
                     }
                 }
 
@@ -97,7 +97,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + ' && rm -f Build-*'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf brizy && mkdir brizy'
                 sh 'cd ' + params.brizySvnPath + ' && cp -r ./trunk/* ./brizy/'
-                sh 'cd ' + params.brizySvnPath + ' && zip -r "+zipFileName+" brizy/'
+                sh 'cd ' + params.brizySvnPath + ' && zip -r "'+zipFileName+'" brizy/'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf ./brizy'
             }
         }
