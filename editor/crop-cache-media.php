@@ -67,7 +67,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 				}
 			}
 
-			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path, $this->post_id, $madia_name );
+			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path_relative, $this->post_id, $madia_name );
 		}
 
 		if ( $attachmentId === 0 || is_wp_error( $attachmentId ) ) {
