@@ -11,6 +11,6 @@
   "require-dev": {
   },
   "require": {
-    "twig/twig": "~1.32.0"
+    "twig/twig": "1.33.0"
   }
 }

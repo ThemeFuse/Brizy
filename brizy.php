@@ -10,7 +10,6 @@
  * License: GPLv3
  * Domain Path: /languages
  */
-
 /**
  * This will fix the url protocol for websites that are working behind a load balancer
  */
