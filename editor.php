@@ -63,11 +63,6 @@ class Brizy_Editor {
 		$supported_post_types[] = Brizy_Admin_Templates::CP_TEMPLATE;
 
 		foreach ( $supported_post_types as $type ) {
-
-			if ( $type == 'post' ) {
-				continue;
-			}
-
 			add_filter( "theme_{$type}_templates", array( $this, 'registerPageTemplates' ) );
 		}
 	}
