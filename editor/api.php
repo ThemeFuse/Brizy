@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_API {
+class Brizy_Editor_API extends Brizy_Editor_AbstractAPI {
 
 	const nonce = 'brizy-api';
 	const AJAX_PING = 'brizy_editor_ping';
@@ -56,10 +56,10 @@ class Brizy_Editor_API {
 
 		$this->post    = $post;
 
-		$this->initialize();
+		parent::__construct();
 	}
 
-	private function initialize() {
+	protected function initialize() {
 
 		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'wp_ajax_' . self::AJAX_PING, array( $this, 'ping' ) );
@@ -547,30 +547,28 @@ class Brizy_Editor_API {
 		$this->success( $items );
 	}
 
-	protected function param( $name ) {
-		if ( isset( $_REQUEST[ $name ] ) ) {
-			return $_REQUEST[ $name ];
-		}
-
-		return null;
-	}
-
-	protected function error( $code, $message ) {
-		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
-	}
-
-	protected function success( $data ) {
-		wp_send_json( $data );
-	}
+//	protected function param( $name ) {
+//		if ( isset( $_REQUEST[ $name ] ) ) {
+//			return $_REQUEST[ $name ];
+//		}
+//
+//		return null;
+//	}
+//
+//	protected function error( $code, $message ) {
+//		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
+//	}
+//
+//	protected function success( $data ) {
+//		wp_send_json( $data );
+//	}
 
 	protected function static_url() {
 		return Brizy_Editor::get()->get_url( '/includes/editor/static' );
 	}
 
-	private function authorize() {
-		if ( ! wp_verify_nonce( $_REQUEST['hash'], self::nonce ) ) {
-			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
-		}
+	protected function getNonceKey() {
+		return self::nonce;
 	}
 
 	public static function create_post_arr( Brizy_Editor_Post $post ) {
