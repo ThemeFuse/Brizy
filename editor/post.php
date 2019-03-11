@@ -210,7 +210,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function convertToOptionValue() {
 
 		return array(
-			'compiled_html'                    => $this->get_compiled_html(),
+			'compiled_html'                    => $this->get_encoded_compiled_html(),
 			'compiled_html_body'               => $this->get_compiled_html_body(),
 			'compiled_html_head'               => $this->get_compiled_html_head(),
 			'needs_compile'                    => $this->needs_compile,
@@ -224,7 +224,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	public function loadStorageData( $data ) {
 		if ( isset( $data['compiled_html'] ) ) {
-			$this->compiled_html = $data['compiled_html'];
+			$this->set_encoded_compiled_html( $data['compiled_html'] );
 		}
 
 		if ( isset( $data['compiled_html_body'] ) ) {
@@ -449,6 +449,31 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$this->compiled_html = $compiled_html;
 
 		return $this;
+	}
+
+
+	/**
+	 * @param $compiled_html
+	 *
+	 * @return $this
+	 */
+	public function set_encoded_compiled_html( $compiled_html ) {
+
+		if ( base64_encode( base64_decode( $compiled_html, true ) ) === $compiled_html ) {
+			$this->set_compiled_html( base64_decode( $compiled_html, true ) );
+		} else {
+			$this->set_compiled_html( $compiled_html );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_encoded_compiled_html() {
+
+		return base64_encode( $this->get_compiled_html() );
 	}
 
 	/**
