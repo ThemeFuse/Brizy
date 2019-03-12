@@ -25,11 +25,12 @@ class Brizy_Public_FileProxy extends Brizy_Public_AbstractProxy {
 
 			try {
 				// Set artificially high because GD uses uncompressed images in memory.
+				session_write_close();
 				wp_raise_memory_limit( 'image' );
 
-				$content = self::get_asset_content($vars[ self::ENDPOINT ]);
+				$content = self::get_asset_content( $vars[ self::ENDPOINT ] );
 
-				if($content!==false) {
+				if ( $content !== false ) {
 					echo $content;
 				}
 			} catch ( Exception $e ) {

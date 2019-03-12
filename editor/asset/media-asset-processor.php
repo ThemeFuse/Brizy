@@ -75,33 +75,43 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 			$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
 
 			if ( ! $media_path ) {
-
-				// there may be cases when there is no attachment with uid due to old version of plugins
-				// in this case we try to download the media and attach it to the current post
-				try {
-					// download media
-					$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post_id );
-					$media_cacher->download_original_image( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
-					$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
-				} catch ( Exception $e ) {
-					continue;
-				}
-
-				if ( ! $media_path ) {
-					continue;
-				}
+				return $content;
 			}
 
+//			if ( ! $media_path ) {
+//
+//				// there may be cases when there is no attachment with uid due to old version of plugins
+//				// in this case we try to download the media and attach it to the current post
+//				try {
+//					// download media
+//					$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post_id );
+//					$media_cacher->download_original_image( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
+//					$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
+//				} catch ( Exception $e ) {
+//					continue;
+//				}
+//
+//				if ( ! $media_path ) {
+//					continue;
+//				}
+//			}
+
 			try {
-				$crop_media_path = $media_cache->crop_media( $media_path, $params[ Brizy_Public_CropProxy::ENDPOINT_FILTER ] );
+
+				//if($media_cache->hasCroptMedia($media_path, $params[ Brizy_Public_CropProxy::ENDPOINT_FILTER ])
+
+				$crop_media_path = $media_cache->crop_media( $media_path, $params[ Brizy_Public_CropProxy::ENDPOINT_FILTER ], false );
+
+				$urlBuilder      = new Brizy_Editor_UrlBuilder( $project, $post_id );
+				$local_media_url = str_replace( $urlBuilder->upload_path(), $urlBuilder->upload_url(), $crop_media_path );
+
+				$content = str_replace( $matches[0][ $i ], $local_media_url, $content );
+
 			} catch ( Exception $e ) {
 				continue;
 			}
 
-			$urlBuilder      = new Brizy_Editor_UrlBuilder( $project, $post_id );
-			$local_media_url = str_replace( $urlBuilder->upload_path(), $urlBuilder->upload_url(), $crop_media_path );
 
-			$content = str_replace( $matches[0][ $i ], $local_media_url, $content );
 		}
 
 		return $content;

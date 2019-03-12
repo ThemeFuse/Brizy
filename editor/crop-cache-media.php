@@ -86,14 +86,22 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		return get_attached_file( $attachmentId );
 	}
 
+	public function getResizedMediaPath( $original_asset_path, $media_filter ) {
+		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
+		$ext                     = pathinfo( $original_asset_path, PATHINFO_EXTENSION );
+
+		return $resized_page_asset_path . "/" . md5( $original_asset_path ) . '.' . $ext;
+	}
+
 	/**
 	 * @param $original_asset_path
 	 * @param $media_filter
+	 * @param bool $force_crop
 	 *
 	 * @return string
 	 * @throws Exception
 	 */
-	public function crop_media( $original_asset_path, $media_filter ) {
+	public function crop_media( $original_asset_path, $media_filter, $force_crop = true ) {
 
 		// Check if user is querying API
 		if ( ! file_exists( $original_asset_path ) ) {
@@ -105,32 +113,32 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
-		$ext                     = pathinfo( $original_asset_path, PATHINFO_EXTENSION );
-		$resized_image_path      = $resized_page_asset_path . "/" . md5( $original_asset_path ) . '.' . $ext;
+		$resized_image_path = $this->getResizedMediaPath( $original_asset_path, $media_filter );
 
 		// resize image
-		if ( $media_filter ) {
+		if ( ! file_exists( $resized_image_path ) ) {
 
-			if ( ! file_exists( $resized_image_path ) ) {
-
-				@mkdir( $resized_page_asset_path, 0755, true );
-
-				// Set artificially high because GD uses uncompressed images in memory.
-				wp_raise_memory_limit( 'image' );
-
-				$closure = function ( $arg ) {
-					return 100;
-				};
-				add_filter( 'jpeg_quality', $closure );
-
-				$imagine = $this->crop( $original_asset_path, $media_filter );
-
-				if ( $imagine ) {
-					$imagine->save( $resized_image_path );
-					unset( $imagine );
-				}
-				remove_filter( 'jpeg_quality', $closure );
+			if(!$force_crop) {
+				throw new Exception('Resized media not found');
 			}
+
+			@mkdir( $resized_page_asset_path, 0755, true );
+
+			// Set artificially high because GD uses uncompressed images in memory.
+			wp_raise_memory_limit( 'image' );
+
+			$closure = function ( $arg ) {
+				return 100;
+			};
+			add_filter( 'jpeg_quality', $closure );
+
+			$imagine = $this->crop( $original_asset_path, $media_filter );
+
+			if ( $imagine ) {
+				$imagine->save( $resized_image_path );
+				unset( $imagine );
+			}
+			remove_filter( 'jpeg_quality', $closure );
 		}
 
 		return $resized_image_path;
