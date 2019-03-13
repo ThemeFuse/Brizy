@@ -12,6 +12,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 				$wp_response = $http->request( $url, array( 'timeout' => 30 ) );
 
 				if ( is_wp_error( $wp_response ) ) {
+					Brizy_Logger::instance()->error( 'Unable to get media content', array( 'exception' => $wp_response ) );
 					continue;
 				}
 
@@ -22,6 +23,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 		$code = wp_remote_retrieve_response_code( $wp_response );
 
 		if ( is_wp_error( $wp_response ) || ! ( $code >= 200 && $code < 300 ) ) {
+			Brizy_Logger::instance()->error( 'Unable to get media content', array( 'exception' => $wp_response ) );
 			return false;
 		}
 
