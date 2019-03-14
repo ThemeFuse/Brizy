@@ -199,6 +199,7 @@ class Brizy_Public_Main {
 			return $template;
 		}
 
+		$template = $this->post->get_template();
 		$template_path = get_post_meta( $post->ID, '_wp_page_template', true );
 
 		if ( in_array( basename( $template_path ), array(

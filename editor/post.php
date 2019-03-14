@@ -671,7 +671,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @return mixed
 	 */
 	public function get_template() {
-		return get_post_meta( $this->get_id(), '_wp_page_template', true );
+		$get_post_meta = get_post_meta( $this->get_id(), '_wp_page_template', true );
+
+		return $get_post_meta;
 	}
 
 	/**

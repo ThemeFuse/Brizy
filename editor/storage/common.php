@@ -43,4 +43,30 @@ class Brizy_Editor_Storage_Common extends Brizy_Editor_Storage_Abstract {
 	protected function key() {
 		return self::KEY;
 	}
+
+
+	/**
+	 * @param $meta_type
+	 * @param $object_id
+	 * @param string $meta_key
+	 * @param bool $single
+	 *
+	 * @return mixed
+	 */
+	public function get_metadata( $object_id, $meta_key = '', $single = false ) {
+		return  (array) get_option( $meta_key, array() );
+	}
+
+	/**
+	 * @param $meta_type
+	 * @param $object_id
+	 * @param $meta_key
+	 * @param $meta_value
+	 * @param string $prev_value
+	 *
+	 * @return mixed
+	 */
+	public function update_metadata( $object_id, $meta_key, $meta_value, $prev_value = '' ) {
+		update_option($meta_key, $meta_value );
+	}
 }

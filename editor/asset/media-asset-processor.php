@@ -78,28 +78,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 				return $content;
 			}
 
-//			if ( ! $media_path ) {
-//
-//				// there may be cases when there is no attachment with uid due to old version of plugins
-//				// in this case we try to download the media and attach it to the current post
-//				try {
-//					// download media
-//					$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post_id );
-//					$media_cacher->download_original_image( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
-//					$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
-//				} catch ( Exception $e ) {
-//					continue;
-//				}
-//
-//				if ( ! $media_path ) {
-//					continue;
-//				}
-//			}
-
 			try {
-
-				//if($media_cache->hasCroptMedia($media_path, $params[ Brizy_Public_CropProxy::ENDPOINT_FILTER ])
-
 				$crop_media_path = $media_cache->crop_media( $media_path, $params[ Brizy_Public_CropProxy::ENDPOINT_FILTER ], false );
 
 				$urlBuilder      = new Brizy_Editor_UrlBuilder( $project, $post_id );
@@ -110,10 +89,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 			} catch ( Exception $e ) {
 				continue;
 			}
-
-
 		}
-
 		return $content;
 	}
 

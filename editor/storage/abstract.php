@@ -64,4 +64,26 @@ abstract class Brizy_Editor_Storage_Abstract {
 	 * @return array
 	 */
 	abstract public function get_storage();
+
+
+	/**
+	 * @param $meta_type
+	 * @param $object_id
+	 * @param string $meta_key
+	 * @param bool $single
+	 *
+	 * @return mixed
+	 */
+	abstract public function get_metadata($object_id, $meta_key = '', $single = false);
+
+	/**
+	 * @param $meta_type
+	 * @param $object_id
+	 * @param $meta_key
+	 * @param $meta_value
+	 * @param string $prev_value
+	 *
+	 * @return mixed
+	 */
+	abstract public function update_metadata($object_id, $meta_key, $meta_value, $prev_value = '');
 }
