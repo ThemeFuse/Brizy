@@ -85,7 +85,7 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	public function get_metadata( $object_id, $meta_key = '', $single = false ) {
 		global $wpdb;
 
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE meta_key=%s", $meta_key ) );
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE meta_key=%s AND post_id = %d", $meta_key, $object_id ) );
 
 		if ( $single && isset( $results[0] ) ) {
 			return maybe_unserialize( $results[0]->meta_value );
