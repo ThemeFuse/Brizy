@@ -19,6 +19,15 @@ abstract class Brizy_Editor_Storage_Abstract {
 		$storage         = $this->get_storage();
 		$storage[ $key ] = $value;
 		$this->update_storage( $storage );
+
+		return $this;
+	}
+
+	public function merge( $value ) {
+		$storage = $this->get_storage();
+		$storage = array_merge( $value, $storage );
+		$this->update_storage( $storage );
+
 		return $this;
 	}
 
@@ -74,7 +83,7 @@ abstract class Brizy_Editor_Storage_Abstract {
 	 *
 	 * @return mixed
 	 */
-	abstract public function get_metadata($object_id, $meta_key = '', $single = false);
+	abstract public function get_metadata( $object_id, $meta_key = '', $single = false );
 
 	/**
 	 * @param $meta_type
@@ -85,5 +94,5 @@ abstract class Brizy_Editor_Storage_Abstract {
 	 *
 	 * @return mixed
 	 */
-	abstract public function update_metadata($object_id, $meta_key, $meta_value, $prev_value = '');
+	abstract public function update_metadata( $object_id, $meta_key, $meta_value, $prev_value = '' );
 }

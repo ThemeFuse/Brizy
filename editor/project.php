@@ -216,6 +216,8 @@ class Brizy_Editor_Project implements Serializable {
 	/**
 	 * @param $key
 	 * @param $value
+	 *
+	 * @throws Exception
 	 */
 	public function setMetaValue( $key, $value ) {
 
@@ -225,10 +227,14 @@ class Brizy_Editor_Project implements Serializable {
 			throw new InvalidArgumentException( 'The key parameter should not be null' );
 		}
 
-		$this->storage->set( $key, $value );
-		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
-		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
-		$this->storage->set( 'updated', new DateTime() );
+		$data = array(
+			$key            => $value,
+			'pluginVersion' => BRIZY_VERSION,
+			'editorVersion' => BRIZY_EDITOR_VERSION,
+			'updated'       => new DateTime()
+		);
+
+		$this->storage->merge( $data );
 
 		// create project revision
 		// md5 it to make sure no one will use this data-- we need it only to make the revision
@@ -239,6 +245,8 @@ class Brizy_Editor_Project implements Serializable {
 
 	/**
 	 * @param $key
+	 *
+	 * @throws Exception
 	 */
 	public function removeMetaValue( $key ) {
 
@@ -247,9 +255,14 @@ class Brizy_Editor_Project implements Serializable {
 		}
 
 		$this->storage->delete( $key );
-		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
-		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
-		$this->storage->set( 'updated', new DateTime() );
+
+		$data = array(
+			'pluginVersion' => BRIZY_VERSION,
+			'editorVersion' => BRIZY_EDITOR_VERSION,
+			'updated'       => new DateTime()
+		);
+
+		$this->storage->merge( $data );
 
 		// create project revision
 		// md5 it to make sure no one will use this data-- we need it only to make the revision

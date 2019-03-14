@@ -339,7 +339,6 @@ class Brizy_Editor_API {
 				throw new Exception( "The received global data is invalid" );
 			}
 
-
 			//$post_id = (int) $this->param( 'post' );
 			$this->project->setGlobalsAsJson( $data );
 
