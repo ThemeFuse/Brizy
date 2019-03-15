@@ -25,7 +25,7 @@ abstract class Brizy_Editor_Storage_Abstract {
 
 	public function merge( $value ) {
 		$storage = $this->get_storage();
-		$storage = array_merge( $value, $storage );
+		$storage = array_merge( $storage, $value );
 		$this->update_storage( $storage );
 
 		return $this;

@@ -331,13 +331,13 @@ class Brizy_Editor_API {
 
 			// let's try to validate the global data
 			// by deserializing and checking the project and globals properties
-			$jsonData = json_decode( $data );
-			if ( is_null( $jsonData ) ) {
-				throw new Exception( "The received global json cannot be decoded" );
-			}
-			if ( ! is_object( $jsonData ) || ! isset( $jsonData->project ) || ! isset( $jsonData->language ) ) {
-				throw new Exception( "The received global data is invalid" );
-			}
+//			$jsonData = json_decode( $data );
+//			if ( is_null( $jsonData ) ) {
+//				throw new Exception( "The received global json cannot be decoded" );
+//			}
+//			if ( ! is_object( $jsonData ) || ! isset( $jsonData->project ) || ! isset( $jsonData->language ) ) {
+//				throw new Exception( "The received global data is invalid" );
+//			}
 
 			//$post_id = (int) $this->param( 'post' );
 			$this->project->setGlobals( $data );
@@ -628,7 +628,7 @@ class Brizy_Editor_API {
 
 		$globals = array(
 			'id'        => $this->project->getId(),
-			'gb'        => $this->project->getGlobals(),
+			'gb'        => json_decode($this->project->getGlobals()),
 			'name'      => $wp_post->post_name,
 			'createdAt' => $wp_post->post_date,
 			'updatedAt' => $wp_post->post_date,

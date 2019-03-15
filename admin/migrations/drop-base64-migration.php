@@ -8,7 +8,7 @@ class Brizy_Admin_Migrations_DropBase64Migration implements Brizy_Admin_Migratio
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.64';
+		return '1.0.65';
 	}
 
 	/**
@@ -17,7 +17,9 @@ class Brizy_Admin_Migrations_DropBase64Migration implements Brizy_Admin_Migratio
 	 */
 	public function execute() {
 
-		if($this->wasExecuted()) return;
+		if ( $this->wasExecuted() ) {
+			return;
+		}
 
 		global $wpdb;
 
@@ -37,9 +39,13 @@ class Brizy_Admin_Migrations_DropBase64Migration implements Brizy_Admin_Migratio
 						$meta_id    = (int) $row['meta_id'];
 						$post_id    = (int) $row['post_id'];
 
+						if ( is_null( $meta_value['globals'] ) || $meta_value['globals'] == '' ) {
+							continue;
+						}
+
 						$globals_decode = base64_decode( $meta_value['globals'] );
 						if ( $globals_decode ) {
-							$meta_value['globals'] =  $globals_decode ;
+							$meta_value['globals'] = $globals_decode;
 						} else {
 							throw new Exception( 'unable to base64 decode the global data' );
 						}
@@ -76,17 +82,21 @@ class Brizy_Admin_Migrations_DropBase64Migration implements Brizy_Admin_Migratio
 						$meta_id    = (int) $row['meta_id'];
 						$post_id    = (int) $row['post_id'];
 
+						if ( is_null( $meta_value['brizy-post']['editor_data'] ) || $meta_value['brizy-post']['editor_data'] == '' ) {
+							continue;
+						}
+
 						$editor_data_decode = base64_decode( $meta_value['brizy-post']['editor_data'] );
 
 						if ( $editor_data_decode ) {
-							$meta_value['brizy-post']['editor_data'] =  $editor_data_decode ;
+							$meta_value['brizy-post']['editor_data'] = $editor_data_decode;
 						} else {
 							throw new Exception( 'unable to base64 decode the editor data' );
 						}
 
 						$compiled_html_decode = base64_decode( $meta_value['brizy-post']['compiled_html'] );
 						if ( $compiled_html_decode ) {
-							$meta_value['brizy-post']['compiled_html'] =  $compiled_html_decode ;
+							$meta_value['brizy-post']['compiled_html'] = $compiled_html_decode;
 						}
 
 						if ( isset( $meta_value[0] ) ) {
@@ -109,13 +119,15 @@ class Brizy_Admin_Migrations_DropBase64Migration implements Brizy_Admin_Migratio
 	}
 
 	public function wasExecuted() {
-		$storage = new Brizy_Admin_Migrations_GlobalStorage();
-		$migrations  = $storage->getMigrations();
+		$storage    = new Brizy_Admin_Migrations_GlobalStorage();
+		$migrations = $storage->getMigrations();
 
-		foreach($migrations as $migration)
-			if( get_class($migration) == get_class($this) ) {
+		foreach ( $migrations as $migration ) {
+			if ( get_class( $migration ) == get_class( $this ) ) {
 				return true;
 			}
+		}
+
 		return false;
 	}
 }
