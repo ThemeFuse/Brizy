@@ -340,7 +340,7 @@ class Brizy_Editor_API {
 			}
 
 			//$post_id = (int) $this->param( 'post' );
-			$this->project->setGlobalsAsJson( $data );
+			$this->project->setGlobals( $data );
 
 			// mark all brizy post to be compiled on next view
 			$posts = Brizy_Editor_Post::get_all_brizy_posts();

@@ -210,21 +210,21 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public function convertToOptionValue() {
 
 		return array(
-			'compiled_html'                    => $this->get_encoded_compiled_html(),
+			'compiled_html'                    => $this->get_compiled_html(),
 			'compiled_html_body'               => $this->get_compiled_html_body(),
 			'compiled_html_head'               => $this->get_compiled_html_head(),
 			'needs_compile'                    => $this->needs_compile,
 			'editor_version'                   => $this->editor_version,
 			'compiler_version'                 => $this->compiler_version,
 			'plugin_version'                   => $this->plugin_version,
-			'editor_data'                      => $this->editor_data,
+			'editor_data'                      => $this->get_editor_data(),
 			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor
 		);
 	}
 
 	public function loadStorageData( $data ) {
 		if ( isset( $data['compiled_html'] ) ) {
-			$this->set_encoded_compiled_html( $data['compiled_html'] );
+			$this->set_compiled_html( $data['compiled_html'] );
 		}
 
 		if ( isset( $data['compiled_html_body'] ) ) {
@@ -411,11 +411,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_editor_data( $content ) {
 
-		if ( base64_encode( base64_decode( $content, true ) ) === $content ) {
-			$this->editor_data = $content;
-		} else {
-			$this->editor_data = base64_encode( $content );
-		}
+		$this->editor_data = $content;
 
 		return $this;
 	}
@@ -451,30 +447,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return $this;
 	}
 
-
-	/**
-	 * @param $compiled_html
-	 *
-	 * @return $this
-	 */
-	public function set_encoded_compiled_html( $compiled_html ) {
-
-		if ( base64_encode( base64_decode( $compiled_html, true ) ) === $compiled_html ) {
-			$this->set_compiled_html( base64_decode( $compiled_html, true ) );
-		} else {
-			$this->set_compiled_html( $compiled_html );
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_encoded_compiled_html() {
-
-		return base64_encode( $this->get_compiled_html() );
-	}
 
 	/**
 	 * @deprecated use get_compiled_html

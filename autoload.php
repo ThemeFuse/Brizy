@@ -19,7 +19,7 @@ function brizy_autoload( $class_name ) {
 	}
 
 	$matches = array();
-	preg_match_all( '/(.[a-z]+|.[A-Z]+|.[A-Z].[a-z]+)/', $last_part, $matches );
+	preg_match_all( '/(.[a-z0-9]+|.[A-Z0-9]+|.[A-Z0-9].[a-z0-9]+)/', $last_part, $matches );
 
 	if ( count( $matches[1] ) > 1 ) {
 		$file_name = strtolower( implode( '-', $matches[1] ) );

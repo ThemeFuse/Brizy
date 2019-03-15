@@ -33,9 +33,9 @@ class Brizy_Admin_Migrations {
 		$latestExecutedVersion   = $latestExecutedMigration->getVersion();
 		$latestMigrationVersion  = end( $migrations );
 
-		$version_compare = version_compare( $version, $latestExecutedVersion );
+		$version_compare = version_compare( $version, $latestExecutedVersion, ">" );
 
-		if ( $version_compare === 1 && $latestMigrationVersion->getVersion() != $latestExecutedMigration->getVersion() ) {
+		if ( $version_compare && $latestMigrationVersion->getVersion() != $latestExecutedMigration->getVersion() ) {
 			$this->upgradeTo( $version );
 		}
 	}

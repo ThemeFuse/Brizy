@@ -200,7 +200,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 					'is_index' => true
 				)
 			) ), // ???
-			'globals_json'          => $project->getGlobalsAsJson(),
+			'globals_json'          => $project->getGlobals(),
 			'page_id'               => 1
 		));
 		$page = parent::request( $compiler_url, array( 'body' => $body ), 'POST' )->get_response_body();

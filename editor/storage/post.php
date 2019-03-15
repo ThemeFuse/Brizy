@@ -110,7 +110,7 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 		$shouldInsert = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id = %d", $meta_key, $object_id ) );
 		$meta_type    = 'post';
 		$meta_subtype = get_object_subtype( $meta_type, $object_id );
-		$meta_value   = sanitize_meta( $meta_key, $meta_value, $meta_type, $meta_subtype );
+		//$meta_value   = sanitize_meta( $meta_key, $meta_value, $meta_type, $meta_subtype );
 
 		if ( count( $shouldInsert ) == 0 ) {
 			$data = array(

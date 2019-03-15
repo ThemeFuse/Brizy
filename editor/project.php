@@ -137,7 +137,7 @@ class Brizy_Editor_Project implements Serializable {
 		$project_data = array(
 			'id'            => md5( uniqid( 'Local project', true ) ),
 			'title'         => 'Brizy Project',
-			'globals'       => base64_encode( '{"project":{},"language":{}}' ),
+			'globals'       => '{"project":{},"language":{}}',
 			'name'          => uniqid( 'Local project', true ),
 			'user'          => null,
 			'template'      => array( 'slug' => 'brizy' ),
@@ -169,37 +169,28 @@ class Brizy_Editor_Project implements Serializable {
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	public function getGlobals() {
-		return json_decode( base64_decode( $this->getMetaValue( 'globals' ) ) );
+		return $this->getMetaValue( 'globals' );
 	}
 
 	/**
 	 * @param $globals
 	 *
 	 * @return $this
+	 * @throws Exception
 	 */
 	public function setGlobals( $globals ) {
-		$this->setGlobalsAsJson( json_encode( $globals ) );
+		$this->setMetaValue( 'globals', $globals );
 
 		return $this;
 	}
 
-	/**
-	 * @param $globals
-	 *
-	 * @return $this
-	 */
-	public function setGlobalsAsJson( $globals ) {
-		$this->setMetaValue( 'globals', base64_encode( $globals ) );
-
-		return $this;
-	}
 
 	/**
 	 * @return bool|string
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	public function getGlobalsAsJson() {
-		return base64_decode( $this->getMetaValue( 'globals' ) );
+		return $this->getMetaValue( 'globals' );
 	}
 
 
@@ -266,7 +257,7 @@ class Brizy_Editor_Project implements Serializable {
 
 		// create project revision
 		// md5 it to make sure no one will use this data-- we need it only to make the revision
-		$this->post->post_content = md5( serialize( $this->storage->get_storage() ) );
+		$this->post->post_content = md5( serialize( time() ) );
 		wp_update_post( $this->post );
 	}
 
