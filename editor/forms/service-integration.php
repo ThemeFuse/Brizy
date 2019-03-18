@@ -126,6 +126,43 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 		return $instance;
 	}
 
+	static public function createFromSerializedData( $data ) {
+		$instance = new self( $data['id'] );
+
+		if ( isset( $data['completed'] ) ) {
+			$instance->setCompleted( $data['completed'] );
+		}
+
+		if ( isset( $data['fields'] ) ) {
+			foreach ( $data['fields'] as $field ) {
+				$instance->addField( Brizy_Editor_Forms_Field::createFromSerializedData( $field ) );
+			}
+		}
+		if ( isset( $data['lists'] ) ) {
+			foreach ( $data['lists'] as $lists ) {
+				$instance->addList( Brizy_Editor_Forms_Group::createFromSerializedData( $lists ) );
+			}
+		}
+		if ( isset( $data['usedAccount'] ) ) {
+			$instance->setUsedAccount( $data['usedAccount'] );
+		}
+		if ( isset( $data['usedList'] ) ) {
+			$instance->setUsedList( $data['usedList'] );
+		}
+		if ( isset( $data['usedFolder'] ) ) {
+			$instance->setUsedFolder( $data['usedFolder'] );
+		}
+		if ( isset( $data['fieldsMap'] ) ) {
+			$instance->setFieldsMap( $data['fieldsMap'] );
+		}
+		if ( isset( $data['confirmationNeeded'] ) ) {
+			$instance->setConfirmationNeeded( $data['confirmationNeeded'] );
+		}
+		if ( isset( $data['hasConfirmation'] ) ) {
+			$instance->setHasConfirmation( $data['hasConfirmation'] );
+		}
+		return $instance;
+	}
 
 	/**
 	 * @param Brizy_Editor_Forms_Group $list

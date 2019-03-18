@@ -16,7 +16,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	/**
 	 * Brizy_Editor_Forms_WordpressIntegration constructor.
 	 */
-	public function __construct( ) {
+	public function __construct() {
 		parent::__construct( 'wordpress' );
 	}
 
@@ -31,6 +31,24 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		$get_object_vars['subject'] = $this->getSubject();
 
 		return $get_object_vars;
+	}
+
+	static public function createFromSerializedData( $data ) {
+		$instance = new self( $data['id'] );
+
+		if ( isset( $data['completed'] ) ) {
+			$instance->setCompleted( $data['completed'] );
+		}
+
+		if ( isset( $data['emailTo'] ) ) {
+			$instance->setEmailTo( $data['emailTo'] );
+		}
+
+		if ( isset( $data['subject'] ) ) {
+			$instance->setSubject( $data['subject'] );
+		}
+
+		return $instance;
 	}
 
 	/**

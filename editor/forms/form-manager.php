@@ -21,7 +21,7 @@ class Brizy_Editor_Forms_FormManager {
 	public function __construct( Brizy_Editor_Project $project ) {
 		$this->project = $project;
 		try {
-			$this->forms = $project->getMetaValue( 'forms' );
+			$this->loadStorage();
 		} catch ( Exception $exception ) {
 			$this->forms = array();
 		}
@@ -70,7 +70,33 @@ class Brizy_Editor_Forms_FormManager {
 		$this->updateStorage();
 	}
 
+	/**
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	private function loadStorage() {
+		$data = $this->project->getMetaValue( 'forms' );
+
+		if ( ! $data ) {
+			$data = array();
+		}
+
+		foreach ( $data as $id => $form_data ) {
+
+			if ( $form_data instanceof Brizy_Editor_Forms_Form ) {
+				$this->forms[ $id ] = $form_data;
+			} elseif ( is_array( $form_data ) ) {
+				$this->forms[ $id ] = Brizy_Editor_Forms_Form::createFromSerializedData( $form_data );
+			}
+
+		}
+	}
+
 	private function updateStorage() {
-		$this->project->setMetaValue( 'forms', $this->forms );
+
+		$data = array();
+		foreach ( $this->forms as $id => $form ) {
+			$data[ $id ] = $form->convertToOptionValue();
+		}
+		$this->project->setMetaValue( 'forms', $data );
 	}
 }

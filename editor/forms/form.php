@@ -17,29 +17,49 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 * @return string
 	 */
 	public function serialize() {
-		return serialize( $this->jsonSerialize() );
+		$get_object_vars = array(
+			'id' => $this->id,
+		);
+
+		foreach ( $this->integrations as $integration ) {
+			$get_object_vars['integrations'][] = $integration->convertToOptionValue();
+		}
+
+		return $get_object_vars;
 	}
 
 	public function jsonSerialize() {
 		$get_object_vars = array(
 			'id'           => $this->id,
-			'integrations' => $this->integrations,
+			'integrations' => $this->integrations
 		);
 
 		return $get_object_vars;
 	}
 
 	public function convertToOptionValue() {
-		return array(
+		$get_object_vars = array(
 			'id'           => $this->id,
-			'integrations' => $this->integrations,
 		);
+
+		foreach ( $this->integrations as $integration ) {
+			$get_object_vars['integrations'][] = $integration->convertToOptionValue();
+		}
+
+		return $get_object_vars;
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$instance               = new self();
-		$instance->id           = $data['id'];
-		$instance->integrations = $data['integrations'];
+		$instance     = new self();
+		$instance->id = $data['id'];
+
+		foreach ( $data['integrations'] as $integration ) {
+			$brizy_editor_forms_wordpress_integration = Brizy_Editor_Forms_AbstractIntegration::createFromSerializedData( $integration );
+
+			if ( $brizy_editor_forms_wordpress_integration ) {
+				$instance->integrations[] = $brizy_editor_forms_wordpress_integration;
+			}
+		}
 
 		return $instance;
 	}
@@ -101,7 +121,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 		if ( is_object( $json_obj ) ) {
 
 			$instance->setId( $json_obj->id );
-
 
 			// add uncompleted wordpress integration
 			$current_user   = wp_get_current_user();
