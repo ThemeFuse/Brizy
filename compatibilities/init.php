@@ -42,5 +42,28 @@ class Brizy_Compatibilities_Init {
 		if ( function_exists( 'domain_mapping_siteurl' ) ) {
 			new Brizy_Compatibilities_WordpressMuDomainMapping();
 		}
+
+		if ( $this->is_plugin_active( 'sg-cachepress/sg-cachepress.php' ) ) {
+			new Brizy_Compatibilities_SgOptimizer();
+		}
+	}
+
+	private function is_plugin_active( $plugin_file ) {
+
+		if ( in_array( $plugin_file, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+			return true;
+		}
+
+		if ( ! is_multisite() ) {
+			return false;
+		}
+
+		$plugins = get_site_option( 'active_sitewide_plugins' );
+
+		if ( isset( $plugins[ $plugin_file ] ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }

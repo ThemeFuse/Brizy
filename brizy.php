@@ -30,7 +30,6 @@ define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 100 );
 include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/autoload.php';
 
 add_action( 'plugins_loaded', 'brizy_load' );
-add_action( 'plugins_loaded', 'brizy_load_compatibilities', 0 );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 
 register_activation_hook( BRIZY_FILE, 'brizy_install' );
@@ -45,10 +44,6 @@ function brizy_load() {
 	}
 
 	$instance = Brizy_Editor::get();
-}
-
-function brizy_load_compatibilities() {
-	new Brizy_Compatibilities_Init();
 }
 
 function brizy_notices() {
@@ -82,3 +77,4 @@ function brizy_clean() {
 	Brizy_Logger::clean();
 }
 
+new Brizy_Compatibilities_Init();
