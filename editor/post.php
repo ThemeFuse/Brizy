@@ -94,6 +94,10 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function __construct( $wp_post_id ) {
 
+		if(is_null($wp_post_id)) {
+			throw new Exception('Invalid post id');
+		}
+
 		self::checkIfPostTypeIsSupported( $wp_post_id );
 		$this->wp_post_id = (int) $wp_post_id;
 
