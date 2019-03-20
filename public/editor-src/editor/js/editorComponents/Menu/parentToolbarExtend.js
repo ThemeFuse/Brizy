@@ -1,8 +1,12 @@
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  defaultValueValue,
+  tabletSyncOnChange,
+  mobileSyncOnChange
+} from "visual/utils/onChange";
 import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 const configMenuValue = Config.get("menuData");
@@ -40,7 +44,12 @@ const getMenu = ({ menuSelected }) => {
 };
 
 export function getItemsForDesktop(v) {
-  const { hex: mMenuIconColorHex } = getOptionColor(v, "mMenuIconColor");
+  const device = "desktop";
+
+  const { hex: mMenuIconColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "mMenuIconColorHex", device }),
+    defaultValueValue({ v, key: "mMenuIconColorPalette", device })
+  );
 
   return [
     {
@@ -278,7 +287,7 @@ export function getItemsForDesktop(v) {
               id: "moreSettingsAdvanced",
               label: t("Advanced"),
               tabIcon: "nc-cog",
-              options: []
+              options: [toolbarCustomCSS({ v })]
             }
           ]
         }
@@ -288,10 +297,12 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
-  const { hex: tabletMMenuIconColorHex } =
-    v.tabletMMenuIconColorHex !== null
-      ? getOptionColor(v, "tabletMMenuIconColor")
-      : getOptionColor(v, "mMenuIconColor");
+  const device = "tablet";
+
+  const { hex: tabletMMenuIconColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "mMenuIconColorHex", device }),
+    defaultValueValue({ v, key: "mMenuIconColorPalette", device })
+  );
 
   return [
     {
@@ -513,10 +524,12 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
-  const { hex: mobileMMenuIconColorHex } =
-    v.mobileMMenuIconColorHex !== null
-      ? getOptionColor(v, "mobileMMenuIconColor")
-      : getOptionColor(v, "mMenuIconColor");
+  const device = "mobile";
+
+  const { hex: mobileMMenuIconColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "mMenuIconColorHex", device }),
+    defaultValueValue({ v, key: "mMenuIconColorPalette", device })
+  );
 
   return [
     {

@@ -19,6 +19,10 @@ export default function() {
     if (clickedInsideContent) {
       $(this).removeClass("brz-popup--opened");
       $("html").removeClass("brz-ow-hidden");
+
+      var video = $(".brz-video .brz-iframe").attr("src");
+      $(".brz-video .brz-iframe").attr("src", "");
+      $(".brz-video .brz-iframe").attr("src", video);
     }
   });
 }

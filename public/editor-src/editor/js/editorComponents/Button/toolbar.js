@@ -1,8 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
+  defaultValueValue,
   onChangeTypography,
   onChangeTypographyTablet,
   onChangeTypographyMobile,
@@ -50,13 +51,39 @@ export function getItemsForDesktop(v) {
   );
 
   // Colors
-  const { hex: bgColorHex } = getOptionColor(v, "bgColor");
-  const { hex: colorHex } = getOptionColor(v, "color");
-  const { hex: borderColorHex } = getOptionColor(v, "borderColor");
-  const { hex: hoverBgColorHex } = getOptionColor(v, "hoverBgColor");
-  const { hex: hoverColorHex } = getOptionColor(v, "hoverColor");
-  const { hex: hoverBorderColorHex } = getOptionColor(v, "hoverBorderColor");
-  const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "colorHex", device }),
+    defaultValueValue({ v, key: "colorPalette", device })
+  );
+  const { hex: borderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
+
+  const { hex: hoverBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "hoverBgColorHex", device }),
+    defaultValueValue({ v, key: "hoverBgColorPalette", device })
+  );
+
+  const { hex: hoverColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "hoverColorHex", device }),
+    defaultValueValue({ v, key: "hoverColorPalette", device })
+  );
+
+  const { hex: hoverBorderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "hoverBorderColorHex", device }),
+    defaultValueValue({ v, key: "hoverBorderColorPalette", device })
+  );
+
+  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device })
+  );
 
   return [
     {
@@ -2009,11 +2036,6 @@ export function getItemsForDesktop(v) {
           value: v.linkType,
           tabs: [
             {
-              id: "anchor",
-              label: t("Anchor"),
-              options: [toolbarLinkAnchor({ v })]
-            },
-            {
               id: "external",
               label: t("URL"),
               options: [
@@ -2021,6 +2043,11 @@ export function getItemsForDesktop(v) {
                 toolbarLinkExternalBlank({ v }),
                 toolbarLinkExternalRel({ v })
               ]
+            },
+            {
+              id: "anchor",
+              label: t("Anchor"),
+              options: [toolbarLinkAnchor({ v })]
             }
           ]
         }

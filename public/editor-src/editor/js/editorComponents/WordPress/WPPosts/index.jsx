@@ -6,7 +6,6 @@ import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";
-import * as parentToolbarExtend from "./parentExtendToolbar";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -16,14 +15,6 @@ class WPPosts extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
-
-  componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
-    this.props.extendParentToolbar(toolbarExtend);
-  }
 
   handleResizerChange = patch => this.patchValue(patch);
 

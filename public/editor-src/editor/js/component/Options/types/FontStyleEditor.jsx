@@ -250,7 +250,7 @@ class FontStyle extends React.Component {
                                   },
                                   {
                                     id: "tabletLetterSpacing",
-                                    label: "Letter Spc.",
+                                    label: "Letter Sp.",
                                     type: "stepper",
                                     display: "block",
                                     min: -20,

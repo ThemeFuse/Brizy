@@ -164,6 +164,7 @@ gulp.task(
     "editor.fonts",
     "editor.icons",
     "editor.img",
+    "editor.polyfill",
     "editor.twig"
   ],
   done => {
@@ -256,6 +257,16 @@ gulp.task("editor.img", () => {
   const dest = paths.build + "/editor/img";
 
   gulp.src(src).pipe(gulp.dest(dest));
+});
+gulp.task("editor.polyfill", () => {
+  const src = paths.editor + "/polyfill/**/*.js";
+  const dest = paths.build + "/editor/js";
+
+  gulp
+    .src(src)
+    .pipe(gulpPlugins.if(IS_PRODUCTION, gulpPlugins.terser()))
+    .pipe(gulpPlugins.concat("polyfill.js"))
+    .pipe(gulp.dest(dest));
 });
 gulp.task("editor.twig", done => {
   const src = paths.editor + "/templates/editor.html.twig";
@@ -503,15 +514,15 @@ gulp.task("pro.block-thumbs", done => {
     });
 });
 gulp.task("pro.template-thumbs", done => {
-  const src = paths.template + "/pro/templates/**/Preview.jpg";
+  const src = paths.template + "/pro/templates/*/**/Preview.jpg";
   const dest = paths.buildPro + "/img-template-thumbs";
 
   gulp
     .src(src)
     .pipe(
-      gulpPlugins.rename(path => {
-        path.basename = path.dirname;
-        path.dirname = "";
+      gulpPlugins.rename(path_ => {
+        path_.basename = path_.dirname.replace(path.sep, "");
+        path_.dirname = "";
       })
     )
     .pipe(gulp.dest(dest))

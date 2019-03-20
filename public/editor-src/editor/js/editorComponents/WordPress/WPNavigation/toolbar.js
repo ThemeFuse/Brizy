@@ -1,7 +1,8 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { getFontStyle, getWeight, getWeightChoices } from "visual/utils/fonts";
 import {
+  defaultValueValue,
   onChangeTypography,
   onChangeTypographyTablet,
   onChangeTypographyMobile,
@@ -9,7 +10,6 @@ import {
   mobileSyncOnChange
 } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 export default menus => {
   const menuList = menus.map(item => ({ title: item.name, value: item.slug }));
@@ -22,13 +22,17 @@ export default menus => {
 };
 
 const getItemsForDesktop = menuList => v => {
+  const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
   // Colors
-  const { hex: colorHex } = getOptionColor(v, "color");
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "colorHex", device }),
+    defaultValueValue({ v, key: "colorPalette", device })
+  );
 
   return [
     {
@@ -261,29 +265,7 @@ const getItemsForDesktop = menuList => v => {
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
-      options: [
-        {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      options: []
     }
   ];
 };

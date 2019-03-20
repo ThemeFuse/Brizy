@@ -1,7 +1,14 @@
-import { getOptionColor, getTaxonomies } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getTaxonomies
+} from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  tabletSyncOnChange,
+  mobileSyncOnChange
+} from "visual/utils/onChange";
 import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 const getToolbarArchives = v => [
@@ -263,7 +270,12 @@ const getToolbarPosts = v => [
 ];
 
 export function getItemsForDesktop(v) {
-  const { hex: paginationColorHex } = getOptionColor(v, "paginationColor");
+  const device = "desktop";
+
+  const { hex: paginationColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "paginationColorHex", device }),
+    defaultValueValue({ v, key: "paginationColorPalette", device })
+  );
 
   return [
     ...(v.type === "archives" ? getToolbarArchives(v) : getToolbarPosts(v)),

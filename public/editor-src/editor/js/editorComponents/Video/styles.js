@@ -190,7 +190,7 @@ export function wrapperStyleClassName(v) {
         backgroundImage: "var(--imageSrc)",
         backgroundPositionX: "var(--coverPositionX)",
         backgroundPositionY: "var(--coverPositionY)",
-        backgroundSize: "var(--coverZoom)"
+        backgroundSize: "var(--coverZoom)",
       },
       "& .brz-video__cover .brz-video__cover-icon": {
         fontSize: "var(--iconFontSize)",

@@ -1,5 +1,5 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 import {
   defaultValueValue,
@@ -23,7 +23,11 @@ import {
 
 export function getItemsForDesktop(v, component) {
   const device = "desktop";
-  const { hex: bgColorHex } = getOptionColor(v, "bgColor");
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
 
   return [
     {
@@ -425,10 +429,11 @@ export function getItemsForDesktop(v, component) {
 export function getItemsForTablet(v) {
   const device = "tablet";
   const state = "normal";
-  const { hex: tabletBgColorHex } =
-    v.tabletBgColorHex !== null
-      ? getOptionColor(v, "tabletBgColor")
-      : getOptionColor(v, "bgColor");
+
+  const { hex: tabletBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
 
   return [
     {
@@ -621,10 +626,11 @@ export function getItemsForTablet(v) {
 export function getItemsForMobile(v) {
   const device = "mobile";
   const state = "normal";
-  const { hex: mobileBgColorHex } =
-    v.mobileBgColorHex !== null
-      ? getOptionColor(v, "mobileBgColor")
-      : getOptionColor(v, "bgColor");
+
+  const { hex: mobileBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
 
   return [
     {

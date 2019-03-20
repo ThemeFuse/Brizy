@@ -1,7 +1,8 @@
 import { hexToRgba } from "visual/utils/color";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
+  defaultValueValue,
   onChangeTypography,
   onChangeTypographyTablet,
   onChangeTypographyMobile,
@@ -102,11 +103,25 @@ const onChangeCustomTypography = (oldValue, newValue, onChange, keysMap) => {
 };
 
 const getMMenuToolbarColor = v => {
+  const device = "desktop";
   // Colors
-  const { hex: mMenuColorHex } = getOptionColor(v, "mMenuColor");
-  const { hex: mMenuHoverColorHex } = getOptionColor(v, "mMenuHoverColor");
-  const { hex: mMenuBgColorHex } = getOptionColor(v, "mMenuBgColor");
-  const { hex: mMenuBorderColorHex } = getOptionColor(v, "mMenuBorderColor");
+
+  const { hex: mMenuColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "mMenuColorHex", device }),
+    defaultValueValue({ v, key: "mMenuColorPalette", device })
+  );
+  const { hex: mMenuHoverColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "mMenuHoverColorHex", device }),
+    defaultValueValue({ v, key: "mMenuHoverColorPalette", device })
+  );
+  const { hex: mMenuBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "mMenuBgColorHex", device }),
+    defaultValueValue({ v, key: "mMenuBgColorPalette", device })
+  );
+  const { hex: mMenuBorderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "mMenuBorderColorHex", device }),
+    defaultValueValue({ v, key: "mMenuBorderColorPalette", device })
+  );
 
   return [
     {
@@ -771,20 +786,38 @@ const getToolbar = v => {
       : renameKeys(subMenuKeys, getFontStyle(subMenuFontStyle));
 
   // Colors
-  const { hex: colorHex } = getOptionColor(v, "color");
-  const { hex: hoverColorHex } = getOptionColor(v, "hoverColor");
-  const { hex: subMenuColorHex } = getOptionColor(v, "subMenuColor");
-  const { hex: subMenuHoverColorHex } = getOptionColor(v, "subMenuHoverColor");
-  const { hex: subMenuBgColorHex } = getOptionColor(v, "subMenuBgColor");
-  const { hex: subMenuHoverBgColorHex } = getOptionColor(
-    v,
-    "subMenuHoverBgColor"
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "colorHex", device }),
+    defaultValueValue({ v, key: "colorPalette", device })
   );
-  const { hex: subMenuBorderColorHex } = getOptionColor(
-    v,
-    "subMenuBorderColor"
+  const { hex: hoverColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "hoverColorHex", device }),
+    defaultValueValue({ v, key: "hoverColorPalette", device })
   );
-  const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
+  const { hex: subMenuColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "subMenuColorHex", device }),
+    defaultValueValue({ v, key: "subMenuColorPalette", device })
+  );
+  const { hex: subMenuHoverColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "subMenuHoverColorHex", device }),
+    defaultValueValue({ v, key: "subMenuHoverColorPalette", device })
+  );
+  const { hex: subMenuBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "subMenuBgColorHex", device }),
+    defaultValueValue({ v, key: "subMenuBgColorPalette", device })
+  );
+  const { hex: subMenuHoverBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "subMenuHoverBgColorHex", device }),
+    defaultValueValue({ v, key: "subMenuHoverBgColorPalette", device })
+  );
+  const { hex: subMenuBorderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "subMenuBorderColorHex", device }),
+    defaultValueValue({ v, key: "subMenuBorderColorPalette", device })
+  );
+  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device })
+  );
 
   return [
     {

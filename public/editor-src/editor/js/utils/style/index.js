@@ -120,3 +120,15 @@ export { styleElementLineBorderWidth } from "./styleElementLine";
 
 // Element Column
 export { styleElementColumnMinHeight } from "./styleElementColumn";
+
+// Element Cloneable
+export {
+  styleItemPaddingTop,
+  styleItemPaddingRight,
+  styleItemPaddingBottom,
+  styleItemPaddingLeft,
+  styleItemMarginTop,
+  styleItemMarginRight,
+  styleItemMarginBottom,
+  styleItemMarginLeft
+} from "./styleItemPadding";

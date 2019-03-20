@@ -37,7 +37,6 @@ export default class Menu extends EditorComponent {
       parentToolbarExtendConfig,
       {
         allowExtend: false,
-        filterExtendName: `${this.constructor.componentId}_parent`
       }
     );
     this.props.extendParentToolbar(parentToolbarExtend);

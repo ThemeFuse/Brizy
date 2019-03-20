@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { preloadImage } from "visual/utils/image";
 
@@ -14,7 +15,9 @@ export default class LazyLoadImage extends Component {
     observerRootSelector: null,
     observerRootMargin: "0px",
     observerThreshold: [0],
-    spinnerDelay: 250
+    spinnerDelay: 250,
+    style: {},
+    onImageLoaded: _.noop
   };
 
   state = {
@@ -85,7 +88,10 @@ export default class LazyLoadImage extends Component {
           }
 
           if (instance.mounted) {
-            instance.setState({ imageFetched: true, showSpinner: false });
+            instance.setState(
+              { imageFetched: true, showSpinner: false },
+              instance.props.onImageLoaded()
+            );
           }
         });
       }
@@ -93,7 +99,7 @@ export default class LazyLoadImage extends Component {
   };
 
   render() {
-    const { width, height, src } = this.props;
+    const { width, height, src, style } = this.props;
     const { imageFetched, showSpinner } = this.state;
     const ratio = Math.round((height / width) * 100 * 10) / 10;
 
@@ -105,7 +111,12 @@ export default class LazyLoadImage extends Component {
           </div>
         )}
         {imageFetched && (
-          <img className="brz-img" src={src} alt="lazyLoad Image" />
+          <img
+            className="brz-img"
+            style={style}
+            src={src}
+            alt="lazyLoad Image"
+          />
         )}
       </div>
     );

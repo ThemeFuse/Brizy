@@ -3,6 +3,17 @@ import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
+import {
+  styleItemPaddingTop,
+  styleItemPaddingRight,
+  styleItemPaddingBottom,
+  styleItemPaddingLeft,
+  styleItemMarginTop,
+  styleItemMarginRight,
+  styleItemMarginBottom,
+  styleItemMarginLeft
+} from "visual/utils/style";
+
 const aligns = {
   left: "flex-start",
   center: "center",
@@ -296,31 +307,42 @@ export function containerStyleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       flex: "1 1 auto",
-      marginTop: "var(--itemMarginTop)",
-      marginRight: "var(--itemMarginRight)",
-      marginBottom: "var(--itemMarginBottom)",
-      marginLeft: "var(--itemMarginLeft)",
 
       ".brz-ed--desktop &": {
         justifyContent: "var(--horizontalAlign)",
         paddingTop: "var(--paddingTop)",
         paddingRight: "var(--paddingRight)",
         paddingBottom: "var(--paddingBottom)",
-        paddingLeft: "var(--paddingLeft)"
+        paddingLeft: "var(--paddingLeft)",
+
+        marginTop: "var(--itemMarginTop)",
+        marginRight: "var(--itemMarginRight)",
+        marginBottom: "var(--itemMarginBottom)",
+        marginLeft: "var(--itemMarginLeft)"
       },
       ".brz-ed--tablet &": {
         justifyContent: "var(--tabletHorizontalAlign)",
         paddingTop: "var(--tabletPaddingTop)",
         paddingRight: "var(--tabletPaddingRight)",
         paddingBottom: "var(--tabletPaddingBottom)",
-        paddingLeft: "var(--tabletPaddingLeft)"
+        paddingLeft: "var(--tabletPaddingLeft)",
+
+        marginTop: "var(--tabletItemMarginTop)",
+        marginRight: "var(--tabletItemMarginRight)",
+        marginBottom: "var(--tabletItemMarginBottom)",
+        marginLeft: "var(--tabletItemMarginLeft)"
       },
       ".brz-ed--mobile &": {
         justifyContent: "var(--mobileHorizontalAlign)",
         paddingTop: "var(--mobilePaddingTop)",
         paddingRight: "var(--mobilePaddingRight)",
         paddingBottom: "var(--mobilePaddingBottom)",
-        paddingLeft: "var(--mobilePaddingLeft)"
+        paddingLeft: "var(--mobilePaddingLeft)",
+
+        marginTop: "var(--mobileItemMarginTop)",
+        marginRight: "var(--mobileItemMarginRight)",
+        marginBottom: "var(--mobileIMarginBottom)",
+        marginLeft: "var(--mobileItemMarginLeft)"
       }
     };
   } else {
@@ -337,10 +359,6 @@ export function containerStyleClassName(v) {
       paddingBottomSuffix,
       paddingLeft,
       paddingLeftSuffix,
-      itemPaddingTop,
-      itemPaddingRight,
-      itemPaddingBottom,
-      itemPaddingLeft,
 
       // Tablet
       tabletPaddingType,
@@ -388,10 +406,23 @@ export function containerStyleClassName(v) {
           ? padding + paddingSuffix
           : paddingLeft + paddingLeftSuffix,
       flex: "1 1 auto",
-      marginTop: `${-itemPaddingTop}px`,
-      marginRight: `${parseFloat(-itemPaddingRight / 2)}px`,
-      marginBottom: `${-itemPaddingBottom}px`,
-      marginLeft: `${parseFloat(-itemPaddingLeft / 2)}px`,
+
+      marginTop: styleItemMarginTop({
+        v,
+        device: "desktop"
+      }),
+      marginRight: styleItemMarginRight({
+        v,
+        device: "desktop"
+      }),
+      marginBottom: styleItemMarginBottom({
+        v,
+        device: "desktop"
+      }),
+      marginLeft: styleItemMarginLeft({
+        v,
+        device: "desktop"
+      }),
 
       "@media (max-width: 991px)": {
         justifyContent: aligns[tabletSyncOnChange(v, "horizontalAlign")],
@@ -410,7 +441,24 @@ export function containerStyleClassName(v) {
         paddingLeft:
           tabletPaddingType === "grouped"
             ? tabletPadding + tabletPaddingSuffix
-            : tabletPaddingLeft + tabletPaddingLeftSuffix
+            : tabletPaddingLeft + tabletPaddingLeftSuffix,
+
+        marginTop: styleItemMarginTop({
+          v,
+          device: "tablet"
+        }),
+        marginRight: styleItemMarginRight({
+          v,
+          device: "tablet"
+        }),
+        marginBottom: styleItemMarginBottom({
+          v,
+          device: "tablet"
+        }),
+        marginLeft: styleItemMarginLeft({
+          v,
+          device: "tablet"
+        })
       },
 
       "@media (max-width: 767px)": {
@@ -430,7 +478,24 @@ export function containerStyleClassName(v) {
         paddingLeft:
           mobilePaddingType === "grouped"
             ? mobilePadding + mobilePaddingSuffix
-            : mobilePaddingLeft + mobilePaddingLeftSuffix
+            : mobilePaddingLeft + mobilePaddingLeftSuffix,
+
+        marginTop: styleItemMarginTop({
+          v,
+          device: "mobile"
+        }),
+        marginRight: styleItemMarginRight({
+          v,
+          device: "mobile"
+        }),
+        marginBottom: styleItemMarginBottom({
+          v,
+          device: "mobile"
+        }),
+        marginLeft: styleItemMarginLeft({
+          v,
+          device: "mobile"
+        })
       }
     };
   }
@@ -460,10 +525,6 @@ export function containerStyleCSSVars(v) {
     paddingBottomSuffix,
     paddingLeft,
     paddingLeftSuffix,
-    itemPaddingTop,
-    itemPaddingRight,
-    itemPaddingBottom,
-    itemPaddingLeft,
 
     // Tablet
     tabletPaddingType,
@@ -510,10 +571,23 @@ export function containerStyleCSSVars(v) {
       paddingType === "grouped"
         ? padding + paddingSuffix
         : paddingLeft + paddingLeftSuffix,
-    "--itemMarginTop": `${-itemPaddingTop}px`,
-    "--itemMarginRight": `${parseFloat(-itemPaddingRight / 2)}px`,
-    "--itemMarginBottom": `${-itemPaddingBottom}px`,
-    "--itemMarginLeft": `${parseFloat(-itemPaddingLeft / 2)}px`,
+
+    "--itemMarginTop": styleItemMarginTop({
+      v,
+      device: "desktop"
+    }),
+    "--itemMarginRight": styleItemMarginRight({
+      v,
+      device: "desktop"
+    }),
+    "--itemMarginBottom": styleItemMarginBottom({
+      v,
+      device: "desktop"
+    }),
+    "--itemMarginLeft": styleItemMarginLeft({
+      v,
+      device: "desktop"
+    }),
 
     // Tablet
     "--tabletHorizontalAlign": aligns[tabletSyncOnChange(v, "horizontalAlign")],
@@ -534,6 +608,23 @@ export function containerStyleCSSVars(v) {
         ? tabletPadding + tabletPaddingSuffix
         : tabletPaddingLeft + tabletPaddingLeftSuffix,
 
+    "--tabletItemMarginTop": styleItemMarginTop({
+      v,
+      device: "tablet"
+    }),
+    "--tabletItemMarginRight": styleItemMarginRight({
+      v,
+      device: "tablet"
+    }),
+    "--tabletItemMarginBottom": styleItemMarginBottom({
+      v,
+      device: "tablet"
+    }),
+    "--tabletItemMarginLeft": styleItemMarginLeft({
+      v,
+      device: "tablet"
+    }),
+
     // Mobile
     "--mobileHorizontalAlign": aligns[mobileSyncOnChange(v, "horizontalAlign")],
     "--mobilePaddingTop":
@@ -551,7 +642,24 @@ export function containerStyleCSSVars(v) {
     "--mobilePaddingLeft":
       mobilePaddingType === "grouped"
         ? mobilePadding + mobilePaddingSuffix
-        : mobilePaddingLeft + mobilePaddingLeftSuffix
+        : mobilePaddingLeft + mobilePaddingLeftSuffix,
+
+    "--mobileItemMarginTop": styleItemMarginTop({
+      v,
+      device: "mobile"
+    }),
+    "--mobileItemMarginRight": styleItemMarginRight({
+      v,
+      device: "mobile"
+    }),
+    "--mobileItemMarginBottom": styleItemMarginBottom({
+      v,
+      device: "mobile"
+    }),
+    "--mobileItemMarginLeft": styleItemMarginLeft({
+      v,
+      device: "mobile"
+    })
   };
 }
 
@@ -561,24 +669,80 @@ export function itemsStyleClassName(v) {
 
   if (IS_EDITOR) {
     glamorObj = {
-      paddingTop: "var(--itemPaddingTop)",
-      paddingRight: "var(--itemPaddingRight)",
-      paddingBottom: "var(--itemPaddingBottom)",
-      paddingLeft: "var(--itemPaddingLeft)"
+      ".brz-ed--desktop &": {
+        paddingTop: "var(--itemPaddingTop)",
+        paddingRight: "var(--itemPaddingRight)",
+        paddingBottom: "var(--itemPaddingBottom)",
+        paddingLeft: "var(--itemPaddingLeft)"
+      },
+      ".brz-ed--tablet &": {
+        paddingTop: "var(--tabletItemPaddingTop)",
+        paddingRight: "var(--tabletItemPaddingRight)",
+        paddingBottom: "var(--tabletItemPaddingBottom)",
+        paddingLeft: "var(--tabletItemPaddingLeft)"
+      },
+      ".brz-ed--mobile &": {
+        paddingTop: "var(--mobileItemPaddingTop)",
+        paddingRight: "var(--mobileItemPaddingRight)",
+        paddingBottom: "var(--mobileItemPaddingBottom)",
+        paddingLeft: "var(--mobileItemPaddingLeft)"
+      }
     };
   } else {
-    const {
-      itemPaddingTop,
-      itemPaddingRight,
-      itemPaddingBottom,
-      itemPaddingLeft
-    } = v;
-
     glamorObj = {
-      paddingTop: `${itemPaddingTop}px`,
-      paddingRight: `${parseFloat(itemPaddingRight / 2)}px`,
-      paddingBottom: `${itemPaddingBottom}px`,
-      paddingLeft: `${parseFloat(itemPaddingLeft / 2)}px`
+      paddingTop: styleItemPaddingTop({
+        v,
+        device: "desktop"
+      }),
+      paddingRight: styleItemPaddingRight({
+        v,
+        device: "desktop"
+      }),
+      paddingBottom: styleItemPaddingBottom({
+        v,
+        device: "desktop"
+      }),
+      paddingLeft: styleItemPaddingLeft({
+        v,
+        device: "desktop"
+      }),
+
+      "@media (max-width: 991px)": {
+        paddingTop: styleItemPaddingTop({
+          v,
+          device: "tablet"
+        }),
+        paddingRight: styleItemPaddingRight({
+          v,
+          device: "tablet"
+        }),
+        paddingBottom: styleItemPaddingBottom({
+          v,
+          device: "tablet"
+        }),
+        paddingLeft: styleItemPaddingLeft({
+          v,
+          device: "tablet"
+        })
+      },
+      "@media (max-width: 767px)": {
+        paddingTop: styleItemPaddingTop({
+          v,
+          device: "mobile"
+        }),
+        paddingRight: styleItemPaddingRight({
+          v,
+          device: "mobile"
+        }),
+        paddingBottom: styleItemPaddingBottom({
+          v,
+          device: "mobile"
+        }),
+        paddingLeft: styleItemPaddingLeft({
+          v,
+          device: "mobile"
+        })
+      }
     };
   }
 
@@ -590,17 +754,56 @@ export function itemsStyleClassName(v) {
 export function itemsStyleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    itemPaddingTop,
-    itemPaddingRight,
-    itemPaddingBottom,
-    itemPaddingLeft
-  } = v;
-
   return {
-    "--itemPaddingTop": `${itemPaddingTop}px`,
-    "--itemPaddingRight": `${parseFloat(itemPaddingRight / 2)}px`,
-    "--itemPaddingBottom": `${itemPaddingBottom}px`,
-    "--itemPaddingLeft": `${parseFloat(itemPaddingLeft / 2)}px`
+    "--itemPaddingTop": styleItemPaddingTop({
+      v,
+      device: "desktop"
+    }),
+    "--itemPaddingRight": styleItemPaddingRight({
+      v,
+      device: "desktop"
+    }),
+    "--itemPaddingBottom": styleItemPaddingBottom({
+      v,
+      device: "desktop"
+    }),
+    "--itemPaddingLeft": styleItemPaddingLeft({
+      v,
+      device: "desktop"
+    }),
+
+    "--tabletItemPaddingTop": styleItemPaddingTop({
+      v,
+      device: "tablet"
+    }),
+    "--tabletItemPaddingRight": styleItemPaddingRight({
+      v,
+      device: "tablet"
+    }),
+    "--tabletItemPaddingBottom": styleItemPaddingBottom({
+      v,
+      device: "tablet"
+    }),
+    "--tabletItemPaddingLeft": styleItemPaddingLeft({
+      v,
+      device: "tablet"
+    }),
+
+    "--mobileItemPaddingTop": styleItemPaddingTop({
+      v,
+      device: "mobile"
+    }),
+    "--mobileItemPaddingRight": styleItemPaddingRight({
+      v,
+      device: "mobile"
+    }),
+    "--mobileItemPaddingBottom": styleItemPaddingBottom({
+      v,
+      device: "mobile"
+    }),
+    "--mobileItemPaddingLeft": styleItemPaddingLeft({
+      v,
+      device: "mobile"
+    })
   };
 }

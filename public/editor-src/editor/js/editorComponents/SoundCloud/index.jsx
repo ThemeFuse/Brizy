@@ -27,6 +27,14 @@ class SoundCloud extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  handleToolbarClose = () => {
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabBorder"
+    });
+  };
+
   handleResizerChange = patch => this.patchValue(patch);
 
   getResizerRestrictions(v) {
@@ -58,7 +66,19 @@ class SoundCloud extends EditorComponent {
     };
   }
 
-  renderForEdit(v) {
+  renderForEdit(_v) {
+    const v = this.applyRulesToValue(_v, [
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
+    ]);
+
     const wrapperClassName = classnames("brz-iframe", {
       "brz-blocked": IS_EDITOR
     });
@@ -70,16 +90,21 @@ class SoundCloud extends EditorComponent {
     const content = !url ? (
       <Placeholder icon="sound-cloud" />
     ) : (
-      <iframe
-        className={wrapperClassName}
-        scrolling="no"
-        frameBorder="no"
-        src={src}
-      />
+      <div className="brz-soundCloud-content">
+        <iframe
+          className={wrapperClassName}
+          scrolling="no"
+          frameBorder="no"
+          src={src}
+        />
+      </div>
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        onClose={this.handleToolbarClose}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={styleClassName(v)} style={styleCSSVars(v)}>
             <BoxResizer
