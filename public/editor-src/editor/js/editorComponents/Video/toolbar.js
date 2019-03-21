@@ -1,5 +1,6 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 
 import {
@@ -24,8 +25,16 @@ import {
 
 export function getItemsForDesktop(v) {
   const device = "desktop";
-  const { hex: bgColorHex } = getOptionColor(v, "bgColor");
-  const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
+
+  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
 
   return [
     {

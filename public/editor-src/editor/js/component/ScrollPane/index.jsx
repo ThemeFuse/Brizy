@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import classnames from "classnames";
 import Scrollable from "./Scrollable";
 import Draggable from "./Draggable";
 
 export default class ScrollPane extends Component {
   static defaultProps = {
-    className: "brz-ed-scroll-pane", // default style
+    className: "", // default style
     style: {},
     window: null,
     onlyWide: false,
@@ -196,9 +197,11 @@ export default class ScrollPane extends Component {
   };
 
   render() {
+    const className = classnames("brz-ed-scroll-pane", this.props.className);
+
     return (
       <div
-        className={this.props.className}
+        className={className}
         style={{
           position: "relative",
           width: this.props.style.width,

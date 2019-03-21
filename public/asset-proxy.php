@@ -26,6 +26,8 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 			return;
 		}
 
+		session_write_close();
+
 		$brizyPost = Brizy_Editor_Post::get( (int) $vars[ self::ENDPOINT_POST ] );
 
 		if ( $brizyPost->uses_editor() ) {

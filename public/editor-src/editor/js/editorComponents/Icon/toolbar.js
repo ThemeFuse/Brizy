@@ -1,7 +1,11 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  tabletSyncOnChange,
+  mobileSyncOnChange
+} from "visual/utils/onChange";
 
 import {
   toolbarLinkAnchor,
@@ -32,11 +36,26 @@ export function getItemsForDesktop(v) {
     (v.customSize + v.tempPadding * 2 + v.tempBorderWidth * 2) / 2
   );
 
-  const { hex: colorHex } = getOptionColor(v, "color");
-  const { hex: borderColorHex } = getOptionColor(v, "borderColor");
-  const { hex: hoverColorHex } = getOptionColor(v, "hoverColor");
-  const { hex: hoverBorderColorHex } = getOptionColor(v, "hoverBorderColor");
-  const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "colorHex", device }),
+    defaultValueValue({ v, key: "colorPalette", device })
+  );
+  const { hex: borderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
+  const { hex: hoverColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "hoverColorHex", device }),
+    defaultValueValue({ v, key: "hoverColorPalette", device })
+  );
+  const { hex: hoverBorderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "hoverBorderColorHex", device }),
+    defaultValueValue({ v, key: "hoverBorderColorPalette", device })
+  );
+  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device })
+  );
 
   return [
     {
@@ -1321,11 +1340,6 @@ export function getItemsForDesktop(v) {
           value: v.linkType,
           tabs: [
             {
-              id: "anchor",
-              label: t("Anchor"),
-              options: [toolbarLinkAnchor({ v })]
-            },
-            {
               id: "external",
               label: t("URL"),
               options: [
@@ -1333,6 +1347,11 @@ export function getItemsForDesktop(v) {
                 toolbarLinkExternalBlank({ v }),
                 toolbarLinkExternalRel({ v })
               ]
+            },
+            {
+              id: "anchor",
+              label: t("Anchor"),
+              options: [toolbarLinkAnchor({ v })]
             }
           ]
         }

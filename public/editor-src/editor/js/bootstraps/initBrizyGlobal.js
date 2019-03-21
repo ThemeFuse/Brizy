@@ -3,7 +3,7 @@ import { addFilter, applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { setIds } from "visual/utils/models";
 import {
-  getOptionColor,
+  getOptionColorHexByPalette,
   getAnimations,
   getDynamicContentChoices,
   getDynamicContentByPlaceholder,
@@ -29,6 +29,7 @@ import {
   makeRichTextFontStylesCSS
 } from "visual/utils/fonts";
 import {
+  defaultValueValue,
   tabletSyncOnChange,
   mobileSyncOnChange,
   onChangeTypography,
@@ -49,7 +50,7 @@ global.Brizy = {
     getDynamicContentByPlaceholder,
     getShapes,
 
-    getOptionColor,
+    getOptionColorHexByPalette,
     hexToRgba,
     getColorPaletteColors,
     getColorPaletteColor,
@@ -67,6 +68,7 @@ global.Brizy = {
     makeRichTextFontFamiliesCSS,
     makeRichTextFontStylesCSS,
 
+    defaultValueValue,
     tabletSyncOnChange,
     mobileSyncOnChange,
     onChangeTypography,

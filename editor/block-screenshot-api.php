@@ -47,19 +47,13 @@ class Brizy_Editor_BlockScreenshotApi {
 
 
 	private function initialize() {
-
-		if ( ! Brizy_Editor::is_user_allowed() ) {
-			return;
-		}
-
-		if ( ! ( isset( $_REQUEST['hash'] ) && wp_verify_nonce( $_REQUEST['hash'], Brizy_Editor_API::nonce ) ) ) {
-			return;
-		}
-
 		add_action( 'wp_ajax_' . self::AJAX_SAVE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		add_action( 'wp_ajax_nopriv_' . self::AJAX_SAVE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
 	}
 
 	public function saveBlockScreenShot() {
+
+		session_write_close();
 
 		if ( empty( $_POST['block_type'] ) || ! in_array( $_POST['block_type'], $this->blockTypes ) || empty( $_POST['img'] ) || empty( $_POST['block_id'] ) ) {
 			wp_send_json( array(

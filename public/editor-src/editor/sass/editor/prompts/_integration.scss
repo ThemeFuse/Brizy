@@ -344,14 +344,15 @@ $option-color: #626b70;
     color: $option-color;
 
     .brz-control__radio-option {
-      display: flex;
-      align-items: center;
       font-size: 15px;
       font-weight: 500;
       border-bottom: 1px solid rgba(#000, 0.1);
       padding: 17px 9px 16px 4px;
       height: 51px;
       cursor: pointer;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
 
       &--active {
         color: $brand-primary;
@@ -359,6 +360,7 @@ $option-color: #626b70;
     }
     .brz-control__radio-check {
       margin-right: 10px;
+      vertical-align: middle;
     }
   }
   &-new__option {

@@ -6906,17 +6906,18 @@ body.modal-open .mm-slideout {
               align-items: center;
       -webkit-box-pack: center;
           -ms-flex-pack: center;
-              justify-content: center;
-      background-repeat: no-repeat; }
+              justify-content: center; }
       .brz .brz-video .brz-video__cover::before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        margin: 0 auto; }
+        margin: 0 auto;
+        background-repeat: no-repeat;
+        background-size: cover; }
       .brz .brz-video .brz-video__cover .brz-video__cover-icon {
         position: relative;
         z-index: 1;
@@ -6958,6 +6959,8 @@ body.modal-open .mm-slideout {
     word-wrap: break-word; }
     .brz .brz-embed-code .brz-shortcode__placeholder {
       height: 250px; }
+    .brz .brz-embed-code img {
+      max-width: 100%; }
   .brz .brz-rich-text {
     -webkit-font-smoothing: antialiased;
     -webkit-box-flex: 1;

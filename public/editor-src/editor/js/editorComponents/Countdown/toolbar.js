@@ -1,8 +1,9 @@
 import _ from "underscore";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { getFontStyle, getWeight, getWeightChoices } from "visual/utils/fonts";
 import {
+  defaultValueValue,
   onChangeTypography,
   onChangeTypographyTablet,
   onChangeTypographyMobile
@@ -31,8 +32,11 @@ export function getItemsForDesktop(v) {
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
-  // ...
-  const { hex: colorHex } = getOptionColor(v, "color");
+  // Color
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "colorHex", device }),
+    defaultValueValue({ v, key: "colorPalette", device })
+  );
 
   return [
     {

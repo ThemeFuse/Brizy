@@ -2,7 +2,7 @@ import React from "react";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
 import DataFilter from "./common/DataFilter";
-import Select from "./common/Select";
+import { assetUrl } from "visual/utils/asset";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
@@ -14,9 +14,13 @@ import { getStore } from "visual/redux/store";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { t } from "visual/utils/i18n";
 
+const defaultFilterUI = {
+  search: true
+};
+
 export default class Saved extends React.Component {
   static defaultProps = {
-    filterUI: {},
+    filterUI: defaultFilterUI,
     blocksConfig: null,
     onAddBlocks: _.noop,
     onClose: _.noop
@@ -27,6 +31,10 @@ export default class Saved extends React.Component {
 
     this.blocksConfig = props.blocksConfig || Editor.getBlocks();
   }
+
+  state = {
+    value: ""
+  };
 
   handleThumbnailAdd = thumbnailData => {
     const { onAddBlocks, onClose } = this.props;
@@ -44,9 +52,106 @@ export default class Saved extends React.Component {
     store.dispatch(updateGlobals("savedBlocks", newSavedBlocks));
   };
 
-  render() {
-    const { filterUI } = this.props;
+  renderDataFilter(data) {
+    const { HeaderSlotLeft, filterUI } = this.props;
+    const filterFn = (item, cf) => {
+      const categoryMatch =
+        cf.category === "*" || item.cat.includes(Number(cf.category));
+      const searchMatch =
+        cf.search === "" ||
+        new RegExp(cf.search.replace(/[.*+?^${}()|[\]\\]/g, ""), "i").test(
+          item.keywords
+        );
 
+      return categoryMatch && searchMatch;
+    };
+    const defaultFilter = {
+      category: "*",
+      search: ""
+    };
+
+    return (
+      <DataFilter data={data} filterFn={filterFn} defaultFilter={defaultFilter}>
+        {(filteredThumbnails, currentFilter, setFilter) => (
+          <React.Fragment>
+            {filterUI.search && (
+              <HeaderSlotLeft>
+                <SearchInput
+                  className="brz-ed-popup-two-header__search"
+                  value={currentFilter.search}
+                  onChange={value => setFilter({ search: value })}
+                />
+              </HeaderSlotLeft>
+            )}
+            <div className="brz-ed-popup-two-body__content">
+              <ScrollPane
+                style={{
+                  overflow: "hidden",
+                  height: "100%"
+                }}
+                className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
+              >
+                {filteredThumbnails.length > 0 ? (
+                  <ThumbnailGrid
+                    data={filteredThumbnails}
+                    onThumbnailAdd={this.handleThumbnailAdd}
+                    onThumbnailRemove={this.handleThumbnailRemove}
+                  />
+                ) : (
+                  <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
+                    <p className="brz-ed-popup-two-blocks__grid-clear-text">
+                      {t("Nothing here, please refine your search.")}
+                    </p>
+                  </div>
+                )}
+              </ScrollPane>
+            </div>
+          </React.Fragment>
+        )}
+      </DataFilter>
+    );
+  }
+
+  renderClear() {
+    const { HeaderSlotLeft, filterUI } = this.props;
+
+    return (
+      <React.Fragment>
+        {filterUI.search && (
+          <HeaderSlotLeft>
+            <SearchInput
+              className="brz-ed-popup-two-header__search"
+              value={this.state.value}
+              onChange={value => this.setState({ value })}
+            />
+          </HeaderSlotLeft>
+        )}
+        <div className="brz-ed-popup-two-body__content">
+          <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
+            {this.state.value !== "" ? (
+              <p className="brz-ed-popup-two-blocks__grid-clear-text">
+                {t("Nothing here, please refine your search.")}
+              </p>
+            ) : (
+              <React.Fragment>
+                <p className="brz-ed-popup-two-blocks__grid-clear-text">
+                  {t("Nothing here yet, save a block first.")}
+                </p>
+                <img
+                  src={`${assetUrl(
+                    "editor/img/save_toolbar.gif"
+                  )}?${Math.random()}`}
+                  className="brz-ed-popup-two-blocks__grid-clear-image-saved"
+                />
+              </React.Fragment>
+            )}
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  render() {
     const savedBlocks = getStore().getState().globals.project.savedBlocks || [];
     const thumbnails = savedBlocks.reduce((acc, block) => {
       const blockData = Editor.getBlock(block.blockId);
@@ -99,69 +204,9 @@ export default class Saved extends React.Component {
 
       return acc;
     }, []);
-    const filterFn = (item, cf) => {
-      const categoryMatch =
-        cf.category === "*" || item.cat.includes(Number(cf.category));
-      const searchMatch =
-        cf.search === "" ||
-        new RegExp(cf.search.replace(/[.*+?^${}()|[\]\\]/g, ""), "i").test(
-          item.keywords
-        );
 
-      return categoryMatch && searchMatch;
-    };
-    const defaultFilter = {
-      category: "*",
-      search: ""
-    };
-
-    const categories = [
-      {
-        id: "*",
-        title: t("All Categories")
-      },
-      ...this.blocksConfig.categories
-    ].filter(category => category.hidden !== true);
-
-    return (
-      <DataFilter
-        data={thumbnails}
-        filterFn={filterFn}
-        defaultFilter={defaultFilter}
-      >
-        {(filteredThumbnails, currentFilter, setFilter) => (
-          <React.Fragment>
-            <div className="brz-ed-popup__head--search brz-d-xs-flex brz-align-items-center brz-justify-content-xs-center">
-              {filterUI.categories !== false && (
-                <Select
-                  className="brz-ed-popup__select--block-categories"
-                  options={categories}
-                  value={currentFilter.category}
-                  onChange={value => setFilter({ category: value })}
-                />
-              )}
-              {filterUI.search !== false && (
-                <SearchInput
-                  value={currentFilter.search}
-                  onChange={value => setFilter({ search: value })}
-                />
-              )}
-            </div>
-            <div className="brz-ed-popup-blocks-body">
-              <ScrollPane
-                style={{ height: 400, overflow: "hidden" }}
-                className="brz-ed-scroll-pane brz-ed-scroll__popup"
-              >
-                <ThumbnailGrid
-                  data={filteredThumbnails}
-                  onThumbnailAdd={this.handleThumbnailAdd}
-                  onThumbnailRemove={this.handleThumbnailRemove}
-                />
-              </ScrollPane>
-            </div>
-          </React.Fragment>
-        )}
-      </DataFilter>
-    );
+    return thumbnails.length > 0
+      ? this.renderDataFilter(thumbnails)
+      : this.renderClear();
   }
 }

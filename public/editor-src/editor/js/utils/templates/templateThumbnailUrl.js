@@ -1,6 +1,7 @@
 import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 import { applyFilter } from "visual/utils/filters";
+import Thumbnail from "../../component/Prompts/PromptBlocks/common/Thumbnail";
 
 export function templateThumbnailUrl(template) {
   const configUrl = Config.get("urls").templateThumbnails;

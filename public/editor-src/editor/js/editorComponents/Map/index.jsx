@@ -84,11 +84,28 @@ class Map extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  handleToolbarClose = () => {
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabBorder"
+    });
+  };
+
   handleResizerChange = patch => this.patchValue(resizerTransformPatch(patch));
 
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`
+      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const { address, zoom } = v;
@@ -97,14 +114,19 @@ class Map extends EditorComponent {
     const content = !address ? (
       <Placeholder icon="pin" />
     ) : (
-      <iframe
-        className={classnames("brz-iframe", { "brz-blocked": IS_EDITOR })}
-        src={src}
-      />
+      <div className="brz-map-content">
+        <iframe
+          className={classnames("brz-iframe", { "brz-blocked": IS_EDITOR })}
+          src={src}
+        />
+      </div>
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        onClose={this.handleToolbarClose}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={styleClassName(v)} style={styleCSSVars(v)}>
             <BoxResizer

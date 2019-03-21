@@ -58,6 +58,16 @@ export async function makeBlockScreenshot(block, options = {}) {
     return Promise.reject(`Could not find block with _id ${block.value._id}`);
   }
 
+  const nodeStyle = getComputedStyle(node);
+
+  if (nodeStyle.display === "none" || nodeStyle.opacity === "0") {
+    return Promise.reject(
+      `Could not make screenshot for block with _id ${
+        block.value._id
+      } because it's hidden`
+    );
+  }
+
   let cloned;
 
   try {
@@ -72,6 +82,7 @@ export async function makeBlockScreenshot(block, options = {}) {
 
   return new Promise((resolve, reject) => {
     const id = uuid(3);
+    const siteUrl = Config.get("urls").site;
 
     promises[id] = [resolve, reject, options_, url];
 
@@ -79,6 +90,7 @@ export async function makeBlockScreenshot(block, options = {}) {
       id,
       url,
       options: options_,
+      siteUrl,
       proxyUrl: proxyUrl()
     });
   });

@@ -1,17 +1,30 @@
 import React from "react";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
-import DataFilter from "./common/DataFilter";
-import Select from "./common/Select";
+import Sidebar from "./common/Sidebar";
 import SearchInput from "./common/SearchInput";
+import DataFilter from "./common/DataFilter";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
 import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 
+const defaultFilterUI = {
+  sidebar: true,
+  search: true,
+  type: true, // dark | light
+  categories: true
+};
+
+let defaultFilter = {
+  type: 0,
+  category: "*",
+  search: ""
+};
+
 export default class Blocks extends React.Component {
   static defaultProps = {
-    filterUI: {},
+    filterUI: defaultFilterUI,
     blocksConfig: null,
     onAddBlocks: _.noop,
     onClose: _.noop
@@ -32,8 +45,7 @@ export default class Blocks extends React.Component {
   };
 
   render() {
-    const { filterUI } = this.props;
-
+    const { filterUI, HeaderSlotLeft } = this.props;
     const thumbnails = this.blocksConfig.blocks.map(block => ({
       ...block,
       thumbnailSrc: blockTemplateThumbnailUrl(block)
@@ -52,12 +64,10 @@ export default class Blocks extends React.Component {
 
       return typeMatch && categoryMatch && searchMatch;
     };
-    const defaultFilter = {
-      type: 0,
-      category: "*",
-      search: ""
-    };
 
+    const blocksArr = this.blocksConfig.blocks;
+    const countersColorBlocks = {};
+    const countersSectionBlocks = {};
     const types = this.blocksConfig.types;
     const categories = [
       {
@@ -73,47 +83,104 @@ export default class Blocks extends React.Component {
         filterFn={filterFn}
         defaultFilter={defaultFilter}
       >
-        {(filteredThumbnails, currentFilter, setFilter) => (
-          <React.Fragment>
-            <div className="brz-ed-popup__head--search brz-d-xs-flex brz-align-items-center brz-justify-content-xs-center">
-              {filterUI.type !== false && (
-                <Select
-                  options={types}
-                  value={currentFilter.type}
-                  onChange={value => setFilter({ type: value })}
-                />
+        {(filteredThumbnails, currentFilter, setFilter) => {
+          defaultFilter.type = currentFilter.type;
+
+          if (!countersColorBlocks[currentFilter.type]) {
+            for (let i = 0; i < blocksArr.length; i++) {
+              const blockType = blocksArr[i].type; // dark | light
+              const blockCategories = blocksArr[i].cat; // header | footer etc.
+
+              if (countersColorBlocks[blockType] === undefined) {
+                countersColorBlocks[blockType] = 1;
+              } else {
+                countersColorBlocks[blockType]++;
+              }
+
+              if (currentFilter.type === blockType) {
+                countersSectionBlocks["*"] = countersColorBlocks[blockType];
+
+                for (let j = 0; j < blockCategories.length; j++) {
+                  const category = blockCategories[j];
+
+                  if (countersSectionBlocks[category] === undefined) {
+                    countersSectionBlocks[category] = 1;
+                  } else {
+                    countersSectionBlocks[category]++;
+                  }
+                }
+              }
+            }
+          }
+
+          return (
+            <React.Fragment>
+              {filterUI.search && (
+                <HeaderSlotLeft>
+                  <SearchInput
+                    className="brz-ed-popup-two-header__search"
+                    value={currentFilter.search}
+                    onChange={value => setFilter({ search: value })}
+                  />
+                </HeaderSlotLeft>
               )}
-              {filterUI.categories !== false && (
-                <Select
-                  className="brz-ed-popup__select--block-categories"
-                  options={categories}
-                  value={currentFilter.category}
-                  onChange={value => setFilter({ category: value })}
-                />
+              {filterUI.sidebar && (
+                <div className="brz-ed-popup-two-body__sidebar">
+                  <ScrollPane
+                    style={{
+                      overflow: "hidden",
+                      height: "100%"
+                    }}
+                    className="brz-ed-scroll--new-dark brz-ed-scroll--medium"
+                  >
+                    <div className="brz-ed-popup-two-sidebar-body">
+                      {filterUI.type && (
+                        <Sidebar
+                          title="STYLES"
+                          options={types}
+                          counters={countersColorBlocks}
+                          value={currentFilter.type}
+                          onChange={value => setFilter({ type: value })}
+                        />
+                      )}
+                      {filterUI.categories && (
+                        <Sidebar
+                          options={categories}
+                          counters={countersSectionBlocks}
+                          value={currentFilter.category}
+                          onChange={value => setFilter({ category: value })}
+                        />
+                      )}
+                    </div>
+                  </ScrollPane>
+                </div>
               )}
-              {filterUI.search !== false && (
-                <SearchInput
-                  value={currentFilter.search}
-                  onChange={value => setFilter({ search: value })}
-                />
-              )}
-            </div>
-            <div className="brz-ed-popup-blocks-body">
-              <ScrollPane
-                style={{
-                  height: 400,
-                  overflow: "hidden"
-                }}
-                className="brz-ed-scroll-pane brz-ed-scroll__popup"
-              >
-                <ThumbnailGrid
-                  data={filteredThumbnails}
-                  onThumbnailAdd={this.handleThumbnailAdd}
-                />
-              </ScrollPane>
-            </div>
-          </React.Fragment>
-        )}
+
+              <div className="brz-ed-popup-two-body__content">
+                <ScrollPane
+                  style={{
+                    overflow: "hidden",
+                    height: "100%"
+                  }}
+                  className="brz-ed-scroll--new-dark brz-ed-scroll--medium"
+                >
+                  {filteredThumbnails.length > 1 ? (
+                    <ThumbnailGrid
+                      data={filteredThumbnails}
+                      onThumbnailAdd={this.handleThumbnailAdd}
+                    />
+                  ) : (
+                    <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
+                      <p className="brz-ed-popup-two-blocks__grid-clear-text">
+                        {t("Nothing here, please refine your search.")}
+                      </p>
+                    </div>
+                  )}
+                </ScrollPane>
+              </div>
+            </React.Fragment>
+          );
+        }}
       </DataFilter>
     );
   }

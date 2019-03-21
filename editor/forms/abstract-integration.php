@@ -84,6 +84,29 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 		return $instance;
 	}
 
+	/**
+	 * @param $data
+	 *
+	 * @return Brizy_Editor_Forms_ServiceIntegration|Brizy_Editor_Forms_WordpressIntegration|void|null
+	 */
+	public static function createFromSerializedData( $data ) {
+		$instance = null;
+		if ( is_array( $data ) ) {
+			if ( ( isset( $data['subject'] ) && isset( $data['emailTo'] ) ) || $data['id'] == 'wordpress' ) {
+				$instance = Brizy_Editor_Forms_WordpressIntegration::createFromSerializedData( $data );
+			} else {
+				$instance = Brizy_Editor_Forms_ServiceIntegration::createFromSerializedData( $data );
+			}
+
+			if ( $instance ) {
+				$instance->setId( $data['id'] );
+				$instance->setCompleted( $data['completed'] );
+			}
+		}
+
+		return $instance;
+	}
+
 
 	/**
 	 * @return array|mixed

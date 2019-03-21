@@ -1,8 +1,15 @@
 import { calcWrapperSizes } from "./calculations";
-import { getOptionColor, getDynamicContentChoices } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  tabletSyncOnChange,
+  mobileSyncOnChange
+} from "visual/utils/onChange";
 
 import {
   toolbarLinkAnchor,
@@ -62,7 +69,11 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
   const maxBorderRadius = Math.round(
     Math.min(wrapperSizes.width, wrapperSizes.height) / 2
   );
-  const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
+
+  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device })
+  );
 
   return [
     {
@@ -188,11 +199,6 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
           value: v.linkType,
           tabs: [
             {
-              id: "anchor",
-              label: t("Anchor"),
-              options: [toolbarLinkAnchor({ v })]
-            },
-            {
               id: "external",
               label: t("URL"),
               options: [
@@ -200,6 +206,11 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                 toolbarLinkExternalBlank({ v }),
                 toolbarLinkExternalRel({ v })
               ]
+            },
+            {
+              id: "anchor",
+              label: t("Anchor"),
+              options: [toolbarLinkAnchor({ v })]
             }
           ]
         }

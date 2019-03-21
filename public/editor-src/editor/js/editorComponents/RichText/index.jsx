@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import _ from "underscore";
 import classNames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import ClickOutside from "visual/component/ClickOutside";
 import ListBox from "visual/component/Controls/ListBox";
@@ -162,15 +163,17 @@ class RichText extends EditorComponent {
           onOpen={this.handleToolbarOpen}
           onClose={this.handleToolbarClose}
         >
-          <div className={this.getClassName(v)}>
-            <Quill
-              ref={this.handleQuillRef}
-              value={v.text}
-              forceUpdate={!isToolbarOpened}
-              onSelectionChange={this.handleSelectionChange}
-              onTextChange={this.handleTextChange}
-            />
-          </div>
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <div className={this.getClassName(v)}>
+              <Quill
+                ref={this.handleQuillRef}
+                value={v.text}
+                forceUpdate={!isToolbarOpened}
+                onSelectionChange={this.handleSelectionChange}
+                onTextChange={this.handleTextChange}
+              />
+            </div>
+          </CustomCSS>
         </Toolbar>
         {(prepopulation !== null || population) &&
           this.renderPopulationHelper()}
@@ -180,10 +183,12 @@ class RichText extends EditorComponent {
 
   renderForView(v) {
     return (
-      <div
-        className={this.getClassName(v)}
-        dangerouslySetInnerHTML={{ __html: v.text }}
-      />
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div
+          className={this.getClassName(v)}
+          dangerouslySetInnerHTML={{ __html: v.text }}
+        />
+      </CustomCSS>
     );
   }
 }

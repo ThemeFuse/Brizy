@@ -108,7 +108,7 @@ export function getItemsForDesktop(v) {
                   id: "moreSettingsAdvanced",
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
-                  options: []
+                  options: [toolbarCustomCSS({ v })]
                 }
               ]
             }

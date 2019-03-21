@@ -36,7 +36,6 @@ class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 			if ( $this->store_file( $asset_url, $new_path ) ) {
 				$asset_url = $new_url;
 			}
-
 		}
 
 		if ( $this->isStaticUrl( $asset_url ) ) {
@@ -61,7 +60,6 @@ class Brizy_Editor_Asset_Storage extends Brizy_Editor_Asset_AbstractStorage {
 
 		return $asset_url;
 	}
-
 
 	/**
 	 * @param $url

@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.64
+ * Version: 1.0.65
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,8 +19,8 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.64' );
-define( 'BRIZY_EDITOR_VERSION', '1.0.87' );
+define( 'BRIZY_VERSION', '1.0.65' );
+define( 'BRIZY_EDITOR_VERSION', '1.0.90' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
@@ -30,7 +30,6 @@ define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 100 );
 include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/autoload.php';
 
 add_action( 'plugins_loaded', 'brizy_load' );
-add_action( 'plugins_loaded', 'brizy_load_compatibilities', 0 );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 
 register_activation_hook( BRIZY_FILE, 'brizy_install' );
@@ -45,10 +44,6 @@ function brizy_load() {
 	}
 
 	$instance = Brizy_Editor::get();
-}
-
-function brizy_load_compatibilities() {
-	new Brizy_Compatibilities_Init();
 }
 
 function brizy_notices() {
@@ -82,3 +77,4 @@ function brizy_clean() {
 	Brizy_Logger::clean();
 }
 
+new Brizy_Compatibilities_Init();

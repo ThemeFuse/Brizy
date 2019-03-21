@@ -58,7 +58,7 @@ const DEFAULT = {
   intermediateMobileSize: null,
   italic: false,
   letterSpacing: null,
-  linkType: "anchor",
+  linkType: "external",
   linkAnchor: "",
   linkExternal: "",
   linkExternalBlank: "off",

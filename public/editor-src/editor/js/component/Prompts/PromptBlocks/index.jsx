@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import classnames from "classnames";
 import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
-import Templates from "./Templates";
+import Layouts from "./Layouts";
 import Blocks from "./Blocks";
 import Saved from "./Saved";
 import Global from "./Global";
@@ -12,9 +13,9 @@ import Global from "./Global";
 const tabs = [
   {
     id: "templates",
-    title: t("Pages"),
+    title: t("Layouts"),
     icon: "nc-pages",
-    component: Templates
+    component: Layouts
   },
   {
     id: "blocks",
@@ -24,13 +25,13 @@ const tabs = [
   },
   {
     id: "saved",
-    title: t("Saved"),
+    title: t("Saved Blocks"),
     icon: "nc-save-section",
     component: Saved
   },
   {
     id: "global",
-    title: t("Global"),
+    title: t("Global Blocks"),
     icon: "nc-global",
     component: Global
   }
@@ -47,8 +48,10 @@ class PromptBlocks extends Component {
 
   renderHeader() {
     const { currentTab } = this.state;
-    const { onClose } = this.props;
-
+    const { filterUI, onClose } = this.props;
+    const className = classnames("brz-ed-popup-two-header__tabs", {
+      "brz-ed-popup-two-header__tabs-fullWidth": filterUI && !filterUI.search
+    });
     const headerTabs = tabs
       .filter(tab => {
         const { shouldRender } = tab.component;
@@ -59,8 +62,8 @@ class PromptBlocks extends Component {
         );
       })
       .map(tab => {
-        const className = classnames("brz-ed-popup-tab-item", {
-          active: tab.id === currentTab
+        const className = classnames("brz-ed-popup-two-tab-item", {
+          "brz-ed-popup-two-tab-item-active": tab.id === currentTab
         });
 
         return (
@@ -69,18 +72,19 @@ class PromptBlocks extends Component {
             className={className}
             onClick={() => this.handleTabChange(tab.id)}
           >
-            <div className="brz-ed-popup-tab-icon">
+            <div className="brz-ed-popup-two-tab-icon">
               <EditorIcon icon={tab.icon} />
             </div>
-            <div className="brz-ed-popup-tab-name">{tab.title}</div>
+            <div className="brz-ed-popup-two-tab-name">{tab.title}</div>
           </div>
         );
       });
 
     return (
-      <div className="brz-ed-popup-header">
-        <div className="brz-ed-popup-header__tabs">{headerTabs}</div>
-        <div className="brz-ed-popup-btn-close" onClick={onClose} />
+      <div className="brz-ed-popup-two-header">
+        <div id="brz-ed-popup-header-left-slot" />
+        <div className={className}>{headerTabs}</div>
+        <div className="brz-ed-popup-two-btn-close" onClick={onClose} />
       </div>
     );
   }
@@ -91,15 +95,39 @@ class PromptBlocks extends Component {
 
     return (
       <Fixed onClose={this.props.onClose}>
-        <div className="brz-ed-popup-wrapper brz-ed-popup-blocks">
+        <div className="brz-ed-popup-two-wrapper brz-ed-popup-two-blocks">
           {this.renderHeader()}
-          <div className="brz-ed-popup-content brz-ed-popup-pane">
-            <div className="brz-ed-popup-body">
-              <Content {...this.props} />
-            </div>
+          <div className="brz-ed-popup-two-body">
+            <Content {...this.props} HeaderSlotLeft={HeaderSlotLeft} />
           </div>
         </div>
       </Fixed>
+    );
+  }
+}
+
+export class HeaderSlotLeft extends Component {
+  state = {
+    isMounted: false
+  };
+
+  headerSlotNode;
+
+  componentDidMount() {
+    // the fact that HeaderSlotLeft is aware of which
+    // the id of the slot div that is rendered by PromptBlocks
+    // and the fact that all modals are rendered in the parent window
+    // is too hardcoded, but it will have to do until we figure a better way
+    this.headerSlotNode = window.parent.document.querySelector(
+      "#brz-ed-popup-header-left-slot"
+    );
+    this.setState({ isMounted: true });
+  }
+
+  render() {
+    return (
+      this.state.isMounted &&
+      ReactDOM.createPortal(this.props.children, this.headerSlotNode)
     );
   }
 }
