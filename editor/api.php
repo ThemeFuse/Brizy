@@ -234,7 +234,6 @@ class Brizy_Editor_API {
 	}
 
 
-
 	public function multipass_create() {
 
 		try {
@@ -286,7 +285,6 @@ class Brizy_Editor_API {
 			exit;
 		}
 	}
-
 
 
 	/**
@@ -344,23 +342,9 @@ class Brizy_Editor_API {
 			$this->project->setGlobalsAsJson( $data );
 
 			// mark all brizy post to be compiled on next view
-			$posts = Brizy_Editor_Post::get_all_brizy_posts();
+			Brizy_Editor_Post::clear_compiled_cache();
 
-			// we need to trigger a post update action to make sure the cache plugins will update clear the cache
-			remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-			// mark all post to be compiled on next view
-			foreach ( $posts as $bpost ) {
-				$bpost->set_needs_compile( true );
-				$bpost->save();
-
-				wp_update_post( array( 'ID' => $bpost->get_id() ) );
-			}
-
-//			$platform = new Brizy_Editor_API_Platform();
-//			if ( ! $platform->isUserCreatedLocally() ) {
-//				Brizy_Editor_User::get()->update_project( $this->project->get_api_project() );
-//			}
-
+			// return the project data
 			$this->success( $this->create_post_globals() );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
