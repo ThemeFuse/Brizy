@@ -102,7 +102,7 @@ export default class Global extends React.Component {
                 }}
                 className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
               >
-                {filteredThumbnails.length > 1 ? (
+                {filteredThumbnails.length > 0 ? (
                   <ThumbnailGrid
                     data={filteredThumbnails}
                     onThumbnailAdd={this.handleThumbnailAdd}
