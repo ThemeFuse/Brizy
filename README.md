@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 4.9<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.64<br>
+Stable tag: 1.0.65<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,23 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.65 - 2019-03-21 ###
+* New: Block Adder UI
+* New: Map and Soundcloud border options
+* New: Added spacing for cloneable elements (Button, Icon, etc.) on mobile and tablet
+* Improved: Custom CSS option
+* Improved: Link option tabs order
+* Improved: Network optimizations for block screenshots
+* Improved: Base64 encode compiled HTML
+* Fixed: Stop playing videos inside closed popups
+* Fixed: Video cover position
+* Fixed: Animations in Safari
+* Fixed: Images that are added via Embed option CSS
+* Fixed: Screenshot API refactoring
+* Fixed: Form serialization
+* Fixed: Compatibility SG optimizer
+* Fixed: Compile post flag refactoring
 
 ### 1.0.64 - 2019-03-07 ###
 * Fixed: Autoloader compatibility
