@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 1.0.64
+Stable tag: 1.0.65
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,23 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.65 - 2019-03-21 =
+* New: Block Adder UI
+* New: Map and Soundcloud border options
+* New: Added spacing for cloneable elements (Button, Icon, etc.) on mobile and tablet
+* Improved: Custom CSS option
+* Improved: Link option tabs order
+* Improved: Network optimizations for block screenshots
+* Improved: Base64 encode compiled HTML
+* Fixed: Stop playing videos inside closed popups
+* Fixed: Video cover position
+* Fixed: Animations in Safari
+* Fixed: Images that are added via Embed option CSS
+* Fixed: Screenshot API refactoring
+* Fixed: Form serialization
+* Fixed: Compatibility SG optimizer
+* Fixed: Compile post flag refactoring
 
 = 1.0.64 - 2019-03-07 =
 * Fixed: Autoloader compatibility

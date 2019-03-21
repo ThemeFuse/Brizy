@@ -4,7 +4,7 @@ import ScrollPane from "visual/component/ScrollPane";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import Button from "../../Components/Button";
-import { substrString, isMaxFields } from "../../utils";
+import { isMaxFields } from "../../utils";
 
 class ViewFields extends Component {
   static defaultProps = {
@@ -58,7 +58,7 @@ class ViewFields extends Component {
     const options = newFields.map(({ required, name, slug }) => {
       return (
         <SelectItem key={slug} value={slug}>
-          <span className="brz-span">{substrString(name)}</span>
+          <span className="brz-span">{name}</span>
           {required && <strong className="brz-strong">*</strong>}
         </SelectItem>
       );

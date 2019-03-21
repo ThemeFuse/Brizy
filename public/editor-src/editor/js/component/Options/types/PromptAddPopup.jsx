@@ -53,8 +53,10 @@ class PromptAddPopupOptionType extends React.Component {
       templatesConfig: {}, // this disables the "Pages" tab
       blocksConfig: getBlocksConfig(),
       filterUI: {
+        sidebar: false,
         categories: false,
-        type: false
+        type: false,
+        search: false
       },
       onAddBlocks: this.handleAddBlocks
     });

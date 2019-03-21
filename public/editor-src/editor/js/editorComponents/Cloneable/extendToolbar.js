@@ -28,7 +28,7 @@ export function getItemsForDesktop(v) {
           tabs: [
             {
               id: "currentShortcodeTab",
-              options: [toolbarElementCloneableSpacing({ v })]
+              options: [toolbarElementCloneableSpacing({ v, device })]
             }
           ]
         }
@@ -92,6 +92,23 @@ export function getItemsForTablet(v) {
   const state = "normal";
 
   return [
+    {
+      id: "tabletToolbarCurrentShortcode",
+      type: "popover",
+      options: [
+        {
+          id: "currentShortcodeTabs",
+          className: "",
+          type: "tabs",
+          tabs: [
+            {
+              id: "currentShortcodeTab",
+              options: [toolbarElementCloneableSpacing({ v, device })]
+            }
+          ]
+        }
+      ]
+    },
     toolbarShowOnTablet({ v }),
     toolbarHorizontalAlign({ v, device }),
     {
@@ -127,6 +144,23 @@ export function getItemsForMobile(v) {
   const state = "normal";
 
   return [
+    {
+      id: "mobileToolbarCurrentShortcode",
+      type: "popover",
+      options: [
+        {
+          id: "currentShortcodeTabs",
+          className: "",
+          type: "tabs",
+          tabs: [
+            {
+              id: "currentShortcodeTab",
+              options: [toolbarElementCloneableSpacing({ v, device })]
+            }
+          ]
+        }
+      ]
+    },
     toolbarShowOnMobile({ v }),
     toolbarHorizontalAlign({ v, device }),
     {

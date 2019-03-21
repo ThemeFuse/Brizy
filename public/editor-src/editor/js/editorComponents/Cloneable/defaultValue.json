@@ -56,6 +56,12 @@
 
   "tabletHorizontalAlign": null,
 
+  "tabletItemPadding": null,
+  "tabletItemPaddingTop": null,
+  "tabletItemPaddingRight": null,
+  "tabletItemPaddingBottom": null,
+  "tabletItemPaddingLeft": null,
+
   "tabletPaddingType": "grouped",
   "tabletPadding": 0,
   "tabletPaddingTop": 0,
@@ -85,6 +91,13 @@
   "showOnMobile": "on",
 
   "mobileHorizontalAlign": null,
+
+  "mobileItemPadding": null,
+  "mobileItemPaddingTop": null,
+  "mobileItemPaddingRight": null,
+  "mobileItemPaddingBottom": null,
+  "mobileItemPaddingLeft": null,
+
 
   "mobilePaddingType": "grouped",
   "mobilePadding": 0,

@@ -1,5 +1,6 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 import {
   toolbarElementLineBorderStyle,
@@ -13,7 +14,11 @@ import {
 
 export function getItemsForDesktop(v) {
   const device = "desktop";
-  const { hex: borderColorHex } = getOptionColor(v, "borderColor");
+
+  const { hex: borderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
 
   return [
     {

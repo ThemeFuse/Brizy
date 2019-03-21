@@ -7,7 +7,6 @@ import SelectItem from "visual/component/Controls/Select/SelectItem";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import Button from "../../Components/Button";
-import { substrString } from "../../utils";
 
 class ViewList extends Component {
   static defaultProps = {
@@ -47,7 +46,7 @@ class ViewList extends Component {
     const options = lists.map(({ name, id }) => {
       return (
         <RadioItem value={id} key={id}>
-          {name ? substrString(name) : `List ${id}`}
+          {name ? name : `List ${id}`}
         </RadioItem>
       );
     });

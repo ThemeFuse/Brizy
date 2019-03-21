@@ -1,29 +1,34 @@
 import React from "react";
+import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
 export default class SearchInput extends React.Component {
+  static defaultProps = {
+    className: "",
+    value: "",
+    onChange: _.noop
+  };
+
   handleInputChange = e => {
     this.props.onChange(e.target.value);
   };
 
   render() {
-    const { value } = this.props;
-    const className = classnames("brz-ed-popup__search--icon", {
-      active: value.length > 0
-    });
+    const { className: _className, value } = this.props;
+    const className = classnames("brz-ed-popup-two-search", _className);
 
     return (
-      <div className="brz-ed-popup__search">
+      <div className={className}>
         <input
           type="text"
-          className="brz-input brz-ed-popup__input"
-          placeholder={t("Enter Search Keyword")}
+          className="brz-input brz-ed-popup-two__input"
+          placeholder={t("Type to search")}
           value={value}
           onChange={this.handleInputChange}
         />
-        <div className={className}>
+        <div className="brz-ed-popup-two-search-icon">
           <EditorIcon icon="nc-search" />
         </div>
       </div>

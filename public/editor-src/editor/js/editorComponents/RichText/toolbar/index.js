@@ -5,6 +5,7 @@ import { encodeToString } from "visual/utils/string";
 import { getFontStyles } from "visual/utils/fonts";
 import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
+import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 const proEnabled = Boolean(Config.get("pro"));
 
@@ -577,31 +578,6 @@ const getItemsForDesktop = (
           value: linkType,
           tabs: [
             {
-              id: "anchor",
-              label: t("Anchor"),
-              options: [
-                {
-                  id: "linkAnchor",
-                  label: t("Anchor"),
-                  type: "blockThumbnail",
-                  value: linkAnchor,
-                  onChange: linkAnchor =>
-                    onChange({
-                      link: encodeToString({
-                        type: linkType,
-                        anchor: linkAnchor ? `#${linkAnchor}` : "",
-                        external: linkExternal,
-                        externalBlank: linkExternalBlank,
-                        externalRel: linkExternalRel,
-                        externalType: linkExternalType,
-                        population: linkPopulation,
-                        popup: linkPopup ? `#${linkPopup}` : ""
-                      })
-                    })
-                }
-              ]
-            },
-            {
               id: "external",
               label: t("URL"),
               options: [
@@ -664,6 +640,31 @@ const getItemsForDesktop = (
                   label: t("Make it Nofollow"),
                   value: linkExternalRel,
                   onChange: linkExternalRel =>
+                    onChange({
+                      link: encodeToString({
+                        type: linkType,
+                        anchor: linkAnchor ? `#${linkAnchor}` : "",
+                        external: linkExternal,
+                        externalBlank: linkExternalBlank,
+                        externalRel: linkExternalRel,
+                        externalType: linkExternalType,
+                        population: linkPopulation,
+                        popup: linkPopup ? `#${linkPopup}` : ""
+                      })
+                    })
+                }
+              ]
+            },
+            {
+              id: "anchor",
+              label: t("Anchor"),
+              options: [
+                {
+                  id: "linkAnchor",
+                  label: t("Anchor"),
+                  type: "blockThumbnail",
+                  value: linkAnchor,
+                  onChange: linkAnchor =>
                     onChange({
                       link: encodeToString({
                         type: linkType,
@@ -823,6 +824,33 @@ const getItemsForDesktop = (
           ],
           onChange: tagName => onChange(getBlockTag(tagName)),
           value: tagName
+        },
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          label: t("More Settings"),
+          icon: "nc-cog",
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs",
+              align: "start",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  tabIcon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  tabIcon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
+          ]
         }
       ]
     }

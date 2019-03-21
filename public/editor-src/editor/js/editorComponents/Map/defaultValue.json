@@ -1,10 +1,90 @@
 {
   "className": "",
 
+  "tabsState": "tabNormal",
+
+  "tabsCurrentElement": "tabCurrentElement",
+
   "size": 100,
   "height": 400,
   "zoom": 15,
   "address": "Wall Street",
+
+  "borderStyle": "solid",
+
+  "tempBorderStyle": "solid",
+
+  "hoverBorderStyle": null,
+
+  "tempHoverBorderStyle": null,
+
+  "borderWidthType": "grouped",
+  "borderWidth": 0,
+  "borderTopWidth": 0,
+  "borderRightWidth": 0,
+  "borderBottomWidth": 0,
+  "borderLeftWidth": 0,
+
+  "tempBorderWidth": 4,
+  "tempBorderTopWidth": 4,
+  "tempBorderRightWidth": 4,
+  "tempBorderBottomWidth": 4,
+  "tempBorderLeftWidth": 4,
+
+  "hoverBorderWidthType": null,
+  "hoverBorderWidth": null,
+  "hoverBorderTopWidth": null,
+  "hoverBorderRightWidth": null,
+  "hoverBorderBottomWidth": null,
+  "hoverBorderLeftWidth": null,
+
+  "tempHoverBorderWidth": null,
+  "tempHoverBorderTopWidth": null,
+  "tempHoverBorderRightWidth": null,
+  "tempHoverBorderBottomWidth": null,
+  "tempHoverBorderLeftWidth": null,
+
+  "borderRadiusType": "grouped",
+  "borderRadius": 0,
+  "borderTopLeftRadius": 0,
+  "borderTopRightRadius": 0,
+  "borderBottomRightRadius": 0,
+  "borderBottomLeftRadius": 0,
+
+  "tempBorderRadius": 0,
+  "tempBorderTopLeftRadius": 0,
+  "tempBorderTopRightRadius": 0,
+  "tempBorderBottomRightRadius": 0,
+  "tempBorderBottomLeftRadius": 0,
+
+  "hoverBorderRadiusType": null,
+  "hoverBorderRadius": null,
+  "hoverBorderTopLeftRadius": null,
+  "hoverBorderTopRightRadius": null,
+  "hoverBorderBottomRightRadius": null,
+  "hoverBorderBottomLeftRadius": null,
+
+  "tempHoverBorderRadius": null,
+  "tempHoverBorderTopLeftRadius": null,
+  "tempHoverBorderTopRightRadius": null,
+  "tempHoverBorderBottomRightRadius": null,
+  "tempHoverBorderBottomLeftRadius": null,
+
+  "tabsColor": "tabBorder",
+
+  "borderColorHex": "#66738d",
+  "borderColorOpacity": 0,
+  "borderColorPalette": "",
+
+  "tempBorderColorOpacity": 1,
+  "tempBorderColorPalette": "",
+
+  "hoverBorderColorHex": null,
+  "hoverBorderColorOpacity": null,
+  "hoverBorderColorPalette": null,
+
+  "tempHoverBorderColorOpacity": null,
+  "tempHoverBorderColorPalette": null,
 
   "boxShadow": "off",
   "boxShadowColorHex": "#000000",
@@ -20,9 +100,85 @@
 
   "customCSS": "",
 
+  "hoverTransition": 50,
+
   "tabletSize": null,
   "tabletHeight": null,
 
+  "tabletBorderStyle": null,
+
+  "tempTabletBorderStyle": null,
+
+  "tabletBorderWidthType": null,
+  "tabletBorderWidth": null,
+  "tabletBorderTopWidth": null,
+  "tabletBorderRightWidth": null,
+  "tabletBorderBottomWidth": null,
+  "tabletBorderLeftWidth": null,
+
+  "tempTabletBorderWidth": null,
+  "tempTabletBorderTopWidth": null,
+  "tempTabletBorderRightWidth": null,
+  "tempTabletBorderBottomWidth": null,
+  "tempTabletBorderLeftWidth": null,
+
+  "tabletBorderRadiusType": null,
+  "tabletBorderRadius": null,
+  "tabletBorderTopLeftRadius": null,
+  "tabletBorderTopRightRadius": null,
+  "tabletBorderBottomLeftRadius": null,
+  "tabletBorderBottomRightRadius": null,
+
+  "tempTabletBorderRadius": null,
+  "tempTabletBorderTopLeftRadius": null,
+  "tempTabletBorderTopRightRadius": null,
+  "tempTabletBorderBottomLeftRadius": null,
+  "tempTabletBorderBottomRightRadius": null,
+
+  "tabletBorderColorHex": null,
+  "tabletBorderColorOpacity": null,
+  "tabletBorderColorPalette": null,
+
+  "tempTabletBorderColorOpacity": null,
+  "tempTabletBorderColorPalette": null,
+
   "mobileSize": null,
-  "mobileHeight": null
+  "mobileHeight": null,
+
+  "mobileBorderStyle": null,
+
+  "tempMobileBorderStyle": null,
+
+  "mobileBorderWidthType": null,
+  "mobileBorderWidth": null,
+  "mobileBorderTopWidth": null,
+  "mobileBorderRightWidth": null,
+  "mobileBorderBottomWidth": null,
+  "mobileBorderLeftWidth": null,
+
+  "tempMobileBorderWidth": null,
+  "tempMobileBorderTopWidth": null,
+  "tempMobileBorderRightWidth": null,
+  "tempMobileBorderBottomWidth": null,
+  "tempMobileBorderLeftWidth": null,
+
+  "mobileBorderRadiusType": null,
+  "mobileBorderRadius": null,
+  "mobileBorderTopLeftRadius": null,
+  "mobileBorderTopRightRadius": null,
+  "mobileBorderBottomLeftRadius": null,
+  "mobileBorderBottomRightRadius": null,
+
+  "tempMobileBorderRadius": null,
+  "tempMobileBorderTopLeftRadius": null,
+  "tempMobileBorderTopRightRadius": null,
+  "tempMobileBorderBottomLeftRadius": null,
+  "tempMobileBorderBottomRightRadius": null,
+
+  "mobileBorderColorHex": null,
+  "mobileBorderColorOpacity": null,
+  "mobileBorderColorPalette": null,
+
+  "tempMobileBorderColorOpacity": null,
+  "tempMobileBorderColorPalette": null
 }

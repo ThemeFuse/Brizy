@@ -1,15 +1,24 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 import {
   toolbarShowOnDesktop,
   toolbarShowOnMobile,
   toolbarCustomCSSClass
 } from "visual/utils/toolbar";
+import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItemsForDesktop(v) {
-  const { hex: bgColorHex } = getOptionColor(v, "bgColor");
-  const { hex: borderColorHex } = getOptionColor(v, "borderColor");
+  const device = "desktop";
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
+  const { hex: borderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
 
   return [
     {
@@ -983,7 +992,12 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
-  const { hex: mobileBgColorHex } = getOptionColor(v, "mobileBgColor");
+  const device = "mobile";
+
+  const { hex: mobileBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
 
   return [
     toolbarShowOnMobile({ v }),

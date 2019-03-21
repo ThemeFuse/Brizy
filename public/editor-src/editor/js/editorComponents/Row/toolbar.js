@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor, getAnimations } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getAnimations
+} from "visual/utils/options";
 import {
   defaultValueValue,
   tabletSyncOnChange,
@@ -49,8 +52,15 @@ import {
 
 export function getItemsForDesktop(v, component) {
   const device = "desktop";
-  const { hex: bgColorHex } = getOptionColor(v, "bgColor");
-  const { hex: boxShadowColorHex } = getOptionColor(v, "boxShadowColor");
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
+  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device })
+  );
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
 
@@ -1452,10 +1462,10 @@ export function getItemsForTablet(v, component) {
   const device = "tablet";
   const state = "normal";
 
-  const { hex: tabletBgColorHex } =
-    v.tabletBgColorHex !== null
-      ? getOptionColor(v, "tabletBgColor")
-      : getOptionColor(v, "bgColor");
+  const { hex: tabletBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
 
@@ -2210,10 +2220,10 @@ export function getItemsForMobile(v, component) {
   const device = "mobile";
   const state = "normal";
 
-  const { hex: mobileBgColorHex } =
-    v.mobileBgColorHex !== null
-      ? getOptionColor(v, "mobileBgColor")
-      : getOptionColor(v, "bgColor");
+  const { hex: mobileBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
 

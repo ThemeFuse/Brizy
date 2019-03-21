@@ -50,7 +50,7 @@
           <body class="brz brz-ed brz-ed--desktop">
             <div id="brz-ed-root"></div>
 
-            <script src="https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry"></script>
+            <script src="{{ assetsUrl }}/editor/js/polyfill.js"></script>
             <script src="{{ assetsUrl }}/editor/js/editor.vendor.js"></script>
             <script>
               window.__VISUAL_CONFIG__ = {{ editorData | json_encode }};
@@ -69,7 +69,7 @@
           </body>
         </html>
       '></iframe>
-      <script src="https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,IntersectionObserverEntry"></script>
+      <script src="{{ assetsUrl }}/editor/js/polyfill.js"></script>
   </body>
   </html>
 {% endspaceless %}

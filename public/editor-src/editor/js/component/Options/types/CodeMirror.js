@@ -84,12 +84,16 @@ class CodeMirrorOptionType extends React.Component {
       mode: "css"
     };
 
+    const defaultElement = `element {
+  /* CSS goes here */
+}`;
+
     return (
       <div className={className} {...attr}>
         {label || helper ? this.renderLabel() : null}
         {IS_EDITOR && (
           <CodeMirror
-            value={value}
+            value={value || defaultElement}
             onChange={this.onChangeDebounced}
             options={options}
           />

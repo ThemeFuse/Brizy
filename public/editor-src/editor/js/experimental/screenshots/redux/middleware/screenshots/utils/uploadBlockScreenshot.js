@@ -7,14 +7,23 @@ export const uploadBlockScreenshot = ({
   screenshotBase64
 }) => {
   const {
-    api: { saveBlockScreenshot },
+    api: { hash, url, saveBlockScreenshot },
     page
   } = Config.get("wp");
 
-  return request(saveBlockScreenshot, {
-    post: page,
-    block_id: screenshotId,
-    img: screenshotBase64,
-    block_type: blockType
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+    },
+    credentials: "omit",
+    body: new URLSearchParams({
+      hash,
+      action: saveBlockScreenshot,
+      post: page,
+      block_id: screenshotId,
+      img: screenshotBase64,
+      block_type: blockType
+    })
   });
 };

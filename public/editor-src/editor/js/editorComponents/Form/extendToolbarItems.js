@@ -1,7 +1,8 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import {
+  defaultValueValue,
   onChangeTypography,
   onChangeTypographyTablet,
   onChangeTypographyMobile,
@@ -11,15 +12,25 @@ import {
 import { t } from "visual/utils/i18n";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
-  // ...
-  const { hex: bgColorHex } = getOptionColor(v, "bgColor");
-  const { hex: colorHex } = getOptionColor(v, "color");
-  const { hex: borderColorHex } = getOptionColor(v, "borderColor");
+  // Color
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device }),
+    defaultValueValue({ v, key: "bgColorPalette", device })
+  );
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "colorHex", device }),
+    defaultValueValue({ v, key: "colorPalette", device })
+  );
+  const { hex: borderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
 
   return [
     {

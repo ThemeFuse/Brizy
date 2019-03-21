@@ -52,11 +52,11 @@
 // Dark
 .brz-ed-scroll--dark {
   .brz-ed-wide-thumb {
-    background-color: #44474b;
+    background-color: rgba(#44474b, 0.5);
     border-radius: 4px;
   }
   .brz-ed-tall-thumb {
-    background-color: #44474b;
+    background-color: rgba(#44474b, 0.5);
     border-radius: 4px;
   }
 }
@@ -73,33 +73,14 @@
   }
 }
 
-// Popup
-.brz-ed-scroll__popup {
-  .brz-ed-scroll-inner {
-    height: 100% !important;
-  }
-  .brz-ed-tall-track {
-    width: 5px;
-    right: 8px;
-    height: calc(100% - 34px) !important;
-    top: 17px !important;
-  }
-  .brz-ed-tall-thumb,
+// New Dark for New Blocks
+.brz-ed-scroll--new-dark {
   .brz-ed-wide-thumb {
-    border-radius: 4px;
-    background-color: #d4d5d7;
+    background-color: #818a91;
+    border-radius: 3px;
   }
-}
-
-// --- Responsive
-@media screen and (max-height: 899px) {
-  .brz-ed-scroll__popup {
-    height: 465px !important;
-  }
-}
-
-@media screen and (min-height: 900px) {
-  .brz-ed-scroll__popup {
-    height: 540px !important;
+  .brz-ed-tall-thumb {
+    background-color: rgba(129, 138, 145, 0.5);
+    border-radius: 3px;
   }
 }

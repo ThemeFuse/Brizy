@@ -1,7 +1,8 @@
 import { hexToRgba } from "visual/utils/color";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
-import { getOptionColor } from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
+  defaultValueValue,
   onChangeTypography,
   onChangeTypographyTablet,
   onChangeTypographyMobile
@@ -20,13 +21,17 @@ import {
 import { t } from "visual/utils/i18n";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
     fontStyle === "" ? v : getFontStyle(fontStyle);
 
-  // ...
-  const { hex: colorHex } = getOptionColor(v, "color");
+  // Color
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "colorHex", device }),
+    defaultValueValue({ v, key: "colorPalette", device })
+  );
 
   return [
     {

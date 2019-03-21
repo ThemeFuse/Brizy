@@ -68,7 +68,11 @@ export default class extends Component {
     });
   }
   getIcons() {
-    const { searchQuery, type: { id }, category } = this.state;
+    const {
+      searchQuery,
+      type: { id },
+      category
+    } = this.state;
 
     const filters = {
       type: id,
@@ -134,7 +138,9 @@ export default class extends Component {
     );
   }
   renderItem(icons, index) {
-    const { value: { name: iconName } } = this.props;
+    const {
+      value: { name: iconName }
+    } = this.props;
     const { name: typeName } = this.state.type;
     const { name: iconValue } = icons[index];
     const className = classnames("brz-ed-popup-icons__grid__item", {
@@ -148,7 +154,7 @@ export default class extends Component {
         style={{ display: "inline-block" }}
         onClick={() => this.onIconClick(typeName, iconValue)}
       >
-        <i className={`nc-icon nc-${typeName} nc-${typeName}-${iconValue}`}></i>
+        <i className={`nc-icon nc-${typeName} nc-${typeName}-${iconValue}`} />
       </div>
     );
   }
@@ -187,6 +193,7 @@ export default class extends Component {
               </div>
               <div className="brz brz-ed-popup-icons__grid">
                 <SmartGrid
+                  height={540}
                   itemRenderer={index => this.renderItem(icons, index)}
                   itemsPerRow={8}
                   initialIndex={initialIndex}

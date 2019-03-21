@@ -228,7 +228,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		}
 
 		$this->set_editor_data( $data['editor_data'] );
-		$this->needs_compile      = metadata_exists( 'post', $this->wp_post_id, self::BRIZY_POST_NEEDS_COMPILE_KEY ) ? (bool)get_post_meta( $this->wp_post_id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true ) : (bool)$data['needs_compile'];
+		$data_needs_compile       = isset( $data['needs_compile'] ) ? $data['needs_compile'] : true;
+		$this->needs_compile      = metadata_exists( 'post', $this->wp_post_id, self::BRIZY_POST_NEEDS_COMPILE_KEY ) ? (bool) get_post_meta( $this->wp_post_id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true ) : $data_needs_compile;
 		$this->editor_version     = isset( $data['editor_version'] ) ? $data['editor_version'] : null;
 		$this->compiler_version   = isset( $data['compiler_version'] ) ? $data['compiler_version'] : null;
 		$this->plugin_version     = isset( $data['plugin_version'] ) ? $data['plugin_version'] : null;

@@ -16,7 +16,7 @@ onerror = e => {
 };
 
 onmessage = async e => {
-  const { id, url: incomingUrl, options, proxyUrl } = e.data;
+  const { id, url: incomingUrl, options, siteUrl, proxyUrl } = e.data;
 
   const r = await fetch(incomingUrl);
   const nodeString = await r.text();
@@ -25,7 +25,7 @@ onmessage = async e => {
 
   removeUnwantedNodes(node);
   transformPictureToImg(node);
-  await inlineImages(node, { proxyUrl });
+  await inlineImages(node, { siteUrl, proxyUrl });
   deactivateBackgroundParallax(node);
   replaceIframesWithPlaceholders(node);
   deactivatePaddingDraggable(node);
@@ -179,7 +179,7 @@ function transformPictureToImg(node) {
   });
 }
 
-async function inlineImages(node, { proxyUrl }) {
+async function inlineImages(node, config) {
   const promises = [];
 
   getElementsByTagName(node, "img").forEach(async node => {
@@ -187,7 +187,7 @@ async function inlineImages(node, { proxyUrl }) {
 
     if (src && !isBase64(src)) {
       promises.push(
-        fetchResource(proxyUrl + encodeURIComponent(src)).then(base64 => {
+        fetchResource(getResourceDownloadUrl(src, config)).then(base64 => {
           node.setAttribute("src", base64);
 
           return base64;
@@ -208,7 +208,7 @@ async function inlineImages(node, { proxyUrl }) {
 
     if (url && src && !isBase64(src)) {
       promises.push(
-        fetchResource(proxyUrl + encodeURIComponent(src)).then(base64 => {
+        fetchResource(getResourceDownloadUrl(src, config)).then(base64 => {
           node.setAttribute(
             "style",
             style.replace(urlRegex, `url("${base64}")`)
@@ -256,10 +256,14 @@ function makeSvgDataUri(nodeString, options) {
 }
 
 function fetchResource(url) {
-  return fetch(url)
+  return fetch(url, { credentials: "omit" })
     .then(r => r.blob())
     .then(blobToDataUri)
     .catch(e => console.error("worker fetch", e));
+}
+
+function getResourceDownloadUrl(src, { siteUrl, proxyUrl }) {
+  return src.indexOf(siteUrl) === 0 ? src : proxyUrl + encodeURIComponent(src);
 }
 
 function blobToDataUri(blob) {
