@@ -1,7 +1,7 @@
 <?php
 
 
-class Brizy_Editor_Forms_Api extends Brizy_Editor_AbstractAPI{
+class Brizy_Editor_Forms_Api {
 
 	const AJAX_GET_FORM = 'brizy_get_form';
 	const AJAX_CREATE_FORM = 'brizy_create_form';
@@ -36,10 +36,10 @@ class Brizy_Editor_Forms_Api extends Brizy_Editor_AbstractAPI{
 
 		$this->post = $post;
 
-		parent::__construct();
+		$this->initialize();
 	}
 
-	protected function initialize() {
+	private function initialize() {
 
 		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'wp_ajax_' . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
@@ -56,8 +56,18 @@ class Brizy_Editor_Forms_Api extends Brizy_Editor_AbstractAPI{
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 	}
 
-	protected function getNonceKey() {
-		return Brizy_Editor_API::nonce;
+	protected function error( $code, $message ) {
+		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
+	}
+
+	protected function success( $data ) {
+		wp_send_json_success( $data );
+	}
+
+	private function authorize() {
+		if ( ! wp_verify_nonce( $_REQUEST['hash'], Brizy_Editor_API::nonce ) ) {
+			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
+		}
 	}
 
 	public function get_form() {
