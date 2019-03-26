@@ -9,31 +9,80 @@ if(params.gitMerge) {
     zipFileName = "BuildFree-"+params.buildVersion+".zip"
 }
 
+def sendSlackMessage(String message) {
+    message = message.replaceAll("'","\'").replaceAll("\n",'\n');
+    withCredentials([string(credentialsId: 'slack-hook-url', variable: 'hook_urk')]) {
+      sh """
+        curl -X POST -H 'Content-type: application/json' --data '${message}' ${hook_urk}
+      """
+    }
+}
 
 def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
 
-    def buildInfo = "\nBranch: "+params.releaseBranch+"\nPlugin version: "+params.buildVersion+"\nEditor version: "+params.editorVersion+"\nChangelog\n"+params.changelog;
+    def slackMessage= '';
+    def color = '';
 
-    withCredentials([string(credentialsId: 'slack', variable: 'SECRET')]) {
+     if ( buildResult == "SUCCESS" ) {
+       slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was successful.";
+       color = '#00ff00';
 
-         if ( buildResult == "SUCCESS" ) {
-           //slackSend  channel: '#jenkins', color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
+       sh '''
+            set +x
+            curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
+       '''
+     }
+     else if( buildResult == "FAILURE" ) {
+       slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was failed.";
+       color = '#ff0000';
+     }
+     else if( buildResult == "UNSTABLE" ) {
+        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was unstable.";
+        color = '#ff8800';
+     }
+     else {
+        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} its result was unclear.";
+        color = '#ff8800';
+     }
 
-           sh '''
-                set +x
-                curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
-           '''
-         }
-         else if( buildResult == "FAILURE" ) {
-           //slackSend  channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed."+buildInfo
-         }
-         else if( buildResult == "UNSTABLE" ) {
-           //slackSend  channel: '#jenkins', color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable."+buildInfo
-         }
-         else {
-           //slackSend channel: '#jenkins', color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear."+buildInfo
-         }
+    def changelog = params.changelog.replaceAll('"','\"');
+
+    def slackMessageJson = """
+    {
+        "attachments": [
+            {
+                "color": "${color}",
+                "title": "${slackMessage}",
+                "fields": [
+                    {
+                        "title": "Plugin version",
+                        "value": "${params.buildVersion}",
+                        "short": true
+                    },
+                    {
+                        "title": "Editor version",
+                        "value": "${params.editorVersion}",
+                        "short": true
+                    },
+                    {
+                        "title": "Branch",
+                        "value": "${params.releaseBranch}",
+                        "short": true
+                    },
+                    {
+                        "title": "Changelog",
+                        "value": "${changelog}",
+                        "short": false
+                    }
+                ],
+                "footer": "Brizy",
+                "footer_icon": "https://brizy.io/wp-content/uploads/2018/02/logo-symbol.png",
+                "ts": 147258512
+            }
+        ]
     }
+    """;
+    sendSlackMessage(slackMessageJson);
 }
 
 def folderExist(path){
