@@ -26,11 +26,6 @@ def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
      if ( buildResult == "SUCCESS" ) {
        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was successful.";
        color = '#00ff00';
-
-       sh '''
-            set +x
-            curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
-       '''
      }
      else if( buildResult == "FAILURE" ) {
        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was failed.";
@@ -76,13 +71,19 @@ def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
                     }
                 ],
                 "footer": "Brizy",
-                "footer_icon": "https://brizy.io/wp-content/uploads/2018/02/logo-symbol.png",
-                "ts": 147258512
+                "footer_icon": "https://brizy.io/wp-content/uploads/2018/02/logo-symbol.png"
             }
         ]
     }
     """;
     sendSlackMessage(slackMessageJson);
+
+     if ( buildResult == "SUCCESS" ) {
+       sh '''
+            set +x
+            curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
+       '''
+     }
 }
 
 def folderExist(path){
