@@ -79,10 +79,12 @@ def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
     sendSlackMessage(slackMessageJson);
 
      if ( buildResult == "SUCCESS" ) {
-       sh '''
-            set +x
-            curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
-       '''
+       withCredentials([string(credentialsId: 'slack', variable: 'SECRET')]) {
+            sh '''
+                set +x
+                curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
+            '''
+       }
      }
 }
 
