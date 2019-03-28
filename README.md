@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.1<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.65<br>
+Stable tag: 1.0.66<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.66 - 2019-03-28 ###
+* Fixed: Form integrations
+* Fixed: Back to WordPress button in classic editor
+* Fixed: Project dependencies
 
 ### 1.0.65 - 2019-03-21 ###
 * New: Block Adder UI
