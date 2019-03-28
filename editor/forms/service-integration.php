@@ -135,12 +135,22 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 
 		if ( isset( $data['fields'] ) ) {
 			foreach ( $data['fields'] as $field ) {
-				$instance->addField( Brizy_Editor_Forms_Field::createFromSerializedData( $field ) );
+
+				if ( $field instanceof Brizy_Editor_Forms_Field ) {
+					$instance->addField( $field );
+				} else {
+					$instance->addField( Brizy_Editor_Forms_Field::createFromSerializedData( $field ) );
+				}
+
 			}
 		}
 		if ( isset( $data['lists'] ) ) {
-			foreach ( $data['lists'] as $lists ) {
-				$instance->addList( Brizy_Editor_Forms_Group::createFromSerializedData( $lists ) );
+			foreach ( $data['lists'] as $list ) {
+				if ( $list instanceof Brizy_Editor_Forms_Group ) {
+					$instance->addList( $list );
+				} else {
+					$instance->addList( Brizy_Editor_Forms_Group::createFromSerializedData( $list ) );
+				}
 			}
 		}
 		if ( isset( $data['usedAccount'] ) ) {
@@ -161,6 +171,7 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 		if ( isset( $data['hasConfirmation'] ) ) {
 			$instance->setHasConfirmation( $data['hasConfirmation'] );
 		}
+
 		return $instance;
 	}
 
@@ -247,7 +258,7 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 			}
 		}
 
-		return array();
+		return null;
 	}
 
 	/**

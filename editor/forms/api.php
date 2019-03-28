@@ -16,21 +16,9 @@ class Brizy_Editor_Forms_Api {
 	const AJAX_AUTHENTICATION_CALLBACK = 'brizy_authentication_callback';
 
 	/**
-	 * @var Brizy_Editor_Project
-	 */
-	private $project;
-
-	/**
 	 * @var Brizy_Editor_Post
 	 */
 	private $post;
-
-	/**
-	 * @return Brizy_Editor_Project
-	 */
-	public function get_project() {
-		return $this->project;
-	}
 
 	/**
 	 * @return Brizy_Editor_Post
@@ -42,13 +30,11 @@ class Brizy_Editor_Forms_Api {
 	/**
 	 * Brizy_Editor_API constructor.
 	 *
-	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function __construct( $project, $post ) {
+	public function __construct( $post ) {
 
-		$this->project = $project;
-		$this->post    = $post;
+		$this->post = $post;
 
 		$this->initialize();
 	}

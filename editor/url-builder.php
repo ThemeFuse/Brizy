@@ -31,10 +31,7 @@ class Brizy_Editor_UrlBuilder
      */
     public function __construct($project = null, $post_id = null)
     {
-
-        $this->project = $project;
         $this->post_id = $post_id;
-
         $this->upload_dir = Brizy_Admin_UploadDir::getUploadDir(null, true);
     }
 
@@ -317,18 +314,19 @@ class Brizy_Editor_UrlBuilder
         return new Brizy_Admin_UrlIterator($urls);
     }
 
-    /**
-     * @param null $path
-     * @param null $template_version
-     * @param null $template_slug
-     *
-     * @return string
-     */
+	/**
+	 * @param null $path
+	 * @param null $template_version
+	 * @param null $template_slug
+	 *
+	 * @return Brizy_Admin_UrlIterator
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
     public function external_asset_url($path = null, $template_version = null, $template_slug = null)
     {
 
         if (is_null($template_slug)) {
-            $template_slug = $this->project->getTemplateSlug();
+            $template_slug = Brizy_Editor_Project::get()->getTemplateSlug();
         }
         if (is_null($template_version)) {
             $template_version = BRIZY_EDITOR_VERSION;

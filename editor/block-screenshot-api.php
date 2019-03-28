@@ -31,16 +31,14 @@ class Brizy_Editor_BlockScreenshotApi {
 	private $blockTypes;
 
 	/**
-	 * Brizy_Editor_BlockScreenshot constructor.
+	 * Brizy_Editor_BlockScreenshotApi constructor.
 	 *
-	 * @param $project
 	 * @param $post
+	 *
+	 * @throws Exception
 	 */
-	public function __construct( $project, $post ) {
-
-		$this->project    = $project;
+	public function __construct( $post ) {
 		$this->post       = $post;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->get_parent_id() : null );
 		$this->blockTypes = array( self::BLOCK_TYPE_NORMAL, self::BLOCK_TYPE_GLOBAL, self::BLOCK_TYPE_SAVED );
 		$this->initialize();
 	}
@@ -114,13 +112,15 @@ class Brizy_Editor_BlockScreenshotApi {
 	 */
 	private function saveScreenshot( $type, $blockFileName, $content ) {
 		try {
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $this->post ? $this->post->get_parent_id() : null );
+
 			switch ( $type ) {
 				case self::BLOCK_TYPE_NORMAL:
-					return $this->storeThumbnail( $content, $this->urlBuilder->page_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . $blockFileName ) );
+					return $this->storeThumbnail( $content, $urlBuilder->page_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . $blockFileName ) );
 				case self::BLOCK_TYPE_GLOBAL:
-					return $this->storeThumbnail( $content, $this->urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'global' . DIRECTORY_SEPARATOR . $blockFileName ) );
+					return $this->storeThumbnail( $content, $urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'global' . DIRECTORY_SEPARATOR . $blockFileName ) );
 				case self::BLOCK_TYPE_SAVED:
-					return $this->storeThumbnail( $content, $this->urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'saved' . DIRECTORY_SEPARATOR . $blockFileName ) );
+					return $this->storeThumbnail( $content, $urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'saved' . DIRECTORY_SEPARATOR . $blockFileName ) );
 			}
 		} catch ( Exception $e ) {
 			return false;

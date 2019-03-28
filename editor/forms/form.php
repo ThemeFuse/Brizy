@@ -25,7 +25,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 			$get_object_vars['integrations'][] = $integration->convertToOptionValue();
 		}
 
-		return $get_object_vars;
+		return serialize($get_object_vars);
 	}
 
 	public function jsonSerialize() {

@@ -5,36 +5,19 @@
 class Brizy_Public_Main {
 
 	/**
-	 * @var Brizy_Editor_Project
-	 */
-	private $project;
-
-	/**
 	 * @var Brizy_Editor_Post
 	 */
 	private $post;
 
-	/**
-	 * @var Twig_Template
-	 */
-	private $twig_template;
-
-	/**
-	 * @var Brizy_Editor_UrlBuilder
-	 */
-	private $url_builder;
 
 	/**
 	 * Brizy_Public_Main constructor.
 	 *
-	 * @param $project
 	 * @param $post
 	 */
-	public function __construct( $project, $post ) {
+	public function __construct( $post ) {
 
-		$this->project     = $project;
 		$this->post        = $post;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $post->get_parent_id() );
 
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
@@ -396,7 +379,7 @@ class Brizy_Public_Main {
 
 
 	private function getConfigObject() {
-		$editor        = Brizy_Editor_Editor_Editor::get( $this->project, $this->post );
+		$editor        = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $this->post );
 		$config_json   = json_encode( $editor->config() );
 		$config_object = json_decode( $config_json );
 

@@ -78,7 +78,6 @@ class Brizy_Editor {
 		try {
 			// do not delete this line
 			$user    = Brizy_Editor_User::get();
-			$project = Brizy_Editor_Project::get();
 
 			if ( $pid ) {
 				$post = Brizy_Editor_Post::get( $pid );
@@ -90,7 +89,7 @@ class Brizy_Editor {
 		} catch ( Exception $e ) {
 		}
 
-		$this->loadEditorApi( $project, $post, $user );
+		$this->loadEditorApi( $post, $user );
 		$this->loadEditorAdminSettings();
 
 		function brizy_add_dashboard_widgets() {
@@ -104,7 +103,7 @@ class Brizy_Editor {
 		if ( $post && $post->uses_editor() ) {
 
 			if ( is_user_logged_in() ) {
-				$this->handleBackEndEditor( $user, $project, $post );
+				$this->handleBackEndEditor( $post );
 			}
 		}
 
@@ -167,13 +166,11 @@ class Brizy_Editor {
 	}
 
 	/**
-	 * @param Brizy_Editor_User $user
-	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function handleFrontEndEditor( $user, $project, $post ) {
+	public function handleFrontEndEditor(  $post ) {
 		try {
-			$main = new Brizy_Public_Main( $project, $post );
+			$main = new Brizy_Public_Main( $post );
 			$main->initialize_front_end();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
@@ -181,14 +178,12 @@ class Brizy_Editor {
 	}
 
 	/**
-	 * @param Brizy_Editor_User $user
-	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function handleBackEndEditor( $user, $project, $post ) {
+	public function handleBackEndEditor(  $post ) {
 
 		try {
-			$main = new Brizy_Public_Main( $project, $post );
+			$main = new Brizy_Public_Main( $post );
 			$main->initialize_wordpress_editor();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
@@ -200,14 +195,14 @@ class Brizy_Editor {
 	 * @param $post
 	 * @param $user
 	 */
-	private function loadEditorApi( $project, $post, $user ) {
+	private function loadEditorApi( $post, $user ) {
 		try {
-			new Brizy_Editor_API( $project, $post );
-			new Brizy_Editor_BlockScreenshotApi( $project, $post );
-			new Brizy_Editor_Forms_Api( $project, $post );
+			new Brizy_Editor_API( $post );
+			new Brizy_Editor_BlockScreenshotApi( $post );
+			new Brizy_Editor_Forms_Api( $post );
 
 			// for other apis
-			do_action( 'brizy_register_api_methods', $user, $project, $post );
+			do_action( 'brizy_register_api_methods', $user, $post );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
@@ -236,8 +231,6 @@ class Brizy_Editor {
 			// do not delete this line
 			$user = Brizy_Editor_User::get();
 
-			$project = Brizy_Editor_Project::get();
-
 			if ( $pid ) {
 				$post = Brizy_Editor_Post::get( $pid );
 			}
@@ -246,7 +239,7 @@ class Brizy_Editor {
 		}
 
 		if ( $post && $post->uses_editor() ) {
-			$this->handleFrontEndEditor( $user, $project, $post );
+			$this->handleFrontEndEditor( $post );
 		}
 	}
 
@@ -259,14 +252,13 @@ class Brizy_Editor {
 
 	private function initializeAssetLoaders() {
 		try {
-			$project     = Brizy_Editor_Project::get();
-			$url_builder = new Brizy_Editor_UrlBuilder( $project );
+			$url_builder = new Brizy_Editor_UrlBuilder( null );
 
 			$config          = null;
 			$proxy           = new Brizy_Public_AssetProxy( $url_builder, $config );
 			$crop_roxy       = new Brizy_Public_CropProxy( $url_builder, $config );
-			$screenshot_roxy = new Brizy_Public_BlockScreenshotProxy( new Brizy_Editor_UrlBuilder( $project ), $config );
-			$screenshot_roxy = new Brizy_Public_FileProxy( new Brizy_Editor_UrlBuilder( $project ), $config );
+			$screenshot_roxy = new Brizy_Public_BlockScreenshotProxy( new Brizy_Editor_UrlBuilder( null ), $config );
+			$screenshot_roxy = new Brizy_Public_FileProxy( new Brizy_Editor_UrlBuilder( null ), $config );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
