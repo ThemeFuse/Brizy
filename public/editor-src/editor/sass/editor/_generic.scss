@@ -56,3 +56,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+// Rotate Editor Icons
+.brz-ed-deg90 {
+  transform: rotate(90deg);
+}
+
+.brz-ed-deg180 {
+  transform: rotate(180deg);
+}
+
+.brz-ed-deg270 {
+  transform: rotate(270deg);
+}

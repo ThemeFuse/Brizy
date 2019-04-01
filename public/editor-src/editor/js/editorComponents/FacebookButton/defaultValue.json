@@ -1,17 +1,23 @@
 {
-  "type": "like",
-  "layout": "button",
-  "size": "small",
+  "content": {
+    "type": "like",
+    "layout": "button",
+    "size": "small",
 
-  "share": "on",
-  "showFriends": "off",
-  "showCounter": "off",
-  "darkScheme": "off",
+    "share": "on",
+    "showFriends": "off",
+    "showCounter": "off",
+    "darkScheme": "off"
+  },
 
-  "targetUrl": "current",
-  "href": "",
+  "link": {
+    "targetUrl": "current",
+    "href": ""
+  },
 
-  "className": "",
+  "style": {
+    "className": "",
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }

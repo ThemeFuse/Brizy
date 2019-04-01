@@ -1,9 +1,11 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import Sortable from "visual/component/Sortable";
 import Editor from "visual/global/Editor";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
+import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
 
@@ -104,12 +106,27 @@ class AccordionItemItems extends EditorArrayComponent {
   renderItemWrapper(item, itemKey, itemIndex) {
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
+    const shortcutsTypes = [
+      "duplicate",
+      "copy",
+      "paste",
+      "pasteStyles",
+      "delete",
+      "horizontalAlign"
+    ];
+
     return (
       <ContextMenuExtend
         key={itemKey}
         {...this.makeContextMenuProps(contextMenuExtendConfig)}
       >
-        {item}
+        <HotKeys
+          shortcutsTypes={shortcutsTypes}
+          id={itemKey}
+          onKeyDown={this.handleKeyDown}
+        >
+          {item}
+        </HotKeys>
       </ContextMenuExtend>
     );
   }

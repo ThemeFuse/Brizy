@@ -1,6 +1,8 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
+import ContextMenu from "visual/component/ContextMenu";
+import contextMenuConfig from "./contextMenu";
 import Items from "./items";
 import { percentageToPixels } from "visual/utils/meta";
 import { styleClassName, styleCSSVars } from "./styles";
@@ -171,7 +173,9 @@ class Carousel extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Items {...itemsProps} />
+        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+          <Items {...itemsProps} />
+        </ContextMenu>
       </CustomCSS>
     );
   }

@@ -87,15 +87,20 @@
       align-items: center;
     }
 
+    .react-contexify__item--placeholder {
+      color: #9da8b1;
+    }
+
     // State
     &--disabled,
     &--disabled:hover {
       pointer-events: none;
       cursor: default;
-      opacity: 0.75;
     }
-    &--title {
-      //
+    &--disabled {
+      .react-contexify__item--title {
+        color: #9ca7b0;
+      }
     }
     &--shortcut {
       color: #9ca7b0;

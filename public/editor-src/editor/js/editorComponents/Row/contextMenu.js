@@ -11,8 +11,11 @@ function getItems(v, component) {
     {
       id: "main",
       type: "group",
+      icon: "nc-row",
       title: t("Row"),
-      disabled: v.showToolbar === "off" || inPopup,
+      disabled: (item, meta) => {
+        return v.showToolbar === "off" || inPopup || meta.isInSubMenu;
+      },
       items: []
     }
   ];

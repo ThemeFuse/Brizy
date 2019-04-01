@@ -89,6 +89,7 @@ export function styleClassName(v) {
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)",
         height: "var(--mobileHeight)",
+        
         "& .brz-map-content": {
           borderStyle: "var(--mobileBorderStyle)",
 

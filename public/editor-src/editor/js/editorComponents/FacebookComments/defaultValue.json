@@ -1,11 +1,17 @@
 {
-  "numPosts": 10,
-  "darkScheme": "off",
+  "content": {
+    "numPosts": 10,
+    "darkScheme": "off"
+  },
 
-  "targetUrl": "current",
-  "href": "",
+  "link": {
+    "targetUrl": "current",
+    "href": ""
+  },
 
-  "className": "",
+  "style": {
+    "className": "",
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }

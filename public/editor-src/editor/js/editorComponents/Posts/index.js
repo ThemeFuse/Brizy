@@ -1,6 +1,8 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
+import ContextMenu from "visual/component/ContextMenu";
+import contextMenuConfig from "./contextMenu";
 import Items from "./items";
 import { styleClassName, styleCSSVars } from "./styles";
 import * as parentToolbarExtend from "./parentToolbarExtend";
@@ -45,6 +47,7 @@ class Posts extends EditorComponent {
         `${_v.paginationColorPalette}__paginationColor`
     ]);
     const {
+      type,
       taxonomy,
       taxonomyId,
       orderBy,
@@ -60,17 +63,21 @@ class Posts extends EditorComponent {
       bindWithKey: "items",
       gridRow,
       gridColumn,
-      taxonomy,
-      taxonomyId,
-      order,
-      orderBy,
       pagination: pagination === "on",
+      loopAttributes: {
+        count: gridRow * gridColumn,
+        taxonomy,
+        value: taxonomyId,
+        ...(type === "posts" ? { order, orderBy } : {})
+      },
       meta: this.getMeta(v)
     });
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Items {...itemsProps} />
+        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+          <Items {...itemsProps} />
+        </ContextMenu>
       </CustomCSS>
     );
   }

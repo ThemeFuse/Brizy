@@ -241,7 +241,7 @@ class SectionHeaderItem extends EditorComponent {
       _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
       _v.shapeBottomColorPalette &&
         `${_v.shapeBottomColorPalette}__shapeBottomColor`,
-        
+
       _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
       _v.tabletBorderColorPalette &&
         `${_v.tabletBorderColorPalette}__tabletBorder`,

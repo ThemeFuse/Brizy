@@ -1,12 +1,17 @@
 {
-  "className": "",
+  "content": {
+    "productID": ""
+  },
 
-  "width": 100,
-  "tabletWidth": null,
-  "mobileWidth": null,
+  "style": {
+    "className": "",
 
-  "productID": "",
-  "style": "",
+    "width": 100,
+    "tabletWidth": null,
+    "mobileWidth": null,
 
-  "customCSS": ""
+    "style": "",
+
+    "customCSS": ""
+  }
 }

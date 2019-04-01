@@ -15,6 +15,8 @@ class PortalToolbar extends React.Component {
     offsetTop: 14,
     offsetBottom: 14,
     offsetLeft: 0,
+    onBeforeOpen: () => {},
+    onBeforeClose: () => {},
     onOpen: () => {},
     onClose: () => {},
     onMouseEnter: () => {},
@@ -70,9 +72,9 @@ class PortalToolbar extends React.Component {
 
   handleMonitorDeactivationRequest() {
     this.hide();
-  };
+  }
 
-  show = props => {
+  show(props) {
     if (this.props.manualControl) {
       const { getProps } = props;
       this.manualPropsGetter = getProps;
@@ -86,19 +88,22 @@ class PortalToolbar extends React.Component {
     } else {
       monitor.setActive(this);
       setTimeout(() => {
+        this.node = ReactDOM.findDOMNode(this);
+        props.onBeforeOpen();
         this.renderPortal(props);
-        this.props.onOpen();
+        props.onOpen();
       }, 0);
     }
-  };
+  }
 
-  hide = () => {
+  hide() {
     const ownerDocument = this.node.ownerDocument;
     const portalNode = portalNodesByDocument.get(ownerDocument);
 
+    this.props.onBeforeClose();
     ReactDOM.unmountComponentAtNode(portalNode);
     this.props.onClose();
-  };
+  }
 
   clickOutsideException = clickTarget => {
     try {

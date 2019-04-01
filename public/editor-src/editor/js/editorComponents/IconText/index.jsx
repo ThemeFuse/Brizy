@@ -29,7 +29,9 @@ class IconText extends EditorComponent {
   }
 
   renderForEdit(v) {
-    const { onToolbarEnter, onToolbarLeave, meta } = this.props;
+    const { onToolbarEnter, onToolbarLeave } = this.props;
+
+    const meta = { ...this.props.meta, inIconText: true };
 
     const iconProps = this.makeSubcomponentProps({
       bindWithKey: "items",

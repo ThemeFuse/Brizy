@@ -671,11 +671,11 @@ class Image extends EditorComponent {
     }
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={imageStylesClassName(v, wrapperSizes, this.props)}>
+      <div className={imageStylesClassName(v, wrapperSizes, this.props)}>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           {content}
-        </div>
-      </CustomCSS>
+        </CustomCSS>
+      </div>
     );
   }
 }

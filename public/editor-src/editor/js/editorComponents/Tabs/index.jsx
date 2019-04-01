@@ -1,6 +1,8 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
+import ContextMenu from "visual/component/ContextMenu";
+import contextMenuConfig from "./contextMenu";
 import Items from "./Items";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
@@ -53,7 +55,9 @@ class Tabs extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Items {...itemProps} />
+        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+          <Items {...itemProps} />
+        </ContextMenu>
       </CustomCSS>
     );
   }

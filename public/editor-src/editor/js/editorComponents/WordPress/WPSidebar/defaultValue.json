@@ -1,11 +1,15 @@
 {
-  "sidebar": "",
+  "content": {
+    "sidebar": ""
+  },
 
-  "width": 100,
+  "style": {
+    "width": 100,
 
-  "customCSS": "",
+    "customCSS": "",
 
-  "tabletWidth": null,
+    "tabletWidth": null,
 
-  "mobileWidth": null
+    "mobileWidth": null
+  }
 }

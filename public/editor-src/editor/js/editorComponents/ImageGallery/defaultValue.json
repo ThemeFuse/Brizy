@@ -1,15 +1,22 @@
 {
-  "className": "",
-  "gridColumn": 2,
-  "spacing": 5,
-  "lightBox": "off",
-  "items": [],
+  "content": {
+    "items": [],
+    "lightBox": "off",
 
-  "customCSS": "",
+    "gridColumn": 2,
 
-  "tabletGridColumn": 2,
-  "tabletSpacing": null,
+    "tabletGridColumn": 2,
+    "mobileGridColumn": 1
+  },
 
-  "mobileGridColumn": 1,
-  "mobileSpacing": null
+  "style": {
+    "className": "",
+    "spacing": 5,
+
+    "customCSS": "",
+
+    "tabletSpacing": null,
+
+    "mobileSpacing": null
+  }
 }

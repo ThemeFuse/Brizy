@@ -108,7 +108,7 @@ class ContextMenuComponent extends Component {
       depth: 0
     };
 
-    if (filterItems(items).length === 0) {
+    if (filterItems(items, itemsMeta).length === 0) {
       return children;
     }
 

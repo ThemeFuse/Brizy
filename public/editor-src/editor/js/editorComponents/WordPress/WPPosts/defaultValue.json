@@ -1,21 +1,25 @@
 {
-  "className": "",
+  "content": {
+    "numberPosts": 5,
+    "category": "",
+    "author": "",
+    "orderBy": "date",
+    "order": "DESC",
+    "include": "",
+    "exclude": "",
+    "metaKey": "",
+    "metaValue": "",
+    "postType": "post",
+    "postStatus": "publish"
+  },
 
-  "width": 100,
-  "tabletWidth": null,
-  "mobileWidth": null,
+  "style": {
+    "className": "",
 
-  "numberPosts": 5,
-  "category": "",
-  "author": "",
-  "orderBy": "date",
-  "order": "DESC",
-  "include": "",
-  "exclude": "",
-  "metaKey": "",
-  "metaValue": "",
-  "postType": "post",
-  "postStatus": "publish",
+    "width": 100,
+    "tabletWidth": null,
+    "mobileWidth": null,
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }

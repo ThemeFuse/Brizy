@@ -1,7 +1,9 @@
 {
-  "className": "",
-  "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit.
-  Dicta nam quod error, reiciendis culpa nostrum inventore, eaque facilis illo illum
-  in placeat fuga earum suscipit dolorem nemo hic.
-  "
+  "content": {
+    "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nam quod error, reiciendis culpa nostrum inventore, eaque facilis illo illum in placeat fuga earum suscipit dolorem nemo hic."
+  },
+
+  "style": {
+    "className": ""
+  }
 }

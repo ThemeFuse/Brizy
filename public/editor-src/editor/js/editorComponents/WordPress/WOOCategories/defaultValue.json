@@ -1,17 +1,21 @@
 {
-  "className": "",
+  "content": {
+    "number": 8,
+    "orderBy": "name",
+    "order": "ASC",
+    "columns": 4,
+    "hideEmpty": 0,
+    "parent": "",
+    "ids": ""
+  },
 
-  "width": 100,
-  "tabletWidth": null,
-  "mobileWidth": null,
+  "style": {
+    "className": "",
 
-  "number": 8,
-  "orderBy": "name",
-  "order": "ASC",
-  "columns": 4,
-  "hideEmpty": 0,
-  "parent": "",
-  "ids": "",
+    "width": 100,
+    "tabletWidth": null,
+    "mobileWidth": null,
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }

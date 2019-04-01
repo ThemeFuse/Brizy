@@ -1,20 +1,22 @@
 {
-  "id": "",
-  "title": "",
-  "attrTitle": "",
-  "classes": "",
-  "target": "",
-  "url": "",
-  "items": [],
-  "iconName": "",
-  "iconType": "",
-  "megaMenu": "off",
-  "megaMenuItems": [
-    {
-      "type": "SectionMegaMenu",
-      "value": {
-        "items": []
+  "content": {
+    "id": "",
+    "title": "",
+    "attrTitle": "",
+    "classes": "",
+    "target": "",
+    "url": "",
+    "items": [],
+    "iconName": "",
+    "iconType": "",
+    "megaMenu": "off",
+    "megaMenuItems": [
+      {
+        "type": "SectionMegaMenu",
+        "value": {
+          "items": []
+        }
       }
-    }
-  ]
+    ]
+  }
 }

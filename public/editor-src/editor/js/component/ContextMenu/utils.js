@@ -32,6 +32,15 @@ export function concatItems(a, b) {
   return [...a, ...b];
 }
 
-export function filterItems(items) {
-  return items.filter(({ disabled }) => !disabled);
+export function filterItems(items, meta) {
+  return items.filter((item, index) => {
+    if (typeof item.disabled === "function") {
+      return !item.disabled(item, {
+        ...meta,
+        isInSubMenu: !(meta.depth === 0 && index === 0)
+      });
+    }
+
+    return !item.disabled;
+  });
 }

@@ -1,394 +1,400 @@
 {
-  "className": "",
-
-  "tabsState": "tabNormal",
-
-  "tabsCurrentElement": "tabCurrentElement",
-
-  "media": "image",
+  "content": {
+    "items": [],
 
-  "bgImageWidth": 0,
-  "bgImageHeight": 0,
-  "bgImageSrc": "",
-  "bgPositionY": 50,
-  "bgPositionX": 50,
-  "bgPopulation": "",
+    "media": "image",
 
-  "bgVideo": "",
-  "bgVideoQuality": 1080,
-  "bgVideoLoop": "off",
+    "bgImageWidth": 0,
+    "bgImageHeight": 0,
+    "bgImageSrc": "",
+    "bgPositionY": 50,
+    "bgPositionX": 50,
+    "bgPopulation": "",
 
-  "bgMapAddress": "Wall Street",
-  "bgMapZoom": 15,
+    "bgVideo": "",
+    "bgVideoQuality": 1080,
+    "bgVideoLoop": "off",
 
-  "hoverMedia": null,
+    "bgMapAddress": "Wall Street",
+    "bgMapZoom": 15,
 
-  "hoverBgImageWidth": null,
-  "hoverBgImageHeight": null,
-  "hoverBgImageSrc": null,
-  "hoverBgPositionY": null,
-  "hoverBgPositionX": null,
-  "hoverBgPopulation": null,
+    "hoverMedia": null,
 
-  "borderStyle": "",
+    "hoverBgImageWidth": null,
+    "hoverBgImageHeight": null,
+    "hoverBgImageSrc": null,
+    "hoverBgPositionY": null,
+    "hoverBgPositionX": null,
+    "hoverBgPopulation": null,
 
-  "tempBorderStyle": "solid",
+    "anchorName": "",
 
-  "hoverBorderStyle": null,
+    "multiPage": "off",
 
-  "tempHoverBorderStyle": null,
+    "showOnDesktop": "on",
 
-  "borderWidthType": "grouped",
-  "borderWidth": 0,
-  "borderTopWidth": 0,
-  "borderRightWidth": 0,
-  "borderBottomWidth": 0,
-  "borderLeftWidth": 0,
+    "showOnTablet": "on",
 
-  "tempBorderWidth": 8,
-  "tempBorderTopWidth": 8,
-  "tempBorderRightWidth": 8,
-  "tempBorderBottomWidth": 8,
-  "tempBorderLeftWidth": 8,
+    "tabletMedia": null,
 
-  "hoverBorderWidthType": null,
-  "hoverBorderWidth": null,
-  "hoverBorderTopWidth": null,
-  "hoverBorderRightWidth": null,
-  "hoverBorderBottomWidth": null,
-  "hoverBorderLeftWidth": null,
+    "tabletBgImageWidth": null,
+    "tabletBgImageHeight": null,
+    "tabletBgImageSrc": null,
+    "tabletBgPositionX": null,
+    "tabletBgPositionY": null,
+    "tabletBgPopulation": null,
 
-  "tempHoverBorderWidth": null,
-  "tempHoverBorderTopWidth": null,
-  "tempHoverBorderRightWidth": null,
-  "tempHoverBorderBottomWidth": null,
-  "tempHoverBorderLeftWidth": null,
+    "tabletBgMapZoom": null,
 
-  "borderRadiusType": "grouped",
-  "borderRadius": 0,
-  "borderTopLeftRadius": 0,
-  "borderTopRightRadius": 0,
-  "borderBottomRightRadius": 0,
-  "borderBottomLeftRadius": 0,
+    "showOnMobile": "on",
 
-  "tempBorderRadius": 0,
-  "tempBorderTopLeftRadius": 0,
-  "tempBorderTopRightRadius": 0,
-  "tempBorderBottomRightRadius": 0,
-  "tempBorderBottomLeftRadius": 0,
+    "mobileMedia": null,
 
-  "hoverBorderRadiusType": null,
-  "hoverBorderRadius": null,
-  "hoverBorderTopLeftRadius": null,
-  "hoverBorderTopRightRadius": null,
-  "hoverBorderBottomRightRadius": null,
-  "hoverBorderBottomLeftRadius": null,
+    "mobileBgImageWidth": null,
+    "mobileBgImageHeight": null,
+    "mobileBgImageSrc": null,
+    "mobileBgPositionX": null,
+    "mobileBgPositionY": null,
+    "mobileBgPopulation": null,
 
-  "tempHoverBorderRadius": null,
-  "tempHoverBorderTopLeftRadius": null,
-  "tempHoverBorderTopRightRadius": null,
-  "tempHoverBorderBottomRightRadius": null,
-  "tempHoverBorderBottomLeftRadius": null,
-
-  "tabsColor": "tabOverlay",
-
-  "bgColorType": "solid",
-
-  "gradientActivePointer": "startPointer",
-  "gradientStartPointer": 0,
-  "gradientFinishPointer": 100,
-
-  "gradientType": "linear",
-
-  "gradientLinearDegree": 90,
-  "gradientRadialDegree": 90,
-
-  "hoverBgColorType": null,
-
-  "hoverGradientActivePointer": null,
-  "hoverGradientStartPointer": null,
-  "hoverGradientFinishPointer": null,
+    "mobileBgMapZoom": null
+  },
 
-  "hoverGradientType": null,
+  "toolbar": {
+    "tabsState": "tabNormal",
 
-  "hoverGradientLinearDegree": null,
-  "hoverGradientRadialDegree": null,
+    "tabsCurrentElement": "tabCurrentElement",
 
-  "bgColorHex": "#000000",
-  "bgColorOpacity": 0,
-  "bgColorPalette": "",
+    "tabsColor": "tabOverlay"
+  },
 
-  "tempBgColorOpacity": 1,
-  "tempBgColorPalette": "",
+  "style": {
+    "className": "",
 
-  "hoverBgColorHex": null,
-  "hoverBgColorOpacity": null,
-  "hoverBgColorPalette": null,
+    "borderStyle": "",
 
-  "tempHoverBgColorOpacity": null,
-  "tempHoverBgColorPalette": null,
+    "tempBorderStyle": "solid",
 
-  "gradientColorHex": "#009900",
-  "gradientColorOpacity": 1,
-  "gradientColorPalette": "",
+    "hoverBorderStyle": null,
 
-  "tempGradientColorOpacity": 1,
-  "tempGradientColorPalette": "",
+    "tempHoverBorderStyle": null,
 
-  "hoverGradientColorHex": null,
-  "hoverGradientColorOpacity": null,
-  "hoverGradientColorPalette": null,
+    "borderWidthType": "grouped",
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
 
-  "tempHoverGradientColorOpacity": null,
-  "tempHoverGradientColorPalette": null,
+    "tempBorderWidth": 8,
+    "tempBorderTopWidth": 8,
+    "tempBorderRightWidth": 8,
+    "tempBorderBottomWidth": 8,
+    "tempBorderLeftWidth": 8,
 
-  "borderColorHex": "#66738d",
-  "borderColorOpacity": 0,
-  "borderColorPalette": "",
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
 
-  "tempBorderColorOpacity": 1,
-  "tempBorderColorPalette": "",
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
 
-  "hoverBorderColorHex": null,
-  "hoverBorderColorOpacity": null,
-  "hoverBorderColorPalette": null,
-
-  "tempHoverBorderColorOpacity": null,
-  "tempHoverBorderColorPalette": null,
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
 
-  "hoverTransition": 50,
-
-  "containerType": "boxed",
-  "containerSize": 100,
-
-  "paddingType": "grouped",
-  "padding": 75,
-  "paddingTop": 75,
-  "paddingBottom": 75,
-
-  "paddingSuffix": "px",
-  "paddingTopSuffix": "px",
-  "paddingBottomSuffix": "px",
-  "boxShadow": "off",
-  "boxShadowColorHex": "#000000",
-  "boxShadowColorOpacity": 1,
-  "boxShadowColorPalette": "",
-  "boxShadowBlur": 4,
-  "boxShadowSpread": 0,
-  "boxShadowVertical": 2,
-  "boxShadowHorizontal": 1,
-
-  "tempBoxShadowColorPalette": "",
-  "tempBoxShadowColorOpacity": 1,
-
-  "shape": "top",
-  "shapeTopColorHex": "#000000",
-  "shapeTopColorOpacity": 1,
-  "shapeTopColorPalette": "",
-  "shapeBottomColorHex": "#000000",
-  "shapeBottomColorOpacity": 1,
-  "shapeBottomColorPalette": "",
-  "tempShapeColorOpacity": 1,
-  "shapeTopHeight": 100,
-  "shapeTopHeightSuffix": "px",
-  "shapeBottomHeight": 100,
-  "shapeBottomHeightSuffix": "px",
-  "shapeTopType": "none",
-  "shapeBottomType": "none",
-  "shapeTopIndex": "auto",
-  "shapeBottomIndex": "auto",
-  "shapeTopHorizontal": "off",
-  "shapeBottomHorizontal": "off",
-
-  "containerClassName": "",
-
-  "showOnDesktop": "on",
-
-  "anchorName": "",
-
-  "multiPage": "off",
-
-  "customCSS": "",
-
-  "showOnTablet": "on",
-
-  "tabletMedia": null,
-
-  "tabletBgImageWidth": null,
-  "tabletBgImageHeight": null,
-  "tabletBgImageSrc": null,
-  "tabletBgPositionX": null,
-  "tabletBgPositionY": null,
-  "tabletBgPopulation": null,
-
-  "tabletBgMapZoom": null,
-
-  "tabletBorderStyle": null,
-
-  "tempTabletBorderStyle": null,
-
-  "tabletBorderWidthType": null,
-  "tabletBorderWidth": null,
-  "tabletBorderTopWidth": null,
-  "tabletBorderRightWidth": null,
-  "tabletBorderBottomWidth": null,
-  "tabletBorderLeftWidth": null,
-
-  "tempTabletBorderWidth": null,
-  "tempTabletBorderTopWidth": null,
-  "tempTabletBorderRightWidth": null,
-  "tempTabletBorderBottomWidth": null,
-  "tempTabletBorderLeftWidth": null,
-
-  "tabletBorderRadiusType": null,
-  "tabletBorderRadius": null,
-  "tabletBorderTopLeftRadius": null,
-  "tabletBorderTopRightRadius": null,
-  "tabletBorderBottomLeftRadius": null,
-  "tabletBorderBottomRightRadius": null,
-
-  "tempTabletBorderRadius": null,
-  "tempTabletBorderTopLeftRadius": null,
-  "tempTabletBorderTopRightRadius": null,
-  "tempTabletBorderBottomLeftRadius": null,
-  "tempTabletBorderBottomRightRadius": null,
-
-  "tabletBgColorType": null,
-
-  "tabletGradientStartPointer": null,
-  "tabletGradientFinishPointer": null,
-  "tabletGradientActivePointer": null,
-
-  "tabletGradientType": null,
-
-  "tabletGradientLinearDegree": null,
-  "tabletGradientRadialDegree": null,
-
-  "tabletBgColorHex": null,
-  "tabletBgColorOpacity": null,
-  "tabletBgColorPalette": null,
-
-  "tempTabletBgColorOpacity": null,
-  "tempTabletBgColorPalette": null,
-
-  "tabletGradientColorHex": null,
-  "tabletGradientColorOpacity": null,
-  "tabletGradientColorPalette": null,
-
-  "tempTabletGradientColorOpacity": null,
-  "tempTabletGradientColorPalette": null,
-
-  "tabletBorderColorHex": null,
-  "tabletBorderColorOpacity": null,
-  "tabletBorderColorPalette": null,
-
-  "tempTabletBorderColorOpacity": null,
-  "tempTabletBorderColorPalette": null,
-
-  "tabletPaddingType": "grouped",
-  "tabletPadding": 25,
-  "tabletPaddingTop": 25,
-  "tabletPaddingBottom": 25,
-
-  "tabletPaddingSuffix": "px",
-  "tabletPaddingTopSuffix": "px",
-  "tabletPaddingBottomSuffix": "px",
-
-  "tabletShape": null,
-  "tabletShapeTopHeight": null,
-  "tabletShapeTopHeightSuffix": null,
-  "tabletShapeBottomHeight": null,
-  "tabletShapeBottomHeightSuffix": null,
-
-  "showOnMobile": "on",
-
-  "mobileMedia": null,
-
-  "mobileBgImageWidth": null,
-  "mobileBgImageHeight": null,
-  "mobileBgImageSrc": null,
-  "mobileBgPositionX": null,
-  "mobileBgPositionY": null,
-  "mobileBgPopulation": null,
-
-  "mobileBgMapZoom": null,
-
-  "mobileBgColorType": null,
-
-  "mobileGradientStartPointer": null,
-  "mobileGradientFinishPointer": null,
-  "mobileGradientActivePointer": null,
-
-  "mobileGradientType": null,
-
-  "mobileGradientLinearDegree": null,
-  "mobileGradientRadialDegree": null,
-
-  "mobileBorderStyle": null,
-
-  "tempMobileBorderStyle": null,
-
-  "mobileBorderWidthType": null,
-  "mobileBorderWidth": null,
-  "mobileBorderTopWidth": null,
-  "mobileBorderRightWidth": null,
-  "mobileBorderBottomWidth": null,
-  "mobileBorderLeftWidth": null,
-
-  "tempMobileBorderWidth": null,
-  "tempMobileBorderTopWidth": null,
-  "tempMobileBorderRightWidth": null,
-  "tempMobileBorderBottomWidth": null,
-  "tempMobileBorderLeftWidth": null,
-
-  "mobileBorderRadiusType": null,
-  "mobileBorderRadius": null,
-  "mobileBorderTopLeftRadius": null,
-  "mobileBorderTopRightRadius": null,
-  "mobileBorderBottomLeftRadius": null,
-  "mobileBorderBottomRightRadius": null,
-
-  "tempMobileBorderRadius": null,
-  "tempMobileBorderTopLeftRadius": null,
-  "tempMobileBorderTopRightRadius": null,
-  "tempMobileBorderBottomLeftRadius": null,
-  "tempMobileBorderBottomRightRadius": null,
-
-  "mobileBgColorHex": null,
-  "mobileBgColorOpacity": null,
-  "mobileBgColorPalette": null,
-
-  "tempMobileBgColorOpacity": null,
-  "tempMobileBgColorPalette": null,
-
-  "mobileGradientColorHex": null,
-  "mobileGradientColorOpacity": null,
-  "mobileGradientColorPalette": null,
-
-  "tempMobileGradientColorOpacity": null,
-  "tempMobileGradientColorPalette": null,
-
-  "mobileBorderColorHex": null,
-  "mobileBorderColorOpacity": null,
-  "mobileBorderColorPalette": null,
-
-  "tempMobileBorderColorOpacity": null,
-  "tempMobileBorderColorPalette": null,
-
-  "mobilePaddingType": "grouped",
-  "mobilePadding": 25,
-  "mobilePaddingTop": 25,
-  "mobilePaddingBottom": 25,
-
-  "mobilePaddingSuffix": "px",
-  "mobilePaddingTopSuffix": "px",
-  "mobilePaddingBottomSuffix": "px",
-
-  "mobileShape": null,
-  "mobileShapeTopHeight": null,
-  "mobileShapeTopHeightSuffix": null,
-  "mobileShapeBottomHeight": null,
-  "mobileShapeBottomHeightSuffix": null,
-
-  "items": []
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "hoverBorderRadiusType": null,
+    "hoverBorderRadius": null,
+    "hoverBorderTopLeftRadius": null,
+    "hoverBorderTopRightRadius": null,
+    "hoverBorderBottomRightRadius": null,
+    "hoverBorderBottomLeftRadius": null,
+
+    "tempHoverBorderRadius": null,
+    "tempHoverBorderTopLeftRadius": null,
+    "tempHoverBorderTopRightRadius": null,
+    "tempHoverBorderBottomRightRadius": null,
+    "tempHoverBorderBottomLeftRadius": null,
+
+    "bgColorType": "solid",
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "gradientType": "linear",
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "hoverBgColorType": null,
+
+    "hoverGradientActivePointer": null,
+    "hoverGradientStartPointer": null,
+    "hoverGradientFinishPointer": null,
+
+    "hoverGradientType": null,
+
+    "hoverGradientLinearDegree": null,
+    "hoverGradientRadialDegree": null,
+
+    "bgColorHex": "#000000",
+    "bgColorOpacity": 0,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "tempHoverBgColorOpacity": null,
+    "tempHoverBgColorPalette": null,
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+
+    "tempGradientColorOpacity": 1,
+    "tempGradientColorPalette": "",
+
+    "hoverGradientColorHex": null,
+    "hoverGradientColorOpacity": null,
+    "hoverGradientColorPalette": null,
+
+    "tempHoverGradientColorOpacity": null,
+    "tempHoverGradientColorPalette": null,
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "hoverTransition": 50,
+
+    "containerType": "boxed",
+    "containerSize": 100,
+
+    "paddingType": "grouped",
+    "padding": 75,
+    "paddingTop": 75,
+    "paddingBottom": 75,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "boxShadow": "off",
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+    "boxShadowBlur": 4,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 2,
+    "boxShadowHorizontal": 1,
+
+    "tempBoxShadowColorPalette": "",
+    "tempBoxShadowColorOpacity": 1,
+
+    "shape": "top",
+    "shapeTopColorHex": "#000000",
+    "shapeTopColorOpacity": 1,
+    "shapeTopColorPalette": "",
+    "shapeBottomColorHex": "#000000",
+    "shapeBottomColorOpacity": 1,
+    "shapeBottomColorPalette": "",
+    "tempShapeColorOpacity": 1,
+    "shapeTopHeight": 100,
+    "shapeTopHeightSuffix": "px",
+    "shapeBottomHeight": 100,
+    "shapeBottomHeightSuffix": "px",
+    "shapeTopType": "none",
+    "shapeBottomType": "none",
+    "shapeTopIndex": "auto",
+    "shapeBottomIndex": "auto",
+    "shapeTopHorizontal": "off",
+    "shapeBottomHorizontal": "off",
+
+    "containerClassName": "",
+
+    "customCSS": "",
+
+    "tabletBorderStyle": null,
+
+    "tempTabletBorderStyle": null,
+
+    "tabletBorderWidthType": null,
+    "tabletBorderWidth": null,
+    "tabletBorderTopWidth": null,
+    "tabletBorderRightWidth": null,
+    "tabletBorderBottomWidth": null,
+    "tabletBorderLeftWidth": null,
+
+    "tempTabletBorderWidth": null,
+    "tempTabletBorderTopWidth": null,
+    "tempTabletBorderRightWidth": null,
+    "tempTabletBorderBottomWidth": null,
+    "tempTabletBorderLeftWidth": null,
+
+    "tabletBorderRadiusType": null,
+    "tabletBorderRadius": null,
+    "tabletBorderTopLeftRadius": null,
+    "tabletBorderTopRightRadius": null,
+    "tabletBorderBottomLeftRadius": null,
+    "tabletBorderBottomRightRadius": null,
+
+    "tempTabletBorderRadius": null,
+    "tempTabletBorderTopLeftRadius": null,
+    "tempTabletBorderTopRightRadius": null,
+    "tempTabletBorderBottomLeftRadius": null,
+    "tempTabletBorderBottomRightRadius": null,
+
+    "tabletBgColorType": null,
+
+    "tabletGradientStartPointer": null,
+    "tabletGradientFinishPointer": null,
+    "tabletGradientActivePointer": null,
+
+    "tabletGradientType": null,
+
+    "tabletGradientLinearDegree": null,
+    "tabletGradientRadialDegree": null,
+
+    "tabletBgColorHex": null,
+    "tabletBgColorOpacity": null,
+    "tabletBgColorPalette": null,
+
+    "tempTabletBgColorOpacity": null,
+    "tempTabletBgColorPalette": null,
+
+    "tabletGradientColorHex": null,
+    "tabletGradientColorOpacity": null,
+    "tabletGradientColorPalette": null,
+
+    "tempTabletGradientColorOpacity": null,
+    "tempTabletGradientColorPalette": null,
+
+    "tabletBorderColorHex": null,
+    "tabletBorderColorOpacity": null,
+    "tabletBorderColorPalette": null,
+
+    "tempTabletBorderColorOpacity": null,
+    "tempTabletBorderColorPalette": null,
+
+    "tabletPaddingType": "grouped",
+    "tabletPadding": 25,
+    "tabletPaddingTop": 25,
+    "tabletPaddingBottom": 25,
+
+    "tabletPaddingSuffix": "px",
+    "tabletPaddingTopSuffix": "px",
+    "tabletPaddingBottomSuffix": "px",
+
+    "tabletShape": null,
+    "tabletShapeTopHeight": null,
+    "tabletShapeTopHeightSuffix": null,
+    "tabletShapeBottomHeight": null,
+    "tabletShapeBottomHeightSuffix": null,
+
+    "mobileBgColorType": null,
+
+    "mobileGradientStartPointer": null,
+    "mobileGradientFinishPointer": null,
+    "mobileGradientActivePointer": null,
+
+    "mobileGradientType": null,
+
+    "mobileGradientLinearDegree": null,
+    "mobileGradientRadialDegree": null,
+
+    "mobileBorderStyle": null,
+
+    "tempMobileBorderStyle": null,
+
+    "mobileBorderWidthType": null,
+    "mobileBorderWidth": null,
+    "mobileBorderTopWidth": null,
+    "mobileBorderRightWidth": null,
+    "mobileBorderBottomWidth": null,
+    "mobileBorderLeftWidth": null,
+
+    "tempMobileBorderWidth": null,
+    "tempMobileBorderTopWidth": null,
+    "tempMobileBorderRightWidth": null,
+    "tempMobileBorderBottomWidth": null,
+    "tempMobileBorderLeftWidth": null,
+
+    "mobileBorderRadiusType": null,
+    "mobileBorderRadius": null,
+    "mobileBorderTopLeftRadius": null,
+    "mobileBorderTopRightRadius": null,
+    "mobileBorderBottomLeftRadius": null,
+    "mobileBorderBottomRightRadius": null,
+
+    "tempMobileBorderRadius": null,
+    "tempMobileBorderTopLeftRadius": null,
+    "tempMobileBorderTopRightRadius": null,
+    "tempMobileBorderBottomLeftRadius": null,
+    "tempMobileBorderBottomRightRadius": null,
+
+    "mobileBgColorHex": null,
+    "mobileBgColorOpacity": null,
+    "mobileBgColorPalette": null,
+
+    "tempMobileBgColorOpacity": null,
+    "tempMobileBgColorPalette": null,
+
+    "mobileGradientColorHex": null,
+    "mobileGradientColorOpacity": null,
+    "mobileGradientColorPalette": null,
+
+    "tempMobileGradientColorOpacity": null,
+    "tempMobileGradientColorPalette": null,
+
+    "mobileBorderColorHex": null,
+    "mobileBorderColorOpacity": null,
+    "mobileBorderColorPalette": null,
+
+    "tempMobileBorderColorOpacity": null,
+    "tempMobileBorderColorPalette": null,
+
+    "mobilePaddingType": "grouped",
+    "mobilePadding": 25,
+    "mobilePaddingTop": 25,
+    "mobilePaddingBottom": 25,
+
+    "mobilePaddingSuffix": "px",
+    "mobilePaddingTopSuffix": "px",
+    "mobilePaddingBottomSuffix": "px",
+
+    "mobileShape": null,
+    "mobileShapeTopHeight": null,
+    "mobileShapeTopHeightSuffix": null,
+    "mobileShapeBottomHeight": null,
+    "mobileShapeBottomHeightSuffix": null
+  }
 }

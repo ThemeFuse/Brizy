@@ -1,16 +1,20 @@
 {
-  "className": "",
+  "content": {
+    "columns": 3,
+    "limit": 6,
+    "category": "",
+    "orderBy": "name",
+    "order": "ASC",
+    "ids": ""
+  },
 
-  "width": 100,
-  "tabletWidth": null,
-  "mobileWidth": null,
+  "style": {
+    "className": "",
 
-  "columns": 3,
-  "limit": 6,
-  "category": "",
-  "orderBy": "name",
-  "order": "ASC",
-  "ids": "",
+    "width": 100,
+    "tabletWidth": null,
+    "mobileWidth": null,
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }
