@@ -1,21 +1,30 @@
 {
-  "iconPosition": "left",
-  "iconSpacing": 20,
-  "items": [
-    {
-      "type": "Icon",
-      "value": {}
-    },
-    {
-      "type": "RichText",
-      "value": {}
-    },
-    {
-      "type": "Cloneable",
-      "value": {
-        "horizontalAlign": "left"
+  "content": {
+    "items": [
+      {
+        "type": "Icon",
+        "value": {}
+      },
+      {
+        "type": "RichText",
+        "value": {}
+      },
+      {
+        "type": "Cloneable",
+        "value": {
+          "style": {
+            "horizontalAlign": "left"
+          }
+        }
       }
-    }
-  ],
-  "customCSS": ""
+    ]
+  },
+
+  "style": {
+    "iconPosition": "left",
+
+    "iconSpacing": 20,
+
+    "customCSS": ""
+  }
 }

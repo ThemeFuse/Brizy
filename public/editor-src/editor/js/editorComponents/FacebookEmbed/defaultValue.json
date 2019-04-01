@@ -1,16 +1,22 @@
 {
-  "type": "post",
+  "content": {
+    "type": "post",
 
-  "postAndVideoShowText": "on",
+    "postAndVideoShowText": "on",
 
-  "videoAllowFullScreen": "off",
-  "videoAutoPlay": "off",
-  "videoCaptions": "off",
+    "videoAllowFullScreen": "off",
+    "videoAutoPlay": "off",
+    "videoCaptions": "off"
+  },
 
-  "postHref": "https://www.facebook.com/brizy.io/posts/1382471355229091",
-  "videoHref": "https://www.facebook.com/brizy.io/videos/1941346902610185",
+  "link": {
+    "postHref": "https://www.facebook.com/brizy.io/posts/1382471355229091",
+    "videoHref": "https://www.facebook.com/brizy.io/videos/1941346902610185"
+  },
 
-  "className": "",
+  "style": {
+    "className": "",
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }

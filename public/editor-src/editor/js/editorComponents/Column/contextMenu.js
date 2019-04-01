@@ -10,7 +10,7 @@ function getItems(v, component) {
       id: "main",
       type: "group",
       title: t("Column"),
-      icon: "",
+      icon: "nc-column",
       disabled: component.props.meta.posts,
       items: []
     }

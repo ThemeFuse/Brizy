@@ -1,4 +1,5 @@
 import React from "react";
+import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import SortableElement from "visual/component/Sortable/SortableElement";
@@ -31,6 +32,16 @@ class Wrapper extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleContainerBorderRef = el => {
     this.containerBorder = el;
   };
@@ -49,6 +60,10 @@ class Wrapper extends EditorComponent {
   };
 
   handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     this.containerBorder.setActive(false);
     this.floatingButton.setActive(false);
   };
@@ -278,23 +293,17 @@ class Wrapper extends EditorComponent {
       }
     });
 
-    const componentId =
-      v.items[0].type === "Posts" || v.items[0].type === "Carousel"
-        ? "Row"
-        : v.items[0].type;
     return (
-      <ContextMenu
-        {...this.makeContextMenuProps(contextMenuConfig, { componentId })}
-      >
-        <div className={containerStyleClassName(v)}>
-          <EditorArrayComponent {...itemsProps} />
-        </div>
-      </ContextMenu>
+      <div className={containerStyleClassName(v)}>
+        <EditorArrayComponent {...itemsProps} />
+      </div>
     );
   }
 
   renderForEdit(v) {
     const { animationName, animationDuration, animationDelay } = v;
+
+    const componentId = v.items[0].type;
 
     return (
       <SortableElement type="shortcode">
@@ -305,26 +314,33 @@ class Wrapper extends EditorComponent {
           duration={animationDuration}
           delay={animationDelay}
         >
-          <ContainerBorder
-            ref={this.handleContainerBorderRef}
-            className="brz-ed-border__wrapper"
-            borderStyle="dotted"
-            activeBorderStyle="dotted"
-            clickOutsideExceptions={[
-              ".brz-ed-sidebar__right",
-              "#brz-toolbar-portal",
-              ".brz-ed-tooltip__content-portal"
-            ]}
-            path={this.props.path}
+          <ContextMenu
+            {...{
+              ...this.makeContextMenuProps(contextMenuConfig),
+              componentId
+            }}
           >
-            <Roles
-              allow={["admin"]}
-              fallbackRender={() => this.renderContent(v)}
+            <ContainerBorder
+              ref={this.handleContainerBorderRef}
+              className="brz-ed-border__wrapper"
+              borderStyle="dotted"
+              activeBorderStyle="dotted"
+              clickOutsideExceptions={[
+                ".brz-ed-sidebar__right",
+                "#brz-toolbar-portal",
+                ".brz-ed-tooltip__content-portal"
+              ]}
+              path={this.props.path}
             >
-              {this.renderToolbar(v)}
-              {this.renderContent(v)}
-            </Roles>
-          </ContainerBorder>
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderContent(v)}
+              >
+                {this.renderToolbar(v)}
+                {this.renderContent(v)}
+              </Roles>
+            </ContainerBorder>
+          </ContextMenu>
         </Animation>
       </SortableElement>
     );

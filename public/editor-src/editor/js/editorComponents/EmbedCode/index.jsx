@@ -32,9 +32,43 @@ class EmbedCode extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(v) {
+  handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabBorder"
+    });
+  };
+
+  renderForEdit(_v) {
+    const v = this.applyRulesToValue(_v, [
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
+
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
+    ]);
     const { code } = v;
     const content = !code ? (
       <Placeholder icon="iframe" />
@@ -46,7 +80,10 @@ class EmbedCode extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        onClose={this.handleToolbarClose}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={styleClassName(v)} style={styleCSSVars(v)}>
             <BoxResizer
@@ -56,7 +93,7 @@ class EmbedCode extends EditorComponent {
               value={v}
               onChange={this.handleResizerChange}
             >
-              {content}
+              <div className="brz-embed-content">{content}</div>
             </BoxResizer>
           </div>
         </CustomCSS>

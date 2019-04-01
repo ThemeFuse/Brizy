@@ -23,7 +23,7 @@ export default class Group extends React.Component {
           <Item key="title" className="react-contexify--title">
             {icon && <EditorIcon icon={icon} />} {title}
           </Item>
-          <Items data={items} meta={itemsMeta} />
+          <Items data={items} meta={{ ...itemsMeta, isInSubMenu: false }} />
         </React.Fragment>
       );
     } else {
@@ -34,7 +34,7 @@ export default class Group extends React.Component {
           hoverDelay={0}
           arrow=""
         >
-          <Items data={items} meta={itemsMeta} />
+          <Items data={items} meta={{ ...itemsMeta, isInSubMenu: true }} />
         </Submenu>
       );
     }

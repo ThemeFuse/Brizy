@@ -47,7 +47,11 @@ import {
   toolbarEntranceAnimation,
   toolbarBgType,
   toolbarElementContainerTypeImageMap,
-  toolbarCustomCSS
+  toolbarCustomCSS,
+  toolbarImageLinkExternal,
+  toolbarLinkExternalBlank,
+  toolbarLinkExternalRel,
+  toolbarLinkAnchor
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v, component) {
@@ -841,6 +845,38 @@ export function getItemsForDesktop(v, component) {
       onChange: (_, { isOpen }) => ({
         tabsColor: !isOpen ? "tabOverlay" : v.tabsColor
       })
+    },
+    {
+      id: "toolbarLink",
+      type: "popover",
+      icon: "nc-link",
+      title: t("Link"),
+      size: "medium",
+      position: 90,
+      disabled: v.linkLightBox === "on",
+      options: [
+        {
+          id: "linkType",
+          type: "tabs",
+          value: v.linkType,
+          tabs: [
+            {
+              id: "external",
+              label: t("URL"),
+              options: [
+                toolbarImageLinkExternal({ v }),
+                toolbarLinkExternalBlank({ v }),
+                toolbarLinkExternalRel({ v })
+              ]
+            },
+            {
+              id: "anchor",
+              label: t("Anchor"),
+              options: [toolbarLinkAnchor({ v })]
+            }
+          ]
+        }
+      ]
     },
     {
       id: "toolbarSettings",

@@ -40,6 +40,9 @@ export class EditorComponent extends React.Component {
       // console.log("scu", this.constructor.componentId, "globals", true);
       return true;
     }
+    if (props.reduxState.copiedElement !== nextProps.reduxState.copiedElement) {
+      return true;
+    }
 
     // check path
     const curPath = props.path || [];
@@ -82,9 +85,14 @@ export class EditorComponent extends React.Component {
   }
 
   getDefaultValue() {
+    const newDefaultValue = Object.assign(
+      {},
+      ...Object.values(this.constructor.defaultValue)
+    );
+
     return this.props.defaultValue
-      ? { ...this.constructor.defaultValue, ...this.props.defaultValue } // allows defaultValue overriding
-      : this.constructor.defaultValue;
+      ? { ...newDefaultValue, ...this.props.defaultValue } // allows defaultValue overriding
+      : newDefaultValue;
   }
 
   getDBValue() {
@@ -286,6 +294,8 @@ export class EditorComponent extends React.Component {
 
     return {
       getItems,
+      onBeforeOpen: () => (global.Brizy.activeEditorComponent = this),
+      onBeforeClose: () => (global.Brizy.activeEditorComponent = null),
       onOpen: onToolbarOpen,
       onClose: onToolbarClose,
       onMouseEnter: onToolbarEnter,

@@ -9,7 +9,8 @@ function getItems(v, component) {
     {
       id: "main",
       type: "group",
-      title: t("Image"), // TODO: See if we'll need icons & prop
+      title: t("Image"), // TODO: See if we'll need icons & prop,
+      disabled: true,
       items: []
     }
   ];

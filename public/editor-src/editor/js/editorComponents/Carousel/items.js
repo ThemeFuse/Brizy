@@ -6,6 +6,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
 import ThemeIcon from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar/index";
+import HotKeys from "visual/component/HotKeys";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
@@ -95,6 +96,16 @@ class Items extends EditorArrayComponent {
     return sameNode || acceptsElement;
   };
 
+  addColumn = itemIndex => {
+    const v = this.getValue();
+
+    const emptyItemData = {
+      ...v[itemIndex - 1],
+      value: { ...v[itemIndex - 1].value, items: [] }
+    };
+    this.insertItem(itemIndex, emptyItemData);
+  };
+
   getItemProps(itemData, itemIndex, items) {
     let { meta, slidesToShow, dynamic, toolbarExtend } = this.props;
 
@@ -108,11 +119,7 @@ class Items extends EditorArrayComponent {
             title: t("Add New Column"),
             position: 100,
             onChange: () => {
-              const emptyItemData = {
-                ...itemData,
-                value: { ...itemData.value, items: [] }
-              };
-              this.insertItem(itemIndex + 1, emptyItemData);
+              this.addColumn(itemIndex + 1);
             }
           },
           {
@@ -165,12 +172,44 @@ class Items extends EditorArrayComponent {
 
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
+    const keyNames = [
+      "alt+N",
+      "ctrl+N",
+      "cmd+N",
+      "right_cmd+N",
+      "alt+D",
+      "alt+C",
+      "alt+V",
+      "alt+shift+V",
+      "shift+alt+V",
+      "alt+del",
+      "alt+up",
+      "alt+down"
+    ];
+
+    const shortcutsTypes = [
+      "duplicate",
+      "copy",
+      "paste",
+      "pasteStyles",
+      "delete",
+      "horizontalAlign",
+      "verticalAlign"
+    ];
+
     return (
       <ContextMenuExtend
         key={itemKey}
         {...this.makeContextMenuProps(contextMenuExtendConfig)}
       >
-        {item}
+        <HotKeys
+          keyNames={keyNames}
+          shortcutsTypes={shortcutsTypes}
+          id={itemKey}
+          onKeyDown={this.handleKeyDown}
+        >
+          {item}
+        </HotKeys>
       </ContextMenuExtend>
     );
   }

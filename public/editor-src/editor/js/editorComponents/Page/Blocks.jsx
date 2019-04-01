@@ -5,6 +5,9 @@ import {
   MiddleBlockAdder,
   LastBlockAdder
 } from "visual/component/BlockAdders";
+import HotKeys from "visual/component/HotKeys";
+import UIState from "visual/global/UIState";
+import { getBlocksConfig } from "visual/component/BlockAdders/utils";
 import BlockErrorBoundary from "./BlockErrorBoundary";
 import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
@@ -20,6 +23,16 @@ class Blocks extends EditorArrayComponent {
     } else {
       this.insertItem(index, blockData);
     }
+  };
+
+  handleKeyDown = () => {
+    const itemsLength = this.getValue().length;
+
+    UIState.set("prompt", {
+      prompt: "blocks",
+      blocksConfig: getBlocksConfig(),
+      onAddBlocks: this.handleBlocksAdd.bind(null, itemsLength)
+    });
   };
 
   getItemProps(itemData, itemIndex) {
@@ -94,7 +107,21 @@ class Blocks extends EditorArrayComponent {
 
     if (items.length === 0 || allItemsAreUnlisted) {
       return (
-        <FirstBlockAdder onAddBlocks={this.handleBlocksAdd.bind(null, 0)} />
+        <React.Fragment>
+          <FirstBlockAdder onAddBlocks={this.handleBlocksAdd.bind(null, 0)} />,
+          <HotKeys
+            keyNames={[
+              "ctrl+shift+A",
+              "cmd+shift+A",
+              "right_cmd+shift+A",
+              "shift+ctrl+A",
+              "shift+cmd+A",
+              "shift+right_cmd+A"
+            ]}
+            id="key-helper-blocks"
+            onKeyDown={this.handleKeyDown}
+          />
+        </React.Fragment>
       );
     }
 
@@ -103,6 +130,18 @@ class Blocks extends EditorArrayComponent {
         {items}
         <LastBlockAdder
           onAddBlocks={this.handleBlocksAdd.bind(null, items.length)}
+        />
+        <HotKeys
+          keyNames={[
+            "ctrl+shift+A",
+            "cmd+shift+A",
+            "right_cmd+shift+A",
+            "shift+ctrl+A",
+            "shift+cmd+A",
+            "shift+right_cmd+A"
+          ]}
+          id="key-helper-blocks"
+          onKeyDown={this.handleKeyDown}
         />
       </div>
     );

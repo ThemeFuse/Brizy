@@ -32,7 +32,18 @@ import { responseToSvg } from "../utils";
             dataType: "text"
           })
             .done(function(res) {
-              $this.html(responseToSvg(res));
+              try {
+                var $svg = $(responseToSvg(res));
+                var attributes = $this.get(0).attributes;
+
+                for (var i = 0; i < attributes.length; i++) {
+                  $svg.attr(attributes[i].nodeName, attributes[i].nodeValue);
+                }
+
+                $this.replaceWith($svg);
+              } catch (error) {
+                console.error(error);
+              }
             })
             .fail(function(jqXHR, textStatus) {
               console.warn("Request failed: " + textStatus);

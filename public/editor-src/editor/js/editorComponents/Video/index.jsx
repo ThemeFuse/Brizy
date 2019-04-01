@@ -27,6 +27,28 @@ class Video extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
+    this.patchValue({
+      tabsState: "tabNormal",
+      tabsCurrentElement: "tabCurrentElement",
+      tabsColor: "tabOverlay"
+    });
+  };
+
   handleResizerChange = patch => this.patchValue(patch);
   handleCoverIconClick(e) {
     e.preventDefault();
@@ -47,8 +69,17 @@ class Video extends EditorComponent {
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
+      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`
+      _v.hoverBorderColorPalette &&
+        `${_v.hoverBorderColorPalette}__hoverBorder`,
+      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
+
+      _v.tabletBorderColorPalette &&
+        `${_v.tabletBorderColorPalette}__tabletBorder`,
+
+      _v.mobileBorderColorPalette &&
+        `${_v.mobileBorderColorPalette}__mobileBorder`
     ]);
 
     const { video, controls, coverImageSrc } = v;
@@ -75,7 +106,10 @@ class Video extends EditorComponent {
     const style = { ...styleCSSVars(v, this.props), ...wrapperStyleCSSVars(v) };
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        onClose={this.handleToolbarClose}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={styleClassName(v, this.props)} style={style}>
             <BoxResizer
@@ -84,7 +118,9 @@ class Video extends EditorComponent {
               value={v}
               onChange={this.handleResizerChange}
             >
-              <div className={wrapperStyleClassName(v)}>{content}</div>
+              <div className="brz-video-content">
+                <div className={wrapperStyleClassName(v)}>{content}</div>
+              </div>
             </BoxResizer>
           </div>
         </CustomCSS>

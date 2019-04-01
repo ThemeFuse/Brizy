@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import EditorGlobal from "visual/global/Editor";
+import UIState from "visual/global/UIState";
+import HotKeys from "visual/component/HotKeys";
 import LeftSidebar from "visual/component/LeftSidebar";
 import BottomPanel from "visual/component/BottomPanel";
 import Portal from "visual/component/Portal";
@@ -19,6 +21,12 @@ class Editor extends React.Component {
 
     this.props.reduxDispatch(updatePage(updateData));
   };
+
+  handleKeyDown() {
+    UIState.set("prompt", {
+      prompt: "key-helper"
+    });
+  }
 
   renderPage() {
     const { Page } = EditorGlobal.getComponents();
@@ -47,6 +55,11 @@ class Editor extends React.Component {
         <Portal node={this.parentWindowDocument.body}>
           <Prompts />
         </Portal>
+        <HotKeys
+          keyNames={["ctrl+/", "cmd+/", "right_cmd+/"]}
+          id="key-helper-editor"
+          onKeyDown={this.handleKeyDown}
+        />
       </React.Fragment>
     );
   }
@@ -59,7 +72,9 @@ const mapDispatchToProps = dispatch => ({
   reduxDispatch: dispatch
 });
 const areStatesEqual = (state, prevState) =>
-  state.page === prevState.page && state.globals === prevState.globals;
+  state.page === prevState.page &&
+  state.globals === prevState.globals &&
+  state.copiedElement === prevState.copiedElement;
 
 export default connect(
   mapStateToProps,

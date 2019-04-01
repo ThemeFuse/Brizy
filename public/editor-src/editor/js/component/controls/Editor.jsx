@@ -108,7 +108,10 @@ class Editor extends React.Component {
   render() {
     const { className: _className, value } = this.props;
     console.dir({ value });
-    const className = classnames("brz-span brz-ed-control--text__editor", _className);
+    const className = classnames(
+      "brz-span brz-ed-control--text__editor",
+      _className
+    );
     return (
       <span
         className={className}

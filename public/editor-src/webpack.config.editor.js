@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const WorkerPlugin = require("worker-plugin");
+const babelrc = require("./babelrc.config.all");
 
 const getExtensions = target => {
   const defaultExtensions = [".js", ".jsx", ".json"];
@@ -30,7 +31,6 @@ module.exports = options => {
     resolve: {
       alias: {
         visual: path.resolve(__dirname, "editor/js"),
-        lib: path.resolve(__dirname, "editor/lib"),
         "visual-template": options.TEMPLATE_PATH
       },
       extensions: getExtensions(options.TARGET)
@@ -40,7 +40,8 @@ module.exports = options => {
         {
           test: /\.jsx?$/,
           include: [path.resolve(__dirname, "editor")],
-          loader: "babel-loader"
+          loader: "babel-loader",
+          options: babelrc.editor()
         }
       ]
     },

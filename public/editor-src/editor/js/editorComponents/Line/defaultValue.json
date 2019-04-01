@@ -1,26 +1,28 @@
 {
-  "className": "",
+  "style": {
+    "className": "",
 
-  "borderStyle": "solid",
+    "borderStyle": "solid",
 
-  "borderWidth": 2,
+    "borderWidth": 2,
 
-  "borderColorHex": "#73777f",
-  "borderColorOpacity": 0.75,
-  "borderColorPalette": "color7",
+    "borderColorHex": "#73777f",
+    "borderColorOpacity": 0.75,
+    "borderColorPalette": "color7",
 
-  "tempBorderColorOpacity": 0.75,
-  "tempBorderColorPalette": "color7",
+    "tempBorderColorOpacity": 0.75,
+    "tempBorderColorPalette": "color7",
 
-  "customCSS": "",
+    "customCSS": "",
 
-  "width": 75,
+    "width": 75,
 
-  "tabletBorderWidth": null,
+    "tabletBorderWidth": null,
 
-  "tabletWidth": null,
+    "tabletWidth": null,
 
-  "mobileBorderWidth": null,
+    "mobileBorderWidth": null,
 
-  "mobileWidth": null
+    "mobileWidth": null
+  }
 }

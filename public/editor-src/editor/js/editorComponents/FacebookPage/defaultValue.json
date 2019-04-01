@@ -1,14 +1,21 @@
 {
-  "pageTabs": "timeline",
-  "height": "450",
+  "content": {
+    "pageTabs": "timeline",
 
-  "smallHeader": "off",
-  "hideCover": "off",
-  "showFacepile": "off",
+    "smallHeader": "off",
+    "hideCover": "off",
+    "showFacepile": "off"
+  },
 
-  "href": "https://facebook.com/brizy.io",
+  "link": {
+    "href": "https://facebook.com/brizy.io"
+  },
 
-  "className": "",
+  "style": {
+    "height": "450",
 
-  "customCSS": ""
+    "className": "",
+
+    "customCSS": ""
+  }
 }

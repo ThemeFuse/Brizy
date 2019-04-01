@@ -1,11 +1,15 @@
 {
-  "className": "",
+  "content": {
+    "shortcode": ""
+  },
 
-  "width": 100,
-  "tabletWidth": null,
-  "mobileWidth": null,
+  "style": {
+    "className": "",
 
-  "shortcode": "",
+    "width": 100,
+    "tabletWidth": null,
+    "mobileWidth": null,
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }

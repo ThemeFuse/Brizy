@@ -22,6 +22,8 @@ class CollapsibleToolbar extends React.Component {
     items: [],
     outSideExceptions: [],
     onChange: _.noop,
+    onBeforeOpen: _.noop,
+    onBeforeClose: _.noop,
     onOpen: _.noop,
     onClose: _.noop
   };
@@ -76,12 +78,14 @@ class CollapsibleToolbar extends React.Component {
 
   open() {
     monitor.setActive(this);
+    this.props.onBeforeOpen();
     this.props.onOpen();
     this.setState({ opened: true });
   }
 
   close() {
     monitor.unsetIfActive(this);
+    this.props.onBeforeClose();
     this.props.onClose();
     this.setState({ opened: false });
   }

@@ -10,7 +10,7 @@ export default class Items extends React.Component {
   render() {
     const { data, meta: meta_ } = this.props;
 
-    return filterItems(data).map((item, index) => {
+    return filterItems(data, meta_).map((item, index) => {
       if (process.env.NODE_ENV === "development") {
         if (!item.type) {
           throw new Error("Item must have a type");

@@ -4,7 +4,8 @@ import {
   EDITOR_RENDERED,
   UPDATE_PAGE,
   UPDATE_GLOBALS,
-  UPDATE_UI
+  UPDATE_UI,
+  COPY_ELEMENT
 } from "./actionTypes";
 
 export function hydrate({ page, globals, styles }) {
@@ -61,6 +62,13 @@ export function updateUI(key, value) {
   return {
     type: UPDATE_UI,
     key,
+    value
+  };
+}
+
+export function updateCopiedElement(value) {
+  return {
+    type: COPY_ELEMENT,
     value
   };
 }

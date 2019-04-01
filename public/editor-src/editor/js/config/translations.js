@@ -70,6 +70,9 @@ export default {
   "Add new option": __("Add new option", "brizy"),
   "Add New": __("Add New", "brizy"),
   "New Style #%s": __("New Style #%s", "brizy"),
+  "Copy": __("Copy", "brizy"),
+  "Paste": __("Paste", "brizy"),
+  "Paste Styles": __("Paste Styles", "brizy"),
   //-> Device Mode
   "Mobile view": __("Mobile view", "brizy"),
   "Tablet view": __("Tablet view", "brizy"),

@@ -15,13 +15,15 @@ import * as toolbarExtendConfig from "./extendToolbar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import { videoData as getVideoData } from "visual/utils/video";
+import Link from "visual/component/Link";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./Items";
 import {
   bgStyleClassName,
   bgStyleCSSVars,
   containerStyleClassName,
-  containerStyleCSSVars
+  containerStyleCSSVars,
+  styleClassName
 } from "./styles";
 import defaultValue from "./defaultValue.json";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
@@ -307,11 +309,9 @@ class Row extends EditorComponent {
     });
 
     return (
-      <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-        <Background {...bgProps}>
-          <Items {...itemsProps} />
-        </Background>
-      </ContextMenu>
+      <Background {...bgProps}>
+        <Items {...itemsProps} />
+      </Background>
     );
   }
 
@@ -372,25 +372,27 @@ class Row extends EditorComponent {
             duration={animationDuration}
             delay={animationDelay}
           >
-            <Roles
-              allow={["admin"]}
-              fallbackRender={() => this.renderContent(v)}
-            >
-              <ContainerBorder
-                ref={input => {
-                  this.containerBorder = input;
-                }}
-                className="brz-ed-border__row"
-                borderStyle="none"
-                activeBorderStyle="dotted"
-                showBorders={false}
-                reactToClick={false}
-                path={this.props.path}
+            <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderContent(v)}
               >
-                {this.renderToolbar(v)}
-                {this.renderContent(v)}
-              </ContainerBorder>
-            </Roles>
+                <ContainerBorder
+                  ref={input => {
+                    this.containerBorder = input;
+                  }}
+                  className="brz-ed-border__row"
+                  borderStyle="none"
+                  activeBorderStyle="dotted"
+                  showBorders={false}
+                  reactToClick={false}
+                  path={this.props.path}
+                >
+                  {this.renderToolbar(v)}
+                  {this.renderContent(v)}
+                </ContainerBorder>
+              </Roles>
+            </ContextMenu>
           </Animation>
         </CustomCSS>
       </SortableElement>
@@ -398,17 +400,42 @@ class Row extends EditorComponent {
   }
 
   renderForView(v) {
-    const { animationName, animationDuration, animationDelay } = v;
+    const {
+      animationName,
+      animationDuration,
+      animationDelay,
+      linkExternalType,
+      linkType,
+      linkAnchor,
+      linkExternalBlank,
+      linkExternalRel,
+      linkPopup
+    } = v;
+
+    const linkHrefs = {
+      anchor: linkAnchor,
+      external: v[linkExternalType],
+      popup: linkPopup
+    };
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Animation
-          className="brz-row__container"
+          className={styleClassName(v)}
           name={animationName !== "none" && animationName}
           duration={animationDuration}
           delay={animationDelay}
         >
           {this.renderContent(v)}
+          {linkHrefs[linkType] !== "" && (
+            <Link
+              className="brz-link-container"
+              type={linkType}
+              href={linkHrefs[linkType]}
+              target={linkExternalBlank}
+              rel={linkExternalRel}
+            />
+          )}
         </Animation>
       </CustomCSS>
     );

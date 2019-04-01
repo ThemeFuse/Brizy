@@ -1,8 +1,11 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
-
+import {
+  defaultValueValue,
+  tabletSyncOnChange,
+  mobileSyncOnChange
+} from "visual/utils/onChange";
 import {
   toolbarElementVideoLink,
   toolbarElementVideoRatio,
@@ -10,9 +13,16 @@ import {
   toolbarElementVideoCover,
   toolbarElementVideoCoverZoom,
   toolbarElementVideoPlaySize,
+  toolbarBorderStyle,
+  toolbarBorderWidth,
+  toolbarBorderRadius,
   toolbarBgColorHexAndOpacity,
   toolbarBgColorPalette,
   toolbarBgColorFields,
+  toolbarBorderColorHexAndOpacity,
+  toolbarBorderColorPalette,
+  toolbarBorderColorFields,
+  toolbarBorderWidthBorderColorPicker,
   toolbarSizeSizeSizePercent,
   toolbarBoxShadowHexAndOpacity,
   toolbarBoxShadowPalette,
@@ -31,6 +41,11 @@ export function getItemsForDesktop(v) {
     defaultValueValue({ v, key: "bgColorPalette", device })
   );
 
+  const { hex: borderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
+
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "boxShadowColorHex", device }),
     defaultValueValue({ v, key: "borderColorPalette", device })
@@ -38,37 +53,137 @@ export function getItemsForDesktop(v) {
 
   return [
     {
-      id: "toolbarVideo",
+      id: "toolbarCurrentElement",
       type: "popover",
       icon: "nc-play",
       title: t("Video"),
       position: 80,
       options: [
         {
-          id: "videoTabs",
+          id: "tabsState",
+          tabsPosition: "left",
           type: "tabs",
+          value: v.tabsState,
           tabs: [
             {
-              id: "videoTab",
-              label: t("Video"),
+              id: "tabNormal",
+              tabIcon: "nc-circle",
+              title: t("Normal"),
               options: [
-                toolbarElementVideoLink({ v }),
-                toolbarElementVideoRatio({ v }),
-                toolbarElementVideoControls({ v })
+                {
+                  id: "tabsCurrentElement",
+                  type: "tabs",
+                  value: v.tabsCurrentElement,
+                  tabs: [
+                    {
+                      id: "tabCurrentElement",
+                      label: t("Video"),
+                      options: [
+                        toolbarElementVideoLink({ v }),
+                        toolbarElementVideoRatio({ v }),
+                        toolbarElementVideoControls({ v })
+                      ]
+                    },
+                    {
+                      id: "tabCurrentElementCover",
+                      label: t("Cover"),
+                      options: [
+                        toolbarElementVideoCover({ v }),
+                        toolbarElementVideoCoverZoom({ v }),
+                        toolbarElementVideoPlaySize({ v })
+                      ]
+                    },
+                    {
+                      id: "tabCurrentElementStyling",
+                      label: t("Styling"),
+                      options: [
+                        toolbarBorderStyle({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBorderStyle",
+                            "onChangeBorderStyleDependencies"
+                          ]
+                        }),
+                        toolbarBorderWidth({
+                          v,
+                          device,
+                          state: "normal",
+                          onChangeGrouped: [
+                            "onChangeBorderWidthGrouped",
+                            "onChangeBorderWidthGroupedDependencies"
+                          ],
+                          onChangeUngrouped: [
+                            "onChangeBorderWidthUngrouped",
+                            "onChangeBorderWidthUngroupedDependencies"
+                          ]
+                        }),
+                        toolbarBorderRadius({
+                          v,
+                          device,
+                          state: "normal",
+                          onChangeGrouped: [
+                            "onChangeBorderRadiusGrouped",
+                            "onChangeBorderRadiusGroupedDependencies"
+                          ],
+                          onChangeUngrouped: [
+                            "onChangeBorderRadiusUngrouped",
+                            "onChangeBorderRadiusUngroupedDependencies"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
+                }
               ]
             },
             {
-              id: "coverTab",
-              label: t("Cover"),
+              id: "tabHover",
+              tabIcon: "nc-hover",
+              title: t("Hover"),
               options: [
-                toolbarElementVideoCover({ v }),
-                toolbarElementVideoCoverZoom({ v }),
-                toolbarElementVideoPlaySize({ v })
+                {
+                  id: "tabsCurrentElement",
+                  type: "tabs",
+                  value: v.tabsCurrentElement,
+                  tabs: [
+                    {
+                      id: "tabCurrentElementStyling",
+                      label: t("Styling"),
+                      options: [
+                        toolbarBorderStyle({
+                          v,
+                          device,
+                          state: "hover",
+                          onChange: ["onChangeBorderStyle"]
+                        }),
+                        toolbarBorderWidth({
+                          v,
+                          device,
+                          state: "hover",
+                          onChangeGrouped: ["onChangeBorderWidthGrouped"],
+                          onChangeUngrouped: ["onChangeBorderWidthUngrouped"]
+                        }),
+                        toolbarBorderRadius({
+                          v,
+                          device,
+                          state: "hover",
+                          onChangeGrouped: ["onChangeBorderRadiusGrouped"],
+                          onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
+                        })
+                      ]
+                    }
+                  ]
+                }
               ]
             }
           ]
         }
-      ]
+      ],
+      onChange: (_, { isOpen }) => ({
+        tabsCurrentElement: !isOpen ? "tabCurrentElement" : v.tabsCurrentElement
+      })
     },
     {
       id: "toolbarColor",
@@ -77,50 +192,37 @@ export function getItemsForDesktop(v) {
       title: t("Colors"),
       roles: ["admin"],
       position: 90,
-      disabled: v.coverImageSrc === "",
       icon: {
         style: {
-          backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+          backgroundColor:
+            v.coverImageSrc === ""
+              ? hexToRgba(borderColorHex, v.borderColorOpacity)
+              : hexToRgba(bgColorHex, v.bgColorOpacity)
         }
       },
       options: [
         {
-          id: "color",
+          id: "tabsState",
           tabsPosition: "left",
           type: "tabs",
+          value: v.tabsState,
           tabs: [
             {
+              id: "tabNormal",
               tabIcon: "nc-circle",
               title: t("Normal"),
               options: [
-                toolbarBgColorHexAndOpacity({
-                  v,
-                  device,
-                  state: "normal",
-                  prefix: "bg",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state: "normal",
-                  prefix: "bg",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
+                  id: "tabsColor",
+                  type: "tabs",
+                  value: v.tabsColor,
+                  tabs: [
                     {
-                      width: 100,
+                      id: "tabOverlay",
+                      label: t("Overlay"),
+                      disabled: v.coverImageSrc === "",
                       options: [
-                        toolbarBgColorFields({
+                        toolbarBgColorHexAndOpacity({
                           v,
                           device,
                           state: "normal",
@@ -129,7 +231,99 @@ export function getItemsForDesktop(v) {
                             "onChangeBgColorHexAndOpacity",
                             "onChangeBgColorHexAndOpacityPalette"
                           ]
-                        })
+                        }),
+                        toolbarBgColorPalette({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "bg",
+                          onChange: [
+                            "onChangeBgColorPalette",
+                            "onChangeBgColorPaletteOpacity"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                toolbarBgColorFields({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  prefix: "bg",
+                                  onChange: [
+                                    "onChangeBgColorHexAndOpacity",
+                                    "onChangeBgColorHexAndOpacityPalette"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      id: "tabBorder",
+                      label: t("Border"),
+                      options: [
+                        toolbarBorderColorHexAndOpacity({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBorderColorHexAndOpacity",
+                            "onChangeBorderColorHexAndOpacityPalette",
+                            "onChangeBorderColorHexAndOpacityDependencies"
+                          ]
+                        }),
+                        toolbarBorderColorPalette({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBorderColorPalette",
+                            "onChangeBorderColorPaletteOpacity",
+                            "onChangeBorderColorHexAndOpacityDependencies"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 51,
+                              options: [
+                                toolbarBorderColorFields({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeBorderColorHexAndOpacity",
+                                    "onChangeBorderColorHexAndOpacityPalette",
+                                    "onChangeBorderColorHexAndOpacityDependencies"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 49,
+                              options: [
+                                toolbarBorderWidthBorderColorPicker({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeBorderWidthGrouped",
+                                    "onChangeBorderWidthGroupedDependencies"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
                       ]
                     }
                   ]
@@ -137,37 +331,20 @@ export function getItemsForDesktop(v) {
               ]
             },
             {
+              id: "tabHover",
               tabIcon: "nc-hover",
               title: t("Hover"),
               options: [
-                toolbarBgColorHexAndOpacity({
-                  v,
-                  device,
-                  state: "hover",
-                  prefix: "bg",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state: "hover",
-                  prefix: "bg",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
+                  id: "tabsColor",
+                  type: "tabs",
+                  value: v.tabsColor,
+                  tabs: [
                     {
-                      width: 100,
+                      id: "tabOverlay",
+                      label: t("Overlay"),
                       options: [
-                        toolbarBgColorFields({
+                        toolbarBgColorHexAndOpacity({
                           v,
                           device,
                           state: "hover",
@@ -176,7 +353,99 @@ export function getItemsForDesktop(v) {
                             "onChangeBgColorHexAndOpacity",
                             "onChangeBgColorHexAndOpacityPalette"
                           ]
-                        })
+                        }),
+                        toolbarBgColorPalette({
+                          v,
+                          device,
+                          state: "hover",
+                          prefix: "bg",
+                          onChange: [
+                            "onChangeBgColorPalette",
+                            "onChangeBgColorPaletteOpacity"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                toolbarBgColorFields({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  prefix: "bg",
+                                  onChange: [
+                                    "onChangeBgColorHexAndOpacity",
+                                    "onChangeBgColorHexAndOpacityPalette"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      id: "tabBorder",
+                      label: t("Border"),
+                      options: [
+                        toolbarBorderColorHexAndOpacity({
+                          v,
+                          device,
+                          state: "hover",
+                          onChange: [
+                            "onChangeBorderColorHexAndOpacity",
+                            "onChangeBorderColorHexAndOpacityPalette",
+                            "onChangeBorderColorHexAndOpacityDependencies"
+                          ]
+                        }),
+                        toolbarBorderColorPalette({
+                          v,
+                          device,
+                          state: "hover",
+                          onChange: [
+                            "onChangeBorderColorPalette",
+                            "onChangeBorderColorPaletteOpacity",
+                            "onChangeBorderColorHexAndOpacityDependencies"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 51,
+                              options: [
+                                toolbarBorderColorFields({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  onChange: [
+                                    "onChangeBorderColorHexAndOpacity",
+                                    "onChangeBorderColorHexAndOpacityPalette",
+                                    "onChangeBorderColorHexAndOpacityDependencies"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 49,
+                              options: [
+                                toolbarBorderWidthBorderColorPicker({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  onChange: [
+                                    "onChangeBorderWidthGrouped",
+                                    "onChangeBorderWidthGroupedDependencies"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
                       ]
                     }
                   ]
@@ -185,7 +454,10 @@ export function getItemsForDesktop(v) {
             }
           ]
         }
-      ]
+      ],
+      onChange: (_, { isOpen }) => ({
+        tabsColor: !isOpen ? "tabOverlay" : v.tabsColor
+      })
     },
     {
       id: "toolbarSettings",
@@ -315,7 +587,154 @@ export function getItemsForDesktop(v) {
 
 export function getItemsForTablet(v) {
   const device = "tablet";
+  const state = "normal";
+
+  const { hex: tabletBorderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
+
   return [
+    {
+      id: "tabletToolbarCurrentElement",
+      type: "popover",
+      icon: "nc-play",
+      title: t("Video"),
+      position: 80,
+      options: [
+        {
+          id: "tabletTabsCurrentElement",
+          type: "tabs",
+          tabs: [
+            {
+              id: "tabletTabCurrentElementStyling",
+              label: t("Styling"),
+              options: [
+                toolbarBorderStyle({
+                  v,
+                  device,
+                  state,
+                  onChange: [
+                    "onChangeBorderStyle",
+                    "onChangeBorderStyleDependencies"
+                  ]
+                }),
+                toolbarBorderWidth({
+                  v,
+                  device,
+                  state,
+                  onChangeGrouped: [
+                    "onChangeBorderWidthGrouped",
+                    "onChangeBorderWidthGroupedDependencies"
+                  ],
+                  onChangeUngrouped: [
+                    "onChangeBorderWidthUngrouped",
+                    "onChangeBorderWidthUngroupedDependencies"
+                  ]
+                }),
+                toolbarBorderRadius({
+                  v,
+                  device,
+                  state,
+                  onChangeGrouped: [
+                    "onChangeBorderRadiusGrouped",
+                    "onChangeBorderRadiusGroupedDependencies"
+                  ],
+                  onChangeUngrouped: [
+                    "onChangeBorderRadiusUngrouped",
+                    "onChangeBorderRadiusUngroupedDependencies"
+                  ]
+                })
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "tabletToolbarColor",
+      type: "popover",
+      size: "auto",
+      title: t("Colors"),
+      position: 90,
+      icon: {
+        style: {
+          backgroundColor: hexToRgba(
+            tabletBorderColorHex,
+            tabletSyncOnChange(v, "borderColorOpacity")
+          )
+        }
+      },
+      options: [
+        {
+          id: "tabletTabsColor",
+          type: "tabs",
+          tabs: [
+            {
+              id: "tabletTabBorder",
+              label: t("Border"),
+              options: [
+                toolbarBorderColorHexAndOpacity({
+                  v,
+                  device,
+                  state,
+                  onChange: [
+                    "onChangeBorderColorHexAndOpacity",
+                    "onChangeBorderColorHexAndOpacityPalette",
+                    "onChangeBorderColorHexAndOpacityDependencies"
+                  ]
+                }),
+                toolbarBorderColorPalette({
+                  v,
+                  device,
+                  state,
+                  onChange: [
+                    "onChangeBorderColorPalette",
+                    "onChangeBorderColorPaletteOpacity",
+                    "onChangeBorderColorHexAndOpacityDependencies"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 51,
+                      options: [
+                        toolbarBorderColorFields({
+                          v,
+                          device,
+                          state,
+                          onChange: [
+                            "onChangeBorderColorHexAndOpacity",
+                            "onChangeBorderColorHexAndOpacityPalette",
+                            "onChangeBorderColorHexAndOpacityDependencies"
+                          ]
+                        })
+                      ]
+                    },
+                    {
+                      width: 49,
+                      options: [
+                        toolbarBorderWidthBorderColorPicker({
+                          v,
+                          device,
+                          state,
+                          onChange: [
+                            "onChangeBorderWidthGrouped",
+                            "onChangeBorderWidthGroupedDependencies"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "tabletToolbarSettings",
       type: "popover",
@@ -330,7 +749,154 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   const device = "mobile";
+  const state = "normal";
+
+  const { hex: mobileBorderColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "borderColorHex", device }),
+    defaultValueValue({ v, key: "borderColorPalette", device })
+  );
+
   return [
+    {
+      id: "mobileToolbarCurrentElement",
+      type: "popover",
+      icon: "nc-play",
+      title: t("Video"),
+      position: 80,
+      options: [
+        {
+          id: "mobileTabsCurrentElement",
+          type: "tabs",
+          tabs: [
+            {
+              id: "mobileTabCurrentElementStyling",
+              label: t("Styling"),
+              options: [
+                toolbarBorderStyle({
+                  v,
+                  device,
+                  state,
+                  onChange: [
+                    "onChangeBorderStyle",
+                    "onChangeBorderStyleDependencies"
+                  ]
+                }),
+                toolbarBorderWidth({
+                  v,
+                  device,
+                  state,
+                  onChangeGrouped: [
+                    "onChangeBorderWidthGrouped",
+                    "onChangeBorderWidthGroupedDependencies"
+                  ],
+                  onChangeUngrouped: [
+                    "onChangeBorderWidthUngrouped",
+                    "onChangeBorderWidthUngroupedDependencies"
+                  ]
+                }),
+                toolbarBorderRadius({
+                  v,
+                  device,
+                  state,
+                  onChangeGrouped: [
+                    "onChangeBorderRadiusGrouped",
+                    "onChangeBorderRadiusGroupedDependencies"
+                  ],
+                  onChangeUngrouped: [
+                    "onChangeBorderRadiusUngrouped",
+                    "onChangeBorderRadiusUngroupedDependencies"
+                  ]
+                })
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "mobileToolbarColor",
+      type: "popover",
+      size: "auto",
+      title: t("Colors"),
+      position: 90,
+      icon: {
+        style: {
+          backgroundColor: hexToRgba(
+            mobileBorderColorHex,
+            mobileSyncOnChange(v, "borderColorOpacity")
+          )
+        }
+      },
+      options: [
+        {
+          id: "mobileTabsColor",
+          type: "tabs",
+          tabs: [
+            {
+              id: "mobileTabBorder",
+              label: t("Border"),
+              options: [
+                toolbarBorderColorHexAndOpacity({
+                  v,
+                  device,
+                  state,
+                  onChange: [
+                    "onChangeBorderColorHexAndOpacity",
+                    "onChangeBorderColorHexAndOpacityPalette",
+                    "onChangeBorderColorHexAndOpacityDependencies"
+                  ]
+                }),
+                toolbarBorderColorPalette({
+                  v,
+                  device,
+                  state,
+                  onChange: [
+                    "onChangeBorderColorPalette",
+                    "onChangeBorderColorPaletteOpacity",
+                    "onChangeBorderColorHexAndOpacityDependencies"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 51,
+                      options: [
+                        toolbarBorderColorFields({
+                          v,
+                          device,
+                          state,
+                          onChange: [
+                            "onChangeBorderColorHexAndOpacity",
+                            "onChangeBorderColorHexAndOpacityPalette",
+                            "onChangeBorderColorHexAndOpacityDependencies"
+                          ]
+                        })
+                      ]
+                    },
+                    {
+                      width: 49,
+                      options: [
+                        toolbarBorderWidthBorderColorPicker({
+                          v,
+                          device,
+                          state,
+                          onChange: [
+                            "onChangeBorderWidthGrouped",
+                            "onChangeBorderWidthGroupedDependencies"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "mobileToolbarSettings",
       type: "popover",

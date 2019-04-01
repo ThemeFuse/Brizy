@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const editorConfigFn = require("./webpack.config.editor");
+const babelrc = require("./babelrc.config.all");
 
 module.exports = options => {
   const editorConfig = editorConfigFn(options);
@@ -25,9 +26,7 @@ module.exports = options => {
           test: /\.jsx?$/,
           include: [path.resolve(__dirname, "editor")],
           loader: "babel-loader",
-          options: {
-            plugins: ["transform-remove-console"]
-          }
+          options: babelrc.export()
         },
         {
           test: /quill|isotope-layout|magnific-popup|slick-carousel|jquery.mmenu/,

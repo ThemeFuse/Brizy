@@ -1,0 +1,223 @@
+// Overlay
+.brz-ed-hotkeys-overlay {
+  background-color: rgba(3, 8, 15, 0.8);
+}
+
+// Container
+.brz-ed-hotkeys-wrapper {
+  position: relative;
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Close Button
+.brz-ed-hotkeys-btn-close {
+  color: #818a91;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    color: #239ddbcc;
+  }
+}
+
+// Label
+.brz-ed-hotkeys-label {
+  height: 30px;
+  color: #ffffff;
+  font-family: pn, "Open Sans", Arial, sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 30px;
+}
+
+//Image
+.brz-ed-hotkeys-image {
+  margin-top: 49px;
+  margin-bottom: 55px;
+}
+
+// Hotkeys Container
+.brz-ed-hotkeys-combination-container {
+  margin-top: 23px;
+  display: flex;
+  width: 795px;
+}
+
+// Hotkeys Column
+.brz-ed-hotkeys-combination-container-column-1 {
+  display: inline-grid;
+  width: 50%;
+  height: 282px;
+}
+
+.brz-ed-hotkeys-combination-container-column-2 {
+  display: inline-grid;
+  width: 50%;
+  height: 242px;
+}
+
+.brz-ed-hotkeys-combination-container-column-list {
+  display: flex;
+}
+
+.brz-ed-hotkeys-combination-container-column-label {
+  width: 231px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding-right: 82px;
+  text-align: right;
+  color: #ffffff;
+  font-family: $font-family-1;
+  font-size: 23px;
+  font-weight: 500;
+
+  .divider {
+    margin-left: 6px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 1px;
+    background-color: #818a91;
+    right: 21px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    display: block;
+  }
+}
+
+.brz-ed-hotkeys-combination-container-column-label-2 {
+  color: #818a91;
+  font-family: $font-family-1;
+  font-size: 17px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  height: 30px;
+
+  .divider {
+    margin-left: 6px;
+  }
+}
+
+//Icons
+.brz-ed-hotkeys-icons {
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+}
+
+@media only screen and (max-width: 1400px) and (max-height: 800px) {
+  .brz-ed-hotkeys-wrapper {
+    position: relative;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 496px;
+  }
+
+  .brz-ed-hotkeys-btn-close {
+    width: 22px;
+    height: 22px;
+    padding: 5px;
+  }
+
+  .brz-ed-hotkeys-label {
+    height: 20px;
+    color: #ffffff;
+    font-family: pn, "Open Sans", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin-top: 15px;
+  }
+
+  .brz-ed-hotkeys-image-container {
+    text-align: center;
+  }
+
+  .brz-ed-hotkeys-image {
+    width: 80%;
+    margin-top: 30px;
+    margin-bottom: 33px;
+  }
+
+  .brz-ed-hotkeys-combination-container {
+    margin-top: 17px;
+    display: flex;
+    width: 556px;
+    height: 170px;
+  }
+
+  .brz-ed-hotkeys-combination-container-column-label {
+    width: 160px;
+    height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    padding-right: 57px;
+    text-align: right;
+    color: #ffffff;
+    font-family: $font-family-1;
+    font-size: 16px;
+    font-weight: 500;
+
+    .divider {
+      margin-left: 6px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 1px;
+      background-color: #818a91;
+      right: 15px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      display: block;
+    }
+  }
+
+  .brz-ed-hotkeys-combination-container-column-label-2 {
+    color: #818a91;
+    font-family: $font-family-1;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    height: 21px;
+
+    .divider {
+      margin-left: 6px;
+    }
+  }
+
+  .brz-ed-hotkeys-icons {
+    width: 11px;
+    height: 11px;
+    margin-left: 4px;
+  }
+}

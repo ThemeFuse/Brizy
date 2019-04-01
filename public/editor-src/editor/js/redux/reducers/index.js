@@ -5,7 +5,8 @@ import {
   HYDRATE,
   UPDATE_PAGE,
   UPDATE_GLOBALS,
-  UPDATE_UI
+  UPDATE_UI,
+  COPY_ELEMENT
 } from "../actionTypes";
 
 // page
@@ -97,11 +98,24 @@ export function ui(state = uiDefault, action) {
   }
 }
 
+export function copiedElement(state = {}, action) {
+  switch (action.type) {
+    case COPY_ELEMENT:
+      return {
+        ...state,
+        ...action.value
+      };
+    default:
+      return state;
+  }
+}
+
 export default historyEnhancer(
   combineReducers({
     page,
     globals,
-    ui
+    ui,
+    copiedElement
   }),
   ["page", "globals"]
 );

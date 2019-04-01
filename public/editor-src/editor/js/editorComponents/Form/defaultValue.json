@@ -1,13 +1,18 @@
 {
-  "messageSuccess": "",
-  "messageError": "",
-  "messageRedirect": "",
-  "horizontalAlign": "left",
+  "content": {
+    "messageSuccess": "",
+    "messageError": "",
+    "messageRedirect": "",
+    "items": []
+  },
 
-  "items": [],
+  "style": {
+    "horizontalAlign": "left",
 
-  "customCSS": "",
+    "customCSS": "",
 
-  "tabletHorizontalAlign": null,
-  "mobileHorizontalAlign": null
+    "tabletHorizontalAlign": null,
+
+    "mobileHorizontalAlign": null
+  }
 }

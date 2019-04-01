@@ -1,13 +1,13 @@
 import _ from "underscore";
 import React from "react";
+import ReactDOM from "react-dom";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableElement from "visual/component/Sortable/SortableElement";
 import { hideToolbar } from "visual/component/Toolbar/index";
-import ContextMenu, {
-  ContextMenuExtend
-} from "visual/component/ContextMenu";
+import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
@@ -103,44 +103,94 @@ class Items extends EditorArrayComponent {
   }
 
   renderItemWrapperDiv(item, itemKey, itemIndex) {
-    const { itemClassName } = this.props;
+    const {
+      itemClassName,
+      meta: { inIconText }
+    } = this.props;
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
-    return (
-      <ContextMenuExtend
-        key={itemKey}
-        {...this.makeContextMenuProps(contextMenuExtendConfig)}
-      >
-        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <SortableElement type="shortcode">
-            <div className={itemClassName}>{item}</div>
-          </SortableElement>
-        </ContextMenu>
-      </ContextMenuExtend>
+    let content = (
+      <SortableElement key={itemKey} type="shortcode">
+        <div className={itemClassName} id={itemKey}>
+          {item}
+        </div>
+      </SortableElement>
     );
+
+    if (!inIconText) {
+      const shortcutsTypes = [
+        "duplicate",
+        "copy",
+        "paste",
+        "pasteStyles",
+        "delete"
+      ];
+
+      content = (
+        <ContextMenuExtend
+          key={itemKey}
+          {...this.makeContextMenuProps(contextMenuExtendConfig)}
+        >
+          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+            <HotKeys
+              shortcutsTypes={shortcutsTypes}
+              id={itemKey}
+              onKeyDown={this.handleKeyDown}
+            >
+              {content}
+            </HotKeys>
+          </ContextMenu>
+        </ContextMenuExtend>
+      );
+    }
+
+    return content;
   }
 
   renderItemWrapperList(item, itemKey, itemIndex) {
-    const className = classnames(
-      "brz-li brz-list__item",
-      this.props.itemClassName
-    );
+    const {
+      itemClassName,
+      meta: { inIconText }
+    } = this.props;
+
+    const className = classnames("brz-li brz-list__item", itemClassName);
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
-    return (
-      <ContextMenuExtend
-        key={itemKey}
-        {...this.makeContextMenuProps(contextMenuExtendConfig)}
-      >
-        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <SortableElement type="shortcode">
-            <li key={itemKey} className={className}>
-              {item}
-            </li>
-          </SortableElement>
-        </ContextMenu>
-      </ContextMenuExtend>
+    let content = (
+      <SortableElement type="shortcode">
+        <li key={itemKey} className={className}>
+          {item}
+        </li>
+      </SortableElement>
     );
+
+    if (!inIconText) {
+      const shortcutsTypes = [
+        "duplicate",
+        "copy",
+        "paste",
+        "pasteStyles",
+        "delete"
+      ];
+      return (
+        <ContextMenuExtend
+          key={itemKey}
+          {...this.makeContextMenuProps(contextMenuExtendConfig)}
+        >
+          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+            <HotKeys
+              shortcutsTypes={shortcutsTypes}
+              id={itemKey}
+              onKeyDown={this.handleKeyDown}
+            >
+              {content}
+            </HotKeys>
+          </ContextMenu>
+        </ContextMenuExtend>
+      );
+    }
+
+    return content;
   }
 
   renderItemWrapper(item, itemKey, itemIndex, itemData, items) {

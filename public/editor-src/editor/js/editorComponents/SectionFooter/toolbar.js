@@ -55,7 +55,7 @@ export function getItemsForDesktop(v, component) {
     {
       id: "toolbarFooter",
       type: "popover",
-      icon: "nc-menu",
+      icon: "nc-footer",
       title: t("Footer"),
       position: 70,
       options: [

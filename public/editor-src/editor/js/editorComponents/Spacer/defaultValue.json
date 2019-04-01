@@ -1,9 +1,11 @@
 {
-  "className": "",
+  "style": {
+    "className": "",
 
-  "height": 50,
+    "height": 50,
 
-  "tabletHeight": null,
+    "tabletHeight": null,
 
-  "mobileHeight": null
+    "mobileHeight": null
+  }
 }
