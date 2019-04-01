@@ -147,16 +147,11 @@ export class HistoryButtons extends React.Component {
 
   handleKeyDown = e => {
     const Z_KEY_CODE = 90;
-    const Y_KEY_CODE = 89;
 
-    if (e.metaKey || e.ctrlKey) {
-      if (e.keyCode === Z_KEY_CODE) {
-        e.preventDefault();
-        this.triggerUndo();
-      } else if (e.keyCode === Y_KEY_CODE) {
-        e.preventDefault();
-        this.triggerRedo();
-      }
+    const modifierKeysWasPressed = e.metaKey || e.ctrlKey || e.shiftKey;
+    if (modifierKeysWasPressed && e.keyCode === Z_KEY_CODE) {
+      e.preventDefault();
+      e.shiftKey ? this.triggerRedo() : this.triggerUndo();
     }
   };
 

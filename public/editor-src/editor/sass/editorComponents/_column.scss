@@ -1,6 +1,7 @@
 // Columns
 .brz-columns {
   display: flex;
+  position: relative;
   flex-direction: column;
   min-height: 1px;
   flex-basis: 100%;

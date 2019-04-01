@@ -1,28 +1,37 @@
 {
-  "className": "",
-  "type": "posts",
-  "gridColumn": 3,
-  "gridRow": 1,
-  "padding": 0,
-  "items": [],
-  "taxonomy": "category",
-  "taxonomyId": 1,
-  "order": "ASC",
-  "orderBy": "ID",
-  "pagination": "off",
-  "paginationSpacing": 20,
-  "paginationColorHex": "#ffffff",
-  "paginationColorOpacity": 1,
-  "paginationColorPalette": "color3",
-  "paginationTempColorOpacity": 1,
-  "paginationTempColorPalette": "color3",
+  "content": {
+    "type": "posts",
+    "items": [],
+    "taxonomy": "category",
+    "taxonomyId": 1,
+    "order": "ASC",
+    "orderBy": "ID",
+    "pagination": "off",
 
-  "customCSS": "",
+    "gridRow": 1,
 
-  "tabletGridColumn": 2,
-  "tabletPadding": null,
-  "tabletPaginationSpacing": null,
+    "gridColumn": 3,
 
-  "mobilePadding": null,
-  "mobilePaginationSpacing": null
+    "tabletGridColumn": 2
+  },
+
+  "style": {
+    "className": "",
+
+    "padding": 0,
+    "paginationSpacing": 20,
+    "paginationColorHex": "#ffffff",
+    "paginationColorOpacity": 1,
+    "paginationColorPalette": "color3",
+    "paginationTempColorOpacity": 1,
+    "paginationTempColorPalette": "color3",
+
+    "customCSS": "",
+
+    "tabletPadding": null,
+    "tabletPaginationSpacing": null,
+
+    "mobilePadding": null,
+    "mobilePaginationSpacing": null
+  }
 }

@@ -8,7 +8,13 @@ import {
 import { makeRichTextColorPaletteCSS } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
 import { currentStyleSelector } from "../selectors";
-import { HYDRATE, UPDATE_GLOBALS, UPDATE_UI } from "../actionTypes";
+import {
+  HYDRATE,
+  UPDATE_GLOBALS,
+  UPDATE_UI,
+  COPY_ELEMENT
+} from "../actionTypes";
+import { updateCopiedElement } from "../actionCreators";
 import { ActionTypes as HistoryActionTypes } from "../reducers/historyEnhancer";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 
@@ -36,6 +42,12 @@ export default config => store => next => action => {
   if (action.type === UPDATE_UI && action.key === "deviceMode") {
     const done = () => next(action);
     handleDeviceModeChange(config, store, action, done);
+    return;
+  }
+
+  if (action.type === COPY_ELEMENT) {
+    const done = () => next(action);
+    handleCopiedElementChange(config, store, action, done);
     return;
   }
 
@@ -82,6 +94,13 @@ function handleHydrate(config, store, action, done) {
     .attr("id", "brz-rich-text-colors")
     .html(makeRichTextColorPaletteCSS(colorPalette));
   jQuery("head", document).append($richTextPaletteStyle);
+
+  jQuery(window).on("storage", e => {
+    const { key, newValue, oldValue } = e.originalEvent;
+    if (key === "copiedStyles" && newValue && newValue !== oldValue) {
+      store.dispatch(updateCopiedElement(JSON.parse(newValue)));
+    }
+  });
 }
 
 function handleAddExtraFont(config, store, action, done) {
@@ -158,6 +177,17 @@ function handleDeviceModeChange(config, store, action, done) {
     brz.className = newBrzClassName;
     blocksIframe.style.maxWidth = iframeMaxWidth;
   });
+}
+
+function handleCopiedElementChange(config, store, action, done) {
+  done();
+
+  const oldCopiedStyles = localStorage.getItem("copiedStyles");
+  const newCopiedStyles = JSON.stringify(action.value);
+
+  if (oldCopiedStyles !== newCopiedStyles) {
+    localStorage.setItem("copiedStyles", newCopiedStyles);
+  }
 }
 
 function handleHistoryChange(config, store, action, done) {

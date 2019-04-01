@@ -6,6 +6,7 @@ import Apps from "./PromptApps";
 // import Popup from "./PromptPopup";
 import Blocks from "./PromptBlocks";
 import Form from "./PromptForm";
+import KeyHelper from "./KeyHelper";
 import { CSSTransition } from "react-transition-group";
 
 class Prompts extends React.Component {
@@ -62,6 +63,9 @@ class Prompts extends React.Component {
           break;
         case "blocks":
           content = <Blocks {...props} onClose={this.close} />;
+          break;
+        case "key-helper":
+          content = <KeyHelper {...props} onClose={this.close} />;
           break;
       }
     }

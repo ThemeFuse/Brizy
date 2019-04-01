@@ -7,6 +7,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import ClickOutside from "visual/component/ClickOutside";
 import ListBox from "visual/component/Controls/ListBox";
+import HotKeys from "visual/component/HotKeys";
 import { getDynamicContentChoices } from "visual/utils/options";
 import Quill from "./Quill";
 import toolbarConfig from "./toolbar";
@@ -87,6 +88,9 @@ class RichText extends EditorComponent {
     this.setState({ isToolbarOpened: false });
   };
 
+  handleKeyDown(e, { keyName, id }) {}
+  handleKeyUp = () => {};
+
   getToolbarProps = () => {
     const onChange = values => {
       // after Quill applies formatting it steals the focus to itself,
@@ -153,28 +157,37 @@ class RichText extends EditorComponent {
     const { prepopulation, population, isToolbarOpened } = this.state;
     const { onToolbarEnter, onToolbarLeave } = this.props;
 
+    const shortcutsTypes = ["copy", "paste", "delete"];
+
     return (
       <React.Fragment>
-        <Toolbar
-          ref={this.handleToolbarRef}
-          manualControl={true}
-          onMouseEnter={onToolbarEnter}
-          onMouseLeave={onToolbarLeave}
-          onOpen={this.handleToolbarOpen}
-          onClose={this.handleToolbarClose}
+        <HotKeys
+          shortcutsTypes={shortcutsTypes}
+          id={this.getId()}
+          onKeyDown={this.handleKeyDown}
+          onKeyUp={this.handleKeyUp}
         >
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <div className={this.getClassName(v)}>
-              <Quill
-                ref={this.handleQuillRef}
-                value={v.text}
-                forceUpdate={!isToolbarOpened}
-                onSelectionChange={this.handleSelectionChange}
-                onTextChange={this.handleTextChange}
-              />
-            </div>
+            <Toolbar
+              ref={this.handleToolbarRef}
+              manualControl={true}
+              onMouseEnter={onToolbarEnter}
+              onMouseLeave={onToolbarLeave}
+              onOpen={this.handleToolbarOpen}
+              onClose={this.handleToolbarClose}
+            >
+              <div className={this.getClassName(v)}>
+                <Quill
+                  ref={this.handleQuillRef}
+                  value={v.text}
+                  forceUpdate={!isToolbarOpened}
+                  onSelectionChange={this.handleSelectionChange}
+                  onTextChange={this.handleTextChange}
+                />
+              </div>
+            </Toolbar>
           </CustomCSS>
-        </Toolbar>
+        </HotKeys>
         {(prepopulation !== null || population) &&
           this.renderPopulationHelper()}
       </React.Fragment>

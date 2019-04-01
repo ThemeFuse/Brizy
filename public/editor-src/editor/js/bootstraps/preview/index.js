@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import jQuery from "jquery";
 import * as Components from "../../component/index.export.js";
 import * as EditorComponents from "../../editorComponents/index.export.js";

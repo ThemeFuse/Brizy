@@ -1,19 +1,179 @@
 {
-  "className": "",
+  "content": {
+    "code": ""
+  },
 
-  "code": "",
+  "toolbar": {
+    "tabsState": "tabNormal",
+    "tabsCurrentElement": "tabCurrentElement",
+    "tabsColor": "tabBorder"
+  },
 
-  "width": 100,
+  "style": {
+    "className": "",
 
-  "height": 250,
+    "borderStyle": "",
 
-  "customCSS": "",
+    "hoverBorderStyle": null,
 
-  "tabletWidth": null,
+    "tempBorderStyle": "solid",
 
-  "tabletHeight": null,
+    "tempHoverBorderStyle": null,
 
-  "mobileWidth": null,
+    "borderWidthType": "grouped",
+    "borderWidth": 2,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
 
-  "mobileHeight": null
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempBorderWidth": 4,
+    "tempBorderTopWidth": 4,
+    "tempBorderRightWidth": 4,
+    "tempBorderBottomWidth": 4,
+    "tempBorderLeftWidth": 4,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "hoverBorderRadiusType": null,
+    "hoverBorderRadius": null,
+    "hoverBorderTopLeftRadius": null,
+    "hoverBorderTopRightRadius": null,
+    "hoverBorderBottomRightRadius": null,
+    "hoverBorderBottomLeftRadius": null,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "tempHoverBorderRadius": null,
+    "tempHoverBorderTopLeftRadius": null,
+    "tempHoverBorderTopRightRadius": null,
+    "tempHoverBorderBottomRightRadius": null,
+    "tempHoverBorderBottomLeftRadius": null,
+
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "width": 100,
+
+    "height": 250,
+
+    "customCSS": "",
+
+    "hoverTransition": 50,
+
+    "tabletBorderStyle": null,
+
+    "tempTabletBorderStyle": null,
+
+    "tabletBorderWidthType": null,
+    "tabletBorderWidth": null,
+    "tabletBorderTopWidth": null,
+    "tabletBorderRightWidth": null,
+    "tabletBorderBottomWidth": null,
+    "tabletBorderLeftWidth": null,
+
+    "tempTabletBorderWidth": null,
+    "tempTabletBorderTopWidth": null,
+    "tempTabletBorderRightWidth": null,
+    "tempTabletBorderBottomWidth": null,
+    "tempTabletBorderLeftWidth": null,
+
+    "tabletBorderRadiusType": null,
+    "tabletBorderRadius": null,
+    "tabletBorderTopLeftRadius": null,
+    "tabletBorderTopRightRadius": null,
+    "tabletBorderBottomRightRadius": null,
+    "tabletBorderBottomLeftRadius": null,
+
+    "tempTabletBorderRadius": null,
+    "tempTabletBorderTopLeftRadius": null,
+    "tempTabletBorderTopRightRadius": null,
+    "tempTabletBorderBottomRightRadius": null,
+    "tempTabletBorderBottomLeftRadius": null,
+
+    "tabletBorderColorHex": null,
+    "tabletBorderColorOpacity": null,
+    "tabletBorderColorPalette": null,
+
+    "tempTabletBorderColorOpacity": null,
+    "tempTabletBorderColorPalette": null,
+
+    "tabletWidth": null,
+
+    "tabletHeight": null,
+
+    "mobileBorderStyle": null,
+
+    "tempMobileBorderStyle": null,
+
+    "mobileBorderWidthType": null,
+    "mobileBorderWidth": null,
+    "mobileBorderTopWidth": null,
+    "mobileBorderRightWidth": null,
+    "mobileBorderBottomWidth": null,
+    "mobileBorderLeftWidth": null,
+
+    "tempMobileBorderWidth": null,
+    "tempMobileBorderTopWidth": null,
+    "tempMobileBorderRightWidth": null,
+    "tempMobileBorderBottomWidth": null,
+    "tempMobileBorderLeftWidth": null,
+
+    "mobileBorderRadiusType": null,
+    "mobileBorderRadius": null,
+    "mobileBorderTopLeftRadius": null,
+    "mobileBorderTopRightRadius": null,
+    "mobileBorderBottomRightRadius": null,
+    "mobileBorderBottomLeftRadius": null,
+
+    "tempMobileBorderRadius": null,
+    "tempMobileBorderTopLeftRadius": null,
+    "tempMobileBorderTopRightRadius": null,
+    "tempMobileBorderBottomRightRadius": null,
+    "tempMobileBorderBottomLeftRadius": null,
+
+    "mobileBorderColorHex": null,
+    "mobileBorderColorOpacity": null,
+    "mobileBorderColorPalette": null,
+
+    "tempMobileBorderColorOpacity": null,
+    "tempMobileBorderColorPalette": null,
+
+    "mobileWidth": null,
+
+    "mobileHeight": null
+  }
 }

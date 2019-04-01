@@ -8,6 +8,7 @@ import Sortable from "visual/component/Sortable";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
+import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { clamp } from "visual/utils/math";
 import { normalizeRowColumns } from "./utils";
@@ -277,12 +278,44 @@ class Items extends EditorArrayComponent {
   renderItemWrapper(item, itemKey, itemIndex) {
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
+    const keyNames = [
+      "alt+N",
+      "ctrl+N",
+      "cmd+N",
+      "right_cmd+N",
+      "alt+D",
+      "alt+C",
+      "alt+V",
+      "alt+shift+V",
+      "shift+alt+V",
+      "alt+del",
+      "alt+up",
+      "alt+down"
+    ];
+
+    const shortcutsTypes = [
+      "duplicate",
+      "copy",
+      "paste",
+      "pasteStyles",
+      "delete",
+      "horizontalAlign",
+      "verticalAlign"
+    ];
+
     return (
       <ContextMenuExtend
         key={itemKey}
         {...this.makeContextMenuProps(contextMenuExtendConfig)}
       >
-        {item}
+        <HotKeys
+          keyNames={keyNames}
+          shortcutsTypes={shortcutsTypes}
+          id={itemKey}
+          onKeyDown={this.handleKeyDown}
+        >
+          {item}
+        </HotKeys>
       </ContextMenuExtend>
     );
   }

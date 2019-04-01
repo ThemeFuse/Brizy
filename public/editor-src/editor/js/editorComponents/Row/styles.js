@@ -933,7 +933,6 @@ export function bgStyleClassName(v) {
     };
   }
   const glamorClassName = String(css(glamorObj));
-
   return classnames(
     "brz-d-xs-flex",
     "brz-flex-xs-wrap",
@@ -1647,4 +1646,28 @@ export function containerStyleCSSVars(v, isInnerRow) {
       current: "paddingLeft"
     })
   };
+}
+
+export function styleClassName(v) {
+  const { className } = v;
+
+  let glamorObj;
+
+  if (!IS_EDITOR) {
+    glamorObj = {
+      position: "relative",
+
+      "& .brz-link-container": {
+        position: "absolute",
+        height: "100%",
+        width: "100%",
+        top: "0",
+        left: "0"
+      }
+    };
+  }
+
+  const glamorClassName = String(css(glamorObj || {}));
+
+  return classnames("brz-row__container", glamorClassName, className);
 }

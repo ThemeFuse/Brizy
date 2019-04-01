@@ -84,7 +84,21 @@ class Map extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleToolbarClose = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     this.patchValue({
       tabsState: "tabNormal",
       tabsCurrentElement: "tabCurrentElement",

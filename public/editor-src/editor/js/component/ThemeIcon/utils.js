@@ -36,7 +36,15 @@ function decrypt(crypted) {
 }
 
 function responseToSvg(r) {
-  return /^<svg/.test(r) ? r : atob(decrypt(r));
+  if (/^<svg/.test(r)) {
+    return r;
+  } else {
+    try {
+      return responseToSvg(atob(decrypt(r)));
+    } catch (e) {
+      throw new Error(`Icon not valid ${r}`);
+    }
+  }
 }
 
 // Intentionally left commonjs export because it is used in gulpfile

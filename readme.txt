@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.1
 Requires PHP: 5.4
-Stable tag: 1.0.66
+Stable tag: 1.0.67
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,15 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.67 - 2019-04-01 =
+* New: Added shortcuts for various actions
+* New: Row and Column link options
+* New: Video and Embed border options
+* Improved: Right click shortcuts
+* Fixed: Preview in IE 11
+* Fixed: Image custom CSS option in preview
+* Fixed: Archives sort order in preview
 
 = 1.0.66 - 2019-03-28 =
 * Fixed: Form integrations

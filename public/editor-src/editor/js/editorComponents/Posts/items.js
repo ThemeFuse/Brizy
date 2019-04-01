@@ -10,11 +10,8 @@ class Items extends EditorArrayComponent {
   static defaultProps = {
     gridRow: 1,
     gridColumn: 2,
-    taxonomy: "",
-    taxonomyId: "",
-    order: "",
-    orderBy: "",
     pagination: false,
+    loopAttributes: {},
     meta: {}
   };
 
@@ -22,6 +19,14 @@ class Items extends EditorArrayComponent {
     return {
       meta: this.props.meta
     };
+  }
+
+  getLoopAttributes() {
+    const { loopAttributes } = this.props;
+
+    return Object.keys(loopAttributes).reduce((acc, curr) => {
+      return `${acc} ${curr}='${loopAttributes[curr]}'`;
+    }, "");
   }
 
   handleSortableAcceptElements = (from, to) => {
@@ -104,40 +109,15 @@ class Items extends EditorArrayComponent {
 
   renderForView(_v) {
     const v = _v.map(this.renderItem);
-    const {
-      className,
-      style,
-      gridColumn,
-      gridRow,
-      taxonomy,
-      taxonomyId,
-      order,
-      orderBy,
-      pagination
-    } = this.props;
-    const maxPostItems = gridRow * gridColumn;
+    const { className, style, pagination } = this.props;
 
     return (
       <div className={className} style={style}>
-        {`{{
-            brizy_dc_post_loop
-            count='${maxPostItems}'
-            taxonomy='${taxonomy}'
-            value='${taxonomyId}'
-            order='${order}'
-            orderby='${orderBy}'
-        }}`}
+        {`{{ brizy_dc_post_loop ${this.getLoopAttributes()} }}`}
         {super.renderItemsContainer(v)}
         {`{{end_brizy_dc_post_loop}}`}
         {pagination &&
-          `{{
-              brizy_dc_post_loop_pagination
-              count='${maxPostItems}'
-              taxonomy='${taxonomy}'
-              value='${taxonomyId}'
-              order='${order}'
-              orderby='${orderBy}'
-            }}`}
+          `{{ brizy_dc_post_loop_pagination ${this.getLoopAttributes()} }}`}
       </div>
     );
   }

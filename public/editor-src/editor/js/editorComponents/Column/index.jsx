@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -15,6 +16,7 @@ import * as toolbarConfig from "./toolbar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import ColumnResizer from "./components/ColumnResizer";
+import Link from "visual/component/Link";
 import { percentageToPixels } from "visual/utils/meta";
 import { minWinColumn } from "visual/config/columns";
 import Items from "./Items";
@@ -384,11 +386,9 @@ class Column extends EditorComponent {
     };
 
     return (
-      <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-        <Background {...bgProps}>
-          <Items {...itemsProps} />
-        </Background>
-      </ContextMenu>
+      <Background {...bgProps}>
+        <Items {...itemsProps} />
+      </Background>
     );
   }
 
@@ -444,21 +444,23 @@ class Column extends EditorComponent {
               allow={["admin"]}
               fallbackRender={() => this.renderContent(v)}
             >
-              <ContainerBorder
-                ref={input => {
-                  this.containerBorder = input;
-                }}
-                className={borderClassName}
-                borderColor={isInnerRow && inGrid ? "red" : "blue"}
-                borderStyle="solid"
-                reactToClick={false}
-                path={path}
-              >
-                {this.renderResizer("left")}
-                {this.renderResizer("right")}
-                {this.renderToolbar(v)}
-                {this.renderContent(v)}
-              </ContainerBorder>
+              <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+                <ContainerBorder
+                  ref={input => {
+                    this.containerBorder = input;
+                  }}
+                  className={borderClassName}
+                  borderColor={isInnerRow && inGrid ? "red" : "blue"}
+                  borderStyle="solid"
+                  reactToClick={false}
+                  path={path}
+                >
+                  {this.renderResizer("left")}
+                  {this.renderResizer("right")}
+                  {this.renderToolbar(v)}
+                  {this.renderContent(v)}
+                </ContainerBorder>
+              </ContextMenu>
             </Roles>
           </Animation>
         </CustomCSS>
@@ -467,7 +469,23 @@ class Column extends EditorComponent {
   }
 
   renderForView(v) {
-    const { animationName, animationDuration, animationDelay } = v;
+    const {
+      animationName,
+      animationDuration,
+      animationDelay,
+      linkExternalType,
+      linkType,
+      linkAnchor,
+      linkExternalBlank,
+      linkExternalRel,
+      linkPopup
+    } = v;
+
+    const linkHrefs = {
+      anchor: linkAnchor,
+      external: v[linkExternalType],
+      popup: linkPopup
+    };
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -478,6 +496,15 @@ class Column extends EditorComponent {
           delay={animationDelay}
         >
           {this.renderContent(v)}
+          {linkHrefs[linkType] !== "" && (
+            <Link
+              className="brz-container-link"
+              type={linkType}
+              href={linkHrefs[linkType]}
+              target={linkExternalBlank}
+              rel={linkExternalRel}
+            />
+          )}
         </Animation>
       </CustomCSS>
     );

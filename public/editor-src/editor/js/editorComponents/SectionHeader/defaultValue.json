@@ -1,9 +1,13 @@
 {
-  "items": [],
+  "content": {
+    "items": [],
 
-  "type": "fixed",
+    "type": "fixed",
 
-  "anchorName": "",
+    "anchorName": ""
+  },
 
-  "containerClassName": ""
+  "style": {
+    "containerClassName": ""
+  }
 }

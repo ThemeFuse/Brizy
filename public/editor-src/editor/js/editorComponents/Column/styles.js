@@ -1699,7 +1699,15 @@ export function styleClassName(v, props) {
 
     glamorObj = {
       ".brz &": {
-        zIndex: zIndex === 0 ? "auto" : zIndex
+        zIndex: zIndex === 0 ? "auto" : zIndex,
+
+        "& .brz-container-link": {
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          top: "0",
+          left: "0"
+        }
       },
       "@media (min-width: 992px)": {
         ".brz &": {

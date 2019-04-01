@@ -78,10 +78,27 @@ export function toolbarElementVideoCoverZoom({ v }) {
       min: 100,
       max: 200
     },
+    input: {
+      show: true,
+      min: 100,
+      max: 200
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "%",
+          value: "%"
+        }
+      ]
+    },
     value: {
       value: v.coverZoom
     },
-    onChange: ({ value: coverZoom }) => ({ coverZoom })
+    onChange: ({ value: coverZoom }) => {
+      console.log(coverZoom);
+      return { coverZoom };
+    }
   };
 }
 
@@ -94,6 +111,20 @@ export function toolbarElementVideoPlaySize({ v }) {
     slider: {
       min: 50,
       max: 200
+    },
+    input: {
+      show: true,
+      min: 50,
+      max: 200
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "%",
+          value: "%"
+        }
+      ]
     },
     value: {
       value: v.iconSize

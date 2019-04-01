@@ -1,5 +1,6 @@
 import React from "react";
 import Config from "visual/global/Config";
+import HotKeys from "visual/component/HotKeys";
 import EditorIcon from "visual/component/EditorIcon";
 import { uuid } from "visual/utils/uuid";
 import { t } from "visual/utils/i18n";
@@ -12,7 +13,8 @@ export default class Button extends React.Component {
     downloadToken: generateToken()
   };
 
-  handleClick = () => {
+  handleSaveHtml = e => {
+    e.preventDefault();
     const { loading, downloadToken } = this.state;
 
     if (!loading) {
@@ -59,9 +61,16 @@ export default class Button extends React.Component {
   render() {
     const { loading, downloadToken } = this.state;
 
+    const keysNames = ["ctrl+S", "cmd+S", "right_cmd+S"];
+
     return (
       <li className="brz-li brz-ed-fixed-bottom-panel__item brz-ed-fixed-bottom-panel__btn brz-ed-fixed-bottom-panel__btn--download">
-        <span className="brz-span" onClick={this.handleClick}>
+        <HotKeys
+          keyNames={keysNames}
+          id="key-helper-save-html"
+          onKeyDown={this.handleSaveHtml}
+        />
+        <span className="brz-span" onClick={this.handleSaveHtml}>
           {loading ? (
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
           ) : (

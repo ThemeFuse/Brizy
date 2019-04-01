@@ -1,42 +1,46 @@
 {
-  "className": "",
+  "content": {
+    "start": 0,
+    "end": 100,
+    "duration": 2
+  },
 
-  "start": 0,
-  "end": 100,
-  "duration": 2,
+  "style": {
+    "className": "",
 
-  "fontStyle": "",
-  "fontFamily": "roboto",
-  "fontSize": 56,
-  "fontWeight": 400,
-  "lineHeight": 1.3,
-  "letterSpacing": 0,
+    "fontStyle": "",
+    "fontFamily": "roboto",
+    "fontSize": 56,
+    "fontWeight": 400,
+    "lineHeight": 1.3,
+    "letterSpacing": 0,
 
-  "colorHex": "#239ddb",
-  "colorOpacity": 1,
-  "colorPalette": "color3",
+    "colorHex": "#239ddb",
+    "colorOpacity": 1,
+    "colorPalette": "color3",
 
-  "tempColorOpacity": 1,
-  "tempColorPalette": "color3",
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color3",
 
-  "hoverColorHex": "#239ddb",
-  "hoverColorOpacity": 0.8,
-  "hoverColorPalette": "color3",
+    "hoverColorHex": "#239ddb",
+    "hoverColorOpacity": 0.8,
+    "hoverColorPalette": "color3",
 
-  "tempHoverColorOpacity": 1,
-  "tempHoverColorPalette": "color3",
+    "tempHoverColorOpacity": 1,
+    "tempHoverColorPalette": "color3",
 
-  "customCSS": "",
+    "customCSS": "",
 
-  "tabletFontStyle": "",
-  "tabletFontSize": 56,
-  "tabletFontWeight": 400,
-  "tabletLineHeight": 1.3,
-  "tabletLetterSpacing": 0,
+    "tabletFontStyle": "",
+    "tabletFontSize": 56,
+    "tabletFontWeight": 400,
+    "tabletLineHeight": 1.3,
+    "tabletLetterSpacing": 0,
 
-  "mobileFontStyle": "",
-  "mobileFontSize": 56,
-  "mobileFontWeight": 400,
-  "mobileLineHeight": 1.3,
-  "mobileLetterSpacing": 0
+    "mobileFontStyle": "",
+    "mobileFontSize": 56,
+    "mobileFontWeight": 400,
+    "mobileLineHeight": 1.3,
+    "mobileLetterSpacing": 0
+  }
 }

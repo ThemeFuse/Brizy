@@ -1,54 +1,66 @@
 {
-  "className": "",
-  "showOnDesktop": "on",
-  "anchorName": "",
-  "customClassName": "",
-  "fullHeight": "off",
+  "content": {
+    "items": [],
 
-  "slider": "off",
+    "anchorName": "",
+    "fullHeight": "off",
 
-  "sliderDots": "circle",
+    "slider": "off",
 
-  "tabsColor": "",
+    "showOnDesktop": "on",
 
-  "sliderDotsColorHex": "#000000",
-  "sliderDotsColorOpacity": 1,
-  "sliderDotsColorPalette": "",
+    "zIndex": 0,
 
-  "tempSliderDotsColorOpacity": 1,
-  "tempSliderDotsColorPalette": "",
+    "showOnTablet": "on",
 
-  "hoverSliderDotsColorHex": "#000000",
-  "hoverSliderDotsColorOpacity": 1,
-  "hoverSliderDotsColorPalette": "",
+    "showOnMobile": "on"
+  },
 
-  "tempHoverSliderDotsColorOpacity": 1,
-  "tempHoverSliderDotsColorPalette": "",
+  "animation": {
+    "sliderAnimation": "none",
+    "sliderAutoPlay": "off",
+    "sliderAutoPlaySpeed": 3
+  },
 
-  "sliderArrows": "thin",
+  "toolbar": {
+    "tabsColor": ""
+  },
 
-  "sliderArrowsColorHex": "#000000",
-  "sliderArrowsColorOpacity": 0.7,
-  "sliderArrowsColorPalette": "",
+  "style": {
+    "className": "",
 
-  "tempSliderArrowsColorOpacity": 1,
-  "tempSliderArrowsColorPalette": "",
+    "customClassName": "",
 
-  "hoverSliderArrowsColorHex": "#000000",
-  "hoverSliderArrowsColorOpacity": 1,
-  "hoverSliderArrowsColorPalette": "",
+    "sliderDots": "circle",
 
-  "tempHoverSliderArrowsColorOpacity": 1,
-  "tempHoverSliderArrowsColorPalette": "",
+    "sliderDotsColorHex": "#000000",
+    "sliderDotsColorOpacity": 1,
+    "sliderDotsColorPalette": "",
 
-  "sliderAnimation": "none",
-  "sliderAutoPlay": "off",
-  "sliderAutoPlaySpeed": 3,
+    "tempSliderDotsColorOpacity": 1,
+    "tempSliderDotsColorPalette": "",
 
-  "items": [],
+    "hoverSliderDotsColorHex": "#000000",
+    "hoverSliderDotsColorOpacity": 1,
+    "hoverSliderDotsColorPalette": "",
 
-  "zIndex": 0,
+    "tempHoverSliderDotsColorOpacity": 1,
+    "tempHoverSliderDotsColorPalette": "",
 
-  "showOnTablet": "on",
-  "showOnMobile": "on"
+    "sliderArrows": "thin",
+
+    "sliderArrowsColorHex": "#000000",
+    "sliderArrowsColorOpacity": 0.7,
+    "sliderArrowsColorPalette": "",
+
+    "tempSliderArrowsColorOpacity": 1,
+    "tempSliderArrowsColorPalette": "",
+
+    "hoverSliderArrowsColorHex": "#000000",
+    "hoverSliderArrowsColorOpacity": 1,
+    "hoverSliderArrowsColorPalette": "",
+
+    "tempHoverSliderArrowsColorOpacity": 1,
+    "tempHoverSliderArrowsColorPalette": ""
+  }
 }

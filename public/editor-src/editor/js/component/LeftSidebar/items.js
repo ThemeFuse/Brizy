@@ -1,3 +1,4 @@
+import UIState from "visual/global/UIState";
 import { AddElements } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
@@ -20,6 +21,19 @@ export default {
           label: t("About Brizy"),
           link: "https://brizy.io",
           linkTarget: "_blank"
+        },
+        {
+          type: "link",
+          icon: "nc-alert-circle-que",
+          label: t("Shortcuts"),
+          link: "#",
+          onClick: e => {
+            e.preventDefault();
+
+            UIState.set("prompt", {
+              prompt: "key-helper"
+            });
+          }
         },
         {
           type: "link",

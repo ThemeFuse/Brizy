@@ -1,12 +1,16 @@
 {
-  "className": "",
+  "content": {
+    "shortcode": "woocommerce_cart",
+    "currentUser": ""
+  },
 
-  "width": 100,
-  "tabletWidth": null,
-  "mobileWidth": null,
+  "style": {
+    "className": "",
 
-  "shortcode": "woocommerce_cart",
-  "currentUser": "",
+    "width": 100,
+    "tabletWidth": null,
+    "mobileWidth": null,
 
-  "customCSS": ""
+    "customCSS": ""
+  }
 }
