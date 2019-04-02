@@ -58,6 +58,10 @@ class Brizy_TwigEngine {
 			return __bt( $key, $value );
 		} ) );
 
+		$this->environment->addFunction( new Twig_SimpleFunction( '__', function ( $key, $value='default' ) {
+			return __( $key, $value );
+		} ) );
+
 		if ( WP_DEBUG ) {
 			$this->environment->addFunction( new Twig_SimpleFunction( 'dump', function ( $value ) {
 				var_dump( $value );

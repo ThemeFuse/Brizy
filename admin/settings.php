@@ -2,6 +2,8 @@
 	die( 'Direct access forbidden.' );
 }
 
+
+
 class Brizy_Admin_Settings {
 
 	private $selected_post_types;
@@ -29,7 +31,7 @@ class Brizy_Admin_Settings {
 	 */
 	private function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ));
+		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ) );
 
 		if ( ! is_network_admin() ) {
 			add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
@@ -72,7 +74,7 @@ class Brizy_Admin_Settings {
 	 */
 	function actionRegisterSettingsPage() {
 
-	    if ( ! Brizy_Editor::is_user_allowed() || is_network_admin() ) {
+		if ( ! Brizy_Editor::is_user_allowed() || is_network_admin() ) {
 			return;
 		}
 
@@ -115,7 +117,8 @@ class Brizy_Admin_Settings {
 				'label'       => 'Role Manager',
 				'is_selected' => $selected_tab == 'roles',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=roles"
-			)
+			),
+
 		);
 
 		return apply_filters( 'brizy_settings_tabs', $tabs );
@@ -130,6 +133,7 @@ class Brizy_Admin_Settings {
 			case 'roles':
 				return $this->get_roles_tab();
 				break;
+
 		}
 	}
 
@@ -149,7 +153,6 @@ class Brizy_Admin_Settings {
 			array( 'roles' => array_map( array( $this, 'is_role_selected' ), $this->list_wp_roles() ), )
 		);
 	}
-
 
 	/**
 	 * @return bool
@@ -421,3 +424,74 @@ class Brizy_Admin_Settings {
 		<?php
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

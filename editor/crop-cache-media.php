@@ -86,11 +86,18 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		return get_attached_file( $attachmentId );
 	}
 
+	/**
+	 * @param $original_asset_path
+	 * @param $media_filter
+	 * @param string $basenamePrefix
+	 *
+	 * @return string
+	 */
 	public function getResizedMediaPath( $original_asset_path, $media_filter ) {
 		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
-		$ext                     = pathinfo( $original_asset_path, PATHINFO_EXTENSION );
 
-		return $resized_page_asset_path . "/" . md5( $original_asset_path ) . '.' . $ext;
+
+		return $resized_page_asset_path . "/" . basename( $original_asset_path );
 	}
 
 	/**
@@ -101,7 +108,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @return string
 	 * @throws Exception
 	 */
-	public function crop_media( $original_asset_path, $media_filter, $force_crop = true ) {
+	public function crop_media( $original_asset_path, $media_filter, $force_crop = true, $force_optimize = false ) {
 
 		// Check if user is querying API
 		if ( ! file_exists( $original_asset_path ) ) {
@@ -113,136 +120,76 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
-		$resized_image_path = $this->getResizedMediaPath( $original_asset_path, $media_filter );
+		$resized_image_path      = $this->getResizedMediaPath( $original_asset_path, $media_filter );
 
-		// resize image
-		if ( ! file_exists( $resized_image_path ) ) {
+		$optimized_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'optimized';
+		$optimized_image_full_path = $optimized_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
 
-			if(!$force_crop) {
-				throw new Exception('Resized media not found');
+		$hq_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'hq';
+		$hq_image_full_path = $hq_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
+
+
+		if ( file_exists( $optimized_image_full_path ) ) {
+			return $optimized_image_full_path;
+		}
+
+		// resize image with default wordpress settings
+		$wp_file_exists = file_exists( $resized_image_path );
+		if ( ! $wp_file_exists ) {
+
+			if ( ! $force_crop ) {
+				throw new Exception( 'Crop not forced.' );
 			}
 
 			@mkdir( $resized_page_asset_path, 0755, true );
 
-			// Set artificially high because GD uses uncompressed images in memory.
-			wp_raise_memory_limit( 'image' );
+			$cropper = new Brizy_Editor_Asset_Crop_Cropper();
 
-			$closure = function ( $arg ) {
+			if ( ! $cropper->crop( $original_asset_path, $resized_image_path, $media_filter ) ) {
+				throw new Exception( 'Failed to crop image.' );
+			}
+		}
+
+		// resize image for optimization
+		$hq_wp_file_exists = file_exists( $hq_image_full_path );
+		$closure           = null;
+		if ( $force_optimize && ! $hq_wp_file_exists ) {
+			$closure = function ( $t ) {
 				return 100;
 			};
 			add_filter( 'jpeg_quality', $closure );
 
-			$imagine = $this->crop( $original_asset_path, $media_filter );
+			@mkdir( $hq_image_path_dir, 0755, true );
 
-			if ( $imagine ) {
-				$imagine->save( $resized_image_path );
-				unset( $imagine );
+			$cropper = new Brizy_Editor_Asset_Crop_Cropper();
+
+			if ( ! $cropper->crop( $original_asset_path, $hq_image_full_path, $media_filter ) ) {
+				throw new Exception( 'Failed to crop image with 100%.' );
 			}
+		}
+
+		// try to optimize the image
+		$hq_wp_file_exists = file_exists( $hq_image_full_path );
+		if ( $force_optimize && $hq_wp_file_exists ) {
+			$optimizer = new Brizy_Editor_Asset_Optimize_Optimizer();
+			@mkdir( $optimized_image_path_dir, 0755, true );
+
+			if ( $optimizer->optimize( $hq_image_full_path, $optimized_image_full_path ) ) {
+				$resized_image_path = $optimized_image_full_path;
+			} else {
+				throw new Exception( 'Failed to optimize the image.' );
+			}
+
+		}
+
+		// remove jpeg_quality and try to delete the hq image
+		if ( $hq_wp_file_exists ) {
 			remove_filter( 'jpeg_quality', $closure );
+			@unlink( $hq_image_full_path );
 		}
 
 		return $resized_image_path;
 	}
-
-	/**
-	 * @param $original_path
-	 * @param $resize_params
-	 *
-	 * @return WP_Error|WP_Image_Editor
-	 * @throws Exception
-	 */
-	private function crop( $original_path, $resize_params ) {
-		$imageEditor = wp_get_image_editor( $original_path );
-
-		if ( $imageEditor instanceof WP_Error ) {
-			Brizy_Logger::instance()->error( $imageEditor->get_error_message(), array( $imageEditor ) );
-			throw new Exception( "Unable to obtain the image editor" );
-		}
-
-		$regExAdvanced = "/^iW=[0-9]{1,4}&iH=[0-9]{1,4}&oX=[0-9]{1,4}&oY=[0-9]{1,4}&cW=[0-9]{1,4}&cH=[0-9]{1,4}$/is";
-		$regExBasic    = "/^iW=[0-9]{1,4}&iH=([0-9]{1,4}|any|\*{1})$/is";
-
-		if ( preg_match( $regExBasic, $resize_params ) ) {
-			$cropType = self::BASIC_CROP_TYPE;
-		} elseif ( preg_match( $regExAdvanced, $resize_params ) ) {
-			$cropType = self::ADVANCED_CROP_TYPE;
-		} else {
-			throw new Exception( "Invalid size format." );
-		}
-
-		$filter_configuration                 = $this->getFilterOptions( $cropType, $original_path, $resize_params );
-		$filter_configuration['originalSize'] = array_values( $imageEditor->get_size() );
-
-		if ( $filter_configuration['format'] == "gif" ) {
-			// do not resize
-			return $imageEditor;
-		} else {
-
-			list( $imgWidth, $imgHeight ) = $filter_configuration['originalSize'];
-			if ( $filter_configuration['is_advanced'] === false ) {
-				list( $requestedImgWidth, $requestedImgHeight ) = array_values( $filter_configuration['requestedData'] );
-				if ( $requestedImgWidth > $imgWidth && ( $requestedImgHeight == "any" || $requestedImgHeight == "*" ) ) {
-					return $imageEditor;
-				}
-				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
-
-				return $imageEditor;
-			}
-
-			list( $requestedImgWidth, $requestedImgHeight, $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight ) = array_values( $filter_configuration['requestedData'] );
-
-			if ( ( $containerWidth > $imgWidth || $containerHeight > $imgHeight ) || $requestedImgWidth > $imgWidth && $requestedImgHeight > $imgHeight ) {
-
-				$newOffsetX = $imgWidth * $requestedOffsetX / $requestedImgWidth;
-				$newOffsetY = $imgHeight * $requestedOffsetY / $requestedImgHeight;
-
-				$newImgWidth  = $imgWidth * $containerWidth / $requestedImgWidth;
-				$newImgHeight = $imgHeight * $containerHeight / $requestedImgHeight;
-
-				$imageEditor->crop( $newOffsetX, $newOffsetY, $newImgWidth, $newImgHeight );
-
-			} else {
-				$imageEditor->resize( $requestedImgWidth, $requestedImgHeight );
-				$imageEditor->crop( $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight );
-			}
-
-			return $imageEditor;
-		}
-	}
-
-	/**
-	 * @param $cropType
-	 * @param $image_path
-	 * @param $resize_params
-	 *
-	 * @return array
-	 */
-	private function getFilterOptions( $cropType, $image_path, $resize_params ) {
-
-		parse_str( strtolower( $resize_params ), $output );
-		$configuration           = array();
-		$configuration['format'] = pathinfo( basename( $image_path ), PATHINFO_EXTENSION );
-
-		switch ( $cropType ) {
-			case self::BASIC_CROP_TYPE:
-				$configuration['requestedData']['imageWidth']  = (int) $output['iw'];
-				$configuration['requestedData']['imageHeight'] = (int) $output['ih'];
-				$configuration['is_advanced']                  = false;
-				break;
-			case self::ADVANCED_CROP_TYPE:
-				$configuration['requestedData']['imageWidth']  = (int) $output['iw'];
-				$configuration['requestedData']['imageHeight'] = (int) $output['ih'];
-				$configuration['requestedData']['offsetX']     = (int) $output['ox'];
-				$configuration['requestedData']['offsetY']     = (int) $output['oy'];
-				$configuration['requestedData']['cropWidth']   = (int) $output['cw'];
-				$configuration['requestedData']['cropHeight']  = (int) $output['ch'];
-				$configuration['is_advanced']                  = true;
-				break;
-		}
-
-		return $configuration;
-	}
-
 
 	/**
 	 * @param $media_name

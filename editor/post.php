@@ -478,9 +478,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		if ( self::$compiled_page ) {
 			return self::$compiled_page;
 		}
-		$brizy_editor_compiled_html = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
-
-		return self::$compiled_page = $brizy_editor_compiled_html;
+		return new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 	}
 
 	public function isCompiledWithCurrentVersion() {
