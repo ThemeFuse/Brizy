@@ -3,11 +3,12 @@ def currentDate =  now.format("yyyy-MM-dd", TimeZone.getTimeZone('UTC'))
 def changeLogs = params.changelog.replaceAll("\n","\\\\n").replaceAll("/",'\\\\/')
 def buildTag = (!params.gitMerge)?"("+params.releaseBranch+")":"";
 def zipFileName = "BuildFree-"+params.buildVersion+"-RC"+buildTag+".zip"
-env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
 
 if(params.gitMerge) {
     zipFileName = "BuildFree-"+params.buildVersion+".zip"
 }
+
+env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
 
 def sendSlackMessage(String message) {
     message = message.replaceAll("'","\'").replaceAll("\n",'\n');
