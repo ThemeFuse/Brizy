@@ -110,7 +110,11 @@ class RichText extends EditorComponent {
       offsetTop: 14,
       ...this.makeToolbarPropsFromConfig(
         toolbarConfig({ ...this.formats }, onChange)
-      )
+      ),
+      onMouseEnter: this.props.onToolbarEnter,
+      onMouseLeave: this.props.onToolbarLeave,
+      onOpen: this.handleToolbarOpen,
+      onClose: this.handleToolbarClose
     };
   };
 
@@ -168,14 +172,7 @@ class RichText extends EditorComponent {
           onKeyUp={this.handleKeyUp}
         >
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <Toolbar
-              ref={this.handleToolbarRef}
-              manualControl={true}
-              onMouseEnter={onToolbarEnter}
-              onMouseLeave={onToolbarLeave}
-              onOpen={this.handleToolbarOpen}
-              onClose={this.handleToolbarClose}
-            >
+            <Toolbar ref={this.handleToolbarRef} manualControl={true}>
               <div className={this.getClassName(v)}>
                 <Quill
                   ref={this.handleQuillRef}
