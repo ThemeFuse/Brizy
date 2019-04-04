@@ -83,8 +83,8 @@ class Brizy_Editor {
 				$post = Brizy_Editor_Post::get( $pid );
 
 				// check post for migration status
-				$migrations = new Brizy_Admin_Migrations();
-				$migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
+				// $migrations = new Brizy_Admin_Migrations();
+				// $migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
 			}
 		} catch ( Exception $e ) {
 		}
