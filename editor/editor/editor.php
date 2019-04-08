@@ -157,6 +157,7 @@ class Brizy_Editor_Editor_Editor {
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
 				'upgradeToPro'        => __bt( 'upgrade-url', apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ) ),
+				'about'          => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'supportUrl'          => __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) ),
 				'backToWordPress'     => empty( $backToWordressUrl ) ? $post_link : $backToWordressUrl,
 				'dashboardNavMenu'    => admin_url( 'nav-menus.php' )
