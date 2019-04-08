@@ -124,7 +124,6 @@ class Brizy_Editor_Editor_Editor {
 
 
 		$post_link         = get_edit_post_link( $wp_post_id, null );
-		$backToWordressUrl = __bt( 'back-to-wp-url', $post_link );
 		$config            = array(
 			'hosts'           => array(
 				'api'     => Brizy_Config::EDITOR_HOST_API,
@@ -159,7 +158,7 @@ class Brizy_Editor_Editor_Editor {
 				'upgradeToPro'        => __bt( 'upgrade-url', apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ) ),
 				'about'          => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'supportUrl'          => __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) ),
-				'backToWordPress'     => empty( $backToWordressUrl ) ? $post_link : $backToWordressUrl,
+				'backToWordPress'     => $post_link,
 				'dashboardNavMenu'    => admin_url( 'nav-menus.php' )
 			),
 			'user'            => array( 'role' => 'admin' ),

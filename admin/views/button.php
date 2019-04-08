@@ -18,16 +18,14 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
 			if ( $is_using_brizy ) {
 				?>
                 <img src="<?php echo plugins_url( '../static/img/arrow.png', __FILE__ ) ?>"
-                     class="brizy-button--arrow"/> <?php echo __( $label, 'brizy' ); ?>
+                     class="brizy-button--arrow"/><?php echo __( $label, 'brizy' ); ?>
 				<?php
 			} else {
 				?>
 				<?php echo $label; ?>
-                <img class="brizy-logo"
+                <img class="brizy-logo" width="16"
                      src="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?>"
-                     srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../static/img/arrow.png', __FILE__ ) ) ?> 2x"
-                />
-				<?php echo __bt( 'brizy', 'Brizy' ); ?>
+                     srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../static/img/arrow.png', __FILE__ ) ) ?> 2x" /><?php echo __bt( 'brizy', 'Brizy' ); ?>
 				<?php
 			}
 			?>
@@ -43,12 +41,10 @@ if ( $is_using_brizy ) {
     </style>
 
     <div class="brizy-editor">
-        <a class="preview brizy-button brizy-button--primary" type="button" href="<?php echo $url; ?>">
-			<?php _e( 'Continue to edit with', 'brizy' ); ?>&nbsp;
-            <img class="brizy-logo"
-                 src="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ )) ?>"
-                 srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../static/img/arrow.png', __FILE__ ) ) ?> 2x"
-            />
+        <a class="brizy-button brizy-button--primary" type="button" href="<?php echo $url; ?>">
+			<?php _e( 'Continue to edit with', 'brizy' ); ?>&nbsp;<img class="brizy-logo" width="16"
+                                                                       src="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?>"
+                                                                       srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../static/img/arrow.png', __FILE__ ) ) ?> 2x"/>
 			<?php echo __bt( 'brizy', 'Brizy' ); ?>
         </a>
     </div>

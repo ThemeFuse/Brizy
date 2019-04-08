@@ -44,9 +44,8 @@
 }
 
 .brizy-buttons {
-    height: 50px;
+    height: 40px;
     text-align: left;
-    margin-top: 10px;
 }
 
 .brizy-buttons-gutenberg {
@@ -65,7 +64,7 @@
 }
 
 .brizy-button {
-    padding: 11px 27px 12px;
+    padding: 0px 30px 0px;
     border-style: solid;
     border-width: 1px;
     border-bottom: 0;
@@ -92,8 +91,7 @@
 }
 
 .brizy-button--default {
-    padding: 15px 30px 15px 24px;
-    font-size: 14px;
+    font-size: 15px;
     color: #444;
     border-color: #e5e5e5;
     background-color: #fff;
