@@ -123,8 +123,8 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 
-		$post_link         = get_edit_post_link( $wp_post_id, null );
-		$config            = array(
+		$post_link = get_edit_post_link( $wp_post_id, null );
+		$config    = array(
 			'hosts'           => array(
 				'api'     => Brizy_Config::EDITOR_HOST_API,
 				'base'    => Brizy_Config::EDITOR_HOST_BASE,
@@ -156,7 +156,7 @@ class Brizy_Editor_Editor_Editor {
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
 				'upgradeToPro'        => __bt( 'upgrade-url', apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ) ),
-				'about'          => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
+				'about'               => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'supportUrl'          => __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) ),
 				'backToWordPress'     => $post_link,
 				'dashboardNavMenu'    => admin_url( 'nav-menus.php' )
@@ -231,7 +231,8 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),
-			'menuData'        => $this->get_menu_data()
+			'menuData'        => $this->get_menu_data(),
+			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) )
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
