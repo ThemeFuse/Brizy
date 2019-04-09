@@ -94,7 +94,7 @@ class Brizy_Compatibilities_Gutenberg {
                         <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button"
                            href="<?php echo $edit_url ?>">
                             <img src="<?php echo plugins_url( '../admin/static/img/arrow.png', __FILE__ ) ?>"
-                             class="brizy-button--arrow"/> <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
+                             class="brizy-button--arrow" /> <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
                         </a>
                     </div>
                 </script>
@@ -113,7 +113,7 @@ class Brizy_Compatibilities_Gutenberg {
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                         <div class="brizy-buttons" >
                             <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="<?php echo $edit_url;?>"><?php echo esc_html__( 'Edit with', 'brizy' ) ?>
-                                <img src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>"
+                                <img width="16" src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>"
                                      srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../admin/static/img/brizy-2x.png', __FILE__ ) );?> 2x"
                                      class="brizy-logo"><?php echo __bt( 'brizy', 'Brizy' ); ?>
                              </a>
