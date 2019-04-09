@@ -92,18 +92,16 @@ class Brizy_Compatibilities_Gutenberg {
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                     <div class="brizy-buttons" style="margin-top:15px;">
                         <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button"
-                           href="<?php echo $edit_url ?>" style="padding:5px 27px 5px;">
+                           href="<?php echo $edit_url ?>">
                             <img src="<?php echo plugins_url( '../admin/static/img/arrow.png', __FILE__ ) ?>"
-                             class="brizy-button--arrow"/> <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
+                             class="brizy-button--arrow" /> <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
                         </a>
                     </div>
                 </script>
                 <script id="brizy-gutenberg-btn-middle" type="text/html">
-                    <div class="brizy-buttons-gutenberg" style="margin-top:15px;">
+                    <div class="brizy-buttons-gutenberg">
                         <a class="brizy-button brizy-button--primary " type="button" href="<?php echo $continueUrl; ?>"
-                           style="padding:5px 27px 5px;"><?php echo __( 'Continue to edit with ', 'brizy' ); ?>&nbsp;
-                            <img src="<?php echo plugins_url( '../admin/static/img/brizy.png', __FILE__ ); ?>"
-                                 class="brizy-button--arrow"/>
+                           style="padding:5px 27px 5px;"><?php echo __( 'Continue to edit with ', 'brizy' ); ?><img src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>" class="brizy-logo"/><?php echo __bt( 'brizy', 'Brizy' ); ?>
                         </a>
                     </div>
                 </script>
@@ -113,9 +111,11 @@ class Brizy_Compatibilities_Gutenberg {
 				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . get_the_ID() ) );
 				?>
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
-                        <div class="brizy-buttons" style="margin-top:15px;">
-                            <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="<?php echo $edit_url;?>" style="padding:5px 27px 5px;"><?php echo esc_html__( 'Edit with', 'brizy' ) ?>
-                                <img src="<?php echo $log_dir;?>brizy.png" srcset="<?php echo $log_dir ?>brizy.png 1x, <?php echo $log_dir;?>brizy-2x.png 2x" class="brizy-logo">
+                        <div class="brizy-buttons" >
+                            <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="<?php echo $edit_url;?>"><?php echo esc_html__( 'Edit with', 'brizy' ) ?>
+                                <img width="16" src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>"
+                                     srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../admin/static/img/brizy-2x.png', __FILE__ ) );?> 2x"
+                                     class="brizy-logo"><?php echo __bt( 'brizy', 'Brizy' ); ?>
                              </a>
                         </div>
                     </script>

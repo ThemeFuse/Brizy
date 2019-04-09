@@ -388,7 +388,7 @@ class Brizy_Admin_Main {
 			$p = Brizy_Editor_Post::get( $post->ID );
 			if ( $p->uses_editor() ) {
 				$actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
-				                         . __( 'Edit with Brizy', 'brizy' )
+				                         . __( 'Edit with '.__bt('brizy','Brizy'), 'brizy' )
 				                         . "</a>";
 			}
 		} catch ( Exception $exception ) {
@@ -452,7 +452,7 @@ class Brizy_Admin_Main {
 			}
 
 			if ( $p->post_title == __( 'Auto Draft' ) ) {
-				$p->post_title = 'Brizy #' . $p->ID;
+				$p->post_title = __bt('brizy','Brizy').' #' . $p->ID;
 				$update_post   = true;
 			}
 

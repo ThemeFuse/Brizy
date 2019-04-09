@@ -123,7 +123,8 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 
-		$config = array(
+		$post_link = get_edit_post_link( $wp_post_id, null );
+		$config    = array(
 			'hosts'           => array(
 				'api'     => Brizy_Config::EDITOR_HOST_API,
 				'base'    => Brizy_Config::EDITOR_HOST_BASE,
@@ -148,15 +149,16 @@ class Brizy_Editor_Editor_Editor {
 				'pagePreview'         => $preview_post_link,
 				'pluginSettings'      => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'change_template_url' => $change_template_url,
-				'backToWordPress'     => get_edit_post_link( $wp_post_id, null ),
 				'assets'              => $this->urlBuilder->editor_asset_url(),
 				'pageAssets'          => $this->urlBuilder->page_upload_url(),
 				'templateFonts'       => 'https://app.brizy.io/fonts/public?path=' . BRIZY_EDITOR_VERSION,
 				'blockThumbnails'     => $this->urlBuilder->external_asset_url( 'template/img-block-thumbs' ) . "",
 				'templateIcons'       => $this->urlBuilder->proxy_url( 'template/icons' ),
 				'site'                => home_url(),
-				'upgradeToPro'        => apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ),
-				'supportUrl'          => apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ),
+				'upgradeToPro'        => __bt( 'upgrade-url', apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ) ),
+				'about'               => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
+				'supportUrl'          => __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) ),
+				'backToDashboard'     => $post_link,
 				'dashboardNavMenu'    => admin_url( 'nav-menus.php' )
 			),
 			'user'            => array( 'role' => 'admin' ),
@@ -229,7 +231,8 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
 				)
 			),
-			'menuData'        => $this->get_menu_data()
+			'menuData'        => $this->get_menu_data(),
+			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) )
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );

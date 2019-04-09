@@ -523,4 +523,5 @@ export default {
   "Drawer Position": __("Drawer Position", "brizy"),
   "anchor-name": __("anchor-name", "brizy"),
   "APPS": __("APPS", "brizy"),
+  "It's a sample": __("It's a sample", "brizy")
 };

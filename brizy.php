@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.68
+ * Version: 1.0.69
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,8 +19,8 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.68' );
-define( 'BRIZY_EDITOR_VERSION', '1.0.92' );
+define( 'BRIZY_VERSION', '1.0.69' );
+define( 'BRIZY_EDITOR_VERSION', '1.0.93' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
@@ -28,6 +28,7 @@ define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
 define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 100 );
 
 include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/autoload.php';
+include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/languages/main.php';
 
 add_action( 'plugins_loaded', 'brizy_load' );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
@@ -50,8 +51,9 @@ function brizy_notices() {
 	?>
     <div class="notice notice-error is-dismissible">
         <p>
-            Brizy requires PHP version 5.4+, you currently running PHP <?php echo PHP_VERSION ?>.
-            <b>BRIZY IS NOT RUNNING. </b>
+			<?php echo __bt( 'brziy', 'Brizy' ) ?> requires PHP version 5.4+, you currently running
+            PHP <?php echo PHP_VERSION ?>.
+            <b><?php echo strtoupper( __bt( 'brziy', 'Brizy' ) ) ?> IS NOT RUNNING. </b>
         </p>
     </div>
 	<?php

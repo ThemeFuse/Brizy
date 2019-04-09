@@ -526,6 +526,7 @@ class Brizy_Languages_Texts
 			"Drawer Position" => __("Drawer Position", "brizy"),
 			"anchor-name" => __("anchor-name", "brizy"),
 			"APPS" => __("APPS", "brizy"),
+			"It's a sample" => __("It's a sample", "brizy")
 		);
 
 		return apply_filters('brizy_editor_config_texts', $texts);

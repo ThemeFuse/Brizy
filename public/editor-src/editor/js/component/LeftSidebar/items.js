@@ -1,9 +1,12 @@
+import Config from "visual/global/Config";
 import UIState from "visual/global/UIState";
 import { AddElements } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
+
+const urls = Config.get("urls");
 
 export default {
   top: [AddElements, BlocksSortable, Styling],
@@ -19,7 +22,7 @@ export default {
           type: "link",
           icon: "nc-info",
           label: t("About Brizy"),
-          link: "https://brizy.io",
+          link: urls.about,
           linkTarget: "_blank"
         },
         {
@@ -39,7 +42,7 @@ export default {
           type: "link",
           icon: "nc-back",
           label: t("Back to Brizy"),
-          link: "https://brizy.io",
+          link: urls.backToDashboard,
           linkTarget: "_blank"
         }
       ]

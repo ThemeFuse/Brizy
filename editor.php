@@ -83,8 +83,8 @@ class Brizy_Editor {
 				$post = Brizy_Editor_Post::get( $pid );
 
 				// check post for migration status
-				$migrations = new Brizy_Admin_Migrations();
-				$migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
+				// $migrations = new Brizy_Admin_Migrations();
+				// $migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
 			}
 		} catch ( Exception $e ) {
 		}
@@ -154,7 +154,7 @@ class Brizy_Editor {
 	function registerPageTemplates( $templates ) {
 		return array_merge( $templates,
 			array(
-				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __( 'Brizy Template', 'brizy' )
+				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __bt('brizy','Brizy').__( ' Template', 'brizy' )
 			) );
 	}
 
@@ -383,7 +383,7 @@ class Brizy_Editor {
 	}
 
 	public function get_name() {
-		return 'Brizy';
+		return __bt('brizy','Brizy');
 	}
 
 	protected function get_post_types() {

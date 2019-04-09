@@ -57,7 +57,7 @@ export default {
           icon: "nc-info",
           linkTarget: "_blank",
           label: t("About Brizy"),
-          link: "https://brizy.io"
+          link: urls.about
         },
         {
           type: "link",
@@ -71,7 +71,7 @@ export default {
           type: "link",
           icon: "nc-back",
           label: t("Back to WordPress"),
-          link: urls.backToWordPress
+          link: urls.backToDashboard
         }
       ]
     }

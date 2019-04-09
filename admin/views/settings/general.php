@@ -9,7 +9,7 @@
     <table class="form-table">
         <tbody>
         <tr>
-            <th scope="row"><?php echo __( 'Activate Brizy For' ); ?></th>
+            <th scope="row"><?php echo __( 'Activate '.__bt('brizy','Brizy').' For' ); ?></th>
             <td>
                 <fieldset>
 					<?php foreach ( $types as $type ) {

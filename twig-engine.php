@@ -54,13 +54,17 @@ class Brizy_TwigEngine {
 
 		$this->environment = new Twig_Environment( $loader, $options );
 
+		$this->environment->addFunction( new Twig_SimpleFunction( 'wl', function ( $key, $value ) {
+			return __bt( $key, $value );
+		} ) );
+
 		if ( WP_DEBUG ) {
 			$this->environment->addFunction( new Twig_SimpleFunction( 'dump', function ( $value ) {
 				var_dump( $value );
 			} ) );
 
 			$this->environment->addFunction( new Twig_SimpleFunction( 'get_pagenum_link', function ( $value ) {
-				return get_pagenum_link( $value,false );
+				return get_pagenum_link( $value, false );
 			} ) );
 		}
 	}

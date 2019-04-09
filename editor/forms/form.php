@@ -17,15 +17,15 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 * @return string
 	 */
 	public function serialize() {
-		$get_object_vars = array(
-			'id' => $this->id,
-		);
+		return serialize( $this->convertToOptionValue() );
+	}
 
-		foreach ( $this->integrations as $integration ) {
-			$get_object_vars['integrations'][] = $integration->convertToOptionValue();
-		}
 
-		return serialize($get_object_vars);
+	public function unserialize( $data ) {
+
+		$vars = unserialize( $data );
+
+		return self::createFromSerializedData($vars);
 	}
 
 	public function jsonSerialize() {

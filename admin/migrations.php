@@ -40,39 +40,6 @@ class Brizy_Admin_Migrations {
 		}
 	}
 
-	/**
-	 * @param Brizy_Editor_Post $post
-	 * @param string $version
-	 */
-	public function runMigrationsBasedOnPost( Brizy_Editor_Post $post, $version ) {
-
-		$migrations = $this->getExistingMigrations();
-
-		$postMigrationStorage    = new Brizy_Admin_Migrations_PostStorage( $post->get_parent_id() );
-		$latestExecutedMigration = $postMigrationStorage->latestMigration();
-		$latestMigrationVersion  = end( $migrations );
-
-		// decide if we need to run the migrations
-		// if there is no executed migrations we have two cases..
-		// 1. the post is new and no migration should be run
-		// 2. the post is old and we need to run the migrations
-		// if the latest executed migrations is old that the $version we need to run the migrations
-		$runMigrations = false;
-
-		if ( ! $latestExecutedMigration ) {
-			if ( $post->get_editor_data() ) {
-				$runMigrations = true;
-			}
-		} else {
-			$runMigrations = version_compare( $version, $latestExecutedMigration->getVersion() ) == 1 &&
-			                 $latestMigrationVersion->getVersion() != $latestExecutedMigration->getVersion();
-		}
-
-		if ( $runMigrations ) {
-			$this->runAllMigrations( $postMigrationStorage );
-		}
-	}
-
 
 	/**
 	 * @return Brizy_Admin_Migrations_MigrationInterface[]
@@ -195,43 +162,4 @@ class Brizy_Admin_Migrations {
 
 		Brizy_Logger::instance()->debug( 'Migration process successful' );
 	}
-
-
-	public function runAllMigrations( Brizy_Admin_Migrations_PostStorage $postMigrationStorage ) {
-		global $wpdb;
-
-		wp_raise_memory_limit( 'image' );
-
-		Brizy_Logger::instance()->debug( 'Starting migration process: [upgrading]' );
-
-		/**
-		 * @var Brizy_Admin_Migrations_MigrationInterface[]
-		 */
-		$migrationsToRun = $this->getExistingMigrations();
-
-		foreach ( $migrationsToRun as $migration ) {
-
-			try {
-				$wpdb->query( 'START TRANSACTION ' );
-
-				$migrationClass = get_class( $migration );
-
-				$migration->execute();
-
-				Brizy_Logger::instance()->debug( 'Run migration: ' . $migrationClass, array( $migrationClass ) );
-
-				$postMigrationStorage->addMigration( $migration )->save();
-
-				$wpdb->query( 'COMMIT' );
-
-			} catch ( Exception $e ) {
-				$wpdb->query( 'ROLLBACK' );
-				Brizy_Logger::instance()->debug( 'Migration process ERROR', $e );
-			}
-		}
-
-		Brizy_Logger::instance()->debug( 'Migration process successful' );
-	}
-
-
 }
