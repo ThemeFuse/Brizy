@@ -158,7 +158,7 @@ class Brizy_Editor_Editor_Editor {
 				'upgradeToPro'        => __bt( 'upgrade-url', apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ) ),
 				'about'               => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'supportUrl'          => __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) ),
-				'backToWordPress'     => $post_link,
+				'backToDashboard'     => $post_link,
 				'dashboardNavMenu'    => admin_url( 'nav-menus.php' )
 			),
 			'user'            => array( 'role' => 'admin' ),
