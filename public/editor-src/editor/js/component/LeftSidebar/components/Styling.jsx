@@ -6,6 +6,7 @@ import Options from "visual/component/Options";
 import { updateGlobals } from "visual/redux/actionCreators";
 import { currentStyleSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
+import { branding } from "visual/utils/branding";
 
 class DrawerComponent extends React.Component {
   handleCurrentStyleChange = value => {
@@ -72,7 +73,7 @@ class DrawerComponent extends React.Component {
       styles: { id: currentStyleId, colorPalette, mergedFontStyles }
     } = this.props;
     const currentStyleChoices = Editor.getStyles().map(style => ({
-      title: style.title,
+      title: branding(style.title),
       value: style.id
     }));
 

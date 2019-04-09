@@ -385,7 +385,7 @@ class FontStyle extends React.Component {
               className="brz-p brz-ed-option__font-style-editor__sample"
               style={sampleStyle}
             >
-              It's Easy Brizy
+              {t("It's a sample")}
             </p>
           </div>
         </Toolbar>
