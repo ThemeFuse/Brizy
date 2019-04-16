@@ -20,8 +20,11 @@ class Brizy_Admin_Rules_Manager {
 	public function createRulesFromJson( $jsonString, $postType = Brizy_Admin_Templates::CP_TEMPLATE, $forceValidation = true ) {
 		$rulesJson = json_decode( $jsonString );
 		$rules     = array();
-		foreach ( $rulesJson as $ruleJson ) {
-			$rules[] = Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
+
+		if ( is_array( $rulesJson ) ) {
+			foreach ( $rulesJson as $ruleJson ) {
+				$rules[] = Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
+			}
 		}
 
 		if ( $forceValidation ) {
