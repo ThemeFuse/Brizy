@@ -143,7 +143,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/doc'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./*.sh'
-                sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./.git'
+                sh 'cd ' + params.brizySvnPath + '/trunk && ( find . -type d -name ".git" && find . -name ".gitignore" && find . -name ".gitmodules" ) | xargs rm -rf'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./Jenkinsfile'
                 sh 'cd ' + params.brizySvnPath + '/trunk && if svn st | grep "!" > /dev/null; then  svn st | grep "!" | cut -d! -f2| sed \'s/^ *//\' | sed \'s/^/"/g\' | sed \'s/$/"/g\' | sed \'s/$/@/g\' | xargs svn rm; fi'
                 sh 'cd ' + params.brizySvnPath + '/trunk && if svn st | grep "?" > /dev/null; then  svn st | grep "?" | cut -d? -f2| sed \'s/^ *//\' | sed \'s/^/"/g\' | sed \'s/$/"/g\' | sed \'s/$/@/g\' | xargs svn add; fi'
