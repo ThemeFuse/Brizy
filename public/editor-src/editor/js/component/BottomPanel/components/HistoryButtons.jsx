@@ -24,7 +24,7 @@ class HistoryItems extends React.Component {
         </li>
         <li
           className={redoClassName}
-          title="Redo (CTRL+Y)"
+          title="Redo (CTRL+SHIFT+Z)"
           onClick={triggerRedo}
         >
           <EditorIcon icon="nc-redo" />
@@ -50,4 +50,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch: dispatch
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HistoryItems);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HistoryItems);

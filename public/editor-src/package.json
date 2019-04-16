@@ -6,6 +6,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.5",
+    "@manaflair/redux-batch": "^1.0.0",
     "animate.css": "^3.7.0",
     "cheerio": "^0.19.0",
     "classnames": "^2.2.5",
@@ -44,11 +45,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
+    "@babel/parser": "^7.4.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.5",
     "@babel/preset-react": "^7.0.0",
+    "@babel/traverse": "^7.4.0",
     "@csstools/postcss-sass": "^3.0.0",
     "autoprefixer": "^7.2.6",
     "babel-loader": "^8.0.4",
@@ -84,12 +87,13 @@
     "null-loader": "^0.1.1",
     "postcss-reporter": "^5.0.0",
     "postcss-scss": "^1.0.4",
+    "recursive-readdir": "^2.2.2",
     "run-sequence": "^2.2.1",
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^17.0.0",
     "twig": "^1.10.5",
     "webpack": "^4.25.1",
-    "worker-plugin": "^1.1.1"
+    "worker-plugin": "^3.1.0"
   },
   "scripts": {
     "build": "npm-run-all --parallel \"build:brizy -- {@}\" \"server -- {@}\" --",

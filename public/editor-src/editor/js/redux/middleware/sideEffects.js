@@ -12,9 +12,9 @@ import {
   HYDRATE,
   UPDATE_GLOBALS,
   UPDATE_UI,
-  COPY_ELEMENT
-} from "../actionTypes";
-import { updateCopiedElement } from "../actionCreators";
+  COPY_ELEMENT,
+  updateCopiedElement
+} from "../actions";
 import { ActionTypes as HistoryActionTypes } from "../reducers/historyEnhancer";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 
@@ -70,7 +70,7 @@ function handleHydrate(config, store, action, done) {
 
   // fonts
   const configFonts = Config.get("fonts");
-  const globalsExtraFonts = action.globals.project.extraFonts || [];
+  const globalsExtraFonts = action.payload.globals.extraFonts || [];
   const fontsToLoad = [...configFonts, ...globalsExtraFonts];
   const $fonts = jQuery("<link>").attr({
     href: makeFontsUrl(fontsToLoad),
@@ -95,6 +95,7 @@ function handleHydrate(config, store, action, done) {
     .html(makeRichTextColorPaletteCSS(colorPalette));
   jQuery("head", document).append($richTextPaletteStyle);
 
+  // clipboard sync between tabs
   jQuery(window).on("storage", e => {
     const { key, newValue, oldValue } = e.originalEvent;
     if (key === "copiedStyles" && newValue && newValue !== oldValue) {

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import UIState from "visual/global/UIState";
 import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
-import { setDeviceMode } from "visual/redux/actionCreators";
+import { setDeviceMode } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 import { getBlocksConfig } from "./utils";
 

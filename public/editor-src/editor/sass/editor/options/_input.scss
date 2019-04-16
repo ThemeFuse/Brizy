@@ -4,6 +4,11 @@
     margin-left: 10px;
   }
 }
+
+.brz-ed-option__input-number-wrap {
+  position: relative;
+}
+
 .brz-ed-option__input-container {
   position: relative;
 
@@ -45,7 +50,7 @@
 
     color: $options-label-color;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
 
     padding: 2px 0;
@@ -58,5 +63,46 @@
     &:active {
       border-bottom: 1px solid #33beea;
     }
+  }
+}
+
+.brz-ed-option__multi-input {
+  .brz-input {
+    width: 17px;
+    outline: none;
+    margin-right: 8px;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  .brz-icon {
+    color: $options-label-color;
+    margin-right: 11px;
+    width: 13px;
+    height: 13px;
+  }
+
+  .brz-input:last-child {
+    margin-right: 0px;
+  }
+
+  .brz-ed-option__multi-input-container {
+    padding: 0 4px;
+  }
+
+  .brz-ed-option__multi-input-container:first-of-type {
+    padding: 0px 4px 0px 0px;
+  }
+
+  .brz-ed-option__multi-input-container:last-child {
+    padding: 0px 0px 0px 4px;
+  }
+
+  &:focus-within > .brz-icon {
+    color: #33beea;
   }
 }

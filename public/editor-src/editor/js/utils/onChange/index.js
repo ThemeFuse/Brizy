@@ -73,6 +73,7 @@ export {
 export {
   onChangeBoxShadowHexAndOpacity,
   onChangeBoxShadowHexAndOpacityPalette,
+  onChangeBoxShadowHexAndOpacityDependencies,
   onChangeBoxShadowPalette,
   onChangeBoxShadowPaletteOpacity
 } from "./onChangeBoxShadow";
@@ -88,14 +89,6 @@ export {
   onChangeMarginGrouped,
   onChangeMarginUngrouped
 } from "./onChangeMargin";
-
-// Element Slider
-export {
-  onChangeSliderColorHexAndOpacity,
-  onChangeSliderColorHexAndOpacityPalette,
-  onChangeSliderColorPalette,
-  onChangeSliderColorPaletteOpacity
-} from "./onChangeElementSlider";
 
 // Element Progress Bar
 export {

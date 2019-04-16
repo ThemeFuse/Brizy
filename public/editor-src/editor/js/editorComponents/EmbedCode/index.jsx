@@ -56,19 +56,7 @@ class EmbedCode extends EditorComponent {
     });
   };
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
-
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
+  renderForEdit(v) {
     const { code } = v;
     const content = !code ? (
       <Placeholder icon="iframe" />

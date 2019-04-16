@@ -6,15 +6,16 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
-import { getStore } from "visual/redux/store";
-import { updateGlobals } from "visual/redux/actionCreators";
 import { uuid } from "visual/utils/uuid";
+import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 import {
   wInBoxedPage,
   wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
+import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
@@ -27,7 +28,6 @@ import {
   containerStyleCSSVars
 } from "./styles";
 import defaultValue from "./defaultValue.json";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -166,32 +166,7 @@ class SectionFooter extends EditorComponent {
     );
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-
-      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
-      _v.hoverGradientColorPalette &&
-        `${_v.hoverGradientColorPalette}__hoverGradient`,
-
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
-      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
-      _v.shapeBottomColorPalette &&
-        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
-
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
-
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
+  renderForEdit(v) {
 
     const styles = {
       ...bgStyleCSSVars(v),
@@ -227,32 +202,7 @@ class SectionFooter extends EditorComponent {
     );
   }
 
-  renderForView(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-
-      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
-      _v.hoverGradientColorPalette &&
-        `${_v.hoverGradientColorPalette}__hoverGradient`,
-
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
-      _v.shapeTopColorPalette && `${_v.shapeTopColorPalette}__shapeTopColor`,
-      _v.shapeBottomColorPalette &&
-        `${_v.shapeBottomColorPalette}__shapeBottomColor`,
-
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
-
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
+  renderForView(v) {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -269,34 +219,30 @@ class SectionFooter extends EditorComponent {
 
   // api
   becomeSaved() {
-    const { blockId } = this.props;
+    const { blockId, reduxDispatch } = this.props;
     const dbValue = this.getDBValue();
-    const store = getStore();
-    const { savedBlocks = [] } = store.getState().globals.project;
 
-    store.dispatch(
-      updateGlobals("savedBlocks", [
-        ...savedBlocks,
-        {
+    reduxDispatch(
+      createSavedBlock({
+        id: uuid(),
+        data: {
           type: "SectionFooter",
           blockId,
           value: dbValue
         }
-      ])
+      })
     );
   }
 
   becomeGlobal() {
-    const { blockId } = this.props;
+    const { blockId, reduxDispatch, onChange } = this.props;
     const dbValue = this.getDBValue();
-    const store = getStore();
-    const { globalBlocks = {} } = store.getState().globals.project;
-    const globalBlockId = uuid(10);
+    const globalBlockId = uuid();
 
-    store.dispatch(
-      updateGlobals("globalBlocks", {
-        ...globalBlocks,
-        [globalBlockId]: {
+    reduxDispatch(
+      createGlobalBlock({
+        id: globalBlockId,
+        data: {
           type: "SectionFooter",
           blockId,
           value: dbValue
@@ -304,25 +250,40 @@ class SectionFooter extends EditorComponent {
       })
     );
 
-    this.props.onChange(
+    onChange(
       {
         type: "GlobalBlock",
         blockId,
-        value: { globalBlockId }
+        value: {
+          _id: this.getId(),
+          globalBlockId
+        }
       },
       {
-        intent: "replace_all"
+        intent: "replace_all",
+        idOptions: {
+          keepExistingIds: true
+        }
       }
     );
   }
 
   becomeNormal() {
-    const store = getStore();
-    const { globalBlocks = {} } = store.getState().globals.project;
-    const { globalBlockId } = this.props.meta;
+    const {
+      meta: { globalBlockId },
+      reduxState,
+      onChange
+    } = this.props;
+    const globalBlocks = globalBlocksSelector(reduxState);
 
-    this.props.onChange(globalBlocks[globalBlockId], {
-      intent: "replace_all"
+    const globalsData = stripIds(globalBlocks[globalBlockId]);
+    globalsData.value._id = this.getId();
+
+    onChange(globalsData, {
+      intent: "replace_all",
+      idOptions: {
+        keepExistingIds: true
+      }
     });
   }
 }

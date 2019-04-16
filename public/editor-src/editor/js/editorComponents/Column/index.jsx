@@ -346,27 +346,7 @@ class Column extends EditorComponent {
     );
   }
 
-  renderContent(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
-      _v.hoverGradientColorPalette &&
-        `${_v.hoverGradientColorPalette}__hoverGradient`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
-
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
-
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
-
+  renderContent(v) {
     const { bgImageSrc, bgColorOpacity } = v;
 
     const itemsProps = this.makeSubcomponentProps({
@@ -392,29 +372,7 @@ class Column extends EditorComponent {
     );
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-
-      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
-      _v.hoverGradientColorPalette &&
-        `${_v.hoverGradientColorPalette}__hoverGradient`,
-
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
-
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`,
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
-
+  renderForEdit(v) {
     const { animationName, animationDuration, animationDelay, items } = v;
     const {
       meta: { inGrid },

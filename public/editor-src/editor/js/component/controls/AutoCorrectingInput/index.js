@@ -150,7 +150,14 @@ export default class AutoCorrectingInput extends React.Component {
   }
 
   render() {
-    const { className, min, max, step } = this.props;
+    const {
+      className,
+      min,
+      max,
+      step,
+      onMouseEnter,
+      onMouseLeave
+    } = this.props;
     const { text } = this.state;
 
     return (
@@ -162,6 +169,8 @@ export default class AutoCorrectingInput extends React.Component {
         max={max}
         step={step}
         onChange={this.handleChange}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
     );
   }

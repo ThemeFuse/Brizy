@@ -1,4 +1,5 @@
 import HistoryButtons from "./components/HistoryButtons";
-import DownloadButton from "./components/DownloadButton";
+import PreviewButton from "./components/PreviewButton";
+import PublishButton from "./components/PublishButton";
 
-export default [HistoryButtons, DownloadButton];
+export default [HistoryButtons, PreviewButton, PublishButton];

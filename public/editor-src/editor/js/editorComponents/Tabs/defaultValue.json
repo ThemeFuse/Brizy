@@ -17,6 +17,8 @@
     "colorOpacity": 0.7,
     "colorPalette": "",
 
+    "bgColorType": "solid",
+
     "bgColorHex": "#ffffff",
     "bgColorOpacity": 1,
     "bgColorPalette": "",

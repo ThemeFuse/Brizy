@@ -9,7 +9,7 @@ export function toolbarBgColorHexAndOpacity({
   v,
   device,
   state,
-  prefix,
+  prefix = "bg",
   disabled = false,
   onChange
 }) {
@@ -51,7 +51,7 @@ export function toolbarBgColorPalette({
   v,
   device,
   state,
-  prefix,
+  prefix = "bg",
   disabled = false,
   onChange
 }) {
@@ -86,7 +86,7 @@ export function toolbarBgColorFields({
   v,
   device,
   state,
-  prefix,
+  prefix = "bg",
   className = "",
   disabled = false,
   onChange

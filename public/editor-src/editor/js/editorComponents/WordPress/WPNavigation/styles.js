@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleColor } from "visual/utils/style";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -80,8 +80,6 @@ export function styleClassName(v) {
       lineHeight,
       fontWeight,
       letterSpacing,
-      colorHex,
-      colorOpacity,
       width,
       itemPadding,
 
@@ -115,7 +113,7 @@ export function styleClassName(v) {
         letterSpacing,
 
         "& > a": {
-          color: hexToRgba(colorHex, colorOpacity)
+          color: styleColor({ v, device: "desktop", state: "normal" })
         },
         "&:not(:last-child)": {
           marginRight: `${itemPadding}px`
@@ -146,11 +144,15 @@ export function styleClassName(v) {
           }
         },
         "& .brz-wp-shortcode__menu__toggle--tablet .menu .sub-menu a": {
-          color: hexToRgba(colorHex, colorOpacity)
+          color: styleColor({ v, device: "desktop", state: "normal" })
         },
         "& .brz-wp-shortcode__menu__icon--bars": {
-          backgroundColor: hexToRgba(colorHex, colorOpacity),
-          color: hexToRgba(colorHex, colorOpacity)
+          backgroundColor: styleColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
+          color: styleColor({ v, device: "desktop", state: "normal" })
         }
       },
       "@media (max-width: 767px)": {
@@ -175,11 +177,15 @@ export function styleClassName(v) {
           }
         },
         "& .brz-wp-shortcode__menu__toggle--mobile .menu .sub-menu a": {
-          color: hexToRgba(colorHex, colorOpacity)
+          color: styleColor({ v, device: "desktop", state: "normal" })
         },
         "& .brz-wp-shortcode__menu__icon--bars": {
-          backgroundColor: hexToRgba(colorHex, colorOpacity),
-          color: hexToRgba(colorHex, colorOpacity)
+          backgroundColor: styleColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
+          color: styleColor({ v, device: "desktop", state: "normal" })
         }
       }
     };
@@ -200,8 +206,6 @@ export function styleCSSVars(v) {
     fontWeight,
     lineHeight,
     letterSpacing,
-    colorHex,
-    colorOpacity,
     width,
     itemPadding,
 
@@ -233,7 +237,7 @@ export function styleCSSVars(v) {
     "--letterSpacing": `${letterSpacing}px`,
 
     // Colors
-    "--color": hexToRgba(colorHex, colorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
 
     // Tablet
     "--tabletMaxWidth": `${tabletSyncOnChange(v, "width")}%`,

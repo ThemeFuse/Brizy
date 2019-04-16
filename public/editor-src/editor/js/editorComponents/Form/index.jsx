@@ -28,8 +28,8 @@ class Form extends EditorComponent {
   };
 
   renderForEdit(v) {
-    const action = Config.get("applications").form.submitUrl;
-    const projectLanguageId = Config.get("projectLanguage").id;
+    const action = Config.get("form").submitUrl;
+    const projectId = Config.get("project").id;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
@@ -44,10 +44,10 @@ class Form extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={styleClassName(v)} style={styleCSSVars(v)}>
           <form
-            action={action}
             noValidate
+            action={action}
+            data-project-id={projectId}
             data-form-id={v._id}
-            data-project-language={projectLanguageId}
             data-success={v.messageSuccess}
             data-error={v.messageError}
             data-redirect={v.messageRedirect}

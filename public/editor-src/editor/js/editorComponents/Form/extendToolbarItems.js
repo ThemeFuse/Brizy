@@ -9,6 +9,13 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
+
+import {
+  toolbarBgColorHexAndOpacity,
+  toolbarBgColorPalette,
+  toolbarBgColorFields
+} from "visual/utils/toolbar";
+
 import { t } from "visual/utils/i18n";
 
 export function getItemsForDesktop(v) {
@@ -222,26 +229,24 @@ export function getItemsForDesktop(v) {
             {
               label: t("Background"),
               options: [
-                {
-                  id: "backgroundColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: bgColorHex,
-                    opacity: v.bgColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    bgColorHex: hex,
-                    bgColorOpacity: opacity,
-                    bgColorPalette: isChanged === "hex" ? "" : v.bgColorPalette
-                  })
-                },
-                {
-                  id: "bgColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.bgColorPalette
-                },
+                toolbarBgColorHexAndOpacity({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBgColorHexAndOpacity",
+                    "onChangeBgColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarBgColorPalette({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBgColorPalette",
+                    "onChangeBgColorPaletteOpacity"
+                  ]
+                }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
@@ -249,21 +254,15 @@ export function getItemsForDesktop(v) {
                     {
                       width: 100,
                       options: [
-                        {
-                          id: "bgColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: bgColorHex,
-                            opacity: v.bgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            bgColorPalette:
-                              isChanged === "hex" ? "" : v.bgColorPalette,
-                            bgColorHex: hex,
-                            bgColorOpacity: opacity
-                          })
-                        }
+                        toolbarBgColorFields({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette"
+                          ]
+                        })
                       ]
                     }
                   ]

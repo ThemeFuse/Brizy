@@ -3,7 +3,7 @@ import deepMerge from "deepmerge";
 import { insert, removeAt, replaceAt, setIn, getIn } from "timm";
 import Editor from "visual/global/Editor";
 import { getStore } from "visual/redux/store";
-import { updateCopiedElement } from "visual/redux/actionCreators";
+import { updateCopiedElement } from "visual/redux/actions";
 import EditorComponent from "./EditorComponent";
 import {
   setIds,

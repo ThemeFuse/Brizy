@@ -1,7 +1,8 @@
 import { setIn, getIn, removeAt, insert } from "timm";
 import _ from "underscore";
 import { getStore } from "visual/redux/store";
-import { updateGlobals } from "visual/redux/actionCreators";
+import { globalBlocksSelector } from "visual/redux/selectors";
+import { updateGlobalBlock } from "visual/redux/actions";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
 import { setIds } from "visual/utils/models";
 
@@ -29,10 +30,12 @@ function attachBlockIfItIsGlobal(oldValue, source) {
 
   let value = oldValue;
   if (block && block.type === "GlobalBlock") {
-    const { globalBlocks } = getStore().getState().globals.project;
     const { globalBlockId } = block.value;
+    const globalBlock = globalBlocksSelector(getStore().getState())[
+      globalBlockId
+    ];
 
-    value = setIn(value, ["items", itemIndex], globalBlocks[globalBlockId]);
+    value = setIn(value, ["items", itemIndex], globalBlock);
   }
 
   return value;
@@ -46,13 +49,15 @@ function detachBlockIfItIsGlobal(oldValue, value, source) {
   let newValue = value;
   if (oldBlock && oldBlock.type === "GlobalBlock" && oldBlock !== newBlock) {
     const store = getStore();
-    const { globalBlocks } = store.getState().globals.project;
     const { globalBlockId } = oldBlock.value;
     const sectionValue = getIn(newValue, ["items", itemIndex]);
 
-    const updatedValue = setIn(globalBlocks, [globalBlockId], sectionValue);
-
-    store.dispatch(updateGlobals("globalBlocks", updatedValue));
+    store.dispatch(
+      updateGlobalBlock({
+        id: globalBlockId,
+        data: sectionValue
+      })
+    );
 
     newValue = setIn(newValue, ["items", itemIndex], oldBlock);
   }

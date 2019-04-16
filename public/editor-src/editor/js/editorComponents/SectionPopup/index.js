@@ -6,10 +6,9 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ThemeIcon from "visual/component/ThemeIcon";
+import { CollapsibleToolbar } from "visual/component/Toolbar";
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
-import { getStore } from "visual/redux/store";
-import { updateGlobals } from "visual/redux/actionCreators";
 import { uuid } from "visual/utils/uuid";
 import { stripIds } from "visual/utils/models";
 import {
@@ -18,7 +17,8 @@ import {
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
-import { CollapsibleToolbar } from "visual/component/Toolbar";
+import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
 import {
@@ -181,26 +181,7 @@ class SectionPopup extends EditorComponent {
     );
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.colorPalette && `${_v.colorPalette}__color`,
-      _v.hoverColorPalette && `${_v.hoverColorPalette}__hoverColor`,
-
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-
-      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
-      _v.hoverGradientColorPalette &&
-        `${_v.hoverGradientColorPalette}__hoverGradient`,
-
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
-
+  renderForEdit(v) {
     const styles = {
       ...sectionStyleCSSVars(v),
       ...bgStyleCSSVars(v),
@@ -239,26 +220,7 @@ class SectionPopup extends EditorComponent {
     );
   }
 
-  renderForView(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.colorPalette && `${_v.colorPalette}__color`,
-      _v.hoverColorPalette && `${_v.hoverColorPalette}__hoverColor`,
-
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-
-      _v.gradientColorPalette && `${_v.gradientColorPalette}__gradient`,
-      _v.hoverGradientColorPalette &&
-        `${_v.hoverGradientColorPalette}__hoverGradient`,
-
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-
-      _v.tabletBgColorPalette && `${_v.tabletBgColorPalette}__tabletBg`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
-
+  renderForView(v) {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div
@@ -288,35 +250,32 @@ class SectionPopup extends EditorComponent {
     });
   }
 
+  // api
   becomeSaved() {
-    const { blockId } = this.props;
+    const { blockId, reduxDispatch } = this.props;
     const dbValue = this.getDBValue();
-    const store = getStore();
-    const { savedBlocks = [] } = store.getState().globals.project;
 
-    store.dispatch(
-      updateGlobals("savedBlocks", [
-        ...savedBlocks,
-        {
+    reduxDispatch(
+      createSavedBlock({
+        id: uuid(),
+        data: {
           type: "SectionPopup",
           blockId,
           value: dbValue
         }
-      ])
+      })
     );
   }
 
   becomeGlobal() {
-    const { blockId } = this.props;
+    const { blockId, reduxDispatch, onChange } = this.props;
     const dbValue = this.getDBValue();
-    const store = getStore();
-    const { globalBlocks = {} } = store.getState().globals.project;
     const globalBlockId = uuid();
 
-    store.dispatch(
-      updateGlobals("globalBlocks", {
-        ...globalBlocks,
-        [globalBlockId]: {
+    reduxDispatch(
+      createGlobalBlock({
+        id: globalBlockId,
+        data: {
           type: "SectionPopup",
           blockId,
           value: dbValue
@@ -324,13 +283,12 @@ class SectionPopup extends EditorComponent {
       })
     );
 
-    this.props.onChange(
+    onChange(
       {
         type: "GlobalBlock",
         blockId,
         value: {
           _id: this.getId(),
-          _blockVisibility: "unlisted",
           globalBlockId
         }
       },
@@ -344,14 +302,17 @@ class SectionPopup extends EditorComponent {
   }
 
   becomeNormal() {
-    const store = getStore();
-    const { globalBlocks = {} } = store.getState().globals.project;
-    const { globalBlockId } = this.props.meta;
+    const {
+      meta: { globalBlockId },
+      reduxState,
+      onChange
+    } = this.props;
+    const globalBlocks = globalBlocksSelector(reduxState);
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();
 
-    this.props.onChange(globalsData, {
+    onChange(globalsData, {
       intent: "replace_all",
       idOptions: {
         keepExistingIds: true

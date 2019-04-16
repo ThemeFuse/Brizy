@@ -5,7 +5,7 @@ import SortablePlugin from "./plugin";
 import UIEvents from "visual/global/UIEvents";
 import { hideToolbar } from "visual/component/Toolbar";
 import { rolesHOC } from "visual/component/Roles";
-import { updateUI } from "visual/redux/actionCreators";
+import { updateUI } from "visual/redux/actions";
 import { getStore } from "visual/redux/store";
 
 const onSort = data => {

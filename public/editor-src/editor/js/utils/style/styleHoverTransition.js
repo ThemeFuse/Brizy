@@ -5,5 +5,5 @@ export function styleHoverTransition({ v }) {
 }
 
 export function styleHoverTransitionProperty() {
-  return "background, border-radius, color, border-color";
+  return "background, border-radius, color, border-color, box-shadow";
 }

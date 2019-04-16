@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleColor } from "visual/utils/style";
 
 const getLabelSize = fontSize => {
   return fontSize <= 24 ? 20 : fontSize > 24 && fontSize <= 32 ? 40 : 60;
@@ -60,8 +60,6 @@ export function styleClassName(v) {
       fontWeight,
       letterSpacing,
       width,
-      colorHex,
-      colorOpacity,
 
       // Tablet
       tabletFontSize,
@@ -83,7 +81,7 @@ export function styleClassName(v) {
     glamorObj = {
       ".brz &": {
         width: `${width}%`,
-        color: hexToRgba(colorHex, colorOpacity),
+        color: styleColor({ v, device: "desktop", state: "normal" }),
         fontFamily: getFontById(fontFamily).family,
         fontSize,
         lineHeight,
@@ -138,8 +136,7 @@ export function styleCSSVars(v) {
     fontWeight,
     letterSpacing,
     width,
-    colorHex,
-    colorOpacity,
+
 
     // Tablet
     tabletFontSize,
@@ -166,7 +163,7 @@ export function styleCSSVars(v) {
     "--fontWeight": fontWeight,
     "--lineHeight": lineHeight,
     "--letterSpacing": `${letterSpacing}px`,
-    "--color": hexToRgba(colorHex, colorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
 
     // Tablet
     "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,

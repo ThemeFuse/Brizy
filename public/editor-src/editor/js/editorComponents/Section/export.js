@@ -12,6 +12,8 @@ export default function() {
     );
   }
 
+  var isRtl = $("html").attr("dir") === "rtl";
+
   $(".brz-slick-slider, .brz-carousel__slider").each(function() {
     var _this = this;
     var $this = $(this);
@@ -50,7 +52,8 @@ export default function() {
       vertical: vertical,
       autoplay: autoPlay,
       autoplaySpeed: autoPlaySpeed,
-      responsive: responsive
+      responsive: responsive,
+      rtl: isRtl
     });
   });
 }

@@ -16,17 +16,23 @@ export default class ScrollPane extends Component {
 
   constructor(props) {
     super(props);
+
+    this.handleRef = React.createRef();
     this._start = 0;
     this._wide = {};
     this._tall = {};
   }
 
   componentDidMount() {
+    this.handleRef.current.addEventListener("wheel", this.handleWheel, {
+      passive: false
+    });
     window.addEventListener("resize", this.handleResize, { passive: true });
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize);
+    this.handleRef.current.removeEventListener("wheel", this.handleWheel);
   }
 
   captureStart = event => {
@@ -201,13 +207,13 @@ export default class ScrollPane extends Component {
 
     return (
       <div
+        ref={this.handleRef}
         className={className}
         style={{
           position: "relative",
           width: this.props.style.width,
           height: this.props.style.height
         }}
-        onWheel={this.handleWheel}
       >
         <Scrollable
           ref={el => {

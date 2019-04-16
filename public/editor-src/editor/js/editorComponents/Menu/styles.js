@@ -3,6 +3,7 @@ import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
+import { styleColor, styleBoxShadow } from "visual/utils/style";
 
 const aligns = {
   left: "flex-start",
@@ -460,13 +461,6 @@ export function styleMenuClassName(v, hasMMenu) {
       borderTopRightRadius,
       borderBottomLeftRadius,
       borderBottomRightRadius,
-      boxShadow,
-      boxShadowColorHex,
-      boxShadowColorOpacity,
-      boxShadowBlur,
-      boxShadowSpread,
-      boxShadowVertical,
-      boxShadowHorizontal,
       tabletSubMenuFontSize,
       tabletSubMenuFontWeight,
       tabletSubMenuLineHeight,
@@ -513,17 +507,9 @@ export function styleMenuClassName(v, hasMMenu) {
       mobileItemPaddingLeft
     } = v;
 
-    const boxShadowStyle =
-      boxShadow === "on"
-        ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-            boxShadowColorHex,
-            boxShadowColorOpacity
-          )}`
-        : "none";
-
     glamorObj = {
       ".brz &": {
-        color: hexToRgba(colorHex, colorOpacity),
+        color: styleColor({ v, device: "desktop", state: "normal" }),
         fontFamily: getFontById(fontFamily).family,
         fontWeight: fontWeight,
         fontSize: `${fontSize}px`,
@@ -531,7 +517,12 @@ export function styleMenuClassName(v, hasMMenu) {
         letterSpacing: `${letterSpacing}px`,
 
         "& .brz-menu__sub-menu": {
-          color: hexToRgba(subMenuColorHex, subMenuColorOpacity),
+          color: styleColor({
+            v,
+            device: "desktop",
+            state: "normal",
+            prefix: "subMenu"
+          }),
           fontFamily: getFontById(subMenuFontFamily).family,
           fontWeight: subMenuFontWeight,
           fontSize: `${subMenuFontSize}px`,
@@ -553,7 +544,7 @@ export function styleMenuClassName(v, hasMMenu) {
             borderRadiusType === "grouped"
               ? `${borderRadius}px`
               : `${borderBottomRightRadius}px`,
-          boxShadow: boxShadowStyle,
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
 
           "& .brz-a:hover": {
             color: hexToRgba(subMenuHoverColorHex, subMenuHoverColorOpacity)
@@ -598,7 +589,7 @@ export function styleMenuClassName(v, hasMMenu) {
           marginLeft: `${parseFloat(itemPaddingLeft / 2)}px`,
 
           "& > .brz-a:hover": {
-            color: hexToRgba(hoverColorHex, hoverColorOpacity)
+            color: styleColor({ v, device: "desktop", state: "hover" })
           }
         },
         "& .brz-menu__item__icon": {
@@ -629,7 +620,12 @@ export function styleMenuClassName(v, hasMMenu) {
         // Color for dropdown arrow
         "&:not(.mm-menu) .brz-menu__dropdown .brz-menu__item-dropdown": {
           "&:after": {
-            borderColor: hexToRgba(subMenuColorHex, subMenuColorOpacity)
+            borderColor: styleColor({
+              v,
+              device: "desktop",
+              state: "normal",
+              prefix: "subMenu"
+            })
           },
           "&:hover:after": {
             borderColor: hexToRgba(
@@ -848,13 +844,6 @@ export function styleMenuCSSVars(v) {
     borderTopRightRadius,
     borderBottomLeftRadius,
     borderBottomRightRadius,
-    boxShadow,
-    boxShadowColorHex,
-    boxShadowColorOpacity,
-    boxShadowBlur,
-    boxShadowSpread,
-    boxShadowVertical,
-    boxShadowHorizontal,
     tabletSubMenuFontSize,
     tabletSubMenuFontWeight,
     tabletSubMenuLineHeight,
@@ -901,17 +890,9 @@ export function styleMenuCSSVars(v) {
     mobileItemPaddingLeft
   } = v;
 
-  const boxShadowStyle =
-    boxShadow === "on"
-      ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
-      : "none";
-
   return {
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--hoverColor": hexToRgba(hoverColorHex, hoverColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--hoverColor": styleColor({ v, device: "desktop", state: "hover" }),
     "--fontFamily": getFontById(fontFamily).family,
     "--fontWeight": fontWeight,
     "--fontSize": `${fontSize}px`,
@@ -948,7 +929,12 @@ export function styleMenuCSSVars(v) {
 
     "--subMenuIconSize": `${subMenuIconSize}px`,
     "--subMenuIconSpacing": `${subMenuIconSpacing}px`,
-    "--subMenuColor": hexToRgba(subMenuColorHex, subMenuColorOpacity),
+    "--subMenuColor": styleColor({
+      v,
+      device: "desktop",
+      state: "normal",
+      prefix: "subMenu"
+    }),
     "--subMenuHoverColor": hexToRgba(
       subMenuHoverColorHex,
       subMenuHoverColorOpacity
@@ -970,7 +956,11 @@ export function styleMenuCSSVars(v) {
     "--subMenuFontSize": `${subMenuFontSize}px`,
     "--subMenuLineHeight": subMenuLineHeight,
     "--subMenuLetterSpacing": `${subMenuLetterSpacing}px`,
-    "--subMenuBoxShadow": boxShadowStyle,
+    "--subMenuBoxShadow": styleBoxShadow({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     "--borderTopLeftRadius":
       borderRadiusType === "grouped"
         ? `${borderRadius}px`

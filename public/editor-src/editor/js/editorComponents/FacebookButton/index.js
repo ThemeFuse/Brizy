@@ -6,6 +6,7 @@ import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
+import { styleClassName, styleCSSVars } from "./styles";
 
 class FacebookButton extends EditorComponent {
   static get componentId() {
@@ -61,7 +62,9 @@ class FacebookButton extends EditorComponent {
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Facebook appId={appData.appId} type="Like" data={data} />
+          <div className={styleClassName(v)} style={styleCSSVars(v)}>
+            <Facebook appId={appData.appId} type="Like" data={data} />
+          </div>
         </CustomCSS>
       </Toolbar>
     );
@@ -97,10 +100,11 @@ class FacebookButton extends EditorComponent {
       "data-href": targetUrl === "custom" && href !== "" ? href : appData.href,
       "data-lang": appData.lang
     };
-
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Facebook appId={appData.appId} type="Like" data={data} />
+        <div className={styleClassName(v)} style={styleCSSVars(v)}>
+          <Facebook appId={appData.appId} type="Like" data={data} />
+        </div>
       </CustomCSS>
     );
   }

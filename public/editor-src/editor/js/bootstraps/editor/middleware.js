@@ -1,8 +1,8 @@
-import thunk from "redux-thunk";
+// import thunk from "redux-thunk";
 import { sideEffects, api } from "visual/redux/middleware";
 
 export default [
-  thunk,
+  // thunk,
   sideEffects({ document, parentDocument: window.parent.document }),
   api
 ];

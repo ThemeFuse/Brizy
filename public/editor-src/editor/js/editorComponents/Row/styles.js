@@ -43,10 +43,6 @@ export function bgStyleClassName(v) {
     glamorObj = {
       zIndex: "var(--zIndex)",
 
-      "> .brz-bg-media": {
-        boxShadow: "var(--boxShadow)"
-      },
-
       ".brz-ed--desktop &": {
         alignItems: "var(--verticalAlign)",
 
@@ -77,6 +73,8 @@ export function bgStyleClassName(v) {
 
           borderColor: "var(--borderColor)",
 
+          boxShadow: "var(--boxShadow)",
+
           transition: "var(--hoverTransition)",
           transitionProperty: "var(--hoverTransitionProperty)"
         },
@@ -92,6 +90,8 @@ export function bgStyleClassName(v) {
           borderTopRightRadius: "var(--hoverBorderTopRightRadius)",
           borderBottomLeftRadius: "var(--hoverBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--hoverBorderBottomRightRadius)",
+
+          boxShadow: "var(--hoverBoxShadow)",
 
           borderColor: "var(--hoverBorderColor)"
         },
@@ -178,6 +178,8 @@ export function bgStyleClassName(v) {
           borderBottomLeftRadius: "var(--tabletBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--tabletBorderBottomRightRadius)",
 
+          boxShadow: "var(--tabletBoxShadow)",
+
           borderColor: "var(--tabletBorderColor)"
         },
 
@@ -230,6 +232,8 @@ export function bgStyleClassName(v) {
           borderTopRightRadius: "var(--mobileBorderTopRightRadius)",
           borderBottomLeftRadius: "var(--mobileBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--mobileBorderBottomRightRadius)",
+
+          boxShadow: "var(--mobileBoxShadow)",
 
           borderColor: "var(--mobileBorderColor)"
         },
@@ -537,7 +541,10 @@ export function bgStyleClassName(v) {
             v,
             device: "desktop",
             state: "hover"
-          })
+          }),
+
+          // Box Shadow
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
         },
         ":hover > .brz-bg-media > .brz-bg-image": {
           // BG Image
@@ -688,7 +695,10 @@ export function bgStyleClassName(v) {
             v,
             device: "tablet",
             state: "normal"
-          })
+          }),
+
+          // Box Shadow
+          boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
         },
         "> .brz-bg-media > .brz-bg-image": {
           // BG Image
@@ -865,7 +875,10 @@ export function bgStyleClassName(v) {
             v,
             device: "mobile",
             state: "normal"
-          })
+          }),
+
+          // Box Shadow
+          boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
         },
         "> .brz-bg-media > .brz-bg-image": {
           // BG Image
@@ -1179,6 +1192,13 @@ export function bgStyleCSSVars(v) {
       state: "hover"
     }),
 
+    // Box Shadow
+    "--hoverBoxShadow": styleBoxShadow({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
     // Hover Transition
     "--hoverTransition": styleHoverTransition({ v }),
     "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
@@ -1285,6 +1305,13 @@ export function bgStyleCSSVars(v) {
 
     // Border Color
     "--tabletBorderColor": styleBorderColor({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
+    // Box Shadow
+    "--tabletBoxShadow": styleBoxShadow({
       v,
       device: "tablet",
       state: "normal"
@@ -1405,6 +1432,13 @@ export function bgStyleCSSVars(v) {
 
     // Border Color
     "--mobileBorderColor": styleBorderColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+
+    // Box Shadow
+    "--mobileBoxShadow": styleBoxShadow({
       v,
       device: "mobile",
       state: "normal"

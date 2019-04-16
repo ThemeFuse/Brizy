@@ -6,7 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import defaultValue from "./defaultValue.json";
 import toolbarConfigFn from "./toolbar";
 import { styleClassName, styleCSSVars } from "./styles";
-import * as Api from "visual/utils/api/editor/index";
+import { getTerms } from "visual/utils/api/editor/index";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -22,9 +22,7 @@ class WOOProducts extends EditorComponent {
   };
 
   componentDidMount() {
-    Api.getTerms("product_cat").then(taxonomies =>
-      this.setState({ taxonomies })
-    );
+    getTerms("product_cat").then(taxonomies => this.setState({ taxonomies }));
   }
 
   handleResizerChange = patch => this.patchValue(patch);

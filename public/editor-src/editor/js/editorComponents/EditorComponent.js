@@ -335,6 +335,10 @@ export class EditorComponent extends React.Component {
       try {
         return this.renderForView(v);
       } catch (e) {
+        if (process.env.NODE_ENV === "development") {
+          console.error(e);
+        }
+
         return null;
       }
     }

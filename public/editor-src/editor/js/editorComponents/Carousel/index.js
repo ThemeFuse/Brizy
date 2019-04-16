@@ -125,12 +125,7 @@ class Carousel extends EditorComponent {
     };
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.sliderArrowsColorPalette &&
-        `${_v.sliderArrowsColorPalette}__arrowsColor`,
-      _v.sliderDotsColorPalette && `${_v.sliderDotsColorPalette}__dotsColor`
-    ]);
+  renderForEdit(v) {
     const {
       slidesToShow,
       slidesToScroll,

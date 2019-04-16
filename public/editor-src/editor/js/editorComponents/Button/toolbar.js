@@ -2486,6 +2486,14 @@ export function getItemsForTablet(v) {
           ]
         }
       ]
+    },
+    {
+      id: "tabletToolbarLink",
+      icon: "nc-link",
+      type: "popover",
+      disabled: v.linkPopup === "",
+      position: 80,
+      options: []
     }
   ];
 }
@@ -2816,6 +2824,14 @@ export function getItemsForMobile(v) {
           ]
         }
       ]
+    },
+    {
+      id: "mobileToolbarLink",
+      icon: "nc-link",
+      type: "popover",
+      disabled: v.linkPopup === "",
+      position: 80,
+      options: []
     }
   ];
 }

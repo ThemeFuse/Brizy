@@ -1,6 +1,7 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { styleState } from "visual/utils/style";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function styleBgGradient({ v, device, state }) {
   const isHover = styleState({ v, state });
@@ -22,7 +23,12 @@ export function styleBgGradient({ v, device, state }) {
     device,
     state
   });
-  const bgColorHex = defaultValueValue({ v, key: "bgColorHex", device, state });
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device, state }),
+    defaultValueValue({ v, key: "bgColorPalette", device, state })
+  );
+
   const bgColorOpacity = defaultValueValue({
     v,
     key: "bgColorOpacity",
@@ -35,12 +41,12 @@ export function styleBgGradient({ v, device, state }) {
     device,
     state
   });
-  const gradientColorHex = defaultValueValue({
-    v,
-    key: "gradientColorHex",
-    device,
-    state
-  });
+
+  const { hex: gradientColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "gradientColorHex", device, state }),
+    defaultValueValue({ v, key: "gradientColorPalette", device, state })
+  );
+
   const gradientColorOpacity = defaultValueValue({
     v,
     key: "gradientColorOpacity",
@@ -78,12 +84,12 @@ export function styleBgGradient({ v, device, state }) {
     device,
     state: "hover"
   });
-  const hoverBgColorHex = defaultValueValue({
-    v,
-    key: "bgColorHex",
-    device,
-    state: "hover"
-  });
+
+  const { hex: hoverBgColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "bgColorHex", device, state: "hover" }),
+    defaultValueValue({ v, key: "bgColorPalette", device, state: "hover" })
+  );
+
   const hoverBgColorOpacity = defaultValueValue({
     v,
     key: "bgColorOpacity",
@@ -96,12 +102,22 @@ export function styleBgGradient({ v, device, state }) {
     device,
     state: "hover"
   });
-  const hoverGradientColorHex = defaultValueValue({
-    v,
-    key: "gradientColorHex",
-    device,
-    state: "hover"
-  });
+
+  const { hex: hoverGradientColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({
+      v,
+      key: "gradientColorHex",
+      device,
+      state: "hover"
+    }),
+    defaultValueValue({
+      v,
+      key: "gradientColorPalette",
+      device,
+      state: "hover"
+    })
+  );
+
   const hoverGradientColorOpacity = defaultValueValue({
     v,
     key: "gradientColorOpacity",

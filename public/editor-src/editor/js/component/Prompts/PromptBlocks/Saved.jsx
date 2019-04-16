@@ -1,26 +1,25 @@
 import React from "react";
+import { connect } from "react-redux";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
 import DataFilter from "./common/DataFilter";
-import { assetUrl } from "visual/utils/asset";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
+import { assetUrl } from "visual/utils/asset";
 import {
   blockThumbnailData,
   placeholderBlockThumbnailUrl
 } from "visual/utils/blocks";
-import { getStore } from "visual/redux/store";
-import { updateGlobals } from "visual/redux/actionCreators";
+import { savedBlocksSelector } from "visual/redux/selectors";
+import { deleteSavedBlock } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
-const defaultFilterUI = {
-  search: true
-};
-
-export default class Saved extends React.Component {
+class Saved extends React.Component {
   static defaultProps = {
-    filterUI: defaultFilterUI,
+    filterUI: {
+      search: true
+    },
     blocksConfig: null,
     onAddBlocks: _.noop,
     onClose: _.noop
@@ -45,11 +44,7 @@ export default class Saved extends React.Component {
   };
 
   handleThumbnailRemove = thumbnailData => {
-    const store = getStore();
-    const savedBlocks = store.getState().globals.project.savedBlocks || [];
-    const newSavedBlocks = _.without(savedBlocks, thumbnailData.resolve);
-
-    store.dispatch(updateGlobals("savedBlocks", newSavedBlocks));
+    this.props.deleteSavedBlock({ id: thumbnailData.id });
   };
 
   renderDataFilter(data) {
@@ -152,61 +147,77 @@ export default class Saved extends React.Component {
   }
 
   render() {
-    const savedBlocks = getStore().getState().globals.project.savedBlocks || [];
-    const thumbnails = savedBlocks.reduce((acc, block) => {
-      const blockData = Editor.getBlock(block.blockId);
-      let thumbnailData;
+    const { savedBlocks } = this.props;
+    const thumbnails = Object.entries(savedBlocks).reduce(
+      (acc, [savedBlockId, block]) => {
+        const blockData = Editor.getBlock(block.blockId);
+        let thumbnailData;
 
-      if (!blockData) {
-        if (
-          !this.blocksConfig.allowMissing ||
-          !this.blocksConfig.allowMissing(block)
-        ) {
-          return acc;
+        if (!blockData) {
+          if (
+            !this.blocksConfig.allowMissing ||
+            !this.blocksConfig.allowMissing(block)
+          ) {
+            return acc;
+          }
+
+          thumbnailData = {
+            id: savedBlockId,
+            thumbnailSrc: placeholderBlockThumbnailUrl(),
+            thumbnailWidth: 500,
+            thumbnailHeight: 200,
+            showRemoveIcon: true,
+            keywords: "",
+            cat: [],
+            type: -1,
+            resolve: block
+          };
+        } else {
+          const inCategories =
+            this.blocksConfig.categories.find(cat =>
+              blockData.cat.includes(cat.id)
+            ) !== undefined;
+          if (!inCategories) {
+            return acc;
+          }
+
+          const { keywords, cat } = blockData;
+          const { url, width, height } = blockThumbnailData(block);
+
+          thumbnailData = {
+            id: savedBlockId,
+            thumbnailSrc: url,
+            thumbnailWidth: width,
+            thumbnailHeight: height,
+            showRemoveIcon: true,
+            keywords,
+            cat,
+            type: this.id,
+            resolve: block
+          };
         }
 
-        thumbnailData = {
-          thumbnailSrc: placeholderBlockThumbnailUrl(),
-          thumbnailWidth: 500,
-          thumbnailHeight: 200,
-          showRemoveIcon: true,
-          keywords: "",
-          cat: [],
-          type: -1,
-          resolve: block
-        };
-      } else {
-        const inCategories =
-          this.blocksConfig.categories.find(cat =>
-            blockData.cat.includes(cat.id)
-          ) !== undefined;
-        if (!inCategories) {
-          return acc;
-        }
+        acc.push(thumbnailData);
 
-        const { keywords, cat } = blockData;
-        const { url, width, height } = blockThumbnailData(block);
-
-        thumbnailData = {
-          id: block.blockId,
-          thumbnailSrc: url,
-          thumbnailWidth: width,
-          thumbnailHeight: height,
-          showRemoveIcon: true,
-          keywords,
-          cat,
-          type: this.id,
-          resolve: block
-        };
-      }
-
-      acc.push(thumbnailData);
-
-      return acc;
-    }, []);
+        return acc;
+      },
+      []
+    );
 
     return thumbnails.length > 0
       ? this.renderDataFilter(thumbnails)
       : this.renderClear();
   }
 }
+
+const mapStateToProps = state => ({
+  savedBlocks: savedBlocksSelector(state)
+});
+const mapDispatchToProps = {
+  deleteSavedBlock
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Saved);

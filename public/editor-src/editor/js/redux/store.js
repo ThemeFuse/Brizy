@@ -1,4 +1,9 @@
-import * as redux from "redux";
+import {
+  createStore as reduxCreateStore,
+  applyMiddleware,
+  compose
+} from "redux";
+// import { reduxBatch } from "@manaflair/redux-batch";
 import rootReducer from "./reducers";
 
 let store;
@@ -8,7 +13,14 @@ export function createStore({ middleware = [] } = {}) {
     throw new Error("store is already created");
   }
 
-  store = redux.createStore(rootReducer, redux.applyMiddleware(...middleware));
+  store = reduxCreateStore(
+    rootReducer,
+    applyMiddleware(...middleware)
+    // compose(
+    //   reduxBatch,
+    //   applyMiddleware(...middleware)
+    // )
+  );
 
   return store;
 }

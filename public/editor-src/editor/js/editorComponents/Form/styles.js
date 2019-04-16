@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleColor, styleBgColor, styleBorderColor } from "visual/utils/style";
 
 export function styleClassName(v) {
   let glamorObj;
@@ -121,17 +121,9 @@ export function fieldsStyleClassName(v) {
       lineHeight,
       fontWeight,
       letterSpacing,
-      marginBottom,
-      colorHex,
-      colorOpacity,
-      bgColorHex,
-      bgColorOpacity,
       borderStyle,
       borderWidth,
       borderRadius,
-      borderColorHex,
-      borderColorOpacity,
-      paddingTop,
       paddingRight,
       paddingBottom,
       paddingLeft,
@@ -159,20 +151,28 @@ export function fieldsStyleClassName(v) {
         lineHeight,
         fontWeight,
         letterSpacing,
-        color: hexToRgba(colorHex, colorOpacity),
+        color: styleColor({ v, device: "desktop", state: "normal" }),
         paddingRight: `${paddingRight / 2}px`,
         paddingBottom: `${paddingBottom}px`,
         paddingLeft: `${paddingLeft / 2}px`,
 
         "& .brz-form__field, .brz-control__select-current": {
-          backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
-          borderColor: hexToRgba(borderColorHex, borderColorOpacity),
+          backgroundColor: styleBgColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
+          borderColor: styleBorderColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
           borderWidth,
           borderStyle,
           borderRadius,
 
           "&::placeholder": {
-            color: hexToRgba(colorHex, colorOpacity)
+            color: styleColor({ v, device: "desktop", state: "normal" })
           }
         }
       },
@@ -226,14 +226,8 @@ export function fieldsStyleCSSVars(v) {
     fontWeight,
     lineHeight,
     letterSpacing,
-    colorHex,
-    colorOpacity,
-    bgColorHex,
-    bgColorOpacity,
     borderWidth,
     borderStyle,
-    borderColorHex,
-    borderColorOpacity,
     borderRadius,
     paddingTop,
     paddingRight,
@@ -269,9 +263,17 @@ export function fieldsStyleCSSVars(v) {
     "--letterSpacing": `${letterSpacing}px`,
 
     // Colors
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
-    "--borderColor": hexToRgba(borderColorHex, borderColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
 
     // Border
     "--borderWidth": `${borderWidth}px`,
