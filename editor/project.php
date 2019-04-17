@@ -115,6 +115,10 @@ class Brizy_Editor_Project implements Serializable {
 			} else {
 				$wp_post = get_post( $wp_post_id );
 			}
+
+			if ( self::$instance[ $wp_post->ID ] ) {
+				return self::$instance[ $wp_post->ID ];
+			}
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
