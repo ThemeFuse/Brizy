@@ -680,13 +680,13 @@ class Brizy_Editor_Project implements Serializable {
 		}
 
 		if ( $key == 'brizy-license-key' ) {
-			return $this->setLicenseKey( $value );
+			$this->setLicenseKey( $value );
 		}
 		if ( $key == 'brizy-cloud-token' ) {
-			return $this->setCloudToken( $value );
+			$this->setCloudToken( $value );
 		}
 		if ( $key == 'brizy-cloud-project' ) {
-			return $this->setCloudProject( $value );
+			$this->setCloudProject( $value );
 		}
 
 		return $this->$key = $value;
@@ -741,13 +741,13 @@ class Brizy_Editor_Project implements Serializable {
 		}
 
 		if ( $key == 'brizy-license-key' ) {
-			$this->getLicenseKey();
+			return $this->getLicenseKey();
 		}
 		if ( $key == 'brizy-cloud-token' ) {
-			$this->getCloudToken();
+			return $this->getCloudToken();
 		}
 		if ( $key == 'brizy-cloud-project' ) {
-			$this->getCloudProject();
+			return $this->getCloudProject();
 		}
 
 		if ( isset( $this->$key ) ) {
