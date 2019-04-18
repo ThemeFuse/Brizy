@@ -29,6 +29,26 @@ class Brizy_Editor_Project implements Serializable {
 	 */
 	protected $storage = null;
 
+	//---------------------------------------------------------------------------------------------------
+	protected $id;
+	protected $title;
+	protected $globals;
+	protected $name;
+	protected $user;
+	protected $template;
+	protected $created;
+	protected $updated;
+	protected $languages;
+	protected $pluginVersion;
+	protected $editorVersion;
+	protected $signature;
+	protected $accounts;
+	protected $license_key;
+	protected $forms;
+	protected $cloud_token;
+	protected $cloud_project;
+	//---------------------------------------------------------------------------------------------------
+
 	/**
 	 * Brizy_Editor_Project constructor.
 	 *
@@ -37,6 +57,7 @@ class Brizy_Editor_Project implements Serializable {
 	protected function __construct( WP_Post $post ) {
 		$this->post    = $post;
 		$this->storage = Brizy_Editor_Storage_Project::instance( $this->post->ID );
+		$this->loadProjectData();
 	}
 
 	public function serialize() {
@@ -77,25 +98,50 @@ class Brizy_Editor_Project implements Serializable {
 	 * @return Brizy_Editor_Project|mixed
 	 * @throws Exception
 	 */
-	public static function get() {
+	public static function get( $apost = null ) {
 
-		if ( isset( self::$instance ) ) {
-			return self::$instance;
+		$wp_post_id = $apost;
+		if ( $apost instanceof WP_Post ) {
+			$wp_post_id = $apost->ID;
 		}
 
+		if ( ! $wp_post_id && isset( self::$instance[ $wp_post_id ] ) ) {
+			return self::$instance[ $wp_post_id ];
+		}
 		try {
+			$wp_post = null;
+			if ( is_null( $wp_post_id ) ) {
+				$wp_post = self::getPost();
+			} else {
+				$wp_post = get_post( $wp_post_id );
+			}
 
-			// check if the project post created
-			// if not then create the project pos
-			$post           = self::getPost();
-			$project        = new self( $post );
-			self::$instance = $project;
-
+			if ( self::$instance[ $wp_post->ID ] ) {
+				return self::$instance[ $wp_post->ID ];
+			}
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
 
-		return self::$instance;
+		return self::$instance[ $wp_post->ID ] = new self( $wp_post );
+
+		//		if ( isset( self::$instance ) ) {
+//			return self::$instance;
+//		}
+//
+//		try {
+//
+//			// check if the project post created
+//			// if not then create the project pos
+//			$post           = self::getPost();
+//			$project        = new self( $post );
+//			self::$instance = $project;
+//
+//		} catch ( Exception $e ) {
+//			Brizy_Logger::instance()->exception( $e );
+//		}
+//
+//		return self::$instance;
 	}
 
 	/**
@@ -135,18 +181,23 @@ class Brizy_Editor_Project implements Serializable {
 		Brizy_Logger::instance()->notice( 'Create new project', array( 'id' => $post_id ) );
 
 		$project_data = array(
-			'id'            => md5( uniqid( 'Local project', true ) ),
-			'title'         => 'Brizy Project',
-			'globals'       => base64_encode( '{"project":{},"language":{}}' ),
-			'name'          => uniqid( 'Local project', true ),
-			'user'          => null,
-			'template'      => array( 'slug' => 'brizy' ),
-			'created'       => new DateTime(),
-			'updated'       => new DateTime(),
-			'languages'     => array(),
-			'pluginVersion' => BRIZY_VERSION,
-			'editorVersion' => BRIZY_EDITOR_VERSION,
-			'signature'     => Brizy_Editor_Signature::get(),
+			'id'                  => md5( uniqid( 'Local project', true ) ),
+			'title'               => 'Brizy Project',
+			'globals'             => base64_encode( '{}' ),
+			'name'                => uniqid( 'Local project', true ),
+			'user'                => null,
+			'template'            => array( 'slug' => 'brizy' ),
+			'created'             => new DateTime(),
+			'updated'             => new DateTime(),
+			'languages'           => array(),
+			'pluginVersion'       => BRIZY_VERSION,
+			'editorVersion'       => BRIZY_EDITOR_VERSION,
+			'signature'           => Brizy_Editor_Signature::get(),
+			'accounts'            => array(),
+			'forms'               => array(),
+			'brizy-license-key'   => null,
+			'brizy-cloud-token'   => null,
+			'brizy-cloud-project' => null,
 		);
 
 
@@ -157,41 +208,410 @@ class Brizy_Editor_Project implements Serializable {
 	}
 
 	/**
-	 * @return mixed
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return array
 	 */
-	public function getId() {
-		return $this->getMetaValue( 'id' );
+	protected function getProjectData() {
+		return array(
+			'id'                  => $this->id,
+			'title'               => $this->title,
+			'globals'             => $this->globals,
+			'name'                => $this->name,
+			'user'                => $this->user,
+			'template'            => $this->template,
+			'created'             => $this->created,
+			'updated'             => $this->updated,
+			'languages'           => $this->languages,
+			'pluginVersion'       => $this->pluginVersion,
+			'editorVersion'       => $this->editorVersion,
+			'signature'           => $this->signature,
+			'accounts'            => $this->accounts,
+			'forms'               => $this->forms,
+			'brizy-license-key'   => $this->license_key,
+			'brizy-cloud-token'   => $this->cloud_token,
+			'brizy-cloud-project' => $this->cloud_project,
+		);
+	}
+
+	protected function loadProjectData() {
+		$data = $this->storage->get_storage();
+
+		$this->id            = isset( $data['id'] ) ? $data['id'] : null;
+		$this->title         = isset( $data['title'] ) ? $data['title'] : null;
+		$this->globals       = isset( $data['globals'] ) ? $data['globals'] : null;
+		$this->name          = isset( $data['name'] ) ? $data['name'] : null;
+		$this->user          = isset( $data['user'] ) ? $data['user'] : null;
+		$this->template      = isset( $data['template'] ) ? $data['template'] : null;
+		$this->created       = isset( $data['created'] ) ? $data['created'] : null;
+		$this->updated       = isset( $data['updated'] ) ? $data['updated'] : null;
+		$this->languages     = isset( $data['languages'] ) ? $data['languages'] : null;
+		$this->pluginVersion = isset( $data['pluginVersion'] ) ? $data['pluginVersion'] : null;
+		$this->editorVersion = isset( $data['editorVersion'] ) ? $data['editorVersion'] : null;
+		$this->signature     = isset( $data['signature'] ) ? $data['signature'] : null;
+		$this->accounts      = isset( $data['accounts'] ) ? $data['accounts'] : null;
+		$this->forms         = isset( $data['forms'] ) ? $data['forms'] : null;
+		$this->license_key   = isset( $data['brizy-license-key'] ) ? $data['brizy-license-key'] : null;
+		$this->cloud_token   = isset( $data['brizy-cloud-token'] ) ? $data['brizy-cloud-token'] : null;
+		$this->cloud_project = isset( $data['brizy-cloud-project'] ) ? $data['brizy-cloud-project'] : null;
+	}
+
+	/**
+	 * This saves ony data.. it does not touch the wordpress post
+	 *
+	 * @return bool
+	 */
+	public function save() {
+
+		try {
+			$value = $this->getProjectData();
+			$this->storage->loadStorage( $value );
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+
+			return false;
+		}
+	}
+
+	public function auto_save_post() {
+		try {
+			$user_id                   = get_current_user_id();
+			$post                      = $this->post;
+			$postParentId              = $this->get_parent_id();
+			$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
+			$post_data                 = get_object_vars( $post );
+			$post_data['post_content'] = md5( time() );
+			$autosavePost              = null;
+
+			if ( $old_autosave ) {
+				$autosavePost = self::get( $old_autosave );
+			}
+
+			if ( $old_autosave ) {
+				$new_autosave                = _wp_post_revision_data( $post_data, true );
+				$new_autosave['ID']          = $old_autosave->ID;
+				$new_autosave['post_author'] = $user_id;
+
+				// If the new autosave has the same content as the post, delete the autosave.
+				$autosave_is_different = false;
+
+				foreach ( array_intersect( array_keys( $new_autosave ), array_keys( _wp_post_revision_fields( $post ) ) ) as $field ) {
+					if ( normalize_whitespace( $new_autosave[ $field ] ) != normalize_whitespace( $post->$field ) ) {
+						$autosave_is_different = true;
+						break;
+					}
+				}
+
+				if ( ! $autosave_is_different ) {
+					wp_delete_post_revision( $old_autosave->ID );
+
+					return new WP_Error( 'rest_autosave_no_changes',
+						__( 'There is nothing to save. The autosave and the post content are the same.' ),
+						array( 'status' => 400 ) );
+				}
+
+				/**
+				 * This filter is documented in wp-admin/post.php.
+				 */
+				do_action( 'wp_creating_autosave', $new_autosave );
+
+				// wp_update_post expects escaped array.
+				wp_update_post( wp_slash( $new_autosave ) );
+
+			} else {
+				// Create the new autosave as a special post revision.
+				$revId        = _wp_put_post_revision( $post_data, true );
+				$autosavePost = self::get( $revId );
+			}
+
+			// @todo: copy data to autosave instance
+			$data = $this->getProjectData();
+
+			$autosavePost->setTitle( $data['title'] );
+			$autosavePost->setGlobals( $data['globals'] );
+			$autosavePost->setTemplate( $data['template'] );
+			$autosavePost->setCreated( $data['created'] );
+			$autosavePost->setUpdated( $data['updated'] );
+			$autosavePost->setLanguages( $data['languages'] );
+			$autosavePost->setPluginVersion( $data['pluginVersion'] );
+			$autosavePost->setEditorVersion( $data['editorVersion'] );
+			$autosavePost->setSignature( $data['signature'] );
+			$autosavePost->setAccounts( $data['accounts'] );
+			$autosavePost->setForms( $data['forms'] );
+			$autosavePost->setLicenseKey( $data['brizy-license-key'] );
+			$autosavePost->setCloudToken( $data['brizy-cloud-token'] );
+			$autosavePost->setCloudProject( $data['brizy-cloud-project'] );
+
+			$autosavePost->save();
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+
+			return false;
+		}
+	}
+
+	/**
+	 * Create revision
+	 */
+	public function save_wp_post() {
+
+		$post_type        = $this->post->post_type;
+		$post_type_object = get_post_type_object( $post_type );
+		$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
+		$post_status      = $can_publish ? 'publish' : 'pending';
+
+		$this->deleteOldAutoSaves();
+
+		wp_update_post( array(
+			'ID'           => $this->get_parent_id(),
+			'post_status'  => $post_status,
+			'post_content' => md5( time() )
+		) );
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function deleteOldAutoSaves() {
+		$user_id      = get_current_user_id();
+		$postParentId = $this->get_parent_id();
+		// Store one autosave per author. If there is already an autosave, overwrite it.
+		$old_autosave = wp_get_post_autosave( $postParentId, $user_id );
+
+		if ( $old_autosave ) {
+			wp_delete_post_revision( $old_autosave->ID );
+
+			return true;
+		}
+	}
+
+	/**
+	 * @return false|int|mixed
+	 */
+	public function get_parent_id() {
+		$id = wp_is_post_revision( $this->post->ID );
+
+		if ( ! $id ) {
+			$id = $this->post->ID;
+		}
+
+		return $id;
 	}
 
 	/**
 	 * @return mixed
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
+	 * @param mixed $title
+	 */
+	public function setTitle( $title ) {
+		$this->title = $title;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @param mixed $name
+	 */
+	public function setName( $name ) {
+		$this->name = $name;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getUser() {
+		return $this->user;
+	}
+
+	/**
+	 * @param mixed $user
+	 */
+	public function setUser( $user ) {
+		$this->user = $user;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getTemplate() {
+		return $this->template;
+	}
+
+	/**
+	 * @param mixed $template
+	 */
+	public function setTemplate( $template ) {
+		$this->template = $template;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCreated() {
+		return $this->created;
+	}
+
+	/**
+	 * @param mixed $created
+	 */
+	public function setCreated( $created ) {
+		$this->created = $created;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getUpdated() {
+		return $this->updated;
+	}
+
+	/**
+	 * @param mixed $updated
+	 */
+	public function setUpdated( $updated ) {
+		$this->updated = $updated;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getLanguages() {
+		return $this->languages;
+	}
+
+	/**
+	 * @param mixed $languages
+	 */
+	public function setLanguages( $languages ) {
+		$this->languages = $languages;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPluginVersion() {
+		return $this->pluginVersion;
+	}
+
+	/**
+	 * @param mixed $pluginVersion
+	 */
+	public function setPluginVersion( $pluginVersion ) {
+		$this->pluginVersion = $pluginVersion;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEditorVersion() {
+		return $this->editorVersion;
+	}
+
+	/**
+	 * @param mixed $editorVersion
+	 */
+	public function setEditorVersion( $editorVersion ) {
+		$this->editorVersion = $editorVersion;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getSignature() {
+		return $this->signature;
+	}
+
+	/**
+	 * @param mixed $signature
+	 */
+	public function setSignature( $signature ) {
+		$this->signature = $signature;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getAccounts() {
+		return $this->accounts;
+	}
+
+	/**
+	 * @param mixed $accounts
+	 */
+	public function setAccounts( $accounts ) {
+		$this->accounts = $accounts;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getLicenseKey() {
+		return $this->license_key;
+	}
+
+	/**
+	 * @param mixed $license_key
+	 */
+	public function setLicenseKey( $license_key ) {
+		$this->license_key = $license_key;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getForms() {
+		return $this->forms;
+	}
+
+	/**
+	 * @param mixed $forms
+	 */
+	public function setForms( $forms ) {
+		$this->forms = $forms;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCloudToken() {
+		return $this->cloud_token;
+	}
+
+	/**
+	 * @param mixed $cloud_token
+	 */
+	public function setCloudToken( $cloud_token ) {
+		$this->cloud_token = $cloud_token;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCloudProject() {
+		return $this->cloud_project;
+	}
+
+	/**
+	 * @param mixed $cloud_project
+	 */
+	public function setCloudProject( $cloud_project ) {
+		$this->cloud_project = $cloud_project;
+	}
+
+	/**
+	 * @return mixed
 	 */
 	public function getGlobals() {
-		return json_decode( base64_decode( $this->getMetaValue( 'globals' ) ) );
-	}
-
-	/**
-	 * @param $globals
-	 *
-	 * @return $this
-	 */
-	public function setGlobals( $globals ) {
-		$this->setGlobalsAsJson( json_encode( $globals ) );
-
-		return $this;
-	}
-
-	/**
-	 * @param $globals
-	 *
-	 * @return $this
-	 */
-	public function setGlobalsAsJson( $globals ) {
-		$this->setMetaValue( 'globals', base64_encode( $globals ) );
-
-		return $this;
+		return $this->globals;
 	}
 
 	/**
@@ -199,16 +619,48 @@ class Brizy_Editor_Project implements Serializable {
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	public function getGlobalsAsJson() {
-		return base64_decode( $this->getMetaValue( 'globals' ) );
+		return base64_decode( $this->getGlobals() );
 	}
 
+	/**
+	 * @return bool|string
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	public function getDecodedGlobals() {
+		return json_decode( $this->getGlobalsAsJson() );
+	}
+
+	/**
+	 * @param mixed $globals
+	 *
+	 * @return Brizy_Editor_Project
+	 */
+	public function setGlobals( $globals ) {
+		$this->globals = $globals;
+
+		return $this;
+	}
+
+	public function setGlobalsAsJson( $globals ) {
+		$this->setGlobals( base64_encode( $globals ) );
+
+		return $this;
+	}
 
 	/**
 	 * @return mixed
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
+	public function getId() {
+		return $this->id;
+	}
+
+
+	/**
+	 * @return mixed
+	 */
 	public function getTemplateSlug() {
-		$template = $this->getMetaValue( 'template' );
+		$template = $this->getTemplate();
 
 		return $template['slug'];
 	}
@@ -216,6 +668,8 @@ class Brizy_Editor_Project implements Serializable {
 	/**
 	 * @param $key
 	 * @param $value
+	 *
+	 * @return mixed
 	 */
 	public function setMetaValue( $key, $value ) {
 
@@ -225,15 +679,27 @@ class Brizy_Editor_Project implements Serializable {
 			throw new InvalidArgumentException( 'The key parameter should not be null' );
 		}
 
-		$this->storage->set( $key, $value );
-		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
-		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
-		$this->storage->set( 'updated', new DateTime() );
+		if ( $key == 'brizy-license-key' ) {
+			$this->setLicenseKey( $value );
+		}
+		if ( $key == 'brizy-cloud-token' ) {
+			$this->setCloudToken( $value );
+		}
+		if ( $key == 'brizy-cloud-project' ) {
+			$this->setCloudProject( $value );
+		}
 
-		// create project revision
-		// md5 it to make sure no one will use this data-- we need it only to make the revision
-		$this->post->post_content = md5( serialize( time() ) );
-		wp_update_post( $this->post );
+		return $this->$key = $value;
+
+		//		$this->storage->set( $key, $value );
+//		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
+//		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
+//		$this->storage->set( 'updated', new DateTime() );
+//
+//		// create project revision
+//		// md5 it to make sure no one will use this data-- we need it only to make the revision
+//		$this->post->post_content = md5( serialize( time() ) );
+//		wp_update_post( $this->post );
 	}
 
 
@@ -246,23 +712,36 @@ class Brizy_Editor_Project implements Serializable {
 			throw new InvalidArgumentException( 'The key parameter should not be null' );
 		}
 
-		$this->storage->delete( $key );
-		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
-		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
-		$this->storage->set( 'updated', new DateTime() );
+		if ( $key == 'brizy-license-key' ) {
+			$this->setLicenseKey( null );
+		}
+		if ( $key == 'brizy-cloud-token' ) {
+			$this->setCloudToken( null );
+		}
+		if ( $key == 'brizy-cloud-project' ) {
+			$this->setCloudProject( null );
+		}
 
-		// create project revision
-		// md5 it to make sure no one will use this data-- we need it only to make the revision
-		$this->post->post_content = md5( serialize( $this->storage->get_storage() ) );
-		wp_update_post( $this->post );
+		if ( isset( $this->$key ) ) {
+			unset( $this->$key );
+		}
+//
+//		$this->storage->delete( $key );
+//		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
+//		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
+//		$this->storage->set( 'updated', new DateTime() );
+//
+//		// create project revision
+//		// md5 it to make sure no one will use this data-- we need it only to make the revision
+//		$this->post->post_content = md5( serialize( $this->storage->get_storage() ) );
+//		wp_update_post( $this->post );
 	}
 
 
 	/**
 	 * @param $key
 	 *
-	 * @return mixed
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return |null
 	 */
 	public function getMetaValue( $key ) {
 
@@ -270,7 +749,21 @@ class Brizy_Editor_Project implements Serializable {
 			throw new InvalidArgumentException( 'The key parameter should not be null' );
 		}
 
-		return $this->storage->get( $key, false );
+		if ( $key == 'brizy-license-key' ) {
+			$this->getLicenseKey();
+		}
+		if ( $key == 'brizy-cloud-token' ) {
+			$this->getCloudToken();
+		}
+		if ( $key == 'brizy-cloud-project' ) {
+			$this->getCloudProject();
+		}
+
+		if ( isset( $this->$key ) ) {
+			return $this->$key;
+		}
+
+		return null;
 	}
 
 	/**
@@ -286,141 +779,5 @@ class Brizy_Editor_Project implements Serializable {
 	public function getWpPost() {
 		return $this->post;
 	}
-
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-
-
-//	protected function __construct( $api_project ) {
-//		$this->api_project = $api_project;
-//	}
-
-//	public function convertToOptionValue() {
-//		return array(
-//			'api_project'        => $this->get_api_project()->serialize(),
-//			'creation_signature' => $this->creation_signature
-//		);
-//	}
-
-//	static public function createFromSerializedData( $data ) {
-//		$project                     = new self( Brizy_Editor_API_Project::createFromSerializedData( unserialize( $data['api_project'] ) ) );
-//		$project->creation_signature = $data['creation_signature'];
-//
-//		return $project;
-//	}
-
-
-//	/**
-//	 * @param Brizy_Editor_API_Project|null $data
-//	 */
-//	public function updateProjectData( $data = null ) {
-//
-//		Brizy_Logger::instance()->notice( 'Update project data', array( 'new_data' => $data ) );
-//		$this->api_project = $data;
-//		$this->save();
-//	}
-
-//	/**
-//	 * @param null $clone_from
-//	 * @param bool $is_local
-//	 *
-//	 * @return Brizy_Editor_Project
-//	 * @throws Brizy_Editor_API_Exceptions_Exception
-//	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
-//	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-//	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-//	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-//	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-//	 * @throws Exception
-//	 */
-//	private static function create( $clone_from = null, $is_local = true ) {
-//
-//		$brizy_editor_user = Brizy_Editor_User::get();
-//
-//		$api_project = $brizy_editor_user->create_project( $clone_from, $is_local );
-//
-//		$project                     = new self( $api_project );
-//		$project->creation_signature = Brizy_Editor_Signature::get();
-//		$project->save();
-//
-//		self::$instance = $project;
-//
-//		return $project;
-//	}
-
-//	/**
-//	 * @return self
-//	 */
-//	public function save() {
-//
-//		Brizy_Logger::instance()->notice( 'Save project', array( $this ) );
-//
-//		$this->set_meta_key( 'worpdress_url', get_site_url() );
-//		$this->set_meta_key( 'worpdress_site_name', get_bloginfo( 'name' ) );
-//		$this->set_meta_key( 'worpdress_version', get_bloginfo( 'version' ) );
-//		$this->set_meta_key( 'worpdress_description', get_bloginfo( 'description' ) );
-//
-//		$brizy_editor_storage_common = Brizy_Editor_Storage_Common::instance();
-//		$brizy_editor_storage_common->set( self::BRIZY_PROJECT, $this->convertToOptionValue() );
-//
-//		return $this;
-//	}
-
-//	/**
-//	 * @param $id
-//	 *
-//	 * @return $this
-//	 */
-//	public function set_id( $id ) {
-//		$this->api_project->set_id( $id );
-//
-//		return $this;
-//	}
-
-//	/**
-//	 * @param $globals
-//	 *
-//	 * @return $this
-//	 */
-//	public function set_globals( $globals ) {
-//		$this->api_project->set_globals( $globals );
-//
-//		return $this;
-//	}
-
-
-//	/**
-//	 * @return Brizy_Editor_API_Project
-//	 */
-//	public function get_api_project() {
-//		return $this->api_project;
-//	}
-
-//	/**
-//	 * @return string
-//	 */
-//	public function get_template_version() {
-//		return $this->get_api_project()->get_template_version();
-//	}
-
-//	/**
-//	 * @param $version
-//	 *
-//	 * @return $this
-//	 */
-//	public function set_template_version( $version ) {
-//		$this->get_api_project()->set_template_version( $version );
-//
-//		return $this;
-//	}
 
 }

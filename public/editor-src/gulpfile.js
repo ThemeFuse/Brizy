@@ -29,7 +29,12 @@ const sass = require("@csstools/postcss-sass");
 const postcssSCSS = require("postcss-scss");
 const autoprefixer = require("autoprefixer");
 
-const { argvVars } = require("./build-utils");
+// build utils
+const argvVars = require("./build-utils/argvVars");
+const {
+  wpTranslations,
+  wpTranslationsDev
+} = require("./build-utils/wpTranslations");
 
 // flags
 const {
@@ -38,6 +43,8 @@ const {
   IS_PRODUCTION,
   IS_EXPORT,
   IS_PRO,
+  VERSION,
+  VERSION_PRO,
   BUILD_DIR,
   BUILD_DIR_PRO,
   NO_WATCH,
@@ -57,9 +64,7 @@ const postsCssProcessors = [
 
 gulp.task(
   "build",
-  [
-    ...(IS_PRODUCTION && IS_EXPORT ? ["verifications"] : []) /* "assignPaths" */
-  ],
+  [...(IS_PRODUCTION && IS_EXPORT ? ["verifications"] : [])],
   () => {
     if (ABORTED) {
       return;
@@ -71,15 +76,42 @@ gulp.task(
       "template",
       ...(IS_EXPORT ? ["export"] : []),
       ...(IS_PRO ? ["pro"] : []),
-      ...(IS_PRODUCTION || NO_WATCH ? [] : ["watch"]),
-      ...(IS_PRODUCTION && IS_EXPORT && TARGET === "WP" ? ["open-source"] : []),
-      ...(IS_PRODUCTION && IS_EXPORT ? ["stats"] : [])
+      ...(TARGET === "WP" ? ["wp.translations"] : []),
+      ...(IS_PRODUCTION && IS_EXPORT
+        ? [
+            ...(TARGET === "WP" ? ["wp.open-source"] : []),
+            "build.versions",
+            "build.stats",
+            "build.zip"
+          ]
+        : []),
+      ...(IS_PRODUCTION || NO_WATCH ? [] : ["watch"])
     ];
 
-    runSequence.apply(null, tasks);
+    runSequence(...tasks);
   }
 );
 gulp.task("verifications", async () => {
+  // version check
+  if (!VERSION) {
+    console.error(
+      chalk.red.bold("When building for production --version must be provided")
+    );
+    ABORTED = true;
+    return;
+  }
+
+  if (IS_PRO && !VERSION_PRO) {
+    console.error(
+      chalk.red.bold(
+        "When building for production with -p --version-pro must be provided"
+      )
+    );
+    ABORTED = true;
+    return;
+  }
+
+  // commit / tag check
   const currentBranchCmd = "git rev-parse --abbrev-ref HEAD";
   const { stdout: currentBranchName } = await exec(currentBranchCmd);
   if (
@@ -148,7 +180,14 @@ gulp.task("assignPaths", () => {
   }
 });
 
-gulp.task("clean", ["clean.free", ...(IS_PRO ? ["clean.pro"] : [])]);
+gulp.task("clean", [
+  "clean.local",
+  "clean.free",
+  ...(IS_PRO ? ["clean.pro"] : [])
+]);
+gulp.task("clean.local", () => {
+  del.sync(paths.buildLocal + "/*", { force: true });
+});
 gulp.task("clean.free", () => {
   del.sync(paths.build + "/*", { force: true });
 });
@@ -440,28 +479,6 @@ gulp.task("export.twig", done => {
     });
 });
 
-gulp.task("stats", () => {
-  const src = [
-    // editor
-    paths.build + "/editor/js/editor.js",
-    paths.build + "/editor/js/editor.vendor.js",
-    paths.build + "/editor/css/editor.css",
-
-    // export
-    paths.build + "/editor/js/preview.js",
-    paths.build + "/editor/css/preview.css",
-
-    // static
-    paths.build + "/editor/js/export.js"
-  ];
-
-  gulp.src(src).pipe(
-    gulpPlugins.size({
-      showFiles: true
-    })
-  );
-});
-
 gulp.task("pro", [
   "pro.js",
   "pro.block-thumbs",
@@ -540,7 +557,16 @@ gulp.task("pro.media", done => {
     .on("end", done);
 });
 
-gulp.task("open-source", done => {
+gulp.task("wp.translations", async () => {
+  const sourceCodePath = paths.editor + "/js";
+  const phpSourceCode =
+    IS_PRODUCTION && IS_EXPORT
+      ? await wpTranslations(sourceCodePath)
+      : await wpTranslationsDev();
+
+  fs.writeFileSync(paths.build + "/texts.php", phpSourceCode, "utf8");
+});
+gulp.task("wp.open-source", done => {
   const src = [
     "./**/*",
     "!node_modules/",
@@ -570,24 +596,119 @@ gulp.task("open-source", done => {
     .on("end", done);
 });
 
+gulp.task("build.versions", () => {
+  const versionsJSON = JSON.stringify(
+    {
+      slug: TEMPLATE_NAME,
+      version: VERSION
+    },
+    null,
+    2
+  );
+  fs.writeFileSync(paths.build + "/versions.json", versionsJSON, "utf8");
+
+  if (IS_PRO) {
+    const versionsJSON = JSON.stringify(
+      {
+        version: VERSION_PRO
+      },
+      null,
+      2
+    );
+    fs.writeFileSync(paths.buildPro + "/versions.json", versionsJSON, "utf8");
+  }
+});
+
+gulp.task("build.stats", () => {
+  const files = [
+    // editor
+    ["editor.js", paths.build + "/editor/js/editor.js"],
+    ["editor.vendor.js", paths.build + "/editor/js/editor.vendor.js"],
+    ["editor.css", paths.build + "/editor/css/editor.css"],
+
+    // export
+    ["preview.js", paths.build + "/editor/js/preview.js"],
+    ["preview.css", paths.build + "/editor/css/preview.css"],
+
+    // polyfill
+    ["polyfill.js", paths.build + "/editor/js/polyfill.js"],
+
+    // static
+    ["export.js", paths.build + "/editor/js/export.js"]
+  ];
+  fs.writeFileSync(
+    paths.build + "/stats.json",
+    getFileSizesJSON(files),
+    "utf8"
+  );
+
+  if (IS_PRO) {
+    const files = [
+      // editor
+      ["editor.pro.js", paths.buildPro + "/js/editor.pro.js"]
+    ];
+    fs.writeFileSync(
+      paths.buildPro + "/stats.json",
+      getFileSizesJSON(files),
+      "utf8"
+    );
+  }
+
+  function getFileSizesJSON(files) {
+    const fileSizes = files.reduce((acc, [name, path]) => {
+      const stats = fs.statSync(path);
+      acc[name] = stats["size"] / 1000000.0;
+      return acc;
+    }, {});
+
+    return JSON.stringify(fileSizes, null, 2);
+  }
+});
+
+gulp.task("build.zip", done => {
+  const suffix = TARGET === "WP" ? "wp" : "cloud";
+
+  const src = [
+    paths.build + "/**/*",
+    `!${paths.build}/pro/`,
+    `!${paths.build}/pro/**/*`,
+    `!${paths.build}/editor-src/`, // generated when building for WP
+    `!${paths.build}/editor-src/**/*` // generated when building for WP
+  ];
+  makeZip(src, `${TEMPLATE_NAME}__${VERSION}__${suffix}.zip`);
+
+  if (IS_PRO) {
+    const src = [paths.buildPro + "/**/*"];
+    makeZip(src, `${TEMPLATE_NAME}-pro__${VERSION_PRO}__${suffix}.zip`);
+  }
+
+  function makeZip(src, zipName) {
+    const dest = paths.buildLocal + "/zip";
+
+    if (!makeZip.doneTimesToCall) {
+      makeZip.doneTimesToCall = IS_PRO ? 2 : 1;
+    }
+
+    gulp
+      .src(src)
+      .pipe(gulpPlugins.zip(zipName))
+      .pipe(gulp.dest(dest))
+      .on("end", () => {
+        makeZip.doneTimesToCall--;
+
+        if (makeZip.doneTimesToCall === 0) {
+          done();
+        }
+      });
+  }
+});
+
 gulp.task("watch", () => {
-  // edit.html.twig (for some reason doesn't work )
-  // const editorTwigPath = paths.editor + "/templates/editor.html.twig";
-  // gulp.watch(editorTwigPath, ["editor.twig"]).on("change", handleChange);
-
-  // editor js.init
-  const jsInitPath = paths.editor + "/js/bootstraps/init/*.js";
-  gulp.watch(jsInitPath, ["editor.js.init"]).on("change", handleChange);
-
   // editor css
   const coreCSSPath = paths.editor + "/**/*.scss";
   gulp
     .watch(coreCSSPath, ["editor.css", ...(IS_EXPORT ? ["export.css"] : [])])
     .on("change", handleChange);
-
-  // libs (uncomment if needed)
-  // const editorLibs = paths.editor + "/lib/*/*/*.js";
-  // gulp.watch(editorLibs, ["editor.js.lib"]).on("change", handleChange);
 
   const templateMiscPath = [
     paths.template + "/assets/**/*",

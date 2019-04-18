@@ -20,7 +20,7 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 	 */
 	public function __construct( Brizy_Editor_Project $project ) {
 		$this->accounts = array();
-		$this->project = $project;
+		$this->project  = $project;
 		try {
 			$this->loadAccounts( $project );
 		} catch ( Exception $exception ) {
@@ -141,7 +141,8 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 			$data[] = $account->convertToOptionValue();
 		}
 
-		$this->project->setMetaValue( 'accounts', $data );
+		$this->project->setAccounts( $data );
+		$this->project->save();
 	}
 
 	/**

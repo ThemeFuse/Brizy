@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
+import { styleColor } from "visual/utils/style";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -42,10 +43,6 @@ export function styleClassName(v) {
       lineHeight,
       fontWeight,
       letterSpacing,
-      colorHex,
-      colorOpacity,
-      hoverColorHex,
-      hoverColorOpacity,
 
       // Tablet
       tabletFontSize,
@@ -62,7 +59,7 @@ export function styleClassName(v) {
 
     glamorObj = {
       ".brz &": {
-        color: hexToRgba(colorHex, colorOpacity),
+        color: styleColor({ v, device: "desktop", state: "normal" }),
         fontFamily: getFontById(fontFamily).family,
         fontSize,
         lineHeight,
@@ -70,7 +67,7 @@ export function styleClassName(v) {
         letterSpacing
       },
       ".brz &:hover": {
-        color: hexToRgba(hoverColorHex, hoverColorOpacity)
+        color: styleColor({ v, device: "desktop", state: "hover" })
       },
       "@media (max-width: 991px)": {
         ".brz &": {
@@ -105,10 +102,7 @@ export function styleCSSVars(v) {
     lineHeight,
     fontWeight,
     letterSpacing,
-    colorHex,
-    colorOpacity,
-    hoverColorHex,
-    hoverColorOpacity,
+
 
     // Tablet
     tabletFontSize,
@@ -129,8 +123,8 @@ export function styleCSSVars(v) {
     "--fontWeight": fontWeight,
     "--lineHeight": lineHeight,
     "--letterSpacing": `${letterSpacing}px`,
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--hoverColor": hexToRgba(hoverColorHex, hoverColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--hoverColor": styleColor({ v, device: "desktop", state: "hover" }),
 
     // Tablet
     "--tabletFontSize": `${tabletFontSize}px`,

@@ -1,29 +1,40 @@
 import Config from "visual/global/Config";
 import { request } from "visual/utils/api/editor";
 
-export const uploadBlockScreenshot = ({
-  screenshotId,
-  blockType = "normal",
-  screenshotBase64
-}) => {
-  const {
-    api: { hash, url, saveBlockScreenshot },
-    page
-  } = Config.get("wp");
+const apiUrl = Config.get("urls").api;
 
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-    },
-    credentials: "omit",
-    body: new URLSearchParams({
-      hash,
-      action: saveBlockScreenshot,
-      post: page,
-      block_id: screenshotId,
-      img: screenshotBase64,
-      block_type: blockType
-    })
+export const uploadBlockScreenshot = ({
+  block,
+  screenshotBase64: attachment
+}) => {
+  attachment = attachment.replace(/data:image\/.+;base64,/, "");
+
+  if (block.value._thumbnailSrc) {
+    return updateBlockScreenshot({ block, attachment });
+  }
+
+  const requestData = {
+    attachment
+  };
+
+  return request({
+    type: "POST",
+    dataType: "json",
+    url: apiUrl + "/screenshots",
+    data: requestData
+  });
+};
+
+const updateBlockScreenshot = ({ block, attachment }) => {
+  const id = block.value._thumbnailSrc;
+  const requestData = {
+    attachment
+  };
+
+  return request({
+    type: "PUT",
+    dataType: "json",
+    url: apiUrl + "/screenshots/" + id,
+    data: requestData
   });
 };

@@ -7,7 +7,7 @@ import { blockThumbnailData } from "visual/utils/blocks";
 import { preloadImage } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
 import { pageDataSelector, pageBlocksSelector } from "visual/redux/selectors";
-import { updatePage } from "visual/redux/actionCreators";
+import { updatePage } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
 const MAX_THUMBNAIL_WIDTH = 132;

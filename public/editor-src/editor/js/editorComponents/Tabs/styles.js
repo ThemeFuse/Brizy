@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleBorderColor, styleColor, styleBgColor } from "visual/utils/style";
 
 const aligns = {
   horizontal: {
@@ -112,13 +112,7 @@ export function styleClassName(v) {
       lineHeight,
       fontWeight,
       letterSpacing,
-      colorHex,
-      colorOpacity,
-      bgColorHex,
-      bgColorOpacity,
       borderWidth,
-      borderColorHex,
-      borderColorOpacity,
       horizontalAlign,
       paddingType,
       padding,
@@ -174,19 +168,35 @@ export function styleClassName(v) {
             paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`
         },
         "& .brz-tabs__nav--button, & .brz-tabs__items": {
-          color: hexToRgba(colorHex, colorOpacity),
-          backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
-          borderColor: hexToRgba(borderColorHex, borderColorOpacity),
+          color: styleColor({ v, device: "desktop", state: "normal" }),
+          backgroundColor: styleBgColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
+          borderColor: styleBorderColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
           borderWidth
         },
         "& .brz-tabs__nav--button": {
           borderBottomColor: "transparent"
         },
         "& .brz-tabs__nav--active .brz-tabs__nav--button": {
-          borderBottomColor: hexToRgba(bgColorHex, bgColorOpacity)
+          borderBottomColor: styleBgColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          })
         },
         "& .brz-tabs__nav--active::after, & .brz-tabs__nav--active::before": {
-          backgroundColor: hexToRgba(borderColorHex, borderColorOpacity)
+          backgroundColor: styleBorderColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          })
         },
         "& .brz-tabs__nav--active::after": {
           right: `calc(-100vw + ${borderWidth}px)`
@@ -201,12 +211,18 @@ export function styleClassName(v) {
           lineHeight: tabletLineHeight,
           fontWeight: tabletFontWeight,
           letterSpacing: `${tabletLetterSpacing}px`,
-      
+
           "& .brz-tabs__nav": {
-            justifyContent: `${aligns.horizontal[tabletSyncOnChange(v, "horizontalAlign")]}`
+            justifyContent: `${
+              aligns.horizontal[tabletSyncOnChange(v, "horizontalAlign")]
+            }`
           },
           "& .brz-tabs__nav--button": {
-            borderBottomColor: hexToRgba(borderColorHex, borderColorOpacity),
+            borderBottomColor: styleBorderColor({
+              v,
+              device: "desktop",
+              state: "normal"
+            }),
             borderWidth: 0
           },
           "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
@@ -240,10 +256,16 @@ export function styleClassName(v) {
           letterSpacing: `${mobileLetterSpacing}px`,
 
           "& .brz-tabs__nav": {
-            justifyContent: `${aligns.horizontal[mobileSyncOnChange(v, "horizontalAlign")]}`
+            justifyContent: `${
+              aligns.horizontal[mobileSyncOnChange(v, "horizontalAlign")]
+            }`
           },
           "& .brz-tabs__nav--button": {
-            borderBottomColor: hexToRgba(borderColorHex, borderColorOpacity),
+            borderBottomColor: styleBorderColor({
+              v,
+              device: "desktop",
+              state: "normal"
+            }),
             borderWidth: 0
           },
           "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
@@ -286,13 +308,7 @@ export function styleCSSVars(v) {
     fontWeight,
     lineHeight,
     letterSpacing,
-    colorHex,
-    colorOpacity,
-    bgColorHex,
-    bgColorOpacity,
     borderWidth,
-    borderColorHex,
-    borderColorOpacity,
     horizontalAlign,
     paddingType,
     padding,
@@ -335,17 +351,28 @@ export function styleCSSVars(v) {
     "--letterSpacing": `${letterSpacing}px`,
 
     // Colors
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
-    "--borderColor": hexToRgba(borderColorHex, borderColorOpacity),
-
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     // Border
     "--borderWidth": `${borderWidth}px`,
 
     // Align
     "--horizontalAlign": `${aligns.horizontal[horizontalAlign]}`,
-    "--mobileHorizontalAlign": `${aligns.horizontal[mobileSyncOnChange(v, "horizontalAlign")]}`,
-    "--tabletHorizontalAlign": `${aligns.horizontal[tabletSyncOnChange(v, "horizontalAlign")]}`,
+    "--mobileHorizontalAlign": `${
+      aligns.horizontal[mobileSyncOnChange(v, "horizontalAlign")]
+    }`,
+    "--tabletHorizontalAlign": `${
+      aligns.horizontal[tabletSyncOnChange(v, "horizontalAlign")]
+    }`,
 
     // Border After and Before
     "--afterWidth": `calc(-100vw + ${borderWidth}px)`,

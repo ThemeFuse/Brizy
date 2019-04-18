@@ -7,6 +7,11 @@ import {
   toolbarCustomCSSClass
 } from "visual/utils/toolbar";
 import { defaultValueValue } from "visual/utils/onChange";
+import {
+  toolbarBgColorHexAndOpacity,
+  toolbarBgColorPalette,
+  toolbarBgColorFields
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
   const device = "desktop";
@@ -124,78 +129,24 @@ export function getItemsForDesktop(v) {
             {
               label: t("Overlay"),
               options: [
-                {
-                  id: "bgColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: bgColorHex,
-                    opacity: v.bgColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-                    const bgColorOpacity =
-                      hex !== v.bgColorHex && v.bgColorOpacity === 0
-                        ? v.tempBgColorOpacity
-                        : opacity;
-
-                    return {
-                      bgColorHex: hex,
-                      bgColorOpacity: bgColorOpacity,
-                      bgColorPalette:
-                        isChanged === "hex" ? "" : v.bgColorPalette,
-
-                      mobileBgColorHex:
-                        v.bgColorHex === v.mobileBgColorHex
-                          ? hex
-                          : v.mobileBgColorHex,
-
-                      mobileBgColorOpacity:
-                        v.bgColorOpacity === v.mobileBgColorOpacity
-                          ? bgColorOpacity
-                          : v.mobileBgColorOpacity,
-
-                      mobileBgColorPalette:
-                        v.bgColorPalette === v.mobileBgColorPalette &&
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileBgColorPalette,
-
-                      tempBgColorOpacity:
-                        bgColorOpacity > 0 && opacityDragEnd
-                          ? bgColorOpacity
-                          : v.tempBgColorOpacity
-                    };
-                  }
-                },
-                {
-                  id: "bgColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.bgColorPalette,
-                  onChange: value => ({
-                    bgColorPalette: value,
-                    bgColorHex: "",
-                    bgColorOpacity:
-                      v.bgColorOpacity === 0
-                        ? v.tempBgColorOpacity
-                        : v.bgColorOpacity,
-
-                    mobileBgColorPalette:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? value
-                        : v.mobileBgColorPalette,
-
-                    mobileBgColorHex:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? ""
-                        : v.mobileBgColorHex,
-
-                    mobileBgColorOpacity:
-                      v.bgColorPalette === v.mobileBgColorPalette
-                        ? v.tempBgColorOpacity
-                        : v.mobileBgColorOpacity
-                  })
-                },
+                toolbarBgColorHexAndOpacity({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBgColorHexAndOpacity",
+                    "onChangeBgColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarBgColorPalette({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBgColorPalette",
+                    "onChangeBgColorPaletteOpacity"
+                  ]
+                }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
@@ -203,44 +154,15 @@ export function getItemsForDesktop(v) {
                     {
                       width: 100,
                       options: [
-                        {
-                          id: "bgColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: bgColorHex,
-                            opacity: v.bgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => {
-                            const bgColorOpacity =
-                              hex !== v.bgColorHex && v.bgColorOpacity === 0
-                                ? v.tempBgColorOpacity
-                                : opacity;
-
-                            return {
-                              bgColorPalette:
-                                isChanged === "hex" ? "" : v.bgColorPalette,
-                              bgColorHex: hex,
-                              bgColorOpacity: bgColorOpacity,
-
-                              mobileBgColorHex:
-                                v.bgColorHex === v.mobileBgColorHex
-                                  ? hex
-                                  : v.mobileBgColorHex,
-
-                              mobileBgColorOpacity:
-                                v.bgColorOpacity === v.mobileBgColorOpacity
-                                  ? bgColorOpacity
-                                  : v.mobileBgColorOpacity,
-
-                              mobileBgColorPalette:
-                                v.bgColorPalette === v.mobileBgColorPalette &&
-                                isChanged === "hex"
-                                  ? ""
-                                  : v.mobileBgColorPalette
-                            };
-                          }
-                        }
+                        toolbarBgColorFields({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette"
+                          ]
+                        })
                       ]
                     }
                   ]

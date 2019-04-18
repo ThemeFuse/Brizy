@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 import {

@@ -2,139 +2,230 @@ import _ from "underscore";
 import jQuery from "jquery";
 import Promise from "promise";
 import Config from "visual/global/Config";
-import Notifications from "visual/global/Notifications";
-import converter from "./converter";
-
-export { converter };
+import {
+  parsePage,
+  stringifyPage,
+  parseGlobals,
+  stringifyGlobals
+} from "./adapter";
 
 export function request(action, data) {
-  const apiConfig = Config.get("wp");
-  const hash = apiConfig.api.hash;
-  const requestUrl = apiConfig.api.url;
-  const allData = _.extend({}, data || {}, { action, hash });
+  const { hash, url } = Config.get("wp").api;
+  const data_ = { ...data, action, hash };
 
   return new Promise((resolve, reject) =>
     jQuery
-      .post(requestUrl, allData)
+      .post(url, data_)
       .done(resolve)
-      .fail(function(jqXHR) {
-        if (jqXHR.status === 503) {
-          // 503 means maintainance
-          window.location.reload();
-          return;
-        }
-
-        Notifications.addNotification({
-          id: "request-failed",
-          type: Notifications.notificationTypes.error,
-          text:
-            "Changes could not be saved. Please check your internet connection or try again later.",
-          dismissible: true
-        });
-
-        reject(jqXHR.responseText);
-      })
+      .fail(jqXHR => reject(jqXHR.responseText))
   );
 }
 
 export function persistentRequest(ajaxSettings) {
-  const apiConfig = Config.get("wp");
+  const { hash, url } = Config.get("wp").api;
+  const { data, ...otherSettings } = ajaxSettings;
 
-  const hash = apiConfig.api.hash;
-  const requestUrl = apiConfig.api.url;
+  return new Promise((resolve, reject) => {
+    jQuery.ajax({
+      ...otherSettings,
+      url,
+      data: {
+        ...data,
+        hash
+      },
+      onbeforeunload() {
+        return "You have unsaved data.";
+      },
+      failedAttempts: 0,
+      success(data) {
+        this.failedAttempts = 0;
+        window.onbeforeunload = null;
+        resolve(data);
+      },
+      error(jqXHR) {
+        this.failedAttempts++;
+        window.onbeforeunload = this.onbeforeunload;
 
-  return new Promise(function(resolve, reject) {
-    ajaxSettings.data = _.extend(ajaxSettings.data, { hash });
-
-    jQuery.ajax(
-      _.extend({ url: requestUrl }, ajaxSettings, {
-        notificationId: "data-save-fail",
-        onbeforeunload: function() {
-          return "You have unsaved data.";
-        },
-        failedAttempts: 0,
-        success: function(data) {
-          // Notifications.removeNotification(this.notificationId);
-          this.failedAttempts = 0;
-          window.onbeforeunload = null;
-          resolve(data);
-        },
-        error: function(jqXHR) {
-          // Notifications.addNotification({
-          //   id: this.notificationId,
-          //   type: Notifications.notificationTypes.error,
-          //   text:
-          //     "Changes could not be saved. Please check your internet connection.",
-          //   dismissible: false
-          // });
-          this.failedAttempts++;
-          window.onbeforeunload = this.onbeforeunload;
-
-          if (this.failedAttempts <= 5) {
-            setTimeout(
-              function() {
-                jQuery.ajax(this);
-              }.bind(this),
-              5000 * this.failedAttempts
-            );
-          }
+        if (this.failedAttempts <= 5) {
+          setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
+        } else {
+          reject(jqXHR);
         }
-      })
-    );
+      }
+    });
   });
 }
 
-export function ping() {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.ping, {});
-}
+// page
 
 export function getPages() {
   const apiConfig = Config.get("wp").api;
   const page = Config.get("wp").page;
+
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: { id: page, action: apiConfig.getPage }
-  }).then(function(r) {
-    return _.map(r, converter.pageFromBackend);
+  }).then(r => {
+    return r.map(parsePage);
   });
 }
 
-export function updatePage(id, data) {
-  const apiConfig = Config.get("wp").api;
-  return persistentRequest({
-    type: "POST",
-    dataType: "json",
-    data: _.extend({ action: apiConfig.updatePage }, data, { id })
-  }).then(converter.pageFromBackend);
-}
-
-export function getGlobals() {
-  const apiConfig = Config.get("wp").api;
-  const page = Config.get("wp").page;
-
-  return persistentRequest({
-    type: "POST",
-    dataType: "text",
-    data: { action: apiConfig.globals.get, id: page }
-  }).then(r => JSON.parse(r).gb);
-}
-
-export function saveGlobals(data) {
-  const apiConfig = Config.get("wp").api;
-  const page = Config.get("wp").page;
+export function updatePage(page, meta = {}) {
+  const { updatePage } = Config.get("wp").api;
+  const { is_autosave = 1 } = meta;
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
-      action: apiConfig.globals.set,
-      gb: JSON.stringify(data),
-      post: page
+      action: updatePage,
+      ...stringifyPage(page),
+      is_autosave
     }
   });
 }
+
+// globals
+
+export function getGlobals() {
+  const { getGlobals } = Config.get("wp").api;
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: { action: getGlobals }
+  }).then(r => {
+    return parseGlobals(r.gb);
+  });
+}
+
+export function updateGlobals(data, meta = {}) {
+  const { setGlobals } = Config.get("wp").api;
+  const { is_autosave = 1 } = meta;
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: {
+      action: setGlobals,
+      gb: stringifyGlobals(data),
+      is_autosave
+    }
+  });
+}
+
+// global blocks
+
+export function getGlobalBlocks() {
+  const { getGlobalBlockList } = Config.get("wp").api;
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: { action: getGlobalBlockList }
+  }).then(r => {
+    return r.reduce((acc, block) => {
+      acc[block.uid] = JSON.parse(block.data);
+
+      return acc;
+    }, {});
+  });
+}
+
+export function createGlobalBlock({ id, data }) {
+  const { createGlobalBlock } = Config.get("wp").api;
+  const data_ = JSON.stringify(data);
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: {
+      action: createGlobalBlock,
+      uid: id,
+      data: data_
+    }
+  });
+}
+
+export function updateGlobalBlock({ id, data }, meta = {}) {
+  const { updateGlobalBlock } = Config.get("wp").api;
+  const { is_autosave = 1 } = meta;
+  const data_ = JSON.stringify(data);
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: {
+      action: updateGlobalBlock,
+      uid: id,
+      data: data_,
+      is_autosave
+    }
+  });
+}
+
+// saved blocks
+
+export function getSavedBlocks() {
+  const { getSavedBlockList } = Config.get("wp").api;
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: { action: getSavedBlockList }
+  }).then(r => {
+    return r.reduce((acc, block) => {
+      acc[block.uid] = JSON.parse(block.data);
+
+      return acc;
+    }, {});
+  });
+}
+
+export function createSavedBlock({ id, data }) {
+  const { createSavedBlock } = Config.get("wp").api;
+  const data_ = JSON.stringify(data);
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: {
+      action: createSavedBlock,
+      uid: id,
+      data: data_
+    }
+  });
+}
+
+export function updateSavedBlock({ id, data }, meta = {}) {
+  const { updateSavedBlock } = Config.get("wp").api;
+  const { is_autosave = 0 } = meta;
+  const data_ = JSON.stringify(data);
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: {
+      action: updateSavedBlock,
+      uid: id,
+      data: data_,
+      is_autosave
+    }
+  });
+}
+
+export function deleteSavedBlock({ id }) {
+  const { deleteSavedBlock } = Config.get("wp").api;
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: { action: deleteSavedBlock, uid: id }
+  });
+}
+
+// image
 
 export function downloadImageFromCloud(id) {
   const { api: apiConfig, page } = Config.get("wp");
@@ -156,46 +247,7 @@ export function getImageUid(id) {
   return request(apiConfig.getMediaUid, data);
 }
 
-export function getSidebars() {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.getSidebars, {});
-}
-
-export function buildContent(id) {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.buildContent, { id });
-}
-
-export function sidebarContent(sidebarId) {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.sidebarContent, { sidebarId });
-}
-
-export function shortcodeContent(shortcode) {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.shortcodeContent, { shortcode });
-}
-
-export function shortcodeList() {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.shortcodeList, {});
-}
-
-export function getMenus() {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.getMenus, {});
-}
-
-export function updatePost() {
-  const apiConfig = Config.get("wp").api;
-  const post = Config.get("wp").page;
-  return request(apiConfig.updatePost, { post });
-}
-
-export function getTerms(taxonomy) {
-  const apiConfig = Config.get("wp").api;
-  return request(apiConfig.getTerms, { taxonomy });
-}
+// featured image
 
 export function updateFeaturedImage(post, attachmentId) {
   const apiConfig = Config.get("wp").api;
@@ -223,4 +275,26 @@ export function updateFeaturedImageFocalPoint(
 export function removeFeaturedImage(post) {
   const apiConfig = Config.get("wp").api;
   return request(apiConfig.removeFeaturedImage, { post });
+}
+
+// other
+
+export function getSidebars() {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.getSidebars, {});
+}
+
+export function shortcodeContent(shortcode) {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.shortcodeContent, { shortcode });
+}
+
+export function getMenus() {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.getMenus, {});
+}
+
+export function getTerms(taxonomy) {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.getTerms, { taxonomy });
 }

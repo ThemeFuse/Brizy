@@ -260,9 +260,19 @@ class Brizy_Editor_UrlBuilder
      *
      * @return string
      */
-    public function editor_asset_url()
+    public function editor_build_url()
     {
         return BRIZY_PLUGIN_URL . '/public/editor-build';
+    }
+
+    /**
+     * @param null $path
+     *
+     * @return string
+     */
+    public function editor_build_path()
+    {
+        return BRIZY_PLUGIN_PATH . '/public/editor-build';
     }
 
     /**

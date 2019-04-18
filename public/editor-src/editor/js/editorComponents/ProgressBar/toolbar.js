@@ -264,7 +264,6 @@ export function getItemsForDesktop(v) {
                   v,
                   device,
                   state: "normal",
-                  prefix: "bg",
                   onChange: [
                     "onChangeBgColorHexAndOpacity",
                     "onChangeBgColorHexAndOpacityPalette"
@@ -274,7 +273,6 @@ export function getItemsForDesktop(v) {
                   v,
                   device,
                   state: "normal",
-                  prefix: "bg",
                   onChange: [
                     "onChangeBgColorPalette",
                     "onChangeBgColorPaletteOpacity"
@@ -291,10 +289,6 @@ export function getItemsForDesktop(v) {
                           v,
                           device,
                           state: "normal",
-                          prefix: "bg",
-                          disabled:
-                            v.bgColorType === "gradient" &&
-                            v.gradientActivePointer === "finishPointer",
                           onChange: [
                             "onChangeBgColorHexAndOpacity",
                             "onChangeBgColorHexAndOpacityPalette"
@@ -309,26 +303,29 @@ export function getItemsForDesktop(v) {
             {
               label: t("Background"),
               options: [
-                toolbarElementProgressBarBg2ColorHexAndOpacity({
+                toolbarBgColorHexAndOpacity({
                   v,
                   device,
                   state: "normal",
+                  prefix: "bg2",
                   onChange: [
-                    "onChangeElementProgressBarBg2ColorHexAndOpacity",
-                    "onChangeElementProgressBarBg2ColorHexAndOpacityPalette",
-                    "onChangeElementProgressBarBg2ColorHexAndOpacityDependencies"
+                    "onChangeBgColorHexAndOpacity",
+                    "onChangeBgColorHexAndOpacityPalette",
+                    "onChangeBgColorHexAndOpacityDependencies"
                   ]
                 }),
-                toolbarElementProgressBarBg2ColorPalette({
+                toolbarBgColorPalette({
                   v,
                   device,
                   state: "normal",
+                  prefix: "bg2",
                   onChange: [
-                    "onChangeElementProgressBarBg2ColorPalette",
-                    "onChangeElementProgressBarBg2ColorPaletteOpacity",
-                    "onChangeElementProgressBarBg2ColorHexAndOpacityDependencies"
+                    "onChangeBgColorPalette",
+                    "onChangeBgColorPaletteOpacity",
+                    "onChangeBgColorHexAndOpacityDependencies"
                   ]
                 }),
+
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
@@ -336,14 +333,18 @@ export function getItemsForDesktop(v) {
                     {
                       width: 100,
                       options: [
-                        toolbarElementProgressBarBg2ColorFields({
+                        toolbarBgColorFields({
                           v,
                           device,
                           state: "normal",
+                          prefix: "bg2",
+                          disabled:
+                            v.bgColorType === "gradient" &&
+                            v.gradientActivePointer === "finishPointer",
                           onChange: [
-                            "onChangeElementProgressBarBg2ColorHexAndOpacity",
-                            "onChangeElementProgressBarBg2ColorHexAndOpacityPalette",
-                            "onChangeElementProgressBarBg2ColorHexAndOpacityDependencies"
+                            "onChangeBgColorHexAndOpacity",
+                            "onChangeBgColorHexAndOpacityPalette",
+                            "onChangeBgColorHexAndOpacityDependencies"
                           ]
                         })
                       ]

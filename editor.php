@@ -11,21 +11,26 @@ class Brizy_Editor {
 
 	private static $instance;
 
+	public static function get() {
+
+		if ( self::$instance ) {
+			return self::$instance;
+		}
+
+		self::$instance = new self();
+
+		return self::$instance;
+	}
+
+
 	/**
 	 * Brizy_Editor constructor.
 	 */
 	private function __construct() {
 
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
-
-		try {
-			$this->runMigrations();
-		} catch ( Brizy_Admin_Migrations_UpgradeRequiredException $e ) {
-			Brizy_Admin_Flash::instance()->add_error( 'Please upgrade Brizy to the latest version.' );
-
-			return;
-		}
-
+		add_action( 'after_setup_theme', array( $this, 'loadCompatibilityClasses' ), - 2000 );
+		add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
 
@@ -45,14 +50,22 @@ class Brizy_Editor {
 	}
 
 	public function runMigrations() {
-		$migrationManager = new Brizy_Admin_Migrations();
-		$migrationManager->runMigrations( BRIZY_VERSION );
+
+		try {
+			$migrationManager = new Brizy_Admin_Migrations();
+			$migrationManager->runMigrations( BRIZY_VERSION );
+		} catch ( Brizy_Admin_Migrations_UpgradeRequiredException $e ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Please upgrade Brizy to the latest version.' );
+
+			return;
+		}
 	}
 
 	public function wordpressInit() {
 
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
+		Brizy_Admin_Blocks_Main::_init();
 
 
 		$this->loadShortcodes();
@@ -81,10 +94,6 @@ class Brizy_Editor {
 
 			if ( $pid ) {
 				$post = Brizy_Editor_Post::get( $pid );
-
-				// check post for migration status
-				// $migrations = new Brizy_Admin_Migrations();
-				// $migrations->runMigrationsBasedOnPost( $post, BRIZY_VERSION );
 			}
 		} catch ( Exception $e ) {
 		}
@@ -126,6 +135,37 @@ class Brizy_Editor {
 		return $num;
 	}
 
+	public function loadCompatibilityClasses() {
+
+		global $wp_version;
+
+		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
+			new Brizy_Compatibilities_Wtc();
+		}
+
+		$version_compare = version_compare( $wp_version, '5' );
+
+		if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
+			new Brizy_Compatibilities_Gutenberg();
+		}
+
+		if ( function_exists( 'autoptimize' ) ) {
+			new Brizy_Compatibilities_Autoptimize();
+		}
+
+		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
+			new Brizy_Compatibilities_WPML();
+		}
+
+		if ( class_exists( 'LiteSpeed_Cache_Config' ) ) {
+			new Brizy_Compatibilities_LiteSpeed();
+		}
+
+		if ( function_exists( 'fvm_cachepath' ) ) {
+			new Brizy_Compatibilities_FastVelocityMinify();
+		}
+	}
+
 	/**
 	 * @param $templates
 	 *
@@ -162,6 +202,7 @@ class Brizy_Editor {
 	public function registerCustomPostTemplates() {
 		Brizy_Editor_Project::registerCustomPostType();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
+		Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPostTemplate();
 	}
 
@@ -300,9 +341,6 @@ class Brizy_Editor {
 		return $pid;
 	}
 
-	public static function get() {
-		return self::$instance ? self::$instance : self::$instance = new self();
-	}
 
 	public static function is_administrator() {
 

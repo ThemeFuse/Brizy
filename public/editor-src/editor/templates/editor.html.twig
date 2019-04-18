@@ -9,7 +9,7 @@
     <link href="{{ assetsUrl }}/editor/css/editor.css" rel="stylesheet">
     <style id="brz-ed-page-curtain-style">@keyframes spin{100%{transform:rotate(360deg)}}.brz-ed-page-curtain{position:fixed;left:0;right:0;top:0;bottom:0;background-color:#141923;z-index:1000}.brz-ed-page-spinner,.brz-ed-page-spinner:after,.brz-ed-page-spinner:before{content:'';position:absolute;top:50%;left:50%;border:3px solid transparent;border-radius:50%;animation:spin 1s linear infinite}.brz-ed-page-spinner{width:100px;height:100px;margin:-50px 0 0 -50px;border-top-color:#22b0da;animation-duration:2.5s}.brz-ed-page-spinner:after{width:80px;height:80px;margin:-40px 0 0 -40px;border-right-color:#ed2164;animation-duration:2s}.brz-ed-page-spinner:before{width:60px;height:60px;margin:-30px 0 0 -30px;border-bottom-color:#fff}</style>
 
-    {% if DEV is not defined or DEV == false %}
+    {% if false and (DEV is not defined or DEV == false) %}
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115444307-1"></script>
         <script>
@@ -58,13 +58,8 @@
             <script src="{{ assetsUrl }}/editor/js/editor.js"></script>
 
             {% if PRO is defined and PRO %}
-              <script src="{{ assetsUrl }}/pro/js/editor.pro.js"></script>
-            {% endif %}
-
-            {% if DEV is defined and DEV %}
-              <script>
-                window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-              </script>
+            {% set assetsUrlPro = editorData.pro.urls.assets %}
+              <script src="{{ assetsUrlPro }}/js/editor.pro.js"></script>
             {% endif %}
           </body>
         </html>

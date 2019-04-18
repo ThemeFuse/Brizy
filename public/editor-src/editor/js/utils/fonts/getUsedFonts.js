@@ -1,12 +1,10 @@
 import Config from "visual/global/Config";
 import { getFontById } from "visual/utils/fonts";
 import { getStore } from "visual/redux/store";
+import { globalsSelector } from "visual/redux/selectors";
 
 export function getUsedFonts() {
-  const {
-    globals: { project: { extraFonts: globalsExtraFonts } }
-  } = getStore().getState();
-
+  const globalsExtraFonts = globalsSelector(getStore().getState()).extraFonts;
   const configFonts = Config.get("fonts").map(getFontById);
   const extraFonts = globalsExtraFonts
     ? globalsExtraFonts.map(getFontById)
@@ -16,10 +14,7 @@ export function getUsedFonts() {
 }
 
 export function getUsedFontsDetails() {
-  const {
-    globals: { project: { extraFonts: globalsExtraFonts } }
-  } = getStore().getState();
-
+  const globalsExtraFonts = globalsSelector(getStore().getState()).extraFonts;
   const configFonts = Config.get("fonts").map(getFontById);
   const extraFonts = globalsExtraFonts
     ? globalsExtraFonts.map(getFontById)

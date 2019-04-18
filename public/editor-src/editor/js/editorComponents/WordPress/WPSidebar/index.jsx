@@ -6,7 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import toolbarConfigFn from "./toolbar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";
-import * as Api from "visual/utils/api/editor";
+import { getSidebars } from "visual/utils/api/editor";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -22,7 +22,7 @@ class WPSidebar extends EditorComponent {
   };
 
   componentDidMount() {
-    Api.getSidebars().then(sidebars => {
+    getSidebars().then(sidebars => {
       this.setState({ sidebars });
 
       const v = this.getValue();

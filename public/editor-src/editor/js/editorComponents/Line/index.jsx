@@ -18,11 +18,7 @@ class Line extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`
-    ]);
-
+  renderForEdit(v) {
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>

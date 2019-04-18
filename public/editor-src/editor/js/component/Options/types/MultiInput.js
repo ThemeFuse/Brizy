@@ -1,0 +1,102 @@
+import React from "react";
+import _ from "underscore";
+import classnames from "classnames";
+import EditorIcon from "visual/component/EditorIcon";
+import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
+
+class MultiInputOptionType extends React.Component {
+  static defaultProps = {
+    className: "",
+    display: "inline",
+    config: {
+      defaultIcon: null,
+      icons: ["nc-settings"]
+    },
+    min: -9999,
+    max: 9999,
+    step: 1,
+    value: null,
+    attr: {},
+    onChange: _.noop
+  };
+
+  state = {
+    activeIcon: this.getInitialIcon()
+  };
+
+  getInitialIcon() {
+    const { defaultIcon, icons } = this.props.config;
+
+    return defaultIcon || icons[0];
+  }
+
+  handleInputValueChange = (index, v) => {
+    const { value, onChange } = this.props;
+    const updated = value.map((v_, index_) => (index_ === index ? v : v_));
+
+    onChange(updated);
+  };
+
+  handleMouseEnter(index) {
+    const { icons } = this.props.config;
+
+    this.setState({
+      activeIcon: icons[index]
+    });
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      activeIcon: this.getInitialIcon()
+    });
+  }
+
+  render() {
+    const {
+      className: _className,
+      attr,
+      min,
+      max,
+      step,
+      value,
+      display
+    } = this.props;
+    const { activeIcon } = this.state;
+
+    const className = classnames(
+      "brz-ed-option__input-outline",
+      "brz-ed-option__multi-input",
+      `brz-ed-option__${display}`,
+      "brz-ed-option__input-number-wrap",
+      _className,
+      attr.className
+    );
+
+    const inputs = value.map((v, index) => (
+      <div
+        key={index}
+        className="brz-ed-option__multi-input-container"
+        onMouseEnter={() => this.handleMouseEnter(index)}
+        onMouseLeave={() => this.handleMouseLeave(index)}
+      >
+        <AutoCorrectingInput
+          className="brz-input"
+          min={min}
+          max={max}
+          step={step}
+          value={v}
+          onChange={v => this.handleInputValueChange(index, v)}
+        />
+      </div>
+    ));
+
+    return (
+      <div className={className} {...attr}>
+        <EditorIcon icon={activeIcon} className="brz-icon" />
+        {inputs}
+      </div>
+    );
+  }
+}
+
+export default MultiInputOptionType;

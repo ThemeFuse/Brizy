@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleColor } from "visual/utils/style";
 
 export function styleClassName(v) {
   const { className, gridColumn } = v;
@@ -37,21 +38,16 @@ export function styleClassName(v) {
       }
     };
   } else {
-    const {
-      padding,
-      paginationSpacing,
-      paginationColorHex,
-      paginationColorOpacity,
-      tabletGridColumn
-    } = v;
+    const { padding, paginationSpacing, tabletGridColumn } = v;
 
     const columnWidth = gridColumn === 1 ? "100%" : `${100 / gridColumn}%`;
 
-    const tabletColumnWidth       = tabletGridColumn === 1 ? "100%" : `${100 / tabletGridColumn}%`;
-    const tabletPadding           = tabletSyncOnChange(v, "padding");
+    const tabletColumnWidth =
+      tabletGridColumn === 1 ? "100%" : `${100 / tabletGridColumn}%`;
+    const tabletPadding = tabletSyncOnChange(v, "padding");
     const tabletPaginationSpacing = tabletSyncOnChange(v, "paginationSpacing");
 
-    const mobilePadding           = mobileSyncOnChange(v, "padding");
+    const mobilePadding = mobileSyncOnChange(v, "padding");
     const mobilePaginationSpacing = mobileSyncOnChange(v, "paginationSpacing");
 
     glamorObj = {
@@ -60,7 +56,7 @@ export function styleClassName(v) {
         gridGap: `${padding}px`
       },
       ".brz & ul.page-numbers": {
-        color: hexToRgba(paginationColorHex, paginationColorOpacity),
+        color: styleColor({ v, device: "desktop", state: "normal" }),
         marginTop: `${paginationSpacing}px`
       },
       "@media (max-width: 991px)": {
@@ -98,28 +94,22 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    gridColumn,
-    padding,
-    paginationSpacing,
-    paginationColorHex,
-    paginationColorOpacity,
-    tabletGridColumn
-  } = v;
+  const { gridColumn, padding, paginationSpacing, tabletGridColumn } = v;
 
   const columnWidth = gridColumn === 1 ? "100%" : `${100 / gridColumn}%`;
 
-  const tabletColumnWidth       = tabletGridColumn === 1 ? "100%" : `${100 / tabletGridColumn}%`;
-  const tabletPadding           = tabletSyncOnChange(v, "padding");
+  const tabletColumnWidth =
+    tabletGridColumn === 1 ? "100%" : `${100 / tabletGridColumn}%`;
+  const tabletPadding = tabletSyncOnChange(v, "padding");
   const tabletPaginationSpacing = tabletSyncOnChange(v, "paginationSpacing");
 
-  const mobilePadding           = mobileSyncOnChange(v, "padding");
+  const mobilePadding = mobileSyncOnChange(v, "padding");
   const mobilePaginationSpacing = mobileSyncOnChange(v, "paginationSpacing");
 
   return {
     "--gridTemplateColumn": `repeat(${gridColumn}, minmax(0, ${columnWidth}))`,
     "--gridGap": `${padding}px`,
-    "--color": hexToRgba(paginationColorHex, paginationColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
     "--marginTop": `${paginationSpacing}px`,
     "--tabletGridTemplateColumn": `repeat(${tabletGridColumn}, minmax(0, ${tabletColumnWidth}))`,
     "--tabletGridGap": `${tabletPadding}px`,

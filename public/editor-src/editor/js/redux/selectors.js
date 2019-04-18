@@ -1,6 +1,8 @@
 import { createSelector } from "reselect";
 import Editor from "visual/global/Editor";
 
+// page
+
 export const pageDataSelector = state => state.page.data || {};
 
 export const pageBlocksSelector = createSelector(
@@ -8,7 +10,9 @@ export const pageBlocksSelector = createSelector(
   pageData => pageData.items || []
 );
 
-export const globalsSelector = state => state.globals.project;
+// globals
+
+export const globalsSelector = state => state.globals || {};
 
 export const currentStyleSelector = createSelector(
   globalsSelector,
@@ -207,14 +211,30 @@ export const currentStyleSelector = createSelector(
   }
 );
 
-export const savedBlocksSelector = createSelector(
-  globalsSelector,
-  globals => globals.savedBlocks || []
+// global blocks
+
+export const globalBlocksSelector = state => state.globalBlocks || {};
+
+export const globalBlocksInPageSelector = createSelector(
+  globalBlocksSelector,
+  pageBlocksSelector,
+  (globalBlocks, pageBlocks) => {
+    return pageBlocks.reduce((acc, block) => {
+      if (block.type === "GlobalBlock") {
+        const { globalBlockId } = block.value;
+
+        acc[block.value.globalBlockId] = globalBlocks[globalBlockId];
+      }
+
+      return acc;
+    }, {});
+  }
 );
 
-export const globalBlocksSelector = createSelector(
-  globalsSelector,
-  globals => globals.globalBlocks || {}
-);
+// saved blocks
+
+export const savedBlocksSelector = state => state.savedBlocks || {};
+
+// ui
 
 export const deviceModeSelector = state => state.ui.deviceMode;

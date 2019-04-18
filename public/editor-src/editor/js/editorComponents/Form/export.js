@@ -24,8 +24,8 @@ export default function() {
       event.preventDefault();
 
       var $this = $(this);
-      var projectLanguage = $this.attr("data-project-language");
-      var id = $this.attr("data-form-id");
+      var projectId = $this.attr("data-project-id");
+      var formId = $this.attr("data-form-id");
       var url = $this.attr("action");
       var successMessage = $this.attr("data-success");
       var errorMessage = $this.attr("data-error");
@@ -74,8 +74,8 @@ export default function() {
         url: url,
         data: {
           data: JSON.stringify(data),
-          project_language: projectLanguage,
-          form_id: id
+          project_id: projectId,
+          form_id: formId
         }
       })
         .done(function() {

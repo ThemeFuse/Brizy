@@ -60,10 +60,11 @@ class Brizy_Admin_Main {
 		add_filter( 'admin_body_class', array( $this, 'filter_add_body_class' ), 10, 2 );
 
 		add_action( 'admin_head', array( $this, 'hide_editor' ) );
+		add_action( 'brizy_global_data_updated', array( $this, 'global_data_updated' ) );
 		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
 		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
 
-		add_filter( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		//add_filter( 'save_post', array( $this, 'save_post' ), 10, 2 );
 
 		add_filter( 'wp_import_existing_post', array( $this, 'handleNewProjectPostImport' ), 10, 2 );
 		add_filter( 'wp_import_post_meta', array( $this, 'handleNewProjectMetaImport' ), 10, 3 );
@@ -113,6 +114,11 @@ class Brizy_Admin_Main {
 	public function action_delete_page( $post = null ) {
 		try {
 
+			if (wp_is_post_autosave($post) || wp_is_post_revision($post)) {
+				return;
+			}
+
+
 			$bpost = Brizy_Editor_Post::get( $post );
 
 			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->get_parent_id() );
@@ -151,27 +157,27 @@ class Brizy_Admin_Main {
 		return $post_states;
 	}
 
-	public function save_post( $post_id, $post ) {
-		try {
-
-			$brizy_post = null;
-
-			$parent_id = wp_is_post_revision( $post_id );
-
-			if ( $parent_id ) {
-				$brizy_post = Brizy_Editor_Post::get( $parent_id );
-
-				if ( $brizy_post->uses_editor() ) {
-					$brizy_post->save( $post_id );
-				}
-			}
-
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
-
-			return;
-		}
-	}
+//	public function save_post( $post_id, $post ) {
+//		try {
+//
+//			$brizy_post = null;
+//
+//			$parent_id = wp_is_post_revision( $post_id );
+//
+//			if ( $parent_id ) {
+//				$brizy_post = Brizy_Editor_Post::get( $parent_id );
+//
+//				if ( $brizy_post->uses_editor() ) {
+//					$brizy_post->save( $post_id );
+//				}
+//			}
+//
+//		} catch ( Exception $e ) {
+//			Brizy_Logger::instance()->exception( $e );
+//
+//			return;
+//		}
+//	}
 
 
 	/**
@@ -487,7 +493,7 @@ class Brizy_Admin_Main {
 		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
 
 			$currentProject        = Brizy_Editor_Project::get();
-			$currentProjectGlobals = $currentProject->getGlobals();
+			$currentProjectGlobals = $currentProject->getDecodedGlobals();
 			$currentProjectPostId  = $currentProject->getWpPost()->ID;
 			$currentProjectStorage = Brizy_Editor_Storage_Project::instance( $currentProjectPostId );
 
@@ -567,5 +573,19 @@ class Brizy_Admin_Main {
 		}
 
 		return $postMeta;
+	}
+
+	public function global_data_updated() {
+		// mark all brizy post to be compiled on next view
+		$posts = Brizy_Editor_Post::get_all_brizy_posts();
+
+		// we need to trigger a post update action to make sure the cache plugins will update clear the cache
+		remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
+		// mark all post to be compiled on next view
+		foreach ( $posts as $bpost ) {
+			$bpost->set_needs_compile( true );
+			$bpost->save();
+			// wp_update_post( array( 'ID' => $bpost->get_id() ) );
+		}
 	}
 }

@@ -1,274 +1,328 @@
 import _ from "underscore";
 import jQuery from "jquery";
 import Config from "visual/global/Config";
-import converter from "./converter";
+import {
+  parsePage,
+  stringifyPage,
+  parseGlobals,
+  stringifyGlobals
+} from "./adapter";
 
 const hardcodedAjaxSettings = {
   xhrFields: {
     withCredentials: true
   },
-  beforeSend: function(xhr) {
-    if (process.env.NODE_ENV === "development") {
-      xhr.setRequestHeader(
-        "Authorization",
-        "Bearer " + Config.get("accessToken")
-      );
-    }
-  }
+  ...(process.env.NODE_ENV === "development"
+    ? {
+        beforeSend(xhr) {
+          xhr.setRequestHeader("x-auth-user-token", Config.get("accessToken"));
+        }
+      }
+    : {})
 };
 
 export function request(ajaxSettings) {
-  return new Promise(function(resolve, reject) {
-    jQuery.ajax(
-      _.extend({}, hardcodedAjaxSettings, ajaxSettings, {
-        success: function(data) {
-          resolve(data);
-        },
-        error: function(jqXHR) {
-          if (jqXHR.status === 503) {
-            // 503 means maintainance
-            window.location.reload();
-            return;
-          }
-          reject(jqXHR.responseText);
-        }
-      })
-    );
+  return new Promise((resolve, reject) => {
+    jQuery.ajax({
+      ...hardcodedAjaxSettings,
+      ...ajaxSettings,
+      success(data) {
+        resolve(data);
+      },
+      error(jqXHR) {
+        reject(jqXHR.responseText);
+      }
+    });
   });
 }
 
 export function persistentRequest(ajaxSettings) {
-  return new Promise(function(resolve, reject) {
-    jQuery.ajax(
-      _.extend({}, hardcodedAjaxSettings, ajaxSettings, {
-        notificationId: "data-save-fail",
-        onbeforeunload: function() {
-          return "You have unsaved data.";
-        },
-        failedAttempts: 0,
-        success: function(data) {
-          // Notifications.removeNotification(this.notificationId);
-          this.failedAttempts = 0;
-          window.onbeforeunload = null;
-          resolve(data);
-        },
-        error: function(jqXHR) {
-          // Notifications.addNotification({
-          //   id: this.notificationId,
-          //   type: Notifications.notificationTypes.error,
-          //   text:
-          //     "Changes could not be saved. Please check your internet connection.",
-          //   dismissible: false
-          // });
-          this.failedAttempts++;
-          window.onbeforeunload = this.onbeforeunload;
+  return new Promise((resolve, reject) => {
+    jQuery.ajax({
+      ...hardcodedAjaxSettings,
+      ...ajaxSettings,
+      onbeforeunload() {
+        return "You have unsaved data.";
+      },
+      failedAttempts: 0,
+      success(data) {
+        this.failedAttempts = 0;
+        window.onbeforeunload = null;
+        resolve(data);
+      },
+      error(jqXHR) {
+        this.failedAttempts++;
+        window.onbeforeunload = this.onbeforeunload;
 
-          if (this.failedAttempts <= 5) {
-            setTimeout(
-              function() {
-                jQuery.ajax(this);
-              }.bind(this),
-              5000 * this.failedAttempts
-            );
-          }
+        if (this.failedAttempts <= 5) {
+          setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
+        } else {
+          reject(jqXHR);
         }
-      })
-    );
+      }
+    });
   });
 }
 
-function getApiUrl() {
-  return Config.get("urls").api;
-}
+const apiUrl = Config.get("urls").api;
+const paginationData = {
+  page: 1,
+  count: 200
+};
+const uidToApiId = {};
 
-function getProjectsApiUrl() {
-  return Config.get("urls").api + "/projects/" + Config.get("project");
-}
-
-function getLanguageData() {
-  return {
-    language: Config.get("projectLanguage").id
-  };
-}
-
-function getPaginationData() {
-  return {
-    page: 1,
-    count: 200
-  };
-}
-
-export { converter };
-
-export function ping() {
-  return request({
-    type: "GET",
-    dataType: "json",
-    url: getApiUrl()
-  });
-}
+// page
 
 export function getPages() {
-  var requestData = _.extend(getLanguageData(), getPaginationData());
+  const project = Config.get("project").id;
+  const requestData = {
+    project,
+    ...paginationData
+  };
+
   return persistentRequest({
     type: "GET",
     dataType: "json",
-    url: getProjectsApiUrl() + "/pages",
+    url: apiUrl + "/pages",
     data: requestData
-  }).then(r => _.map(r, converter.pageFromBackend));
+  }).then(r => {
+    return r.map(parsePage);
+  });
 }
 
-export function addPage(data) {
-  var requestData = _.extend(converter.pageToBackend(data), getLanguageData());
+export function createPage(data, meta = {}) {
+  const { is_autosave = 0 } = meta;
+  const requestData = {
+    ...data,
+    is_autosave
+  };
+
   return persistentRequest({
     type: "POST",
     dataType: "json",
-    url: getProjectsApiUrl() + "/pages",
+    url: apiUrl + "/pages",
     data: requestData
-  }).then(converter.pageFromBackend);
+  }).then(r => {
+    return parsePage(r);
+  });
 }
 
-export function updatePage(id, data) {
-  var requestData = _.extend(
-    _.pick(
-      converter.pageToBackend(data),
-      "title",
-      "slug",
-      "data",
-      "description",
-      "is_index",
-      "type",
-      "url"
-    ),
-    getLanguageData()
-  );
+export function updatePage(page, meta = {}) {
+  const { id, data, is_index, status } = stringifyPage(page);
+  const { is_autosave = 1 } = meta;
+  const requestData = {
+    data,
+    is_index,
+    status,
+    is_autosave
+  };
+
   return persistentRequest({
     type: "PUT",
-    url: getProjectsApiUrl() + "/pages/" + id,
+    dataType: "json",
+    url: apiUrl + "/pages/" + id,
     data: requestData
-  }).then(converter.pageFromBackend);
+  });
 }
 
 export function deletePage(id) {
   return persistentRequest({
     type: "DELETE",
     dataType: "json",
-    url: getProjectsApiUrl() + "/pages/" + id
+    url: apiUrl + "/pages/" + id
   });
 }
+
+// globals
 
 export function getGlobals() {
+  const project = Config.get("project").id;
+
   return persistentRequest({
     type: "GET",
     dataType: "json",
-    url: getProjectsApiUrl(),
-    data: getLanguageData()
-  }).then(r => JSON.parse(r.globals));
+    url: apiUrl + "/projects/" + project
+  }).then(r => {
+    return parseGlobals(r.globals);
+  });
 }
 
-export function saveGlobals(data) {
-  var requestData = _.extend(
-    { globals: JSON.stringify(data) },
-    getLanguageData()
-  );
+export function updateGlobals(data, meta = {}) {
+  const project = Config.get("project").id;
+  const { is_autosave = 1 } = meta;
+  const requestData = {
+    globals: stringifyGlobals(data),
+    is_autosave
+  };
+
   return persistentRequest({
     type: "PUT",
     dataType: "json",
-    url: getProjectsApiUrl(),
+    url: apiUrl + "/projects/" + project,
     data: requestData
   });
 }
 
-export function getVariants() {
-  var requestData = getPaginationData();
+// global blocks
+
+export function getGlobalBlocks() {
+  const project = Config.get("project").id;
+  const requestData = {
+    ...paginationData,
+    project
+  };
+
   return persistentRequest({
     type: "GET",
     dataType: "json",
-    url: getProjectsApiUrl() + "/variants",
+    url: apiUrl + "/global_blocks",
     data: requestData
+  }).then(r => {
+    return r.reduce((acc, { id, uid, data }) => {
+      // map uids to ids to use them in updates
+      uidToApiId[uid] = id;
+
+      acc[uid] = JSON.parse(data);
+
+      return acc;
+    }, {});
   });
 }
 
-export function cloneVariant(id) {
+export function createGlobalBlock({ id: uid, data }, meta = {}) {
+  const project = Config.get("project").id;
+  const { is_autosave = 0 } = meta;
+  const requestData = {
+    uid,
+    project,
+    data: JSON.stringify(data),
+    is_autosave
+  };
+
   return persistentRequest({
     type: "POST",
     dataType: "json",
-    url: getProjectsApiUrl() + "/variants/" + id + "/clones"
+    url: apiUrl + "/global_blocks",
+    data: requestData
+  }).then(r => {
+    // map our uid to the newly created block's id
+    uidToApiId[uid] = r.id;
   });
 }
+
+export function updateGlobalBlock({ id: uid, data }, meta = {}) {
+  if (uidToApiId[uid]) {
+    const { is_autosave = 1 } = meta;
+    const requestData = {
+      uid,
+      data: JSON.stringify(data),
+      is_autosave
+    };
+
+    return persistentRequest({
+      type: "PUT",
+      dataType: "json",
+      url: apiUrl + "/global_blocks/" + uidToApiId[uid],
+      data: requestData
+    });
+  } else {
+    // need some kind of retry mechanism
+    return Promise.reject("not implemented yet");
+  }
+}
+
+// saved blocks
+
+export function getSavedBlocks() {
+  const library = Config.get("library").id;
+  const requestData = {
+    ...paginationData,
+    library
+  };
+
+  return persistentRequest({
+    type: "GET",
+    dataType: "json",
+    url: apiUrl + "/saved_blocks",
+    data: requestData
+  }).then(r => {
+    return r.reduce((acc, { id, uid, data }) => {
+      // map uids to ids to use them in updates
+      uidToApiId[uid] = id;
+
+      acc[uid] = JSON.parse(data);
+
+      return acc;
+    }, {});
+  });
+}
+
+export function createSavedBlock({ id: uid, data }, meta = {}) {
+  const library = Config.get("library").id;
+  const { is_autosave = 0 } = meta;
+  const requestData = {
+    uid,
+    library,
+    data: JSON.stringify(data),
+    is_autosave
+  };
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    url: apiUrl + "/saved_blocks",
+    data: requestData
+  }).then(r => {
+    // map our uid to the newly created block's id
+    uidToApiId[uid] = r.id;
+  });
+}
+
+export function updateSavedBlock({ id: uid, data }, meta = {}) {
+  if (uidToApiId[uid]) {
+    const { is_autosave = 1 } = meta;
+    const requestData = {
+      uid,
+      data: JSON.stringify(data),
+      is_autosave
+    };
+
+    return persistentRequest({
+      type: "PUT",
+      dataType: "json",
+      url: apiUrl + "/saved_blocks/" + uidToApiId[uid],
+      data: requestData
+    });
+  } else {
+    // need some kind of retry mechanism
+    return Promise.reject("not implemented yet");
+  }
+}
+
+export function deleteSavedBlock({ id: uid }) {
+  if (uidToApiId[uid]) {
+    return persistentRequest({
+      type: "DELETE",
+      dataType: "json",
+      url: apiUrl + "/saved_blocks/" + uidToApiId[uid]
+    });
+  } else {
+    // need some kind of retry mechanism
+    return Promise.reject("not implemented yet");
+  }
+}
+
+// image
 
 export function uploadImage(data) {
-  var requestData = converter.imageToBackend(data);
+  const requestData = {
+    attachment: data.base64
+  };
+
   return request({
     type: "POST",
     dataType: "json",
-    url: getProjectsApiUrl() + "/media",
+    url: apiUrl + "/media",
     data: requestData
-  });
-}
-
-export function uploadFile(file) {
-  return request({
-    type: "POST",
-    dataType: "json",
-    contentType: false,
-    processData: false,
-    url: getProjectsApiUrl() + "/custom_files",
-    data: file
-  });
-}
-
-export function getProjectLanguages() {
-  var requestData = getPaginationData();
-  return persistentRequest({
-    type: "GET",
-    dataType: "json",
-    url: getProjectsApiUrl() + "/languages",
-    data: requestData
-  });
-}
-
-export function getDomains(data) {
-  return simpleRequest({
-    type: "GET",
-    dataType: "json",
-    url: getProjectsApiUrl() + "/domains",
-    data: data
-  });
-}
-
-export function setDomains(data) {
-  return simpleRequest({
-    type: "POST",
-    dataType: "json",
-    url: getProjectsApiUrl() + "/domains",
-    data: data
-  });
-}
-
-export function updateDomains(id, data) {
-  return simpleRequest({
-    type: "PUT",
-    dataType: "json",
-    url: getProjectsApiUrl() + "/domains/" + id,
-    data: data
-  });
-}
-
-export function deleteDomains(id, data) {
-  return simpleRequest({
-    type: "DELETE",
-    dataType: "json",
-    url: getProjectsApiUrl() + "/domains/" + id,
-    data: data
-  });
-}
-
-export function connectDomain(id, data) {
-  return simpleRequest({
-    type: "PUT",
-    dataType: "json",
-    url: getProjectsApiUrl() + "/domains/" + id + "/connect",
-    data: data
   });
 }

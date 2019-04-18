@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleColor } from "visual/utils/style";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -76,10 +76,6 @@ export function styleClassName(v) {
       spacing,
       slidesToShow,
       sliderArrowsSpacing,
-      sliderArrowsColorHex,
-      sliderArrowsColorOpacity,
-      sliderDotsColorHex,
-      sliderDotsColorOpacity,
       sliderPaddingType,
       sliderPadding,
       sliderPaddingSuffix,
@@ -91,7 +87,6 @@ export function styleClassName(v) {
       sliderPaddingBottomSuffix,
       sliderPaddingLeft,
       sliderPaddingLeftSuffix,
-      tabletSlidesToShow,
       tabletSliderPaddingType,
       tabletSliderPadding,
       tabletSliderPaddingSuffix,
@@ -162,10 +157,20 @@ export function styleClassName(v) {
         paddingRight: `${spacing / 2}px`
       },
       "& > .brz-carousel__slider > .brz-slick-slider__dots": {
-        color: hexToRgba(sliderDotsColorHex, sliderDotsColorOpacity)
+        color: styleColor({
+          v,
+          device: "desktop",
+          state: "normal",
+          prefix: "sliderDotsColor"
+        })
       },
       "& > .brz-carousel__slider > .brz-slick-slider__arrow": {
-        color: hexToRgba(sliderArrowsColorHex, sliderArrowsColorOpacity)
+        color: styleColor({
+          v,
+          device: "desktop",
+          state: "normal",
+          prefix: "sliderArrowsColor"
+        })
       },
       "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
         left: `${sliderArrowsSpacing}px`
@@ -255,10 +260,6 @@ export function styleCSSVars(v) {
   const {
     spacing,
     sliderArrowsSpacing,
-    sliderArrowsColorHex,
-    sliderArrowsColorOpacity,
-    sliderDotsColorHex,
-    sliderDotsColorOpacity,
     sliderPaddingType,
     sliderPadding,
     sliderPaddingSuffix,
@@ -307,8 +308,18 @@ export function styleCSSVars(v) {
     "--spacing": `${spacing / 2}px`,
     "--sliderMargin": `-${spacing / 2}px`,
     "--arrowsSpacing": `${sliderArrowsSpacing}px`,
-    "--colorArrows": hexToRgba(sliderArrowsColorHex, sliderArrowsColorOpacity),
-    "--colorDots": hexToRgba(sliderDotsColorHex, sliderDotsColorOpacity),
+    "--colorArrows": styleColor({
+      v,
+      device: "desktop",
+      state: "normal",
+      prefix: "sliderArrowsColor"
+    }),
+    "--colorDots": styleColor({
+      v,
+      device: "desktop",
+      state: "normal",
+      prefix: "sliderDotsColor"
+    }),
     "--paddingTop":
       sliderPaddingType === "grouped"
         ? sliderPadding + sliderPaddingSuffix

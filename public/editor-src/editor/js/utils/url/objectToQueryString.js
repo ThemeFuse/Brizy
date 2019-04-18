@@ -1,11 +1,13 @@
-import _ from 'underscore';
-
 export default function objectToQueryString(obj) {
   if (!obj) {
-    return '';
+    return "";
   }
 
-  return _.map(obj, function(value, key) {
-    return key + '=' + encodeURIComponent(value);
-  }).join('&');
-};
+  var arr = [];
+
+  for (var prop in obj) {
+    arr.push(prop + "=" + encodeURIComponent(obj[prop]));
+  }
+
+  return arr.join("&");
+}

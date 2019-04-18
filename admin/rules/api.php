@@ -77,32 +77,25 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$postId = (int) $this->param( 'post' );
 
+		$postType = get_post_type( $postId );
+
 		if ( ! $postId ) {
 			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
 
 		$ruleData = file_get_contents( "php://input" );
-		$ruleJson = json_decode( $ruleData );
-		$rule     = Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
+
+		$rule = $this->manager->createRuleFromJson( $ruleData, $postType );
 
 		// validate rule
-		$ruleSet = $this->manager->getAllRulesSet();
-
-		foreach ( $ruleSet->getRules() as $arule ) {
-
-			if ( $rule->isEqual( $arule ) ) {
-				wp_send_json_error( (object) array(
-					'message' => 'The rule is already used in one template',
-					'rule'    => $arule->getId()
-				), 400 );
-			}
+		if ( $error = $this->manager->validateRule( $postType, $rule ) ) {
+			wp_send_json_error( $error, 400 );
 		}
 
 		$this->manager->addRule( $postId, $rule );
 
 		wp_send_json_success( $rule, 200 );
 
-		return null;
 	}
 
 	public function actionCreateRules() {
@@ -116,27 +109,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		$rulesData = file_get_contents( "php://input" );
-		$rulesJson = json_decode( $rulesData );
-		$rules     = array();
-		foreach ( $rulesJson as $ruleJson ) {
-			$rules[] = Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
 
-		}
+		$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+
 		// validate rule
-		$ruleSet = $this->manager->getAllRulesSet(array(), $postType);
-		$errors  = array();
-		foreach ( $ruleSet->getRules() as $arule ) {
-			foreach ( $rules as $newRule ) {
-				if ( $newRule->isEqual( $arule ) ) {
-					$errors[] = (object) array(
-						'message' => 'The rule is already used',
-						'rule'    => $arule->getId()
-					);
-				}
-			}
-		}
-
-		if ( count( $errors ) > 0 ) {
+		if ( $errors = $this->manager->validateRules( $postType, $rules ) ) {
 			wp_send_json_error( $errors, 400 );
 		}
 

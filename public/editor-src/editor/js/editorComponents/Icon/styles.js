@@ -1,8 +1,14 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { styleBgGradient } from "visual/utils/style";
+import {
+  styleBgGradient,
+  styleBorderColor,
+  styleColor,
+  styleBgColor,
+  styleBoxShadow
+} from "visual/utils/style";
+
 const getIconStrokeWidth = (v, iconSize) => {
   const { type } = v;
 
@@ -67,30 +73,11 @@ export function styleClassName(v) {
     };
   } else {
     const {
-      colorHex,
-      colorOpacity,
-      bgColorHex,
-      bgColorOpacity,
-      borderColorHex,
-      borderColorOpacity,
-      hoverColorHex,
-      hoverColorOpacity,
-      hoverBgColorHex,
-      hoverBgColorOpacity,
-      hoverBorderColorHex,
-      hoverBorderColorOpacity,
       borderWidth,
       borderStyle,
       customSize,
       padding,
-      borderRadius,
-      boxShadow,
-      boxShadowColorHex,
-      boxShadowColorOpacity,
-      boxShadowBlur,
-      boxShadowSpread,
-      boxShadowVertical,
-      boxShadowHorizontal
+      borderRadius
     } = v;
 
     // Tablet
@@ -148,19 +135,19 @@ export function styleClassName(v) {
     const tabletStrokeWidth = getIconStrokeWidth(v, tabletCustomSize);
     const mobileStrokeWidth = getIconStrokeWidth(v, mobileCustomSize);
 
-    const boxShadowStyle =
-      boxShadow === "on"
-        ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-            boxShadowColorHex,
-            boxShadowColorOpacity
-          )}`
-        : "none";
-
     glamorObj = {
       ".brz &": {
-        color: hexToRgba(colorHex, colorOpacity),
-        borderColor: hexToRgba(borderColorHex, borderColorOpacity),
-        backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
+        color: styleColor({ v, device: "desktop", state: "normal" }),
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
         backgroundImage: styleBgGradient({
           v,
           device: "desktop",
@@ -174,12 +161,20 @@ export function styleClassName(v) {
         padding: `${padding}px`,
         borderRadius,
         strokeWidth,
-        boxShadow: boxShadowStyle
+        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
       },
       ".brz &:hover": {
-        color: hexToRgba(hoverColorHex, hoverColorOpacity),
-        borderColor: hexToRgba(hoverBorderColorHex, hoverBorderColorOpacity),
-        backgroundColor: hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
+        color: styleColor({ v, device: "desktop", state: "hover" }),
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
         backgroundImage: styleBgGradient({
           v,
           device: "desktop",
@@ -220,30 +215,11 @@ export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
   const {
-    colorHex,
-    colorOpacity,
-    bgColorHex,
-    bgColorOpacity,
-    borderColorHex,
-    borderColorOpacity,
-    hoverColorHex,
-    hoverColorOpacity,
-    hoverBgColorHex,
-    hoverBgColorOpacity,
-    hoverBorderColorHex,
-    hoverBorderColorOpacity,
     borderWidth,
     borderStyle,
     customSize,
     padding,
-    borderRadius,
-    boxShadow,
-    boxShadowColorHex,
-    boxShadowColorOpacity,
-    boxShadowBlur,
-    boxShadowSpread,
-    boxShadowVertical,
-    boxShadowHorizontal
+    borderRadius
   } = v;
 
   // Tablet
@@ -298,18 +274,18 @@ export function styleCSSVars(v) {
   const tabletStrokeWidth = getIconStrokeWidth(v, tabletCustomSize);
   const mobileStrokeWidth = getIconStrokeWidth(v, mobileCustomSize);
 
-  const boxShadowStyle =
-    boxShadow === "on"
-      ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
-      : "none";
-
   return {
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--borderColor": hexToRgba(borderColorHex, borderColorOpacity),
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     "--backgroundGradient": styleBgGradient({
       v,
       device: "desktop",
@@ -317,12 +293,17 @@ export function styleCSSVars(v) {
     }),
     "--borderWidth": `${borderWidth}px`,
     "--borderStyle": borderStyle,
-    "--hoverColor": hexToRgba(hoverColorHex, hoverColorOpacity),
-    "--hoverBorderColor": hexToRgba(
-      hoverBorderColorHex,
-      hoverBorderColorOpacity
-    ),
-    "--hoverBgColor": hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
+    "--hoverColor": styleColor({ v, device: "desktop", state: "hover" }),
+    "--hoverBorderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+    "--hoverBgColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
     "--hoverBackgroundGradient": styleBgGradient({
       v,
       device: "desktop",
@@ -334,7 +315,7 @@ export function styleCSSVars(v) {
     "--padding": `${padding}px`,
     "--borderRadius": `${borderRadius}px`,
     "--strokeWidth": strokeWidth,
-    "--boxShadow": boxShadowStyle,
+    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
 
     //Tablet
     "--tabletWidth": `${tabletIconSize}px`,

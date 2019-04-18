@@ -119,7 +119,8 @@ export {
   toolbarBoxShadowBlur,
   toolbarBoxShadowSpread,
   toolbarBoxShadowVertical,
-  toolbarBoxShadowHorizontal
+  toolbarBoxShadowHorizontal,
+  toolbarBoxShadow
 } from "./toolbarBoxShadow";
 
 // Disabled

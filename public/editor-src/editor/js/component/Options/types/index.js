@@ -15,7 +15,9 @@ import FormApps from "./FormApps";
 import Grid from "./Grid";
 import ImageSetter from "./ImageSetter";
 import IconSetter from "./IconSetter";
+import MultiInput from "./MultiInput";
 import MultiPicker from "./MultiPicker";
+
 import Input from "./Input";
 import Textarea from "./Textarea";
 import Popover from "./Popover";
@@ -52,6 +54,7 @@ export default {
   imageSetter: ImageSetter,
   iconSetter: IconSetter,
   multiPicker: MultiPicker,
+  multiInput: MultiInput,
   input: Input,
   textarea: Textarea,
   popover: Popover,

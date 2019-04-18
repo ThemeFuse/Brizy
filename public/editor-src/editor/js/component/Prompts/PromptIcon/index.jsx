@@ -193,7 +193,7 @@ export default class extends Component {
               </div>
               <div className="brz brz-ed-popup-icons__grid">
                 <SmartGrid
-                  height={540}
+                  height="100%"
                   itemRenderer={index => this.renderItem(icons, index)}
                   itemsPerRow={8}
                   initialIndex={initialIndex}

@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { styleElementSliderColor } from "visual/utils/style";
+import { styleColor } from "visual/utils/style";
 
 export function sectionStyleClassName(v) {
   const {
@@ -64,38 +64,38 @@ export function sectionStyleClassName(v) {
         [`${sliderFullHeight}`]: fullHeight === "on" ? "100vh" : "100%"
       },
       ".brz & .brz-slick-slider__dots": {
-        color: styleElementSliderColor({
+        color: styleColor({
           v,
           device: "desktop",
           state: "normal",
-          prefix: "sliderDots"
+          prefix: "sliderDotsColor"
         })
       },
 
       ".brz & .brz-slick-slider__arrow": {
-        color: styleElementSliderColor({
+        color: styleColor({
           v,
           device: "desktop",
           state: "normal",
-          prefix: "sliderArrows"
+          prefix: "sliderArrowsColor"
         })
       },
 
       ".brz & .brz-slick-slider__dots:hover": {
-        color: styleElementSliderColor({
+        color: styleColor({
           v,
           device: "desktop",
           state: "hover",
-          prefix: "sliderDots"
+          prefix: "sliderDotsColor"
         })
       },
 
       ".brz & .brz-slick-slider__arrow:hover": {
-        color: styleElementSliderColor({
+        color: styleColor({
           v,
           device: "desktop",
           state: "hover",
-          prefix: "sliderArrows"
+          prefix: "sliderArrowsColor"
         })
       },
 
@@ -126,32 +126,32 @@ export function sectionStyleCSSVars(v) {
 
   return {
     "--fullHeight100vh": fullHeight === "on" ? "100vh" : "100%",
-    "--colorDots": styleElementSliderColor({
+    "--colorDots": styleColor({
       v,
       device: "desktop",
       state: "normal",
-      prefix: "sliderDots"
+      prefix: "sliderDotsColor"
     }),
 
-    "--hoverColorDots": styleElementSliderColor({
+    "--hoverColorDots": styleColor({
       v,
       device: "desktop",
       state: "hover",
-      prefix: "sliderDots"
+      prefix: "sliderDotsColor"
     }),
 
-    "--colorArrows": styleElementSliderColor({
+    "--colorArrows": styleColor({
       v,
       device: "desktop",
       state: "normal",
-      prefix: "sliderArrows"
+      prefix: "sliderArrowsColor"
     }),
 
-    "--hoverColorArrows": styleElementSliderColor({
+    "--hoverColorArrows": styleColor({
       v,
       device: "desktop",
       state: "hover",
-      prefix: "sliderArrows"
+      prefix: "sliderArrowsColor"
     }),
     "--zIndex": zIndex === 0 ? "auto" : zIndex
   };

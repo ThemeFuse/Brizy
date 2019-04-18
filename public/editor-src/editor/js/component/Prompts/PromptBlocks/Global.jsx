@@ -1,26 +1,25 @@
 import React from "react";
+import { connect } from "react-redux";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
 import DataFilter from "./common/DataFilter";
-import { assetUrl } from "visual/utils/asset";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import Editor from "visual/global/Editor";
+import { assetUrl } from "visual/utils/asset";
 import {
   blockThumbnailData,
   placeholderBlockThumbnailUrl
 } from "visual/utils/blocks";
-import { getStore } from "visual/redux/store";
-import { updateGlobals } from "visual/redux/actionCreators";
+import { globalBlocksSelector } from "visual/redux/selectors";
+import { updateGlobalBlock } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
-const defaultFilterUI = {
-  search: true
-};
-
-export default class Global extends React.Component {
+class Global extends React.Component {
   static defaultProps = {
-    filterUI: defaultFilterUI,
+    filterUI: {
+      search: true
+    },
     blocksConfig: null,
     onAddBlocks: _.noop,
     onClose: _.noop
@@ -45,18 +44,20 @@ export default class Global extends React.Component {
   };
 
   handleThumbnailRemove = thumbnailData => {
-    const store = getStore();
-    const globalBlocks = store.getState().globals.project.globalBlocks || {};
-    const { globalBlockId } = thumbnailData.resolve.value;
-    const newGlobalBlocks = {
-      ...globalBlocks,
-      [globalBlockId]: {
-        ...globalBlocks[globalBlockId],
-        deleted: true
-      }
-    };
+    const { globalBlocks, updateGlobalBlock } = this.props;
+    const { id } = thumbnailData;
+    const globalBlock = globalBlocks[id];
 
-    store.dispatch(updateGlobals("globalBlocks", newGlobalBlocks));
+    updateGlobalBlock({
+      id,
+      data: {
+        ...globalBlock,
+        deleted: true
+      },
+      meta: {
+        is_autosave: 0
+      }
+    });
   };
 
   renderDataFilter(thumbnails) {
@@ -163,8 +164,7 @@ export default class Global extends React.Component {
   }
 
   render() {
-    const globalBlocks =
-      getStore().getState().globals.project.globalBlocks || {};
+    const { globalBlocks } = this.props;
     const thumbnails = Object.entries(globalBlocks).reduce(
       (acc, [globalBlockId, block]) => {
         if (block.deleted) {
@@ -183,6 +183,7 @@ export default class Global extends React.Component {
           }
 
           thumbnailData = {
+            id: globalBlockId,
             thumbnailSrc: placeholderBlockThumbnailUrl(),
             thumbnailWidth: 500,
             thumbnailHeight: 200,
@@ -209,7 +210,7 @@ export default class Global extends React.Component {
           const { url, width, height } = blockThumbnailData(block);
 
           thumbnailData = {
-            id: block.blockId,
+            id: globalBlockId,
             thumbnailSrc: url,
             thumbnailWidth: width,
             thumbnailHeight: height,
@@ -236,3 +237,15 @@ export default class Global extends React.Component {
       : this.renderClear();
   }
 }
+
+const mapStateToProps = state => ({
+  globalBlocks: globalBlocksSelector(state)
+});
+const mapDispatchToProps = {
+  updateGlobalBlock
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Global);

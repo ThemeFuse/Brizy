@@ -1,13 +1,19 @@
 import _ from "underscore";
-import { uuid } from "visual/utils/uuid";
 import {
   EDITOR_RENDERED,
+  UPDATE_UI,
   UPDATE_PAGE,
   UPDATE_GLOBALS,
-  UPDATE_UI
-} from "visual/redux/actionTypes";
+  CREATE_GLOBAL_BLOCK,
+  UPDATE_GLOBAL_BLOCK,
+  CREATE_SAVED_BLOCK
+} from "visual/redux/actions";
 import { ActionTypes as HistoryActionTypes } from "visual/redux/reducers/historyEnhancer";
-import { updatePage, updateGlobals } from "visual/redux/actionCreators";
+import {
+  updatePage,
+  updateGlobalBlock,
+  updateSavedBlock
+} from "visual/redux/actions";
 import {
   pageDataSelector as getPageData,
   pageBlocksSelector as getPageBlocks,
@@ -40,8 +46,8 @@ const getBlocksMap = blocks =>
   }, {});
 const blockIsInThePage = (blockId, store) =>
   Boolean(getBlocksMap(getPageBlocks(store.getState()))[blockId]);
-const blockIsInSaved = (block, store) =>
-  getSavedBlocks(store.getState()).includes(block); // saved blocks do not have their own uuid so we look by reference
+const blockIsInSaved = (blockId, store) =>
+  Boolean(getSavedBlocks(store.getState())[blockId]);
 const isDesktopMode = store =>
   deviceModeSelector(store.getState()) === "desktop";
 
@@ -70,14 +76,15 @@ export default store => next => action => {
 
   if (
     action.type === UPDATE_PAGE ||
-    (action.type === UPDATE_GLOBALS && action.key === "globalBlocks") ||
+    action.type === CREATE_GLOBAL_BLOCK ||
+    action.type === UPDATE_GLOBAL_BLOCK ||
     action.type === UNDO ||
     action.type === REDO
   ) {
     changedBlocksDebounced(prevState, store, next);
   }
 
-  if (action.type === UPDATE_GLOBALS && action.key === "savedBlocks") {
+  if (action.type === CREATE_SAVED_BLOCK) {
     changedBlocks(prevState, store, next);
   }
 };
@@ -114,9 +121,9 @@ const allBlocksDebounced = _.debounce(allBlocks, DEBOUNCE_INTERVAL);
 
 function changedBlocks(prevState, store, next) {
   const changedBlocks = {
-    page: [],
-    saved: [],
-    global: []
+    page: new Set(),
+    saved: new Set(),
+    global: new Set()
   };
 
   const currState = store.getState();
@@ -133,9 +140,9 @@ function changedBlocks(prevState, store, next) {
 
       if (block !== prevBlocksMap[blockId]) {
         if (block.type === "GlobalBlock") {
-          changedBlocks.global.push(block.value.globalBlockId);
+          changedBlocks.global.add(block.value.globalBlockId);
         } else {
-          changedBlocks.page.push(block);
+          changedBlocks.page.add(block);
         }
       }
     });
@@ -143,11 +150,11 @@ function changedBlocks(prevState, store, next) {
 
   // collect changed saved blocks
   {
-    const prevBlocksMap = getBlocksMap(getSavedBlocks(prevState));
-    const currBlocksMap = getBlocksMap(getSavedBlocks(currState));
+    const prevBlocksMap = getSavedBlocks(prevState);
+    const currBlocksMap = getSavedBlocks(currState);
     Object.entries(currBlocksMap).forEach(([blockId, block]) => {
       if (block !== prevBlocksMap[blockId]) {
-        changedBlocks.saved.push(block);
+        changedBlocks.saved.add(blockId);
       }
     });
   }
@@ -158,7 +165,7 @@ function changedBlocks(prevState, store, next) {
     const currBlocksMap = getGlobalBlocks(currState);
     Object.entries(currBlocksMap).forEach(([blockId, block]) => {
       if (block !== prevBlocksMap[blockId]) {
-        changedBlocks.global.push(blockId);
+        changedBlocks.global.add(blockId);
       }
     });
   }
@@ -184,7 +191,7 @@ async function enqueueTasks(changedBlocks, store, next) {
   const historyMeta = {
     historyReplacePresent: true
   };
-  const pageBlockTasks = changedBlocks.page.map(block => {
+  const pageBlockTasks = Array.from(changedBlocks.page).map(block => {
     const blockId = block.value._id;
 
     return {
@@ -197,12 +204,14 @@ async function enqueueTasks(changedBlocks, store, next) {
         if (!blockIsInThePage(blockId, store)) {
           return;
         }
-        const screenshotId = blockId;
+        let screenshotId = blockId;
         let screenshot;
         try {
           screenshot = await makeBlockScreenshot(block);
         } catch (e) {
-          console.log(e);
+          if (process.env.NODE_ENV === "development") {
+            console.warn(e);
+          }
         }
 
         // upload screenshot
@@ -213,10 +222,14 @@ async function enqueueTasks(changedBlocks, store, next) {
           enqueueAgain();
           return;
         }
-        await uploadBlockScreenshot({
+        const r = await uploadBlockScreenshot({
+          block,
           screenshotId,
           screenshotBase64: screenshot.src
         });
+        if (TARGET !== "WP") {
+          screenshotId = r.id;
+        }
 
         // update store
         if (!blockIsInThePage(blockId, store)) {
@@ -235,142 +248,168 @@ async function enqueueTasks(changedBlocks, store, next) {
             : block;
         });
         next(
-          updatePage(
-            {
-              data: {
-                ...pageData,
-                items: updatedBlocks
-              }
+          updatePage({
+            data: {
+              ...pageData,
+              items: updatedBlocks
             },
-            historyMeta
-          )
+            meta: historyMeta
+          })
         );
       }
     };
   });
-  const savedBlockTasks = changedBlocks.saved.map(block => {
-    const blockId = uuid();
-
+  const savedBlockTasks = Array.from(changedBlocks.saved).map(savedBlockId => {
     return {
-      id: blockId,
+      id: savedBlockId,
       priority: taskQueue.taskPriorities.IMMEDIATE,
       cb: async enqueueAgain => {
-        // console.log("saved block screen cb", blockId);
+        let block;
 
         // make screenshot
-        const screenshotId = blockId;
-        const screenshot = await makeBlockScreenshot(block);
+        block = getSavedBlocks(store.getState())[savedBlockId];
+        if (!block) {
+          return;
+        }
+        let screenshotId = savedBlockId;
+        let screenshot;
+        try {
+          screenshot = await makeBlockScreenshot(block);
+        } catch (e) {
+          if (process.env.NODE_ENV === "development") {
+            console.warn(e);
+          }
+        }
 
         // upload screenshot
-        if (!blockIsInSaved(block, store)) {
+        block = getSavedBlocks(store.getState())[savedBlockId];
+        if (!block) {
           return;
         }
         if (!isDesktopMode(store)) {
           enqueueAgain();
           return;
         }
-        await uploadBlockScreenshot({
+        const r = await uploadBlockScreenshot({
+          block,
           blockType: "global",
           screenshotId,
           screenshotBase64: screenshot.src
         });
+        if (TARGET !== "WP") {
+          screenshotId = r.id;
+        }
 
         // update store (saved blocks)
-        if (!blockIsInSaved(block, store)) {
+        block = getSavedBlocks(store.getState())[savedBlockId];
+        if (!block) {
           return;
         }
-        const savedBlocks = getSavedBlocks(store.getState());
-        const updatedBlocks = savedBlocks.map(block_ => {
-          return block_ === block
-            ? updateBlockWithScreenshotInfo({
-                block,
-                src: screenshotId,
-                width: screenshot.width,
-                height: screenshot.height
-              })
-            : block_;
-        });
-        next(updateGlobals("savedBlocks", updatedBlocks, historyMeta));
+        next(
+          updateSavedBlock({
+            id: savedBlockId,
+            data: updateBlockWithScreenshotInfo({
+              block,
+              src: screenshotId,
+              width: screenshot.width,
+              height: screenshot.height
+            }),
+            meta: historyMeta
+          })
+        );
       }
     };
   });
-  const globalBlockTasks = changedBlocks.global.map(globalBlockId => {
-    return {
-      id: globalBlockId,
-      priority: taskQueue.taskPriorities.NORMAL,
-      cb: async enqueueAgain => {
-        // console.log("global block screen cb", globalBlockId);
+  const globalBlockTasks = Array.from(changedBlocks.global).map(
+    globalBlockId => {
+      return {
+        id: globalBlockId,
+        priority: taskQueue.taskPriorities.NORMAL,
+        cb: async enqueueAgain => {
+          // console.log("global block screen cb", globalBlockId);
 
-        const refBlock = getPageBlocks(store.getState()).find(
-          block =>
-            block.type === "GlobalBlock" &&
-            block.value.globalBlockId === globalBlockId
-        );
+          const refBlock = getPageBlocks(store.getState()).find(
+            block =>
+              block.type === "GlobalBlock" &&
+              block.value.globalBlockId === globalBlockId
+          );
 
-        // abort if the block is no longer in the page
-        if (!refBlock) {
-          return;
-        }
+          // abort if the block is no longer in the page
+          if (!refBlock) {
+            return;
+          }
 
-        // make screenshot
-        const screenshotId = globalBlockId;
-        const screenshot = await makeBlockScreenshot(refBlock);
+          // make screenshot
+          let screenshotId = globalBlockId;
+          let screenshot;
+          try {
+            screenshot = await makeBlockScreenshot(refBlock);
+          } catch (e) {
+            if (process.env.NODE_ENV === "development") {
+              console.warn(e);
+            }
+          }
 
-        // upload screenshot
-        if (!isDesktopMode(store)) {
-          enqueueAgain();
-          return;
-        }
-        await uploadBlockScreenshot({
-          blockType: "global",
-          screenshotId,
-          screenshotBase64: screenshot.src
-        });
+          // upload screenshot
+          if (!isDesktopMode(store)) {
+            enqueueAgain();
+            return;
+          }
+          const r = await uploadBlockScreenshot({
+            block: refBlock,
+            blockType: "global",
+            screenshotId,
+            screenshotBase64: screenshot.src
+          });
+          if (TARGET !== "WP") {
+            screenshotId = r.id;
+          }
 
-        // update store (page)
-        const pageData = getPageData(store.getState());
-        const pageBlocks = pageData.items || [];
-        const updatedBlocks = pageBlocks.map(block => {
-          return block.type == "GlobalBlock" &&
-            block.value.globalBlockId === globalBlockId
-            ? updateBlockWithScreenshotInfo({
-                block,
-                src: screenshotId,
-                width: screenshot.width,
-                height: screenshot.height
-              })
-            : block;
-        });
-        next(
-          updatePage(
-            {
+          // update store (page)
+          const pageData = getPageData(store.getState());
+          const pageBlocks = pageData.items || [];
+          const updatedBlocks = pageBlocks.map(block => {
+            return block.type == "GlobalBlock" &&
+              block.value.globalBlockId === globalBlockId
+              ? updateBlockWithScreenshotInfo({
+                  block,
+                  src: screenshotId,
+                  width: screenshot.width,
+                  height: screenshot.height
+                })
+              : block;
+          });
+          next(
+            updatePage({
               data: {
                 ...pageData,
                 items: updatedBlocks
-              }
-            },
-            historyMeta
-          )
-        );
+              },
+              meta: historyMeta
+            })
+          );
 
-        // update store (globalBlocks)
-        const globalBlocks = getGlobalBlocks(store.getState());
-        if (!globalBlocks[globalBlockId]) {
-          return;
+          // update store (globalBlocks)
+          const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+          if (!globalBlock) {
+            return;
+          }
+          next(
+            updateGlobalBlock({
+              id: globalBlockId,
+              data: updateBlockWithScreenshotInfo({
+                block: globalBlock,
+                src: screenshotId,
+                width: screenshot.width,
+                height: screenshot.height
+              }),
+              meta: historyMeta
+            })
+          );
         }
-        const updatedGlobalBlocks = {
-          ...globalBlocks,
-          [globalBlockId]: updateBlockWithScreenshotInfo({
-            block: globalBlocks[globalBlockId],
-            src: screenshotId,
-            width: screenshot.width,
-            height: screenshot.height
-          })
-        };
-        next(updateGlobals("globalBlocks", updatedGlobalBlocks, historyMeta));
-      }
-    };
-  });
+      };
+    }
+  );
   const allTasks = [...pageBlockTasks, ...savedBlockTasks, ...globalBlockTasks];
 
   if (allTasks.length > 0) {

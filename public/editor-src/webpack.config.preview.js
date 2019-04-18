@@ -12,6 +12,12 @@ module.exports = options => {
       ...editorConfig.output,
       filename: "preview.js"
     },
+    resolve: {
+      alias: {
+        "visual/utils": path.resolve(__dirname, "editor/js/utils")
+      },
+      extensions: editorConfig.resolve.extensions
+    },
     module: {
       rules: [
         {

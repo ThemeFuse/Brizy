@@ -21,13 +21,13 @@ class WPTemplate extends React.Component {
 
   handleTemplateChange = template => {
     const win = window.parent || window;
-    const changedTemplateUrl = Config.get("urls").change_template_url;
+    const { changeTemplate } = Config.get("urls");
 
-    win.location.href = `${changedTemplateUrl}&template=${template}`;
+    win.location.href = `${changeTemplate}&template=${template}`;
   };
 
   renderOptions() {
-    const { templates } = Config.get('wp');
+    const { templates } = Config.get("wp");
 
     return templates.map((template, index) => {
       return (
@@ -40,7 +40,10 @@ class WPTemplate extends React.Component {
 
   render() {
     const { label, className: _className, currentTemplate } = this.props;
-    const className = classnames("brz-ed-sidebar-bottom__option brz-ed-sidebar__wp-template", _className);
+    const className = classnames(
+      "brz-ed-sidebar-bottom__option brz-ed-sidebar__wp-template",
+      _className
+    );
 
     return (
       <div className={className}>
@@ -63,4 +66,7 @@ const mapStateToProps = state => ({
   currentTemplate: state.page.template
 });
 
-export default connect(mapStateToProps, null)(WPTemplate);
+export default connect(
+  mapStateToProps,
+  null
+)(WPTemplate);

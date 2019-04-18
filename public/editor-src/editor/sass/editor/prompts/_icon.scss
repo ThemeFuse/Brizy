@@ -1,5 +1,7 @@
 // Icons
 .brz-ed-popup-icons__grid {
+  height: 540px;
+
   .brz-ed-scroll-inner {
     padding: 20px 20px 0;
   }
@@ -30,9 +32,7 @@
 
 // --- Responsive
 @media screen and (max-height: 899px) {
-  .brz-ed-popup-icons {
-    .brz-ed-scroll__popup {
-      height: 465px !important;
-    }
+  .brz-ed-popup-icons__grid {
+    height: 465px;
   }
 }

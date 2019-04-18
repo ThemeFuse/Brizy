@@ -1,4 +1,3 @@
-import _ from "underscore";
 import objectToQueryString from "visual/utils/url/objectToQueryString";
 
 const DEFAULT_SETTINGS = {

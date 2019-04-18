@@ -109,7 +109,10 @@ class Brizy_Admin_Post_RevisionManager {
 		$meta_key_count   = count( $monitor->getPostMetaKeys() );
 		$meta_keys_params = rtrim( str_repeat( '%s,', $meta_key_count ), ',' );
 		$params           = array( (int) $revision, (int) $post );
-		$query            = "INSERT INTO {$tablePostMeta} (post_Id, meta_key, meta_value) 
+
+		$this->cleanMetaData($post,$revision,$monitor);
+
+		$query = "INSERT INTO {$tablePostMeta} (post_Id, meta_key, meta_value) 
 									SELECT %d, meta_key, meta_value 
 									FROM {$tablePostMeta} 
 									WHERE post_id=%d";
@@ -122,7 +125,17 @@ class Brizy_Admin_Post_RevisionManager {
 		}
 
 		$wpdb->query( $wpdb->prepare( $query, $params ) );
+	}
 
+	private function cleanMetaData( $post, $revision, $monitor ) {
+		global $wpdb;
+		$params        = array( (int) $revision );
+		$meta_key_count   = count( $monitor->getPostMetaKeys() );
+		$meta_keys_params = rtrim( str_repeat( '%s,', $meta_key_count ), ',' );
+		$tablePostMeta = "{$wpdb->prefix}postmeta";
+		$query         = "DELETE FROM {$tablePostMeta} WHERE post_id=%d and meta_key IN ({$meta_keys_params})";
+		$params = array_merge( $params, $monitor->getPostMetaKeys() );
+		$wpdb->query( $wpdb->prepare( $query, $params ) );
 	}
 
 	/**
@@ -136,7 +149,7 @@ class Brizy_Admin_Post_RevisionManager {
 		global $wpdb;
 		try {
 
-			$tablePostMeta    = "{$wpdb->prefix}postmeta";
+			$tablePostMeta = "{$wpdb->prefix}postmeta";
 
 			$wpdb->query( "START TRANSACTION" );
 

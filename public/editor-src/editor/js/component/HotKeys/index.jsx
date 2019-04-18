@@ -56,6 +56,10 @@ const HotKeysContext = React.createContext({});
 class HotKeys extends React.Component {
   static contextType = HotKeysContext;
 
+  contextValue = {
+    getParentContextMenuItems: this.getItems
+  };
+
   handleFilterItems(items) {
     // It's hack only for shortcodes. We calculate current active shortcode and return his callback
     if (items.length && items[0].id.startsWith("key-helper")) {
@@ -173,12 +177,9 @@ class HotKeys extends React.Component {
 
     const { children, id } = this.props;
     const items = this.getItems();
-    const value = {
-      getParentContextMenuItems: this.getItems
-    };
 
     return (
-      <HotKeysContext.Provider value={value}>
+      <HotKeysContext.Provider value={this.contextValue}>
         {children}
         <HotKeysPlugin
           items={items}

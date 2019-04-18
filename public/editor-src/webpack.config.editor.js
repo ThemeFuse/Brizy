@@ -54,7 +54,9 @@ module.exports = options => {
         IS_EDITOR: true,
         IS_PREVIEW: false
       }),
-      new WorkerPlugin()
+      new WorkerPlugin({
+        globalObject: false
+      })
     ],
     optimization: {
       splitChunks: {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import Placeholder from "visual/component/Placeholder";
-import * as Api from "visual/utils/api/editor";
+import { shortcodeContent } from "visual/utils/api/editor";
 import BoxResizer from "visual/component/BoxResizer";
 
 export class WPShortcode extends Component {
@@ -138,7 +138,7 @@ class Inner extends Component {
       return;
     }
 
-    return Api.shortcodeContent(shortcodeString).then(({ shortcode }) =>
+    return shortcodeContent(shortcodeString).then(({ shortcode }) =>
       this.setState({ shortcodeHTML: shortcode })
     );
   }

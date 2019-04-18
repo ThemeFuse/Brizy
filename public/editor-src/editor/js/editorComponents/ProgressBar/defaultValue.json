@@ -52,12 +52,16 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
+    "bgColorType": "solid",
+
     "bgColorHex": "#239ddb",
     "bgColorOpacity": 1,
     "bgColorPalette": "color3",
 
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "color3",
+
+    "bg2ColorType": "solid",
 
     "bg2ColorHex": "#cccccc",
     "bg2ColorOpacity": 1,

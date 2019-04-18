@@ -279,11 +279,7 @@ class Image extends EditorComponent {
     };
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`
-    ]);
-
+  renderForEdit(v) {
     const {
       imageWidth,
       imageHeight,
@@ -479,11 +475,7 @@ class Image extends EditorComponent {
     );
   }
 
-  renderForView(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`
-    ]);
-
+  renderForView(v) {
     const {
       imagePopulation,
       imageWidth,

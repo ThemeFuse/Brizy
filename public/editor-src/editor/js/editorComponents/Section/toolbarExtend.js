@@ -1,8 +1,8 @@
 import { t } from "visual/utils/i18n";
 import {
-  toolbarSliderColorHexAndOpacity,
-  toolbarSliderColorPalette,
-  toolbarSliderColorFields,
+  toolbarColorHexAndOpacity,
+  toolbarColorPalette,
+  toolbarColorFields,
   toolbarShowOnDesktop,
   toolbarShowOnTablet,
   toolbarShowOnMobile,
@@ -194,23 +194,20 @@ const getSliderColorsTabs = ({ v, state }) => {
       label: t("Dots"),
       disabled: v.slider === "off",
       options: [
-        toolbarSliderColorHexAndOpacity({
+        toolbarColorHexAndOpacity({
           v,
           state,
-          prefix: "sliderDots",
+          prefix: "sliderDotsColor",
           onChange: [
-            "onChangeSliderColorHexAndOpacity",
-            "onChangeSliderColorHexAndOpacityPalette"
+            "onChangeColorHexAndOpacity",
+            "onChangeColorHexAndOpacityPalette"
           ]
         }),
-        toolbarSliderColorPalette({
+        toolbarColorPalette({
           v,
           state,
-          prefix: "sliderDots",
-          onChange: [
-            "onChangeSliderColorPalette",
-            "onChangeSliderColorPaletteOpacity"
-          ]
+          prefix: "sliderDotsColor",
+          onChange: ["onChangeColorPalette", "onChangeColorPaletteOpacity"]
         }),
         {
           type: "grid",
@@ -219,13 +216,13 @@ const getSliderColorsTabs = ({ v, state }) => {
             {
               width: 100,
               options: [
-                toolbarSliderColorFields({
+                toolbarColorFields({
                   v,
                   state,
-                  prefix: "sliderDots",
+                  prefix: "sliderDotsColor",
                   onChange: [
-                    "onChangeSliderColorHexAndOpacity",
-                    "onChangeSliderColorHexAndOpacityPalette"
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
                   ]
                 })
               ]
@@ -239,23 +236,20 @@ const getSliderColorsTabs = ({ v, state }) => {
       label: t("Arrows"),
       disabled: v.slider === "off",
       options: [
-        toolbarSliderColorHexAndOpacity({
+        toolbarColorHexAndOpacity({
           v,
           state,
-          prefix: "sliderArrows",
+          prefix: "sliderArrowsColor",
           onChange: [
-            "onChangeSliderColorHexAndOpacity",
-            "onChangeSliderColorHexAndOpacityPalette"
+            "onChangeColorHexAndOpacity",
+            "onChangeColorHexAndOpacityPalette"
           ]
         }),
-        toolbarSliderColorPalette({
+        toolbarColorPalette({
           v,
           state,
-          prefix: "sliderArrows",
-          onChange: [
-            "onChangeSliderColorPalette",
-            "onChangeSliderColorPaletteOpacity"
-          ]
+          prefix: "sliderArrowsColor",
+          onChange: ["onChangeColorPalette", "onChangeColorPaletteOpacity"]
         }),
         {
           type: "grid",
@@ -264,13 +258,13 @@ const getSliderColorsTabs = ({ v, state }) => {
             {
               width: 100,
               options: [
-                toolbarSliderColorFields({
+                toolbarColorFields({
                   v,
                   state,
-                  prefix: "sliderArrows",
+                  prefix: "sliderArrowsColor",
                   onChange: [
-                    "onChangeSliderColorHexAndOpacity",
-                    "onChangeSliderColorHexAndOpacityPalette"
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
                   ]
                 })
               ]

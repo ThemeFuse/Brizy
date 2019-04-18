@@ -1,4 +1,5 @@
 import Config from "visual/global/Config";
+import UIState from "visual/global/UIState";
 import { AddElements } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
@@ -50,7 +51,7 @@ export default {
           icon: "nc-bug",
           linkTarget: "_blank",
           label: t("Submit an Issue"),
-          link: urls.supportUrl
+          link: urls.support
         },
         {
           type: "link",
@@ -58,6 +59,19 @@ export default {
           linkTarget: "_blank",
           label: t("About Brizy"),
           link: urls.about
+        },
+        {
+          type: "link",
+          icon: "nc-alert-circle-que",
+          label: t("Shortcuts"),
+          link: "#",
+          onClick: e => {
+            e.preventDefault();
+
+            UIState.set("prompt", {
+              prompt: "key-helper"
+            });
+          }
         },
         {
           type: "link",

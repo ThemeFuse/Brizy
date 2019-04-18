@@ -98,5 +98,6 @@ class Brizy_Editor_Forms_FormManager {
 			$data[ $id ] = $form->convertToOptionValue();
 		}
 		$this->project->setMetaValue( 'forms', $data );
+		$this->project->save();
 	}
 }

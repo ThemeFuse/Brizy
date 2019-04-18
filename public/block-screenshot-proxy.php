@@ -22,6 +22,8 @@ class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 			return;
 		}
 
+		session_write_close();
+
 		$blockName = $vars[ self::ENDPOINT ];
 		$blockPost = isset( $vars[ self::ENDPOINT_POST ] ) ? $vars[ self::ENDPOINT_POST ] : null;
 

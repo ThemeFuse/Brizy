@@ -151,6 +151,24 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	}
 
+	public static function getAutoSavePost( $postId, $userId ) {
+		$postParentId = self::getPostParent( $postId );
+		$autosave     = wp_get_post_autosave( $postParentId, $userId );
+
+		if(!$autosave)
+			return;
+
+		$post         = get_post( $postId );
+
+		$postDate     = new DateTime( $post->post_modified );
+		$autosaveDate = new DateTime( $autosave->post_modified );
+
+		if ( $postDate > $autosaveDate ) {
+			return null;
+		}
+
+		return $autosave->ID;
+	}
 
 	/**
 	 * @param $wp_post_id
@@ -239,6 +257,9 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
+	 * @todo: We need to move this method from here
+	 *
+	 *
 	 * @return Brizy_Editor_Post[]
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
@@ -311,7 +332,89 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return $post;
 	}
 
+	public function auto_save_post() {
+		try {
+			$user_id                   = get_current_user_id();
+			$post                      = $this->get_wp_post();
+			$postParentId              = $this->get_parent_id();
+			$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
+			$post_data                 = get_object_vars( $post );
+			$post_data['post_content'] .= "\n<!-- " . time() . "-->";
+			$autosavePost              = null;
+
+			if ( $old_autosave ) {
+				$autosavePost = self::get( $old_autosave );
+			}
+
+			if ( $old_autosave ) {
+				$new_autosave                = _wp_post_revision_data( $post_data, true );
+				$new_autosave['ID']          = $old_autosave->ID;
+				$new_autosave['post_author'] = $user_id;
+
+				// If the new autosave has the same content as the post, delete the autosave.
+				$autosave_is_different = false;
+
+				foreach ( array_intersect( array_keys( $new_autosave ), array_keys( _wp_post_revision_fields( $post ) ) ) as $field ) {
+					if ( normalize_whitespace( $new_autosave[ $field ] ) != normalize_whitespace( $post->$field ) ) {
+						$autosave_is_different = true;
+						break;
+					}
+				}
+
+				if ( ! $autosave_is_different ) {
+					wp_delete_post_revision( $old_autosave->ID );
+
+					return new WP_Error( 'rest_autosave_no_changes', __( 'There is nothing to save. The autosave and the post content are the same.' ), array( 'status' => 400 ) );
+				}
+
+				/**
+				 * This filter is documented in wp-admin/post.php.
+				 */
+				do_action( 'wp_creating_autosave', $new_autosave );
+
+				// wp_update_post expects escaped array.
+				wp_update_post( wp_slash( $new_autosave ) );
+
+			} else {
+				// Create the new autosave as a special post revision.
+				$revId        = _wp_put_post_revision( $post_data, true );
+				$autosavePost = self::get( $revId );
+			}
+
+			$autosavePost->set_template( $this->get_template() );
+			$autosavePost->set_editor_data( $this->get_editor_data() );
+			$autosavePost->set_editor_version( $this->get_editor_version() );
+			$autosavePost->save();
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+
+			return false;
+		}
+	}
+
+	public function save_wp_post() {
+
+		$post_type        = $this->get_wp_post()->post_type;
+		$post_type_object = get_post_type_object( $post_type );
+		$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
+		$post_status      = $can_publish ? 'publish' : 'pending';
+
+		$brizy_compiled_page = $this->get_compiled_page();
+
+		$this->deleteOldAutosaves();
+
+		wp_update_post( array(
+			'ID'           => $this->get_parent_id(),
+			'post_status'  => $post_status,
+			'post_content' => $brizy_compiled_page->get_body()
+		) );
+	}
+
 	/**
+	 * This saves ony data.. it does not touch the wordpress post
+	 *
+	 *
 	 * @return bool
 	 */
 	public function save() {
@@ -323,6 +426,23 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 			Brizy_Logger::instance()->exception( $exception );
 
 			return false;
+		}
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	private function deleteOldAutosaves() {
+		$user_id      = get_current_user_id();
+		$postParentId = $this->get_parent_id();
+		// Store one autosave per author. If there is already an autosave, overwrite it.
+		$old_autosave = wp_get_post_autosave( $postParentId, $user_id );
+
+		if ( $old_autosave ) {
+			wp_delete_post_revision( $old_autosave->ID );
+
+			return true;
 		}
 	}
 
@@ -447,10 +567,14 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @return false|int|mixed
 	 */
 	public function get_parent_id() {
-		$id = wp_is_post_revision( $this->get_id() );
+		return self::getPostParent( $this->get_id() );
+	}
+
+	protected static function getPostParent( $postId ) {
+		$id = wp_is_post_revision( $postId );
 
 		if ( ! $id ) {
-			$id = $this->get_id();
+			$id = $postId;
 		}
 
 		return $id;
@@ -615,6 +739,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
+	 * @todo: We need to move this method from here
+	 *
 	 * @param $text
 	 * @param string $tags
 	 * @param bool $invert

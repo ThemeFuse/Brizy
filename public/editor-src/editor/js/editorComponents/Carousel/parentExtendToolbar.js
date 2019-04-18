@@ -10,6 +10,12 @@ import {
   mobileSyncOnChange
 } from "visual/utils/onChange";
 
+import {
+  toolbarColorHexAndOpacity,
+  toolbarColorPalette,
+  toolbarColorFields
+} from "visual/utils/toolbar";
+
 export function getItemsForDesktop(v) {
   const device = "desktop";
 
@@ -327,43 +333,24 @@ export function getItemsForDesktop(v) {
               id: "arrows",
               label: t("Arrows"),
               options: [
-                {
-                  id: "sliderArrowsColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: sliderArrowsColorHex,
-                    opacity: v.sliderArrowsColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-                    const sliderArrowsColorOpacity =
-                      hex !== v.sliderArrowsColorHex &&
-                      v.sliderArrowsColorOpacity === 0
-                        ? v.tempSliderArrowsColorOpacity
-                        : opacity;
-
-                    return {
-                      sliderArrowsColorHex: hex,
-                      sliderArrowsColorOpacity: sliderArrowsColorOpacity,
-                      sliderArrowsColorPalette:
-                        isChanged === "hex" ? "" : v.sliderArrowsColorPalette
-                    };
-                  }
-                },
-                {
-                  id: "sliderArrowsColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.sliderArrowsColorPalette,
-                  onChange: sliderArrowsColorPalette => ({
-                    sliderArrowsColorPalette,
-
-                    sliderArrowsColorOpacity:
-                      v.sliderArrowsColorOpacity === 0
-                        ? v.tempSliderArrowsColorOpacity
-                        : v.sliderArrowsColorOpacity
-                  })
-                },
+                toolbarColorHexAndOpacity({
+                  v,
+                  state,
+                  prefix: "sliderArrowsColor",
+                  onChange: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarColorPalette({
+                  v,
+                  state,
+                  prefix: "sliderArrowsColor",
+                  onChange: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
@@ -371,23 +358,15 @@ export function getItemsForDesktop(v) {
                     {
                       width: 100,
                       options: [
-                        {
-                          id: "sliderArrowsColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: sliderArrowsColorHex,
-                            opacity: v.sliderArrowsColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            sliderArrowsColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.sliderArrowsColorPalette,
-                            sliderArrowsColorHex: hex,
-                            sliderArrowsColorOpacity: opacity
-                          })
-                        }
+                        toolbarColorFields({
+                          v,
+                          state,
+                          prefix: "sliderArrowsColor",
+                          onChange: [
+                            "onChangeColorHexAndOpacity",
+                            "onChangeColorHexAndOpacityPalette"
+                          ]
+                        })
                       ]
                     }
                   ]
@@ -399,43 +378,24 @@ export function getItemsForDesktop(v) {
               label: t("Dots"),
               disabled: v.slider === "off",
               options: [
-                {
-                  id: "sliderDotsColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: sliderDotsColorHex,
-                    opacity: v.sliderDotsColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-                    const sliderDotsColorOpacity =
-                      hex !== v.sliderDotsColorHex &&
-                      v.sliderDotsColorOpacity === 0
-                        ? v.tempSliderDotsColorOpacity
-                        : opacity;
-
-                    return {
-                      sliderDotsColorHex: hex,
-                      sliderDotsColorOpacity: sliderDotsColorOpacity,
-                      sliderDotsColorPalette:
-                        isChanged === "hex" ? "" : v.sliderDotsColorPalette
-                    };
-                  }
-                },
-                {
-                  id: "sliderDotsColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.sliderDotsColorPalette,
-                  onChange: sliderDotsColorPalette => ({
-                    sliderDotsColorPalette,
-
-                    sliderDotsColorOpacity:
-                      v.sliderDotsColorOpacity === 0
-                        ? v.tempSliderDotsColorOpacity
-                        : v.sliderDotsColorOpacity
-                  })
-                },
+                toolbarColorHexAndOpacity({
+                  v,
+                  state,
+                  prefix: "sliderDotsColor",
+                  onChange: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ]
+                }),
+                toolbarColorPalette({
+                  v,
+                  state,
+                  prefix: "sliderDotsColor",
+                  onChange: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
@@ -443,23 +403,15 @@ export function getItemsForDesktop(v) {
                     {
                       width: 100,
                       options: [
-                        {
-                          id: "sliderDotsColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: sliderDotsColorHex,
-                            opacity: v.sliderDotsColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            sliderDotsColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.sliderDotsColorPalette,
-                            sliderDotsColorHex: hex,
-                            sliderDotsColorOpacity: opacity
-                          })
-                        }
+                        toolbarColorFields({
+                          v,
+                          state,
+                          prefix: "sliderDotsColor",
+                          onChange: [
+                            "onChangeColorHexAndOpacity",
+                            "onChangeColorHexAndOpacityPalette"
+                          ]
+                        })
                       ]
                     }
                   ]

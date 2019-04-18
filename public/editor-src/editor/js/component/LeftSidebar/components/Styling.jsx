@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import _ from "underscore";
 import Editor from "visual/global/Editor";
 import Options from "visual/component/Options";
-import { updateGlobals } from "visual/redux/actionCreators";
-import { currentStyleSelector } from "visual/redux/selectors";
+import { updateGlobals } from "visual/redux/actions";
+import { globalsSelector, currentStyleSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { branding } from "visual/utils/branding";
 
@@ -17,7 +17,12 @@ class DrawerComponent extends React.Component {
       _selected: value
     };
 
-    dispatch(updateGlobals("styles", newStyles));
+    dispatch(
+      updateGlobals({
+        key: "styles",
+        value: newStyles
+      })
+    );
   };
 
   handleStylingChange = (key, value) => {
@@ -57,7 +62,12 @@ class DrawerComponent extends React.Component {
       }
     };
 
-    dispatch(updateGlobals("styles", newStyles));
+    dispatch(
+      updateGlobals({
+        key: "styles",
+        value: newStyles
+      })
+    );
   };
 
   handleFontAdd = font => {
@@ -65,7 +75,13 @@ class DrawerComponent extends React.Component {
     const newExtraFonts = [...extraFonts, font];
     const meta = { addedFonts: [font] };
 
-    dispatch(updateGlobals("extraFonts", newExtraFonts, meta));
+    dispatch(
+      updateGlobals({
+        key: "extraFonts",
+        value: newExtraFonts,
+        meta
+      })
+    );
   };
 
   render() {
@@ -121,8 +137,8 @@ class DrawerComponent extends React.Component {
 
 const mapStateToProps = state => ({
   styles: currentStyleSelector(state),
-  globalStyles: state.globals.project.styles || {},
-  extraFonts: state.globals.project.extraFonts || []
+  globalStyles: globalsSelector(state).styles || {},
+  extraFonts: globalsSelector(state).extraFonts || []
 });
 const mapDispatchToProps = dispatch => ({
   dispatch
