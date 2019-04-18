@@ -103,9 +103,15 @@ function calcOptions(node) {
 }
 
 function proxyUrl() {
-  const siteUrl = Config.get("urls").site;
+  if (TARGET === "WP") {
+    const siteUrl = Config.get("urls").site;
 
-  return urlContainsQueryString(siteUrl)
-    ? `${siteUrl}&brizy_file=`
-    : `${siteUrl}?brizy_file=`;
+    return urlContainsQueryString(siteUrl)
+      ? `${siteUrl}&brizy_file=`
+      : `${siteUrl}?brizy_file=`;
+  } else {
+    const siteUrl = Config.get("urls").site;
+
+    return `${siteUrl}/download/proxy?url=`;
+  }
 }

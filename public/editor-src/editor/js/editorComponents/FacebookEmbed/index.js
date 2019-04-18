@@ -2,7 +2,7 @@ import React from "react";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import { styleClassName } from "./styles";
+import { styleClassName, styleCSSVars } from "./styles";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
@@ -60,7 +60,7 @@ class FacebookEmbed extends EditorComponent {
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={styleClassName(v)}>
+          <div className={styleClassName(v)} style={styleCSSVars(v)}>
             <Facebook appId={appData.appId} type={t} data={data} />
           </div>
         </CustomCSS>
@@ -99,7 +99,9 @@ class FacebookEmbed extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Facebook appId={appData.appId} type={t} data={data} />
+        <div className={styleClassName(v)} style={styleCSSVars(v)}>
+          <Facebook appId={appData.appId} type={t} data={data} />
+        </div>
       </CustomCSS>
     );
   }

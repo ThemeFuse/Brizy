@@ -114,6 +114,11 @@ class Brizy_Admin_Main {
 	public function action_delete_page( $post = null ) {
 		try {
 
+			if (wp_is_post_autosave($post) || wp_is_post_revision($post)) {
+				return;
+			}
+
+
 			$bpost = Brizy_Editor_Post::get( $post );
 
 			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->get_parent_id() );

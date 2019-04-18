@@ -1,10 +1,9 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 import {
-  styleBorderStyle,
   styleBorderColor,
+  styleBorderStyle,
   styleSizeWidthPercent,
   styleElementLineBorderWidth
 } from "visual/utils/style";
@@ -45,8 +44,6 @@ export function styleClassName(v) {
     const {
       width,
       borderWidth,
-      borderColorHex,
-      borderColorOpacity,
       borderStyle
     } = v;
 
@@ -57,7 +54,11 @@ export function styleClassName(v) {
         "& .brz-hr": {
           borderTopWidth: `${borderWidth}px`,
           borderTopStyle: borderStyle,
-          borderTopColor: hexToRgba(borderColorHex, borderColorOpacity)
+          borderTopColor: styleBorderColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          })
         }
       },
       "@media (max-width: 991px)": {

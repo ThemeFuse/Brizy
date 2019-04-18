@@ -7,7 +7,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import { currentContainerBorder } from "visual/component/ContainerBorder";
 import { getStore } from "visual/redux/store";
-import { updatePage } from "visual/redux/actionCreators";
+import { updatePage } from "visual/redux/actions";
 import { setIds } from "visual/utils/models";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup";
 import { blockThumbnailData } from "visual/utils/blocks";
@@ -43,6 +43,7 @@ class PromptAddPopupOptionType extends React.Component {
     helper: false,
     helperContent: "",
     display: "inline",
+    close: true,
     value: "",
     onChange: _.noop
   };
@@ -140,7 +141,7 @@ class PromptAddPopupOptionType extends React.Component {
   }
 
   renderThumbnail() {
-    const { value } = this.props;
+    const { value, close } = this.props;
     const blocks = getStore().getState().page.data.items;
     const block = blocks.find(el => el.value._id === value);
     const { url, width, height } = blockThumbnailData(block);
@@ -165,12 +166,14 @@ class PromptAddPopupOptionType extends React.Component {
           onClick={this.handleEdit}
           alt="Popup Thumbnail"
         />
-        <div
-          className="brz-ed-option__prompt-popup-remove"
-          onClick={this.handleDelete}
-        >
-          <EditorIcon icon="nc-circle-remove" />
-        </div>
+        {close && (
+          <div
+            className="brz-ed-option__prompt-popup-remove"
+            onClick={this.handleDelete}
+          >
+            <EditorIcon icon="nc-circle-remove" />
+          </div>
+        )}
       </figure>
     );
   }

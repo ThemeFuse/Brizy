@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import {
   styleBgImage,
   styleExportBgImage,

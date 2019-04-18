@@ -2,10 +2,10 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
+import { getMenus } from "visual/utils/api/editor/index";
 import toolbarConfigFn from "./toolbar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";
-import * as Api from "visual/utils/api/editor/index";
 
 class WPNavigation extends EditorComponent {
   static get componentId() {
@@ -19,7 +19,7 @@ class WPNavigation extends EditorComponent {
   };
 
   componentDidMount() {
-    Api.getMenus().then(menus => {
+    getMenus().then(menus => {
       this.setState({ menus });
 
       const v = this.getValue();
@@ -31,7 +31,6 @@ class WPNavigation extends EditorComponent {
 
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
-      _v.colorPalette && `${_v.colorPalette}__color`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
       _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`

@@ -1,9 +1,8 @@
 import React from "react";
-import { setIn } from "timm";
 import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { getStore } from "visual/redux/store";
-import { updateGlobals } from "visual/redux/actionCreators";
+import { globalBlocksSelector } from "visual/redux/selectors";
+import { updateGlobalBlock } from "visual/redux/actions";
 
 class GlobalBlock extends EditorComponent {
   static get componentId() {
@@ -17,29 +16,39 @@ class GlobalBlock extends EditorComponent {
   static defaultValue = {};
 
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    const { globalBlockId } = this.getDBValue();
+    const globalBlockChanged =
+      globalBlocksSelector(nextProps.reduxState)[globalBlockId] !==
+      globalBlocksSelector(this.props.reduxState)[globalBlockId];
+
+    return globalBlockChanged || this.optionalSCU(nextProps);
   }
 
   handleComponentChange = (value, meta) => {
     if (meta.intent === "replace_all") {
       this.props.onChange(value, meta);
     } else {
-      const store = getStore();
-      const { globalBlocks = {} } = store.getState().globals.project;
       const { globalBlockId } = this.getDBValue();
-      const updatedGlobalBlocks = setIn(
-        globalBlocks,
-        [globalBlockId, "value"],
+      const globalBlock = globalBlocksSelector(this.props.reduxState)[
+        globalBlockId
+      ];
+      const updatedGlobalBlock = {
+        ...globalBlock,
         value
-      );
+      };
 
-      store.dispatch(updateGlobals("globalBlocks", updatedGlobalBlocks));
+      this.props.reduxDispatch(
+        updateGlobalBlock({
+          id: globalBlockId,
+          data: updatedGlobalBlock
+        })
+      );
     }
   };
 
   renderForEdit(v) {
     const { globalBlockId } = v;
-    const { globalBlocks } = getStore().getState().globals.project;
+    const globalBlocks = globalBlocksSelector(this.props.reduxState);
     const { type, value, ...otherData } = globalBlocks[globalBlockId];
     const Component = Editor.getComponent(type);
     const meta = {

@@ -41,10 +41,6 @@ export function bgStyleClassName(v, props) {
     glamorObj = {
       zIndex: "var(--zIndex)",
 
-      "> .brz-bg-media": {
-        boxShadow: "var(--boxShadow)"
-      },
-
       ".brz-ed--desktop &": {
         alignItems: "var(--verticalAlign)",
 
@@ -96,6 +92,8 @@ export function bgStyleClassName(v, props) {
 
           borderColor: "var(--borderColor)",
 
+          boxShadow: "var(--boxShadow)",
+
           transition: "var(--hoverTransition)",
           transitionProperty: "var(--hoverTransitionProperty)"
         },
@@ -112,7 +110,9 @@ export function bgStyleClassName(v, props) {
           borderBottomLeftRadius: "var(--hoverBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--hoverBorderBottomRightRadius)",
 
-          borderColor: "var(--hoverBorderColor)"
+          borderColor: "var(--hoverBorderColor)",
+
+          boxShadow: "var(--hoverBoxShadow)"
         },
 
         "> .brz-bg-media > .brz-bg-image": {
@@ -183,7 +183,9 @@ export function bgStyleClassName(v, props) {
           borderBottomLeftRadius: "var(--tabletBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--tabletBorderBottomRightRadius)",
 
-          borderColor: "var(--tabletBorderColor)"
+          borderColor: "var(--tabletBorderColor)",
+
+          boxShadow: "var(--tabletBoxShadow)"
         },
 
         "> .brz-bg-media > .brz-bg-image": {
@@ -237,7 +239,9 @@ export function bgStyleClassName(v, props) {
           borderBottomLeftRadius: "var(--mobileBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--mobileBorderBottomRightRadius)",
 
-          borderColor: "var(--mobileBorderColor)"
+          borderColor: "var(--mobileBorderColor)",
+
+          boxShadow: "var(--mobileBoxShadow)"
         },
 
         "> .brz-bg-media > .brz-bg-image": {
@@ -582,8 +586,12 @@ export function bgStyleClassName(v, props) {
             v,
             device: "desktop",
             state: "hover"
-          })
+          }),
+
+          // Box Shadow
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
         },
+
         ":hover > .brz-bg-media > .brz-bg-image": {
           // BG Image
           backgroundImage: styleExportBgImage({
@@ -782,8 +790,12 @@ export function bgStyleClassName(v, props) {
             v,
             device: "tablet",
             state: "normal"
-          })
+          }),
+
+          // Box Shadow
+          boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
         },
+
         "> .brz-bg-media > .brz-bg-image": {
           // BG Image
           backgroundImage: styleExportBgImage({
@@ -990,7 +1002,10 @@ export function bgStyleClassName(v, props) {
             v,
             device: "mobile",
             state: "normal"
-          })
+          }),
+
+          // Box Shadow
+          boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
         },
         "> .brz-bg-media > .brz-bg-image": {
           // BG Image
@@ -1340,6 +1355,13 @@ export function bgStyleCSSVars(v, props) {
       state: "hover"
     }),
 
+    // Box Shadow
+    "--hoverBoxShadow": styleBoxShadow({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
     // Hover Transition
     "--hoverTransition": styleHoverTransition({ v }),
     "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
@@ -1433,6 +1455,14 @@ export function bgStyleCSSVars(v, props) {
       device: "tablet",
       state: "normal"
     }),
+
+    // Box Shadow
+    "--tabletBoxShadow": styleBoxShadow({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
     "--tabletBackgroundGradient": styleBgGradient({
       v,
       device: "tablet",
@@ -1588,6 +1618,13 @@ export function bgStyleCSSVars(v, props) {
 
     // Border Color
     "--mobileBorderColor": styleBorderColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+
+    // Box Shadow
+    "--mobileBoxShadow": styleBoxShadow({
       v,
       device: "mobile",
       state: "normal"

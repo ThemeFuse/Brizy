@@ -41,11 +41,7 @@ class Posts extends EditorComponent {
     };
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.paginationColorPalette &&
-        `${_v.paginationColorPalette}__paginationColor`
-    ]);
+  renderForEdit(v) {
     const {
       type,
       taxonomy,
@@ -68,7 +64,7 @@ class Posts extends EditorComponent {
         count: gridRow * gridColumn,
         taxonomy,
         value: taxonomyId,
-        ...(type === "posts" ? { order, orderBy } : {})
+        ...(type === "posts" ? { order, orderby: orderBy } : {})
       },
       meta: this.getMeta(v)
     });

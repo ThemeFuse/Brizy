@@ -34,9 +34,6 @@ class Accordion extends EditorComponent {
 
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.colorPalette && `${_v.colorPalette}__color`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
       _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`

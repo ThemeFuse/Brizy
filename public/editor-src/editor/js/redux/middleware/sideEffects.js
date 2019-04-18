@@ -11,16 +11,40 @@ import { currentStyleSelector } from "../selectors";
 import {
   HYDRATE,
   UPDATE_GLOBALS,
+  UPDATE_PAGE,
+  UPDATE_GLOBAL_BLOCK,
+  UPDATE_SAVED_BLOCK,
   UPDATE_UI,
-  COPY_ELEMENT
-} from "../actionTypes";
-import { updateCopiedElement } from "../actionCreators";
+  COPY_ELEMENT,
+  updateCopiedElement
+} from "../actions";
 import { ActionTypes as HistoryActionTypes } from "../reducers/historyEnhancer";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 
 const { UNDO, REDO } = HistoryActionTypes;
 
 export default config => store => next => action => {
+  // show warning if the user wants to leave
+  // without publishing / updating changes
+  switch (action.type) {
+    case UPDATE_PAGE:
+    case UPDATE_GLOBALS:
+    case UPDATE_GLOBAL_BLOCK:
+    case UPDATE_SAVED_BLOCK:
+    case UNDO:
+    case REDO: {
+      const window_ = window.parent || window;
+
+      if (action.meta.is_autosave === 0) {
+        window_.removeEventListener("beforeunload", handleBeforeUnload);
+      } else {
+        window_.addEventListener("beforeunload", handleBeforeUnload);
+      }
+
+      break;
+    }
+  }
+
   if (action.type === HYDRATE) {
     const done = () => next(action);
     handleHydrate(config, store, action, done);
@@ -70,7 +94,7 @@ function handleHydrate(config, store, action, done) {
 
   // fonts
   const configFonts = Config.get("fonts");
-  const globalsExtraFonts = action.globals.project.extraFonts || [];
+  const globalsExtraFonts = action.payload.globals.extraFonts || [];
   const fontsToLoad = [...configFonts, ...globalsExtraFonts];
   const $fonts = jQuery("<link>").attr({
     href: makeFontsUrl(fontsToLoad),
@@ -95,6 +119,7 @@ function handleHydrate(config, store, action, done) {
     .html(makeRichTextColorPaletteCSS(colorPalette));
   jQuery("head", document).append($richTextPaletteStyle);
 
+  // clipboard sync between tabs
   jQuery(window).on("storage", e => {
     const { key, newValue, oldValue } = e.originalEvent;
     if (key === "copiedStyles" && newValue && newValue !== oldValue) {
@@ -209,4 +234,9 @@ function handleHistoryChange(config, store, action, done) {
       makeRichTextColorPaletteCSS(colorPalette)
     );
   }
+}
+
+function handleBeforeUnload(e) {
+  e.preventDefault();
+  e.returnValue = "Do you really want to close?";
 }

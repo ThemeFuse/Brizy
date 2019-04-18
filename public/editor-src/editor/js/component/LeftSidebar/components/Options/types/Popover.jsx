@@ -4,7 +4,7 @@ import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
 import Options from "visual/component/LeftSidebar/components/Options";
 import { getStore } from "visual/redux/store";
-import { updateUI } from "visual/redux/actionCreators";
+import { updateUI } from "visual/redux/actions";
 
 export default class DrawerPopover extends React.Component {
   static defaultProps = {
@@ -30,11 +30,24 @@ export default class DrawerPopover extends React.Component {
           })
         );
       }
-      this.setState({ isOpen: true });
+
+      this.open();
     }
   };
 
   handleClickOutside = () => {
+    this.close();
+  };
+
+  open = () => {
+    const { isOpen } = this.state;
+
+    if (!isOpen) {
+      this.setState({ isOpen: true });
+    }
+  };
+
+  close = () => {
     const { isOpen } = this.state;
 
     if (isOpen) {
@@ -62,6 +75,8 @@ export default class DrawerPopover extends React.Component {
     const { options } = this.props;
     const meta = {
       popover: {
+        open: this.open,
+        close: this.close,
         show: this.show,
         hide: this.hide
       }

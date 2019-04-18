@@ -36,7 +36,7 @@ export default class Menu extends EditorComponent {
     const parentToolbarExtend = this.makeToolbarPropsFromConfig(
       parentToolbarExtendConfig,
       {
-        allowExtend: false,
+        allowExtend: false
       }
     );
     this.props.extendParentToolbar(parentToolbarExtend);
@@ -268,36 +268,39 @@ export default class Menu extends EditorComponent {
     }
 
     const v = this.applyRulesToValue(_v, [
-      _v.colorPalette && `${_v.colorPalette}__color`,
-      _v.hoverColorPalette && `${_v.hoverColorPalette}__hoverColor`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
       _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`,
+
       _v.subMenuColorPalette && `${_v.subMenuColorPalette}__subMenuColor`,
       _v.subMenuHoverColorPalette &&
         `${_v.subMenuHoverColorPalette}__subMenuHoverColor`,
+
       _v.subMenuBgColorPalette && `${_v.subMenuBgColorPalette}__subMenuBgColor`,
       _v.subMenuHoverBgColorPalette &&
         `${_v.subMenuHoverBgColorPalette}__subMenuHoverBgColor`,
       _v.subMenuBorderColorPalette &&
         `${_v.subMenuBorderColorPalette}__subMenuBorderColor`,
+
       _v.subMenuFontStyle && `${_v.subMenuFontStyle}__subMenuFsDesktop`,
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
       _v.tabletSubMenuFontStyle &&
         `${_v.tabletSubMenuFontStyle}__subMenuFsTablet`,
       _v.mobileSubMenuFontStyle &&
         `${_v.mobileSubMenuFontStyle}__subMenuFsMobile`,
+
       _v.mMenuColorPalette && `${_v.mMenuColorPalette}__mMenuColor`,
       _v.mMenuBgColorPalette && `${_v.mMenuBgColorPalette}__mMenuBgColor`,
       _v.mMenuBorderColorPalette &&
         `${_v.mMenuBorderColorPalette}__mMenuBorderColor`,
       _v.mMenuHoverColorPalette &&
         `${_v.mMenuHoverColorPalette}__mMenuHoverColor`,
+
       _v.mMenuIconColorPalette && `${_v.mMenuIconColorPalette}__mMenuIconColor`,
       _v.tabletMMenuIconColorPalette &&
         `${_v.tabletMMenuIconColorPalette}__tabletMMenuIconColor`,
       _v.mobileMMenuIconColorPalette &&
         `${_v.mobileMMenuIconColorPalette}__mobileMMenuIconColor`,
+
       _v.mMenuFontStyle && `${_v.mMenuFontStyle}__mMenuFsDesktop`,
       _v.tabletMMenuFontStyle && `${_v.tabletMMenuFontStyle}__mMenuFsTablet`,
       _v.mobileMMenuFontStyle && `${_v.mobileMMenuFontStyle}__mMenuFsMobile`
@@ -337,8 +340,6 @@ export default class Menu extends EditorComponent {
     }
 
     const v = this.applyRulesToValue(_v, [
-      _v.colorPalette && `${_v.colorPalette}__color`,
-      _v.hoverColorPalette && `${_v.hoverColorPalette}__hoverColor`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
       _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`,
@@ -351,7 +352,6 @@ export default class Menu extends EditorComponent {
       _v.subMenuBorderColorPalette &&
         `${_v.subMenuBorderColorPalette}__subMenuBorderColor`,
       _v.subMenuFontStyle && `${_v.subMenuFontStyle}__subMenuFsDesktop`,
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
       _v.tabletSubMenuFontStyle &&
         `${_v.tabletSubMenuFontStyle}__subMenuFsTablet`,
       _v.mobileSubMenuFontStyle &&

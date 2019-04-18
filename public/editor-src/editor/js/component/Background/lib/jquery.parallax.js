@@ -99,8 +99,12 @@ import $ from "jquery";
         this._handleScrollBound,
         false
       );
-      window.addEventListener("wheel", this._handleWheelBound, false);
-      window.addEventListener("resize", this._handleResizeBound, false);
+      window.addEventListener("wheel", this._handleWheelBound, {
+        passive: false
+      });
+      window.addEventListener("resize", this._handleResizeBound, {
+        passive: false
+      });
     },
     _detachEvents: function() {
       this.options.baseElement.removeEventListener(

@@ -50,8 +50,27 @@ class Video extends EditorComponent {
   };
 
   handleResizerChange = patch => this.patchValue(patch);
+
   handleCoverIconClick(e) {
     e.preventDefault();
+  }
+
+  getVideoSrc(v) {
+    const { videoPopulation, video, coverImageSrc, controls } = v;
+
+    if (videoPopulation) {
+      return videoPopulation;
+    }
+
+    const videoSrc = getVideoData(video);
+
+    return videoSrc
+      ? getVideoUrl(videoSrc, {
+          autoplay: Boolean(coverImageSrc),
+          controls: controls === "on",
+          suggestedVideo: false
+        })
+      : "";
   }
 
   renderCover(videoSrc) {
@@ -66,32 +85,11 @@ class Video extends EditorComponent {
     );
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBgColorPalette && `${_v.hoverBgColorPalette}__hoverBg`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
-
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
-
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
-
-    const { video, controls, coverImageSrc } = v;
+  renderForEdit(v) {
+    const { video, controls, coverImageSrc, videoPopulation } = v;
     const videoData = getVideoData(video);
 
-    const videoSrc = videoData
-      ? getVideoUrl(videoData, {
-          autoplay: Boolean(coverImageSrc),
-          controls: controls === "on",
-          suggestedVideo: false
-        })
-      : "";
+    const videoSrc = this.getVideoSrc(v);
 
     let content = coverImageSrc ? (
       this.renderCover(videoSrc)
@@ -99,7 +97,7 @@ class Video extends EditorComponent {
       <iframe allowFullScreen={true} className="brz-iframe" src={videoSrc} />
     );
 
-    if (!videoSrc && !coverImageSrc) {
+    if ((!videoSrc && !coverImageSrc) || (videoPopulation && !coverImageSrc)) {
       content = <Placeholder icon="play" />;
     }
 
@@ -125,6 +123,47 @@ class Video extends EditorComponent {
           </div>
         </CustomCSS>
       </Toolbar>
+    );
+  }
+
+  renderForView(v) {
+    const { coverImageSrc, controls, videoPopulation } = v;
+    const videoSrc = this.getVideoSrc(v);
+    let content = coverImageSrc ? (
+      this.renderCover(videoSrc)
+    ) : (
+      <iframe
+        allowFullScreen={true}
+        className="brz-iframe"
+        src={videoPopulation ? "" : videoSrc}
+      />
+    );
+
+    if (!videoSrc && !coverImageSrc) {
+      content = <Placeholder icon="play" />;
+    }
+
+    const style = { ...styleCSSVars(v, this.props), ...wrapperStyleCSSVars(v) };
+
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div
+          className={styleClassName(v, this.props)}
+          style={style}
+          data-auto-play={Boolean(coverImageSrc)}
+          data-controls={controls === "on"}
+          data-population={videoPopulation}
+        >
+          <div className="brz-video-content">
+            <div className={wrapperStyleClassName(v)}>
+              {content}
+              {videoPopulation && (
+                <Placeholder className="brz-hidden" icon="play" />
+              )}
+            </div>
+          </div>
+        </div>
+      </CustomCSS>
     );
   }
 }

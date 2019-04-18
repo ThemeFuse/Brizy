@@ -6,11 +6,10 @@ import { Provider } from "react-redux";
 import { renderStatic } from "glamor/server";
 import cheerio from "cheerio";
 
-import { converter } from "visual/utils/api/editor";
+import { parsePage } from "visual/utils/api/editor/adapter";
 
 import { createStore } from "visual/redux/store";
-import { hydrate } from "visual/redux/actionCreators";
-import styles from "visual-template/styles/default";
+import { hydrate } from "visual/redux/actions";
 
 import EditorGlobal from "visual/global/Editor";
 import "../registerEditorParts";
@@ -23,22 +22,28 @@ import changeRichText from "./transforms/body/changeRichText";
 import changeRichTextDCColor from "./transforms/body/changeRichTextDCColor";
 
 export default function main(pageId, pages, globals) {
-  const convertedPages = pages.map(converter.pageFromBackend);
-  const page = convertedPages.find(page =>
-    pageId ? page.id === pageId : page.index
-  );
+  const page = pages
+    .map(parsePage)
+    .find(page => (pageId ? page.id === pageId : page.is_index));
+
+  // this is done to keep the compiler backwards compatible
+  // with the times when Global and Saved blocks were saved inside globals.
+  // Doing so prevents older version to crash the compiler
+  const { globalBlocks = {}, savedBlocks = {} } = globals;
+  delete globals.globalBlocks;
+  delete globals.savedBlocks;
 
   if (!page) {
     throw new Error(`can not find page with id ${pageId}`);
   }
 
   return {
-    meta: getPageMeta(page),
-    blocks: getPageBlocks(page, globals)
+    meta: getPageMeta({ page }),
+    blocks: getPageBlocks({ page, globals, globalBlocks, savedBlocks })
   };
 }
 
-function getPageMeta(page) {
+function getPageMeta({ page }) {
   return {
     slug: page.slug || "",
     title: page.title || "",
@@ -46,10 +51,10 @@ function getPageMeta(page) {
   };
 }
 
-function getPageBlocks(page, globals) {
+function getPageBlocks({ page, globals, globalBlocks, savedBlocks }) {
   const store = createStore();
 
-  store.dispatch(hydrate({ page, globals, styles }));
+  store.dispatch(hydrate({ page, globals, globalBlocks, savedBlocks }));
 
   const { Page } = EditorGlobal.getComponents();
   const reduxState = store.getState();

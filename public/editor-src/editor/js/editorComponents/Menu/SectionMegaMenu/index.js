@@ -96,13 +96,7 @@ class SectionMegaMenu extends EditorComponent {
     );
   }
 
-  renderItems(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
-
+  renderItems(v) {
     const {
       bgImageSrc,
       bgColorOpacity,
@@ -137,13 +131,7 @@ class SectionMegaMenu extends EditorComponent {
     );
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.mobileBgColorPalette && `${_v.mobileBgColorPalette}__mobileBg`
-    ]);
-
+  renderForEdit(v) {
     const styles = {
       ...bgStyleCSSVars(v),
       ...itemsStyleCSSVars(v),

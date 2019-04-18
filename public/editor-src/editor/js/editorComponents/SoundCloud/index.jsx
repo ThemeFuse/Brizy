@@ -80,19 +80,7 @@ class SoundCloud extends EditorComponent {
     };
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
-
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
-
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
-
+  renderForEdit(v) {
     const wrapperClassName = classnames("brz-iframe", {
       "brz-blocked": IS_EDITOR
     });

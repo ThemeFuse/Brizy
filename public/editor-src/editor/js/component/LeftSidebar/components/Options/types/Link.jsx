@@ -14,6 +14,16 @@ export default class DrawerPopoverItem extends React.Component {
     onClick: _.noop
   };
 
+  handleClick = e => {
+    const { link, meta = {}, onClick } = this.props;
+
+    if ((link === "" || link === "#") && meta.popover) {
+      meta.popover.close();
+    }
+
+    onClick(e);
+  };
+
   render() {
     const {
       className: _className,
@@ -21,8 +31,7 @@ export default class DrawerPopoverItem extends React.Component {
       label,
       link,
       linkTarget,
-      title,
-      onClick
+      title
     } = this.props;
 
     const className = classnames("brz-ed-sidebar-bottom__option", _className);
@@ -43,7 +52,7 @@ export default class DrawerPopoverItem extends React.Component {
     }
 
     return (
-      <div className={className} title={title} onClick={onClick}>
+      <div className={className} title={title} onClick={this.handleClick}>
         {content}
       </div>
     );

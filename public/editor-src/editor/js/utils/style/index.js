@@ -112,9 +112,6 @@ export {
 // Z Index
 export { styleZIndex } from "./styleZIndex";
 
-// Element Slider
-export { styleElementSliderColor } from "./styleElementSlider";
-
 // Element Line
 export { styleElementLineBorderWidth } from "./styleElementLine";
 

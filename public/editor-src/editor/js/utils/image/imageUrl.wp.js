@@ -1,5 +1,5 @@
 import Config from "visual/global/Config";
-import * as Api from "visual/utils/api/editor";
+import { downloadImageFromCloud } from "visual/utils/api/editor";
 import { objectToQueryString } from "visual/utils/url";
 import nonWPImageUrl, { getFilter } from "./imageUrl.js";
 
@@ -37,7 +37,7 @@ export default function imageUrl(
       if (!pendingRequests[imageSrc]) {
         pendingRequests[imageSrc] = true;
 
-        Api.downloadImageFromCloud(imageSrc).then(() => {
+        downloadImageFromCloud(imageSrc).then(() => {
           pendingRequests[imageSrc] = false;
           pageAttachments.images[imageSrc] = true;
         });

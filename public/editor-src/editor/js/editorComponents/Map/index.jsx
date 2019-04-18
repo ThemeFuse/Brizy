@@ -108,34 +108,25 @@ class Map extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(resizerTransformPatch(patch));
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.boxShadowColorPalette && `${_v.boxShadowColorPalette}__boxShadow`,
-      _v.borderColorPalette && `${_v.borderColorPalette}__border`,
-      _v.hoverBorderColorPalette &&
-        `${_v.hoverBorderColorPalette}__hoverBorder`,
 
-      _v.tabletBorderColorPalette &&
-        `${_v.tabletBorderColorPalette}__tabletBorder`,
 
-      _v.mobileBorderColorPalette &&
-        `${_v.mobileBorderColorPalette}__mobileBorder`
-    ]);
+  renderForEdit(v) {
+    const { address, addressPopulation, zoom } = v;
+    const addressSrc = addressPopulation === "" ? address : addressPopulation;
+    const src = `${URL}?key=${KEY}&q=${addressSrc}&zoom=${zoom}`;
 
-    const { address, zoom } = v;
-    const src = `${URL}?key=${KEY}&q=${address}&zoom=${zoom}`;
-
-    const content = !address ? (
-      <Placeholder icon="pin" />
-    ) : (
-      <div className="brz-map-content">
-        <iframe
-          className={classnames("brz-iframe", { "brz-blocked": IS_EDITOR })}
-          src={src}
-        />
-      </div>
-    );
-
+    const content =
+      !address && !addressPopulation ? (
+        <Placeholder icon="pin" />
+      ) : (
+        <div className="brz-map-content">
+          <iframe
+            className={classnames("brz-iframe", { "brz-blocked": IS_EDITOR })}
+            src={src}
+          />
+        </div>
+      );
+    
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig(toolbarConfig)}

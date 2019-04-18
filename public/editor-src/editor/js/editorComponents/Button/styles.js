@@ -1,9 +1,14 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { styleBgGradient } from "visual/utils/style";
+import {
+  styleBgColor,
+  styleBorderColor,
+  styleBgGradient,
+  styleBoxShadow,
+  styleColor
+} from "visual/utils/style";
 
 export function styleClassName(v) {
   const { className } = v;
@@ -71,12 +76,6 @@ export function styleClassName(v) {
       fontWeight,
       lineHeight,
       letterSpacing,
-      colorHex,
-      colorOpacity,
-      bgColorHex,
-      bgColorOpacity,
-      borderColorHex,
-      borderColorOpacity,
       borderWidth,
       borderStyle,
       paddingTop,
@@ -85,19 +84,6 @@ export function styleClassName(v) {
       paddingLeft,
       borderRadius,
       borderRadiusType,
-      hoverColorHex,
-      hoverColorOpacity,
-      hoverBgColorHex,
-      hoverBgColorOpacity,
-      hoverBorderColorHex,
-      hoverBorderColorOpacity,
-      boxShadow,
-      boxShadowColorHex,
-      boxShadowColorOpacity,
-      boxShadowBlur,
-      boxShadowSpread,
-      boxShadowVertical,
-      boxShadowHorizontal,
 
       // Tablet
       tabletFontSize,
@@ -119,14 +105,6 @@ export function styleClassName(v) {
       mobilePaddingBottom,
       mobilePaddingLeft
     } = v;
-
-    const boxShadowStyle =
-      boxShadow === "on"
-        ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-            boxShadowColorHex,
-            boxShadowColorOpacity
-          )}`
-        : "none";
 
     // the same code (calculation) like in editor
     let tabletContentHeight =
@@ -184,9 +162,17 @@ export function styleClassName(v) {
         lineHeight,
         fontWeight,
         letterSpacing,
-        color: hexToRgba(colorHex, colorOpacity),
-        borderColor: hexToRgba(borderColorHex, borderColorOpacity),
-        backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
+        color: styleColor({ v, device: "desktop", state: "normal" }),
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
         backgroundImage: styleBgGradient({
           v,
           device: "desktop",
@@ -199,13 +185,21 @@ export function styleClassName(v) {
         paddingBottom: `${paddingBottom}px`,
         paddingLeft: `${paddingLeft}px`,
         borderRadius,
-        boxShadow: boxShadowStyle
+        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
       },
       ".brz &&:hover": {
-        color: hexToRgba(hoverColorHex, hoverColorOpacity),
-        borderColor: hexToRgba(hoverBorderColorHex, hoverBorderColorOpacity),
-        backgroundColor: hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
-        boxShadow: boxShadowStyle,
+        color: styleColor({ v, device: "desktop", state: "hover" }),
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "hover"
+        }),
+        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
         backgroundImage: styleBgGradient({
           v,
           device: "desktop",
@@ -256,12 +250,6 @@ export function styleCSSVars(v) {
     fontWeight,
     lineHeight,
     letterSpacing,
-    colorHex,
-    colorOpacity,
-    bgColorHex,
-    bgColorOpacity,
-    borderColorHex,
-    borderColorOpacity,
     borderWidth,
     borderStyle,
     paddingTop,
@@ -270,19 +258,6 @@ export function styleCSSVars(v) {
     paddingLeft,
     borderRadiusType,
     borderRadius,
-    hoverColorHex,
-    hoverColorOpacity,
-    hoverBgColorHex,
-    hoverBgColorOpacity,
-    hoverBorderColorHex,
-    hoverBorderColorOpacity,
-    boxShadow,
-    boxShadowColorHex,
-    boxShadowColorOpacity,
-    boxShadowBlur,
-    boxShadowSpread,
-    boxShadowVertical,
-    boxShadowHorizontal,
 
     // Tablet
     tabletFontSize,
@@ -304,14 +279,6 @@ export function styleCSSVars(v) {
     mobilePaddingBottom,
     mobilePaddingLeft
   } = v;
-
-  const boxShadowStyle =
-    boxShadow === "on"
-      ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
-      : "none";
 
   // calculations copied from toolbar
   let tabletContentHeight =
@@ -368,9 +335,17 @@ export function styleCSSVars(v) {
     "--fontSize": `${fontSize}px`,
     "--lineHeight": lineHeight,
     "--letterSpacing": `${letterSpacing}px`,
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--borderColor": hexToRgba(borderColorHex, borderColorOpacity),
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     "--backgroundGradient": styleBgGradient({
       v,
       device: "desktop",
@@ -379,17 +354,22 @@ export function styleCSSVars(v) {
     "--borderWidth": `${borderWidth}px`,
     "--borderStyle": borderStyle,
     "--borderRadius": `${borderRadius}px`,
-    "--boxShadow": boxShadowStyle,
+    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
     "--paddingTop": `${paddingTop}px`,
     "--paddingRight": `${paddingRight}px`,
     "--paddingBottom": `${paddingBottom}px`,
     "--paddingLeft": `${paddingLeft}px`,
-    "--hoverColor": hexToRgba(hoverColorHex, hoverColorOpacity),
-    "--hoverBorderColor": hexToRgba(
-      hoverBorderColorHex,
-      hoverBorderColorOpacity
-    ),
-    "--hoverBgColor": hexToRgba(hoverBgColorHex, hoverBgColorOpacity),
+    "--hoverColor": styleColor({ v, device: "desktop", state: "hover" }),
+    "--hoverBorderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+    "--hoverBgColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
     "--hoverBackgroundGradient": styleBgGradient({
       v,
       device: "desktop",

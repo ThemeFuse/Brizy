@@ -1,12 +1,7 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
-import {
-  tabletSyncOnChange,
-  mobileSyncOnChange
-} from "visual/utils/onChange";
-
+import { styleBorderColor, styleColor, styleBgColor } from "visual/utils/style";
 // Accordion Style
 export function styleClassName(v) {
   const { className } = v;
@@ -75,13 +70,7 @@ export function styleClassName(v) {
       lineHeight,
       fontWeight,
       letterSpacing,
-      colorHex,
-      colorOpacity,
-      bgColorHex,
-      bgColorOpacity,
       borderWidth,
-      borderColorHex,
-      borderColorOpacity,
       paddingType,
       padding,
       paddingTop,
@@ -134,9 +123,17 @@ export function styleClassName(v) {
             paddingType === "grouped" ? `${padding}px` : `${paddingLeft}px`
         },
         "& .brz-accordion__nav, & .brz-accordion__content": {
-          color: hexToRgba(colorHex, colorOpacity),
-          backgroundColor: hexToRgba(bgColorHex, bgColorOpacity),
-          borderColor: hexToRgba(borderColorHex, borderColorOpacity),
+          color: styleColor({ v, device: "desktop", state: "normal" }),
+          backgroundColor: styleBgColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
+          borderColor: styleBorderColor({
+            v,
+            device: "desktop",
+            state: "normal"
+          }),
           borderWidth
         }
       },
@@ -146,7 +143,7 @@ export function styleClassName(v) {
           lineHeight: tabletLineHeight,
           fontWeight: tabletFontWeight,
           letterSpacing: `${tabletLetterSpacing}px`,
-      
+
           "& .brz-accordion__content": {
             paddingTop:
               tabletPaddingType === "grouped"
@@ -211,13 +208,7 @@ export function styleCSSVars(v) {
     fontWeight,
     lineHeight,
     letterSpacing,
-    colorHex,
-    colorOpacity,
-    bgColorHex,
-    bgColorOpacity,
     borderWidth,
-    borderColorHex,
-    borderColorOpacity,
     paddingType,
     padding,
     paddingTop,
@@ -259,9 +250,17 @@ export function styleCSSVars(v) {
     "--letterSpacing": `${letterSpacing}px`,
 
     // Colors
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
-    "--borderColor": hexToRgba(borderColorHex, borderColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
 
     // Border
     "--borderWidth": `${borderWidth}px`,

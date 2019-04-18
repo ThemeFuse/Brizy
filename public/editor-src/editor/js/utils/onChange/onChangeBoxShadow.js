@@ -1,4 +1,5 @@
 // ToDo.. De ce ColorFields accepta 2 valori HEX si Opacity eu cerd ca e nevoie doar de HEX opacity nu e nevoie de el
+import { onChangeDependeciesGrouped } from "./onChange";
 import { defaultValueValue, defaultValueKey } from "./device";
 
 export function onChangeBoxShadowHexAndOpacity({
@@ -76,6 +77,53 @@ export function onChangeBoxShadowHexAndOpacityPalette({
     })]: tempPalette,
     [defaultValueKey({ key: "boxShadow", device, state })]: "on"
   };
+}
+
+export function onChangeBoxShadowHexAndOpacityDependencies({
+  v,
+  device,
+  state,
+  opacity = undefined,
+  isChanged = "hex"
+}) {
+  const dependencies = {
+    boxShadowBlur: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowSpread: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowVertical: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowHorizontal: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    }
+  };
+
+  opacity = onChangeBoxShadowOpacity({
+    v,
+    device,
+    state,
+    opacity,
+    isChanged
+  });
+
+  return onChangeDependeciesGrouped({
+    v,
+    device,
+    state,
+    value: opacity,
+    dependencies
+  });
 }
 
 export function onChangeBoxShadowPalette({ v, device, state, palette }) {

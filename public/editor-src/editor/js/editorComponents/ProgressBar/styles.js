@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { styleColor, styleBgColor } from "visual/utils/style";
 
 export function containerStyleClassName(v) {
   const { className } = v;
@@ -30,18 +30,19 @@ export function containerStyleClassName(v) {
     const {
       // General
       width,
-      borderRadius,
-
-      // Color
-      bg2ColorHex,
-      bg2ColorOpacity
+      borderRadius
     } = v;
 
     glamorObj = {
       ".brz &": {
         width: `${width}%`,
         borderRadius: `${borderRadius}px`,
-        backgroundColor: hexToRgba(bg2ColorHex, bg2ColorOpacity)
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "normal",
+          prefix: "bg2"
+        })
       },
       "@media (max-width: 991px)": {
         ".brz &": {
@@ -69,17 +70,18 @@ export function containerStyleCSSVars(v) {
   const {
     // General
     width,
-    borderRadius,
-
-    // Color
-    bg2ColorHex,
-    bg2ColorOpacity
+    borderRadius
   } = v;
 
   return {
     "--width": `${width}%`,
     "--borderRadius": `${borderRadius}px`,
-    "--bg2Color": hexToRgba(bg2ColorHex, bg2ColorOpacity),
+    "--bg2Color": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal",
+      prefix: "bg2"
+    }),
 
     // Tablet
     "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
@@ -141,17 +143,9 @@ export function styleClassName(v) {
       fontWeight,
       letterSpacing,
 
-      // Color
-      colorHex,
-      colorOpacity,
-      bgColorHex,
-      bgColorOpacity,
-
       // Padding
       paddingTop,
       paddingRight,
-      paddingBottom,
-      paddingLeft,
 
       // Tablet
       tabletFontSize,
@@ -180,8 +174,12 @@ export function styleClassName(v) {
         letterSpacing,
 
         // Color
-        color: hexToRgba(colorHex, colorOpacity),
-        backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
+        color: styleColor({ v, device: "desktop", state: "normal" }),
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        })
       },
       "@media (max-width: 991px)": {
         ".brz &": {
@@ -229,17 +227,9 @@ export function styleCSSVars(v) {
     fontWeight,
     letterSpacing,
 
-    // Color
-    colorHex,
-    colorOpacity,
-    bgColorHex,
-    bgColorOpacity,
-
     // Padding
     paddingTop,
     paddingRight,
-    paddingBottom,
-    paddingLeft,
 
     // Tablet
     tabletFontSize,
@@ -268,8 +258,12 @@ export function styleCSSVars(v) {
     "--letterSpacing": `${letterSpacing}px`,
 
     // Color
-    "--color": hexToRgba(colorHex, colorOpacity),
-    "--bgColor": hexToRgba(bgColorHex, bgColorOpacity),
+    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--bgColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
 
     // Tablet
     "--tabletFontSize": `${tabletFontSize}px`,

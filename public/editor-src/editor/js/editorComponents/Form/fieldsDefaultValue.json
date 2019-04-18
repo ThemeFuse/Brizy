@@ -14,9 +14,16 @@
     "colorHex": "#73777f",
     "colorOpacity": 0.7,
     "colorPalette": "",
+
+    "bgColorType": "solid",
+
     "bgColorHex": "#ffffff",
     "bgColorOpacity": 1,
     "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
     "borderColorHex": "#dcdee1",
     "borderColorOpacity": 1,
     "borderColorPalette": "",

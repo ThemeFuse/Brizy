@@ -2,6 +2,8 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { imageUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
+import { styleBorderColor, styleBgColor } from "visual/utils/style";
+
 
 export function sectionStyleClassName(v) {
   const {
@@ -130,7 +132,11 @@ export function bgStyleClassName(v) {
           borderWidthType === "grouped"
             ? `${borderWidth}px`
             : `${borderLeftWidth}px`,
-        borderColor: `${hexToRgba(borderColorHex, borderColorOpacity)}`,
+        borderColor: styleBorderColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        }),
         borderStyle: "solid",
         borderTopLeftRadius:
           borderRadiusType === "grouped"
@@ -154,7 +160,11 @@ export function bgStyleClassName(v) {
         backgroundPosition: `${bgPositionX}% ${bgPositionY}%`
       },
       "> .brz-bg-media > .brz-bg-color": {
-        backgroundColor: hexToRgba(bgColorHex, bgColorOpacity)
+        backgroundColor: styleBgColor({
+          v,
+          device: "desktop",
+          state: "normal"
+        })
       },
       "@media (max-width: 767px)": {
         "> .brz-bg-media > .brz-bg-image": {
@@ -164,7 +174,11 @@ export function bgStyleClassName(v) {
           backgroundPosition: `${mobileBgPositionX}% ${mobileBgPositionY}%`
         },
         "> .brz-bg-media > .brz-bg-color": {
-          backgroundColor: hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+          backgroundColor: styleBgColor({
+            v,
+            device: "mobile",
+            state: "normal"
+          })
         }
       }
     };
@@ -208,7 +222,11 @@ export function bgStyleCSSVars(v) {
     "--backgroundImage": bgImageSrc ? `url(${imageUrl(bgImageSrc)})` : "none",
     "--backgroundPositionX": `${bgPositionX}%`,
     "--backgroundPositionY": `${bgPositionY}%`,
-    "--backgroundColor": hexToRgba(bgColorHex, bgColorOpacity),
+    "--backgroundColor": styleBgColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     "--borderTopWidth":
       borderWidthType === "grouped"
         ? `${borderWidth}px`
@@ -225,7 +243,11 @@ export function bgStyleCSSVars(v) {
       borderWidthType === "grouped"
         ? `${borderWidth}px`
         : `${borderLeftWidth}px`,
-    "--borderColor": `${hexToRgba(borderColorHex, borderColorOpacity)}`,
+    "--borderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
     "--borderStyle": "solid",
     "--borderTopLeftRadius":
       borderRadiusType === "grouped"
@@ -248,7 +270,11 @@ export function bgStyleCSSVars(v) {
       : "none",
     "--mobileBackgroundPositionX": `${mobileBgPositionX}%`,
     "--mobileBackgroundPositionY": `${mobileBgPositionY}%`,
-    "--mobileBackgroundColor": hexToRgba(mobileBgColorHex, mobileBgColorOpacity)
+    "--mobileBackgroundColor": styleBgColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    })
   };
 }
 

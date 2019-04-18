@@ -1420,33 +1420,55 @@ export function getItemsForDesktop(v) {
                               "onChangeBoxShadowPaletteOpacity"
                             ]
                           }),
-                          toolbarBoxShadowFields({
-                            v,
-                            device,
-                            state: "normal",
-                            onChange: [
-                              "onChangeBoxShadowHexAndOpacity",
-                              "onChangeBoxShadowHexAndOpacityPalette"
+                          {
+                            type: "grid",
+                            className: "brz-ed-grid__color-fileds",
+                            columns: [
+                              {
+                                width: 41,
+                                options: [
+                                  toolbarBoxShadowFields({
+                                    v,
+                                    device,
+                                    state: "normal",
+                                    onChange: [
+                                      "onChangeBoxShadowHexAndOpacity",
+                                      "onChangeBoxShadowHexAndOpacityPalette"
+                                    ]
+                                  })
+                                ]
+                              },
+                              {
+                                width: 59,
+                                options: [
+                                  {
+                                    id: "boxShadow",
+                                    type: "multiInput",
+                                    config: {
+                                      defaultIcon: ["nc-settings"],
+                                      icons: [
+                                        "nc-blur",
+                                        "nc-size",
+                                        "nc-vertical",
+                                        "nc-horizontal"
+                                      ]
+                                    },
+                                    value: [
+                                      v.boxShadowBlur,
+                                      v.boxShadowSpread,
+                                      v.boxShadowVertical,
+                                      v.boxShadowHorizontal
+                                    ],
+                                    onChange: value => {
+                                      console.log(value);
+                                    }
+                                  }
+                                ]
+                              }
                             ]
-                          })
+                          }
                         ]
-                      },
-                      toolbarBoxShadowBlur({ v, device, state: "normal" }),
-                      toolbarBoxShadowSpread({
-                        v,
-                        device,
-                        state: "normal"
-                      }),
-                      toolbarBoxShadowVertical({
-                        v,
-                        device,
-                        state: "normal"
-                      }),
-                      toolbarBoxShadowHorizontal({
-                        v,
-                        device,
-                        state: "normal"
-                      })
+                      }
                     ]
                   }
                 }
@@ -1571,6 +1593,14 @@ export function getItemsForTablet(v) {
       ]
     },
     {
+      id: "tabletToolbarLink",
+      type: "popover",
+      icon: "nc-link",
+      disabled: v.linkPopup === "",
+      position: 80,
+      options: []
+    },
+    {
       id: "tabletToolbarSettings",
       type: "popover",
       disabled: true
@@ -1682,6 +1712,14 @@ export function getItemsForMobile(v) {
           onChange: ({ value: mobilePadding }) => ({ mobilePadding })
         }
       ]
+    },
+    {
+      id: "mobileToolbarLink",
+      type: "popover",
+      icon: "nc-link",
+      disabled: v.linkPopup === "",
+      position: 80,
+      options: []
     },
     {
       id: "mobileToolbarSettings",

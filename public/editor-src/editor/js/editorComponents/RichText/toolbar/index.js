@@ -859,6 +859,7 @@ const getItemsForDesktop = (
 
 export const getItemsForTablet = (
   {
+    linkPopup,
     horizontalAlign,
     font,
     fontStyle,
@@ -964,10 +965,26 @@ export const getItemsForTablet = (
     ]
   },
   {
+    id: "tabletToolbarLink",
+    type: "popover",
+    icon: "nc-link",
+    position: 30,
+    disabled: linkPopup === "",
+    options: [
+      {
+        id: "linkPopup",
+        type: "promptAddPopup",
+        label: t("Popup"),
+        close: false,
+        value: linkPopup
+      }
+    ]
+  },
+  {
     id: "tabletHorizontalAlign",
     label: t("Align"),
     type: "toggle",
-    position: 30,
+    position: 40,
     choices: [
       {
         icon: "nc-text-align-left",
@@ -1058,6 +1075,7 @@ export const getItemsForTablet = (
 
 export const getItemsForMobile = (
   {
+    linkPopup,
     horizontalAlign,
     font,
     fontStyle,
@@ -1163,10 +1181,26 @@ export const getItemsForMobile = (
     ]
   },
   {
+    id: "mobileToolbarLink",
+    type: "popover",
+    icon: "nc-link",
+    position: 30,
+    disabled: linkPopup === "",
+    options: [
+      {
+        id: "linkPopup",
+        type: "promptAddPopup",
+        label: t("Popup"),
+        close: false,
+        value: linkPopup
+      }
+    ]
+  },
+  {
     id: "mobileHorizontalAlign",
     label: t("Align"),
     type: "toggle",
-    position: 30,
+    position: 40,
     choices: [
       {
         icon: "nc-text-align-left",

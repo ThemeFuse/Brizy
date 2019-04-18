@@ -187,11 +187,11 @@ export function styleClassName(v) {
             current: "borderBottomRightRadius"
           }),
 
-          borderColor: `${styleBorderColor({
+          borderColor: styleBorderColor({
             v,
             device: "desktop",
             state: "normal"
-          })}`
+          })
         },
 
         "@media (min-width: 991px)": {
@@ -255,12 +255,11 @@ export function styleClassName(v) {
                 state: "hover",
                 current: "borderBottomRightRadius"
               }),
-
-              borderColor: `${styleBorderColor({
+              borderColor: styleBorderColor({
                 v,
                 device: "desktop",
                 state: "hover"
-              })}`
+              })
             }
           }
         },
@@ -328,11 +327,11 @@ export function styleClassName(v) {
               current: "borderBottomRightRadius"
             }),
 
-            borderColor: `${styleBorderColor({
+            borderColor: styleBorderColor({
               v,
               device: "tablet",
               state: "normal"
-            })}`
+            })
           },
 
           "& iframe": {
@@ -398,11 +397,11 @@ export function styleClassName(v) {
               current: "borderBottomRightRadius"
             }),
 
-            borderColor: `${styleBorderColor({
+            borderColor: styleBorderColor({
               v,
               device: "mobile",
               state: "normal"
-            })}`
+            })
           },
 
           "& iframe": {

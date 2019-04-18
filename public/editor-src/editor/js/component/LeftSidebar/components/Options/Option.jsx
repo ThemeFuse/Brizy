@@ -11,23 +11,26 @@ class Option extends React.Component {
   render() {
     const { data, meta, className: _className } = this.props;
     const Component = optionTypes[data.type];
-
     const extraProps =
       typeof data.extraProps === "object"
         ? data.extraProps
         : typeof data.extraProps === "function"
-          ? data.extraProps()
-          : {};
-
+        ? data.extraProps()
+        : {};
     const className = classnames(
       data.className,
       _className,
       extraProps.className
     );
+    const finalProps = {
+      ...data,
+      ...extraProps,
+      meta,
+      className
+    };
+    const element = <Component {...finalProps} />;
 
-    return (
-      <Component {...data} {...extraProps} meta={meta} className={className} />
-    );
+    return finalProps.render ? finalProps.render(element) : element;
   }
 }
 

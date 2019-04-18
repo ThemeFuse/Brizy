@@ -7,7 +7,7 @@ import LeftSidebar from "visual/component/LeftSidebar";
 import BottomPanel from "visual/component/BottomPanel";
 import Portal from "visual/component/Portal";
 import Prompts from "visual/component/Prompts";
-import { updatePage } from "visual/redux/actionCreators";
+import { updatePage } from "visual/redux/actions";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -17,9 +17,7 @@ class Editor extends React.Component {
   }
 
   handlePageChange = pageValue => {
-    const updateData = { data: pageValue };
-
-    this.props.reduxDispatch(updatePage(updateData));
+    this.props.reduxDispatch(updatePage({ data: pageValue }));
   };
 
   handleKeyDown() {
@@ -74,6 +72,7 @@ const mapDispatchToProps = dispatch => ({
 const areStatesEqual = (state, prevState) =>
   state.page === prevState.page &&
   state.globals === prevState.globals &&
+  state.globalBlocks === prevState.globalBlocks &&
   state.copiedElement === prevState.copiedElement;
 
 export default connect(

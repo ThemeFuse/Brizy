@@ -1,12 +1,12 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 import {
   styleBorderStyle,
   styleBorderWidth,
   styleBorderRadius,
   styleBorderColor,
+  styleBoxShadow,
   styleHoverTransition,
   styleHoverTransitionProperty
 } from "visual/utils/style";
@@ -18,8 +18,6 @@ export function styleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       ".brz &": {
-        boxShadow: "var(--boxShadow)",
-
         "& .brz-map-content": {
           overflow: "hidden",
           position: "relative",
@@ -47,6 +45,8 @@ export function styleClassName(v) {
 
           borderColor: "var(--borderColor)",
 
+          boxShadow: "var(--boxShadow)",
+
           transition: "var(--hoverTransition)",
           transitionProperty: "var(--hoverTransitionProperty)",
 
@@ -63,13 +63,16 @@ export function styleClassName(v) {
             borderBottomLeftRadius: "var(--hoverBorderBottomLeftRadius)",
             borderBottomRightRadius: "var(--hoverBorderBottomRightRadius)",
 
-            borderColor: "var(--hoverBorderColor)"
+            borderColor: "var(--hoverBorderColor)",
+
+            boxShadow: "var(--hoverBoxShadow)"
           }
         }
       },
       ".brz-ed--tablet &": {
         width: "var(--tabletWidth)",
         height: "var(--tabletHeight)",
+
         "& .brz-map-content": {
           borderStyle: "var(--tabletBorderStyle)",
 
@@ -83,13 +86,15 @@ export function styleClassName(v) {
           borderBottomLeftRadius: "var(--tabletBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--tabletBorderBottomRightRadius)",
 
-          borderColor: "var(--tabletBorderColor)"
+          borderColor: "var(--tabletBorderColor)",
+
+          boxShadow: "var(--tabletBoxShadow)"
         }
       },
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)",
         height: "var(--mobileHeight)",
-        
+
         "& .brz-map-content": {
           borderStyle: "var(--mobileBorderStyle)",
 
@@ -103,36 +108,19 @@ export function styleClassName(v) {
           borderBottomLeftRadius: "var(--mobileBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--mobileBorderBottomRightRadius)",
 
-          borderColor: "var(--mobileBorderColor)"
+          borderColor: "var(--mobileBorderColor)",
+
+          boxShadow: "var(--mobileBoxShadow)"
         }
       }
     };
   } else {
-    const {
-      size,
-      height,
-      boxShadow,
-      boxShadowColorHex,
-      boxShadowColorOpacity,
-      boxShadowBlur,
-      boxShadowSpread,
-      boxShadowVertical,
-      boxShadowHorizontal
-    } = v;
-
-    const boxShadowStyle =
-      boxShadow === "on"
-        ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-            boxShadowColorHex,
-            boxShadowColorOpacity
-          )}`
-        : "none";
+    const { size, height } = v;
 
     glamorObj = {
       ".brz &": {
         width: `${size}%`,
         height: `${height}px`,
-        boxShadow: boxShadowStyle,
 
         "& .brz-map-content": {
           overflow: "hidden",
@@ -198,11 +186,14 @@ export function styleClassName(v) {
             current: "borderBottomRightRadius"
           }),
 
-          borderColor: `${styleBorderColor({
+          borderColor: styleBorderColor({
             v,
             device: "desktop",
             state: "normal"
-          })}`,
+          }),
+
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
+
           "@media (min-width: 991px)": {
             // Hover Transition
             transition: styleHoverTransition({ v }),
@@ -265,11 +256,17 @@ export function styleClassName(v) {
                 current: "borderBottomRightRadius"
               }),
 
-              borderColor: `${styleBorderColor({
+              borderColor: styleBorderColor({
                 v,
                 device: "desktop",
                 state: "hover"
-              })}`
+              }),
+
+              boxShadow: styleBoxShadow({
+                v,
+                device: "desktop",
+                state: "hover"
+              })
             }
           }
         }
@@ -336,11 +333,13 @@ export function styleClassName(v) {
               current: "borderBottomRightRadius"
             }),
 
-            borderColor: `${styleBorderColor({
+            borderColor: styleBorderColor({
               v,
               device: "tablet",
               state: "normal"
-            })}`
+            }),
+
+            boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
           }
         }
       },
@@ -405,11 +404,13 @@ export function styleClassName(v) {
               current: "borderBottomRightRadius"
             }),
 
-            borderColor: `${styleBorderColor({
+            borderColor: styleBorderColor({
               v,
               device: "mobile",
               state: "normal"
-            })}`
+            }),
+
+            boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
           }
         }
       }
@@ -424,25 +425,7 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    size,
-    height,
-    boxShadow,
-    boxShadowColorHex,
-    boxShadowColorOpacity,
-    boxShadowBlur,
-    boxShadowSpread,
-    boxShadowVertical,
-    boxShadowHorizontal
-  } = v;
-
-  const boxShadowStyle =
-    boxShadow === "on"
-      ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
-      : "none";
+  const { size, height } = v;
 
   return {
     // Border Style
@@ -511,9 +494,11 @@ export function styleCSSVars(v) {
       state: "normal"
     }),
 
+    // Box Shadow
+    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
+
     "--width": `${size}%`,
     "--height": `${height}px`,
-    "--boxShadow": boxShadowStyle,
 
     //####--- Hover ---####//
 
@@ -578,6 +563,13 @@ export function styleCSSVars(v) {
 
     // Border Color
     "--hoverBorderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // Box Shadow
+    "--hoverBoxShadow": styleBoxShadow({
       v,
       device: "desktop",
       state: "hover"
@@ -655,10 +647,18 @@ export function styleCSSVars(v) {
       state: "normal"
     }),
 
+    // Box Shadow
+    "--tabletBoxShadow": styleBoxShadow({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
     "--tabletWidth": `${tabletSyncOnChange(v, "size")}%`,
     "--tabletHeight": `${tabletSyncOnChange(v, "height")}px`,
 
-    // Mobile
+    //###### Mobile ######//
+
     // Border Style
     "--mobileBorderStyle": styleBorderStyle({
       v,
@@ -720,6 +720,13 @@ export function styleCSSVars(v) {
 
     // Border Color
     "--mobileBorderColor": styleBorderColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+
+    // Box Shadow
+    "--mobileBoxShadow": styleBoxShadow({
       v,
       device: "mobile",
       state: "normal"

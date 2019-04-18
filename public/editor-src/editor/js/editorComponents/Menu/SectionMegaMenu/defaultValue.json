@@ -21,6 +21,8 @@
   "style": {
     "className": "",
 
+    "bgColorType": "solid",
+
     "bgColorHex": "#000000",
     "bgColorOpacity": 1,
     "bgColorPalette": "",

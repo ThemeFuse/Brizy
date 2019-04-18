@@ -30,9 +30,6 @@ class ProgressBar extends EditorComponent {
 
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
-      _v.colorPalette && `${_v.colorPalette}__color`,
-      _v.bgColorPalette && `${_v.bgColorPalette}__bg`,
-      _v.bg2ColorPalette && `${_v.bg2ColorPalette}__bg2`,
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
       _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`

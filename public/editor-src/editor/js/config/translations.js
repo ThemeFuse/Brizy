@@ -386,7 +386,6 @@ export default {
   "SoundCloud": __("SoundCloud", "brizy"),
   "SoundCloud Link": __("SoundCloud Link", "brizy"),
   //-> Video
-  "Video Link": __("Video Link", "brizy"),
   "Ratio": __("Ratio", "brizy"),
   "Controls": __("Controls", "brizy"),
   "Cover": __("Cover", "brizy"),

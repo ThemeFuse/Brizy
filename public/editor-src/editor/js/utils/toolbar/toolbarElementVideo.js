@@ -1,15 +1,21 @@
 import { t } from "visual/utils/i18n";
 
-export function toolbarElementVideoLink({ v }) {
+export function toolbarElementVideoLink({ v, population }) {
   return {
     id: "video",
-    label: t("Video Link"),
+    label: t("Link"),
     type: "input",
     placeholder: t("YouTube or Vimeo"),
+    population: {
+      show: population.length > 0,
+      choices: population
+    },
     value: {
+      population: v.videoPopulation,
       value: v.video
     },
-    onChange: ({ value: video }) => ({
+    onChange: ({ value: video, population: videoPopulation }) => ({
+      videoPopulation,
       video
     })
   };
@@ -96,7 +102,6 @@ export function toolbarElementVideoCoverZoom({ v }) {
       value: v.coverZoom
     },
     onChange: ({ value: coverZoom }) => {
-      console.log(coverZoom);
       return { coverZoom };
     }
   };
@@ -121,8 +126,8 @@ export function toolbarElementVideoPlaySize({ v }) {
       show: true,
       choices: [
         {
-          title: "%",
-          value: "%"
+          title: "px",
+          value: "px"
         }
       ]
     },

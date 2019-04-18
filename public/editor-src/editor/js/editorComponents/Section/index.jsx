@@ -2,8 +2,8 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import SectionItems from "./Items";
 import { cloneItem } from "visual/editorComponents/EditorArrayComponent";
-import { getStore } from "visual/redux/store";
-import { updateGlobals } from "visual/redux/actionCreators";
+import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import { uuid } from "visual/utils/uuid";
 import { stripIds } from "visual/utils/models";
 import * as toolbarExtendConfig from "./toolbarExtend";
@@ -78,13 +78,7 @@ class Section extends EditorComponent {
     return <SectionItems {...itemsProps} />;
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.sliderArrowsColorPalette &&
-        `${_v.sliderArrowsColorPalette}__arrowsColor`,
-      _v.sliderDotsColorPalette && `${_v.sliderDotsColorPalette}__dotsColor`
-    ]);
-
+  renderForEdit(v) {
     return (
       <section
         id={this.getId()}
@@ -97,13 +91,7 @@ class Section extends EditorComponent {
     );
   }
 
-  renderForView(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.sliderArrowsColorPalette &&
-        `${_v.sliderArrowsColorPalette}__arrowsColor`,
-      _v.sliderDotsColorPalette && `${_v.sliderDotsColorPalette}__dotsColor`
-    ]);
-
+  renderForView(v) {
     return (
       <section
         id={v.anchorName || this.getId()}
@@ -118,34 +106,30 @@ class Section extends EditorComponent {
   // api
 
   becomeSaved() {
-    const { blockId } = this.props;
+    const { blockId, reduxDispatch } = this.props;
     const dbValue = this.getDBValue();
-    const store = getStore();
-    const { savedBlocks = [] } = store.getState().globals.project;
 
-    store.dispatch(
-      updateGlobals("savedBlocks", [
-        ...savedBlocks,
-        {
+    reduxDispatch(
+      createSavedBlock({
+        id: uuid(),
+        data: {
           type: "Section",
           blockId,
           value: dbValue
         }
-      ])
+      })
     );
   }
 
   becomeGlobal() {
-    const { blockId } = this.props;
+    const { blockId, reduxDispatch, onChange } = this.props;
     const dbValue = this.getDBValue();
-    const store = getStore();
-    const { globalBlocks = {} } = store.getState().globals.project;
     const globalBlockId = uuid();
 
-    store.dispatch(
-      updateGlobals("globalBlocks", {
-        ...globalBlocks,
-        [globalBlockId]: {
+    reduxDispatch(
+      createGlobalBlock({
+        id: globalBlockId,
+        data: {
           type: "Section",
           blockId,
           value: dbValue
@@ -153,7 +137,7 @@ class Section extends EditorComponent {
       })
     );
 
-    this.props.onChange(
+    onChange(
       {
         type: "GlobalBlock",
         blockId,
@@ -172,14 +156,17 @@ class Section extends EditorComponent {
   }
 
   becomeNormal() {
-    const store = getStore();
-    const { globalBlocks = {} } = store.getState().globals.project;
-    const { globalBlockId } = this.props.meta;
+    const {
+      meta: { globalBlockId },
+      reduxState,
+      onChange
+    } = this.props;
+    const globalBlocks = globalBlocksSelector(reduxState);
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();
 
-    this.props.onChange(globalsData, {
+    onChange(globalsData, {
       intent: "replace_all",
       idOptions: {
         keepExistingIds: true

@@ -1,6 +1,10 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
+import {
+  styleBoxShadow,
+  styleHoverTransition,
+  styleHoverTransitionProperty
+} from "visual/utils/style";
 
 export function imageStylesClassName(v, sizes, props) {
   const {
@@ -24,27 +28,7 @@ export function imageStylesClassName(v, sizes, props) {
     const maxBorderRadius = Math.round(Math.min(dW, dH) / 2);
     const maxTabletBorderRadius = Math.round(Math.min(tW, tH) / 2);
     const maxMobileBorderRadius = Math.round(Math.min(mW, mH) / 2);
-    const {
-      imageBrightness,
-      imageHue,
-      imageContrast,
-      imageSaturation,
-      boxShadow,
-      boxShadowColorHex,
-      boxShadowColorOpacity,
-      boxShadowBlur,
-      boxShadowSpread,
-      boxShadowVertical,
-      boxShadowHorizontal
-    } = v;
-
-    const boxShadowStyle =
-      boxShadow === "on"
-        ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-            boxShadowColorHex,
-            boxShadowColorOpacity
-          )}`
-        : "none";
+    const { imageBrightness, imageHue, imageContrast, imageSaturation } = v;
 
     glamorObj = {
       ".brz &": {
@@ -52,14 +36,24 @@ export function imageStylesClassName(v, sizes, props) {
         height: !imageSrc && !imagePopulation ? `${dH}px` : "auto",
         borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`,
         filter: `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`,
-        boxShadow: boxShadowStyle
+        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
+      },
+
+      "@media (min-width: 991px)": {
+        transition: styleHoverTransition({ v }),
+        transitionProperty: styleHoverTransitionProperty(),
+
+        ".brz &:hover": {
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
+        }
       },
 
       "@media (max-width: 991px)": {
         ".brz &": {
           maxWidth: `${Math.round(Math.abs((tW * 100) / tabletW))}%`,
           height: !imageSrc && !imagePopulation ? `${tH}px` : "auto",
-          borderRadius: `${Math.min(borderRadius, maxTabletBorderRadius)}px`
+          borderRadius: `${Math.min(borderRadius, maxTabletBorderRadius)}px`,
+          boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
         }
       },
 
@@ -67,7 +61,8 @@ export function imageStylesClassName(v, sizes, props) {
         ".brz &": {
           maxWidth: `${Math.round(Math.abs((mW * 100) / mobileW))}%`,
           height: !imageSrc && !imagePopulation ? `${mH}px` : "auto",
-          borderRadius: `${Math.min(borderRadius, maxMobileBorderRadius)}px`
+          borderRadius: `${Math.min(borderRadius, maxMobileBorderRadius)}px`,
+          boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
         }
       }
     };
@@ -154,23 +149,30 @@ export function contentStyleCSSVars(v, sizes) {
 export function wrapperStyleClassName(v) {
   const { className } = v;
   const glamorObj = {
-    ".brz &": {
-      boxShadow: "var(--boxShadow)"
-    },
     ".brz-ed--desktop &": {
       width: "var(--width)",
       height: "var(--height)",
-      borderRadius: "var(--borderRadius)"
+      borderRadius: "var(--borderRadius)",
+      boxShadow: "var(--boxShadow)",
+
+      transition: "var(--hoverTransition)",
+      transitionProperty: "var(--hoverTransitionProperty)",
+
+      ":hover": {
+        boxShadow: "var(--hoverBoxShadow)"
+      }
     },
     ".brz-ed--tablet &": {
       width: "var(--tabletWidth)",
       height: "var(--tabletHeight)",
-      borderRadius: "var(--tabletBorderRadius)"
+      borderRadius: "var(--tabletBorderRadius)",
+      boxShadow: "var(--tabletBoxShadow)"
     },
     ".brz-ed--mobile &": {
       width: "var(--mobileWidth)",
       height: "var(--mobileHeight)",
-      borderRadius: "var(--mobileBorderRadius)"
+      borderRadius: "var(--mobileBorderRadius)",
+      boxShadow: "var(--mobileBoxShadow)"
     }
   };
   const glamorClassName = String(css(glamorObj));
@@ -185,36 +187,45 @@ export function wrapperStyleCSSVars(v, sizes) {
     mobile: { width: mW, height: mH }
   } = sizes;
 
-  const {
-    boxShadow,
-    boxShadowColorHex,
-    boxShadowColorOpacity,
-    boxShadowBlur,
-    boxShadowSpread,
-    boxShadowVertical,
-    boxShadowHorizontal
-  } = v;
-
-  const boxShadowStyle =
-    boxShadow === "on"
-      ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
-          boxShadowColorHex,
-          boxShadowColorOpacity
-        )}`
-      : "none";
-
   return {
+    //####--- Normal ---####//
+
     "--width": `${dW}px`,
     "--height": `${dH}px`,
-    "--boxShadow": boxShadowStyle,
+    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
 
-    // Tablet
+    //####--- Hover ---####//
+
+    // Box Shadow
+    "--hoverBoxShadow": styleBoxShadow({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // Hover Transition
+    "--hoverTransition": styleHoverTransition({ v }),
+    "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
+
+    //####--- Tablet ---####//
+
     "--tabletWidth": `${tW}px`,
     "--tabletHeight": `${tH}px`,
+    "--tabletBoxShadow": styleBoxShadow({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
 
-    // Mobile
+    //####--- Mobile ---####//
+
     "--mobileWidth": `${mW}px`,
-    "--mobileHeight": `${mH}px`
+    "--mobileHeight": `${mH}px`,
+    "--mobileBoxShadow": styleBoxShadow({
+      v,
+      device: "mobile",
+      state: "normal"
+    })
   };
 }
 

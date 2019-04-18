@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { removeAt, insert } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
-import { updatePage } from "visual/redux/actionCreators";
+import { updatePage } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 import BlockThumbnail from "./BlockThumbnail";
 
