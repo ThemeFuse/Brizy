@@ -11,6 +11,9 @@ import { currentStyleSelector } from "../selectors";
 import {
   HYDRATE,
   UPDATE_GLOBALS,
+  UPDATE_PAGE,
+  UPDATE_GLOBAL_BLOCK,
+  UPDATE_SAVED_BLOCK,
   UPDATE_UI,
   COPY_ELEMENT,
   updateCopiedElement
@@ -21,6 +24,27 @@ import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 const { UNDO, REDO } = HistoryActionTypes;
 
 export default config => store => next => action => {
+  // show warning if the user wants to leave
+  // without publishing / updating changes
+  switch (action.type) {
+    case UPDATE_PAGE:
+    case UPDATE_GLOBALS:
+    case UPDATE_GLOBAL_BLOCK:
+    case UPDATE_SAVED_BLOCK:
+    case UNDO:
+    case REDO: {
+      const window_ = window.parent || window;
+
+      if (action.meta.is_autosave === 0) {
+        window_.removeEventListener("beforeunload", handleBeforeUnload);
+      } else {
+        window_.addEventListener("beforeunload", handleBeforeUnload);
+      }
+
+      break;
+    }
+  }
+
   if (action.type === HYDRATE) {
     const done = () => next(action);
     handleHydrate(config, store, action, done);
@@ -210,4 +234,9 @@ function handleHistoryChange(config, store, action, done) {
       makeRichTextColorPaletteCSS(colorPalette)
     );
   }
+}
+
+function handleBeforeUnload(e) {
+  e.preventDefault();
+  e.returnValue = "Do you really want to close?";
 }
