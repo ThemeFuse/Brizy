@@ -680,26 +680,17 @@ class Brizy_Editor_Project implements Serializable {
 		}
 
 		if ( $key == 'brizy-license-key' ) {
-			$this->setLicenseKey( $value );
+			return $this->setLicenseKey( $value );
 		}
 		if ( $key == 'brizy-cloud-token' ) {
-			$this->setCloudToken( $value );
+			return $this->setCloudToken( $value );
 		}
 		if ( $key == 'brizy-cloud-project' ) {
-			$this->setCloudProject( $value );
+			return $this->setCloudProject( $value );
 		}
 
 		return $this->$key = $value;
 
-		//		$this->storage->set( $key, $value );
-//		$this->storage->set( 'pluginVersion', BRIZY_VERSION );
-//		$this->storage->set( 'editorVersion', BRIZY_EDITOR_VERSION );
-//		$this->storage->set( 'updated', new DateTime() );
-//
-//		// create project revision
-//		// md5 it to make sure no one will use this data-- we need it only to make the revision
-//		$this->post->post_content = md5( serialize( time() ) );
-//		wp_update_post( $this->post );
 	}
 
 
