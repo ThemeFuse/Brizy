@@ -27,12 +27,11 @@ class PublishButton extends React.Component {
       return;
     }
 
-    // to trigger updateGlobals we must provide a key and a value
-    // we fake it by taking the first key and it's corresponding value
+    // force a network request, but don't change anything
     return new Promise((resolve, reject) => {
       return updateGlobals({
-        key: globalsEntries[0][0],
-        value: globalsEntries[0][1],
+        key: null,
+        value: null,
         meta: {
           is_autosave: 0,
           syncImmediate: true,
