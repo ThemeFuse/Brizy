@@ -44,6 +44,11 @@ export function globals(state = {}, action) {
 
       return globals;
     case UPDATE_GLOBALS:
+      // temporary hack made for PublishButton
+      if (!action.key) {
+        return state;
+      }
+
       return {
         ...state,
         [action.key]: action.value

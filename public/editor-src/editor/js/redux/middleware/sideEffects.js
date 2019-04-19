@@ -35,7 +35,7 @@ export default config => store => next => action => {
     case REDO: {
       const window_ = window.parent || window;
 
-      if (action.meta.is_autosave === 0) {
+      if (action.meta && action.meta.is_autosave === 0) {
         window_.removeEventListener("beforeunload", handleBeforeUnload);
       } else {
         window_.addEventListener("beforeunload", handleBeforeUnload);
