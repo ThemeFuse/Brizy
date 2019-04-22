@@ -9,6 +9,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const TAXONOMY = 2;
 	const ARCHIVE = 4;
 	const TEMPLATE = 8;
+	const BRIZY_TEMPLATE = 16;
 
 	/**
 	 * @var int

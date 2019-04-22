@@ -187,7 +187,9 @@ class Brizy_Admin_Templates {
 
 	static public function registerCustomPostTemplate() {
 
-	    if(is_network_admin()) return;
+		if ( is_network_admin() ) {
+			return;
+		}
 
 		$labels = array(
 			'name'               => _x( 'Templates', 'post type general name' ),
@@ -211,7 +213,7 @@ class Brizy_Admin_Templates {
 				'labels'              => $labels,
 				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __( __bt('brizy','Brizy').' templates.' ),
+				'description'         => __( __bt( 'brizy', 'Brizy' ) . ' templates.' ),
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
 				'show_ui'             => true,
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
@@ -279,6 +281,9 @@ class Brizy_Admin_Templates {
 	}
 
 	public function getGroupList() {
+
+		$context = $_REQUEST['template-rules'];
+
 		$closure = function ( $v ) {
 			return array(
 				'title'      => $v->label,
@@ -306,7 +311,7 @@ class Brizy_Admin_Templates {
 			array(
 				'title' => 'Others',
 				'value' => Brizy_Admin_Rule::TEMPLATE,
-				'items' => $this->geTemplateList()
+				'items' => $this->geTemplateList( $context )
 			),
 		);
 
@@ -343,16 +348,22 @@ class Brizy_Admin_Templates {
 		} ) );
 	}
 
-	public function geTemplateList() {
+	public function geTemplateList( $context ) {
 
-		return array(
+		$list = array(
 			array( 'title' => 'Author page', 'value' => 'author', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
 			array( 'title' => 'Search page', 'value' => 'search', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
 			array( 'title' => 'Front page', 'value' => 'front_page', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
 			array( 'title' => 'Blog / Posts page', 'value' => 'home_page', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
 			array( 'title' => '404 page', 'value' => '404', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
-			array( 'title' => 'Archive page', 'value' => '', 'groupValue' => Brizy_Admin_Rule::ARCHIVE ),
+			array( 'title' => 'Archive page', 'value' => '', 'groupValue' => Brizy_Admin_Rule::ARCHIVE )
 		);
+
+		if ( $context != 'template-rules' ) {
+			$list[] = array( 'title' => 'Brizy Templates', 'value' => 'brizy_template', 'groupValue' => Brizy_Admin_Rule::BRIZY_TEMPLATE );
+		}
+
+		return $list;
 	}
 
 	static function getCurrentPageGroupAndType() {
