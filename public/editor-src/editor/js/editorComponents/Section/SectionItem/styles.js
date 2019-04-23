@@ -24,9 +24,8 @@ import {
   styleShapeBottomFlip,
   styleShapeTopIndex,
   styleShapeBottomIndex,
-  styleShapeTopType,
+  styleShapeType,
   styleShapeTopBackgroundSize,
-  styleShapeBottomType,
   styleShapeBottomBackgroundSize
 } from "visual/utils/style";
 
@@ -328,14 +327,14 @@ export function bgStyleClassName(v, props) {
 
       // Shape
       "> .brz-bg-media > .brz-bg-shape__top": {
-        backgroundImage: styleShapeTopType({ v }),
+        backgroundImage: styleShapeType({ v, prefix: "Top" }),
         backgroundSize: styleShapeTopBackgroundSize({ v, device: "desktop" }),
         transform: styleShapeTopFlip({ v }),
         height: styleShapeTopHeight({ v, device: "desktop" }),
         zIndex: styleShapeTopIndex({ v })
       },
       "> .brz-bg-media > .brz-bg-shape__bottom": {
-        backgroundImage: styleShapeBottomType({ v }),
+        backgroundImage: styleShapeType({ v, prefix: "Bottom" }),
         backgroundSize: styleShapeBottomBackgroundSize({
           v,
           device: "desktop"
@@ -829,7 +828,7 @@ export function bgStyleCSSVars(v, props) {
     "--shapeTopHeight": styleShapeTopHeight({ v, device: "desktop" }),
     "--shapeTopFlip": styleShapeTopFlip({ v }),
     "--shapeTopIndex": styleShapeTopIndex({ v }),
-    "--shapeTopType": styleShapeTopType({ v }),
+    "--shapeTopType": styleShapeType({ v, prefix: "Top" }),
     "--shapeTopBackgroundSize": styleShapeTopBackgroundSize({
       v,
       device: "desktop"
@@ -838,7 +837,7 @@ export function bgStyleCSSVars(v, props) {
     "--shapeBottomHeight": styleShapeBottomHeight({ v, device: "desktop" }),
     "--shapeBottomFlip": styleShapeBottomFlip({ v }),
     "--shapeBottomIndex": styleShapeBottomIndex({ v }),
-    "--shapeBottomType": styleShapeBottomType({ v }),
+    "--shapeBottomType": styleShapeType({ v, prefix: "Bottom" }),
     "--shapeBottomBackgroundSize": styleShapeBottomBackgroundSize({
       v,
       device: "desktop"

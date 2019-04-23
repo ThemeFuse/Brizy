@@ -6,6 +6,7 @@ import {
   styleBorderWidth,
   styleBorderRadius,
   styleBorderColor,
+  styleBoxShadow,
   styleHoverTransition,
   styleHoverTransitionProperty
 } from "visual/utils/style";
@@ -39,6 +40,8 @@ export function styleClassName(v) {
 
           borderColor: "var(--borderColor)",
 
+          boxShadow: "var(--boxShadow)",
+
           transition: "var(--hoverTransition)",
           transitionProperty: "var(--hoverTransitionProperty)",
 
@@ -55,7 +58,9 @@ export function styleClassName(v) {
             borderBottomLeftRadius: "var(--hoverBorderBottomLeftRadius)",
             borderBottomRightRadius: "var(--hoverBorderBottomRightRadius)",
 
-            borderColor: "var(--hoverBorderColor)"
+            borderColor: "var(--hoverBorderColor)",
+
+            boxShadow: "var(--hoverBoxShadow)"
           }
         }
       },
@@ -75,7 +80,9 @@ export function styleClassName(v) {
           borderBottomLeftRadius: "var(--tabletBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--tabletBorderBottomRightRadius)",
 
-          borderColor: "var(--tabletBorderColor)"
+          borderColor: "var(--tabletBorderColor)",
+
+          boxShadow: "var(--tabletBoxShadow)"
         }
       },
       ".brz-ed--mobile &": {
@@ -94,7 +101,9 @@ export function styleClassName(v) {
           borderBottomLeftRadius: "var(--mobileBorderBottomLeftRadius)",
           borderBottomRightRadius: "var(--mobileBorderBottomRightRadius)",
 
-          borderColor: "var(--mobileBorderColor)"
+          borderColor: "var(--mobileBorderColor)",
+
+          boxShadow: "var(--mobileBoxShadow)"
         }
       }
     };
@@ -167,6 +176,9 @@ export function styleClassName(v) {
             device: "desktop",
             state: "normal"
           })}`,
+
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
+
           "@media (min-width: 991px)": {
             // Hover Transition
             transition: styleHoverTransition({ v }),
@@ -232,7 +244,13 @@ export function styleClassName(v) {
                 v,
                 device: "desktop",
                 state: "hover"
-              })}`
+              })}`,
+
+              boxShadow: styleBoxShadow({
+                v,
+                device: "desktop",
+                state: "hover"
+              })
             }
           }
         }
@@ -299,7 +317,9 @@ export function styleClassName(v) {
               v,
               device: "tablet",
               state: "normal"
-            })}`
+            })}`,
+
+            boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
           }
         }
       },
@@ -364,7 +384,9 @@ export function styleClassName(v) {
               v,
               device: "mobile",
               state: "normal"
-            })}`
+            })}`,
+
+            boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
           }
         }
       }
@@ -449,6 +471,9 @@ export function styleCSSVars(v) {
       state: "normal"
     }),
 
+    // Box Shadow
+    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
+
     "--width": `${width}%`,
 
     //###---Hover--###//
@@ -513,6 +538,13 @@ export function styleCSSVars(v) {
 
     // Border Color
     "--hoverBorderColor": styleBorderColor({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
+    // Box Shadow
+    "--hoverBoxShadow": styleBoxShadow({
       v,
       device: "desktop",
       state: "hover"
@@ -590,6 +622,13 @@ export function styleCSSVars(v) {
       state: "normal"
     }),
 
+    // Box Shadow
+    "--tabletBoxShadow": styleBoxShadow({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
     "--tabletWidth": `${tabletSyncOnChange(v, "width")}%`,
 
     //###---Mobile--###//
@@ -655,6 +694,13 @@ export function styleCSSVars(v) {
 
     // Border Color
     "--mobileBorderColor": styleBorderColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+
+    // Box Shadow
+    "--mobileBoxShadow": styleBoxShadow({
       v,
       device: "mobile",
       state: "normal"

@@ -398,6 +398,7 @@ export function getItemsForDesktop(v) {
                     {
                       id: "tabOverlay",
                       label: t("Overlay"),
+                      disabled: v.coverImageSrc === "",
                       options: [
                         toolbarBgColorHexAndOpacity({
                           v,

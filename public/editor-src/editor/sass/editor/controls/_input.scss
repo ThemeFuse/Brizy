@@ -18,6 +18,7 @@
   box-shadow: none;
   text-shadow: none;
   text-align: left;
+  margin-left: auto;
   -moz-appearance: textfield; // Remove spin button on Firefox
 
   &:focus,

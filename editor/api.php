@@ -402,7 +402,7 @@ class Brizy_Editor_API {
 		$post_query = array(
 			'post_type'      => $postType,
 			'posts_per_page' => - 1,
-			'post_status'    => $postType == 'attachment' ? 'inherit' : 'publish',
+			'post_status'    => $postType == 'attachment' ? 'inherit' : array('publish', 'pending', 'draft', 'future', 'private'),
 			'orderby'        => 'post_title',
 			'order'          => 'ASC'
 		);

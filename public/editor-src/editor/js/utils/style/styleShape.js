@@ -1,14 +1,33 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { svgToUri } from "visual/utils/icons";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
-export function styleShapeTopType({ v }) {
-  const { shapeTopType, shapeTopColorHex, shapeTopColorOpacity } = v;
-  return shapeTopType === "none"
+export function styleShapeType({ v, device, state, prefix }) {
+  const shapeType = defaultValueValue({
+    v,
+    key: `shape${prefix}Type`,
+    device,
+    state
+  });
+
+  const { hex: shapeColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: `shape${prefix}ColorHex`, device, state }),
+    defaultValueValue({ v, key: `shape${prefix}ColorPalette`, device, state })
+  );
+
+  const shapeColorOpacity = defaultValueValue({
+    v,
+    key: `shape${prefix}ColorOpacity`,
+    device,
+    state
+  });
+
+  return shapeType === "none"
     ? "none"
     : `url('${svgToUri(
-        shapeTopType,
-        hexToRgba(shapeTopColorHex, shapeTopColorOpacity)
+        shapeType,
+        hexToRgba(shapeColorHex, shapeColorOpacity)
       )}')`;
 }
 
@@ -38,16 +57,6 @@ export function styleShapeTopHeight({ v, device }) {
 export function styleShapeTopIndex({ v }) {
   const { shapeTopIndex } = v;
   return shapeTopIndex;
-}
-
-export function styleShapeBottomType({ v }) {
-  const { shapeBottomType, shapeBottomColorHex, shapeBottomColorOpacity } = v;
-  return shapeBottomType === "none"
-    ? "none"
-    : `url('${svgToUri(
-        shapeBottomType,
-        hexToRgba(shapeBottomColorHex, shapeBottomColorOpacity)
-      )}')`;
 }
 
 export function styleShapeBottomBackgroundSize({ v, device }) {

@@ -28,6 +28,8 @@ export function getItemsForDesktop(v) {
     defaultValueValue({ v, key: "sliderDotsColorPalette", device })
   );
 
+  const state = "normal";
+
   return [
     {
       id: "toolbarCarousel",

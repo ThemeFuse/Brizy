@@ -134,7 +134,7 @@ export default class extends Component {
                   {isMac ? "cmd + S" : "Ctrl + S"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Save
+                  Publish / Update Page
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">

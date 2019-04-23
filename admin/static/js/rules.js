@@ -7,6 +7,7 @@ var RULE_POSTS = "1";
 var RULE_TAXONOMY = "2";
 var RULE_ARCHIVE = "4";
 var RULE_TEMPLATE = "8";
+var RULE_BRIZY_TEMPLATE = "16";
 
 var defaultRule = {
     type: RULE_TYPE_INCLUDE,
@@ -38,7 +39,8 @@ var api = {
 
         return jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_group_list",
-            hash: Brizy_Admin_Rules.hash
+            hash: Brizy_Admin_Rules.hash,
+            context: 'template-rules'
         }).done(function (data) {
             apiCache.groupList = jQuery.Deferred().resolve(data);
         });

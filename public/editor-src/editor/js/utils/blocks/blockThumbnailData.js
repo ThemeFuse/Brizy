@@ -3,7 +3,7 @@ import { applyFilter } from "visual/utils/filters";
 import { blockTemplateThumbnailUrl } from "./blockTemplateThumbnailUrl";
 import { placeholderBlockThumbnailUrl } from "./placeholderBlockThumbnailUrl";
 
-export const blockThumbnailData = block => {
+export const blockThumbnailData = (block, meta = {}) => {
   const blockTemplateId = block.blockId;
   const blockTemplate = Editor.getBlock(blockTemplateId);
   const data = blockTemplate
@@ -18,5 +18,5 @@ export const blockThumbnailData = block => {
         height: 200
       };
 
-  return applyFilter("blockThumbnailData", data, block);
+  return applyFilter("blockThumbnailData", data, block, meta);
 };

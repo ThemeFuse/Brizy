@@ -18,10 +18,7 @@ import {
   toolbarBoxShadowHexAndOpacity,
   toolbarBoxShadowPalette,
   toolbarBoxShadowFields,
-  toolbarBoxShadowBlur,
-  toolbarBoxShadowSpread,
-  toolbarBoxShadowVertical,
-  toolbarBoxShadowHorizontal,
+  toolbarBoxShadow,
   toolbarBgColorHexAndOpacity,
   toolbarBgColorPalette,
   toolbarBgColorFields,
@@ -78,11 +75,6 @@ export function getItemsForDesktop(v) {
   const { hex: hoverBorderColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "hoverBorderColorHex", device }),
     defaultValueValue({ v, key: "hoverBorderColorPalette", device })
-  );
-
-  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "boxShadowColorHex", device }),
-    defaultValueValue({ v, key: "boxShadowColorPalette", device })
   );
 
   return [
@@ -1046,7 +1038,7 @@ export function getItemsForDesktop(v) {
                   type: "tabs",
                   tabs: [
                     {
-                      label: t("Background"),
+                      label: t("Bg"),
                       options: [
                         {
                           type: "grid",
@@ -1605,6 +1597,62 @@ export function getItemsForDesktop(v) {
                           ]
                         }
                       ]
+                    },
+                    {
+                      label: t("Shadow"),
+                      options: [
+                        toolbarBoxShadowHexAndOpacity({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBoxShadowHexAndOpacity",
+                            "onChangeBoxShadowHexAndOpacityPalette",
+                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          ]
+                        }),
+                        toolbarBoxShadowPalette({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBoxShadowPalette",
+                            "onChangeBoxShadowPaletteOpacity",
+                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 41,
+                              options: [
+                                toolbarBoxShadowFields({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeBoxShadowHexAndOpacity",
+                                    "onChangeBoxShadowHexAndOpacityPalette",
+                                    "onChangeBoxShadowHexAndOpacityDependencies"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 59,
+                              options: [
+                                toolbarBoxShadow({
+                                  v,
+                                  device,
+                                  state: "normal"
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -1620,7 +1668,7 @@ export function getItemsForDesktop(v) {
                   type: "tabs",
                   tabs: [
                     {
-                      label: t("Background"),
+                      label: t("Bg"),
                       options: [
                         {
                           type: "grid",
@@ -2012,6 +2060,62 @@ export function getItemsForDesktop(v) {
                           ]
                         }
                       ]
+                    },
+                    {
+                      label: t("Shadow"),
+                      options: [
+                        toolbarBoxShadowHexAndOpacity({
+                          v,
+                          device,
+                          state: "hover",
+                          onChange: [
+                            "onChangeBoxShadowHexAndOpacity",
+                            "onChangeBoxShadowHexAndOpacityPalette",
+                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          ]
+                        }),
+                        toolbarBoxShadowPalette({
+                          v,
+                          device,
+                          state: "hover",
+                          onChange: [
+                            "onChangeBoxShadowPalette",
+                            "onChangeBoxShadowPaletteOpacity",
+                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 41,
+                              options: [
+                                toolbarBoxShadowFields({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  onChange: [
+                                    "onChangeBoxShadowHexAndOpacity",
+                                    "onChangeBoxShadowHexAndOpacityPalette",
+                                    "onChangeBoxShadowHexAndOpacityDependencies"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 59,
+                              options: [
+                                toolbarBoxShadow({
+                                  v,
+                                  device,
+                                  state: "hover"
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -2071,81 +2175,7 @@ export function getItemsForDesktop(v) {
               id: "settingsStyling",
               label: t("Styling"),
               tabIcon: "nc-styling",
-              options: [
-                {
-                  type: "multiPicker",
-                  position: 80,
-                  picker: {
-                    id: "boxShadow",
-                    label: t("Shadow"),
-                    type: "switch",
-                    value: v.boxShadow
-                  },
-                  choices: {
-                    on: [
-                      {
-                        id: "boxShadowColors",
-                        type: "popover",
-                        size: "auto",
-                        label: t("Color"),
-                        title: t("Color"),
-                        icon: {
-                          style: {
-                            backgroundColor: hexToRgba(
-                              boxShadowColorHex,
-                              v.boxShadowColorOpacity
-                            )
-                          }
-                        },
-                        options: [
-                          toolbarBoxShadowHexAndOpacity({
-                            v,
-                            device,
-                            state: "normal",
-                            onChange: [
-                              "onChangeBoxShadowHexAndOpacity",
-                              "onChangeBoxShadowHexAndOpacityPalette"
-                            ]
-                          }),
-                          toolbarBoxShadowPalette({
-                            v,
-                            device,
-                            state: "normal",
-                            onChange: [
-                              "onChangeBoxShadowPalette",
-                              "onChangeBoxShadowPaletteOpacity"
-                            ]
-                          }),
-                          {
-                            type: "grid",
-                            className: "brz-ed-grid__color-fileds",
-                            columns: [
-                              {
-                                width: 100,
-                                options: [
-                                  toolbarBoxShadowFields({
-                                    v,
-                                    device,
-                                    state: "normal",
-                                    onChange: [
-                                      "onChangeBoxShadowHexAndOpacity",
-                                      "onChangeBoxShadowHexAndOpacityPalette"
-                                    ]
-                                  })
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      toolbarBoxShadowBlur({ v, device, state: "normal" }),
-                      toolbarBoxShadowSpread({ v, device, state: "normal" }),
-                      toolbarBoxShadowVertical({ v, device, state: "normal" }),
-                      toolbarBoxShadowHorizontal({ v, device, state: "normal" })
-                    ]
-                  }
-                }
-              ]
+              options: []
             },
             {
               id: "moreSettingsAdvanced",
@@ -2162,6 +2192,11 @@ export function getItemsForDesktop(v) {
 
 export function getItemsForTablet(v) {
   const device = "tablet";
+
+  const { hex: tabletBoxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device })
+  );
 
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
@@ -2488,6 +2523,86 @@ export function getItemsForTablet(v) {
       ]
     },
     {
+      id: "tabletToolbarColor",
+      type: "popover",
+      size: "auto",
+      title: t("Colors"),
+      position: 90,
+      icon: {
+        style: {
+          backgroundColor: hexToRgba(
+            tabletBoxShadowColorHex,
+            tabletSyncOnChange(v, "boxShadowColorOpacity")
+          )
+        }
+      },
+      options: [
+        {
+          id: "tabletTabsColor",
+          type: "tabs",
+          tabs: [
+            {
+              id: "tabletBoxShadow",
+              label: t("Shadow"),
+              options: [
+                toolbarBoxShadowHexAndOpacity({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBoxShadowHexAndOpacity",
+                    "onChangeBoxShadowHexAndOpacityPalette",
+                    "onChangeBoxShadowHexAndOpacityDependencies"
+                  ]
+                }),
+                toolbarBoxShadowPalette({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBoxShadowPalette",
+                    "onChangeBoxShadowPaletteOpacity",
+                    "onChangeBoxShadowHexAndOpacityDependencies"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 41,
+                      options: [
+                        toolbarBoxShadowFields({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBoxShadowHexAndOpacity",
+                            "onChangeBoxShadowHexAndOpacityPalette",
+                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          ]
+                        })
+                      ]
+                    },
+                    {
+                      width: 59,
+                      options: [
+                        toolbarBoxShadow({
+                          v,
+                          device,
+                          state: "normal"
+                        })
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       id: "tabletToolbarLink",
       icon: "nc-link",
       type: "popover",
@@ -2500,6 +2615,11 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   const device = "mobile";
+
+  const { hex: mobileBoxShadowColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "boxShadowColorHex", device }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device })
+  );
 
   // Typography
   const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
@@ -2818,6 +2938,86 @@ export function getItemsForMobile(v) {
                       { mobileLetterSpacing: newMobileLetterSpacing },
                       v
                     )
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "mobileToolbarColor",
+      type: "popover",
+      size: "auto",
+      title: t("Colors"),
+      position: 90,
+      icon: {
+        style: {
+          backgroundColor: hexToRgba(
+            mobileBoxShadowColorHex,
+            mobileSyncOnChange(v, "boxShadowColorOpacity")
+          )
+        }
+      },
+      options: [
+        {
+          id: "mobileTabsColor",
+          type: "tabs",
+          tabs: [
+            {
+              id: "mobileBoxShadow",
+              label: t("Shadow"),
+              options: [
+                toolbarBoxShadowHexAndOpacity({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBoxShadowHexAndOpacity",
+                    "onChangeBoxShadowHexAndOpacityPalette",
+                    "onChangeBoxShadowHexAndOpacityDependencies"
+                  ]
+                }),
+                toolbarBoxShadowPalette({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeBoxShadowPalette",
+                    "onChangeBoxShadowPaletteOpacity",
+                    "onChangeBoxShadowHexAndOpacityDependencies"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 41,
+                      options: [
+                        toolbarBoxShadowFields({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBoxShadowHexAndOpacity",
+                            "onChangeBoxShadowHexAndOpacityPalette",
+                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          ]
+                        })
+                      ]
+                    },
+                    {
+                      width: 59,
+                      options: [
+                        toolbarBoxShadow({
+                          v,
+                          device,
+                          state: "normal"
+                        })
+                      ]
+                    }
+                  ]
                 }
               ]
             }

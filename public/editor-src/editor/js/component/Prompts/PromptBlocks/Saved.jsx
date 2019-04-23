@@ -182,7 +182,9 @@ class Saved extends React.Component {
           }
 
           const { keywords, cat } = blockData;
-          const { url, width, height } = blockThumbnailData(block);
+          const { url, width, height } = blockThumbnailData(block, {
+            isSavedBlock: true
+          });
 
           thumbnailData = {
             id: savedBlockId,

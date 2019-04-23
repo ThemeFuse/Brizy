@@ -105,45 +105,4 @@ export function styleBoxShadow({ v, device, state }) {
     : "none";
 }
 
-export function styleFooterBoxShadow({ v, device, state }) {
-  const boxShadow = defaultValueValue({ v, key: "boxShadow", device, state });
-  const boxShadowVertical = defaultValueValue({
-    v,
-    key: "boxShadowVertical",
-    device,
-    state
-  });
-  const boxShadowBlur = defaultValueValue({
-    v,
-    key: "boxShadowBlur",
-    device,
-    state
-  });
-  const boxShadowColorHex = defaultValueValue({
-    v,
-    key: "boxShadowColorHex",
-    device,
-    state
-  });
-  const boxShadowColorOpacity = defaultValueValue({
-    v,
-    key: "boxShadowColorOpacity",
-    device,
-    state
-  });
 
-  const diff = boxShadowVertical < 0 ? -boxShadowBlur : boxShadowBlur;
-  const color = hexToRgba(boxShadowColorHex, boxShadowColorOpacity);
-  const inBoth = boxShadowVertical === 0;
-
-  return boxShadow === "off"
-    ? "none"
-    : inBoth
-    ? `inset 0 ${boxShadowVertical +
-        diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color},
-          inset 0 -${boxShadowVertical +
-            diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color}`
-    : `inset 0 ${boxShadowVertical +
-        diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color},
-          inset 0 0 0 0 ${color}`;
-}
