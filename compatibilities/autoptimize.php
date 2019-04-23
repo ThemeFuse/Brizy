@@ -14,6 +14,7 @@ class Brizy_Compatibilities_Autoptimize {
 	public function disable_js_optimize() {
 		if ( isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) ) {
 			add_filter( 'autoptimize_filter_js_noptimize', '__return_true' );
+			add_filter( 'autoptimize_filter_css_noptimize', '__return_true' );
 		}
 	}
 }
