@@ -21,7 +21,9 @@ class MultiInputOptionType extends React.Component {
   };
 
   state = {
-    activeIcon: this.getInitialIcon()
+    activeIcon: this.getInitialIcon(),
+    focusedIcon: 0,
+    focused: false
   };
 
   getInitialIcon() {
@@ -46,8 +48,29 @@ class MultiInputOptionType extends React.Component {
   }
 
   handleMouseLeave() {
+    const { icons } = this.props.config;
+    const { focusedIcon, focused } = this.state;
+
     this.setState({
-      activeIcon: this.getInitialIcon()
+      activeIcon: focused ? icons[focusedIcon] : this.getInitialIcon()
+    });
+  }
+
+  onFocus(index) {
+    const { icons } = this.props.config;
+
+    this.setState({
+      activeIcon: icons[index],
+      focusedIcon: index,
+      focused: true
+    });
+  }
+
+  onBlur(index) {
+    this.setState({
+      activeIcon: this.getInitialIcon(),
+      focusedIcon: index,
+      focused: false
     });
   }
 
@@ -85,6 +108,8 @@ class MultiInputOptionType extends React.Component {
           max={max}
           step={step}
           value={v}
+          onFocus={() => this.onFocus(index)}
+          onBlur={() => this.onBlur(index)}
           onChange={v => this.handleInputValueChange(index, v)}
         />
       </div>

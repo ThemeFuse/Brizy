@@ -89,6 +89,7 @@ import $ from "jquery";
     _init: function() {
       this._resizePlayer();
       this._attachEvents();
+      this._loadIframe();
     },
     _updateSettings: function() {
       var $iframe = this.$elem.find("iframe");
@@ -149,6 +150,15 @@ import $ from "jquery";
 
       if (this.settings.autoResize) {
         $(window).off("resize", this._resizeHandler);
+      }
+    },
+    _loadIframe: function() {
+      var $iframe = this.$elem.find("iframe");
+      var data = $iframe.data();
+      var src = data.src;
+
+      if (src) {
+        $iframe.attr("src", src);
       }
     },
 

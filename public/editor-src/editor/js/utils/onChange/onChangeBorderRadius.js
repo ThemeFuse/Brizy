@@ -132,7 +132,7 @@ export function onChangeBorderRadiusUngrouped({
      *
      * tempBorderTopLeftRadius: borderTopLeftRadius,
      */
-    ...onChangeUngroupedByUngrouped({ v, childs, current, value, temp }),
+    ...onChangeUngroupedByUngrouped({ v, childs, state, current, value, temp }),
 
     /**
      * ### OUTPUT EXAMPLE

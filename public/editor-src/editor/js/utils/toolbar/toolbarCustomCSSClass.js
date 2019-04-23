@@ -7,7 +7,6 @@ export function toolbarCustomCSSClass({ v, position = 40 }) {
     position,
     display: "block",
     type: "input",
-    inputSize: "auto",
     value: {
       value: v.customClassName
     },

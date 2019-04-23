@@ -37,8 +37,7 @@ export function styleClassName(v) {
         backgroundColor: "var(--backgroundColor)",
         backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
-        borderStyle: "var(--borderStyle)",
-        boxShadow: "var(--boxShadow)"
+        borderStyle: "var(--borderStyle)"
       },
       ".brz &:hover": {
         color: "var(--hoverColor)",
@@ -52,7 +51,12 @@ export function styleClassName(v) {
         fontSize: "var(--fontSize)",
         padding: "var(--padding)",
         borderRadius: "var(--borderRadius)",
-        strokeWidth: "var(--strokeWidth)"
+        strokeWidth: "var(--strokeWidth)",
+        boxShadow: "var(--boxShadow)",
+
+        ":hover": {
+          boxShadow: "var(--hoverBoxShadow)"
+        }
       },
       ".brz-ed--tablet &": {
         width: "var(--tabletWidth)",
@@ -60,7 +64,8 @@ export function styleClassName(v) {
         fontSize: "var(--tabletFontSize)",
         padding: "var(--tabletPadding)",
         borderRadius: "var(--tabletBorderRadius)",
-        strokeWidth: "var(--tabletStrokeWidth)"
+        strokeWidth: "var(--tabletStrokeWidth)",
+        boxShadow: "var(--tabletBoxShadow)"
       },
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)",
@@ -68,17 +73,12 @@ export function styleClassName(v) {
         fontSize: "var(--mobileFontSize)",
         padding: "var(--mobilePadding)",
         borderRadius: "var(--mobileBorderRadius)",
-        strokeWidth: "var(--mobileStrokeWidth)"
+        strokeWidth: "var(--mobileStrokeWidth)",
+        boxShadow: "var(--mobileBoxShadow)"
       }
     };
   } else {
-    const {
-      borderWidth,
-      borderStyle,
-      customSize,
-      padding,
-      borderRadius
-    } = v;
+    const { borderWidth, borderStyle, customSize, padding, borderRadius } = v;
 
     // Tablet
     const tabletCustomSize = tabletSyncOnChange(v, "customSize");
@@ -163,23 +163,27 @@ export function styleClassName(v) {
         strokeWidth,
         boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
       },
-      ".brz &:hover": {
-        color: styleColor({ v, device: "desktop", state: "hover" }),
-        borderColor: styleBorderColor({
-          v,
-          device: "desktop",
-          state: "hover"
-        }),
-        backgroundColor: styleBgColor({
-          v,
-          device: "desktop",
-          state: "hover"
-        }),
-        backgroundImage: styleBgGradient({
-          v,
-          device: "desktop",
-          state: "hover"
-        })
+
+      "@media (min-width: 991px)": {
+        ".brz &:hover": {
+          color: styleColor({ v, device: "desktop", state: "hover" }),
+          borderColor: styleBorderColor({
+            v,
+            device: "desktop",
+            state: "hover"
+          }),
+          backgroundColor: styleBgColor({
+            v,
+            device: "desktop",
+            state: "hover"
+          }),
+          backgroundImage: styleBgGradient({
+            v,
+            device: "desktop",
+            state: "hover"
+          }),
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
+        }
       },
 
       "@media (max-width: 991px)": {
@@ -189,7 +193,8 @@ export function styleClassName(v) {
           fontSize: `${tabletCustomSize}px`,
           padding: `${tabletPadding}px`,
           borderRadius: `${tabletBorderRadius}px`,
-          strokeWidth: tabletStrokeWidth
+          strokeWidth: tabletStrokeWidth,
+          boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
         }
       },
 
@@ -200,7 +205,8 @@ export function styleClassName(v) {
           fontSize: `${mobileCustomSize}px`,
           padding: `${mobilePadding}px`,
           borderRadius: `${mobileBorderRadius}px`,
-          strokeWidth: mobileStrokeWidth
+          strokeWidth: mobileStrokeWidth,
+          boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
         }
       }
     };
@@ -214,13 +220,7 @@ export function styleClassName(v) {
 export function styleCSSVars(v) {
   if (IS_PREVIEW) return;
 
-  const {
-    borderWidth,
-    borderStyle,
-    customSize,
-    padding,
-    borderRadius
-  } = v;
+  const { borderWidth, borderStyle, customSize, padding, borderRadius } = v;
 
   // Tablet
   const tabletCustomSize = tabletSyncOnChange(v, "customSize");
@@ -317,6 +317,12 @@ export function styleCSSVars(v) {
     "--strokeWidth": strokeWidth,
     "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
 
+    "--hoverBoxShadow": styleBoxShadow({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
     //Tablet
     "--tabletWidth": `${tabletIconSize}px`,
     "--tabletHeight": `${tabletIconSize}px`,
@@ -325,12 +331,26 @@ export function styleCSSVars(v) {
     "--tabletBorderRadius": `${tabletBorderRadius}px`,
     "--tabletStrokeWidth": tabletStrokeWidth,
 
+    // Box Shadow
+    "--tabletBoxShadow": styleBoxShadow({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
     // Mobile
     "--mobileWidth": `${mobileIconSize}px`,
     "--mobileHeight": `${mobileIconSize}px`,
     "--mobileFontSize": `${mobileCustomSize}px`,
     "--mobilePadding": `${mobilePadding}px`,
     "--mobileBorderRadius": `${mobileBorderRadius}px`,
-    "--mobileStrokeWidth": mobileStrokeWidth
+    "--mobileStrokeWidth": mobileStrokeWidth,
+
+    // Box Shadow
+    "--mobileBoxShadow": styleBoxShadow({
+      v,
+      device: "mobile",
+      state: "normal"
+    })
   };
 }

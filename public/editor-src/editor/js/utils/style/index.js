@@ -66,9 +66,6 @@ export {
 // Container Type
 export { styleContainerType } from "./styleContainerType";
 
-// Container Type
-export { styleElementSectionContainerSize } from "./styleElementSection";
-
 // Padding
 export { stylePadding } from "./stylePadding";
 
@@ -76,7 +73,7 @@ export { stylePadding } from "./stylePadding";
 export { styleMargin } from "./styleMargin";
 
 // Box Shadow
-export { styleBoxShadow, styleFooterBoxShadow } from "./styleBoxShadow";
+export { styleBoxShadow } from "./styleBoxShadow";
 
 // Shape
 export {
@@ -86,10 +83,9 @@ export {
   styleShapeBottomFlip,
   styleShapeTopIndex,
   styleShapeBottomIndex,
-  styleShapeTopType,
   styleShapeTopBackgroundSize,
-  styleShapeBottomType,
-  styleShapeBottomBackgroundSize
+  styleShapeBottomBackgroundSize,
+  styleShapeType
 } from "./styleShape";
 
 // Show on Devices
@@ -111,6 +107,12 @@ export {
 
 // Z Index
 export { styleZIndex } from "./styleZIndex";
+
+// Element Section
+export {
+  styleElementSectionContainerSize,
+  styleElementSectionBoxShadow
+} from "./styleElementSection";
 
 // Element Line
 export { styleElementLineBorderWidth } from "./styleElementLine";
