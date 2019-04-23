@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.1
 Requires PHP: 5.4
-Stable tag: 1.0.73
+Stable tag: 1.0.74
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,16 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.74 - 2019-04-23 =
+* New: Box Shadow option for Button, Icon, Soundcloud, Embed, Header, Footer
+* Improved: Disabled Overlay Color option for Video when it has an image cover
+* Improved: Return draft posts in Add rule form for template
+* Fixed: Carousel toolbar not opening
+* Fixed: Embed Border option not working properly
+* Fixed: Section Dividers not respecting global color palette values
+* Fixed: Background Video option not working in preview in certain instances
+* Fixed: Screenshots for Global and Saved blocks not being displayed
 
 = 1.0.73 - 2019-04-19 =
 * Fixed: Publish button not working for certain users
