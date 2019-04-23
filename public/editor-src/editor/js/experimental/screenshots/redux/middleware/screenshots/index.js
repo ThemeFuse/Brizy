@@ -76,7 +76,6 @@ export default store => next => action => {
 
   if (
     action.type === UPDATE_PAGE ||
-    action.type === CREATE_GLOBAL_BLOCK ||
     action.type === UPDATE_GLOBAL_BLOCK ||
     action.type === UNDO ||
     action.type === REDO
@@ -84,16 +83,24 @@ export default store => next => action => {
     changedBlocksDebounced(prevState, store, next);
   }
 
-  if (action.type === CREATE_SAVED_BLOCK) {
-    changedBlocks(prevState, store, next);
+  if (
+    action.type === CREATE_SAVED_BLOCK ||
+    action.type === CREATE_GLOBAL_BLOCK
+  ) {
+    const options = {
+      ...(action.type === CREATE_GLOBAL_BLOCK
+        ? { globalIsAutosave: false }
+        : {})
+    };
+    changedBlocks(prevState, store, next, options);
   }
 };
 
 function allBlocks(store, next) {
   const changedBlocks = {
-    page: [],
-    saved: [],
-    global: []
+    page: new Set(),
+    saved: new Set(),
+    global: new Set()
   };
 
   const currState = store.getState();
@@ -107,9 +114,9 @@ function allBlocks(store, next) {
       }
 
       if (block.type === "GlobalBlock") {
-        changedBlocks.global.push(block.value.globalBlockId);
+        changedBlocks.global.add(block.value.globalBlockId);
       } else {
-        changedBlocks.page.push(block);
+        changedBlocks.page.add(block);
       }
     });
   }
@@ -119,7 +126,7 @@ function allBlocks(store, next) {
 
 const allBlocksDebounced = _.debounce(allBlocks, DEBOUNCE_INTERVAL);
 
-function changedBlocks(prevState, store, next) {
+function changedBlocks(prevState, store, next, options) {
   const changedBlocks = {
     page: new Set(),
     saved: new Set(),
@@ -133,11 +140,6 @@ function changedBlocks(prevState, store, next) {
     const prevBlocksMap = getBlocksMap(getPageBlocks(prevState));
     const currBlocksMap = getBlocksMap(getPageBlocks(currState));
     Object.entries(currBlocksMap).forEach(([blockId, block]) => {
-      // if (block.type === "SectionPopup") {
-      //   console.log("skipping section popup");
-      //   return;
-      // }
-
       if (block !== prevBlocksMap[blockId]) {
         if (block.type === "GlobalBlock") {
           changedBlocks.global.add(block.value.globalBlockId);
@@ -172,7 +174,7 @@ function changedBlocks(prevState, store, next) {
 
   // console.log("changedBlocks", changedBlocks);
 
-  enqueueTasks(changedBlocks, store, next);
+  enqueueTasks(changedBlocks, store, next, options);
 }
 
 const changedBlocksDebounced = debounceAdvanced({
@@ -187,7 +189,7 @@ const changedBlocksDebounced = debounceAdvanced({
   }
 });
 
-async function enqueueTasks(changedBlocks, store, next) {
+async function enqueueTasks(changedBlocks, store, next, options = {}) {
   const historyMeta = {
     historyReplacePresent: true
   };
@@ -365,30 +367,6 @@ async function enqueueTasks(changedBlocks, store, next) {
             screenshotId = r.id;
           }
 
-          // update store (page)
-          const pageData = getPageData(store.getState());
-          const pageBlocks = pageData.items || [];
-          const updatedBlocks = pageBlocks.map(block => {
-            return block.type == "GlobalBlock" &&
-              block.value.globalBlockId === globalBlockId
-              ? updateBlockWithScreenshotInfo({
-                  block,
-                  src: screenshotId,
-                  width: screenshot.width,
-                  height: screenshot.height
-                })
-              : block;
-          });
-          next(
-            updatePage({
-              data: {
-                ...pageData,
-                items: updatedBlocks
-              },
-              meta: historyMeta
-            })
-          );
-
           // update store (globalBlocks)
           const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
           if (!globalBlock) {
@@ -403,7 +381,10 @@ async function enqueueTasks(changedBlocks, store, next) {
                 width: screenshot.width,
                 height: screenshot.height
               }),
-              meta: historyMeta
+              meta: {
+                ...historyMeta,
+                is_autosave: options.globalIsAutosave === false ? 0 : 1
+              }
             })
           );
         }

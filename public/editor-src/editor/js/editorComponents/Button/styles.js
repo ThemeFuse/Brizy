@@ -24,14 +24,12 @@ export function styleClassName(v) {
         backgroundColor: "var(--backgroundColor)",
         backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
-        borderStyle: "var(--borderStyle)",
-        boxShadow: "var(--boxShadow)"
+        borderStyle: "var(--borderStyle)"
       },
       ".brz &&:hover": {
         color: "var(--hoverColor)",
         borderColor: "var(--hoverBorderColor)",
         backgroundColor: "var(--hoverBgColor)",
-        boxShadow: "var(--boxShadow)",
         backgroundImage: "var(--hoverBackgroundGradient)"
       },
       ".brz-ed--desktop &": {
@@ -43,8 +41,14 @@ export function styleClassName(v) {
         paddingRight: "var(--paddingRight)",
         paddingBottom: "var(--paddingBottom)",
         paddingLeft: "var(--paddingLeft)",
-        borderRadius: "var(--borderRadius)"
+        borderRadius: "var(--borderRadius)",
+        boxShadow: "var(--boxShadow)"
       },
+
+      ".brz-ed--desktop &&:hover": {
+        boxShadow: "var(--hoverBoxShadow)"
+      },
+
       ".brz-ed--tablet &": {
         fontSize: "var(--tabletFontSize)",
         fontWeight: "var(--tabletFontWeight)",
@@ -54,8 +58,14 @@ export function styleClassName(v) {
         paddingRight: "var(--tabletPaddingRight)",
         paddingBottom: "var(--tabletPaddingBottom)",
         paddingLeft: "var(--tabletPaddingLeft)",
-        borderRadius: "var(--tabletBorderRadius)"
+        borderRadius: "var(--tabletBorderRadius)",
+        boxShadow: "var(--tabletBoxShadow)"
       },
+
+      ".brz-ed--tablet &&:hover": {
+        boxShadow: "var(--tabletBoxShadow)"
+      },
+
       ".brz-ed--mobile &": {
         fontSize: "var(--mobileFontSize)",
         fontWeight: "var(--mobileFontWeight)",
@@ -65,7 +75,12 @@ export function styleClassName(v) {
         paddingRight: "var(--mobilePaddingRight)",
         paddingBottom: "var(--mobilePaddingBottom)",
         paddingLeft: "var(--mobilePaddingLeft)",
-        borderRadius: "var(--mobileBorderRadius)"
+        borderRadius: "var(--mobileBorderRadius)",
+        boxShadow: "var(--mobileBoxShadow)"
+      },
+
+      ".brz-ed--mobile &&:hover": {
+        boxShadow: "var(--mobileBoxShadow)"
       }
     };
   } else {
@@ -187,6 +202,7 @@ export function styleClassName(v) {
         borderRadius,
         boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
       },
+
       ".brz &&:hover": {
         color: styleColor({ v, device: "desktop", state: "hover" }),
         borderColor: styleBorderColor({
@@ -204,8 +220,10 @@ export function styleClassName(v) {
           v,
           device: "desktop",
           state: "hover"
-        })
+        }),
+        boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
       },
+
       "@media (max-width: 991px)": {
         ".brz &": {
           fontSize: `${tabletFontSize}px`,
@@ -216,7 +234,12 @@ export function styleClassName(v) {
           paddingRight: `${tabletPaddingRight}px`,
           paddingBottom: `${tabletPaddingBottom}px`,
           paddingLeft: `${tabletPaddingLeft}px`,
-          borderRadius: `${tabletBorderRadius}px`
+          borderRadius: `${tabletBorderRadius}px`,
+          boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
+        },
+
+        ".brz &&:hover": {
+          boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
         }
       },
       "@media (max-width: 767px)": {
@@ -229,7 +252,13 @@ export function styleClassName(v) {
           paddingRight: `${mobilePaddingRight}px`,
           paddingBottom: `${mobilePaddingBottom}px`,
           paddingLeft: `${mobilePaddingLeft}px`,
-          borderRadius: `${mobileBorderRadius}px`
+          borderRadius: `${mobileBorderRadius}px`,
+
+          boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
+        },
+
+        ".brz &&:hover": {
+          boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
         }
       }
     };
@@ -376,6 +405,12 @@ export function styleCSSVars(v) {
       state: "hover"
     }),
 
+    "--hoverBoxShadow": styleBoxShadow({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
     // Tablet
     "--tabletFontSize": `${tabletFontSize}px`,
     "--tabletFontWeight": tabletFontWeight,
@@ -386,6 +421,11 @@ export function styleCSSVars(v) {
     "--tabletPaddingBottom": `${tabletPaddingBottom}px`,
     "--tabletPaddingLeft": `${tabletPaddingLeft}px`,
     "--tabletBorderRadius": `${tabletBorderRadius}px`,
+    "--tabletBoxShadow": styleBoxShadow({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
 
     // Mobile
     "--mobileFontSize": `${mobileFontSize}px`,
@@ -396,7 +436,13 @@ export function styleCSSVars(v) {
     "--mobilePaddingRight": `${mobilePaddingRight}px`,
     "--mobilePaddingBottom": `${mobilePaddingBottom}px`,
     "--mobilePaddingLeft": `${mobilePaddingLeft}px`,
-    "--mobileBorderRadius": `${mobileBorderRadius}px`
+    "--mobileBorderRadius": `${mobileBorderRadius}px`,
+    // Box Shadow
+    "--mobileBoxShadow": styleBoxShadow({
+      v,
+      device: "mobile",
+      state: "normal"
+    })
   };
 }
 

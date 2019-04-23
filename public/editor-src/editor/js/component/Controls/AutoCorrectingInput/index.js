@@ -17,6 +17,8 @@ export default class AutoCorrectingInput extends React.Component {
     max: 100,
     step: 1,
     round: true,
+    onFocus: _.noop,
+    onBlur: _.noop,
     onTextChange: _.noop,
     onChange: _.noop
   };
@@ -155,6 +157,8 @@ export default class AutoCorrectingInput extends React.Component {
       min,
       max,
       step,
+      onFocus,
+      onBlur,
       onMouseEnter,
       onMouseLeave
     } = this.props;
@@ -168,6 +172,8 @@ export default class AutoCorrectingInput extends React.Component {
         min={min}
         max={max}
         step={step}
+        onFocus={onFocus}
+        onBlur={onBlur}
         onChange={this.handleChange}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}

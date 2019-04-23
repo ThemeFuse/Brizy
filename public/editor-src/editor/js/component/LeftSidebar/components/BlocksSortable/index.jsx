@@ -3,6 +3,11 @@ import { connect } from "react-redux";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { removeAt, insert } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
+import {
+  pageDataSelector,
+  pageBlocksSelector,
+  globalBlocksSelector
+} from "visual/redux/selectors";
 import { updatePage } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 import BlockThumbnail from "./BlockThumbnail";
@@ -90,8 +95,9 @@ class DrawerComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  pageData: state.page.data,
-  pageBlocks: state.page.data.items || []
+  pageData: pageDataSelector(state),
+  pageBlocks: pageBlocksSelector(state),
+  globalBlocks: globalBlocksSelector(state) // this is needed only to redraw the component when global blocks change
 });
 
 const mapDispatchToProps = dispatch => ({

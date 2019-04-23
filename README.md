@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.1<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.73<br>
+Stable tag: 1.0.74<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.74 - 2019-04-23 ###
+* New: Box Shadow option for Button, Icon, Soundcloud, Embed, Header, Footer
+* Improved: Disabled Overlay Color option for Video when it has an image cover
+* Improved: Return draft posts in Add rule form for template
+* Fixed: Carousel toolbar not opening
+* Fixed: Embed Border option not working properly
+* Fixed: Section Dividers not respecting global color palette values
+* Fixed: Background Video option not working in preview in certain instances
+* Fixed: Screenshots for Global and Saved blocks not being displayed
 
 ### 1.0.73 - 2019-04-19 ###
 * Fixed: Publish button not working for certain users

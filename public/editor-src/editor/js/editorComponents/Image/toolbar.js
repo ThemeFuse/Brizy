@@ -210,6 +210,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   id: "tabsColor",
                   type: "tabs",
                   value: v.tabsColor,
+                  hideHandlesWhenOne: false,
                   tabs: [
                     {
                       id: "tabBoxShadow",
@@ -281,11 +282,11 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   id: "tabsColor",
                   type: "tabs",
                   value: v.tabsColor,
+                  hideHandlesWhenOne: false,
                   tabs: [
                     {
                       id: "tabBoxShadow",
                       label: t("Shadow"),
-
                       options: [
                         toolbarBoxShadowHexAndOpacity({
                           v,
@@ -641,6 +642,7 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
         {
           id: "tabletTabsColor",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               id: "tabletBoxShadow",
@@ -880,6 +882,7 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
           id: "mobileTabsColor",
           className: "",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               id: "mobileBoxShadow",

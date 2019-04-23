@@ -137,6 +137,9 @@ export {
   toolbarElementContainerTypeImageMap
 } from "./toolbarElementContainer";
 
+// Element Section
+export { toolbarElementSectionBoxShadow } from "./toolbarElementSection";
+
 // Element Video
 export {
   toolbarElementVideoLink,

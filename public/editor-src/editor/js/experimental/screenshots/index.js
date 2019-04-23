@@ -1,4 +1,6 @@
 import { addFilter } from "visual/utils/filters";
+import { globalBlocksSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { browserScreenshotsSupported } from "./utils/browserScreenshotsSupported";
 import { blockScreenshotUrl } from "./utils/blockScreenshotUrl";
 import screenshotsMiddleware from "./redux/middleware/screenshots";
@@ -26,31 +28,15 @@ addFilter("bootstraps.editor.middleware", async middleware => {
     : middleware;
 });
 
-// "blockThumbnailUrl__real" is temporary
-// and will be replaced with "blockThumbnailUrl"
-// within the next few releases
-addFilter(
-  "blockThumbnailUrl__real",
-  (url, block) => {
-    const { _thumbnailSrc, _thumbnailWidth, _thumbnailHeight } = block.value;
-
-    if (
-      screenshotsSupported &&
-      _thumbnailSrc &&
-      _thumbnailWidth &&
-      _thumbnailHeight
-    ) {
-      return blockScreenshotUrl(block);
-    } else {
-      return url;
-    }
-  },
-  1000
-);
-
 addFilter(
   "blockThumbnailData",
-  (data, block) => {
+  (data, block, meta) => {
+    if (block.type === "GlobalBlock") {
+      block = globalBlocksSelector(getStore().getState())[
+        block.value.globalBlockId
+      ];
+    }
+
     const { _thumbnailSrc, _thumbnailWidth, _thumbnailHeight } = block.value;
 
     if (
@@ -60,7 +46,7 @@ addFilter(
       _thumbnailHeight
     ) {
       return {
-        url: blockScreenshotUrl(block),
+        url: blockScreenshotUrl(block, meta),
         width: _thumbnailWidth,
         height: _thumbnailHeight
       };

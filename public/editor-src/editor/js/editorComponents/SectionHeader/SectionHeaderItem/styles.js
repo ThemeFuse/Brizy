@@ -16,17 +16,16 @@ import {
   styleHoverTransitionProperty,
   styleElementSectionContainerSize,
   stylePadding,
+  styleShapeType,
   styleShapeTopHeight,
   styleShapeBottomHeight,
   styleShapeTopFlip,
   styleShapeBottomFlip,
   styleShapeTopIndex,
   styleShapeBottomIndex,
-  styleShapeTopType,
   styleShapeTopBackgroundSize,
-  styleShapeBottomType,
   styleShapeBottomBackgroundSize,
-  styleBoxShadow
+  styleElementSectionBoxShadow
 } from "visual/utils/style";
 
 export function bgStyleClassName(v) {
@@ -34,8 +33,6 @@ export function bgStyleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       "> .brz-bg-media": {
-        boxShadow: "var(--boxShadow)",
-
         // Shape
         "> .brz-bg-shape__top": {
           transform: "var(--shapeTopFlip)",
@@ -54,6 +51,14 @@ export function bgStyleClassName(v) {
       },
 
       ".brz-ed--desktop &": {
+        "> .brz-bg-content": {
+          boxShadow: "var(--boxShadow)",
+          transition: "var(--hoverTransition)",
+          transitionProperty: "var(--hoverTransitionProperty)"
+        },
+
+        ":hover > .brz-bg-content": { boxShadow: "var(--hoverBoxShadow)" },
+
         "> .brz-bg-media": {
           borderStyle: "var(--borderStyle)",
 
@@ -128,6 +133,8 @@ export function bgStyleClassName(v) {
         }
       },
       ".brz-ed--tablet &": {
+        "> .brz-bg-content": { boxShadow: "var(--tabletBoxShadow)" },
+
         "> .brz-bg-media": {
           borderStyle: "var(--tabletBorderStyle)",
 
@@ -165,6 +172,8 @@ export function bgStyleClassName(v) {
         }
       },
       ".brz-ed--mobile &": {
+        "> .brz-bg-content": { boxShadow: "var(--mobileBoxShadow)" },
+
         "> .brz-bg-media": {
           borderStyle: "var(--mobileBorderStyle)",
 
@@ -204,6 +213,14 @@ export function bgStyleClassName(v) {
     };
   } else {
     glamorObj = {
+      "> .brz-bg-content": {
+        boxShadow: styleElementSectionBoxShadow({
+          v,
+          device: "desktop",
+          state: "normal"
+        })
+      },
+
       "> .brz-bg-media": {
         // Border Style
         borderStyle: styleBorderStyle({
@@ -269,9 +286,7 @@ export function bgStyleClassName(v) {
           v,
           device: "desktop",
           state: "normal"
-        }),
-        // Box Shadow
-        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
+        })
       },
 
       "> .brz-bg-media > .brz-bg-image": {
@@ -310,14 +325,14 @@ export function bgStyleClassName(v) {
 
       // Shape
       "> .brz-bg-media > .brz-bg-shape__top": {
-        backgroundImage: styleShapeTopType({ v }),
+        backgroundImage: styleShapeType({ v, prefix: "Top" }),
         backgroundSize: styleShapeTopBackgroundSize({ v, device: "desktop" }),
         transform: styleShapeTopFlip({ v }),
         height: styleShapeTopHeight({ v, device: "desktop" }),
         zIndex: styleShapeTopIndex({ v })
       },
       "> .brz-bg-media > .brz-bg-shape__bottom": {
-        backgroundImage: styleShapeBottomType({ v }),
+        backgroundImage: styleShapeType({ v, prefix: "Bottom" }),
         backgroundSize: styleShapeBottomBackgroundSize({
           v,
           device: "desktop"
@@ -328,6 +343,12 @@ export function bgStyleClassName(v) {
       },
       "@media (min-width: 991px)": {
         // Transition
+
+        "> .brz-bg-content": {
+          transition: styleHoverTransition({ v }),
+          transitionProperty: styleHoverTransitionProperty()
+        },
+
         "> .brz-bg-media": {
           // Hover Transition
           transition: styleHoverTransition({ v }),
@@ -344,6 +365,14 @@ export function bgStyleClassName(v) {
           transitionProperty: styleHoverTransitionProperty()
         },
         //Hover
+        ":hover > .brz-bg-content": {
+          boxShadow: styleElementSectionBoxShadow({
+            v,
+            device: "desktop",
+            state: "hover"
+          })
+        },
+
         ":hover > .brz-bg-media": {
           // Border Style
           borderStyle: styleBorderStyle({
@@ -446,6 +475,14 @@ export function bgStyleClassName(v) {
       },
 
       "@media (max-width: 991px)": {
+        "> .brz-bg-content": {
+          boxShadow: styleElementSectionBoxShadow({
+            v,
+            device: "tablet",
+            state: "normal"
+          })
+        },
+
         "> .brz-bg-media": {
           // Border Style
           borderStyle: styleBorderStyle({
@@ -560,6 +597,14 @@ export function bgStyleClassName(v) {
         }
       },
       "@media (max-width: 767px)": {
+        "> .brz-bg-content": {
+          boxShadow: styleElementSectionBoxShadow({
+            v,
+            device: "mobile",
+            state: "normal"
+          })
+        },
+
         "> .brz-bg-media": {
           // Border Style
           borderStyle: styleBorderStyle({
@@ -784,13 +829,17 @@ export function bgStyleCSSVars(v) {
     }),
 
     // Box Shadow
-    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
+    "--boxShadow": styleElementSectionBoxShadow({
+      v,
+      device: "desktop",
+      state: "normal"
+    }),
 
     // Shape
     "--shapeTopHeight": styleShapeTopHeight({ v, device: "desktop" }),
     "--shapeTopFlip": styleShapeTopFlip({ v }),
     "--shapeTopIndex": styleShapeTopIndex({ v }),
-    "--shapeTopType": styleShapeTopType({ v }),
+    "--shapeTopType": styleShapeType({ v, prefix: "Top" }),
     "--shapeTopBackgroundSize": styleShapeTopBackgroundSize({
       v,
       device: "desktop"
@@ -799,7 +848,7 @@ export function bgStyleCSSVars(v) {
     "--shapeBottomHeight": styleShapeBottomHeight({ v, device: "desktop" }),
     "--shapeBottomFlip": styleShapeBottomFlip({ v }),
     "--shapeBottomIndex": styleShapeBottomIndex({ v }),
-    "--shapeBottomType": styleShapeBottomType({ v }),
+    "--shapeBottomType": styleShapeType({ v, prefix: "Bottom" }),
     "--shapeBottomBackgroundSize": styleShapeBottomBackgroundSize({
       v,
       device: "desktop"
@@ -904,6 +953,13 @@ export function bgStyleCSSVars(v) {
       state: "hover"
     }),
 
+    // Box Shadow
+    "--hoverBoxShadow": styleElementSectionBoxShadow({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
     // Hover Transition
     "--hoverTransition": styleHoverTransition({ v }),
     "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
@@ -1001,6 +1057,13 @@ export function bgStyleCSSVars(v) {
 
     // Border Color
     "--tabletBorderColor": styleBorderColor({
+      v,
+      device: "tablet",
+      state: "normal"
+    }),
+
+    // Box Shadow
+    "--tabletBoxShadow": styleElementSectionBoxShadow({
       v,
       device: "tablet",
       state: "normal"
@@ -1115,6 +1178,13 @@ export function bgStyleCSSVars(v) {
 
     // Border Color
     "--mobileBorderColor": styleBorderColor({
+      v,
+      device: "mobile",
+      state: "normal"
+    }),
+
+    // Box Shadow
+    "--mobileBoxShadow": styleElementSectionBoxShadow({
       v,
       device: "mobile",
       state: "normal"

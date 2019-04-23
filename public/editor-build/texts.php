@@ -65,6 +65,7 @@ class Brizy_Public_EditorBuild_Texts {
 			"Back to WordPress" => __("Back to WordPress", "brizy"),
 			"Background" => __("Background", "brizy"),
 			"Bar" => __("Bar", "brizy"),
+			"Bg" => __("Bg", "brizy"),
 			"Bg Size" => __("Bg Size", "brizy"),
 			"Block" => __("Block", "brizy"),
 			"Blocks" => __("Blocks", "brizy"),

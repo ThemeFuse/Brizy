@@ -90,6 +90,11 @@ export {
   onChangeMarginUngrouped
 } from "./onChangeMargin";
 
+// Element Section
+export {
+  onChangeElementSectionBoxShadowHexAndOpacityDependencies
+} from "./onChangeElementSection";
+
 // Element Progress Bar
 export {
   onChangeElementProgressBarBg2ColorHexAndOpacity,

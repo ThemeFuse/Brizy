@@ -207,7 +207,9 @@ class Global extends React.Component {
           }
 
           const { keywords, cat } = blockData;
-          const { url, width, height } = blockThumbnailData(block);
+          const { url, width, height } = blockThumbnailData(block, {
+            isGlobalBlock: true
+          });
 
           thumbnailData = {
             id: globalBlockId,

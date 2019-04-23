@@ -153,6 +153,7 @@ export function getItemsForDesktop(v) {
                   id: "tabsColor",
                   type: "tabs",
                   value: v.tabsColor,
+                  hideHandlesWhenOne: false,
                   tabs: [
                     {
                       id: "tabBoxShadow",
@@ -224,6 +225,7 @@ export function getItemsForDesktop(v) {
                   id: "tabsColor",
                   type: "tabs",
                   value: v.tabsColor,
+                  hideHandlesWhenOne: false,
                   tabs: [
                     {
                       id: "tabBoxShadow",
@@ -410,6 +412,7 @@ export function getItemsForTablet(v) {
         {
           id: "tabletTabsColor",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               id: "tabBoxShadow",
@@ -504,6 +507,7 @@ export function getItemsForMobile(v) {
           id: "mobileTabsColor",
           className: "",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               id: "mobileBoxShadow",
