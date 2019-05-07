@@ -155,10 +155,11 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$postParentId = self::getPostParent( $postId );
 		$autosave     = wp_get_post_autosave( $postParentId, $userId );
 
-		if(!$autosave)
+		if ( ! $autosave ) {
 			return;
+		}
 
-		$post         = get_post( $postId );
+		$post = get_post( $postId );
 
 		$postDate     = new DateTime( $post->post_modified );
 		$autosaveDate = new DateTime( $autosave->post_modified );
@@ -434,16 +435,16 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @return bool
 	 */
 	private function deleteOldAutosaves() {
+		global $wpdb;
 		$user_id      = get_current_user_id();
 		$postParentId = $this->get_parent_id();
-		// Store one autosave per author. If there is already an autosave, overwrite it.
-		$old_autosave = wp_get_post_autosave( $postParentId, $user_id );
 
-		if ( $old_autosave ) {
-			wp_delete_post_revision( $old_autosave->ID );
-
-			return true;
-		}
+		$wpdb->query( $wpdb->prepare( "
+										DELETE FROM {$wpdb->posts} 
+										WHERE post_author = %d and 
+											  post_parent = %d and 
+											  post_type = 'revision' and 
+											  post_name LIKE %s", $user_id, $postParentId, "{$postParentId}-autosave%" ) );
 	}
 
 	/**
