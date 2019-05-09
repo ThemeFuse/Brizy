@@ -5,3 +5,8 @@ nohup.out
 **/node_modules/
 public/editor-build/template
 public/editor-build/pro
+tests/_output
+codeception.yml
+.env.local
+
+

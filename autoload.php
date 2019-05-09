@@ -7,6 +7,7 @@ include_once dirname( __FILE__ ) . "/vendor/autoload.php";
  */
 function brizyAutoload( $class_name ) {
 
+	echo $class_name." ";
 	$class_parts = explode( '_', $class_name );
 	$last_part   = end( $class_parts );
 	$path_parts  = array_slice( $class_parts, 1, count( $class_parts ) - 2 );

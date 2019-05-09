@@ -9,10 +9,13 @@
     }
   ],
   "require-dev": {
+    "codeception/codeception": "^3.0",
+    "lucatume/wp-browser": "^2.2"
   },
   "require": {
     "twig/twig": "1.33.0",
     "shortpixel/shortpixel-php": "dev-master",
-    "knplabs/gaufrette": "0.3"
+    "knplabs/gaufrette": "0.3",
+    "phpunit/phpunit": "8.1"
   }
 }
