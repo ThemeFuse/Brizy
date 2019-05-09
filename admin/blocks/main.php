@@ -40,6 +40,14 @@ class Brizy_Admin_Blocks_Main {
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_filter( 'brizy_global_data', array( $this, 'populateGlobalData' ) );
+		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
+	}
+
+	public function populateSupportedPosts( $types ) {
+		$types[] = self::CP_SAVED;
+		$types[] = self::CP_GLOBAL;
+
+		return $types;
 	}
 
 	/**
@@ -65,9 +73,9 @@ class Brizy_Admin_Blocks_Main {
 		) );
 
 		foreach ( $blocks as $block ) {
-			$brizy_editor_block             = Brizy_Editor_Block::get( $block );
-			$uid                            = $brizy_editor_block->get_uid();
-			$globalData->globalBlocks[$uid] = json_decode( $brizy_editor_block->get_editor_data() );
+			$brizy_editor_block               = Brizy_Editor_Block::get( $block );
+			$uid                              = $brizy_editor_block->get_uid();
+			$globalData->globalBlocks[ $uid ] = json_decode( $brizy_editor_block->get_editor_data() );
 		}
 
 		$blocks = get_posts( array(
@@ -79,7 +87,7 @@ class Brizy_Admin_Blocks_Main {
 		) );
 
 		foreach ( $blocks as $block ) {
-			$brizy_editor_block                 = Brizy_Editor_Block::get( $block );
+			$brizy_editor_block        = Brizy_Editor_Block::get( $block );
 			$globalData->savedBlocks[] = json_decode( $brizy_editor_block->get_editor_data() );
 		}
 
