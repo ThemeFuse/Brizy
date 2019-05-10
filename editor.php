@@ -66,6 +66,7 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
+		Brizy_Admin_OptimizeImages::_init();
 
 
 		$this->loadShortcodes();

@@ -11,6 +11,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 	protected $position;
 
+	static protected $block_instance = null;
+
 	/**
 	 * @param $apost
 	 *
@@ -24,11 +26,11 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			$wp_post_id = $apost->ID;
 		}
 
-		if ( isset( self::$instance[ $wp_post_id ] ) ) {
-			return self::$instance[ $wp_post_id ];
+		if ( isset( self::$block_instance[ $wp_post_id ] ) ) {
+			return self::$block_instance[ $wp_post_id ];
 		}
 
-		return self::$instance[ $wp_post_id ] = new self( $wp_post_id, $uid );
+		return self::$block_instance[ $wp_post_id ] = new self( $wp_post_id, $uid );
 
 	}
 

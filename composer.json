@@ -11,6 +11,8 @@
   "require-dev": {
   },
   "require": {
-    "twig/twig": "1.33.0"
+    "twig/twig": "1.33.0",
+    "shortpixel/shortpixel-php": "dev-master",
+    "knplabs/gaufrette": "0.3"
   }
 }

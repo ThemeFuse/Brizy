@@ -527,6 +527,7 @@ class Brizy_Admin_Templates {
 
 		} catch ( Exception $e ) {
 			//ignore
+            Brizy_Logger::instance()->error($e->getMessage(),[$e]);
 		}
 	}
 

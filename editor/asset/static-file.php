@@ -24,6 +24,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 
 		if ( is_wp_error( $wp_response ) || ! ( $code >= 200 && $code < 300 ) ) {
 			Brizy_Logger::instance()->error( 'Unable to get media content', array( 'exception' => $wp_response ) );
+
 			return false;
 		}
 
@@ -75,7 +76,10 @@ abstract class Brizy_Editor_Asset_StaticFile {
 	protected function create_attachment( $madia_name, $absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null ) {
 		$filetype = wp_check_filetype( $absolute_asset_path );
 
+		$upload_path = wp_upload_dir();
+
 		$attachment = array(
+			'guid'           => $upload_path['baseurl'] . "/" . $relative_asset_path,
 			'post_mime_type' => $filetype['type'],
 			'post_title'     => basename( $absolute_asset_path ),
 			'post_content'   => '',

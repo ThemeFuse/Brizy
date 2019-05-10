@@ -35,6 +35,7 @@ class Brizy_Config {
 	const UPGRADE_TO_PRO_URL = "https://brizy.io/pro";
 	const SUPPORT_URL = "https://github.com/ThemeFuse/Brizy/issues";
 	const ABOUT_URL = "https://brizy.io";
+	const SHORTPIXEL_CONFIG = "https://www.brizy.cloud/shortpixel.txt";
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
@@ -56,5 +57,13 @@ class Brizy_Config {
 		return new Brizy_Admin_UrlIterator(
 			array( 'http://www.brizy.org' )
 		);
+	}
+
+
+	static public function getOptimizerConfig( $className ) {
+		switch ( $className ) {
+			case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
+				return array('API_KEY'=>'uunlmNjZZBtKLfCSg4OK');
+		}
 	}
 }

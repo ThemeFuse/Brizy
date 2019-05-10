@@ -122,7 +122,7 @@ class Brizy_Logger {
 	 * Example: Application component unavailable, unexpected exception.
 	 *
 	 * @param string $message
-	 * @param array $context
+	 * @param array $contextgt
 	 *
 	 * @return void
 	 */
@@ -213,6 +213,6 @@ class Brizy_Logger {
 	 * @param Exception $exception
 	 */
 	public function exception( \Exception $exception ) {
-		$this->log( self::ERROR_LOG, $exception->getMessage(), array( $exception ) );
+		$this->log( self::ERROR_LOG, $exception->getMessage(), array( $exception->getTraceAsString() ) );
 	}
 }
