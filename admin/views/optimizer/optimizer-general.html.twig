@@ -4,6 +4,8 @@
     <script>
         (function ($) {
 
+            var requestQueue = [];
+            var maxRequestCount = 3;
             var count = {{ count }} ;
             var currentIndex = 0;
             var failCount = 0;
@@ -13,36 +15,65 @@
                 {% endfor %}
             ];
 
-            window.nextRequest = function (index) {
-                if (index === count) {
-                    $('#optimize-submit').prop('disabled', false);
-                    return;
-                }
-
-                currentIndex = index;
+            window.startOptimize = function () {
+                currentIndex = 0;
                 updateUI();
-                $.ajax({
-                    url: links[index],
-                    success: function (data) {
-                        nextRequest(index + 1);
-                        updateUI();
-                    },
-                    error: function () {
-                        failCount++;
-                        nextRequest(index + 1);
-                        updateUI();
-                    }
-                });
+                if (links.length > 0) {
+                    const handle = setInterval(function () {
+                        if (requestQueue.length < maxRequestCount && links[currentIndex]) {
+                            // add request
+                            console.log('Add new request');
+                            requestQueue.push($.ajax({
+                                url: links[currentIndex],
+                                success: function (data) {
+                                    updateUI();
+                                },
+                                error: function () {
+                                    failCount++;
+                                    updateUI();
+                                }
+                            }));
+
+                            currentIndex++;
+
+                        } else {
+                            console.log('Clear done requests');
+                            // check and remove done requests
+                            for (var i = 0; i < maxRequestCount; i++) {
+                                if (requestQueue[i] && requestQueue[i].readyState == 4) {
+                                    requestQueue.splice(i, 1);
+                                }
+                            }
+                        }
+
+                        if (!links[currentIndex]) {
+                            console.log('Clear Interval');
+                            updateUI();
+                            clearInterval(handle);
+                        }
+
+                    }, 500);
+                }
             };
 
             function updateUI() {
-                var progress = (currentIndex + 1) + "/" + count;
-                $('#optimize-results').html('<p>Process: ' + progress + '' +
-                    '<svg class="brz-spinner"><use xlink:href="{{ svg }}"></svg>' +
-                    '</p>' +
-                    '<p>Failed: ' + failCount + '</p>');
-            }
 
+                var progress = (currentIndex ) + "/" + count;
+
+                if(currentIndex<links.length)
+                {
+                    $('#optimize-results').html('<p>Process: ' + progress + '' +
+                        '<svg class="brz-spinner"><use xlink:href="{{ svg }}"></svg>' +
+                        '</p>' +
+                        '<p>Failed: ' + failCount + '</p>');
+                } else {
+                    $('#optimize-results').html('<p>Process: ' + progress + '' +
+                        '</p>' +
+                        '<p>Failed: ' + failCount + '</p>');
+
+                    jQuery('#optimize-submit').prop('disabled',false);
+                }
+            }
         })(jQuery);
     </script>
     <div id="optimize-results">
@@ -51,7 +82,7 @@
     {% if enabled %}
         {% if count>0 %}
             <button type="submit" id="optimize-submit" class="button button-primary"
-                    onclick="nextRequest(0); jQuery(this).prop('disabled',true);">
+                    onclick="startOptimize(); jQuery(this).prop('disabled',true);">
                 {{ submit_label }}
             </button>
         {% endif %}

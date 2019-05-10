@@ -29,9 +29,11 @@ class Brizy_Editor_Asset_Optimize_Optimizer {
 				/**
 				 * @var Brizy_Editor_Asset_Optimize_OptimizerInterface $optimizer ;
 				 */
-				$optimizer = new $optimizerClass( $settings[ $optimizerClass::getId() ] );
+				if ( $settings = $settings[ $optimizerClass::getId() ] ) {
+					$optimizer = new $optimizerClass( $settings );
 
-				return $optimizer->optimize( $source, $target );
+					return $optimizer->optimize( $source, $target );
+				}
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 				continue;
