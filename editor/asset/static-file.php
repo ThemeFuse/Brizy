@@ -86,7 +86,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			'post_status'    => 'inherit'
 		);
 
-		$attachment_id = wp_insert_attachment( $attachment, $absolute_asset_path, $post_id );
+		$attachment_id = wp_insert_attachment( $attachment, $relative_asset_path, $post_id );
 
 		if ( is_wp_error( $attachment_id ) || $attachment_id === 0 ) {
 			return false;
