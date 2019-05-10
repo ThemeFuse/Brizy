@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.1<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.74<br>
+Stable tag: 1.0.75<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,17 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.75 - 2019-05-10 ###
+* New: Integrated Shortpixel image optimizer
+* Improved: Lowered the max brizy revision count
+* Improved: Delete old auto save posts
+* Improved: Changed max brizy revision count value to 30
+* Fixed: Optimized delete auto saved posts code
+* Fixed Create global blocks
+* Fixed Create attachment post for block images
+* Fixed: AutoOptimeze plugin break our css
+
 
 ### 1.0.74 - 2019-04-23 ###
 * New: Box Shadow option for Button, Icon, Soundcloud, Embed, Header, Footer
