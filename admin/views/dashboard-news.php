@@ -12,7 +12,7 @@
 						<?php endif; ?>
 						<?php echo esc_html( $item['title'] ); ?>
                     </a>
-                    <p class="brizy-overview__post-description"><?php echo esc_html( $item['excerpt'] ); ?></p>
+                    <p class="brizy-overview__post-description"><?php echo $item['excerpt']; ?></p>
                 </li>
 			<?php endforeach; ?>
         </ul>

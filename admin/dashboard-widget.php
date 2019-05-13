@@ -39,26 +39,51 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 	 * @return string
 	 */
 	private function renderNews() {
-		$news = [
-			[
-				'url'     => 'https://www.brizy.io/blog/white-label/',
-				'badge'   => 'new',
-				'title'   => 'Brizy Pro 0.0.20: White Label',
-				'excerpt' => 'Hydrogen is HERE :P. Just kidding, but if you had a company named Hydrogen you’d love our new White Label feature we just added in Brizy PRO.',
-			],
-			[
-				'url'     => 'https://www.brizy.io/blog/keyboard-shortcuts/',
-				'badge'   => 'new',
-				'title'   => 'Keyboard Shortcuts are Here',
-				'excerpt' => 'Starting today you’ll be creating client websites with Brizy even faster if that’s possible. We’ve added a bunch of keyboard shortcuts that will improve the speed you work with Brizy and make your life much easier when it comes to copy-pasting styles, duplicating content and more.',
-			],
-			[
-				'url'     => 'https://www.brizy.io/blog/new-premium-layout-packs/',
-				'badge'   => 'new',
-				'title'   => 'Brizy Pro 0.0.19: 17 new premium layout packs ',
-				'excerpt' => 'In our continuous effort to make Brizy the tool of choice when it comes to building stunning websites, I’d glad to tell you that we’ve just added 17 new premium layout packs that will let you kick start client websites in minutes. That is another 99 layouts on top of the 56 we already have.',
-			],
-		];
+
+		$transient_key = 'brizy_feed_news';
+
+		if ( ! ( $news = get_transient( $transient_key ) ) ) {
+
+			$request = wp_remote_get( 'https://www.brizy.io/index.php/wp-json/wp/v2/posts' );
+
+			if ( is_wp_error( $request ) ) {
+
+				return $request->get_error_message();
+
+			} elseif ( ! isset( $request['response'] ) || ! isset( $request['response']['code'] ) || ! is_array( $request['response'] ) ) {
+
+				return esc_html__( 'Something went wrong. There is no a valid response code.', 'brizy' );
+
+			} elseif ( 200 !== $request['response']['code'] ) {
+
+				if ( isset( $request['response']['message'] ) ) {
+					return $request['response']['message'];
+				} else {
+					return esc_html__( 'The request was blocked, or something is wrong with the remote server.', 'brizy' );
+				}
+
+			} elseif ( empty( $request['body'] ) ) {
+				return esc_html__( 'There is no body in the remote server response.', 'brizy' );
+			}
+
+			$items = json_decode( $request['body'], true );
+
+			if ( ! $items ) {
+				return esc_html__( 'Filed decode returned json by brizy.io', 'brizy' );
+			}
+
+			$news = [];
+
+			foreach ( array_slice( $items, 5 ) as $item ) {
+				$news[] = [
+					'url'     => $item['link'],
+					'title'   => $item['title']['rendered'],
+					'excerpt' => $item['excerpt']['rendered'],
+				];
+			}
+
+			set_transient( $transient_key, $news, 2 * DAY_IN_SECONDS );
+		}
 
 		return Brizy_Admin_View::render( 'dashboard-news', [ 'news' => $news ] );
 	}
@@ -105,5 +130,4 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 		return Brizy_Admin_View::render( 'dashboard-posts', array( 'posts' => $brizy_posts ) );
 	}
-
 }
