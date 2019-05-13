@@ -35,6 +35,7 @@ class Brizy_Admin_Settings {
 
 		if ( ! is_network_admin() ) {
 			add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterGoProPage' ), 20 );
 		} else {
 			add_action( 'network_admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
 		}
@@ -97,6 +98,28 @@ class Brizy_Admin_Settings {
 			$this,
 			'render'
 		) );
+	}
+
+	/**
+	 * @internal
+	 */
+	function actionRegisterGoProPage() {
+
+	    if ( class_exists( 'BrizyPro_Main' ) ) {
+	        return;
+        }
+
+		add_submenu_page(
+		        self::menu_slug(),
+                '',
+                '<span class="brz-settings__go_pro">
+                    <span class="dashicons dashicons-star-filled" style="font-size: 17px"></span>' .
+                    __( 'Go Pro', 'brizy' ) .
+                '</span>',
+                'manage_options',
+                'https://www.brizy.io/brizy-pro-pricing/',
+                array()
+        );
 	}
 
 	private function get_selected_tab() {
