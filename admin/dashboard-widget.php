@@ -74,7 +74,7 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 			$news = [];
 
-			foreach ( array_slice( $items, 5 ) as $item ) {
+			foreach ( array_slice( $items, 0, 3 ) as $item ) {
 				$news[] = [
 					'url'     => $item['link'],
 					'title'   => $item['title']['rendered'],
