@@ -121,12 +121,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 ### 1.0.75 - 2019-05-10 ###
 * New: Integrated Shortpixel image optimizer
 * Improved: Lowered the max brizy revision count
-* Improved: Delete old auto save posts
+* Improved: Delete old autosave posts
 * Improved: Changed max brizy revision count value to 30
 * Fixed: Optimized delete auto saved posts code
+* Fixed: Removed random image names (works only for new image uploads)
 * Fixed Create global blocks
 * Fixed Create attachment post for block images
-* Fixed: AutoOptimeze plugin break our css
+* Fixed: Autoptimeze plugin breaks our css
 
 
 ### 1.0.74 - 2019-04-23 ###
