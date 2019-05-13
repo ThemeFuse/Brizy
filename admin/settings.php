@@ -110,15 +110,15 @@ class Brizy_Admin_Settings {
         }
 
 		add_submenu_page(
-		        self::menu_slug(),
-                '',
-                '<span class="brz-settings__go_pro">
-                    <span class="dashicons dashicons-star-filled" style="font-size: 17px"></span>' .
-                    __( 'Go Pro', 'brizy' ) .
-                '</span>',
-                'manage_options',
-                'https://www.brizy.io/brizy-pro-pricing/',
-                array()
+            self::menu_slug(),
+            '',
+            '<span class="brz-settings__go_pro">
+                <span class="dashicons dashicons-star-filled" style="font-size: 17px"></span>' .
+                __( 'Go Pro', 'brizy' ) .
+            '</span>',
+            'manage_options',
+            'https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/',
+            array()
         );
 	}
 
