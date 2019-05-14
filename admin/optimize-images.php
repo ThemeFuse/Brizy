@@ -1,7 +1,6 @@
 <?php
 
 use Gaufrette\Filesystem;
-use Gaufrette\Adapter\Local as LocalAdapter;
 
 class Brizy_Admin_OptimizeImages {
 
@@ -95,7 +94,7 @@ class Brizy_Admin_OptimizeImages {
 		$settings          = Brizy_Editor_Project::get()->getImageOptimizerSettings();
 		$urlBuilder        = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
 		$brizy_upload_path = $urlBuilder->brizy_upload_path();
-		$adapter           = new LocalAdapter( $brizy_upload_path );
+		$adapter           = new Brizy_Admin_Guafrette_LocalAdapter( $brizy_upload_path );
 		$filesystem        = new Filesystem( $adapter );
 
 		$brizy_ids = Brizy_Editor_Post::get_all_brizy_post_ids();
