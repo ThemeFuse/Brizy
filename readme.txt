@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.1
 Requires PHP: 5.4
-Stable tag: 1.0.75
+Stable tag: 1.0.76
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,15 +139,19 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.76 - 2019-05-14 =
+* Fixed: Guafrette warning in Path class
+
 = 1.0.75 - 2019-05-10 =
 * New: Integrated Shortpixel image optimizer
 * Improved: Lowered the max brizy revision count
-* Improved: Delete old auto save posts
+* Improved: Delete old autosave posts
 * Improved: Changed max brizy revision count value to 30
 * Fixed: Optimized delete auto saved posts code
+* Fixed: Removed random image names (works only for new image uploads)
 * Fixed Create global blocks
 * Fixed Create attachment post for block images
-* Fixed: AutoOptimeze plugin break our css
+* Fixed: Autoptimeze plugin breaks our css
 
 
 = 1.0.74 - 2019-04-23 =
