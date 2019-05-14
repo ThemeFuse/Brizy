@@ -7,9 +7,7 @@
 			<?php foreach ( $news as $item ) : ?>
                 <li class="brizy-overview__post">
                     <a href="<?php echo esc_url( $item['url'] ); ?>" class="brizy-overview__post-link" target="_blank">
-						<?php if ( ! empty( $item['badge'] ) ) : ?>
-                            <span class="brizy-overview__badge"><?php echo esc_html( $item['badge'] ); ?></span>
-						<?php endif; ?>
+                        <span class="brizy-overview__badge"><?php echo __( 'New', 'elementor' ); ?></span>
 						<?php echo esc_html( $item['title'] ); ?>
                     </a>
                     <p class="brizy-overview__post-description"><?php echo $item['excerpt']; ?></p>

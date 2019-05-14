@@ -284,3 +284,19 @@
     border-radius: 3px;
     text-transform: uppercase
 }
+
+.brizy-dashboard-widget-footer {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 12px 12px 12px 0;
+    border-top: 1px solid #eee;
+}
+
+.brizy-dashboard-widget-footer__go-pro {
+    display:inline-flex;
+    fill: #0073aa;
+}
+
+.brizy-dashboard-widget-footer__go-pro:hover {
+    fill: #00a0d2;
+}
