@@ -236,6 +236,15 @@ class Brizy_Admin_Main {
 		$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ), __( 'Settings', 'brizy' ) );
 		array_unshift( $links, $settings_link );
 
+		if ( ! class_exists( 'BrizyPro_Main' ) ) {
+
+			$links['go_pro'] = sprintf(
+				'<a href="%1$s" target="_blank" style="color:#39b54a;font-weight:700;">%2$s</a>',
+				'https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/',
+				__( 'Go Pro', 'brizy' )
+			);
+		}
+
 		return $links;
 	}
 

@@ -103,7 +103,7 @@ class Brizy_Admin_Settings {
 	/**
 	 * @internal
 	 */
-	function actionRegisterGoProPage() {
+	public function actionRegisterGoProPage() {
 
 	    if ( class_exists( 'BrizyPro_Main' ) ) {
 	        return;
@@ -112,8 +112,10 @@ class Brizy_Admin_Settings {
 		add_submenu_page(
             self::menu_slug(),
             '',
-            '<span class="brz-settings__go_pro">
-                <span class="dashicons dashicons-star-filled" style="font-size: 17px"></span>' .
+            '<span style="display:flex;color:#00b9eb;">
+                <svg height="20" width="20">
+                    <path d="M13,7 L12,7 L12,4.73333333 C12,2.6744 10.206,1 8,1 C5.794,1 4,2.6744 4,4.73333333 L4,7 L3,7 C2.448,7 2,7.41813333 2,7.93333333 L2,14.0666667 C2,14.5818667 2.448,15 3,15 L13,15 C13.552,15 14,14.5818667 14,14.0666667 L14,7.93333333 C14,7.41813333 13.552,7 13,7 Z M10,5 L12,5 L12,7 L10,7 L6,7 L6,5 C6,3.897 6.897,3 8,3 C9.103,3 10,3.897 10,5 Z" fill="#00b9eb" fill-rule="nonzero"/>
+                </svg>' .
                 __( 'Go Pro', 'brizy' ) .
             '</span>',
             'manage_options',
