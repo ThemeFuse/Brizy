@@ -126,6 +126,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			$block->save();
 
+			do_action( 'brizy_global_block_created', $block );
 			do_action( 'brizy_global_data_updated' );
 
 			$this->success( Brizy_Editor_Block::postData( $block ) );
@@ -154,6 +155,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block->set_needs_compile( true );
 			$block->save();
 
+			do_action( 'brizy_saved_block_created', $block );
 			do_action( 'brizy_global_data_updated' );
 
 			$this->success( Brizy_Editor_Block::postData( $block ) );
@@ -198,6 +200,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$block->auto_save_post();
 			} else {
 				$block->save();
+				do_action( 'brizy_global_block_updated', $block );
 				do_action( 'brizy_global_data_updated' );
 			}
 
@@ -228,7 +231,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$block->auto_save_post();
 			} else {
 				$block->save();
-				do_action( 'brizy_global_data_updated' );
+				do_action( 'brizy_saved_block_updated', $block );
+				do_action( 'brizy_saved_data_updated' );
 			}
 
 			$this->success( Brizy_Editor_Block::postData( $block ) );
@@ -244,8 +248,12 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( '400', 'Invalid uid' );
 		}
 
-		if ( $this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL ) ) {
-			do_action( 'brizy_global_data_updated' );
+		$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
+
+		if($block) {
+			do_action( 'brizy_global_block_deleted', $block );
+			do_action( 'brizy_global_data_deleted' );
+			$this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
 			$this->success( null );
 		}
 
@@ -259,8 +267,18 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( '400', 'Invalid uid' );
 		}
 
+		$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
+
+		if($block) {
+			do_action( 'brizy_global_block_deleted', $block );
+			do_action( 'brizy_global_data_deleted' );
+			$this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
+			$this->success( null );
+		}
+
 		if ( $this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED ) ) {
-			do_action( 'brizy_global_data_updated' );
+			do_action( 'brizy_saved_block_deleted', $this->param( 'uid' ) );
+			do_action( 'brizy_saved_data_deleted' );
 			$this->success( null );
 		}
 
@@ -287,6 +305,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$block = $this->getBlock( $uid, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 				$block->setPosition( $positionObj );
 				$block->save();
+
+				do_action( 'brizy_global_block_updated', $block );
 			}
 
 			do_action( 'brizy_global_data_updated' );
@@ -295,7 +315,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-
 			$this->error( '400', 'Unable to save block positions' );
 		}
 

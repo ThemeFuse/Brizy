@@ -152,7 +152,6 @@ class Brizy_Editor_Editor_Editor {
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 			),
 			'serverTimestamp' => time(),
-			'menuData'        => $this->get_menu_data(),
 			'wp'            => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
@@ -248,6 +247,7 @@ class Brizy_Editor_Editor_Editor {
 				)
 			),
 			'branding'      => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+			'cloud'           => array( 'token' => $this->project->getMetaValue( 'brizy-cloud-token' ) )
 			'editorVersion' => BRIZY_EDITOR_VERSION
 		);
 

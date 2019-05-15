@@ -28,6 +28,15 @@ class Brizy_Config {
 	const ABOUT_URL = "https://www.brizy.io";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
+	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
+	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
+	const CLOUD_LIBRARY = '/dev/library';
+	const CLOUD_AUTH_TOKEN = '/api/tokens';
+	const CLOUD_MEDIA = '/api/media';
+	const CLOUD_CONTAINERS = '/api/containers';
+	const CLOUD_PROJECTS = '/api/projects';
+	const CLOUD_SAVEDBLOCKS = '/api/saved_blocks';
+
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(

@@ -1,0 +1,86 @@
+{% extends "cloud-base.html.twig" %}
+
+{% block content %}
+
+    <p>
+        <a href="{{ logoutUrl }}">Logout</a>
+    </p>
+    <br>
+
+    <h3>Project</h3>
+    {% if  projects|length > 0 %}
+        <div class="projects">
+            <form method="post" id="cloud-form" action="{{ pageUrl }}">
+                {{ nonce | raw }}
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">
+                            <label for="project-account">Select Account</label>
+                        </th>
+                        <td>
+                            <select name="brizy-cloud-use-container" id="project-account" class="regular-text">
+                                {% for container in containers %}
+                                    <option value="{{ container.id }}" {{ container.id==projectObject.container?'selected':'' }}>{{ container.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="project">Select project</label>
+                        </th>
+                        <td>
+                            <select name="brizy-cloud-use-project" id="project" class="regular-text">
+                                <option value="0">Don't use projects</option>
+                                {% for project in projects %}
+                                    <option value="{{ project.id }}" {{ project.id==projectObject.id?'selected':'' }}>{{ project.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <p class="submit">
+                    <input type="submit" name="brizy-cloud-use-project-submit" id="submit" class="button button-primary"
+                           value="Save">
+                </p>
+            </form>
+        </div>
+    {% else %}
+        <div class="no-projects">
+            You have not created any projects.
+        </div>
+    {% endif %}
+    <br>
+    <br>
+    <h3>Create new project</h3>
+    <form method="post">
+        {{ nonce | raw }}
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="cloud-projectcontainer">Account</label>
+                </th>
+                <td>
+                    <select name="cloud-projectcontainer" id="cloud-projectcontainer" class="regular-text">
+                        {% for container in containers %}
+                            <option value="{{ container.id }}">{{ container.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="cloud-projectname">Project name</label>
+                </th>
+                <td>
+                    <input name="cloud-projectname" type="text" value="" class="regular-text"
+                           id="cloud-projectname"/>
+                </td>
+            </tr>
+        </table>
+        <p class="submit">
+            <input type="submit" name="brizy-cloud-create-project" id="submit" class="button button-primary"
+                   value="Create">
+        </p>
+    </form>
+{% endblock %}

@@ -72,6 +72,7 @@ class Brizy_Editor {
 		Brizy_Admin_Blocks_Main::_init();
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
+		Brizy_Admin_Cloud::_init();
 
 
 		$this->loadShortcodes();
