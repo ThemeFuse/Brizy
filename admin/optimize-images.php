@@ -369,5 +369,4 @@ class Brizy_Admin_OptimizeImages {
 		return apply_filters( 'brizy_optimizer_tabs', $tabs );
 	}
 
-
 }

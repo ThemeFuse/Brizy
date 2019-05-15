@@ -11,6 +11,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
+	const GET_SAVED_BLOCK_ACTION = 'brizy-get-saved-block';
+
 	const GET_GLOBAL_BLOCKS_ACTION = '-get-global-blocks';
 	const GET_SAVED_BLOCKS_ACTION = '-get-saved-blocks';
 	const CREATE_GLOBAL_BLOCK_ACTION = '-create-global-block';
@@ -58,7 +60,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
 		add_action( $pref . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
 		add_action( $pref . self::GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
-		add_action( $pref . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
+		add_action( $pref . self::GET_SAVED_BLOCK_ACTION, array( $this, 'actionGetSavedBlockByUid' ) );
+		add_action( 'wp_ajax_' . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
 		add_action( $pref . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
 		add_action( $pref . self::UPDATE_SAVED_BLOCK_ACTION, array( $this, 'actionUpdateSavedBlock' ) );
 		add_action( $pref . self::DELETE_GLOBAL_BLOCK_ACTION, array( $this, 'actionDeleteGlobalBlock' ) );
@@ -71,7 +74,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			$bockManager = new Brizy_Admin_Blocks_Manager( null );
+
+			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+
+			$blocks = $bockManager->getAllBlocks( Brizy_Admin_Blocks_Main::CP_GLOBAL, array(), $fields );
 
 			$this->success( $blocks );
 
@@ -84,9 +91,39 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_SAVED );
+			$cloudClient = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+
+			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+
+			$bockManager = new Brizy_Admin_Blocks_Manager( $cloudClient );
+
+			$blocks = $bockManager->getAllBlocks( Brizy_Admin_Blocks_Main::CP_SAVED, array(), $fields );
 
 			$this->success( $blocks );
+
+		} catch ( Exception $exception ) {
+			$this->error( 400, $exception->getMessage() );
+		}
+	}
+
+	public function actionGetSavedBlockByUid() {
+		$this->verifyNonce( self::nonce );
+
+		if ( ! $this->param( 'uid' ) ) {
+			$this->error( 400, 'Invalid uid' );
+		}
+
+		try {
+			$cloudClient = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+			$bockManager = new Brizy_Admin_Blocks_Manager( $cloudClient );
+
+			$block = $bockManager->getBlockByUid( Brizy_Admin_Blocks_Main::CP_SAVED, $this->param( 'uid' ) );
+
+			if ( ! $block ) {
+				$this->error( 404, 'Block not found' );
+			}
+
+			$this->success( $block );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -103,12 +140,17 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		if ( ! $this->param( 'data' ) ) {
 			$this->error( 400, 'Invalid data' );
 		}
+		if ( ! $this->param( 'meta' ) ) {
+			$this->error( 400, 'Invalid meta data' );
+		}
+
 
 		try {
 			$editorData = stripslashes( $this->param( 'data' ) );
 			$position   = stripslashes( $this->param( 'position' ) );
 
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( $editorData );
 			$block->set_needs_compile( true );
 
@@ -124,6 +166,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			$block->save();
 
+			do_action( 'brizy_global_block_created', $block );
 			do_action( 'brizy_global_data_updated' );
 
 			$this->success( $block->createResponse() );
@@ -144,14 +187,25 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'Invalid data' );
 		}
 
+		if ( ! $this->param( 'meta' ) ) {
+			$this->error( 400, 'Invalid meta data' );
+		}
+
+		if ( ! $this->param( 'media' ) ) {
+			$this->error( 400, 'Invalid media data provided' );
+		}
 
 		try {
 			$data  = stripslashes( $this->param( 'data' ) );
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_SAVED );
+			$block->setMedia( stripslashes( $this->param( 'media' ) ) );
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( $data );
 			$block->set_needs_compile( true );
+			$block->setCloudUpdateRequired( true );
 			$block->save();
 
+			do_action( 'brizy_saved_block_created', $block );
 			do_action( 'brizy_global_data_updated' );
 
 			$this->success( $block->createResponse() );
@@ -174,6 +228,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
+			if ( ! $this->param( 'meta' ) ) {
+				$this->error( 400, 'Invalid meta data' );
+			}
+
 			if ( $this->param( 'dataVersion' ) === null ) {
 				$this->error( '400', 'Invalid data version' );
 			}
@@ -183,6 +241,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			/**
 			 * @var Brizy_Editor_Block $block ;
 			 */
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 			$block->setDataVersion( $this->param( 'dataVersion' ) );
 			$position = stripslashes( $this->param( 'position' ) );
@@ -201,6 +260,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$block->save( 1 );
 			} else {
 				$block->save( 0 );
+				do_action( 'brizy_global_block_updated', $block );
 				do_action( 'brizy_global_data_updated' );
 			}
 
@@ -226,6 +286,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data version' );
 			}
 
+			if ( ! $this->param( 'meta' ) ) {
+				$this->error( 400, 'Invalid meta data' );
+			}
+
+			if ( ! $this->param( 'media' ) ) {
+				$this->error( 400, 'Invalid media data provided' );
+			}
+
 			$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
 
 			if ( ! $block instanceof Brizy_Editor_Block ) {
@@ -234,12 +302,15 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 			$block->setDataVersion( $this->param( 'dataVersion' ) );
+			$block->setMedia( stripslashes( $this->param( 'media' ) ) );
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->save( 1 );
 			} else {
 				$block->save();
-				do_action( 'brizy_global_data_updated' );
+				do_action( 'brizy_saved_block_updated', $block );
+				do_action( 'brizy_saved_data_updated' );
 			}
 
 			$this->success( $block->createResponse() );
@@ -255,8 +326,12 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( '400', 'Invalid uid' );
 		}
 
-		if ( $this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL ) ) {
-			do_action( 'brizy_global_data_updated' );
+		$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
+
+		if ( $block ) {
+			do_action( 'brizy_global_block_deleted', $block );
+			do_action( 'brizy_global_data_deleted' );
+			$this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
 			$this->success( null );
 		}
 
@@ -270,8 +345,18 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( '400', 'Invalid uid' );
 		}
 
+		$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
+
+		if ( $block ) {
+			do_action( 'brizy_global_block_deleted', $block );
+			do_action( 'brizy_global_data_deleted' );
+			$this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
+			$this->success( null );
+		}
+
 		if ( $this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED ) ) {
-			do_action( 'brizy_global_data_updated' );
+			do_action( 'brizy_saved_block_deleted', $this->param( 'uid' ) );
+			do_action( 'brizy_saved_data_deleted' );
 			$this->success( null );
 		}
 
@@ -302,6 +387,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$block = $this->getBlock( $uid, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 				$block->setPosition( $positionObj );
 				$block->save();
+
+				do_action( 'brizy_global_block_updated', $block );
 			}
 
 			do_action( 'brizy_global_data_updated' );
@@ -310,7 +397,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-
 			$this->error( '400', 'Unable to save block positions' );
 		}
 

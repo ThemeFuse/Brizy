@@ -30,6 +30,20 @@ class Brizy_Config {
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
 	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/dev';
 
+	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
+	const CLOUD_ENDPOINT = ' http://www.brizysites.com';
+	const CLOUD_LIBRARY = '/dev/library';
+	const CLOUD_SIGNIN = '/api/sign_ins';
+	const CLOUD_SIGNUP = '/api/sign_ups';
+	const CLOUD_RESET_PASSWORD = '/api/recover_passwords';
+	const CLOUD_MEDIA = '/api/media';
+	const CLOUD_CONTAINERS = '/api/containers';
+	const CLOUD_PROJECTS = '/api/projects';
+	const CLOUD_SAVEDBLOCKS = '/api/saved_blocks';
+	const CLOUD_FONTS = '/api/fonts';
+	const CLOUD_POPUPS = '/api/saved_popups';
+	const CLOUD_LAYOUTS = '/api/layouts';
+
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(

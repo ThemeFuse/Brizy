@@ -92,7 +92,10 @@ class Brizy_Editor_Editor_Editor {
 
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
 		$config            = array(
-			'user'            => array( 'role' => 'admin' ),
+			'user'            => array(
+				'role'         => 'admin',
+				'isAuthorized' => $this->project->getMetaValue( 'brizy-cloud-token' ) !== null
+			),
 			'project'         => array(
 				'id'                => $this->project->getId(),
 				'status'            => $this->getProjectStatus(),
@@ -153,6 +156,7 @@ class Brizy_Editor_Editor_Editor {
 				'maxUploadSize' => $this->fileUploadMaxSize()
 			),
 			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+			'cloud'           => array( 'token' => $this->project->getMetaValue( 'brizy-cloud-token' ) ),
 			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
 
@@ -760,12 +764,23 @@ class Brizy_Editor_Editor_Editor {
 			'updateGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 			'deleteGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
 			'getRuleGroupList'           => $pref . Brizy_Admin_Rules_Api::RULE_GROUP_LIST,
+			'getLayoutByUid' => Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
+			'getLayoutList'  => Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+			'createLayout'   => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+			'updateLayout'   => Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
+			'deleteLayout'   => Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
+			'cloudSignIn'        => Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
+			'cloudSignUp'        => Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
+			'cloudSignOut'       => Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
+			'cloudResetPassword' => Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
+			'cloudSync'          => Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
 			'createRule'                 => $pref . Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
 			'createRules'                => $pref . Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
 			'updateRules'                => $pref . Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
 			'deleteRule'                 => $pref . Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
 			'getRuleList'                => $pref . Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 			'updateBlockPositions'       => $pref . Brizy_Admin_Blocks_Api::UPDATE_POSITIONS_ACTION,
+			'getSavedBlockByUid' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
 			'getSavedBlockList'          => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
 			'createSavedBlock'           => $pref . Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
 			'updateSavedBlock'           => $pref . Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
