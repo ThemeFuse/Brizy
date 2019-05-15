@@ -173,7 +173,6 @@ class Brizy_Admin_Migrations {
 			}
 		}
 
-
 		Brizy_Logger::instance()->debug( 'Migration process successful' );
 	}
 }

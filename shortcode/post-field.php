@@ -58,6 +58,7 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 			case 'post_content':
 				$GLOBALS['post'] = $post;
 				setup_postdata($post);
+				$GLOBALS['post'] = $post;
 				add_filter( 'the_content', 'wpautop' );
 				$content = get_the_content( null, null, $post );
 				$content = wpautop($content);

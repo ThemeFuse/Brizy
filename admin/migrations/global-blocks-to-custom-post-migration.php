@@ -62,7 +62,6 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 					$brizyPost->set_needs_compile( true );
 					$brizyPost->saveStorage();
 				}
-
 			}
 		}
 

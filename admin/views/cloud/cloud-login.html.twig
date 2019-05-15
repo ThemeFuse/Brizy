@@ -1,0 +1,32 @@
+{% extends "cloud-base.html.twig" %}
+
+{% block content %}
+    <form method="post">
+        {{ nonce | raw }}
+
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="cloud-username">User name</label>
+                </th>
+                <td>
+                    <input name="cloud-username" type="text" value="{{ username }}" class="regular-text"
+                           id="cloud-username"/>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="cloud-password">Password</label>
+                </th>
+                <td>
+                    <input name="cloud-password" type="password" value="{{ password }}" class="regular-text"
+                           id="cloud-password"/>
+                </td>
+            </tr>
+        </table>
+        <p class="submit">
+            <input type="submit" name="brizy-cloud-login" id="submit" class="button button-primary"
+                   value="Login">
+        </p>
+    </form>
+{% endblock %}

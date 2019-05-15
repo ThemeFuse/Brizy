@@ -2,6 +2,8 @@
 
 class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
+	use Brizy_Editor_Asset_AttachmentAware;
+
 	const BASIC_CROP_TYPE = 1;
 	const ADVANCED_CROP_TYPE = 2;
 
@@ -197,32 +199,5 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		return $resized_image_path;
 	}
 
-	/**
-	 * @param $media_name
-	 *
-	 * @return null|string
-	 */
-	private function getAttachmentByMediaName( $media_name ) {
 
-		global $wpdb;
-
-		$pt = $wpdb->posts;
-		$mt  = $wpdb->postmeta;
-
-		return $wpdb->get_var( $wpdb->prepare(
-			"SELECT 
-						{$pt}.ID
-					FROM {$pt}
-						INNER JOIN {$mt} ON ( {$pt}.ID = {$mt}.post_id )
-					WHERE 
-						( {$mt}.meta_key = 'brizy_attachment_uid' 
-						AND {$mt}.meta_value = %s )
-						AND {$pt}.post_type = 'attachment'
-						AND {$pt}.post_status = 'inherit'
-					GROUP BY {$pt}.ID
-					ORDER BY {$pt}.post_date DESC",
-			$media_name
-		) );
-
-	}
 }

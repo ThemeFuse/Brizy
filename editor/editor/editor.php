@@ -84,7 +84,10 @@ class Brizy_Editor_Editor_Editor {
 
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
 		$config            = array(
-			'user'            => array( 'role' => 'admin' ),
+			'user'            => array(
+				'role'         => 'admin',
+				'isAuthorized' => $this->project->getMetaValue( 'brizy-cloud-token' ) !== null
+			),
 			'project'         => array(
 				'id'                => $this->project->getId(),
 				'status'            => $this->getProjectStatus(),
@@ -140,10 +143,17 @@ class Brizy_Editor_Editor_Editor {
 					'setProject'     => Brizy_Editor_API::AJAX_SET_PROJECT,
 					'setProjectMeta' => Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 
-					'getGlobalBlockList'   => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
-					'createGlobalBlock'    => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
-					'updateGlobalBlock'    => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
-					'deleteGlobalBlock'    => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
+					'getLayoutByUid' => Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
+					'getLayoutList'  => Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+					'createLayout'   => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+					'updateLayout'   => Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
+					'deleteLayout'   => Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
+
+					'getGlobalBlockList' => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+					'createGlobalBlock'  => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
+					'updateGlobalBlock'  => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
+					'deleteGlobalBlock'  => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
+
 					'getRuleGroupList'     => Brizy_Editor_API::RULE_GROUP_LIST,
 					'createRule'           => Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
 					'createRules'          => Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
@@ -152,17 +162,17 @@ class Brizy_Editor_Editor_Editor {
 					'getRuleList'          => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 					'updateBlockPositions' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 
-					'getSavedBlockList' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
-					'createSavedBlock'  => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
-					'updateSavedBlock'  => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
-					'deleteSavedBlock'  => Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
+					'getSavedBlockByUid' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+					'getSavedBlockList'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+					'createSavedBlock'   => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
+					'updateSavedBlock'   => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
+					'deleteSavedBlock'   => Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
 
 					'media'              => Brizy_Editor_API::AJAX_MEDIA,
 					'downloadMedia'      => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
 					'getMediaUid'        => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
 					'getAttachmentUid'   => Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
 					'getServerTimeStamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
-
 
 					'createBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
 					'updateBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
@@ -191,6 +201,12 @@ class Brizy_Editor_Editor_Editor {
 					'createFont' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
 					'deleteFont' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
 					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
+
+					'cloudSignIn'        => Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
+					'cloudSignUp'        => Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
+					'cloudSignOut'       => Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
+					'cloudResetPassword' => Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
+					'cloudSync'          => Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
 
 					'getAccount'    => Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNT,
 					'getAccounts'   => Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNTS,
@@ -221,6 +237,7 @@ class Brizy_Editor_Editor_Editor {
 				'maxUploadSize' => $this->fileUploadMaxSize()
 			),
 			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+			'cloud'           => array( 'token' => $this->project->getMetaValue( 'brizy-cloud-token' ) ),
 			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
 

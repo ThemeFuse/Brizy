@@ -26,6 +26,7 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
+
 		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), - 999999, 4 );
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
 
@@ -36,14 +37,6 @@ class Brizy_Admin_Popups_Main {
 
 	public function removePageAttributes() {
 		remove_meta_box( 'pageparentdiv', self::CP_POPUP, 'side' );
-	}
-
-	static public function registerSupportedPostType() {
-		add_filter( 'brizy_supported_post_types', function ( $posts ) {
-			$posts[] = self::CP_POPUP;
-
-			return $posts;
-		} );
 	}
 
 	static public function registerCustomPosts() {
@@ -88,6 +81,12 @@ class Brizy_Admin_Popups_Main {
 		);
 
 		remove_post_type_support( self::CP_POPUP, 'page-attributes' );
+
+
+		add_filter( 'brizy_supported_post_types', function ( $posts ) {
+			$posts[] = self::CP_POPUP;
+			return $posts;
+		} );
 	}
 
 	/**
@@ -110,10 +109,11 @@ class Brizy_Admin_Popups_Main {
 	 * @param $content
 	 * @param $project
 	 * @param $wpPost
-	 * @param $context
+	 * @param string $context
 	 *
-	 * @return mixed
+	 * @return string|string[]|null
 	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 */
 	public function insertPopupsHtml( $content, $project, $wpPost, $context = 'document' ) {
 		$popups = $this->getMatchingBrizyPopups();
@@ -215,6 +215,5 @@ class Brizy_Admin_Popups_Main {
 
 		return $resultPopups;
 	}
-
-
 }
+
