@@ -268,7 +268,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	public static function get_all_brizy_posts() {
 		global $wpdb;
 		$posts = $wpdb->get_results(
-			$wpdb->prepare( "SELECT p.post_type, p.post_id FROM {$wpdb->postmeta} pm 
+			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm 
 									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'
 									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
 		);
