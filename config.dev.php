@@ -20,7 +20,7 @@ class Brizy_Config {
 	const BRIZY_REGISTRATION_CREDENTIALS = 'http://www.brizy.org/wordpress/credentials';
 
 	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
-	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-template.php';
+	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-header-footer-template.php';
 
 	const BRIZY_APPLICATION_INTEGRATION_URL = 'http://ec2-52-203-33-55.compute-1.amazonaws.com';
 	const BRIZY_APPLICATION_FORM_ID = '4_4sh251774pwkgswwcow4ssgkkgosk4wowgss00k8w0ggs8808o';

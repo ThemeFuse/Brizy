@@ -6,6 +6,11 @@
 <?php if (!defined('ABSPATH')) {
 	die('Direct access forbidden.');
 }
+
+echo '<pre style="background:#23282d;z-index:99999999;color:#78FF5B;font-size:14px;position:relative;">';
+print_r( 'brizy-blank-template.php' );
+echo '</pre>';
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>

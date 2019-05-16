@@ -184,12 +184,13 @@ class Brizy_Public_Main {
 		}
 
 		$template_path = get_post_meta( $post->ID, '_wp_page_template', true );
+		$template_path = ! $template_path && $post->post_type == Brizy_Admin_Templates::CP_TEMPLATE ? Brizy_Config::BRIZY_TEMPLATE_FILE_NAME : $template_path;
 
 		if ( in_array( basename( $template_path ), array(
 			Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME,
 			Brizy_Config::BRIZY_TEMPLATE_FILE_NAME
 		) ) ) {
-			return Brizy_Editor::get()->get_path( '/public/views/templates/brizy-blank-template.php' );
+			return Brizy_Editor::get()->get_path( '/public/views/templates/' . $template_path );
 		}
 
 		return $template;
