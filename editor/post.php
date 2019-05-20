@@ -276,7 +276,15 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$result = array();
 		foreach ( $posts as $p ) {
 			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
-				$result[] = Brizy_Editor_Post::get( $p->post_id );
+
+				if ( in_array( $p->post_type, array(
+					Brizy_Admin_Blocks_Main::CP_GLOBAL,
+					Brizy_Admin_Blocks_Main::CP_SAVED
+				) ) ) {
+					$result[] = Brizy_Editor_Block::get( $p->post_id );
+				} else {
+					$result[] = Brizy_Editor_Post::get( $p->post_id );
+				}
 			}
 		}
 
@@ -421,6 +429,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		try {
 			$value = $this->convertToOptionValue();
 			$this->storage()->set( self::BRIZY_POST, $value );
+
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 
