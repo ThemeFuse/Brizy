@@ -258,12 +258,12 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @todo: We need to move this method from here
-	 *
-	 *
 	 * @return Brizy_Editor_Post[]
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+	 * @todo: We need to move this method from here
+	 *
+	 *
 	 */
 	public static function get_all_brizy_posts() {
 		global $wpdb;
@@ -382,9 +382,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 				$autosavePost = self::get( $revId );
 			}
 
-			$autosavePost->set_template( $this->get_template() );
-			$autosavePost->set_editor_data( $this->get_editor_data() );
-			$autosavePost->set_editor_version( $this->get_editor_version() );
+			$autosavePost = $this->populateAutoSavedData( $autosavePost );
 			$autosavePost->save();
 
 		} catch ( Exception $exception ) {
@@ -478,6 +476,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		if ( self::$compiled_page ) {
 			return self::$compiled_page;
 		}
+
 		return new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 	}
 
@@ -623,27 +622,27 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @deprecated use get_compiled_html
 	 * @return string
+	 * @deprecated use get_compiled_html
 	 */
 	public function get_compiled_html_body() {
 		return $this->compiled_html_body;
 	}
 
 	/**
-	 * @deprecated use get_compiled_html
 	 * @return string
+	 * @deprecated use get_compiled_html
 	 */
 	public function get_compiled_html_head() {
 		return $this->compiled_html_head;
 	}
 
 	/**
-	 * @deprecated use set_compiled_html
-	 *
 	 * @param $html
 	 *
 	 * @return $this
+	 * @deprecated use set_compiled_html
+	 *
 	 */
 	public function set_compiled_html_body( $html ) {
 		$this->compiled_html_body = $html;
@@ -652,11 +651,11 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @deprecated use set_compiled_html
-	 *
 	 * @param $html
 	 *
 	 * @return $this
+	 * @deprecated use set_compiled_html
+	 *
 	 */
 	public function set_compiled_html_head( $html ) {
 		// remove all title and meta tags.
@@ -738,13 +737,13 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @todo: We need to move this method from here
-	 *
 	 * @param $text
 	 * @param string $tags
 	 * @param bool $invert
 	 *
 	 * @return null|string|string[]
+	 * @todo: We need to move this method from here
+	 *
 	 */
 	function strip_tags_content( $text, $tags = '', $invert = false ) {
 
@@ -859,6 +858,14 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function get_editor_version() {
 		return $this->editor_version;
+	}
+
+	protected function populateAutoSavedData( $autosave ) {
+		$autosave->set_template( $this->get_template() );
+		$autosave->set_editor_data( $this->get_editor_data() );
+		$autosave->set_editor_version( $this->get_editor_version() );
+
+		return $autosave;
 	}
 }
 

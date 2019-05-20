@@ -102,4 +102,19 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $data;
 	}
 
+	/**
+	 * @param $autosave
+	 *
+	 * @return Brizy_Editor_Block
+	 */
+	protected function populateAutoSavedData( $autosave ) {
+		/**
+		 * @var Brizy_Editor_Block $autosave ;
+		 */
+		$autosave = parent::populateAutoSavedData( $autosave );
+		$autosave->setPosition( $this->getPosition() );
+
+		return $autosave;
+	}
+
 }
