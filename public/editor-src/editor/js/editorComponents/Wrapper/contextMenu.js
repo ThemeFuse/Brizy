@@ -31,6 +31,7 @@ const translationsMap = {
   FacebookComments: t("Facebook Comments"),
   FacebookEmbed: t("Facebook Embed"),
   FacebookPage: t("Facebook Page"),
+  FacebookGroup: t("Facebook Group")
 };
 
 export default {

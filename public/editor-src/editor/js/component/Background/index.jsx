@@ -266,7 +266,7 @@ class Background extends React.Component {
         data-quality={settings.quality}
       >
         <iframe
-          src={IS_EDITOR && src}
+          src={IS_EDITOR ? src : ""}
           data-src={src}
           className="brz-iframe brz-bg-video__cover"
           style={iframeStyle}

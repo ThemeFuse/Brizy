@@ -12,7 +12,9 @@
     "tabletPositionX": null,
 
     "mobilePositionY": null,
-    "mobilePositionX": null
+    "mobilePositionX": null,
+
+    "popups": []
   },
 
   "link": {

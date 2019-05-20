@@ -27,8 +27,8 @@ export default function() {
   var $fbRoot = $(".fb-root");
 
   if ($facebook.length && $fbRoot.length === 0) {
-    var lang = $facebook.data().lang;
-    var appId = $facebook.appid;
+    var lang = $facebook.attr("lang");
+    var appId = $facebook.attr("appid");
 
     createElementFb(lang, appId);
   }

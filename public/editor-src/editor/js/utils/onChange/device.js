@@ -23,7 +23,7 @@ export function keySyncOnChange(key, deviceKey) {
   return deviceKey === null ? key : deviceKey;
 }
 
-export function defaultValueKey({ key, device, state }) {
+export function defaultValueKey({ key, device = "desktop", state = "normal" }) {
   return device && state
     ? defaultValueKeyByDevice(defaultValueKeyByState(key, state), device)
     : device
@@ -33,10 +33,17 @@ export function defaultValueKey({ key, device, state }) {
     : key;
 }
 
-export function defaultValueValue({ v, key, device, state }) {
+export function defaultValueValue({
+  v,
+  key,
+  device = "desktop",
+  state = "normal"
+}) {
   const deviceKey = defaultValueKey({ key, device, state });
 
-  return v[deviceKey] === null ? v[key] : v[deviceKey];
+  return v[deviceKey] === null || v[deviceKey] === undefined
+    ? v[key]
+    : v[deviceKey];
 }
 
 function defaultValueKeyByState(key, state) {

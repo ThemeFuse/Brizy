@@ -1,5 +1,10 @@
 {
-  "content": { "name": "favourite-31", "type": "glyph" },
+  "content": {
+    "type": "glyph",
+    "name": "favourite-31",
+
+    "popups": []
+  },
 
   "link": {
     "linkType": "external",
@@ -137,6 +142,8 @@
     "tempBorderWidth": 3,
 
     "borderStyle": "solid",
+
+    "hoverTransition": 50,
 
     "boxShadow": "off",
 

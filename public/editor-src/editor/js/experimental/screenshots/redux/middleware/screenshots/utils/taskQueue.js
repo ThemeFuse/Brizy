@@ -51,7 +51,7 @@ export function makeTaskQueue(options) {
       // find IMMEDIATE tasks and run them instantly
       this._tasks.forEach(task => {
         if (task.priority === this.taskPriorities.IMMEDIATE) {
-          task.cb();
+          task.cb(...(task.cbArgs || []));
         }
       });
 
@@ -74,7 +74,7 @@ export function makeTaskQueue(options) {
 
           try {
             const enqueueAgain = () => (enqueueAgain.called = true);
-            await task.cb(enqueueAgain);
+            await task.cb(...(task.cbArgs || []), enqueueAgain);
 
             if (enqueueAgain.called) {
               this._tasks.push(task);
@@ -82,6 +82,9 @@ export function makeTaskQueue(options) {
           } catch (e) {
             // not sure how to deal with this yet
             // maybe add some retry mechanism later
+            if (process.env.NODE_ENV === "development") {
+              console.error(e);
+            }
           }
 
           if (this._tasks.length > 0) {

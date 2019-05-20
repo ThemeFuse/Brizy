@@ -27,7 +27,7 @@
     "react-codemirror": "^1.0.0",
     "react-contexify": "git+ssh://git@github.com/bagrinsergiu/react-contexify.git#v3.0.3-custom",
     "react-dom": "^16.6.0",
-    "react-facebook": "^6.0.14",
+    "react-facebook": "^8.0.4",
     "react-list": "^0.8.7",
     "react-redux": "^5.0.7",
     "react-resize-aware": "^2.7.0",

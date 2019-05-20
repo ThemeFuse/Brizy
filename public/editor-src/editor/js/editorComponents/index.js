@@ -41,6 +41,7 @@ import FacebookButton from "./FacebookButton";
 import FacebookComments from "./FacebookComments";
 import FacebookEmbed from "./FacebookEmbed";
 import FacebookPage from "./FacebookPage";
+import FacebookGroup from "./FacebookGroup";
 
 export default {
   Page,
@@ -85,7 +86,8 @@ export default {
   FacebookButton,
   FacebookComments,
   FacebookEmbed,
-  FacebookPage
+  FacebookPage,
+  FacebookGroup
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

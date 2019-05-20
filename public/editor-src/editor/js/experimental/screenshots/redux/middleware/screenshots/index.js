@@ -1,4 +1,6 @@
 import _ from "underscore";
+import { getIn, updateIn } from "timm";
+import { findDeep } from "visual/utils/object";
 import {
   EDITOR_RENDERED,
   UPDATE_UI,
@@ -25,6 +27,7 @@ import {
   makeBlockScreenshot,
   uploadBlockScreenshot,
   updateBlockWithScreenshotInfo,
+  stripBlockOfScreenshotInfo,
   makeTaskQueue,
   debounceAdvanced
 } from "./utils";
@@ -46,8 +49,6 @@ const getBlocksMap = blocks =>
   }, {});
 const blockIsInThePage = (blockId, store) =>
   Boolean(getBlocksMap(getPageBlocks(store.getState()))[blockId]);
-const blockIsInSaved = (blockId, store) =>
-  Boolean(getSavedBlocks(store.getState())[blockId]);
 const isDesktopMode = store =>
   deviceModeSelector(store.getState()) === "desktop";
 
@@ -80,7 +81,12 @@ export default store => next => action => {
     action.type === UNDO ||
     action.type === REDO
   ) {
-    changedBlocksDebounced(prevState, store, next);
+    const options = {
+      popup: action.meta.SectionPopup,
+      sourceBlockId: action.meta.sourceBlockId
+    };
+
+    changedBlocksDebounced(prevState, store, next, options);
   }
 
   if (
@@ -88,10 +94,22 @@ export default store => next => action => {
     action.type === CREATE_GLOBAL_BLOCK
   ) {
     const options = {
-      ...(action.type === CREATE_GLOBAL_BLOCK
-        ? { globalIsAutosave: false }
-        : {})
+      taskIdSuffix: "create",
+      sourceBlockId: action.meta.sourceBlockId,
+      isAutosave: 0,
+      renewScreenshot: true
     };
+
+    if (action === CREATE_SAVED_BLOCK) {
+      // there are currently problems if we would make
+      // global blocks also of IMMEDIATE priority because
+      // by the time the block will be screenshoted it is be
+      // highly likely that it would be incomplete because
+      // of the unmounting that happens when transforming
+      // a normal block to a global one
+      options.taskPriority = taskQueue.taskPriorities.IMMEDIATE;
+    }
+
     changedBlocks(prevState, store, next, options);
   }
 };
@@ -190,204 +208,41 @@ const changedBlocksDebounced = debounceAdvanced({
 });
 
 async function enqueueTasks(changedBlocks, store, next, options = {}) {
-  const historyMeta = {
-    historyReplacePresent: true
-  };
   const pageBlockTasks = Array.from(changedBlocks.page).map(block => {
-    const blockId = block.value._id;
-
     return {
-      id: blockId,
-      priority: taskQueue.taskPriorities.NORMAL,
-      cb: async enqueueAgain => {
-        // console.log("block screen cb", blockId);
-
-        // make screenshot
-        if (!blockIsInThePage(blockId, store)) {
-          return;
-        }
-        let screenshotId = blockId;
-        let screenshot;
-        try {
-          screenshot = await makeBlockScreenshot(block);
-        } catch (e) {
-          if (process.env.NODE_ENV === "development") {
-            console.warn(e);
-          }
-        }
-
-        // upload screenshot
-        if (!blockIsInThePage(blockId, store)) {
-          return;
-        }
-        if (!isDesktopMode(store)) {
-          enqueueAgain();
-          return;
-        }
-        const r = await uploadBlockScreenshot({
-          block,
-          screenshotId,
-          screenshotBase64: screenshot.src
-        });
-        if (TARGET !== "WP") {
-          screenshotId = r.id;
-        }
-
-        // update store
-        if (!blockIsInThePage(blockId, store)) {
-          return;
-        }
-        const pageData = getPageData(store.getState());
-        const pageBlocks = pageData.items || [];
-        const updatedBlocks = pageBlocks.map(block => {
-          return block.value._id === blockId
-            ? updateBlockWithScreenshotInfo({
-                block,
-                src: screenshotId,
-                width: screenshot.width,
-                height: screenshot.height
-              })
-            : block;
-        });
-        next(
-          updatePage({
-            data: {
-              ...pageData,
-              items: updatedBlocks
-            },
-            meta: historyMeta
-          })
-        );
-      }
+      id: block.value._id + (options.taskIdSuffix || ""),
+      priority:
+        options.taskPriority !== undefined
+          ? options.taskPriority
+          : taskQueue.taskPriorities.NORMAL,
+      cb: options.popup ? popupBlockTaskCb : pageBlockTaskCb,
+      cbArgs: [store, next, options, block]
     };
   });
   const savedBlockTasks = Array.from(changedBlocks.saved).map(savedBlockId => {
     return {
-      id: savedBlockId,
-      priority: taskQueue.taskPriorities.IMMEDIATE,
-      cb: async enqueueAgain => {
-        let block;
-
-        // make screenshot
-        block = getSavedBlocks(store.getState())[savedBlockId];
-        if (!block) {
-          return;
-        }
-        let screenshotId = savedBlockId;
-        let screenshot;
-        try {
-          screenshot = await makeBlockScreenshot(block);
-        } catch (e) {
-          if (process.env.NODE_ENV === "development") {
-            console.warn(e);
-          }
-        }
-
-        // upload screenshot
-        block = getSavedBlocks(store.getState())[savedBlockId];
-        if (!block) {
-          return;
-        }
-        if (!isDesktopMode(store)) {
-          enqueueAgain();
-          return;
-        }
-        const r = await uploadBlockScreenshot({
-          block,
-          blockType: "global",
-          screenshotId,
-          screenshotBase64: screenshot.src
-        });
-        if (TARGET !== "WP") {
-          screenshotId = r.id;
-        }
-
-        // update store (saved blocks)
-        block = getSavedBlocks(store.getState())[savedBlockId];
-        if (!block) {
-          return;
-        }
-        next(
-          updateSavedBlock({
-            id: savedBlockId,
-            data: updateBlockWithScreenshotInfo({
-              block,
-              src: screenshotId,
-              width: screenshot.width,
-              height: screenshot.height
-            }),
-            meta: historyMeta
-          })
-        );
-      }
+      id: savedBlockId + (options.taskIdSuffix || ""),
+      priority:
+        options.taskPriority !== undefined
+          ? options.taskPriority
+          : taskQueue.taskPriorities.NORMAL,
+      cb: savedBlockTaskCb,
+      cbArgs: [store, next, options, savedBlockId]
     };
   });
   const globalBlockTasks = Array.from(changedBlocks.global).map(
     globalBlockId => {
       return {
-        id: globalBlockId,
-        priority: taskQueue.taskPriorities.NORMAL,
-        cb: async enqueueAgain => {
-          // console.log("global block screen cb", globalBlockId);
-
-          const refBlock = getPageBlocks(store.getState()).find(
-            block =>
-              block.type === "GlobalBlock" &&
-              block.value.globalBlockId === globalBlockId
-          );
-
-          // abort if the block is no longer in the page
-          if (!refBlock) {
-            return;
-          }
-
-          // make screenshot
-          let screenshotId = globalBlockId;
-          let screenshot;
-          try {
-            screenshot = await makeBlockScreenshot(refBlock);
-          } catch (e) {
-            if (process.env.NODE_ENV === "development") {
-              console.warn(e);
-            }
-          }
-
-          // upload screenshot
-          if (!isDesktopMode(store)) {
-            enqueueAgain();
-            return;
-          }
-          const r = await uploadBlockScreenshot({
-            block: refBlock,
-            blockType: "global",
-            screenshotId,
-            screenshotBase64: screenshot.src
-          });
-          if (TARGET !== "WP") {
-            screenshotId = r.id;
-          }
-
-          // update store (globalBlocks)
-          const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
-          if (!globalBlock) {
-            return;
-          }
-          next(
-            updateGlobalBlock({
-              id: globalBlockId,
-              data: updateBlockWithScreenshotInfo({
-                block: globalBlock,
-                src: screenshotId,
-                width: screenshot.width,
-                height: screenshot.height
-              }),
-              meta: {
-                ...historyMeta,
-                is_autosave: options.globalIsAutosave === false ? 0 : 1
-              }
-            })
-          );
-        }
+        id: globalBlockId + (options.taskIdSuffix || ""),
+        priority:
+          options.taskPriority !== undefined
+            ? options.taskPriority
+            : taskQueue.taskPriorities.NORMAL,
+        cb: options.popup
+          ? popupBlockInsideGlobalBlockTaskCb
+          : globalBlockTaskCb,
+        // cb: globalBlockTaskCb,
+        cbArgs: [store, next, options, globalBlockId]
       };
     }
   );
@@ -395,5 +250,429 @@ async function enqueueTasks(changedBlocks, store, next, options = {}) {
 
   if (allTasks.length > 0) {
     taskQueue.enqueue(allTasks);
+  }
+}
+async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
+  // console.log("block screen cb", blockId);
+  const blockId = block.value._id;
+  let screenshotId = blockId;
+  let screenshot;
+
+  // make screenshot
+  {
+    if (!blockIsInThePage(blockId, store)) {
+      return;
+    }
+
+    try {
+      screenshot = await makeBlockScreenshot(block);
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(e);
+      }
+      return;
+    }
+  }
+
+  // upload screenshot
+  {
+    if (!blockIsInThePage(blockId, store)) {
+      return;
+    }
+
+    if (!isDesktopMode(store)) {
+      enqueueAgain();
+      return;
+    }
+
+    const r = await uploadBlockScreenshot({
+      block,
+      screenshotId,
+      screenshotBase64: screenshot.src
+    });
+    if (TARGET !== "WP") {
+      screenshotId = r.id;
+    }
+  }
+
+  // update store
+  {
+    if (!blockIsInThePage(blockId, store)) {
+      return;
+    }
+
+    const pageData = getPageData(store.getState());
+    const pageBlocks = pageData.items || [];
+    const updatedBlocks = pageBlocks.map(block => {
+      return block.value._id === blockId
+        ? updateBlockWithScreenshotInfo({
+            block,
+            src: screenshotId,
+            width: screenshot.width,
+            height: screenshot.height
+          })
+        : block;
+    });
+
+    next(
+      updatePage({
+        data: {
+          ...pageData,
+          items: updatedBlocks
+        },
+        meta: {
+          historyReplacePresent: true
+        }
+      })
+    );
+  }
+}
+async function savedBlockTaskCb(
+  store,
+  next,
+  options,
+  savedBlockId,
+  enqueueAgain
+) {
+  let screenshotId = savedBlockId;
+  let screenshot;
+
+  // make screenshot
+  {
+    const node = document.querySelector(`#${options.sourceBlockId}`);
+    if (!node) {
+      return;
+    }
+
+    try {
+      screenshot = await makeBlockScreenshot(null, { node });
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(e);
+      }
+      return;
+    }
+  }
+
+  // upload screenshot
+  {
+    const block = getSavedBlocks(store.getState())[savedBlockId];
+    if (!block) {
+      return;
+    }
+
+    if (!isDesktopMode(store)) {
+      enqueueAgain();
+      return;
+    }
+
+    const r = await uploadBlockScreenshot({
+      block: options.renewScreenshot
+        ? stripBlockOfScreenshotInfo(block)
+        : block,
+      blockType: "global",
+      screenshotId,
+      screenshotBase64: screenshot.src
+    });
+    if (TARGET !== "WP") {
+      screenshotId = r.id;
+    }
+  }
+
+  // update store (saved blocks)
+  {
+    const block = getSavedBlocks(store.getState())[savedBlockId];
+    if (!block) {
+      return;
+    }
+
+    next(
+      updateSavedBlock({
+        id: savedBlockId,
+        data: updateBlockWithScreenshotInfo({
+          block,
+          src: screenshotId,
+          width: screenshot.width,
+          height: screenshot.height
+        }),
+        meta: {
+          is_autosave:
+            options.isAutosave !== undefined ? options.isAutosave : 1,
+          historyReplacePresent: true
+        }
+      })
+    );
+  }
+}
+async function globalBlockTaskCb(
+  store,
+  next,
+  options,
+  globalBlockId,
+  enqueueAgain
+) {
+  // console.log("global block screen cb", globalBlockId);
+  let screenshotId = globalBlockId;
+  let screenshot;
+
+  // make screenshot
+  {
+    let sourceBlockId;
+    if (options.sourceBlockId) {
+      sourceBlockId = options.sourceBlockId;
+    } else {
+      const pageData = getPageData(store.getState());
+      const { obj: sourceBlock } = findDeep(
+        pageData,
+        obj => obj.value && obj.value.globalBlockId === globalBlockId
+      );
+
+      if (!sourceBlock) {
+        return;
+      }
+
+      sourceBlockId = sourceBlock.value._id;
+    }
+
+    const node = document.querySelector(`#${sourceBlockId}`);
+    if (!node) {
+      return;
+    }
+
+    try {
+      screenshot = await makeBlockScreenshot(null, { node });
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(e);
+      }
+      return;
+    }
+  }
+
+  // upload screenshot
+  {
+    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    if (!globalBlock) {
+      return;
+    }
+
+    if (!isDesktopMode(store)) {
+      enqueueAgain();
+      return;
+    }
+
+    const r = await uploadBlockScreenshot({
+      block: options.renewScreenshot
+        ? stripBlockOfScreenshotInfo(globalBlock)
+        : globalBlock,
+      blockType: "global",
+      screenshotId,
+      screenshotBase64: screenshot.src,
+      newScreenshot: options.newScreenshot
+    });
+    if (TARGET !== "WP") {
+      screenshotId = r.id;
+    }
+  }
+
+  // update store (globalBlocks)
+  {
+    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    if (!globalBlock) {
+      return;
+    }
+
+    next(
+      updateGlobalBlock({
+        id: globalBlockId,
+        data: updateBlockWithScreenshotInfo({
+          block: globalBlock,
+          src: screenshotId,
+          width: screenshot.width,
+          height: screenshot.height
+        }),
+        meta: {
+          is_autosave:
+            options.isAutosave !== undefined ? options.isAutosave : 1,
+          historyReplacePresent: true
+        }
+      })
+    );
+  }
+}
+async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
+  const { path: pathToPopup_, domId: popupDOMId } = options.popup;
+  // pathToPopup_ gets us to value, but we need one level higher
+  // to the object containing { type, value }
+  const pathToPopup = pathToPopup_.slice(0, -1);
+  const pageData = getPageData(store.getState());
+  const popup = getIn(pageData, pathToPopup);
+  const popupId = popup.value._id;
+  let screenshotId = popupId;
+  let screenshot;
+
+  // make screenshot
+  {
+    const node = document.querySelector(`#${popupDOMId}`);
+    if (!node) {
+      return;
+    }
+
+    try {
+      screenshot = await makeBlockScreenshot(null, { node });
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(e);
+      }
+      return;
+    }
+  }
+
+  // upload screenshot
+  {
+    const pageData = getPageData(store.getState());
+    const popup = getIn(pageData, pathToPopup);
+    const popupIsInPage = popup && popup.value && popup.value._id === popupId;
+    if (!popupIsInPage) {
+      return;
+    }
+
+    if (!isDesktopMode(store)) {
+      enqueueAgain();
+      return;
+    }
+
+    const r = await uploadBlockScreenshot({
+      block: popup,
+      screenshotId,
+      screenshotBase64: screenshot.src
+    });
+    if (TARGET !== "WP") {
+      screenshotId = r.id;
+    }
+  }
+
+  // update store
+  {
+    const pageData = getPageData(store.getState());
+    const popup = getIn(pageData, pathToPopup);
+    const popupIsInPage = (popup && popup.value && popup.value._id) === popupId;
+    if (!popupIsInPage) {
+      return;
+    }
+
+    const newPageData = updateIn(pageData, pathToPopup, popup =>
+      updateBlockWithScreenshotInfo({
+        block: popup,
+        src: screenshotId,
+        width: screenshot.width,
+        height: screenshot.height
+      })
+    );
+
+    next(
+      updatePage({
+        data: newPageData,
+        meta: {
+          historyReplacePresent: true
+        }
+      })
+    );
+  }
+}
+async function popupBlockInsideGlobalBlockTaskCb(
+  store,
+  next,
+  options,
+  globalBlockId,
+  enqueueAgain
+) {
+  const { domId: popupDOMId, dbId: popupDbId } = options.popup;
+  const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+  const { obj: popup } = findDeep(
+    globalBlock,
+    obj => obj && obj.value && obj.value._id === popupDbId
+  );
+  const popupId = popup.value._id;
+  let screenshotId = popup === globalBlock ? globalBlockId : popupId;
+  let screenshot;
+
+  // make screenshot
+  {
+    const node = document.querySelector(`#${popupDOMId}`);
+    if (!node) {
+      return;
+    }
+
+    try {
+      screenshot = await makeBlockScreenshot(null, { node });
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(e);
+      }
+      return;
+    }
+  }
+
+  // upload screenshot
+  {
+    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    const { obj: popup } = findDeep(
+      globalBlock,
+      obj => obj && obj.value && obj.value._id === popupDbId
+    );
+    const popupIsInPage = Boolean(popup);
+    if (!popupIsInPage) {
+      return;
+    }
+
+    if (!isDesktopMode(store)) {
+      enqueueAgain();
+      return;
+    }
+
+    const r = await uploadBlockScreenshot({
+      block: popup,
+      blockType: popup === globalBlock ? "global" : "normal",
+      screenshotId,
+      screenshotBase64: screenshot.src
+    });
+    if (TARGET !== "WP") {
+      screenshotId = r.id;
+    }
+  }
+
+  // update store
+  {
+    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    const { obj: popup, path } = findDeep(
+      globalBlock,
+      obj => obj && obj.value && obj.value._id === popupDbId
+    );
+    const popupIsInPage = Boolean(popup);
+    if (!popupIsInPage) {
+      return;
+    }
+
+    const newGlobalBlock = updateIn(globalBlock, path, popup =>
+      updateBlockWithScreenshotInfo({
+        block: popup,
+        src: screenshotId,
+        width: screenshot.width,
+        height: screenshot.height
+      })
+    );
+
+    next(
+      updateGlobalBlock({
+        id: globalBlockId,
+        data: newGlobalBlock,
+        meta: {
+          is_autosave:
+            options.isAutosave !== undefined ? options.isAutosave : 1,
+          historyReplacePresent: true
+        }
+      })
+    );
   }
 }

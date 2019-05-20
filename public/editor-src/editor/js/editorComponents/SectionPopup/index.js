@@ -1,5 +1,5 @@
 import React from "react";
-import jQuery from "jquery";
+import ReactDOM from "react-dom";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -17,6 +17,7 @@ import {
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
+import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
@@ -47,15 +48,34 @@ class SectionPopup extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  state = {
-    isOpened: false
-  };
+  // this is a used as a hack to reopen the
+  // popup after it is unmounted when switching
+  // from Global to normal
+  static tmpGlobal = null;
 
-  mounted = false;
+  constructor(...args) {
+    super(...args);
+
+    this.instanceKey = this.props.instanceKey || this.getId();
+
+    if (IS_EDITOR) {
+      this.state = {
+        isOpened: SectionPopup.tmpGlobal === this.getId()
+      };
+      SectionPopup.tmpGlobal = null;
+
+      this.mounted = false;
+      this.popupRef = React.createRef();
+      this.containerBorderRef = React.createRef();
+      this.popupsContainer = document.getElementById("brz-popups");
+      this.el = document.createElement("div");
+    }
+  }
 
   componentDidMount() {
     this.mounted = true;
-    SectionPopupInstances.set(this.getId(), this);
+    this.popupsContainer.appendChild(this.el);
+    SectionPopupInstances.set(this.instanceKey, this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -65,13 +85,30 @@ class SectionPopup extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
-    SectionPopupInstances.delete(this.getId());
-    jQuery("html").removeClass("brz-ow-hidden");
+    this.popupsContainer.removeChild(this.el);
+    this.popupsContainer = null;
+    this.el = null;
+
+    document.documentElement.classList.remove("brz-ow-hidden");
+    SectionPopupInstances.delete(this.instanceKey);
+  }
+
+  handleValueChange(newValue, meta) {
+    super.handleValueChange(
+      newValue,
+      Object.assign(meta, {
+        SectionPopup: {
+          dbId: this.getDBValue()._id,
+          domId: this.getId(),
+          path: this.getPath()
+        }
+      })
+    );
   }
 
   handleToolbarOpen = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setActive(true);
+    if (this.containerBorderRef.current) {
+      this.containerBorderRef.current.setActive(true);
     }
   };
 
@@ -80,8 +117,8 @@ class SectionPopup extends EditorComponent {
       return;
     }
 
-    if (this.containerBorder) {
-      this.containerBorder.setActive(false);
+    if (this.containerBorderRef.current) {
+      this.containerBorderRef.current.setActive(false);
     }
 
     this.patchValue({
@@ -182,6 +219,11 @@ class SectionPopup extends EditorComponent {
   }
 
   renderForEdit(v) {
+    if (!this.state.isOpened) {
+      return null;
+    }
+
+    const id = this.getId();
     const styles = {
       ...sectionStyleCSSVars(v),
       ...bgStyleCSSVars(v),
@@ -189,10 +231,10 @@ class SectionPopup extends EditorComponent {
       ...containerStyleCSSVars(v)
     };
 
-    return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+    return ReactDOM.createPortal(
+      <CustomCSS selectorName={id} css={v.customCSS}>
         <div
-          id={this.getId()}
+          id={id}
           className={sectionStyleClassName(v, this.state)}
           style={styles}
           data-block-id={this.props.blockId}
@@ -202,9 +244,7 @@ class SectionPopup extends EditorComponent {
           </div>
           <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
             <ContainerBorder
-              ref={el => {
-                this.containerBorder = el;
-              }}
+              ref={this.containerBorderRef}
               borderStyle="none"
               activeBorderStyle="none"
               reactToClick={false}
@@ -216,7 +256,8 @@ class SectionPopup extends EditorComponent {
             </ContainerBorder>
           </Roles>
         </div>
-      </CustomCSS>
+      </CustomCSS>,
+      this.el
     );
   }
 
@@ -225,7 +266,7 @@ class SectionPopup extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div
           className={sectionStyleClassName(v, this.state)}
-          data-brz-popup={this.getId()}
+          data-brz-popup={this.instanceKey}
         >
           <div className="brz-popup__close">
             <ThemeIcon name="close-popup" type="editor" />
@@ -237,14 +278,14 @@ class SectionPopup extends EditorComponent {
   }
 
   open() {
-    jQuery("html").addClass("brz-ow-hidden");
+    document.documentElement.classList.add("brz-ow-hidden");
     this.setState({
       isOpened: true
     });
   }
 
   close() {
-    jQuery("html").removeClass("brz-ow-hidden");
+    document.documentElement.classList.remove("brz-ow-hidden");
     this.setState({
       isOpened: false
     });
@@ -252,33 +293,43 @@ class SectionPopup extends EditorComponent {
 
   // api
   becomeSaved() {
-    const { blockId, reduxDispatch } = this.props;
+    const { blockId } = this.props;
     const dbValue = this.getDBValue();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createSavedBlock({
         id: uuid(),
         data: {
-          type: "SectionPopup",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
   }
 
   becomeGlobal() {
-    const { blockId, reduxDispatch, onChange } = this.props;
+    SectionPopup.tmpGlobal = this.getId();
+
+    const { blockId, onChange } = this.props;
     const dbValue = this.getDBValue();
     const globalBlockId = uuid();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createGlobalBlock({
         id: globalBlockId,
         data: {
-          type: "SectionPopup",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
@@ -302,12 +353,13 @@ class SectionPopup extends EditorComponent {
   }
 
   becomeNormal() {
+    SectionPopup.tmpGlobal = this.getId();
+
     const {
       meta: { globalBlockId },
-      reduxState,
       onChange
     } = this.props;
-    const globalBlocks = globalBlocksSelector(reduxState);
+    const globalBlocks = globalBlocksSelector(getStore().getState());
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();

@@ -7,7 +7,9 @@ import {
   styleBorderColor,
   styleBgGradient,
   styleBoxShadow,
-  styleColor
+  styleColor,
+  styleHoverTransition,
+  styleHoverTransitionProperty
 } from "visual/utils/style";
 
 export function styleClassName(v) {
@@ -24,7 +26,10 @@ export function styleClassName(v) {
         backgroundColor: "var(--backgroundColor)",
         backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
-        borderStyle: "var(--borderStyle)"
+        borderStyle: "var(--borderStyle)",
+
+        transition: "var(--hoverTransition)",
+        transitionProperty: "var(--hoverTransitionProperty)"
       },
       ".brz &&:hover": {
         color: "var(--hoverColor)",
@@ -200,30 +205,34 @@ export function styleClassName(v) {
         paddingBottom: `${paddingBottom}px`,
         paddingLeft: `${paddingLeft}px`,
         borderRadius,
-        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
-      },
-
-      ".brz &&:hover": {
-        color: styleColor({ v, device: "desktop", state: "hover" }),
-        borderColor: styleBorderColor({
-          v,
-          device: "desktop",
-          state: "hover"
-        }),
-        backgroundColor: styleBgColor({
-          v,
-          device: "desktop",
-          state: "hover"
-        }),
         boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
-        backgroundImage: styleBgGradient({
-          v,
-          device: "desktop",
-          state: "hover"
-        }),
-        boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
+
+        transition: styleHoverTransition({ v }),
+        transitionProperty: styleHoverTransitionProperty()
       },
 
+      "@media (min-width: 991px)": {
+        ".brz &&:hover": {
+          color: styleColor({ v, device: "desktop", state: "hover" }),
+          borderColor: styleBorderColor({
+            v,
+            device: "desktop",
+            state: "hover"
+          }),
+          backgroundColor: styleBgColor({
+            v,
+            device: "desktop",
+            state: "hover"
+          }),
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
+          backgroundImage: styleBgGradient({
+            v,
+            device: "desktop",
+            state: "hover"
+          }),
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
+        }
+      },
       "@media (max-width: 991px)": {
         ".brz &": {
           fontSize: `${tabletFontSize}px`,
@@ -410,6 +419,10 @@ export function styleCSSVars(v) {
       device: "desktop",
       state: "hover"
     }),
+
+    // Hover Transition
+    "--hoverTransition": styleHoverTransition({ v }),
+    "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
 
     // Tablet
     "--tabletFontSize": `${tabletFontSize}px`,

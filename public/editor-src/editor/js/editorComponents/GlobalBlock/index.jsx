@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { globalBlocksSelector } from "visual/redux/selectors";
@@ -18,8 +19,8 @@ class GlobalBlock extends EditorComponent {
   shouldComponentUpdate(nextProps) {
     const { globalBlockId } = this.getDBValue();
     const globalBlockChanged =
-      globalBlocksSelector(nextProps.reduxState)[globalBlockId] !==
-      globalBlocksSelector(this.props.reduxState)[globalBlockId];
+      nextProps.globalBlocks[globalBlockId] !==
+      this.props.globalBlocks[globalBlockId];
 
     return globalBlockChanged || this.optionalSCU(nextProps);
   }
@@ -40,7 +41,11 @@ class GlobalBlock extends EditorComponent {
       this.props.reduxDispatch(
         updateGlobalBlock({
           id: globalBlockId,
-          data: updatedGlobalBlock
+          data: updatedGlobalBlock,
+          meta: {
+            ...meta,
+            sourceBlockId: this.getId()
+          }
         })
       );
     }
@@ -48,7 +53,7 @@ class GlobalBlock extends EditorComponent {
 
   renderForEdit(v) {
     const { globalBlockId } = v;
-    const globalBlocks = globalBlocksSelector(this.props.reduxState);
+    const { globalBlocks } = this.props;
     const { type, value, ...otherData } = globalBlocks[globalBlockId];
     const Component = Editor.getComponent(type);
     const meta = {
@@ -59,6 +64,7 @@ class GlobalBlock extends EditorComponent {
     if (Component) {
       return (
         <Component
+          {...this.props}
           {...otherData}
           _id={this.getId()}
           path={this.getPath()}
@@ -89,4 +95,8 @@ class GlobalBlock extends EditorComponent {
   }
 }
 
-export default GlobalBlock;
+const mapStateToProps = state => ({
+  globalBlocks: globalBlocksSelector(state)
+});
+
+export default connect(mapStateToProps)(GlobalBlock);

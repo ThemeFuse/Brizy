@@ -5,7 +5,6 @@ import { encodeToString } from "visual/utils/string";
 import { getFontStyles } from "visual/utils/fonts";
 import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 const proEnabled = Boolean(Config.get("pro"));
 
@@ -126,8 +125,6 @@ const getItemsForDesktop = (
     tabletSize,
     mobileSize,
     weight,
-    intermediateTabletWeight,
-    intermediateMobileWeight,
     tabletWeight,
     mobileWeight,
     linkType,
@@ -142,7 +139,7 @@ const getItemsForDesktop = (
     marginBottom,
     population,
     populationColor,
-    prepopulation
+    popups
   },
   onChange
 ) => (v, component) => {
@@ -689,8 +686,12 @@ const getItemsForDesktop = (
                   id: "linkPopup",
                   type: "promptAddPopup",
                   label: t("Popup"),
-                  value: linkPopup,
-                  onChange: linkPopup =>
+                  popupKey: `${component.getId()}_${linkPopup}`,
+                  value: {
+                    value: linkPopup,
+                    popups: popups
+                  },
+                  onChange: ({ value: linkPopup, popups }) =>
                     onChange({
                       link: encodeToString({
                         type: linkType,
@@ -701,7 +702,8 @@ const getItemsForDesktop = (
                         externalType: linkExternalType,
                         population: linkPopulation,
                         popup: linkPopup ? `#${linkPopup}` : ""
-                      })
+                      }),
+                      popups
                     })
                 }
               ]
@@ -859,19 +861,26 @@ const getItemsForDesktop = (
 
 export const getItemsForTablet = (
   {
+    linkType,
+    linkAnchor,
+    linkExternal,
+    linkExternalBlank,
+    linkExternalType,
+    linkPopulation,
+    linkExternalRel,
     linkPopup,
     horizontalAlign,
     font,
-    fontStyle,
     height,
     letterSpacing,
     weight,
     size,
     marginTop,
-    marginBottom
+    marginBottom,
+    popups
   },
   onChange
-) => () => [
+) => (v, component) => [
   {
     id: "toolbarFont",
     type: "popover",
@@ -969,14 +978,32 @@ export const getItemsForTablet = (
     type: "popover",
     icon: "nc-link",
     position: 30,
-    disabled: linkPopup === "",
     options: [
       {
         id: "linkPopup",
         type: "promptAddPopup",
         label: t("Popup"),
-        close: false,
-        value: linkPopup
+        disabled: !proEnabled || linkType !== "popup" || linkPopup === "",
+        canDelete: false,
+        popupKey: `${component.getId()}_${linkPopup}`,
+        value: {
+          value: linkPopup,
+          popups: popups
+        },
+        onChange: ({ value: linkPopup, popups }) =>
+          onChange({
+            link: encodeToString({
+              type: linkType,
+              anchor: linkAnchor ? `#${linkAnchor}` : "",
+              external: linkExternal,
+              externalBlank: linkExternalBlank,
+              externalRel: linkExternalRel,
+              externalType: linkExternalType,
+              population: linkPopulation,
+              popup: linkPopup ? `#${linkPopup}` : ""
+            }),
+            popups
+          })
       }
     ]
   },
@@ -1075,19 +1102,26 @@ export const getItemsForTablet = (
 
 export const getItemsForMobile = (
   {
+    linkType,
+    linkAnchor,
+    linkExternal,
+    linkExternalBlank,
+    linkExternalType,
+    linkPopulation,
+    linkExternalRel,
     linkPopup,
     horizontalAlign,
     font,
-    fontStyle,
     height,
     letterSpacing,
     weight,
     size,
     marginTop,
-    marginBottom
+    marginBottom,
+    popups
   },
   onChange
-) => () => [
+) => (v, component) => [
   {
     id: "toolbarFont",
     type: "popover",
@@ -1191,8 +1225,27 @@ export const getItemsForMobile = (
         id: "linkPopup",
         type: "promptAddPopup",
         label: t("Popup"),
-        close: false,
-        value: linkPopup
+        disabled: !proEnabled || linkType !== "popup" || linkPopup === "",
+        canDelete: false,
+        popupKey: `${component.getId()}_${linkPopup}`,
+        value: {
+          value: linkPopup,
+          popups: popups
+        },
+        onChange: ({ value: linkPopup, popups }) =>
+          onChange({
+            link: encodeToString({
+              type: linkType,
+              anchor: linkAnchor ? `#${linkAnchor}` : "",
+              external: linkExternal,
+              externalBlank: linkExternalBlank,
+              externalRel: linkExternalRel,
+              externalType: linkExternalType,
+              population: linkPopulation,
+              popup: linkPopup ? `#${linkPopup}` : ""
+            }),
+            popups
+          })
       }
     ]
   },
