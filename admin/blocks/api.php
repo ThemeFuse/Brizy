@@ -112,7 +112,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_GLOBAL );
 			$block->set_editor_data( $editorData );
 			$block->set_needs_compile( true );
-			$block->setPosition( (int) $this->param( 'position' ) );
+			$block->setPosition(  Brizy_Editor_BlockPosition::createFromSerializedData( $this->param( 'position' ) ) );
 
 			// rules
 			$rulesData = stripslashes( $this->param( 'rules' ) );
@@ -171,11 +171,13 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
+
 			$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
-
+			/**
+			 * @var Brizy_Editor_Block $block ;
+			 */
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
-			$block->setPosition( $this->param( 'position' ) );
-
+			$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( $this->param( 'position' ) ) );
 
 			// rules
 			$rulesData = stripslashes( $this->param( 'rules' ) );
