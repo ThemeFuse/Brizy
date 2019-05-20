@@ -41,6 +41,7 @@ class Brizy_Public_Main {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			add_filter( 'show_admin_bar', '__return_false' );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
+			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
 
@@ -312,6 +313,9 @@ class Brizy_Public_Main {
 		return $content;
 	}
 
+	public function _action_the_content( $content ) {
+		echo $this->_filter_the_content( $content );
+	}
 
 	/**
 	 *  Show the compiled page head content
