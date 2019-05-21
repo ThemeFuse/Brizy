@@ -12,6 +12,12 @@ class Brizy_Admin_Settings {
 
 	private $capability_options;
 
+	/**
+	 * @var string
+	 */
+	private $screenName;
+
+
 	public static function menu_slug() {
 		return 'brizy-settings';
 	}
@@ -78,7 +84,7 @@ class Brizy_Admin_Settings {
 			return;
 		}
 
-		add_menu_page( Brizy_Editor::get()->get_name(),
+		$this->screenName =  add_menu_page( Brizy_Editor::get()->get_name(),
 			Brizy_Editor::get()->get_name(),
 			'read',
 			self::menu_slug(),
@@ -93,7 +99,7 @@ class Brizy_Admin_Settings {
 	 * @internal
 	 */
 	function actionRegisterRoleManagerPage() {
-		add_submenu_page( self::menu_slug(), __( 'Role Manager' ), __( 'Role Manager' ), 'manage_options', self::menu_slug(), array(
+		 add_submenu_page( self::menu_slug(), __( 'Role Manager' ), __( 'Role Manager' ), 'manage_options', self::menu_slug(), array(
 			$this,
 			'render'
 		) );
@@ -162,6 +168,12 @@ class Brizy_Admin_Settings {
 	}
 
 	public function settings_submit() {
+
+		$screen = get_current_screen();
+
+		if ( $this->screenName != $screen->id ) {
+			return;
+		}
 
 		switch ( $_POST['tab'] ) {
 			case 'general':
