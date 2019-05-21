@@ -12,6 +12,11 @@ class Brizy_Admin_OptimizeImages {
 	private $twig;
 
 	/**
+	 * @var string
+	 */
+	private $screenName;
+
+	/**
 	 * @return Brizy_Admin_OptimizeImages
 	 */
 	public static function _init() {
@@ -42,7 +47,7 @@ class Brizy_Admin_OptimizeImages {
 	}
 
 	public function addSubmenuPage() {
-		add_submenu_page( Brizy_Admin_Settings::menu_slug(),
+		$this->screenName  = add_submenu_page( Brizy_Admin_Settings::menu_slug(),
 			__( 'Optimize Images' ),
 			__( 'Optimize Images' ),
 			'manage_options',
@@ -71,6 +76,12 @@ class Brizy_Admin_OptimizeImages {
 	 **/
 	public function action_validate_form_submit() {
 
+		$screen = get_current_screen();
+
+		if ( $this->screenName != $screen->id ) {
+			return;
+		}
+
 		if ( count( $_POST ) == 0 ) {
 			return;
 		}
@@ -80,13 +91,9 @@ class Brizy_Admin_OptimizeImages {
 		}
 
 		do_action( 'brizy_optimizer_submit' );
-
 		$tab = $this->get_selected_tab();
-
 		wp_redirect( menu_page_url( $this->menu_slug(), false ) . ( $tab ? '&tab=' . $tab : '' ) );
-
 		exit;
-
 	}
 
 
