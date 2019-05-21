@@ -58,7 +58,7 @@ class Brizy_Admin_Blocks_Main {
 		foreach ( $blocks as $block ) {
 			$brizy_editor_block               = Brizy_Editor_Block::get( $block );
 			$uid                              = $brizy_editor_block->getUid();
-			$globalData->globalBlocks[ $uid ] = json_decode( $brizy_editor_block->get_editor_data() );
+			$globalData->globalBlocks[ $uid ] = $brizy_editor_block->convertToOptionValue();
 		}
 
 		$blocks = get_posts( array(
@@ -71,7 +71,7 @@ class Brizy_Admin_Blocks_Main {
 
 		foreach ( $blocks as $block ) {
 			$brizy_editor_block        = Brizy_Editor_Block::get( $block );
-			$globalData->savedBlocks[] = json_decode( $brizy_editor_block->get_editor_data() );
+			$globalData->savedBlocks[] = $brizy_editor_block->convertToOptionValue();
 		}
 
 		return $globalData;
