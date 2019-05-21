@@ -186,22 +186,21 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function compile_page( Brizy_Editor_Project $project, $page_data, $config, $compiler_url ) {
 
-		$template_version = BRIZY_EDITOR_VERSION;
-		$url_builder      = new Brizy_Editor_UrlBuilder( $project );
-		$body             = apply_filters( 'brizy_compiler_params', array(
-			'template_slug'    => 'brizy',
-			'template_version' => $template_version,
-			'download_url'     => 'https://static.brizy.io',
-			'config_json'      => json_encode( $config ), // ???
-			'pages_json'       => json_encode( array(
+
+		$body = apply_filters( 'brizy_compiler_params', array(
+			'page_id'            => 1,
+			'free_version'       => BRIZY_EDITOR_VERSION,
+			'download_url'       => 'https://static.brizy.io/builds',
+			'config_json'        => json_encode( $config ),
+			'pages_json'         => json_encode( array(
 				array(
 					'id'       => 1,
 					'data'     => $page_data,
 					'is_index' => true
 				)
-			) ), // ???
-			'globals_json'     => json_encode( apply_filters( 'brizy_global_data', $project->getDecodedGlobals() ) ),
-			'page_id'          => 1
+			) ),
+			'project_json'       => json_encode( $project->create_post_data() ),
+			'global_blocks_json' => json_encode( Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL ) )
 		) );
 
 
@@ -306,5 +305,12 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		$options['headers'] = array_merge( $options['headers'], $this->get_headers() );
 
 		return $options;
+	}
+
+	protected function get_project_json( Brizy_Editor_Project $project ) {
+		return json_encode( array(
+			'id'   => $project->getId(),
+			'data' => $project->getDataAsJson()
+		) );
 	}
 }

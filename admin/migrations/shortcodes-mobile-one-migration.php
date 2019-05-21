@@ -5,6 +5,13 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	use Brizy_Admin_Migrations_PostsTrait;
 
 	/**
+	 * @return int|mixed
+	 */
+	public function getPriority() {
+		return 0;
+	}
+
+	/**
 	 * Return the version
 	 *
 	 * @return mixed

@@ -16,6 +16,13 @@
     "twig/twig": "1.33.0",
     "shortpixel/shortpixel-php": "dev-master",
     "knplabs/gaufrette": "0.3",
-    "phpunit/phpunit": "8.1"
-  }
+    "phpunit/phpunit": "8.1",
+    "bagrinsergiu/brizy-migration-utils": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git"
+    }
+  ]
 }

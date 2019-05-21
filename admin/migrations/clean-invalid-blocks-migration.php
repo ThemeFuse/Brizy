@@ -36,4 +36,8 @@ class Brizy_Admin_Migrations_CleanInvalidBlocksMigration implements Brizy_Admin_
 		}
 	}
 
+	public function getPriority() {
+		return 0;
+	}
+
 }

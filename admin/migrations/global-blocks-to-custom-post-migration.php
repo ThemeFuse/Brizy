@@ -3,6 +3,13 @@
 class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
 	/**
+	 * @return int|mixed
+	 */
+	public function getPriority() {
+		return 0;
+	}
+
+	/**
 	 * Return the version
 	 *
 	 * @return mixed
@@ -17,18 +24,19 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 	 */
 	public function execute() {
 
-		$project              = Brizy_Editor_Project::get();
-		$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $project->getWpPost()->ID );
-		$globals              = $project->getDecodedGlobals();
+		$projectPost          = Brizy_Editor_Project::getPost();
+		$projectStorage     = Brizy_Editor_Storage_Project::instance( $projectPost->ID );
+		$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $projectPost->ID );
+		$globals              = json_decode( base64_decode( $projectStorage->get( 'globals', false ) ) );
 
 		if ( $globals && ! isset( $globals->project ) ) {
 			return;
 		}
 
 		if ( ! $globals || ( isset( $globals->project ) && empty( $globals->project ) ) ) {
-			$project->setGlobals( base64_encode( json_encode( (object) array() ) ) );
-			$project->save();
-			$postMigrationStorage->addMigration($this)->save();
+			$projectStorage->set( 'globals', base64_encode( json_encode( (object) array() ) ) );
+			$postMigrationStorage->addMigration( $this )->save();
+
 			return;
 		}
 
@@ -69,13 +77,12 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 			}
 		}
 
-		update_post_meta( $project->getWpPost()->ID, 'brizy-bk-' . get_class( $this ) . '-' . $this->getVersion(), $globals );
+		update_post_meta( $projectPost->ID, 'brizy-bk-' . get_class( $this ) . '-' . $this->getVersion(), $globals );
 
 		unset( $globals->project->globalBlocks );
 		unset( $globals->project->savedBlocks );
-		
-		$project->setGlobals( base64_encode( json_encode( $globals->project ) ) );
-		$project->save();
-		$postMigrationStorage->addMigration($this)->save();
+
+		$projectStorage->set( 'globals', base64_encode( json_encode( $globals->project ) ) );
+		$postMigrationStorage->addMigration( $this )->save();
 	}
 }
