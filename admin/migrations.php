@@ -108,7 +108,6 @@ class Brizy_Admin_Migrations {
 	 * @param string $version
 	 */
 	private function upgradeTo( $version ) {
-
 		global $wpdb;
 
 		wp_raise_memory_limit( 'image' );
@@ -139,24 +138,50 @@ class Brizy_Admin_Migrations {
 			} );
 		}
 
-		foreach ( $migrationsToRun as $migration ) {
+		$migrations = array();
 
+		foreach ( $migrationsToRun as $m ) {
+			$migrations[ $m->getVersion() ][] = $m;
+		}
+
+		foreach ( $migrations as $v => $m ) {
+			//prioritise migrations
+			usort( $migrations[ $v ], function ( $a, $b ) {
+				$p1 = $a->getPriority();
+				$p2 = $b->getPriority();
+
+				if ( $p1 == $p2 ) {
+					return 0;
+				}
+
+				return ( $p1 < $p2 ) ? - 1 : 1;
+			} );
+		}
+
+		// run migrations
+		foreach ( $migrations as $versionMigrations ) {
 			try {
-				$wpdb->query( 'START TRANSACTION ' );
+				foreach ( $versionMigrations as $migration ) {
 
-				$migrationClass = get_class( $migration );
 
-				$migration->execute();
+					$wpdb->query( 'START TRANSACTION ' );
 
-				Brizy_Logger::instance()->debug( 'Run migration: ' . $migrationClass, array( $migrationClass ) );
+					$migrationClass = get_class( $migration );
 
-				$this->globalStorage->addMigration( $migration )->save();
+					$migration->execute();
 
-				$wpdb->query( 'COMMIT' );
+					Brizy_Logger::instance()->debug( 'Run migration: ' . $migrationClass, array( $migrationClass ) );
 
+					$this->globalStorage->addMigration( $migration )->save();
+
+					$wpdb->query( 'COMMIT' );
+
+
+				}
 			} catch ( Exception $e ) {
 				$wpdb->query( 'ROLLBACK' );
-				Brizy_Logger::instance()->debug( 'Migration process ERROR', [$e] );
+				Brizy_Logger::instance()->debug( 'Migration process ERROR', [ $e ] );
+				break;
 			}
 		}
 

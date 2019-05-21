@@ -73,7 +73,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = $this->getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
 			$this->success( $blocks );
 
@@ -86,7 +86,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = $this->getBlocksByType( Brizy_Admin_Blocks_Main::CP_SAVED );
+			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_SAVED );
 
 			$this->success( $blocks );
 
@@ -301,33 +301,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->success( '200', json_encode( $positionObject ) );
 	}
 
-	/**
-	 * @param $type
-	 * @param array $arags
-	 *
-	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	private function getBlocksByType( $type, $arags = array() ) {
 
-		$filterArgs = array(
-			'post_type'      => $type,
-			'posts_per_page' => - 1,
-			'post_status'    => 'any',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-		);
-		$filterArgs = array_merge( $filterArgs, $arags );
-
-		$wpBlocks = get_posts( $filterArgs );
-		$blocks   = array();
-
-		foreach ( $wpBlocks as $wpPost ) {
-			$blocks[] = $this->postData( Brizy_Editor_Block::get( $wpPost ) );
-		}
-
-		return $blocks;
-	}
 
 	/**
 	 * @param $uid
@@ -421,23 +395,4 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 
-	/**
-	 * @param Brizy_Editor_Block $post
-	 *
-	 * @return array
-	 */
-	public function postData( Brizy_Editor_Block $post ) {
-
-		$p_id = (int) $post->get_id();
-
-		$global = array(
-			'uid'      => $post->get_uid(),
-			'status'   => get_post_status( $p_id ),
-			'data'     => $post->get_editor_data(),
-			'position' => $post->getPosition(),
-			'rules'    => $this->ruleManager->getRules( $p_id ),
-		);
-
-		return $global;
-	}
 }

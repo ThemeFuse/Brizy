@@ -5,8 +5,8 @@ class Brizy_Editor_API {
 	const nonce = 'brizy-api';
 	const AJAX_GET = 'brizy_editor_get_items';
 	const AJAX_UPDATE = 'brizy_update_item';
-	const AJAX_GET_GLOBALS = 'brizy_get_gb';
-	const AJAX_SET_GLOBALS = 'brizy_set_gb';
+	const AJAX_GET_PROJECT = 'brizy_get_project';
+	const AJAX_SET_PROJECT = 'brizy_set_project';
 	const AJAX_MEDIA = 'brizy_media';
 	const AJAX_SIDEBARS = 'brizy_sidebars';
 	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
@@ -17,6 +17,7 @@ class Brizy_Editor_API {
 	const AJAX_JWT_TOKEN = 'brizy_multipass_create';
 
 	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
+	const AJAX_UPDATE_EDITOR_META_DATA = 'brizy_update_editor_meta_data';
 	const AJAX_UPDATE_MENU_ITEM_DATA = 'brizy_update_menu_item_data';
 
 	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
@@ -56,8 +57,8 @@ class Brizy_Editor_API {
 		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_GLOBALS, array( $this, 'get_globals' ) );
-			add_action( 'wp_ajax_' . self::AJAX_SET_GLOBALS, array( $this, 'set_globals' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SET_PROJECT, array( $this, 'set_project' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
@@ -72,10 +73,25 @@ class Brizy_Editor_API {
 				'set_featured_image_focal_point'
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_REMOVE_FEATURED_IMAGE, array( $this, 'remove_featured_image' ) );
+			add_action( 'wp_ajax_' . self::AJAX_UPDATE_EDITOR_META_DATA, array(
+				$this,
+				'update_editor_project_meta_data'
+			) );
+		}
+	}
 
+	public function update_editor_project_meta_data() {
+		$this->authorize();
+
+		if ( ! $this->param( 'metaData' ) ) {
+			$this->error( 400, 'Invalid meta data provided' );
+		} else {
+			Brizy_Editor_Project::get()->setEditorMetaAsJson( $this->param( 'metaData' ) );
 		}
 
+		$this->error( 400, 'Invalid post' );
 	}
+
 
 	public function set_featured_image() {
 		$this->authorize();
@@ -182,10 +198,10 @@ class Brizy_Editor_API {
 	/**
 	 * @internal
 	 **/
-	public function get_globals() {
+	public function get_project() {
 		try {
 			$this->authorize();
-			$data = $this->create_post_globals();
+			$data = Brizy_Editor_Project::get()->create_post_data();
 
 			$this->success( $data );
 		} catch ( Exception $exception ) {
@@ -198,16 +214,18 @@ class Brizy_Editor_API {
 	/**
 	 * @internal
 	 */
-	public function set_globals() {
+	public function set_project() {
 		try {
 			$this->authorize();
 
 			// update project globas
-			$data = stripslashes( $this->param( 'gb' ) );
+			$meta = stripslashes( $this->param( 'data' ) );
 
 			$project = Brizy_Editor_Project::get();
-			//$post_id = (int) $this->param( 'post' );
-			$project->setGlobalsAsJson( $data );
+
+			if ( $meta ) {
+				$project->setDataAsJson( $meta );
+			}
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$project->auto_save_post();
@@ -221,7 +239,7 @@ class Brizy_Editor_API {
 			}
 
 
-			$this->success( $this->create_post_globals() );
+			$this->success( $project->create_post_data() );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
@@ -379,19 +397,6 @@ class Brizy_Editor_API {
 		return $global;
 	}
 
-	/**
-	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function create_post_globals() {
-		$project = Brizy_Editor_Project::get();
-		$globals = array(
-			'id' => $project->getId(),
-			'gb' => $project->getGlobalsAsJson(),
-		);
-
-		return $globals;
-	}
 
 	public function get_post_list( $searchTerm, $postType, $excludePostType = array() ) {
 
@@ -402,7 +407,13 @@ class Brizy_Editor_API {
 		$post_query = array(
 			'post_type'      => $postType,
 			'posts_per_page' => - 1,
-			'post_status'    => $postType == 'attachment' ? 'inherit' : array('publish', 'pending', 'draft', 'future', 'private'),
+			'post_status'    => $postType == 'attachment' ? 'inherit' : array(
+				'publish',
+				'pending',
+				'draft',
+				'future',
+				'private'
+			),
 			'orderby'        => 'post_title',
 			'order'          => 'ASC'
 		);

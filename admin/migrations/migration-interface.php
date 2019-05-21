@@ -16,4 +16,10 @@ interface Brizy_Admin_Migrations_MigrationInterface {
 	 */
 	public function execute();
 
+
+	/**
+	 * @return mixed
+	 */
+	public function getPriority();
+
 }

@@ -4,6 +4,13 @@
 class Brizy_Admin_Migrations_RulesMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
 	/**
+	 * @return int|mixed
+	 */
+	public function getPriority() {
+		return 0;
+	}
+
+	/**
 	 * Return the version
 	 *
 	 * @return mixed
