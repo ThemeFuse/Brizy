@@ -48,7 +48,7 @@ class Brizy_Editor_Project implements Serializable {
 	protected $cloud_token;
 	protected $cloud_project;
 	protected $image_optimizer_settings;
-
+	protected $data;
 	//---------------------------------------------------------------------------------------------------
 
 	/**
@@ -59,7 +59,19 @@ class Brizy_Editor_Project implements Serializable {
 	protected function __construct( WP_Post $post ) {
 		$this->post    = $post;
 		$this->storage = Brizy_Editor_Storage_Project::instance( $this->post->ID );
-		$this->loadProjectData();
+		$this->loadProjectData( $this->storage->get_storage() );
+	}
+
+	/**
+	 * This will be returned by api when project is requested
+	 */
+	public function create_post_data() {
+		$data = array(
+			'id'   => $this->getId(),
+			'data' => $this->getDataAsJson()
+		);
+
+		return $data;
 	}
 
 	public function serialize() {
@@ -150,7 +162,7 @@ class Brizy_Editor_Project implements Serializable {
 	/**
 	 * @return false|null|WP_Post
 	 */
-	static private function getPost() {
+	static public function getPost() {
 		global $wpdb;
 
 		$row = $wpdb->get_results(
@@ -187,7 +199,6 @@ class Brizy_Editor_Project implements Serializable {
 		$project_data = array(
 			'id'                       => md5( uniqid( 'Local project', true ) ),
 			'title'                    => 'Brizy Project',
-			'globals'                  => base64_encode( '{}' ),
 			'name'                     => uniqid( 'Local project', true ),
 			'user'                     => null,
 			'template'                 => array( 'slug' => 'brizy' ),
@@ -199,6 +210,7 @@ class Brizy_Editor_Project implements Serializable {
 			'signature'                => Brizy_Editor_Signature::get(),
 			'accounts'                 => array(),
 			'forms'                    => array(),
+			'data'                     => base64_encode( file_get_contents( BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "editor-build" . DIRECTORY_SEPARATOR . "defaults.json" ) ),
 			'brizy-license-key'        => null,
 			'brizy-cloud-token'        => null,
 			'brizy-cloud-project'      => null,
@@ -219,7 +231,7 @@ class Brizy_Editor_Project implements Serializable {
 		return array(
 			'id'                       => $this->id,
 			'title'                    => $this->title,
-			'globals'                  => $this->globals,
+			//'globals'                  => $this->globals,
 			'name'                     => $this->name,
 			'user'                     => $this->user,
 			'template'                 => $this->template,
@@ -231,6 +243,7 @@ class Brizy_Editor_Project implements Serializable {
 			'signature'                => $this->signature,
 			'accounts'                 => $this->accounts,
 			'forms'                    => $this->forms,
+			'data'                     => $this->data,
 			'brizy-license-key'        => $this->license_key,
 			'brizy-cloud-token'        => $this->cloud_token,
 			'brizy-cloud-project'      => $this->cloud_project,
@@ -238,12 +251,9 @@ class Brizy_Editor_Project implements Serializable {
 		);
 	}
 
-	protected function loadProjectData() {
-		$data = $this->storage->get_storage();
-
-		$this->id                       = isset( $data['id'] ) ? $data['id'] : null;
-		$this->title                    = isset( $data['title'] ) ? $data['title'] : null;
-		$this->globals                  = isset( $data['globals'] ) ? $data['globals'] : null;
+	protected function loadProjectData( $data ) {
+		$this->id    = isset( $data['id'] ) ? $data['id'] : null;
+		$this->title = isset( $data['title'] ) ? $data['title'] : null;
 		$this->name                     = isset( $data['name'] ) ? $data['name'] : null;
 		$this->user                     = isset( $data['user'] ) ? $data['user'] : null;
 		$this->template                 = isset( $data['template'] ) ? $data['template'] : null;
@@ -255,6 +265,7 @@ class Brizy_Editor_Project implements Serializable {
 		$this->signature                = isset( $data['signature'] ) ? $data['signature'] : null;
 		$this->accounts                 = isset( $data['accounts'] ) ? $data['accounts'] : null;
 		$this->forms                    = isset( $data['forms'] ) ? $data['forms'] : null;
+		$this->data                     = isset( $data['data'] ) ? $data['data'] : null;
 		$this->license_key              = isset( $data['brizy-license-key'] ) ? $data['brizy-license-key'] : null;
 		$this->cloud_token              = isset( $data['brizy-cloud-token'] ) ? $data['brizy-cloud-token'] : null;
 		$this->cloud_project            = isset( $data['brizy-cloud-project'] ) ? $data['brizy-cloud-project'] : null;
@@ -332,20 +343,7 @@ class Brizy_Editor_Project implements Serializable {
 			// @todo: copy data to autosave instance
 			$data = $this->getProjectData();
 
-			$autosavePost->setTitle( $data['title'] );
-			$autosavePost->setGlobals( $data['globals'] );
-			$autosavePost->setTemplate( $data['template'] );
-			$autosavePost->setCreated( $data['created'] );
-			$autosavePost->setUpdated( $data['updated'] );
-			$autosavePost->setLanguages( $data['languages'] );
-			$autosavePost->setPluginVersion( $data['pluginVersion'] );
-			$autosavePost->setEditorVersion( $data['editorVersion'] );
-			$autosavePost->setSignature( $data['signature'] );
-			$autosavePost->setAccounts( $data['accounts'] );
-			$autosavePost->setForms( $data['forms'] );
-			$autosavePost->setLicenseKey( $data['brizy-license-key'] );
-			$autosavePost->setCloudToken( $data['brizy-cloud-token'] );
-			$autosavePost->setCloudProject( $data['brizy-cloud-project'] );
+			$autosavePost->loadProjectData( $data );
 			$autosavePost->setImageOptimizerSettings( $data['image-optimizer-settings'] );
 
 			$autosavePost->save();
@@ -614,6 +612,7 @@ class Brizy_Editor_Project implements Serializable {
 	public function setCloudProject( $cloud_project ) {
 		$this->cloud_project = $cloud_project;
 	}
+	//====================================================================================================================================================================================
 
 	/**
 	 * @return mixed
@@ -651,6 +650,43 @@ class Brizy_Editor_Project implements Serializable {
 		$this->setGlobals( base64_encode( $globals ) );
 
 		return $this;
+	}
+//====================================================================================================================================================================================
+
+	/**
+	 * @return mixed
+	 */
+	public function getData() {
+		return $this->data;
+	}
+
+	/**
+	 * @param mixed $data
+	 *
+	 * @return Brizy_Editor_Project
+	 */
+	public function setData( $data ) {
+		$this->data = $data;
+
+		return $this;
+	}
+
+	public function setDataAsJson( $data ) {
+		$this->setData( base64_encode( $data ) );
+
+		return $this;
+	}
+
+	public function getDataAsJson() {
+		return base64_decode( $this->getData() );
+	}
+
+	/**
+	 * @return bool|string
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	public function getDecodedData() {
+		return json_decode( $this->getDataAsJson() );
 	}
 
 	/**

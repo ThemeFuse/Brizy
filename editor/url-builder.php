@@ -327,17 +327,13 @@ class Brizy_Editor_UrlBuilder
 	/**
 	 * @param null $path
 	 * @param null $template_version
-	 * @param null $template_slug
 	 *
 	 * @return Brizy_Admin_UrlIterator
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-    public function external_asset_url($path = null, $template_version = null, $template_slug = null)
+    public function external_asset_url($path = null, $template_version = null)
     {
 
-        if (is_null($template_slug)) {
-            $template_slug = Brizy_Editor_Project::get()->getTemplateSlug();
-        }
         if (is_null($template_version)) {
             $template_version = BRIZY_EDITOR_VERSION;
         }
@@ -347,11 +343,28 @@ class Brizy_Editor_UrlBuilder
         }
 
         $urls = array();
-        foreach (Brizy_Config::getStaticBrizyUrls() as $url) {
-            $urls[] = sprintf($url . $path, $template_slug, $template_version);
+        foreach (Brizy_Config::getStaticUrls() as $url) {
+            $urls[] = sprintf($url . $path, $template_version);
         }
 
         return new Brizy_Admin_UrlIterator($urls);
+    }
+
+    /**
+	 * @param null $template_version
+	 *
+	 * @return Brizy_Admin_UrlIterator
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+    public function external_fonts_url($template_version = null)
+    {
+
+        if (is_null($template_version)) {
+            $template_version = BRIZY_EDITOR_VERSION;
+        }
+
+        $url = Brizy_Config::FONTS_URL;
+        return sprintf($url, $template_version);
     }
 }
 
