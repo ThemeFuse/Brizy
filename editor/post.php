@@ -418,6 +418,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		) );
 	}
 
+
 	/**
 	 * This saves ony data.. it does not touch the wordpress post
 	 *

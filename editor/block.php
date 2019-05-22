@@ -67,6 +67,66 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $this->position;
 	}
 
+	public function auto_save_post() {
+		try {
+			$user_id                   = get_current_user_id();
+			$post                      = $this->get_wp_post();
+			$postParentId              = $this->get_parent_id();
+			$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
+			$post_data                 = get_object_vars( $post );
+			$post_data['post_content'] .= "\n<!-- " . time() . "-->";
+			$autosavePost              = null;
+
+			if ( $old_autosave ) {
+				$autosavePost = self::get( $old_autosave );
+			}
+
+			if ( $old_autosave ) {
+				$new_autosave                = _wp_post_revision_data( $post_data, true );
+				$new_autosave['ID']          = $old_autosave->ID;
+				$new_autosave['post_author'] = $user_id;
+
+				// If the new autosave has the same content as the post, delete the autosave.
+				$autosave_is_different = false;
+
+				foreach ( array_intersect( array_keys( $new_autosave ), array_keys( _wp_post_revision_fields( $post ) ) ) as $field ) {
+					if ( normalize_whitespace( $new_autosave[ $field ] ) != normalize_whitespace( $post->$field ) ) {
+						$autosave_is_different = true;
+						break;
+					}
+				}
+
+				if ( ! $autosave_is_different ) {
+					wp_delete_post_revision( $old_autosave->ID );
+
+					return new WP_Error( 'rest_autosave_no_changes', __( 'There is nothing to save. The autosave and the post content are the same.' ), array( 'status' => 400 ) );
+				}
+
+				/**
+				 * This filter is documented in wp-admin/post.php.
+				 */
+				do_action( 'wp_creating_autosave', $new_autosave );
+
+				// wp_update_post expects escaped array.
+				wp_update_post( wp_slash( $new_autosave ) );
+
+			} else {
+				// Create the new autosave as a special post revision.
+				$revId        = _wp_put_post_revision( $post_data, true );
+				$autosavePost = self::get( $revId );
+			}
+
+			$autosavePost = $this->populateAutoSavedData( $autosavePost );
+			$autosavePost->save();
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+
+			return false;
+		}
+	}
+
+
 	public function jsonSerialize() {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
