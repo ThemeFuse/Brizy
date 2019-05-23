@@ -1,6 +1,6 @@
 <?php
 /**
- * Compatibility with Fast Velocity Minify plugin: https://wordpress.org/plugins/wordpress-mu-domain-mapping/
+ * Compatibility with WordPress MU Domain Mapping plugin: https://wordpress.org/plugins/wordpress-mu-domain-mapping/
  */
 class Brizy_Compatibilities_WordpressMuDomainMapping {
 
@@ -10,10 +10,8 @@ class Brizy_Compatibilities_WordpressMuDomainMapping {
 
 	public function remove_redirect_to_mapped_domain() {
 
-		if (  ! isset( $_GET['brizy-edit'] ) && ! isset( $_GET['brizy-edit-iframe'] ) ) {
-			return;
+		if (  isset( $_GET['brizy-edit'] ) || isset( $_GET['brizy-edit-iframe'] ) ) {
+			remove_action( 'template_redirect', 'redirect_to_mapped_domain' );
 		}
-
-		remove_action( 'template_redirect', 'redirect_to_mapped_domain' );
 	}
 }

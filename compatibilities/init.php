@@ -39,9 +39,7 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_Phastpress();
 		}
 
-		if ( function_exists( 'domain_mapping_siteurl' ) ) {
-			new Brizy_Compatibilities_WordpressMuDomainMapping();
-		}
+		new Brizy_Compatibilities_WordpressMuDomainMapping();
 
 		if ( $this->is_plugin_active( 'sg-cachepress/sg-cachepress.php' ) ) {
 			new Brizy_Compatibilities_SgOptimizer();
