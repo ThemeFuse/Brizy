@@ -20,9 +20,8 @@ export default function() {
       $(this).removeClass("brz-popup--opened");
       $("html").removeClass("brz-ow-hidden");
 
-      var video = $(".brz-video .brz-iframe").attr("src");
-      $(".brz-video .brz-iframe").attr("src", "");
-      $(".brz-video .brz-iframe").attr("src", video);
+      // trigger an event so that other components could listen
+      $(document).trigger("brz.popup.close", [this]);
     }
   });
 }

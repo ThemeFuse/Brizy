@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import Options from "visual/component/Options";
+import Options, { filterOptionsData } from "visual/component/Options";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 
@@ -174,9 +174,13 @@ class PopoverOptionType extends React.Component {
   }
 
   render() {
-    return this.props.display === "outside"
-      ? this.renderOutside()
-      : this.renderInside();
+    const { options, display } = this.props;
+
+    if (filterOptionsData(options).length === 0) {
+      return null;
+    }
+
+    return display === "outside" ? this.renderOutside() : this.renderInside();
   }
 }
 

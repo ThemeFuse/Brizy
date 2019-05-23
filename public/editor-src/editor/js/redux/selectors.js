@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import Editor from "visual/global/Editor";
+import objectTraverse from "visual/utils/objectTraverse";
 
 // page
 
@@ -219,15 +220,21 @@ export const globalBlocksInPageSelector = createSelector(
   globalBlocksSelector,
   pageBlocksSelector,
   (globalBlocks, pageBlocks) => {
-    return pageBlocks.reduce((acc, block) => {
-      if (block.type === "GlobalBlock") {
-        const { globalBlockId } = block.value;
+    const acc = {};
 
-        acc[block.value.globalBlockId] = globalBlocks[globalBlockId];
+    // global blocks can be deep in the tree (like popups)
+    // that's why it's not sufficient to search only with a simple reduce
+    objectTraverse(pageBlocks, (key, value, obj) => {
+      if (obj.type && obj.type === "GlobalBlock" && obj.value) {
+        const { globalBlockId } = obj.value;
+
+        if (!acc[globalBlockId]) {
+          acc[globalBlockId] = globalBlocks[globalBlockId];
+        }
       }
+    });
 
-      return acc;
-    }, {});
+    return acc;
   }
 );
 

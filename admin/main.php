@@ -114,7 +114,7 @@ class Brizy_Admin_Main {
 	public function action_delete_page( $post = null ) {
 		try {
 
-			if (wp_is_post_autosave($post) || wp_is_post_revision($post)) {
+			if ( wp_is_post_autosave( $post ) || wp_is_post_revision( $post ) ) {
 				return;
 			}
 
@@ -375,13 +375,13 @@ class Brizy_Admin_Main {
 	}
 
 	/**
-	 * @internal
-	 *
 	 * @param array $actions
 	 * @param WP_Post $post
 	 *
 	 * @return array
-	 **/
+	 **@internal
+	 *
+	 */
 	public function filter_add_brizy_edit_row_actions( $actions, $post ) {
 
 		$is_allowed = Brizy_Editor::is_user_allowed();
@@ -394,7 +394,7 @@ class Brizy_Admin_Main {
 			$p = Brizy_Editor_Post::get( $post->ID );
 			if ( $p->uses_editor() ) {
 				$actions['brizy-edit'] = "<a href='{$p->edit_url()}'>"
-				                         . __( 'Edit with '.__bt('brizy','Brizy'), 'brizy' )
+				                         . __( 'Edit with ' . __bt( 'brizy', 'Brizy' ), 'brizy' )
 				                         . "</a>";
 			}
 		} catch ( Exception $exception ) {
@@ -405,12 +405,12 @@ class Brizy_Admin_Main {
 	}
 
 	/**
-	 * @internal
-	 *
 	 * @param string $body
 	 *
 	 * @return string
-	 **/
+	 **@internal
+	 *
+	 */
 	public function filter_add_body_class( $body ) {
 		if ( ! ( $id = get_the_ID() ) ) {
 			return $body;
@@ -458,7 +458,7 @@ class Brizy_Admin_Main {
 			}
 
 			if ( $p->post_title == __( 'Auto Draft' ) ) {
-				$p->post_title = __bt('brizy','Brizy').' #' . $p->ID;
+				$p->post_title = __bt( 'brizy', 'Brizy' ) . ' #' . $p->ID;
 				$update_post   = true;
 			}
 
@@ -583,8 +583,10 @@ class Brizy_Admin_Main {
 		remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
 		// mark all post to be compiled on next view
 		foreach ( $posts as $bpost ) {
-			$bpost->set_needs_compile( true );
-			$bpost->save();
+			if ( ! $bpost->get_needs_compile() ) {
+				$bpost->set_needs_compile( true );
+				$bpost->save();
+			}
 			// wp_update_post( array( 'ID' => $bpost->get_id() ) );
 		}
 	}

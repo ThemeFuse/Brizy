@@ -79,8 +79,20 @@ const DEFAULT = {
 let instances = [];
 
 export default class QuillComponent extends React.Component {
+  isUnmounted = false;
+
   componentDidMount() {
-    this.initPlugin();
+    const { initDelay } = this.props;
+
+    if (initDelay > 0) {
+      setTimeout(() => {
+        if (!this.isUnmounted) {
+          this.initPlugin();
+        }
+      }, initDelay);
+    } else {
+      this.initPlugin();
+    }
   }
 
   componentWillReceiveProps({ value, forceUpdate }) {
@@ -100,6 +112,7 @@ export default class QuillComponent extends React.Component {
   }
 
   componentWillUnmount() {
+    this.isUnmounted = true;
     this.destroyPlugin();
   }
 

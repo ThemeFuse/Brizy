@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import _ from "underscore";
 import ResizeAware from "react-resize-aware";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
@@ -10,6 +11,7 @@ import Toolbar from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
 import toolbarConfigFn, {
   getMinSize,
@@ -279,6 +281,39 @@ class Image extends EditorComponent {
     };
   }
 
+  renderPopups() {
+    const popupsProps = this.makeSubcomponentProps({
+      bindWithKey: "popups",
+      itemProps: itemData => {
+        let isGlobal = false;
+
+        if (itemData.type === "GlobalBlock") {
+          // TODO: some kind of error handling
+          itemData = globalBlocksSelector(getStore().getState())[
+            itemData.value.globalBlockId
+          ];
+          isGlobal = true;
+        }
+
+        const {
+          blockId,
+          value: { popupId }
+        } = itemData;
+
+        return {
+          blockId,
+          instanceKey: IS_EDITOR
+            ? `${this.getId()}_${popupId}`
+            : isGlobal
+            ? `global_${popupId}`
+            : popupId
+        };
+      }
+    });
+
+    return <EditorArrayComponent {...popupsProps} />;
+  }
+
   renderForEdit(v) {
     const {
       imageWidth,
@@ -296,7 +331,8 @@ class Image extends EditorComponent {
       linkExternalRel,
       linkLightBox,
       linkExternalType,
-      linkPopup
+      linkPopup,
+      popups
     } = v;
     const { desktopW, tabletW, mobileW, inGallery = false } = this.props.meta;
     const {
@@ -442,36 +478,42 @@ class Image extends EditorComponent {
       : resizerPoints.default;
 
     return (
-      <div
-        ref={this.handleContainerRef}
-        className={imageStylesClassName(v, wrapperSizes, this.props)}
-        style={imageStylesCSSVars(v)}
-      >
-        <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <div
-              className={contentStyleClassName(v)}
-              style={contentStyleCSSVars(v, wrapperSizes)}
-            >
-              <BoxResizer
-                restrictions={resizerRestrictions}
-                points={resizerPoints_}
-                meta={this.props.meta}
-                value={resizerTransformValue(v)}
-                onChange={this.handleBoxResizerChange}
+      <Fragment>
+        <div
+          ref={this.handleContainerRef}
+          className={imageStylesClassName(v, wrapperSizes, this.props)}
+          style={imageStylesCSSVars(v)}
+        >
+          <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+              <div
+                className={contentStyleClassName(v)}
+                style={contentStyleCSSVars(v, wrapperSizes)}
               >
-                <div
-                  className={wrapperStyleClassName(v)}
-                  style={wrapperStyleCSSVars(v, wrapperSizes)}
+                <BoxResizer
+                  restrictions={resizerRestrictions}
+                  points={resizerPoints_}
+                  meta={this.props.meta}
+                  value={resizerTransformValue(v)}
+                  onChange={this.handleBoxResizerChange}
                 >
-                  {content}
-                </div>
-              </BoxResizer>
-            </div>
-          </CustomCSS>
-        </Toolbar>
-        {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
-      </div>
+                  <div
+                    className={wrapperStyleClassName(v)}
+                    style={wrapperStyleCSSVars(v, wrapperSizes)}
+                  >
+                    {content}
+                  </div>
+                </BoxResizer>
+              </div>
+            </CustomCSS>
+          </Toolbar>
+          {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
+        </div>
+        {popups.length > 0 &&
+          linkType === "popup" &&
+          linkPopup !== "" &&
+          this.renderPopups()}
+      </Fragment>
     );
   }
 
@@ -486,7 +528,8 @@ class Image extends EditorComponent {
       linkExternalRel,
       linkLightBox,
       linkExternalType,
-      linkPopup
+      linkPopup,
+      popups
     } = v;
 
     const { desktopW, tabletW, mobileW } = this.props.meta;
@@ -663,11 +706,17 @@ class Image extends EditorComponent {
     }
 
     return (
-      <div className={imageStylesClassName(v, wrapperSizes, this.props)}>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          {content}
-        </CustomCSS>
-      </div>
+      <Fragment>
+        <div className={imageStylesClassName(v, wrapperSizes, this.props)}>
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {content}
+          </CustomCSS>
+        </div>
+        {popups.length > 0 &&
+          linkType === "popup" &&
+          linkPopup !== "" &&
+          this.renderPopups()}
+      </Fragment>
     );
   }
 }

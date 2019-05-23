@@ -4,6 +4,7 @@
 
     "borderStyle": "solid",
 
+    "borderWidthType": "grouped",
     "borderWidth": 2,
 
     "borderColorHex": "#73777f",

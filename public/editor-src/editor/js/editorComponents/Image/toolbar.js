@@ -707,10 +707,9 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
     },
     {
       id: "tabletToolbarLink",
-      icon: "nc-link",
-      disabled: v.linkPopup === "",
-      position: 90,
       type: "popover",
+      icon: "nc-link",
+      position: 90,
       options: []
     },
     {
@@ -947,10 +946,9 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
     },
     {
       id: "mobileToolbarLink",
-      icon: "nc-link",
-      disabled: v.linkPopup === "",
-      position: 90,
       type: "popover",
+      icon: "nc-link",
+      position: 90,
       options: []
     },
     {

@@ -4,7 +4,9 @@
     "type": "link",
 
     "iconName": "tail-right",
-    "iconType": "glyph"
+    "iconType": "glyph",
+
+    "popups": []
   },
 
   "link": {
@@ -114,6 +116,8 @@
 
     "tempHoverBorderColorOpacity": 0.8,
     "tempHoverBorderColorPalette": "color3",
+
+    "hoverTransition": 50,
 
     "size": "medium",
 

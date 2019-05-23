@@ -72,10 +72,13 @@
 
     "width": 100,
 
+    "paddingType": "ungrouped",
+
     "paddingTop": 5,
     "paddingRight": 15,
-    "paddingBottom": 5,
-    "paddingLeft": 15,
+
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
 
     "customCSS": "",
 

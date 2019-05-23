@@ -14,6 +14,7 @@ import {
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
+import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
@@ -167,7 +168,6 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForEdit(v) {
-
     const styles = {
       ...bgStyleCSSVars(v),
       ...itemsStyleCSSVars(v),
@@ -203,7 +203,6 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForView(v) {
-
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <footer
@@ -219,33 +218,41 @@ class SectionFooter extends EditorComponent {
 
   // api
   becomeSaved() {
-    const { blockId, reduxDispatch } = this.props;
+    const { blockId } = this.props;
     const dbValue = this.getDBValue();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createSavedBlock({
         id: uuid(),
         data: {
-          type: "SectionFooter",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
   }
 
   becomeGlobal() {
-    const { blockId, reduxDispatch, onChange } = this.props;
+    const { blockId, onChange } = this.props;
     const dbValue = this.getDBValue();
     const globalBlockId = uuid();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createGlobalBlock({
         id: globalBlockId,
         data: {
-          type: "SectionFooter",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
@@ -271,10 +278,9 @@ class SectionFooter extends EditorComponent {
   becomeNormal() {
     const {
       meta: { globalBlockId },
-      reduxState,
       onChange
     } = this.props;
-    const globalBlocks = globalBlocksSelector(reduxState);
+    const globalBlocks = globalBlocksSelector(getStore().getState());
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();

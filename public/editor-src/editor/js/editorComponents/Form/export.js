@@ -98,28 +98,35 @@ export default function() {
     var $this = $(this);
     var $parentElem = $this.closest(".brz-form__item");
     var value = $this.val();
+    var data = $this.data();
+    var type = data.type;
     var result = true;
+    var isRequired = $this.prop("required");
+    var pattern = $this.attr("pattern");
 
     $parentElem.removeClass(
       "brz-form__item--error brz-form__item--error-pattern brz-form__item--error-required"
     );
 
-    var pattern = $this.attr("pattern");
-    if (!new RegExp(pattern).test(value)) {
+    if (type === "Number") {
+      if (isRequired && !new RegExp(pattern).test(value)) {
+        $parentElem.addClass(
+          "brz-form__item--error brz-form__item--error-pattern"
+        );
+        result = false;
+      }
+    } else if (!new RegExp(pattern).test(value)) {
       $parentElem.addClass(
         "brz-form__item--error brz-form__item--error-pattern"
       );
       result = false;
     }
 
-    var isRequired = $this.prop("required");
-    if (isRequired) {
-      if (!value.length) {
-        $parentElem.addClass(
-          "brz-form__item--error brz-form__item--error-required"
-        );
-        result = false;
-      }
+    if (isRequired && !value.length) {
+      $parentElem.addClass(
+        "brz-form__item--error brz-form__item--error-required"
+      );
+      result = false;
     }
 
     return result;

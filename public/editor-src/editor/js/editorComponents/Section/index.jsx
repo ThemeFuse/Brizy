@@ -2,6 +2,7 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import SectionItems from "./Items";
 import { cloneItem } from "visual/editorComponents/EditorArrayComponent";
+import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import { uuid } from "visual/utils/uuid";
@@ -83,8 +84,8 @@ class Section extends EditorComponent {
       <section
         id={this.getId()}
         className={sectionStyleClassName(v)}
-        data-block-id={this.props.blockId}
         style={sectionStyleCSSVars(v)}
+        data-block-id={this.props.blockId}
       >
         {this.renderItems(v)}
       </section>
@@ -106,33 +107,41 @@ class Section extends EditorComponent {
   // api
 
   becomeSaved() {
-    const { blockId, reduxDispatch } = this.props;
+    const { blockId } = this.props;
     const dbValue = this.getDBValue();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createSavedBlock({
         id: uuid(),
         data: {
-          type: "Section",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
   }
 
   becomeGlobal() {
-    const { blockId, reduxDispatch, onChange } = this.props;
+    const { blockId, onChange } = this.props;
     const dbValue = this.getDBValue();
     const globalBlockId = uuid();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createGlobalBlock({
         id: globalBlockId,
         data: {
-          type: "Section",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
@@ -158,10 +167,9 @@ class Section extends EditorComponent {
   becomeNormal() {
     const {
       meta: { globalBlockId },
-      reduxState,
       onChange
     } = this.props;
-    const globalBlocks = globalBlocksSelector(reduxState);
+    const globalBlocks = globalBlocksSelector(getStore().getState());
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();

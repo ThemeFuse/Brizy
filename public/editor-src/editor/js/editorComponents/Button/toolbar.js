@@ -27,6 +27,7 @@ import {
   toolbarGradientType,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
+  toolbarHoverTransition,
   toolbarCustomCSS
 } from "visual/utils/toolbar";
 
@@ -2181,7 +2182,7 @@ export function getItemsForDesktop(v) {
               id: "moreSettingsAdvanced",
               label: t("Advanced"),
               tabIcon: "nc-cog",
-              options: []
+              options: [toolbarHoverTransition({ v, position: 100 })]
             }
           ]
         }
@@ -2527,7 +2528,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       size: "auto",
       title: t("Colors"),
-      position: 90,
+      position: 80,
       icon: {
         style: {
           backgroundColor: hexToRgba(
@@ -2540,6 +2541,7 @@ export function getItemsForTablet(v) {
         {
           id: "tabletTabsColor",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               id: "tabletBoxShadow",
@@ -2604,10 +2606,9 @@ export function getItemsForTablet(v) {
     },
     {
       id: "tabletToolbarLink",
-      icon: "nc-link",
       type: "popover",
-      disabled: v.linkPopup === "",
-      position: 80,
+      icon: "nc-link",
+      position: 90,
       options: []
     }
   ];
@@ -2963,6 +2964,7 @@ export function getItemsForMobile(v) {
         {
           id: "mobileTabsColor",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               id: "mobileBoxShadow",
@@ -3027,9 +3029,8 @@ export function getItemsForMobile(v) {
     },
     {
       id: "mobileToolbarLink",
-      icon: "nc-link",
       type: "popover",
-      disabled: v.linkPopup === "",
+      icon: "nc-link",
       position: 80,
       options: []
     }

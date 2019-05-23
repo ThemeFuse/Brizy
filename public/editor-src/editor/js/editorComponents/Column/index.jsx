@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { Fragment } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import SortableElement from "visual/component/Sortable/SortableElement";
 import Background from "visual/component/Background";
@@ -12,6 +12,8 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
 import Toolbar from "visual/component/Toolbar";
+import { getStore } from "visual/redux/store";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
@@ -372,8 +374,49 @@ class Column extends EditorComponent {
     );
   }
 
+  renderPopups() {
+    const popupsProps = this.makeSubcomponentProps({
+      bindWithKey: "popups",
+      itemProps: itemData => {
+        let isGlobal = false;
+
+        if (itemData.type === "GlobalBlock") {
+          // TODO: some kind of error handling
+          itemData = globalBlocksSelector(getStore().getState())[
+            itemData.value.globalBlockId
+          ];
+          isGlobal = true;
+        }
+
+        const {
+          blockId,
+          value: { popupId }
+        } = itemData;
+
+        return {
+          blockId,
+          instanceKey: IS_EDITOR
+            ? `${this.getId()}_${popupId}`
+            : isGlobal
+            ? `global_${popupId}`
+            : popupId
+        };
+      }
+    });
+
+    return <EditorArrayComponent {...popupsProps} />;
+  }
+
   renderForEdit(v) {
-    const { animationName, animationDuration, animationDelay, items } = v;
+    const {
+      animationName,
+      animationDuration,
+      animationDelay,
+      items,
+      linkType,
+      linkPopup,
+      popups
+    } = v;
     const {
       meta: { inGrid },
       path
@@ -389,40 +432,46 @@ class Column extends EditorComponent {
     });
 
     return (
-      <SortableElement type="column" useHandle={true}>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Animation
-            className={styleClassName(v, this.props)}
-            style={styles}
-            name={animationName !== "none" && animationName}
-            duration={animationDuration}
-            delay={animationDelay}
-          >
-            <Roles
-              allow={["admin"]}
-              fallbackRender={() => this.renderContent(v)}
+      <Fragment>
+        <SortableElement type="column" useHandle={true}>
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <Animation
+              className={styleClassName(v, this.props)}
+              style={styles}
+              name={animationName !== "none" && animationName}
+              duration={animationDuration}
+              delay={animationDelay}
             >
-              <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-                <ContainerBorder
-                  ref={input => {
-                    this.containerBorder = input;
-                  }}
-                  className={borderClassName}
-                  borderColor={isInnerRow && inGrid ? "red" : "blue"}
-                  borderStyle="solid"
-                  reactToClick={false}
-                  path={path}
-                >
-                  {this.renderResizer("left")}
-                  {this.renderResizer("right")}
-                  {this.renderToolbar(v)}
-                  {this.renderContent(v)}
-                </ContainerBorder>
-              </ContextMenu>
-            </Roles>
-          </Animation>
-        </CustomCSS>
-      </SortableElement>
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderContent(v)}
+              >
+                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+                  <ContainerBorder
+                    ref={input => {
+                      this.containerBorder = input;
+                    }}
+                    className={borderClassName}
+                    borderColor={isInnerRow && inGrid ? "red" : "blue"}
+                    borderStyle="solid"
+                    reactToClick={false}
+                    path={path}
+                  >
+                    {this.renderResizer("left")}
+                    {this.renderResizer("right")}
+                    {this.renderToolbar(v)}
+                    {this.renderContent(v)}
+                  </ContainerBorder>
+                </ContextMenu>
+              </Roles>
+            </Animation>
+          </CustomCSS>
+        </SortableElement>
+        {popups.length > 0 &&
+          linkType === "popup" &&
+          linkPopup !== "" &&
+          this.renderPopups()}
+      </Fragment>
     );
   }
 
@@ -436,7 +485,8 @@ class Column extends EditorComponent {
       linkAnchor,
       linkExternalBlank,
       linkExternalRel,
-      linkPopup
+      linkPopup,
+      popups
     } = v;
 
     const linkHrefs = {
@@ -446,25 +496,31 @@ class Column extends EditorComponent {
     };
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Animation
-          className={styleClassName(v, this.props)}
-          name={animationName !== "none" && animationName}
-          duration={animationDuration}
-          delay={animationDelay}
-        >
-          {this.renderContent(v)}
-          {linkHrefs[linkType] !== "" && (
-            <Link
-              className="brz-container-link"
-              type={linkType}
-              href={linkHrefs[linkType]}
-              target={linkExternalBlank}
-              rel={linkExternalRel}
-            />
-          )}
-        </Animation>
-      </CustomCSS>
+      <Fragment>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <Animation
+            className={styleClassName(v, this.props)}
+            name={animationName !== "none" && animationName}
+            duration={animationDuration}
+            delay={animationDelay}
+          >
+            {this.renderContent(v)}
+            {linkHrefs[linkType] !== "" && (
+              <Link
+                className="brz-container-link"
+                type={linkType}
+                href={linkHrefs[linkType]}
+                target={linkExternalBlank}
+                rel={linkExternalRel}
+              />
+            )}
+          </Animation>
+        </CustomCSS>
+        {popups.length > 0 &&
+          linkType === "popup" &&
+          linkPopup !== "" &&
+          this.renderPopups()}
+      </Fragment>
     );
   }
 }

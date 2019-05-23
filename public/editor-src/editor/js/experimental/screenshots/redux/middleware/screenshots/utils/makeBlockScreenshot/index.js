@@ -52,7 +52,7 @@ worker.onmessage = async e => {
 };
 
 export async function makeBlockScreenshot(block, options = {}) {
-  const node = document.querySelector(`#${block.value._id}`);
+  const node = options.node || document.querySelector(`#${block.value._id}`);
 
   if (!node) {
     return Promise.reject(`Could not find block with _id ${block.value._id}`);

@@ -6,6 +6,7 @@ import { getStore } from "visual/redux/store";
 import { updateCopiedElement } from "visual/redux/actions";
 import EditorComponent from "./EditorComponent";
 import {
+  stripSystemKeys,
   setIds,
   setStyles,
   getElementOfArrayLoop,
@@ -32,21 +33,6 @@ function combineMerge(target, source, options) {
   return destination;
 }
 
-export function insertItem(value, itemIndex, itemData) {
-  const itemDataWithIds = setIds(itemData);
-  const updatedValue = insert(value, itemIndex, itemDataWithIds);
-
-  return updatedValue;
-}
-
-export function cloneItem(value, itemIndex, toIndex = itemIndex + 1) {
-  if (!value[itemIndex]) {
-    throw new Error(`Can't clone invalid item at index ${itemIndex}`);
-  }
-
-  return insertItem(value, toIndex, value[itemIndex]); // the object will be cloned there
-}
-
 export default class EditorArrayComponent extends EditorComponent {
   static defaultProps = {
     itemProps: {},
@@ -54,9 +40,17 @@ export default class EditorArrayComponent extends EditorComponent {
     sliceEndIndex: Infinity
   };
 
-  insertItem(itemIndex, itemData) {
-    const itemDataWithIds = setIds(itemData);
+  static insertItem(items, itemIndex, itemData) {
+    const itemDataStripped = stripSystemKeys(itemData);
+    const itemDataWithIds = setIds(itemDataStripped);
+    const updatedValue = insert(items, itemIndex, itemDataWithIds);
 
+    return updatedValue;
+  }
+
+  insertItem(itemIndex, itemData) {
+    const itemDataStripped = stripSystemKeys(itemData);
+    const itemDataWithIds = setIds(itemDataStripped);
     const dbValue = this.getDBValue() || [];
     const updatedValue = insert(dbValue, itemIndex, itemDataWithIds);
 
@@ -65,22 +59,24 @@ export default class EditorArrayComponent extends EditorComponent {
 
   insertItemsBatch(itemIndex, itemsData) {
     const dbValue = this.getDBValue() || [];
-    const updatedValue = itemsData.reduce(
-      (acc, itemData, index) =>
-        insert(acc, itemIndex + index, setIds(itemData)),
-      dbValue
-    );
+    const updatedValue = itemsData.reduce((acc, itemData, index) => {
+      const itemDataStripped = stripSystemKeys(itemData);
+      const itemDataWithIds = setIds(itemDataStripped);
+
+      return insert(acc, itemIndex + index, itemDataWithIds);
+    }, dbValue);
 
     this.handleValueChange(updatedValue, { arrayOperation: "insert_bulk" });
   }
 
-  updateItem(itemIndex, itemValue) {
+  updateItem(itemIndex, itemValue, updateMeta) {
     const dbValue = this.getDBValue();
     const updatedValue = setIn(dbValue, [itemIndex, "value"], itemValue);
 
-    this.handleValueChange(updatedValue, {
-      arrayOperation: "itemChange"
-    });
+    this.handleValueChange(
+      updatedValue,
+      Object.assign(updateMeta, { arrayOperation: "itemChange" })
+    );
   }
 
   removeItem(itemIndex) {
@@ -91,12 +87,10 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 
   replaceItem(itemIndex, itemData, meta) {
+    const itemDataStripped = stripSystemKeys(itemData, { exclude: ["_id"] });
+    const itemDataWithIds = setIds(itemDataStripped, meta.idOptions);
     const dbValue = this.getDBValue() || [];
-    const updatedValue = replaceAt(
-      dbValue,
-      itemIndex,
-      setIds(itemData, meta.idOptions)
-    );
+    const updatedValue = replaceAt(dbValue, itemIndex, itemDataWithIds);
 
     this.handleValueChange(updatedValue, {
       arrayOperation: "replace",
@@ -196,6 +190,15 @@ export default class EditorArrayComponent extends EditorComponent {
     return this.getDBValue() || this.getDefaultValue();
   }
 
+  getValue2() {
+    const defaultValue = this.getDefaultValue();
+    const dbValue = this.getDBValue();
+
+    return {
+      v: dbValue || defaultValue
+    };
+  }
+
   validateValue() {
     // always valid
   }
@@ -227,9 +230,9 @@ export default class EditorArrayComponent extends EditorComponent {
         this.replaceItem(itemIndex, itemValue, meta);
       } else {
         if (itemValue === null) {
-          this.removeItem(itemIndex);
+          this.removeItem(itemIndex, meta);
         } else {
-          this.updateItem(itemIndex, itemValue);
+          this.updateItem(itemIndex, itemValue, meta);
         }
       }
     };

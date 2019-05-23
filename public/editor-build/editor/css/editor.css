@@ -6180,7 +6180,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .admin-bar .wp-env .visual-wrap-block-wrap{margin-left:0;padding-bottom:0}
 .brz .brz-wp__sidebar{width:100%}
 .brz .brz-wp__sidebar .brz-shortcode__placeholder{width:100%;min-height:300px}
-.brz .brz-wp-shortcode{width:100%}
+.brz .brz-wp-shortcode{width:100%;min-height:20px}
 .brz .brz-wp-shortcode .woocommerce:empty{width:100%;height:15px}
 .brz .brz-wp-shortcode .woocommerce-product-gallery{opacity:1!important}
 .brz .brz-wp-shortcode .brz-shortcode__placeholder{width:100%;min-height:300px}
@@ -6204,12 +6204,12 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-wp-shortcode__menu__icon--bars:after,.brz .brz-wp-shortcode__menu__icon--bars:before{background-color:currentColor;content:"";display:block;height:100%;position:absolute;-webkit-transition:all .2s ease-out;transition:all .2s ease-out;width:100%}
 .brz .brz-wp-shortcode__menu__icon--bars:before{top:5px}
 .brz .brz-wp-shortcode__menu__icon--bars:after{top:-5px}
-.brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn{display:none}
-.brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked~div .menu{display:-webkit-box;display:-ms-flexbox;display:flex;max-height:100%}
-.brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked~.brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars{background:0 0}
-.brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked~.brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:before{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
-.brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked~.brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:after{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
-.brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked~.brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:after,.brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked~.brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:before{top:0}
+.brz .brz-wp-shortcode__menu .brz-input{display:none}
+.brz .brz-wp-shortcode__menu .brz-input:checked~div .menu{display:-webkit-box;display:-ms-flexbox;display:flex;max-height:100%}
+.brz .brz-wp-shortcode__menu .brz-input:checked~.brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars{background:0 0}
+.brz .brz-wp-shortcode__menu .brz-input:checked~.brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:before{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
+.brz .brz-wp-shortcode__menu .brz-input:checked~.brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:after{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
+.brz .brz-wp-shortcode__menu .brz-input:checked~.brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:after,.brz .brz-wp-shortcode__menu .brz-input:checked~.brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:before{top:0}
 @media (max-width:767px){.brz:not(.brz-ed) .brz-wp-shortcode__menu{width:auto;text-align:center}
 .brz:not(.brz-ed) .brz-wp-shortcode__menu__toggle--mobile .menu{display:none;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column nowrap;max-height:0;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;-webkit-transition:max-height .2s ease-out;transition:max-height .2s ease-out}
 .brz:not(.brz-ed) .brz-wp-shortcode__menu__toggle--mobile .menu .sub-menu{position:relative;display:block;width:100%;left:15px;background-color:transparent}
@@ -10936,5 +10936,5 @@ to{-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,.3);box-shadow:0 0 10px 0 rgba(0,0,0
 .brz-ed .brz-rich-text .link--anchor:not(.is-empty):hover,.brz-ed .brz-rich-text .link--external:not(.is-empty):hover,.brz-ed .brz-rich-text .link--popup:not(.is-empty):hover{text-decoration:underline}
 .brz-ed .brz-rich-text .link--anchor.is-empty,.brz-ed .brz-rich-text .link--external.is-empty,.brz-ed .brz-rich-text .link--popup.is-empty{text-decoration:none}
 .brz-ed .brz-rich-text .link--anchor.is-empty:hover,.brz-ed .brz-rich-text .link--external.is-empty:hover,.brz-ed .brz-rich-text .link--popup.is-empty:hover{text-decoration:none}
-.brz-ed .fb-comments,.brz-ed .fb-like,.brz-ed .fb-page,.brz-ed .fb-post,.brz-ed .fb-video{pointer-events:none}
+.brz-ed .fb-comments,.brz-ed .fb-group,.brz-ed .fb-like,.brz-ed .fb-page,.brz-ed .fb-post,.brz-ed .fb-video{pointer-events:none}
 .brz-ed .brz-fb-comments,.brz-ed .brz-fb-embed,.brz-ed .brz-fb-page{width:100%}

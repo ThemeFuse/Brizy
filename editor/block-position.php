@@ -91,9 +91,7 @@ class Brizy_Editor_BlockPosition extends Brizy_Admin_Serializable {
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$instance = new self();
-		$instance->setAlign( $data['align'] );
-		$instance->setIndex( $data['index'] );
+		$instance = new self( $data['align'], $data['index'] );
 
 		return $instance;
 	}

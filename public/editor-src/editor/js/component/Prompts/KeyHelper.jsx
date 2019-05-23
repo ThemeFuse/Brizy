@@ -4,6 +4,7 @@ import { assetUrl } from "visual/utils/asset";
 import { detectOS } from "visual/utils/dom/detectOS";
 import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
+import { t } from "visual/utils/i18n";
 
 export default class extends Component {
   render() {
@@ -29,7 +30,7 @@ export default class extends Component {
             className="brz-ed-hotkeys-btn-close"
             onClick={this.props.onClose}
           />
-          <div className="brz-ed-hotkeys-label">Keyboard Shortcuts</div>
+          <div className="brz-ed-hotkeys-label">{t("Keyboard Shortcuts")}</div>
           <div className="brz-ed-hotkeys-image-container">
             <picture>
               <img className="brz-ed-hotkeys-image" srcSet={src} />
@@ -42,7 +43,7 @@ export default class extends Component {
                   {isMac ? "cmd + C" : "Ctrl + C"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Copy
+                  {t("Copy")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -50,7 +51,7 @@ export default class extends Component {
                   {isMac ? "cmd + V" : "Ctrl + V"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Paste
+                  {t("Paste")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -58,7 +59,7 @@ export default class extends Component {
                   {isMac ? "cmd + shift + V" : "Ctrl + Shift + V"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Paste Style
+                  {t("Paste Style")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -66,7 +67,7 @@ export default class extends Component {
                   {isMac ? "cmd + D" : "Ctrl + D"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Duplicate
+                  {t("Duplicate")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -74,7 +75,7 @@ export default class extends Component {
                   {isMac ? "cmd + delete" : "Delete"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Delete
+                  {t("Delete")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -91,7 +92,7 @@ export default class extends Component {
                   />
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Horizontal Align
+                  {t("Horizontal Align")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -108,7 +109,7 @@ export default class extends Component {
                   />
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Vertical Align
+                  {t("Vertical Align")}
                 </span>
               </div>
             </div>
@@ -118,7 +119,7 @@ export default class extends Component {
                   {isMac ? "cmd + Z" : "Ctrl + Z"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Undo
+                  {t("Undo")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -126,7 +127,7 @@ export default class extends Component {
                   {isMac ? "cmd + shift + Z" : "Ctrl + Shift + Z"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Redo
+                  {t("Redo")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -134,7 +135,7 @@ export default class extends Component {
                   {isMac ? "cmd + S" : "Ctrl + S"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Publish / Update Page
+                  {t("Publish / Update Page")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -151,7 +152,7 @@ export default class extends Component {
                   />
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Responsive Zoom In / Out
+                  {t("Responsive Zoom In / Out")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -163,7 +164,7 @@ export default class extends Component {
                   />
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Shortcuts
+                  {t("Shortcuts")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -171,7 +172,7 @@ export default class extends Component {
                   {isMac ? "cmd + shift + A" : "Ctrl + Shift + A"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  Add New Block / Layout
+                  {t("Add New Block / Layout")}
                 </span>
               </div>
             </div>
