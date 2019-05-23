@@ -125,7 +125,7 @@ class Brizy_Admin_Settings {
                 __( 'Go Pro', 'brizy' ) .
             '</span>',
             'manage_options',
-            'https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/',
+			Brizy_Config::GO_PRO_DASHBOARD_URL,
             array()
         );
 	}

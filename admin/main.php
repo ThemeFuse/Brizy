@@ -240,7 +240,7 @@ class Brizy_Admin_Main {
 
 			$links['go_pro'] = sprintf(
 				'<a href="%1$s" target="_blank" style="color:#39b54a;font-weight:700;">%2$s</a>',
-				'https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/',
+				Brizy_Config::GO_PRO_DASHBOARD_URL,
 				__( 'Go Pro', 'brizy' )
 			);
 		}
