@@ -6,6 +6,7 @@
 <?php if (!defined('ABSPATH')) {
 	die('Direct access forbidden.');
 }
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
