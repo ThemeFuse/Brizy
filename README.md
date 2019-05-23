@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.1<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.77<br>
+Stable tag: 1.0.78<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.78 - 2019-05-23 ###
+* Fixed: Blank template and template loading
 
 ### 1.0.77 - 2019-05-23 ###
 * New: Added hover transition option for Icon and Button
