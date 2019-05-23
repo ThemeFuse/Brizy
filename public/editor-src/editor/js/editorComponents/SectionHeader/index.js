@@ -11,6 +11,7 @@ import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import { currentTooltip } from "visual/component/Controls/Tooltip";
 import { uuid } from "visual/utils/uuid";
 import { capitalize } from "visual/utils/string";
+import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
@@ -264,33 +265,41 @@ class SectionHeader extends EditorComponent {
 
   // api
   becomeSaved() {
-    const { blockId, reduxDispatch } = this.props;
+    const { blockId } = this.props;
     const dbValue = this.getDBValue();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createSavedBlock({
         id: uuid(),
         data: {
-          type: "SectionHeader",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
   }
 
   becomeGlobal() {
-    const { blockId, reduxDispatch, onChange } = this.props;
+    const { blockId, onChange } = this.props;
     const dbValue = this.getDBValue();
     const globalBlockId = uuid();
+    const dispatch = getStore().dispatch;
 
-    reduxDispatch(
+    dispatch(
       createGlobalBlock({
         id: globalBlockId,
         data: {
-          type: "SectionHeader",
+          type: this.constructor.componentId,
           blockId,
           value: dbValue
+        },
+        meta: {
+          sourceBlockId: this.getId()
         }
       })
     );
@@ -316,10 +325,9 @@ class SectionHeader extends EditorComponent {
   becomeNormal() {
     const {
       meta: { globalBlockId },
-      reduxState,
       onChange
     } = this.props;
-    const globalBlocks = globalBlocksSelector(reduxState);
+    const globalBlocks = globalBlocksSelector(getStore().getState());
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();

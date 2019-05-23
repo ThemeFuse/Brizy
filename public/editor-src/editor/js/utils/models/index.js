@@ -7,6 +7,7 @@ import {
   getClosestParent,
   getParentWhichContainsStyleProperty
 } from "./styles";
+import { stripSystemKeys } from "./stripSystemKeys";
 
 export {
   setIds,
@@ -15,5 +16,6 @@ export {
   getStyles,
   getElementOfArrayLoop,
   getClosestParent,
-  getParentWhichContainsStyleProperty
+  getParentWhichContainsStyleProperty,
+  stripSystemKeys
 };

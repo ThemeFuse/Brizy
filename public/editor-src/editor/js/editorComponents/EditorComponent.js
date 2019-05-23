@@ -132,10 +132,25 @@ export class EditorComponent extends React.Component {
       : defaultValue;
   }
 
-  patchValue(patch, meta) {
+  getValue2() {
+    const defaultValue = this.getDefaultValue();
+    const stylesValue = this.getStylesValue();
+    const dbValue = this.getDBValue();
+
+    return {
+      v: { ...defaultValue, ...stylesValue, ...dbValue },
+      vs: { ...defaultValue, ...stylesValue },
+      vd: defaultValue
+    };
+  }
+
+  patchValue(patch, meta = {}) {
     const newValue = this.makeNewValueFromPatch(patch);
 
-    this.handleValueChange(newValue, { patch, meta });
+    this.handleValueChange(newValue, {
+      ...meta,
+      patch
+    });
   }
 
   makeNewValueFromPatch(patch) {
@@ -325,18 +340,19 @@ export class EditorComponent extends React.Component {
   }
 
   render() {
-    const v = this.getValue();
+    // const v = this.getValue();
+    const { v, vs, vd } = this.getValue2();
 
     if (IS_EDITOR) {
-      return this.renderForEdit(v);
+      return this.renderForEdit(v, vs, vd);
     }
 
     if (IS_PREVIEW) {
       try {
-        return this.renderForView(v);
+        return this.renderForView(v, vs, vd);
       } catch (e) {
         if (process.env.NODE_ENV === "development") {
-          console.error(e);
+          throw e;
         }
 
         return null;
@@ -344,12 +360,12 @@ export class EditorComponent extends React.Component {
     }
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
     throw "renderForEdit: Not Implemented";
   }
 
-  renderForView(v) {
-    return this.renderForEdit(v);
+  renderForView(v, vs, vd) {
+    return this.renderForEdit(v, vs, vd);
   }
 
   // experimental

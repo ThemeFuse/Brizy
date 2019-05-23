@@ -1,9 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
+import { getStore } from "visual/redux/store";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";
@@ -15,6 +18,39 @@ class Icon extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  renderPopups() {
+    const popupsProps = this.makeSubcomponentProps({
+      bindWithKey: "popups",
+      itemProps: itemData => {
+        let isGlobal = false;
+
+        if (itemData.type === "GlobalBlock") {
+          // TODO: some kind of error handling
+          itemData = globalBlocksSelector(getStore().getState())[
+            itemData.value.globalBlockId
+          ];
+          isGlobal = true;
+        }
+
+        const {
+          blockId,
+          value: { popupId }
+        } = itemData;
+
+        return {
+          blockId,
+          instanceKey: IS_EDITOR
+            ? `${this.getId()}_${popupId}`
+            : isGlobal
+            ? `global_${popupId}`
+            : popupId
+        };
+      }
+    });
+
+    return <EditorArrayComponent {...popupsProps} />;
+  }
+
   renderForEdit(v) {
     const {
       type: iconType,
@@ -24,7 +60,8 @@ class Icon extends EditorComponent {
       linkExternalBlank,
       linkExternalRel,
       linkExternalType,
-      linkPopup
+      linkPopup,
+      popups
     } = v;
     const hrefs = {
       anchor: linkAnchor,
@@ -54,13 +91,19 @@ class Icon extends EditorComponent {
     const style = { ...styleCSSVars(v) };
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className="brz-icon__container" style={style}>
-            {content}
-          </div>
-        </CustomCSS>
-      </Toolbar>
+      <Fragment>
+        <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <div className="brz-icon__container" style={style}>
+              {content}
+            </div>
+          </CustomCSS>
+        </Toolbar>
+        {popups.length > 0 &&
+          linkType === "popup" &&
+          linkPopup !== "" &&
+          this.renderPopups()}
+      </Fragment>
     );
   }
 }

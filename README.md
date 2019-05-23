@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.1<br>
+Tested up to: 5.2.1<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.76<br>
+Stable tag: 1.0.77<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.77 - 2019-05-23 ###
+* New: Added hover transition option for Icon and Button
+* Improved: Set a minimum height to Embed and WordPress elements
+* Improved: Migrated Line and Progress to a new CSS system meant to clean up the DOM
+* Improved: Sql queries
+* Fixed: Menu not working when having more than one in a page
+* Fixed: Form number filed triggering validation error when empty but not required
+* Fixed: Vertical align in column
+* Fixed: Image optimize submit settings
+* Fixed: Autosave for globals and saved block
+
 
 ### 1.0.76 - 2019-05-14 ###
 * Fixed: Guafrette warning in Path class

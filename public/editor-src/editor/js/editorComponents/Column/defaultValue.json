@@ -68,7 +68,9 @@
 
     "showOnMobile": "on",
 
-    "items": []
+    "items": [],
+
+    "popups": []
   },
 
   "link": {

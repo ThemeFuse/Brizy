@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import Placeholder from "visual/component/Placeholder";
-import { shortcodeContent } from "visual/utils/api/editor";
 import BoxResizer from "visual/component/BoxResizer";
+import { uuid } from "visual/utils/uuid";
+import { shortcodeContent } from "visual/utils/api/editor";
 
 export class WPShortcode extends Component {
   static defaultProps = {
@@ -21,6 +22,8 @@ export class WPShortcode extends Component {
     className: "",
     style: {}
   };
+
+  id = uuid(3);
 
   render() {
     const {
@@ -43,13 +46,12 @@ export class WPShortcode extends Component {
     let content = <Inner {...innerProps} />;
 
     if (mobileToggleMenu || tabletToggleMenu) {
+      const id = `brz-wp-shortcode__menu__btn-${this.id}`;
+
       content = (
         <div className={toggleClassName}>
-          <input id="brz-wp-shortcode__menu__btn" type="checkbox" />
-          <label
-            className="brz-wp-shortcode__menu__icon"
-            htmlFor="brz-wp-shortcode__menu__btn"
-          >
+          <input className="brz-input" id={id} type="checkbox" />
+          <label className="brz-wp-shortcode__menu__icon" htmlFor={id}>
             <span className="brz-wp-shortcode__menu__icon--bars" />
           </label>
           {content}

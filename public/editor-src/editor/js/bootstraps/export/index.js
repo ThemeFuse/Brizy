@@ -20,6 +20,9 @@ import addFontStylesCSS from "./transforms/head/addFontStylesCSS";
 import addCustomCSS from "./transforms/head/addCustomCSS";
 import changeRichText from "./transforms/body/changeRichText";
 import changeRichTextDCColor from "./transforms/body/changeRichTextDCColor";
+import extractPopups from "./transforms/body/extractPopups";
+
+import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
 
 export default function main(pageId, pages, globals) {
   const page = pages
@@ -58,6 +61,11 @@ function getPageBlocks({ page, globals, globalBlocks, savedBlocks }) {
 
   const { Page } = EditorGlobal.getComponents();
   const reduxState = store.getState();
+
+  // === TMP ===
+  css.isServer = true;
+  // ===========
+
   const { html, css: glamorCSS } = renderStatic(() =>
     ReactDOMServer.renderToStaticMarkup(
       <Provider store={store}>
@@ -66,8 +74,12 @@ function getPageBlocks({ page, globals, globalBlocks, savedBlocks }) {
     )
   );
 
+  // === TMP ===
+  const brzCss = tmpCSSFromCache();
+  // ===========
+
   const $pageHTML = cheerio.load(
-    `<html><head><style>${glamorCSS}</style></head><body>${html}</body></html>`
+    `<html><head><style>${glamorCSS}</style><style data-brz-css>${brzCss}</style></head><body>${html}</body></html>`
   );
 
   changeRichTextDCColor($pageHTML);
@@ -89,6 +101,7 @@ function getPageHeadBlock($pageHTML) {
 
 function getPageBodyBlock($pageHTML) {
   changeRichText($pageHTML);
+  extractPopups($pageHTML);
 
   return $pageHTML("body").html();
 }

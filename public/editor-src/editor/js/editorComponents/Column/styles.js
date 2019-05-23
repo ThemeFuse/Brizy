@@ -40,10 +40,9 @@ export function bgStyleClassName(v, props) {
   if (IS_EDITOR) {
     glamorObj = {
       zIndex: "var(--zIndex)",
+      alignItems: "var(--verticalAlign)",
 
       ".brz-ed--desktop &": {
-        alignItems: "var(--verticalAlign)",
-
         paddingTop: "var(--paddingTop)",
         paddingRight: "var(--paddingRight)",
         paddingBottom: "var(--paddingBottom)",
@@ -147,8 +146,6 @@ export function bgStyleClassName(v, props) {
         filter: "var(--tabletFilter)",
         opacity: "var(--tabletOpacity)",
 
-        alignItems: "var(--tabletVerticalAlign)",
-
         paddingTop: "var(--tabletPaddingTop)",
         paddingRight: "var(--tabletPaddingRight)",
         paddingBottom: "var(--tabletPaddingBottom)",
@@ -202,8 +199,6 @@ export function bgStyleClassName(v, props) {
       ".brz-ed--mobile &": {
         filter: "var(--mobileFilter)",
         opacity: "var(--mobileOpacity)",
-
-        alignItems: "var(--mobileVerticalAlign)",
 
         paddingTop: "var(--mobilePaddingTop)",
         paddingRight: "var(--mobilePaddingRight)",
@@ -317,7 +312,13 @@ export function bgStyleClassName(v, props) {
         current: "marginLeft",
         hasItems
       }),
-
+      // vertical Align
+      alignItems: styleAlignVerticalAlign({
+        v,
+        device: "desktop",
+        state: "normal",
+        hasItems
+      }),
       "> .brz-bg-content": {
         // Border Style
         borderStyle: styleBorderStyle({
@@ -1037,24 +1038,6 @@ export function bgStyleClassName(v, props) {
             v,
             device: "mobile",
             state: "normal"
-          }),
-          // Vertica lAlign
-          alignItems: styleAlignVerticalAlign({
-            v,
-            device: "mobile",
-            state: "normal",
-            hasItems
-          })
-        }
-      },
-      "@media (min-width: 768px)": {
-        ".brz &": {
-          // Vertical Align
-          alignItems: styleAlignVerticalAlign({
-            v,
-            device: "mobile",
-            state: "normal",
-            hasItems
           })
         }
       },
@@ -1524,12 +1507,6 @@ export function bgStyleCSSVars(v, props) {
       current: "marginRight",
       hasItems
     }),
-    "--tabletVerticalAlign": styleAlignVerticalAlign({
-      v,
-      device: "tablet",
-      state: "normal",
-      hasItems
-    }),
 
     /* ######### MOBILE NORMAL ######### */
 
@@ -1689,12 +1666,6 @@ export function bgStyleCSSVars(v, props) {
       device: "mobile",
       state: "normal",
       current: "marginRight",
-      hasItems
-    }),
-    "--mobileVerticalAlign": styleAlignVerticalAlign({
-      v,
-      device: "mobile",
-      state: "normal",
       hasItems
     })
   };

@@ -6,7 +6,9 @@ import {
   styleBorderColor,
   styleColor,
   styleBgColor,
-  styleBoxShadow
+  styleBoxShadow,
+  styleHoverTransition,
+  styleHoverTransitionProperty
 } from "visual/utils/style";
 
 const getIconStrokeWidth = (v, iconSize) => {
@@ -53,6 +55,9 @@ export function styleClassName(v) {
         borderRadius: "var(--borderRadius)",
         strokeWidth: "var(--strokeWidth)",
         boxShadow: "var(--boxShadow)",
+
+        transition: "var(--hoverTransition)",
+        transitionProperty: "var(--hoverTransitionProperty)",
 
         ":hover": {
           boxShadow: "var(--hoverBoxShadow)"
@@ -161,7 +166,10 @@ export function styleClassName(v) {
         padding: `${padding}px`,
         borderRadius,
         strokeWidth,
-        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
+        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
+
+        transition: styleHoverTransition({ v }),
+        transitionProperty: styleHoverTransitionProperty()
       },
 
       "@media (min-width: 991px)": {
@@ -309,6 +317,11 @@ export function styleCSSVars(v) {
       device: "desktop",
       state: "hover"
     }),
+
+    // Hover Transition
+    "--hoverTransition": styleHoverTransition({ v }),
+    "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
+
     "--width": `${iconSize}px`,
     "--height": `${iconSize}px`,
     "--fontSize": `${customSize}px`,

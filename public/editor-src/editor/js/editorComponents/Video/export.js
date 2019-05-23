@@ -38,6 +38,19 @@ export default function() {
       }
     }
   });
+
+  // stopping all videos inside a popup that is closed
+  $(document).on("brz.popup.close", function(e, popup) {
+    var $popup = $(popup);
+
+    $popup.find(".brz-video .brz-iframe").each(function() {
+      var $this = $(this);
+      var src = $this.attr("src");
+
+      $this.attr("src", ""); // this forces the video to stop
+      $this.attr("src", src);
+    });
+  });
 }
 
 function getVideoPopulationUrl(data) {

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 import TextEditor from "visual/editorComponents/Text/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
+import { getStore } from "visual/redux/store";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import {
   styleClassName,
@@ -30,7 +33,6 @@ class Button extends EditorComponent {
 
     return (
       <ThemeIcon
-        key="icon"
         className={iconStyleClassName(v)}
         name={iconName}
         type={iconType}
@@ -86,6 +88,39 @@ class Button extends EditorComponent {
     return <Link {...props}>{content}</Link>;
   }
 
+  renderPopups() {
+    const popupsProps = this.makeSubcomponentProps({
+      bindWithKey: "popups",
+      itemProps: itemData => {
+        let isGlobal = false;
+
+        if (itemData.type === "GlobalBlock") {
+          // TODO: some kind of error handling
+          itemData = globalBlocksSelector(getStore().getState())[
+            itemData.value.globalBlockId
+          ];
+          isGlobal = true;
+        }
+
+        const {
+          blockId,
+          value: { popupId }
+        } = itemData;
+
+        return {
+          blockId,
+          instanceKey: IS_EDITOR
+            ? `${this.getId()}_${popupId}`
+            : isGlobal
+            ? `global_${popupId}`
+            : popupId
+        };
+      }
+    });
+
+    return <EditorArrayComponent {...popupsProps} />;
+  }
+
   renderForEdit(_v) {
     const v = this.applyRulesToValue(_v, [
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
@@ -93,22 +128,29 @@ class Button extends EditorComponent {
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
     ]);
 
-    const { text, type, iconName, iconType } = v;
+    const { text, type, iconName, iconType, linkType, linkPopup, popups } = v;
     const renderIcon = iconName && iconType;
-
-    const content = [
-      renderIcon && this.renderIcon(v),
-      <TextEditor key="text" value={text} onChange={this.handleTextChange} />
-    ];
+    const content = (
+      <Fragment>
+        {renderIcon && this.renderIcon(v)}
+        <TextEditor value={text} onChange={this.handleTextChange} />
+      </Fragment>
+    );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          {type === "link"
-            ? this.renderLink(v, content)
-            : this.renderSubmit(v, content)}
-        </CustomCSS>
-      </Toolbar>
+      <Fragment>
+        <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {type === "link"
+              ? this.renderLink(v, content)
+              : this.renderSubmit(v, content)}
+          </CustomCSS>
+        </Toolbar>
+        {popups.length > 0 &&
+          linkType === "popup" &&
+          linkPopup !== "" &&
+          this.renderPopups()}
+      </Fragment>
     );
   }
 }

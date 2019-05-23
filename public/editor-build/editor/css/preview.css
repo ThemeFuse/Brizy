@@ -15808,7 +15808,8 @@ body.modal-open .mm-slideout {
       width: 100%;
       min-height: 300px; }
   .brz .brz-wp-shortcode {
-    width: 100%; }
+    width: 100%;
+    min-height: 20px; }
     .brz .brz-wp-shortcode .woocommerce:empty {
       width: 100%;
       height: 15px; }
@@ -15922,23 +15923,23 @@ body.modal-open .mm-slideout {
         top: 5px; }
       .brz .brz-wp-shortcode__menu__icon--bars:after {
         top: -5px; }
-  .brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn {
+  .brz .brz-wp-shortcode__menu .brz-input {
     display: none; }
-    .brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked ~ div .menu {
+    .brz .brz-wp-shortcode__menu .brz-input:checked ~ div .menu {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
       max-height: 100%; }
-    .brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked ~ .brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars {
+    .brz .brz-wp-shortcode__menu .brz-input:checked ~ .brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars {
       background: transparent; }
-    .brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked ~ .brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:before {
+    .brz .brz-wp-shortcode__menu .brz-input:checked ~ .brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:before {
       -webkit-transform: rotate(-45deg);
               transform: rotate(-45deg); }
-    .brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked ~ .brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:after {
+    .brz .brz-wp-shortcode__menu .brz-input:checked ~ .brz-wp-shortcode__menu__icon .brz-wp-shortcode__menu__icon--bars:after {
       -webkit-transform: rotate(45deg);
               transform: rotate(45deg); }
-    .brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked ~ .brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:before,
-    .brz .brz-wp-shortcode__menu #brz-wp-shortcode__menu__btn:checked ~ .brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:after {
+    .brz .brz-wp-shortcode__menu .brz-input:checked ~ .brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:before,
+    .brz .brz-wp-shortcode__menu .brz-input:checked ~ .brz-wp-shortcode__menu__icon:not(.steps) .brz-wp-shortcode__menu__icon--bars:after {
       top: 0; }
   @media (max-width: 767px) {
     .brz:not(.brz-ed) .brz-wp-shortcode__menu {

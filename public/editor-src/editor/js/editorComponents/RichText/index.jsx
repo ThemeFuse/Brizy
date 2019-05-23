@@ -1,14 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import _ from "underscore";
 import classNames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import ClickOutside from "visual/component/ClickOutside";
 import ListBox from "visual/component/Controls/ListBox";
 import HotKeys from "visual/component/HotKeys";
 import { getDynamicContentChoices } from "visual/utils/options";
+import { getStore } from "visual/redux/store";
+import { globalBlocksSelector } from "visual/redux/selectors";
 import Quill from "./Quill";
 import toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
@@ -65,7 +67,18 @@ class RichText extends EditorComponent {
   };
 
   handleTextChange = text => {
-    this.patchValue({ text });
+    let popups;
+
+    // making use of the popups hack
+    if (this.tmpPopups) {
+      popups = this.tmpPopups;
+      this.tmpPopups = null;
+    }
+
+    this.patchValue({
+      text,
+      ...(popups ? { popups } : {})
+    });
   };
 
   handlePopulationSet = value => {
@@ -89,16 +102,27 @@ class RichText extends EditorComponent {
   };
 
   handleKeyDown(e, { keyName, id }) {}
-  handleKeyUp = () => {};
+  handleKeyUp() {}
 
   getToolbarProps = () => {
+    const v = this.getValue();
     const onChange = values => {
       // after Quill applies formatting it steals the focus to itself,
       // we try to fight back by remembering the previous focused element
       // and restoring it's focus after Quill steals it
       const prevActive = document.activeElement;
 
-      _.forEach(values, (value, type) => this.quill.format(type, value));
+      // this is a hack to somehow make RichText be able to save
+      // popups inside it's value
+      if (values.popups) {
+        this.tmpPopups = values.popups;
+      }
+
+      for (const [key, value] of Object.entries(values)) {
+        if (key !== "popups") {
+          this.quill.format(key, value);
+        }
+      }
 
       if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
         prevActive.focus && prevActive.focus();
@@ -109,7 +133,10 @@ class RichText extends EditorComponent {
       node: ReactDOM.findDOMNode(this),
       offsetTop: 14,
       ...this.makeToolbarPropsFromConfig(
-        toolbarConfig({ ...this.formats }, onChange)
+        toolbarConfig(
+          { ...this.formats, popups: this.tmpPopups || v.popups },
+          onChange
+        )
       ),
       onMouseEnter: this.props.onToolbarEnter,
       onMouseLeave: this.props.onToolbarLeave,
@@ -157,10 +184,44 @@ class RichText extends EditorComponent {
     return ReactDOM.createPortal(content, document.body);
   }
 
+  renderPopups() {
+    const popupsProps = this.makeSubcomponentProps({
+      bindWithKey: "popups",
+      itemProps: itemData => {
+        let isGlobal = false;
+
+        if (itemData.type === "GlobalBlock") {
+          // TODO: some kind of error handling
+          itemData = globalBlocksSelector(getStore().getState())[
+            itemData.value.globalBlockId
+          ];
+          isGlobal = true;
+        }
+
+        const {
+          blockId,
+          value: { popupId }
+        } = itemData;
+
+        return {
+          blockId,
+          instanceKey: IS_EDITOR
+            ? `${this.getId()}_${popupId}`
+            : isGlobal
+            ? `global_${popupId}`
+            : popupId
+        };
+      }
+    });
+
+    return <EditorArrayComponent {...popupsProps} />;
+  }
+
   renderForEdit(v) {
     const { prepopulation, population, isToolbarOpened } = this.state;
-    const { onToolbarEnter, onToolbarLeave } = this.props;
-
+    const { meta = {} } = this.props;
+    const { popups } = v;
+    const inPopup = Boolean(meta.sectionPopup);
     const shortcutsTypes = ["copy", "paste", "delete"];
 
     return (
@@ -180,6 +241,7 @@ class RichText extends EditorComponent {
                   forceUpdate={!isToolbarOpened}
                   onSelectionChange={this.handleSelectionChange}
                   onTextChange={this.handleTextChange}
+                  initDelay={inPopup ? 1000 : 0}
                 />
               </div>
             </Toolbar>
@@ -187,18 +249,24 @@ class RichText extends EditorComponent {
         </HotKeys>
         {(prepopulation !== null || population) &&
           this.renderPopulationHelper()}
+        {popups.length > 0 && this.renderPopups()}
       </React.Fragment>
     );
   }
 
   renderForView(v) {
+    const { popups } = v;
+
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div
-          className={this.getClassName(v)}
-          dangerouslySetInnerHTML={{ __html: v.text }}
-        />
-      </CustomCSS>
+      <Fragment>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div
+            className={this.getClassName(v)}
+            dangerouslySetInnerHTML={{ __html: v.text }}
+          />
+        </CustomCSS>
+        {popups.length > 0 && this.renderPopups()}
+      </Fragment>
     );
   }
 }

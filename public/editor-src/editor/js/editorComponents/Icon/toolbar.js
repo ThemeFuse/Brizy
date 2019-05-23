@@ -24,6 +24,7 @@ import {
   toolbarGradientType,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
+  toolbarHoverTransition,
   toolbarCustomCSS
 } from "visual/utils/toolbar";
 
@@ -1490,7 +1491,7 @@ export function getItemsForDesktop(v) {
               id: "moreSettingsAdvanced",
               label: t("Advanced"),
               tabIcon: "nc-cog",
-              options: []
+              options: [toolbarHoverTransition({ v, position: 100 })]
             }
           ]
         }
@@ -1629,6 +1630,7 @@ export function getItemsForTablet(v) {
         {
           id: "tabletTabsColor",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               label: t("Shadow"),
@@ -1836,6 +1838,7 @@ export function getItemsForMobile(v) {
         {
           id: "mobileTabsColor",
           type: "tabs",
+          hideHandlesWhenOne: false,
           tabs: [
             {
               label: t("Shadow"),
