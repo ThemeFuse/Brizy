@@ -59,7 +59,7 @@ class Brizy_Config {
 	static public function getEditorBaseUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://www.brizy.org'
+				'http://www.brizysites.com'
 			)
 		);
 	}
