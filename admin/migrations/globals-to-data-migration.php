@@ -33,7 +33,8 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 				$editorBuildPath    = BRIZY_PLUGIN_PATH .
 				                      DIRECTORY_SEPARATOR . "public" .
 				                      DIRECTORY_SEPARATOR . "editor-build";
-				$mergedGlobals      = Migration_Globals_Project::execute( $beforeMergeGlobals, $editorBuildPath );
+				$projectMigration   = new Migration_Globals_Project( $editorBuildPath );
+				$mergedGlobals      = $projectMigration->execute( $beforeMergeGlobals );
 				$storage->set( 'data', base64_encode( json_encode( $mergedGlobals ) ) );
 				$storage->delete( 'globals' );
 			}
@@ -49,16 +50,22 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 }
 
 class Migration_Globals_Project {
-	static function execute( $gb, $buildPath ) {
-		$defaults = self::getDefaults( $buildPath );
-		$styles   = self::getStyles( $buildPath );
-		$fonts    = self::getFonts( $buildPath );
+	private $buildPath;
 
-		return self::merge( $gb, $defaults, $styles, $fonts );
+	public function __construct( $buildPath ) {
+		$this->buildPath = $buildPath;
 	}
 
-	static private function getStyles( $buildPath ) {
-		$templates = json_decode( file_get_contents( $buildPath .
+	public function execute( $gb ) {
+		$defaults = $this->getDefaults();
+		$styles   = $this->getStyles();
+		$fonts    = $this->getFonts();
+
+		return $this->merge( $gb, $defaults, $styles, $fonts );
+	}
+
+	private function getStyles() {
+		$templates = json_decode( file_get_contents( $this->buildPath .
 		                                             DIRECTORY_SEPARATOR . "templates" .
 		                                             DIRECTORY_SEPARATOR . "meta.json" ) );
 		$result    = array();
@@ -72,8 +79,8 @@ class Migration_Globals_Project {
 		return $result;
 	}
 
-	static private function getFonts( $buildPath ) {
-		$fonts  = json_decode( file_get_contents( $buildPath .
+	private function getFonts() {
+		$fonts  = json_decode( file_get_contents( $this->buildPath .
 		                                          DIRECTORY_SEPARATOR . "googleFonts.json" ) );
 		$result = array();
 
@@ -84,7 +91,7 @@ class Migration_Globals_Project {
 		return $result;
 	}
 
-	static private function getStyle( $styles, $id ) {
+	private function getStyle( $styles, $id ) {
 		foreach ( $styles as $style ) {
 			if ( $style && $style->id === $id ) {
 				return $style;
@@ -92,12 +99,12 @@ class Migration_Globals_Project {
 		}
 	}
 
-	static private function getDefaults( $buildPath ) {
-		return json_decode( file_get_contents( $buildPath .
+	private function getDefaults() {
+		return json_decode( file_get_contents( $this->buildPath .
 		                                       DIRECTORY_SEPARATOR . "defaults.json" ) );
 	}
 
-	static private function merge( $globals, $default, $styles, $fonts ) {
+	private function merge( $globals, $default, $styles, $fonts ) {
 		$result = $default;
 
 		// extraFont
@@ -182,13 +189,11 @@ class Migration_Globals_Project {
 		return $result;
 	}
 
-	static private function uuid( $n = 32 ) {
-		$characters   = 'abcdefghijklmnopqrstuvwxyz';
+	private function uuid( $n = 32 ) {
 		$randomString = '';
 
 		for ( $i = 0; $i < $n; $i ++ ) {
-			$index        = rand( 0, strlen( $characters ) - 1 );
-			$randomString .= $characters[ $index ];
+			$randomString .= chr( rand( 97, 122 ) );
 		}
 
 		return $randomString;
