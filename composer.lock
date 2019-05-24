@@ -4,8 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2af59da7eefba7237a072c1612b1a34",
+    "content-hash": "65d580fc2b3cdab3cb813dc84fd4c1ff",
     "packages": [
+        {
+            "name": "bagrinsergiu/brizy-migration-utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
+                "reference": "a9c8dd4ce657d769c983483c2110a56b6d87668c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/a9c8dd4ce657d769c983483c2110a56b6d87668c",
+                "reference": "a9c8dd4ce657d769c983483c2110a56b6d87668c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Brizy\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Alex Zaharia",
+                    "email": "alecszaharia@gmail.com"
+                }
+            ],
+            "description": "Data migration utils",
+            "support": {
+                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/master",
+                "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
+            },
+            "time": "2019-05-24T07:13:11+00:00"
+        },
         {
             "name": "knplabs/gaufrette",
             "version": "v0.3",
@@ -216,7 +249,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "shortpixel/shortpixel-php": 20
+        "shortpixel/shortpixel-php": 20,
+        "bagrinsergiu/brizy-migration-utils": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
