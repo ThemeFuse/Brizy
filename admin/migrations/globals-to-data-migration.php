@@ -33,7 +33,7 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 				$editorBuildPath    = BRIZY_PLUGIN_PATH .
 				                      DIRECTORY_SEPARATOR . "public" .
 				                      DIRECTORY_SEPARATOR . "editor-build";
-				$projectMigration   = new \Brizy\DataToProjectMigration( $editorBuildPath );
+				$projectMigration   = new \Brizy\DataToProjectTransformer( $editorBuildPath );
 				$mergedGlobals      = $projectMigration->execute( $beforeMergeGlobals );
 				$storage->set( 'data', base64_encode( json_encode( $mergedGlobals ) ) );
 				$storage->delete( 'globals' );

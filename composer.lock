@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
-                "reference": "a9c8dd4ce657d769c983483c2110a56b6d87668c"
+                "reference": "68afe9c2de6cb7db1a766b4580eb1f7fb2ec5cf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/a9c8dd4ce657d769c983483c2110a56b6d87668c",
-                "reference": "a9c8dd4ce657d769c983483c2110a56b6d87668c",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/68afe9c2de6cb7db1a766b4580eb1f7fb2ec5cf7",
+                "reference": "68afe9c2de6cb7db1a766b4580eb1f7fb2ec5cf7",
                 "shasum": ""
             },
             "type": "library",
@@ -37,7 +37,7 @@
                 "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/master",
                 "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
             },
-            "time": "2019-05-24T07:13:11+00:00"
+            "time": "2019-05-24T07:38:50+00:00"
         },
         {
             "name": "knplabs/gaufrette",
