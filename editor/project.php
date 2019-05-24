@@ -380,16 +380,17 @@ class Brizy_Editor_Project implements Serializable {
 	 * @return bool
 	 */
 	private function deleteOldAutoSaves() {
+		global $wpdb;
 		$user_id      = get_current_user_id();
 		$postParentId = $this->get_parent_id();
-		// Store one autosave per author. If there is already an autosave, overwrite it.
-		$old_autosave = wp_get_post_autosave( $postParentId, $user_id );
 
-		if ( $old_autosave ) {
-			wp_delete_post_revision( $old_autosave->ID );
+		$wpdb->query( $wpdb->prepare( "
+										DELETE FROM {$wpdb->posts} 
+										WHERE post_author = %d and 
+											  post_parent = %d and 
+											  post_type = 'revision' and 
+											  post_name LIKE %s", $user_id, $postParentId, "{$postParentId}-autosave%" ) );
 
-			return true;
-		}
 	}
 
 	/**
