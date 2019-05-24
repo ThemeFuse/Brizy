@@ -29,5 +29,5 @@ require_once( ABSPATH . WPINC . '/load.php' );
 wp_fix_server_vars();
 
 require_once( ABSPATH . WPINC . '/functions.php' );
-echo PLUGIN_DIR . '/autoload.php';
+
 include_once PLUGIN_DIR . '/autoload.php';
