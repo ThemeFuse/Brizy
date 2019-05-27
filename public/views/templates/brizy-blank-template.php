@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 </head>
 <body <?php body_class(); ?>>
 
-<?php if ( is_category() || is_archive() || is_tag() || is_404() || is_search() || is_front_page() || is_home() ) : ?>
+<?php if ( is_category() || is_archive() || is_tag() || is_404() || is_search() || is_home() ) : ?>
 	<?php do_action( 'brizy_template_content' ); ?>
 <?php else: ?>
 	<?php while ( have_posts() ) : the_post() ?>
