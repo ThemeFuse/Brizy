@@ -30,7 +30,7 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 	public function render() {
 		echo Brizy_Admin_View::render( 'dashboard', array(
-			//'news'  => $this->renderNews(),
+			'news'  => $this->renderNews(),
 			'posts' => $this->renderBrizyPosts()
 		) );
 	}
@@ -39,24 +39,95 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 	 * @return string
 	 */
 	private function renderNews() {
-		return Brizy_Admin_View::render( 'dashboard-news', array() );
+
+		$transient_key = 'brizy_feed_news';
+
+		if ( ! ( $news = get_transient( $transient_key ) ) ) {
+
+			$request = wp_remote_get( 'https://www.brizy.io/index.php/wp-json/wp/v2/posts' );
+
+			if ( is_wp_error( $request ) ) {
+
+				return $request->get_error_message();
+
+			} elseif ( ! isset( $request['response'] ) || ! isset( $request['response']['code'] ) || ! is_array( $request['response'] ) ) {
+
+				return esc_html__( 'Something went wrong. There is no a valid response code.', 'brizy' );
+
+			} elseif ( 200 !== $request['response']['code'] ) {
+
+				if ( isset( $request['response']['message'] ) ) {
+					return $request['response']['message'];
+				} else {
+					return esc_html__( 'The request was blocked, or something is wrong with the remote server.', 'brizy' );
+				}
+
+			} elseif ( empty( $request['body'] ) ) {
+				return esc_html__( 'There is no body in the remote server response.', 'brizy' );
+			}
+
+			$items = json_decode( $request['body'], true );
+
+			if ( ! $items ) {
+				return esc_html__( 'Filed decode returned json by brizy.io', 'brizy' );
+			}
+
+			$news = [];
+
+			foreach ( array_slice( $items, 0, 3 ) as $item ) {
+				$news[] = [
+					'url'     => $item['link'],
+					'title'   => $item['title']['rendered'],
+					'excerpt' => $item['excerpt']['rendered'],
+				];
+			}
+
+			set_transient( $transient_key, $news, 2 * DAY_IN_SECONDS );
+		}
+
+		return Brizy_Admin_View::render( 'dashboard-news', [ 'news' => $news ] );
 	}
 
 	/**
 	 * @return string
 	 */
 	private function renderBrizyPosts() {
+
 		$query = array(
-			'post_type'   => Brizy_Editor::get()->supported_post_types(),
-			'meta_query'  => 'brizy',
-			'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' ),
-			'order'=>'DESC',
-			'order_by'=>'ID'
+			'post_type'   => array_diff( Brizy_Editor::get()->supported_post_types(), [ 'brizy-global-block', 'brizy-saved-block', 'brizy-global-block' ] ),
+			'post_status' => [ 'publish', 'draft' ],
+			'meta_key'    => 'brizy',
+			'orderby'     => 'modified'
 		);
 
-		$posts = get_posts( $query );
+		$posts       = get_posts( $query );
+		$brizy_posts = [];
 
-		return Brizy_Admin_View::render( 'dashboard-posts', array( 'posts' => $posts ) );
+		foreach ( $posts as $apost ) {
+
+			try {
+
+				$brizy_post = Brizy_Editor_Post::get( $apost );
+
+				if ( ! $brizy_post->uses_editor() ) {
+					continue;
+				}
+
+				$brizy_posts[] = [
+					'edit_url' => add_query_arg( [ Brizy_Editor_Constants::EDIT_KEY => '' ], get_permalink( $apost ) ),
+					'title'    => get_the_title( $apost ),
+					'date'     => get_the_modified_date( '', $apost )
+				];
+
+				if ( 6 === count( $brizy_posts ) ) {
+					break;
+				}
+
+			} catch ( Exception $e ) {
+				continue;
+			}
+		}
+
+		return Brizy_Admin_View::render( 'dashboard-posts', array( 'posts' => $brizy_posts ) );
 	}
-
 }

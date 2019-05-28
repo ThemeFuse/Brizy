@@ -463,11 +463,11 @@ class Brizy_Admin_Templates {
 			return $template;
 		}
 
-		if ( is_category() || is_archive() || is_tag() || is_404() || is_search() || is_front_page() || is_home() ) {
-			return path_join( BRIZY_PLUGIN_PATH, 'public/views/templates/brizy-template.php' );
-		}
-
 		$templateName = $this->template->get_template();
+
+		if ( ! $templateName ) {
+			return path_join( BRIZY_PLUGIN_PATH, 'public/views/templates/' . Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
+		}
 
 		if ( in_array( $templateName, array(
 			Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME,

@@ -41,6 +41,7 @@ class Brizy_Public_Main {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			add_filter( 'show_admin_bar', '__return_false' );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
+			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
 
@@ -184,12 +185,13 @@ class Brizy_Public_Main {
 		}
 
 		$template_path = get_post_meta( $post->ID, '_wp_page_template', true );
+		$template_path = ! $template_path && $post->post_type == Brizy_Admin_Templates::CP_TEMPLATE ? Brizy_Config::BRIZY_TEMPLATE_FILE_NAME : $template_path;
 
 		if ( in_array( basename( $template_path ), array(
 			Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME,
 			Brizy_Config::BRIZY_TEMPLATE_FILE_NAME
 		) ) ) {
-			return Brizy_Editor::get()->get_path( '/public/views/templates/brizy-blank-template.php' );
+			return Brizy_Editor::get()->get_path( '/public/views/templates/' . $template_path );
 		}
 
 		return $template;
@@ -251,14 +253,14 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor() {
-		return ! is_admin() && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
+		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor_Constants::EDIT_KEY ] ) && $this->post->uses_editor();
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor_on_iframe() {
-		return ! is_admin() && isset( $_GET[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && $this->post->uses_editor();
+		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor_Constants::EDIT_KEY_IFRAME ] ) && $this->post->uses_editor();
 	}
 
 	/**
@@ -311,6 +313,9 @@ class Brizy_Public_Main {
 		return $content;
 	}
 
+	public function _action_the_content( $content ) {
+		echo $this->_filter_the_content( $content );
+	}
 
 	/**
 	 *  Show the compiled page head content

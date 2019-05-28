@@ -258,3 +258,45 @@
     fill: #efefef;
     stroke: none;
 }
+
+#brizy_dashboard .brizy-overview__feed {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#brizy_dashboard .e-brizy__feed .e-overview__post-link {
+    padding-bottom: 5px;
+}
+
+#brizy_dashboard .brizy-overview__recently-edited .brizy-overview__heading, #brizy_dashboard .brizy-overview__feed .brizy-overview__heading {
+    font-weight: 700;
+    border-bottom: 1px solid #eee;
+    margin: 0 -12px;
+    padding: 6px 12px;
+}
+
+#brizy_dashboard .brizy-overview__badge {
+    background: #39b54a;
+    color: #fff;
+    font-size: .75em;
+    padding: 3px 6px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: uppercase
+}
+
+.brizy-dashboard-widget-footer {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 12px 12px 12px 0;
+    border-top: 1px solid #eee;
+}
+
+.brizy-dashboard-widget-footer__go-pro {
+    display:inline-flex;
+    fill: #0073aa;
+}
+
+.brizy-dashboard-widget-footer__go-pro:hover {
+    fill: #00a0d2;
+}

@@ -7214,6 +7214,7 @@ body.modal-open .mm-slideout {
       padding: 0;
       text-indent: -9999px;
       border: 2px solid currentColor;
+      border-radius: 0;
       background-color: transparent;
       -webkit-transition: linear 0.2s transform, linear 0.2s background-color;
       transition: linear 0.2s transform, linear 0.2s background-color; }

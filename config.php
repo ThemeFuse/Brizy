@@ -20,7 +20,7 @@ class Brizy_Config {
 	const BRIZY_REGISTRATION_CREDENTIALS = '/wordpress/credentials';
 
 	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
-	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-template.php';
+	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-header-footer-template.php';
 
 	const BRIZY_APPLICATION_INTEGRATION_URL = 'https://forms.brizy.io';
 	const BRIZY_APPLICATION_FORM_ID = '6_5968m8wd3r8kcwww8o480w4c4c84sc8gw4kwk80s4k0c48ogkc';
@@ -36,6 +36,7 @@ class Brizy_Config {
 	const SUPPORT_URL = "https://github.com/ThemeFuse/Brizy/issues";
 	const ABOUT_URL = "https://brizy.io";
 	const SHORTPIXEL_CONFIG = "https://www.brizy.cloud/shortpixel.txt";
+	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(

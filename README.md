@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.1<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.79<br>
+Stable tag: 1.0.80<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.80 - 2019-05-28 ###
+* Fixed: Section Make it a Slider option
+* Fixed: Hotkeys not working in Global blocks
+* Fixed: Slider dots options not working with certain WordPress themes
+* Fixed: Undo / Redo
 
 ### 1.0.79 - 2019-05-27 ###
 * Fixed: Brizy template for front page

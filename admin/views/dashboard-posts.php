@@ -1,37 +1,16 @@
-
-<h3><b></b></h3>
-<ul>
-	<?php
-	if ( count( $posts ) ) {
-		foreach ( $posts as $apost ) {
-
-			try {
-				$brizy_post = Brizy_Editor_Post::get( $apost );
-
-				if ( ! $brizy_post->uses_editor() ) {
-					continue;
-				}
-
-				$link = add_query_arg(
-					array( Brizy_Editor_Constants::EDIT_KEY => '' ),
-					get_permalink( $apost )
-				);
-
-				?>
-                <li>
-                    <a href="<?php echo $link; ?>">
-						<?php echo get_the_title( $apost ) ?>
-                    </a>
+<?php if ( count( $posts ) ) : ?>
+    <div class="brizy-overview__recently-edited">
+        <h3 class="brizy-overview__heading">
+            <?php echo __( 'Recently Edited', 'elementor' ); ?>
+        </h3>
+        <ul class="brizy-overview__posts">
+            <?php foreach ( $posts as $apost ) : ?>
+                <li class="brizy-overview__post">
+                    <a href="<?php echo esc_url( $apost['edit_url'] ); ?>" class="e-overview__post-link">
+                        <?php echo $apost['title']; ?> <span class="dashicons dashicons-edit"></span>
+                    </a> <span><?php echo $apost['date']; ?></span>
                 </li>
-				<?php
-			} catch ( Exception $e ) {
-				continue;
-			}
-		}
-	} else {
-		?>
-        <p><?php _e('No posts created')?>.</p>
-		<?php
-	}
-	?>
-</ul>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>

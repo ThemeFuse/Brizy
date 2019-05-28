@@ -5680,7 +5680,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-slick-slider__dots li{display:inline-block;vertical-align:middle;padding-left:5px;padding-right:5px}
 .brz .brz-slick-slider__dots li:first-child{padding-left:0}
 .brz .brz-slick-slider__dots li:last-child{padding-right:0}
-.brz .brz-slick-slider__dots button{cursor:pointer;color:inherit;outline:0;overflow:hidden;padding:0;text-indent:-9999px;border:2px solid currentColor;background-color:transparent;-webkit-transition:linear .2s transform,linear .2s background-color;transition:linear .2s transform,linear .2s background-color}
+.brz .brz-slick-slider__dots button{cursor:pointer;color:inherit;outline:0;overflow:hidden;padding:0;text-indent:-9999px;border:2px solid currentColor;border-radius:0;background-color:transparent;-webkit-transition:linear .2s transform,linear .2s background-color;transition:linear .2s transform,linear .2s background-color}
 .brz .brz-slick-slider__dots .slick-active button{background-color:currentColor;-webkit-transition:linear .2s transform,linear .2s background-color;transition:linear .2s transform,linear .2s background-color}
 .brz .brz-slick-slider__dots--circle button{width:10px;height:10px;border-radius:10px}
 .brz .brz-slick-slider__dots--diamond button{width:10px;height:10px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}

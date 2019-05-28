@@ -349,9 +349,7 @@ class Brizy_Editor {
 			return false;
 		}
 
-		$user = wp_get_current_user();
-
-		return in_array( 'administrator', (array) $user->roles );
+		return is_admin() || is_super_admin();
 	}
 
 	public static function is_subscriber() {

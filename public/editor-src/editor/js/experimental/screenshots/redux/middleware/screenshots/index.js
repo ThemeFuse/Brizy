@@ -81,10 +81,14 @@ export default store => next => action => {
     action.type === UNDO ||
     action.type === REDO
   ) {
-    const options = {
-      popup: action.meta.SectionPopup,
-      sourceBlockId: action.meta.sourceBlockId
-    };
+    let options;
+
+    if (action.meta) {
+      options = {
+        popup: action.meta.SectionPopup,
+        sourceBlockId: action.meta.sourceBlockId
+      };
+    }
 
     changedBlocksDebounced(prevState, store, next, options);
   }
