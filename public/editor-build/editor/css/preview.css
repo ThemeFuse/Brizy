@@ -6967,10 +6967,11 @@ body.modal-open .mm-slideout {
         -ms-flex: 1 1 auto;
             flex: 1 1 auto;
     min-width: 0;
-    white-space: pre-wrap;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word; }
+    .brz .brz-rich-text > * {
+      white-space: pre-wrap; }
     .brz .brz-rich-text i,
     .brz .brz-rich-text em {
       font-style: italic; }
@@ -7104,6 +7105,13 @@ body.modal-open .mm-slideout {
       height: calc(16px + (0.075 * 100%)); }
   .brz .brz-soundcloud {
     font-size: 0; }
+    .brz .brz-soundcloud .brz-soundCloud-content {
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      width: 100%; }
+      .brz .brz-soundcloud .brz-soundCloud-content iframe {
+        width: 100%; }
   .brz .slick-slider {
     position: relative;
     display: block;
