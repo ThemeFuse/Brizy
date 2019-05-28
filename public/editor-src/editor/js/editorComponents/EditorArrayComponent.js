@@ -48,6 +48,14 @@ export default class EditorArrayComponent extends EditorComponent {
     return updatedValue;
   }
 
+  static cloneItem(items, itemIndex, toIndex = itemIndex + 1) {
+    if (!items[itemIndex]) {
+      throw new Error(`Can't clone invalid item at index ${itemIndex}`);
+    }
+
+    return EditorArrayComponent.insertItem(items, toIndex, items[itemIndex]);
+  }
+
   insertItem(itemIndex, itemData) {
     const itemDataStripped = stripSystemKeys(itemData);
     const itemDataWithIds = setIds(itemDataStripped);

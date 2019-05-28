@@ -1,7 +1,7 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import SectionItems from "./Items";
-import { cloneItem } from "visual/editorComponents/EditorArrayComponent";
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksSelector } from "visual/redux/selectors";
@@ -36,7 +36,7 @@ class Section extends EditorComponent {
         super.handleValueChange(
           {
             ...value,
-            items: cloneItem(value.items, 0)
+            items: EditorArrayComponent.cloneItem(value.items, 0)
           },
           meta
         );
