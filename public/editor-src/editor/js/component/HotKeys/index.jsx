@@ -3,6 +3,10 @@ import { getIn } from "timm";
 import { getStore } from "visual/redux/store";
 import { rolesHOC } from "visual/component/Roles";
 import { getClosestParent } from "visual/utils/models";
+import {
+  pageDataNoRefsSelector,
+  copiedElementNoRefsSelector
+} from "visual/redux/selectors";
 import HotKeysPlugin from "./HotKeysPlugin";
 
 const keyNamesShortKeys = {
@@ -73,10 +77,9 @@ class HotKeys extends React.Component {
 
     const activeElementPath = activeEditorComponent.getPath();
 
-    const {
-      page: { data },
-      copiedElement
-    } = getStore().getState();
+    const state = getStore().getState();
+    const data = pageDataNoRefsSelector(state);
+    const copiedElement = copiedElementNoRefsSelector(state);
     const copiedPath = [...activeElementPath];
 
     // this condition for this cases:
@@ -96,6 +99,7 @@ class HotKeys extends React.Component {
         );
 
         if (
+          currentCopiedContainerValue &&
           (currentCopiedContainerValue.type === "Cloneable" ||
             currentActiveContainerValue.type === "Cloneable") &&
           currentCopiedContainerValue.value.items[0].type !==
@@ -138,11 +142,15 @@ class HotKeys extends React.Component {
     ];
 
     const deleteKeyWasPressed = keyNamesShortKeys.delete.includes(keyName);
+    const pasteKeyNamePressed = keyNamesShortKeys.paste.includes(keyName);
+    const copyKeyNamePressed = keyNamesShortKeys.copy.includes(keyName);
+    const textShortCutWasPressed =
+      deleteKeyWasPressed || pasteKeyNamePressed || copyKeyNamePressed;
     const elementIsEditable =
       e.target.closest("[contenteditable=true]") || e.target.closest("input");
     return (
       !e.target.closest(excludeSelectors.join(",")) &&
-      !(elementIsEditable && deleteKeyWasPressed)
+      !(elementIsEditable && textShortCutWasPressed)
     );
   }
 

@@ -3,6 +3,10 @@ import deepMerge from "deepmerge";
 import { insert, removeAt, replaceAt, setIn, getIn } from "timm";
 import Editor from "visual/global/Editor";
 import { getStore } from "visual/redux/store";
+import {
+  pageDataNoRefsSelector,
+  copiedElementNoRefsSelector
+} from "visual/redux/selectors";
 import { updateCopiedElement } from "visual/redux/actions";
 import EditorComponent from "./EditorComponent";
 import {
@@ -77,7 +81,7 @@ export default class EditorArrayComponent extends EditorComponent {
     this.handleValueChange(updatedValue, { arrayOperation: "insert_bulk" });
   }
 
-  updateItem(itemIndex, itemValue, updateMeta) {
+  updateItem(itemIndex, itemValue, updateMeta = {}) {
     const dbValue = this.getDBValue();
     const updatedValue = setIn(dbValue, [itemIndex, "value"], itemValue);
 
@@ -313,7 +317,7 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 
   getCurrentCopiedElement = () => {
-    const { path, value } = getStore().getState().copiedElement;
+    const { path, value } = copiedElementNoRefsSelector(getStore().getState());
 
     if (value) {
       return getIn(value, path);
@@ -324,10 +328,8 @@ export default class EditorArrayComponent extends EditorComponent {
 
   changeVerticalAlign(index, alignDirection) {
     const v = this.getValue();
+    const data = pageDataNoRefsSelector(getStore().getState());
     const activeElementPath = global.Brizy.activeEditorComponent.getPath();
-    const {
-      page: { data }
-    } = getStore().getState();
 
     const {
       path,
@@ -373,10 +375,9 @@ export default class EditorArrayComponent extends EditorComponent {
   changeHorizontalAlign(index, alignDirection) {
     const v = this.getValue();
     const activeElementPath = global.Brizy.activeEditorComponent.getPath();
-    const {
-      page: { data }
-    } = getStore().getState();
-    const deviceMode = getStore().getState().ui.deviceMode;
+    const state = getStore().getState();
+    const data = pageDataNoRefsSelector(state);
+    const { deviceMode } = state.ui;
     const alignName =
       deviceMode === "desktop"
         ? "horizontalAlign"
@@ -427,7 +428,9 @@ export default class EditorArrayComponent extends EditorComponent {
 
   paste(index) {
     const v = this.getValue()[index];
-    const { path, value: copiedValue } = getStore().getState().copiedElement;
+    const { path, value: copiedValue } = copiedElementNoRefsSelector(
+      getStore().getState()
+    );
     if (!copiedValue) {
       return;
     }
@@ -445,7 +448,9 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 
   pasteStyles(index) {
-    const { path, value: copiedValue } = getStore().getState().copiedElement;
+    const { path, value: copiedValue } = copiedElementNoRefsSelector(
+      getStore().getState()
+    );
     if (!copiedValue) {
       return;
     }
