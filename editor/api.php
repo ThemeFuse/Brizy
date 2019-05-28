@@ -73,23 +73,8 @@ class Brizy_Editor_API {
 				'set_featured_image_focal_point'
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_REMOVE_FEATURED_IMAGE, array( $this, 'remove_featured_image' ) );
-			add_action( 'wp_ajax_' . self::AJAX_UPDATE_EDITOR_META_DATA, array(
-				$this,
-				'update_editor_project_meta_data'
-			) );
+
 		}
-	}
-
-	public function update_editor_project_meta_data() {
-		$this->authorize();
-
-		if ( ! $this->param( 'metaData' ) ) {
-			$this->error( 400, 'Invalid meta data provided' );
-		} else {
-			Brizy_Editor_Project::get()->setEditorMetaAsJson( $this->param( 'metaData' ) );
-		}
-
-		$this->error( 400, 'Invalid post' );
 	}
 
 
