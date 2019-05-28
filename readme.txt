@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.2.1
 Requires PHP: 5.4
-Stable tag: 1.0.79
+Stable tag: 1.0.80
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,12 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.80 - 2019-05-28 =
+* Fixed: Section Make it a Slider option
+* Fixed: Hotkeys not working in Global blocks
+* Fixed: Slider dots options not working with certain WordPress themes
+* Fixed: Undo / Redo
 
 = 1.0.79 - 2019-05-27 =
 * Fixed: Brizy template for front page
