@@ -1,33 +1,91 @@
 def now = new Date()
 def currentDate =  now.format("yyyy-MM-dd", TimeZone.getTimeZone('UTC'))
 def changeLogs = params.changelog.replaceAll("\n","\\\\n").replaceAll("/",'\\\\/')
-def zipFileName = "Build-"+params.buildVersion+".zip"
+def buildTag = (!params.gitMerge)?"("+params.releaseBranch+")":"";
+def zipFileName = "BuildFree-"+params.buildVersion+"-RC"+buildTag+".zip"
+
+if(params.gitMerge) {
+    zipFileName = "BuildFree-"+params.buildVersion+".zip"
+}
+
 env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
+
+def sendSlackMessage(String message) {
+    message = message.replaceAll("'","\'").replaceAll("\n",'\n');
+    withCredentials([string(credentialsId: 'slack-hook-url', variable: 'hook_urk')]) {
+      sh """
+        curl -X POST -H 'Content-type: application/json' --data '${message}' ${hook_urk}
+      """
+    }
+}
 
 def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
 
-
-    def buildInfo = "\nBranch: "+params.releaseBranch+"\nPlugin version: "+params.buildVersion+"\nEditor version: "+params.editorVersion+"\nChangelog\n"+params.changelog;
+    def slackMessage= '';
+    def color = '';
 
      if ( buildResult == "SUCCESS" ) {
-       slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful."+buildInfo
-
-       withCredentials([string(credentialsId: 'Slack Oauth Token', variable: 'SECRET')]) {
-           sh '''
-               set +x
-               curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
-           '''
-       }
-
+       slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was successful.";
+       color = '#00ff00';
      }
      else if( buildResult == "FAILURE" ) {
-       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed."+buildInfo
+       slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was failed.";
+       color = '#ff0000';
      }
      else if( buildResult == "UNSTABLE" ) {
-       slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable."+buildInfo
+        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was unstable.";
+        color = '#ff8800';
      }
      else {
-       slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear."+buildInfo
+        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} its result was unclear.";
+        color = '#ff8800';
+     }
+
+    def changelog = params.changelog.replaceAll('"','\"');
+
+    def slackMessageJson = """
+    {
+        "attachments": [
+            {
+                "color": "${color}",
+                "title": "${slackMessage}",
+                "fields": [
+                    {
+                        "title": "Plugin version",
+                        "value": "${params.buildVersion}",
+                        "short": true
+                    },
+                    {
+                        "title": "Editor version",
+                        "value": "${params.editorVersion}",
+                        "short": true
+                    },
+                    {
+                        "title": "Branch",
+                        "value": "${params.releaseBranch}",
+                        "short": true
+                    },
+                    {
+                        "title": "Changelog",
+                        "value": "${changelog}",
+                        "short": false
+                    }
+                ],
+                "footer": "Brizy",
+                "footer_icon": "https://brizy.io/wp-content/uploads/2018/02/logo-symbol.png"
+            }
+        ]
+    }
+    """;
+    sendSlackMessage(slackMessageJson);
+
+     if ( buildResult == "SUCCESS" ) {
+       withCredentials([string(credentialsId: 'slack', variable: 'SECRET')]) {
+            sh '''
+                set +x
+                curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
+            '''
+       }
      }
 }
 
@@ -42,12 +100,12 @@ pipeline {
             steps {
                 script {
                     if(folderExist(params.brizySvnPath+"/tags/"+params.buildVersion)) {
-                        error("Build failed because this version is alread built.")
+                        error("Build failed because this version is already built.")
                     }
                 }
 
                 git url: "git@github.com:/ThemeFuse/Brizy",
-                    credentialsId: '7ca32202-12d1-4189-9ff3-093095f8ffc3',
+                    credentialsId: 'Git',
                     branch: params.releaseBranch
 
                 sh 'git config user.name "Alex Zaharia"'
@@ -70,7 +128,6 @@ pipeline {
         }
 
         stage('Prepare SVN') {
-
             steps {
                 sh 'cd ' + params.brizySvnPath + ' && svn cleanup && svn revert . -R && svn up'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf trunk/*'
@@ -81,39 +138,40 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -type f -name "*.dev.php" -delete'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf  ./bin ./tests *.dist *.xml *.lock *.json *.yml .gitignore'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/test'
+                sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/.git'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/ext/twig'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/twig/twig/doc'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./*.sh'
-                sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./.git'
+                sh 'cd ' + params.brizySvnPath + '/trunk && ( find . -type d -name ".git" && find . -name ".gitignore" && find . -name ".gitmodules" ) | xargs rm -rf'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./Jenkinsfile'
-                sh 'cd ' + params.brizySvnPath + '/trunk && if svn st | grep "!" > /dev/null; then  svn st | grep "!" | cut -d! -f2| sed \'s/^ *//\' | sed \'s/^/"/g\' | sed \'s/$/"/g\' | xargs svn rm; fi'
-                sh 'cd ' + params.brizySvnPath + '/trunk && if svn st | grep "?" > /dev/null; then  svn st | grep "?" | cut -d? -f2| sed \'s/^ *//\' | sed \'s/^/"/g\' | sed \'s/$/"/g\' | xargs svn add; fi'
+                sh 'cd ' + params.brizySvnPath + '/trunk && if svn st | grep "!" > /dev/null; then  svn st | grep "!" | cut -d! -f2| sed \'s/^ *//\' | sed \'s/^/"/g\' | sed \'s/$/"/g\' | sed \'s/$/@/g\' | xargs svn rm; fi'
+                sh 'cd ' + params.brizySvnPath + '/trunk && if svn st | grep "?" > /dev/null; then  svn st | grep "?" | cut -d? -f2| sed \'s/^ *//\' | sed \'s/^/"/g\' | sed \'s/$/"/g\' | sed \'s/$/@/g\' | xargs svn add; fi'
                 sh 'cd ' + params.brizySvnPath + ' && rm -f Build-*'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf brizy && mkdir brizy'
                 sh 'cd ' + params.brizySvnPath + ' && cp -r ./trunk/* ./brizy/'
-                sh 'cd ' + params.brizySvnPath + ' && zip -r "'+zipFileName+'" brizy/'
+                sh 'cd ' + params.brizySvnPath + ' && zip -r "'+zipFileName+'" brizy/ -x .git -x .idea -x .gitignore'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf ./brizy'
             }
         }
 
         stage('Git Merge') {
-                    when {
-                        expression { return params.gitMerge }
-                    }
-                    steps {
-                        sh 'git commit -a -m "Build '+params.buildVersion+'"'
-                        sh 'git checkout -t origin/master'
-                        sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
-                        sh 'git tag '+params.buildVersion
-                        sh 'git checkout -t origin/develop'
-                        sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
+            when {
+                expression { return params.gitMerge }
+            }
+            steps {
+                sh 'git commit -a -m "Build '+params.buildVersion+'"'
+                sh 'git checkout -t origin/master'
+                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
+                sh 'git tag '+params.buildVersion
+                sh 'git checkout -t origin/develop'
+                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
 
-                        sshagent (credentials: ['7ca32202-12d1-4189-9ff3-093095f8ffc3']) {
-                            sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
-                        }
-                    }
+                sshagent (credentials: ['Git']) {
+                    sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
                 }
+            }
+        }
 
         stage('Publish') {
             when {
@@ -124,7 +182,6 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + ' && svn commit --non-interactive --trust-server-cert --username themefusecom --password \''+params.svnPassword+'\'  -m "Version '+params.buildVersion+'"'
             }
         }
-
     }
 
     post {
