@@ -235,7 +235,8 @@ class PromptAddPopupOptionType extends React.Component {
   renderThumbnailLegacy() {
     const {
       value: { value },
-      pageBlocks
+      pageBlocks,
+      canDelete
     } = this.props;
     let block = pageBlocks.find(block => block.value._id === value);
     const { url, width, height } = blockThumbnailData(block);
