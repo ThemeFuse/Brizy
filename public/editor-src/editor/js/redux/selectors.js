@@ -1,19 +1,25 @@
 import { createSelector } from "reselect";
+import produce from "immer";
 import Editor from "visual/global/Editor";
 import objectTraverse from "visual/utils/objectTraverse";
-
-// page
+import { getGeneratedGlobalBlocksInPage } from "visual/utils/blocks";
 
 export const pageDataSelector = state => state.page.data || {};
+
+export const globalBlocksSelector = state => state.globalBlocks || {};
+
+export const savedBlocksSelector = state => state.savedBlocks || {};
+
+export const deviceModeSelector = state => state.ui.deviceMode;
+
+export const globalsSelector = state => state.globals || {};
+
+export const copiedElementSelector = state => state.copiedElement;
 
 export const pageBlocksSelector = createSelector(
   pageDataSelector,
   pageData => pageData.items || []
 );
-
-// globals
-
-export const globalsSelector = state => state.globals || {};
 
 export const currentStyleSelector = createSelector(
   globalsSelector,
@@ -212,9 +218,23 @@ export const currentStyleSelector = createSelector(
   }
 );
 
-// global blocks
+export const pageDataNoRefsSelector = createSelector(
+  pageDataSelector,
+  globalBlocksSelector,
+  (pageData, globalBlocks) => {
+    return produce(pageData, draft => {
+      objectTraverse(draft, (key, value, obj) => {
+        if (obj.type && obj.type === "GlobalBlock" && obj.value) {
+          const { globalBlockId } = obj.value;
 
-export const globalBlocksSelector = state => state.globalBlocks || {};
+          if (globalBlocks[globalBlockId]) {
+            Object.assign(obj, globalBlocks[globalBlockId]);
+          }
+        }
+      });
+    });
+  }
+);
 
 export const globalBlocksInPageSelector = createSelector(
   globalBlocksSelector,
@@ -238,10 +258,20 @@ export const globalBlocksInPageSelector = createSelector(
   }
 );
 
-// saved blocks
+export const copiedElementNoRefsSelector = createSelector(
+  copiedElementSelector,
+  globalBlocksSelector,
+  (copiedElement, globalBlocks) => {
+    return produce(copiedElement, draft => {
+      objectTraverse(draft, (key, value, obj) => {
+        if (obj.type && obj.type === "GlobalBlock" && obj.value) {
+          const { globalBlockId } = obj.value;
 
-export const savedBlocksSelector = state => state.savedBlocks || {};
-
-// ui
-
-export const deviceModeSelector = state => state.ui.deviceMode;
+          if (globalBlocks[globalBlockId]) {
+            Object.assign(obj, globalBlocks[globalBlockId]);
+          }
+        }
+      });
+    });
+  }
+);

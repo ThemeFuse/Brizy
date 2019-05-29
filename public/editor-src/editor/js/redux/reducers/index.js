@@ -121,7 +121,11 @@ export function ui(state = uiDefault, action) {
   }
 }
 
-export function copiedElement(state = {}, action) {
+const copiedElementDefault = {
+  value: {},
+  path: []
+};
+export function copiedElement(state = copiedElementDefault, action) {
   switch (action.type) {
     case COPY_ELEMENT:
       return {
