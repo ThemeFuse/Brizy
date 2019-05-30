@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.1<br>
 Requires PHP: 5.4<br>
-Stable tag: 1.0.80<br>
+Stable tag: 1.0.81<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.81 - 2019-05-29 ###
+* Fixed: Popup option not working for certain users
+* Fixed: Url for Go to pro button
 
 ### 1.0.80 - 2019-05-28 ###
 * Fixed: Section Make it a Slider option
