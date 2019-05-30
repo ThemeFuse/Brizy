@@ -148,7 +148,7 @@ class Brizy_Editor_Editor_Editor {
 				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
 			),
 			'form'            => array(
-				'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
+				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 			),
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
@@ -237,7 +237,7 @@ class Brizy_Editor_Editor_Editor {
 			),
 			'applications'    => array(
 				'form' => array(
-					'submitUrl' => add_query_arg( 'action', 'brizy_submit_form', set_url_scheme( admin_url( 'admin-ajax.php' ) ) )
+					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 				)
 			),
 			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) )
