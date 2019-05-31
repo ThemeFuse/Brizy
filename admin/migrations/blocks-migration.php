@@ -1,5 +1,7 @@
 <?php
 
+use Brizy\ConditionsContext;
+
 class Brizy_Admin_Migrations_BlocksMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
 	/**
@@ -25,29 +27,52 @@ class Brizy_Admin_Migrations_BlocksMigration implements Brizy_Admin_Migrations_M
 	 */
 	public function execute() {
 
-		throw new Exception();
 
 		$pages              = $this->getAllPages();
 		$globalBlocks       = $this->getGlobalBlocks();
 		$transformer        = new \Brizy\ConditionsTransformer();
-		$transformerContext = new Brizy\ConditionsContext( $globalBlocks );
+		$transformerContext = new ConditionsContext( null );
+		$transformerContext->setGlobalBlocks( $globalBlocks );
 		foreach ( $pages as $page ) {
 
 			$storage = Brizy_Editor_Storage_Post::instance( $page->ID );
 
 			$pageConfig = $this->getConfig( $page );
 
-			$transformerContext->setData( $storage->get( Brizy_Editor_Post::BRIZY_POST, false ) );
+			$data = $storage->get( Brizy_Editor_Post::BRIZY_POST, false );
+			$transformerContext->setData( json_decode( base64_decode( $data['editor_data'] ) ) );
 			$transformerContext->setConfig( $pageConfig );
 
 			$transformer->execute( $transformerContext );
 
 			// backup page data
-			// update_post_meta( $page->ID, 'brizy-bk-' . get_class( $this ) . '-' . $this->getVersion(), $storage->get_storage() );
-			// save globas blocks and page data
-		}
+			update_post_meta( $page->ID, 'brizy-bk-' . get_class( $this ) . '-' . $this->getVersion(), $storage->get_storage() );
 
-		exit;
+			// save globas blocks and page data
+			$data['editor_data'] = base64_encode( json_encode( $transformerContext->getData() ) );
+			$storage->set( Brizy_Editor_Post::BRIZY_POST, $data );
+
+			// store globals blocks
+			foreach ( $transformerContext->getGlobalBlocks() as $block ) {
+
+				$blockObject = Brizy_Editor_Block::get( $block->post_id );
+
+				update_post_meta( $block->post_id, 'brizy-bk-' . get_class( $this ) . '-' . $this->getVersion(), $blockObject->convertToOptionValue() );
+				$rules = array();
+				foreach ( $block->rules as $ruleJson ) {
+					$rules[] = Brizy_Admin_Rule::createFromJsonObject( json_encode( $ruleJson ) );
+				}
+
+				$blockObject->setRules( $rules );
+
+				if ( $block->position ) {
+					$blockObject->setPosition( new Brizy_Editor_BlockPosition( $block->position->align, $block->position->index ) );
+				}
+
+				$blockObject->save();
+			}
+		}
+		throw new Exception();
 	}
 
 	private function getGlobalBlocks() {
@@ -62,14 +87,14 @@ class Brizy_Admin_Migrations_BlocksMigration implements Brizy_Admin_Migrations_M
 		) );
 
 		foreach ( $blocks as $block ) {
-			$brizy_editor_block                  = Brizy_Editor_Block::get( $block );
-			$uid                                 = $brizy_editor_block->get_uid();
-			$globalBlocks[ $uid ]                = $brizy_editor_block->convertToOptionValue();
-			$globalBlocks[ $uid ]['editor_data'] = base64_decode( $globalBlocks[ $uid ]['editor_data'] );
+			$brizy_editor_block            = Brizy_Editor_Block::get( $block );
+			$uid                           = $brizy_editor_block->get_uid();
+			$globalBlocks[ $uid ]          = (object) $brizy_editor_block->convertToOptionValue();
+			$globalBlocks[ $uid ]->post_id = $block->ID;
+
 			//$globalBlocks[ $uid ]['position']    = json_decode( $globalBlocks[ $uid ]['position'] );
 			//$globalBlocks[ $uid ]['rules']    = json_decode( $globalBlocks[ $uid ]['position'] );
 		}
-
 
 		return $globalBlocks;
 	}

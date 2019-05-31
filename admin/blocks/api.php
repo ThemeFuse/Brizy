@@ -190,8 +190,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			// rules
 			$rulesData = stripslashes( $this->param( 'rules' ) );
 			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL, false );
-
-			$this->ruleManager->setRules( $block->get_wp_post()->ID, $rules );
+			$block->setRules($rules);
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->auto_save_post();

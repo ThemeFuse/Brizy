@@ -9,8 +9,19 @@
 
 class Brizy_Editor_Block extends Brizy_Editor_Post {
 
+	/**
+	 * @var Brizy_Editor_BlockPosition[]
+	 */
 	protected $position;
 
+	/***
+	 * @var Brizy_Admin_Rule[]
+	 */
+	protected $rules;
+
+	/**
+	 * @var self;
+	 */
 	static protected $block_instance = null;
 
 	/**
@@ -51,7 +62,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		if ( $uid ) {
 			$this->uid = $uid;
-			update_post_meta( $this->get_parent_id(), 'brizy_post_uid', $this->uid );
+			update_metadata( $this->get_wp_post()->post_type, $this->get_parent_id(),'brizy_post_uid', $this->uid );
 		} else {
 			$this->create_uid();
 		}
@@ -65,6 +76,24 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 	public function getPosition() {
 		return $this->position;
+	}
+
+	/**
+	 * @return Brizy_Admin_Rule[]
+	 */
+	public function getRules() {
+		return $this->rules;
+	}
+
+	/**
+	 * @param Brizy_Admin_Rule[] $rules
+	 *
+	 * @return Brizy_Editor_Block
+	 */
+	public function setRules( $rules ) {
+		$this->rules = $rules;
+
+		return $this;
 	}
 
 	public function auto_save_post() {
@@ -126,14 +155,18 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		}
 	}
 
+	public function save() {
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$ruleManager->setRules( $this->get_id(), $this->getRules() );
+		parent::save();
+	}
+
 
 	public function jsonSerialize() {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
 
-		$ruleManager = new Brizy_Admin_Rules_Manager();
-
-		$data['rules']    = $ruleManager->getRules( $this->get_id() );
+		$data['rules']    = $this->getRules();
 		$data['position'] = $this->getPosition();
 
 		unset( $data['wp_post'] );
@@ -147,15 +180,16 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		if ( isset( $data['position'] ) ) {
 			$this->position = $data['position'];
 		}
+
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$this->setRules( $ruleManager->getRules( $this->get_id() ) );
 	}
 
 	public function convertToOptionValue() {
 		$data = parent::convertToOptionValue();
 
 		$data['position'] = $this->getPosition();
-
-		$ruleManager   = new Brizy_Admin_Rules_Manager();
-		$data['rules'] = $ruleManager->getRules( $this->get_id() );
+		$data['rules']    = $this->getRules();
 
 		return $data;
 	}
@@ -171,6 +205,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		 */
 		$autosave = parent::populateAutoSavedData( $autosave );
 		$autosave->setPosition( $this->getPosition() );
+		$autosave->setRules( $this->getRules() );
 
 		return $autosave;
 	}
@@ -211,18 +246,15 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	 */
 	public static function postData( Brizy_Editor_Block $post ) {
 
-		$p_id        = (int) $post->get_id();
-		$ruleManager = new Brizy_Admin_Rules_Manager();
-		$global      = array(
+		$p_id   = (int) $post->get_id();
+		$global = array(
 			'uid'      => $post->get_uid(),
 			'status'   => get_post_status( $p_id ),
 			'data'     => $post->get_editor_data(),
 			'position' => $post->getPosition(),
-			'rules'    => $ruleManager->getRules( $p_id ),
+			'rules'    => $post->getRules()
 		);
 
 		return $global;
 	}
-
-
 }
