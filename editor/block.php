@@ -9,6 +9,9 @@
 
 class Brizy_Editor_Block extends Brizy_Editor_Post {
 
+	/**
+	 * @var Brizy_Editor_BlockPosition[]
+	 */
 	use Brizy_Editor_AutoSaveAware, Brizy_Editor_Synchronizable;
 
 	const BRIZY_META = 'brizy-meta';
@@ -29,9 +32,13 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	 */
 	protected $media;
 
+	/**
+	 * @var Brizy_Admin_Rule[]
+	 */
+	protected $rules;
 
 	/**
-	 * @var Brizy_Editor_Block
+	 * @var self;
 	 */
 	static protected $block_instance = null;
 
@@ -181,6 +188,24 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $this->position;
 	}
 
+	/**
+	 * @return Brizy_Admin_Rule[]
+	 */
+	public function getRules() {
+		return $this->rules;
+	}
+
+	/**
+	 * @param Brizy_Admin_Rule[] $rules
+	 *
+	 * @return Brizy_Editor_Block
+	 */
+	public function setRules( $rules ) {
+		$this->rules = $rules;
+
+		return $this;
+	}
+
 
 	public function isGlobalBlock() {
 		return $this->getWpPost() instanceof WP_Post && $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL;
@@ -251,6 +276,9 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			$this->position = $storage_post['position'];
 		}
 
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$this->setRules( $ruleManager->getRules( $this->getWpPostId() ) );
+
 		if ( isset( $storage_post['cloudId'] ) ) {
 			$this->setCloudId( $storage_post['cloudId'] );
 		}
@@ -294,6 +322,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		 */
 		$autosave = parent::populateAutoSavedData( $autosave );
 		$autosave->setPosition( $this->getPosition() );
+		$autosave->setRules( $this->getRules() );
 
 		return $autosave;
 	}
@@ -335,6 +364,5 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			do_action( 'brizy_global_data_updated' );
 		}
 	}
-
 
 }
