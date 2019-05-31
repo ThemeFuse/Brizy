@@ -9,10 +9,21 @@
 
 class Brizy_Editor_Block extends Brizy_Editor_Post {
 
+	/**
+	 * @var Brizy_Editor_BlockPosition[]
+	 */
 	use Brizy_Editor_AutoSaveAware;
 
 	protected $position;
 
+	/***
+	 * @var Brizy_Admin_Rule[]
+	 */
+	protected $rules;
+
+	/**
+	 * @var self;
+	 */
 	static protected $block_instance = null;
 
 	public static function cleanClassCache() {
@@ -118,6 +129,24 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $this->position;
 	}
 
+	/**
+	 * @return Brizy_Admin_Rule[]
+	 */
+	public function getRules() {
+		return $this->rules;
+	}
+
+	/**
+	 * @param Brizy_Admin_Rule[] $rules
+	 *
+	 * @return Brizy_Editor_Block
+	 */
+	public function setRules( $rules ) {
+		$this->rules = $rules;
+
+		return $this;
+	}
+
 	public function jsonSerialize() {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
@@ -136,9 +165,13 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		parent::loadInstanceData();
 		$storage      = $this->getStorage();
 		$storage_post = $storage->get( self::BRIZY_POST, false );
+
 		if ( isset( $storage_post['position'] ) ) {
 			$this->position = $storage_post['position'];
 		}
+
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$this->setRules( $ruleManager->getRules( $this->getWpPostId() ) );
 	}
 
 	public function convertToOptionValue() {
@@ -163,6 +196,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		 */
 		$autosave = parent::populateAutoSavedData( $autosave );
 		$autosave->setPosition( $this->getPosition() );
+		$autosave->setRules( $this->getRules() );
 
 		return $autosave;
 	}
@@ -203,7 +237,5 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			$this->savePost();
 			do_action( 'brizy_global_data_updated' );
 		}
-
 	}
-
 }
