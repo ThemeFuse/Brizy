@@ -2,14 +2,23 @@
 
 class BlockTest extends \Codeception\Test\Unit {
 
-	// tests
+	/**
+	 * @var \UnitTester
+	 */
+	protected $tester;
+
+	protected function _before() {
+	}
+
+	protected function _after() {
+	}
 
 	/**
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-	public function test_save() {
+	public function testSave() {
 
-		$data         = base64_encode('test');
+		$data         = base64_encode( 'test' );
 		$data_decoded = 'test';
 
 		$id    = wp_insert_post( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_GLOBAL, 'post_title' => 'Test' ] );
@@ -24,6 +33,7 @@ class BlockTest extends \Codeception\Test\Unit {
 
 		$block = new Brizy_Editor_Block( $id );
 
+
 		$this->assertInstanceOf( "Brizy_Editor_BlockPosition", $block->getPosition(), "setPosition should return a Brizy_Editor_BlockPosition instance " );
 		$this->assertEquals( $data_decoded, $block->get_editor_data(), "It should return decoded data" );
 		$this->assertEquals( "1", $block->get_compiler_version() );
@@ -33,12 +43,12 @@ class BlockTest extends \Codeception\Test\Unit {
 	/**
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-	public function test_jsonSerialize() {
+	public function testJsonSerialize() {
 
-		$data         = base64_encode('test');
+		$data         = base64_encode( 'test' );
 		$data_decoded = 'test';
 
-		echo $id    = wp_insert_post( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_GLOBAL, 'post_title' => 'Test 2' ] );
+		echo $id = wp_insert_post( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_GLOBAL, 'post_title' => 'Test 2' ] );
 
 		$block = new Brizy_Editor_Block( $id );
 		$block->setPosition( new Brizy_Editor_BlockPosition( "left", 1 ) );
@@ -49,13 +59,13 @@ class BlockTest extends \Codeception\Test\Unit {
 
 		$block = new Brizy_Editor_Block( $id );
 
+		// getting data that is going to be in json string
 		$json_serialize = $block->jsonSerialize();
 
-		var_dump($json_serialize);
-
-		$this->assertTrue( isset($json_serialize['rules']),'Rule data is not returned in json serialize data' );
-		$this->assertTrue( isset($json_serialize['position']),'Position data is not returned in json serialize data' );
-		$this->assertTrue( isset($json_serialize['editor_data']),'Editor data is not returned in json serialize data' );
-		$this->assertEquals( $json_serialize['editor_data'],$data_decoded,'Editor data is not decoded' );
+		$this->assertTrue( isset( $json_serialize['rules'] ), 'Rule data is not returned in json serialize data' );
+		$this->assertTrue( isset( $json_serialize['position'] ), 'Position data is not returned in json serialize data' );
+		$this->assertTrue( isset( $json_serialize['editor_data'] ), 'Editor data is not returned in json serialize data' );
+		$this->assertEquals( $json_serialize['editor_data'], $data_decoded, 'Editor data is not decoded' );
 	}
+
 }

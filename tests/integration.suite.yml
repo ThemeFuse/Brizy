@@ -5,7 +5,9 @@
 actor: WpunitTester
 modules:
     enabled:
+        - Asserts
         - WPLoader
+        - \Helper\Unit
         - \Helper\Wpunit
     config:
         WPLoader:
@@ -18,6 +20,6 @@ modules:
             tablePrefix: "%TEST_TABLE_PREFIX%"
             domain: "%TEST_SITE_WP_DOMAIN%"
             adminEmail: "%TEST_SITE_ADMIN_EMAIL%"
-            title: "Test"        
+            title: "Test"
             plugins: ['brizy/brizy.php']
             activatePlugins: ['brizy/brizy.php']
