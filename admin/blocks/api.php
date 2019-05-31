@@ -108,14 +108,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 			$editorData = stripslashes( $this->param( 'data' ) );
-			$position = stripslashes( $this->param( 'position' ) );
+			$position   = stripslashes( $this->param( 'position' ) );
 
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_GLOBAL );
 			$block->set_editor_data( $editorData );
 			$block->set_needs_compile( true );
 
 			if ( $position ) {
-				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars(json_decode($position)) ) );
+				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars( json_decode( $position ) ) ) );
 			}
 
 			// rules
@@ -184,7 +184,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$position = stripslashes( $this->param( 'position' ) );
 
 			if ( $position ) {
-				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars(json_decode($position)) ) );
+				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars( json_decode( $position ) ) ) );
 			}
 
 			// rules
@@ -302,7 +302,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 
-
 	/**
 	 * @param $uid
 	 * @param $postType
@@ -365,6 +364,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	 */
 	private function createBlock( $uid, $status, $type ) {
 		$post = wp_insert_post( array(
+			'post_title'  => md5( time() ),
 			'post_status' => $status,
 			'post_type'   => $type
 		) );
