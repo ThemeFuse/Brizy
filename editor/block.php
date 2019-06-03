@@ -40,6 +40,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	public static function get( $apost, $uid = null ) {
 
 		$wp_post_id = $apost;
+
 		if ( $apost instanceof WP_Post ) {
 			$wp_post_id = $apost->ID;
 		}

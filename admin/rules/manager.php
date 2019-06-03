@@ -197,7 +197,7 @@ class Brizy_Admin_Rules_Manager {
 			$arrayRules[] = $rule->convertToOptionValue();
 		}
 
-		update_metadata( get_post_type((int)$postId), (int) $postId, 'brizy-rules', $arrayRules  );
+		update_metadata( 'post', (int) $postId, 'brizy-rules', $arrayRules  );
 	}
 
 	/**
