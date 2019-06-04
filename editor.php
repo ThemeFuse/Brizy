@@ -91,7 +91,7 @@ class Brizy_Editor {
 
 		try {
 			// do not delete this line
-			$user    = Brizy_Editor_User::get();
+			$user = Brizy_Editor_User::get();
 
 			if ( $pid ) {
 				$post = Brizy_Editor_Post::get( $pid );
@@ -122,7 +122,7 @@ class Brizy_Editor {
 
 	public function revisionsToKeep( $num, $post ) {
 		try {
-			if(in_array($post->post_type,array( Brizy_Editor_Project::BRIZY_PROJECT ))) {
+			if ( in_array( $post->post_type, array( Brizy_Editor_Project::BRIZY_PROJECT ) ) ) {
 				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
 			}
 
@@ -195,22 +195,22 @@ class Brizy_Editor {
 	function registerPageTemplates( $templates ) {
 		return array_merge( $templates,
 			array(
-				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __bt('brizy','Brizy').__( ' Template', 'brizy' )
+				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __bt( 'brizy', 'Brizy' ) . __( ' Template', 'brizy' )
 			) );
 	}
 
 
 	public function registerCustomPostTemplates() {
 		Brizy_Editor_Project::registerCustomPostType();
-		Brizy_Admin_Templates::registerCustomPostTemplate();
 		Brizy_Admin_Blocks_Main::registerCustomPosts();
-		Brizy_Admin_FormEntries::registerCustomPostTemplate();
+		Brizy_Admin_FormEntries::registerCustomPost();
+		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}
 
 	/**
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function handleFrontEndEditor(  $post ) {
+	public function handleFrontEndEditor( $post ) {
 		try {
 			$main = new Brizy_Public_Main( $post );
 			$main->initialize_front_end();
@@ -222,7 +222,7 @@ class Brizy_Editor {
 	/**
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function handleBackEndEditor(  $post ) {
+	public function handleBackEndEditor( $post ) {
 
 		try {
 			$main = new Brizy_Public_Main( $post );
@@ -420,7 +420,7 @@ class Brizy_Editor {
 	}
 
 	public function get_name() {
-		return __bt('brizy','Brizy');
+		return __bt( 'brizy', 'Brizy' );
 	}
 
 	protected function get_post_types() {
