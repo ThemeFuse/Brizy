@@ -131,7 +131,7 @@ class Brizy_Editor_Project implements Serializable {
 				$wp_post = get_post( $wp_post_id );
 			}
 
-			if ( self::$instance[ $wp_post->ID ] ) {
+			if ( isset( self::$instance[ $wp_post->ID ] ) ) {
 				return self::$instance[ $wp_post->ID ];
 			}
 		} catch ( Exception $e ) {
@@ -139,28 +139,11 @@ class Brizy_Editor_Project implements Serializable {
 		}
 
 		return self::$instance[ $wp_post->ID ] = new self( $wp_post );
-
-		//		if ( isset( self::$instance ) ) {
-//			return self::$instance;
-//		}
-//
-//		try {
-//
-//			// check if the project post created
-//			// if not then create the project pos
-//			$post           = self::getPost();
-//			$project        = new self( $post );
-//			self::$instance = $project;
-//
-//		} catch ( Exception $e ) {
-//			Brizy_Logger::instance()->exception( $e );
-//		}
-//
-//		return self::$instance;
 	}
 
 	/**
-	 * @return false|null|WP_Post
+	 * @return false|WP_Post
+	 * @throws Exception
 	 */
 	static public function getPost() {
 		global $wpdb;
@@ -252,8 +235,8 @@ class Brizy_Editor_Project implements Serializable {
 	}
 
 	protected function loadProjectData( $data ) {
-		$this->id    = isset( $data['id'] ) ? $data['id'] : null;
-		$this->title = isset( $data['title'] ) ? $data['title'] : null;
+		$this->id                       = isset( $data['id'] ) ? $data['id'] : null;
+		$this->title                    = isset( $data['title'] ) ? $data['title'] : null;
 		$this->name                     = isset( $data['name'] ) ? $data['name'] : null;
 		$this->user                     = isset( $data['user'] ) ? $data['user'] : null;
 		$this->template                 = isset( $data['template'] ) ? $data['template'] : null;
