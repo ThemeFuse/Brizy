@@ -15,7 +15,7 @@ class Brizy_Admin_Migrations_BlockPostTitleMigration implements Brizy_Admin_Migr
 	 * @return mixed
 	 */
 	public function getVersion() {
-		return '1.0.91';
+		return '1.0.82';
 	}
 
 	/**
@@ -24,23 +24,28 @@ class Brizy_Admin_Migrations_BlockPostTitleMigration implements Brizy_Admin_Migr
 	 */
 	public function execute() {
 
-			try {
-				global $wpdb;
+		try {
+			global $wpdb;
+			$invalidBlocks = $wpdb->get_results(
+				"SELECT p.ID, p.post_title FROM {$wpdb->posts} p 
+						WHERE p.post_type='brizy-global-block' OR p.post_type='brizy-saved-block'" );
 
-				$invalidBlocks = $wpdb->get_results(
-					"SELECT p.ID FROM {$wpdb->posts} p  
-					WHERE (p.post_type='brizy-global-block' or p.post_type='brizy-saved-block'");
-
-				if ( is_array( $invalidBlocks ) ) {
-					foreach ( $invalidBlocks as $id=>$block ) {
-
-						$name = md5(time().$id);
-						$wpdb->query( "UPDATE  {$wpdb->posts} SET post_title=  WHERE ID={$block->ID}" );
+			if ( is_array( $invalidBlocks ) ) {
+				foreach ( $invalidBlocks as $id => $block ) {
+					if ( $block->post_title != '' ) {
+						continue;
 					}
-				}
 
-			} catch ( Exception $e ) {
-				return;
+					$name = md5( time() . $id );
+					$wpdb->query(
+						$wpdb->prepare( "UPDATE {$wpdb->posts} 
+												SET `post_title` = %s, `post_name` = %s 
+												WHERE ID=%d ", array( $name, $name, $block->ID ) )
+					);
+				}
 			}
+		} catch ( Exception $e ) {
+			return;
+		}
 	}
 }

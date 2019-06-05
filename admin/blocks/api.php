@@ -363,8 +363,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	private function createBlock( $uid, $status, $type ) {
+		$name = md5( time() );
 		$post = wp_insert_post( array(
-			'post_title'  => md5( time() ),
+			'post_title'  => $name,
+			'post_name'   => $name,
 			'post_status' => $status,
 			'post_type'   => $type
 		) );
