@@ -10,7 +10,6 @@ modules:
     enabled:
         - WPDb
         - WPBrowser
-        - REST
         - \Helper\Acceptance
     config:
         WPDb:
