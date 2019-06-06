@@ -6,14 +6,12 @@
 actor: FunctionalTester
 modules:
   enabled:
-    - \Helper\Integration
     - \Helper\Functional
     - Asserts
     - REST
     - WPDb
     - WPBrowser
-    - WPLoader
-    - WPFilesystem
+  #        - WPLoader
   config:
     WPBrowser:
       url: '%TEST_SITE_WP_URL%'
@@ -26,24 +24,24 @@ modules:
       depends: WPBrowser
       url: '%TEST_SITE_WP_URL%'
     WPDb:
-      dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%;port=3307'
+      dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%'
       user: '%TEST_SITE_DB_USER%'
       password: '%TEST_SITE_DB_PASSWORD%'
-      dump: 'tests/_data/dump-active-brizy.sql'
+      dump: 'tests/_data/dump.sql'
       reconect: true
       populate: true
-      cleanup: false
+      cleanup: true
       waitlock: 10
       url: '%TEST_SITE_WP_URL%'
       urlReplacement: true
       tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
     WPLoader:
+      loadOnly: true
       wpRootFolder: "%WP_ROOT_FOLDER%"
-      dbName: "%TEST_SITE_DB_NAME%"
-      dbHost: "%TEST_SITE_DB_HOST%"
-      dbUser: "%TEST_SITE_DB_USER%"
-      dbPassword: "%TEST_SITE_DB_PASSWORD%"
-      tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
+      dbName: "%TEST_DB_NAME%"
+      dbHost: "%TEST_DB_HOST%"
+      dbUser: "%TEST_DB_USER%"
+      dbPassword: "%TEST_DB_PASSWORD%"
       wpDebug: true
       plugins: ['brizy/brizy.php']
       activatePlugins: ['brizy/brizy.php']
