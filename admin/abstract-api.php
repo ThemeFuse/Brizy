@@ -20,7 +20,6 @@ abstract class Brizy_Admin_AbstractApi {
 	 * @param $action
 	 */
 	protected function verifyNonce( $action ) {
-
 		return;
 		if ( ! wp_verify_nonce( $this->getRequestNonce(), $action ) ) {
 			Brizy_Logger::instance()->error( 'Invalid request nonce', $_REQUEST );
@@ -53,6 +52,6 @@ abstract class Brizy_Admin_AbstractApi {
 	 * @param $data
 	 */
 	protected function success( $data ) {
-		wp_send_json( $data );
+		wp_send_json_success( $data );
 	}
 }

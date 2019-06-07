@@ -214,12 +214,15 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$p_id        = (int) $post->get_id();
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		$global      = array(
-			'uid'      => $post->get_uid(),
-			'status'   => get_post_status( $p_id ),
-			'data'     => $post->get_editor_data(),
-			'position' => $post->getPosition(),
-			'rules'    => $ruleManager->getRules( $p_id ),
+			'uid'    => $post->get_uid(),
+			'status' => get_post_status( $p_id ),
+			'data'   => $post->get_editor_data(),
 		);
+
+		if ( $post->get_wp_post()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {
+			$global['position'] = $post->getPosition();
+			$global['rules']    = $ruleManager->getRules( $p_id );
+		}
 
 		return $global;
 	}

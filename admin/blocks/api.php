@@ -128,7 +128,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -155,7 +155,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -200,7 +200,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $block->convertToOptionValue() );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 		} catch
 		( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -223,14 +223,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 
-			if ( (int) $this->param( 'autosave' ) ) {
+			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->auto_save_post();
 			} else {
 				$block->save();
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $block->convertToOptionValue() );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
