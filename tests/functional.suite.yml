@@ -11,7 +11,7 @@ modules:
     - REST
     - WPDb
     - WPBrowser
-  #        - WPLoader
+    - WPLoader
   config:
     WPBrowser:
       url: '%TEST_SITE_WP_URL%'
@@ -24,7 +24,7 @@ modules:
       depends: WPBrowser
       url: '%TEST_SITE_WP_URL%'
     WPDb:
-      dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%'
+      dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%;port=3307'
       user: '%TEST_SITE_DB_USER%'
       password: '%TEST_SITE_DB_PASSWORD%'
       dump: 'tests/_data/dump.sql'
@@ -38,10 +38,10 @@ modules:
     WPLoader:
       loadOnly: true
       wpRootFolder: "%WP_ROOT_FOLDER%"
-      dbName: "%TEST_DB_NAME%"
-      dbHost: "%TEST_DB_HOST%"
-      dbUser: "%TEST_DB_USER%"
-      dbPassword: "%TEST_DB_PASSWORD%"
+      dbName: "%TEST_SITE_DB_NAME%"
+      dbHost: "%TEST_SITE_DB_HOST%"
+      dbUser: "%TEST_SITE_DB_USER%"
+      dbPassword: "%TEST_SITE_DB_PASSWORD%"
       wpDebug: true
       plugins: ['brizy/brizy.php']
       activatePlugins: ['brizy/brizy.php']

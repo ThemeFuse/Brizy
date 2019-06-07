@@ -11,7 +11,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const CREATE_FONT_ACTION = 'brizy-create-font';
+	const AJAX_CREATE_FONT_ACTION = 'brizy-create-font';
 
 	/**
 	 * @return Brizy_Admin_Fonts_Api
@@ -32,7 +32,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::CREATE_FONT_ACTION, array( $this, 'actionCreateFont' ) );
+		add_action( 'wp_ajax_' . self::AJAX_CREATE_FONT_ACTION, array( $this, 'actionCreateFont' ) );
 
 	}
 
