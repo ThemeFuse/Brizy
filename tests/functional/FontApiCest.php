@@ -31,8 +31,9 @@ class FontApiCest {
 			]
 		] );
 
-		$font = json_decode( $response = $I->grabResponse() );
-		echo $response;
+        $font = json_decode( $response = $I->grabResponse() );
+
+		$I->seeResponseCodeIsSuccessful();
 
 		$I->assertTrue( isset( $font->data ), 'Response should contain property: data' );
 
@@ -54,13 +55,13 @@ class FontApiCest {
 		$postsTable = $I->grabPostsTableName();
 
 		$attachmentCount = $I->countRowsInDatabase( $postsTable, [
-			'post_status' => 'attachment',
+			'post_type' => 'attachment',
 			'post_parent' => $font->postId
 		] );
 
-		$I->assertEquals( $attachmentCount, 10, 'Is should create 10 attachments' );
+		$I->assertEquals( 10, $attachmentCount, 'Is should create 10 attachments' );
 
-		$I->seePostMetaInDatabase( [ 'post_id' => $font->postId, 'meta_key' => 'uid', 'meta_value' => $font->uid ] );
+		$I->seePostMetaInDatabase( [ 'post_id' => $font->postId, 'meta_key' => 'brizy_post_uid', 'meta_value' => $font->uid ] );
 	}
 
 

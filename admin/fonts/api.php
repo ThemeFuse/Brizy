@@ -7,87 +7,108 @@
  */
 
 
-class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
+class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi
+{
 
-	const nonce = 'brizy-api';
+    const nonce = 'brizy-api';
 
-	const AJAX_CREATE_FONT_ACTION = 'brizy-create-font';
+    const AJAX_CREATE_FONT_ACTION = 'brizy-create-font';
 
-	/**
-	 * @return Brizy_Admin_Fonts_Api
-	 */
-	public static function _init() {
-		static $instance;
+    /**
+     * @return Brizy_Admin_Fonts_Api
+     */
+    public static function _init()
+    {
+        static $instance;
 
-		if ( ! $instance ) {
-			$instance = new self();
-		}
+        if (!$instance) {
+            $instance = new self();
+        }
 
-		return $instance;
-	}
-
-
-	protected function getRequestNonce() {
-		return $this->param( 'hash' );
-	}
-
-	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::AJAX_CREATE_FONT_ACTION, array( $this, 'actionCreateFont' ) );
-	}
-
-	/**
-	 *
-	 */
-	public function actionCreateFont() {
-		try {
-
-			if ( ! ( $family = $this->param( 'family' ) ) ) {
-				$this->error( 400, 'Invalid font family' );
-			}
-
-			if ( ! isset( $_FILES['fonts'] ) ) {
-				$this->error( 400, 'Invalid font files' );
-			}
+        return $instance;
+    }
 
 
-			// create font post
-			$fontId = wp_insert_post( [
-				'post_title'  => $family,
-				'post_name'   => $family,
-				'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
-				'post_status' => 'publish',
+    protected function getRequestNonce()
+    {
+        return $this->param('hash');
+    }
 
-			] );
+    protected function initializeApiActions()
+    {
+        add_action('wp_ajax_' . self::AJAX_CREATE_FONT_ACTION, array($this, 'actionCreateFont'));
+    }
 
-			if ( ! $fontId ) {
-				$this->error( 400, 'Unable to create font' );
-			}
+    /**
+     *
+     */
+    public function actionCreateFont()
+    {
+        try {
 
-			$uid = md5( $fontId . time() );
-			update_post_meta( $fontId, 'brizy_post_uid', $uid );
+            global $wpdb;
 
-			// create font attachments
-			foreach ( $_FILES['fonts']['name'] as $weight => $attachments ) {
-				foreach ( $attachments as $type => $file ) {
-					$file = array(
-						'name'     => $_FILES['fonts']['name'][ $weight ][ $type ],
-						'type'     => $_FILES['fonts']['type'][ $weight ][ $type ],
-						'tmp_name' => $_FILES['fonts']['tmp_name'][ $weight ][ $type ],
-						'error'    => $_FILES['fonts']['error'][ $weight ][ $type ],
-						'size'     => $_FILES['fonts']['size'][ $weight ][ $type ]
-					);
+            if (!($family = $this->param('family'))) {
+                $this->error(400, 'Invalid font family');
+            }
 
-					$result = wp_handle_upload( $file );
-					wp_insert_attachment( $attachment, $filename, $parent_post_id );
-
-				}
-			}
+            if (!isset($_FILES['fonts'])) {
+                $this->error(400, 'Invalid font files');
+            }
 
 
-			$this->success( [ 'uid' => $uid, 'postId' => $fontId, 'family' => $family ] );
+            $wpdb->query('START TRANSACTION ');
 
-		} catch ( Exception $exception ) {
-			$this->error( 400, $exception->getMessage() );
-		}
-	}
+            try {
+
+                // create font post
+                $fontId = wp_insert_post([
+                    'post_title' => $family,
+                    'post_name' => $family,
+                    'post_type' => Brizy_Admin_Fonts_Main::CP_FONT,
+                    'post_status' => 'publish',
+
+                ]);
+
+                if (!$fontId) {
+                    $this->error(400, 'Unable to create font');
+                }
+
+
+                $uid = md5($fontId . time());
+                update_post_meta($fontId, 'brizy_post_uid', $uid);
+
+                // create font attachments
+                foreach ($_FILES['fonts']['name'] as $weight => $attachments) {
+                    foreach ($attachments as $type => $file) {
+                        $file = array(
+                            'name' => $_FILES['fonts']['name'][$weight][$type],
+                            'type' => $_FILES['fonts']['type'][$weight][$type],
+                            'tmp_name' => $_FILES['fonts']['tmp_name'][$weight][$type],
+                            'error' => $_FILES['fonts']['error'][$weight][$type],
+                            'size' => $_FILES['fonts']['size'][$weight][$type]
+                        );
+
+                        $id = media_handle_sideload($file, $fontId, "Font attachment");
+
+                        if (is_wp_error($id)) {
+                            throw new Exception('Unable to handle font sideload');
+                        }
+                    }
+                }
+
+                $wpdb->query('COMMIT');
+
+            } catch (Exception $e) {
+                $wpdb->query('ROLLBACK');
+                Brizy_Logger::instance()->debug('Migration process ERROR', [$e]);
+                $this->error(400, $e->getMessage());
+            }
+
+            $this->success(['uid' => $uid, 'postId' => $fontId, 'family' => $family]);
+
+        } catch (Exception $exception) {
+            $this->error(400, $exception->getMessage());
+        }
+    }
 }

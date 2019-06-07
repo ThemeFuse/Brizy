@@ -75,9 +75,9 @@ class BlockApiCest {
 		$jsonResponse = $I->grabResponse();
 		$array        = json_decode( $jsonResponse );
 
-		$I->assertCount( 2, $array, 'Response should contain two blocks' );
+		$I->assertCount( 2, $array->data, 'Response should contain two blocks' );
 
-		foreach ( $array as $block ) {
+		foreach ( $array->data as $block ) {
 			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
@@ -99,9 +99,9 @@ class BlockApiCest {
 		$jsonResponse = $I->grabResponse();
 		$array        = json_decode( $jsonResponse );
 
-		$I->assertCount( 2, $array, 'Response should contain two blocks' );
+		$I->assertCount( 2, $array->data, 'Response should contain two blocks' );
 
-		foreach ( $array as $block ) {
+		foreach ( $array->data as $block ) {
 			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
@@ -119,6 +119,7 @@ class BlockApiCest {
 		$I->seeResponseCodeIsSuccessful();
 		$jsonResponse = $I->grabResponse();
 		$block        = json_decode( $jsonResponse );
+        $block = $block->data;
 
 		$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 		$I->assertNotNull( $block->status, 'Block should contain property:  status' );
@@ -174,6 +175,7 @@ class BlockApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 		$block = json_decode( $I->grabResponse() );
+        $block = $block->data;
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
 		$I->assertEquals( $block->status, 'publish', 'Block should contain property:  status' );
@@ -196,6 +198,7 @@ class BlockApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 		$block = json_decode( $I->grabResponse() );
+        $block = $block->data;
 
 		$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 		$I->assertNotNull( $block->status, 'Block should contain property:  status' );
@@ -242,6 +245,7 @@ class BlockApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 		$block = json_decode( $I->grabResponse() );
+        $block = $block->data;
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
 		$I->assertEquals( $block->status, 'publish', 'Block should contain property:  status' );
