@@ -11,8 +11,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const CREATE_GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
-	const CREATE_GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
+	const GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
+	const GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
 
 	const CREATE_GLOBAL_BLOCK_ACTION = 'brizy-create-global-block';
 	const CREATE_SAVED_BLOCK_ACTION = 'brizy-create-saved-block';
@@ -58,8 +58,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::CREATE_GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
-		add_action( 'wp_ajax_' . self::CREATE_GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
+		add_action( 'wp_ajax_' . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
+		add_action( 'wp_ajax_' . self::GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
 		add_action( 'wp_ajax_' . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_SAVED_BLOCK_ACTION, array( $this, 'actionUpdateSavedBlock' ) );

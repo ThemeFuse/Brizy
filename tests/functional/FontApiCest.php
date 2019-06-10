@@ -31,7 +31,7 @@ class FontApiCest {
 			]
 		] );
 
-        $font = json_decode( $response = $I->grabResponse() );
+		$font = json_decode( $response = $I->grabResponse() );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -55,14 +55,129 @@ class FontApiCest {
 		$postsTable = $I->grabPostsTableName();
 
 		$attachmentCount = $I->countRowsInDatabase( $postsTable, [
-			'post_type' => 'attachment',
+			'post_type'   => 'attachment',
 			'post_parent' => $font->postId
 		] );
 
 		$I->assertEquals( 10, $attachmentCount, 'Is should create 10 attachments' );
 
-		$I->seePostMetaInDatabase( [ 'post_id' => $font->postId, 'meta_key' => 'brizy_post_uid', 'meta_value' => $font->uid ] );
+		$I->seePostMetaInDatabase( [
+			'post_id'    => $font->postId,
+			'meta_key'   => 'brizy_post_uid',
+			'meta_value' => $font->uid
+		] );
+
+		$I->seePostMetaInDatabase( [
+			'meta_key'   => 'brizy-font-weight',
+			'meta_value' => '400'
+		] );
+
+		$I->seePostMetaInDatabase( [
+			'meta_key'   => 'brizy-font-weight',
+			'meta_value' => '500'
+		] );
+
+		$I->seePostMetaInDatabase( [
+			'meta_key'   => 'brizy-font-weight',
+			'meta_value' => '700'
+		] );
 	}
 
 
+	public function deleteFont( FunctionalTester $I ) {
+
+		$fontFamily = 'proxima_nova';
+		$fontId     = $I->havePostInDatabase( [
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_title'  => $fontFamily,
+			'post_name'   => $fontFamily,
+			'post_status' => 'publish',
+			'meta_input'  => [
+				'brizy_post_uid' => 'gffbf00297b0b4e9ee27af32a7b79c333',
+			],
+		] );
+
+		$I->havePostInDatabase( [
+			'post_type'   => 'attachment',
+			'post_parent' => $fontId,
+			'meta_input'  => [
+				'brizy-font-weight'    => 400,
+				'brizy-font-file-type' => 'ttf'
+			],
+		] );
+
+		$fontFamily = 'proxima_nova';
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
+			'family' => $fontFamily,
+		] );
+
+		$I->seeResponseCodeIsSuccessful();
+
+		$I->dontSeePostInDatabase( [
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_title'  => $fontFamily,
+			'post_name'   => $fontFamily,
+			'post_status' => 'publish',
+		] );
+
+		$I->dontSeeAttachmentInDatabase( [ 'post_parent' => $fontId ] );
+
+		$I->cantSeePostMetaInDatabase( [
+			'post_id'  => $fontId,
+			'meta_key' => 'brizy-font-weight',
+		] );
+
+		$I->cantSeePostMetaInDatabase( [
+			'post_id'  => $fontId,
+			'meta_key' => 'brizy-font-file-type',
+		] );
+	}
+
+	public function deleteUnknownFont( FunctionalTester $I ) {
+
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
+			'family' => 'unknown',
+		] );
+
+		echo $I->grabResponse();
+
+		$I->canSeeResponseCodeIs( 404 );
+	}
+
+	public function deleteFontWithInvalidRequest( FunctionalTester $I ) {
+
+		$fontFamily = 'proxima_nova';
+		$fontId     = $I->havePostInDatabase( [
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_title'  => $fontFamily,
+			'post_name'   => $fontFamily,
+			'post_status' => 'publish',
+			'meta_input'  => [
+				'brizy_post_uid' => 'gffbf00297b0b4e9ee27af32a7b79c333',
+			],
+		] );
+
+		$I->havePostInDatabase( [
+			'post_type'   => 'attachment',
+			'post_parent' => $fontId,
+			'meta_input'  => [
+				'brizy-font-weight'    => 400,
+				'brizy-font-file-type' => 'ttf'
+			],
+		] );
+
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
+			'bad_family' => 'unknown',
+		] );
+
+
+		$I->seePostInDatabase( [
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_title'  => $fontFamily,
+			'post_name'   => $fontFamily,
+			'post_status' => 'publish',
+		] );
+
+		$I->canSeeResponseCodeIs( 400 );
+	}
 }

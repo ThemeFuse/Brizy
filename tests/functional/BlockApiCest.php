@@ -5,7 +5,7 @@ class BlockApiCest {
 
 	public function _before( FunctionalTester $I ) {
 		$I->haveManyPostsInDatabase( 2, [
-			'post_type'   => 'brizy-global-block',
+			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'post_title'  => 'Global {{n}}',
 			'post_name'   => 'Global {{n}}',
 			'post_status' => 'publish',
@@ -34,7 +34,7 @@ class BlockApiCest {
 		] );
 
 		$I->haveManyPostsInDatabase( 2, [
-			'post_type'   => 'brizy-saved-block',
+			'post_type'   => Brizy_Admin_Blocks_Main::CP_SAVED,
 			'post_title'  => 'Save {{n}}',
 			'post_name'   => 'Save {{n}}',
 			'post_status' => 'publish',
@@ -68,7 +68,7 @@ class BlockApiCest {
 	 */
 	public function getGlobalBlocksTest( FunctionalTester $I ) {
 
-		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-get-global-blocks' ] ) );
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION ] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -92,7 +92,7 @@ class BlockApiCest {
 	 */
 	public function getSavedBlocksTest( FunctionalTester $I ) {
 
-		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-get-saved-blocks' ] ) );
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION ] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -110,7 +110,7 @@ class BlockApiCest {
 
 
 	public function createGlobalBlockTest( FunctionalTester $I ) {
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-create-global-block' ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION ] ), [
 			'uid'      => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
 			'data'     => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
 			'position' => '{"align": "top","index": 1}'
@@ -119,7 +119,7 @@ class BlockApiCest {
 		$I->seeResponseCodeIsSuccessful();
 		$jsonResponse = $I->grabResponse();
 		$block        = json_decode( $jsonResponse );
-        $block = $block->data;
+		$block        = $block->data;
 
 		$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 		$I->assertNotNull( $block->status, 'Block should contain property:  status' );
@@ -137,7 +137,7 @@ class BlockApiCest {
 		$newPosition  = [ 'align' => 'bottom', 'index' => 2 ];
 
 		$blockId = $I->havePostInDatabase( [
-			'post_type'   => 'brizy-global-block',
+			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'post_title'  => 'Global',
 			'post_name'   => 'Global',
 			'post_status' => 'publish',
@@ -175,7 +175,7 @@ class BlockApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 		$block = json_decode( $I->grabResponse() );
-        $block = $block->data;
+		$block = $block->data;
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
 		$I->assertEquals( $block->status, 'publish', 'Block should contain property:  status' );
@@ -198,7 +198,7 @@ class BlockApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 		$block = json_decode( $I->grabResponse() );
-        $block = $block->data;
+		$block = $block->data;
 
 		$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 		$I->assertNotNull( $block->status, 'Block should contain property:  status' );
@@ -211,7 +211,7 @@ class BlockApiCest {
 		$newBlockData = '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[{"type":"Wrapper","value":{"_styles":["wrapper","wrapper--richText"],"items":[{"type":"RichText","value":{"_styles":["richText"],"_id":"syjtlzsdrwrgnmwxpstedqobpsdfxmavczha"}}],"_id":"xkthoywyegkdidqznqjrkccydqiaycgawlty"}}],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"rvnmxwnzfehrukgcaepiaaucgfzaseyygfso","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892726684}}';
 
 		$blockId = $I->havePostInDatabase( [
-			'post_type'   => 'brizy-saved-block',
+			'post_type'   => Brizy_Admin_Blocks_Main::CP_SAVED,
 			'post_title'  => 'Saved',
 			'post_name'   => 'Saved',
 			'post_status' => 'publish',
@@ -245,7 +245,7 @@ class BlockApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 		$block = json_decode( $I->grabResponse() );
-        $block = $block->data;
+		$block = $block->data;
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
 		$I->assertEquals( $block->status, 'publish', 'Block should contain property:  status' );

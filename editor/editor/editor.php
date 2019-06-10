@@ -170,7 +170,7 @@ class Brizy_Editor_Editor_Editor {
 					'setProject'     => Brizy_Editor_API::AJAX_SET_PROJECT,
 					'setProjectMeta' => Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 
-					'getGlobalBlockList'   => Brizy_Admin_Blocks_Api::CREATE_GET_GLOBAL_BLOCKS_ACTION,
+					'getGlobalBlockList'   => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
 					'createGlobalBlock'    => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
 					'updateGlobalBlock'    => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 					'deleteGlobalBlock'    => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
@@ -181,7 +181,7 @@ class Brizy_Editor_Editor_Editor {
 					'getRuleList'          => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 					'updateBlockPositions' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 
-					'getSavedBlockList' => Brizy_Admin_Blocks_Api::CREATE_GET_SAVED_BLOCKS_ACTION,
+					'getSavedBlockList' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
 					'createSavedBlock'  => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
 					'updateSavedBlock'  => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
 					'deleteSavedBlock'  => Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
