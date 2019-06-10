@@ -17,7 +17,7 @@ abstract class Brizy_Public_AbstractProxy extends Brizy_Editor_Asset_StaticFile 
 	/**
 	 * Brizy_Public_AssetProxy constructor.
 	 *
-	 * @param $url_builder
+	 * @param Brizy_Editor_UrlBuilder $url_builder
 	 * @param $config
 	 */
 	public function __construct( $url_builder, $config ) {

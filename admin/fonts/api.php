@@ -112,7 +112,6 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-
 	public function actionDeleteFont() {
 
 		global $wpdb;
@@ -125,7 +124,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 			'post_type'  => Brizy_Admin_Fonts_Main::CP_FONT,
 			'post_title' => $family,
 			'post_name'  => $family
-		], ARRAY_A );
+		] );
 
 
 		if ( count( $font ) > 0 ) {
@@ -144,14 +143,14 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 			// delete all attachments first
 
-			$attachments = get_attached_media( '', $font['ID'] );
+			$attachments = get_attached_media( '', $font->ID );
 
 			foreach ( $attachments as $attachment ) {
 				wp_delete_attachment( $attachment->ID, 'true' );
 			}
 
 			// delete font
-			wp_delete_post( $font['ID'] );
+			wp_delete_post( $font->ID );
 
 			$wpdb->query( 'COMMIT' );
 
@@ -162,6 +161,5 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		$this->success( [] );
-
 	}
 }

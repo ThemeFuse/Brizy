@@ -11,11 +11,14 @@ modules:
   config:
     WPLoader:
       wpRootFolder: "%WP_ROOT_FOLDER%"
-      dbName: "%TEST_SITE_DB_NAME%"
-      dbHost: "%TEST_SITE_DB_HOST%"
-      dbUser: "%TEST_SITE_DB_USER%"
-      dbPassword: "%TEST_SITE_DB_PASSWORD%"
-      tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
+      dbName: "%TEST_DB_NAME%"
+      dbHost: "%TEST_DB_HOST%"
+      dbUser: "%TEST_DB_USER%"
+      dbPassword: "%TEST_DB_PASSWORD%"
       wpDebug: true
+      tablePrefix: "%TEST_TABLE_PREFIX%"
+      domain: "%TEST_SITE_WP_DOMAIN%"
+      adminEmail: "%TEST_SITE_ADMIN_EMAIL%"
+      title: "Test"
       plugins: ['brizy/brizy.php']
       activatePlugins: ['brizy/brizy.php']

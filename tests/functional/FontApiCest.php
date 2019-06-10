@@ -6,6 +6,9 @@ class FontApiCest {
 	}
 
 
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function createFontTest( FunctionalTester $I ) {
 		$fontFamily = 'proxima_nova';
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
@@ -83,7 +86,47 @@ class FontApiCest {
 		] );
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 */
+	public function getFontCssTest( FunctionalTester $I ) {
+		$I->wantToTest( 'The CSS file return for a font family' );
+		$fontFamily = 'proxima_nova';
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
+			'family' => $fontFamily,
+		], [
+			'fonts' => [
+				'400' => [
+					'ttf'   => codecept_data_dir( 'fonts/pn-regular-webfont.ttf' ),
+					'eot'   => codecept_data_dir( 'fonts/pn-regular-webfont.eot' ),
+					'woff'  => codecept_data_dir( 'fonts/pn-regular-webfont.woff' ),
+					'woff2' => codecept_data_dir( 'fonts/pn-regular-webfont.woff2' ),
+				],
+				'500' => [
+					'eot'   => codecept_data_dir( 'fonts/pn-medium-webfont.eot' ),
+					'woff'  => codecept_data_dir( 'fonts/pn-medium-webfont.woff' ),
+					'woff2' => codecept_data_dir( 'fonts/pn-medium-webfont.woff2' ),
+				],
+				'700' => [
+					'eot'   => codecept_data_dir( 'fonts/pn-bold-webfont.eot' ),
+					'woff'  => codecept_data_dir( 'fonts/pn-bold-webfont.woff' ),
+					'woff2' => codecept_data_dir( 'fonts/pn-bold-webfont.woff2' ),
+				],
+			]
+		] );
 
+		$I->seeResponseCodeIsSuccessful();
+
+
+		$I->sendGET( '/?' . build_query( [ Brizy_Admin_Fonts_Handler::ENDPOINT => "proxima_nova:400,500" ] ) );
+		$I->seeResponseCodeIsSuccessful();
+		$I->seeHttpHeader( 'Content-Type', 'text/css;charset=UTF-8' );
+	}
+
+
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function deleteFont( FunctionalTester $I ) {
 
 		$fontFamily = 'proxima_nova';
@@ -133,18 +176,22 @@ class FontApiCest {
 		] );
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function deleteUnknownFont( FunctionalTester $I ) {
 
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
 			'family' => 'unknown',
 		] );
 
-		echo $I->grabResponse();
-
 		$I->canSeeResponseCodeIs( 404 );
 	}
 
-	public function deleteFontWithInvalidRequest( FunctionalTester $I ) {
+	/**
+	 * @param FunctionalTester $I
+	 */
+	public function deleteInvalidFontRequest( FunctionalTester $I ) {
 
 		$fontFamily = 'proxima_nova';
 		$fontId     = $I->havePostInDatabase( [
