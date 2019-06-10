@@ -12,6 +12,7 @@ modules:
         - WPDb
         - WPBrowser
         - WPLoader
+        - WPFilesystem
     config:
         WPBrowser:
             url: '%TEST_SITE_WP_URL%'
@@ -46,3 +47,5 @@ modules:
             wpDebug: true
             plugins: ['brizy/brizy.php']
             activatePlugins: ['brizy/brizy.php']
+        WPFilesystem:
+            wpRootFolder: "%WP_ROOT_FOLDER%"

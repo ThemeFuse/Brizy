@@ -3,6 +3,7 @@
 class FontApiCest {
 	public function _before( FunctionalTester $I ) {
 		$I->loginAs( 'admin', 'admin' );
+		@$I->cleanUploadsDir();
 	}
 
 
@@ -118,9 +119,21 @@ class FontApiCest {
 		$I->seeResponseCodeIsSuccessful();
 
 
-		$I->sendGET( '/?' . build_query( [ Brizy_Admin_Fonts_Handler::ENDPOINT => "proxima_nova:400,500" ] ) );
+		$I->sendGET( '/?' . build_query( [ Brizy_Admin_Fonts_Handler::ENDPOINT => "proxima_nova:400,500,700" ] ) );
+
 		$I->seeResponseCodeIsSuccessful();
 		$I->seeHttpHeader( 'Content-Type', 'text/css;charset=UTF-8' );
+
+		$I->see( 'pn-regular-webfont.ttf' );
+		$I->see( 'pn-regular-webfont.eot' );
+		$I->see( 'pn-regular-webfont.woff' );
+		$I->see( 'pn-regular-webfont.woff2' );
+		$I->see( 'pn-medium-webfont.eot' );
+		$I->see( 'pn-medium-webfont.woff' );
+		$I->see( 'pn-medium-webfont.woff2' );
+		$I->see( 'pn-bold-webfont.eot' );
+		$I->see( 'pn-bold-webfont.woff' );
+		$I->see( 'pn-bold-webfont.woff2' );
 	}
 
 
