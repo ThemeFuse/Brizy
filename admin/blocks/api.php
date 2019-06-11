@@ -368,15 +368,15 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		$positions      = file_get_contents( "php://input" );
-		$positionObject = json_decode( $positions );
 
+		$positionObject = json_decode( $positions );
 		$wpdb->query( 'START TRANSACTION ' );
 
 		try {
 
 			foreach ( get_object_vars( $positionObject ) as $uid => $position ) {
 
-				$positionObj = new Brizy_Editor_BlockPosition( $position->align, $position->index );
+				$positionObj = new Brizy_Editor_BlockPosition( $position->top, $position->bottom, $position->align );
 
 				$block = $this->getBlock( $uid, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 				$block->setPosition( $positionObj );
