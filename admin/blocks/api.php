@@ -169,7 +169,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			do_action( 'brizy_global_block_created', $block );
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block->createResponse() );
+			$this->success( Brizy_Editor_Block::postData($block->createResponse()) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -208,7 +208,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			do_action( 'brizy_saved_block_created', $block );
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block->createResponse() );
+			$this->success( Brizy_Editor_Block::postData($block->createResponse()) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -485,7 +485,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		throw new Exception( 'Unable to create block' );
 	}
 
-
 	/**
 	 * @param $postUid
 	 * @param $postType
@@ -501,6 +500,4 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			return wp_delete_post( $postId );
 		}
 	}
-
-
 }
