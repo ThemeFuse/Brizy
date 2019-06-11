@@ -463,6 +463,22 @@ class BlockApiCest {
 			]
 		) );
 		$I->seeResponseCodeIsSuccessful();
+
+		//------------------------------------------------------------------
+
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ), json_encode(
+			[
+				'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10 ],
+				'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
+			]
+		) );
+		$I->seeResponseCodeIs( 400 );
+
+
+		//------------------------------------------------------------------
+
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ), 'Invalid Json' );
+		$I->seeResponseCodeIs( 400 );
 	}
 
 

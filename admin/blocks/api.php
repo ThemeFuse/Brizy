@@ -370,15 +370,29 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$positions      = file_get_contents( "php://input" );
 
 		$positionObject = json_decode( $positions );
-		$wpdb->query( 'START TRANSACTION ' );
+
+		if(!$positionObject) {
+			$this->error(400,'Invalid position data provided');
+		}
+
+		$wpdb->query( 'START TRANSACTION' );
 
 		try {
 
 			foreach ( get_object_vars( $positionObject ) as $uid => $position ) {
 
+				if ( !(isset($position->top) && isset($position->bottom) && isset($position->align)) ) {
+					throw  new Exception();
+				}
+
 				$positionObj = new Brizy_Editor_BlockPosition( $position->top, $position->bottom, $position->align );
 
 				$block = $this->getBlock( $uid, Brizy_Admin_Blocks_Main::CP_GLOBAL );
+
+				if(!$block) {
+					throw  new Exception();
+				}
+
 				$block->setPosition( $positionObj );
 				$block->save();
 
