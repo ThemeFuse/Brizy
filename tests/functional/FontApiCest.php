@@ -83,6 +83,18 @@ class FontApiCest {
 	 * @param FunctionalTester $I
 	 */
 	public function createFontTest( FunctionalTester $I ) {
+
+		$I->havePostInDatabase( [
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_title'  => "Test Font",
+			'post_name'   => "Test Font",
+			'post_status' => 'publish',
+			'meta_input'  => [
+				'brizy_post_uid' => 'gffbf00297b0b4e9ee27af32a7b79c3330',
+			],
+		] );
+
+
 		$fontFamily = 'proxima_nova';
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
 			'family' => $fontFamily,
@@ -107,6 +119,8 @@ class FontApiCest {
 			]
 		] );
 
+
+		echo $response = $I->grabResponse();
 
 		$I->seeResponseCodeIsSuccessful();
 

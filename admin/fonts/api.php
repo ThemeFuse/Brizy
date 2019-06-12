@@ -63,8 +63,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 			$existingFont = get_posts(
 				[
-					'post_title'  => $family,
-					'post_name'   => $family,
+					'title'   => $family,
 					'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
 					'post_status' => 'publish',
 				]
