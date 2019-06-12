@@ -24,6 +24,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	const DELETE_SAVED_BLOCK_ACTION = 'brizy-delete-saved-block';
 	const UPDATE_BLOCK_POSITIONS_ACTION = 'brizy-update-block-positions';
 
+	// TMP TEST THIRD PARTY
+	const GET_THIRD_PARTY_DATA = 'brizy-get-third-party-data';
+
 	/**
 	 * @var Brizy_Admin_Rules_Manager
 	 */
@@ -67,7 +70,35 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		add_action( 'wp_ajax_' . self::CREATE_SAVED_BLOCK_ACTION, array( $this, 'actionCreateSavedBlock' ) );
 		add_action( 'wp_ajax_' . self::DELETE_SAVED_BLOCK_ACTION, array( $this, 'actionDeleteSavedBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_BLOCK_POSITIONS_ACTION, array( $this, 'actionUpdateBlockPositions' ) );
+
+		// TMP TEST THIRD PARTY
+		add_action( 'wp_ajax_' . self::GET_THIRD_PARTY_DATA, array( $this, 'actionGetThirdPartyData' ) );
 	}
+
+	// TMP TEST THIRD PARTY
+	public function actionGetThirdPartyData() {
+		$this->verifyNonce( self::nonce );
+
+		$id = $this->param('id');
+		$v = json_decode( stripslashes( $this->param('v') ), true);
+
+		$third_party = null;
+		foreach( apply_filters( 'brizy_third-party_elements', array() ) as $tmp ) {
+			if ( $tmp['id'] === $id ) {
+				$third_party = $tmp;
+				break;
+			}
+		};
+
+		if (!$third_party) {
+			// TODO: throw some error, or return 400
+		}
+
+		$data = call_user_func( $third_party['dataApi'], $v );
+
+		$this->success( $data );
+	}
+
 
 	public function actionGetGlobalBlocks() {
 		$this->verifyNonce( self::nonce );

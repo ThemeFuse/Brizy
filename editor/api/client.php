@@ -200,7 +200,10 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 				)
 			) ),
 			'project_json'       => json_encode( $project->create_post_data() ),
-			'global_blocks_json' => json_encode( Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL ) )
+			'global_blocks_json' => json_encode( Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL ) ),
+
+			 // TMP TEST THIRD PARTY
+			'third_party'        => apply_filters('brizy_third-party_elements', array()),
 		) );
 
 

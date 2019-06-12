@@ -225,6 +225,9 @@ class Brizy_Editor_Editor_Editor {
 
 					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA, // ???
 					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA, // ???
+
+					// TMP TEST THIRD PARTY
+					'getThirdPartyData' => Brizy_Admin_Blocks_Api::GET_THIRD_PARTY_DATA,
 				),
 				'plugins'         => array(
 					'dummy'       => true,
@@ -240,7 +243,10 @@ class Brizy_Editor_Editor_Editor {
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 				)
 			),
-			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) )
+			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+
+			// TMP TEST THIRD PARTY
+			'thirdParty'      => apply_filters('brizy_third-party_elements', array())
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );

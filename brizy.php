@@ -17,7 +17,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 	$_SERVER['HTTPS'] = 'on';
 }
 
-define( 'BRIZY_DEVELOPMENT', false );
+define( 'BRIZY_DEVELOPMENT', true );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '1.0.81' );
 define( 'BRIZY_EDITOR_VERSION', '1.0.101' );
@@ -45,6 +45,9 @@ function brizy_load() {
 	}
 
 	$instance = Brizy_Editor::get();
+
+	// TMP TEST THIRD PARTY
+	Brizy_ThirdParty_Main::init();
 }
 
 function brizy_notices() {
