@@ -40,32 +40,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionGetFonts() {
-
-		global $wpdb;
-
-		$fonts = get_posts( array(
-			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
-			'post_status' => 'publish',
-			'numberposts' => - 1,
-		) );
-
-		$result = array();
-
-		foreach ( $fonts as $font ) {
-
-			$weights = $wpdb->get_results( $wpdb->prepare(
-				"SELECT m.meta_value FROM {$wpdb->posts} p JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'", array( $font->ID )
-			), ARRAY_A );
-
-			$result[] = array(
-				'family'  => $font->post_title,
-				'weights' => array_map( function ( $v ) {
-					return $v['meta_value'];
-				}, $weights )
-			);
-		}
-
-		$this->success( $result );
+		$this->success( Brizy_Admin_Fonts_Main::getAllFontObjects() );
 	}
 
 
@@ -101,7 +76,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 			$wpdb->query( 'START TRANSACTION ' );
 
-			$weights = array_keys($_FILES['fonts']['name']);
+			$weights = array_keys( $_FILES['fonts']['name'] );
 
 			try {
 
@@ -151,7 +126,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, $e->getMessage() );
 			}
 
-			$this->success( [ 'family' => $family, 'weights'=>$weights ] );
+			$this->success( [ 'family' => $family, 'weights' => $weights ] );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );

@@ -30,6 +30,7 @@ class Brizy_Admin_Fonts_Main {
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_filter( 'upload_mimes', array( $this, 'addFOntTypes' ), 1, 1 );
+		add_filter( 'brizy_compiler_params', array( $this, 'editorConfigFilter' ), 1, 1 );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );
@@ -76,7 +77,43 @@ class Brizy_Admin_Fonts_Main {
 				'supports'            => array( 'title', 'page-attributes' )
 			)
 		);
+	}
 
+	static public function getAllFontObjects() {
+		global $wpdb;
+
+		$fonts = get_posts( array(
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_status' => 'publish',
+			'numberposts' => - 1,
+		) );
+
+		$result = array();
+
+		foreach ( $fonts as $font ) {
+
+			$weights = $wpdb->get_results( $wpdb->prepare(
+				"SELECT m.meta_value FROM {$wpdb->posts} p 
+						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'",
+				array( $font->ID ) ), ARRAY_A
+			);
+
+			$result[] = array(
+				'family'  => $font->post_title,
+				'weights' => array_map( function ( $v ) {
+					return $v['meta_value'];
+				}, $weights )
+			);
+		}
+
+		return $result;
+	}
+
+	public function editorConfigFilter( $compilerParams ) {
+
+		$compilerParams['uploaded_fonts'] = json_encode( self::getAllFontObjects() );
+
+		return $compilerParams;
 	}
 
 

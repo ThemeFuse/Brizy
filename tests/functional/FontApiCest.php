@@ -6,6 +6,12 @@ class FontApiCest {
 		@$I->cleanUploadsDir();
 	}
 
+	public function compilerFontParametersTest(FunctionalTester $I) {
+
+		$compilerParams = apply_filters( 'brizy_compiler_params', [] );
+		$I->assertArrayHasKey( 'uploaded_fonts', $compilerParams ,'The compiler parameters should contain fonts');
+	}
+
 	public function getFontsDataTest( FunctionalTester $I ) {
 		$fontFamily = 'proxima_nova_';
 
