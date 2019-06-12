@@ -13,6 +13,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	const AJAX_CREATE_FONT_ACTION = 'brizy-create-font';
 	const AJAX_DELETE_FONT_ACTION = 'brizy-delete-font';
+	const AJAX_GET_FONTS_ACTION = 'brizy-get-fonts';
 
 	/**
 	 * @return Brizy_Admin_Fonts_Api
@@ -35,7 +36,38 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 	protected function initializeApiActions() {
 		add_action( 'wp_ajax_' . self::AJAX_CREATE_FONT_ACTION, array( $this, 'actionCreateFont' ) );
 		add_action( 'wp_ajax_' . self::AJAX_DELETE_FONT_ACTION, array( $this, 'actionDeleteFont' ) );
+		add_action( 'wp_ajax_' . self::AJAX_GET_FONTS_ACTION, array( $this, 'actionGetFonts' ) );
 	}
+
+	public function actionGetFonts() {
+
+		global $wpdb;
+
+		$fonts = get_posts( array(
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_status' => 'publish',
+			'numberposts' => - 1,
+		) );
+
+		$result = array();
+
+		foreach ( $fonts as $font ) {
+
+			$weights = $wpdb->get_results( $wpdb->prepare(
+				"SELECT m.meta_value FROM {$wpdb->posts} p JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'", array( $font->ID )
+			), ARRAY_A );
+
+			$result[] = array(
+				'family'  => $font->post_title,
+				'weights' => array_map( function ( $v ) {
+					return $v['meta_value'];
+				}, $weights )
+			);
+		}
+
+		$this->success( $result );
+	}
+
 
 	/**
 	 *
@@ -53,6 +85,19 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, 'Invalid font files' );
 			}
 
+
+			$existingFont = get_posts(
+				[
+					'post_title'  => $family,
+					'post_name'   => $family,
+					'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+					'post_status' => 'publish',
+				]
+			);
+
+			if ( count( $existingFont ) != 0 ) {
+				$this->error( 400, 'This font family already exists.' );
+			}
 
 			$wpdb->query( 'START TRANSACTION ' );
 
