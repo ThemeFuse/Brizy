@@ -101,18 +101,25 @@ class FontApiCest {
 			]
 		] );
 
-		$font = json_decode( $response = $I->grabResponse() );
 
 		$I->seeResponseCodeIsSuccessful();
 
+		$font = json_decode( $response = $I->grabResponse() );
+
 		$I->assertTrue( isset( $font->data ), 'Response should contain property: data' );
+		$I->assertIsObject( $font, "The Font should be an object" );
+
 
 		$font = $font->data;
 
-		$I->assertTrue( isset( $font->uid ), 'Response should contain property: uid' );
-		$I->assertTrue( isset( $font->postId ), 'Response should contain property: postId' );
+		// family
+		$I->assertTrue( isset( $font->family ), "The property 'family' must be present." );
+		$I->assertStringContainsString( $fontFamily, $font->family, "The 'family' value should be valid" );
 
-		$I->seeResponseCodeIsSuccessful();
+		//weights
+		$I->assertTrue( isset( $font->weights ), "The property 'weights' must be present." );
+		$I->assertEquals( [ '400', '500', '700' ], $font->weights, "The 'weights' array should be valid" );
+
 
 		$I->seePostInDatabase( [
 			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
@@ -187,11 +194,11 @@ class FontApiCest {
 			]
 		] );
 
-		$I->seeResponseCodeIs(400);
+		$I->seeResponseCodeIs( 400 );
 
 		$font = json_decode( $response = $I->grabResponse() );
 
-		$I->assertFalse($font->success, 'The sucess status of the request should be false');
+		$I->assertFalse( $font->success, 'The sucess status of the request should be false' );
 	}
 
 	/**

@@ -101,6 +101,8 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 			$wpdb->query( 'START TRANSACTION ' );
 
+			$weights = array_keys($_FILES['fonts']['name']);
+
 			try {
 
 				// create font post
@@ -115,7 +117,6 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				if ( ! $fontId ) {
 					$this->error( 400, 'Unable to create font' );
 				}
-
 
 				$uid = md5( $fontId . time() );
 				update_post_meta( $fontId, 'brizy_post_uid', $uid );
@@ -150,7 +151,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, $e->getMessage() );
 			}
 
-			$this->success( [ 'uid' => $uid, 'postId' => $fontId, 'family' => $family ] );
+			$this->success( [ 'family' => $family, 'weights'=>$weights ] );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
