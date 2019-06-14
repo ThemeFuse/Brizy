@@ -79,39 +79,10 @@ class Brizy_Admin_Fonts_Main {
 		);
 	}
 
-	static public function getAllFontObjects() {
-		global $wpdb;
-
-		$fonts = get_posts( array(
-			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
-			'post_status' => 'publish',
-			'numberposts' => - 1,
-		) );
-
-		$result = array();
-
-		foreach ( $fonts as $font ) {
-
-			$weights = $wpdb->get_results( $wpdb->prepare(
-				"SELECT m.meta_value FROM {$wpdb->posts} p 
-						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'",
-				array( $font->ID ) ), ARRAY_A
-			);
-
-			$result[] = array(
-				'family'  => $font->post_title,
-				'weights' => array_map( function ( $v ) {
-					return $v['meta_value'];
-				}, $weights )
-			);
-		}
-
-		return $result;
-	}
-
 	public function editorConfigFilter( $compilerParams ) {
 
-		$compilerParams['uploaded_fonts'] = json_encode( self::getAllFontObjects() );
+		$fontManager                      = new Brizy_Admin_Fonts_Manager();
+		$compilerParams['uploaded_fonts'] = json_encode( $fontManager->getAllFonts() );
 
 		return $compilerParams;
 	}

@@ -5,47 +5,47 @@
 
 actor: FunctionalTester
 modules:
-    enabled:
-        - \Helper\Functional
-        - Asserts
-        - REST
-        - WPDb
-        - WPBrowser
-        - WPLoader
-        - WPFilesystem
-    config:
-        WPBrowser:
-            url: '%TEST_SITE_WP_URL%'
-            adminUsername: '%TEST_SITE_ADMIN_EMAIL%'
-            adminPassword: '%TEST_SITE_ADMIN_PASSWORD%'
-            adminUrl: /wp-admin
-            headers:
-                X-Testing: 'wp-browser'
-        REST:
-            depends: WPBrowser
-            url: '%TEST_SITE_WP_URL%'
-        WPDb:
-            dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%;port=3307'
-            user: '%TEST_SITE_DB_USER%'
-            password: '%TEST_SITE_DB_PASSWORD%'
-            dump: 'tests/_data/dump-active-brizy.sql'
-            reconect: true
-            populate: true
-            cleanup: true
-            waitlock: 10
-            url: '%TEST_SITE_WP_URL%'
-            urlReplacement: true
-            tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
-        WPLoader:
-            loadOnly: true
-            wpRootFolder: "%WP_ROOT_FOLDER%"
-            dbName: "%TEST_SITE_DB_NAME%"
-            dbHost: "%TEST_SITE_DB_HOST%"
-            dbUser: "%TEST_SITE_DB_USER%"
-            dbPassword: "%TEST_SITE_DB_PASSWORD%"
-            dbPort: 3307
-            wpDebug: true
-            plugins: ['brizy/brizy.php']
-            activatePlugins: ['brizy/brizy.php']
-        WPFilesystem:
-            wpRootFolder: "%WP_ROOT_FOLDER%"
+  enabled:
+    - \Helper\Integration
+    - \Helper\Functional
+    - Asserts
+    - REST
+    - WPDb
+    - WPBrowser
+    - WPLoader
+    - WPFilesystem
+  config:
+    WPBrowser:
+      url: '%TEST_SITE_WP_URL%'
+      adminUsername: '%TEST_SITE_ADMIN_EMAIL%'
+      adminPassword: '%TEST_SITE_ADMIN_PASSWORD%'
+      adminUrl: /wp-admin
+      headers:
+        X-Testing: 'wp-browser'
+    REST:
+      depends: WPBrowser
+      url: '%TEST_SITE_WP_URL%'
+    WPDb:
+      dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%;port=3307'
+      user: '%TEST_SITE_DB_USER%'
+      password: '%TEST_SITE_DB_PASSWORD%'
+      dump: 'tests/_data/dump-active-brizy.sql'
+      reconect: true
+      populate: true
+      cleanup: false
+      waitlock: 10
+      url: '%TEST_SITE_WP_URL%'
+      urlReplacement: true
+      tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
+    WPLoader:
+      wpRootFolder: "%WP_ROOT_FOLDER%"
+      dbName: "%TEST_SITE_DB_NAME%"
+      dbHost: "%TEST_SITE_DB_HOST%"
+      dbUser: "%TEST_SITE_DB_USER%"
+      dbPassword: "%TEST_SITE_DB_PASSWORD%"
+      tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
+      wpDebug: true
+      plugins: ['brizy/brizy.php']
+      activatePlugins: ['brizy/brizy.php']
+    WPFilesystem:
+      wpRootFolder: "%WP_ROOT_FOLDER%"

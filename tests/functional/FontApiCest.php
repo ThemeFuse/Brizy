@@ -4,6 +4,7 @@ class FontApiCest {
 	public function _before( FunctionalTester $I ) {
 		$I->loginAs( 'admin', 'admin' );
 		@$I->cleanUploadsDir();
+		$I->dontHavePostInDatabase(['post_type'   => Brizy_Admin_Fonts_Main::CP_FONT]);
 	}
 
 	public function compilerFontParametersTest( FunctionalTester $I ) {
@@ -53,7 +54,6 @@ class FontApiCest {
 		$I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
 			'post_title'  => "Test Font",
-			'post_name'   => "Test Font",
 			'post_status' => 'publish',
 			'meta_input'  => [
 				'brizy_post_uid' => 'gffbf00297b0b4e9ee27af32a7b79c3330',
@@ -106,7 +106,6 @@ class FontApiCest {
 		$I->seePostInDatabase( [
 			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
 			'post_title'  => $fontFamily,
-			'post_name'   => $fontFamily,
 			'post_status' => 'publish',
 		] );
 
@@ -149,10 +148,10 @@ class FontApiCest {
 		$fontId     = $I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
 			'post_title'  => $fontFamily,
-			'post_name'   => $fontFamily,
 			'post_status' => 'publish',
 			'meta_input'  => [
 				'brizy_post_uid' => 'gffbf00297b0b4e9ee27af32a7b79c3330',
+				'brizy-font-type' => 'uploaded',
 			],
 		] );
 
