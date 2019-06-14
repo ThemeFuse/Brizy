@@ -63,7 +63,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 			$existingFont = get_posts(
 				[
-					'title'   => $family,
+					'title'       => $family,
 					'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
 					'post_status' => 'publish',
 				]
@@ -108,12 +108,12 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 						$id = media_handle_sideload( $file, $fontId, "Font attachment" );
 
-						update_post_meta( $id, 'brizy-font-weight', $weight );
-						update_post_meta( $id, 'brizy-font-file-type', $type );
-
 						if ( is_wp_error( $id ) ) {
 							throw new Exception( 'Unable to handle font sideload' );
 						}
+
+						update_post_meta( $id, 'brizy-font-weight', $weight );
+						update_post_meta( $id, 'brizy-font-file-type', $type );
 					}
 				}
 
