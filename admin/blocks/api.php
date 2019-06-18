@@ -81,6 +81,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		$id = $this->param('id');
 		$v = json_decode( stripslashes( $this->param('v') ), true);
+		$context = Brizy_ThirdParty_Context::getForEditor();
 
 		$third_party = null;
 		foreach( apply_filters( 'brizy_third-party_elements', array() ) as $tmp ) {
@@ -94,7 +95,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			// TODO: throw some error, or return 400
 		}
 
-		$data = call_user_func( $third_party['dataApi'], $v );
+		$data = call_user_func( $third_party['dataApi'], $v, $context );
 
 		$this->success( $data );
 	}

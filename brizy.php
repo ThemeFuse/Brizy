@@ -37,7 +37,6 @@ register_activation_hook( BRIZY_FILE, 'brizy_install' );
 register_deactivation_hook( BRIZY_FILE, 'brizy_clean' );
 
 function brizy_load() {
-
 	if ( version_compare( PHP_VERSION, '5.4.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
 

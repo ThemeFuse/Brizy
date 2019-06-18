@@ -13,6 +13,7 @@ class Brizy_Content_Placeholders_ThirdParty extends Brizy_Content_Placeholders_S
 		$attributes = $contentPlaceholder->getAttributes();
 		$id = $attributes['id'];
 		$v = json_decode($attributes['v'], true);
+		$context = Brizy_ThirdParty_Context::getForPreview();
 
 		$third_party = null;
 		foreach( apply_filters( 'brizy_third-party_elements', array() ) as $tmp ) {
@@ -29,7 +30,7 @@ class Brizy_Content_Placeholders_ThirdParty extends Brizy_Content_Placeholders_S
 		$twig = new Twig_Environment(new Twig_Loader_String());
 		return $twig->render(
 			$third_party['html'],
-			array_merge($v, array( 'apiData' => call_user_func( $third_party['dataApi'], $v )))
+			array_merge($v, array( 'apiData' => call_user_func( $third_party['dataApi'], $v, $context )))
 		);
 	}
 }
