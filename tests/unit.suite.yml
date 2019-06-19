@@ -4,6 +4,18 @@
 
 actor: UnitTester
 modules:
-    enabled:
-        - Asserts
-        - \Helper\Unit
+  enabled:
+    - Asserts
+    - \Helper\Unit
+    - WPLoader
+  config:
+    WPLoader:
+      wpRootFolder: "%WP_ROOT_FOLDER%"
+      dbName: "%TEST_SITE_DB_NAME%"
+      dbHost: "%TEST_SITE_DB_HOST%"
+      dbUser: "%TEST_SITE_DB_USER%"
+      dbPassword: "%TEST_SITE_DB_PASSWORD%"
+      tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
+      wpDebug: true
+      plugins: ['brizy/brizy.php']
+      activatePlugins: ['brizy/brizy.php']
