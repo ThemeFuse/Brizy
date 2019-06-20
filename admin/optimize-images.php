@@ -17,19 +17,6 @@ class Brizy_Admin_OptimizeImages {
 	private $screenName;
 
 	/**
-	 * @return Brizy_Admin_OptimizeImages
-	 */
-	public static function _init() {
-		static $instance;
-
-		if ( ! $instance ) {
-			$instance = new self();
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * @return string
 	 */
 	public static function menu_slug() {

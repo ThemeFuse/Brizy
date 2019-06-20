@@ -30,7 +30,7 @@ class Brizy_Admin_Templates {
 	/**
 	 * Brizy_Admin_Templates constructor.
 	 */
-	protected function __construct() {
+	public function __construct() {
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 
@@ -54,18 +54,7 @@ class Brizy_Admin_Templates {
 		}
 	}
 
-	/**
-	 * @return Brizy_Admin_Templates
-	 */
-	public static function _init() {
-		static $instance;
 
-		if ( ! $instance ) {
-			$instance = new self();
-		}
-
-		return $instance;
-	}
 
 	function action_register_static() {
 

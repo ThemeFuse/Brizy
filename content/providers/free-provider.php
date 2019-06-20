@@ -19,12 +19,9 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		return array(
 			new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', 'brizy_dc_image_title' ),
 			new Brizy_Content_Placeholders_ImageAltAttribute( 'Internal Alt Attributes', 'brizy_dc_image_alt' ),
-			new Brizy_Content_Placeholders_UniquePageUrl( 'Uniquer page url','brizy_dc_current_page_unique_url' ),
+			new Brizy_Content_Placeholders_UniquePageUrl( 'Uniquer page url', 'brizy_dc_current_page_unique_url' ),
 			new Brizy_Content_Placeholders_Simple( 'WP Language', 'brizy_dc_page_language', get_locale() ),
-			new Brizy_Content_Placeholders_Simple( 'Ajax Url', 'brizy_dc_ajax_url', admin_url( 'admin-ajax.php' ) ),
-
-			// TMP TEST THIRD PARTY
-			new Brizy_Content_Placeholders_ThirdParty('', 'brizy_dc_third_party', null),
+			new Brizy_Content_Placeholders_Component( '', 'brizy_dc_third_party', null ),
 		);
 	}
 }

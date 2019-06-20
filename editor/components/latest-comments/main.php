@@ -1,78 +1,39 @@
 <?php
 
-class Brizy_ThirdParty_LatestComments_Main {
-	public static function init() {
-		add_action( 'brizy_editor_enqueue_scripts', 'Brizy_ThirdParty_LatestComments_Main::enqueue_toolbar_js' );
-		add_filter( 'brizy_third-party_elements', 'Brizy_ThirdParty_LatestComments_Main::register_element' );
+
+class Brizy_Editor_Components_LatestComments_Main extends Brizy_Editor_Components_Abstract_Component {
+	/**
+	 * @return string
+	 */
+	public function getId() {
+		return 'LatestComments';
 	}
 
-	public static function enqueue_toolbar_js() {
-		wp_enqueue_script(
-			'brizy-tp-latest-comments',
-			plugins_url( 'toolbar.js', __FILE__ ),
-			array( 'brizy-editor' ),
-			null,
-			true
-		);
-	}
-
-	public static function register_element( $elements ) {
-		$html = '
-<div class="tp-latest-comments" >
-  {% for comment in apiData %}
-    <div class="tp-comment">
-      <img data-brz-toolbar="avatar" class="tp-comment-avatar" src="{{ comment.avatar }}">
-      <div class="tp-comment-content">
-        <div class="tp-comment-author">{{ comment.author }}</div>
-        <div data-brz-toolbar="content" class="tp-comment-text">{{ comment.content }}</div>
-      </div>
-    </div>
-  {% endfor %}
-</div>';
-
-		$css = '
-& .tp-latest-comments {
-  background: white;
-  color: {{ contentColor }};
-}
-& .tp-comment {
-  display: flex;
-  width: 500px;
-  padding: 10px;
-  margin: 0 auto;
-}
-& .tp-comment-avatar {
-  width: {{ avatarSize }}px;
-  height: {{ avatarSize }}px;
-  border-radius: {{ avatarRadius == "rounded" ? 50 : 0 }}%;
-  margin-right: {{ avatarSpacing }}px;
-}
-& .tp-comment-author {
-  margin-bottom: 5px;
-  font-weight: bold;
-}';
-
-		$elements[] = array(
-			'id'           => 'LatestComments',
-			'title'        => 'Latest Comments',
-			'icon'         => 'nc-save-section',
-			'html'         => $html,
-			'css'          => $css,
-			'defaultValue' => array(
+	/**
+	 * @return mixed
+	 */
+	public function getConfig() {
+		return array(
+			'id'               => $this->getId(),
+			'title'            => 'Latest Comments',
+			'icon'             => 'nc-save-section',
+			'html' => $this->getHtmlTemplate(),
+			'css'  => $this->getCssTemplate(),
+			'defaultValue'     => array(
 				'avatarSize'    => '48',
 				'avatarRadius'  => 'rounded',
 				'avatarSpacing' => '10',
 				'contentColor'  => 'black',
 				'numComments'   => '3'
 			),
-			'dataApi'      => "Brizy_ThirdParty_LatestComments_Main::data_api",
-			'dataApiKeys'  => array( 'numComments' )
+			'dataApiKeys'      => array( 'numComments' )
 		);
-
-		return $elements;
 	}
 
-	public static function data_api( $v ) {
+	/**
+	 * @return mixed
+	 */
+	public function getData() {
 		$data = array(
 			array(
 				'author'  => 'vjeux',
@@ -103,7 +64,31 @@ class Brizy_ThirdParty_LatestComments_Main {
 
 		shuffle( $data );
 
+		$v = $this->getContext()->getV();
+
 		return array_slice( $data, 0, $v['numComments'] );
 	}
 
+	/**
+	 * @return string[]
+	 */
+	public function getAssets() {
+		return [
+			plugins_url( 'toolbar.js', __FILE__ )
+		];
+	}
+
+	/**
+	 * @return false|string
+	 */
+	protected function getHtmlTemplate() {
+		return file_get_contents( dirname( __FILE__ ) . '/html-template.html.twig' );
+	}
+
+	/**
+	 * @return false|string
+	 */
+	protected function getCssTemplate() {
+		return file_get_contents( dirname( __FILE__ ) . '/css-styles.html.twig' );
+	}
 }

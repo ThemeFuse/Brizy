@@ -63,15 +63,17 @@ class Brizy_Editor {
 
 	public function wordpressInit() {
 
-		Brizy_Admin_FormEntries::_init();
-		Brizy_Admin_Templates::_init();
-		Brizy_Admin_Blocks_Main::_init();
-		Brizy_Admin_OptimizeImages::_init();
+		$formEntries    = new Brizy_Admin_FormEntries();
+		$templates      = new Brizy_Admin_Templates();
+		$blocks         = new Brizy_Admin_Blocks_Main();
+		$optimizeImages = new Brizy_Admin_OptimizeImages();
+		$components     = Brizy_Public_Components::instance();
+		$componentApi   = new Brizy_Public_ComponentsApi();
 
-
-		$this->loadShortcodes();
 		$this->registerCustomPostTemplates();
+		$this->loadShortcodes();
 		$this->initializeAssetLoaders();
+
 
 		$supported_post_types   = $this->supported_post_types();
 		$supported_post_types[] = Brizy_Admin_Templates::CP_TEMPLATE;
@@ -290,6 +292,10 @@ class Brizy_Editor {
 		$a = new Brizy_Shortcode_Sidebar();
 		$b = new Brizy_Shortcode_Posts();
 		$c = new Brizy_Shortcode_Navigation();
+	}
+
+	private function loadComponents() {
+
 	}
 
 	private function initializeAssetLoaders() {

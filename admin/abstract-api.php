@@ -52,6 +52,6 @@ abstract class Brizy_Admin_AbstractApi {
 	 * @param $data
 	 */
 	protected function success( $data ) {
-		wp_send_json( $data );
+		wp_send_json_success( $data );
 	}
 }

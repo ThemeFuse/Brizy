@@ -22,19 +22,6 @@ class Brizy_Admin_Blocks_Main {
 	const CP_SAVED = 'brizy-saved-block';
 
 	/**
-	 * @return Brizy_Admin_Blocks_Main
-	 */
-	public static function _init() {
-		static $instance;
-
-		if ( ! $instance ) {
-			$instance = new self();
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * BrizyPro_Admin_Popups constructor.
 	 */
 	public function __construct() {
@@ -148,6 +135,4 @@ class Brizy_Admin_Blocks_Main {
 			)
 		);
 	}
-
-
 }

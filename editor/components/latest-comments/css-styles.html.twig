@@ -1,0 +1,20 @@
+& .tp-latest-comments {
+background: white;
+color: {{ contentColor }};
+}
+& .tp-comment {
+display: flex;
+width: 500px;
+padding: 10px;
+margin: 0 auto;
+}
+& .tp-comment-avatar {
+width: {{ avatarSize }}px;
+height: {{ avatarSize }}px;
+border-radius: {{ avatarRadius == "rounded" ? 50 : 0 }}%;
+margin-right: {{ avatarSpacing }}px;
+}
+& .tp-comment-author {
+margin-bottom: 5px;
+font-weight: bold;
+}

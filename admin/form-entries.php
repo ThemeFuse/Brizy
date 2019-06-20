@@ -9,18 +9,6 @@ class Brizy_Admin_FormEntries {
 
 	private $enableLog = true;
 
-	/**
-	 * @return Brizy_Admin_FormLeads
-	 */
-	public static function _init() {
-		static $instance;
-
-		if ( ! $instance ) {
-			$instance = new self();
-		}
-
-		return $instance;
-	}
 
 	/**
 	 * Brizy_Admin_FormLeads constructor.
