@@ -19,15 +19,22 @@ class Brizy_Admin_Cloud_BlockUploader extends Brizy_Admin_Cloud_AbstractUploader
 		// upload them if needed
 		// create the block in cloud
 
-		$client = Brizy_Admin_Cloud_Client::instance();
-
 		foreach ( $block->getAssets() as $uid => $path ) {
-			if ( $client->isMediaUploaded( $uid ) ) {
-				$client->uploadMedia( $uid );
+			if ( ! $this->client->isMediaUploaded( $uid ) ) {
+
+				$attachmentId = $this->getAttachmentByMediaName( $uid );
+
+				if ( ! $attachmentId ) {
+					throw new Exception( 'Invalid uid provided in upload block media' );
+				}
+
+				$file = get_attached_file( $attachmentId );
+
+				$this->client->uploadMedia( $file );
 			}
 		}
 
-		$client->createOrUpdateBlock( $block );
+		$this->client->createOrUpdateBlock( $block );
 	}
 
 	/**
@@ -37,7 +44,6 @@ class Brizy_Admin_Cloud_BlockUploader extends Brizy_Admin_Cloud_AbstractUploader
 	 * @throws Exception
 	 */
 	public function delete( Brizy_Editor_Block $block ) {
-		$client = Brizy_Admin_Cloud_Client::instance();
-		$client->deleteBlock( $block->getCloudId() );
+		$this->client->deleteBlock( $block->getCloudId() );
 	}
 }

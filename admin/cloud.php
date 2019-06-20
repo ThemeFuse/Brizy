@@ -44,7 +44,7 @@ class Brizy_Admin_Cloud {
 	private function __construct( Brizy_Editor_Project $project ) {
 
 		$this->project     = $project;
-		$this->cloudClient = Brizy_Admin_Cloud_Client::instance();
+		$this->cloudClient = new Brizy_Admin_Cloud_Client( $project, new WP_Http() );
 
 		add_action( 'wp_ajax_' . self::GET_CLOUD_PROJECTS_ACTION, array( $this, 'actionGetProjects' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'registersCloudAssets' ) );
@@ -69,8 +69,7 @@ class Brizy_Admin_Cloud {
 
 	public function actionBlockCreated( Brizy_Editor_Block $block ) {
 		try {
-			$cloudClient = Brizy_Admin_Cloud_Client::instance();
-			$updater     = new Brizy_Admin_Cloud_BlockUploader( $cloudClient );
+			$updater = new Brizy_Admin_Cloud_BlockUploader( $this->cloudClient );
 			$updater->upload( $block );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
@@ -79,8 +78,7 @@ class Brizy_Admin_Cloud {
 
 	public function actionBlockDeleted( Brizy_Editor_Block $block ) {
 		try {
-			$cloudClient = Brizy_Admin_Cloud_Client::instance();
-			$updater     = new Brizy_Admin_Cloud_BlockUploader( $cloudClient );
+			$updater = new Brizy_Admin_Cloud_BlockUploader( $this->cloudClient );
 			$updater->delete( $block );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
