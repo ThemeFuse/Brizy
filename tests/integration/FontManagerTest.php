@@ -308,6 +308,7 @@ class FontManagerTest extends \Codeception\Test\Unit {
 		$this->tester->assertCount( 10, $fonts, 'It should return 10 fonts' );
 
 		foreach ( $fonts as $font ) {
+			$this->assertArrayHasKey( 'id', $font, 'Font should contain "id" key' );
 			$this->assertArrayHasKey( 'family', $font, 'Font should contain "family" key' );
 			$this->assertArrayHasKey( 'type', $font, 'Font should contain "type" key' );
 			$this->assertArrayHasKey( 'weights', $font, 'Font should contain "weight" key' );

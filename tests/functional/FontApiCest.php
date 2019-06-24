@@ -37,6 +37,7 @@ class FontApiCest {
 			$I->assertIsObject( $font, "The Font should be an object" );
 
 			// family
+			$I->assertTrue( isset( $font->id ), "The property 'id' must be present." );
 			$I->assertTrue( isset( $font->family ), "The property 'family' must be present." );
 			$I->assertStringContainsString( $fontFamily, $font->family, "The 'family' value should be valid" );
 
@@ -95,6 +96,7 @@ class FontApiCest {
 		$font = $font->data;
 
 		// family
+		$I->assertTrue( isset( $font->id ), "The property 'id' must be present." );
 		$I->assertTrue( isset( $font->family ), "The property 'family' must be present." );
 		$I->assertStringContainsString( $fontFamily, $font->family, "The 'family' value should be valid" );
 

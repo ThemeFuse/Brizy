@@ -33,6 +33,7 @@ class Brizy_Admin_Fonts_Manager {
 			);
 
 			$result[] = array(
+				'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
 				'family'  => $font->post_title,
 				'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
 				'weights' => array_map( function ( $v ) {
@@ -72,13 +73,15 @@ class Brizy_Admin_Fonts_Manager {
 		}
 
 		$weights = $wpdb->get_results( $wpdb->prepare(
-			"SELECT m.meta_value FROM {$wpdb->posts} p 
-						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'",
+			"SELECT DISTINCT m.meta_value FROM {$wpdb->posts} p 
+						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'
+						",
 			array( $font->ID ) ), ARRAY_A
 		);
 
 
 		return array(
+			'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
 			'family'  => $font->post_title,
 			'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
 			'weights' => array_map( function ( $v ) {
@@ -193,17 +196,17 @@ class Brizy_Admin_Fonts_Manager {
 		}
 
 		$font = get_posts( [
-			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
-			'title'  => $family,
-			'meta_query' => array(
+			'post_type'      => Brizy_Admin_Fonts_Main::CP_FONT,
+			'title'          => $family,
+			'meta_query'     => array(
 				array(
-					'key' => 'brizy-font-type',
+					'key'   => 'brizy-font-type',
 					'value' => $fontType
 				)
 			),
-			'posts_per_page' => -1,
-			'orderby'     => 'ID',
-			'order'       => 'DESC',
+			'posts_per_page' => - 1,
+			'orderby'        => 'ID',
+			'order'          => 'DESC',
 		] );
 
 		if ( count( $font ) > 0 ) {

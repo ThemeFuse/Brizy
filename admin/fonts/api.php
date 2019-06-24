@@ -108,7 +108,9 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, $e->getMessage() );
 			}
 
-			$this->success( [ 'family' => $family, 'weights' => $weights ] );
+			$font = $this->fontManager->getFont($family,$fontType);
+
+			$this->success( $font );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
