@@ -9,7 +9,7 @@ class FontManagerTest extends \Codeception\Test\Unit {
 	protected function _before() {
 		global $wpdb;
 		@$wpdb->check_connection();
-		$this->tester->dontHavePostInDatabase(['post_type'   => Brizy_Admin_Fonts_Main::CP_FONT]);
+		$this->tester->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
 	}
 
 	/**
@@ -146,8 +146,10 @@ class FontManagerTest extends \Codeception\Test\Unit {
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 
 		$fontId = $fontManager->createFont( $family, $fontWeights, $fontType );
+		$uid    = get_post_meta( $fontId, 'brizy_post_uid', true );
 
 		$this->tester->assertIsInt( $fontId, 'It should return an integer' );
+		$this->tester->assertEqual( 'f', $uid[0], 'It should start with F' );
 
 		$this->tester->seePostInDatabase( [
 			'ID'          => $fontId,
@@ -161,6 +163,12 @@ class FontManagerTest extends \Codeception\Test\Unit {
 			'meta_key'   => 'brizy-font-type',
 			'meta_value' => $fontType
 		] );
+
+		$this->tester->seePostMetaInDatabase( [
+			'post_id'  => $fontId,
+			'meta_key' => 'brizy_post_uid',
+		] );
+
 
 		$postsTable = $this->tester->grabPostsTableName();
 
@@ -275,7 +283,7 @@ class FontManagerTest extends \Codeception\Test\Unit {
 		] );
 	}
 
-	public function testDeleteUnknownFont(){
+	public function testDeleteUnknownFont() {
 		$this->expectException( \Exception::class );
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 		$fontManager->deleteFont( 'unknown', 'uploaded' );

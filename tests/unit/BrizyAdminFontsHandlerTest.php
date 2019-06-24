@@ -12,4 +12,5 @@ class BrizyAdminFontsHandlerTest extends \Codeception\Test\Unit {
 
 		$this->tester->assertContains( Brizy_Admin_Fonts_Handler::ENDPOINT, $handler->query_vars( [] ), 'It should add endpoint brizy_font' );
 	}
+
 }
