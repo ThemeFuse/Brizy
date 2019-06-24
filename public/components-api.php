@@ -30,15 +30,21 @@ class Brizy_Public_ComponentsApi extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'Invalid component' );
 		}
 
+		if ( ! $this->param( 'pageId' ) ) {
+			$this->error( 400, 'Invalid component' );
+		}
+
 
 		$id      = $this->param( 'id' );
 		$v       = json_decode( stripslashes( $this->param( 'v' ) ), true );
 		$context = new Brizy_Editor_Components_Context();
 		$context->setV( $v );
+		$context->setIsEditor( true );
+		$context->setPageId( $this->param( 'pageId' ) );
 
-		$component = Brizy_Public_Components::instance()->getComponent($id);
+		$component = Brizy_Public_Components::instance()->getComponent( $id );
 
-		if($component) {
+		if ( $component ) {
 			$component->setContext( $context );
 			$data = $component->getData();
 			$this->success( $data );
