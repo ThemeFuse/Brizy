@@ -243,7 +243,7 @@ class Brizy_Editor_Editor_Editor {
 				)
 			),
 			'branding'               => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
-			'thirdPartyComponents' => array()
+			'thirdPartyComponents' => apply_filters( 'brizy_components', array() )
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );

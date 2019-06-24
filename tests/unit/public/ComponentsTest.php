@@ -72,16 +72,23 @@ class ComponentsTest extends \Codeception\Test\Unit {
 		$this->assertSame( $aComponent, $component, 'It should return the correct component' );
 	}
 
-	public function testCompileParametersFilter() {
-
-		$component = $this->getMockBuilder( Brizy_Editor_Components_Abstract_Component::class )
-		                  ->disableOriginalConstructor()
-		                  ->getMockForAbstractClass();
+	public function testComponentsFilter() {
 
 		$components = Brizy_Public_Components::instance();
-		$components->addComponent($component);
 
-		$params = $components->compilerParams([]);
+		$components = $components->componentsFilter( [] );
+
+		$this->assertGreaterThan( 0, count( $components ), 'It should return some component configs' );
+
+		foreach ( $components as $config ) {
+			$this->assertArrayHasKey( 'id', $config, 'Config should contain property "id"' );
+			$this->assertArrayHasKey( 'title', $config, 'Config should contain property "title"' );
+			$this->assertArrayHasKey( 'icon', $config, 'Config should contain property "icon"' );
+			$this->assertArrayHasKey( 'html', $config, 'Config should contain property "html"' );
+			$this->assertArrayHasKey( 'css', $config, 'Config should contain property "css"' );
+			$this->assertArrayHasKey( 'defaultValue', $config, 'Config should contain property "defaultValue"' );
+			$this->assertArrayHasKey( 'dataApiKeys', $config, 'Config should contain property "dataApiKeys"' );
+		}
 
 	}
 }
