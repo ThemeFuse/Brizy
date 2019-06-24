@@ -36,6 +36,8 @@ class Brizy_Public_Components {
 		$this->components = apply_filters( 'brizy-editor-components', $this->components );
 		$this->validateComponents( $this->components );
 		$this->enqueueAssets();
+
+		add_filter( 'brizy_compiler_params', array( $this, 'compilerParams' ) );
 	}
 
 	/**
@@ -67,6 +69,18 @@ class Brizy_Public_Components {
 	 */
 	public function getComponents() {
 		return $this->components;
+	}
+
+	/**
+	 * @param $params
+	 *
+	 * @return mixed
+	 */
+	public function compilerParams( $params ) {
+
+		$params['thirdPartyComponents'] = $this->components;
+
+		return $params;
 	}
 
 	/**

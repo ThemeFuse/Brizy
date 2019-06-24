@@ -123,11 +123,11 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		$config = array(
-			'user'            => array( 'role' => 'admin' ),
-			'project'         => array(
+			'user'                   => array( 'role' => 'admin' ),
+			'project'                => array(
 				'id' => $this->project->getId()
 			),
-			'urls'            => array(
+			'urls'                   => array(
 				'site'               => home_url(),
 				'api'                => home_url( '/wp-json/v1' ),
 				'assets'             => $this->urlBuilder->editor_build_url(),
@@ -147,12 +147,12 @@ class Brizy_Editor_Editor_Editor {
 				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
 			),
-			'form'            => array(
+			'form'                   => array(
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 			),
-			'serverTimestamp' => time(),
-			'menuData'        => $this->get_menu_data(),
-			'wp'              => array(
+			'serverTimestamp'        => time(),
+			'menuData'               => $this->get_menu_data(),
+			'wp'                     => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
 				'ruleMatches'     => $ruleMatches,
@@ -226,8 +226,7 @@ class Brizy_Editor_Editor_Editor {
 					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA, // ???
 					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA, // ???
 
-					// TMP TEST THIRD PARTY
-					'getThirdPartyData' => Brizy_Admin_Blocks_Api::GET_THIRD_PARTY_DATA,
+					'getThirdPartyData' => Brizy_Public_ComponentsApi::AJAX_GET_DATA,
 				),
 				'plugins'         => array(
 					'dummy'       => true,
@@ -238,15 +237,13 @@ class Brizy_Editor_Editor_Editor {
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
 				'isTemplate'      => $isTemplate
 			),
-			'applications'    => array(
+			'applications'           => array(
 				'form' => array(
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 				)
 			),
-			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
-
-			// TMP TEST THIRD PARTY
-			'thirdParty'      => apply_filters('brizy_third-party_elements', array())
+			'branding'               => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+			'thirdPartyComponents' => array()
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );

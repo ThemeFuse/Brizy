@@ -70,6 +70,18 @@ class ComponentsTest extends \Codeception\Test\Unit {
 		$aComponent = $components->getComponent( 'UID_String' );
 
 		$this->assertSame( $aComponent, $component, 'It should return the correct component' );
+	}
+
+	public function testCompileParametersFilter() {
+
+		$component = $this->getMockBuilder( Brizy_Editor_Components_Abstract_Component::class )
+		                  ->disableOriginalConstructor()
+		                  ->getMockForAbstractClass();
+
+		$components = Brizy_Public_Components::instance();
+		$components->addComponent($component);
+
+		$params = $components->compilerParams([]);
 
 	}
 }

@@ -44,9 +44,6 @@ function brizy_load() {
 	}
 
 	$instance = Brizy_Editor::get();
-
-	// TMP TEST THIRD PARTY
-	Brizy_ThirdParty_Main::init();
 }
 
 function brizy_notices() {
