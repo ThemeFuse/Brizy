@@ -83,6 +83,7 @@ class ComponentsTest extends \Codeception\Test\Unit {
 		foreach ( $components as $config ) {
 			$this->assertArrayHasKey( 'id', $config, 'Config should contain property "id"' );
 			$this->assertArrayHasKey( 'title', $config, 'Config should contain property "title"' );
+			$this->assertArrayHasKey( 'hasData', $config, 'Config should contain property "hasData"' );
 			$this->assertArrayHasKey( 'icon', $config, 'Config should contain property "icon"' );
 			$this->assertArrayHasKey( 'html', $config, 'Config should contain property "html"' );
 			$this->assertArrayHasKey( 'css', $config, 'Config should contain property "css"' );

@@ -14,19 +14,20 @@ class Brizy_Editor_Components_LatestComments_Main extends Brizy_Editor_Component
 	 */
 	public function getConfig() {
 		return array(
-			'id'               => $this->getId(),
-			'title'            => 'Latest Comments',
-			'icon'             => 'nc-save-section',
-			'html' => $this->getHtmlTemplate(),
-			'css'  => $this->getCssTemplate(),
-			'defaultValue'     => array(
+			'id'           => $this->getId(),
+			'title'        => 'Latest Comments',
+			'icon'         => 'nc-save-section',
+			'hasData'      => true,
+			'html'         => $this->getHtmlTemplate(),
+			'css'          => $this->getCssTemplate(),
+			'defaultValue' => array(
 				'avatarSize'    => '48',
 				'avatarRadius'  => 'rounded',
 				'avatarSpacing' => '10',
 				'contentColor'  => 'black',
 				'numComments'   => '3'
 			),
-			'dataApiKeys'      => array( 'numComments' )
+			'dataApiKeys'  => array( 'numComments' )
 		);
 	}
 
