@@ -37,7 +37,7 @@ class Brizy_Public_Components {
 		$this->validateComponents( $this->components );
 		$this->enqueueAssets();
 
-		add_filter( 'brizy_compiler_params', array( $this, 'compilerParams' ) );
+		add_filter( 'brizy_editor_config', array( $this, 'compilerParams' ) );
 	}
 
 	/**

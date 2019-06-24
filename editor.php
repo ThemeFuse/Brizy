@@ -68,7 +68,8 @@ class Brizy_Editor {
 		$blocks         = new Brizy_Admin_Blocks_Main();
 		$optimizeImages = new Brizy_Admin_OptimizeImages();
 		$components     = Brizy_Public_Components::instance();
-		$componentApi   = new Brizy_Public_ComponentsApi();
+		$components->initialize();
+		$componentApi = new Brizy_Public_ComponentsApi();
 
 		$this->registerCustomPostTemplates();
 		$this->loadShortcodes();
