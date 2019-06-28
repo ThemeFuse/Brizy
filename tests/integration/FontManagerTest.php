@@ -149,7 +149,6 @@ class FontManagerTest extends \Codeception\Test\Unit {
 		$uid    = get_post_meta( $fontId, 'brizy_post_uid', true );
 
 		$this->tester->assertIsInt( $fontId, 'It should return an integer' );
-		$this->tester->assertEqual( 'f', $uid[0], 'It should start with F' );
 
 		$this->tester->seePostInDatabase( [
 			'ID'          => $fontId,

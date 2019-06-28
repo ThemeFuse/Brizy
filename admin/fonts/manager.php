@@ -142,7 +142,7 @@ class Brizy_Admin_Fonts_Manager {
 				throw new Exception( 'Unable to create font' );
 			}
 
-			$uid = "f".md5( $fontId . time() );
+			$uid = md5( $fontId . time() );
 			update_post_meta( $fontId, 'brizy_post_uid', $uid );
 			update_post_meta( $fontId, 'brizy-font-type', $fontType );
 
