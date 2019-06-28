@@ -3,10 +3,11 @@
 class Brizy_Compatibilities_Init {
 
 	public function __construct() {
-		$this->loadCompatibilities();
+		$this->load_compatibilites();
+		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
 	}
 
-	private function loadCompatibilities() {
+	private function load_compatibilites() {
 		global $wp_version;
 
 		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
@@ -43,6 +44,12 @@ class Brizy_Compatibilities_Init {
 
 		if ( $this->is_plugin_active( 'sg-cachepress/sg-cachepress.php' ) ) {
 			new Brizy_Compatibilities_SgOptimizer();
+		}
+	}
+
+	public function action_plugins_loaded() {
+		if ( function_exists( 'wpseo_auto_load' ) ) {
+			new Brizy_Compatibilities_YoastSeo();
 		}
 	}
 
