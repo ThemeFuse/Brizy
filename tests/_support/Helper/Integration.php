@@ -74,7 +74,7 @@ class Integration extends \Codeception\Module {
 			'post_title'  => $fontFamily,
 			'post_status' => $status,
 			'meta_input'  => [
-				'brizy_post_uid'  => md5( time() ),
+				'brizy_post_uid'  => md5( time().$fontFamily.$type.$status ),
 				'brizy-font-type' => $type
 			],
 		] );

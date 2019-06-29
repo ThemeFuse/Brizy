@@ -255,9 +255,10 @@ class FontManagerTest extends \Codeception\Test\Unit {
 		$uploadedFontId = $this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 		$googleFontId   = $this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'google' );
 
+		$uploadedFontUId = get_post_meta( $uploadedFontId, 'brizy_post_uid', true );
 
 		$fontManager = new Brizy_Admin_Fonts_Manager();
-		$fontManager->deleteFont( $fontFamily, 'uploaded' );
+		$fontManager->deleteFont( $uploadedFontUId );
 
 		$this->tester->dontSeePostInDatabase( [
 			'ID' => $uploadedFontId
@@ -269,7 +270,6 @@ class FontManagerTest extends \Codeception\Test\Unit {
 			'meta_value' => 'upload'
 		] );
 
-
 		$this->tester->seePostInDatabase( [
 			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
 			'post_title'  => $fontFamily,
@@ -277,6 +277,7 @@ class FontManagerTest extends \Codeception\Test\Unit {
 		] );
 
 		$this->tester->seePostMetaInDatabase( [
+			'post_id'    => $googleFontId,
 			'meta_key'   => 'brizy-font-type',
 			'meta_value' => 'google'
 		] );
@@ -285,7 +286,7 @@ class FontManagerTest extends \Codeception\Test\Unit {
 	public function testDeleteUnknownFont() {
 		$this->expectException( \Exception::class );
 		$fontManager = new Brizy_Admin_Fonts_Manager();
-		$fontManager->deleteFont( 'unknown', 'uploaded' );
+		$fontManager->deleteFont( 'UNKNOWN UID' );
 	}
 
 	public function testGetFontList() {
@@ -322,5 +323,68 @@ class FontManagerTest extends \Codeception\Test\Unit {
 			$this->assertContains( '400', $font['weights'], 'Font weights should contain "400" key' );
 			$this->assertContains( '500italic', $font['weights'], 'Font weights should contain "500italic" key' );
 		}
+	}
+
+	public function testGetFont() {
+
+		$this->tester->wantToTest( 'get font method' );
+
+		$fontFamily     = 'proxima_nova';
+		$uploadedFontId = $this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+
+		$uploadedFontUId = get_post_meta( $uploadedFontId, 'brizy_post_uid', true );
+
+		$fontManager = new Brizy_Admin_Fonts_Manager();
+		$font        = $fontManager->getFont( $uploadedFontUId );
+
+		$this->assertArrayHasKey( 'id', $font, 'Font should contain "id" key' );
+		$this->assertArrayHasKey( 'family', $font, 'Font should contain "family" key' );
+		$this->assertArrayHasKey( 'type', $font, 'Font should contain "type" key' );
+		$this->assertArrayHasKey( 'weights', $font, 'Font should contain "weight" key' );
+		$this->assertContains( '400', $font['weights'], 'Font weights should contain "400" key' );
+	}
+
+	public function testGetUnknownFont() {
+
+		$this->tester->wantToTest( 'get font method' );
+
+		$fontFamily = 'proxima_nova';
+		$this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+
+		$fontManager = new Brizy_Admin_Fonts_Manager();
+		$font        = $fontManager->getFont( 'UNKNOWN ID' );
+
+		$this->assertNull( $font, 'It should return null' );
+	}
+
+
+	public function testGetFontByFamily() {
+
+		$this->tester->wantToTest( 'get font method' );
+
+		$fontFamily = 'proxima_nova';
+		$this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+
+		$fontManager = new Brizy_Admin_Fonts_Manager();
+		$font        = $fontManager->getFontByFamily( $fontFamily, 'uploaded' );
+
+		$this->assertArrayHasKey( 'id', $font, 'Font should contain "id" key' );
+		$this->assertArrayHasKey( 'family', $font, 'Font should contain "family" key' );
+		$this->assertArrayHasKey( 'type', $font, 'Font should contain "type" key' );
+		$this->assertArrayHasKey( 'weights', $font, 'Font should contain "weight" key' );
+		$this->assertContains( '400', $font['weights'], 'Font weights should contain "400" key' );
+	}
+
+	public function testGetFontByUnknownFamily() {
+
+		$this->tester->wantToTest( 'get font method' );
+
+		$fontFamily = 'proxima_nova';
+		$this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+
+		$fontManager = new Brizy_Admin_Fonts_Manager();
+		$font        = $fontManager->getFontByFamily( 'UNKNOWN', 'uploaded' );
+		
+		$this->assertNull( $font, 'It should return null' );
 	}
 }

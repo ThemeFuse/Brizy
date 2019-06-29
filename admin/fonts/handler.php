@@ -13,6 +13,9 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 
 	/**
 	 * @return mixed|void
+	 * @throws Twig_Error_Loader
+	 * @throws Twig_Error_Runtime
+	 * @throws Twig_Error_Syntax
 	 */
 	public function process_query() {
 		global $wp_query;
@@ -26,20 +29,24 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 
 		session_write_close();
 
-		$fontFamilies = $this->explodeFont( $vars[ self::ENDPOINT ] );
+		$fontQueries = $this->explodeFont( $vars[ self::ENDPOINT ] );
 
-		if ( count( $fontFamilies ) == 0 ) {
+		if ( count( $fontQueries ) == 0 ) {
 			return;
 		}
 
 		$contexts = array();
 
-		foreach ( $fontFamilies as $family => $weights ) {
-			$contexts[ $family ] = array();
-			$fontPost            = $this->getFont( $family );
+		foreach ( $fontQueries as $fontUid => $weights ) {
+			$contexts[ $fontUid ] = array();
+			$fontPost             = $this->getFont( $fontUid );
+
+			if ( ! $fontPost ) {
+				continue;
+			}
 
 			foreach ( $weights as $weight ) {
-				$contexts[ $family ][ $weight ] = $this->getFontWeightFileUrls( $fontPost->ID, $weight );
+				$contexts[ $fontUid ][ $weight ] = $this->getFontWeightFileUrls( $fontPost->ID, $weight );
 			}
 		}
 
@@ -86,16 +93,20 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 	}
 
 	/**
-	 * @param $family
+	 * @param $uid
 	 *
 	 * @return mixed|null
 	 */
-	private function getFont( $family ) {
+	private function getFont( $uid ) {
 		$fonts = get_posts( [
 			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
-			'post_title'  => $family,
-			'post_name'   => $family,
 			'post_status' => 'publish',
+			'meta_query'  => array(
+				array(
+					'key'   => 'brizy_post_uid',
+					'value' => $uid
+				)
+			),
 		] );
 
 		if ( is_array( $fonts ) && isset( $fonts[0] ) ) {

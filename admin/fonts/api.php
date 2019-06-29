@@ -76,7 +76,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, 'Invalid font files' );
 			}
 
-			$existingFont = $this->fontManager->getFont( $family, $fontType );
+			$existingFont = $this->fontManager->getFontByFamily( $family, $fontType );
 
 			if ( $existingFont ) {
 				$this->error( 400, 'This font family already exists.' );
@@ -101,14 +101,16 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 					}
 				}
 
-				$this->fontManager->createFont( $family, $files, $fontType );
+				$fontPostId = $this->fontManager->createFont( $family, $files, $fontType );
 
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->debug( 'Create font ERROR', [ $e ] );
 				$this->error( 400, $e->getMessage() );
 			}
 
-			$font = $this->fontManager->getFont($family,$fontType);
+			$fontUidId = get_post_meta( $fontPostId, 'brizy_post_uid', true );
+
+			$font = $this->fontManager->getFont( $fontUidId );
 
 			$this->success( $font );
 
@@ -119,18 +121,14 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionDeleteFont() {
 
-		if ( ! ( $family = $this->param( 'family' ) ) ) {
-			$this->error( 400, 'Invalid font family' );
-		}
-
-		if ( ! ( $type = $this->param( 'type' ) ) ) {
-			$this->error( 400, 'Invalid font type family' );
+		if ( ! ( $fontId = $this->param( 'id' ) ) ) {
+			$this->error( 400, 'Invalid font id' );
 		}
 
 		$manager = new Brizy_Admin_Fonts_Manager();
 
 		try {
-			$manager->deleteFont( $family, $type );
+			$manager->deleteFont( $fontId );
 		} catch ( Exception $e ) {
 			$this->error( $e->getCode(), $e->getMessage() );
 		}

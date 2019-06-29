@@ -46,21 +46,19 @@ class Brizy_Admin_Fonts_Manager {
 	}
 
 	/**
-	 * @param $family
-	 * @param $fontType
+	 * @param $uid
 	 *
 	 * @return array|null
 	 */
-	public function getFont( $family, $fontType ) {
+	public function getFont( $uid ) {
 
 		global $wpdb;
 
 		$fonts = get_posts( array(
-			'title'       => $family,
 			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
 			'post_status' => 'publish',
-			'meta_key'    => 'brizy-font-type',
-			'meta_value'  => $fontType,
+			'meta_key'    => 'brizy_post_uid',
+			'meta_value'  => $uid,
 			'numberposts' => - 1,
 			'orderby'     => 'ID',
 			'order'       => 'DESC',
@@ -72,22 +70,29 @@ class Brizy_Admin_Fonts_Manager {
 			return null;
 		}
 
-		$weights = $wpdb->get_results( $wpdb->prepare(
-			"SELECT DISTINCT m.meta_value FROM {$wpdb->posts} p 
-						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'
-						",
-			array( $font->ID ) ), ARRAY_A
-		);
+		return $this->getFontReturnData( $font );
+	}
 
+	public function getFontByFamily( $family, $type ) {
 
-		return array(
-			'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
-			'family'  => $font->post_title,
-			'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
-			'weights' => array_map( function ( $v ) {
-				return $v['meta_value'];
-			}, $weights )
-		);
+		$fonts = get_posts( array(
+			'title'       => $family,
+			'post_type'   => Brizy_Admin_Fonts_Main::CP_FONT,
+			'post_status' => 'publish',
+			'meta_key'    => 'brizy-font-type',
+			'meta_value'  => $type,
+			'numberposts' => - 1,
+			'orderby'     => 'ID',
+			'order'       => 'DESC',
+		) );
+
+		if ( isset( $fonts[0] ) ) {
+			$font = $fonts[0];
+		} else {
+			return null;
+		}
+
+		return $this->getFontReturnData( $font );
 	}
 
 	/**
@@ -178,30 +183,24 @@ class Brizy_Admin_Fonts_Manager {
 	}
 
 	/**
-	 * @param $family
-	 * @param $fontType
+	 * @param $fontUid
 	 *
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function deleteFont( $family, $fontType ) {
+	public function deleteFont( $fontUid ) {
 		global $wpdb;
 
-		if ( $family == '' ) {
-			throw new Exception( 'Invalid font family' );
-		}
-
-		if ( $fontType == '' ) {
-			throw new Exception( 'Invalid font type' );
+		if ( ! $fontUid ) {
+			throw new Exception( 'Invalid font uid' );
 		}
 
 		$font = get_posts( [
 			'post_type'      => Brizy_Admin_Fonts_Main::CP_FONT,
-			'title'          => $family,
 			'meta_query'     => array(
 				array(
-					'key'   => 'brizy-font-type',
-					'value' => $fontType
+					'key'   => 'brizy_post_uid',
+					'value' => $fontUid
 				)
 			),
 			'posts_per_page' => - 1,
@@ -242,5 +241,32 @@ class Brizy_Admin_Fonts_Manager {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param wpdb $wpdb
+	 * @param $font
+	 *
+	 * @return array
+	 */
+	private function getFontReturnData( $font ) {
+		global $wpdb;
+
+		$weights = $wpdb->get_results( $wpdb->prepare(
+			"SELECT DISTINCT m.meta_value FROM {$wpdb->posts} p 
+						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'
+						",
+			array( $font->ID ) ), ARRAY_A
+		);
+
+
+		return array(
+			'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
+			'family'  => $font->post_title,
+			'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
+			'weights' => array_map( function ( $v ) {
+				return $v['meta_value'];
+			}, $weights )
+		);
 	}
 }

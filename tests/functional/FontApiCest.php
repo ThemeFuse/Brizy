@@ -4,7 +4,7 @@ class FontApiCest {
 	public function _before( FunctionalTester $I ) {
 		$I->loginAs( 'admin', 'admin' );
 		@$I->cleanUploadsDir();
-		$I->dontHavePostInDatabase(['post_type'   => Brizy_Admin_Fonts_Main::CP_FONT]);
+		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
 	}
 
 	public function compilerFontParametersTest( FunctionalTester $I ) {
@@ -152,7 +152,7 @@ class FontApiCest {
 			'post_title'  => $fontFamily,
 			'post_status' => 'publish',
 			'meta_input'  => [
-				'brizy_post_uid' => 'gffbf00297b0b4e9ee27af32a7b79c3330',
+				'brizy_post_uid'  => 'gffbf00297b0b4e9ee27af32a7b79c3330',
 				'brizy-font-type' => 'uploaded',
 			],
 		] );
@@ -169,6 +169,7 @@ class FontApiCest {
 
 
 		$fontFamily = 'proxima_nova';
+
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
 			'family' => $fontFamily,
 		], [
@@ -220,12 +221,14 @@ class FontApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 
+		$font = json_decode( $I->grabResponse() )->data;
 
-		$I->sendGET( '/?' . build_query( [ Brizy_Admin_Fonts_Handler::ENDPOINT => "proxima_nova:400,500,700" ] ) );
+		$I->sendGET( '/?' . build_query( [ Brizy_Admin_Fonts_Handler::ENDPOINT => "{$font->id}:400,500,700" ] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 		$I->seeHttpHeader( 'Content-Type', 'text/css;charset=UTF-8' );
 
+		$I->see( 'font-family: \'' . $font->id . '\'' );
 		$I->see( 'pn-regular-webfont.ttf' );
 		$I->see( 'pn-regular-webfont.eot' );
 		$I->see( 'pn-regular-webfont.woff' );
@@ -251,9 +254,10 @@ class FontApiCest {
 		$uploadedFontId = $I->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 		$googleFontId   = $I->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'google' );
 
+		$uploadedFontUId = get_post_meta( $uploadedFontId, 'brizy_post_uid', true );
+
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
-			'family' => $fontFamily,
-			'type'   => 'uploaded'
+			'id' => $uploadedFontUId,
 		] );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -277,15 +281,7 @@ class FontApiCest {
 		$uploadedFontId = $I->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
-			'family' => 'unknown',
-			'type'   => 'uploaded'
-		] );
-
-		$I->canSeeResponseCodeIs( 404 );
-
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
-			'family' => 'proxima_nova',
-			'type'   => 'unknwon'
+			'id' => 'unknown',
 		] );
 
 		$I->canSeeResponseCodeIs( 404 );
@@ -294,30 +290,4 @@ class FontApiCest {
 		$I->canSeeAttachmentInDatabase( [ 'post_parent' => $uploadedFontId ] );
 	}
 
-	/**
-	 * @param FunctionalTester $I
-	 *
-	 * @throws \Codeception\Exception\ModuleException
-	 */
-	public function deleteInvalidFontRequest( FunctionalTester $I ) {
-
-		$fontFamily     = 'proxima_nova';
-		$uploadedFontId = $I->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
-
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
-			'bad_family' => 'unknown',
-			'type'       => 'uploaded'
-		] );
-
-		$I->canSeeResponseCodeIs( 400 );
-
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
-			'family' => 'unknown',
-		] );
-
-		$I->canSeeResponseCodeIs( 400 );
-
-		$I->canSeePostInDatabase( [ 'ID' => $uploadedFontId ] );
-		$I->canSeeAttachmentInDatabase( [ 'post_parent' => $uploadedFontId ] );
-	}
 }
