@@ -18,7 +18,7 @@ class LatestCommentsTest extends \Codeception\Test\Unit {
 		$this->assertArrayHasKey( 'html', $config, 'Config should contain property "html"' );
 		$this->assertArrayHasKey( 'css', $config, 'Config should contain property "css"' );
 		$this->assertArrayHasKey( 'defaultValue', $config, 'Config should contain property "defaultValue"' );
-		$this->assertArrayHasKey( 'dataApiKeys', $config, 'Config should contain property "dataApiKeys"' );
+		$this->assertArrayHasKey( 'dataKeys', $config, 'Config should contain property "dataKeys"' );
 		$this->assertArrayHasKey( 'hasData', $config, 'Config should contain property "hasData"' );
 		$this->assertEquals( 'LatestComments', $config['id'], 'Config should contain correct id' );
 

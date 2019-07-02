@@ -88,7 +88,7 @@ class ComponentsTest extends \Codeception\Test\Unit {
 			$this->assertArrayHasKey( 'html', $config, 'Config should contain property "html"' );
 			$this->assertArrayHasKey( 'css', $config, 'Config should contain property "css"' );
 			$this->assertArrayHasKey( 'defaultValue', $config, 'Config should contain property "defaultValue"' );
-			$this->assertArrayHasKey( 'dataApiKeys', $config, 'Config should contain property "dataApiKeys"' );
+			$this->assertArrayHasKey( 'dataKeys', $config, 'Config should contain property "dataKeys"' );
 		}
 
 	}

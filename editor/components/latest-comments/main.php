@@ -17,7 +17,6 @@ class Brizy_Editor_Components_LatestComments_Main extends Brizy_Editor_Component
 			'id'           => $this->getId(),
 			'title'        => 'Latest Comments',
 			'icon'         => 'nc-save-section',
-			'hasData'      => true,
 			'html'         => $this->getHtmlTemplate(),
 			'css'          => $this->getCssTemplate(),
 			'defaultValue' => array(
@@ -27,7 +26,8 @@ class Brizy_Editor_Components_LatestComments_Main extends Brizy_Editor_Component
 				'contentColor'  => 'black',
 				'numComments'   => '3'
 			),
-			'dataApiKeys'  => array( 'numComments' )
+			'hasData'      => true,
+			'dataKeys'     => array( 'numComments' )
 		);
 	}
 
