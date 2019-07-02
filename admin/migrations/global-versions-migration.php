@@ -2,6 +2,8 @@
 
 class Brizy_Admin_Migrations_GlobalVersionsMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
+	use Brizy_Admin_Migrations_PostsTrait;
+
 	/**
 	 * @return int|mixed
 	 */
@@ -25,8 +27,14 @@ class Brizy_Admin_Migrations_GlobalVersionsMigration implements Brizy_Admin_Migr
 	public function execute() {
 
 		try {
-			$postProjectId  = Brizy_Editor_Project::get()->getWpPost()->ID;
-			$projectStorage = Brizy_Editor_Storage_Project::instance( $postProjectId );
+
+			$projectPost = $this->getProjectPost();
+
+			if ( ! $projectPost ) {
+				return;
+			}
+
+			$projectStorage = Brizy_Editor_Storage_Project::instance( $projectPost->ID );
 
 			$pluginVersion = $projectStorage->get( 'pluginVersion', false );
 

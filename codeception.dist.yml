@@ -18,4 +18,6 @@ extensions:
         - Codeception\Command\GenerateWPXMLRPC
 params:
     - .env.testing
+settings:
+    shuffle: true
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"

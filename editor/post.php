@@ -262,8 +262,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 * @todo: We need to move this method from here
-	 *
-	 *
 	 */
 	public static function get_all_brizy_posts() {
 		global $wpdb;
@@ -287,7 +285,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 				}
 			}
 		}
-
 		return $result;
 	}
 

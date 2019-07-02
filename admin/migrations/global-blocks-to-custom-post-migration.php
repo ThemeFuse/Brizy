@@ -2,6 +2,8 @@
 
 class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
+	use Brizy_Admin_Migrations_PostsTrait;
+
 	/**
 	 * @return int|mixed
 	 */
@@ -24,8 +26,13 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 	 */
 	public function execute() {
 
-		$projectPost          = Brizy_Editor_Project::getPost();
-		$projectStorage     = Brizy_Editor_Storage_Project::instance( $projectPost->ID );
+		$projectPost = $this->getProjectPost();
+
+		if ( ! $projectPost ) {
+			return;
+		}
+
+		$projectStorage       = Brizy_Editor_Storage_Project::instance( $projectPost->ID );
 		$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $projectPost->ID );
 		$globals              = json_decode( base64_decode( $projectStorage->get( 'globals', false ) ) );
 
@@ -85,4 +92,5 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 		$projectStorage->set( 'globals', base64_encode( json_encode( $globals->project ) ) );
 		$postMigrationStorage->addMigration( $this )->save();
 	}
+
 }
