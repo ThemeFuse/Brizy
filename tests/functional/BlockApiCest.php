@@ -4,6 +4,7 @@
 class BlockApiCest {
 
 	public function _before( FunctionalTester $I ) {
+		wp_cache_flush();
 		$I->haveManyPostsInDatabase( 2, [
 			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'post_title'  => 'Global {{n}}',

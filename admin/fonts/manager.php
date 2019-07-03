@@ -118,7 +118,7 @@ class Brizy_Admin_Fonts_Manager {
 			throw new Exception( 'Invalid font weights' );
 		}
 
-		$font = $this->getFont( $family, $fontType );
+		$font = $this->getFontByFamily( $family, $fontType );
 
 		if ( $font ) {
 			throw new Exception( 'This font already exists' );
@@ -177,7 +177,7 @@ class Brizy_Admin_Fonts_Manager {
 
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-			Brizy_Logger::instance()->debug( 'Create font ERROR', [ $e ] );
+			Brizy_Logger::instance()->debug( 'Create font ERROR', [ $e->getMessage() ] );
 			throw new Exception( 'Unable to create font' );
 		}
 	}

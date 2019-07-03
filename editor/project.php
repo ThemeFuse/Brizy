@@ -29,11 +29,6 @@ class Brizy_Editor_Project implements Serializable {
 	 */
 	protected $storage = null;
 
-	/**
-	 * @var Brizy_Editor_Storage_Abstract
-	 */
-	protected $global_storage = null;
-
 	//---------------------------------------------------------------------------------------------------
 	protected $id;
 	protected $title;
@@ -54,8 +49,6 @@ class Brizy_Editor_Project implements Serializable {
 	protected $cloud_project;
 	protected $image_optimizer_settings;
 	protected $data;
-	protected $fonts;
-	protected $styles;
 	//---------------------------------------------------------------------------------------------------
 
 	/**
@@ -64,10 +57,13 @@ class Brizy_Editor_Project implements Serializable {
 	 * @param WP_Post $post
 	 */
 	protected function __construct( WP_Post $post ) {
-		$this->post           = $post;
-		$this->storage        = Brizy_Editor_Storage_Project::instance( $this->post->ID );
-		$this->global_storage = Brizy_Editor_Storage_ProjectGlobals::instance( $this->get_parent_id() );
-		$this->loadProjectData();
+		$this->post    = $post;
+		$this->storage = Brizy_Editor_Storage_Project::instance( $this->post->ID );
+		$this->loadProjectData( $this->storage->get_storage() );
+	}
+
+	public static function cleanClassCache() {
+		self::$instance = array();
 	}
 
 	/**
@@ -75,10 +71,8 @@ class Brizy_Editor_Project implements Serializable {
 	 */
 	public function create_post_data() {
 		$data = array(
-			'id'     => $this->getId(),
-			'data'   => $this->getDataAsJson(),
-			'fonts'  => $this->getFontsAsJson(),
-			'styles' => $this->getStylesAsJson()
+			'id'   => $this->getId(),
+			'data' => $this->getDataAsJson()
 		);
 
 		return $data;
@@ -117,9 +111,6 @@ class Brizy_Editor_Project implements Serializable {
 		);
 	}
 
-	public static function cleanClassCache() {
-		self::$instance = array();
-	}
 
 	/**
 	 * @return Brizy_Editor_Project|mixed
@@ -153,7 +144,6 @@ class Brizy_Editor_Project implements Serializable {
 
 		return self::$instance[ $wp_post->ID ] = new self( $wp_post );
 	}
-
 
 	/**
 	 * @return false|WP_Post
@@ -207,7 +197,7 @@ class Brizy_Editor_Project implements Serializable {
 			'signature'                => Brizy_Editor_Signature::get(),
 			'accounts'                 => array(),
 			'forms'                    => array(),
-			'data'                     => base64_encode( file_get_contents( BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "editor-build" . DIRECTORY_SEPARATOR . "defaultData.json" ) ),
+			'data'                     => base64_encode( file_get_contents( BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "editor-build" . DIRECTORY_SEPARATOR . "defaults.json" ) ),
 			'brizy-license-key'        => null,
 			'brizy-cloud-token'        => null,
 			'brizy-cloud-project'      => null,
@@ -217,14 +207,6 @@ class Brizy_Editor_Project implements Serializable {
 
 		$storage = Brizy_Editor_Storage_Project::instance( $post_id );
 		$storage->loadStorage( $project_data );
-
-		$project_globals_data = array(
-			'fonts'  => base64_encode( file_get_contents( BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "editor-build" . DIRECTORY_SEPARATOR . "defaultFonts.json" ) ),
-			'styles' => base64_encode( file_get_contents( BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "editor-build" . DIRECTORY_SEPARATOR . "defaultStyles.json" ) )
-		);
-
-		$storage = Brizy_Editor_Storage_ProjectGlobals::instance( $post_id );
-		$storage->loadStorage( $project_globals_data );
 
 		return $post_id;
 	}
@@ -236,6 +218,7 @@ class Brizy_Editor_Project implements Serializable {
 		return array(
 			'id'                       => $this->id,
 			'title'                    => $this->title,
+			//'globals'                  => $this->globals,
 			'name'                     => $this->name,
 			'user'                     => $this->user,
 			'template'                 => $this->template,
@@ -255,19 +238,7 @@ class Brizy_Editor_Project implements Serializable {
 		);
 	}
 
-	protected function getProjectGlobalData() {
-		return array(
-			'styles' => $this->styles,
-			'fonts'  => $this->fonts
-		);
-	}
-
-
-	protected function loadProjectData() {
-
-		$data        = $this->storage->get_storage();
-		$global_data = $this->global_storage->get_storage();
-
+	protected function loadProjectData( $data ) {
 		$this->id                       = isset( $data['id'] ) ? $data['id'] : null;
 		$this->title                    = isset( $data['title'] ) ? $data['title'] : null;
 		$this->name                     = isset( $data['name'] ) ? $data['name'] : null;
@@ -282,8 +253,6 @@ class Brizy_Editor_Project implements Serializable {
 		$this->accounts                 = isset( $data['accounts'] ) ? $data['accounts'] : null;
 		$this->forms                    = isset( $data['forms'] ) ? $data['forms'] : null;
 		$this->data                     = isset( $data['data'] ) ? $data['data'] : null;
-		$this->fonts                    = isset( $global_data['fonts'] ) ? $data['fonts'] : null;
-		$this->styles                   = isset( $global_data['styles'] ) ? $data['styles'] : null;
 		$this->license_key              = isset( $data['brizy-license-key'] ) ? $data['brizy-license-key'] : null;
 		$this->cloud_token              = isset( $data['brizy-cloud-token'] ) ? $data['brizy-cloud-token'] : null;
 		$this->cloud_project            = isset( $data['brizy-cloud-project'] ) ? $data['brizy-cloud-project'] : null;
@@ -300,9 +269,6 @@ class Brizy_Editor_Project implements Serializable {
 		try {
 			$value = $this->getProjectData();
 			$this->storage->loadStorage( $value );
-
-			$value = $this->getProjectGlobalData();
-			$this->global_storage->loadStorage( $value );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 
@@ -364,7 +330,7 @@ class Brizy_Editor_Project implements Serializable {
 			// @todo: copy data to autosave instance
 			$data = $this->getProjectData();
 
-			$autosavePost->loadProjectData();
+			$autosavePost->loadProjectData( $data );
 			$autosavePost->setImageOptimizerSettings( $data['image-optimizer-settings'] );
 
 			$autosavePost->save();
@@ -710,96 +676,6 @@ class Brizy_Editor_Project implements Serializable {
 	public function getDecodedData() {
 		return json_decode( $this->getDataAsJson() );
 	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getFonts() {
-		return $this->fonts;
-	}
-
-	/**
-	 * @param mixed $fonts
-	 *
-	 * @return Brizy_Editor_Project
-	 */
-	public function setFonts( $fonts ) {
-		$this->fonts = $fonts;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $fontsJson
-	 *
-	 * @return Brizy_Editor_Project
-	 */
-	public function setFontsAsJson( $fontsJson ) {
-		$this->setFonts( base64_encode( $fontsJson ) );
-
-		return $this;
-	}
-
-	/**
-	 * @return bool|string
-	 */
-	public function getFontsAsJson() {
-		return base64_decode( $this->getFonts() );
-	}
-
-	/**
-	 * @return bool|string
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function getDecodedFonts() {
-		return json_decode( $this->getFontsAsJson() );
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getStyles() {
-		return $this->styles;
-	}
-
-	/**
-	 * @param mixed $styles
-	 *
-	 * @return Brizy_Editor_Project
-	 */
-	public function setStyles( $styles ) {
-		$this->styles = $styles;
-
-		return $this;
-	}
-
-
-	/**
-	 * @param string $fontsStyles
-	 *
-	 * @return Brizy_Editor_Project
-	 */
-	public function setStylesAsJson( $fontsStyles ) {
-		$this->setStyles( base64_encode( $fontsStyles ) );
-
-		return $this;
-	}
-
-	/**
-	 * @return bool|string
-	 */
-	public function getStylesAsJson() {
-		return base64_decode( $this->getStyles() );
-	}
-
-	/**
-	 * @return bool|string
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function getDecodedStyles() {
-		return json_decode( $this->getStylesAsJson() );
-	}
-
 
 	/**
 	 * @return mixed

@@ -8,11 +8,14 @@ class ProjectTest extends \Codeception\Test\Unit {
 	protected $tester;
 
 	protected function _before() {
+		wp_cache_flush();
 		global $wpdb;
 		@$wpdb->check_connection();
 	}
 
 	public function testCreatedMetaKeys() {
+
+		Brizy_Editor_Project::get();
 
 		$this->tester->seePostInDatabase( [
 			'post_type'      => Brizy_Editor_Project::BRIZY_PROJECT,
@@ -26,9 +29,6 @@ class ProjectTest extends \Codeception\Test\Unit {
 			'meta_key' => 'brizy-project',
 		] );
 
-		$this->tester->seePostMetaInDatabase( [
-			'meta_key' => 'brizy-project-globals',
-		] );
 	}
 
 	public function test_create_post_data() {
@@ -37,9 +37,5 @@ class ProjectTest extends \Codeception\Test\Unit {
 
 		$this->assertArrayHasKey( 'id', $data, "It should contain key 'id'    " );
 		$this->assertArrayHasKey( 'data', $data, "It should contain key 'data'  " );
-		$this->assertArrayHasKey( 'fonts', $data, "It should contain key 'fonts' " );
-		$this->assertArrayHasKey( 'styles', $data, "It should contain key 'styles'" );
-
 	}
-
 }

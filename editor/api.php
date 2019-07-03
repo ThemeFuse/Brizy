@@ -211,20 +211,14 @@ class Brizy_Editor_API {
 
 			// update project globas
 			$meta   = stripslashes( $this->param( 'data' ) );
-			$fonts  = stripslashes( $this->param( 'fonts' ) );
-			$styles = stripslashes( $this->param( 'styles' ) );
 
 			$project = Brizy_Editor_Project::get();
 
-			if ( $meta ) {
-				$project->setDataAsJson( $meta );
+			if ( !$meta ) {
+				throw new Exception('', 400);
 			}
-			if ( $fonts ) {
-				$project->setFontsAsJson( $fonts );
-			}
-			if ( $styles ) {
-				$project->setStylesAsJson( $styles );
-			}
+
+			$project->setDataAsJson( $meta );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$project->auto_save_post();

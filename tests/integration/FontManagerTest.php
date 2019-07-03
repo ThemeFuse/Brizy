@@ -7,9 +7,11 @@ class FontManagerTest extends \Codeception\Test\Unit {
 	protected $tester;
 
 	protected function _before() {
+		wp_cache_flush();
 		global $wpdb;
 		@$wpdb->check_connection();
 		$this->tester->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
+		new Brizy_Admin_Fonts_Main();
 	}
 
 	/**

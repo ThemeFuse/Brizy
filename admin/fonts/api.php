@@ -102,7 +102,6 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				}
 
 				$fontPostId = $this->fontManager->createFont( $family, $files, $fontType );
-
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->debug( 'Create font ERROR', [ $e ] );
 				$this->error( 400, $e->getMessage() );

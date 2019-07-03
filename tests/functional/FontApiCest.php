@@ -4,6 +4,7 @@ class FontApiCest {
 	public function _before( FunctionalTester $I ) {
 		$I->loginAs( 'admin', 'admin' );
 		@$I->cleanUploadsDir();
+		wp_cache_flush();
 		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
 	}
 
