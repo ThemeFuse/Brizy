@@ -301,7 +301,7 @@ class BlockApiCest {
 	public function updateGlobalBlockPositionsTest( FunctionalTester $I ) {
 
 
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ), json_encode(
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ),
 			[
 				'blocks'      => [
 					'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
@@ -309,12 +309,12 @@ class BlockApiCest {
 				],
 				'is_autosave' => 0
 			]
-		) );
+		);
 		$I->seeResponseCodeIsSuccessful();
 		$I->dontSeePostInDatabase( [ 'post_type' => 'revision' ] );
 
 
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ), json_encode(
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ),
 			[
 				'blocks'      => [
 					'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
@@ -322,7 +322,7 @@ class BlockApiCest {
 				],
 				'is_autosave' => 1
 			]
-		) );
+		);
 		$I->seeResponseCodeIsSuccessful();
 		$I->seePostInDatabase( [ 'post_type' => 'revision' ] );
 
