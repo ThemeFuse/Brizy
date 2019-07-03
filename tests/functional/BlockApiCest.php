@@ -456,14 +456,14 @@ class BlockApiCest {
 	public function updateGlobalBlockPositionsTest( FunctionalTester $I ) {
 
 
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ),
-			[
-				'blocks'      => [
-					'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 0, 'bottom' => 1, 'align' => "left" ],
-					'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]
-				],
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
+				'action'      => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 				'is_autosave' => 0
-			]
+			] ),
+			json_encode( (object) [
+				'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 0, 'bottom' => 1, 'align' => "left" ],
+				'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]
+			] )
 		);
 		$I->seeResponseCodeIsSuccessful();
 		$I->dontSeePostInDatabase( [ 'post_type' => 'revision' ] );
@@ -488,14 +488,14 @@ class BlockApiCest {
 
 	public function updateGlobalBlockPositionsWithAutosaveTest( FunctionalTester $I ) {
 
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ),
-			[
-				'blocks'      => [
-					'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
-					'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
-				],
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
+				'action'      => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 				'is_autosave' => 1
-			]
+			] ),
+			json_encode( (object) [
+				'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
+				'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
+			] )
 		);
 		$I->seeResponseCodeIsSuccessful();
 		$I->seePostInDatabase( [ 'post_type' => 'revision' ] );
@@ -507,7 +507,6 @@ class BlockApiCest {
 
 		$jsonResponse = $I->grabResponse();
 		$array        = json_decode( $jsonResponse );
-
 
 		foreach ( $array->data as $block ) {
 			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
