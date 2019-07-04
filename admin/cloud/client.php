@@ -64,12 +64,10 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 *
 	 * @param Brizy_Editor_Project $project
 	 * @param WP_Http $http
-	 *
-	 * @throws Exception
 	 */
 	public function __construct( Brizy_Editor_Project $project, WP_Http $http ) {
 		$this->brizyProject = $project;
-		$this->http    = $http;
+		$this->http         = $http;
 	}
 
 
@@ -209,7 +207,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			'uid'         => $block->get_uid()
 		);
 
-		$url            = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS;
+		$url = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS;
 
 		if ( $block->getCloudId() ) {
 			$response = $this->http->request( $url, array(
@@ -295,5 +293,56 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		return $code == 200;
 	}
 
+
+	/**
+	 * @param $font
+	 *
+	 * Ex:
+	 *  [
+	 * 'id'      => 'askdalskdlaksd',
+	 * 'family'  => 'proxima-nova',
+	 * 'type'    => 'uploaded',
+	 * 'weights' => [
+	 * '400' => [
+	 * 'ttf'   => codecept_data_dir( 'fonts/pn-regular-webfont.ttf' ),
+	 * 'eot'   => codecept_data_dir( 'fonts/pn-regular-webfont.eot' ),
+	 * 'woff'  => codecept_data_dir( 'fonts/pn-regular-webfont.woff' ),
+	 * 'woff2' => codecept_data_dir( 'fonts/pn-regular-webfont.woff2' ),
+	 * ],
+	 * '500' => [
+	 * 'eot'   => codecept_data_dir( 'fonts/pn-medium-webfont.eot' ),
+	 * 'woff'  => codecept_data_dir( 'fonts/pn-medium-webfont.woff' ),
+	 * 'woff2' => codecept_data_dir( 'fonts/pn-medium-webfont.woff2' ),
+	 * ],
+	 * '700' => [
+	 * 'eot'   => codecept_data_dir( 'fonts/pn-bold-webfont.eot' ),
+	 * 'woff'  => codecept_data_dir( 'fonts/pn-bold-webfont.woff' ),
+	 * 'woff2' => codecept_data_dir( 'fonts/pn-bold-webfont.woff2' ),
+	 * ],
+	 * ]
+	 * ];
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function createFont( $font ) {
+
+		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS, array(
+			'body'    => array(
+				'uid'    => $font['id'],
+				'family' => $font['family'],
+				'files'  => $font['weights']
+			),
+			'headers' => $this->getHeaders()
+		) );
+
+		$code = wp_remote_retrieve_response_code( $response );
+
+		if ( $code >= 400 ) {
+			throw new Exception( 'Invalid code return by cloud api' );
+		}
+
+		return $code == 200;
+	}
 
 }

@@ -36,6 +36,7 @@ class Brizy_Config {
 	const CLOUD_CONTAINERS = '/api/containers';
 	const CLOUD_PROJECTS = '/api/projects';
 	const CLOUD_SAVEDBLOCKS = '/api/saved_blocks';
+	const CLOUD_FONTS = '/api/fonts';
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(

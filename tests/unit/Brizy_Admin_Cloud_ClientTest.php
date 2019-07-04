@@ -341,4 +341,54 @@ class Brizy_Admin_Cloud_ClientTest extends \Codeception\Test\Unit {
 
 		$client->uploadMedia( $filePath );
 	}
+
+
+	public function testUploadFonts() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS;
+
+		$fontToCreate = [
+			'id'      => 'askdalskdlaksd',
+			'family'  => 'proxima-nova',
+			'type'    => 'uploaded',
+			'weights' => [
+				'400' => [
+					'ttf'   => codecept_data_dir( 'fonts/pn-regular-webfont.ttf' ),
+					'eot'   => codecept_data_dir( 'fonts/pn-regular-webfont.eot' ),
+					'woff'  => codecept_data_dir( 'fonts/pn-regular-webfont.woff' ),
+					'woff2' => codecept_data_dir( 'fonts/pn-regular-webfont.woff2' ),
+				],
+				'500' => [
+					'eot'   => codecept_data_dir( 'fonts/pn-medium-webfont.eot' ),
+					'woff'  => codecept_data_dir( 'fonts/pn-medium-webfont.woff' ),
+					'woff2' => codecept_data_dir( 'fonts/pn-medium-webfont.woff2' ),
+				],
+				'700' => [
+					'eot'   => codecept_data_dir( 'fonts/pn-bold-webfont.eot' ),
+					'woff'  => codecept_data_dir( 'fonts/pn-bold-webfont.woff' ),
+					'woff2' => codecept_data_dir( 'fonts/pn-bold-webfont.woff2' ),
+				],
+			]
+		];
+
+		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
+			'headers' => [
+				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+			],
+			'body'    => array(
+				'uid'    => $fontToCreate['id'],
+				'family' => $fontToCreate['family'],
+				'files'  => $fontToCreate['weights']
+			),
+		] ) )->shouldBeCalled();
+
+
+		$client->createFont( $fontToCreate );
+
+	}
 }
