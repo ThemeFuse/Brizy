@@ -186,9 +186,10 @@ class Brizy_Editor_Editor_Editor {
 					'updateSavedBlock'  => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
 					'deleteSavedBlock'  => Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
 
-					'media'         => Brizy_Editor_API::AJAX_MEDIA,
-					'downloadMedia' => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
-					'getMediaUid'   => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+					'media'              => Brizy_Editor_API::AJAX_MEDIA,
+					'downloadMedia'      => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
+					'getMediaUid'        => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+					'getServerTimeStamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
 
 
 					'saveBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_SAVE_BLOCK_SCREENSHOT,

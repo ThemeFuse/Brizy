@@ -26,6 +26,7 @@ class Brizy_Editor_API {
 	const AJAX_SET_FEATURED_IMAGE = 'brizy_set_featured_image';
 	const AJAX_SET_FEATURED_IMAGE_FOCAL_POINT = 'brizy_set_featured_image_focal_point';
 	const AJAX_REMOVE_FEATURED_IMAGE = 'brizy_remove_featured_image';
+	const AJAX_TIMESTAMP = 'brizy_timestamp';
 
 	/**
 	 * @var Brizy_Editor_Post
@@ -72,9 +73,13 @@ class Brizy_Editor_API {
 				$this,
 				'set_featured_image_focal_point'
 			) );
-			add_action( 'wp_ajax_' . self::AJAX_REMOVE_FEATURED_IMAGE, array( $this, 'remove_featured_image' ) );
+			add_action( 'wp_ajax_' . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
 
 		}
+	}
+
+	public function timestamp() {
+		$this->success( array( 'timestamp' => time() ) );
 	}
 
 
