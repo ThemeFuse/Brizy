@@ -72,6 +72,7 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			$this->plugin_live_composer_fixes();
 		}
+
 	}
 
 	public function brizy_content( $content, $project, $wpPost ) {
@@ -148,6 +149,7 @@ class Brizy_Public_Main {
 		) );
 
 	}
+
 
 	/**
 	 * @internal
@@ -337,7 +339,6 @@ class Brizy_Public_Main {
 
 			$compiled_html_head = $this->post->get_compiled_html_head();
 			$compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_head );
-
 			$this->post->set_needs_compile( true )
 			           ->save();
 
@@ -350,6 +351,8 @@ class Brizy_Public_Main {
 		}
 
 		$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post() );
+
+
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
 		                     ->render( 'head-partial.html.twig', $params );
 

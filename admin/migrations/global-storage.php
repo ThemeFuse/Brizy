@@ -24,6 +24,5 @@ class Brizy_Admin_Migrations_GlobalStorage extends Brizy_Admin_Migrations_Abstra
 				throw new Brizy_Admin_Migrations_UpgradeRequiredException( 'Please update the plugin to the latest version' );
 			}
 		}
-
 	}
 }

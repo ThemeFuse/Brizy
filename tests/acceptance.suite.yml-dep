@@ -8,9 +8,9 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - WPBrowser
         - WPDb
-        - WPLoader
+        - WPBrowser
+        - REST
         - \Helper\Acceptance
     config:
         WPLoader:
@@ -44,3 +44,6 @@ modules:
             adminUsername: '%TEST_SITE_ADMIN_USERNAME%'
             adminPassword: '%TEST_SITE_ADMIN_PASSWORD%'
             adminPath: '%TEST_SITE_WP_ADMIN_PATH%'
+        REST:
+            depends: WPBrowser
+            url: '%TEST_SITE_WP_URL%/wp-admin/'

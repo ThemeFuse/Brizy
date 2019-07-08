@@ -13,7 +13,7 @@ modules:
     - \Helper\Integration
   config:
     WPDb:
-      dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%;port=3307'
+      dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%'
       user: '%TEST_SITE_DB_USER%'
       password: '%TEST_SITE_DB_PASSWORD%'
       dump: 'tests/_data/dump-active-brizy.sql'
