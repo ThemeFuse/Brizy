@@ -72,10 +72,10 @@ class Brizy_Admin_SiteSettings_Main {
 
 	private function handleSettingsTabSubmit() {
 		if ( isset( $_POST['title'] ) ) {
-			update_option( 'blogname', $_POST['title'] );
+			update_option( 'blogname', wp_unslash( $_POST['title'] ) );
 		}
 		if ( isset( $_POST['description'] ) ) {
-			update_option( 'blogdescription', $_POST['description'] );
+			update_option( 'blogdescription', wp_unslash( $_POST['description'] ) );
 		}
 
 		if ( isset( $_FILES['favicon'] ) ) {
@@ -103,10 +103,10 @@ class Brizy_Admin_SiteSettings_Main {
 
 	public function handleSocialSharingSubmit() {
 		if ( isset( $_POST['title'] ) ) {
-			update_option( 'brizy-social-title', $_POST['title'] );
+			update_option( 'brizy-social-title', wp_unslash( $_POST['title'] ) );
 		}
 		if ( isset( $_POST['description'] ) ) {
-			update_option( 'brizy-social-description', $_POST['description'] );
+			update_option( 'brizy-social-description', wp_unslash( $_POST['description'] ) );
 		}
 
 		if ( isset( $_FILES['thumbnail'] ) ) {
@@ -136,16 +136,16 @@ class Brizy_Admin_SiteSettings_Main {
 
 	private function handleCustomCssSubmit() {
 		if ( isset( $_POST['custom_css'] ) ) {
-			update_option( 'brizy-custom-css', $_POST['custom_css'] );
+			update_option( 'brizy-custom-css', wp_unslash( $_POST['custom_css'] ) );
 		}
 	}
 
 	private function handleCodeInjectionSubmit() {
 		if ( isset( $_POST['header_code'] ) ) {
-			update_option( 'brizy-header-injection', $_POST['header_code'] );
+			update_option( 'brizy-header-injection', wp_unslash( $_POST['header_code'] ) );
 		}
 		if ( isset( $_POST['footer_code'] ) ) {
-			update_option( 'brizy-footer-injection', $_POST['footer_code'] );
+			update_option( 'brizy-footer-injection', wp_unslash( $_POST['footer_code'] ) );
 		}
 	}
 
@@ -155,21 +155,21 @@ class Brizy_Admin_SiteSettings_Main {
 		$context = array(
 			'brizy_settings_tab' => isset( $_REQUEST['brizy-settings-tab'] ) ? $_REQUEST['brizy-settings-tab'] : 'site-settings',
 			'site_settings'      => array(
-				'title'       => get_bloginfo( 'name' ),
-				'description' => get_bloginfo( 'description' ),
+				'title'       => html_entity_decode( get_bloginfo( 'name' ) ),
+				'description' => html_entity_decode( get_bloginfo( 'description' ) ),
 				'favicon'     => get_option( 'brizy-settings-favicon' ),
 				'favicon_url' => site_url( get_option( 'brizy-settings-favicon' ) )
 			),
 			'social_sharing'     => array(
-				'title'         => get_option( 'brizy-social-title' ),
-				'description'   => get_option( 'brizy-social-description' ),
+				'title'         => html_entity_decode( get_option( 'brizy-social-title' ) ),
+				'description'   => html_entity_decode( get_option( 'brizy-social-description' ) ),
 				'thumbnail'     => get_option( 'brizy-social-thumbnail' ),
 				'thumbnail_url' => site_url( get_option( 'brizy-social-thumbnail' ) )
 			),
-			'custom_css'         => get_option( 'brizy-custom-css' ),
+			'custom_css'         => html_entity_decode( get_option( 'brizy-custom-css' ) ),
 			'code_injection'     => array(
-				'header_code' => get_option( 'brizy-header-injection' ),
-				'footer_code' => get_option( 'brizy-footer-injection' )
+				'header_code' => html_entity_decode( get_option( 'brizy-header-injection' ) ),
+				'footer_code' => html_entity_decode( get_option( 'brizy-footer-injection' ) )
 			),
 		);
 

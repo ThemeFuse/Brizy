@@ -339,6 +339,7 @@ class Brizy_Public_Main {
 
 			$compiled_html_head = $this->post->get_compiled_html_head();
 			$compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_head );
+
 			$this->post->set_needs_compile( true )
 			           ->save();
 

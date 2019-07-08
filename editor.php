@@ -304,6 +304,7 @@ class Brizy_Editor {
 	public function brizy_settings_header() {
 		$params = array();
 
+
 		$context = array(
 			'site_settings'  => array(
 				'title'       => html_entity_decode( get_bloginfo( 'name' ) ),
