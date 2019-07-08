@@ -74,6 +74,7 @@ class Brizy_Editor_API {
 				'set_featured_image_focal_point'
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
+			add_action( 'wp_ajax_nopriv_' . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
 
 		}
 	}
