@@ -213,6 +213,9 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 					'assets'      => $config['urls']['assets'],
 					'apiEndpoint' => set_url_scheme( admin_url( 'admin-ajax.php' ) )
 				),
+				'api'             => array(
+					'getTimestamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
+				),
 				'serverTimestamp' => time()
 			),
 			'page'       => $page
