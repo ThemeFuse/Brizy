@@ -14,17 +14,6 @@
                                     <div class="brz-ed-popup-two-sidebar-title">DASHBOARD</div>
                                     <div class="modal_dash active" id="settingsDash">
 
-                                        <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='site-pages' ?'brz-ed-popup-two-sidebar-list-active':'' }}" data-tab-name="pages">
-                                                <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
-                                                    <i class="brz-icon-svg">
-                                                        <svg class="brz-icon-svg">
-                                                            <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Pages"></use>
-                                                        </svg>
-                                                    </i>
-                                                </span>
-                                            <span class="brz-span brz-ed-popup-two-sidebar-list__span-text">Pages</span>
-                                        </li>
-
                                         <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='site-settings' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
                                             data-tab-name="settings">
                                                 <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
@@ -39,7 +28,6 @@
                                                     Settings
                                                 </span>
                                         </li>
-
                                         <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='social-sharing' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
                                             data-tab-name="socialSharing">
                                                 <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
@@ -102,14 +90,12 @@
                         </div>
                         <div class="brz-ed-popup-two-btn-close" data-dismiss="modal"></div>
                     </div>
-                    <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='site-pages' ?'brz-ed-scroll-pane-active':'' }}">
-
-                    </div>
 
                     <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='site-settings' ?'brz-ed-scroll-pane-active':'' }}"
                          id="settings">
                         <div class="brz-ed-scroll-inner">
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="">
+
                                 <input type="hidden" name="brizy-settings-tab-submit" value="site-settings">
                                 <div class="inner-content">
 
@@ -123,7 +109,7 @@
                                                 benefits
                                             </div>
                                             <div class="sett-block-field">
-                                                <input type="text" name="title" value="{{ site_settings['title']  }}">
+                                                <input type="text" name="title" value="{{ site_settings['title'] }}">
                                             </div>
                                         </div>
                                         <div class="settings-block">
@@ -177,7 +163,7 @@
                     <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='social-sharing' ?'brz-ed-scroll-pane-active':'' }}"
                          id="socialSharing">
                         <div class="brz-ed-scroll-inner">
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="">
                                 <input type="hidden" name="brizy-settings-tab-submit" value="social-sharing">
                                 <div class="inner-content">
                                     <!-- Settings Content -->
@@ -250,7 +236,7 @@
                     <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='custom-css' ?'brz-ed-scroll-pane-active':'' }}"
                          id="customCSS">
                         <div class="brz-ed-scroll-inner">
-                            <form action="" method="post">
+                            <form action="">
                                 <input type="hidden" name="brizy-settings-tab-submit" value="custom-css">
                                 <div class="inner-content">
                                     <!-- Settings Content -->
@@ -286,7 +272,7 @@
                     <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='code-injection' ?'brz-ed-scroll-pane-active':'' }}"
                          id="codeInjection">
                         <div class="brz-ed-scroll-inner">
-                            <form action="" method="post">
+                            <form action="">
                                 <input type="hidden" name="brizy-settings-tab-submit" value="code-injection">
                                 <div class="inner-content">
                                     <!-- Settings Content -->
@@ -302,7 +288,7 @@
                                             </div>
                                             <div class="sett-block-field custom_css_aria textarea2">
                                                 <textarea class="codemirror-editor" id="css_custom2" name="header_code"
-                                                          data-mode="html">{{ code_injection['header_code'] }}</textarea>
+                                                          data-mode="text/html">{{ code_injection['header_code'] }}</textarea>
                                             </div>
                                         </div>
                                         <div class="settings-block">
@@ -314,7 +300,7 @@
                                             </div>
                                             <div class="sett-block-field custom_css_aria textarea2">
                                                 <textarea class="codemirror-editor" id="css_custom3" name="footer_code"
-                                                          data-mode="html">{{ code_injection['footer_code'] }}</textarea>
+                                                          data-mode="text/html">{{ code_injection['footer_code'] }}</textarea>
                                             </div>
                                         </div>
                                     </div>
