@@ -4,15 +4,11 @@
 class SiteSettingsCest {
 
 
-	public function _before( FunctionalTester $I ) {
-		$I->loginAsAdmin();
+	public function _before( AcceptanceTester $I ) {
+		$I->loginAs( 'admin', 'admin' );
 		$I->amOnPluginsPage();
+		@$I->cleanUploadsDir();
 		$I->activatePlugin( 'brizy' );
-	}
-
-	public function settingsPopupTest( AcceptanceTester $I ) {
-		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
-		$I->seeResponseCodeIs( 200 );
 	}
 
 	/**
@@ -21,6 +17,7 @@ class SiteSettingsCest {
 	public function settingsPopupLayoutTest( AcceptanceTester $I ) {
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
+		$I->waitForPageLoad( $I );
 		// test popup
 		$I->see( 'Project' );
 		$I->see( 'Site Settings' );
@@ -56,34 +53,66 @@ class SiteSettingsCest {
 		$I->see( 'Save Changes' );
 	}
 
+
+	/**
+	 * @param AcceptanceTester $I
+	 */
+	public function inPageSiteSettingsTest( AcceptanceTester $I ) {
+		$I->haveOptionInDatabase( 'blogname', md5( 'blogname' ) );
+		$I->haveOptionInDatabase( 'blogdescription', md5( 'blogdescription' ) );
+
+		$I->haveOptionInDatabase( 'brizy-settings-favicon', md5( 'brizy-settings-favicon' ) );
+		$I->haveOptionInDatabase( 'brizy-social-title', md5( 'brizy-social-title' ) );
+		$I->haveOptionInDatabase( 'brizy-social-description', md5( 'brizy-social-description' ) );
+		$I->haveOptionInDatabase( 'brizy-social-thumbnail', md5( 'brizy-social-thumbnail' ) );
+		$I->haveOptionInDatabase( 'brizy-custom-css', md5( 'brizy-custom-css' ) );
+		$I->haveOptionInDatabase( 'brizy-header-injection', md5( 'brizy-header-injection' ) );
+		$I->haveOptionInDatabase( 'brizy-footer-injection', md5( 'brizy-footer-injection' ) );
+
+		$I->amOnPage( '/ ' );
+
+		$I->seeInSource( md5( 'blogname' ) );
+		$I->seeInSource( md5( 'blogdescription' ) );
+		$I->seeInSource( md5( 'brizy-settings-favicon' ) );
+		$I->seeInSource( md5( 'brizy-social-title' ) );
+		$I->seeInSource( md5( 'brizy-social-description' ) );
+		$I->seeInSource( md5( 'brizy-social-thumbnail' ) );
+		$I->seeInSource( md5( 'brizy-custom-css' ) );
+		$I->seeInSource( md5( 'brizy-header-injection' ) );
+		$I->seeInSource( md5( 'brizy-footer-injection' ) );
+	}
+
 	/**
 	 * @param AcceptanceTester $I
 	 */
 	public function siteSettingsDataSubmitTest( AcceptanceTester $I ) {
 
 		$formParams = [
-			'title'       => 'brizy-settings-title',
-			'description' => 'brizy-settings-description',
+			'title'       => 'brizy-"settings"-&title',
+			'description' => 'brizy-"settings"-&description',
 		];
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
 		$I->click( '#settingsDash > li:nth-of-type(1)' );
 
+		$I->attachFile( 'input[name=favicon]', 'favico.jpg' );
+
 		$I->submitForm( '#settings form', $formParams );
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
+		$I->click( '#settingsDash > li:nth-of-type(1)' );
 		$I->seeInFormFields( '#settings form', $formParams );
 
-		$I->canSeeInSource( 'brizy-settings-favicon-url' );
-
+		$I->seeOptionInDatabase( [
+			'option_name'  => 'blogname',
+			'option_value' => 'brizy-&quot;settings&quot;-&amp;title'
+		] );
 		$I->seeOptionInDatabase( [
 			'option_name'  => 'blogdescription',
-			'option_value' => 'brizy-settings-description'
+			'option_value' => 'brizy-&quot;settings&quot;-&amp;description'
 		] );
-		$I->seeOptionInDatabase( [ 'option_name' => 'blogname', 'option_value' => 'brizy-settings-title' ] );
 		$I->seeOptionInDatabase( [
-			'option_name'  => 'brizy-settings-favicon',
-			'option_value' => 'brizy-settings-favicon-url'
+			'option_name' => 'brizy-settings-favicon',
 		] );
 	}
 
@@ -98,24 +127,26 @@ class SiteSettingsCest {
 			'description' => 'brizy-social-description',
 		];
 
-
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
 		$I->click( '#settingsDash > li:nth-of-type(2)' );
+		$I->attachFile( 'input[name=thumbnail]', 'favico.jpg' );
 		$I->submitForm( '#socialSharing form', $formParams );
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
+		$I->click( '#settingsDash > li:nth-of-type(2)' );
 		$I->seeInFormFields( '#socialSharing form', $formParams );
-		$I->canSeeInSource( 'brizy-social-thumbnail-url' );
 
 
-		$I->seeOptionInDatabase( [ 'option_name' => 'brizy-social-title', 'option_value' => 'brizy-social-title' ] );
+		$I->seeOptionInDatabase( [
+			'option_name'  => 'brizy-social-title',
+			'option_value' => 'brizy-social-title'
+		] );
 		$I->seeOptionInDatabase( [
 			'option_name'  => 'brizy-social-description',
 			'option_value' => 'brizy-social-description'
 		] );
 		$I->seeOptionInDatabase( [
-			'option_name'  => 'brizy-social-thumbnail',
-			'option_value' => 'brizy-social-thumbnail-url'
+			'option_name' => 'brizy-social-thumbnail',
 		] );
 
 	}
@@ -135,9 +166,13 @@ class SiteSettingsCest {
 		$I->submitForm( '#customCSS form', $formParams );
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
+		$I->click( '#settingsDash > li:nth-of-type(3)' );
 		$I->seeInFormFields( '#customCSS form', $formParams );
 
-		$I->seeOptionInDatabase( [ 'option_name' => 'brizy-custom-css', 'option_value' => $css ] );
+		$I->seeOptionInDatabase( [
+			'option_name'  => 'brizy-custom-css',
+			'option_value' => $css
+		] );
 	}
 
 	/**
@@ -148,16 +183,18 @@ class SiteSettingsCest {
 		$header = 'INJECTED CONTENT IN HEADER';
 		$footer = 'INJECTED CONTENT IN FOOTER';
 
-		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
-
-		$I->click( '#settingsDash > li:nth-of-type(4)' );
-
 		$formParams = [
 			'header_code' => $header,
 			'footer_code' => $footer,
 		];
+
+		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
+		$I->click( '#settingsDash > li:nth-of-type(4)' );
+
 		$I->submitForm( '#codeInjection form', $formParams );
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
+
+		$I->click( '#settingsDash > li:nth-of-type(4)' );
 		$I->seeInFormFields( '#codeInjection form', $formParams );
 
 		$I->seeOptionInDatabase( [ 'option_name' => 'brizy-header-injection', 'option_value' => $header ] );

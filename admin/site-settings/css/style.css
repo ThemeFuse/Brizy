@@ -6,21 +6,21 @@
 @font-face {
   font-family: pn;
   font-weight: 400;
-  src: url(site-settings/fonts/pn.woff2) format("woff2"); }
+  src: url(../fonts/pn.woff2) format("woff2"); }
 @font-face {
   font-family: pn;
   font-style: normal;
   font-weight: 600;
-  src: url(site-settings/fonts/pn-medium.woff2) format("woff2"); }
+  src: url(../fonts/pn-medium.woff2) format("woff2"); }
 @font-face {
   font-family: pn;
   font-weight: 800;
-  src: url(site-settings/fonts/pn-bold.woff2) format("woff2"); }
+  src: url(../fonts/pn-bold.woff2) format("woff2"); }
 @font-face {
   font-family: pn;
   font-style: italic;
   font-weight: 800;
-  src: url(site-settings/fonts/pn-bold-italic.woff2) format("woff2"); }
+  src: url(../fonts/pn-bold-italic.woff2) format("woff2"); }
 /*  Global Reset  */
 html,
 body,

@@ -17,7 +17,7 @@ class Brizy_Public_Main {
 	 */
 	public function __construct( $post ) {
 
-		$this->post        = $post;
+		$this->post = $post;
 
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
@@ -72,6 +72,7 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			$this->plugin_live_composer_fixes();
 		}
+
 	}
 
 	public function brizy_content( $content, $project, $wpPost ) {
@@ -140,6 +141,7 @@ class Brizy_Public_Main {
 		do_action( 'brizy_editor_enqueue_scripts' );
 	}
 
+
 	/**
 	 * @internal
 	 */
@@ -170,7 +172,7 @@ class Brizy_Public_Main {
 		$postTypeLabel = $wp_post_types[ $type ]->labels->singular_name;
 		$args          = array(
 			'id'    => 'brizy_Edit_page_link',
-			'title' => __( "Edit " . $postTypeLabel . " with ". __bt('brizy','Brizy') ),
+			'title' => __( "Edit " . $postTypeLabel . " with " . __bt( 'brizy', 'Brizy' ) ),
 			'href'  => $this->post->edit_url(),
 			'meta'  => array()
 		);
@@ -328,7 +330,6 @@ class Brizy_Public_Main {
 
 			$compiled_html_head = $this->post->get_compiled_html_head();
 			$compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_head );
-
 			$this->post->set_needs_compile( true )
 			           ->save();
 
@@ -341,6 +342,8 @@ class Brizy_Public_Main {
 		}
 
 		$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post() );
+
+
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
 		                     ->render( 'head-partial.html.twig', $params );
 
@@ -400,7 +403,7 @@ class Brizy_Public_Main {
 		if ( $is_preview ) {
 			$user_id      = get_current_user_id();
 			$postParentId = $this->post->get_parent_id();
-			$autosaveId = Brizy_Editor_Post::getAutoSavePost( $postParentId, $user_id );
+			$autosaveId   = Brizy_Editor_Post::getAutoSavePost( $postParentId, $user_id );
 
 			if ( $autosaveId ) {
 				$this->post    = Brizy_Editor_Post::get( $autosaveId );
