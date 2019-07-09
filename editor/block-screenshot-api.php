@@ -53,7 +53,7 @@ class Brizy_Editor_BlockScreenshotApi {
 
 		session_write_close();
 
-		if ( empty( $_POST['block_type'] ) || ! in_array( $_POST['block_type'], $this->blockTypes ) || empty( $_POST['img'] ) || empty( $_POST['block_id'] ) ) {
+		if ( empty( $_POST['block_type'] ) || ! in_array( $_POST['block_type'], $this->blockTypes ) || empty( $_POST['ibsf'] ) || empty( $_POST['block_id'] ) ) {
 			wp_send_json( array(
 				'success' => false,
 				'message' => esc_html__( 'Bad request', 'brizy' )
@@ -64,8 +64,8 @@ class Brizy_Editor_BlockScreenshotApi {
 		$imageContent = null;
 		$fileName     = null;
 
-		if ( preg_match( '/^data:image\/(\w+);base64,/', $_POST['img'], $img_type ) ) {
-			$base64     = $_POST['img'];
+		if ( preg_match( '/^data:image\/(\w+);base64,/', $_POST['ibsf'], $img_type ) ) {
+			$base64     = $_POST['ibsf'];
 			$img_base64 = substr( $base64, strpos( $base64, ',' ) + 1 );
 			$img_type   = strtolower( $img_type[1] ); // jpg, png, gif
 			$fileName   = sanitize_file_name( $_POST['block_id'] . ".{$img_type}" );
