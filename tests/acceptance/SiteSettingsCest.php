@@ -163,6 +163,7 @@ class SiteSettingsCest {
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
 		$I->click( '#settingsDash > li:nth-of-type(3)' );
+		$I->fillField("#customCSS textarea[name=custom_css]", $css);
 		$I->submitForm( '#customCSS form', $formParams );
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
@@ -199,6 +200,5 @@ class SiteSettingsCest {
 
 		$I->seeOptionInDatabase( [ 'option_name' => 'brizy-header-injection', 'option_value' => $header ] );
 		$I->seeOptionInDatabase( [ 'option_name' => 'brizy-footer-injection', 'option_value' => $footer ] );
-
 	}
 }

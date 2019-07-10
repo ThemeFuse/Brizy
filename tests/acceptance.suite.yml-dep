@@ -35,7 +35,7 @@ modules:
             url: '%TEST_SITE_WP_URL%'
             browser: chrome
             port: 9515
-            wait: 5
+            wait: 10
             window_size: false
             capabilities:
                 chromeOptions:
