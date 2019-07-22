@@ -3,7 +3,6 @@
 
 class SiteSettingsCest {
 
-
 	public function _before( AcceptanceTester $I ) {
 		$I->loginAs( 'admin', 'admin' );
 		$I->amOnPluginsPage();
@@ -136,7 +135,6 @@ class SiteSettingsCest {
 		$I->click( '#settingsDash > li:nth-of-type(2)' );
 		$I->seeInFormFields( '#socialSharing form', $formParams );
 
-
 		$I->seeOptionInDatabase( [
 			'option_name'  => 'brizy-social-title',
 			'option_value' => 'brizy-social-title'
@@ -148,7 +146,6 @@ class SiteSettingsCest {
 		$I->seeOptionInDatabase( [
 			'option_name' => 'brizy-social-thumbnail',
 		] );
-
 	}
 
 	/**
@@ -163,11 +160,12 @@ class SiteSettingsCest {
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
 		$I->click( '#settingsDash > li:nth-of-type(3)' );
-		$I->fillField("#customCSS textarea[name=custom_css]", $css);
+		$I->executeJS('$("#customCSS textarea").show();');
 		$I->submitForm( '#customCSS form', $formParams );
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
 		$I->click( '#settingsDash > li:nth-of-type(3)' );
+		$I->executeJS('$("#customCSS textarea").show();');
 		$I->seeInFormFields( '#customCSS form', $formParams );
 
 		$I->seeOptionInDatabase( [
@@ -191,11 +189,13 @@ class SiteSettingsCest {
 
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
 		$I->click( '#settingsDash > li:nth-of-type(4)' );
+		$I->executeJS('$("#customCSS textarea").show();');
 
 		$I->submitForm( '#codeInjection form', $formParams );
 		$I->amOnPage( '/wp-content/plugins/brizy/admin/site-settings.php' );
 
 		$I->click( '#settingsDash > li:nth-of-type(4)' );
+		$I->executeJS('$("#customCSS textarea").show();');
 		$I->seeInFormFields( '#codeInjection form', $formParams );
 
 		$I->seeOptionInDatabase( [ 'option_name' => 'brizy-header-injection', 'option_value' => $header ] );
