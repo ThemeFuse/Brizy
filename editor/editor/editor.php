@@ -192,7 +192,8 @@ class Brizy_Editor_Editor_Editor {
 					'getServerTimeStamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
 
 
-					'saveBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_SAVE_BLOCK_SCREENSHOT,
+					'createBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
+					'updateBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
 
 					'getSidebars'      => Brizy_Editor_API::AJAX_SIDEBARS,
 					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
