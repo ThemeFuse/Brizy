@@ -175,7 +175,9 @@ class BlockApiCest {
 		] );
 
 		$I->seeResponseCodeIsSuccessful();
+		var_dump($I->grabResponse());
 		$block = json_decode( $I->grabResponse() );
+
 		$block = $block->data;
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
