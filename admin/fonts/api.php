@@ -82,9 +82,6 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, 'This font family already exists.' );
 			}
 
-
-			$weights = array_keys( $_FILES['fonts']['name'] );
-
 			try {
 
 				$files = array();

@@ -1,19 +1,31 @@
 <?php
 
 class FontApiCest {
+
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function _before( FunctionalTester $I ) {
-		$I->loginAs( 'admin', 'admin' );
-		@$I->cleanUploadsDir();
 		wp_cache_flush();
+		@$I->cleanUploadsDir();
 		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
+		$I->loginAs( 'admin', 'admin' );
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function compilerFontParametersTest( FunctionalTester $I ) {
 
 		$compilerParams = apply_filters( 'brizy_compiler_params', [] );
 		$I->assertArrayHasKey( 'uploaded_fonts', $compilerParams, 'The compiler parameters should contain fonts' );
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws \Codeception\Exception\ModuleException
+	 */
 	public function getFontsDataTest( FunctionalTester $I ) {
 		$fontFamily = 'proxima_nova_';
 
@@ -64,7 +76,7 @@ class FontApiCest {
 
 
 		$fontFamily = 'proxima_nova';
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
+		$I->sendPost( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
 			'family' => $fontFamily,
 		], [
 			'fonts' => [
@@ -87,9 +99,10 @@ class FontApiCest {
 			]
 		] );
 
+		$font = json_decode( $response = $I->grabResponse() );
+
 		$I->seeResponseCodeIsSuccessful();
 
-		$font = json_decode( $response = $I->grabResponse() );
 
 		$I->assertTrue( isset( $font->data ), 'Response should contain property: data' );
 		$I->assertIsObject( $font, "The Font should be an object" );
@@ -185,10 +198,10 @@ class FontApiCest {
 		] );
 
 		$I->seeResponseCodeIs( 400 );
+		$response = $I->grabResponse();
+		$font     = json_decode( $response );
 
-		$font = json_decode( $response = $I->grabResponse() );
-
-		$I->assertFalse( $font->success, 'The sucess status of the request should be false' );
+		$I->assertFalse( $font->success, 'The success status of the request should be false' );
 	}
 
 	/**
@@ -227,6 +240,7 @@ class FontApiCest {
 		$I->sendGET( '/?' . build_query( [ Brizy_Admin_Fonts_Handler::ENDPOINT => "{$font->id}:400,500,700" ] ) );
 
 		$I->seeResponseCodeIsSuccessful();
+		$response = $I->grabResponse();
 		$I->seeHttpHeader( 'Content-Type', 'text/css;charset=UTF-8' );
 
 		$I->see( 'font-family: \'' . $font->id . '\'' );

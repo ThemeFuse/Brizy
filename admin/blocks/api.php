@@ -317,7 +317,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								meta_key='brizy_post_uid' and 
 								meta_value='%s'   
 								WHERE p.post_type IN ('%s')
-								ORDER DESC p.ID
+								ORDER BY p.ID DESC
 								LIMIT 1", array( $uid, $postType ) );
 
 		return $wpdb->get_var( $prepare );
@@ -337,7 +337,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								pm.post_id=p.ID and 
 								meta_key='brizy_post_uid' and 
 								meta_value='%s'   
-								ORDER DESC p.ID
+								ORDER BY p.ID DESC
 								LIMIT 1", array( $uid, ) );
 
 		return $wpdb->get_var( $prepare );

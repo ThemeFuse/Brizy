@@ -9,20 +9,19 @@ class ScreenshotApiCest {
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 		$I->loginAs( 'admin', 'admin' );
-		$I->cleanUploadsDir( 'brizy' );
 	}
 
 
 	protected function invalidDataProvider() {
 		return [
-			[ 'block_type' => 'normal', 'img' => null ],
-			[ 'block_type' => 'normal', 'img' => '' ],
+			[ 'block_type' => 'normal', 'ibsf' => null ],
+			[ 'block_type' => 'normal', 'ibsf' => '' ],
 			[ 'block_type' => 'normal', ],
 
-			[ 'block_type' => null, 'img' => self::PIXEL_IMG_PNG ],
-			[ 'block_type' => '', 'img' => self::PIXEL_IMG_PNG ],
-			[ 'img' => self::PIXEL_IMG_PNG ],
-			[ 'block_type' => 'global', 'img' => 'asdasdasdasdasd' ],
+			[ 'block_type' => null, 'ibsf' => self::PIXEL_IMG_PNG ],
+			[ 'block_type' => '', 'ibsf' => self::PIXEL_IMG_PNG ],
+			[ 'ibsf' => self::PIXEL_IMG_PNG ],
+			[ 'block_type' => 'global', 'ibsf' => 'asdasdasdasdasd' ],
 		];
 	}
 
@@ -33,31 +32,31 @@ class ScreenshotApiCest {
 		return [
 			[
 				'block_type' => 'global',
-				'img'        => self::PIXEL_IMG_PNG,
+				'ibsf'        => self::PIXEL_IMG_PNG,
 				'file_type'  => '.png',
 				'post'       => null
 			],
 			[
 				'block_type' => 'global',
-				'img'        => self::PIXEL_IMG_GIF,
+				'ibsf'        => self::PIXEL_IMG_GIF,
 				'file_type'  => '.gif',
 				'post'       => null
 			],
 			[
 				'block_type' => 'saved',
-				'img'        => self::PIXEL_IMG_PNG,
+				'ibsf'        => self::PIXEL_IMG_PNG,
 				'file_type'  => '.png',
 				'post'       => null
 			],
 			[
 				'block_type' => 'normal',
-				'img'        => self::PIXEL_IMG_PNG,
+				'ibsf'        => self::PIXEL_IMG_PNG,
 				'file_type'  => '.png',
 				'post'       => $postId
 			],
 			[
 				'block_type' => 'normal',
-				'img'        => self::PIXEL_IMG_GIF,
+				'ibsf'        => self::PIXEL_IMG_GIF,
 				'file_type'  => '.gif',
 				'post'       => $postId
 			],
@@ -98,7 +97,7 @@ class ScreenshotApiCest {
 
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_create_block_screenshot' ] ), [
 			'block_type' => $example['block_type'],
-			'img'        => $example['img'],
+			'ibsf'        => $example['ibsf'],
 			'post'       => $example['post']
 		] );
 		$I->seeResponseCodeIs( 200 );
@@ -106,7 +105,7 @@ class ScreenshotApiCest {
 		$response = $I->grabResponse();
 		$object   = json_decode( $response );
 
-		$this->assertScreenshotReponse( $I, $object );
+		$this->assertScreenshotResponse( $I, $object );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $example['post'] );
 		if ( $example['block_type'] == 'normal' ) {
@@ -125,35 +124,33 @@ class ScreenshotApiCest {
 	 */
 	public function putScreenShotTest( FunctionalTester $I ) {
 
-		$screen_id  = \Brizy\Utils\UUId::uuid();
-		$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), null );
-		$filePath   = $urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'global' . DIRECTORY_SEPARATOR . "{$screen_id}.png" );
-		$path       = dirname( $filePath );
-		if ( ! file_exists( $path ) ) {
-			! @mkdir( $path, 0777, true );
-		}
-
-		file_put_contents( $filePath, "image content" );
-		`chmod -R 777 {$path}`;
-
-
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_update_block_screenshot' ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_create_block_screenshot' ] ), [
 			'block_type' => 'global',
-			'img'        => self::PIXEL_IMG_PNG,
-			'id'         => $screen_id
+			'ibsf'        => self::PIXEL_IMG_PNG,
 		] );
-		$I->seeResponseCodeIs( 200 );
 
 		$response = $I->grabResponse();
 		$object   = json_decode( $response );
 
-		$this->assertScreenshotReponse( $I, $object );
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_update_block_screenshot' ] ), [
+			'block_type' => 'global',
+			'ibsf'        => self::PIXEL_IMG_PNG,
+			'id'         => $object->data->id
+		] );
 
-		$I->assertTrue( file_exists( $filePath ), 'The screenshot file should be present in FS' );
+
+		$response = $I->grabResponse();
+
+		$object   = json_decode( $response );
+
+		$I->seeResponseCodeIs( 200 );
+
+		$this->assertScreenshotResponse( $I, $object );
+
 	}
 
 
-	private function assertScreenshotReponse( FunctionalTester $I, $object ) {
+	private function assertScreenshotResponse( FunctionalTester $I, $object ) {
 		$I->assertArrayHasKey( 'data', (array) $object, 'It should contain key "data"' );
 		$I->assertArrayHasKey( 'id', (array) $object->data, 'It should contain screenshot id' );
 	}
