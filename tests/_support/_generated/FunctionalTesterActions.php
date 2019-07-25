@@ -29,7 +29,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('haveManyFontsInDataBase', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -46,7 +46,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('haveFontInDataBase', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -57,7 +57,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('makeTemporaryFile', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -882,7 +882,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('assertEqualsCanonicalizing', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -893,7 +893,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('assertNotEqualsCanonicalizing', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -904,7 +904,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('assertEqualsIgnoringCase', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -915,7 +915,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('assertNotEqualsIgnoringCase', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -926,7 +926,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('assertEqualsWithDelta', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -937,7 +937,7 @@ trait FunctionalTesterActions
         return $this->getScenario()->runStep(new \Codeception\Step\Action('assertNotEqualsWithDelta', func_get_args()));
     }
 
- 
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -3180,7 +3180,7 @@ trait FunctionalTesterActions
      *              'readers_count' => 23
      *          ],
      *         'tax_input' => [
-     *              ['genre' => 'fiction']
+     *              'genre' => 'fiction'
      *          ]
      * ]);
      * ```

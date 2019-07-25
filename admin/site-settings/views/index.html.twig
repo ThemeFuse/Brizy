@@ -14,6 +14,17 @@
                                     <div class="brz-ed-popup-two-sidebar-title">DASHBOARD</div>
                                     <div class="modal_dash active" id="settingsDash">
 
+                                        <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='site-pages' ?'brz-ed-popup-two-sidebar-list-active':'' }}" data-tab-name="pages">
+                                                <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
+                                                    <i class="brz-icon-svg">
+                                                        <svg class="brz-icon-svg">
+                                                            <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Pages"></use>
+                                                        </svg>
+                                                    </i>
+                                                </span>
+                                            <span class="brz-span brz-ed-popup-two-sidebar-list__span-text">Pages</span>
+                                        </li>
+
                                         <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='site-settings' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
                                             data-tab-name="settings">
                                                 <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
@@ -28,6 +39,7 @@
                                                     Settings
                                                 </span>
                                         </li>
+
                                         <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='social-sharing' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
                                             data-tab-name="socialSharing">
                                                 <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
@@ -89,6 +101,9 @@
                             </div>
                         </div>
                         <div class="brz-ed-popup-two-btn-close" data-dismiss="modal"></div>
+                    </div>
+                    <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='site-pages' ?'brz-ed-scroll-pane-active':'' }}">
+
                     </div>
 
                     <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='site-settings' ?'brz-ed-scroll-pane-active':'' }}"

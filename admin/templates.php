@@ -408,7 +408,6 @@ class Brizy_Admin_Templates {
 		}
 
 		return array( $applyFor, $entityType, $entityValues );
-
 	}
 
 

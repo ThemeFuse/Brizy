@@ -148,5 +148,4 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$this->success( null, 200 );
 	}
-
 }

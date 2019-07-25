@@ -19,20 +19,17 @@ class Brizy_Admin_Popups_Main {
 
 		if ( ! $instance ) {
 			$instance = new self();
+			$instance->initialize();
 		}
 
 		return $instance;
 	}
 
 	/**
-	 * BrizyPro_Admin_Popups constructor.
+	 * @param $types
+	 *
+	 * @return array
 	 */
-	public function __construct() {
-		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_filter( 'brizy_global_data', array( $this, 'populateGlobalData' ) );
-		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
-	}
-
 	public function populateSupportedPosts( $types ) {
 		$types[] = self::CP_POPUP;
 
@@ -40,65 +37,18 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	/**
-	 * Populated the global data for compiler
-	 *
-	 * @param $globalData
+	 * @param $content
+	 * @param $project
+	 * @param $wpPost
 	 *
 	 * @return mixed
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-	public function populateGlobalData( $globalData ) {
+	public function insertPopupsHtml( $content, $project, $wpPost ) {
 
-		if ( ! is_object( $globalData ) ) {
-			$globalData = (object) array( 'globalBlocks' => array(), 'savedBlocks' => array() );
-		}
 
-		$blocks = get_posts( array(
-			'post_type'      => Brizy_Admin_Popups_Main::CP_GLOBAL,
-			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-		) );
 
-		foreach ( $blocks as $block ) {
-			$brizy_editor_block               = Brizy_Editor_Block::get( $block );
-			$uid                              = $brizy_editor_block->get_uid();
-			$block_data                       = $brizy_editor_block->convertToOptionValue();
-			$globalData->globalBlocks[ $uid ] = array(
-				'data'     => json_decode( $brizy_editor_block->get_editor_data() ),
-				'position' => $block_data['position'],
-				'rules'    => $block_data['rules']
-			);
-		}
-
-		$blocks = get_posts( array(
-			'post_type'      => Brizy_Admin_Popups_Main::CP_SAVED,
-			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-		) );
-
-		foreach ( $blocks as $block ) {
-			$brizy_editor_block        = Brizy_Editor_Block::get( $block );
-			$block_data                       = $brizy_editor_block->convertToOptionValue();
-			$globalData->savedBlocks[] = array(
-				'data' => json_decode( $brizy_editor_block->get_editor_data() ),
-				'rules'    => $block_data['rules']
-			);
-		}
-
-		return $globalData;
+		return $content;
 	}
-
-	/**
-	 *
-	 */
-	public function initializeActions() {
-		Brizy_Admin_Popups_Api::_init();
-	}
-
 
 	static public function registerCustomPosts() {
 
@@ -124,6 +74,11 @@ class Brizy_Admin_Popups_Main {
 			)
 		);
 
+	}
+
+	public function initialize() {
+		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
+		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN );
 	}
 
 }

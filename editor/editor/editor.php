@@ -84,6 +84,7 @@ class Brizy_Editor_Editor_Editor {
 		$change_template_url = null;
 		$templates           = null;
 		$isTemplate          = false;
+		$isPopup             = false;
 		$ruleMatches         = array();
 
 		if ( ! is_null( $this->post ) ) {
@@ -93,6 +94,7 @@ class Brizy_Editor_Editor_Editor {
 			$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' ) );
 			$templates           = apply_filters( "brizy:templates", $this->post->get_templates() );
 			$isTemplate          = $this->post->get_wp_post()->post_type == Brizy_Admin_Templates::CP_TEMPLATE;
+			$isPopup             = $this->post->get_wp_post()->post_type == Brizy_Admin_Popups_Main::CP_POPUP;
 		}
 
 		$post_thumbnail = $this->getThumbnailData( $wp_post_id );
@@ -242,7 +244,8 @@ class Brizy_Editor_Editor_Editor {
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => (object) Brizy_Public_EditorBuild_Texts::get_editor_texts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
-				'isTemplate'      => $isTemplate
+				'isTemplate'      => $isTemplate,
+				'isPopup'         => $isPopup
 			),
 			'applications'    => array(
 				'form' => array(
