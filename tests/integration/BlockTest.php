@@ -9,9 +9,12 @@ class BlockTest extends \Codeception\Test\Unit {
 
 	protected function _before() {
 		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
 	}
 
 	protected function _after() {
+
 	}
 
 	/**

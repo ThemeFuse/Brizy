@@ -8,7 +8,6 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	const CREATE_RULE_ACTION = 'brizy_add_rule';
 	const DELETE_RULE_ACTION = 'brizy_delete_rule';
 	const LIST_RULE_ACTION = 'brizy_list_rules';
-
 	/**
 	 * @var Brizy_Admin_Rules_Manager
 	 */
