@@ -3,7 +3,7 @@
 
 class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
-	const nonce = 'brizy-rule-api';
+	const nonce = Brizy_Editor_API::nonce;
 	const CREATE_RULES_ACTION = 'brizy_add_rules';
 	const CREATE_RULE_ACTION = 'brizy_add_rule';
 	const DELETE_RULE_ACTION = 'brizy_delete_rule';
