@@ -29,7 +29,7 @@ class Brizy_Admin_Rules_Manager {
 
 		if ( $forceValidation ) {
 			if ( $this->validateRules( $postType, $rules ) ) {
-				throw new Exception( 'One or more rules are already used' );
+				throw new Exception( 'One or more rules are already used or is overridden by an existent rule' );
 			}
 		}
 

@@ -85,7 +85,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$ruleData = file_get_contents( "php://input" );
 
-		$rule = $this->manager->createRuleFromJson( $ruleData, $postType );
+		try {
+			$rule = $this->manager->createRuleFromJson( $ruleData, $postType );
+		} catch ( Exception $e ) {
+			wp_send_json_error( "Validation".$e->getMessage(), 400 );
+		}
 
 		// validate rule
 		if ( $error = $this->manager->validateRule( $postType, $rule ) ) {
@@ -101,7 +105,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	public function actionCreateRules() {
 		$this->verifyNonce( self::nonce );
 
-		$postId = (int) $this->param( 'post' );
+		$postId   = (int) $this->param( 'post' );
 		$postType = get_post_type( $postId );
 
 		if ( ! $postId ) {
@@ -110,7 +114,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$rulesData = file_get_contents( "php://input" );
 
-		$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+		try {
+			$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+		} catch ( Exception $e ) {
+			wp_send_json_error( "Validation: ".$e->getMessage(), 400 );
+		}
 
 		// validate rule
 		if ( $errors = $this->manager->validateRules( $postType, $rules ) ) {
