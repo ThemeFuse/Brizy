@@ -38,33 +38,8 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * @param $data
-	 *
-	 * @throws Exception
+	 * @return array|mixed
 	 */
-	public function unserialize( $data ) {
-
-		$vars = unserialize( $data );
-
-		foreach ( $vars as $prop => $value ) {
-
-			if ( $prop == 'integrations' ) {
-				foreach ( $value as $integration ) {
-					if ( $integration instanceof Brizy_Editor_Forms_AbstractIntegration ) {
-						$this->integrations[] = $integration;
-					} else {
-						$brizy_editor_forms_abstract_integration = Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( (object) $integration );
-						if ( $brizy_editor_forms_abstract_integration ) {
-							$this->integrations[] = $brizy_editor_forms_abstract_integration;
-						}
-					}
-				}
-			} else {
-				$this->$prop = $value;
-			}
-		}
-	}
-
 	public function jsonSerialize() {
 		$get_object_vars = array(
 			'id'               => $this->id,
