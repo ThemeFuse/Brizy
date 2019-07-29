@@ -234,7 +234,7 @@ class Brizy_Editor_Editor_Editor {
 
 					'createFont' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
 					'deleteFont' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
-					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION
+					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
 
 					'getAccount'    => Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNT,
 					'getAccounts'   => Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNTS,
