@@ -5,12 +5,12 @@
 actor: IntegrationTester
 modules:
   enabled:
-    - Asserts
-    - WPDb
-    - WPLoader
     - \Helper\Unit
     - \Helper\Wpunit
     - \Helper\Integration
+    - Asserts
+    - WPDb
+    - WPLoader
     - WPFilesystem
   config:
     WPDb:
@@ -25,6 +25,8 @@ modules:
       url: '%TEST_SITE_WP_URL%'
       urlReplacement: true
       tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
+      checkExistence: true
+      update: true
     WPLoader:
       wpRootFolder: "%WP_ROOT_FOLDER%"
       loadOnly: true

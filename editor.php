@@ -464,7 +464,7 @@ class Brizy_Editor {
 	}
 
 	public function default_supported_post_types() {
-		return array( 'page', 'post' );
+		return array( 'page', 'post', Brizy_Admin_Popups_Main::CP_POPUP );
 	}
 
 	public function get_name() {

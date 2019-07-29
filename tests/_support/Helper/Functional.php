@@ -6,18 +6,29 @@ namespace Helper;
 // all public methods declared in helper class will be available in $I
 
 use Brizy_Admin_Fonts_Main;
+use FunctionalTester;
 
 class Functional extends \Codeception\Module {
 
 	/**
-	 * @param $count
-	 * @param $fontFamily
-	 * @param $weights
-	 * @param $type
-	 * @param string $status
+	 * @param $action
+	 * @param array $params
 	 *
-	 * @throws \Codeception\Exception\ModuleException
+	 * @return string
 	 */
+	public function ajaxUrl( $action, $params = [], $prefix = '' ) {
+		return $prefix . '/wp-admin/admin-ajax.php?' . build_query( array_merge( [ 'action' => $action ], $params ) );
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @return array|mixed|object
+	 */
+	public function grabJsonResponse( FunctionalTester $I ) {
+		return json_decode( $I->grabResponse() );
+	}
+
 	public function haveManyFontsInDataBase( $count, $fontFamily, $weights, $type, $status = 'publish' ) {
 
 

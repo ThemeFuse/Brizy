@@ -6,6 +6,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	const nonce = Brizy_Editor_API::nonce;
 	const CREATE_RULES_ACTION = 'brizy_add_rules';
 	const CREATE_RULE_ACTION = 'brizy_add_rule';
+	const UPDATE_RULES_ACTION = 'brizy_update_rules';
 	const DELETE_RULE_ACTION = 'brizy_delete_rule';
 	const LIST_RULE_ACTION = 'brizy_list_rules';
 	/**
@@ -45,10 +46,10 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	protected function initializeApiActions() {
 		add_action( 'wp_ajax_' . self::CREATE_RULE_ACTION, array( $this, 'actionCreateRule' ) );
 		add_action( 'wp_ajax_' . self::CREATE_RULES_ACTION, array( $this, 'actionCreateRules' ) );
+		add_action( 'wp_ajax_' . self::UPDATE_RULES_ACTION, array( $this, 'actionUpdateRules' ) );
 		add_action( 'wp_ajax_' . self::DELETE_RULE_ACTION, array( $this, 'actionDeleteRule' ) );
 		add_action( 'wp_ajax_' . self::LIST_RULE_ACTION, array( $this, 'actionGetRuleList' ) );
 	}
-
 
 	/**
 	 * @return null|void
@@ -90,9 +91,26 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, "Validation" . $e->getMessage() );
 		}
 
+		try {
+			$ruleValidator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $postId );
+			$ruleValidator->validateRuleForPostId( $rule, $postId );
+		} catch ( Brizy_Admin_Rules_ValidationException $e ) {
+			wp_send_json_error( array( 'message' => $e->getMessage(), 'rule' => $e->getRuleId() ), 400 );
+		} catch ( Exception $e ) {
+			wp_send_json_error( array( 'message' => $e->getMessage() ), 400 );
+		}
+
 		// validate rule
-		if ( $error = $this->manager->validateRule( $postType, $rule ) ) {
-			wp_send_json_error( $error, 400 );
+
+		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $postId );
+
+		try {
+			$validator->validateRuleForPostId( $rule, $postId );
+		} catch ( Brizy_Admin_Rules_ValidationException $e ) {
+			wp_send_json_error( array(
+				'rule'    => $e->getRuleId(),
+				'message' => $e->getMessage()
+			), 400 );
 		}
 
 		$this->manager->addRule( $postId, $rule );
@@ -118,9 +136,15 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, $e->getMessage() );
 		}
 
-		// validate rule
-		if ( $errors = $this->manager->validateRules( $postType, $rules ) ) {
-			wp_send_json_error( $errors, 400 );
+		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $postId );
+
+		try {
+			$validator->validateRulesForPostId( $rules, $postId );
+		} catch ( Brizy_Admin_Rules_ValidationException $e ) {
+			wp_send_json_error( array(
+				'rule'    => $e->getRuleId(),
+				'message' => $e->getMessage()
+			), 400 );
 		}
 
 		foreach ( $rules as $newRule ) {
@@ -128,6 +152,39 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		$this->success( $rules, 200 );
+
+		return null;
+	}
+
+
+	public function actionUpdateRules() {
+		$this->verifyNonce( self::nonce );
+
+		$postId   = (int) $this->param( 'post' );
+		$postType = get_post_type( $postId );
+
+		if ( ! $postId ) {
+			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
+		}
+
+		$rulesData = file_get_contents( "php://input" );
+
+		$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+
+		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $postId );
+
+		try {
+			$validator->validateRulesForPostId( $rules, $postId );
+		} catch ( Brizy_Admin_Rules_ValidationException $e ) {
+			wp_send_json_error( array(
+				'rule'    => $e->getRuleId(),
+				'message' => $e->getMessage()
+			), 400 );
+		}
+
+		$this->manager->saveRules( $postId, $rules );
+
+		wp_send_json_success( $rules, 200 );
 
 		return null;
 	}

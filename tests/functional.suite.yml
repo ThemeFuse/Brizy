@@ -39,6 +39,7 @@ modules:
       tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
     WPLoader:
       loadOnly: true
+      multisite: false
       wpRootFolder: "%WP_ROOT_FOLDER%"
       dbName: "%TEST_SITE_DB_NAME%"
       dbHost: "%TEST_SITE_DB_HOST%"

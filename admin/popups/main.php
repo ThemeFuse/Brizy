@@ -25,29 +25,9 @@ class Brizy_Admin_Popups_Main {
 		return $instance;
 	}
 
-	/**
-	 * @param $types
-	 *
-	 * @return array
-	 */
-	public function populateSupportedPosts( $types ) {
-		$types[] = self::CP_POPUP;
-
-		return $types;
-	}
-
-	/**
-	 * @param $content
-	 * @param $project
-	 * @param $wpPost
-	 *
-	 * @return mixed
-	 */
-	public function insertPopupsHtml( $content, $project, $wpPost ) {
-
-
-
-		return $content;
+	public function initialize() {
+		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
+		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
 	}
 
 	static public function registerCustomPosts() {
@@ -76,9 +56,75 @@ class Brizy_Admin_Popups_Main {
 
 	}
 
-	public function initialize() {
-		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
-		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN );
+	/**
+	 * @param $types
+	 *
+	 * @return array
+	 */
+	public function populateSupportedPosts( $types ) {
+		$types[] = self::CP_POPUP;
+
+		return $types;
 	}
 
+	/**
+	 * @param $content
+	 * @param $project
+	 * @param $wpPost
+	 * @param $context
+	 *
+	 * @return mixed
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	public function insertPopupsHtml( $content, $project, $wpPost, $context ) {
+		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
+
+		$popus = $this->getMatchingPopups( $applyFor, $entityType, $entityValues );
+
+		foreach ( $popus as $popup ) {
+			$brizyPost    = Brizy_Editor_Post::get( $popup );
+			$compiledPage = $brizyPost->get_compiled_page();
+
+			if ( $context == 'head' || $context == 'document' ) {
+				$content = $this->insertInHead( $content, $compiledPage->get_head() );
+			}
+
+			if ( $context == 'body' || $context == 'document' ) {
+				$content = $this->insertInBody( $content, $compiledPage->get_body() );
+			}
+		}
+
+		return $content;
+	}
+
+	private function insertInHead( $target, $content ) {
+
+		return $content;
+	}
+
+	private function insertInBody( $target, $content ) {
+		return $content;
+	}
+
+	private function getMatchingPopups( $applyFor, $entityType, $entityValues ) {
+
+		$resultTemplates = array();
+		$allPopups       = get_posts( array(
+			'post_type'   => self::CP_POPUP,
+			'numberposts' => - 1,
+			'post_status' => 'publish'
+		) );
+
+		$allPopups = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $allPopups );
+
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		foreach ( $allPopups as $atemplate ) {
+			$ruleSet = $ruleManager->getRuleSet( $atemplate->ID );
+			if ( $ruleSet->isMatching( $applyFor, $entityType, $entityValues ) ) {
+				$resultTemplates[] = $atemplate;
+			}
+		}
+
+		return $resultTemplates;
+	}
 }

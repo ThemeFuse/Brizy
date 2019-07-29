@@ -39,14 +39,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	private $entityValues = array();
 
 	/**
-	 * This prop is not going to be serialized.
-	 * Please do not serialize it.
-	 *
-	 * @var int
-	 */
-	private $templateId;
-
-	/**
 	 * @return array|mixed
 	 */
 	public function jsonSerialize() {
@@ -373,23 +365,5 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 */
 	private function generateId() {
 		return md5( implode( '', func_get_args() ) .time() );
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getTemplateId() {
-		return $this->templateId;
-	}
-
-	/**
-	 * @param int $templateId
-	 *
-	 * @return Brizy_Admin_Rule
-	 */
-	public function setTemplateId( $templateId ) {
-		$this->templateId = $templateId;
-
-		return $this;
 	}
 }
