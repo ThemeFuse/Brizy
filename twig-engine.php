@@ -20,7 +20,7 @@ class Brizy_TwigEngine {
 	 */
 	static public function instance( $path ) {
 
-		$templates        = glob( rtrim( $path, "/" ) . "/*.html.twig" );
+		$templates        = glob( rtrim( $path, "/" ) . "/*.twig" );
 		$loader_templates = array();
 		foreach ( $templates as $template ) {
 

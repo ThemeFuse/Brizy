@@ -62,6 +62,10 @@ class Brizy_Editor_Project implements Serializable {
 		$this->loadProjectData( $this->storage->get_storage() );
 	}
 
+	public static function cleanClassCache() {
+		self::$instance = array();
+	}
+
 	/**
 	 * This will be returned by api when project is requested
 	 */

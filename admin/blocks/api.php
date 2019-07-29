@@ -11,8 +11,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const CREATE_GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
-	const CREATE_GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
+	const GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
+	const GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
 
 	const CREATE_GLOBAL_BLOCK_ACTION = 'brizy-create-global-block';
 	const CREATE_SAVED_BLOCK_ACTION = 'brizy-create-saved-block';
@@ -58,8 +58,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::CREATE_GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
-		add_action( 'wp_ajax_' . self::CREATE_GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
+		add_action( 'wp_ajax_' . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
+		add_action( 'wp_ajax_' . self::GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
 		add_action( 'wp_ajax_' . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_SAVED_BLOCK_ACTION, array( $this, 'actionUpdateSavedBlock' ) );
@@ -128,7 +128,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -155,7 +155,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -200,7 +200,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $block->convertToOptionValue() );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 		} catch
 		( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -223,14 +223,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 
-			if ( (int) $this->param( 'autosave' ) ) {
+			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->auto_save_post();
 			} else {
 				$block->save();
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $block->convertToOptionValue() );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
@@ -317,7 +317,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								meta_key='brizy_post_uid' and 
 								meta_value='%s'   
 								WHERE p.post_type IN ('%s')
-								ORDER DESC p.ID
+								ORDER BY p.ID DESC
 								LIMIT 1", array( $uid, $postType ) );
 
 		return $wpdb->get_var( $prepare );
@@ -337,7 +337,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								pm.post_id=p.ID and 
 								meta_key='brizy_post_uid' and 
 								meta_value='%s'   
-								ORDER DESC p.ID
+								ORDER BY p.ID DESC
 								LIMIT 1", array( $uid, ) );
 
 		return $wpdb->get_var( $prepare );

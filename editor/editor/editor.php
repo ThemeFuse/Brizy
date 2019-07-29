@@ -170,7 +170,7 @@ class Brizy_Editor_Editor_Editor {
 					'setProject'     => Brizy_Editor_API::AJAX_SET_PROJECT,
 					'setProjectMeta' => Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 
-					'getGlobalBlockList'   => Brizy_Admin_Blocks_Api::CREATE_GET_GLOBAL_BLOCKS_ACTION,
+					'getGlobalBlockList'   => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
 					'createGlobalBlock'    => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
 					'updateGlobalBlock'    => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 					'deleteGlobalBlock'    => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
@@ -181,7 +181,7 @@ class Brizy_Editor_Editor_Editor {
 					'getRuleList'          => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 					'updateBlockPositions' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 
-					'getSavedBlockList' => Brizy_Admin_Blocks_Api::CREATE_GET_SAVED_BLOCKS_ACTION,
+					'getSavedBlockList' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
 					'createSavedBlock'  => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
 					'updateSavedBlock'  => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
 					'deleteSavedBlock'  => Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
@@ -192,7 +192,8 @@ class Brizy_Editor_Editor_Editor {
 					'getServerTimeStamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
 
 
-					'saveBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_SAVE_BLOCK_SCREENSHOT,
+					'createBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
+					'updateBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
 
 					'getSidebars'      => Brizy_Editor_API::AJAX_SIDEBARS,
 					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
@@ -223,6 +224,10 @@ class Brizy_Editor_Editor_Editor {
 					'createIntegration'          => Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
 					'updateIntegration'          => Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
 					'deleteIntegration'          => Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
+
+					'createFont' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
+					'deleteFont' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
+					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION
 
 					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA, // ???
 					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA, // ???

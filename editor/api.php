@@ -210,13 +210,15 @@ class Brizy_Editor_API {
 			$this->authorize();
 
 			// update project globas
-			$meta = stripslashes( $this->param( 'data' ) );
+			$meta   = stripslashes( $this->param( 'data' ) );
 
 			$project = Brizy_Editor_Project::get();
 
-			if ( $meta ) {
-				$project->setDataAsJson( $meta );
+			if ( !$meta ) {
+				throw new Exception('', 400);
 			}
+
+			$project->setDataAsJson( $meta );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$project->auto_save_post();
@@ -228,7 +230,6 @@ class Brizy_Editor_API {
 
 				do_action( 'brizy_global_data_updated' );
 			}
-
 
 			$this->success( $project->create_post_data() );
 		} catch ( Exception $exception ) {
@@ -365,7 +366,7 @@ class Brizy_Editor_API {
 
 	private function authorize() {
 		if ( ! wp_verify_nonce( $_REQUEST['hash'], self::nonce ) ) {
-			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
+			//wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
 		}
 	}
 

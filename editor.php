@@ -66,6 +66,7 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
+		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
 
 
@@ -203,6 +204,7 @@ class Brizy_Editor {
 	public function registerCustomPostTemplates() {
 		Brizy_Editor_Project::registerCustomPostType();
 		Brizy_Admin_Blocks_Main::registerCustomPosts();
+		Brizy_Admin_Fonts_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPost();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}

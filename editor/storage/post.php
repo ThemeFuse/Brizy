@@ -29,6 +29,9 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	 * @return array
 	 */
 	public function get_storage() {
+
+		wp_cache_delete( $this->get_id(), 'post_meta');
+
 		$get_metadata = get_metadata( 'post', $this->get_id(), $this->key(), true );
 
 		if ( is_array( $get_metadata ) ) {

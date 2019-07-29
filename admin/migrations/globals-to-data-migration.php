@@ -2,6 +2,8 @@
 
 class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
+	use Brizy_Admin_Migrations_PostsTrait;
+
 	/**
 	 * Return the version
 	 *
@@ -18,7 +20,7 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 	public function execute() {
 
 		try {
-			$projectPost = Brizy_Editor_Project::getPost();
+			$projectPost = $this->getProjectPost();
 
 			if ( ! $projectPost ) {
 				return;
