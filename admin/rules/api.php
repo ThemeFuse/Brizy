@@ -117,7 +117,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
 		} catch ( Exception $e ) {
-			wp_send_json_error( "Validation: ".$e->getMessage(), 400 );
+			wp_send_json_error( $e->getMessage(), 400 );
 		}
 
 		// validate rule
