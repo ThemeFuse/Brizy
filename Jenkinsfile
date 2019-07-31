@@ -108,8 +108,6 @@ pipeline {
                     credentialsId: 'Git',
                     branch: params.releaseBranch
 
-                sh 'git config user.name "Alex Zaharia"'
-                sh 'git config user.email alecszaharia@gmail.com'
                 sh 'git remote set-branches --add origin master'
                 sh 'git remote set-branches --add origin develop'
                 sh 'git remote set-branches --add origin release'
