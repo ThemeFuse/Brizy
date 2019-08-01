@@ -102,7 +102,7 @@ class RulesApiCest {
 	 *
 	 * @throws Exception
 	 */
-	public function createInvalidRuleTest( FunctionalTester $I ) {
+	public function createExistingRuleTest( FunctionalTester $I ) {
 		$ruleId = md5( time() );
 		$rule   = Brizy_Admin_Rule::createFromRequestData( [
 			"id"           => $ruleId,
@@ -135,6 +135,35 @@ class RulesApiCest {
 		$rules       = $ruleManager->getRules( $postId );
 
 		$I->assertEquals( $rules, [ $rule ], 'It should return the rule created' );
+	}
+
+
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws Exception
+	 */
+	public function createRuleForInvalidPostTest( FunctionalTester $I ) {
+		$postId = $I->havePostInDatabase( [
+			'post_type'   => 'page',
+			'post_status' => 'publish',
+		] );
+
+		$I->haveHttpHeader( 'Content-Type', 'application/json' );
+		$newRule = Brizy_Admin_Rule::createFromRequestData( [
+			"type"         => 1,
+			"appliedFor"   => 1,
+			"entityType"   => "post",
+			"entityValues" => [ 1 ]
+		] );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [ 'post' => $postId ] ), $newRule->convertToOptionValue() );
+
+		$I->seeResponseCodeIs( 400 );
+
+		$I->dontSeePostMetaInDatabase( [
+			'post_id'  => $postId,
+			'meta_key' => 'brizy-rules'
+		] );
 	}
 
 
@@ -184,6 +213,44 @@ class RulesApiCest {
 		}
 
 		$I->assertEquals( $expectedRulesAsArrays, $rules, 'It should return the rules created' );
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws Exception
+	 */
+	public function createRulesForInvalidPostTest( FunctionalTester $I ) {
+
+		$postId = $I->havePostInDatabase( [
+			'post_type'   => 'page',
+			'post_status' => 'publish',
+		] );
+
+		$I->haveHttpHeader( 'Content-Type', 'application/json' );
+		$rules = [
+			[
+				"type"         => 1,
+				"appliedFor"   => 1,
+				"entityType"   => "post",
+				"entityValues" => [ 1 ]
+			],
+			[
+				"type"         => 1,
+				"appliedFor"   => 1,
+				"entityType"   => "post",
+				"entityValues" => [ 2 ]
+			]
+		];
+
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rules', [ 'post' => $postId ] ), $rules );
+
+		$I->seeResponseCodeIs( 400 );
+
+		$I->dontSeePostMetaInDatabase( [
+			'post_id'  => $postId,
+			'meta_key' => 'brizy-rules'
+		] );
 	}
 
 	/**
@@ -242,6 +309,45 @@ class RulesApiCest {
 		}
 
 		$I->assertEquals( $expectedRulesAsArrays, $rules, 'It should return the rules created' );
+	}
+
+
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws Exception
+	 */
+	public function updateRulesForInvalidPostTest( FunctionalTester $I ) {
+
+		$postId = $I->havePostInDatabase( [
+			'post_type'   => 'page',
+			'post_status' => 'publish',
+		] );
+
+		$I->haveHttpHeader( 'Content-Type', 'application/json' );
+		$rules = [
+			[
+				"type"         => 1,
+				"appliedFor"   => 2,
+				"entityType"   => "post",
+				"entityValues" => [ 1 ]
+			],
+			[
+				"type"         => 1,
+				"appliedFor"   => 2,
+				"entityType"   => "post",
+				"entityValues" => [ 2 ]
+			]
+		];
+
+		$I->sendPOST( $I->ajaxUrl( 'brizy_update_rules', [ 'post' => $postId ] ), $rules );
+
+		$I->seeResponseCodeIs( 400 );
+
+		$I->dontSeePostMetaInDatabase( [
+			'post_id'  => $postId,
+			'meta_key' => 'brizy-rules'
+		] );
 	}
 
 
