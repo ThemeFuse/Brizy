@@ -20,6 +20,10 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	 */
 	protected $lists = array();
 
+	/**
+	 * @var array
+	 */
+	protected $folders = array();
 
 	/**
 	 * @var
@@ -59,7 +63,7 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	 * @return bool|mixed
 	 * @throws Exception
 	 */
-	public function handleSubmit(Brizy_Editor_Forms_Form $form, $fields ) {
+	public function handleSubmit( Brizy_Editor_Forms_Form $form, $fields ) {
 		/**
 		 * @var \BrizyForms\Service\Service $service ;
 		 */
@@ -79,15 +83,36 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 
 		$get_object_vars = parent::jsonSerialize();
 
-		$get_object_vars['fields']             = $this->getFields();
-		$get_object_vars['lists']              = $this->getLists();
-		$get_object_vars['usedAccount']        = $this->getUsedAccount();
-		$get_object_vars['usedList']           = $this->getUsedList();
-		$get_object_vars['usedFolder']         = $this->getUsedFolder();
-		$get_object_vars['fieldsMap']          = $this->getFieldsMap();
-		$get_object_vars['accounts']           = $this->getAccounts();
-		$get_object_vars['confirmationNeeded'] = $this->isConfirmationNeeded();
-		$get_object_vars['hasConfirmation']    = $this->hasConfirmation();
+		if ( ! is_null( $this->getFields() ) ) {
+			$get_object_vars['fields'] = $this->getFields();
+		}
+		if ( ! is_null( $this->getLists() ) ) {
+			$get_object_vars['lists'] = $this->getLists();
+		}
+		if ( ! is_null( $this->getFolders() ) ) {
+			$get_object_vars['folders'] = $this->getFolders();
+		}
+		if ( ! is_null( $this->getUsedAccount() ) ) {
+			$get_object_vars['usedAccount'] = $this->getUsedAccount();
+		}
+		if ( ! is_null( $this->getUsedList() ) ) {
+			$get_object_vars['usedList'] = $this->getUsedList();
+		}
+		if ( ! is_null( $this->getUsedFolder() ) ) {
+			$get_object_vars['usedFolder'] = $this->getUsedFolder();
+		}
+		if ( ! is_null( $this->getFieldsMap() ) ) {
+			$get_object_vars['fieldsMap'] = $this->getFieldsMap();
+		}
+		if ( ! is_null( $this->getAccounts() ) ) {
+			$get_object_vars['accounts'] = $this->getAccounts();
+		}
+		if ( ! is_null( $this->isConfirmationNeeded() ) ) {
+			$get_object_vars['confirmationNeeded'] = $this->isConfirmationNeeded();
+		}
+		if ( ! is_null( $this->hasConfirmation() ) ) {
+			$get_object_vars['hasConfirmation'] = $this->hasConfirmation();
+		}
 
 		return $get_object_vars;
 	}
@@ -98,6 +123,9 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	public function serialize() {
 		$value = $this->jsonSerialize();
 		unset( $value['accounts'] );
+		unset( $value['folders'] );
+		unset( $value['lists'] );
+		unset( $value['fields'] );
 
 		return serialize( $value );
 	}
@@ -120,10 +148,21 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 			}
 			if ( isset( $json_obj->lists ) ) {
 				foreach ( $json_obj->lists as $list ) {
-					if( !$list instanceof Brizy_Editor_Forms_Group)
+					if ( ! $list instanceof Brizy_Editor_Forms_Group ) {
 						$instance->addList( Brizy_Editor_Forms_Group::createFromJson( $list ) );
-					else
-						$instance->addList($list);
+					} else {
+						$instance->addList( $list );
+					}
+				}
+			}
+
+			if ( isset( $json_obj->folders ) ) {
+				foreach ( $json_obj->folders as $folder ) {
+					if ( ! $folder instanceof Brizy_Editor_Forms_Folder ) {
+						$instance->addFolder( Brizy_Editor_Forms_Folder::createFromJson( $folder ) );
+					} else {
+						$instance->addFolder( $folder );
+					}
 				}
 			}
 
@@ -157,26 +196,6 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 			$instance->setCompleted( $data['completed'] );
 		}
 
-		if ( isset( $data['fields'] ) ) {
-			foreach ( $data['fields'] as $field ) {
-
-				if ( $field instanceof Brizy_Editor_Forms_Field ) {
-					$instance->addField( $field );
-				} else {
-					$instance->addField( Brizy_Editor_Forms_Field::createFromSerializedData( $field ) );
-				}
-
-			}
-		}
-		if ( isset( $data['lists'] ) ) {
-			foreach ( $data['lists'] as $list ) {
-				if ( $list instanceof Brizy_Editor_Forms_Group ) {
-					$instance->addList( $list );
-				} else {
-					$instance->addList( Brizy_Editor_Forms_Group::createFromSerializedData( $list ) );
-				}
-			}
-		}
 		if ( isset( $data['usedAccount'] ) ) {
 			$instance->setUsedAccount( $data['usedAccount'] );
 		}
@@ -196,6 +215,7 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 			$instance->setHasConfirmation( $data['hasConfirmation'] );
 		}
 
+
 		return $instance;
 	}
 
@@ -207,12 +227,36 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	}
 
 	/**
+	 * @param Brizy_Editor_Forms_Folder $folders
+	 */
+	public function addFolder( Brizy_Editor_Forms_Folder $folders ) {
+		$this->folders[] = $folders;
+	}
+
+	/**
 	 * @param Brizy_Editor_Forms_Field $field
 	 */
 	public function addField( Brizy_Editor_Forms_Field $field ) {
 		$this->fields[] = $field;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getFolders() {
+		return $this->folders;
+	}
+
+	/**
+	 * @param array $folders
+	 *
+	 * @return Brizy_Editor_Forms_ServiceIntegration
+	 */
+	public function setFolders( $folders ) {
+		$this->folders = $folders;
+
+		return $this;
+	}
 
 	/**
 	 * @return array
@@ -274,9 +318,9 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	 */
 	public function getUsedListObject() {
 
+		$used_account = $this->getUsedList();
 		foreach ( (array) $this->lists as $list ) {
 			$var          = $list->getId();
-			$used_account = $this->getUsedList();
 			if ( $var == $used_account ) {
 				return $list;
 			}
