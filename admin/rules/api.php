@@ -171,12 +171,10 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
 
-//		// validate rule
-//		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $postId );
-//
-//		if ( ! $validator ) {
-//			$this->error( 400, 'Unable to get the rule validator for this post type' );
-//		}
+		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $postId );
+		if ( ! $validator ) {
+			$this->error( 400, 'Unable to get the rule validator for this post type' );
+		}
 //
 //		try {
 //			$validator->validateRulesForPostId( $rules, $postId );
