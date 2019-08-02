@@ -381,6 +381,7 @@ class Brizy_Editor_Forms_Api {
 			}
 
 			$integration = apply_filters( 'brizy_create_integration', $integration, $form );
+			$integration = apply_filters( 'brizy_prepare_integration', $integration, $form );
 			$integration = apply_filters( 'brizy_add_integration_accounts', $integration, $form );
 
 			if ( $form->addIntegration( $integration ) ) {
@@ -414,7 +415,7 @@ class Brizy_Editor_Forms_Api {
 
 		if ( $integration ) {
 			$integration = apply_filters( 'brizy_add_integration_accounts', $integration, $form );
-			$integration = apply_filters( 'brizy_get_integration', $integration, $form );
+			$integration = apply_filters( 'brizy_prepare_integration', $integration, $form );
 			$this->success( $integration );
 		}
 
@@ -435,6 +436,7 @@ class Brizy_Editor_Forms_Api {
 		$integration = Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( json_decode( file_get_contents( 'php://input' ) ) );
 
 		$integration = apply_filters( 'brizy_update_integration', $integration, $form );
+		$integration = apply_filters( 'brizy_prepare_integration', $integration, $form );
 
 		//------------------
 
