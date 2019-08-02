@@ -33,7 +33,7 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	/**
 	 * @var
 	 */
-	protected $fieldsMap;
+	protected $fieldsMap = '[]';
 
 	/**
 	 * @var
@@ -206,7 +206,15 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 			$instance->setUsedFolder( $data['usedFolder'] );
 		}
 		if ( isset( $data['fieldsMap'] ) ) {
-			$instance->setFieldsMap( $data['fieldsMap'] );
+
+			if ( is_array( $data['fieldsMap'] ) ) {
+				$instance->setFieldsMap( json_encode( $data['fieldsMap'] ) );
+			} elseif ( empty( $data['fieldsMap'] ) ) {
+				$instance->setFieldsMap( '[]' );
+			} else {
+				$instance->setFieldsMap( $data['fieldsMap'] );
+			}
+
 		}
 		if ( isset( $data['confirmationNeeded'] ) ) {
 			$instance->setConfirmationNeeded( $data['confirmationNeeded'] );
@@ -320,7 +328,7 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 
 		$used_account = $this->getUsedList();
 		foreach ( (array) $this->lists as $list ) {
-			$var          = $list->getId();
+			$var = $list->getId();
 			if ( $var == $used_account ) {
 				return $list;
 			}
