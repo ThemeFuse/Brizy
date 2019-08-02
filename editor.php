@@ -215,6 +215,7 @@ class Brizy_Editor {
 		Brizy_Admin_Fonts_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPost();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
+		Brizy_Admin_Popups_Main::registerCustomPosts();
 	}
 
 	/**

@@ -39,18 +39,18 @@ class Brizy_Admin_Popups_Main {
 		register_post_type( self::CP_POPUP,
 			array(
 				'labels'              => $labels,
-				'public'              => false,
+				'public'              => true,
 				'has_archive'         => false,
 				'description'         => __( 'Brizy popup', 'brizy' ),
-				'publicly_queryable'  => false,
-				'show_ui'             => false,
-				'show_in_menu'        => false,
-				'query_var'           => false,
+				'publicly_queryable'  => true,
+				'show_ui'             => true,
+				'show_in_menu'        => true,
+				'query_var'           => true,
 				'capability_type'     => 'page',
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
 				'exclude_from_search' => true,
-				'supports'            => array( 'title', 'revisions', 'page-attributes' )
+				'supports'            => array( 'title', 'post_content', 'revisions', 'page-attributes' )
 			)
 		);
 
