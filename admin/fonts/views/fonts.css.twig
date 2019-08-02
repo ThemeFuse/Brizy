@@ -6,7 +6,7 @@
             font-family: '{{ family }}';
             font-style: {{ weight|fontStyle }};
             font-weight: {{ weight|fontWeight }};
-            src: local('{{ family }}'), url({{ font_url }}) format('{{ type }}');
+            src: local('{{ family }}'), url({{ font_url }}) format('{{ type | fontType }}');
         }
         {% endfor %}
     {% endfor %}

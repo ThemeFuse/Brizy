@@ -63,6 +63,17 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 
 			           return $weight;
 		           } ) );
+		$twigEngine->getEnvironment()
+		           ->addFilter( new Twig_SimpleFilter( 'fontType', function ( $type ) {
+
+			           switch ( $type ) {
+				           case 'ttf':
+					           return 'truetype';
+				           default:
+					           return $type;
+			           }
+
+		           } ) );
 		$twigEngine->getEnvironment()->addFilter( new Twig_SimpleFilter( 'fontWeight', function ( $weight ) {
 			return trim( preg_replace( "/[^\d]+/", "", $weight ) );
 		} ) );

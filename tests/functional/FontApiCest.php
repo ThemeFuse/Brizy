@@ -254,6 +254,7 @@ class FontApiCest {
 		$I->see( 'pn-bold-webfont.eot' );
 		$I->see( 'pn-bold-webfont.woff' );
 		$I->see( 'pn-bold-webfont.woff2' );
+		$I->see( 'format(\'truetype\')' );
 	}
 
 
