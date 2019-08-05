@@ -23,6 +23,11 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	/**
 	 * @var array
 	 */
+	protected $listProperties = array();
+
+	/**
+	 * @var array
+	 */
 	protected $folders = array();
 
 	/**
@@ -89,6 +94,9 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 		if ( ! is_null( $this->getLists() ) ) {
 			$get_object_vars['lists'] = $this->getLists();
 		}
+		if ( ! is_null( $this->getListProperties() ) ) {
+			$get_object_vars['listProperties'] = $this->getListProperties();
+		}
 		if ( ! is_null( $this->getFolders() ) ) {
 			$get_object_vars['folders'] = $this->getFolders();
 		}
@@ -126,6 +134,7 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 		unset( $value['folders'] );
 		unset( $value['lists'] );
 		unset( $value['fields'] );
+		unset( $value['listProperties'] );
 
 		return serialize( $value );
 	}
@@ -441,6 +450,24 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	 */
 	public function setUsedFolder( $usedFolder ) {
 		$this->usedFolder = $usedFolder;
+
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getListProperties() {
+		return $this->listProperties;
+	}
+
+	/**
+	 * @param array $listProperties
+	 *
+	 * @return Brizy_Editor_Forms_ServiceIntegration
+	 */
+	public function setListProperties( $listProperties ) {
+		$this->listProperties = $listProperties;
 
 		return $this;
 	}
