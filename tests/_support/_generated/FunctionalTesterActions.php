@@ -8205,7 +8205,6 @@ trait FunctionalTesterActions
      * ```
      *
      * @param null $name
-     *
      * @see \Codeception\Lib\InnerBrowser::makeHtmlSnapshot()
      */
     public function makeHtmlSnapshot($name = null) {
