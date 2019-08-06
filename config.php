@@ -35,7 +35,7 @@ class Brizy_Config {
 	const PLATFORM_EMAIL = "admin@admin.com";
 
 	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/brizy-pro-pricing/";
-	const SUPPORT_URL = "https://github.com/ThemeFuse/Brizy/issues";
+	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
 	const SHORTPIXEL_CONFIG = "https://www.brizy.cloud/shortpixel.txt";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
