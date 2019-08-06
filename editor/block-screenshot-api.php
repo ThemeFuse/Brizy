@@ -83,7 +83,7 @@ class Brizy_Editor_BlockScreenshotApi {
 
 		$img_type = $this->getFileExtensionByContent( $imageContent );
 
-		if ( ! in_array( $img_type, array( 'jpg', 'gif', 'png' ) ) ) {
+		if ( ! in_array( $img_type, array( 'jpg', 'jpeg', 'gif', 'png' ) ) ) {
 			wp_send_json_error( array(
 				'message' => esc_html__( 'Invalid image format', 'brizy' )
 			) );
@@ -129,7 +129,7 @@ class Brizy_Editor_BlockScreenshotApi {
 		$extensions = array(
 			'image/png'  => 'png',
 			'image/jpeg' => 'jpg',
-			'image/jpg'  => 'jpg',
+			'image/jpg'  => 'jpeg',
 			'image/gif'  => 'gif',
 		);
 
