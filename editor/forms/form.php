@@ -45,7 +45,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 			'id'               => $this->id,
 			'hasEmailTemplate' => $this->hasEmailTemplate(),
 			'emailTemplate'    => $this->getEmailTemplate(),
-			'integrations'     => $this->integrations,
+			'integrations'     => array()
 		);
 
 		foreach ( $this->integrations as $integration ) {
@@ -57,9 +57,10 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 	public function convertToOptionValue() {
 		$get_object_vars = array(
-			'id' => $this->id,
+			'id'               => $this->id,
 			'hasEmailTemplate' => $this->hasEmailTemplate(),
 			'emailTemplate'    => $this->getEmailTemplate(),
+			'integrations'     => array()
 		);
 
 		foreach ( $this->integrations as $integration ) {
@@ -70,8 +71,8 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$instance               = new self();
-		$instance->id           = $data['id'];
+		$instance     = new self();
+		$instance->id = $data['id'];
 
 		$instance->hasEmailTemplate = $data['hasEmailTemplate'];
 		$instance->emailTemplate    = $data['emailTemplate'];
@@ -113,7 +114,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 * @throws Exception
 	 */
 	public static function createFromJson( $json_obj ) {
-		$instance = new self();
+		$formInstance = new self();
 
 		if ( ! isset( $json_obj ) ) {
 			throw new Exception( 'Bad Request', 400 );
@@ -121,23 +122,23 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		if ( is_object( $json_obj ) ) {
 
-			$instance->setId( $json_obj->id );
+			$formInstance->setId( $json_obj->id );
 
 			// add uncompleted wordpress integration
 			$current_user   = wp_get_current_user();
 			$an_integration = new Brizy_Editor_Forms_WordpressIntegration();
 			$an_integration->setEmailTo( $current_user->user_email );
 
-			$instance->addIntegration( $an_integration );
+			$formInstance->addIntegration( $an_integration );
 
 			foreach ( (array) $json_obj->integrations as $integration ) {
 				if ( is_object( $integration ) ) {
-					$instance->addIntegration( Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( $integration ) );
+					$formInstance->addIntegration( Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( $integration ) );
 				}
 			}
 		}
 
-		return $instance;
+		return $formInstance;
 	}
 
 	/**
