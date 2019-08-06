@@ -175,8 +175,6 @@ class Brizy_Admin_Migrations {
 					$this->globalStorage->addMigration( $migration )->save();
 
 					$wpdb->query( 'COMMIT' );
-
-
 				}
 			} catch ( Exception $e ) {
 				$wpdb->query( 'ROLLBACK' );

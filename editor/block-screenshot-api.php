@@ -128,8 +128,8 @@ class Brizy_Editor_BlockScreenshotApi {
 
 		$extensions = array(
 			'image/png'  => 'png',
-			'image/jpeg' => 'jpg',
-			'image/jpg'  => 'jpeg',
+			'image/jpeg' => 'jpeg',
+			'image/jpg'  => 'jpg',
 			'image/gif'  => 'gif',
 		);
 

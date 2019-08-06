@@ -30,7 +30,11 @@ class Brizy_Editor {
 
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
 		add_action( 'after_setup_theme', array( $this, 'loadCompatibilityClasses' ), - 2000 );
-		add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
+		try {
+			add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
+		} catch ( Exception $e ) {
+			return;
+		}
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
 
@@ -56,8 +60,7 @@ class Brizy_Editor {
 			$migrationManager->runMigrations( BRIZY_VERSION );
 		} catch ( Brizy_Admin_Migrations_UpgradeRequiredException $e ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Please upgrade Brizy to the latest version.' );
-
-			return;
+			throw new Exception( 'Halt plugin execution!' );
 		}
 	}
 
