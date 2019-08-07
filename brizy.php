@@ -44,17 +44,6 @@ function brizy_load() {
 	}
 
 	$instance = Brizy_Editor::get();
-
-	Brizy_Logger::instance()->emergency( 'emergency' );
-	Brizy_Logger::instance()->alert( 'alert' );
-	Brizy_Logger::instance()->critical( 'critical' );
-	Brizy_Logger::instance()->error( 'error' );
-	Brizy_Logger::instance()->warning( 'warning' );
-	Brizy_Logger::instance()->notice( 'notice' );
-	Brizy_Logger::instance()->info( 'info' );
-	Brizy_Logger::instance()->debug( 'debug' );
-
-	exit;
 }
 
 function brizy_notices() {
