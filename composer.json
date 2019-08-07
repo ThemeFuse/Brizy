@@ -15,7 +15,7 @@
   },
   "require": {
     "twig/twig": "1.33.0",
-    "shortpixel/shortpixel-php": "dev-master",
+    "shortpixel/shortpixel-php": "^1.5",
     "knplabs/gaufrette": "0.3",
     "bagrinsergiu/brizy-migration-utils": "^1.1"
   },

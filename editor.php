@@ -60,6 +60,7 @@ class Brizy_Editor {
 			$migrationManager->runMigrations( BRIZY_VERSION );
 		} catch ( Brizy_Admin_Migrations_UpgradeRequiredException $e ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Please upgrade Brizy to the latest version.' );
+			Brizy_Logger::instance()->critical( 'Unknown migration found. The plugin must be downgraded to the previous version' );
 			throw new Exception( 'Halt plugin execution!' );
 		}
 	}
@@ -134,6 +135,7 @@ class Brizy_Editor {
 				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
 			}
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
 
 		}
 
