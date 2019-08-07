@@ -60,7 +60,6 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 		] );
 
 		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $templateId );
-
 		$validator->validateRuleForPostId( new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 10, 12 ] ), $templateId );
 
 		$this->expectException( Brizy_Admin_Rules_ValidationException::class );
@@ -80,7 +79,7 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 		}
 
 		$templateId = $this->tester->havePostInDatabase( [
-			'post_type'   => Brizy_Admin_Popups_Main::CP_POPUP,
+			'post_type'   => Brizy_Admin_Templates::CP_TEMPLATE,
 			'post_status' => 'publish',
 		] );
 
@@ -89,6 +88,7 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 		$validator->validateRulesForPostId( $rules, $templateId );
 
 		$this->expectException( Brizy_Admin_Rules_ValidationException::class );
+
 		$validator->validateRulesForPostId( [
 			new Brizy_Admin_Rule( 2, 1, 1, 'post', [ 1, 2 ] ),
 		], $templateId );

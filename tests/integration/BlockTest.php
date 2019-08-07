@@ -37,14 +37,10 @@ class BlockTest extends \Codeception\Test\Unit {
 
 		$block = new Brizy_Editor_Block( $id );
 
-
 		$this->assertInstanceOf( "Brizy_Editor_BlockPosition", $block->getPosition(), "setPosition should return a Brizy_Editor_BlockPosition instance " );
 		$this->assertEquals( $data_decoded, $block->get_editor_data(), "It should return decoded data" );
 		$this->assertEquals( "1", $block->get_compiler_version() );
 		$this->assertEquals( "2", $block->get_editor_version() );
-
-
-
 	}
 
 	/**
