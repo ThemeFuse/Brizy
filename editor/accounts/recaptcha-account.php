@@ -70,11 +70,11 @@ class Brizy_Editor_Accounts_RecaptchaAccount extends Brizy_Editor_Accounts_Abstr
 	public function validate() {
 
 		if ( ! isset( $_REQUEST['secretkey'] ) ) {
-			$this->error( 400, 'Invalid secret provided' );
+			throw new Exception( 'Invalid secret provided' );
 		}
 
 		if ( ! isset( $_REQUEST['response'] ) ) {
-			$this->error( 400, 'Invalid response provided' );
+			throw new Exception( 'Invalid response provided' );
 		}
 
 		$http     = new WP_Http();
