@@ -74,11 +74,13 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 			$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 			$account = $manager->getAccount( $this->param( 'id' ) );
 
-			if(!$account)
-				$this->error(404,'Account not found');
+			if ( ! $account ) {
+				$this->error( 404, 'Account not found' );
+			}
 
 			$this->success( $account );
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
 			$this->error( 500, $e->getMessage() );
 		}
 	}
@@ -101,6 +103,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 			$accounts = $manager->getFilteredAccounts( $filter );
 			$this->success( $accounts );
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
 			$this->error( 500, $e->getMessage() );
 		}
 	}
@@ -110,9 +113,11 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$manager  = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 			$instance = Brizy_Editor_Accounts_AbstractAccount::createFromJson( json_decode( file_get_contents( 'php://input' ) ) );
+			$instance->validate();
 			$manager->addAccount( $instance );
 			$this->success( $instance );
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
 			$this->error( 500, $e->getMessage() );
 		}
 	}
@@ -125,6 +130,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 			$manager->updateAccount( $instance );
 			$this->success( $instance );
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
 			$this->error( 500, $e->getMessage() );
 		}
 	}
@@ -141,6 +147,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 			$manager->deleteAccountById( $this->param( 'id' ) );
 			$this->success( null );
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
 			$this->error( 500, $e->getMessage() );
 		}
 	}
