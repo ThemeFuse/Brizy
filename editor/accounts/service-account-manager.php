@@ -104,6 +104,7 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 		if ( $this->hasAccount( $account ) ) {
 			return;
 		}
+
 		$this->accounts[] = $account;
 		$this->updateStorage();
 	}
@@ -115,7 +116,7 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 
 		foreach ( $this->getAllAccounts() as $index => $account ) {
 			if ( $account->getId() == $anAccount->getId() ) {
-				$this->accounts[$index] = $anAccount;
+				$this->accounts[ $index ] = $anAccount;
 				break;
 			}
 		}

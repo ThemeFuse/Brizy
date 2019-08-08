@@ -133,11 +133,11 @@ abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Seriali
 
 		if ( isset( $data['group'] ) )
 			switch ( $data['group'] ) {
-				case self::SOCIAL_GROUP:
-					return new Brizy_Editor_Accounts_SocialAccount( $data );
 				default:
 				case self::INTEGRATIONS_GROUP:
 					return new Brizy_Editor_Accounts_Account( $data );
+				case self::SOCIAL_GROUP:
+					return new Brizy_Editor_Accounts_SocialAccount( $data );
 				case self::RECAPTCHA_GROUP:
 					return new Brizy_Editor_Accounts_RecaptchaAccount( $data );
 			}
@@ -164,5 +164,15 @@ abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Seriali
 		throw new Exception( 'Invalid json provided.' );
 	}
 
+	/**
+	 * Some accounts may need advanced validation
+	 *
+	 * Ex: a request to an external api may be needed
+	 *
+	 * @return bool
+	 */
+	public function validate() {
+		return true;
+	}
 
 }

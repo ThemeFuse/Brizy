@@ -61,7 +61,40 @@ class Brizy_Editor_Accounts_RecaptchaAccount extends Brizy_Editor_Accounts_Abstr
 	}
 
 	public function getSiteKey() {
-		return $this->get('sitekey');
+		return $this->get( 'sitekey' );
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function validate() {
+
+		if ( ! isset( $_REQUEST['secretkey'] ) ) {
+			$this->error( 400, 'Invalid secret provided' );
+		}
+
+		if ( ! isset( $_REQUEST['response'] ) ) {
+			$this->error( 400, 'Invalid response provided' );
+		}
+
+		$http     = new WP_Http();
+		$response = $http->post( 'https://www.google.com/recaptcha/api/siteverify', array(
+			'body' => array(
+				'secret'   => $_REQUEST['secretkey'],
+				'response' => $_REQUEST['response']
+			)
+		) );
+
+		$body = wp_remote_retrieve_body( $response );
+
+		$responseJsonObject = json_decode( $body );
+
+		if ( ! is_object( $responseJsonObject ) || ! $responseJsonObject->success ) {
+			throw new Exception( "Unable to validate account" );
+		}
+
+		return true;
+	}
+
 
 }
