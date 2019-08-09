@@ -146,6 +146,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'Invalid data' );
 		}
 
+
 		try {
 			$data  = stripslashes( $this->param( 'data' ) );
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_SAVED );

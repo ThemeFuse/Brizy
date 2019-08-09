@@ -1,16 +1,14 @@
 <?php
 
 
-class ProjectTest extends \Codeception\Test\Unit {
+class ProjectTest extends \Codeception\TestCase\Test {
 	/**
-	 * @var \WpunitTester
+	 * @var \IntegrationTester
 	 */
 	protected $tester;
 
 	protected function _before() {
 		wp_cache_flush();
-		global $wpdb;
-		@$wpdb->check_connection();
 	}
 
 	public function testCreatedMetaKeys() {

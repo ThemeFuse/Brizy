@@ -106,7 +106,7 @@ class ProjectApiCest {
 		Brizy_Editor_Project::cleanClassCache();
 		$project = Brizy_Editor_Project::get();
 
-		$I->assertNotEquals( '{}', $project->getDataAsJson(), 'It should not return submitted project data becausr is an autosave' );
+		$I->assertNotEquals( '{}', $project->getDataAsJson(), 'It should not return submitted project data because is an autosave' );
 
 
 		// also make sure the get project data request is returning the correct values

@@ -2,6 +2,7 @@
 
 class FontApiCest {
 
+
 	/**
 	 * @param FunctionalTester $I
 	 */
@@ -18,7 +19,7 @@ class FontApiCest {
 	public function compilerFontParametersTest( FunctionalTester $I ) {
 
 		$compilerParams = apply_filters( 'brizy_compiler_params', [] );
-		$I->assertArrayHasKey( 'uploaded_fonts', $compilerParams, 'The compiler parameters should contain fonts' );
+		$I->assertArrayNotHasKey( 'uploaded_fonts', $compilerParams, 'The compiler parameters should not contain fonts' );
 	}
 
 	/**

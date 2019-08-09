@@ -2,7 +2,7 @@
 #
 # Suite for unit or integration tests that require WordPress functions and classes.
 
-actor: WpunitTester
+actor: IntegrationTester
 modules:
   enabled:
     - Asserts
@@ -26,7 +26,7 @@ modules:
       tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
     WPLoader:
       wpRootFolder: "%WP_ROOT_FOLDER%"
-      isolatedInstall: true
+      loadOnly: false
       domain: "%TEST_SITE_WP_DOMAIN%"
       dbName: "%TEST_SITE_DB_NAME%"
       dbHost: "%TEST_SITE_DB_HOST%"

@@ -1,15 +1,21 @@
 <?php
 
-class FontManagerTest extends \Codeception\Test\Unit {
+class FontManagerTest extends \Codeception\TestCase\Test {
 	/**
-	 * @var \WpunitTester
+	 * @var \IntegrationTester
 	 */
 	protected $tester;
 
-	protected function _before() {
-		wp_cache_flush();
+	public static function tearDownAfterClass(): void {
+		parent::tearDownAfterClass();
 		global $wpdb;
 		@$wpdb->check_connection();
+
+
+	}
+
+	protected function _before() {
+		wp_cache_flush();
 		$this->tester->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
 		new Brizy_Admin_Fonts_Main();
 	}
