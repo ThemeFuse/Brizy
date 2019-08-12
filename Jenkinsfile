@@ -132,6 +132,7 @@ pipeline {
                 sh 'cp -r * '+ params.brizySvnPath + '/trunk/'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf vendor'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf public/editor-src'
+                sh 'cd ' + params.brizySvnPath + '/trunk && /usr/local/bin/composer clearcache'
                 sh 'cd ' + params.brizySvnPath + '/trunk && /usr/local/bin/composer install --no-dev'
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -type f -name "*.dev.php" -delete'
                 sh 'cd ' + params.brizySvnPath + '/trunk && find ./vendor/ -type d -name ".git" | xargs rm -rf '
