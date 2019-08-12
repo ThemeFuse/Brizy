@@ -87,14 +87,16 @@ class Brizy_Editor_Editor_Editor {
 		$isPopup             = false;
 		$ruleMatches         = array();
 
+
 		if ( ! is_null( $this->post ) ) {
+			$parent_post_type  = get_post_type( $this->get_post()->get_parent_id() );
 			$wp_post_id        = $this->post->get_wp_post()->ID;
 			$preview_post_link = $this->getPreviewUrl( $this->post->get_wp_post() );
 
 			$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' ) );
 			$templates           = apply_filters( "brizy:templates", $this->post->get_templates() );
-			$isTemplate          = $this->post->get_wp_post()->post_type == Brizy_Admin_Templates::CP_TEMPLATE;
-			$isPopup             = $this->post->get_wp_post()->post_type == Brizy_Admin_Popups_Main::CP_POPUP;
+			$isTemplate          = $parent_post_type == Brizy_Admin_Templates::CP_TEMPLATE;
+			$isPopup             = $parent_post_type == Brizy_Admin_Popups_Main::CP_POPUP;
 		}
 
 		$post_thumbnail = $this->getThumbnailData( $wp_post_id );
@@ -163,7 +165,7 @@ class Brizy_Editor_Editor_Editor {
 				'featuredImage'   => $post_thumbnail,
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
-				'api'            => array(
+				'api'             => array(
 					'hash' => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 
@@ -238,16 +240,16 @@ class Brizy_Editor_Editor_Editor {
 					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA, // ???
 					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA, // ???
 				),
-				'plugins'        => array(
+				'plugins'         => array(
 					'dummy'       => true,
 					'woocommerce' => $this->get_woocomerce_plugin_info(),
 				),
-				'hasSidebars'    => count( $wp_registered_sidebars ) > 0,
-				'l10n'           => (object) Brizy_Public_EditorBuild_Texts::get_editor_texts(),
-				'pageData'       => apply_filters( 'brizy_page_data', array() ),
-				'isTemplate'     => $isTemplate,
-				'isPopup'        => $isPopup,
-				'availableRoles' => $this->roleList()
+				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
+				'l10n'            => (object) Brizy_Public_EditorBuild_Texts::get_editor_texts(),
+				'pageData'        => apply_filters( 'brizy_page_data', array() ),
+				'isTemplate'      => $isTemplate,
+				'isPopup'         => $isPopup,
+				'availableRoles'  => $this->roleList()
 			),
 			'applications'    => array(
 				'form' => array(
