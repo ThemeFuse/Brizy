@@ -66,7 +66,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$rules = $this->manager->getRules( $postId );
 
-		wp_send_json_success( $rules, 200 );
+		$this->success( $rules );
 
 		return null;
 	}
@@ -80,7 +80,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$postType = get_post_type( $postId );
 
 		if ( ! $postId ) {
-			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
+			$this->error( 400, "Validation" . 'Invalid post' );
 		}
 
 		$ruleData = file_get_contents( "php://input" );
@@ -88,7 +88,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$rule = $this->manager->createRuleFromJson( $ruleData, $postType );
 		} catch ( Exception $e ) {
-			wp_send_json_error( "Validation".$e->getMessage(), 400 );
+			$this->error( 400, "Validation" . $e->getMessage() );
 		}
 
 		// validate rule
@@ -97,7 +97,6 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		$this->manager->addRule( $postId, $rule );
-
 		wp_send_json_success( $rule, 200 );
 
 	}
@@ -109,7 +108,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$postType = get_post_type( $postId );
 
 		if ( ! $postId ) {
-			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
+			$this->error( 400, 'Invalid post' );
 		}
 
 		$rulesData = file_get_contents( "php://input" );
@@ -117,7 +116,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
 		} catch ( Exception $e ) {
-			wp_send_json_error( $e->getMessage(), 400 );
+			$this->error( 400, $e->getMessage() );
 		}
 
 		// validate rule
@@ -129,7 +128,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->manager->addRule( $postId, $newRule );
 		}
 
-		wp_send_json_success( $rules, 200 );
+		$this->success( $rules, 200 );
 
 		return null;
 	}
@@ -142,12 +141,12 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$ruleId = $this->param( 'rule' );
 
 		if ( ! $postId || ! $ruleId ) {
-			wp_send_json_error( null, 400 );
+			$this->error( 400, 'Invalid request' );
 		}
 
 		$this->manager->deleteRule( $postId, $ruleId );
 
-		wp_send_json_success( null, 200 );
+		$this->success( null, 200 );
 	}
 
 }

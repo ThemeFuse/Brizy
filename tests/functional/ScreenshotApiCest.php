@@ -11,6 +11,15 @@ class ScreenshotApiCest {
 		$I->loginAs( 'admin', 'admin' );
 	}
 
+	public function requestWithoutVersionKey( FunctionalTester $I ) {
+		$I->wantToTest( 'Request with invalid editor version' );
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query(
+				[ 'action' => 'brizy_create_block_screenshot' ] ), [
+			'block_type' => 'global',
+			'ibsf'       => self::PIXEL_IMG_PNG,
+		] );
+		$I->seeResponseCodeIs( 400 );
+	}
 
 	protected function invalidDataProvider() {
 		return [
@@ -32,31 +41,31 @@ class ScreenshotApiCest {
 		return [
 			[
 				'block_type' => 'global',
-				'ibsf'        => self::PIXEL_IMG_PNG,
+				'ibsf'       => self::PIXEL_IMG_PNG,
 				'file_type'  => '.png',
 				'post'       => null
 			],
 			[
 				'block_type' => 'global',
-				'ibsf'        => self::PIXEL_IMG_GIF,
+				'ibsf'       => self::PIXEL_IMG_GIF,
 				'file_type'  => '.gif',
 				'post'       => null
 			],
 			[
 				'block_type' => 'saved',
-				'ibsf'        => self::PIXEL_IMG_PNG,
+				'ibsf'       => self::PIXEL_IMG_PNG,
 				'file_type'  => '.png',
 				'post'       => null
 			],
 			[
 				'block_type' => 'normal',
-				'ibsf'        => self::PIXEL_IMG_PNG,
+				'ibsf'       => self::PIXEL_IMG_PNG,
 				'file_type'  => '.png',
 				'post'       => $postId
 			],
 			[
 				'block_type' => 'normal',
-				'ibsf'        => self::PIXEL_IMG_GIF,
+				'ibsf'       => self::PIXEL_IMG_GIF,
 				'file_type'  => '.gif',
 				'post'       => $postId
 			],
@@ -71,7 +80,10 @@ class ScreenshotApiCest {
 	 */
 	public function invalidPostScreenShotTest( FunctionalTester $I, $example ) {
 
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_create_block_screenshot' ] ), (array) $example );
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_create_block_screenshot',
+				'version' => BRIZY_EDITOR_VERSION
+			] ), (array) $example );
 		$I->seeResponseCodeIs( 400 );
 	}
 
@@ -95,10 +107,14 @@ class ScreenshotApiCest {
 	 */
 	private function _postScreenShotTest( FunctionalTester $I, $example ) {
 
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_create_block_screenshot' ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_create_block_screenshot',
+				'version' => BRIZY_EDITOR_VERSION
+			] ), [
 			'block_type' => $example['block_type'],
-			'ibsf'        => $example['ibsf'],
-			'post'       => $example['post']
+			'ibsf'       => $example['ibsf'],
+			'post'       => $example['post'],
+
 		] );
 		$I->seeResponseCodeIs( 200 );
 
@@ -124,24 +140,30 @@ class ScreenshotApiCest {
 	 */
 	public function putScreenShotTest( FunctionalTester $I ) {
 
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_create_block_screenshot' ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_create_block_screenshot',
+				'version' => BRIZY_EDITOR_VERSION
+			] ), [
 			'block_type' => 'global',
-			'ibsf'        => self::PIXEL_IMG_PNG,
+			'ibsf'       => self::PIXEL_IMG_PNG,
 		] );
 
 		$response = $I->grabResponse();
 		$object   = json_decode( $response );
 
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy_update_block_screenshot' ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_update_block_screenshot',
+				'version' => BRIZY_EDITOR_VERSION
+			] ), [
 			'block_type' => 'global',
-			'ibsf'        => self::PIXEL_IMG_PNG,
-			'id'         => $object->data->id
+			'ibsf'       => self::PIXEL_IMG_PNG,
+			'id'         => $object->data->id,
 		] );
 
 
 		$response = $I->grabResponse();
 
-		$object   = json_decode( $response );
+		$object = json_decode( $response );
 
 		$I->seeResponseCodeIs( 200 );
 

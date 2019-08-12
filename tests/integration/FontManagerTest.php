@@ -1,17 +1,15 @@
 <?php
 
-class FontManagerTest extends \Codeception\TestCase\Test {
+class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \IntegrationTester
 	 */
 	protected $tester;
 
 	public static function tearDownAfterClass(): void {
-		parent::tearDownAfterClass();
 		global $wpdb;
 		@$wpdb->check_connection();
-
-
+		parent::tearDownAfterClass();
 	}
 
 	protected function _before() {

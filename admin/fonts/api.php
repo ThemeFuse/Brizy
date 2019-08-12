@@ -37,15 +37,16 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 	 * Brizy_Admin_Fonts_Api constructor.
 	 */
 	public function __construct() {
-		parent::__construct();
+
 		$this->fontManager = new Brizy_Admin_Fonts_Manager();
+		parent::__construct();
 	}
 
 	/**
 	 * @return null
 	 */
 	protected function getRequestNonce() {
-		return $this->param( 'hash' );
+		return self::nonce;
 	}
 
 	protected function initializeApiActions() {
@@ -56,6 +57,8 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionGetFonts() {
 
+		$this->verifyNonce( self::nonce );
+
 		$manager = new Brizy_Admin_Fonts_Manager();
 
 		$this->success( $manager->getAllFonts() );
@@ -63,6 +66,8 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionCreateFont() {
 		try {
+
+			$this->verifyNonce( self::nonce );
 
 			if ( ! ( $family = $this->param( 'family' ) ) ) {
 				$this->error( 400, 'Invalid font family' );
@@ -111,11 +116,14 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 			$this->success( $font );
 
 		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
 			$this->error( 400, $exception->getMessage() );
 		}
 	}
 
 	public function actionDeleteFont() {
+
+		$this->verifyNonce( self::nonce );
 
 		if ( ! ( $fontId = $this->param( 'id' ) ) ) {
 			$this->error( 400, 'Invalid font id' );
@@ -125,8 +133,9 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 			$manager->deleteFont( $fontId );
-		} catch ( Exception $e ) {
-			$this->error( $e->getCode(), $e->getMessage() );
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 
 		$this->success( [] );

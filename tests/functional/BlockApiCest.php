@@ -63,13 +63,21 @@ class BlockApiCest {
 		$I->loginAs( 'admin', 'admin' );
 	}
 
+	public function requestWithoutVersionKey( FunctionalTester $I ) {
+		$I->wantToTest( 'Request with invalid editor version' );
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION ] ) );
+		$I->seeResponseCodeIs( 400 );
+	}
 
 	/**
 	 * @param AcceptanceTester $I
 	 */
 	public function getGlobalBlocksTest( FunctionalTester $I ) {
 
-		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION ] ) );
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -93,7 +101,10 @@ class BlockApiCest {
 	 */
 	public function getSavedBlocksTest( FunctionalTester $I ) {
 
-		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION ] ) );
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -111,7 +122,10 @@ class BlockApiCest {
 
 
 	public function createGlobalBlockTest( FunctionalTester $I ) {
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
+				'version' => BRIZY_EDITOR_VERSION
+			] ), [
 			'uid'      => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
 			'data'     => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
 			'position' => '{"align": "top","index": 1}'
@@ -172,6 +186,7 @@ class BlockApiCest {
 			'data'        => $newBlockData,
 			'position'    => json_encode( $newPosition ),
 			'is_autosave' => 1,
+			'version'     => BRIZY_EDITOR_VERSION
 		] );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -194,8 +209,10 @@ class BlockApiCest {
 
 	public function createSavedBlockTest( FunctionalTester $I ) {
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION ] ), [
-			'uid'  => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
-			'data' => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
+			'uid'     => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
+			'data'    => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
+			'version' => BRIZY_EDITOR_VERSION
+
 		] );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -243,6 +260,7 @@ class BlockApiCest {
 			'uid'         => $uid,
 			'data'        => $newBlockData,
 			'is_autosave' => 1,
+			'version'     => BRIZY_EDITOR_VERSION
 		] );
 
 		$I->seeResponseCodeIsSuccessful();

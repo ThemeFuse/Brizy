@@ -1,6 +1,8 @@
 <?php
 
-class Brizy_Editor_BlockScreenshotApi {
+class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
+
+	const nonce = 'brizy-api';
 
 	const AJAX_CREATE_BLOCK_SCREENSHOT = 'brizy_create_block_screenshot';
 	const AJAX_UPDATE_BLOCK_SCREENSHOT = 'brizy_update_block_screenshot';
@@ -41,19 +43,24 @@ class Brizy_Editor_BlockScreenshotApi {
 	public function __construct( $post ) {
 		$this->post       = $post;
 		$this->blockTypes = array( self::BLOCK_TYPE_NORMAL, self::BLOCK_TYPE_GLOBAL, self::BLOCK_TYPE_SAVED );
-		$this->initialize();
+		parent::__construct();
+	}
+
+	protected function getRequestNonce() {
+		return self::nonce;
 	}
 
 
-	private function initialize() {
+	protected function initializeApiActions() {
 		add_action( 'wp_ajax_' . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
-
 		add_action( 'wp_ajax_' . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
 	}
 
 	public function saveBlockScreenShot() {
+
+		$this->verifyNonce( self::nonce );
 
 		session_write_close();
 

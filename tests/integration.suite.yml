@@ -26,7 +26,7 @@ modules:
       tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
     WPLoader:
       wpRootFolder: "%WP_ROOT_FOLDER%"
-      loadOnly: false
+      loadOnly: true
       domain: "%TEST_SITE_WP_DOMAIN%"
       dbName: "%TEST_SITE_DB_NAME%"
       dbHost: "%TEST_SITE_DB_HOST%"

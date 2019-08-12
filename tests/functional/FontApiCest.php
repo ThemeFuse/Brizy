@@ -13,6 +13,15 @@ class FontApiCest {
 		$I->loginAs( 'admin', 'admin' );
 	}
 
+	public function requestWithoutVersionKey( FunctionalTester $I ) {
+		$I->wantToTest( 'Request with invalid editor version' );
+		$I->sendGET( '/wp-admin/admin-ajax.php?' . build_query(
+				[
+					'action' => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION
+				] ) );
+		$I->seeResponseCodeIs( 400 );
+	}
+
 	/**
 	 * @param FunctionalTester $I
 	 */
@@ -38,7 +47,11 @@ class FontApiCest {
 		$I->haveManyFontsInDataBase( 15, $fontFamily, [ '400' => [ 'ttf' ], '500italic' => [ 'ttf' ] ], 'uploaded' );
 
 
-		$I->sendGET( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION ] ) );
+		$I->sendGET( '/wp-admin/admin-ajax.php?' . build_query(
+				[
+					'action'  => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
+					'version' => BRIZY_EDITOR_VERSION
+				] ) );
 		$I->seeResponseCodeIsSuccessful();
 		$fonts = json_decode( $response = $I->grabResponse() );
 
@@ -77,7 +90,11 @@ class FontApiCest {
 
 
 		$fontFamily = 'proxima_nova';
-		$I->sendPost( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
+		$I->sendPost( '/wp-admin/admin-ajax.php?' . build_query(
+				[
+					'action'  => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
+					'version' => BRIZY_EDITOR_VERSION
+				] ), [
 			'family' => $fontFamily,
 		], [
 			'fonts' => [
@@ -211,7 +228,10 @@ class FontApiCest {
 	public function getFontCssTest( FunctionalTester $I ) {
 		$I->wantToTest( 'The CSS file return for a font family' );
 		$fontFamily = 'proxima_nova';
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
+				'version' => BRIZY_EDITOR_VERSION
+			] ), [
 			'family' => $fontFamily,
 		], [
 			'fonts' => [
@@ -273,7 +293,10 @@ class FontApiCest {
 
 		$uploadedFontUId = get_post_meta( $uploadedFontId, 'brizy_post_uid', true );
 
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
+				'version' => BRIZY_EDITOR_VERSION
+			] ), [
 			'id' => $uploadedFontUId,
 		] );
 
@@ -297,7 +320,10 @@ class FontApiCest {
 		$fontFamily     = 'proxima_nova';
 		$uploadedFontId = $I->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION ] ), [
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
+				'version' => BRIZY_EDITOR_VERSION
+			] ), [
 			'id' => 'unknown',
 		] );
 

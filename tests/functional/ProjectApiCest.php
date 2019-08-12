@@ -9,6 +9,16 @@ class ProjectApiCest {
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 		$I->loginAs( 'admin', 'admin' );
+		$I->dontHavePostInDatabase( [ 'post_type' => 'brizy-project' ] );
+	}
+
+	public function requestWithoutVersionKey( FunctionalTester $I ) {
+		$I->wantToTest( 'Request with invalid editor version' );
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action' => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'hash'   => wp_create_nonce( Brizy_Editor_API::nonce ),
+			] ) );
+		$I->seeResponseCodeIs( 400 );
 	}
 
 	/**
@@ -16,8 +26,9 @@ class ProjectApiCest {
 	 */
 	public function getProjectDataTest( FunctionalTester $I ) {
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action' => Brizy_Editor_API::AJAX_GET_PROJECT,
-				'hash'   => wp_create_nonce( Brizy_Editor_API::nonce )
+				'action'  => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
+				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 		$jsonResponse = $I->grabResponse();
 
@@ -25,27 +36,38 @@ class ProjectApiCest {
 
 		$projectObject = json_decode( $jsonResponse );
 
-		$this->assertCorrectProjectDataInResponse( $I, $projectObject );
+		$this->assertCorrectProjectDataInResponse( $I, $projectObject->data );
 	}
 
 
+	public function postProjectWithoutAutosaveParameters() {
+		return [
+			[ 'data' => '{}' ],
+			[ 'data' => '{}', 'is_autosave' => 0 ],
+
+		];
+	}
+
 	/**
+	 * @dataProvider postProjectWithoutAutosaveParameters
+	 *
 	 * @param FunctionalTester $I
+	 * @param \Codeception\Example $example
+	 *
+	 * @throws Exception
 	 */
-	public function postProjectWithoutAutosaveTest( FunctionalTester $I ) {
+	public function postProjectWithoutAutosaveTest( FunctionalTester $I, \Codeception\Example $example ) {
 		$query = build_query( [
-			'action' => Brizy_Editor_API::AJAX_SET_PROJECT,
-			'hash'   => wp_create_nonce( Brizy_Editor_API::nonce )
+			'action'  => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'version' => BRIZY_EDITOR_VERSION
 		] );
-		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [
-			'data' => '{}',
-		] );
+		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, $example->getIterator()->getArrayCopy() );
 		$jsonResponse = $I->grabResponse();
 
 		$I->seeResponseCodeIsSuccessful();
 
-		$projectObject = json_decode( $jsonResponse );
-
+		$projectObject = json_decode( $jsonResponse )->data;
 
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_title' => 'Brizy Project' ] );
 
@@ -63,14 +85,15 @@ class ProjectApiCest {
 
 		// also make sure the get project data request is returning the correct values
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action' => Brizy_Editor_API::AJAX_GET_PROJECT,
-				'hash'   => wp_create_nonce( Brizy_Editor_API::nonce )
+				'action'  => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
+				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 		$jsonResponse = $I->grabResponse();
 
 		$I->seeResponseCodeIsSuccessful();
 
-		$projectObject = json_decode( $jsonResponse );
+		$projectObject = json_decode( $jsonResponse )->data;
 
 		$I->assertEquals( '{}', $projectObject->data, 'It should return submitted project data' );
 	}
@@ -81,12 +104,13 @@ class ProjectApiCest {
 	 */
 	public function postProjectWithAutosaveTest( FunctionalTester $I ) {
 		$query = build_query( [
-			'action' => Brizy_Editor_API::AJAX_SET_PROJECT,
-			'hash'   => wp_create_nonce( Brizy_Editor_API::nonce )
+			'action'  => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'version' => BRIZY_EDITOR_VERSION
 		] );
 		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [
 			'data'        => '{}',
-			'is_autosave' => 1
+			'is_autosave' => 1,
 		] );
 		$jsonResponse = $I->grabResponse();
 
@@ -94,25 +118,26 @@ class ProjectApiCest {
 
 		$projectObject = json_decode( $jsonResponse );
 
-
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_title' => 'Brizy Project' ] );
 
-		$this->assertCorrectProjectDataInResponse( $I, $projectObject );
+		$this->assertCorrectProjectDataInResponse( $I, $projectObject->data );
 
-		$I->assertEquals( '{}', $projectObject->data, 'It should contain the submitted data' );
+		$I->assertEquals( '{}', $projectObject->data->data, 'It should contain the submitted data' );
 
 
-		// asser the correct data is returned but project class
+		// assert the correct data is returned but project class
 		Brizy_Editor_Project::cleanClassCache();
 		$project = Brizy_Editor_Project::get();
 
-		$I->assertNotEquals( '{}', $project->getDataAsJson(), 'It should not return submitted project data because is an autosave' );
+		$data_as_json = $project->getDataAsJson();
+		$I->assertNotEquals( '{}', $data_as_json, 'It should not return submitted project data because is an autosave' );
 
 
 		// also make sure the get project data request is returning the correct values
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action' => Brizy_Editor_API::AJAX_GET_PROJECT,
-				'hash'   => wp_create_nonce( Brizy_Editor_API::nonce )
+				'action'  => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
+				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 		$jsonResponse = $I->grabResponse();
 
@@ -120,7 +145,7 @@ class ProjectApiCest {
 
 		$projectObject = json_decode( $jsonResponse );
 
-		$I->assertNotEquals( '{}', $projectObject->data, 'It should return submitted project data' );
+		$I->assertNotEquals( '{}', $projectObject->data->data, 'It should return submitted project data' );
 	}
 
 	/**
@@ -128,18 +153,19 @@ class ProjectApiCest {
 	 */
 	public function postProjectFailsTest( FunctionalTester $I ) {
 		$query = build_query( [
-			'action' => Brizy_Editor_API::AJAX_SET_PROJECT,
-			'hash'   => wp_create_nonce( Brizy_Editor_API::nonce )
+			'action'  => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'version' => BRIZY_EDITOR_VERSION
 		] );
-		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [
-		] );
+		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [] );
 
 		$I->seeResponseCodeIs( 400 );
 
 
 		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [
-			'fonts'  => '{}',
-			'styles' => '{}'
+			'fonts'   => '{}',
+			'styles'  => '{}',
+			'version' => BRIZY_EDITOR_VERSION
 		] );
 
 		$I->seeResponseCodeIs( 400 );

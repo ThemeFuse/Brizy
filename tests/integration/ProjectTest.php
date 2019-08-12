@@ -1,11 +1,17 @@
 <?php
 
 
-class ProjectTest extends \Codeception\TestCase\Test {
+class ProjectTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \IntegrationTester
 	 */
 	protected $tester;
+
+	public static function tearDownAfterClass(): void {
+		global $wpdb;
+		@$wpdb->check_connection();
+		parent::tearDownAfterClass();
+	}
 
 	protected function _before() {
 		wp_cache_flush();
