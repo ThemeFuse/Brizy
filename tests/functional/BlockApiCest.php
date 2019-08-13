@@ -5,6 +5,8 @@ class BlockApiCest {
 
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
+		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_GLOBAL ] );
+		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_SAVED ] );
 		$I->haveManyPostsInDatabase( 2, [
 			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'post_title'  => 'Global {{n}}',

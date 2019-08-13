@@ -10,6 +10,7 @@ class FontApiCest {
 		wp_cache_flush();
 		@$I->cleanUploadsDir();
 		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
+		$I->dontHavePostInDatabase( [ 'post_type' => 'attachment' ] );
 		$I->loginAs( 'admin', 'admin' );
 	}
 
