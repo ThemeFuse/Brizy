@@ -64,10 +64,6 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		$headers   = array();
 		$headers[] = 'Content-type: text/html; charset=UTF-8';
 
-		if ( $this->getSubject() ) {
-			$headers[] = "Subject: {$this->getSubject()}";
-		}
-
 		if ( $this->getEmailTo() ) {
 			$headers[] = "To: {$this->getEmailTo()}";
 		}
@@ -87,9 +83,10 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		if ( $this->getFromEmail() ) {
 			$fromName = '';
 			if ( $this->getFromName() ) {
-				$fromName = "<{$this->getFromName()}>";
+				$headers[] = "From: \"{$this->getFromName()}\" <{$this->getFromEmail()}>";
+			} else {
+				$headers[] = "From: {$this->getFromEmail()}";
 			}
-			$headers[] = "From: {$fromName}{$this->getFromEmail()}";
 		}
 
 		$field_string = array();
@@ -99,6 +96,8 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 
 		$email_body = $form->getEmailTemplateContent( $fields );
 
+		$email_body = $this->insertMetaDataFields( $email_body );
+
 		$headers    = apply_filters( 'brizy_form_email_headers', $headers, $fields, $form );
 		$email_body = apply_filters( 'brizy_form_email_body', $email_body, $fields, $form );
 
@@ -107,7 +106,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		}
 
 		return wp_mail(
-			$recipients[0],
+			null,
 			$this->getSubject(),
 			$email_body,
 			$headers
@@ -121,8 +120,14 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 
 		$get_object_vars = parent::jsonSerialize();
 
-		$get_object_vars['emailTo'] = $this->getEmailTo();
-		$get_object_vars['subject'] = $this->getSubject();
+		$get_object_vars['emailTo']   = $this->getEmailTo();
+		$get_object_vars['subject']   = $this->getSubject();
+		$get_object_vars['fromEmail'] = $this->getFromEmail();
+		$get_object_vars['fromName']  = $this->getFromName();
+		$get_object_vars['replayTo']  = $this->getReplayTo();
+		$get_object_vars['cc']        = $this->getCc();
+		$get_object_vars['bcc']       = $this->getBcc();
+		$get_object_vars['metaData']  = $this->getMetaData();
 
 		return $get_object_vars;
 	}
