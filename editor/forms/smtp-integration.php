@@ -94,15 +94,11 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 	public static function createFromJson( $json_obj ) {
 		$instance = null;
 		if ( is_object( $json_obj ) ) {
-			$instance = new self( $json_obj->id );
 
-			if ( isset( $json_obj->emailTo ) ) {
-				$instance->setEmailTo( trim( $json_obj->emailTo ) );
-			}
+			$instance = new self();
 
-			if ( isset( $json_obj->subject ) ) {
-				$instance->setSubject( trim( $json_obj->subject ) );
-			}
+			self::populateInstanceDataFromJson( $instance, $json_obj );
+
 			if ( isset( $json_obj->host ) ) {
 				$instance->setHost( trim( $json_obj->host ) );
 			}

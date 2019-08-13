@@ -14,6 +14,36 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	protected $subject;
 
 	/**
+	 * @var string
+	 */
+	protected $fromEmail;
+
+	/**
+	 * @var string
+	 */
+	protected $fromName;
+
+	/**
+	 * @var string
+	 */
+	protected $replayTo;
+
+	/**
+	 * @var string
+	 */
+	protected $cc;
+
+	/**
+	 * @var string
+	 */
+	protected $bcc;
+
+	/**
+	 * @var string
+	 */
+	protected $metaData;
+
+	/**
 	 * Brizy_Editor_Forms_WordpressIntegration constructor.
 	 */
 	public function __construct() {
@@ -34,13 +64,32 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		$headers   = array();
 		$headers[] = 'Content-type: text/html; charset=UTF-8';
 
-		if ( count( $recipients ) > 1 ) {
-			foreach ( $recipients as $i => $recipient ) {
-				if ( $i == 0 ) {
-					continue;
-				}
-				$headers[] = 'Bcc: ' . trim( $recipient );
+		if ( $this->getSubject() ) {
+			$headers[] = "Subject: {$this->getSubject()}";
+		}
+
+		if ( $this->getEmailTo() ) {
+			$headers[] = "To: {$this->getEmailTo()}";
+		}
+
+		if ( $this->getCc() ) {
+			$headers[] = "Cc: {$this->getCc()}";
+		}
+
+		if ( $this->getBcc() ) {
+			$headers[] = "Bcc: {$this->getBcc()}";
+		}
+
+		if ( $this->getReplayTo() ) {
+			$headers[] = "Reply-To: {$this->getReplayTo()}";
+		}
+
+		if ( $this->getFromEmail() ) {
+			$fromName = '';
+			if ( $this->getFromName() ) {
+				$fromName = "<{$this->getFromName()}>";
 			}
+			$headers[] = "From: {$fromName}{$this->getFromEmail()}";
 		}
 
 		$field_string = array();
@@ -79,7 +128,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$instance = new self( $data['id'] );
+		$instance = new self();
 
 		if ( isset( $data['completed'] ) ) {
 			$instance->setCompleted( $data['completed'] );
@@ -91,6 +140,30 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 
 		if ( isset( $data['subject'] ) ) {
 			$instance->setSubject( $data['subject'] );
+		}
+
+		if ( isset( $data['fromEmail'] ) ) {
+			$instance->setFromEmail( $data['fromEmail'] );
+		}
+
+		if ( isset( $data['fromName'] ) ) {
+			$instance->setFromName( $data['fromName'] );
+		}
+
+		if ( isset( $data['replayTo'] ) ) {
+			$instance->setReplayTo( $data['replayTo'] );
+		}
+
+		if ( isset( $data['cc'] ) ) {
+			$instance->setCc( $data['cc'] );
+		}
+
+		if ( isset( $data['bcc'] ) ) {
+			$instance->setBcc( $data['bcc'] );
+		}
+
+		if ( isset( $data['metaData'] ) ) {
+			$instance->setMetaData( $data['metaData'] );
 		}
 
 		return $instance;
@@ -140,6 +213,114 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getFromEmail() {
+		return $this->fromEmail;
+	}
+
+	/**
+	 * @param string $fromEmail
+	 *
+	 * @return Brizy_Editor_Forms_WordpressIntegration
+	 */
+	public function setFromEmail( $fromEmail ) {
+		$this->fromEmail = $fromEmail;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFromName() {
+		return $this->fromName;
+	}
+
+	/**
+	 * @param string $fromName
+	 *
+	 * @return Brizy_Editor_Forms_WordpressIntegration
+	 */
+	public function setFromName( $fromName ) {
+		$this->fromName = $fromName;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReplayTo() {
+		return $this->replayTo;
+	}
+
+	/**
+	 * @param string $replayTo
+	 *
+	 * @return Brizy_Editor_Forms_WordpressIntegration
+	 */
+	public function setReplayTo( $replayTo ) {
+		$this->replayTo = $replayTo;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCc() {
+		return $this->cc;
+	}
+
+	/**
+	 * @param string $cc
+	 *
+	 * @return Brizy_Editor_Forms_WordpressIntegration
+	 */
+	public function setCc( $cc ) {
+		$this->cc = $cc;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getBcc() {
+		return $this->bcc;
+	}
+
+	/**
+	 * @param string $bcc
+	 *
+	 * @return Brizy_Editor_Forms_WordpressIntegration
+	 */
+	public function setBcc( $bcc ) {
+		$this->bcc = $bcc;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMetaData() {
+		return $this->metaData;
+	}
+
+	/**
+	 * @param string $metaData
+	 *
+	 * @return Brizy_Editor_Forms_WordpressIntegration
+	 */
+	public function setMetaData( $metaData ) {
+		$this->metaData = $metaData;
+
+		return $this;
+	}
+
+	/**
 	 * @param $json_obj
 	 *
 	 * @return Brizy_Editor_Forms_WordpressIntegration|null
@@ -147,14 +328,85 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	public static function createFromJson( $json_obj ) {
 		$instance = null;
 		if ( is_object( $json_obj ) ) {
-			$instance = new self( $json_obj->id );
+			$instance = new self();
+
+			self::populateInstanceDataFromJson( $instance, $json_obj );
+		}
+
+		return $instance;
+	}
+
+	private function insertMetaDataFields( $emailBody ) {
+
+		$metaFields = explode( ',', $this->getMetaData() );
+		$tests      = array();
+		foreach ( $metaFields as $meta ) {
+			switch ( $meta ) {
+				case 'time':
+					$tests[] = 'Time: ' . date( 'Y-m-d H:i:s' );
+					break;
+				case 'pageUrl':
+					$tests[] = 'Page Url: ' . $_SERVER['HTTP_REFERER'];
+					break;
+				case 'userAgent':
+					$tests[] = 'User Agent: ' . $_SERVER['HTTP_USER_AGENT'];
+					break;
+				case 'remoteIp':
+					$ip = $_SERVER['REMOTE_ADDR'];
+
+					if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+						$ip = $_SERVER['HTTP_CLIENT_IP'];
+					} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+					}
+
+					$tests[] = 'Remote IP: ' . $ip;
+					break;
+				case 'credit':
+					$tests[] = 'Powered by : ' . __bt( 'brizy', 'Brizy' );
+					break;
+			}
+		}
+
+		$tests = implode( '<br>', $tests );
+
+		return $emailBody . "<br>-------------------------<br>" . $tests;
+	}
+
+	protected static function populateInstanceDataFromJson( $instance, $json_obj ) {
+		if ( is_object( $json_obj ) ) {
 
 			if ( isset( $json_obj->emailTo ) ) {
-				$instance->setEmailTo( $json_obj->emailTo );
+				$instance->setEmailTo( trim( $json_obj->emailTo ) );
 			}
 			if ( isset( $json_obj->subject ) ) {
-				$instance->setSubject( $json_obj->subject );
+				$instance->setSubject( trim( $json_obj->subject ) );
 			}
+
+			if ( isset( $json_obj->fromEmail ) ) {
+				$instance->setFromEmail( trim( $json_obj->fromEmail ) );
+			}
+
+			if ( isset( $json_obj->fromName ) ) {
+				$instance->setFromName( trim( $json_obj->fromName ) );
+			}
+
+			if ( isset( $json_obj->replayTo ) ) {
+				$instance->setReplayTo( trim( $json_obj->replayTo ) );
+			}
+
+			if ( isset( $json_obj->cc ) ) {
+				$instance->setCc( trim( $json_obj->cc ) );
+			}
+
+			if ( isset( $json_obj->bcc ) ) {
+				$instance->setBcc( trim( $json_obj->bcc ) );
+			}
+
+			if ( isset( $json_obj->metaData ) ) {
+				$instance->setMetaData( trim( $json_obj->metaData ) );
+			}
+
 		}
 
 		return $instance;
