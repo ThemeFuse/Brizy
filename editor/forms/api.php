@@ -350,7 +350,7 @@ class Brizy_Editor_Forms_Api {
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->critical( $exception->getMessage(), array( $exception ) );
-			$this->error( 400, $e->getMessage() );
+			$this->error( 400, $exception->getMessage() );
 		}
 
 		$this->error( 500, "Unable to create integration" );

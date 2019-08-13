@@ -27,7 +27,9 @@ class Brizy_Editor_Forms_GmailSmtpIntegration extends Brizy_Editor_Forms_SmtpInt
 	public static function createFromJson( $json_obj ) {
 		$instance = null;
 		if ( is_object( $json_obj ) ) {
-			$instance = new self( $json_obj->id );
+			$instance = new self();
+
+			self::populateInstanceDataFromJson( $instance, $json_obj );
 
 			if ( isset( $json_obj->emailTo ) ) {
 				$instance->setEmailTo( trim( $json_obj->emailTo ) );
