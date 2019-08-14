@@ -122,6 +122,40 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 		return $instance;
 	}
 
+
+	static public function createFromSerializedData( $data, $instance = null ) {
+
+		if ( is_null( $instance ) ) {
+			$instance = new self();
+		}
+
+		$instance = parent::createFromSerializedData( $data, $instance );
+
+		if ( isset( $data['host'] ) ) {
+			$instance->setHost( $data['host'] );
+		}
+
+		if ( isset( $data['port'] ) ) {
+			$instance->setPort( $data['port'] );
+		}
+		if ( isset( $data['username'] ) ) {
+			$instance->setUsername( $data['username'] );
+		}
+		if ( isset( $data['password'] ) ) {
+			$instance->setPassword( $data['password'] );
+		}
+		if ( isset( $data['encryption'] ) ) {
+			$instance->setEncryption( $data['encryption'] );
+		}
+
+		if ( isset( $data['authentication'] ) ) {
+			$instance->setAuthentication( $data['authentication'] );
+		}
+
+
+		return $instance;
+	}
+
 	/**
 	 * @return string
 	 */

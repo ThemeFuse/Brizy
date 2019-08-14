@@ -38,6 +38,7 @@ class Brizy_Editor_Forms_GmailSmtpIntegration extends Brizy_Editor_Forms_SmtpInt
 			if ( isset( $json_obj->subject ) ) {
 				$instance->setSubject( trim( $json_obj->subject ) );
 			}
+
 			if ( isset( $json_obj->username ) ) {
 				$instance->setUsername( trim( $json_obj->username ) );
 			}
@@ -45,6 +46,16 @@ class Brizy_Editor_Forms_GmailSmtpIntegration extends Brizy_Editor_Forms_SmtpInt
 				$instance->setPassword( trim( $json_obj->password ) );
 			}
 		}
+
+		return $instance;
+	}
+
+	public static function createFromSerializedData( $data, $instance = null ) {
+		if ( is_null( $instance ) ) {
+			$instance = new self();
+		}
+
+		$instance = parent::createFromSerializedData( $data, $instance );
 
 		return $instance;
 	}

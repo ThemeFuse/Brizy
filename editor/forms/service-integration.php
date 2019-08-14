@@ -198,8 +198,10 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 		return $instance;
 	}
 
-	static public function createFromSerializedData( $data ) {
-		$instance = new self( $data['id'] );
+	static public function createFromSerializedData( $data, $instance = null ) {
+		if ( is_null( $instance ) ) {
+			$instance = new self( $data['id'] );
+		}
 
 		if ( isset( $data['completed'] ) ) {
 			$instance->setCompleted( $data['completed'] );

@@ -132,8 +132,11 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		return $get_object_vars;
 	}
 
-	static public function createFromSerializedData( $data ) {
-		$instance = new self();
+	static public function createFromSerializedData( $data, $instance = null ) {
+
+		if ( is_null( $instance ) ) {
+			$instance = new self();
+		}
 
 		if ( isset( $data['completed'] ) ) {
 			$instance->setCompleted( $data['completed'] );
