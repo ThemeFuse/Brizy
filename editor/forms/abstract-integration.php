@@ -113,7 +113,7 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 	 *
 	 * @return Brizy_Editor_Forms_ServiceIntegration|Brizy_Editor_Forms_WordpressIntegration|void|null
 	 */
-	public static function createFromSerializedData( $data ) {
+	public static function createFromSerializedData( $data, $instance = null ) {
 		$instance = null;
 		if ( $data instanceof Brizy_Editor_Forms_WordpressIntegration ||
 		     $data instanceof Brizy_Editor_Forms_ServiceIntegration ) {
@@ -121,10 +121,26 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 		}
 
 		if ( is_array( $data ) ) {
-			if ( ( isset( $data['subject'] ) && isset( $data['emailTo'] ) ) || $data['id'] == 'wordpress' ) {
-				$instance = Brizy_Editor_Forms_WordpressIntegration::createFromSerializedData( $data );
-			} else {
-				$instance = Brizy_Editor_Forms_ServiceIntegration::createFromSerializedData( $data );
+
+			switch ( $data['id'] ) {
+				case 'wordpress':
+					$instance = Brizy_Editor_Forms_WordpressIntegration::createFromSerializedData( $data, $instance );
+					break;
+				case 'smtp':
+					if ( class_exists( 'Brizy_Editor_Forms_SmtpIntegration' ) ) {
+						$instance = Brizy_Editor_Forms_SmtpIntegration::createFromSerializedData( $data );
+					}
+					break;
+				case 'gmail_smtp':
+					if ( class_exists( 'Brizy_Editor_Forms_GmailSmtpIntegration' ) ) {
+						$instance = Brizy_Editor_Forms_GmailSmtpIntegration::createFromSerializedData( $data );
+					}
+					break;
+				default:
+					if ( class_exists( 'Brizy_Editor_Forms_ServiceIntegration' ) ) {
+						$instance = Brizy_Editor_Forms_ServiceIntegration::createFromSerializedData( $data );
+					}
+					break;
 			}
 
 			if ( $instance ) {
