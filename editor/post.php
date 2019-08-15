@@ -263,7 +263,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 * @todo: We need to move this method from here
 	 */
-	public static function get_all_brizy_posts() {
+	public static function foreach_brizy_post( $callback ) {
 		global $wpdb;
 		$posts = $wpdb->get_results(
 			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm 
@@ -275,13 +275,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		foreach ( $posts as $p ) {
 			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
 
-				if ( in_array( $p->post_type, array(
-					Brizy_Admin_Blocks_Main::CP_GLOBAL,
-					Brizy_Admin_Blocks_Main::CP_SAVED
-				) ) ) {
-					$result[] = Brizy_Editor_Block::get( $p->post_id );
-				} else {
-					$result[] = Brizy_Editor_Post::get( $p->post_id );
+				if ( is_callable( $callback ) ) {
+					$callback( $p );
 				}
 			}
 		}

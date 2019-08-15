@@ -545,7 +545,7 @@ class Brizy_Admin_Main {
 			$currentProjectGlobals->styles->default = $projectData->styles->default;
 
 			if ( $projectData->styles && isset( $projectData->styles->_selected ) ) {
-				$selected                                          = $projectData->styles->_selected;
+				$selected                                 = $projectData->styles->_selected;
 				$currentProjectGlobals->styles->_selected = $selected;
 				if ( $selected ) {
 					$currentProjectGlobals->styles->$selected = $projectData->styles->$selected;
@@ -574,18 +574,28 @@ class Brizy_Admin_Main {
 	}
 
 	public function global_data_updated() {
-		// mark all brizy post to be compiled on next view
-		$posts = Brizy_Editor_Post::get_all_brizy_posts();
 
 		// we need to trigger a post update action to make sure the cache plugins will update clear the cache
 		remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-		// mark all post to be compiled on next view
-		foreach ( $posts as $bpost ) {
-			if ( ! $bpost->get_needs_compile() ) {
-				$bpost->set_needs_compile( true );
-				$bpost->save();
+
+		// mark all brizy post to be compiled on next view
+		Brizy_Editor_Post::foreach_brizy_post( function ( $p ) {
+
+			if ( in_array( $p->post_type, array(
+				Brizy_Admin_Blocks_Main::CP_GLOBAL,
+				Brizy_Admin_Blocks_Main::CP_SAVED
+			) ) ) {
+				$brizyPost = Brizy_Editor_Block::get( $p->post_id );
+			} else {
+				$brizyPost = Brizy_Editor_Post::get( $p->post_id );
 			}
-			// wp_update_post( array( 'ID' => $bpost->get_id() ) );
-		}
+
+			if ( ! $brizyPost->get_needs_compile() ) {
+				$brizyPost->set_needs_compile( true );
+				$brizyPost->save();
+			}
+
+			unset( $brizyPost );
+		} );
 	}
 }
