@@ -59,7 +59,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	 */
 	public function handleSubmit( Brizy_Editor_Forms_Form $form, $fields ) {
 
-		$recipients = explode( ',', $this->getEmailTo() );
+		///$recipients = explode( ',', $this->getEmailTo() );
 
 		$headers   = array();
 		$headers[] = 'Content-type: text/html; charset=UTF-8';
@@ -89,17 +89,17 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 			}
 		}
 
-		$field_string = array();
-		foreach ( $fields as $field ) {
-			$field_string[] = "{$field->label}: " . esc_html( $field->value );
-		}
+//		$field_string = array();
+//		foreach ( $fields as $field ) {
+//			$field_string[] = "{$field->label}: " . esc_html( $field->value );
+//		}
 
 		$email_body = $form->getEmailTemplateContent( $fields );
 
-		$email_body = $this->insertMetaDataFields( $email_body );
-
 		$headers    = apply_filters( 'brizy_form_email_headers', $headers, $fields, $form );
 		$email_body = apply_filters( 'brizy_form_email_body', $email_body, $fields, $form );
+
+		$email_body = $this->insertMetaDataFields( $email_body );
 
 		if ( ! function_exists( 'wp_mail' ) ) {
 			throw new Exception( 'Please check your wordpress configuration.' );
