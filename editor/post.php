@@ -267,7 +267,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		global $wpdb;
 		$posts = $wpdb->get_results(
 			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'
+									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision' and p.post_type<>'attachment'
 									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
 		);
 
@@ -292,7 +292,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		global $wpdb;
 		$posts = $wpdb->get_results(
 			$wpdb->prepare( "SELECT p.ID FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'
+									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'  and p.post_type<>'attachment'
 									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
 		);
 
@@ -301,14 +301,15 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		}, $posts );
 	}
 
+	/**
 	public static function clear_compiled_cache() {
 
-		$posts = self::get_all_brizy_post_ids();
-		remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-		foreach ( $posts as $id ) {
-			update_metadata( 'post', $id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true );
-			//wp_update_post( array( 'ID' => $id ) );
-		}
+	$posts = self::get_all_brizy_post_ids();
+	remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
+	foreach ( $posts as $id ) {
+	update_metadata( 'post', $id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true );
+	//wp_update_post( array( 'ID' => $id ) );
+	}
 	}
 
 	/**
