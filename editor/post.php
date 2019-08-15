@@ -258,6 +258,14 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
+	 *  Mark all brizy post that needs compile
+	 */
+	public static function mark_all_for_compilation() {
+		global $wpdb;
+		$wpdb->update( $wpdb->postmeta, array( 'meta_value' => 1 ), array( 'meta_key' => self::BRIZY_POST_NEEDS_COMPILE_KEY ) );
+	}
+
+	/**
 	 * @return Brizy_Editor_Post[]
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
@@ -280,6 +288,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 				}
 			}
 		}
+
 		return $result;
 	}
 
@@ -302,17 +311,17 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	public static function clear_compiled_cache() {
-
-	$posts = self::get_all_brizy_post_ids();
-	remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-	foreach ( $posts as $id ) {
-	update_metadata( 'post', $id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true );
-	//wp_update_post( array( 'ID' => $id ) );
-	}
-	}
-
-	/**
+	 * public static function clear_compiled_cache() {
+	 *
+	 * $posts = self::get_all_brizy_post_ids();
+	 * remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
+	 * foreach ( $posts as $id ) {
+	 * update_metadata( 'post', $id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true );
+	 * //wp_update_post( array( 'ID' => $id ) );
+	 * }
+	 * }
+	 *
+	 * /**
 	 * @param $project
 	 * @param $post
 	 *

@@ -573,29 +573,10 @@ class Brizy_Admin_Main {
 		return $postMeta;
 	}
 
+	/**
+	 * Mark all post to be compiled next time
+	 */
 	public function global_data_updated() {
-
-		// we need to trigger a post update action to make sure the cache plugins will update clear the cache
-		remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-
-		// mark all brizy post to be compiled on next view
-		Brizy_Editor_Post::foreach_brizy_post( function ( $p ) {
-
-			if ( in_array( $p->post_type, array(
-				Brizy_Admin_Blocks_Main::CP_GLOBAL,
-				Brizy_Admin_Blocks_Main::CP_SAVED
-			) ) ) {
-				$brizyPost = Brizy_Editor_Block::get( $p->post_id );
-			} else {
-				$brizyPost = Brizy_Editor_Post::get( $p->post_id );
-			}
-
-			if ( ! $brizyPost->get_needs_compile() ) {
-				$brizyPost->set_needs_compile( true );
-				$brizyPost->save();
-			}
-
-			unset( $brizyPost );
-		} );
+		Brizy_Editor_Post::mark_all_for_compilation();
 	}
 }
