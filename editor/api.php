@@ -230,8 +230,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$project->save();
 				$project->save_wp_post();
 
-				Brizy_Editor_Post::clear_compiled_cache();
-
 				do_action( 'brizy_global_data_updated' );
 			}
 

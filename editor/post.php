@@ -311,17 +311,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
-	 * public static function clear_compiled_cache() {
-	 *
-	 * $posts = self::get_all_brizy_post_ids();
-	 * remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-	 * foreach ( $posts as $id ) {
-	 * update_metadata( 'post', $id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true );
-	 * //wp_update_post( array( 'ID' => $id ) );
-	 * }
-	 * }
-	 *
-	 * /**
 	 * @param $project
 	 * @param $post
 	 *
