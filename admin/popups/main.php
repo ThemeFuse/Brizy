@@ -82,28 +82,43 @@ class Brizy_Admin_Popups_Main {
 		foreach ( $popups as $brizyPopup ) {
 			$compiledPage = $brizyPopup->get_compiled_page();
 
-			if ( $context == 'head' || $context == 'document' ) {
-				$content = $this->insertInHead( $content, $compiledPage->get_head() );
+			if ( $context == 'document' ) {
+				$content = $this->insertInDocumentHead( $content, $compiledPage->get_head() );
+				$content = $this->insertInDocumentBody( $content, $compiledPage->get_body() );
 			}
 
-			if ( $context == 'body' || $context == 'document' ) {
-				$content = $this->insertInBody( $content, $compiledPage->get_body() );
+			if ( $context == 'head' ) {
+				$content = $this->insertHead( $content, $compiledPage->get_head() );
+			}
+
+			if ( $context == 'body' ) {
+				$content = $this->insertBody( $content, $compiledPage->get_body() );
 			}
 		}
 
 		return $content;
 	}
 
-	private function insertInHead( $target, $headContent ) {
+	private function insertHead( $target, $headContent ) {
 
-		$target = preg_replace( "/(<head[^>]*>)/ium", "$1" . $headContent, $target );
+		return $target . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT START-->\n\n";
+	}
+
+	private function insertBody( $target, $bodyContent ) {
+
+		return $target . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT START-->\n\n";
+	}
+
+	private function insertInDocumentHead( $target, $headContent ) {
+
+		$target = preg_replace( "/(<head[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT START-->\n\n", $target );
 
 		return $target;
 	}
 
-	private function insertInBody( $target, $bodyContent ) {
+	private function insertInDocumentBody( $target, $bodyContent ) {
 
-		$target = preg_replace( "/(<body[^>]*>)/ium", "$1" . $bodyContent, $target );
+		$target = preg_replace( "/(<body[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT START-->\n\n", $target );
 
 		return $target;
 	}

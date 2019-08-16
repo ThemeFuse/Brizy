@@ -36,6 +36,8 @@ class Brizy_Admin_Popups_MainUnitTest extends \Codeception\Test\Unit {
 <body class="test-class"></body>
 </html>';
 
+		$compiledTargetHtml = new Brizy_Editor_CompiledHtml( $targetHtml );
+
 		$main = $this->getMockBuilder( Brizy_Admin_Popups_Main::class )
 		             ->setMethods( [ 'getMatchingBrizyPopups' ] )
 		             ->getMock();
@@ -54,27 +56,18 @@ class Brizy_Admin_Popups_MainUnitTest extends \Codeception\Test\Unit {
 		     ->willReturn( [ $popupMock ] );
 
 
-		$content = $main->insertPopupsHtml( $targetHtml, null, null, 'head' );
+		$content = $main->insertPopupsHtml( $compiledTargetHtml->get_head(), null, null, 'head' );
 
-		$compiledHtml = new Brizy_Editor_CompiledHtml( $content );
-		$this->assertStringContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_head(), 'It should include styles in head' );
-		$this->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_head(), 'It should not include HTML code in head' );
-		$this->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_body(), 'It should not include HTML code in body' );
+		$this->assertStringContainsString( 'INCLUDE THIS CSS CODE', $content, 'It should include styles in head' );
 
-		$content = $main->insertPopupsHtml( $targetHtml, null, null, 'body' );
+		$content = $main->insertPopupsHtml( $compiledTargetHtml->get_body(), null, null, 'body' );
 
-		$compiledHtml = new Brizy_Editor_CompiledHtml( $content );
-		$this->assertStringNotContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_head(), 'It should not include styles in head' );
-		$this->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_head(), 'It should not include HTML code in head' );
-		$this->assertStringContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_body(), 'It should include HTML code in body' );
+		$this->assertStringContainsString( 'INCLUDE THIS HTML CODE', $content, 'It should include HTML code in body' );
 
 		$content = $main->insertPopupsHtml( $targetHtml, null, null, 'document' );
 
-		$compiledHtml = new Brizy_Editor_CompiledHtml( $content );
-		$this->assertStringContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_head(), 'It should include styles in head' );
-		$this->assertStringNotContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_body(), 'It should not include styles in body' );
+		$this->assertStringContainsString( 'INCLUDE THIS CSS CODE', $content, 'It should include styles in head' );
 
-		$this->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_head(), 'It should not include HTML code in head' );
-		$this->assertStringContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_body(), 'It should include HTML code in body' );
+		$this->assertStringContainsString( 'INCLUDE THIS HTML CODE', $content, 'It should include HTML code in body' );
 	}
 }

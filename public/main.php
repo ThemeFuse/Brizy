@@ -156,7 +156,7 @@ class Brizy_Public_Main {
 	public function _action_enqueue_preview_assets() {
 		$config_object = $this->getConfigObject();
 		$assets_url    = $config_object->urls->assets;
-		$current_user  = get_currentuserinfo();
+		$current_user  = wp_get_current_user();
 		$config_json   = json_encode( array(
 			'serverTimestamp' => time(),
 			'currentUser'     => [
