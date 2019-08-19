@@ -98,6 +98,9 @@ pipeline {
     stages {
         stage('Version Update') {
             steps {
+
+                sh "/usr/local/bin/composer config -g github-oauth.github.com ${params.gitHubToken}"
+
                 script {
                     if(folderExist(params.brizySvnPath+"/tags/"+params.buildVersion)) {
                         error("Build failed because this version is already built.")
@@ -107,6 +110,8 @@ pipeline {
                 git url: "git@github.com:/ThemeFuse/Brizy",
                     credentialsId: 'Git',
                     branch: params.releaseBranch
+
+
 
                 sh 'git remote set-branches --add origin master'
                 sh 'git remote set-branches --add origin develop'
@@ -129,7 +134,7 @@ pipeline {
 
         stage('Prepare SVN') {
             steps {
-                sh '/usr/local/bin/composer config --global --auth github-oauth.github.com '+params.gitHubToken
+
                 sh 'cd ' + params.brizySvnPath + ' && svn cleanup && svn revert . -R && svn up'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf trunk/*'
                 sh 'cp -r * '+ params.brizySvnPath + '/trunk/'
