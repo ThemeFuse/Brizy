@@ -122,6 +122,8 @@ pipeline {
 
                 sh "sed -i \"s/== Changelog ==/== Changelog ==\\n\\n= ${params.buildVersion} - "+currentDate+" =\\n${changeLogs}/\" readme.txt"
                 sh "sed -i \"s/## Changelog/## Changelog\\n\\n### ${params.buildVersion} - "+currentDate+" ###\\n${changeLogs}/\" README.md"
+
+                sh "composer config --global --auth github-oauth.github.com cd39eb809695aa92ac418330b13bba7e91eb4116"
             }
         }
 
