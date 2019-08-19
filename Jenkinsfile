@@ -123,12 +123,13 @@ pipeline {
                 sh "sed -i \"s/== Changelog ==/== Changelog ==\\n\\n= ${params.buildVersion} - "+currentDate+" =\\n${changeLogs}/\" readme.txt"
                 sh "sed -i \"s/## Changelog/## Changelog\\n\\n### ${params.buildVersion} - "+currentDate+" ###\\n${changeLogs}/\" README.md"
 
-                sh "composer config --global --auth github-oauth.github.com cd39eb809695aa92ac418330b13bba7e91eb4116"
+
             }
         }
 
         stage('Prepare SVN') {
             steps {
+                sh '/usr/local/bin/composer config --global --auth github-oauth.github.com '+params.gitHubToken
                 sh 'cd ' + params.brizySvnPath + ' && svn cleanup && svn revert . -R && svn up'
                 sh 'cd ' + params.brizySvnPath + ' && rm -rf trunk/*'
                 sh 'cp -r * '+ params.brizySvnPath + '/trunk/'
