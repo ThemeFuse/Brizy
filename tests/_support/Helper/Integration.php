@@ -64,7 +64,7 @@ class Integration extends \Codeception\Module {
 	 * @return mixed
 	 * @throws \Codeception\Exception\ModuleException
 	 */
-	public function haveFontInDataBase( $fontFamily, $weights, $type, $status = 'publish' ) {
+	public function haveFontInDataBase( $uid, $fontFamily, $weights, $type, $status = 'publish' ) {
 
 
 		$db = $this->getModule( 'WPDb' );
@@ -74,7 +74,7 @@ class Integration extends \Codeception\Module {
 			'post_title'  => $fontFamily,
 			'post_status' => $status,
 			'meta_input'  => [
-				'brizy_post_uid'  => md5( time().$fontFamily.$type.$status ),
+				'brizy_post_uid'  => $uid,
 				'brizy-font-type' => $type
 			],
 		] );

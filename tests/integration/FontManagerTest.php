@@ -23,10 +23,12 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function invalidCreateFontParameters() {
 		return [
-			[ null, null, null ],
-			[ 'pn', null, null ],
-			[ 'pn', [], null ],
+			[ null, null, null, null ],
+			[ null, 'pn', null, null ],
+			[ md5( '123' ), 'pn', null, null ],
+			[ md5( '123' ), 'pn', [], null ],
 			[
+				md5( '123' ),
 				'pn',
 				[
 					[
@@ -44,6 +46,7 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 				null
 			],
 			[
+				md5( '123' ),
 				'',
 				[
 					'400' => [
@@ -59,11 +62,13 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 				'uploaded'
 			],
 			[
+				md5( '123' ),
 				'pn',
 				[ '400' => [] ],
 				'uploaded'
 			],
 			[
+				md5( '123' ),
 				'pn',
 				[
 					'400' => [
@@ -79,6 +84,7 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 				'upload'
 			],
 			[
+				md5( '123' ),
 				'pn',
 				[
 					'400' => [
@@ -112,6 +118,7 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 	public function testCreateFont() {
 		$this->tester->wantToTest( 'createFont method on a Brizy_Admin_Fonts_Manager instance' );
 
+		$fontUid     = md5( time() );
 		$family      = 'proxima nova';
 		$fontType    = 'uploaded';
 		$fontWeights = [
@@ -151,10 +158,11 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 
-		$fontId = $fontManager->createFont( $family, $fontWeights, $fontType );
+		$fontId = $fontManager->createFont( $fontUid, $family, $fontWeights, $fontType );
 		$uid    = get_post_meta( $fontId, 'brizy_post_uid', true );
 
 		$this->tester->assertIsInt( $fontId, 'It should return an integer' );
+		$this->tester->assertEquals( $fontUid, $uid, 'It should create the provided font uid' );
 
 		$this->tester->seePostInDatabase( [
 			'ID'          => $fontId,
@@ -170,8 +178,9 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 		] );
 
 		$this->tester->seePostMetaInDatabase( [
-			'post_id'  => $fontId,
-			'meta_key' => 'brizy_post_uid',
+			'post_id'    => $fontId,
+			'meta_key'   => 'brizy_post_uid',
+			'meta_value' => $fontUid,
 		] );
 
 
@@ -219,6 +228,7 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 		$this->tester->wantToTest( 'createFont method on a Brizy_Admin_Fonts_Manager with duplicate font' );
 		$this->expectException( \Exception::class );
 
+		$fontUid     = md5( time() );
 		$fontFamily  = 'proxima_nova';
 		$fontType    = 'uploaded';
 		$fontWeights = [
@@ -232,34 +242,35 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 				],
 			]
 		];
-		$this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], $fontType );
+		$this->tester->haveFontInDataBase( $fontUid, $fontFamily, [ '400' => [ 'ttf' ] ], $fontType );
 
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 
-		$fontManager->createFont( $fontFamily, $fontWeights, $fontType );
+		$fontManager->createFont( $fontUid, $fontFamily, $fontWeights, $fontType );
 	}
 
 	/**
 	 * @dataProvider invalidCreateFontParameters
 	 *
+	 * @param $uid
 	 * @param $fontFamily
 	 * @param $weight
 	 * @param $type
 	 *
 	 * @throws Exception
 	 */
-	public function testCreateFontFails( $fontFamily, $weight, $type ) {
+	public function testCreateFontFails( $uid, $fontFamily, $weight, $type ) {
 		$this->expectException( \Exception::class );
 		$fontManager = new Brizy_Admin_Fonts_Manager();
-		$fontManager->createFont( $fontFamily, $weight, $type );
+		$fontManager->createFont( $uid, $fontFamily, $weight, $type );
 	}
 
 	public function testDeleteFont() {
 
 		$this->tester->wantToTest( 'deleteFont method on a Brizy_Admin_Fonts_Manager instance' );
 		$fontFamily     = 'proxima_nova';
-		$uploadedFontId = $this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
-		$googleFontId   = $this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'google' );
+		$uploadedFontId = $this->tester->haveFontInDataBase( md5( 1 ), $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+		$googleFontId   = $this->tester->haveFontInDataBase( md5( 2 ), $fontFamily, [ '400' => [ 'ttf' ] ], 'google' );
 
 		$uploadedFontUId = get_post_meta( $uploadedFontId, 'brizy_post_uid', true );
 
@@ -335,10 +346,9 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->tester->wantToTest( 'get font method' );
 
-		$fontFamily     = 'proxima_nova';
-		$uploadedFontId = $this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
-
-		$uploadedFontUId = get_post_meta( $uploadedFontId, 'brizy_post_uid', true );
+		$uploadedFontUId = md5( time() );
+		$fontFamily      = 'proxima_nova';
+		$uploadedFontId  = $this->tester->haveFontInDataBase( $uploadedFontUId, $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 		$font        = $fontManager->getFont( $uploadedFontUId );
@@ -354,8 +364,9 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->tester->wantToTest( 'get font method' );
 
+		$uid        = md5( time() );
 		$fontFamily = 'proxima_nova';
-		$this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+		$this->tester->haveFontInDataBase( $uid, $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 		$font        = $fontManager->getFont( 'UNKNOWN ID' );
@@ -368,11 +379,12 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->tester->wantToTest( 'get font method' );
 
+		$uid        = md5( time() );
 		$fontFamily = 'proxima_nova';
-		$this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+		$this->tester->haveFontInDataBase( $uid, $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 
 		$fontManager = new Brizy_Admin_Fonts_Manager();
-		$font        = $fontManager->getFontByFamily( $fontFamily, 'uploaded' );
+		$font        = $fontManager->getFontByFamily( $uid, $fontFamily, 'uploaded' );
 
 		$this->assertArrayHasKey( 'id', $font, 'Font should contain "id" key' );
 		$this->assertArrayHasKey( 'family', $font, 'Font should contain "family" key' );
@@ -385,12 +397,27 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->tester->wantToTest( 'get font method' );
 
+		$uid        = md5( time() );
 		$fontFamily = 'proxima_nova';
-		$this->tester->haveFontInDataBase( $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+		$this->tester->haveFontInDataBase( $uid, $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 
 		$fontManager = new Brizy_Admin_Fonts_Manager();
-		$font        = $fontManager->getFontByFamily( 'UNKNOWN', 'uploaded' );
-		
+		$font        = $fontManager->getFontByFamily( $uid, 'UNKNOWN', 'uploaded' );
+
+		$this->assertNull( $font, 'It should return null' );
+	}
+
+	public function testGetFontByUnknownUid() {
+
+		$this->tester->wantToTest( 'get font method' );
+
+		$uid        = md5( time() );
+		$fontFamily = 'proxima_nova';
+		$this->tester->haveFontInDataBase( $uid, $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
+
+		$fontManager = new Brizy_Admin_Fonts_Manager();
+		$font        = $fontManager->getFontByFamily( 123, $fontFamily, 'uploaded' );
+
 		$this->assertNull( $font, 'It should return null' );
 	}
 }

@@ -73,7 +73,7 @@ class Brizy_Admin_Fonts_Manager {
 		return $this->getFontReturnData( $font );
 	}
 
-	public function getFontByFamily( $family, $type ) {
+	public function getFontByFamily( $uid, $family, $type ) {
 
 		$fonts = get_posts( array(
 			'title'       => $family,
@@ -88,14 +88,17 @@ class Brizy_Admin_Fonts_Manager {
 
 		if ( isset( $fonts[0] ) ) {
 			$font = $fonts[0];
-		} else {
-			return null;
+			if ( $uid == get_post_meta( $font->ID, 'brizy_post_uid', true ) ) {
+				return $this->getFontReturnData( $font );
+			}
+
 		}
 
-		return $this->getFontReturnData( $font );
+		return null;
 	}
 
 	/**
+	 * @param $uid
 	 * @param $family
 	 * @param $fontWeights
 	 * @param $fontType
@@ -103,9 +106,12 @@ class Brizy_Admin_Fonts_Manager {
 	 * @return int
 	 * @throws Exception
 	 */
-	public function createFont( $family, $fontWeights, $fontType ) {
+	public function createFont( $uid, $family, $fontWeights, $fontType ) {
 		global $wpdb;
 
+		if ( $uid == '' ) {
+			throw new Exception( 'Invalid font uid' );
+		}
 		if ( $family == '' ) {
 			throw new Exception( 'Invalid font family' );
 		}
@@ -118,7 +124,7 @@ class Brizy_Admin_Fonts_Manager {
 			throw new Exception( 'Invalid font weights' );
 		}
 
-		$font = $this->getFontByFamily( $family, $fontType );
+		$font = $this->getFont( $uid );
 
 		if ( $font ) {
 			throw new Exception( 'This font already exists' );
@@ -143,11 +149,9 @@ class Brizy_Admin_Fonts_Manager {
 			] );
 
 			if ( ! $fontId || is_wp_error( $fontId ) ) {
-
 				throw new Exception( 'Unable to create font' );
 			}
 
-			$uid = md5( $fontId . time() );
 			update_post_meta( $fontId, 'brizy_post_uid', $uid );
 			update_post_meta( $fontId, 'brizy-font-type', $fontType );
 

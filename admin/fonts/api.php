@@ -69,6 +69,10 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 			$this->verifyNonce( self::nonce );
 
+			if ( ! ( $fontUidId = $this->param( 'id' ) ) ) {
+				$this->error( 400, 'Invalid font uid' );
+			}
+
 			if ( ! ( $family = $this->param( 'family' ) ) ) {
 				$this->error( 400, 'Invalid font family' );
 			}
@@ -81,7 +85,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, 'Invalid font files' );
 			}
 
-			$existingFont = $this->fontManager->getFontByFamily( $family, $fontType );
+			$existingFont = $this->fontManager->getFontByFamily( $fontUidId, $family, $fontType );
 
 			if ( $existingFont ) {
 				$this->error( 400, 'This font family already exists.' );
@@ -103,7 +107,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 					}
 				}
 
-				$fontPostId = $this->fontManager->createFont( $family, $files, $fontType );
+				$fontPostId = $this->fontManager->createFont( $fontUidId, $family, $files, $fontType );
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->debug( 'Create font ERROR', [ $e ] );
 				$this->error( 400, $e->getMessage() );
