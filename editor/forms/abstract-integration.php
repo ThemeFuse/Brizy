@@ -91,6 +91,11 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 	 */
 	public static function createFromSerializedData( $data ) {
 		$instance = null;
+		if ( $data instanceof Brizy_Editor_Forms_WordpressIntegration ||
+		     $data instanceof Brizy_Editor_Forms_ServiceIntegration ) {
+			return $data;
+		}
+
 		if ( is_array( $data ) ) {
 			if ( ( isset( $data['subject'] ) && isset( $data['emailTo'] ) ) || $data['id'] == 'wordpress' ) {
 				$instance = Brizy_Editor_Forms_WordpressIntegration::createFromSerializedData( $data );
