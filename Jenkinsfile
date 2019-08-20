@@ -99,8 +99,6 @@ pipeline {
         stage('Version Update') {
             steps {
 
-                sh "/usr/local/bin/composer config -g github-oauth.github.com ${params.gitHubToken}"
-
                 script {
                     if(folderExist(params.brizySvnPath+"/tags/"+params.buildVersion)) {
                         error("Build failed because this version is already built.")
@@ -110,8 +108,6 @@ pipeline {
                 git url: "git@github.com:/ThemeFuse/Brizy",
                     credentialsId: 'Git',
                     branch: params.releaseBranch
-
-
 
                 sh 'git remote set-branches --add origin master'
                 sh 'git remote set-branches --add origin develop'
@@ -140,6 +136,7 @@ pipeline {
                 sh 'cp -r * '+ params.brizySvnPath + '/trunk/'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf vendor'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf public/editor-src'
+                sh "/usr/local/bin/composer config -g github-oauth.github.com ${params.gitHubToken}"
                 sh 'cd ' + params.brizySvnPath + '/trunk && /usr/local/bin/composer clearcache'
                 sh 'cd ' + params.brizySvnPath + '/trunk && /usr/local/bin/composer install --no-dev'
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -type f -name "*.dev.php" -delete'
