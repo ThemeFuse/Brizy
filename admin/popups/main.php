@@ -28,6 +28,14 @@ class Brizy_Admin_Popups_Main {
 	public function initialize() {
 		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
 		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
+
+		if ( is_admin() ) {
+			add_action( 'admin_menu', array( $this, 'removePageAttributes' ) );
+		}
+	}
+
+	public function removePageAttributes() {
+		remove_meta_box( 'pageparentdiv', self::CP_POPUP, 'side' );
 	}
 
 	static public function registerCustomPosts() {
@@ -47,7 +55,8 @@ class Brizy_Admin_Popups_Main {
 			'search_items'       => __( 'Search Popups' ),
 			'parent_item_colon'  => __( 'Parent Popups:' ),
 			'not_found'          => __( 'No Popups found.' ),
-			'not_found_in_trash' => __( 'No Popups found in Trash.' )
+			'not_found_in_trash' => __( 'No Popups found in Trash.' ),
+			'attributes'         => __( 'Popup attributes:' )
 		);
 
 		register_post_type( self::CP_POPUP,
@@ -65,10 +74,12 @@ class Brizy_Admin_Popups_Main {
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
 				'exclude_from_search' => true,
-				'supports'            => array( 'title', 'post_content', 'revisions', 'page-attributes' )
+				'can_export'          => true,
+				'supports'            => array( 'title', 'post_content', 'revisions' )
 			)
 		);
 
+		remove_post_type_support( self::CP_POPUP, 'page-attributes' );
 	}
 
 	/**
