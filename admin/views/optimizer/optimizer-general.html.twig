@@ -58,20 +58,25 @@
 
             function updateUI() {
 
-                var progress = (currentIndex ) + "/" + count;
+                var progress = (currentIndex) + "/" + count;
 
-                if(currentIndex<links.length)
-                {
+                if (currentIndex < links.length) {
                     $('#optimize-results').html('<p>Process: ' + progress + '' +
                         '<svg class="brz-spinner"><use xlink:href="{{ svg }}"></svg>' +
                         '</p>' +
                         '<p>Failed: ' + failCount + '</p>');
+
+                    $('#optimize-donotclose').show();
+                    window.onbeforeunload = function (e) {
+                        return '';
+                    };
                 } else {
                     $('#optimize-results').html('<p>Process: ' + progress + '' +
                         '</p>' +
                         '<p>Failed: ' + failCount + '</p>');
-
-                    jQuery('#optimize-submit').prop('disabled',false);
+                    $('#optimize-donotclose').hide();
+                    jQuery('#optimize-submit').prop('disabled', false);
+                    window.onbeforeunload = undefined;
                 }
             }
         })(jQuery);
@@ -79,7 +84,8 @@
     <div id="optimize-results">
         <p>There are <b>{{ count }}</b> images that can be optimized.</p>
     </div>
-    {% if enabled %}
+
+    {% if not enabled %}
         {% if count>0 %}
             <button type="submit" id="optimize-submit" class="button button-primary"
                     onclick="startOptimize(); jQuery(this).prop('disabled',true);">
@@ -93,6 +99,10 @@
             </p>
         </div>
     {% endif %}
+
+    <div id="optimize-donotclose" style="display: none;">
+        <p><i> {{ __("Don't leave this page until the optimisation process is completed.") }}</i></p>
+    </div>
 
     <style>
         .brz-spinner {
