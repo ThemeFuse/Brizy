@@ -32,20 +32,35 @@ class Brizy_Admin_Popups_Main {
 
 	static public function registerCustomPosts() {
 
+
 		$labels = array(
-			'name' => _x( 'Brizy popup', 'brizy' ),
+			'name'               => _x( 'Popups', 'post type general name' ),
+			'singular_name'      => _x( 'Popup', 'post type singular name' ),
+			'menu_name'          => _x( 'Popups', 'admin menu' ),
+			'name_admin_bar'     => _x( 'Popup', 'add new on admin bar' ),
+			'add_new'            => _x( 'Add New', self::CP_POPUP ),
+			'add_new_item'       => __( 'Add New Popup' ),
+			'new_item'           => __( 'New Popup' ),
+			'edit_item'          => __( 'Edit Popup' ),
+			'view_item'          => __( 'View Popup' ),
+			'all_items'          => __( 'Popups' ),
+			'search_items'       => __( 'Search Popups' ),
+			'parent_item_colon'  => __( 'Parent Popups:' ),
+			'not_found'          => __( 'No Popups found.' ),
+			'not_found_in_trash' => __( 'No Popups found in Trash.' )
 		);
 
 		register_post_type( self::CP_POPUP,
 			array(
 				'labels'              => $labels,
-				'public'              => true,
+				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __( 'Brizy popup', 'brizy' ),
-				'publicly_queryable'  => true,
+				'description'         => __( 'Popups', 'brizy' ),
+				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
 				'show_ui'             => true,
-				'show_in_menu'        => true,
-				'query_var'           => true,
+				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
+				'query_var'           => false,
+				'rewrite'             => array( 'slug' => 'brizy-popup' ),
 				'capability_type'     => 'page',
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
