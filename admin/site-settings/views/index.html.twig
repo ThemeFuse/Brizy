@@ -129,14 +129,13 @@
                                                 field below
                                             </div>
                                             <div class="sett-block-field sett-upload-file">
-                                                <span class="sett-favicon-path">{{ site_settings['favicon'] }}</span>
+                                                <span class="sett-favicon-path">{{ site_settings['favicon_url'] }}</span>
                                                 <div class="upload-file-btn">
-                                                    <input type="file" name="favicon"
-                                                           accept="image/x-png,image/gif,image/jpeg,image/ico">
+                                                    <input type="file" name="favicon" accept="image/x-png,image/gif,image/jpeg,image/ico">
+                                                    <input type="hidden" name="favicon_id" value="{{ site_settings['favicon_id'] }}">
                                                     <div class="btn-select"><span>Select</span></div>
                                                     <div class="sett-favicon-th">
-                                                        <img src="{{ site_settings['favicon_url'] }}" alt=""
-                                                             id="settings-favicon" width="20">
+                                                        <img src="{{ site_settings['favicon_url'] }}" alt="" id="settings-favicon" width="20">
                                                     </div>
                                                 </div>
                                             </div>

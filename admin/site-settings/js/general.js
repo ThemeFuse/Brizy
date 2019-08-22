@@ -27,6 +27,7 @@ function bindFormInputEvents(parent) {
     $(".upload-file-btn > input", parent).change(function () {
         var inputFileVal = $(this).val();
         $('.sett-favicon-path').text(inputFileVal);
+        $('input[name="favicon_id"]').val('');
     });
 }
 
