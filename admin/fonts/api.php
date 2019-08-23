@@ -120,7 +120,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 			$this->success( $font );
 
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
+			Brizy_Logger::instance()->critical( $exception->getMessage(), [ $exception ] );
 			$this->error( 400, $exception->getMessage() );
 		}
 	}
@@ -138,7 +138,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$manager->deleteFont( $fontId );
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
+			Brizy_Logger::instance()->critical( $exception->getMessage(), [ $exception ] );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
 

@@ -167,6 +167,7 @@ class Brizy_Admin_Fonts_Manager {
 					$id = media_handle_sideload( $file, $fontId, "Attached font file" );
 
 					if ( ! $id || is_wp_error( $id ) ) {
+						Brizy_Logger::instance()->critical( 'Unable to handle font sideload', [ $id ] );
 						throw new Exception( 'Unable to handle font sideload' );
 					}
 
@@ -181,7 +182,7 @@ class Brizy_Admin_Fonts_Manager {
 
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-			Brizy_Logger::instance()->debug( 'Create font ERROR', [ $e->getMessage() ] );
+			Brizy_Logger::instance()->critical( 'Create font ERROR', [ $e->getMessage() ] );
 			throw new Exception( 'Unable to create font' );
 		}
 	}
