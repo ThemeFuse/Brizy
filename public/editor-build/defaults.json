@@ -1,44 +1,20 @@
 {
-  "selectedKit": "brizydefault",
+  "selectedKit": "kxnmljnsniklnqftyvrkkzwhcvudtcmxikok",
 
-  "selectedStyle": "default",
+  "selectedStyle": "kldugntsakdckzxhreidncqvgunudghrcuzv",
   "styles": [
     {
-      "id": "default",
+      "id": "kldugntsakdckzxhreidncqvgunudghrcuzv",
       "title": "Brizy default",
       "colorPalette": [
-        {
-          "id": "color1",
-          "hex": "#191b21"
-        },
-        {
-          "id": "color2",
-          "hex": "#142850"
-        },
-        {
-          "id": "color3",
-          "hex": "#239ddb"
-        },
-        {
-          "id": "color4",
-          "hex": "#66738d"
-        },
-        {
-          "id": "color5",
-          "hex": "#bde1f4"
-        },
-        {
-          "id": "color6",
-          "hex": "#eef0f2"
-        },
-        {
-          "id": "color7",
-          "hex": "#73777f"
-        },
-        {
-          "id": "color8",
-          "hex": "#ffffff"
-        }
+        { "id": "color1", "hex": "#191b21" },
+        { "id": "color2", "hex": "#142850" },
+        { "id": "color3", "hex": "#239ddb" },
+        { "id": "color4", "hex": "#66738d" },
+        { "id": "color5", "hex": "#bde1f4" },
+        { "id": "color6", "hex": "#eef0f2" },
+        { "id": "color7", "hex": "#73777f" },
+        { "id": "color8", "hex": "#ffffff" }
       ],
       "fontStyles": [
         {
@@ -46,6 +22,7 @@
           "id": "paragraph",
           "title": "Paragraph",
           "fontFamily": "noto_serif",
+          "fontFamilyType": "google",
           "fontSize": 16,
           "fontWeight": 300,
           "lineHeight": 1.7,
@@ -64,6 +41,7 @@
           "id": "subtitle",
           "title": "Subtitle",
           "fontFamily": "noto_serif",
+          "fontFamilyType": "google",
           "fontSize": 18,
           "fontWeight": 300,
           "lineHeight": 1.5,
@@ -82,6 +60,7 @@
           "id": "abovetitle",
           "title": "Above Title",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 16,
           "fontWeight": 400,
           "lineHeight": 1.7,
@@ -100,6 +79,7 @@
           "id": "heading1",
           "title": "Heading 1",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 56,
           "fontWeight": 200,
           "lineHeight": 1.3,
@@ -118,6 +98,7 @@
           "id": "heading2",
           "title": "Heading 2",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 42,
           "fontWeight": 700,
           "lineHeight": 1.3,
@@ -136,6 +117,7 @@
           "id": "heading3",
           "title": "Heading 3",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 32,
           "fontWeight": 600,
           "lineHeight": 1.3,
@@ -154,6 +136,7 @@
           "id": "heading4",
           "title": "Heading 4",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 26,
           "fontWeight": 500,
           "lineHeight": 1.4,
@@ -172,6 +155,7 @@
           "id": "heading5",
           "title": "Heading 5",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 20,
           "fontWeight": 500,
           "lineHeight": 1.5,
@@ -190,6 +174,7 @@
           "id": "heading6",
           "title": "Heading 6",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 17,
           "fontWeight": 500,
           "lineHeight": 1.5,
@@ -208,6 +193,7 @@
           "id": "button",
           "title": "Button",
           "fontFamily": "montserrat",
+          "fontFamilyType": "google",
           "fontSize": 12,
           "fontWeight": 600,
           "lineHeight": 1.8,
