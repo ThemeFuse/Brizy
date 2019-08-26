@@ -28,19 +28,18 @@
                                                     Settings
                                                 </span>
                                         </li>
-                                        <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='social-sharing' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
-                                            data-tab-name="socialSharing">
-                                                <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
-                                                    <i class="brz-icon-svg">
-                                                        <svg class="brz-icon-svg">
-                                                            <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Social"></use>
-                                                        </svg>
-                                                    </i>
-                                                </span>
+                                       {# <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='social-sharing' ?'brz-ed-popup-two-sidebar-list-active':'' }}" data-tab-name="socialSharing">
+                                            <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
+                                                <i class="brz-icon-svg">
+                                                    <svg class="brz-icon-svg">
+                                                        <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Social"></use>
+                                                    </svg>
+                                                </i>
+                                            </span>
                                             <span class="brz-span brz-ed-popup-two-sidebar-list__span-text">
-                                                    Social Sharing
-                                                </span>
-                                        </li>
+                                                Social Sharing
+                                            </span>
+                                        </li>#}
                                         <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='custom-css' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
                                             data-tab-name="customCSS">
                                                 <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
@@ -78,14 +77,21 @@
                 <div class="brz-ed-popup-two-body__content">
                     <div class="brz-ed-popup-two-header">
                         <div class="brz-ed-popup-two-header__tabs">
-                            <div class="brz-ed-popup-two-tab-item brz-ed-popup-two-tab-item-active"
-                                 data-page-name="pages" data-dash-name="settingsDash">
+                            <div class="brz-ed-popup-two-tab-item brz-ed-popup-two-tab-item-active" data-page-name="pages" data-dash-name="settingsDash">
                                 <div class="brz-ed-popup-two-tab-icon">
                                     <svg class="brz-icon-svg">
                                         <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Edit-Page"></use>
                                     </svg>
                                 </div>
-                                <div class="brz-ed-popup-two-tab-name">Project</div>
+                                <div class="brz-ed-popup-two-tab-name">Settings</div>
+                            </div>
+                            <div class="brz-ed-popup-two-tab-item" data-page-name="pages" data-dash-name="custom_post_type">
+                                <div class="brz-ed-popup-two-tab-icon">
+                                    <svg class="brz-icon-svg">
+                                        <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Edit-Page"></use>
+                                    </svg>
+                                </div>
+                                <div class="brz-ed-popup-two-tab-name">Custom Post Type</div>
                             </div>
                         </div>
                         <div class="brz-ed-popup-two-btn-close" data-dismiss="modal"></div>
@@ -108,7 +114,7 @@
                                                 benefits
                                             </div>
                                             <div class="sett-block-field">
-                                                <input type="text" name="title" value="{{ site_settings['title']  }}">
+                                                <input type="text" name="title" value="{{ site_settings['title'] }}">
                                             </div>
                                         </div>
                                         <div class="settings-block">
@@ -131,11 +137,14 @@
                                             <div class="sett-block-field sett-upload-file">
                                                 <span class="sett-favicon-path">{{ site_settings['favicon_url'] }}</span>
                                                 <div class="upload-file-btn">
-                                                    <input type="file" name="favicon" accept="image/x-png,image/gif,image/jpeg,image/ico">
-                                                    <input type="hidden" name="favicon_id" value="{{ site_settings['favicon_id'] }}">
+                                                    <input type="file" name="favicon"
+                                                           accept="image/x-png,image/gif,image/jpeg,image/ico">
+                                                    <input type="hidden" name="favicon_id"
+                                                           value="{{ site_settings['favicon_id'] }}">
                                                     <div class="btn-select"><span>Select</span></div>
                                                     <div class="sett-favicon-th">
-                                                        <img src="{{ site_settings['favicon_url'] }}" alt="" id="settings-favicon" width="20">
+                                                        <img src="{{ site_settings['favicon_url'] }}" alt=""
+                                                             id="settings-favicon" width="20">
                                                     </div>
                                                 </div>
                                             </div>
