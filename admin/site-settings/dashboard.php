@@ -1,19 +1,23 @@
 <?php
 
-class Brizy_Admin_SiteSettings_Main {
+class Brizy_Admin_SiteSettings_Dashboard {
 
+	public function __construct() {
+		add_action( 'brizy_site_settings_popup_html', array( $this, 'action_popup_html' ) );
+		add_action( 'template_include', array( $this, 'action_template_include' ), 10000 );
+		//add_action( 'wp_enqueue_scripts', array( $this, 'action_enqueue_scripts' ) );
 
-	private $pageUrl = '';
+		$this->run();
+	}
 
-	public function __construct( $pageUrl ) {
-		$this->pageUrl = $pageUrl;
+	public function action_template_include() {
+		return Brizy_Editor::get()->get_path( 'admin/site-settings/views/dashboard.php' );
 	}
 
 	public function run() {
 		try {
-			$this->enqueueAssets();
 			$this->handleSubmits();
-			$this->render();
+			$this->action_enqueue_scripts();
 		} catch ( \Exception $e ) {
 			echo '0';
 		}
@@ -40,11 +44,19 @@ class Brizy_Admin_SiteSettings_Main {
 					break;
 			}
 
-			wp_redirect( Brizy_Editor::get()->get_url( $this->pageUrl . '?' . build_query( array( 'brizy-settings-tab' => $_REQUEST['brizy-settings-tab-submit'] ) ) ) );
+			$query = build_query(
+				array(
+					'brizy-site-settings' => '',
+					'brizy-settings-tab'  => $_REQUEST['brizy-settings-tab-submit']
+				)
+			);
+
+			wp_redirect( home_url( $query ) );
 		}
 	}
 
-	private function enqueueAssets() {
+	public function action_enqueue_scripts() {
+
 		wp_enqueue_style( 'settings-bootstrap', Brizy_Editor::get()->get_url( 'admin/site-settings/css/bootstrap.min.css' ) );
 		wp_enqueue_style( 'settings-codemirror', Brizy_Editor::get()->get_url( 'admin/site-settings/css/codemirror.css' ) );
 		//wp_enqueue_style( 'settings-select2', Brizy_Editor::get()->get_url( 'admin/site-settings/css/select2.min.css' ) );
@@ -60,14 +72,6 @@ class Brizy_Admin_SiteSettings_Main {
 //		wp_enqueue_script( 'settings-app', Brizy_Editor::get()->get_url( 'admin/site-settings/js/app.js' ) );
 		wp_enqueue_script( 'settings-submit', Brizy_Editor::get()->get_url( 'admin/site-settings/js/form-submit.js' ) );
 		wp_enqueue_script( 'settings-general', Brizy_Editor::get()->get_url( 'admin/site-settings/js/general.js' ) );
-
-	}
-
-	private function render() {
-
-		include dirname( __FILE__ ) . '/views/header.php';
-		$this->getPopupContent();
-		include dirname( __FILE__ ) . '/views/footer.php';
 	}
 
 	private function handleSettingsTabSubmit() {
@@ -159,7 +163,7 @@ class Brizy_Admin_SiteSettings_Main {
 		}
 	}
 
-	private function getPopupContent() {
+	public function action_popup_html() {
 		$twig = Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/views' );
 
 		$context = array(
