@@ -42,7 +42,7 @@ trait FunctionalTesterActions
 	 * @throws \Codeception\Exception\ModuleException
      * @see \Helper\Integration::haveFontInDataBase()
      */
-    public function haveFontInDataBase($fontFamily, $weights, $type, $status = null) {
+	public function haveFontInDataBase( $uid, $fontFamily, $weights, $type, $status = null ) {
         return $this->getScenario()->runStep(new \Codeception\Step\Action('haveFontInDataBase', func_get_args()));
     }
 

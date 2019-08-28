@@ -31,7 +31,9 @@ class Brizy_Config {
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
 	const CLOUD_LIBRARY = '/dev/library';
-	const CLOUD_AUTH_TOKEN = '/api/tokens';
+	const CLOUD_SIGNIN = '/api/sign_ins';
+	const CLOUD_SIGNUP = '/api/sign_ups';
+	const CLOUD_RESET_PASSWORD = '/api/recover_passwords';
 	const CLOUD_MEDIA = '/api/media';
 	const CLOUD_CONTAINERS = '/api/containers';
 	const CLOUD_PROJECTS = '/api/projects';

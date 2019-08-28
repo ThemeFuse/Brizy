@@ -152,7 +152,7 @@ class Brizy_Editor_Editor_Editor {
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 			),
 			'serverTimestamp' => time(),
-			'wp'            => array(
+			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
 				'ruleMatches'     => $ruleMatches,
@@ -227,7 +227,11 @@ class Brizy_Editor_Editor_Editor {
 
 					'createFont' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
 					'deleteFont' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
-					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION
+					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
+
+					'cloudSignIn'        => Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
+					'cloudSignUp'        => Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
+					'cloudResetPassword' => Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
 
 					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA, // ???
 					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA, // ???
@@ -241,14 +245,14 @@ class Brizy_Editor_Editor_Editor {
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
 				'isTemplate'      => $isTemplate
 			),
-			'applications'  => array(
+			'applications'    => array(
 				'form' => array(
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 				)
 			),
-			'branding'      => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
-			'cloud'           => array( 'token' => $this->project->getMetaValue( 'brizy-cloud-token' ) )
-			'editorVersion' => BRIZY_EDITOR_VERSION
+			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+			'cloud'           => array( 'token' => $this->project->getMetaValue( 'brizy-cloud-token' ) ),
+			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );

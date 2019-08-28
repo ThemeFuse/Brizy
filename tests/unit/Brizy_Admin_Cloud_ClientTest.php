@@ -68,14 +68,14 @@ class Brizy_Admin_Cloud_ClientTest extends \Codeception\Test\Unit {
 	}
 
 
-	public function testObtainToken() {
+	public function testSignIn() {
 		$projectObserver = $this->getProjectObjserver();
 		$httpObserver    = $this->getHttpObjserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 
-		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_AUTH_TOKEN;
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNIN;
 		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
 				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
@@ -83,12 +83,65 @@ class Brizy_Admin_Cloud_ClientTest extends \Codeception\Test\Unit {
 				'Content-type'      => 'application/x-www-form-urlencoded'
 			],
 			'body'    => [
-				'username' => 'username',
+				'email'    => 'username@email.com',
 				'password' => 'password'
 			]
 		] ) )->shouldBeCalled();
 
-		$client->obtainToken( 'username', 'password' );
+		$client->signIn( 'username@email.com', 'password' );
+	}
+
+	public function testSignUp() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNUP;
+		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
+			'headers' => [
+				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'Content-type'      => 'application/x-www-form-urlencoded'
+			],
+			'body'    => [
+
+				'first_name'       => 'first_name',
+				'last_name'        => 'last_name',
+				'email'            => 'email@email.com',
+				'new_password'     => 'password',
+				'confirm_password' => 'password'
+			]
+		] ) )->shouldBeCalled();
+
+		$client->signUp( 'first_name',
+			'last_name',
+			'email@email.com',
+			'password',
+			'password' );
+	}
+
+	public function testResetPassword() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_RESET_PASSWORD;
+		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
+			'headers' => [
+				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'Content-type'      => 'application/x-www-form-urlencoded'
+			],
+			'body'    => [
+				'email' => 'email@email.com',
+			]
+		] ) )->shouldBeCalled();
+
+		$client->resetPassword( 'email@email.com' );
 	}
 
 	public function testGetContainers() {
@@ -319,6 +372,7 @@ class Brizy_Admin_Cloud_ClientTest extends \Codeception\Test\Unit {
 
 		$projectObserver = $this->getProjectObjserver();
 		$httpObserver    = $this->getHttpObjserver();
+		$uid             = md5( time() );
 
 		$filePath = tempnam( '/tmp', 'test' );
 		file_put_contents( $filePath, 'content' );
@@ -335,11 +389,12 @@ class Brizy_Admin_Cloud_ClientTest extends \Codeception\Test\Unit {
 			],
 			'body'    => array(
 				'attachment' => base64_encode( 'content' ),
+				'name'       => $uid,
 				'filename'   => basename( $filePath )
 			),
 		] ) )->shouldBeCalled();
 
-		$client->uploadMedia( $filePath );
+		$client->uploadMedia( $uid, $filePath );
 	}
 
 

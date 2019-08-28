@@ -30,7 +30,7 @@ class Brizy_Admin_Cloud_BlockUploader extends Brizy_Admin_Cloud_AbstractUploader
 
 				$file = get_attached_file( $attachmentId );
 
-				$this->client->uploadMedia( $file );
+				$this->client->uploadMedia( $uid, $file );
 			}
 		}
 

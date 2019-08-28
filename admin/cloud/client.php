@@ -58,7 +58,6 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		return $this;
 	}
 
-
 	/**
 	 * Brizy_Admin_Cloud_Client constructor.
 	 *
@@ -101,20 +100,85 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	}
 
 	/**
-	 * @param $username
+	 * @param $email
 	 * @param $password
 	 *
 	 * @return array|bool|WP_Error
 	 */
-	public function obtainToken( $username, $password ) {
+	public function signIn( $email, $password ) {
 
-		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_AUTH_TOKEN, array(
+		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNIN, array(
 			'headers' => $this->getHeaders( array(
 				'Content-type' => 'application/x-www-form-urlencoded'
 			) ),
 			'body'    => array(
-				'username' => $username,
+				'email'    => $email,
 				'password' => $password
+			)
+		) );
+
+		$code = wp_remote_retrieve_response_code( $response );
+
+		if ( $code == 200 ) {
+
+			$jsonResponse = json_decode( $response['body'] );
+
+			return $jsonResponse->token;
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * @param string $firstName
+	 * @param string $lastName
+	 * @param string $email
+	 * @param string $password
+	 * @param string $confirmPassword
+	 *
+	 * @return bool
+	 */
+	public function signUp( $firstName, $lastName, $email, $password, $confirmPassword ) {
+
+		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNUP, array(
+			'headers' => $this->getHeaders( array(
+				'Content-type' => 'application/x-www-form-urlencoded'
+			) ),
+			'body'    => array(
+				'first_name'       => $firstName,
+				'last_name'        => $lastName,
+				'email'            => $email,
+				'new_password'     => $password,
+				'confirm_password' => $confirmPassword,
+			)
+		) );
+
+		$code = wp_remote_retrieve_response_code( $response );
+
+		if ( $code == 200 ) {
+
+			$jsonResponse = json_decode( $response['body'] );
+
+			return $jsonResponse->token;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param $email
+	 *
+	 * @return bool
+	 */
+	public function resetPassword( $email ) {
+
+		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_RESET_PASSWORD, array(
+			'headers' => $this->getHeaders( array(
+				'Content-type' => 'application/x-www-form-urlencoded'
+			) ),
+			'body'    => array(
+				'email' => $email,
 			)
 		) );
 
@@ -274,11 +338,12 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function uploadMedia( $file ) {
+	public function uploadMedia( $uid, $file ) {
 
 		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA, array(
 			'body'    => array(
 				'attachment' => base64_encode( file_get_contents( $file ) ),
+				'name'       => $uid,
 				'filename'   => basename( $file )
 			),
 			'headers' => $this->getHeaders()

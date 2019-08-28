@@ -30,7 +30,6 @@ class Brizy_Admin_Cloud {
 	public static function _init() {
 
 		static $instance;
-
 		return $instance ? $instance : $instance = new self( Brizy_Editor_Project::get() );
 	}
 
@@ -46,6 +45,7 @@ class Brizy_Admin_Cloud {
 		$this->project     = $project;
 		$this->cloudClient = new Brizy_Admin_Cloud_Client( $project, new WP_Http() );
 
+		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_action( 'wp_ajax_' . self::GET_CLOUD_PROJECTS_ACTION, array( $this, 'actionGetProjects' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'registersCloudAssets' ) );
 		add_action( 'admin_menu', array( $this, 'actionRegisterCloutLoginPage' ), 11 );
@@ -62,9 +62,13 @@ class Brizy_Admin_Cloud {
 
 		if ( $this->isLoggedIn() ) {
 			add_action( 'brizy_saved_block_created', array( $this, 'actionBlockCreated' ) );
-			//add_action( 'brizy_global_block_updated', array( $this, 'actionBlockCreated' ) );
+			//add_action( 'brizy_global_block_created', array( $this, 'actionBlockCreated' ) );
 			add_action( 'brizy_saved_block_deleted', array( $this, 'actionBlockDeleted' ) );
 		}
+	}
+
+	public function initializeActions() {
+		Brizy_Admin_Cloud_Api::_init( $this->project );
 	}
 
 	public function actionBlockCreated( Brizy_Editor_Block $block ) {
