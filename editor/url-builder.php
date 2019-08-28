@@ -254,6 +254,15 @@ class Brizy_Editor_UrlBuilder {
 		return $this->brizy_upload_path( 'editor' . $path );
 	}
 
+	public function editor_asset_relative_path( $path = null ) {
+
+		if ( $path ) {
+			$path = '/' . ltrim( $path, '/' );
+		}
+
+		return $this->brizy_upload_relative_path( 'editor' . $path );
+	}
+
 	/**
 	 * @param null $path
 	 *

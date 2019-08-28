@@ -14,7 +14,7 @@ class Brizy_Editor_Asset_AssetProxyStorage extends Brizy_Editor_Asset_AbstractSt
 
 		//$asset_url     = html_entity_decode( $asset_url );
 		$new_url = $this->url_builder->page_upload_url( "assets/icons/" . basename( $asset_url ) );
-		$new_path = $this->url_builder->page_upload_path( "assets/icons/" . basename( $asset_url ) );
+		$new_path = $this->url_builder->page_upload_relative_path( "assets/icons/" . basename( $asset_url ) );
 		$external_url  = $this->url_builder->external_asset_url( $asset_url );
 
 

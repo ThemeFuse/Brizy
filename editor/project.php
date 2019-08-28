@@ -117,7 +117,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 				$wp_post = get_post( $wp_post_id );
 			}
 
-			if ( isset( self::$instance[ $wp_post->ID ] ) ) {
+			if ( $wp_post && isset( self::$instance[ $wp_post->ID ] ) ) {
 				return self::$instance[ $wp_post->ID ];
 			}
 		} catch ( Exception $e ) {
@@ -170,6 +170,16 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 			throw new Exception( $message );
 		}
 
+		$defaultJsonPath = Brizy_Editor_UrlBuilder::editor_build_path( 'defaults.json' );
+
+		$fs = Brizy_Admin_FileSystem::instance();
+
+		if ( ! $fs->has( $defaultJsonPath ) ) {
+			throw new Exception( 'Failed to create project. No fdefault json found.' );
+			Brizy_Logger::instance()->critical( 'Failed to create project. No fdefault json found.', [ $defaultJsonPath ] );
+		}
+
+		$data         = $fs->read( $defaultJsonPath );
 		$project_data = array(
 			'id'                       => md5( uniqid( 'Local project', true ) ),
 			'title'                    => 'Brizy Project',
@@ -184,7 +194,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 			'signature'                => Brizy_Editor_Signature::get(),
 			'accounts'                 => array(),
 			'forms'                    => array(),
-			'data'                     => base64_encode( file_get_contents( $defaultJsonPath ) ),
+			'data'                     => base64_encode( $data ),
 			'brizy-license-key'        => null,
 			'brizy-cloud-token'        => null,
 			'brizy-cloud-project'      => null,

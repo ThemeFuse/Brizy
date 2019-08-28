@@ -119,6 +119,8 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new InvalidArgumentException( "Invalid crop filter" );
 		}
 
+		$fs = Brizy_Admin_FileSystem::instance();
+
 		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
 		$resized_image_path      = $this->getResizedMediaPath( $original_asset_path, $media_filter );
 
@@ -129,19 +131,19 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$hq_image_full_path = $hq_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
 
 
-		if ( file_exists( $optimized_image_full_path ) ) {
+		if ( $fs->has( $optimized_image_full_path ) ) {
 			return $optimized_image_full_path;
 		}
 
 		// resize image with default wordpress settings
-		$wp_file_exists = file_exists( $resized_image_path );
+		$wp_file_exists = $fs->has( $resized_image_path );
 		if ( ! $wp_file_exists ) {
 
 			if ( ! $force_crop ) {
 				throw new Exception( 'Crop not forced.' );
 			}
 
-			if ( !file_exists( $resized_page_asset_path ) && ! @mkdir( $resized_page_asset_path, 0755, true ) && ! is_dir( $resized_page_asset_path ) ) {
+			if ( !$fs->has( $resized_page_asset_path ) && ! @$fs->( $resized_page_asset_path, 0755, true ) && ! is_dir( $resized_page_asset_path ) ) {
 				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $resized_page_asset_path ) );
 			}
 

@@ -118,7 +118,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 
 		$mimeType = wp_get_image_mime( $tmpfname );
 
-		return $this->getExtentsionByMime( $mimeType );
+		return $this->getExtensionByMime( $mimeType );
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	 *
 	 * @return mixed|string
 	 */
-	protected function getExtentsionByMime( $mimeType ) {
+	protected function getExtensionByMime( $mimeType ) {
 
 		$extensions = array(
 			'image/png'  => 'png',
@@ -172,6 +172,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	 * @param $filePath
 	 *
 	 * @return bool
+	 * @throws Exception
 	 */
 	private function storeThumbnail( $content, $filePath ) {
 		$store_file = $this->storeFile( $content, $filePath );
@@ -188,17 +189,10 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	 * @param $thumbnailFullPath
 	 *
 	 * @return bool
+	 * @throws Exception
 	 */
 	private function storeFile( $content, $thumbnailFullPath ) {
-		$path = dirname( $thumbnailFullPath );
-
-		if ( ! file_exists( $path ) ) {
-			if ( ! @mkdir( $path, 0755, true ) ) {
-				return false;
-			}
-		}
-
-		return file_put_contents( $thumbnailFullPath, $content ) !== false;
+		return Brizy_Admin_FileSystem::instance()->write( $thumbnailFullPath, $content ) > 0;
 	}
 
 
@@ -209,6 +203,9 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	 */
 	private function resizeImage( $thumbnailFullPath ) {
 		try {
+
+			Brizy_Admin_FileSystem::instance()->writeFileLocally( $thumbnailFullPath );
+
 			$imageEditor = wp_get_image_editor( $thumbnailFullPath );
 
 			if ( $imageEditor instanceof WP_Error ) {
@@ -217,6 +214,8 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 
 			$imageEditor->resize( 600, 600 );
 			$result = $imageEditor->save( $thumbnailFullPath );
+
+			Brizy_Admin_FileSystem::instance()->loadFileInKey( $thumbnailFullPath, $thumbnailFullPath );
 
 			return is_array( $result );
 		} catch ( Exception $e ) {

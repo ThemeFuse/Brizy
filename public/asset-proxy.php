@@ -40,44 +40,34 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 		$asset_path = "/" . ltrim( $endpoint_value, "/" );
 		$asset_url  = $this->urlBuilder->external_asset_url( $asset_path );
 
-		$new_path = $this->urlBuilder->page_upload_path( "assets/icons/" . basename( $asset_path ) );
+		$new_path = $this->urlBuilder->page_upload_relative_path( "assets/icons/" . basename( $asset_path ) );
 
-		if ( ! file_exists( $new_path ) ) {
-			$store_result = $this->store_file( $asset_url, $new_path );
+		$store_result = $this->store_file( $asset_url, $new_path );
 
-			if ( ! $store_result ) {
-				global $wp_query;
-				$wp_query->set_404();
+		if ( ! $store_result ) {
+			global $wp_query;
+			$wp_query->set_404();
 
-				return;
-			}
+			return;
 		}
 
-		if ( file_exists( $new_path ) ) {
+		$content = Brizy_Admin_FileSystem::instance()->read( $new_path );
 
-			$content = file_get_contents( $new_path );
+		// send headers
+		$headers                  = array();
+		$headers['Content-Type']  = $this->get_mime( $new_path, 1 );
+		$headers['Cache-Control'] = 'max-age=600';
 
-			// send headers
-			$headers                   = array();
-			$headers['Content-Type']   = $this->get_mime( $new_path, 1 );
-			$headers['Cache-Control']  = 'max-age=600';
-
-			foreach ( $headers as $key => $val ) {
-				if ( is_array( $val ) ) {
-					$val = implode( ', ', $val );
-				}
-
-				header( "{$key}: {$val}" );
+		foreach ( $headers as $key => $val ) {
+			if ( is_array( $val ) ) {
+				$val = implode( ', ', $val );
 			}
 
-			// send file content
-			echo $content;
-			exit;
+			header( "{$key}: {$val}" );
 		}
 
-		global $wp_query;
-		$wp_query->set_404();
-
-		return;
+		// send file content
+		echo $content;
+		exit;
 	}
 }

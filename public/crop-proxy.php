@@ -90,7 +90,6 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 			$media_cache     = new Brizy_Editor_CropCacheMedia( $project, $post_id );
 			$crop_media_path = $media_cache->crop_media( $media_url, $filter, true, $optimize );
 			$this->send_file( $crop_media_path );
-
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 			throw new Exception( 'Unable to crop media' );

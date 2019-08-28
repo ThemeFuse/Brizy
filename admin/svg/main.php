@@ -28,7 +28,7 @@ class Brizy_Admin_Svg_Main {
 	 * BrizyPro_Admin_Popups constructor.
 	 */
 	public function __construct() {
-		if(Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false )) {
+		if ( Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false ) ) {
 			add_filter( 'upload_mimes', array( $this, 'addSvgMimeType' ) );
 			add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
 			add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 3 );
@@ -38,7 +38,7 @@ class Brizy_Admin_Svg_Main {
 
 	public function addSvgMimeType( $mime_types ) {
 
-		$mime_types['svg']   = self::SVG_MIME;
+		$mime_types['svg'] = self::SVG_MIME;
 
 		return $mime_types;
 	}
@@ -48,11 +48,13 @@ class Brizy_Admin_Svg_Main {
 			return $file;
 		}
 
-		$dirtySVG = file_get_contents( $file['tmp_name'] );
+		$fileSystem = Brizy_Admin_FileSystem::instance();
+
+		$dirtySVG = $fileSystem->read( $file['tmp_name'] );
 
 		$sanitizer = new \enshrined\svgSanitize\Sanitizer();
 		$cleanSVG  = $sanitizer->sanitize( $dirtySVG );
-		file_put_contents( $file['tmp_name'], $cleanSVG );
+		$fileSystem->write( $file['tmp_name'], $cleanSVG );
 
 		return $file;
 	}
@@ -88,6 +90,7 @@ class Brizy_Admin_Svg_Main {
 	 * @param $meta
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 */
 	public function wp_prepare_attachment_for_js( $attachment_data, $attachment, $meta ) {
 
@@ -99,7 +102,8 @@ class Brizy_Admin_Svg_Main {
 			return $attachment_data;
 		}
 
-		$svg = file_get_contents( get_attached_file( $attachment->ID ) );
+		$fileSystem = Brizy_Admin_FileSystem::instance();
+		$svg = $fileSystem->read( get_attached_file( $attachment->ID ) );
 
 		if ( ! $svg ) {
 			return $attachment_data;

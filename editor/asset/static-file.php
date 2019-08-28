@@ -41,32 +41,20 @@ abstract class Brizy_Editor_Asset_StaticFile {
 	 */
 	protected function store_file( $asset_source, $asset_path ) {
 
-		if ( file_exists( $asset_path ) ) {
+		$fs = Brizy_Admin_FileSystem::instance();
+
+		if ( $fs->has( $asset_path ) ) {
 			return true;
 		}
 
 		try {
-			// check destination dir
-			$dir_path = dirname( $asset_path );
-
-			if ( ! file_exists( $dir_path ) ) {
-				if ( !file_exists( $dir_path ) && ! mkdir( $dir_path, 0755, true ) && ! is_dir( $dir_path ) ) {
-					throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $dir_path ) );
-				}
-			}
-
-			$content = self::get_asset_content( $asset_source );
-
-			if ( $content !== false ) {
-				file_put_contents( $asset_path, $content );
-			} else {
-				return false;
-			}
+			$content = $this->get_asset_content( $asset_source );
+			return $fs->write( $asset_path, $content ) > 0;
 
 		} catch ( Exception $e ) {
 			// clean up
 			if ( $asset_path ) {
-				@unlink( $asset_path );
+				$fs->delete( $asset_path );
 			}
 
 			return false;
@@ -132,14 +120,17 @@ abstract class Brizy_Editor_Asset_StaticFile {
 	 * @param array $headers
 	 */
 	public function send_file( $filename, $headers = array() ) {
-		if ( file_exists( $filename ) ) {
+
+		$fs = Brizy_Admin_FileSystem::instance();
+
+		if ( $fs->has( $filename ) ) {
 
 			$defaultHeaders = array(
 				'Content-Type'  => $this->get_mime( $filename, 1 ),
 				'Cache-Control' => 'max-age=600'
 			);
 
-			$content = file_get_contents( $filename );
+			$content = $fs->read( $filename );
 
 			// send headers
 			$headers = array_merge( $defaultHeaders, $headers );
