@@ -192,8 +192,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.brz-ed-popup-two-tab-item').trigger( 'click' );
 
-    // Menu Load
     $('.brz-ed-popup-two-tab-item').on('click', function () {
         var pageNameAttr = $(this).attr('data-page-name');
         var dashNameAttr = $(this).attr('data-dash-name');
@@ -208,8 +208,8 @@ jQuery(document).ready(function ($) {
             $('.brz-ed-popup-two-sidebar > .modal_dash').fadeOut(0).removeClass('active');
             $('.brz-ed-popup-two-sidebar').find('#' + dashNameAttr).fadeIn(0).addClass('active');
 
-            $('#settingsDash > .brz-ed-tab-item').removeClass('brz-ed-popup-two-sidebar-list-active');
-            $('#settingsDash > li:first-child').addClass('brz-ed-popup-two-sidebar-list-active');
+            $('.brz-ed-tab-item').removeClass('brz-ed-popup-two-sidebar-list-active');
+            $('#' + dashNameAttr + ' > .brz-ed-tab-item:first').addClass('brz-ed-popup-two-sidebar-list-active');
         }
     });
 

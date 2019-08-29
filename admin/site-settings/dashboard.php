@@ -164,29 +164,93 @@ class Brizy_Admin_SiteSettings_Dashboard {
 	}
 
 	public function action_popup_html() {
-		$twig = Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/views' );
 
-		$context = array(
+		$exclude_posts_types = [
+			'attachment'
+		];
+
+		$include_posts_types = array_map( function( $post_type ) {
+			global $wp_post_types;
+			return isset( $wp_post_types[ $post_type ] ) ? $wp_post_types[ $post_type ] : '';
+
+		}, [ 'brizy_template' ] );
+
+		$args = [
+			'public'              => true,
+			'exclude_from_search' => false,
+			'show_ui'             => true,
+		];
+
+		$post_types = array_diff_key( get_post_types( $args, 'objects' ), array_flip( $exclude_posts_types ) );
+		$post_types = array_map( function( $val ){
+			return [
+				'id' => $val->name,
+				'icon' => 'symbol-defs.svg#icon-Pages',
+				'name' => $val->label
+			];
+		}, array_filter( array_merge( $post_types, $include_posts_types ) ) );
+
+		$posts = [];
+		foreach ( $post_types as $post_type ) {
+			$posts[ $post_type['id'] ] = get_posts(
+				[
+					'post_type'      => $post_type['id'],
+					'post_status'    => 'any',
+					'posts_per_page' => 10
+				]
+			);
+		}
+
+
+
+		$context = [
 			'brizy_settings_tab' => isset( $_REQUEST['brizy-settings-tab'] ) ? $_REQUEST['brizy-settings-tab'] : 'site-settings',
-			'site_settings'      => array(
+			'fonts_url'          => BRIZY_PLUGIN_URL . '/admin/site-settings/fonts/',
+			'site_settings'      => [
+				'tabs' => [
+					[
+						'id'   => 'content_settings',
+						'icon' => 'symbol-defs.svg#icon-General-Settings',
+						'name' => esc_html__( 'Site Settings', 'brizy' )
+					],
+					[
+						'id'   => 'socialSharing',
+						'icon' => 'symbol-defs.svg#icon-Social',
+						'name' => esc_html__( 'Social Sharing', 'brizy' )
+					],
+					[
+						'id'   => 'customCSS',
+						'icon' => 'symbol-defs.svg#icon-CSS',
+						'name' => esc_html__( 'Custom CSS', 'brizy' )
+					],
+					[
+						'id'   => 'codeInjection',
+						'icon' => 'symbol-defs.svg#icon-Code-Injection',
+						'name' => esc_html__( 'Code Injection', 'brizy' )
+					]
+				],
 				'title'       => html_entity_decode( get_bloginfo( 'name' ) ),
 				'description' => html_entity_decode( get_bloginfo( 'description' ) ),
 				'favicon_id'  => get_option( 'site_icon' ),
 				'favicon_url' => get_site_icon_url()
-			),
-			'social_sharing'     => array(
+			],
+			'social_sharing'     => [
 				'title'         => html_entity_decode( get_option( 'brizy-social-title' ) ),
 				'description'   => html_entity_decode( get_option( 'brizy-social-description' ) ),
 				'thumbnail'     => get_option( 'brizy-social-thumbnail' ),
 				'thumbnail_url' => site_url( get_option( 'brizy-social-thumbnail' ) )
-			),
+			],
 			'custom_css'         => html_entity_decode( get_option( 'brizy-custom-css' ) ),
-			'code_injection'     => array(
+			'code_injection'     => [
 				'header_code' => html_entity_decode( get_option( 'brizy-header-injection' ) ),
 				'footer_code' => html_entity_decode( get_option( 'brizy-footer-injection' ) )
-			),
-		);
+			],
+			'post_types' => [
+				'tabs' => $post_types
+			],
+			'posts' => $posts,
+		];
 
-		echo $twig->render( 'index.html.twig', $context );
+		echo Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/views' )->render( 'index.html.twig', $context );
 	}
 }
