@@ -138,6 +138,13 @@ class Brizy_Public_Main {
 		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_editor_enqueue_scripts' );
+
+		// include REST api authenticate nonce
+		wp_localize_script( 'wp-api', 'wpApiSettings', array(
+			'root'  => esc_url_raw( rest_url() ),
+			'nonce' => wp_create_nonce( 'wp_rest' )
+		) );
+
 	}
 
 	/**
