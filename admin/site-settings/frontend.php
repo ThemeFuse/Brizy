@@ -3,8 +3,8 @@
 class Brizy_Admin_SiteSettings_Frontend {
 
 	public function __construct() {
-		//add_action( 'wp_head', array( $this, 'brizy_settings_header' ) );
-		//add_action( 'wp_footer', array( $this, 'brizy_settings_footer' ) );
+		add_action( 'wp_head', array( $this, 'brizy_settings_header' ) );
+		add_action( 'wp_footer', array( $this, 'brizy_settings_footer' ) );
 	}
 
 	public function brizy_settings_header() {

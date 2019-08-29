@@ -394,14 +394,7 @@ a {
     position: relative;
     height: calc(100% + 60px);
     padding-bottom: 10px;
-    -webkit-animation-name: fadeIn;
-            animation-name: fadeIn;
-    -webkit-animation-fill-mode: both;
-            animation-fill-mode: both;
-    -webkit-animation-delay: 4s;
-            animation-delay: 4s;
-    -webkit-animation-duration: 200s;
-            animation-duration: 200s; }
+    }
   .brz-ed .brz-ed-popup-two-body .brz-ed-scroll-pane > div {
     border-color: transparent;
     overflow: hidden;

@@ -1,4 +1,6 @@
-<div class="modal" id="modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modalLabel">
+<!-- Modal -->
+<div class="modal show" id="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+     aria-hidden="true" aria-labelledby="modalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <!-- Content Modal -->
@@ -9,18 +11,62 @@
                         <div class="brz-ed-scroll-inner">
                             <div class="brz-ed-popup-two-sidebar-body">
                                 <ul class="brz-ul brz-ed-popup-two-sidebar">
-                                    <div class="modal_dash active" id="sidebar_post_types">
-                                        <div class="brz-ed-popup-two-sidebar-title">Types</div>
-                                        {% for item in post_types['tabs'] %}
-                                            {{ include('sidebar-item.html.twig') }}
-                                        {% endfor %}
-                                    </div>
+                                    <div class="brz-ed-popup-two-sidebar-title">DASHBOARD</div>
+                                    <div class="modal_dash active" id="settingsDash">
 
-                                    <div class="modal_dash" id="sitebar_settings">
-                                        <div class="brz-ed-popup-two-sidebar-title">Settings</div>
-                                        {% for item in site_settings['tabs'] %}
-                                            {{ include('sidebar-item.html.twig') }}
-                                        {% endfor %}
+                                        <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='site-settings' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
+                                            data-tab-name="settings">
+                                                <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
+                                                    <i class="brz-icon-svg">
+                                                        <svg class="brz-icon-svg">
+                                                            <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-General-Settings">
+                                                            </use>
+                                                        </svg>
+                                                    </i>
+                                                </span>
+                                            <span class="brz-span brz-ed-popup-two-sidebar-list__span-text">Site
+                                                    Settings
+                                                </span>
+                                        </li>
+                                        {# <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='social-sharing' ?'brz-ed-popup-two-sidebar-list-active':'' }}" data-tab-name="socialSharing">
+                                             <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
+                                                 <i class="brz-icon-svg">
+                                                     <svg class="brz-icon-svg">
+                                                         <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Social"></use>
+                                                     </svg>
+                                                 </i>
+                                             </span>
+                                             <span class="brz-span brz-ed-popup-two-sidebar-list__span-text">
+                                                 Social Sharing
+                                             </span>
+                                         </li>#}
+                                        <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='custom-css' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
+                                            data-tab-name="customCSS">
+                                                <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
+                                                    <i class="brz-icon-svg">
+                                                        <svg class="brz-icon-svg">
+                                                            <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-CSS"></use>
+                                                        </svg>
+                                                    </i>
+                                                </span>
+                                            <span class="brz-span brz-ed-popup-two-sidebar-list__span-text">
+                                                    Custom CSS
+                                                </span>
+                                        </li>
+                                        <li class="brz-li brz-ed-popup-two-sidebar-list brz-ed-tab-item {{ brizy_settings_tab=='code-injection' ?'brz-ed-popup-two-sidebar-list-active':'' }}"
+                                            data-tab-name="codeInjection">
+                                                <span class="brz-span brz-ed-popup-two-sidebar-list__span-icon">
+                                                    <i class="brz-icon-svg">
+                                                        <svg class="brz-icon-svg">
+                                                            <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Code-Injection">
+                                                            </use>
+                                                        </svg>
+                                                    </i>
+                                                </span>
+                                            <span class="brz-span brz-ed-popup-two-sidebar-list__span-text">
+                                                    Code Injection
+                                                </span>
+                                        </li>
                                     </div>
                                 </ul>
                             </div>
@@ -31,61 +77,28 @@
                 <div class="brz-ed-popup-two-body__content">
                     <div class="brz-ed-popup-two-header">
                         <div class="brz-ed-popup-two-header__tabs">
-                            <div class="brz-ed-popup-two-tab-item brz-ed-popup-two-tab-item-active" data-page-name="content_post_types" data-dash-name="sidebar_post_types">
+                            <div class="brz-ed-popup-two-tab-item brz-ed-popup-two-tab-item-active" data-page-name="pages" data-dash-name="settingsDash">
                                 <div class="brz-ed-popup-two-tab-icon">
                                     <svg class="brz-icon-svg">
-                                        <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Menus"></use>
+                                        <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Edit-Page"></use>
                                     </svg>
                                 </div>
-                                <div class="brz-ed-popup-two-tab-name">Post Types</div>
+                                <div class="brz-ed-popup-two-tab-name">Settings</div>
                             </div>
-
-                            <div class="brz-ed-popup-two-tab-item" data-page-name="content_settings" data-dash-name="sitebar_settings">
+                            <div class="brz-ed-popup-two-tab-item" data-page-name="pages" data-dash-name="custom_post_type">
                                 <div class="brz-ed-popup-two-tab-icon">
                                     <svg class="brz-icon-svg">
-                                        <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Edit-Page"></use>
+                                        <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Edit-Page"></use>
                                     </svg>
                                 </div>
-                                <div class="brz-ed-popup-two-tab-name">Site Settings</div>
+                                <div class="brz-ed-popup-two-tab-name">Custom Post Type</div>
                             </div>
                         </div>
                         <div class="brz-ed-popup-two-btn-close" data-dismiss="modal"></div>
                     </div>
 
-                    <div class="brz-ed-scroll-pane brz-ed-scroll-pane-active" id="content_post_types">
-                        <div class="brz-ed-scroll-inner">
-                            <div class="inner-content">
-
-                                {% for post_type, items in posts %}
-                                    {{ include('post-item.html.twig') }}
-                                {% endfor %}
-
-                            </div>
-                            <!-- Footer content -->
-                            <div class="brz-ed-popup-two-body__footer">
-                                <div class="footer-col">
-                                    <a href="javascript:void(0);" class="footer-btn">
-                                        <span>Add New Page</span>
-                                        <svg class="brz-icon-svg">
-                                            <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-add"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-                                <div class="footer-col">
-                                    <div class="footer-info">
-                                        <svg class="brz-icon-svg">
-                                            <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Info"></use>
-                                        </svg>
-                                        <p>
-                                            Create menus by going to the <a href="javascript:void(0);">Menus</a> tab
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="brz-ed-scroll-pane" id="content_settings">
+                    <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='site-settings' ?'brz-ed-scroll-pane-active':'' }}"
+                         id="settings">
                         <div class="brz-ed-scroll-inner">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="brizy-settings-tab-submit" value="site-settings">
@@ -144,7 +157,7 @@
                                         <a href="javascript:void(0);" class="footer-btn submit">
                                             <span>Save Changes</span>
                                             <svg class="brz-icon-svg">
-                                                <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                                                <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Check"></use>
                                             </svg>
                                         </a>
                                     </div>
@@ -154,51 +167,9 @@
                             </form>
                         </div>
                     </div>
-
-                    <div class="brz-ed-scroll-pane" id="socialSharing">
+                    <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='social-sharing' ?'brz-ed-scroll-pane-active':'' }}"
+                         id="socialSharing">
                         <div class="brz-ed-scroll-inner">
-                            <div class="inner-content">
-                                <!-- Settings Content -->
-                                <div class="site-settings-wrap">
-                                    <div class="settings-block">
-                                        <h2 class="sett-block-title">Social information</h2>
-                                        <div class="sett-block-desc">
-                                            When sharing your pages on social networks, Brizy Cloud will use this content to display in links.
-                                        </div>
-                                    </div>
-                                    <div class="settings-block">
-                                        <h2 class="sett-block-title">Status Message</h2>
-                                        <div class="sett-block-field">
-                                            <input type="text" value="Merge Creative - Innovative Products for Marketing Experts">
-                                        </div>
-                                    </div>
-                                    <div class="settings-block">
-                                        <h2 class="sett-block-title">Description (max. 280 characters)</h2>
-                                        <div class="sett-block-field">
-                                            <textarea>Merge Creaive is a hosted platform powered by Brizy Builder, providing a more streamlined experience when creating landing pages. Unlimited space & projects.</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="settings-block thumbnail_wrap">
-                                        <div class="thumbnail_left">
-                                            <h2 class="sett-block-title">Image Thumbnail</h2>
-                                            <div class="sett-block-desc">
-                                                Upload an image to represent the site content when sharing on social networks
-                                            </div>
-                                        </div>
-                                        <div class="thumbnail_right">
-                                            <input type="file" accept="image/x-png,image/gif,image/jpeg,image/ico">
-                                            <div class="thumbnail_absolute">
-                                                <div class="icon">
-                                                </div>
-                                                <div class="add_image">
-                                                    Add Image
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Footer content -->
                             <form action="" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="brizy-settings-tab-submit" value="social-sharing">
                                 <div class="inner-content">
@@ -258,7 +229,7 @@
                                         <a href="javascript:void(0);" class="footer-btn submit">
                                             <span>Save Changes</span>
                                             <svg class="brz-icon-svg">
-                                                <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                                                <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Check"></use>
                                             </svg>
                                         </a>
                                     </div>
@@ -269,8 +240,8 @@
                             </form>
                         </div>
                     </div>
-
-                    <div class="brz-ed-scroll-pane" id="customCSS">
+                    <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='custom-css' ?'brz-ed-scroll-pane-active':'' }}"
+                         id="customCSS">
                         <div class="brz-ed-scroll-inner">
                             <form action="" method="post">
                                 <input type="hidden" name="brizy-settings-tab-submit" value="custom-css">
@@ -295,7 +266,7 @@
                                         <a href="javascript:void(0);" class="footer-btn submit">
                                             <span>Save Changes</span>
                                             <svg class="brz-icon-svg">
-                                                <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                                                <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Check"></use>
                                             </svg>
                                         </a>
                                     </div>
@@ -305,8 +276,8 @@
                             </form>
                         </div>
                     </div>
-
-                    <div class="brz-ed-scroll-pane" id="codeInjection">
+                    <div class="brz-ed-scroll-pane {{ brizy_settings_tab=='code-injection' ?'brz-ed-scroll-pane-active':'' }}"
+                         id="codeInjection">
                         <div class="brz-ed-scroll-inner">
                             <form action="" method="post">
                                 <input type="hidden" name="brizy-settings-tab-submit" value="code-injection">
@@ -347,14 +318,14 @@
                                         <a href="javascript:void(0);" class="footer-btn submit">
                                             <span>Save Changes</span>
                                             <svg class="brz-icon-svg">
-                                                <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                                                <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Check"></use>
                                             </svg>
                                         </a>
                                     </div>
                                     <div class="footer-col">
                                         <div class="footer-info">
                                             <svg class="brz-icon-svg">
-                                                <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Info"></use>
+                                                <use xlink:href="site-settings/fonts/symbol-defs.svg#icon-Info"></use>
                                             </svg>
                                             <p>
                                                 Tip: Learn more about code injection <a
@@ -366,7 +337,7 @@
                             </form>
                         </div>
                     </div>
-
+                    <!-- Menu Page -->
                 </div>
             </div>
         </div>
