@@ -94,13 +94,9 @@ class Brizy_Admin_Blocks_Main {
 		return $globalData;
 	}
 
-	/**
-	 *
-	 */
 	public function initializeActions() {
 		Brizy_Admin_Blocks_Api::_init();
 	}
-
 
 	static public function registerCustomPosts() {
 

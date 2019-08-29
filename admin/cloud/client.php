@@ -184,7 +184,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 
 		$code = wp_remote_retrieve_response_code( $response );
 
-		if ( $code == 200 ) {
+		if ( $code == 204 ) {
 
 			$jsonResponse = json_decode( $response['body'] );
 

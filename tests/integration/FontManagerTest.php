@@ -15,6 +15,7 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 	protected function _before() {
 		wp_cache_flush();
 		$this->tester->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Fonts_Main::CP_FONT ] );
+		$this->tester->dontHavePostInDatabase( [ 'post_type' => 'attachments' ] );
 		new Brizy_Admin_Fonts_Main();
 	}
 
@@ -358,6 +359,67 @@ class FontManagerTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertArrayHasKey( 'type', $font, 'Font should contain "type" key' );
 		$this->assertArrayHasKey( 'weights', $font, 'Font should contain "weight" key' );
 		$this->assertContains( '400', $font['weights'], 'Font weights should contain "400" key' );
+	}
+
+	public function testGetFontForExport() {
+
+		$this->tester->wantToTest( 'get font method' );
+
+		$fontUid     = md5( time() );
+		$family      = 'proxima nova';
+		$fontType    = 'uploaded';
+		$fontWeights = [
+			'400' => [
+				'eot'  => [
+					'name'     => basename( codecept_data_dir( 'fonts/pn-regular-webfont.eot' ) ),
+					'type'     => 'application/x-font-ttf',
+					'tmp_name' => $this->tester->makeTemporaryFile( codecept_data_dir( 'fonts/pn-regular-webfont.eot' ) ),
+					'error'    => 0,
+					'size'     => filesize( codecept_data_dir( 'fonts/pn-regular-webfont.eot' ) )
+				],
+				'woff' => [
+					'name'     => basename( codecept_data_dir( 'fonts/pn-medium-webfont.woff' ) ),
+					'type'     => 'application/font-woff',
+					'tmp_name' => $this->tester->makeTemporaryFile( codecept_data_dir( 'fonts/pn-medium-webfont.woff' ) ),
+					'error'    => 0,
+					'size'     => filesize( codecept_data_dir( 'fonts/pn-medium-webfont.woff' ) )
+				]
+			],
+			'700' => [
+				'eot'  => [
+					'name'     => basename( codecept_data_dir( 'fonts/pn-regular-webfont.eot' ) ),
+					'type'     => 'application/vnd.ms-fontobject',
+					'tmp_name' => $this->tester->makeTemporaryFile( codecept_data_dir( 'fonts/pn-regular-webfont.eot' ) ),
+					'error'    => 0,
+					'size'     => filesize( codecept_data_dir( 'fonts/pn-regular-webfont.eot' ) )
+				],
+				'woff' => [
+					'name'     => basename( codecept_data_dir( 'fonts/pn-bold-webfont.woff' ) ),
+					'type'     => 'application/font-woff',
+					'tmp_name' => $this->tester->makeTemporaryFile( codecept_data_dir( 'fonts/pn-bold-webfont.woff' ) ),
+					'error'    => 0,
+					'size'     => filesize( codecept_data_dir( 'fonts/pn-bold-webfont.woff' ) )
+				]
+			]
+		];
+
+		$fontManager = new Brizy_Admin_Fonts_Manager();
+
+		$fontId = $fontManager->createFont( $fontUid, $family, $fontWeights, $fontType );
+
+		$fontManager = new Brizy_Admin_Fonts_Manager();
+		$font        = $fontManager->getFontForExport( $fontUid );
+
+		$this->assertArrayHasKey( 'id', $font, 'Font should contain "id" key' );
+		$this->assertArrayHasKey( 'family', $font, 'Font should contain "family" key' );
+		$this->assertArrayHasKey( 'type', $font, 'Font should contain "type" key' );
+		$this->assertArrayHasKey( 'weights', $font, 'Font should contain "weight" key' );
+
+
+		$this->assertStringContainsString( '.eot', $font['weights']['400']['eot'], 'Font weights should contain "400" key and "pn-regular-webfont.eot"' );
+		$this->assertStringContainsString( '.woff', $font['weights']['400']['woff'], 'Font weights should contain "400" key and "pn-regular-webfont.woff"' );
+		$this->assertStringContainsString( '.eot', $font['weights']['700']['eot'], 'Font weights should contain "700" key and "pn-regular-webfont.eot"' );
+		$this->assertStringContainsString( '.woff', $font['weights']['700']['woff'], 'Font weights should contain "700" key and "pn-regular-webfont.woff"' );
 	}
 
 	public function testGetUnknownFont() {

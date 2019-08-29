@@ -5,12 +5,13 @@
 actor: IntegrationTester
 modules:
   enabled:
-    - Asserts
-    - WPDb
-    - WPLoader
     - \Helper\Unit
     - \Helper\Wpunit
     - \Helper\Integration
+    - Asserts
+    - WPDb
+    - WPFilesystem
+    - WPLoader
   config:
     WPDb:
       dsn: 'mysql:host=%TEST_SITE_DB_HOST%;dbname=%TEST_SITE_DB_NAME%;port=3307'
@@ -18,16 +19,15 @@ modules:
       password: '%TEST_SITE_DB_PASSWORD%'
       dump: 'tests/_data/dump-active-brizy.sql'
       reconect: true
-      populate: true
-      cleanup: false
+      populate: false
+      cleanup: true
       waitlock: 10
       url: '%TEST_SITE_WP_URL%'
       urlReplacement: true
       tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
     WPLoader:
-      wpRootFolder: "%WP_ROOT_FOLDER%"
       loadOnly: true
-      domain: "%TEST_SITE_WP_DOMAIN%"
+      wpRootFolder: "%WP_ROOT_FOLDER%"
       dbName: "%TEST_SITE_DB_NAME%"
       dbHost: "%TEST_SITE_DB_HOST%"
       dbUser: "%TEST_SITE_DB_USER%"
@@ -36,3 +36,5 @@ modules:
       wpDebug: true
       plugins: ['brizy/brizy.php']
       activatePlugins: ['brizy/brizy.php']
+    WPFilesystem:
+      wpRootFolder: "%WP_ROOT_FOLDER%"

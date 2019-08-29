@@ -30,6 +30,7 @@ class Brizy_Admin_Cloud {
 	public static function _init() {
 
 		static $instance;
+
 		return $instance ? $instance : $instance = new self( Brizy_Editor_Project::get() );
 	}
 
@@ -50,7 +51,7 @@ class Brizy_Admin_Cloud {
 		add_action( 'admin_enqueue_scripts', array( $this, 'registersCloudAssets' ) );
 		add_action( 'admin_menu', array( $this, 'actionRegisterCloutLoginPage' ), 11 );
 
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+		if ( isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			add_action( 'admin_init', array( $this, 'handleSubmit' ), 10 );
 		}
 
@@ -59,34 +60,10 @@ class Brizy_Admin_Cloud {
 		}
 
 		$this->twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/admin/views/cloud/" );
-
-		if ( $this->isLoggedIn() ) {
-			add_action( 'brizy_saved_block_created', array( $this, 'actionBlockCreated' ) );
-			//add_action( 'brizy_global_block_created', array( $this, 'actionBlockCreated' ) );
-			add_action( 'brizy_saved_block_deleted', array( $this, 'actionBlockDeleted' ) );
-		}
 	}
 
 	public function initializeActions() {
 		Brizy_Admin_Cloud_Api::_init( $this->project );
-	}
-
-	public function actionBlockCreated( Brizy_Editor_Block $block ) {
-		try {
-			$updater = new Brizy_Admin_Cloud_BlockUploader( $this->cloudClient );
-			$updater->upload( $block );
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
-		}
-	}
-
-	public function actionBlockDeleted( Brizy_Editor_Block $block ) {
-		try {
-			$updater = new Brizy_Admin_Cloud_BlockUploader( $this->cloudClient );
-			$updater->delete( $block );
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
-		}
 	}
 
 	public function registersCloudAssets() {
@@ -212,6 +189,7 @@ class Brizy_Admin_Cloud {
 
 	public function handleLogout() {
 		$this->project->setCloudToken( null );
+		$this->project->save();
 	}
 
 	public function handleCreateProject() {

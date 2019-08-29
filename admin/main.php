@@ -69,8 +69,6 @@ class Brizy_Admin_Main {
 		add_filter( 'wp_import_existing_post', array( $this, 'handleNewProjectPostImport' ), 10, 2 );
 		add_filter( 'wp_import_post_meta', array( $this, 'handleNewProjectMetaImport' ), 10, 3 );
 
-		add_filter( 'wp_import_posts', array( $this, 'handlePostsImport' ) );
-
 
 		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
 
@@ -179,7 +177,6 @@ class Brizy_Admin_Main {
 //			return;
 //		}
 //	}
-
 
 	/**
 	 * @param $post_id
@@ -501,37 +498,13 @@ class Brizy_Admin_Main {
 		exit;
 	}
 
-	public function handlePostsImport( $posts ) {
-
-		$incompatibleBrizyPosts = array();
-
-		foreach ( $posts as $i => $post ) {
-			if ( ! isset( $post['postmeta'] ) ) {
-				continue;
-			}
-
-			foreach ( $post['postmeta'] as $meta ) {
-				if ( $meta['key'] == 'brizy-post-plugin-version' && ! Brizy_Editor_Data_ProjectMergeStrategy::checkVersionCompatibility( $meta['value'] ) ) {
-					$incompatibleBrizyPosts[] = array(
-						'post_title' => $post['post_title'],
-						'version'    => $meta['value']
-					);
-					unset( $posts[ $i ] );
-				}
-			}
-		}
-
-		if ( count( $incompatibleBrizyPosts ) ) {
-			foreach ( $incompatibleBrizyPosts as $brizy_post ) {
-				printf( __( 'Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s ', 'brizy' ),
-					esc_html( $brizy_post['post_title'] ), esc_html( $brizy_post['version'] ) );
-				echo '<br />';
-			}
-		}
-
-		return $posts;
-	}
-
+	/**
+	 * @param $existing
+	 * @param $post
+	 *
+	 * @return int
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
 	public function handleNewProjectPostImport( $existing, $post ) {
 
 		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
@@ -573,6 +546,13 @@ class Brizy_Admin_Main {
 		return $existing;
 	}
 
+	/**
+	 * @param $postMeta
+	 * @param $post_id
+	 * @param $post
+	 *
+	 * @return null
+	 */
 	public function handleNewProjectMetaImport( $postMeta, $post_id, $post ) {
 		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
 			return null;

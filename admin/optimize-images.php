@@ -108,20 +108,7 @@ class Brizy_Admin_OptimizeImages {
 		$urls      = array();
 		foreach ( $brizy_ids as $id ) {
 			try {
-				$brizyPost = Brizy_Editor_Post::get( $id );
-
-				if ( ! $brizyPost->get_compiled_html() ) {
-					$content = $brizyPost->get_compiled_html_body();
-				} else {
-					$compiled_page = $brizyPost->get_compiled_page();
-					$content       = $compiled_page->get_head() . $compiled_page->get_body();
-				}
-
-				$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
-
-				$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $brizyPost->get_wp_post() );
-
-				$urls = array_merge( $urls, $this->extract_media_urls( $content, $filesystem ) );
+				$urls = array_merge( $urls, $this->extractImageUrls( $id, $urls, $filesystem ) );
 			} catch ( Exception $e ) {
 				continue;
 			}
@@ -138,6 +125,31 @@ class Brizy_Admin_OptimizeImages {
 
 
 		return $this->twig->render( 'optimizer-general.html.twig', $context );
+	}
+
+	/**
+	 * @param Brizy_Editor_Post $id
+	 * @param array $urls
+	 * @param Filesystem $filesystem
+	 *
+	 * @return array
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	private function extractImageUrls( Brizy_Editor_Post $id, array $urls, Filesystem $filesystem ) {
+		$brizyPost = Brizy_Editor_Post::get( $id );
+
+		if ( ! $brizyPost->get_compiled_html() ) {
+			$content = $brizyPost->get_compiled_html_body();
+		} else {
+			$compiled_page = $brizyPost->get_compiled_page();
+			$content       = $compiled_page->get_head() . $compiled_page->get_body();
+		}
+
+		$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
+
+		$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $brizyPost->get_wp_post() );
+
+		return $this->extract_media_urls( $content, $filesystem );
 	}
 
 	public function settings_submit() {
@@ -309,6 +321,5 @@ class Brizy_Admin_OptimizeImages {
 
 		return apply_filters( 'brizy_optimizer_tabs', $tabs );
 	}
-
 
 }

@@ -105,12 +105,17 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		if ( ! $this->param( 'data' ) ) {
 			$this->error( 400, 'Invalid data' );
 		}
+		if ( ! $this->param( 'meta' ) ) {
+			$this->error( 400, 'Invalid meta data' );
+		}
+
 
 		try {
 			$editorData = stripslashes( $this->param( 'data' ) );
 			$position   = stripslashes( $this->param( 'position' ) );
 
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( $editorData );
 			$block->set_needs_compile( true );
 
@@ -147,10 +152,19 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'Invalid data' );
 		}
 
+		if ( ! $this->param( 'meta' ) ) {
+			$this->error( 400, 'Invalid meta data' );
+		}
+
+		if ( ! $this->param( 'media' ) ) {
+			$this->error( 400, 'Invalid media data provided' );
+		}
 
 		try {
 			$data  = stripslashes( $this->param( 'data' ) );
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_SAVED );
+			$block->setMedia( stripslashes( $this->param( 'media' ) ) );
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( $data );
 			$block->set_needs_compile( true );
 			$block->save();
@@ -178,11 +192,16 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
+			if ( ! $this->param( 'meta' ) ) {
+				$this->error( 400, 'Invalid meta data' );
+			}
+
 
 			$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
 			/**
 			 * @var Brizy_Editor_Block $block ;
 			 */
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 			$position = stripslashes( $this->param( 'position' ) );
 
@@ -223,9 +242,19 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
+			if ( ! $this->param( 'meta' ) ) {
+				$this->error( 400, 'Invalid meta data' );
+			}
+
+			if ( ! $this->param( 'media' ) ) {
+				$this->error( 400, 'Invalid media data provided' );
+			}
+
 			$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
 
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
+			$block->setMedia( stripslashes( $this->param( 'media' ) ) );
+			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->auto_save_post();
@@ -250,7 +279,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
-		if($block) {
+		if ( $block ) {
 			do_action( 'brizy_global_block_deleted', $block );
 			do_action( 'brizy_global_data_deleted' );
 			$this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
@@ -269,7 +298,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
 
-		if($block) {
+		if ( $block ) {
 			do_action( 'brizy_global_block_deleted', $block );
 			do_action( 'brizy_global_data_deleted' );
 			$this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );

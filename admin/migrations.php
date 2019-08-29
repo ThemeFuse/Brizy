@@ -161,10 +161,9 @@ class Brizy_Admin_Migrations {
 		// run migrations
 		foreach ( $migrations as $versionMigrations ) {
 			try {
+				$wpdb->query( 'START TRANSACTION ' );
 				foreach ( $versionMigrations as $migration ) {
 
-
-					$wpdb->query( 'START TRANSACTION ' );
 
 					$migrationClass = get_class( $migration );
 
@@ -173,14 +172,15 @@ class Brizy_Admin_Migrations {
 					Brizy_Logger::instance()->debug( 'Run migration: ' . $migrationClass, array( $migrationClass ) );
 
 					$this->globalStorage->addMigration( $migration )->save();
-
-					$wpdb->query( 'COMMIT' );
 				}
+
+				$wpdb->query( 'COMMIT' );
 			} catch ( Exception $e ) {
 				$wpdb->query( 'ROLLBACK' );
 				Brizy_Logger::instance()->debug( 'Migration process ERROR', [ $e ] );
 				break;
 			}
+
 		}
 
 		Brizy_Logger::instance()->debug( 'Migration process successful' );

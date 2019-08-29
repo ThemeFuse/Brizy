@@ -9,15 +9,24 @@
 
 class Brizy_Editor_Block extends Brizy_Editor_Post {
 
+	const BRIZY_BLOCK_META = 'brizy-block-meta';
+	const BRIZY_BLOCK_MEDIA = 'brizy-block-media';
+	const BRIZY_BLOCK_CLOUD_UPDATE = 'brizy-block-cloud-update-required';
+
 	/**
 	 * @var object
 	 */
 	protected $position;
 
 	/**
-	 * @var array
+	 * @var string
 	 */
-	protected $assets;
+	protected $meta;
+
+	/**
+	 * @var string
+	 */
+	protected $media;
 
 	/**
 	 * @var array
@@ -61,7 +70,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	 */
 	public function __construct( $wp_post_id, $uid = null ) {
 
-		$this->assets = array();
+		$this->meta = '';
 
 		self::checkIfPostTypeIsSupported( $wp_post_id );
 		$this->wp_post_id = (int) $wp_post_id;
@@ -75,6 +84,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$storage_post = $storage->get( self::BRIZY_POST, false );
 
 		$this->loadStorageData( $storage_post );
+
 
 		if ( $uid ) {
 			$this->uid = $uid;
@@ -103,23 +113,104 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	}
 
 	/**
-	 * @return array
+	 * @return null
 	 */
-	public function getAssets() {
-
-		return $this->assets;
+	public function getUid() {
+		return $this->uid;
 	}
 
 	/**
-	 * @param array $assets
+	 * @param null $uid
 	 *
 	 * @return Brizy_Editor_Block
 	 */
-	public function setAssets( $assets ) {
-		$this->assets = $assets;
+	public function setUid( $uid ) {
+		$this->uid = $uid;
 
 		return $this;
 	}
+
+	public function isGlobalBlock() {
+		return $this->get_wp_post() instanceof WP_Post && $this->get_wp_post()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL;
+	}
+
+	public function isSavedBlock() {
+		return $this->get_wp_post() instanceof WP_Post && $this->get_wp_post()->post_type == Brizy_Admin_Blocks_Main::CP_SAVED;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isCloudUpdateRequired() {
+
+		if ( $this->isGlobalBlock() ) {
+			return false;
+		}
+
+		return (bool) get_metadata( 'post', $this->wp_post_id, self::BRIZY_BLOCK_CLOUD_UPDATE, true );
+	}
+
+	/**
+	 * @param bool $cloudUpdateRequired
+	 *
+	 * @return Brizy_Editor_Block
+	 */
+	public function setCloudUpdateRequired( $cloudUpdateRequired ) {
+
+		if ( $this->isSavedBlock() ) {
+			update_metadata( 'post', $this->wp_post_id, self::BRIZY_BLOCK_CLOUD_UPDATE, (int) $cloudUpdateRequired );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getMeta() {
+		return get_metadata( 'post', $this->wp_post_id, self::BRIZY_BLOCK_META, true );
+	}
+
+	/**
+	 * @param string $meta
+	 *
+	 * @return Brizy_Editor_Block
+	 */
+	public function setMeta( $meta ) {
+		$this->meta = $meta;
+		update_metadata( 'post', $this->wp_post_id, self::BRIZY_BLOCK_META, $meta );
+	}
+
+	public function getMedia() {
+		return get_metadata( 'post', $this->wp_post_id, self::BRIZY_BLOCK_MEDIA, true );
+	}
+
+	/**
+	 * @param string $media
+	 *
+	 * @return Brizy_Editor_Block
+	 */
+	public function setMedia( $media ) {
+		$this->media = $media;
+		update_metadata( 'post', $this->wp_post_id, self::BRIZY_BLOCK_MEDIA, $media );
+	}
+
+
+	/**
+	 * @return mixed
+	 */
+	public function get_template() {
+		return get_post_meta( $this->get_id(), '_wp_page_template', true );
+	}
+
+	/**
+	 * @param string $editor_version
+	 */
+	public function set_editor_version( $editor_version ) {
+		$this->editor_version = $editor_version;
+		update_metadata( 'post', $this->wp_post_id, self::BRIZY_POST_EDITOR_VERSION, $editor_version );
+	}
+
 
 	/**
 	 * @return array
@@ -209,10 +300,10 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 
-		$data['rules']   = $ruleManager->getRules( $this->get_id() );
-		$data['assets']  = $this->getAssets();
-		$data['cloudId'] = $this->getCloudId();
+		$data['rules']    = $ruleManager->getRules( $this->get_id() );
+		$data['cloudId']  = $this->getCloudId();
 		$data['position'] = $this->getPosition();
+		$data['meta']     = $this->getMeta();
 
 		unset( $data['wp_post'] );
 
@@ -229,10 +320,6 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			$this->position = $data['position'];
 		}
 
-		if ( isset( $data['assets'] ) ) {
-			$this->assets = $data['assets'];
-		}
-
 		if ( isset( $data['cloudId'] ) ) {
 			$this->cloudId = $data['cloudId'];
 		}
@@ -244,10 +331,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	public function convertToOptionValue() {
 		$data = parent::convertToOptionValue();
 
-				$data['position'] = $this->getPosition();
-
-		$data['assets']  = $this->getAssets();
-		$data['cloudId'] = $this->getCloudId();
+		$data['position'] = $this->getPosition();
+		$data['cloudId']  = $this->getCloudId();
 
 		$ruleManager   = new Brizy_Admin_Rules_Manager();
 		$data['rules'] = $ruleManager->getRules( $this->get_id() );
@@ -312,6 +397,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			'uid'    => $post->get_uid(),
 			'status' => get_post_status( $p_id ),
 			'data'   => $post->get_editor_data(),
+			'meta'   => $post->getMeta()
 		);
 
 		if ( $post->get_wp_post()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {

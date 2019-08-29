@@ -2,7 +2,7 @@
 
 use \Prophecy\Argument;
 
-class Brizy_Admin_Cloud_ClientTest extends \Codeception\Test\Unit {
+class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 
 	/**

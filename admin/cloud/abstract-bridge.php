@@ -3,7 +3,7 @@
 /**
  * Class Brizy_Admin_Cloud_AbstractUploader
  */
-abstract class Brizy_Admin_Cloud_AbstractUploader implements Brizy_Admin_Cloud_UploaderInterface {
+abstract class Brizy_Admin_Cloud_AbstractBridge implements Brizy_Admin_Cloud_BridgeInterface {
 
 	/**
 	 * @var Brizy_Admin_Cloud_Client

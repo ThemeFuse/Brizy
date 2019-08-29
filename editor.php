@@ -50,7 +50,6 @@ class Brizy_Editor {
 
 		add_filter( "brizy:templates", array( $this, 'filterPublicTemplates' ) );
 		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
-
 	}
 
 	public function runMigrations() {
@@ -73,6 +72,7 @@ class Brizy_Editor {
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
 		Brizy_Admin_Cloud::_init();
+		Brizy_Admin_Cloud_Cron::_init();
 
 
 		$this->loadShortcodes();
