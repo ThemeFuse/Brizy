@@ -3,9 +3,8 @@
 class Brizy_Admin_SiteSettings_Dashboard {
 
 	public function __construct() {
-		add_action( 'brizy_site_settings_popup_html', array( $this, 'action_popup_html' ) );
-		add_action( 'template_include', array( $this, 'action_template_include' ), 10000 );
-		//add_action( 'wp_enqueue_scripts', array( $this, 'action_enqueue_scripts' ) );
+		add_action( 'brizy_site_settings_popup_html', [ $this, 'action_popup_html' ] );
+		add_action( 'template_include', [ $this, 'action_template_include' ], 10000 );
 
 		$this->run();
 	}
@@ -42,13 +41,21 @@ class Brizy_Admin_SiteSettings_Dashboard {
 				case 'code-injection':
 					$this->handleCodeInjectionSubmit();
 					break;
+
+				case 'update-post':
+					$this->hanldeUpdatePostSubmit();
+					break;
+
+				case 'delete-post':
+					$this->hanldeDeletePostSubmit();
+					break;
 			}
 
 			$query = build_query(
-				array(
+				[
 					'brizy-site-settings' => '',
 					'brizy-settings-tab'  => $_REQUEST['brizy-settings-tab-submit']
-				)
+				]
 			);
 
 			wp_redirect( home_url( $query ) );
@@ -89,7 +96,7 @@ class Brizy_Admin_SiteSettings_Dashboard {
 			include_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 			$uploadedfile = $_FILES['favicon'];
-			$file         = wp_handle_upload( $uploadedfile, array( 'test_form' => false ) );
+			$file         = wp_handle_upload( $uploadedfile, [ 'test_form' => false ] );
 
 			if ( ! $file || isset( $file['error'] ) ) {
 
@@ -98,13 +105,13 @@ class Brizy_Admin_SiteSettings_Dashboard {
 				return;
 			}
 
-			$attachment = array(
+			$attachment = [
 				'guid'           => $file['url'],
 				'post_mime_type' => $file['type'],
 				'post_title'     => preg_replace( '/\\.[^.]+$/', '', basename( $file['name'] ) ),
 				'post_content'   => '',
 				'post_status'    => 'inherit'
-			);
+			];
 
 			$id = wp_insert_attachment( $attachment, $file['file'] );
 
@@ -124,7 +131,7 @@ class Brizy_Admin_SiteSettings_Dashboard {
 		}
 
 		if ( isset( $_FILES['thumbnail'] ) ) {
-			$upload_overrides = array( 'test_form' => false );
+			$upload_overrides = [ 'test_form' => false ];
 			$uploadedfile     = $_FILES['thumbnail'];
 			$file             = wp_handle_upload( $uploadedfile, $upload_overrides );
 
@@ -163,45 +170,27 @@ class Brizy_Admin_SiteSettings_Dashboard {
 		}
 	}
 
-	public function action_popup_html() {
+	private function hanldeUpdatePostSubmit() {
 
-		$exclude_posts_types = [
-			'attachment'
-		];
-
-		$include_posts_types = array_map( function( $post_type ) {
-			global $wp_post_types;
-			return isset( $wp_post_types[ $post_type ] ) ? $wp_post_types[ $post_type ] : '';
-
-		}, [ 'brizy_template' ] );
-
-		$args = [
-			'public'              => true,
-			'exclude_from_search' => false,
-			'show_ui'             => true,
-		];
-
-		$post_types = array_diff_key( get_post_types( $args, 'objects' ), array_flip( $exclude_posts_types ) );
-		$post_types = array_map( function( $val ){
-			return [
-				'id' => $val->name,
-				'icon' => 'symbol-defs.svg#icon-Pages',
-				'name' => $val->label
-			];
-		}, array_filter( array_merge( $post_types, $include_posts_types ) ) );
-
-		$posts = [];
-		foreach ( $post_types as $post_type ) {
-			$posts[ $post_type['id'] ] = get_posts(
-				[
-					'post_type'      => $post_type['id'],
-					'post_status'    => 'any',
-					'posts_per_page' => 10
-				]
-			);
+		if ( ! get_post( $_POST['post_id'] ) ) {
+			return;
 		}
 
+		wp_update_post(
+			[
+				'ID'          => $_POST['post_id'],
+				'post_title'  => $_POST['page-title'],
+				'post_name'   => $_POST['permalink'],
+				'post_status' => $_POST['status'],
+			]
+		);
+	}
 
+	private function hanldeDeletePostSubmit() {
+		wp_delete_post( $_POST['post_id'] );
+	}
+
+	public function action_popup_html() {
 
 		$context = [
 			'brizy_settings_tab' => isset( $_REQUEST['brizy-settings-tab'] ) ? $_REQUEST['brizy-settings-tab'] : 'site-settings',
@@ -209,7 +198,7 @@ class Brizy_Admin_SiteSettings_Dashboard {
 			'site_settings'      => [
 				'tabs' => [
 					[
-						'id'   => 'content_settings',
+						'id'   => 'settings',
 						'icon' => 'symbol-defs.svg#icon-General-Settings',
 						'name' => esc_html__( 'Site Settings', 'brizy' )
 					],
@@ -246,11 +235,87 @@ class Brizy_Admin_SiteSettings_Dashboard {
 				'footer_code' => html_entity_decode( get_option( 'brizy-footer-injection' ) )
 			],
 			'post_types' => [
-				'tabs' => $post_types
+				'tabs' => $this->get_post_types()
 			],
-			'posts' => $posts,
+			'posts' => $this->get_posts(),
 		];
 
 		echo Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/views' )->render( 'index.html.twig', $context );
+	}
+
+	private function get_post_types() {
+
+		$exclude_posts_types = [
+			'attachment'
+		];
+
+		$include_posts_types = array_map( function( $post_type ) {
+			global $wp_post_types;
+			return isset( $wp_post_types[ $post_type ] ) ? $wp_post_types[ $post_type ] : '';
+
+		}, [ 'brizy_template' ] );
+
+		$args = [
+			'public'              => true,
+			'exclude_from_search' => false,
+			'show_ui'             => true,
+		];
+
+		$post_types = array_diff_key( get_post_types( $args, 'objects' ), array_flip( $exclude_posts_types ) );
+		$post_types = array_map( function( $val ){
+			return [
+				'id'            => $val->name,
+				'icon'          => 'symbol-defs.svg#icon-Pages',
+				'name'          => $val->label,
+				'singular_name' => $val->labels->singular_name,
+				//'add_new_post'  => add_query_arg( [ 'post_type' => $val->name ], admin_url( 'post-new.php' ) )
+			];
+		}, array_filter( array_merge( $post_types, $include_posts_types ) ) );
+
+		return $post_types;
+	}
+
+	private function get_posts() {
+
+		$post_types = $this->get_post_types();
+		$out        = [];
+
+		foreach ( $post_types as $post_type ) {
+
+			$posts = get_posts(
+				[
+					'post_type'      => $post_type['id'],
+					'post_status'    => 'any',
+					'posts_per_page' => 10
+				]
+			);
+
+			$posts = array_map( function( $post ) {
+				$post->brizy_edit_url = $this->get_edit_post_url( $post );
+				return $post;
+			}, $posts );
+
+			$out[] = [
+				'post_type' => $post_type,
+				'posts'     => $posts
+			];
+		}
+
+		return $out;
+	}
+
+	private function get_edit_post_url( $post ) {
+
+		try {
+			$is_using_brizy = Brizy_Editor_Post::get( $post->ID )->uses_editor();
+		} catch ( Exception $e ) {
+			$is_using_brizy = false;
+		}
+
+		if ( $is_using_brizy ) {
+			return add_query_arg( [ Brizy_Editor_Constants::EDIT_KEY => '' ], get_permalink( $post->ID ) );
+		}
+
+		return esc_url( add_query_arg( [ 'action' => '_brizy_admin_editor_enable', 'post' => $post->ID ], admin_url( 'admin-post.php' ) ) );
 	}
 }
