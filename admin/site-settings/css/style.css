@@ -724,7 +724,7 @@ a {
         transition: all 0.2s ease; }
         .pages-list-wrap .pages-list-item .pages-list-actions__icon:hover {
           color: rgba(3, 8, 15, 0.92); }
-    .pages-list-wrap .pages-list-item.item-public .pages-list-title:before {
+    .pages-list-wrap .pages-list-item.item-publish .pages-list-title:before {
       background-color: #47CC24; }
     .pages-list-wrap .pages-list-item.item-draft .pages-list-title:before {
       background-color: #DFAD3D; }

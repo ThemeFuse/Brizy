@@ -1,0 +1,239 @@
+<div class="brz-ed-scroll-pane" id="settings-content">
+    <div class="brz-ed-scroll-inner">
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="brizy-settings-tab-submit" value="site-settings">
+            <div class="inner-content">
+
+                <!-- Settings Content -->
+                <div class="site-settings-wrap">
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Site Title</h2>
+                        <div class="sett-block-desc">
+                            The site title is used wherever the title of the site appears, adding to
+                            SEO
+                            benefits
+                        </div>
+                        <div class="sett-block-field">
+                            <input type="text" name="title" value="{{ site_settings['title'] }}">
+                        </div>
+                    </div>
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Site Description</h2>
+                        <div class="sett-block-desc">
+                            The description is used as metadata for SEO (recommended lenght 150
+                            characters)
+                        </div>
+                        <div class="sett-block-field">
+                                                <textarea
+                                                        name="description">{{ site_settings['description'] }}</textarea>
+                        </div>
+                    </div>
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Favicon</h2>
+                        <div class="sett-block-desc">
+                            Paste in the link to the favicon file or upload a PNG or ICO file in the
+                            field below
+                        </div>
+                        <div class="sett-block-field sett-upload-file">
+                            <span class="sett-favicon-path">{{ site_settings['favicon_url'] }}</span>
+                            <div class="upload-file-btn">
+                                <input type="file" name="favicon"
+                                       accept="image/x-png,image/gif,image/jpeg,image/ico">
+                                <input type="hidden" name="favicon_id"
+                                       value="{{ site_settings['favicon_id'] }}">
+                                <div class="btn-select"><span>Select</span></div>
+                                <div class="sett-favicon-th">
+                                    <img src="{{ site_settings['favicon_url'] }}" alt=""
+                                         id="settings-favicon" width="20">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer content -->
+            <div class="brz-ed-popup-two-body__footer">
+                <div class="footer-col">
+                    <a href="javascript:void(0);" class="footer-btn submit">
+                        <span>Save Changes</span>
+                        <svg class="brz-icon-svg">
+                            <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-col">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="brz-ed-scroll-pane" id="socialSharing-content">
+    <div class="brz-ed-scroll-inner">
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="brizy-settings-tab-submit" value="social-sharing">
+            <div class="inner-content">
+                <!-- Settings Content -->
+                <div class="site-settings-wrap">
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Social information</h2>
+                        <div class="sett-block-desc">
+                            When sharing your pages on social networks, Brizy Cloud will use this
+                            content to display in links.
+                        </div>
+                    </div>
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Status Message</h2>
+                        <div class="sett-block-field">
+                            <input type="text" name="title" value="{{ social_sharing['title'] }}">
+                        </div>
+                    </div>
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Description (max. 280 characters)</h2>
+                        <div class="sett-block-field">
+                                                <textarea
+                                                        name="description">{{ social_sharing['description'] }}</textarea>
+                        </div>
+                    </div>
+                    <div class="settings-block thumbnail_wrap">
+                        <div class="thumbnail_left">
+                            <h2 class="sett-block-title">Image Thumbnail</h2>
+                            <div class="sett-block-desc">
+                                Upload an image to represent the site content when sharing on social
+                                networks
+                            </div>
+                        </div>
+                        <div class="thumbnail_right">
+                            {% if  social_sharing['thumbnail'] %}
+                                <img src="{{ social_sharing['thumbnail_url'] }}" alt=""
+                                     id="settings-favicon" width="123" height="123">
+                            {% else %}
+                                <input type="file"
+                                       name="thumbnail"
+                                       accept="image/x-png,image/gif,image/jpeg,image/ico">
+                                <div class="thumbnail_absolute">
+                                    <div class="icon">
+                                    </div>
+                                    <div class="add_image">
+                                        Add Image
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer content -->
+            <div class="brz-ed-popup-two-body__footer">
+                <div class="footer-col">
+                    <a href="javascript:void(0);" class="footer-btn submit">
+                        <span>Save Changes</span>
+                        <svg class="brz-icon-svg">
+                            <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-col">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="brz-ed-scroll-pane" id="customCSS-content">
+    <div class="brz-ed-scroll-inner">
+        <form action="" method="post">
+            <input type="hidden" name="brizy-settings-tab-submit" value="custom-css">
+            <div class="inner-content">
+                <!-- Settings Content -->
+                <div class="site-settings-wrap">
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Custom CSS</h2>
+                        <div class="sett-block-desc">
+                            This area will allow you to add custom CSS rules into your site.
+                        </div>
+                        <div class="sett-block-field custom_css_aria">
+                                                <textarea class="codemirror-editor" id="css_custom" name="custom_css"
+                                                          data-mode="text/css">{{ custom_css }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer content -->
+            <div class="brz-ed-popup-two-body__footer">
+                <div class="footer-col">
+                    <a href="javascript:void(0);" class="footer-btn submit">
+                        <span>Save Changes</span>
+                        <svg class="brz-icon-svg">
+                            <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-col">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="brz-ed-scroll-pane" id="codeInjection-content">
+    <div class="brz-ed-scroll-inner">
+        <form action="" method="post">
+            <input type="hidden" name="brizy-settings-tab-submit" value="code-injection">
+            <div class="inner-content">
+                <!-- Settings Content -->
+                <div class="site-settings-wrap">
+                    <div class="settings-block injector_wrap">
+                        <h2 class="sett-block-title">
+                            Code Injection > <span>Header</span>
+                        </h2>
+                        <div class="sett-block-desc">
+                            Enter code that will be injected into the 'head' tag on every page of
+                            your
+                            site.
+                        </div>
+                        <div class="sett-block-field custom_css_aria textarea2">
+                                                <textarea class="codemirror-editor" id="css_custom2" name="header_code"
+                                                          data-mode="html">{{ code_injection['header_code'] }}</textarea>
+                        </div>
+                    </div>
+                    <div class="settings-block">
+                        <h2 class="sett-block-title">Code Injection > <span>Footer</span></h2>
+                        <div class="sett-block-desc">
+                            Enter code that will be injected into the 'footer' template on every
+                            page of
+                            your site.
+                        </div>
+                        <div class="sett-block-field custom_css_aria textarea2">
+                                                <textarea class="codemirror-editor" id="css_custom3" name="footer_code"
+                                                          data-mode="html">{{ code_injection['footer_code'] }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer content -->
+            <div class="brz-ed-popup-two-body__footer">
+                <div class="footer-col">
+                    <a href="javascript:void(0);" class="footer-btn submit">
+                        <span>Save Changes</span>
+                        <svg class="brz-icon-svg">
+                            <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Check"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-info">
+                        <svg class="brz-icon-svg">
+                            <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Info"></use>
+                        </svg>
+                        <p>
+                            Tip: Learn more about code injection <a
+                                    href="javascript:void(0);">here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

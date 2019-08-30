@@ -180,25 +180,26 @@ jQuery(document).ready(function ($) {
     $('#modal').modal('show');
 
     // Tabs
-    $('.brz-ed-tab-item').on('click', function () {
-        var tabNameAttr = $(this).attr('data-tab-name');
+    $( '.brz-ed-tab-item' ).on( 'click', function () {
+        var tabNameAttr = $( this ).attr( 'data-tab-name' );
 
-        if (!$(this).hasClass('brz-ed-popup-two-sidebar-list-active')) {
-            $('.brz-ed-tab-item').removeClass('brz-ed-popup-two-sidebar-list-active');
-            $(this).addClass('brz-ed-popup-two-sidebar-list-active');
+        if ( ! $( this ).hasClass( 'brz-ed-popup-two-sidebar-list-active' ) ) {
+            $( '.brz-ed-tab-item' ).removeClass( 'brz-ed-popup-two-sidebar-list-active' );
+            $( this ).addClass( 'brz-ed-popup-two-sidebar-list-active' );
 
-            $('.brz-ed-popup-two-body__content > .brz-ed-scroll-pane').fadeOut(0).removeClass('brz-ed-scroll-pane-active');
-            $('.brz-ed-popup-two-body__content').find('#' + tabNameAttr).fadeIn(0).addClass('brz-ed-scroll-pane-active');
+            $( '.brz-ed-popup-two-body__content > .brz-ed-scroll-pane' ).fadeOut( 0 ).removeClass( 'brz-ed-scroll-pane-active' );
+            $( '.brz-ed-popup-two-body__content' ).find( '#' + tabNameAttr ).fadeIn( 0 ).addClass( 'brz-ed-scroll-pane-active' );
         }
-    });
-
-    $('.brz-ed-popup-two-tab-item').trigger( 'click' );
+    } );
 
     $('.brz-ed-popup-two-tab-item').on('click', function () {
         var pageNameAttr = $(this).attr('data-page-name');
         var dashNameAttr = $(this).attr('data-dash-name');
 
+
+
         if (!$(this).hasClass('brz-ed-popup-two-tab-item-active')) {
+            console.log( dashNameAttr    );
             $('.brz-ed-popup-two-tab-item').removeClass('brz-ed-popup-two-tab-item-active');
             $(this).addClass('brz-ed-popup-two-tab-item-active');
 
@@ -215,4 +216,5 @@ jQuery(document).ready(function ($) {
 
     bindFormInputEvents();
 
+    $('.brz-ed-popup-two-tab-item').children(":first").trigger( 'click' );
 });
