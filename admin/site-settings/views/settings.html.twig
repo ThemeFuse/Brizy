@@ -24,8 +24,7 @@
                             characters)
                         </div>
                         <div class="sett-block-field">
-                                                <textarea
-                                                        name="description">{{ site_settings['description'] }}</textarea>
+                            <textarea name="description">{{ site_settings['description'] }}</textarea>
                         </div>
                     </div>
                     <div class="settings-block">
@@ -35,7 +34,10 @@
                             field below
                         </div>
                         <div class="sett-block-field sett-upload-file">
-                            <span class="sett-favicon-path">{{ site_settings['favicon_url'] }}</span>
+                            <span class="sett-favicon-path">
+                                <span class="brz-favicon-path-text">{{ site_settings['favicon_url'] }}</span>
+                                <span class="brz-remove-favicon"></span>
+                            </span>
                             <div class="upload-file-btn">
                                 <input type="file" name="favicon"
                                        accept="image/x-png,image/gif,image/jpeg,image/ico">
@@ -43,8 +45,7 @@
                                        value="{{ site_settings['favicon_id'] }}">
                                 <div class="btn-select"><span>Select</span></div>
                                 <div class="sett-favicon-th">
-                                    <img src="{{ site_settings['favicon_url'] }}" alt=""
-                                         id="settings-favicon" width="20">
+                                    <img src="{{ site_settings['favicon_url'] }}" alt="" id="settings-favicon" width="20">
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,7 @@
     </div>
 </div>
 
-<div class="brz-ed-scroll-pane" id="socialSharing-content">
+{#<div class="brz-ed-scroll-pane" id="socialSharing-content">
     <div class="brz-ed-scroll-inner">
         <form action="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="brizy-settings-tab-submit" value="social-sharing">
@@ -139,7 +140,7 @@
             </div>
         </form>
     </div>
-</div>
+</div>#}
 
 <div class="brz-ed-scroll-pane" id="customCSS-content">
     <div class="brz-ed-scroll-inner">
@@ -222,7 +223,7 @@
                         </svg>
                     </a>
                 </div>
-                <div class="footer-col">
+                {#<div class="footer-col">
                     <div class="footer-info">
                         <svg class="brz-icon-svg">
                             <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Info"></use>
@@ -232,7 +233,7 @@
                                     href="javascript:void(0);">here</a>
                         </p>
                     </div>
-                </div>
+                </div>#}
             </div>
         </form>
     </div>

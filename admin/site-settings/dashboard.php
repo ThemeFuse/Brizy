@@ -43,11 +43,11 @@ class Brizy_Admin_SiteSettings_Dashboard {
 					break;
 
 				case 'update-post':
-					$this->hanldeUpdatePostSubmit();
+					$this->handleUpdatePostSubmit();
 					break;
 
 				case 'delete-post':
-					$this->hanldeDeletePostSubmit();
+					$this->handleDeletePostSubmit();
 					break;
 			}
 
@@ -93,7 +93,9 @@ class Brizy_Admin_SiteSettings_Dashboard {
 
 		if ( ! empty( $_FILES['favicon'] ) && empty( $_POST['favicon_id'] ) ) {
 
-			include_once( ABSPATH . 'wp-admin/includes/image.php' );
+			require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+			require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+			require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
 			$uploadedfile = $_FILES['favicon'];
 			$file         = wp_handle_upload( $uploadedfile, [ 'test_form' => false ] );
@@ -170,13 +172,13 @@ class Brizy_Admin_SiteSettings_Dashboard {
 		}
 	}
 
-	private function hanldeUpdatePostSubmit() {
+	private function handleUpdatePostSubmit() {
 
 		if ( ! get_post( $_POST['post_id'] ) ) {
 			return;
 		}
 
-		wp_update_post(
+		$post_id = wp_update_post(
 			[
 				'ID'          => $_POST['post_id'],
 				'post_title'  => $_POST['page-title'],
@@ -184,9 +186,13 @@ class Brizy_Admin_SiteSettings_Dashboard {
 				'post_status' => $_POST['status'],
 			]
 		);
+
+		if ( ! empty( $_POST['description'] ) && $post_id ) {
+			update_post_meta( $post_id, 'brizy-seo-description', $_POST['description'] );
+		}
 	}
 
-	private function hanldeDeletePostSubmit() {
+	private function handleDeletePostSubmit() {
 		wp_delete_post( $_POST['post_id'] );
 	}
 
@@ -202,11 +208,11 @@ class Brizy_Admin_SiteSettings_Dashboard {
 						'icon' => 'symbol-defs.svg#icon-General-Settings',
 						'name' => esc_html__( 'Site Settings', 'brizy' )
 					],
-					[
+					/*[
 						'id'   => 'socialSharing',
 						'icon' => 'symbol-defs.svg#icon-Social',
 						'name' => esc_html__( 'Social Sharing', 'brizy' )
-					],
+					],*/
 					[
 						'id'   => 'customCSS',
 						'icon' => 'symbol-defs.svg#icon-CSS',
@@ -234,10 +240,10 @@ class Brizy_Admin_SiteSettings_Dashboard {
 				'header_code' => html_entity_decode( get_option( 'brizy-header-injection' ) ),
 				'footer_code' => html_entity_decode( get_option( 'brizy-footer-injection' ) )
 			],
-			'post_types' => [
+			/*'post_types' => [
 				'tabs' => $this->get_post_types()
 			],
-			'posts' => $this->get_posts(),
+			'posts'      => $this->get_posts(),*/
 		];
 
 		echo Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/views' )->render( 'index.html.twig', $context );
@@ -291,7 +297,8 @@ class Brizy_Admin_SiteSettings_Dashboard {
 			);
 
 			$posts = array_map( function( $post ) {
-				$post->brizy_edit_url = $this->get_edit_post_url( $post );
+				$post->brizy_edit_url        = $this->get_edit_post_url( $post );
+				$post->brizy_seo_description = $seo_description = get_post_meta( $post->ID, 'brizy-seo-description', true );
 				return $post;
 			}, $posts );
 
