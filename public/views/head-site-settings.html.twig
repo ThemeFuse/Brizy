@@ -12,22 +12,21 @@
     <!-- END HEADER SCRIPT INJECTION -->
 {% endif %}
 
+{% if single_title is defined %}
+    <meta name="description" content="{{ site_settings['title'] }}">
+{% endif %}
+
 {#
 <!-- Search Engine -->
 <meta name="description" content="{{ site_settings['title'] }}">
-
-<!-- Schema.org for Google -->
-<meta itemprop="name" content="{{ site_settings['title'] }}">
-<meta itemprop="description" content="{{ site_settings['description'] }}">
-<meta itemprop="image" content="{{ social_sharing['thumbnail_url'] }}">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ social_sharing['title'] }}">
 <meta name="twitter:description" content="{{ social_sharing['description'] }}">
 <meta name="twitter:image:src" content="{{ social_sharing['thumbnail_url'] }}">
-
 <!-- Twitter - Article -->
+
 <!-- Open Graph general (Facebook, Pinterest & Google+) -->
 <meta property="og:title" content="{{ social_sharing['title'] }}">
 <meta property="og:description" content="{{ social_sharing['description'] }}">
