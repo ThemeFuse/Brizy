@@ -95,6 +95,9 @@ def folderExist(path){
 
 pipeline {
     agent any
+    environment {
+            GITHUB_TOKEN     = credentials('git-token')
+    }
     stages {
         stage('Version Update') {
             steps {
@@ -136,7 +139,7 @@ pipeline {
                 sh 'cp -r * '+ params.brizySvnPath + '/trunk/'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf vendor'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf public/editor-src'
-                sh "/usr/local/bin/composer config -g github-oauth.github.com ${params.gitHubToken}"
+                sh "/usr/local/bin/composer config -g github-oauth.github.com $GITHUB_TOKEN"
                 sh 'cd ' + params.brizySvnPath + '/trunk && /usr/local/bin/composer clearcache'
                 sh 'cd ' + params.brizySvnPath + '/trunk && /usr/local/bin/composer install --no-dev'
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -type f -name "*.dev.php" -delete'
