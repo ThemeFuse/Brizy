@@ -312,7 +312,7 @@ class Brizy_Admin_Templates {
 			),
 		);
 
-		wp_send_json( $groups, 200 );
+		wp_send_json_success( $groups, 200 );
 	}
 
 	private function getCustomPostsList( $groupValue ) {

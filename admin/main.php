@@ -283,21 +283,24 @@ class Brizy_Admin_Main {
 		);
 
 		$get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
+
 		wp_localize_script(
 			Brizy_Editor::get()->get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
 			array(
-				'url'         => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-				'pluginUrl'   => BRIZY_PLUGIN_URL,
-				'ruleApiHash' => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
-				'id'          => get_the_ID(),
-				'page'        => array(
+				'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+				'pluginUrl'     => BRIZY_PLUGIN_URL,
+				'ruleApiHash'   => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
+				'id'            => get_the_ID(),
+				'page'          => array(
 					'focalPoint' => $get_post_focal ? $get_post_focal : array( 'x' => 50, 'y' => 50 )
 				),
-				'actions'     => array(
+				'actions'       => array(
 					'enable'  => '_brizy_admin_editor_enable',
 					'disable' => '_brizy_admin_editor_disable',
-				)
+				),
+				'editorVersion' => BRIZY_EDITOR_VERSION,
+				'pluginVersion' => BRIZY_VERSION,
 			)
 		);
 	}

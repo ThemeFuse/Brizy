@@ -40,9 +40,10 @@ var api = {
         return jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_group_list",
             hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion,
             context: 'template-rules'
         }).done(function (data) {
-            apiCache.groupList = jQuery.Deferred().resolve(data);
+            apiCache.groupList = jQuery.Deferred().resolve(data.data);
         });
     },
     getPosts: function (postType, filter, exclude) {
@@ -56,9 +57,10 @@ var api = {
             excludePostTypes: exclude,
             postType: postType,
             filterTerm: filter,
-            hash: Brizy_Admin_Rules.hash
+            hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion
         }).done(function (data) {
-            apiCache.postList[cachekey] = jQuery.Deferred().resolve(data);
+            apiCache.postList[cachekey] = jQuery.Deferred().resolve(data.data);
         });
     },
     getTerms: function (taxonomy) {
@@ -67,9 +69,10 @@ var api = {
         return jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_get_terms",
             hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion,
             taxonomy: taxonomy
         }).done(function (data) {
-            apiCache.termList[taxonomy] = jQuery.Deferred().resolve(data);
+            apiCache.termList[taxonomy] = jQuery.Deferred().resolve(data.data);
         });
     },
     createRule: function (rule) {
@@ -92,6 +95,7 @@ var api = {
             action: "brizy_delete_rule",
             rule: ruleId,
             hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion,
             post: Brizy_Admin_Rules.id
         });
     },
@@ -100,6 +104,7 @@ var api = {
         return jQuery.post(Brizy_Admin_Rules.url, {
             action: "brizy_list_rules",
             hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion,
             post: Brizy_Admin_Rules.id
         });
     }
@@ -114,7 +119,7 @@ var actions = {
 
     updateGroups: function (value) {
         return function (state) {
-            return {groups: value};
+            return {groups: value.data};
         };
     },
 
@@ -195,7 +200,6 @@ var RuleTypeField = function (params) {
 };
 
 BrzSelect2 = function (params) {
-    console.log(params);
 
     var oncreate = function (element) {
         var el = jQuery(element);
@@ -205,7 +209,7 @@ BrzSelect2 = function (params) {
         }
         if (typeof params.optionRequest === 'function') {
             params.optionRequest().done(function (data) {
-                var options = params.convertResponseToOptions(data);
+                var options = params.convertResponseToOptions(data.data);
                 options.forEach(function (option) {
                     el.append(option).trigger("change");
                 });
