@@ -9,12 +9,12 @@
                         <div class="brz-ed-scroll-inner">
                             <div class="brz-ed-popup-two-sidebar-body">
                                 <ul class="brz-ul brz-ed-popup-two-sidebar">
-                                    {#<div class="modal_dash active" id="sidebar_post_types">
+                                    <div class="modal_dash active" id="sidebar_post_types">
                                         <div class="brz-ed-popup-two-sidebar-title">Types</div>
                                         {% for item in post_types['tabs'] %}
                                             {{ include('sidebar-item.html.twig') }}
                                         {% endfor %}
-                                    </div>#}
+                                    </div>
 
                                     <div class="modal_dash" id="sitebar_settings">
                                         <div class="brz-ed-popup-two-sidebar-title">Settings</div>
@@ -31,19 +31,19 @@
                 <div class="brz-ed-popup-two-body__content">
                     <div class="brz-ed-popup-two-header">
                         <div class="brz-ed-popup-two-header__tabs">
-                            {#<div class="brz-ed-popup-two-tab-item" data-page-name="post-content" data-dash-name="sidebar_post_types">
+                            <div class="brz-ed-popup-two-tab-item" data-page-name="post-content" data-dash-name="sidebar_post_types">
                                 <div class="brz-ed-popup-two-tab-icon">
                                     <svg class="brz-icon-svg">
-                                        <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Menus"></use>
+                                        <use xlink:href="{{ base_url }}fonts/symbol-defs.svg#icon-Menus"></use>
                                     </svg>
                                 </div>
                                 <div class="brz-ed-popup-two-tab-name">Post Types</div>
-                            </div>#}
+                            </div>
 
                             <div class="brz-ed-popup-two-tab-item" data-page-name="settings-content" data-dash-name="sitebar_settings">
                                 <div class="brz-ed-popup-two-tab-icon">
                                     <svg class="brz-icon-svg">
-                                        <use xlink:href="{{ fonts_url }}symbol-defs.svg#icon-Edit-Page"></use>
+                                        <use xlink:href="{{ base_url }}fonts/symbol-defs.svg#icon-Edit-Page"></use>
                                     </svg>
                                 </div>
                                 <div class="brz-ed-popup-two-tab-name">Site Settings</div>
@@ -53,10 +53,10 @@
                     </div>
 
                     {% for data in posts %}
-                        {{ include('post-type-items.html.twig') }}
+                        {% include 'post-types.html.twig' %}
                     {% endfor %}
 
-                    {{ include( 'settings.html.twig' ) }}
+                    {% include 'settings.html.twig' %}
 
                 </div>
             </div>

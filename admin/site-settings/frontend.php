@@ -31,8 +31,8 @@ class Brizy_Admin_SiteSettings_Frontend {
 			'language'       => get_locale(),
 		);
 
-		if ( is_single() && ( $seo_description = get_post_meta( get_the_ID(), 'brizy-seo-description', true ) ) ) {
-			$context['seo_description'] = $seo_description;
+		if ( is_single() && ( $post_description = get_post_meta( get_the_ID(), 'brizy-seo-description', true ) ) ) {
+			$context['post_description'] = $post_description;
 		}
 
 		echo Brizy_TwigEngine::instance( Brizy_Editor::get()->get_path( '/public/views' ) )

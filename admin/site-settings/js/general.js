@@ -163,4 +163,38 @@ jQuery(document).ready(function ($) {
     } );
 
     bindFormInputEvents();
-});
+
+    $('.brz-pagination').each( function() {
+        var self = $( this );
+
+        self.pagination({
+            dataSource: JSON.parse( self.attr( 'data-pages' ) ),
+            pageSize: 1,
+            showGoInput: true,
+            showGoButton: true,
+            callback: function ( data, pagination ) {
+                var page = data[0];
+
+                if ( page === 1 && self.hasClass( 'js-unchanged-content' ) ) {
+                    return;
+                }
+                self.removeClass( 'js-unchanged-content' );
+
+                $.ajax({
+                    method: 'POST',
+                    url: Brizy_Site_Settings.ajax_url,
+                    data: {
+                        action: 'brizy_site_settings_get_posts',
+                        'brizy-site-settings': true,
+                        guard: Brizy_Site_Settings.guard,
+                        page: page,
+                        post_type: self.attr( 'data-post-type' )
+                    },
+                    success: function ( response ) {
+                        self.parent().find( '.pages-list-items' ).html( response );
+                    }
+                });
+            }
+        });
+    } );
+} );

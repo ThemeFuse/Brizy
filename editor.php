@@ -301,7 +301,7 @@ class Brizy_Editor {
 
 		new Brizy_Admin_SiteSettings_Frontend();
 
-		if ( Brizy_Editor::is_administrator() && isset( $_GET['brizy-site-settings'] ) ) {
+		if ( Brizy_Editor::is_administrator() && isset( $_REQUEST['brizy-site-settings'] ) ) {
 			new Brizy_Admin_SiteSettings_Dashboard();
 		}
 	}

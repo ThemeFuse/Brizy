@@ -1453,4 +1453,14 @@ a {
   transition: all .2s ease;
   transform: rotateZ(-45deg);
 }
+
+.brz-pagination {
+  margin-left:auto;
+  margin-right:0;
+}
+
+.paginationjs {
+  margin: 20px 54px 0 0;
+  float:right;
+}
 /*# sourceMappingURL=style.css.map */

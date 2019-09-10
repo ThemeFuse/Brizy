@@ -1,0 +1,54 @@
+<div class="brz-ed-scroll-pane" id="{{ data.post_type.id }}-content">
+    <div class="brz-ed-scroll-inner">
+        <div class="inner-content">
+
+            <div class="pages-list-wrap" id="{{ data.post_type.id }}">
+                <div class="pages-list-head">
+                    <div class="pages-list-col">
+                        <div class="pages-list-text">Page Name</div>
+                    </div>
+                    <div class="pages-list-col">
+                        <div class="pages-list-text">Slug</div>
+                    </div>
+                    <div class="pages-list-col">
+                        <div class="pages-list-text">Actions</div>
+                    </div>
+                </div>
+
+                <div class="brz-pagination js-unchanged-content clearfix" data-pages="{{ data.max_num_pages }}" data-post-type="{{ data.post_type.id }}"></div>
+
+                <div class="pages-list-items" id="{{ data.post_type.id }}ListItems">
+
+                    {% include 'posts.html.twig' with { posts: data.posts, base_url: base_url } %}
+
+                </div>
+            </div>
+
+        </div>
+        <!-- Footer content -->
+        <div class="brz-ed-popup-two-body__footer">
+            <div class="footer-col">
+                <form action="" method="post">
+                    <input type="hidden" name="brizy-settings-tab-submit" value="create-post">
+                    <input type="hidden" name="post-type" value="{{ data.post_type.id }}">
+                    <a href="javascript:void(0);" class="footer-btn submit">
+                        <span>Add New {{ data.post_type.singular_name }}</span>
+                        <svg class="brz-icon-svg">
+                            <use xlink:href="{{ base_url }}fonts/symbol-defs.svg#icon-add"></use>
+                        </svg>
+                    </a>
+                </form>
+            </div>
+            <div class="footer-col">
+                <div class="footer-info">
+                    <svg class="brz-icon-svg">
+                        <use xlink:href="{{ base_url }}fonts/symbol-defs.svg#icon-Info"></use>
+                    </svg>
+                    <p>
+                        Create new items
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
