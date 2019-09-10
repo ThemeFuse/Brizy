@@ -136,7 +136,7 @@ class Brizy_Editor_Editor_Editor {
 				'templateThumbnails' => $this->urlBuilder->external_asset_url( 'thumbs' ) . "",
 				'templateIcons'      => $this->urlBuilder->proxy_url( 'editor/icons' ),
 				'templateFonts'      => $this->urlBuilder->external_fonts_url(),
-				'editorFonts'        => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+				'editorFonts'        => home_url(),
 				'pagePreview'        => $preview_post_link,
 				'about'              => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'backToDashboard'    => get_edit_post_link( $wp_post_id, null ),
