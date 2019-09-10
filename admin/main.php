@@ -69,10 +69,43 @@ class Brizy_Admin_Main {
 		add_filter( 'wp_import_existing_post', array( $this, 'handleNewProjectPostImport' ), 10, 2 );
 		add_filter( 'wp_import_post_meta', array( $this, 'handleNewProjectMetaImport' ), 10, 3 );
 
+		add_filter( 'wp_import_posts', array( $this, 'handlePostsImport' ) );
+
+
 		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
 
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
+	}
 
+	public function handlePostsImport( $posts ) {
+
+		$incompatibleBrizyPosts = array();
+
+		foreach ( $posts as $i => $post ) {
+			if ( ! isset( $post['postmeta'] ) ) {
+				continue;
+			}
+
+			foreach ( $post['postmeta'] as $meta ) {
+				if ( $meta['key'] == 'brizy-post-plugin-version' && version_compare( $meta['value'], BRIZY_VERSION . 'sss' ) !== 0 ) {
+					$incompatibleBrizyPosts[] = array(
+						'post_title' => $post['post_title'],
+						'version'    => $meta['value']
+					);
+					unset( $posts[ $i ] );
+				}
+			}
+		}
+
+		if ( count( $incompatibleBrizyPosts ) ) {
+			foreach ( $incompatibleBrizyPosts as $brizy_post ) {
+				printf( __( 'Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s ', 'brizy' ),
+					esc_html( $brizy_post['post_title'] ), esc_html( $brizy_post['version'] ) );
+				echo '<br />';
+			}
+		}
+
+		return $posts;
 	}
 
 	public function addFocalPoint( $content, $postId, $thumbId ) {
@@ -117,7 +150,6 @@ class Brizy_Admin_Main {
 			if ( wp_is_post_autosave( $post ) || wp_is_post_revision( $post ) ) {
 				return;
 			}
-
 
 			$bpost = Brizy_Editor_Post::get( $post );
 
@@ -522,45 +554,18 @@ class Brizy_Admin_Main {
 				// force import if the project data is not found in current project.
 				return 0;
 			}
-
 			$projectData = json_decode( base64_decode( $projectMeta['data'] ) );
 
-			// MERGE STYLES
-			// 1. merge extra fonts
-			$currentProjectGlobals->extraFonts = array_unique(
-				array_merge(
-					(array) ( isset( $currentProjectGlobals->extraFonts ) ? $currentProjectGlobals->extraFonts : array() ),
-					(array) ( isset( $projectData->extraFonts ) ? $projectData->extraFonts : array() )
-				)
-			);
-			// 2. merge extra fonts styles
+			$mergeStrategy = Brizy_Editor_Data_ProjectMergeStrategy::getMergerInstance( $projectMeta['pluginVersion'] );
 
-			if ( ! isset( $currentProjectGlobals->styles ) ) {
-				$currentProjectGlobals->styles = (object) array( '_extraFontStyles' => array() );
-			}
-
-			$currentProjectGlobals->styles->_extraFontStyles = array_merge(
-				(array) ( isset( $currentProjectGlobals->styles->_extraFontStyles ) ? $currentProjectGlobals->styles->_extraFontStyles : array() ),
-				(array) ( isset( $projectData->styles->_extraFontStyles ) ? $projectData->styles->_extraFontStyles : array() )
-			);
-
-
-			$currentProjectGlobals->styles->default = $projectData->styles->default;
-
-			if ( $projectData->styles && isset( $projectData->styles->_selected ) ) {
-				$selected                                 = $projectData->styles->_selected;
-				$currentProjectGlobals->styles->_selected = $selected;
-				if ( $selected ) {
-					$currentProjectGlobals->styles->$selected = $projectData->styles->$selected;
-				}
-			}
+			$mergedData = $mergeStrategy->merge( $currentProjectGlobals, $projectData );
 
 			// create project data backup
 			$data = $currentProjectStorage->get_storage();
 			update_post_meta( $currentProjectPostId, 'brizy-project-import-backup-' . md5( time() ), $data );
 			//---------------------------------------------------------
 
-			$currentProject->setGlobals( $currentProjectGlobals );
+			$currentProject->setGlobals( $mergedData );
 
 			return $currentProjectPostId;
 		}
