@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Editor_Data_ProjectMerger81 implements Brizy_Editor_Data_ProjectMergerStrategyInterface {
+class Brizy_Editor_Data_ProjectMerge81 implements Brizy_Editor_Data_ProjectMergeStrategyInterface {
 
 	/**
 	 * @param $projectData1
