@@ -567,7 +567,6 @@ class Brizy_Admin_Main {
 
 			$currentProject->setDataAsJson( json_encode( $mergedData ) );
 			$currentProject->save();
-
 			return $currentProjectPostId;
 		}
 
