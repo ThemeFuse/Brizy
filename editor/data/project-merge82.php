@@ -31,6 +31,10 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 		// selected Style
 		$result->selectedStyle = $projectData2->selectedStyle;
 
+		if ( ! isset( $result->styles ) ) {
+			$result->styles = array();
+		}
+
 		// merge styles
 		foreach ( $projectData2->styles as $i => $style ) {
 			foreach ( $result->styles as $j => $resultStyle ) {

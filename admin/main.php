@@ -565,8 +565,8 @@ class Brizy_Admin_Main {
 			update_post_meta( $currentProjectPostId, 'brizy-project-import-backup-' . md5( time() ), $data );
 			//---------------------------------------------------------
 
-			$currentProject->setGlobals( $mergedData );
-
+			$currentProject->setDataAsJson( json_encode( $mergedData ) );
+			$currentProject->save();
 			return $currentProjectPostId;
 		}
 
