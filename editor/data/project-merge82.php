@@ -4,13 +4,17 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 	private function mergeFonts( $fonts, $newFonts, $key = "family" ) {
 		$result = $fonts;
 
-		foreach ( $result->data as $font ) {
-			foreach ( $newFonts->data as $newFont ) {
+		foreach ( $newFonts->data as $newFont ) {
+			$exist = false;
+
+			foreach ( $fonts->data as $font ) {
 				if ( $font->$key === $newFont->$key ) {
-					continue;
-				} else {
-					$result->data[] = $newFont;
+					$exist = true;
 				}
+			}
+
+			if ( ! $exist ) {
+				$result->data[] = $newFont;
 			}
 		}
 
@@ -53,23 +57,31 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 
 		// fonts -> blocks
 		if ( isset( $projectData2->fonts->blocks ) ) {
-			$resultBlocks          = ( isset( $result->fonts->blocks ) ) ? $result->fonts->blocks : array( 'data' => array() );
-			$result->fonts->blocks = $this->mergeFonts( $resultBlocks, $projectData2->fonts->blocks );
+			if ( ! isset( $result->fonts->blocks ) ) {
+				$result->fonts->blocks = $projectData2->fonts->blocks;
+			} else {
+				$result->fonts->blocks = $this->mergeFonts( $projectData2->fonts->blocks, $projectData2->fonts->blocks );
+			}
 		}
 
 		// fonts -> google
 		if ( isset( $projectData2->fonts->google ) ) {
-			$resultGoogle          = ( isset( $result->fonts->google ) ) ? $result->fonts->google : array( 'data' => array() );
-			$result->fonts->google = $this->mergeFonts( $resultGoogle, $projectData2->fonts->google );
+			if ( ! isset( $result->fonts->google ) ) {
+				$result->fonts->google = $projectData2->fonts->google;
+			} else {
+				$result->fonts->google = $this->mergeFonts( $projectData2->fonts->google, $projectData2->fonts->google );
+			}
 		}
 
 		// fonts -> upload
 		if ( isset( $projectData2->fonts->upload ) ) {
-			$resultUpload          = ( isset( $result->fonts->upload ) ) ? $result->fonts->upload : array( 'data' => array() );
-			$result->fonts->upload = $this->mergeFonts( $resultUpload, $projectData2->fonts->upload, "id" );
+			if ( ! isset( $result->fonts->upload ) ) {
+				$result->fonts->uploud = $projectData2->fonts->upload;
+			} else {
+				$result->fonts->upload = $this->mergeFonts( $projectData2->fonts->upload, $projectData2->fonts->upload, "id" );
+			}
 		}
 
 		return $result;
-
 	}
 }
