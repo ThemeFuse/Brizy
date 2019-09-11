@@ -511,7 +511,7 @@ class Brizy_Admin_Main {
 			}
 
 			foreach ( $post['postmeta'] as $meta ) {
-				if ( $meta['key'] == 'brizy-post-plugin-version' && version_compare( $meta['value'], BRIZY_VERSION ) !== 0 ) {
+				if ( $meta['key'] == 'brizy-post-plugin-version' && ! Brizy_Editor_Data_ProjectMergeStrategy::checkVersionCompatibility( $meta['value'] ) ) {
 					$incompatibleBrizyPosts[] = array(
 						'post_title' => $post['post_title'],
 						'version'    => $meta['value']
@@ -565,7 +565,8 @@ class Brizy_Admin_Main {
 			update_post_meta( $currentProjectPostId, 'brizy-project-import-backup-' . md5( time() ), $data );
 			//---------------------------------------------------------
 
-			$currentProject->setGlobals( $mergedData );
+			$currentProject->setDataAsJson( json_encode( $mergedData ) );
+			$currentProject->save();
 
 			return $currentProjectPostId;
 		}
