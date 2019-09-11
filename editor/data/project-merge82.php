@@ -6,7 +6,7 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 
 		foreach ( $result->data as $font ) {
 			foreach ( $newFonts->data as $newFont ) {
-				if ( $font[ $key ] === $newFont[ $key ] ) {
+				if ( $font->$key === $newFont->$key ) {
 					continue;
 				} else {
 					$result->data[] = $newFont;
@@ -68,6 +68,8 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 			$resultUpload          = ( isset( $result->fonts->upload ) ) ? $result->fonts->upload : array( 'data' => array() );
 			$result->fonts->upload = $this->mergeFonts( $resultUpload, $projectData2->fonts->upload, "id" );
 		}
+
+		return $result;
 
 	}
 }

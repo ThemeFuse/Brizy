@@ -77,37 +77,6 @@ class Brizy_Admin_Main {
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
 	}
 
-	public function handlePostsImport( $posts ) {
-
-		$incompatibleBrizyPosts = array();
-
-		foreach ( $posts as $i => $post ) {
-			if ( ! isset( $post['postmeta'] ) ) {
-				continue;
-			}
-
-			foreach ( $post['postmeta'] as $meta ) {
-				if ( $meta['key'] == 'brizy-post-plugin-version' && version_compare( $meta['value'], BRIZY_VERSION . 'sss' ) !== 0 ) {
-					$incompatibleBrizyPosts[] = array(
-						'post_title' => $post['post_title'],
-						'version'    => $meta['value']
-					);
-					unset( $posts[ $i ] );
-				}
-			}
-		}
-
-		if ( count( $incompatibleBrizyPosts ) ) {
-			foreach ( $incompatibleBrizyPosts as $brizy_post ) {
-				printf( __( 'Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s ', 'brizy' ),
-					esc_html( $brizy_post['post_title'] ), esc_html( $brizy_post['version'] ) );
-				echo '<br />';
-			}
-		}
-
-		return $posts;
-	}
-
 	public function addFocalPoint( $content, $postId, $thumbId ) {
 
 		if ( ! $thumbId ) {
@@ -530,6 +499,37 @@ class Brizy_Admin_Main {
 		}
 
 		exit;
+	}
+
+	public function handlePostsImport( $posts ) {
+
+		$incompatibleBrizyPosts = array();
+
+		foreach ( $posts as $i => $post ) {
+			if ( ! isset( $post['postmeta'] ) ) {
+				continue;
+			}
+
+			foreach ( $post['postmeta'] as $meta ) {
+				if ( $meta['key'] == 'brizy-post-plugin-version' && version_compare( $meta['value'], BRIZY_VERSION ) !== 0 ) {
+					$incompatibleBrizyPosts[] = array(
+						'post_title' => $post['post_title'],
+						'version'    => $meta['value']
+					);
+					unset( $posts[ $i ] );
+				}
+			}
+		}
+
+		if ( count( $incompatibleBrizyPosts ) ) {
+			foreach ( $incompatibleBrizyPosts as $brizy_post ) {
+				printf( __( 'Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s ', 'brizy' ),
+					esc_html( $brizy_post['post_title'] ), esc_html( $brizy_post['version'] ) );
+				echo '<br />';
+			}
+		}
+
+		return $posts;
 	}
 
 	public function handleNewProjectPostImport( $existing, $post ) {
