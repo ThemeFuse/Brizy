@@ -43,7 +43,7 @@ var api = {
             version: Brizy_Admin_Data.editorVersion,
             context: 'template-rules'
         }).done(function (data) {
-            apiCache.groupList = jQuery.Deferred().resolve(data.data);
+            apiCache.groupList = jQuery.Deferred().resolve(data);
         });
     },
     getPosts: function (postType, filter, exclude) {
@@ -60,7 +60,7 @@ var api = {
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion
         }).done(function (data) {
-            apiCache.postList[cachekey] = jQuery.Deferred().resolve(data.data);
+            apiCache.postList[cachekey] = jQuery.Deferred().resolve(data);
         });
     },
     getTerms: function (taxonomy) {
@@ -72,7 +72,7 @@ var api = {
             version: Brizy_Admin_Data.editorVersion,
             taxonomy: taxonomy
         }).done(function (data) {
-            apiCache.termList[taxonomy] = jQuery.Deferred().resolve(data.data);
+            apiCache.termList[taxonomy] = jQuery.Deferred().resolve(data);
         });
     },
     createRule: function (rule) {
@@ -81,6 +81,7 @@ var api = {
         url.searchParams.append('action', 'brizy_add_rule');
         url.searchParams.append('hash', Brizy_Admin_Rules.hash);
         url.searchParams.append('post', Brizy_Admin_Rules.id);
+        url.searchParams.append('version', Brizy_Admin_Data.editorVersion);
 
         return jQuery.ajax({
             type: "POST",
@@ -208,8 +209,8 @@ BrzSelect2 = function (params) {
             el.on("change", params.onChange);
         }
         if (typeof params.optionRequest === 'function') {
-            params.optionRequest().done(function (data) {
-                var options = params.convertResponseToOptions(data.data);
+            params.optionRequest().done(function (response) {
+                var options = params.convertResponseToOptions(response);
                 options.forEach(function (option) {
                     el.append(option).trigger("change");
                 });
@@ -241,9 +242,9 @@ BrzSelect2 = function (params) {
 };
 
 var PostSelect2Field = function (params) {
-    var convertResponseToOptions = function (data) {
+    var convertResponseToOptions = function (response) {
         var options = [new Option("All", null, false, false)];
-        data.posts.forEach(function (post) {
+        response.data.posts.forEach(function (post) {
             var selected = params.value.includes(post.ID + "") || params.value.includes(post.ID);
             options.push(new Option(post.title, post.ID, false, selected));
         });
@@ -282,9 +283,9 @@ var RuleCustomPostSearchField = function (params) {
 };
 
 var RuleTaxonomySearchField = function (params) {
-    var convertResponseToOptions = function (data) {
+    var convertResponseToOptions = function (response) {
         var options = [new Option("All", null, false, false)];
-        data.forEach(function (term) {
+        response.data.forEach(function (term) {
             var selected = params.rule.entityValues && (params.rule.entityValues.includes(term.term_id + "") || params.rule.entityValues.includes(term.term_id));
             options.push(new Option(term.name, term.term_id, false, selected));
         });

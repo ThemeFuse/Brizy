@@ -22,7 +22,7 @@ abstract class Brizy_Admin_AbstractApi {
 	protected function verifyNonce( $action ) {
 
 		$version = $this->param( 'version' );
-		if ( $version != BRIZY_EDITOR_VERSION ) {
+		if ( $version !== BRIZY_EDITOR_VERSION ) {
 			Brizy_Logger::instance()->critical( 'Request with invalid version',
 				[
 					'editorVersion'   => BRIZY_EDITOR_VERSION,
