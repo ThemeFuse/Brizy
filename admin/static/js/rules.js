@@ -46,6 +46,7 @@ var api = {
             apiCache.groupList = jQuery.Deferred().resolve(data);
         });
     },
+
     getPosts: function (postType, filter, exclude) {
 
         var cachekey = postType + filter;
@@ -63,6 +64,7 @@ var api = {
             apiCache.postList[cachekey] = jQuery.Deferred().resolve(data);
         });
     },
+
     getTerms: function (taxonomy) {
         if (apiCache.termList[taxonomy])
             return apiCache.termList[taxonomy];
@@ -75,6 +77,7 @@ var api = {
             apiCache.termList[taxonomy] = jQuery.Deferred().resolve(data);
         });
     },
+
     createRule: function (rule) {
 
         var url = new URL(Brizy_Admin_Rules.url);

@@ -372,7 +372,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string
 	 */
 	private function generateId() {
-		return md5( implode( '', func_get_args() ) );
+		return md5( implode( '', func_get_args() ) .time() );
 	}
 
 	/**
