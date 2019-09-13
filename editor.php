@@ -69,10 +69,16 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
+		Brizy_Admin_Popups_Main::_init();
+		Brizy_Admin_Layouts_Main::_init();
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
 		Brizy_Admin_Cloud::_init();
-		Brizy_Admin_Cloud_Cron::_init();
+
+		if ( ! wp_doing_ajax() && Brizy_Editor_Project::get()->getCloudToken() ) {
+			// do not run cron actions on ajax request
+			Brizy_Admin_Cloud_Cron::_init();
+		}
 
 
 		$this->loadShortcodes();
@@ -210,6 +216,8 @@ class Brizy_Editor {
 	public function registerCustomPostTemplates() {
 		Brizy_Editor_Project::registerCustomPostType();
 		Brizy_Admin_Blocks_Main::registerCustomPosts();
+		Brizy_Admin_Popups_Main::registerCustomPosts();
+		Brizy_Admin_Layouts_Main::registerCustomPosts();
 		Brizy_Admin_Fonts_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPost();
 		Brizy_Admin_Templates::registerCustomPostTemplate();

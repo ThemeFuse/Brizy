@@ -29,7 +29,7 @@ class Brizy_Admin_Fonts_Main {
 	 */
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_filter( 'upload_mimes', array( $this, 'addFOntTypes' ), 1, 1 );
+		add_filter( 'wp_check_filetype_and_ext', array( $this, 'addFontTypes2' ), 10, 4 );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );
@@ -42,9 +42,9 @@ class Brizy_Admin_Fonts_Main {
 		Brizy_Admin_Fonts_Api::_init();
 	}
 
-	public function addFOntTypes( $mime_types ) {
+	public function uploadMimes( $mime_types ) {
 
-		$mime_types['ttf']   = 'application/x-font-ttf';
+		$mime_types['ttf']   = 'font/ttf';
 		$mime_types['eot']   = 'application/vnd.ms-fontobject';
 		$mime_types['woff']  = 'application/x-font-woff';
 		$mime_types['woff2'] = 'application/x-font-woff2';
@@ -52,8 +52,23 @@ class Brizy_Admin_Fonts_Main {
 		return $mime_types;
 	}
 
+	public function addFontTypes2( $info, $tmpfile, $filename, $mimes ) {
+		$parts = explode( '.', $filename );
+		$ext   = array_pop( $parts );
+		$ext   = strtolower( $ext );
+
+		$additionalTypes = $this->uploadMimes(array());
+
+		if ( $type = $additionalTypes[ $ext ] ) {
+			$ret = array( 'ext' => $ext, 'type' => $type, 'proper_filename' => $filename );
+		}
+
+		return $ret;
+	}
+
 
 	static public function registerCustomPosts() {
+
 
 		$labels = array(
 			'name' => _x( 'Fonts', 'post type general name' ),

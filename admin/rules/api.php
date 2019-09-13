@@ -98,7 +98,6 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$this->manager->addRule( $postId, $rule );
 		wp_send_json_success( $rule, 200 );
-
 	}
 
 	public function actionCreateRules() {

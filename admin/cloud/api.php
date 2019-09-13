@@ -55,6 +55,13 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 		if ( $token = $this->cloudClient->signIn( $data->email, $data->password ) ) {
 			$this->project->setCloudToken( $token );
+
+			$containers = $this->cloudClient->getContainers();
+
+			if ( isset( $containers[0] ) ) {
+				$this->project->setCloudContainer( $containers[0]->id );
+			}
+
 			$this->project->save();
 			$this->success( [] );
 		} else {

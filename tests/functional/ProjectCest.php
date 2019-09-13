@@ -22,16 +22,16 @@ class ProjectCest {
 	 */
 	public function createdMetaKeysTest( FunctionalTester $I ) {
 
-		Brizy_Editor_Project::get();
+		$project = Brizy_Editor_Project::get();
 
 		$I->seePostInDatabase( [
-			'post_type'      => Brizy_Editor_Project::BRIZY_PROJECT,
-			'post_name'      => 'Brizy Project',
-			'post_status'    => 'publish',
+			'post_type'   => Brizy_Editor_Project::BRIZY_PROJECT,
+			'post_status' => 'publish',
 		] );
 
 		$I->seePostMetaInDatabase( [
 			'meta_key' => 'brizy-project',
+			'post_id'  => $project->get_parent_id()
 		] );
 	}
 

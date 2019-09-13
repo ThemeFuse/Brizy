@@ -29,7 +29,7 @@ class BlockApiCest {
 					]
 				),
 				'brizy_post_uid'              => 'gffbf00297b0b4e9ee27af32a7b79c333{{n}}',
-				'brizy-block-meta'            => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
+				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
 				'brizy-post-editor-version'   => '1.0.101',
 				'brizy-post-compiler-version' => '1.0.101',
 				'brizy-need-compile'          => 0,
@@ -57,8 +57,8 @@ class BlockApiCest {
 					]
 				),
 				'brizy_post_uid'              => 'sffbf00297b0b4e9ee27af32a7b79c333{{n}}',
-				'brizy-block-meta'            => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
-				'brizy-block-media'           => '{"fonts":["pvfegzyhgbmoprmzmsxfakudbermsvztkyel","jzuulmiplxnszgangurbqaexkirdbgpfhfxm"],"images":["dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg","e3959c03766425afcfa8bd16e72fb505b6221ae1.jpeg"]}',
+				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
+				'brizy-media'                 => '{"fonts":["pvfegzyhgbmoprmzmsxfakudbermsvztkyel","jzuulmiplxnszgangurbqaexkirdbgpfhfxm"],"images":["dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg","e3959c03766425afcfa8bd16e72fb505b6221ae1.jpeg"]}',
 				'brizy-post-editor-version'   => '1.0.101',
 				'brizy-post-compiler-version' => '1.0.101',
 				'brizy-need-compile'          => 0,
@@ -92,13 +92,37 @@ class BlockApiCest {
 		$I->assertCount( 2, $array->data, 'Response should contain two blocks' );
 
 		foreach ( $array->data as $block ) {
-			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
-			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
-			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
+			$I->assertTrue( isset( $block->uid ), 'Block should contain property: uid' );
+			$I->assertTrue( isset( $block->status ), 'Block should contain property:  status' );
+			$I->assertTrue( isset( $block->data ), 'Block should contain property:  data' );
+			$I->assertFalse( isset( $block->media ), 'Block should contain property:  media' );
+			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain correct meta value' );
+			$I->assertTrue( isset( $block->position ), 'Block should contain property:  position and must be object' );
+			$I->assertTrue( isset( $block->rules ), 'Block should contain property:  rules and must be array' );
+		}
+
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+				'fields'  => [ 'uid', 'meta' ],
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIsSuccessful();
+
+		$jsonResponse = $I->grabResponse();
+		$array        = json_decode( $jsonResponse );
+
+		$I->assertCount( 2, $array->data, 'Response should contain two blocks' );
+
+		foreach ( $array->data as $block ) {
+			$I->assertTrue( isset( $block->uid ), 'Block should contain property: uid' );
+			$I->assertFalse( isset( $block->status ), 'Block should not contain property:  status' );
+			$I->assertFalse( isset( $block->data ), 'Block should not contain property:  data' );
 			$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
-			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain corect meta value' );
-			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
+			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain correct meta value' );
+			$I->assertFalse( isset( $block->position ), 'Block should not contain property:  position and must be object' );
+			$I->assertFalse( isset( $block->rules ), 'Block should not contain property:  rules and must be array' );
 		}
 
 	}
@@ -121,15 +145,85 @@ class BlockApiCest {
 		$I->assertCount( 2, $array->data, 'Response should contain two blocks' );
 
 		foreach ( $array->data as $block ) {
-			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
-			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
-			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
+			$I->assertTrue( isset( $block->uid ), 'Block should contain property: uid' );
+			$I->assertTrue( isset( $block->status ), 'Block should contain property:  status' );
+			$I->assertTrue( isset( $block->data ), 'Block should contain property:  data' );
+			$I->assertFalse( isset( $block->media ), 'Block should contain property:  media' );
+			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain correct meta value' );
+		}
+
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+				'fields'  => [ 'uid', 'meta' ],
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIsSuccessful();
+
+		$jsonResponse = $I->grabResponse();
+		$array        = json_decode( $jsonResponse );
+
+		$I->assertCount( 2, $array->data, 'Response should contain two blocks' );
+
+		foreach ( $array->data as $block ) {
+			$I->assertTrue( isset( $block->uid ), 'Block should contain property: uid' );
+			$I->assertFalse( isset( $block->status ), 'Block should not contain property:  status' );
+			$I->assertFalse( isset( $block->data ), 'Block should not contain property:  data' );
 			$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
-			$I->assertNotNull( $block->meta, 'Block should contain property:  meta' );
-			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain corect meta value' );
+			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain correct meta value' );
+			$I->assertFalse( isset( $block->position ), 'Block should not contain property:  position and must be object' );
+			$I->assertFalse( isset( $block->rules ), 'Block should not contain property:  rules and must be array' );
 		}
 	}
 
+	/**
+	 * @param AcceptanceTester $I
+	 */
+	public function getSavedBlockByUidTest( FunctionalTester $I ) {
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+				'uid'     => 'sffbf00297b0b4e9ee27af32a7b79c3331',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIsSuccessful();
+
+		$jsonResponse = $I->grabResponse();
+		$array        = json_decode( $jsonResponse );
+
+		$block = $array->data;
+
+		$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
+		$I->assertNotNull( $block->status, 'Block should contain property:  status' );
+		$I->assertNotNull( $block->data, 'Block should contain property:  data' );
+		$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
+		$I->assertNotNull( $block->meta, 'Block should contain property:  meta' );
+		$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain correct meta value' );
+	}
+
+	/**
+	 * @param AcceptanceTester $I
+	 */
+	public function getCloudBlockByUidTest( FunctionalTester $I ) {
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+				'uid'     => md5( time() ),
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs( 404 );
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+				'uid'     => 'gffbf00297b0b4e9ee27af32a7b79c3331',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs( 404 );
+	}
 
 	public function createGlobalBlockTest( FunctionalTester $I ) {
 		$meta  = '{"_thumbnailSrc": "","_thumbnailWidth": 0}';
@@ -192,7 +286,7 @@ class BlockApiCest {
 					]
 				),
 				'brizy_post_uid'              => $uid,
-				'brizy-block-meta'            => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
+				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
 				'brizy-post-editor-version'   => '1.0.101',
 				'brizy-post-compiler-version' => '1.0.101',
 				'brizy-need-compile'          => 0,
@@ -230,8 +324,8 @@ class BlockApiCest {
 
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_parent' => $blockId ] );
 		$I->dontSeePostMetaInDatabase( [
-			'post_id'    => $blockId,
-			'meta_key'   => 'brizy-block-media',
+			'post_id'  => $blockId,
+			'meta_key' => 'brizy-media',
 		] );
 	}
 
@@ -288,11 +382,11 @@ class BlockApiCest {
 					]
 				),
 				'brizy_post_uid'              => $uid,
-				'brizy-block-meta'            => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
+				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
 				'brizy-post-editor-version'   => '1.0.101',
 				'brizy-post-compiler-version' => '1.0.101',
 				'brizy-need-compile'          => 0,
-				'brizy-block-media'           => '{"fonts":["pvfegzyhgbmoprmzmsxfakudbermsvztkyel","jzuulmiplxnszgangurbqaexkirdbgpfhfxm"],"images":["dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg","e3959c03766425afcfa8bd16e72fb505b6221ae1.jpeg"]}'
+				'brizy-media'                 => '{"fonts":["pvfegzyhgbmoprmzmsxfakudbermsvztkyel","jzuulmiplxnszgangurbqaexkirdbgpfhfxm"],"images":["dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg","e3959c03766425afcfa8bd16e72fb505b6221ae1.jpeg"]}'
 			],
 		] );
 
@@ -318,7 +412,7 @@ class BlockApiCest {
 		$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $blockId,
-			'meta_key'   => 'brizy-block-media',
+			'meta_key'   => 'brizy-media',
 			'meta_value' => $newMedia
 		] );
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_parent' => $blockId ] );

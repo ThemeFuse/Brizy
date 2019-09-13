@@ -49,16 +49,40 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function import( $blockId ) {
-		throw new Exception( 'Not implemented' );
+		$blocks = $this->client->getBlocks( [ 'filter'=>['uid' => $blockId]] );
+
+		if ( ! isset( $blocks[0] ) ) {
+			return;
+		}
+
+		$block = $blocks[0];
+
+		$name = md5( time() );
+		$post = wp_insert_post( array(
+			'post_title'  => $name,
+			'post_name'   => $name,
+			'post_status' => 'publish',
+			'post_type'   => Brizy_Admin_Blocks_Main::CP_SAVED
+		) );
+
+		if ( $post ) {
+			$brizyPost = Brizy_Editor_Block::get( $post, $block['uid'] );
+			$brizyPost->setMeta( $block['meta'] );
+			$brizyPost->setCloudId( $block['id'] );
+			$brizyPost->set_editor_data( $block['data'] );
+			$brizyPost->set_uses_editor( true );
+			$brizyPost->set_needs_compile( true );
+			$brizyPost->save();
+		}
 	}
 
 	/**
-	 * @param Brizy_Editor_Block $block
+	 * @param Brizy_Editor_Block $layout
 	 *
 	 * @return mixed|void
 	 * @throws Exception
 	 */
-	public function delete( $block ) {
-		$this->client->deleteBlock( $block->getCloudId() );
+	public function delete( $layout ) {
+		$this->client->deleteBlock( $layout->getCloudId() );
 	}
 }

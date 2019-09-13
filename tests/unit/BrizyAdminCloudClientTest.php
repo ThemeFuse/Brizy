@@ -11,6 +11,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	private function getProjectObjserver() {
 		$projectObserver = $this->prophesize( Brizy_Editor_Project::class );
 		$projectObserver->getMetaValue( 'brizy-cloud-token' )->willReturn( 'brizy-cloud-token-hash' );
+		$projectObserver->getMetaValue( 'brizy-cloud-container' )->willReturn( 'brizy-cloud-container' );
+		$projectObserver->getCloudContainer()->willReturn( 'container' );
 
 		return $projectObserver;
 	}
@@ -39,7 +41,10 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$projectObserver = $this->getProjectObjserver();
 		$httpObserver    = $this->getHttpObjserver();
 
-		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+		$httpObserver = $httpObserver->reveal();
+		$client       = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver );
+
+		$this->assertSame( $client->getHttp(), $httpObserver, 'The getHttp should return the valid instance passed in constructor' );
 
 		$client->setHttp( $http = new WP_Http() );
 		$this->assertSame( $client->getHttp(), $http, 'The getHttp should return the valid instance' );
@@ -60,8 +65,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LIBRARY;
 		$httpObserver->get( $apiEndpointUrl, Argument::containing( [
-			'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
-			'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash'
+			'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+			'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION
 		] ) )->shouldBeCalled();
 
 		$client->getLibraries();
@@ -78,8 +83,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNIN;
 		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 				'Content-type'      => 'application/x-www-form-urlencoded'
 			],
 			'body'    => [
@@ -101,8 +106,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNUP;
 		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 				'Content-type'      => 'application/x-www-form-urlencoded'
 			],
 			'body'    => [
@@ -132,8 +137,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_RESET_PASSWORD;
 		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 				'Content-type'      => 'application/x-www-form-urlencoded'
 			],
 			'body'    => [
@@ -153,8 +159,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_CONTAINERS;
 		$httpObserver->get( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			]
 		] ) )->shouldBeCalled();
 
@@ -171,8 +178,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_PROJECTS . '?' . http_build_query( $filters );
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			]
 		] ) )->shouldBeCalled();
 
@@ -189,8 +197,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			]
 		] ) )->shouldBeCalled();
 
@@ -207,8 +216,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			],
 			'body'    => [
 				'name'      => 'name',
@@ -222,6 +232,29 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 
+	public function testGetBlocks() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$filters        = [ 'key' => 'val' ];
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS . '?' . http_build_query( [
+				'key'       => 'val',
+				'container' => 'container'
+			] );
+		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
+			'headers' => [
+
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			]
+		] ) )->shouldBeCalled();
+
+		$client->getBlocks( $filters );
+	}
+
+
 	public function testCreateBlock() {
 		$projectObserver = $this->getProjectObjserver();
 		$httpObserver    = $this->getHttpObjserver();
@@ -229,44 +262,25 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 
 		// set up reuqest for library list
-		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LIBRARY;
-		$httpObserver->get( $apiEndpointUrl, Argument::containing( [
-			'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
-			'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash'
-		] ) )->willReturn(
-			[
-				'body'     => '[{"id":4,"name":"My Personal Projects"},{"id":58930,"name":"fsfaf"}]',
-				'response' =>
-					array(
-						'code'    => 200,
-						'message' => 'OK',
-					),
-				'cookies'  =>
-					array(),
-				'filename' => null,
-			]
-		);
-
-
 		$blockObserver = $this->prophesize( Brizy_Editor_Block::class );
 		$blockObserver->get_editor_data()->willReturn( "SOME_ENCODED_JSON" );
 		$blockObserver->get_uid()->willReturn( "SOME_UID" );
 		$blockObserver->getCloudId()->willReturn( null );
+		$blockObserver->getMeta()->willReturn( array() );
 		$block = $blockObserver->reveal();
 
 		$cloudBlockData = array(
-			'library'     => 4,
+			'container'   => 'container',
 			'meta'        => array(),
 			'data'        => $block->get_editor_data(),
-			'is_autosave' => 0,
 			'uid'         => $block->get_uid()
 		);
 
-
-		$httpObserver->post( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS ), Argument::exact( [
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS;
+		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			],
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
@@ -283,46 +297,29 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 
 		// set up reuqest for library list
-		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LIBRARY;
-		$httpObserver->get( $apiEndpointUrl, Argument::containing( [
-			'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
-			'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash'
-		] ) )->willReturn(
-			[
-				'body'     => '[{"id":4,"name":"My Personal Projects"},{"id":58930,"name":"fsfaf"}]',
-				'response' =>
-					array(
-						'code'    => 200,
-						'message' => 'OK',
-					),
-				'cookies'  =>
-					array(),
-				'filename' => null,
-			]
-		);
+		$this->observerGetLibraryRequest( $httpObserver );
 
 
 		$blockObserver = $this->prophesize( Brizy_Editor_Block::class );
 		$blockObserver->get_editor_data()->willReturn( "SOME_ENCODED_JSON" );
 		$blockObserver->get_uid()->willReturn( "SOME_UID" );
 		$blockObserver->getCloudId()->willReturn( "CLOUD_UID" );
+		$blockObserver->getMeta()->willReturn( array() );
 		$block = $blockObserver->reveal();
 
 		$cloudBlockData = array(
-			'library'     => 4,
+			'container'   => 'container',
 			'meta'        => array(),
 			'data'        => $block->get_editor_data(),
-			'is_autosave' => 0,
 			'uid'         => $block->get_uid()
 		);
 
-
 		$httpObserver->request( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS ), Argument::exact( [
-			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
-				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-			],
 			'method'  => 'PUT',
+			'headers' => [
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			],
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
 
@@ -336,12 +333,12 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
-		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS . "/100";
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS . "/100" . '?' . http_build_query( [ 'container' => 'container' ] );
 
 		$httpObserver->request( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			],
 			'method'  => 'DELETE'
 		] ) )->shouldBeCalled();
@@ -356,12 +353,12 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
-		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA . '?name=MEDIA_UID';
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA . '?name=MEDIA_UID&container=container';
 
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			],
 		] ) )->shouldBeCalled();
 
@@ -384,10 +381,12 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			],
 			'body'    => array(
+				'container'  => 'container',
 				'attachment' => base64_encode( 'content' ),
 				'name'       => $uid,
 				'filename'   => basename( $filePath )
@@ -396,7 +395,6 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$client->uploadMedia( $uid, $filePath );
 	}
-
 
 	public function testUploadFonts() {
 		$projectObserver = $this->getProjectObjserver();
@@ -407,10 +405,11 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS;
 
 		$fontToCreate = [
-			'id'      => 'askdalskdlaksd',
-			'family'  => 'proxima-nova',
-			'type'    => 'uploaded',
-			'weights' => [
+			'id'        => 'askdalskdlaksd',
+			'container' => 'container',
+			'family'    => 'proxima-nova',
+			'type'      => 'uploaded',
+			'weights'   => [
 				'400' => [
 					'ttf'   => codecept_data_dir( 'fonts/pn-regular-webfont.ttf' ),
 					'eot'   => codecept_data_dir( 'fonts/pn-regular-webfont.eot' ),
@@ -432,13 +431,15 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-				'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
 			],
 			'body'    => array(
-				'uid'    => $fontToCreate['id'],
-				'family' => $fontToCreate['family'],
-				'files'  => $fontToCreate['weights']
+				'container' => 'container',
+				'uid'       => $fontToCreate['id'],
+				'family'    => $fontToCreate['family'],
+				'files'     => $fontToCreate['weights'],
 			),
 		] ) )->shouldBeCalled();
 
@@ -446,4 +447,292 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$client->createFont( $fontToCreate );
 
 	}
+
+	public function testGetFont() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$uid = md5( time() );
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS . '?' . http_build_query( [
+				'uid'       => $uid,
+				'container' => 'container'
+			] );
+		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
+			'headers' => [
+
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			]
+		] ) )->shouldBeCalled();
+
+
+		$client->getFont( $uid );
+	}
+
+	//=================================================================================================================
+
+	public function testGetPopups() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$filters        = [ 'key' => 'val' ];
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS . '?' . http_build_query( [
+				'key'       => 'val',
+				'container' => 'container'
+			] );
+		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
+			'headers' => [
+
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			]
+		] ) )->shouldBeCalled();
+
+		$client->getPopups( $filters );
+	}
+
+
+	public function testCreatePopup() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+
+		// set up reuqest for library list
+		$this->observerGetLibraryRequest( $httpObserver );
+
+		$popupObserver = $this->prophesize( Brizy_Editor_Popup::class );
+		$popupObserver->get_editor_data()->willReturn( "SOME_ENCODED_JSON" );
+		$popupObserver->get_uid()->willReturn( "SOME_UID" );
+		$popupObserver->getCloudId()->willReturn( null );
+		$popupObserver->getMeta()->willReturn( array() );
+		$popup = $popupObserver->reveal();
+
+		$cloudBlockData = array(
+			'container'   => 'container',
+			'meta'        => array(),
+			'data'        => $popup->get_editor_data(),
+			'is_autosave' => 0,
+			'uid'         => $popup->get_uid()
+		);
+
+
+		$httpObserver->post( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS ), Argument::exact( [
+			'headers' => [
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			],
+			'body'    => $cloudBlockData
+		] ) )->shouldBeCalled();
+
+
+		$client->createOrUpdatePopup( $popup );
+	}
+
+	public function testUpdatePopup() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		// set up reuqest for library list
+		$this->observerGetLibraryRequest( $httpObserver );
+
+		$blockObserver = $this->prophesize( Brizy_Editor_Popup::class );
+		$blockObserver->get_editor_data()->willReturn( "SOME_ENCODED_JSON" );
+		$blockObserver->get_uid()->willReturn( "SOME_UID" );
+		$blockObserver->getCloudId()->willReturn( "CLOUD_UID" );
+		$blockObserver->getMeta()->willReturn( "{}" );
+		$popup = $blockObserver->reveal();
+
+		$cloudBlockData = array(
+			'container'   => 'container',
+			'meta'        => '{}',
+			'data'        => $popup->get_editor_data(),
+			'is_autosave' => 0,
+			'uid'         => $popup->get_uid()
+		);
+
+		$httpObserver->request( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS ), Argument::exact( [
+			'method'  => 'PUT',
+			'headers' => [
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			],
+			'body'    => $cloudBlockData
+		] ) )->shouldBeCalled();
+
+
+		$client->createOrUpdatePopup( $popup );
+	}
+
+	public function testDeletePopup() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS . "/100" . '?' . http_build_query( [
+				'container' => 'container'
+			] );
+
+		$httpObserver->request( Argument::exact( $apiEndpointUrl ), Argument::exact( [
+			'headers' => [
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			],
+			'method'  => 'DELETE'
+		] ) )->shouldBeCalled();
+
+		$client->deletePopup( 100 );
+	}
+
+	//=================================================================================================================
+
+	public function testGetLayouts() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$filters        = [ 'key' => 'val' ];
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS . '?' . http_build_query( [
+				'key'       => 'val',
+				'container' => 'container',
+			] );
+		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
+			'headers' => [
+
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			]
+		] ) )->shouldBeCalled();
+
+		$client->getLayouts( $filters );
+	}
+
+	public function testCreateLayout() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+
+		// set up reuqest for library list
+		$this->observerGetLibraryRequest( $httpObserver );
+
+
+		$blockObserver = $this->prophesize( Brizy_Editor_Layout::class );
+		$blockObserver->get_editor_data()->willReturn( "SOME_ENCODED_JSON" );
+		$blockObserver->get_uid()->willReturn( "SOME_UID" );
+		$blockObserver->getCloudId()->willReturn( null );
+		$blockObserver->getMeta()->willReturn( "{}" );
+		$layout = $blockObserver->reveal();
+
+		$cloudBlockData = array(
+			'container'   => 'container',
+			'meta'        => '{}',
+			'data'        => $layout->get_editor_data(),
+			'uid'         => $layout->get_uid()
+		);
+
+
+		$httpObserver->post( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS ), Argument::exact( [
+			'headers' => [
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			],
+			'body'    => $cloudBlockData
+		] ) )->shouldBeCalled();
+
+
+		$client->createOrUpdateLayout( $layout );
+	}
+
+
+	public function testUpdateLayout() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+
+		// set up reuqest for library list
+		$this->observerGetLibraryRequest( $httpObserver );
+
+
+		$blockObserver = $this->prophesize( Brizy_Editor_Layout::class );
+		$blockObserver->get_editor_data()->willReturn( "SOME_ENCODED_JSON" );
+		$blockObserver->get_uid()->willReturn( "SOME_UID" );
+		$blockObserver->getCloudId()->willReturn( "CLOUD_UID" );
+		$blockObserver->getMeta()->willReturn( "{}" );
+		$layout = $blockObserver->reveal();
+
+		$cloudBlockData = array(
+			'container'   => 'container',
+			'meta'        => '{}',
+			'data'        => $layout->get_editor_data(),
+			'uid'         => $layout->get_uid()
+		);
+
+
+		$httpObserver->request( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS ), Argument::exact( [
+			'headers' => [
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			],
+			'method'  => 'PUT',
+			'body'    => $cloudBlockData
+		] ) )->shouldBeCalled();
+
+
+		$client->createOrUpdateLayout( $layout );
+	}
+
+	public function testDeleteLayout() {
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS . "/100" . '?' . http_build_query( [
+				'container' => 'container'
+			] );;
+
+		$httpObserver->request( Argument::exact( $apiEndpointUrl ), Argument::exact( [
+			'headers' => [
+
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			],
+			'method'  => 'DELETE'
+		] ) )->shouldBeCalled();
+
+		$client->deleteLayout( 100 );
+	}
+
+
+	private function observerGetLibraryRequest( $httpObserver ) {
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LIBRARY;
+		$httpObserver->get( $apiEndpointUrl, Argument::containing( [
+
+			'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+			'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+		] ) )->willReturn(
+			[
+				'body'     => '[{"id":4,"name":"My Personal Projects"},{"id":58930,"name":"fsfaf"}]',
+				'response' =>
+					array(
+						'code'    => 200,
+						'message' => 'OK',
+					),
+				'cookies'  =>
+					array(),
+				'filename' => null,
+			]
+		);
+	}
+
 }

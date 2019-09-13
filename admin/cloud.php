@@ -108,8 +108,8 @@ class Brizy_Admin_Cloud {
 	private function handleLoginPage() {
 		$context = array(
 			'nonce'    => wp_nonce_field( 'validate-cloud', '_wpnonce', true, false ),
-			'username' => 'ab10@test.dev',
-			'password' => '12345'
+			'username' => '',
+			'password' => ''
 		);
 
 		echo $this->twig->render( 'cloud-login.html.twig', $context );
@@ -148,12 +148,8 @@ class Brizy_Admin_Cloud {
 			$this->handleLogout();
 		}
 
-		if ( isset( $_REQUEST['brizy-cloud-create-project'] ) ) {
-			$this->handleCreateProject();
-		}
-
-		if ( isset( $_REQUEST['brizy-cloud-use-project'] ) ) {
-			$this->handleUseProject();
+		if ( isset( $_REQUEST['brizy-cloud-use-container'] ) ) {
+			$this->handleUseContainer();
 		}
 
 		wp_redirect( $pageUrl );
@@ -168,13 +164,22 @@ class Brizy_Admin_Cloud {
 		}
 
 		try {
-			$token = $this->cloudClient->obtainToken( $_REQUEST['cloud-username'], $_REQUEST['cloud-password'] );
+			$token = $this->cloudClient->signIn( $_REQUEST['cloud-username'], $_REQUEST['cloud-password'] );
 
 			if ( ! $token ) {
 				Brizy_Admin_Flash::instance()->add_error( __( 'Unable to obtain authorization data. Please check your credentials.' ) );
 			} else {
 				$this->project->setCloudToken( $token );
+
+				$containers = $this->cloudClient->getContainers();
+
+				if ( isset( $containers[0] ) ) {
+					$this->project->setCloudContainer( $containers[0]->id );
+				}
+
 				$this->project->save();
+
+
 			}
 
 		} catch ( Exception $e ) {
@@ -189,51 +194,24 @@ class Brizy_Admin_Cloud {
 
 	public function handleLogout() {
 		$this->project->setCloudToken( null );
+		$this->project->setCloudContainer( null );
 		$this->project->save();
 	}
 
-	public function handleCreateProject() {
-
-
-		if ( ! isset( $_REQUEST['cloud-projectcontainer'] ) || $_REQUEST['cloud-projectcontainer'] == '' ) {
-			Brizy_Admin_Flash::instance()->add_error( __( 'Please provide the account' ) );
+	public function handleUseContainer() {
+		if ( ! isset( $_REQUEST['brizy-cloud-use-container'] ) || $_REQUEST['brizy-cloud-use-container'] == '' ) {
+			Brizy_Admin_Flash::instance()->add_error( __( 'Please provide the container id' ) );
 
 			return;
 		}
 
-		if ( ! isset( $_REQUEST['cloud-projectname'] ) || $_REQUEST['cloud-projectname'] == '' ) {
-			Brizy_Admin_Flash::instance()->add_error( __( 'Please provide the project name' ) );
+		$projectId = $_REQUEST['brizy-cloud-use-container'];
 
-			return;
-		}
-
-		$project = $this->cloudClient->createProject( $_REQUEST['cloud-projectcontainer'], $_REQUEST['cloud-projectname'] );
-
-		if ( ! $project ) {
-			Brizy_Admin_Flash::instance()->add_error( __( 'Failed to create the project.' ) );
-		}
-
-		Brizy_Admin_Flash::instance()->add_success( 'You successfully created a project' );
-		$pageUrl = menu_page_url( self::menu_slug(), false );
-		wp_redirect( $pageUrl );
-		exit;
-
-	}
-
-	public function handleUseProject() {
-		if ( ! isset( $_REQUEST['brizy-cloud-use-project'] ) || $_REQUEST['brizy-cloud-use-project'] == '' ) {
-			Brizy_Admin_Flash::instance()->add_error( __( 'Please provide the project id' ) );
-
-			return;
-		}
-
-		$projectId = (int) $_REQUEST['brizy-cloud-use-project'];
-
-		if ( $projectId > 0 ) {
-			$this->project->setCloudProject( (int) $_REQUEST['brizy-cloud-use-project'] );
+		if ( $projectId ) {
+			$this->project->setCloudContainer( $projectId );
 			Brizy_Admin_Flash::instance()->add_success( __( 'Success' ) );
 		} else {
-			$this->project->removeMetaValue( 'brizy-cloud-project' );
+			$this->project->removeMetaValue( 'cloudContainer' );
 		}
 
 		$this->project->save();

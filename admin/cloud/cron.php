@@ -25,6 +25,8 @@ class Brizy_Admin_Cloud_Cron {
 		$this->client = $client;
 
 		add_action( 'brizy-cloud-synchronize', array( $this, 'syncBlocks' ) );
+		add_action( 'brizy-cloud-synchronize', array( $this, 'syncPopups' ) );
+		add_action( 'brizy-cloud-synchronize', array( $this, 'syncLayouts' ) );
 		add_filter( 'cron_schedules', array( $this, 'addBrizyCloudCronSchedules' ) );
 
 		$interval = is_user_logged_in() ? '5minute' : 'hourly';
@@ -34,8 +36,24 @@ class Brizy_Admin_Cloud_Cron {
 		}
 	}
 
+	public function syncLayouts() {
+		$layoutIds = $this->getLayoutsForSync();
+
+		foreach ( $layoutIds as $lId ) {
+			$this->syncLayout( $lId->ID );
+		}
+	}
+
+	public function syncPopups() {
+		$postIds = $this->getPopupsForSync();
+
+		foreach ( $postIds as $popupId ) {
+			$this->syncPopup( $popupId->ID );
+		}
+	}
+
 	public function syncBlocks() {
-		$postIds = $this->getBlockForSync();
+		$postIds = $this->getBlocksForSync();
 
 		foreach ( $postIds as $blockId ) {
 			$this->syncBlock( $blockId->ID );
@@ -52,10 +70,40 @@ class Brizy_Admin_Cloud_Cron {
 		return $schedules;
 	}
 
-	private function getBlockForSync() {
+	private function getLayoutsForSync() {
 		global $wpdb;
 
-		$meta_key       = Brizy_Editor_Block::BRIZY_BLOCK_CLOUD_UPDATE;
+		$meta_key       = Brizy_Editor_Layout::BRIZY_CLOUD_UPDATE_META;
+		$savedBlockType = Brizy_Admin_Layouts_Main::CP_LAYOUT;
+
+		$postIds = $wpdb->get_results(
+			"SELECT ID FROM {$wpdb->posts} p 
+					JOIN {$wpdb->postmeta} pm ON pm.post_id=p.ID and pm.meta_key='{$meta_key}' and pm.meta_value=1
+					WHERE p.post_type='{$savedBlockType}'
+					LIMIT 1" );
+
+		return $postIds;
+	}
+
+	private function getPopupsForSync() {
+		global $wpdb;
+
+		$meta_key       = Brizy_Editor_Popup::BRIZY_CLOUD_UPDATE_META;
+		$savedBlockType = Brizy_Admin_Popups_Main::CP_SAVED_POPUP;
+
+		$postIds = $wpdb->get_results(
+			"SELECT ID FROM {$wpdb->posts} p 
+					JOIN {$wpdb->postmeta} pm ON pm.post_id=p.ID and pm.meta_key='{$meta_key}' and pm.meta_value=1
+					WHERE p.post_type='{$savedBlockType}'
+					LIMIT 1" );
+
+		return $postIds;
+	}
+
+	private function getBlocksForSync() {
+		global $wpdb;
+
+		$meta_key       = Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED;
 		$savedBlockType = Brizy_Admin_Blocks_Main::CP_SAVED;
 
 		$postIds = $wpdb->get_results(
@@ -84,6 +132,44 @@ class Brizy_Admin_Cloud_Cron {
 			Brizy_Logger::instance()->critical( 'Failed to sync block',
 				[
 					'blockId' => $blockId
+				] );
+		}
+	}
+
+	private function syncPopup( $popupId ) {
+
+		try {
+			$brizyPopup = Brizy_Editor_Popup::get( $popupId );
+
+			if ( $brizyPopup && $brizyPopup->isSavedPopup() ) {
+				$updater = new Brizy_Admin_Cloud_PopupBridge( $this->client );
+				$updater->export( $brizyPopup );
+
+				$brizyPopup->setCloudUpdateRequired( false );
+			}
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( 'Failed to sync popup',
+				[
+					'popupId' => $popupId
+				] );
+		}
+	}
+
+	private function syncLayout( $layoutId ) {
+
+		try {
+			$brizyLayout = Brizy_Editor_Layout::get( $layoutId );
+
+			if ( $brizyLayout ) {
+				$updater = new Brizy_Admin_Cloud_LayoutBridge( $this->client );
+				$updater->export( $brizyLayout );
+
+				$brizyLayout->setCloudUpdateRequired( false );
+			}
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( 'Failed to sync layout',
+				[
+					'layoutId' => $layoutId
 				] );
 		}
 	}

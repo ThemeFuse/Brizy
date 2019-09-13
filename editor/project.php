@@ -46,6 +46,7 @@ class Brizy_Editor_Project implements Serializable {
 	protected $license_key;
 	protected $forms;
 	protected $cloud_token;
+	protected $cloudContainer;
 	protected $cloud_project;
 	protected $image_optimizer_settings;
 	protected $data;
@@ -200,6 +201,7 @@ class Brizy_Editor_Project implements Serializable {
 			'data'                     => base64_encode( file_get_contents( BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "editor-build" . DIRECTORY_SEPARATOR . "defaults.json" ) ),
 			'brizy-license-key'        => null,
 			'brizy-cloud-token'        => null,
+			'cloudContainer'           => null,
 			'brizy-cloud-project'      => null,
 			'image-optimizer-settings' => array(),
 		);
@@ -234,6 +236,7 @@ class Brizy_Editor_Project implements Serializable {
 			'brizy-license-key'        => $this->license_key,
 			'brizy-cloud-token'        => $this->cloud_token,
 			'brizy-cloud-project'      => $this->cloud_project,
+			'cloudContainer'           => $this->cloudContainer,
 			'image-optimizer-settings' => $this->image_optimizer_settings,
 		);
 	}
@@ -256,6 +259,7 @@ class Brizy_Editor_Project implements Serializable {
 		$this->license_key              = isset( $data['brizy-license-key'] ) ? $data['brizy-license-key'] : null;
 		$this->cloud_token              = isset( $data['brizy-cloud-token'] ) ? $data['brizy-cloud-token'] : null;
 		$this->cloud_project            = isset( $data['brizy-cloud-project'] ) ? $data['brizy-cloud-project'] : null;
+		$this->cloudContainer           = isset( $data['cloudContainer'] ) ? $data['cloudContainer'] : null;
 		$this->image_optimizer_settings = isset( $data['image-optimizer-settings'] ) ? $data['image-optimizer-settings'] : array();
 	}
 
@@ -587,6 +591,23 @@ class Brizy_Editor_Project implements Serializable {
 		$this->cloud_token = $cloud_token;
 	}
 
+	/**
+	 * @return mixed
+	 */
+	public function getCloudContainer() {
+		return $this->cloudContainer;
+	}
+
+	/**
+	 * @param mixed $cloudContainer
+	 *
+	 * @return Brizy_Editor_Project
+	 */
+	public function setCloudContainer( $cloudContainer ) {
+		$this->cloudContainer = $cloudContainer;
+
+		return $this;
+	}
 
 	/**
 	 * @return mixed
@@ -736,6 +757,9 @@ class Brizy_Editor_Project implements Serializable {
 		}
 		if ( $key == 'brizy-cloud-project' ) {
 			$this->setCloudProject( $value );
+		}
+		if ( $key == 'brizy-cloud-container' ) {
+			$this->setCloudContainer( $value );
 		}
 
 		return $this->$key = $value;

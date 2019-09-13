@@ -82,7 +82,7 @@ class BlockCest {
 		$this->globalBlockObject->setCloudUpdateRequired( true );
 		$I->dontSeePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_BLOCK_CLOUD_UPDATE,
+			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
 		] );
 
 		$expectedFlag = $this->globalBlockObject->isCloudUpdateRequired();
@@ -93,7 +93,7 @@ class BlockCest {
 		$this->savedBlockObject->setCloudUpdateRequired( true );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_BLOCK_CLOUD_UPDATE,
+			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
 			'meta_value' => 1,
 		] );
 
@@ -103,7 +103,7 @@ class BlockCest {
 		$this->savedBlockObject->setCloudUpdateRequired( false );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_BLOCK_CLOUD_UPDATE,
+			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
 			'meta_value' => 0,
 		] );
 
@@ -117,7 +117,7 @@ class BlockCest {
 		$this->savedBlockObject->setMeta( $meta );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_BLOCK_META,
+			'meta_key'   => Brizy_Editor_Block::BRIZY_META,
 			'meta_value' => $meta,
 		] );
 
@@ -131,7 +131,7 @@ class BlockCest {
 		$this->savedBlockObject->setMedia( $media );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_BLOCK_MEDIA,
+			'meta_key'   => Brizy_Editor_Block::BRIZY_MEDIA,
 			'meta_value' => $media,
 		] );
 

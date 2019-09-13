@@ -11,6 +11,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
+	const GET_SAVED_BLOCK_ACTION = 'brizy-get-saved-block';
+
 	const GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
 	const GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
 
@@ -60,6 +62,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	protected function initializeApiActions() {
 		add_action( 'wp_ajax_' . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
 		add_action( 'wp_ajax_' . self::GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
+		add_action( 'wp_ajax_' . self::GET_SAVED_BLOCK_ACTION, array( $this, 'actionGetSavedBlockByUid' ) );
 		add_action( 'wp_ajax_' . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_SAVED_BLOCK_ACTION, array( $this, 'actionUpdateSavedBlock' ) );
@@ -73,7 +76,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			$bockManager = new Brizy_Admin_Blocks_Manager( null );
+
+			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+
+			$blocks = $bockManager->getAllBlocks( Brizy_Admin_Blocks_Main::CP_GLOBAL, array(), $fields );
 
 			$this->success( $blocks );
 
@@ -86,9 +93,39 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_SAVED );
+			$cloudClient = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+
+			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+
+			$bockManager = new Brizy_Admin_Blocks_Manager( $cloudClient );
+
+			$blocks = $bockManager->getAllBlocks( Brizy_Admin_Blocks_Main::CP_SAVED, array(), $fields );
 
 			$this->success( $blocks );
+
+		} catch ( Exception $exception ) {
+			$this->error( 400, $exception->getMessage() );
+		}
+	}
+
+	public function actionGetSavedBlockByUid() {
+		$this->verifyNonce( self::nonce );
+
+		if ( ! $this->param( 'uid' ) ) {
+			$this->error( 400, 'Invalid uid' );
+		}
+
+		try {
+			$cloudClient = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+			$bockManager = new Brizy_Admin_Blocks_Manager( $cloudClient );
+
+			$block = $bockManager->getBlockByUid( Brizy_Admin_Blocks_Main::CP_SAVED, $this->param( 'uid' ) );
+
+			if ( ! $block ) {
+				$this->error( 404, 'Block not found' );
+			}
+
+			$this->success( $block );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -167,6 +204,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( $data );
 			$block->set_needs_compile( true );
+			$block->setCloudUpdateRequired( true );
 			$block->save();
 
 			do_action( 'brizy_saved_block_created', $block );

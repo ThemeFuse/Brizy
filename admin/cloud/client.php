@@ -17,10 +17,9 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 
 
 	/**
-	 * @var Brizy_Admin_Cloud_Client
+	 * @var integer
 	 */
-	private static $instance;
-
+	private $library;
 
 	/**
 	 * @return Brizy_Editor_Project
@@ -72,8 +71,9 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 
 	private function getHeaders( $aditional = null ) {
 		return array_merge( array(
-			'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
-			'X-AUTH-USER-TOKEN' => $this->brizyProject->getMetaValue( 'brizy-cloud-token' )
+			//'X-AUTH-APP-TOKEN'  => Brizy_Config::CLOUD_APP_KEY,
+			'X-AUTH-USER-TOKEN' => $this->brizyProject->getMetaValue( 'brizy-cloud-token' ),
+			'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION
 		), is_array( $aditional ) ? $aditional : array() );
 	}
 
@@ -195,24 +195,11 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	}
 
 	public function getContainers() {
-		$response = $this->http->get( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_CONTAINERS, array( 'headers' => $this->getHeaders() ) );
-
-		return json_decode( $response['body'] );
+		return $this->getCloudEntity( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_CONTAINERS, [] );
 	}
 
 	public function getProjects( $filters ) {
-
-		$url      = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_PROJECTS;
-		$url      = $url . '?' . http_build_query( $filters );
-		$response = $this->http->get( $url, array( 'headers' => $this->getHeaders() ) );
-
-		$code = wp_remote_retrieve_response_code( $response );
-		if ( $code == 200 ) {
-			return json_decode( $response['body'] );
-		}
-
-		return null;
-
+		return $this->getCloudEntity( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_PROJECTS, $filters );
 	}
 
 	public function getProject( $id ) {
@@ -248,6 +235,9 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		return false;
 	}
 
+	public function getBlocks( $filters = array() ) {
+		return $this->getCloudEntityByContainer( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS, $filters );
+	}
 
 	/**
 	 * @param Brizy_Editor_Block $block
@@ -257,18 +247,11 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 */
 	public function createOrUpdateBlock( Brizy_Editor_Block $block ) {
 
-		$libraries = $this->getLibraries();
-
-		if ( ! isset( $libraries[0] ) ) {
-			throw new Exception( 'No libraries returned' );
-		}
-
 		$cloudBlockData = array(
-			'library'     => $libraries[0]->id,
-			'meta'        => array(),
-			'data'        => $block->get_editor_data(),
-			'is_autosave' => 0,
-			'uid'         => $block->get_uid()
+			'container' => $this->brizyProject->getCloudContainer(),
+			'meta'      => $block->getMeta(),
+			'data'      => $block->get_editor_data(),
+			'uid'       => $block->get_uid()
 		);
 
 		$url = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS;
@@ -276,11 +259,11 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		if ( $block->getCloudId() ) {
 			$response = $this->http->request( $url, array(
 				'method'  => 'PUT',
+				'headers' => $this->getHeaders(),
 				'body'    => $cloudBlockData,
-				'headers' => $this->getHeaders()
 			) );
 		} else {
-			$response = $this->http->post( $url, array( 'body' => $cloudBlockData, 'headers' => $this->getHeaders() ) );
+			$response = $this->http->post( $url, array( 'headers' => $this->getHeaders(), 'body' => $cloudBlockData ) );
 		}
 
 		$code = wp_remote_retrieve_response_code( $response );
@@ -299,7 +282,8 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @throws Exception
 	 */
 	public function deleteBlock( $blockId ) {
-		$url      = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS . "/" . $blockId;
+		$query    = http_build_query( [ 'container' => $this->brizyProject->getCloudContainer() ] );
+		$url      = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS . "/" . $blockId . "?" . $query;
 		$response = $this->http->request( $url, array( 'method' => 'DELETE', 'headers' => $this->getHeaders() ) );
 		$code     = wp_remote_retrieve_response_code( $response );
 
@@ -310,14 +294,43 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		return $code == 200;
 	}
 
+
 	/**
-	 * @param $uid
+	 * @param $filters
+	 *
+	 * @return array|mixed|object|null
+	 */
+	public function getPopups( $filters = array() ) {
+		return $this->getCloudEntityByContainer( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS, $filters );
+	}
+
+	/**
+	 * @param Brizy_Editor_Popup $popup
 	 *
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function isMediaUploaded( $uid ) {
-		$response = $this->http->get( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA . '?name=' . $uid, array( 'headers' => $this->getHeaders() ) );
+	public function createOrUpdatePopup( Brizy_Editor_Popup $popup ) {
+
+		$cloudBlockData = array(
+			'container'   => $this->brizyProject->getCloudContainer(),
+			'meta'        => $popup->getMeta(),
+			'data'        => $popup->get_editor_data(),
+			'is_autosave' => 0,
+			'uid'         => $popup->get_uid()
+		);
+
+		$url = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS;
+
+		if ( $popup->getCloudId() ) {
+			$response = $this->http->request( $url, array(
+				'method'  => 'PUT',
+				'headers' => $this->getHeaders(),
+				'body'    => $cloudBlockData
+			) );
+		} else {
+			$response = $this->http->post( $url, array( 'headers' => $this->getHeaders(), 'body' => $cloudBlockData ) );
+		}
 
 		$code = wp_remote_retrieve_response_code( $response );
 
@@ -325,11 +338,103 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			throw new Exception( 'Invalid code return by cloud api' );
 		}
 
-		$body = wp_remote_retrieve_body( $response );
+		return $code == 200;
+	}
 
-		$json = json_decode( $body );
+	/**
+	 * @param $popupId
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function deletePopup( $popupId ) {
+		$query    = http_build_query( [ 'container' => $this->brizyProject->getCloudContainer() ] );
+		$url      = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS . "/" . $popupId . "?" . $query;
+		$response = $this->http->request( $url, array( 'method' => 'DELETE', 'headers' => $this->getHeaders() ) );
+		$code     = wp_remote_retrieve_response_code( $response );
 
-		return is_array( $json ) && count( $json ) == 1;
+		if ( $code >= 400 ) {
+			throw new Exception( 'Invalid code return by cloud api' );
+		}
+
+		return $code == 200;
+	}
+
+
+	/**
+	 * @param $filters
+	 *
+	 * @return array|mixed|object|null
+	 */
+	public function getLayouts( $filters = array() ) {
+		return $this->getCloudEntityByContainer( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS, $filters );
+	}
+
+
+	/**
+	 * @param Brizy_Editor_Layout $layout
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function createOrUpdateLayout( Brizy_Editor_Layout $layout ) {
+
+		$cloudBlockData = array(
+			'container'   => $this->brizyProject->getCloudContainer(),
+			'meta'        => $layout->getMeta(),
+			'data'        => $layout->get_editor_data(),
+			'uid'         => $layout->get_uid()
+		);
+
+		$url = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS;
+
+		if ( $layout->getCloudId() ) {
+			$response = $this->http->request( $url, array(
+				'method'  => 'PUT',
+				'headers' => $this->getHeaders(),
+				'body'    => $cloudBlockData,
+			) );
+		} else {
+			$response = $this->http->post( $url, array( 'headers' => $this->getHeaders(), 'body' => $cloudBlockData ) );
+		}
+
+		$code = wp_remote_retrieve_response_code( $response );
+
+		if ( $code >= 400 ) {
+			throw new Exception( 'Invalid code return by cloud api' );
+		}
+
+		return $code == 200;
+	}
+
+	/**
+	 * @param $layoutId
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function deleteLayout( $layoutId ) {
+		$query    = http_build_query( [ 'container' => $this->brizyProject->getCloudContainer() ] );
+		$url      = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS . "/" . $layoutId . "?" . $query;
+		$response = $this->http->request( $url, array( 'method' => 'DELETE', 'headers' => $this->getHeaders() ) );
+		$code     = wp_remote_retrieve_response_code( $response );
+
+		if ( $code >= 400 ) {
+			throw new Exception( 'Invalid code return by cloud api' );
+		}
+
+		return $code == 200;
+	}
+
+
+	/**
+	 * @param $uid
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function isMediaUploaded( $uid ) {
+		return ! is_null( $this->getCloudEntityByContainer( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA, [ 'name' => $uid ] ) );
 	}
 
 	/**
@@ -341,12 +446,13 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	public function uploadMedia( $uid, $file ) {
 
 		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA, array(
+			'headers' => $this->getHeaders(),
 			'body'    => array(
+				'container'  => $this->brizyProject->getCloudContainer(),
 				'attachment' => base64_encode( file_get_contents( $file ) ),
 				'name'       => $uid,
 				'filename'   => basename( $file )
-			),
-			'headers' => $this->getHeaders()
+			)
 		) );
 
 		$code = wp_remote_retrieve_response_code( $response );
@@ -393,12 +499,13 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	public function createFont( $font ) {
 
 		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS, array(
+			'headers' => $this->getHeaders(),
 			'body'    => array(
-				'uid'    => $font['id'],
-				'family' => $font['family'],
-				'files'  => $font['weights']
-			),
-			'headers' => $this->getHeaders()
+				'container' => $this->brizyProject->getCloudContainer(),
+				'uid'       => $font['id'],
+				'family'    => $font['family'],
+				'files'     => $font['weights']
+			)
 		) );
 
 		$code = wp_remote_retrieve_response_code( $response );
@@ -408,6 +515,55 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		}
 
 		return $code == 200;
+	}
+
+	public function getFont( $uid ) {
+		$response = $this->getCloudEntityByContainer( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS, array( 'uid' => $uid ) );
+
+		if ( is_array( $response ) && isset( $response[0] ) ) {
+			return $response[0];
+		}
+
+		return null;
+	}
+
+
+	/**
+	 * @param $endpoint
+	 * @param $filters
+	 *
+	 * @return array|mixed|object|null
+	 */
+	private function getCloudEntity( $endpoint, $filters = array() ) {
+
+		$http_build_query = http_build_query( $filters );
+
+		if ( $http_build_query ) {
+			$http_build_query = '?' . $http_build_query;
+		}
+
+		$url      = $endpoint . $http_build_query;
+		$response = $this->http->get( $url, array( 'headers' => $this->getHeaders() ) );
+
+		$code = wp_remote_retrieve_response_code( $response );
+		if ( $code == 200 ) {
+			return json_decode( $response['body'] );
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param $endpoint
+	 * @param $filters
+	 *
+	 * @return array|mixed|object|null
+	 */
+	private function getCloudEntityByContainer( $endpoint, $filters = array() ) {
+
+		$filters = array_merge( $filters, [ 'container' => $this->brizyProject->getCloudContainer() ] );
+
+		return $this->getCloudEntity( $endpoint, $filters );
 	}
 
 }

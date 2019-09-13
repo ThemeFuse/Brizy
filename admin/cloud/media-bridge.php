@@ -40,12 +40,12 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	}
 
 	/**
-	 * @param $blockId
+	 * @param $layoutId
 	 *
 	 * @return mixed|void
 	 * @throws Exception
 	 */
-	public function delete( $blockId ) {
+	public function delete( $layoutId ) {
 		throw new Exception( 'Not implemented' );
 	}
 }

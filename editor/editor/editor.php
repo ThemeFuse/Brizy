@@ -152,6 +152,7 @@ class Brizy_Editor_Editor_Editor {
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 			),
 			'serverTimestamp' => time(),
+			'menuData'        => $this->get_menu_data(),
 			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
@@ -170,10 +171,29 @@ class Brizy_Editor_Editor_Editor {
 					'setProject'     => Brizy_Editor_API::AJAX_SET_PROJECT,
 					'setProjectMeta' => Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 
-					'getGlobalBlockList'   => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
-					'createGlobalBlock'    => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
-					'updateGlobalBlock'    => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
-					'deleteGlobalBlock'    => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
+					'getGlobalPopupByUid' => Brizy_Admin_Popups_Api::GET_GLOBAL_POPUP_BY_UID_ACTION,
+					'getGlobalPopupList'  => Brizy_Admin_Popups_Api::GET_GLOBAL_POPUPS_ACTION,
+					'createGlobalPopup'   => Brizy_Admin_Popups_Api::CREATE_GLOBAL_POPUP_ACTION,
+					'updateGlobalPopup'   => Brizy_Admin_Popups_Api::UPDATE_GLOBAL_POPUP_ACTION,
+					'deleteGlobalPopup'   => Brizy_Admin_Popups_Api::DELETE_GLOBAL_POPUP_ACTION,
+
+					'getSavedPopupByUid' => Brizy_Admin_Popups_Api::GET_SAVED_POPUP_BY_UID_ACTION,
+					'getSavedPopupList'  => Brizy_Admin_Popups_Api::GET_SAVED_POPUPS_ACTION,
+					'createSavedPopup'   => Brizy_Admin_Popups_Api::CREATE_SAVED_POPUP_ACTION,
+					'updateSavedPopup'   => Brizy_Admin_Popups_Api::UPDATE_SAVED_POPUP_ACTION,
+					'deleteSavedPopup'   => Brizy_Admin_Popups_Api::DELETE_SAVED_POPUP_ACTION,
+
+					'getLayoutByUid' => Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
+					'getLayoutList'  => Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+					'createLayout'   => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+					'updateLayout'   => Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
+					'deleteLayout'   => Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
+
+					'getGlobalBlockList' => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+					'createGlobalBlock'  => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
+					'updateGlobalBlock'  => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
+					'deleteGlobalBlock'  => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
+
 					'getRuleGroupList'     => Brizy_Admin_Templates::RULE_GROUP_LIST,
 					'createRule'           => Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
 					'createRules'          => Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
@@ -181,16 +201,16 @@ class Brizy_Editor_Editor_Editor {
 					'getRuleList'          => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 					'updateBlockPositions' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 
-					'getSavedBlockList' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
-					'createSavedBlock'  => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
-					'updateSavedBlock'  => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
-					'deleteSavedBlock'  => Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
+					'getSavedBlockByUid' => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+					'getSavedBlockList'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+					'createSavedBlock'   => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
+					'updateSavedBlock'   => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
+					'deleteSavedBlock'   => Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
 
 					'media'              => Brizy_Editor_API::AJAX_MEDIA,
 					'downloadMedia'      => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
 					'getMediaUid'        => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
 					'getServerTimeStamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
-
 
 					'createBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
 					'updateBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,

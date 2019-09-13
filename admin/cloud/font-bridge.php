@@ -49,7 +49,45 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function import( $fontUid ) {
-		throw new Exception( 'Not implemented' );
+
+		$font = $this->client->getFont( $fontUid );
+
+		$family  = $font['family'];
+		$weights = $font['files'];
+
+		$newWeights = array();
+
+		// transform font urls to local files
+		foreach ( $weights as $weight => $weightType ) {
+			foreach ( $weightType as $type => $fileUrl ) {
+				$newWeights[ $weight ][ $type ] = $this->downloadFileToTemporaryFile( $fileUrl );
+			}
+		}
+
+		return $this->fontManager->createFont( $fontUid, $family, $newWeights, 'uploaded' );
+	}
+
+	private function downloadFileToTemporaryFile( $url ) {
+		$filePath = tempnam( sys_get_temp_dir(), basename( $url ) );
+		$content  = file_get_contents( $url );
+		$result   = file_put_contents( $filePath, $content );
+
+		if ( $result === false ) {
+			Brizy_Logger::instance()->critical( 'Filed to write font content',
+				[
+					'url'      => $url,
+					'filePath' => $filePath
+				] );
+			throw new Exception( 'Filed to write font content' );
+		}
+
+		return array(
+			'name'     => basename( $url ),
+			'type'     => mime_content_type( $filePath ),
+			'tmp_name' => $filePath,
+			'error'    => 0,
+			'size'     => filesize( $filePath )
+		);
 	}
 
 	/**
