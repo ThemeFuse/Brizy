@@ -7,14 +7,17 @@ const unSplitFont = font => {
   const [type, family] = font.split("|");
   return { type, family };
 };
+const getComponentDefaultValue = type => {
+  const component = EditorComponents.getComponent(type);
+  return component ? component.defaultValue : {};
+};
 
 export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
   const fontFamilies = new Set();
 
   modelTraverse(models, {
     Component({ type, value }) {
-      const defaultStyle =
-        EditorComponents.getComponent(type).defaultValue.style || {};
+      const defaultStyle = getComponentDefaultValue(type).style || {};
 
       Object.entries(defaultStyle.families || {}).forEach(fontKeys => {
         const [key, keyValue] = fontKeys;
@@ -28,12 +31,11 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
       });
     },
     RichText({ type, value }) {
-      const { text: dvText } =
-        EditorComponents.getComponent(type).defaultValue.content || {};
+      const defaultValue = getComponentDefaultValue(type).content || {};
       const classRgx = /class="(.+?)">/g;
       const familyTypeRgx = /.*?brz-(f(?:[f|t]))-(\w+)+.*?/g;
       let classes;
-      const text = value.text || dvText;
+      const text = value.text || defaultValue.text;
 
       while ((classes = classRgx.exec(text))) {
         let [_, classList] = classes;
