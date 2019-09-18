@@ -15,12 +15,16 @@
                     </div>
                 </div>
 
-                <div class="brz-pagination js-unchanged-content clearfix" data-pages="{{ data.max_num_pages }}" data-post-type="{{ data.post_type.id }}"></div>
+                {% if data.posts is not empty %}
+                    <div class="brz-pagination js-unchanged-content clearfix" data-pages="{{ data.max_num_pages }}" data-post-type="{{ data.post_type.id }}"></div>
+                {% endif %}
 
                 <div class="pages-list-items" id="{{ data.post_type.id }}ListItems">
-
-                    {% include 'posts.html.twig' with { posts: data.posts, base_url: base_url } %}
-
+                    {% if data.posts is empty %}
+                        <div class="brz-no-posts">This post type has no posts.</div>
+                    {% else %}
+                        {% include 'posts.html.twig' with { posts: data.posts, base_url: base_url } %}
+                    {% endif %}
                 </div>
             </div>
 

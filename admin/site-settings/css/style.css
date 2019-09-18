@@ -1463,4 +1463,12 @@ a {
   margin: 20px 54px 0 0;
   float:right;
 }
+
+.brz-no-posts {
+  padding: 25px 0 25px 20px;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 600;
+  color: #21252B;
+}
 /*# sourceMappingURL=style.css.map */
