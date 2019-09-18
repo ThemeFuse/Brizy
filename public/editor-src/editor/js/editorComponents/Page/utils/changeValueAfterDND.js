@@ -1,10 +1,12 @@
 import { setIn, getIn, removeAt, insert } from "timm";
+import produce from "immer";
 import _ from "underscore";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { updateGlobalBlock } from "visual/redux/actions";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
 import { setIds } from "visual/utils/models";
+import { objectTraverse2 } from "visual/utils/object";
 
 // timm helpers
 const addIn = (object, [...path], value) => {
@@ -24,55 +26,71 @@ const removeIn = (object, [...path]) => {
   return setIn(object, path, newObj);
 };
 
-function attachBlockIfItIsGlobal(oldValue, source) {
-  const { itemPath: [, itemIndex] = [] } = source;
-  const block = itemIndex ? getIn(oldValue, ["items", itemIndex]) : null;
+function attachGlobalBlocks(value, source) {
+  const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
+  const { itemPath = [] } = source;
+  const transformed = produce(value, draft => {
+    let cursor = draft;
+    let i = 0;
 
-  let value = oldValue;
-  if (block && block.type === "GlobalBlock") {
-    const { globalBlockId } = block.value;
-    const globalBlock = globalBlocksSelector(getStore().getState())[
-      globalBlockId
-    ];
+    do {
+      if (cursor.type && cursor.type === "GlobalBlock" && cursor.value) {
+        const { globalBlockId } = cursor.value;
 
-    value = setIn(value, ["items", itemIndex], globalBlock);
-  }
+        if (globalBlocks[globalBlockId]) {
+          Object.assign(cursor, globalBlocks[globalBlockId], {
+            __tmp_global_original__: JSON.stringify(cursor)
+          });
+        }
+      }
 
-  return value;
+      cursor = cursor[itemPath[i++]];
+    } while (i < itemPath.length);
+  });
+
+  return transformed;
 }
 
-function detachBlockIfItIsGlobal(oldValue, value, source) {
-  const { itemPath: [, itemIndex] = [] } = source;
-  const oldBlock = itemIndex ? getIn(oldValue, ["items", itemIndex]) : null;
-  const newBlock = itemIndex ? getIn(value, ["items", itemIndex]) : null;
+function detachGlobalBlocks(value, source) {
+  const globalBlockUpdates = [];
+  const ret = produce(value, draft => {
+    objectTraverse2(draft, obj => {
+      if (obj.__tmp_global_original__) {
+        // restore replaced global block (1)
+        const tmp = JSON.parse(obj.__tmp_global_original__);
+        delete obj.__tmp_global_original__;
 
-  let newValue = value;
-  if (oldBlock && oldBlock.type === "GlobalBlock" && oldBlock !== newBlock) {
-    const store = getStore();
-    const { globalBlockId } = oldBlock.value;
-    const sectionValue = getIn(newValue, ["items", itemIndex]);
+        // mark up global block for later update
+        globalBlockUpdates.push([tmp.value.globalBlockId, JSON.stringify(obj)]);
 
-    store.dispatch(
-      updateGlobalBlock({
-        id: globalBlockId,
-        data: sectionValue
-      })
-    );
+        // restore replaced global block (2)
+        Object.assign(obj, tmp);
+      }
+    });
+  });
 
-    newValue = setIn(newValue, ["items", itemIndex], oldBlock);
+  if (globalBlockUpdates.length) {
+    for (const [globalBlockId, dataStringified] of globalBlockUpdates) {
+      getStore().dispatch(
+        updateGlobalBlock({
+          id: globalBlockId,
+          data: JSON.parse(dataStringified)
+        })
+      );
+    }
   }
 
-  return newValue;
+  return ret;
 }
 
 export default function changeValueAfterDND(oldValue, { from, to }) {
-  let value = attachBlockIfItIsGlobal(oldValue, from);
-  value = attachBlockIfItIsGlobal(value, to);
+  let value = attachGlobalBlocks(oldValue, from);
+  value = attachGlobalBlocks(value, to);
 
   value = getValue(value, { from, to });
 
-  value = detachBlockIfItIsGlobal(oldValue, value, from);
-  value = detachBlockIfItIsGlobal(oldValue, value, to);
+  value = detachGlobalBlocks(value, from);
+  value = detachGlobalBlocks(value, to);
 
   return value;
 }

@@ -24,6 +24,12 @@
   }
   .brz-ed-border__column--empty {
     min-height: 125px;
+
+    > .brz-bg {
+      padding: 0;
+      margin: 0;
+      align-items: stretch;
+    }
   }
 }
 

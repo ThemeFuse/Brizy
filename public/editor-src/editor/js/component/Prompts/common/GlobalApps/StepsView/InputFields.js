@@ -4,7 +4,11 @@ import ScrollPane from "visual/component/ScrollPane";
 import Switch from "visual/component/Controls/Switch";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import ReactSelect from "visual/component/Controls/ReactSelect";
+import Tooltip from "visual/component/Controls/Tooltip";
+import EditorIcon from "visual/component/EditorIcon";
 import Button from "../../Button";
+import { t } from "visual/utils/i18n";
 
 class InputFields extends Component {
   static defaultProps = {
@@ -12,12 +16,15 @@ class InputFields extends Component {
     title: "",
     shortTitle: "",
     description: "",
+    headTitle: "",
+    headDescription: "",
     img: "",
     data: [
       {
         title: "",
         value: "",
-        name: ""
+        name: "",
+        helper: null
       }
     ],
     nextLoading: null,
@@ -72,6 +79,7 @@ class InputFields extends Component {
     return (
       <div className="brz-ed-popup-integrations-step__fields-input">
         <Switch
+          className="brz-ed-control__switch--light"
           defaultValue={value}
           onChange={checked => {
             this.props.onActive(name, checked);
@@ -81,19 +89,51 @@ class InputFields extends Component {
     );
   }
 
+  renderSearch({ name, choices }) {
+    return (
+      <div className="brz-ed-popup-integrations-step__fields-select">
+        <ReactSelect
+          className="brz-control__select2--light"
+          options={choices}
+          onChange={({ value }) => {
+            this.props.onActive(name, value);
+          }}
+        />
+      </div>
+    );
+  }
+
   renderOptions() {
     const options = this.props.data.map((option, index) => {
-      const { title, type } = option;
+      const { title, type, helper } = option;
 
       return (
         <div
           key={index}
           className="brz-ed-popup-integrations-step__fields-option"
         >
-          <p className="brz-p">{title}</p>
+          <div className="brz-d-xs-flex brz-align-items-xs-center">
+            <p className="brz-p">{title}</p>
+            {helper && (
+              <Tooltip
+                className="brz-ed-popup-integrations-fields__tooltip"
+                openOnClick={false}
+                inPortal={true}
+                overlay={
+                  <div
+                    className="brz-ed-popup-integrations-fields__info"
+                    dangerouslySetInnerHTML={{ __html: helper }}
+                  />
+                }
+              >
+                <EditorIcon icon="nc-alert-circle-que" />
+              </Tooltip>
+            )}
+          </div>
           {!type && this.renderInput(option)}
           {type === "select" && this.renderSelect(option)}
           {type === "switch" && this.renderSwitch(option)}
+          {type === "search" && this.renderSearch(option)}
         </div>
       );
     });
@@ -101,7 +141,7 @@ class InputFields extends Component {
     return (
       <ScrollPane
         style={{ maxHeight: 255 }}
-        className="brz-ed-scroll-pane brz-ed-popup-integrations__scroll-pane"
+        className="brz-ed-popup-integrations__scroll-pane"
       >
         {options}
       </ScrollPane>
@@ -118,7 +158,9 @@ class InputFields extends Component {
 
   render() {
     const {
-      title,
+      headTitle,
+      headDescription,
+      description,
       error,
       prevLoading,
       nextLoading,
@@ -130,15 +172,24 @@ class InputFields extends Component {
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__fields">
         {error && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
-          <p className="brz-p">
-            <strong className="brz-strong">FORM FIELDS</strong>
-          </p>
-          <p className="brz-p">
-            <strong className="brz-strong">{title} FIELDS</strong>
-          </p>
+          {headTitle && (
+            <p className="brz-p">
+              <strong className="brz-strong">{headTitle}</strong>
+            </p>
+          )}
+          {headDescription && (
+            <p className="brz-p">
+              <strong className="brz-strong">{headDescription}</strong>
+            </p>
+          )}
         </div>
         <div className="brz-ed-popup-integrations-step__body">
           {this.renderOptions()}
+          {description && (
+            <p className="brz-p brz-ed-popup-integrations__description">
+              {description}
+            </p>
+          )}
           <div className="brz-ed-popup-integrations-step__buttons">
             {prevLoading !== null && (
               <Button
@@ -147,7 +198,7 @@ class InputFields extends Component {
                 loading={prevLoading}
                 onClick={onPrev}
               >
-                Back
+                {t("Back")}
               </Button>
             )}
             {nextLoading !== null && (
@@ -157,7 +208,7 @@ class InputFields extends Component {
                 loading={nextLoading}
                 onClick={onNext}
               >
-                Continue
+                {t("Continue")}
               </Button>
             )}
           </div>

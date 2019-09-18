@@ -1,13 +1,14 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
+import classnames from "classnames";
 import SectionFooterItems from "./Items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
 import { uuid } from "visual/utils/uuid";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { stripIds } from "visual/utils/models";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -16,18 +17,16 @@ import {
 } from "visual/config/columns";
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
-  sectionStyleClassName,
-  bgStyleClassName,
-  bgStyleCSSVars,
-  itemsStyleClassName,
-  itemsStyleCSSVars,
-  containerStyleClassName,
-  containerStyleCSSVars
+  styleSection,
+  styleBg,
+  styleContainer,
+  styleContainerWrap
 } from "./styles";
+import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 
 class SectionFooter extends EditorComponent {
@@ -127,39 +126,42 @@ class SectionFooter extends EditorComponent {
     );
   }
 
-  renderItems(v) {
-    const {
-      bgImageSrc,
-      bgColorOpacity,
-      bgPopulation,
-      shapeTopType,
-      shapeBottomType
-    } = v;
-
+  renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-
-    const bgProps = {
-      className: bgStyleClassName(v),
-      imageSrc: bgImageSrc || bgPopulation,
-      colorOpacity: bgColorOpacity,
-      shapeTopType: shapeTopType !== "none" && shapeTopType,
-      shapeBottomType: shapeBottomType !== "none" && shapeBottomType,
-      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
-      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
-      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
-      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
-    };
-
+    const classNameBg = classnames(
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        styleBg(v, vs, vd)
+      )
+    );
+    const classNameContainer = classnames(
+      "brz-container",
+      v.containerClassName,
+      css(
+        `${this.constructor.componentId}-container`,
+        `${this.getId()}-container`,
+        styleContainer(v, vs, vd)
+      )
+    );
+    const classNameContainerWrap = classnames(
+      "brz-container__wrap",
+      css(
+        `${this.constructor.componentId}-containerWrap`,
+        `${this.getId()}-containerWrap`,
+        styleContainerWrap(v, vs, vd)
+      )
+    );
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      className: itemsStyleClassName(v),
+      className: classNameContainer,
       meta
     });
 
     return (
-      <Background {...bgProps}>
+      <Background className={classNameBg} value={v} meta={meta}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
-          <div className={containerStyleClassName(v)}>
+          <div className={classNameContainerWrap}>
             <SectionFooterItems {...itemsProps} />
           </div>
         </PaddingResizer>
@@ -167,22 +169,31 @@ class SectionFooter extends EditorComponent {
     );
   }
 
-  renderForEdit(v) {
-    const styles = {
-      ...bgStyleCSSVars(v),
-      ...itemsStyleCSSVars(v),
-      ...containerStyleCSSVars(v)
-    };
+  renderForEdit(v, vs, vd) {
+    const { className, customClassName } = v;
+
+    const classNameSection = classnames(
+      "brz-footer",
+      className,
+      customClassName,
+      css(
+        `${this.constructor.componentId}-section`,
+        `${this.getId()}-section`,
+        styleSection(v, vs, vd)
+      )
+    );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <footer
           id={this.getId()}
-          className={sectionStyleClassName(v)}
+          className={classNameSection}
           data-block-id={this.props.blockId}
-          style={styles}
         >
-          <Roles allow={["admin"]} fallbackRender={() => this.renderItems(v)}>
+          <Roles
+            allow={["admin"]}
+            fallbackRender={() => this.renderItems(v, vs, vd)}
+          >
             <ContainerBorder
               ref={el => {
                 this.containerBorder = el;
@@ -194,7 +205,7 @@ class SectionFooter extends EditorComponent {
               path={this.getPath()}
             >
               {this.renderToolbar(v)}
-              {this.renderItems(v)}
+              {this.renderItems(v, vs, vd)}
             </ContainerBorder>
           </Roles>
         </footer>
@@ -202,15 +213,28 @@ class SectionFooter extends EditorComponent {
     );
   }
 
-  renderForView(v) {
+  renderForView(v, vs, vd) {
+    const { className, customClassName } = v;
+
+    const classNameSection = classnames(
+      "brz-footer",
+      className,
+      customClassName,
+      css(
+        `${this.constructor.componentId}-section`,
+        `${this.getId()}-section`,
+        styleSection(v, vs, vd)
+      )
+    );
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <footer
           id={v.anchorName || this.getId()}
-          className={sectionStyleClassName(v)}
+          className={classNameSection}
           data-uid={this.getId()}
         >
-          {this.renderItems(v)}
+          {this.renderItems(v, vs, vd)}
         </footer>
       </CustomCSS>
     );
@@ -280,7 +304,7 @@ class SectionFooter extends EditorComponent {
       meta: { globalBlockId },
       onChange
     } = this.props;
-    const globalBlocks = globalBlocksSelector(getStore().getState());
+    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();

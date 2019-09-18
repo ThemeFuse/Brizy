@@ -190,6 +190,10 @@ export function styleMenuClassName(v, hasMMenu) {
           borderBottomRightRadius: "var(--borderBottomRightRadius)",
           boxShadow: "var(--subMenuBoxShadow)",
 
+          "&:hover": {
+            boxShadow: "var(--subMenuHoverBoxShadow)"
+          },
+
           "& .brz-a:hover": {
             color: "var(--subMenuHoverColor)"
           }
@@ -411,11 +415,8 @@ export function styleMenuClassName(v, hasMMenu) {
     };
   } else {
     const {
-      colorHex,
-      colorOpacity,
-      hoverColorHex,
-      hoverColorOpacity,
       fontFamily,
+      fontFamilyType,
       fontWeight,
       fontSize,
       lineHeight,
@@ -438,8 +439,6 @@ export function styleMenuClassName(v, hasMMenu) {
       mobileIconSize,
       subMenuIconSize,
       subMenuIconSpacing,
-      subMenuColorHex,
-      subMenuColorOpacity,
       subMenuHoverColorHex,
       subMenuHoverColorOpacity,
       subMenuBgColorHex,
@@ -451,6 +450,7 @@ export function styleMenuClassName(v, hasMMenu) {
       subMenuBorderWidth,
       subMenuBorderStyle,
       subMenuFontFamily,
+      subMenuFontFamilyType,
       subMenuFontWeight,
       subMenuFontSize,
       subMenuLineHeight,
@@ -480,6 +480,7 @@ export function styleMenuClassName(v, hasMMenu) {
       mMenuBorderColorHex,
       mMenuBorderColorOpacity,
       mMenuFontFamily,
+      mMenuFontFamilyType,
       mMenuFontWeight,
       mMenuFontSize,
       mMenuLineHeight,
@@ -510,7 +511,8 @@ export function styleMenuClassName(v, hasMMenu) {
     glamorObj = {
       ".brz &": {
         color: styleColor({ v, device: "desktop", state: "normal" }),
-        fontFamily: getFontById(fontFamily).family,
+        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
+          .family,
         fontWeight: fontWeight,
         fontSize: `${fontSize}px`,
         lineHeight: lineHeight,
@@ -521,9 +523,12 @@ export function styleMenuClassName(v, hasMMenu) {
             v,
             device: "desktop",
             state: "normal",
-            prefix: "subMenu"
+            prefix: "subMenuColor"
           }),
-          fontFamily: getFontById(subMenuFontFamily).family,
+          fontFamily: getFontById({
+            family: subMenuFontFamily,
+            type: subMenuFontFamilyType
+          }).family,
           fontWeight: subMenuFontWeight,
           fontSize: `${subMenuFontSize}px`,
           lineHeight: subMenuLineHeight,
@@ -546,13 +551,20 @@ export function styleMenuClassName(v, hasMMenu) {
               : `${borderBottomRightRadius}px`,
           boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
 
+          "&:hover": {
+            boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
+          },
+
           "& .brz-a:hover": {
             color: hexToRgba(subMenuHoverColorHex, subMenuHoverColorOpacity)
           }
         },
         "& .brz-mm-menu__item": {
           color: hexToRgba(mMenuColorHex, mMenuColorOpacity),
-          fontFamily: getFontById(mMenuFontFamily).family,
+          fontFamily: getFontById({
+            family: mMenuFontFamily,
+            type: mMenuFontFamilyType
+          }).family,
           fontSize: `${mMenuFontSize}`,
           fontWeight: mMenuFontWeight,
           lineHeight: mMenuLineHeight,
@@ -568,7 +580,10 @@ export function styleMenuClassName(v, hasMMenu) {
         },
         "& .mm-navbar": {
           color: hexToRgba(mMenuColorHex, mMenuColorOpacity),
-          fontFamily: getFontById(mMenuFontFamily).family,
+          fontFamily: getFontById({
+            family: mMenuFontFamily,
+            type: mMenuFontFamilyType
+          }).family,
           fontSize: `${mMenuFontSize}`,
           fontWeight: mMenuFontWeight,
           lineHeight: mMenuLineHeight,
@@ -624,7 +639,7 @@ export function styleMenuClassName(v, hasMMenu) {
               v,
               device: "desktop",
               state: "normal",
-              prefix: "subMenu"
+              prefix: "subMenuColor"
             })
           },
           "&:hover:after": {
@@ -794,11 +809,8 @@ export function styleMenuCSSVars(v) {
   }
 
   const {
-    colorHex,
-    colorOpacity,
-    hoverColorHex,
-    hoverColorOpacity,
     fontFamily,
+    fontFamilyType,
     fontWeight,
     fontSize,
     lineHeight,
@@ -821,8 +833,6 @@ export function styleMenuCSSVars(v) {
     mobileIconSize,
     subMenuIconSize,
     subMenuIconSpacing,
-    subMenuColorHex,
-    subMenuColorOpacity,
     subMenuHoverColorHex,
     subMenuHoverColorOpacity,
     subMenuBgColorHex,
@@ -834,6 +844,7 @@ export function styleMenuCSSVars(v) {
     subMenuBorderWidth,
     subMenuBorderStyle,
     subMenuFontFamily,
+    subMenuFontFamilyType,
     subMenuFontWeight,
     subMenuFontSize,
     subMenuLineHeight,
@@ -863,6 +874,7 @@ export function styleMenuCSSVars(v) {
     mMenuBorderColorHex,
     mMenuBorderColorOpacity,
     mMenuFontFamily,
+    mMenuFontFamilyType,
     mMenuFontWeight,
     mMenuFontSize,
     mMenuLineHeight,
@@ -889,11 +901,11 @@ export function styleMenuCSSVars(v) {
     mobileItemPaddingBottom,
     mobileItemPaddingLeft
   } = v;
-
   return {
     "--color": styleColor({ v, device: "desktop", state: "normal" }),
     "--hoverColor": styleColor({ v, device: "desktop", state: "hover" }),
-    "--fontFamily": getFontById(fontFamily).family,
+    "--fontFamily": getFontById({ family: fontFamily, type: fontFamilyType })
+      .family,
     "--fontWeight": fontWeight,
     "--fontSize": `${fontSize}px`,
     "--lineHeight": lineHeight,
@@ -933,7 +945,7 @@ export function styleMenuCSSVars(v) {
       v,
       device: "desktop",
       state: "normal",
-      prefix: "subMenu"
+      prefix: "subMenuColor"
     }),
     "--subMenuHoverColor": hexToRgba(
       subMenuHoverColorHex,
@@ -951,7 +963,10 @@ export function styleMenuCSSVars(v) {
     "--subMenuBorderWidth": `${subMenuBorderWidth}px`,
     "--subMenuBorderStyle": subMenuBorderStyle,
 
-    "--subMenuFontFamily": getFontById(subMenuFontFamily).family,
+    "--subMenuFontFamily": getFontById({
+      family: subMenuFontFamily,
+      type: subMenuFontFamilyType
+    }).family,
     "--subMenuFontWeight": subMenuFontWeight,
     "--subMenuFontSize": `${subMenuFontSize}px`,
     "--subMenuLineHeight": subMenuLineHeight,
@@ -961,6 +976,13 @@ export function styleMenuCSSVars(v) {
       device: "desktop",
       state: "normal"
     }),
+
+    "--subMenuHoverBoxShadow": styleBoxShadow({
+      v,
+      device: "desktop",
+      state: "hover"
+    }),
+
     "--borderTopLeftRadius":
       borderRadiusType === "grouped"
         ? `${borderRadius}px`
@@ -999,7 +1021,10 @@ export function styleMenuCSSVars(v) {
       mMenuBorderColorHex,
       mMenuBorderColorOpacity
     ),
-    "--mMenuFontFamily": getFontById(mMenuFontFamily).family,
+    "--mMenuFontFamily": getFontById({
+      family: mMenuFontFamily,
+      type: mMenuFontFamilyType
+    }).family,
     "--mMenuFontWeight": mMenuFontWeight,
     "--mMenuFontSize": `${mMenuFontSize}px`,
     "--mMenuLineHeight": mMenuLineHeight,

@@ -1,0 +1,87 @@
+// Select 2 Downshift
+.brz-control__select2 {
+  font-family: $font-family-1;
+
+  // Input
+  &-value-container {
+    line-height: $control-height;
+    height: $control-height;
+    border-radius: $control-border-radius;
+    font-size: $control-font-size;
+    letter-spacing: $control-letter-spacing;
+  }
+  &-value {
+    font: inherit;
+    letter-spacing: inherit;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    background: none;
+    padding-left: $control-padding;
+    padding-right: $control-padding;
+  }
+
+  // Dropdown
+  &-menu {
+    font-family: $font-family-1;
+    z-index: z("select-portal");
+    width: 200px;
+    box-shadow: 0 1px 10px 0 rgba(18, 34, 35, 0.1);
+    margin-top: 3px; // ? placement
+    border-radius: $control-border-radius;
+  }
+  &-option {
+    cursor: pointer;
+    padding-left: $control-padding;
+    padding-right: $control-padding;
+    font-size: $control-font-size;
+    letter-spacing: $control-letter-spacing;
+    line-height: $control-height;
+    height: $control-height;
+    transition: color 0.15s linear;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+    &:hover,
+    &.active {
+      transition: color 0.15s linear;
+      color: $brand-primary;
+    }
+  }
+
+  // ScrollPane
+  &-scroll-pane {
+    // Set default height
+    // uses for first render
+    .brz-ed-scroll-inner {
+      height: 120px;
+      overflow: hidden;
+    }
+  }
+}
+
+// Light
+.brz-control__select2--light {
+  .brz-control__select2-value-container {
+    background-color: #fff;
+    color: #383e48;
+  }
+  .brz-control__select2-menu {
+    background-color: #fff;
+  }
+  .brz-control__select2-option {
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .brz-control__select2-scroll-pane {
+    .brz-ed-wide-thumb,
+    .brz-ed-tall-thumb {
+      background-color: #7b7b7b;
+      border-radius: 2px;
+    }
+  }
+}

@@ -1,6 +1,3 @@
-// Style Render
-export * from "./style";
-
 // Style State
 export { styleState } from "./state";
 
@@ -18,14 +15,21 @@ export {
 // Background Attachment
 export { styleBgAttachment } from "./styleBgAttachment";
 
-// Border Style
-export { styleBorderStyle } from "./styleBorderStyle";
-
 // Border Radius
-export { styleBorderRadius } from "./styleBorderRadius";
+export {
+  styleBorderRadiusType,
+  styleBorderRadiusGrouped,
+  styleBorderRadiusUngrouped
+} from "./styleBorderRadius";
 
-// Border Width
-export { styleBorderWidth } from "./styleBorderWidth";
+// Border Style, Width, Color
+export {
+  styleBorderStyle,
+  styleBorderColor,
+  styleBorderWidthType,
+  styleBorderWidthGrouped,
+  styleBorderWidthUngrouped
+} from "./styleBorder";
 
 // Color
 export { styleColor } from "./styleColor";
@@ -36,9 +40,6 @@ export { styleBgColor } from "./styleBgColor";
 // BG Gradient
 export { styleBgGradient } from "./styleBgGradient";
 
-// Border Color
-export { styleBorderColor } from "./styleBorderColor";
-
 // Hover Transition
 export {
   styleHoverTransition,
@@ -47,7 +48,8 @@ export {
 
 // Align
 export {
-  styleAlignVerticalAlign,
+  styleAlignFlexVerticalAlign,
+  styleAlignFlexHorizontalAlign,
   styleAlignHorizontalAlign
 } from "./styleAlign";
 
@@ -60,39 +62,70 @@ export {
 
 // Size
 export {
-  styleSizeWidthPercent,
-  styleSizeHeightPx,
-  styleSizeSizePercent,
-  styleSizeConatinerSizePercent
+  styleSizeWidth,
+  styleSizeHeight,
+  styleSizeSize,
+  styleSizeContainerSize
 } from "./styleSize";
 
 // Container Type
-export { styleContainerType } from "./styleContainerType";
-
-// Container Type
-export { styleElementSectionContainerSize } from "./styleElementSection";
+export {
+  styleElementSectionContainerType,
+  styleElementSectionContainerSize,
+  styleElementSectionSliderHeight,
+  styleElementSectionHeight
+} from "./styleElementSection";
 
 // Padding
-export { stylePadding } from "./stylePadding";
+export {
+  stylePaddingType,
+  stylePaddingGrouped,
+  stylePaddingUngrouped,
+  stylePaddingGroupedSuffix,
+  stylePaddingUngroupedSuffix,
+  styleItemPaddingTop,
+  styleItemPaddingRight,
+  styleItemPaddingBottom,
+  styleItemPaddingLeft
+} from "./stylePadding";
 
 // Margin
-export { styleMargin } from "./styleMargin";
+export {
+  styleMarginType,
+  styleMarginGrouped,
+  styleMarginUngrouped,
+  styleMarginGroupedSuffix,
+  styleMarginUngroupedSuffix,
+  styleItemMarginTop,
+  styleItemMarginRight,
+  styleItemMarginBottom,
+  styleItemMarginLeft
+} from "./styleMargin";
 
 // Box Shadow
-export { styleBoxShadow, styleFooterBoxShadow } from "./styleBoxShadow";
+export {
+  styleBoxShadowType,
+  styleBoxShadowColor,
+  styleBoxShadowHorizontal,
+  styleBoxShadowVertical,
+  styleBoxShadowBlur,
+  styleBoxShadowSpread
+} from "./styleBoxShadow";
 
 // Shape
 export {
-  styleShapeTopHeight,
-  styleShapeBottomHeight,
-  styleShapeTopFlip,
-  styleShapeBottomFlip,
-  styleShapeTopIndex,
-  styleShapeBottomIndex,
   styleShapeTopType,
-  styleShapeTopBackgroundSize,
+  styleShapeTopSvg,
+  styleShapeTopHeight,
+  styleShapeTopHeightSuffix,
+  styleShapeTopFlip,
+  styleShapeTopIndex,
   styleShapeBottomType,
-  styleShapeBottomBackgroundSize
+  styleShapeBottomSvg,
+  styleShapeBottomHeight,
+  styleShapeBottomHeightSuffix,
+  styleShapeBottomFlip,
+  styleShapeBottomIndex
 } from "./styleShape";
 
 // Show on Devices
@@ -124,20 +157,70 @@ export {
   styleTypographyLetterSpacing
 } from "./styleTypography";
 
+// Typography
+export {
+  styleTypography2FontFamily,
+  styleTypography2FontSize,
+  styleTypography2LineHeight,
+  styleTypography2FontWeight,
+  styleTypography2LetterSpacing
+} from "./styleTypography2";
+
+// Filter
+export {
+  styleFilterBrightness,
+  styleFilterHue,
+  styleFilterSaturation,
+  styleFilterContrast
+} from "./styleFilter";
+
 // Element Column
-export { styleElementColumnMinHeight } from "./styleElementColumn";
+export {
+  styleElementColumnMinHeightType,
+  styleElementColumnMinHeight
+} from "./styleElementColumn";
 
 //Element ProgressBar
 export { styleElementProgressBarPercentage } from "./styleElementProgressBar";
 
-// Element Cloneable
+// Element Countdown
 export {
-  styleItemPaddingTop,
-  styleItemPaddingRight,
-  styleItemPaddingBottom,
-  styleItemPaddingLeft,
-  styleItemMarginTop,
-  styleItemMarginRight,
-  styleItemMarginBottom,
-  styleItemMarginLeft
-} from "./styleItemPadding";
+  styleTypographyElementCountdownLabelFontSize
+} from "./styleElementCountdown";
+
+// Element IconBox
+export {
+  styleElementIconBoxIconPosition,
+  styleElementIconBoxMarginLeft,
+  styleElementIconBoxMarginRight
+} from "./styleElementIconBox";
+
+// Element Image Gallery
+export {
+  styleElementImageGalleryGridColumn,
+  styleElementImageGallerySpacing
+} from "./styleElementImageGallery";
+
+//Element Video
+export {
+  styleElementVideoPaddingRatio,
+  styleElementVideoPointerEvents,
+  styleElementVideoIconFontSize,
+  styleElementVideoBgColorRatio,
+  styleElementVideoCoverSrc,
+  styleElementVideoCoverPositionX,
+  styleElementVideoCoverPositionY,
+  styleElementVideoCoverZoom,
+  styleElementVideoIconSizeWidth,
+  styleElementVideoIconSizeHeight
+} from "./styleElementVideo";
+
+//Element Button
+export {
+  styleElementButtonBorderRadius,
+  styleElementButtonIconPosition,
+  styleElementButtonIconPositionCss,
+  styleElementButtonIconCustomSize,
+  styleElementButtonIconMargin,
+  styleElementIconStrokeWidth
+} from "./styleElementButton";

@@ -8,12 +8,12 @@ export const rolesHOC = ({
   fallbackComponent: FallbackComponent,
   fallbackRender
 }) => {
-  return function rolesHOC(props) {
+  function rolesHOC(props, ref) {
     const roleTestPassed = allow.includes(currentUserRole());
 
     if (roleTestPassed) {
       if (Component) {
-        return <Component {...props} />;
+        return <Component {...props} ref={ref} />;
       }
 
       if (render) {
@@ -21,7 +21,7 @@ export const rolesHOC = ({
       }
     } else {
       if (FallbackComponent) {
-        return <FallbackComponent {...props} />;
+        return <FallbackComponent {...props} ref={ref} />;
       }
 
       if (fallbackRender) {
@@ -30,5 +30,8 @@ export const rolesHOC = ({
     }
 
     return null;
-  };
+  }
+  rolesHOC.displayName = `RolesHOC(${Component.displayName || Component.name})`;
+
+  return React.forwardRef(rolesHOC);
 };

@@ -20,17 +20,17 @@ export default class Tabs extends React.Component {
   };
 
   renderTabs = () => {
-    if (
-      React.Children.count(this.props.children) === 1 &&
-      this.props.hideHandlesWhenOne
-    ) {
+    // React.Children.toArray automatically filters out falsy children
+    const childrenArr = React.Children.toArray(this.props.children);
+
+    if (childrenArr.length === 1 && this.props.hideHandlesWhenOne) {
       return null;
     }
 
-    const items = React.Children.map(this.props.children, (child, key) => {
+    const items = childrenArr.map((child, index) => {
       return (
         <li
-          key={key}
+          key={index}
           title={child.props.title}
           className={classnames(
             "brz-li brz-ed-control__tab",
@@ -52,19 +52,23 @@ export default class Tabs extends React.Component {
       this.props.tabsClassName
     );
 
-    return <ul className={tabsClassName}>{items}</ul>;
+    return items.length ? <ul className={tabsClassName}>{items}</ul> : null;
   };
 
   renderTabContent = () => {
+    // React.Children.toArray automatically filters out falsy children
+    const childrenArr = React.Children.toArray(this.props.children);
     const tabsContentClassName = classnames(
       "brz-ed-control__tab__content",
       `brz-ed-control__tabs__content__${this.props.tabsPosition}`
     );
 
-    return React.Children.map(this.props.children, child => {
+    return childrenArr.map((child, index) => {
       if (this.props.value === child.props.value) {
         return (
-          <div className={tabsContentClassName}>{child.props.children}</div>
+          <div key={index} className={tabsContentClassName}>
+            {child.props.children}
+          </div>
         );
       }
     });

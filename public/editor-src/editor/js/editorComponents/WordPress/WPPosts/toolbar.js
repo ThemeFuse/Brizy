@@ -1,13 +1,28 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
+import { defaultValueKey } from "visual/utils/onChange";
+import {
+  toolbarElementWPPostsType,
+  toolbarElementWPPostsNumber,
+  toolbarElementWPPostsCategory,
+  toolbarElementWPPostsAuthor,
+  toolbarElementWPPostsInclude,
+  toolbarElementWPPostsExclude,
+  toolbarElementWPPostsStatus,
+  toolbarElementWPPostsMetaKey,
+  toolbarElementWPPostsMetaValue,
+  toolbarElementWPPostsOrderBy,
+  toolbarElementWPPostsOrder,
+  toolbarSizeWidthWidthPercent,
+  toolbarCustomCSS
+} from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
+export function getItems({ v, device }) {
   return [
     {
-      id: "toolbarWPPosts",
+      id: defaultValueKey({ key: "toolbarWPPosts", device, state: "normal" }),
       type: "popover",
       icon: "nc-wp-shortcode",
+      devices: "desktop",
       position: 10,
       options: [
         {
@@ -18,149 +33,78 @@ export function getItemsForDesktop(v) {
               id: "queryTab",
               label: t("Query"),
               options: [
-                {
-                  id: "postType",
-                  label: t("Post Type"),
-                  type: "select",
-                  choices: [
-                    { title: t("Post"), value: "post" },
-                    { title: t("Page"), value: "page" }
-                  ],
-                  value: v.postType
-                },
-                {
-                  id: "numberPosts",
-                  label: t("Number posts"),
-                  type: "input",
-                  value: {
-                    value: v.numberPosts
-                  },
-                  onChange: ({ value: numberPosts }) => ({
-                    numberPosts
-                  })
-                },
-                {
-                  id: "category",
-                  label: t("Category"),
-                  type: "input",
-                  value: {
-                    value: v.category
-                  },
-                  onChange: ({ value: category }) => ({
-                    category
-                  })
-                },
-                {
-                  id: "author",
-                  label: t("Author"),
-                  type: "input",
-                  value: {
-                    value: v.author
-                  },
-                  onChange: ({ value: author }) => ({
-                    author
-                  })
-                },
-                {
-                  id: "include",
-                  label: t("Include"),
-                  type: "input",
-                  value: {
-                    value: v.include
-                  },
-                  onChange: ({ value: include }) => ({
-                    include
-                  })
-                },
-                {
-                  id: "exclude",
-                  label: t("Exclude"),
-                  type: "input",
-                  value: {
-                    value: v.exclude
-                  },
-                  onChange: ({ value: exclude }) => ({
-                    exclude
-                  })
-                },
-                {
-                  id: "postStatus",
-                  label: "Status",
-                  type: "select",
-                  choices: [
-                    { title: t("Publish"), value: "publish" },
-                    { title: t("Future"), value: "future" },
-                    { title: t("Draft"), value: "draft" },
-                    { title: t("Pending"), value: "pending" },
-                    { title: t("Private"), value: "private" },
-                    { title: t("Trash"), value: "trash" },
-                    { title: t("Auto-Draft"), value: "auto-draft" },
-                    { title: t("Inherit"), value: "inherit" }
-                  ],
-                  value: v.postStatus
-                },
-                {
-                  id: "metaKey",
-                  label: t("Meta Key"),
-                  type: "input",
-                  value: {
-                    value: v.metaKey
-                  },
-                  onChange: ({ value: metaKey }) => ({
-                    metaKey
-                  })
-                },
-                {
-                  id: "metaValue",
-                  label: t("Meta Value"),
-                  type: "input",
-                  value: {
-                    value: v.metaValue
-                  },
-                  onChange: ({ value: metaValue }) => ({
-                    metaValue
-                  })
-                }
+                toolbarElementWPPostsType({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsNumber({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsCategory({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsAuthor({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsInclude({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsExclude({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsStatus({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsMetaKey({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsMetaValue({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                })
               ]
             },
-
             {
               id: "layoutTab",
               label: "Layout",
               options: [
-                {
-                  id: "orderBy",
-                  label: t("Order By"),
-                  type: "select",
-                  choices: [
-                    { title: t("None"), value: "none" },
-                    { title: t("ID"), value: "ID" },
-                    { title: t("Author"), value: "author" },
-                    { title: t("Date"), value: "date" },
-                    { title: t("Modified"), value: "modified" },
-                    { title: t("Parent"), value: "parent" },
-                    { title: t("Random"), value: "rand" },
-                    { title: t("Comment Count"), value: "comment_count" },
-                    { title: t("Menu order"), value: "menu_order" }
-                  ],
-                  value: v.orderBy
-                },
-                {
-                  id: "order",
-                  label: t("Order"),
-                  type: "select",
-                  choices: [
-                    {
-                      title: t("Asc"),
-                      value: "ASC"
-                    },
-                    {
-                      title: t("Desc"),
-                      value: "DESC"
-                    }
-                  ],
-                  value: v.order
-                }
+                toolbarElementWPPostsOrderBy({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementWPPostsOrder({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                })
               ]
             }
           ]
@@ -168,39 +112,23 @@ export function getItemsForDesktop(v) {
       ]
     },
     {
-      id: "toolbarSettings",
+      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",
       icon: "nc-cog",
       roles: ["admin"],
       position: 110,
       options: [
+        toolbarSizeWidthWidthPercent({
+          v,
+          device,
+          state: "normal"
+        }),
         {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        },
-        {
-          id: "advancedSettings",
+          id: defaultValueKey({
+            key: "advancedSettings",
+            device,
+            state: "normal"
+          }),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
@@ -208,95 +136,29 @@ export function getItemsForDesktop(v) {
             {
               id: "settingsTabs",
               type: "tabs",
+              devices: "desktop",
               align: "start",
               tabs: [
                 {
-                  id: "moreSettingsAdvanced",
+                  id: defaultValueKey({
+                    key: "moreSettingsAdvanced",
+                    device,
+                    state: "normal"
+                  }),
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
-                  options: [toolbarCustomCSS({ v })]
+                  options: [
+                    toolbarCustomCSS({
+                      v,
+                      device,
+                      state: "normal",
+                      devices: "desktop"
+                    })
+                  ]
                 }
               ]
             }
           ]
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  return [
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      roles: ["admin"],
-      position: 110,
-      options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  return [
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      roles: ["admin"],
-      position: 110,
-      options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
         }
       ]
     }

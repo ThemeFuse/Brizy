@@ -1,17 +1,23 @@
-import _ from "underscore";
 import jQuery from "jquery";
 import Promise from "promise";
 import Config from "visual/global/Config";
 import {
   parsePage,
   stringifyPage,
-  parseGlobals,
-  stringifyGlobals
+  parseProject,
+  stringifyProject,
+  parseGlobalBlock,
+  stringifyGlobalBlock,
+  parseSavedBlock,
+  stringifySavedBlock
 } from "./adapter";
+
+const apiUrl = Config.get("wp").api.url;
 
 export function request(action, data) {
   const { hash, url } = Config.get("wp").api;
-  const data_ = { ...data, action, hash };
+  const version = Config.get("editorVersion");
+  const data_ = { ...data, action, hash, version };
 
   return new Promise((resolve, reject) =>
     jQuery
@@ -23,6 +29,7 @@ export function request(action, data) {
 
 export function persistentRequest(ajaxSettings) {
   const { hash, url } = Config.get("wp").api;
+  const version = Config.get("editorVersion");
   const { data, ...otherSettings } = ajaxSettings;
 
   return new Promise((resolve, reject) => {
@@ -31,7 +38,8 @@ export function persistentRequest(ajaxSettings) {
       url,
       data: {
         ...data,
-        hash
+        hash,
+        version
       },
       onbeforeunload() {
         return "You have unsaved data.";
@@ -56,6 +64,43 @@ export function persistentRequest(ajaxSettings) {
   });
 }
 
+// a thin wrapper around fetch
+export function request2(url, config = {}) {
+  // will see later if we'll have to hardcode
+  // some settings into config like we do for brizy cloud
+  return fetch(url, config);
+}
+
+// project
+
+export function getProject() {
+  const { getProject } = Config.get("wp").api;
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: { action: getProject }
+  })
+    .then(({ data }) => data)
+    .then(parseProject);
+}
+
+export function updateProject(project, meta = {}) {
+  const { setProject } = Config.get("wp").api;
+  const { is_autosave = 1 } = meta;
+  const { data } = stringifyProject(project);
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    data: {
+      action: setProject,
+      data,
+      is_autosave
+    }
+  });
+}
+
 // page
 
 export function getPages() {
@@ -66,9 +111,7 @@ export function getPages() {
     type: "POST",
     dataType: "json",
     data: { id: page, action: apiConfig.getPage }
-  }).then(r => {
-    return r.map(parsePage);
-  });
+  }).then(({ data }) => data.map(parsePage));
 }
 
 export function updatePage(page, meta = {}) {
@@ -86,35 +129,6 @@ export function updatePage(page, meta = {}) {
   });
 }
 
-// globals
-
-export function getGlobals() {
-  const { getGlobals } = Config.get("wp").api;
-
-  return persistentRequest({
-    type: "POST",
-    dataType: "json",
-    data: { action: getGlobals }
-  }).then(r => {
-    return parseGlobals(r.gb);
-  });
-}
-
-export function updateGlobals(data, meta = {}) {
-  const { setGlobals } = Config.get("wp").api;
-  const { is_autosave = 1 } = meta;
-
-  return persistentRequest({
-    type: "POST",
-    dataType: "json",
-    data: {
-      action: setGlobals,
-      gb: stringifyGlobals(data),
-      is_autosave
-    }
-  });
-}
-
 // global blocks
 
 export function getGlobalBlocks() {
@@ -124,42 +138,42 @@ export function getGlobalBlocks() {
     type: "POST",
     dataType: "json",
     data: { action: getGlobalBlockList }
-  }).then(r => {
-    return r.reduce((acc, block) => {
-      acc[block.uid] = JSON.parse(block.data);
+  }).then(({ data }) => {
+    return data.map(parseGlobalBlock).reduce((acc, { uid, data }) => {
+      acc[uid] = data;
 
       return acc;
     }, {});
   });
 }
 
-export function createGlobalBlock({ id, data }) {
+export function createGlobalBlock(globalBlock) {
   const { createGlobalBlock } = Config.get("wp").api;
-  const data_ = JSON.stringify(data);
+  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
       action: createGlobalBlock,
-      uid: id,
-      data: data_
+      uid,
+      data
     }
   });
 }
 
-export function updateGlobalBlock({ id, data }, meta = {}) {
+export function updateGlobalBlock(globalBlock, meta = {}) {
   const { updateGlobalBlock } = Config.get("wp").api;
   const { is_autosave = 1 } = meta;
-  const data_ = JSON.stringify(data);
+  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
       action: updateGlobalBlock,
-      uid: id,
-      data: data_,
+      uid,
+      data,
       is_autosave
     }
   });
@@ -174,42 +188,42 @@ export function getSavedBlocks() {
     type: "POST",
     dataType: "json",
     data: { action: getSavedBlockList }
-  }).then(r => {
-    return r.reduce((acc, block) => {
-      acc[block.uid] = JSON.parse(block.data);
+  }).then(({ data }) => {
+    return data.map(parseSavedBlock).reduce((acc, { uid, data }) => {
+      acc[uid] = data;
 
       return acc;
     }, {});
   });
 }
 
-export function createSavedBlock({ id, data }) {
+export function createSavedBlock(savedBlock) {
   const { createSavedBlock } = Config.get("wp").api;
-  const data_ = JSON.stringify(data);
+  const { id: uid, data } = stringifySavedBlock(savedBlock);
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
       action: createSavedBlock,
-      uid: id,
-      data: data_
+      uid,
+      data
     }
   });
 }
 
-export function updateSavedBlock({ id, data }, meta = {}) {
+export function updateSavedBlock(savedBlock, meta = {}) {
   const { updateSavedBlock } = Config.get("wp").api;
   const { is_autosave = 0 } = meta;
-  const data_ = JSON.stringify(data);
+  const { id: uid, data } = stringifySavedBlock(savedBlock);
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
       action: updateSavedBlock,
-      uid: id,
-      data: data_,
+      uid,
+      data,
       is_autosave
     }
   });
@@ -234,7 +248,7 @@ export function downloadImageFromCloud(id) {
     media: id
   };
 
-  return request(apiConfig.downloadMedia, data);
+  return request(apiConfig.downloadMedia, data).then(({ data }) => data);
 }
 
 export function getImageUid(id) {
@@ -244,13 +258,14 @@ export function getImageUid(id) {
     attachment_id: id
   };
 
-  return request(apiConfig.getMediaUid, data);
+  return request(apiConfig.getMediaUid, data).then(({ data }) => data);
 }
 
 // featured image
 
 export function updateFeaturedImage(post, attachmentId) {
   const apiConfig = Config.get("wp").api;
+
   return request(apiConfig.setFeaturedImage, {
     post,
     attachmentId
@@ -264,6 +279,7 @@ export function updateFeaturedImageFocalPoint(
   pointY
 ) {
   const apiConfig = Config.get("wp").api;
+
   return request(apiConfig.setFeaturedImageFocalPoint, {
     post,
     attachmentId,
@@ -281,20 +297,88 @@ export function removeFeaturedImage(post) {
 
 export function getSidebars() {
   const apiConfig = Config.get("wp").api;
-  return request(apiConfig.getSidebars, {});
+  return request(apiConfig.getSidebars, {}).then(({ data }) => data);
 }
 
 export function shortcodeContent(shortcode) {
   const apiConfig = Config.get("wp").api;
-  return request(apiConfig.shortcodeContent, { shortcode });
+  return request(apiConfig.shortcodeContent, { shortcode }).then(
+    ({ data }) => data
+  );
 }
 
 export function getMenus() {
   const apiConfig = Config.get("wp").api;
-  return request(apiConfig.getMenus, {});
+  return request(apiConfig.getMenus, {}).then(({ data }) => data);
 }
 
 export function getTerms(taxonomy) {
   const apiConfig = Config.get("wp").api;
-  return request(apiConfig.getTerms, { taxonomy });
+  return request(apiConfig.getTerms, { taxonomy }).then(({ data }) => data);
+}
+
+export function getUploadedFonts() {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.getFonts, {}).then(({ data }) => data);
+}
+
+// screenshots
+
+export function createBlockScreenshot({ base64, blockType }) {
+  const {
+    page,
+    api: { createBlockScreenshot }
+  } = Config.get("wp");
+  const version = Config.get("editorVersion");
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+
+  return request2(apiUrl, {
+    method: "POST",
+    credentials: "omit",
+    body: new URLSearchParams({
+      action: createBlockScreenshot,
+      post: page,
+      block_type: blockType,
+      ibsf: attachment,
+      version
+    })
+  })
+    .then(r => r.json())
+    .then(rj => {
+      if (rj.success) {
+        return rj.data;
+      }
+
+      throw rj;
+    });
+}
+
+export function updateBlockScreenshot({ id, base64, blockType }) {
+  const {
+    page,
+    api: { updateBlockScreenshot }
+  } = Config.get("wp");
+  const version = Config.get("editorVersion");
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+
+  return request2(apiUrl, {
+    method: "POST",
+    credentials: "omit",
+    body: new URLSearchParams({
+      action: updateBlockScreenshot,
+      post: page,
+      block_type: blockType,
+      id,
+      ibsf: attachment,
+      version
+    })
+  })
+    .then(r => r.json())
+    .then(rj => {
+      if (rj.success) {
+        return rj.data;
+      }
+
+      throw rj;
+    });
 }

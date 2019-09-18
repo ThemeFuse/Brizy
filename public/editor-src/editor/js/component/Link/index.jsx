@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import { getBlockById } from "visual/utils/blocks";
+import { getStore } from "visual/redux/store";
+import { pageDataNoRefsSelector } from "visual/redux/selectors";
 
 class Link extends Component {
   static defaultProps = {
@@ -34,8 +35,17 @@ class Link extends Component {
         if (IS_EDITOR) {
           href = `#${_href}`;
         } else {
-          const block = getBlockById(_href);
-          const anchorName = (block && block.value.anchorName) || _href;
+          // while the orthodox way of getting data from the store is be using connect from react-redux
+          // it could be problematic in this case because of potential problems caused be rerenders triggered by connect
+          // because Link can hold in children heavy react trees (like columns)
+          const pageDataNoRefs = pageDataNoRefsSelector(getStore().getState());
+          const pageBlocks = pageDataNoRefs.items || [];
+          const blockByHref = pageBlocks.find(
+            block => block.value._id === _href
+          );
+          const anchorName =
+            (blockByHref && blockByHref.value.anchorName) || _href;
+
           href = `#${anchorName}`;
         }
         break;

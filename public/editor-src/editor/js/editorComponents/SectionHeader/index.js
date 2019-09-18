@@ -10,10 +10,11 @@ import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import { currentTooltip } from "visual/component/Controls/Tooltip";
 import { uuid } from "visual/utils/uuid";
+import { stripIds } from "visual/utils/models";
 import { capitalize } from "visual/utils/string";
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
 
@@ -327,7 +328,7 @@ class SectionHeader extends EditorComponent {
       meta: { globalBlockId },
       onChange
     } = this.props;
-    const globalBlocks = globalBlocksSelector(getStore().getState());
+    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();

@@ -1,4 +1,4 @@
-import { capitalize } from "visual/utils/string";
+import { capitalize, capByPrefix } from "visual/utils/string";
 import * as onChanges from "visual/utils/onChange";
 import { defaultValueKey, defaultValueValue } from "./device";
 
@@ -322,179 +322,122 @@ export function onChangeUngroupedByUngrouped({
       { [defaultValueKey({ key: current, device, state })]: value };
 }
 
-/**
- * ### OUTPUT EXAMPLE
- *
- * borderColorOpacity:
- *   value === 0
- *     ? 0
- *     : value > 0
- *       ? v.tempBorderColorOpacity
- *       : v.borderColorOpacity,
- *
- * ---------------------------
- *
- * borderRadius:
- *  value === 0 && v.bgColorOpacity === 0
- *    ? 0
- *    : value > 0
- *      ? v.tempBorderRadius
- *      : v.borderRadius,
- *
- * borderTopLeftRadius:
- *  value === 0 && v.bgColorOpacity === 0
- *    ? 0
- *    : value > 0 &&
- *      v.borderTopRightRadius === 0 &&
- *      v.borderBottomRightRadius === 0 &&
- *      v.borderBottomLeftRadius === 0
- *        ? v.tempBorderTopLeftRadius
- * :      v.borderTopLeftRadius,
- *
- * borderTopRightRadius:
- *  value === 0 && v.bgColorOpacity === 0
- *    ? 0
- *    : value > 0 &&
- *      v.borderTopLeftRadius === 0 &&
- *      v.borderBottomRightRadius === 0 &&
- *      v.borderBottomLeftRadius === 0
- *        ? v.tempBorderTopRightRadius
- *        : v.borderTopRightRadius,
- *
- * borderBottomLeftRadius:
- *  value === 0 && v.bgColorOpacity === 0
- *    ? 0
- *    : value > 0 &&
- *      v.borderTopLeftRadius === 0 &&
- *      v.borderTopRightRadius === 0 &&
- *      v.borderBottomRightRadius === 0
- *        ? v.tempBorderBottomLeftRadius
- *        : v.borderBottomLeftRadius,
- *
- * borderBottomRightRadius:
- *  value === 0 && v.bgColorOpacity === 0
- *    ? 0
- *    : value > 0 &&
- *      v.borderTopLeftRadius === 0 &&
- *      v.borderTopRightRadius === 0 &&
- *      v.borderBottomLeftRadius === 0
- *        ? v.tempBorderBottomRightRadius
- *        : v.borderBottomRightRadius
- */
 export function onChangeDependeciesGrouped({
   v,
-  device,
-  state,
+  device = "desktop",
+  state = "normal",
   value,
   dependencies
 }) {
-  //// console.log(value);
-  // console.log(v);
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
   const r = Object.entries(dependencies).reduce((arr, [key, params]) => {
-    arr[defaultValueKey({ key, device, state })] =
-      /**
-       * ### OUTPUT EXAMPLE
-       *
-       * dependencies: {
-       *  borderRadius: {
-       *    childs: [
-       *      "borderTopLeftRadius",
-       *      "borderTopRightRadius",
-       *      "borderBottomLeftRadius",
-       *      "borderBottomRightRadius"
-       *    ],
-       *    nullValue: "bgColorOpacity",
-       *    tempValue: ""
-       *  },
-       *
-       * value === 0 && typeof params.nullValue !== "undefined" && ( params.nullValue !== "" && v[params.nullValue] === 0 )
-       *
-       * borderRadius:
-       *  value === 0 && v.bgColorOpacity === 0
-       *    ? 0
-       *    : [...]
-       *      ? [...]
-       *      : [...]
-       */
-      /**
-       * ### OUTPUT EXAMPLE
-       *
-       * dependencies: {
-       *   borderWidth: {
-       *     childs: [
-       *       "borderTopWidth",
-       *       "borderRightWidth",
-       *       "borderBottomWidth",
-       *       "borderLeftWidth"
-       *     ],
-       *     nullValue: "",
-       *     tempValue: ""
-       *   },
-       * },
-       *
-       * value === 0 && typeof params.nullValue !== "undefined" && params.nullValue === ""
-       *
-       * borderWidth:
-       *   value === 0
-       *     ? 0
-       *     : [...]
-       *       ? [...]
-       *       : [...]
-       */
+    const paramsNullValue =
       (value === 0 || value === "") &&
       typeof params.nullValue !== "undefined" &&
       ((params.nullValue.length > 0 &&
         params.nullValue.every(p => v[p] === "" || v[p] === 0)) ||
         params.nullValue.length === 0)
-        ? key === "borderStyle"
-          ? ""
-          : 0
-        : /**
-         * ### OUTPUT EXAMPLE
-         *
-         * dependencies: {
-         *  borderRadius: {
-         *    childs: [
-         *      "borderTopLeftRadius",
-         *      "borderTopRightRadius",
-         *      "borderBottomLeftRadius",
-         *      "borderBottomRightRadius"
-         *    ],
-         *    nullValue: "bgColorOpacity",
-         *    tempValue: ""
-         *  },
-         *
-         * borderRadius:
-         *  [...]
-         *    ? [...]
-         *    : value > 0
-         *      ? v.tempBorderRadius
-         *      : v.borderRadius,
-         */
-        (value > 0 || value !== "") &&
-          ((params.tempValue.length > 0 &&
-            params.tempValue.every(p => v[p] === "" || v[p] === 0)) ||
-            params.tempValue.length === 0)
-        ? defaultValueValue({ v, key: `temp${capitalize(key)}`, device, state })
-        : defaultValueValue({ v, key, device, state });
+        ? true
+        : false;
+
+    const paramsTempValue =
+      value !== 0 &&
+      value !== "" &&
+      (dvv(key) === 0 || // Asta e corect din cauza nu trebuie onchange sa schimbe valorile care lea pus userul manual. Ele pot fi gresite dar nu conteaza ele sunt puse manual. Daca temp e gresit aici apar multe probleme.
+        dvv(key) === "" ||
+        dvv("boxShadow") === "off") &&
+      ((params.tempValue.length > 0 &&
+        params.tempValue.every(p => v[p] === "" || v[p] === 0)) ||
+        params.tempValue.length === 0)
+        ? true
+        : false;
+
+    // Asta e corect pentru ca el filtreze sa nu ajunge null si undefined in model dar trebuei de ce ele ajug in general
+    const bool = dvv(key) === null || dvv(key) === undefined;
+
+    if (bool) {
+      console.log("onChange " + key + " " + dvv(key));
+    }
+
+    bool
+      ? arr
+      : (arr[dvk(key)] = paramsNullValue
+          ? params.type === "string"
+            ? ""
+            : 0
+          : paramsTempValue
+          ? dvv(`temp${capitalize(key)}`)
+          : dvv(key));
 
     Object.assign(
       arr,
       params.childs.reduce((arr, child) => {
-        arr[defaultValueKey({ key: child, device, state })] =
-          (value === 0 || value === "") &&
-          typeof params.nullValue !== "undefined" &&
-          ((params.nullValue.length > 0 &&
-            params.nullValue.every(p => v[p] === "" || v[p] === 0)) ||
-            params.nullValue.length === 0)
-            ? child === "borderStyle"
-              ? ""
-              : 0
-            : /**
-             * Daca Border Color > 0 && tempBorderWidthChils === 0 => BorderWidthChils = TempBorderWidth
-             */
-            (value > 0 || value !== "") &&
+        v[defaultValueKey({ key: child, device, state })] === null ||
+        v[defaultValueKey({ key: child, device, state })] === undefined
+          ? arr
+          : (arr[defaultValueKey({ key: child, device, state })] =
+              (value === 0 || value === "") &&
+              typeof params.nullValue !== "undefined" &&
+              ((params.nullValue.length > 0 &&
+                params.nullValue.every(p => v[p] === "" || v[p] === 0)) ||
+                params.nullValue.length === 0)
+                ? params.type === "string"
+                  ? ""
+                  : 0
+                : /**
+                 * Daca Border Color > 0 && tempBorderWidthChils === 0 => BorderWidthChils = TempBorderWidth
+                 */
+                (value > 0 || value !== "") &&
+                  params.childs.every(
+                    p =>
+                      defaultValueValue({
+                        v,
+                        key: `temp${capitalize(p)}`,
+                        device,
+                        state
+                      }) === 0
+                  )
+                ? defaultValueValue({
+                    v,
+                    key: `temp${capitalize(key)}`,
+                    device,
+                    state
+                  })
+                : (value > 0 || value !== "") &&
+                  ((params.tempValue.length > 0 &&
+                    params.tempValue.every(p => v[p] === "" || v[p] === 0)) ||
+                    params.tempValue.length === 0)
+                ? defaultValueValue({
+                    v,
+                    key: `temp${capitalize(child)}`,
+                    device,
+                    state
+                  })
+                : defaultValueValue({ v, key: child, device, state }));
+
+        return arr;
+      }, {}),
+      params.childs.reduce((arr, child) => {
+        v[
+          defaultValueKey({ key: `temp${capitalize(child)}`, device, state })
+        ] === null ||
+        v[
+          defaultValueKey({ key: `temp${capitalize(child)}`, device, state })
+        ] === undefined
+          ? arr
+          : (arr[
+              defaultValueKey({
+                key: `temp${capitalize(child)}`,
+                device,
+                state
+              })
+            ] =
+              /**
+               * Daca Border Color > 0 && BorderWidthChils === 0 => BorderWidthChils = TempBorderWidth
+               */
+              (value > 0 || value !== "") &&
               params.childs.every(
                 p =>
                   defaultValueValue({
@@ -504,59 +447,46 @@ export function onChangeDependeciesGrouped({
                     state
                   }) === 0
               )
-            ? defaultValueValue({
-                v,
-                key: `temp${capitalize(key)}`,
-                device,
-                state
-              })
-            : (value > 0 || value !== "") &&
-              ((params.tempValue.length > 0 &&
-                params.tempValue.every(p => v[p] === "" || v[p] === 0)) ||
-                params.tempValue.length === 0)
-            ? defaultValueValue({
-                v,
-                key: `temp${capitalize(child)}`,
-                device,
-                state
-              })
-            : defaultValueValue({ v, key: child, device, state });
-
-        return arr;
-      }, {}),
-      params.childs.reduce((arr, child) => {
-        arr[
-          defaultValueKey({ key: `temp${capitalize(child)}`, device, state })
-        ] =
-          /**
-           * Daca Border Color > 0 && BorderWidthChils === 0 => BorderWidthChils = TempBorderWidth
-           */
-          (value > 0 || value !== "") &&
-          params.childs.every(
-            p =>
-              defaultValueValue({
-                v,
-                key: `temp${capitalize(p)}`,
-                device,
-                state
-              }) === 0
-          )
-            ? defaultValueValue({
-                v,
-                key,
-                device,
-                state
-              })
-            : defaultValueValue({
-                v,
-                key: `temp${capitalize(child)}`,
-                device,
-                state
-              });
+                ? defaultValueValue({
+                    v,
+                    key,
+                    device,
+                    state
+                  })
+                : defaultValueValue({
+                    v,
+                    key: `temp${capitalize(child)}`,
+                    device,
+                    state
+                  }));
 
         return arr;
       }, {})
     );
+
+    return arr;
+  }, {});
+
+  return r;
+}
+
+export function onChangeDependeciesGrouped2({
+  v,
+  device = "desktop",
+  state = "normal",
+  value,
+  dependencies
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  const r = dependencies.reduce((arr, item) => {
+    arr[dvk(item)] =
+      value === 0 || value === ""
+        ? isNaN(dvv(item))
+          ? ""
+          : 0
+        : dvv(capByPrefix("temp", capitalize(item)));
 
     return arr;
   }, {});
@@ -584,107 +514,111 @@ export function onChangeDependeciesUngrouped({
   dependencies
 }) {
   return Object.entries(dependencies).reduce((arr, [key, params]) => {
-    arr[defaultValueKey({ key, device, state })] =
-      /**
-       * ### OUTPUT EXAMPLE
-       *
-       * dependencies: {
-       *  borderColorOpacity: {
-       *    childs: [],
-       *    nullValue: [],
-       *    tempValue: []
-       *  }
-       * },
-       *
-       * value === 0 && typeof params.nullValue !== "undefined" && params.nullValue === ""
-       *
-       * borderColorOpacity:
-       *   value === 0
-       *     ? 0
-       *     : value > 0
-       *       ? v.tempBorderColorOpacity
-       *       : v.borderColorOpacity,
-       */
-      (value === 0 || value === "") &&
-      ((childs.length > 0 &&
-        childs.filter(p => p !== current).every(z => v[z] === 0)) ||
-        childs.length === 0) &&
-      typeof params.nullValue !== "undefined" &&
-      ((params.nullValue.length > 0 &&
-        params.nullValue.every(p => v[p] === "" || v[p] === 0)) ||
-        params.nullValue.length === 0)
-        ? key === "borderStyle"
-          ? ""
-          : 0
-        : /**
-         * ### OUTPUT EXAMPLE
-         *
-         * dependencies: {
-         *  borderRadius: {
-         *    childs: [
-         *      "borderTopLeftRadius",
-         *      "borderTopRightRadius",
-         *      "borderBottomLeftRadius",
-         *      "borderBottomRightRadius"
-         *    ],
-         *    nullValue: "bgColorOpacity",
-         *    tempValue: ""
-         *  },
-         *
-         * borderRadius:
-         *  [...]
-         *    ? [...]
-         *    : value > 0
-         *      ? v.tempBorderRadius
-         *      : v.borderRadius,
-         */
-        (value > 0 || value !== "") &&
-          ((params.tempValue.length > 0 &&
-            params.tempValue.every(p => v[p] === "" || v[p] === 0)) ||
-            params.tempValue.length === 0)
-        ? defaultValueValue({
-            v,
-            key: `temp${capitalize(key)}`,
-            device,
-            state
-          })
-        : defaultValueValue({
-            v,
-            key,
-            device,
-            state
-          });
-
-    Object.assign(
-      arr,
-      params.childs.reduce((arr, child) => {
-        arr[defaultValueKey({ key: child, device, state })] =
+    v[key] === null
+      ? arr
+      : (arr[defaultValueKey({ key, device, state })] =
+          /**
+           * ### OUTPUT EXAMPLE
+           *
+           * dependencies: {
+           *  borderColorOpacity: {
+           *    childs: [],
+           *    nullValue: [],
+           *    tempValue: []
+           *  }
+           * },
+           *
+           * value === 0 && typeof params.nullValue !== "undefined" && params.nullValue === ""
+           *
+           * borderColorOpacity:
+           *   value === 0
+           *     ? 0
+           *     : value > 0
+           *       ? v.tempBorderColorOpacity
+           *       : v.borderColorOpacity,
+           */
           (value === 0 || value === "") &&
           ((childs.length > 0 &&
             childs.filter(p => p !== current).every(z => v[z] === 0)) ||
             childs.length === 0) &&
+          typeof params.nullValue !== "undefined" &&
           ((params.nullValue.length > 0 &&
             params.nullValue.every(p => v[p] === "" || v[p] === 0)) ||
             params.nullValue.length === 0)
-            ? child === "borderStyle"
+            ? params.type === "string"
               ? ""
               : 0
             : /**
-             * Daca Border Top Width > 0 => BorderRadiusChils = TempBorderRadiusChilds
+             * ### OUTPUT EXAMPLE
+             *
+             * dependencies: {
+             *  borderRadius: {
+             *    childs: [
+             *      "borderTopLeftRadius",
+             *      "borderTopRightRadius",
+             *      "borderBottomLeftRadius",
+             *      "borderBottomRightRadius"
+             *    ],
+             *    nullValue: "bgColorOpacity",
+             *    tempValue: ""
+             *  },
+             *
+             * borderRadius:
+             *  [...]
+             *    ? [...]
+             *    : value > 0
+             *      ? v.tempBorderRadius
+             *      : v.borderRadius,
              */
-            (value > 0 || value !== "") && params.tempValue.length === 0
+            (value > 0 || value !== "") &&
+              ((params.tempValue.length > 0 &&
+                params.tempValue.every(p => v[p] === "" || v[p] === 0)) ||
+                params.tempValue.length === 0)
             ? defaultValueValue({
                 v,
-                key: `temp${capitalize(child)}`,
+                key: `temp${capitalize(key)}`,
                 device,
                 state
               })
             : defaultValueValue({
                 v,
-                key: child,
+                key,
                 device,
                 state
-              });
+              }));
+
+    Object.assign(
+      arr,
+      params.childs.reduce((arr, child) => {
+        v[child] === null
+          ? arr
+          : (arr[defaultValueKey({ key: child, device, state })] =
+              (value === 0 || value === "") &&
+              ((childs.length > 0 &&
+                childs.filter(p => p !== current).every(z => v[z] === 0)) ||
+                childs.length === 0) &&
+              ((params.nullValue.length > 0 &&
+                params.nullValue.every(p => v[p] === "" || v[p] === 0)) ||
+                params.nullValue.length === 0)
+                ? params.type === "string"
+                  ? ""
+                  : 0
+                : /**
+                 * Daca Border Top Width > 0 => BorderRadiusChils = TempBorderRadiusChilds
+                 */
+                (value > 0 || value !== "") && params.tempValue.length === 0
+                ? defaultValueValue({
+                    v,
+                    key: `temp${capitalize(child)}`,
+                    device,
+                    state
+                  })
+                : defaultValueValue({
+                    v,
+                    key: child,
+                    device,
+                    state
+                  }));
 
         return arr;
       }, {})

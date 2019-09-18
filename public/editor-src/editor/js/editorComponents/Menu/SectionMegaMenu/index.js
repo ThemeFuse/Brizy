@@ -14,7 +14,6 @@ import { CollapsibleToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import {
   sectionStyleClassName,
-  sectionStyleCSSVars,
   bgStyleClassName,
   bgStyleCSSVars,
   itemsStyleClassName,
@@ -97,23 +96,7 @@ class SectionMegaMenu extends EditorComponent {
   }
 
   renderItems(v) {
-    const {
-      bgImageSrc,
-      bgColorOpacity,
-      mobileBgImageSrc,
-      mobileBgColorOpacity
-    } = v;
-
     const meta = this.getMeta(v);
-
-    let bgProps = {
-      className: bgStyleClassName(v),
-      imageSrc: bgImageSrc,
-      colorOpacity: bgColorOpacity,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
-    };
-
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       className: itemsStyleClassName(v),
@@ -121,7 +104,7 @@ class SectionMegaMenu extends EditorComponent {
     });
 
     return (
-      <Background {...bgProps}>
+      <Background className={bgStyleClassName(v)} value={v} meta={meta}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
           <div className={containerStyleClassName(v)}>
             <SectionMegaMenuItems {...itemsProps} />

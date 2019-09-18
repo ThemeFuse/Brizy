@@ -3,6 +3,7 @@ import Quill from "quill";
 let Block = Quill.import("blots/block");
 
 class DCBlock extends Block {
+  static className = "text-block";
   static create(value) {
     const node = super.create(value);
     node.classList.add("brz-tp__dc-block-st1");

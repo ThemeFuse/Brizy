@@ -5,26 +5,30 @@ import {
   toolbarPadding,
   toolbarMargin,
   toolbarShowOnDesktop,
-  toolbarShowOnTablet,
-  toolbarShowOnMobile,
+  toolbarShowOnResponsive,
   toolbarZIndex,
   toolbarCustomCSSClass,
   toolbarEntranceAnimation
 } from "visual/utils/toolbar";
+import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItemsForDesktop(v) {
-  const device = "desktop";
-
+export function getItems({ v, device }) {
   return [
+    toolbarShowOnResponsive({
+      v,
+      device,
+      state: "normal",
+      devices: "responsive"
+    }),
     toolbarHorizontalAlign({ v, device }),
     {
-      id: "toolbarSettings",
+      id: defaultValueKey({ key: "toolbarSettings", device }),
       type: "popover",
       title: t("Settings"),
       position: 110,
       options: [
         {
-          id: "advancedSettings",
+          id: defaultValueKey({ key: "advancedSettings", device }),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
@@ -32,6 +36,7 @@ export function getItemsForDesktop(v) {
             {
               id: "settingsTabs",
               type: "tabs",
+              devices: "desktop",
               align: "start",
               tabs: [
                 {
@@ -59,88 +64,29 @@ export function getItemsForDesktop(v) {
                   id: "moreSettingsAdvanced",
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
+                  devices: "desktop",
                   options: [
-                    toolbarShowOnDesktop({ v }),
-                    toolbarZIndex({ v }),
-                    toolbarCustomCSSClass({ v }),
-                    toolbarEntranceAnimation({ v })
+                    toolbarShowOnDesktop({ v, device }),
+                    toolbarZIndex({ v, device }),
+                    toolbarCustomCSSClass({ v, device }),
+                    toolbarEntranceAnimation({ v, device })
                   ]
                 }
               ]
-            }
-          ]
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  const device = "tablet";
-
-  return [
-    toolbarShowOnTablet({ v }),
-    toolbarHorizontalAlign({ v, device }),
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      position: 110,
-      options: [
-        {
-          id: "tabletAdvancedSettings",
-          type: "advancedSettings",
-          sidebarLabel: t("More Settings"),
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
+            },
             toolbarPadding({
               v,
               device,
+              devices: "responsive",
+              state: "normal",
               onChangeGrouped: ["onChangePaddingGrouped"],
               onChangeUngrouped: ["onChangePaddingUngrouped"]
             }),
             toolbarMargin({
               v,
               device,
-              onChangeGrouped: ["onChangeMarginGrouped"],
-              onChangeUngrouped: ["onChangeMarginUngrouped"]
-            })
-          ]
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  const device = "mobile";
-
-  return [
-    toolbarShowOnMobile({ v }),
-    toolbarHorizontalAlign({ v, device }),
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      position: 110,
-      options: [
-        {
-          id: "mobileAdvancedSettings",
-          type: "advancedSettings",
-          sidebarLabel: t("More Settings"),
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            toolbarPadding({
-              v,
-              device,
-              onChangeGrouped: ["onChangePaddingGrouped"],
-              onChangeUngrouped: ["onChangePaddingUngrouped"]
-            }),
-            toolbarMargin({
-              v,
-              device,
+              devices: "responsive",
+              state: "normal",
               onChangeGrouped: ["onChangeMarginGrouped"],
               onChangeUngrouped: ["onChangeMarginUngrouped"]
             })

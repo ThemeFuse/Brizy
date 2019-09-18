@@ -6,5 +6,5 @@ export function templateIconUrl(type, iconName, suffix = "nc_icon") {
 
   return configUrl
     ? `${configUrl}/${type}/${iconName}.svg#${suffix}`
-    : assetUrl(`template/icons/${type}/${iconName}.svg#${suffix}`);
+    : assetUrl(`editor/icons/${type}/${iconName}.svg#${suffix}`);
 }

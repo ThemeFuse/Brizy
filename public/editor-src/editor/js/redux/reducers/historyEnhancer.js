@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "underscore";
 
 const HISTORY_UPDATE_FREQUENCY = 2000;
 const MAX_HISTORY_LENGTH = 10;
@@ -12,6 +11,10 @@ let canRedo = false;
 
 const createHistorySnapshot = (state, keysToTrack) =>
   keysToTrack.reduce((acc, key) => {
+    if (typeof key === "object") {
+      key = key.key;
+    }
+
     acc[key] = state[key];
     return acc;
   }, {});
@@ -33,7 +36,7 @@ const redoHistory = () => {
   updateFlags();
   return history[currentHistoryIndex];
 };
-const updateHistory = (state, keysToTrack, options) => {
+const updateHistory = (state, { keysToTrack }, options) => {
   // the first (initial) snapshot
   if (currentHistoryIndex === 0 && history[currentHistoryIndex] === null) {
     history[currentHistoryIndex] = createHistorySnapshot(state, keysToTrack);
@@ -42,9 +45,19 @@ const updateHistory = (state, keysToTrack, options) => {
     return;
   }
 
-  let newStateIsDifferent = keysToTrack.some(
-    key => state[key] !== history[currentHistoryIndex][key]
-  );
+  let newStateIsDifferent = keysToTrack.some(key => {
+    if (typeof key === "string") {
+      return state[key] !== history[currentHistoryIndex][key];
+    } else {
+      const { key: key_, equals } = key;
+
+      if (equals) {
+        return !equals(state[key_], history[currentHistoryIndex][key_]);
+      } else {
+        return state[key_] !== history[currentHistoryIndex][key_];
+      }
+    }
+  });
 
   if (newStateIsDifferent) {
     const nextSnapshot = createHistorySnapshot(state, keysToTrack);
@@ -97,16 +110,18 @@ export const ActionTypes = {
   REDO: "REDO"
 };
 
-export default function historyEnhancer(reducer, keysToTrack) {
+export default function historyEnhancer(reducer, config) {
   return function(state, action) {
     switch (action.type) {
-      case ActionTypes.UNDO:
+      case ActionTypes.UNDO: {
         const undoSnapshot = undoHistory();
+
         return {
           ...state,
           ...undoSnapshot,
           historyTravelling: true
         };
+      }
       case ActionTypes.REDO:
         const redoSnapshot = redoHistory();
         return {
@@ -119,7 +134,7 @@ export default function historyEnhancer(reducer, keysToTrack) {
         const newState = reducer(state, action);
 
         if (action.type !== "@@redux/INIT") {
-          updateHistory(newState, keysToTrack, {
+          updateHistory(newState, config, {
             replacePresent: action.meta && action.meta.historyReplacePresent
           });
         }

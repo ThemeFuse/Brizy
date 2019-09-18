@@ -1,49 +1,57 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
 
-export function styleBorderRadius({ v, device, state, current }) {
+export function styleBorderRadiusType({ v, device, state }) {
   const isHover = styleState({ v, state });
-  const borderRadiusType = defaultValueValue({
-    v,
-    key: "borderRadiusType",
-    device,
-    state
-  });
-  const hoverBorderRadiusType = defaultValueValue({
-    v,
-    key: "borderRadiusType",
-    device,
-    state: "hover"
-  });
-  const borderRadius = defaultValueValue({
-    v,
-    key: "borderRadius",
-    device,
-    state
-  });
-  const hoverBorderRadius = defaultValueValue({
-    v,
-    key: "borderRadius",
-    device,
-    state: "hover"
-  });
-  const currentValue = current
-    ? defaultValueValue({ v, key: current, device, state })
-    : null;
-  const hoverCurrentValue = current
-    ? defaultValueValue({
-        v,
-        key: current,
-        device,
-        state: "hover"
-      })
-    : null;
 
-  return isHover === "hover" && hoverBorderRadiusType === "grouped"
-    ? `${hoverBorderRadius}px`
-    : isHover === "hover" && hoverBorderRadiusType === "ungrouped"
-    ? `${hoverCurrentValue}px`
-    : borderRadiusType === "grouped"
-    ? `${borderRadius}px`
-    : `${currentValue}px`;
+  const currentValue = defaultValueValue({
+    v,
+    key: "borderRadiusType",
+    device,
+    state
+  });
+
+  const hoverCurrentValue = defaultValueValue({
+    v,
+    key: "borderRadiusType",
+    device,
+    state: "hover"
+  });
+
+  return isHover === "hover" ? hoverCurrentValue : currentValue;
+}
+
+export function styleBorderRadiusGrouped({ v, device, state }) {
+  const isHover = styleState({ v, state });
+
+  const currentValue = defaultValueValue({
+    v,
+    key: "borderRadius",
+    device,
+    state
+  });
+
+  const hoverCurrentValue = defaultValueValue({
+    v,
+    key: "borderRadius",
+    device,
+    state: "hover"
+  });
+
+  return isHover === "hover" ? hoverCurrentValue : currentValue;
+}
+
+export function styleBorderRadiusUngrouped({ v, device, state, current }) {
+  const isHover = styleState({ v, state });
+
+  const currentValue = defaultValueValue({ v, key: current, device, state });
+
+  const hoverCurrentValue = defaultValueValue({
+    v,
+    key: current,
+    device,
+    state: "hover"
+  });
+
+  return isHover === "hover" ? hoverCurrentValue : currentValue;
 }

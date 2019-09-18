@@ -2,7 +2,12 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { styleBorderColor, styleColor, styleBgColor } from "visual/utils/style";
+import {
+  styleBorderColor,
+  styleColor,
+  styleBgColor,
+  styleBorderWidth
+} from "visual/utils/style";
 
 const aligns = {
   horizontal: {
@@ -37,10 +42,12 @@ export function styleClassName(v) {
           backgroundColor: "var(--borderColor)"
         },
         "& .brz-tabs__nav--active::after": {
-          right: "var(--afterWidth)"
+          right: "var(--afterWidth)",
+          height: "var(--borderWidth)"
         },
         "& .brz-tabs__nav--active::before": {
-          left: "var(--afterWidth)"
+          left: "var(--afterWidth)",
+          height: "var(--borderWidth)"
         }
       },
 
@@ -108,6 +115,7 @@ export function styleClassName(v) {
   } else {
     const {
       fontFamily,
+      fontFamilyType,
       fontSize,
       lineHeight,
       fontWeight,
@@ -148,7 +156,8 @@ export function styleClassName(v) {
 
     glamorObj = {
       ".brz &": {
-        fontFamily: getFontById(fontFamily).family,
+        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
+          .family,
         fontSize,
         lineHeight,
         fontWeight,
@@ -199,10 +208,32 @@ export function styleClassName(v) {
           })
         },
         "& .brz-tabs__nav--active::after": {
-          right: `calc(-100vw + ${borderWidth}px)`
+          right: `calc(-100vw + ${styleBorderWidth({
+            v,
+            device: "desktop",
+            state: "normal",
+            current: "borderWidth"
+          })})`,
+          height: styleBorderWidth({
+            v,
+            device: "desktop",
+            state: "normal",
+            current: "borderWidth"
+          })
         },
         "& .brz-tabs__nav--active::before": {
-          left: `calc(-100vw + ${borderWidth}px)`
+          left: `calc(-100vw + ${styleBorderWidth({
+            v,
+            device: "desktop",
+            state: "normal",
+            current: "borderWidth"
+          })})`,
+          height: styleBorderWidth({
+            v,
+            device: "desktop",
+            state: "normal",
+            current: "borderWidth"
+          })
         }
       },
       "@media (max-width: 991px)": {
@@ -226,7 +257,12 @@ export function styleClassName(v) {
             borderWidth: 0
           },
           "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
-            borderBottomWidth: `${borderWidth}px`
+            borderBottomWidth: `${styleBorderWidth({
+              v,
+              device: "desktop",
+              state: "normal",
+              current: "borderWidth"
+            })}`
           },
           "& .brz-tabs__item--content": {
             paddingTop:
@@ -269,7 +305,12 @@ export function styleClassName(v) {
             borderWidth: 0
           },
           "& .brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
-            borderBottomWidth: `${borderWidth}px`
+            borderBottomWidth: `${styleBorderWidth({
+              v,
+              device: "desktop",
+              state: "normal",
+              current: "borderWidth"
+            })}`
           },
           "& .brz-tabs__item--content": {
             paddingTop:
@@ -304,6 +345,7 @@ export function styleCSSVars(v) {
 
   const {
     fontFamily,
+    fontFamilyType,
     fontSize,
     fontWeight,
     lineHeight,
@@ -344,7 +386,8 @@ export function styleCSSVars(v) {
 
   return {
     // Typography
-    "--fontFamily": getFontById(fontFamily).family,
+    "--fontFamily": getFontById({ family: fontFamily, type: fontFamilyType })
+      .family,
     "--fontWeight": fontWeight,
     "--fontSize": `${fontSize}px`,
     "--lineHeight": lineHeight,
@@ -363,7 +406,12 @@ export function styleCSSVars(v) {
       state: "normal"
     }),
     // Border
-    "--borderWidth": `${borderWidth}px`,
+    "--borderWidth": `${styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderWidth"
+    })}`,
 
     // Align
     "--horizontalAlign": `${aligns.horizontal[horizontalAlign]}`,
@@ -375,8 +423,18 @@ export function styleCSSVars(v) {
     }`,
 
     // Border After and Before
-    "--afterWidth": `calc(-100vw + ${borderWidth}px)`,
-    "--beforeWidth": `calc(-100vw + ${borderWidth}px)`,
+    "--afterWidth": `calc(-100vw + ${styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderWidth"
+    })})`,
+    "--beforeWidth": `calc(-100vw + ${styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderWidth"
+    })})`,
 
     // Padding Tab
     "--paddingTop":

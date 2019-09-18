@@ -7,7 +7,9 @@ import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
 import * as parentToolbarExtend from "./parentExtendToolbar";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
+import classnames from "classnames";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 
 class ImageGallery extends EditorComponent {
   static get componentId() {
@@ -19,10 +21,13 @@ class ImageGallery extends EditorComponent {
   node = null;
 
   componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      parentToolbarExtend,
+      {
+        allowExtend: false,
+        filterExtendName: `${this.constructor.componentId}_parent`
+      }
+    );
     this.props.extendParentToolbar(toolbarExtend);
 
     this.initIsotope();
@@ -76,7 +81,7 @@ class ImageGallery extends EditorComponent {
     });
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
     const itemProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
@@ -85,13 +90,19 @@ class ImageGallery extends EditorComponent {
       }
     });
 
+    const className = classnames(
+      "brz-image__gallery",
+      { "brz-image__gallery-lightbox": v.lightBox === "on" },
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div
-          ref={this.handleRef}
-          className={styleClassName(v)}
-          style={styleCSSVars(v)}
-        >
+        <div ref={this.handleRef} className={className}>
           <Items {...itemProps} />
         </div>
       </CustomCSS>

@@ -50,7 +50,6 @@ class MultiInputOptionType extends React.Component {
   handleMouseLeave() {
     const { icons } = this.props.config;
     const { focusedIcon, focused } = this.state;
-
     this.setState({
       activeIcon: focused ? icons[focusedIcon] : this.getInitialIcon()
     });

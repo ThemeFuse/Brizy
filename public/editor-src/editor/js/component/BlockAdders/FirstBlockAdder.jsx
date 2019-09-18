@@ -1,12 +1,10 @@
 import React from "react";
-import _ from "underscore";
 import { connect } from "react-redux";
 import UIState from "visual/global/UIState";
 import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
-import { setDeviceMode } from "visual/redux/actions";
+import { setDeviceMode, addBlock, importTemplate } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
-import { getBlocksConfig } from "./utils";
 
 const textsByDeviceMode = {
   desktop: {
@@ -25,17 +23,58 @@ const textsByDeviceMode = {
 
 class FirstBlockAdder extends React.Component {
   static defaultProps = {
-    onAddBlocks: _.noop
+    insertIndex: 0
   };
 
-  handleClick = () => {
-    const { deviceMode, blocks, onAddBlocks, dispatch } = this.props;
+  handleTemplateAdd = data => {
+    const { insertIndex, dispatch } = this.props;
+    const meta = { insertIndex };
+    dispatch(importTemplate(data, meta));
+  };
+
+  handleBlockAdd = data => {
+    const { insertIndex, dispatch } = this.props;
+    const meta = { insertIndex };
+    dispatch(addBlock(data, meta));
+  };
+
+  open = () => {
+    const { deviceMode, dispatch } = this.props;
 
     if (deviceMode === "desktop") {
       UIState.set("prompt", {
         prompt: "blocks",
-        blocksConfig: getBlocksConfig(),
-        onAddBlocks
+        tabProps: {
+          blocks: {
+            categoriesFilter: categories => {
+              return TARGET === "WP"
+                ? categories
+                : categories.filter(
+                    ({ slug }) => slug !== "header" && slug !== "footer"
+                  );
+            },
+            onAddBlocks: this.handleBlockAdd
+          },
+          saved: {
+            blocksFilter: blocks => {
+              return blocks.filter(
+                ([_, block]) => block.type !== "SectionPopup"
+              );
+            },
+            onAddBlocks: this.handleBlockAdd
+          },
+          global: {
+            blocksFilter: blocks => {
+              return blocks.filter(
+                ([_, block]) => block.type !== "SectionPopup"
+              );
+            },
+            onAddBlocks: this.handleBlockAdd
+          },
+          templates: {
+            onAddBlocks: this.handleTemplateAdd
+          }
+        }
       });
     } else {
       dispatch(setDeviceMode("desktop"));
@@ -46,16 +85,19 @@ class FirstBlockAdder extends React.Component {
     const { deviceMode } = this.props;
     const { title, description } = textsByDeviceMode[deviceMode];
     const roundPlusProps = {
-      icon: deviceMode === "mobile" || deviceMode === "tablet" ? "nc-desktop" : null,
-      className: deviceMode === "mobile" || deviceMode === "tablet" ? "floating-action-button--icon" : null
+      icon:
+        deviceMode === "mobile" || deviceMode === "tablet"
+          ? "nc-desktop"
+          : null,
+      className:
+        deviceMode === "mobile" || deviceMode === "tablet"
+          ? "floating-action-button--icon"
+          : null
     };
 
     return (
       <div className="brz-ed-wrap-block-wrap brz-ed-wrap-block-wrap--first">
-        <div
-          className="brz-ed-wrap-block-empty-page"
-          onClick={this.handleClick}
-        >
+        <div className="brz-ed-wrap-block-empty-page" onClick={this.open}>
           <div className="brz-ed-wrap-block-empty-page-heading">{title}</div>
           <RoundPlus {...roundPlusProps} />
           <div className="brz-ed-wrap-block-empty-page-heading2">

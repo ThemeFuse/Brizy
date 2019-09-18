@@ -3,9 +3,8 @@ import Config from "visual/global/Config";
 import { objectToQueryString } from "visual/utils/url";
 
 export const getFilter = options => {
-  const roundedOptions = _.mapObject(
-    options,
-    val => (val === "number" ? Math.round(val) : val)
+  const roundedOptions = _.mapObject(options, val =>
+    val === "number" ? Math.round(val) : val
   );
 
   return objectToQueryString(roundedOptions);

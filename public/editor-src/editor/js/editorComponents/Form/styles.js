@@ -2,7 +2,13 @@ import classnames from "classnames";
 import { css } from "glamor";
 import { getFontById } from "visual/utils/fonts";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { styleColor, styleBgColor, styleBorderColor } from "visual/utils/style";
+import {
+  styleColor,
+  styleBgColor,
+  styleBorderColor,
+  styleBorderStyle,
+  styleBorderWidth
+} from "visual/utils/style";
 
 export function styleClassName(v) {
   let glamorObj;
@@ -64,8 +70,7 @@ export function fieldsStyleClassName(v) {
           backgroundColor: "var(--backgroundColor)",
           borderColor: "var(--borderColor)",
           borderWidth: "var(--borderWidth)",
-          borderStyle: "var(--borderStyle)",
-          borderRadius: "var(--borderRadius)"
+          borderStyle: "var(--borderStyle)"
         },
         "& .brz-form__select-item__input": {
           color: "var(--color)"
@@ -117,13 +122,11 @@ export function fieldsStyleClassName(v) {
   } else {
     const {
       fontFamily,
+      fontFamilyType,
       fontSize,
       lineHeight,
       fontWeight,
       letterSpacing,
-      borderStyle,
-      borderWidth,
-      borderRadius,
       paddingRight,
       paddingBottom,
       paddingLeft,
@@ -146,7 +149,8 @@ export function fieldsStyleClassName(v) {
       marginLeft: `-${paddingLeft / 2}px`,
 
       ".brz & .brz-form__item": {
-        fontFamily: getFontById(fontFamily).family,
+        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
+          .family,
         fontSize,
         lineHeight,
         fontWeight,
@@ -167,9 +171,13 @@ export function fieldsStyleClassName(v) {
             device: "desktop",
             state: "normal"
           }),
-          borderWidth,
-          borderStyle,
-          borderRadius,
+          borderWidth: styleBorderWidth({
+            v,
+            device: "desktop",
+            state: "normal",
+            current: "borderWidth"
+          }),
+          borderStyle: styleBorderStyle({ v, device: "desktop" }),
 
           "&::placeholder": {
             color: styleColor({ v, device: "desktop", state: "normal" })
@@ -177,7 +185,8 @@ export function fieldsStyleClassName(v) {
         }
       },
       ".brz & .form-alert": {
-        fontFamily: getFontById(fontFamily).family
+        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
+          .family
       },
       "@media (max-width: 991px)": {
         ".brz &.brz-form__fields": {
@@ -222,13 +231,11 @@ export function fieldsStyleCSSVars(v) {
 
   const {
     fontFamily,
+    fontFamilyType,
     fontSize,
     fontWeight,
     lineHeight,
     letterSpacing,
-    borderWidth,
-    borderStyle,
-    borderRadius,
     paddingTop,
     paddingRight,
     paddingBottom,
@@ -256,7 +263,8 @@ export function fieldsStyleCSSVars(v) {
     "--marginLeft": `-${paddingLeft / 2}px`,
 
     // Typography
-    "--fontFamily": getFontById(fontFamily).family,
+    "--fontFamily": getFontById({ family: fontFamily, type: fontFamilyType })
+      .family,
     "--fontWeight": fontWeight,
     "--fontSize": `${fontSize}px`,
     "--lineHeight": lineHeight,
@@ -276,16 +284,19 @@ export function fieldsStyleCSSVars(v) {
     }),
 
     // Border
-    "--borderWidth": `${borderWidth}px`,
-    "--borderStyle": borderStyle,
-    "--borderRadius": `${borderRadius}px`,
+    "--borderWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderWidth"
+    }),
+    "--borderStyle": styleBorderStyle({ v, device: "desktop" }),
 
     // Tablet
     "--tabletFontSize": `${tabletFontSize}px`,
     "--tabletLineHeight": tabletLineHeight,
     "--tabletFontWeight": tabletFontWeight,
     "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
-    "--tabletBorderRadius": `${tabletSyncOnChange(v, "borderRadius")}px`, // this key is used only here, but no div use this variable
 
     "--tabletPaddingTop": `${tabletSyncOnChange(v, "paddingTop")}px`,
     "--tabletPaddingRight": `${tabletSyncOnChange(v, "paddingRight") / 2}px`,
@@ -299,7 +310,6 @@ export function fieldsStyleCSSVars(v) {
     "--mobileLineHeight": mobileLineHeight,
     "--mobileFontWeight": mobileFontWeight,
     "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
-    "--mobileBorderRadius": `${mobileSyncOnChange(v, "borderRadius")}px`, // this key is used only here, but no div use this variable
 
     "--mobilePaddingTop": `${mobileSyncOnChange(v, "paddingTop")}px`,
     "--mobilePaddingRight": `${mobileSyncOnChange(v, "paddingRight") / 2}px`,

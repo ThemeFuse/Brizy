@@ -1,42 +1,72 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementCounterStart({ v }) {
+export function toolbarElementCounterStart({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "start",
+    id: defaultValueKey({ key: "start", device, state }),
     label: t("Start"),
     type: "input",
     inputType: "number",
     inputSize: "small",
+    devices,
     value: {
-      value: v.start
+      value: defaultValueValue({
+        v,
+        key: "start",
+        device,
+        state
+      })
     },
-    onChange: ({ value: start }) => ({
-      start
+    onChange: ({ value }) => ({
+      [defaultValueKey({ v, key: "start", device, state })]: value
     })
   };
 }
 
-export function toolbarElementCounterEnd({ v }) {
+export function toolbarElementCounterEnd({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "end",
+    id: defaultValueKey({ key: "end", device, state }),
     label: t("End"),
     type: "input",
     inputType: "number",
     inputSize: "small",
+    devices,
     value: {
-      value: v.end
+      value: defaultValueValue({
+        v,
+        key: "end",
+        device,
+        state
+      })
     },
-    onChange: ({ value: end }) => ({
-      end: end !== "" ? end : 0
+    onChange: ({ value }) => ({
+      [defaultValueKey({ v, key: "end", device, state })]:
+        value !== "" ? value : 0
     })
   };
 }
 
-export function toolbarElementCounterDuration({ v }) {
+export function toolbarElementCounterDuration({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "duration",
+    id: defaultValueKey({ key: "duration", device, state }),
     label: t("Duration"),
     type: "slider",
+    devices,
     slider: {
       min: 0,
       step: 0.5,
@@ -55,11 +85,16 @@ export function toolbarElementCounterDuration({ v }) {
       ]
     },
     value: {
-      value: v.duration
+      value: defaultValueValue({
+        v,
+        key: "duration",
+        device,
+        state
+      })
     },
-    onChange: ({ value: duration }) => {
+    onChange: ({ value }) => {
       return {
-        duration
+        [defaultValueKey({ v, key: "duration", device, state })]: value
       };
     }
   };

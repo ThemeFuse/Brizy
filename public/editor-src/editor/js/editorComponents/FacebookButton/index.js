@@ -6,7 +6,9 @@ import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
+import classnames from "classnames";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 
 class FacebookButton extends EditorComponent {
   static get componentId() {
@@ -28,7 +30,7 @@ class FacebookButton extends EditorComponent {
     };
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
     const {
       type,
       layout,
@@ -59,10 +61,19 @@ class FacebookButton extends EditorComponent {
       lang: appData.lang
     };
 
+    const className = classnames(
+      "brz-facebook",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={styleClassName(v)} style={styleCSSVars(v)}>
+          <div className={className}>
             <Facebook appId={appData.appId} type="Like" data={data} />
           </div>
         </CustomCSS>
@@ -70,7 +81,7 @@ class FacebookButton extends EditorComponent {
     );
   }
 
-  renderForView(v) {
+  renderForView(v, vs, vd) {
     const {
       type,
       layout,
@@ -100,9 +111,18 @@ class FacebookButton extends EditorComponent {
       "data-href": targetUrl === "custom" && href !== "" ? href : appData.href,
       "data-lang": appData.lang
     };
+    const className = classnames(
+      "brz-facebook",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
+        <div className={className}>
           <Facebook appId={appData.appId} type="Like" data={data} />
         </div>
       </CustomCSS>

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
-import Button from "../../Components/Button";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { t } from "visual/utils/i18n";
+import Button from "../../../common/Button";
 import { capitalize } from "visual/utils/string";
 
 export default class CreateList extends Component {
@@ -14,13 +15,13 @@ export default class CreateList extends Component {
     description: "",
     img: "",
     form: {},
-    data: {},
+    listsCreate: [],
     apiKeyValue: {},
     nextLoading: false,
     prevLoading: false,
-    handlePrev: _.noop,
-    handleNext: _.noop,
-    handleChange: _.noop
+    onPrev: _.noop,
+    onNext: _.noop,
+    onChange: _.noop
   };
 
   renderError() {
@@ -32,7 +33,7 @@ export default class CreateList extends Component {
   }
 
   renderInput({ name }) {
-    const { apiKeyValue, handleChange } = this.props;
+    const { apiKeyValue, onChange } = this.props;
 
     return (
       <div className="brz-ed-popup-integrations-step__fields-input">
@@ -40,7 +41,7 @@ export default class CreateList extends Component {
           className="brz-input"
           value={apiKeyValue[name]}
           onChange={e => {
-            handleChange(name, e.target.value);
+            onChange(name, e.target.value);
           }}
         />
       </div>
@@ -48,7 +49,7 @@ export default class CreateList extends Component {
   }
 
   renderSelect({ name, choices: _choices }) {
-    const { apiKeyValue, handleChange } = this.props;
+    const { apiKeyValue, onChange } = this.props;
     const value = apiKeyValue[name];
     const choices = value
       ? _choices
@@ -72,7 +73,7 @@ export default class CreateList extends Component {
           itemHeight="30"
           inPortal={true}
           onChange={itemTarget => {
-            handleChange(name, itemTarget);
+            onChange(name, itemTarget);
           }}
         >
           {options}
@@ -82,7 +83,7 @@ export default class CreateList extends Component {
   }
 
   renderTextarea({ name }) {
-    const { apiKeyValue, handleChange } = this.props;
+    const { apiKeyValue, onChange } = this.props;
 
     return (
       <div className="brz-ed-popup-integrations-step__fields-input">
@@ -90,7 +91,7 @@ export default class CreateList extends Component {
           className="brz-textarea"
           value={apiKeyValue[name]}
           onChange={e => {
-            handleChange(name, e.target.value);
+            onChange(name, e.target.value);
           }}
         />
       </div>
@@ -98,7 +99,7 @@ export default class CreateList extends Component {
   }
 
   renderApiKeys() {
-    const fields = this.props.data.listApiKeys.map((key, index) => {
+    const fields = this.props.listsCreate.map((key, index) => {
       const { title, type } = key;
 
       return (
@@ -124,12 +125,12 @@ export default class CreateList extends Component {
 
   render() {
     const {
-      data: { listApiKeys },
+      listsCreate,
       nextLoading,
       prevLoading,
       error,
-      handlePrev,
-      handleNext
+      onPrev,
+      onNext
     } = this.props;
 
     return (
@@ -137,23 +138,23 @@ export default class CreateList extends Component {
         {error && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
           <p className="brz-p">
-            <strong className="brz-strong">CREATE LIST</strong>
+            <strong className="brz-strong">{t("CREATE LIST")}</strong>
           </p>
         </div>
         <div className="brz-ed-popup-integrations-step__body">
-          {listApiKeys.length && this.renderApiKeys()}
+          {listsCreate.length > 0 && this.renderApiKeys()}
 
           <div className="brz-ed-popup-integrations-step__buttons">
             <Button
               type="gray"
               leftIcon="nc-arrow-left"
               loading={prevLoading}
-              onClick={handlePrev}
+              onClick={onPrev}
             >
-              Back
+              {t("Back")}
             </Button>
-            <Button type="tail" loading={nextLoading} onClick={handleNext}>
-              Create
+            <Button type="tail" loading={nextLoading} onClick={onNext}>
+              {t("Create")}
             </Button>
           </div>
         </div>

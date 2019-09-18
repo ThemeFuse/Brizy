@@ -1,38 +1,49 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { svgToUri } from "visual/utils/icons";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
-export function styleShapeTopType({ v }) {
-  const { shapeTopType, shapeTopColorHex, shapeTopColorOpacity } = v;
-  return shapeTopType === "none"
-    ? "none"
-    : `url('${svgToUri(
-        shapeTopType,
-        hexToRgba(shapeTopColorHex, shapeTopColorOpacity)
-      )}')`;
+export function styleShapeTopType({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeTopType", device, state });
 }
 
-export function styleShapeTopBackgroundSize({ v, device }) {
-  return `100% ${defaultValueValue({
+export function styleShapeTopSvg({ v, device, state }) {
+  const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: `shapeTopColorHex`, device, state }),
+    defaultValueValue({ v, key: `shapeTopColorPalette`, device, state })
+  );
+
+  const shapeTopColorOpacity = defaultValueValue({
     v,
-    key: "shapeTopHeight",
-    device
-  })}${defaultValueValue({ v, key: "shapeTopHeightSuffix", device })}`;
+    key: "shapeTopColorOpacity",
+    device,
+    state
+  });
+
+  const shapeTopType = defaultValueValue({
+    v,
+    key: "shapeTopType",
+    device,
+    state
+  });
+
+  return svgToUri(
+    shapeTopType,
+    hexToRgba(shapeTopColorHex, shapeTopColorOpacity)
+  );
+}
+
+export function styleShapeTopHeight({ v, device }) {
+  return defaultValueValue({ v, key: "shapeTopHeight", device });
+}
+
+export function styleShapeTopHeightSuffix({ v, device }) {
+  return defaultValueValue({ v, key: "shapeTopHeightSuffix", device });
 }
 
 export function styleShapeTopFlip({ v }) {
   const { shapeTopHorizontal } = v;
-  return shapeTopHorizontal === "on"
-    ? "rotateX(0deg) rotateY(-180deg)"
-    : "rotateX(0deg) rotateY(0deg)";
-}
-
-export function styleShapeTopHeight({ v, device }) {
-  return `${defaultValueValue({
-    v,
-    key: "shapeTopHeight",
-    device
-  })}${defaultValueValue({ v, key: "shapeTopHeightSuffix", device })}`;
+  return shapeTopHorizontal;
 }
 
 export function styleShapeTopIndex({ v }) {
@@ -40,37 +51,45 @@ export function styleShapeTopIndex({ v }) {
   return shapeTopIndex;
 }
 
-export function styleShapeBottomType({ v }) {
-  const { shapeBottomType, shapeBottomColorHex, shapeBottomColorOpacity } = v;
-  return shapeBottomType === "none"
-    ? "none"
-    : `url('${svgToUri(
-        shapeBottomType,
-        hexToRgba(shapeBottomColorHex, shapeBottomColorOpacity)
-      )}')`;
+export function styleShapeBottomType({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeBottomType", device, state });
 }
 
-export function styleShapeBottomBackgroundSize({ v, device }) {
-  return `100% ${defaultValueValue({
+export function styleShapeBottomSvg({ v, device, state }) {
+  const { hex: shapeBottomColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: `shapeBottomColorHex`, device, state }),
+    defaultValueValue({ v, key: `shapeBottomColorPalette`, device, state })
+  );
+  const shapeBottomColorOpacity = defaultValueValue({
     v,
-    key: "shapeBottomHeight",
-    device
-  })}${defaultValueValue({ v, key: "shapeBottomHeightSuffix", device })}`;
+    key: "shapeBottomColorOpacity",
+    device,
+    state
+  });
+  const shapeBottomType = defaultValueValue({
+    v,
+    key: "shapeBottomType",
+    device,
+    state
+  });
+
+  return svgToUri(
+    shapeBottomType,
+    hexToRgba(shapeBottomColorHex, shapeBottomColorOpacity)
+  );
+}
+
+export function styleShapeBottomHeight({ v, device }) {
+  return defaultValueValue({ v, key: "shapeBottomHeight", device });
+}
+
+export function styleShapeBottomHeightSuffix({ v, device }) {
+  return defaultValueValue({ v, key: "shapeBottomHeightSuffix", device });
 }
 
 export function styleShapeBottomFlip({ v }) {
   const { shapeBottomHorizontal } = v;
-  return shapeBottomHorizontal === "on"
-    ? "rotateX(-180deg) rotateY(0deg)"
-    : "rotateX(-180deg) rotateY(-180deg)";
-}
-
-export function styleShapeBottomHeight({ v, device }) {
-  return `${defaultValueValue({
-    v,
-    key: "shapeBottomHeight",
-    device
-  })}${defaultValueValue({ v, key: "shapeBottomHeightSuffix", device })}`;
+  return shapeBottomHorizontal;
 }
 
 export function styleShapeBottomIndex({ v }) {

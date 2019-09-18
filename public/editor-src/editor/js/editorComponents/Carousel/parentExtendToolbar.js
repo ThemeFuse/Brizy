@@ -10,11 +10,7 @@ import {
   mobileSyncOnChange
 } from "visual/utils/onChange";
 
-import {
-  toolbarColorHexAndOpacity,
-  toolbarColorPalette,
-  toolbarColorFields
-} from "visual/utils/toolbar";
+import { toolbarColor2, toolbarColorHexField2 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
   const device = "desktop";
@@ -22,10 +18,6 @@ export function getItemsForDesktop(v) {
   const { hex: sliderArrowsColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "sliderArrowsColorHex", device }),
     defaultValueValue({ v, key: "sliderArrowsColorPalette", device })
-  );
-  const { hex: sliderDotsColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "sliderDotsColorHex", device }),
-    defaultValueValue({ v, key: "sliderDotsColorPalette", device })
   );
 
   const state = "normal";
@@ -335,20 +327,16 @@ export function getItemsForDesktop(v) {
               id: "arrows",
               label: t("Arrows"),
               options: [
-                toolbarColorHexAndOpacity({
+                toolbarColor2({
                   v,
-                  state,
+                  device,
+                  state: "normal",
                   prefix: "sliderArrowsColor",
-                  onChange: [
+                  onChangeHex: [
                     "onChangeColorHexAndOpacity",
                     "onChangeColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarColorPalette({
-                  v,
-                  state,
-                  prefix: "sliderArrowsColor",
-                  onChange: [
+                  ],
+                  onChangePalette: [
                     "onChangeColorPalette",
                     "onChangeColorPaletteOpacity"
                   ]
@@ -360,9 +348,10 @@ export function getItemsForDesktop(v) {
                     {
                       width: 100,
                       options: [
-                        toolbarColorFields({
+                        toolbarColorHexField2({
                           v,
-                          state,
+                          device,
+                          state: "normal",
                           prefix: "sliderArrowsColor",
                           onChange: [
                             "onChangeColorHexAndOpacity",
@@ -378,36 +367,34 @@ export function getItemsForDesktop(v) {
             {
               id: "dots",
               label: t("Dots"),
-              disabled: v.slider === "off",
               options: [
-                toolbarColorHexAndOpacity({
+                toolbarColor2({
                   v,
-                  state,
+                  device,
+                  disabled: v.slider === "off",
+                  state: "normal",
                   prefix: "sliderDotsColor",
-                  onChange: [
+                  onChangeHex: [
                     "onChangeColorHexAndOpacity",
                     "onChangeColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarColorPalette({
-                  v,
-                  state,
-                  prefix: "sliderDotsColor",
-                  onChange: [
+                  ],
+                  onChangePalette: [
                     "onChangeColorPalette",
                     "onChangeColorPaletteOpacity"
                   ]
                 }),
                 {
                   type: "grid",
+                  disabled: v.slider === "off",
                   className: "brz-ed-grid__color-fileds",
                   columns: [
                     {
                       width: 100,
                       options: [
-                        toolbarColorFields({
+                        toolbarColorHexField2({
                           v,
-                          state,
+                          device,
+                          state: "normal",
                           prefix: "sliderDotsColor",
                           onChange: [
                             "onChangeColorHexAndOpacity",

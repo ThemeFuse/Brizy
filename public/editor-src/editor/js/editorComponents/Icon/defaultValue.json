@@ -17,6 +17,11 @@
     "linkPopup": ""
   },
 
+  "toolbar": {
+    "tabsState": "",
+    "tabsColor": ""
+  },
+
   "style": {
     "className": "",
 
@@ -145,7 +150,9 @@
 
     "hoverTransition": 50,
 
-    "boxShadow": "off",
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
@@ -166,6 +173,8 @@
 
     "hoverBoxShadow": null,
 
+    "tempHoverBoxShadow": null,
+
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,
     "hoverBoxShadowColorPalette": null,
@@ -182,6 +191,8 @@
     "tempHoverBoxShadowSpread": null,
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowHorizontal": null,
+
+    "hoverTransition": 50,
 
     "strokeWidth": 1,
 

@@ -1,17 +1,32 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarSizeSizeSizePercent({ v, device }) {
+export function toolbarSizeSizeSizePercent({
+  v,
+  device,
+  devices = "all",
+  state,
+  min = 1,
+  max = 100,
+  disabled = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "size", device }),
+    id: dvk("size"),
     label: t("Size"),
     type: "slider",
+    devices,
+    disabled,
     slider: {
-      min: 1,
-      max: 100
+      min,
+      max
     },
     input: {
-      show: true
+      show: true,
+      min,
+      max
     },
     suffix: {
       show: true,
@@ -23,18 +38,24 @@ export function toolbarSizeSizeSizePercent({ v, device }) {
       ]
     },
     value: {
-      value: defaultValueValue({ v, key: "size", device })
+      value: dvv("size")
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ key: "size", device })]: value
+      [dvk("size")]: value
     })
   };
 }
 
-export function toolbarSizeWidthWidthPercent({ v, device, state }) {
+export function toolbarSizeWidthWidthPercent({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
     id: defaultValueKey({ key: "width", device, state }),
     label: t("Width"),
+    devices,
     type: "slider",
     slider: {
       min: 1,
@@ -61,11 +82,18 @@ export function toolbarSizeWidthWidthPercent({ v, device, state }) {
   };
 }
 
-export function toolbarSizeHeightHeightPx({ v, device, state, config }) {
+export function toolbarSizeHeightHeightPx({
+  v,
+  device,
+  state,
+  config,
+  devices = "all"
+}) {
   return {
     id: defaultValueKey({ key: "height", device, state }),
     label: t("Height"),
     type: "slider",
+    devices,
     slider: {
       min: config.slider.min,
       max: config.slider.max
@@ -87,6 +115,54 @@ export function toolbarSizeHeightHeightPx({ v, device, state, config }) {
     },
     onChange: ({ value }) => ({
       [defaultValueKey({ key: "height", device, state })]: value
+    })
+  };
+}
+
+export function toolbarSizeContainerSize({
+  v,
+  device,
+  state,
+  devices = "all"
+}) {
+  return {
+    id: defaultValueKey({
+      key: "containerSize",
+      device,
+      state
+    }),
+    label: t("Width"),
+    type: "slider",
+    devices,
+    position: 100,
+    slider: {
+      min: 35,
+      max: 100
+    },
+    input: {
+      show: true,
+      min: 35,
+      max: 100
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "%",
+          value: "%"
+        }
+      ]
+    },
+    value: {
+      value: defaultValueValue({
+        v,
+        key: "containerSize",
+        device,
+        state
+      })
+    },
+    onChange: ({ value: containerSize }) => ({
+      containerSize
     })
   };
 }

@@ -1,21 +1,26 @@
 import React from "react";
+import classnames from "classnames";
 import { connect } from "react-redux";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle
+} from "react-sortable-hoc";
 import { removeAt, insert } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
-import {
-  pageDataSelector,
-  pageBlocksSelector,
-  globalBlocksSelector
-} from "visual/redux/selectors";
-import { updatePage } from "visual/redux/actions";
+import { pageAssembledSelector } from "visual/redux/selectors";
+import { removeBlock, reorderBlocks } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 import BlockThumbnail from "./BlockThumbnail";
+
+const DragHandle = SortableHandle(({ item }) => (
+  <BlockThumbnail blockData={item} />
+));
 
 const SortableItem = SortableElement(({ item, onRemove }) => {
   return (
     <div className="brz-ed-sidebar-block-item">
-      <BlockThumbnail blockData={item} />
+      <DragHandle item={item} />
       <div className="brz-ed-sidebar-block-remove" onClick={onRemove}>
         <EditorIcon icon="nc-circle-remove-2" className="brz-ed-bar-icon" />
       </div>
@@ -23,7 +28,7 @@ const SortableItem = SortableElement(({ item, onRemove }) => {
   );
 });
 
-const SortableList = SortableContainer(({ items, onItemRemove }) => {
+const SortableList = SortableContainer(({ isSorting, items, onItemRemove }) => {
   const filteredItems = [];
 
   for (let i = 0; i < items.length; i++) {
@@ -43,50 +48,88 @@ const SortableList = SortableContainer(({ items, onItemRemove }) => {
     );
   }
 
-  return <div className="brz-ed-sidebar-ordering">{filteredItems}</div>;
+  const className = classnames("brz-ed-sidebar-sortable", {
+    "brz-ed-sidebar-sortable--sorting": isSorting
+  });
+  return <div className={className}>{filteredItems}</div>;
 });
 
 class DrawerComponent extends React.Component {
-  static defaultProps = {
-    items: [],
-    onSortEnd: () => {},
-    onItemRemove: () => {}
+  static getDerivedStateFromProps(props, state) {
+    // the 'optimistic' flag tells us to keep the state
+    // to perform an optimistic update until we get new props.
+    // This is why we discard the flag after accepting the state
+    if (state.optimistic) {
+      return {
+        blocks: state.blocks,
+        optimistic: false
+      };
+    }
+
+    if (props.page.data.items !== state.blocks) {
+      return {
+        blocks: props.page.data.items || []
+      };
+    }
+
+    return null;
+  }
+
+  state = {
+    blocks: [],
+    isSorting: false
+  };
+
+  handleBeforeSortStart = () => {
+    this.setState({
+      isSorting: true
+    });
   };
 
   handleSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex !== newIndex) {
-      const { pageBlocks } = this.props;
-      const movedBlock = pageBlocks[oldIndex];
-      const updatedBlocks = insert(
-        removeAt(pageBlocks, oldIndex),
-        newIndex,
-        movedBlock
-      );
+      // make an optimistic update,
+      // after which update the store fo real
+      this.setState(
+        state => {
+          const { blocks } = state;
+          const movedBlock = blocks[oldIndex];
 
-      this.updatePageBlocks(updatedBlocks);
+          return {
+            blocks: insert(removeAt(blocks, oldIndex), newIndex, movedBlock),
+            optimistic: true,
+            isSorting: false
+          };
+        },
+        () => {
+          setTimeout(() => {
+            this.props.dispatch(reorderBlocks({ oldIndex, newIndex }));
+          }, 100);
+        }
+      );
+    } else {
+      this.setState({
+        isSorting: false
+      });
     }
   };
 
   handleItemRemove = index => {
-    const { pageBlocks } = this.props;
-    const updatedBlocks = removeAt(pageBlocks, index);
-
-    this.updatePageBlocks(updatedBlocks);
-  };
-
-  updatePageBlocks = blocks => {
-    const { pageData, onPageDataChange } = this.props;
-
-    onPageDataChange({ ...pageData, items: blocks });
+    this.props.dispatch(removeBlock({ index }));
   };
 
   render() {
+    const { blocks, isSorting } = this.state;
+
     return (
       <SortableList
         helperClass="brz-ed-sidebar-block-item-helper"
-        items={this.props.pageBlocks}
+        isSorting={isSorting}
+        items={blocks}
         distance={5}
+        useDragHandle={true}
         contentWindow={() => window.parent}
+        onSortStart={this.handleBeforeSortStart}
         onSortEnd={this.handleSortEnd}
         onItemRemove={this.handleItemRemove}
       />
@@ -95,23 +138,12 @@ class DrawerComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  pageData: pageDataSelector(state),
-  pageBlocks: pageBlocksSelector(state),
-  globalBlocks: globalBlocksSelector(state) // this is needed only to redraw the component when global blocks change
-});
-
-const mapDispatchToProps = dispatch => ({
-  onPageDataChange: data => {
-    dispatch(updatePage({ data }));
-  }
+  page: pageAssembledSelector(state)
 });
 
 export const BlocksSortable = {
   id: "blocksSortable",
   icon: "nc-reorder",
   drawerTitle: t("Reorder Blocks"),
-  drawerComponent: connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(DrawerComponent)
+  drawerComponent: connect(mapStateToProps)(DrawerComponent)
 };

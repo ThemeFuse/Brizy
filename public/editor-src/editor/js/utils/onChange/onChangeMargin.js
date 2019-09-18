@@ -3,12 +3,14 @@ import {
   onChangeUngroupedByUngrouped,
   onChangeGroupedByUngrouped
 } from "./onChange";
+import { defaultValueKey } from "./device";
 
 export function onChangeMarginGrouped({
   v,
   device,
   state,
   childs = undefined,
+  marginType = "default",
   value,
   suffix
 }) {
@@ -20,7 +22,9 @@ export function onChangeMarginGrouped({
   const parent = "margin";
   childs =
     childs === undefined
-      ? ["marginTop", "marginRight", "marginBottom", "marginLeft"]
+      ? marginType === "topBottom"
+        ? ["marginTop", "marginBottom"]
+        : ["marginTop", "marginRight", "marginBottom", "marginLeft"]
       : childs;
 
   const childsSuffix = [];
@@ -93,7 +97,11 @@ export function onChangeMarginUngrouped({
      *
      * marginTopSuffix,
      */
-    [`${current}Suffix`]: suffix,
+    [`${defaultValueKey({
+      key: `${current}Suffix`,
+      device,
+      state
+    })}`]: suffix,
 
     /**
      * ### OUTPUT EXAMPLE

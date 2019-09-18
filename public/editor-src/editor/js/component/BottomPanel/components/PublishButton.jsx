@@ -1,85 +1,14 @@
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
-import {
-  globalsSelector,
-  globalBlocksInPageSelector
-} from "visual/redux/selectors";
-import {
-  updatePage,
-  updateGlobals,
-  updateGlobalBlock
-} from "visual/redux/actions";
+import { publish } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
-class PublishButton extends React.Component {
+class PublishButton extends Component {
   state = {
     loading: false
   };
-
-  publishGlobals() {
-    const { globals, updateGlobals } = this.props;
-    const globalsEntries = Object.entries(globals);
-
-    if (globalsEntries.length === 0) {
-      return;
-    }
-
-    // force a network request, but don't change anything
-    return new Promise((resolve, reject) => {
-      return updateGlobals({
-        key: null,
-        value: null,
-        meta: {
-          is_autosave: 0,
-          syncImmediate: true,
-          syncSuccess: resolve,
-          syncFail: reject
-        }
-      });
-    });
-  }
-
-  publishGlobalBlocks() {
-    const { globalBlocksInPage, updateGlobalBlock } = this.props;
-    const updatePromises = Object.entries(globalBlocksInPage).map(
-      ([id, data]) => {
-        return new Promise((resolve, reject) => {
-          updateGlobalBlock({
-            id,
-            data,
-            meta: {
-              is_autosave: 0,
-              syncImmediate: true,
-              syncSuccess: resolve,
-              syncFail: reject
-            }
-          });
-        });
-      }
-    );
-
-    return Promise.all(updatePromises);
-  }
-
-  publishPage() {
-    const { page, updatePage } = this.props;
-
-    return new Promise((resolve, reject) => {
-      return updatePage({
-        data: page.data,
-        status: "publish",
-        meta: {
-          is_autosave: 0,
-          syncImmediate: true,
-          syncSuccess: resolve,
-          syncFail: reject
-        }
-      });
-    });
-  }
 
   publish = e => {
     e.preventDefault();
@@ -88,18 +17,18 @@ class PublishButton extends React.Component {
       return;
     }
 
-    this.setState({ loading: true }, async () => {
-      try {
-        await this.publishGlobals();
-        await this.publishGlobalBlocks();
-        await this.publishPage(); // page must be published last, because it triggers compilation (in WP)
-      } catch (e) {
-        if (process.env.NODE_ENV === "development") {
-          console.error("could not publish or save page");
-        }
-      }
-
-      this.setState({ loading: false });
+    this.setState({ loading: true }, () => {
+      this.props
+        .dispatch(publish())
+        .then(() => {
+          this.setState({ loading: false });
+        })
+        .catch(e => {
+          if (process.env.NODE_ENV === "development") {
+            console.error("could not publish or save page");
+          }
+          this.setState({ loading: false });
+        });
     });
   };
 
@@ -132,16 +61,9 @@ class PublishButton extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  page: state.page,
-  globals: globalsSelector(state),
-  globalBlocksInPage: globalBlocksInPageSelector(state)
-});
-const mapDispatchToProps = {
-  updatePage,
-  updateGlobals,
-  updateGlobalBlock
-};
+const mapStateToProps = state => ({ page: state.page });
+
+const mapDispatchToProps = dispatch => ({ dispatch });
 
 export default connect(
   mapStateToProps,

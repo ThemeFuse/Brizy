@@ -4,19 +4,28 @@
   border-bottom: 1px solid transparent;
   margin-top: -1px;
   margin-bottom: -1px;
+}
 
-  &-clone {
-    @extend .brz-wrapper;
+// Wrapper Clone
+.brz-wrapper-clone {
+  @extend .brz-wrapper;
 
-    &__wrap {
-      height: 100%;
+  &__wrap {
+    height: 100%;
 
-      & > div {
-        align-items: center;
-      }
+    & > div {
+      align-items: center;
+    }
+    // uses case for collapse margin bottom
+    &:after {
+      content: "";
+      display: table;
+    }
+    .brz-flex-xs-wrap {
+      flex: 1 1 auto;
     }
   }
-  &-clone__item {
+  &__item {
     position: relative;
     min-height: 1px;
     flex-basis: auto;

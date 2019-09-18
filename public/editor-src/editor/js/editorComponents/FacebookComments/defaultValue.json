@@ -10,9 +10,9 @@
   },
 
   "toolbar": {
-    "tabsState": "tabNormal",
+    "tabsState": "",
 
-    "tabsColor": "tabBoxShadow"
+    "tabsColor": ""
   },
 
   "style": {
@@ -20,7 +20,9 @@
 
     "customCSS": "",
 
-    "boxShadow": "off",
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
@@ -40,6 +42,8 @@
     "tempBoxShadowHorizontal": 1,
 
     "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
 
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,

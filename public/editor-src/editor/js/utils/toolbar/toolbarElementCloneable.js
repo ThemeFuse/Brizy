@@ -1,12 +1,19 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementCloneableSpacing({ v, device, position = 350 }) {
+export function toolbarElementCloneableSpacing({
+  v,
+  device,
+  devices = "all",
+  state,
+  position = 350
+}) {
   return {
-    id: defaultValueKey({ key: "itemPadding", device }),
+    id: defaultValueKey({ key: "itemPadding", device, state }),
     type: "slider",
     label: t("Spacing"),
     roles: ["admin"],
+    devices,
     position,
     slider: {
       min: 0,
@@ -29,19 +36,22 @@ export function toolbarElementCloneableSpacing({ v, device, position = 350 }) {
       value: defaultValueValue({
         v,
         key: "itemPadding",
-        device
+        device,
+        state
       })
     },
     onChange: ({ value }) => {
       return {
-        [defaultValueKey({ key: "itemPadding", device })]: value,
+        [defaultValueKey({ key: "itemPadding", device, state })]: value,
         [defaultValueKey({
           key: "itemPaddingRight",
-          device
+          device,
+          state
         })]: value,
         [defaultValueKey({
           key: "itemPaddingLeft",
-          device
+          device,
+          state
         })]: value
       };
     }

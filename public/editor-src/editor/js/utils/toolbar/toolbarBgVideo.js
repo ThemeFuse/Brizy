@@ -1,33 +1,58 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarBgVideoUrl({ v, disabled = false }) {
+export function toolbarBgVideoUrl({
+  v,
+  device,
+  devices = "all",
+  state,
+  disabled = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: "bgVideo",
+    id: dvk("bgVideo"),
     label: t("URL"),
     type: "input",
     inputType: "video",
     placeholder: t("YouTube or Vimeo"),
     disabled,
+    devices,
     value: {
-      value: v.bgVideo
+      value: dvv("bgVideo")
     },
     onChange: ({ value: bgVideo }) => ({
       bgVideo,
 
       bgColorOpacity:
-        bgVideo !== "" && v.bgColorOpacity === 1 ? 0.8 : v.bgColorOpacity,
+        bgVideo !== "" && dvv("bgColorOpacity") === 1
+          ? 0.8
+          : dvv("bgColorOpacity"),
 
       tempBgColorOpacity:
-        bgVideo !== "" && v.bgColorOpacity === 1 ? 0.8 : v.tempBgColorOpacity
+        bgVideo !== "" && dvv("bgColorOpacity") === 1
+          ? 0.8
+          : dvv("tempBgColorOpacity")
     })
   };
 }
 
-export function toolbarBgVideoQuality({ v, disabled = false }) {
+export function toolbarBgVideoQuality({
+  v,
+  device,
+  devices = "all",
+  state,
+  disabled = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: "bgVideoQuality",
+    id: dvk("bgVideoQuality"),
     label: t("Quality"),
     type: "select",
+    devices,
     disabled,
     choices: [
       {
@@ -39,16 +64,26 @@ export function toolbarBgVideoQuality({ v, disabled = false }) {
         value: 720
       }
     ],
-    value: v.bgVideoQuality
+    value: dvv("bgVideoQuality")
   };
 }
 
-export function toolbarBgVideoLoop({ v, disabled = false }) {
+export function toolbarBgVideoLoop({
+  v,
+  device,
+  devices = "all",
+  state,
+  disabled = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: "bgVideoLoop",
+    id: dvk("bgVideoLoop"),
     label: t("Loop"),
     type: "switch",
+    devices,
     disabled,
-    value: v.bgVideoLoop
+    value: dvv("bgVideoLoop")
   };
 }

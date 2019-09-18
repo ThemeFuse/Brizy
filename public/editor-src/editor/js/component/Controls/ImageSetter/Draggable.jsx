@@ -35,6 +35,20 @@ export default class Draggable extends React.Component {
     this.window = node.ownerDocument.defaultView;
   }
 
+  componentWillReceiveProps(nextProps) {
+    const oldX = this.props.position.x;
+    const oldY = this.props.position.y;
+    const newX = nextProps.position.x;
+    const newY = nextProps.position.y;
+
+    if (oldX !== newX || oldY !== newY) {
+      this.setState({
+        x: newX,
+        y: newY
+      });
+    }
+  }
+
   componentWillUnmount() {
     const node = ReactDOM.findDOMNode(this);
     const parent = node.parentNode || node.ownerDocument.body;

@@ -93,6 +93,12 @@
     }
   }
 }
+
+// Section Popup
+.brz-popup__inner {
+  height: 100%;
+}
+
 // Responsive
 @include media-breakpoint-down(sm) {
   &.brz-ed .brz-section__header {

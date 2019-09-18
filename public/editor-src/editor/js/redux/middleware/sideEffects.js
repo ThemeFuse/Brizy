@@ -1,242 +1,341 @@
 import jQuery from "jquery";
-import Config from "visual/global/Config";
+import _ from "underscore";
 import {
-  makeFontsUrl,
-  makeRichTextFontFamiliesCSS,
-  makeRichTextFontStylesCSS
+  makeRichTextFontStylesCSS,
+  makeRichTextFontUploadCSS,
+  makeUploadFontsUrl,
+  projectFontsData
 } from "visual/utils/fonts";
 import { makeRichTextColorPaletteCSS } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
-import { currentStyleSelector } from "../selectors";
+import {
+  currentStyleSelector,
+  extraFontStylesSelector,
+  fontSelector,
+  unDeletedFontSelector
+} from "../selectors";
 import {
   HYDRATE,
-  UPDATE_GLOBALS,
+  ADD_BLOCK,
+  REMOVE_BLOCK,
+  REORDER_BLOCKS,
   UPDATE_PAGE,
   UPDATE_GLOBAL_BLOCK,
-  UPDATE_SAVED_BLOCK,
   UPDATE_UI,
   COPY_ELEMENT,
-  updateCopiedElement
+  updateCopiedElement,
+  UPDATE_CURRENT_STYLE_ID,
+  UPDATE_CURRENT_STYLE,
+  UPDATE_EXTRA_FONT_STYLES,
+  IMPORT_TEMPLATE,
+  IMPORT_KIT,
+  ADD_FONTS,
+  DELETE_FONTS,
+  PUBLISH
 } from "../actions";
 import { ActionTypes as HistoryActionTypes } from "../reducers/historyEnhancer";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
+import {
+  makeRichTextFontGoogleCSS,
+  makeSubsetGoogleFontsUrl
+} from "visual/utils/fonts";
 
 const { UNDO, REDO } = HistoryActionTypes;
 
 export default config => store => next => action => {
+  const callbacks = {
+    onBeforeNext: [],
+    onAfterNext: []
+  };
+
   // show warning if the user wants to leave
   // without publishing / updating changes
   switch (action.type) {
+    case ADD_BLOCK:
+    case REMOVE_BLOCK:
+    case REORDER_BLOCKS:
     case UPDATE_PAGE:
-    case UPDATE_GLOBALS:
     case UPDATE_GLOBAL_BLOCK:
-    case UPDATE_SAVED_BLOCK:
+    case UPDATE_CURRENT_STYLE_ID:
+    case UPDATE_CURRENT_STYLE:
+    case UPDATE_EXTRA_FONT_STYLES:
+    case IMPORT_TEMPLATE:
     case UNDO:
     case REDO: {
       const window_ = window.parent || window;
-
-      if (action.meta && action.meta.is_autosave === 0) {
-        window_.removeEventListener("beforeunload", handleBeforeUnload);
-      } else {
-        window_.addEventListener("beforeunload", handleBeforeUnload);
-      }
-
+      window_.addEventListener("beforeunload", handleBeforeUnload);
+      break;
+    }
+    case PUBLISH: {
+      const window_ = window.parent || window;
+      window_.removeEventListener("beforeunload", handleBeforeUnload);
       break;
     }
   }
 
   if (action.type === HYDRATE) {
-    const done = () => next(action);
-    handleHydrate(config, store, action, done);
-    return;
+    handleHydrate(callbacks);
   }
 
-  if (action.type === UPDATE_GLOBALS && action.key === "extraFonts") {
-    const done = () => next(action);
-    handleAddExtraFont(config, store, action, done);
-    return;
+  if (
+    action.type === IMPORT_TEMPLATE ||
+    action.type === IMPORT_KIT ||
+    action.type === ADD_BLOCK ||
+    action.type === ADD_FONTS ||
+    action.type === DELETE_FONTS
+  ) {
+    handleFontsChange(callbacks);
   }
 
-  if (action.type === UPDATE_GLOBALS && action.key === "styles") {
-    const done = () => next(action);
-    handleStylesChange(config, store, action, done);
-    return;
+  if (
+    action.type === IMPORT_TEMPLATE ||
+    action.type === UPDATE_CURRENT_STYLE_ID ||
+    action.type === UPDATE_CURRENT_STYLE ||
+    action.type === UPDATE_EXTRA_FONT_STYLES
+  ) {
+    handleStylesChange(callbacks);
   }
 
   if (action.type === UPDATE_UI && action.key === "deviceMode") {
-    const done = () => next(action);
-    handleDeviceModeChange(config, store, action, done);
-    return;
+    handleDeviceModeChange(callbacks);
   }
 
   if (action.type === COPY_ELEMENT) {
-    const done = () => next(action);
-    handleCopiedElementChange(config, store, action, done);
-    return;
+    handleCopiedElementChange(callbacks);
   }
 
   if (action.type === UNDO || action.type === REDO) {
-    const done = () => next(action);
-    handleHistoryChange(config, store, action, done);
-    return;
+    handleHistoryChange(callbacks);
   }
 
+  const oldState = store.getState();
+
+  // Now is not used
+  // uncomment if need
+  // callbacks.onBeforeNext.forEach(task => task({ config, state: oldState, action }));
+
   next(action);
+
+  const state = store.getState();
+  callbacks.onAfterNext.forEach(task =>
+    task({ config, state, oldState, action })
+  );
 };
 
-function handleHydrate(config, store, action, done) {
-  done();
+function handleHydrate(callbacks) {
+  callbacks.onAfterNext.push(({ state, config }) => {
+    const { document, parentDocument } = config;
+    const currentFonts = projectFontsData(unDeletedFontSelector(state));
+    const allFonts = projectFontsData(fontSelector(state));
+    const { colorPalette, fontStyles } = currentStyleSelector(state);
+    const extraFontStyles = extraFontStylesSelector(state);
 
-  const { document, parentDocument } = config;
-  const { mergedFontStyles, colorPalette } = currentStyleSelector(
-    store.getState()
-  );
+    // added project fonts to Head
+    const $googleFonts = jQuery("<link>").attr({
+      href: makeSubsetGoogleFontsUrl(currentFonts.google),
+      type: "text/css",
+      rel: "stylesheet"
+    });
 
-  // fonts
-  const configFonts = Config.get("fonts");
-  const globalsExtraFonts = action.payload.globals.extraFonts || [];
-  const fontsToLoad = [...configFonts, ...globalsExtraFonts];
-  const $fonts = jQuery("<link>").attr({
-    href: makeFontsUrl(fontsToLoad),
-    type: "text/css",
-    rel: "stylesheet"
+    jQuery("head", document).append($googleFonts);
+    jQuery("head", parentDocument).append($googleFonts.clone());
+
+    // generate classname for richText
+    const $richTextFontFamilies = jQuery("<style>")
+      .attr("id", "brz-rich-text-font-families")
+      .html(makeRichTextFontGoogleCSS(allFonts.google));
+
+    jQuery("head", document).append($richTextFontFamilies);
+
+    if (currentFonts.upload && currentFonts.upload.length > 0) {
+      const $uploadFonts = jQuery("<link>").attr({
+        href: makeUploadFontsUrl(currentFonts.upload),
+        type: "text/css",
+        rel: "stylesheet"
+      });
+      jQuery("head", document).append($uploadFonts);
+      jQuery("head", parentDocument).append($uploadFonts.clone());
+    }
+    if (allFonts.upload && allFonts.upload.length > 0) {
+      jQuery("#brz-rich-text-font-families").append(
+        makeRichTextFontUploadCSS(allFonts.upload)
+      );
+    }
+
+    // Fonts Styles
+    const $richTextFontStyle = jQuery("<style>")
+      .attr("id", "brz-rich-text-font-styles")
+      .html(makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles]));
+    jQuery("head", document).append($richTextFontStyle);
+
+    // ColorPalette
+    const $richTextPaletteStyle = jQuery("<style>")
+      .attr("id", "brz-rich-text-colors")
+      .html(makeRichTextColorPaletteCSS(colorPalette));
+    jQuery("head", document).append($richTextPaletteStyle);
+
+    // clipboard sync between tabs
+    jQuery(window).on("storage", e => {
+      const { key, newValue, oldValue } = e.originalEvent;
+      if (key === "copiedStyles" && newValue && newValue !== oldValue) {
+        store.dispatch(updateCopiedElement(JSON.parse(newValue)));
+      }
+    });
   });
-  jQuery("head", document).append($fonts);
-  jQuery("head", parentDocument).append($fonts.clone());
+}
 
-  const $richTextFontFamiliesStyle = jQuery("<style>")
-    .attr("id", "brz-rich-text-font-families")
-    .html(makeRichTextFontFamiliesCSS(fontsToLoad));
-  jQuery("head", document).append($richTextFontFamiliesStyle);
+function handleFontsChange(callbacks) {
+  callbacks.onAfterNext.push(({ config, state, oldState, action }) => {
+    if (state.fonts === oldState.fonts) {
+      return;
+    }
 
-  const $richTextFontStyle = jQuery("<style>")
-    .attr("id", "brz-rich-text-font-styles")
-    .html(makeRichTextFontStylesCSS(mergedFontStyles));
-  jQuery("head", document).append($richTextFontStyle);
+    const { document, parentDocument } = config;
+    const { fontStyles } = currentStyleSelector(state);
+    const extraFontStyles = extraFontStylesSelector(state);
+    const $families = jQuery("#brz-rich-text-font-families");
+    const { google, upload } = projectFontsData(fontSelector(state));
 
-  const $richTextPaletteStyle = jQuery("<style>")
-    .attr("id", "brz-rich-text-colors")
-    .html(makeRichTextColorPaletteCSS(colorPalette));
-  jQuery("head", document).append($richTextPaletteStyle);
+    // Override current Fonts Styles
+    jQuery("#brz-rich-text-font-styles").html(
+      makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles])
+    );
 
-  // clipboard sync between tabs
-  jQuery(window).on("storage", e => {
-    const { key, newValue, oldValue } = e.originalEvent;
-    if (key === "copiedStyles" && newValue && newValue !== oldValue) {
-      store.dispatch(updateCopiedElement(JSON.parse(newValue)));
+    // Override current css Families
+    $families.html(makeRichTextFontGoogleCSS(google));
+
+    // Append Upload css Families
+    if (upload && upload.length > 0) {
+      $families.append(makeRichTextFontUploadCSS(upload));
+    }
+
+    // Generate new Link for new Fonts
+    if (action.type !== DELETE_FONTS) {
+      diffFonts(oldState.fonts, state.fonts).forEach(({ type, fonts }) => {
+        const href =
+          type === "upload"
+            ? makeUploadFontsUrl(fonts)
+            : makeSubsetGoogleFontsUrl(fonts);
+        const $addedFont = jQuery("<link>").attr({
+          href,
+          type: "text/css",
+          rel: "stylesheet"
+        });
+
+        jQuery("head", document).append($addedFont);
+        jQuery("head", parentDocument).append($addedFont.clone());
+      });
     }
   });
 }
 
-function handleAddExtraFont(config, store, action, done) {
-  const { document, parentDocument } = config;
-  const addedFonts = action.meta.addedFonts;
-
-  if (addedFonts.length === 0) {
-    return;
-  }
-
-  const $addedFont = jQuery("<link>").attr({
-    href: makeFontsUrl(addedFonts),
-    type: "text/css",
-    rel: "stylesheet"
-  });
-
-  jQuery("#brz-rich-text-font-families").append(
-    makeRichTextFontFamiliesCSS(addedFonts)
-  );
-
-  jQuery("head", document).append($addedFont);
-  jQuery("head", parentDocument).append($addedFont.clone());
-
-  done();
-}
-
-function handleStylesChange(config, store, action, done) {
-  done();
-
-  const { mergedFontStyles, colorPalette } = currentStyleSelector(
-    store.getState()
-  );
-
-  jQuery("#brz-rich-text-font-styles").html(
-    makeRichTextFontStylesCSS(mergedFontStyles)
-  );
-
-  jQuery("#brz-rich-text-colors").html(
-    makeRichTextColorPaletteCSS(colorPalette)
-  );
-}
-
-function handleDeviceModeChange(config, store, action, done) {
-  done();
-
-  const { document, parentDocument } = config;
-  const mode = action.value;
-
-  const blocksIframe = parentDocument.getElementById("brz-ed-iframe");
-  const oldIframeClassName = blocksIframe.className;
-  const newIframeClassName = addClass(
-    removeClass(oldIframeClassName, /^brz-ed-iframe--/),
-    `brz-ed-iframe--${mode}`
-  );
-
-  const brz = document.getElementsByClassName("brz")[0];
-  const oldBrzClassName = brz.className;
-  const newBrzClassName = addClass(
-    removeClass(oldBrzClassName, /^brz-ed--/),
-    `brz-ed--${mode}`
-  );
-
-  const scrollWidth = blocksIframe.offsetWidth - document.body.offsetWidth;
-  let iframeMaxWidth = "";
-
-  if (scrollWidth > 0 && (mode === "mobile" || mode === "tablet")) {
-    const wInPage = mode === "mobile" ? wInMobilePage : wInTabletPage;
-    const extraSpace = scrollWidth + 30; // 30 is padding
-    iframeMaxWidth = `${wInPage + extraSpace}px`;
-  }
-
-  requestAnimationFrame(() => {
-    blocksIframe.className = newIframeClassName;
-    brz.className = newBrzClassName;
-    blocksIframe.style.maxWidth = iframeMaxWidth;
-  });
-}
-
-function handleCopiedElementChange(config, store, action, done) {
-  done();
-
-  const oldCopiedStyles = localStorage.getItem("copiedStyles");
-  const newCopiedStyles = JSON.stringify(action.value);
-
-  if (oldCopiedStyles !== newCopiedStyles) {
-    localStorage.setItem("copiedStyles", newCopiedStyles);
-  }
-}
-
-function handleHistoryChange(config, store, action, done) {
-  done();
-
-  const currentGlobals = action.currentSnapshot.globals;
-  const nextGlobals = action.nextSnapshot.globals;
-
-  if (currentGlobals !== nextGlobals) {
-    const { mergedFontStyles, colorPalette } = currentStyleSelector(
-      store.getState()
-    );
+function handleStylesChange(callbacks) {
+  callbacks.onAfterNext.push(({ state }) => {
+    const { fontStyles, colorPalette } = currentStyleSelector(state);
+    const extraFontStyles = extraFontStylesSelector(state);
 
     jQuery("#brz-rich-text-font-styles").html(
-      makeRichTextFontStylesCSS(mergedFontStyles)
+      makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles])
     );
 
     jQuery("#brz-rich-text-colors").html(
       makeRichTextColorPaletteCSS(colorPalette)
     );
-  }
+  });
+}
+
+function handleDeviceModeChange(callbacks) {
+  callbacks.onAfterNext.push(({ config, action }) => {
+    const { document, parentDocument } = config;
+    const mode = action.value;
+
+    const blocksIframe = parentDocument.getElementById("brz-ed-iframe");
+    const oldIframeClassName = blocksIframe.className;
+    const newIframeClassName = addClass(
+      removeClass(oldIframeClassName, /^brz-ed-iframe--/),
+      `brz-ed-iframe--${mode}`
+    );
+
+    const brz = document.getElementsByClassName("brz")[0];
+    const oldBrzClassName = brz.className;
+    const newBrzClassName = addClass(
+      removeClass(oldBrzClassName, /^brz-ed--/),
+      `brz-ed--${mode}`
+    );
+
+    const scrollWidth = blocksIframe.offsetWidth - document.body.offsetWidth;
+    let iframeMaxWidth = "";
+
+    if (scrollWidth > 0 && (mode === "mobile" || mode === "tablet")) {
+      const wInPage = mode === "mobile" ? wInMobilePage : wInTabletPage;
+      const extraSpace = scrollWidth + 30; // 30 is padding
+      iframeMaxWidth = `${wInPage + extraSpace}px`;
+    }
+
+    requestAnimationFrame(() => {
+      blocksIframe.className = newIframeClassName;
+      brz.className = newBrzClassName;
+      blocksIframe.style.maxWidth = iframeMaxWidth;
+    });
+  });
+}
+
+function handleCopiedElementChange(callbacks) {
+  callbacks.onAfterNext.push(({ action }) => {
+    const oldCopiedStyles = localStorage.getItem("copiedStyles");
+    const newCopiedStyles = JSON.stringify(action.value);
+
+    if (oldCopiedStyles !== newCopiedStyles) {
+      localStorage.setItem("copiedStyles", newCopiedStyles);
+    }
+  });
+}
+
+function handleHistoryChange(callbacks) {
+  callbacks.onAfterNext.push(({ state, action }) => {
+    const currentStyleId = action.currentSnapshot.currentStyleId;
+    const nextStyleId = action.nextSnapshot.currentStyleId;
+    const currentStyle = action.currentSnapshot.currentStyle;
+    const nextStyle = action.nextSnapshot.currentStyle;
+    const currentExtraFontStyle = action.currentSnapshot.extraFontStyles;
+    const nextExtraFontStyle = action.nextSnapshot.extraFontStyles;
+
+    if (
+      currentStyleId !== nextStyleId ||
+      currentStyle !== nextStyle ||
+      currentExtraFontStyle !== nextExtraFontStyle
+    ) {
+      const { fontStyles, colorPalette } = currentStyleSelector(state);
+      const extraFontStyles = extraFontStylesSelector(state);
+
+      jQuery("#brz-rich-text-font-styles").html(
+        makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles])
+      );
+
+      jQuery("#brz-rich-text-colors").html(
+        makeRichTextColorPaletteCSS(colorPalette)
+      );
+    }
+  });
 }
 
 function handleBeforeUnload(e) {
   e.preventDefault();
   e.returnValue = "Do you really want to close?";
+}
+
+function diffFonts(oldFonts, fonts) {
+  return Object.entries(fonts).reduce((acc, [type, { data }]) => {
+    const oldFont = oldFonts[type];
+
+    if (!oldFont) {
+      return [...acc, { type, fonts: data }];
+    }
+
+    if (oldFont.data !== data) {
+      return [...acc, { type, fonts: _.difference(data, oldFont.data) }];
+    }
+
+    return acc;
+  }, []);
 }

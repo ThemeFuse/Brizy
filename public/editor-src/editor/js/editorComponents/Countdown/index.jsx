@@ -7,8 +7,9 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
-import { getTime, getServerTimestamp, formatDate, getLanguage } from "./utils";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
+import { getTime, formatDate, getLanguage } from "./utils";
 import BoxResizer from "visual/component/BoxResizer";
 
 // lib
@@ -55,7 +56,7 @@ class Countdown extends EditorComponent {
     const v = this.getValue();
 
     if (!v.date) {
-      const current = new Date(getServerTimestamp());
+      const current = new Date();
       const after30days = new Date(current.setDate(current.getDate() + 30));
 
       this.patchValue({ date: formatDate(after30days, "d/m/Y") });
@@ -97,10 +98,9 @@ class Countdown extends EditorComponent {
 
     const timeZoneOffset = -timeZone * 60 * 1000;
     const currentLanguage = getLanguage(language);
-    const serverTimeStamp = getServerTimestamp();
 
     jQuery(this.countdown).countdown({
-      now: serverTimeStamp,
+      now: Date.now(),
       endDate: this.endDate,
       timeZoneOffset: timeZoneOffset,
       tickInterval: 1000,
@@ -127,24 +127,26 @@ class Countdown extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
-      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
-      _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
-    ]);
+  renderForEdit(v, vs, vd) {
+    const className = classnames(
+      "brz-countdown",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
 
     const { timeZone, language } = v;
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div
             ref={el => {
               this.countdown = el;
             }}
-            className={styleClassName(v)}
-            style={styleCSSVars(v)}
+            className={className}
             data-end={this.endDate}
             data-timezone={timeZone}
             data-language={language}

@@ -13,13 +13,15 @@ import {
 import {
   toolbarDisabledShowOnTablet,
   toolbarDisabledShowOnMobile,
-  toolbarBoxShadowHexAndOpacity,
-  toolbarBoxShadowPalette,
-  toolbarBoxShadowFields,
-  toolbarBoxShadowBlur,
-  toolbarBoxShadowSpread,
-  toolbarBoxShadowVertical,
-  toolbarBoxShadowHorizontal
+  toolbarBgColor2,
+  toolbarBgColorHexField2,
+  toolbarColor2,
+  toolbarColorHexField2,
+  toolbarBoxShadow2,
+  toolbarBoxShadowHexField2,
+  toolbarBoxShadowFields2,
+  toolbarBorder2,
+  toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
@@ -27,6 +29,7 @@ import { t } from "visual/utils/i18n";
 const subMenuKeys = {
   fontStyle: "subMenuFontStyle",
   fontFamily: "subMenuFontFamily",
+  fontFamilyType: "subMenuFontFamilyType",
   fontSize: "subMenuFontSize",
   fontWeight: "subMenuFontWeight",
   letterSpacing: "subMenuLetterSpacing",
@@ -51,6 +54,7 @@ const mobileSubMenuKeys = {
 const mMenuKeys = {
   fontStyle: "mMenuFontStyle",
   fontFamily: "mMenuFontFamily",
+  fontFamilyType: "mMenuFontFamilyType",
   fontSize: "mMenuFontSize",
   fontWeight: "mMenuFontWeight",
   letterSpacing: "mMenuLetterSpacing",
@@ -110,18 +114,6 @@ const getMMenuToolbarColor = v => {
     defaultValueValue({ v, key: "mMenuColorHex", device }),
     defaultValueValue({ v, key: "mMenuColorPalette", device })
   );
-  const { hex: mMenuHoverColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "mMenuHoverColorHex", device }),
-    defaultValueValue({ v, key: "mMenuHoverColorPalette", device })
-  );
-  const { hex: mMenuBgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "mMenuBgColorHex", device }),
-    defaultValueValue({ v, key: "mMenuBgColorPalette", device })
-  );
-  const { hex: mMenuBorderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "mMenuBorderColorHex", device }),
-    defaultValueValue({ v, key: "mMenuBorderColorPalette", device })
-  );
 
   return [
     {
@@ -154,65 +146,14 @@ const getMMenuToolbarColor = v => {
                     {
                       label: t("Text"),
                       options: [
-                        {
-                          id: "mMenuColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: mMenuColorHex,
-                            opacity: v.mMenuColorOpacity
-                          },
-                          onChange: ({
-                            hex,
-                            opacity,
-                            isChanged,
-                            opacityDragEnd
-                          }) => {
-                            opacity =
-                              hex !== v.mMenuColorHex &&
-                              v.mMenuColorOpacity == 0
-                                ? v.mMenuTempColorOpacity
-                                : opacity;
-
-                            return {
-                              mMenuColorHex: hex,
-                              mMenuColorOpacity: opacity,
-                              mMenuColorPalette:
-                                isChanged === "hex" ? "" : v.mMenuColorPalette,
-
-                              // Temporary Value changes
-                              mMenuTempColorOpacity:
-                                opacity > 0 && opacityDragEnd
-                                  ? opacity
-                                  : v.mMenuTempColorOpacity,
-
-                              // Normal + Hover Sync
-                              mMenuHoverColorHex:
-                                v.mMenuColorHex === v.mMenuHoverColorHex
-                                  ? hex
-                                  : v.mMenuHoverColorHex,
-
-                              mMenuHoverColorOpacity:
-                                v.mMenuColorOpacity === v.mMenuHoverColorOpacity
-                                  ? opacity
-                                  : v.mMenuHoverColorOpacity
-                            };
-                          }
-                        },
-                        {
-                          id: "mMenuColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.mMenuColorPalette,
-                          onChange: mMenuColorPalette => ({
-                            mMenuColorPalette,
-
-                            mMenuColorOpacity:
-                              v.mMenuColorOpacity === 0
-                                ? v.mMenuTempColorOpacity
-                                : v.mMenuColorOpacity
-                          })
-                        },
+                        toolbarColor2({
+                          v,
+                          device,
+                          prefix: "mMenuColor",
+                          state: "normal",
+                          onChangeHex: ["onChangeColorHexMMenu2"],
+                          onChangePalette: ["onChangeColorPaletteMMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
@@ -220,23 +161,13 @@ const getMMenuToolbarColor = v => {
                             {
                               width: 100,
                               options: [
-                                {
-                                  id: "mMenuColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: mMenuColorHex,
-                                    opacity: v.mMenuColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    mMenuColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.mMenuColorPalette,
-                                    mMenuColorHex: hex,
-                                    mMenuColorOpacity: opacity
-                                  })
-                                }
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "mMenuColor",
+                                  state: "normal",
+                                  onChange: ["onChangeColorFieldsMMenu2"]
+                                })
                               ]
                             }
                           ]
@@ -246,80 +177,29 @@ const getMMenuToolbarColor = v => {
                     {
                       label: t("Background"),
                       options: [
-                        {
-                          id: "mMenuBgColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: mMenuBgColorHex,
-                            opacity: v.mMenuBgColorOpacity
-                          },
-                          onChange: ({
-                            hex,
-                            opacity,
-                            isChanged,
-                            opacityDragEnd
-                          }) => {
-                            opacity =
-                              hex !== v.mMenuBgColorHex &&
-                              v.mMenuBgColorOpacity == 0
-                                ? v.mMenuTempBgColorOpacity
-                                : opacity;
-
-                            return {
-                              mMenuBgColorHex: hex,
-                              mMenuBgColorOpacity: opacity,
-                              mMenuBgColorPalette:
-                                isChanged === "hex"
-                                  ? ""
-                                  : v.mMenuBgColorPalette,
-
-                              // Temporary Value changes
-                              mMenuTempBgColorOpacity:
-                                opacity > 0 && opacityDragEnd
-                                  ? opacity
-                                  : v.mMenuTempBgColorOpacity
-                            };
-                          }
-                        },
-                        {
-                          id: "mMenuBgColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.mMenuBgColorPalette,
-                          onChange: mMenuBgColorPalette => ({
-                            mMenuBgColorPalette,
-
-                            mMenuBgColorOpacity:
-                              v.mMenuBgColorOpacity === 0
-                                ? v.mMenuTempBgColorOpacity
-                                : v.mMenuBgColorOpacity
-                          })
-                        },
+                        toolbarBgColor2({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "mMenuBg",
+                          showSelect: false,
+                          onChangeHex: ["onChangeBgColorHexMMenu2"],
+                          onChangePalette: ["onChangeBgColorPaletteMMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
                           columns: [
                             {
-                              width: 100,
+                              width: 30,
                               options: [
-                                {
-                                  id: "mMenuBgColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: mMenuBgColorHex,
-                                    opacity: v.mMenuBgColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    mMenuBgColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.mMenuBgColorPalette,
-                                    mMenuBgColorHex: hex,
-                                    mMenuBgColorOpacity: opacity
-                                  })
-                                }
+                                toolbarBgColorHexField2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  prefix: "mMenuBg",
+                                  onChange: ["onChangeBgColorFieldsMMenu2"]
+                                })
                               ]
                             }
                           ]
@@ -329,81 +209,29 @@ const getMMenuToolbarColor = v => {
                     {
                       label: t("Border"),
                       options: [
-                        {
-                          id: "mMenuBorderColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: mMenuBorderColorHex,
-                            opacity: v.mMenuBorderColorOpacity
-                          },
-                          onChange: ({
-                            hex,
-                            opacity,
-                            isChanged,
-                            opacityDragEnd
-                          }) => {
-                            opacity =
-                              hex !== v.mMenuBorderColorHex &&
-                              v.mMenuBorderColorOpacity == 0
-                                ? v.mMenuTempBorderColorOpacity
-                                : opacity;
-
-                            return {
-                              mMenuBorderColorHex: hex,
-                              mMenuBorderColorOpacity: opacity,
-                              mMenuBorderColorPalette:
-                                isChanged === "hex"
-                                  ? ""
-                                  : v.mMenuBorderColorPalette,
-
-                              // Temporary Value changes
-                              mMenuTempBorderColorOpacity:
-                                opacity > 0 && opacityDragEnd
-                                  ? opacity
-                                  : v.mMenuTempBorderColorOpacity
-                            };
-                          }
-                        },
-                        {
-                          id: "mMenuBorderColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.mMenuBorderColorPalette,
-                          onChange: mMenuBorderColorPalette => ({
-                            mMenuBorderColorPalette,
-
-                            mMenuBorderColorOpacity:
-                              v.mMenuBorderColorOpacity === 0
-                                ? v.mMenuTempBorderColorOpacity
-                                : v.mMenuBorderColorOpacity
-                          })
-                        },
+                        toolbarBorder2({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "mMenuBorder",
+                          showSelect: false,
+                          onChangeHex: ["onChangeBorderColorHexMMenu2"],
+                          onChangePalette: ["onChangeBorderColorPaletteMMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
                           columns: [
                             {
-                              width: 100,
+                              width: 38,
                               options: [
-                                {
-                                  id: "mMenuBorderColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: mMenuBorderColorHex,
-                                    opacity: v.mMenuBorderColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    mMenuBorderColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.mMenuBorderColorPalette,
-
-                                    mMenuBorderColorHex: hex,
-                                    mMenuBorderColorOpacity: opacity
-                                  })
-                                }
+                                toolbarBorderColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "mMenuBorder",
+                                  state: "normal",
+                                  onChange: ["onChangeBorderColorFieldsMMenu2"]
+                                })
                               ]
                             }
                           ]
@@ -426,41 +254,13 @@ const getMMenuToolbarColor = v => {
                     {
                       label: t("Text"),
                       options: [
-                        {
-                          id: "mMenuHoverColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: mMenuHoverColorHex,
-                            opacity: v.mMenuHoverColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            mMenuHoverColorHex: hex,
-                            mMenuHoverColorOpacity:
-                              hex !== v.mMenuHoverColorHex &&
-                              v.mMenuHoverColorOpacity == 0
-                                ? v.mMenuTempHoverColorOpacity
-                                : opacity,
-
-                            mMenuHoverColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.mMenuHoverColorPalette
-                          })
-                        },
-                        {
-                          id: "mMenuHoverColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.mMenuHoverColorPalette,
-                          onChange: value => ({
-                            mMenuHoverColorPalette: value,
-                            mMenuHoverColorOpacity:
-                              v.mMenuHoverColorOpacity === 0
-                                ? v.mMenuTempHoverColorOpacity
-                                : v.mMenuHoverColorOpacity
-                          })
-                        },
+                        toolbarColor2({
+                          v,
+                          device,
+                          prefix: "mMenuHoverColor",
+                          onChangeHex: ["onChangeHoverColorHexMMenu2"],
+                          onChangePalette: ["onChangeHoverColorPaletteMMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
@@ -468,23 +268,12 @@ const getMMenuToolbarColor = v => {
                             {
                               width: 100,
                               options: [
-                                {
-                                  id: "mMenuHoverColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: mMenuHoverColorHex,
-                                    opacity: v.mMenuHoverColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    mMenuHoverColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.mMenuHoverColorPalette,
-                                    mMenuHoverColorHex: hex,
-                                    mMenuHoverColorOpacity: opacity
-                                  })
-                                }
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "mMenuHoverColor",
+                                  onChange: ["onChangeHoverColorFieldsMMenu2"]
+                                })
                               ]
                             }
                           ]
@@ -511,6 +300,7 @@ const getMMenuToolbar = v => {
   const {
     mMenuFontSize,
     mMenuFontFamily,
+    mMenuFontFamilyType,
     mMenuFontWeight,
     mMenuLineHeight,
     mMenuLetterSpacing
@@ -606,17 +396,17 @@ const getMMenuToolbar = v => {
                   label: t("Font Family"),
                   type: "fontFamily",
                   value: mMenuFontFamily,
-                  onChange: ({ id }) => {
-                    return onChangeCustomTypography(
+                  onChange: ({ id, weights, type }) =>
+                    onChangeCustomTypography(
                       v,
                       {
                         fontFamily: id,
-                        fontWeight: getWeight(mMenuFontWeight, id)
+                        fontFamilyType: type,
+                        fontWeight: getWeight(mMenuFontWeight, weights)
                       },
                       onChangeTypography,
                       mMenuKeys
-                    );
-                  }
+                    )
                 }
               ]
             },
@@ -700,7 +490,10 @@ const getMMenuToolbar = v => {
                           label: t("Weight"),
                           type: "select",
                           display: "block",
-                          choices: getWeightChoices(mMenuFontFamily),
+                          choices: getWeightChoices({
+                            family: mMenuFontFamily,
+                            type: mMenuFontFamilyType
+                          }),
                           value: mMenuFontWeight,
                           onChange: fontWeight => {
                             return onChangeCustomTypography(
@@ -770,13 +563,20 @@ const getToolbar = v => {
   const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
-  const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
-    fontStyle === "" ? v : getFontStyle(fontStyle);
+  const {
+    fontSize,
+    fontFamily,
+    fontFamilyType,
+    fontWeight,
+    lineHeight,
+    letterSpacing
+  } = fontStyle === "" ? v : getFontStyle(fontStyle);
 
   const subMenuFontStyle = v.subMenuFontStyle;
   const {
     subMenuFontSize,
     subMenuFontFamily,
+    subMenuFontFamilyType,
     subMenuFontWeight,
     subMenuLineHeight,
     subMenuLetterSpacing
@@ -790,33 +590,9 @@ const getToolbar = v => {
     defaultValueValue({ v, key: "colorHex", device }),
     defaultValueValue({ v, key: "colorPalette", device })
   );
-  const { hex: hoverColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "hoverColorHex", device }),
-    defaultValueValue({ v, key: "hoverColorPalette", device })
-  );
   const { hex: subMenuColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "subMenuColorHex", device }),
     defaultValueValue({ v, key: "subMenuColorPalette", device })
-  );
-  const { hex: subMenuHoverColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "subMenuHoverColorHex", device }),
-    defaultValueValue({ v, key: "subMenuHoverColorPalette", device })
-  );
-  const { hex: subMenuBgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "subMenuBgColorHex", device }),
-    defaultValueValue({ v, key: "subMenuBgColorPalette", device })
-  );
-  const { hex: subMenuHoverBgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "subMenuHoverBgColorHex", device }),
-    defaultValueValue({ v, key: "subMenuHoverBgColorPalette", device })
-  );
-  const { hex: subMenuBorderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "subMenuBorderColorHex", device }),
-    defaultValueValue({ v, key: "subMenuBorderColorPalette", device })
-  );
-  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "boxShadowColorHex", device }),
-    defaultValueValue({ v, key: "boxShadowColorPalette", device })
   );
 
   return [
@@ -974,9 +750,13 @@ const getToolbar = v => {
                   label: t("Font Family"),
                   type: "fontFamily",
                   value: fontFamily,
-                  onChange: ({ id }) => {
+                  onChange: ({ id, weights, type }) => {
                     return onChangeTypography(
-                      { fontFamily: id, fontWeight: getWeight(fontWeight, id) },
+                      {
+                        fontFamily: id,
+                        fontFamilyType: type,
+                        fontWeight: getWeight(fontWeight, weights)
+                      },
                       v
                     );
                   }
@@ -1059,7 +839,10 @@ const getToolbar = v => {
                           label: t("Weight"),
                           type: "select",
                           display: "block",
-                          choices: getWeightChoices(fontFamily),
+                          choices: getWeightChoices({
+                            family: fontFamily,
+                            type: fontFamilyType
+                          }),
                           value: fontWeight,
                           onChange: newFontWeight => {
                             return onChangeTypography(
@@ -1115,12 +898,13 @@ const getToolbar = v => {
                   label: t("Font Family"),
                   type: "fontFamily",
                   value: subMenuFontFamily,
-                  onChange: ({ id }) => {
+                  onChange: ({ id, weights, type }) => {
                     return onChangeCustomTypography(
                       v,
                       {
                         fontFamily: id,
-                        fontWeight: getWeight(subMenuFontWeight, id)
+                        fontFamilyType: type,
+                        fontWeight: getWeight(subMenuFontWeight, weights)
                       },
                       onChangeTypography,
                       subMenuKeys
@@ -1221,7 +1005,10 @@ const getToolbar = v => {
                           label: t("Weight"),
                           type: "select",
                           display: "block",
-                          choices: getWeightChoices(subMenuFontFamily),
+                          choices: getWeightChoices({
+                            family: subMenuFontFamily,
+                            type: subMenuFontFamilyType
+                          }),
                           value: subMenuFontWeight,
                           onChange: fontWeight => {
                             return onChangeCustomTypography(
@@ -1290,70 +1077,13 @@ const getToolbar = v => {
                     {
                       label: t("Text"),
                       options: [
-                        {
-                          id: "color",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: colorHex,
-                            opacity: v.colorOpacity
-                          },
-                          onChange: ({
-                            hex,
-                            opacity,
-                            isChanged,
-                            opacityDragEnd
-                          }) => {
-                            opacity =
-                              hex !== v.colorHex && v.colorOpacity === 0
-                                ? v.tempColorOpacity
-                                : opacity;
-
-                            return {
-                              colorHex: hex,
-                              colorOpacity: opacity,
-                              colorPalette:
-                                isChanged === "hex" ? "" : v.colorPalette,
-
-                              // Temporary Value changes
-                              tempColorOpacity:
-                                opacity > 0 && opacityDragEnd
-                                  ? opacity
-                                  : v.tempColorOpacity,
-
-                              // Normal + Hover Sync
-                              hoverColorHex:
-                                v.colorHex === v.hoverColorHex
-                                  ? hex
-                                  : v.hoverColorHex,
-
-                              hoverColorOpacity:
-                                v.colorOpacity === v.hoverColorOpacity
-                                  ? opacity
-                                  : v.hoverColorOpacity
-                            };
-                          }
-                        },
-                        {
-                          id: "colorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.colorPalette,
-                          onChange: colorPalette => ({
-                            colorPalette,
-
-                            colorOpacity:
-                              v.colorOpacity === 0
-                                ? v.tempColorOpacity
-                                : v.colorOpacity,
-
-                            // Normal + Hover Sync
-                            hoverColorPalette:
-                              v.colorPalette === v.hoverColorPalette
-                                ? colorPalette
-                                : v.hoverColorPalette
-                          })
-                        },
+                        toolbarColor2({
+                          v,
+                          device,
+                          state: "normal",
+                          onChangeHex: ["onChangeMenuColorHex2"],
+                          onChangePalette: ["onChangeMenuColorPalette2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
@@ -1361,32 +1091,12 @@ const getToolbar = v => {
                             {
                               width: 100,
                               options: [
-                                {
-                                  id: "colorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: colorHex,
-                                    opacity: v.colorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    colorPalette:
-                                      isChanged === "hex" ? "" : v.colorPalette,
-                                    colorHex: hex,
-                                    colorOpacity: opacity,
-
-                                    // Normal + Hover Sync
-                                    hoverColorHex:
-                                      v.colorHex === v.hoverColorHex
-                                        ? hex
-                                        : v.hoverColorHex,
-
-                                    hoverColorOpacity:
-                                      v.colorOpacity === v.hoverColorOpacity
-                                        ? opacity
-                                        : v.hoverColorOpacity
-                                  })
-                                }
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  onChange: ["onChangeMenuColorFields2"]
+                                })
                               ]
                             }
                           ]
@@ -1409,38 +1119,13 @@ const getToolbar = v => {
                     {
                       label: t("Text"),
                       options: [
-                        {
-                          id: "hoverColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: hoverColorHex,
-                            opacity: v.hoverColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            hoverColorHex: hex,
-                            hoverColorOpacity:
-                              hex !== v.hoverColorHex &&
-                              v.hoverColorOpacity === 0
-                                ? v.tempHoverColorOpacity
-                                : opacity,
-                            hoverColorPalette:
-                              isChanged === "hex" ? "" : v.hoverColorPalette
-                          })
-                        },
-                        {
-                          id: "hoverColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.hoverColorPalette,
-                          onChange: value => ({
-                            hoverColorPalette: value,
-                            hoverColorOpacity:
-                              v.hoverColorOpacity === 0
-                                ? v.tempHoverColorOpacity
-                                : v.hoverColorOpacity
-                          })
-                        },
+                        toolbarColor2({
+                          v,
+                          device,
+                          state: "hover",
+                          onChangeHex: ["onChangeMenuHoverColorHex2"],
+                          onChangePalette: ["onChangeMenuHoverColorPalette2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
@@ -1448,23 +1133,12 @@ const getToolbar = v => {
                             {
                               width: 100,
                               options: [
-                                {
-                                  id: "hoverColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: hoverColorHex,
-                                    opacity: v.hoverColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    hoverColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.hoverColorPalette,
-                                    hoverColorHex: hex,
-                                    hoverColorOpacity: opacity
-                                  })
-                                }
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  onChange: ["onChangeMenuHoverColorFields2"]
+                                })
                               ]
                             }
                           ]
@@ -1508,108 +1182,13 @@ const getToolbar = v => {
                     {
                       label: t("Text"),
                       options: [
-                        {
-                          id: "subMenuColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: subMenuColorHex,
-                            opacity: v.subMenuColorOpacity
-                          },
-                          onChange: ({
-                            hex,
-                            opacity,
-                            isChanged,
-                            opacityDragEnd
-                          }) => {
-                            opacity =
-                              hex !== v.subMenuColorHex &&
-                              v.subMenuColorOpacity === 0
-                                ? v.subMenuTempColorOpacity
-                                : opacity;
-
-                            return {
-                              subMenuColorHex: hex,
-                              subMenuColorOpacity: opacity,
-                              subMenuColorPalette:
-                                isChanged === "hex"
-                                  ? ""
-                                  : v.subMenuColorPalette,
-
-                              // Temporary Value changes
-                              subMenuTempColorOpacity:
-                                opacity > 0 && opacityDragEnd
-                                  ? opacity
-                                  : v.subMenuTempColorOpacity,
-
-                              // Normal + Hover Sync
-                              subMenuHoverColorHex:
-                                v.subMenuColorHex === v.subMenuHoverColorHex
-                                  ? hex
-                                  : v.subMenuHoverColorHex,
-
-                              subMenuHoverColorOpacity:
-                                v.subMenuColorOpacity ===
-                                v.subMenuHoverColorOpacity
-                                  ? opacity
-                                  : v.subMenuHoverColorOpacity,
-
-                              // Sync MMenu
-                              mMenuColorHex:
-                                v.subMenuColorHex === v.mMenuColorHex
-                                  ? hex
-                                  : v.mMenuColorHex,
-                              mMenuColorOpacity:
-                                v.subMenuColorOpacity === v.mMenuColorOpacity
-                                  ? opacity
-                                  : v.mMenuColorOpacity,
-
-                              // MMenu + Hover Sync
-                              mMenuHoverColorHex:
-                                v.subMenuColorHex === v.mMenuHoverColorHex
-                                  ? hex
-                                  : v.mMenuHoverColorHex,
-
-                              mMenuHoverColorOpacity:
-                                v.subMenuColorOpacity ===
-                                v.mMenuHoverColorOpacity
-                                  ? opacity
-                                  : v.mMenuHoverColorOpacity
-                            };
-                          }
-                        },
-                        {
-                          id: "subMenuColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.subMenuColorPalette,
-                          onChange: subMenuColorPalette => ({
-                            subMenuColorPalette,
-
-                            subMenuColorOpacity:
-                              v.subMenuColorOpacity === 0
-                                ? v.subMenuTempColorOpacity
-                                : v.subMenuColorOpacity,
-
-                            // Normal + Hover Sync
-                            subMenuHoverColorPalette:
-                              v.subMenuColorPalette ===
-                              v.subMenuHoverColorPalette
-                                ? subMenuColorPalette
-                                : v.subMenuHoverColorPalette,
-
-                            // Sync MMenu
-                            mMenuColorPalette:
-                              v.subMenuColorPalette === v.mMenuColorPalette
-                                ? subMenuColorPalette
-                                : v.mMenuColorPalette,
-
-                            mMenuHoverColorPalette:
-                              v.subMenuColorPalette === v.mMenuHoverColorPalette
-                                ? subMenuColorPalette
-                                : v.mMenuHoverColorPalette
-                          })
-                        },
+                        toolbarColor2({
+                          v,
+                          device,
+                          prefix: "subMenuColor",
+                          onChangeHex: ["onChangeColorHexSubMenu2"],
+                          onChangePalette: ["onChangeColorPaletteSubMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
@@ -1617,59 +1196,12 @@ const getToolbar = v => {
                             {
                               width: 100,
                               options: [
-                                {
-                                  id: "subMenuColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: subMenuColorHex,
-                                    opacity: v.subMenuColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    subMenuColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.subMenuColorPalette,
-                                    subMenuColorHex: hex,
-                                    subMenuColorOpacity: opacity,
-
-                                    // Normal + Hover Sync
-                                    subMenuHoverColorHex:
-                                      v.subMenuColorHex ===
-                                      v.subMenuHoverColorHex
-                                        ? hex
-                                        : v.subMenuHoverColorHex,
-
-                                    subMenuHoverColorOpacity:
-                                      v.subMenuColorOpacity ===
-                                      v.subMenuHoverColorOpacity
-                                        ? hex
-                                        : v.subMenuHoverColorOpacity,
-
-                                    // Sync MMenu
-                                    mMenuColorHex:
-                                      v.subMenuColorHex === v.mMenuColorHex
-                                        ? hex
-                                        : v.mMenuBgColorHex,
-                                    mMenuColorOpacity:
-                                      v.subMenuColorOpacity ===
-                                      v.mMenuColorOpacity
-                                        ? opacity
-                                        : v.mMenuColorOpacity,
-
-                                    // MMenu + Hover Sync
-                                    mMenuHoverColorHex:
-                                      v.subMenuColorHex === v.mMenuHoverColorHex
-                                        ? hex
-                                        : v.mMenuHoverColorHex,
-
-                                    mMenuHoverColorOpacity:
-                                      v.subMenuColorOpacity ===
-                                      v.mMenuHoverColorOpacity
-                                        ? opacity
-                                        : v.mMenuHoverColorOpacity
-                                  })
-                                }
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "subMenuColor",
+                                  onChange: ["onChangeColorFieldsSubMenu2"]
+                                })
                               ]
                             }
                           ]
@@ -1677,141 +1209,31 @@ const getToolbar = v => {
                       ]
                     },
                     {
-                      label: t("Background"),
+                      label: t("Bg"),
                       options: [
-                        {
-                          id: "subMenuBgColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: subMenuBgColorHex,
-                            opacity: v.subMenuBgColorOpacity
-                          },
-                          onChange: ({
-                            hex,
-                            opacity,
-                            isChanged,
-                            opacityDragEnd
-                          }) => {
-                            opacity =
-                              hex !== v.subMenuBgColorHex &&
-                              v.subMenuBgColorOpacity === 0
-                                ? v.subMenuTempBgColorOpacity
-                                : opacity;
-
-                            return {
-                              subMenuBgColorHex: hex,
-                              subMenuBgColorOpacity: opacity,
-                              subMenuBgColorPalette:
-                                isChanged === "hex"
-                                  ? ""
-                                  : v.subMenuBgColorPalette,
-
-                              // Temporary Value chnges
-                              subMenuTempBgColorOpacity:
-                                opacity > 0 && opacityDragEnd
-                                  ? opacity
-                                  : v.subMenuTempBgColorOpacity,
-
-                              // Normal + Hover Sync
-                              subMenuHoverBgColorHex:
-                                v.subMenuBgColorHex === v.subMenuHoverBgColorHex
-                                  ? hex
-                                  : v.subMenuHoverBgColorHex,
-
-                              subMenuHoverBgColorOpacity:
-                                v.subMenuBgColorOpacity ===
-                                v.subMenuHoverBgColorOpacity
-                                  ? hex
-                                  : v.subMenuHoverBgColorOpacity,
-
-                              // Sync MMenu
-                              mMenuBgColorHex:
-                                v.subMenuBgColorHex === v.mMenuBgColorHex
-                                  ? hex
-                                  : v.mMenuBgColorHex,
-                              mMenuBgColorOpacity:
-                                v.subMenuBgColorOpacity ===
-                                v.mMenuBgColorOpacity
-                                  ? opacity
-                                  : v.mMenuBgColorOpacity
-                            };
-                          }
-                        },
-                        {
-                          id: "subMenuBgColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.subMenuBgColorPalette,
-                          onChange: subMenuBgColorPalette => ({
-                            subMenuBgColorPalette,
-
-                            subMenuBgColorOpacity:
-                              v.subMenuBgColorOpacity === 0
-                                ? v.subMenuTempBgColorOpacity
-                                : v.subMenuBgColorOpacity,
-
-                            // Normal + Hover Sync
-                            subMenuHoverBgColorPalette:
-                              v.subMenuBgColorPalette ===
-                              v.subMenuHoverBgColorPalette
-                                ? subMenuBgColorPalette
-                                : v.subMenuHoverBgColorPalette,
-
-                            // Sync MMenu
-                            mMenuBgColorPalette:
-                              v.subMenuBgColorPalette === v.mMenuBgColorPalette
-                                ? subMenuBgColorPalette
-                                : v.mMenuBgColorPalette
-                          })
-                        },
+                        toolbarBgColor2({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "subMenuBg",
+                          showSelect: false,
+                          onChangeHex: ["onChangeBgColorHexSubMenu2"],
+                          onChangePalette: ["onChangeBgColorPaletteSubMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
                           columns: [
                             {
-                              width: 100,
+                              width: 30,
                               options: [
-                                {
-                                  id: "subMenuBgColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: subMenuBgColorHex,
-                                    opacity: v.subMenuBgColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    subMenuBgColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.subMenuBgColorPalette,
-                                    subMenuBgColorHex: hex,
-                                    subMenuBgColorOpacity: opacity,
-
-                                    subMenuHoverBgColorHex:
-                                      v.subMenuBgColorHex ===
-                                      v.subMenuHoverBgColorHex
-                                        ? hex
-                                        : v.subMenuHoverBgColorHex,
-
-                                    subMenuHoverBgColorOpacity:
-                                      v.subMenuBgColorOpacity ===
-                                      v.subMenuHoverBgColorOpacity
-                                        ? hex
-                                        : v.subMenuHoverBgColorOpacity,
-
-                                    // Sync MMenu
-                                    mMenuBgColorHex:
-                                      v.subMenuBgColorHex === v.mMenuBgColorHex
-                                        ? hex
-                                        : v.mMenuBgColorHex,
-                                    mMenuBgColorOpacity:
-                                      v.subMenuBgColorOpacity ===
-                                      v.mMenuBgColorOpacity
-                                        ? opacity
-                                        : v.mMenuBgColorOpacity
-                                  })
-                                }
+                                toolbarBgColorHexField2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  prefix: "subMenuBg",
+                                  onChange: ["onChangeBgColorFieldsSubMenu2"]
+                                })
                               ]
                             }
                           ]
@@ -1821,111 +1243,95 @@ const getToolbar = v => {
                     {
                       label: t("Border"),
                       options: [
-                        {
-                          id: "subMenuBorderColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: subMenuBorderColorHex,
-                            opacity: v.subMenuBorderColorOpacity
-                          },
-                          onChange: ({
-                            hex,
-                            opacity,
-                            isChanged,
-                            opacityDragEnd
-                          }) => {
-                            opacity =
-                              hex !== v.subMenuBorderColorHex &&
-                              v.subMenuBorderColorOpacity === 0
-                                ? v.subMenuTempBorderColorOpacity
-                                : opacity;
-
-                            return {
-                              subMenuBorderColorHex: hex,
-                              subMenuBorderColorOpacity: opacity,
-                              subMenuBorderColorPalette:
-                                isChanged === "hex"
-                                  ? ""
-                                  : v.subMenuBorderColorPalette,
-
-                              // Temporary Value chnges
-                              subMenuTempBorderColorOpacity:
-                                opacity > 0 && opacityDragEnd
-                                  ? opacity
-                                  : v.subMenuTempBorderColorOpacity,
-
-                              // Sync MMenu
-                              mMenuBorderColorHex:
-                                v.subMenuBorderColorHex ===
-                                v.mMenuBorderColorHex
-                                  ? hex
-                                  : v.mMenuBorderColorHex,
-                              mMenuBorderColorOpacity:
-                                v.subMenuBorderColorOpacity ===
-                                v.mMenuBorderColorOpacity
-                                  ? opacity
-                                  : v.mMenuBorderColorOpacity
-                            };
-                          }
-                        },
-                        {
-                          id: "subMenuBorderColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.subMenuBorderColorPalette,
-                          onChange: subMenuBorderColorPalette => ({
-                            subMenuBorderColorPalette,
-
-                            subMenuBorderColorOpacity:
-                              v.subMenuBorderColorOpacity === 0
-                                ? v.subMenuTempBorderColorOpacity
-                                : v.subMenuBorderColorOpacity,
-
-                            // Sync MMenu
-                            mMenuBorderColorPalette:
-                              v.subMenuBorderColorPalette ===
-                              v.mMenuBorderColorPalette
-                                ? subMenuBorderColorPalette
-                                : v.mMenuBorderColorPalette
-                          })
-                        },
+                        toolbarBorder2({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "subMenuBorder",
+                          showSelect: false,
+                          onChangeHex: ["onChangeBorderColorHexSubMenu2"],
+                          onChangePalette: [
+                            "onChangeBorderColorPaletteSubMenu2"
+                          ]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
                           columns: [
                             {
-                              width: 100,
+                              width: 38,
                               options: [
-                                {
-                                  id: "subMenuBorderColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: subMenuBorderColorHex,
-                                    opacity: v.subMenuBorderColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    subMenuBorderColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.subMenuBorderColorPalette,
-                                    subMenuBorderColorHex: hex,
-                                    subMenuBorderColorOpacity: opacity,
-
-                                    // Sync MMenu
-                                    mMenuBorderColorHex:
-                                      v.subMenuBorderColorHex ===
-                                      v.mMenuBorderColorHex
-                                        ? hex
-                                        : v.mMenuBorderColorHex,
-                                    mMenuBorderColorOpacity:
-                                      v.subMenuBorderColorOpacity ===
-                                      v.mMenuBorderColorOpacity
-                                        ? opacity
-                                        : v.mMenuBorderColorOpacity
-                                  })
-                                }
+                                toolbarBorderColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "subMenuBorder",
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeBorderColorFieldsSubMenu2"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      id: "tabBoxShadow",
+                      label: t("Shadow"),
+                      options: [
+                        toolbarBoxShadow2({
+                          v,
+                          device,
+                          choices: "outline",
+                          state: "normal",
+                          onChangeType: [
+                            "onChangeBoxShadowType2",
+                            "onChangeBoxShadowTypeDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBoxShadowPalette2",
+                            "onChangeBoxShadowPaletteOpacity2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 41,
+                              options: [
+                                toolbarBoxShadowHexField2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeBoxShadowHexAndOpacity2",
+                                    "onChangeBoxShadowHexAndOpacityPalette2",
+                                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 59,
+                              options: [
+                                toolbarBoxShadowFields2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  choices: "outline",
+                                  onChange: [
+                                    "onChangeBoxShadowFields2",
+                                    "onChangeBoxShadowFieldsDependencies2"
+                                  ]
+                                })
                               ]
                             }
                           ]
@@ -1948,59 +1354,13 @@ const getToolbar = v => {
                     {
                       label: t("Text"),
                       options: [
-                        {
-                          id: "subMenuHoverColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: subMenuHoverColorHex,
-                            opacity: v.subMenuHoverColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            subMenuHoverColorHex: hex,
-                            subMenuHoverColorOpacity:
-                              hex !== v.subMenuHoverColorHex &&
-                              v.subMenuHoverColorOpacity === 0
-                                ? v.subMenuTempHoverColorOpacity
-                                : opacity,
-                            subMenuHoverColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.subMenuHoverColorPalette,
-
-                            // MMenu + Hover Sync
-                            mMenuHoverColorHex:
-                              v.subMenuHoverColorHex === v.mMenuHoverColorHex
-                                ? hex
-                                : v.mMenuHoverColorHex,
-
-                            mMenuHoverColorOpacity:
-                              v.subMenuHoverColorOpacity ===
-                              v.mMenuHoverColorOpacity
-                                ? opacity
-                                : v.mMenuHoverColorOpacity
-                          })
-                        },
-                        {
-                          id: "subMenuHoverColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.subMenuHoverColorPalette,
-                          onChange: value => ({
-                            subMenuHoverColorPalette: value,
-                            subMenuHoverColorOpacity:
-                              v.subMenuHoverColorOpacity === 0
-                                ? v.subMenuTempHoverColorOpacity
-                                : v.subMenuHoverColorOpacity,
-
-                            // MMenu Sync
-                            mMenuHoverColorPalette:
-                              v.subMenuHoverColorPalette ===
-                              v.mMenuHoverColorPalette
-                                ? value
-                                : v.mMenuHoverColorPalette
-                          })
-                        },
+                        toolbarColor2({
+                          v,
+                          device,
+                          prefix: "subMenuHoverColor",
+                          onChangeHex: ["onChangeHoverColorHexSubMenu2"],
+                          onChangePalette: ["onChangeHoverColorPaletteSubMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
@@ -2008,35 +1368,12 @@ const getToolbar = v => {
                             {
                               width: 100,
                               options: [
-                                {
-                                  id: "subMenuHoverColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: subMenuHoverColorHex,
-                                    opacity: v.subMenuHoverColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    subMenuHoverColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.subMenuHoverColorPalette,
-                                    subMenuHoverColorHex: hex,
-                                    subMenuHoverColorOpacity: opacity,
-
-                                    // Sync MMenu
-                                    mMenuHoverColorHex:
-                                      v.subMenuHoverColorHex ===
-                                      v.mMenuHoverColorHex
-                                        ? hex
-                                        : v.mMenuHoverColorHex,
-                                    mMenuHoverColorOpacity:
-                                      v.subMenuHoverColorOpacity ===
-                                      v.mMenuHoverColorOpacity
-                                        ? opacity
-                                        : v.mMenuHoverColorOpacity
-                                  })
-                                }
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "subMenuHoverColor",
+                                  onChange: ["onChangeHoverColorFieldsSubMenu2"]
+                                })
                               ]
                             }
                           ]
@@ -2046,64 +1383,94 @@ const getToolbar = v => {
                     {
                       label: t("Background"),
                       options: [
-                        {
-                          id: "subMenuHoverBgColor",
-                          type: "colorPicker",
-                          position: 10,
-                          value: {
-                            hex: subMenuHoverBgColorHex,
-                            opacity: v.subMenuHoverBgColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            subMenuHoverBgColorHex: hex,
-                            subMenuHoverBgColorOpacity:
-                              hex !== v.subMenuHoverBgColorHex &&
-                              v.subMenuHoverBgColorOpacity === 0
-                                ? v.subMenuTempHoverBgColorOpacity
-                                : opacity,
-                            subMenuHoverBgColorPalette:
-                              isChanged === "hex"
-                                ? ""
-                                : v.subMenuHoverBgColorPalette
-                          })
-                        },
-                        {
-                          id: "subMenuHoverBgColorPalette",
-                          type: "colorPalette",
-                          position: 20,
-                          value: v.subMenuHoverBgColorPalette,
-                          onChange: value => ({
-                            subMenuHoverBgColorPalette: value,
-                            subMenuHoverBgColorOpacity:
-                              v.subMenuHoverBgColorOpacity === 0
-                                ? v.subMenuTempHoverBgColorOpacity
-                                : v.subMenuHoverBgColorOpacity
-                          })
-                        },
+                        toolbarBgColor2({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "subMenuHoverBg",
+                          showSelect: false,
+                          onChangeHex: ["onChangeBgHoverColorHexSubMenu2"],
+                          onChangePalette: ["onChangeBorderColorPaletteMMenu2"]
+                        }),
                         {
                           type: "grid",
                           className: "brz-ed-grid__color-fileds",
                           columns: [
                             {
-                              width: 100,
+                              width: 30,
                               options: [
-                                {
-                                  id: "subMenuHoverBgColorFields",
-                                  type: "colorFields",
-                                  position: 30,
-                                  value: {
-                                    hex: subMenuHoverBgColorHex,
-                                    opacity: v.subMenuHoverBgColorOpacity
-                                  },
-                                  onChange: ({ hex, opacity, isChanged }) => ({
-                                    subMenuHoverBgColorPalette:
-                                      isChanged === "hex"
-                                        ? ""
-                                        : v.subMenuHoverBgColorPalette,
-                                    subMenuHoverBgColorHex: hex,
-                                    subMenuHoverBgColorOpacity: opacity
-                                  })
-                                }
+                                toolbarBgColorHexField2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  prefix: "subMenuHoverBg",
+                                  onChange: [
+                                    "onChangeBgHoverColorFieldsSubMenu2"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+
+                    {
+                      id: "tabBoxShadow",
+                      label: t("Shadow"),
+                      options: [
+                        toolbarBoxShadow2({
+                          v,
+                          device,
+                          choices: "outline",
+                          state: "hover",
+                          onChangeType: [
+                            "onChangeBoxShadowType2",
+                            "onChangeBoxShadowTypeDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBoxShadowPalette2",
+                            "onChangeBoxShadowPaletteOpacity2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 41,
+                              options: [
+                                toolbarBoxShadowHexField2({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  onChange: [
+                                    "onChangeBoxShadowHexAndOpacity2",
+                                    "onChangeBoxShadowHexAndOpacityPalette2",
+                                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 59,
+                              options: [
+                                toolbarBoxShadowFields2({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  choices: "outline",
+                                  onChange: [
+                                    "onChangeBoxShadowFields2",
+                                    "onChangeBoxShadowFieldsDependencies2"
+                                  ]
+                                })
                               ]
                             }
                           ]
@@ -2502,90 +1869,6 @@ const getToolbar = v => {
                       }
                     ]
                   }
-                },
-                {
-                  type: "multiPicker",
-                  picker: {
-                    id: "boxShadow",
-                    label: t("Shadow"),
-                    type: "switch",
-                    value: v.boxShadow
-                  },
-                  choices: {
-                    on: [
-                      {
-                        id: "boxShadowColors",
-                        type: "popover",
-                        size: "auto",
-                        label: t("Color"),
-                        title: t("Color"),
-                        icon: {
-                          style: {
-                            backgroundColor: hexToRgba(
-                              boxShadowColorHex,
-                              v.boxShadowColorOpacity
-                            )
-                          }
-                        },
-                        options: [
-                          toolbarBoxShadowHexAndOpacity({
-                            v,
-                            device,
-                            state: "normal",
-                            onChange: [
-                              "onChangeBoxShadowHexAndOpacity",
-                              "onChangeBoxShadowHexAndOpacityPalette"
-                            ]
-                          }),
-                          toolbarBoxShadowPalette({
-                            v,
-                            device,
-                            state: "normal",
-                            onChange: [
-                              "onChangeBoxShadowPalette",
-                              "onChangeBoxShadowPaletteOpacity"
-                            ]
-                          }),
-                          {
-                            type: "grid",
-                            className: "brz-ed-grid__color-fileds",
-                            columns: [
-                              {
-                                width: 100,
-                                options: [
-                                  toolbarBoxShadowFields({
-                                    v,
-                                    device,
-                                    state: "normal",
-                                    onChange: [
-                                      "onChangeBoxShadowHexAndOpacity",
-                                      "onChangeBoxShadowHexAndOpacityPalette"
-                                    ]
-                                  })
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      toolbarBoxShadowBlur({ v, device, state: "normal" }),
-                      toolbarBoxShadowSpread({
-                        v,
-                        device,
-                        state: "normal"
-                      }),
-                      toolbarBoxShadowVertical({
-                        v,
-                        device,
-                        state: "normal"
-                      }),
-                      toolbarBoxShadowHorizontal({
-                        v,
-                        device,
-                        state: "normal"
-                      })
-                    ]
-                  }
                 }
               ]
             }
@@ -2610,7 +1893,7 @@ export function getItemsForDesktop(v) {
 
 const getTabletMMenuToolbar = v => {
   const mMenuFontStyle = v.mMenuFontStyle;
-  const { mMenuFontFamily } =
+  const { mMenuFontFamily, mMenuFontFamilyType } =
     mMenuFontStyle === ""
       ? v
       : renameKeys(mMenuKeys, getFontStyle(mMenuFontStyle));
@@ -2759,7 +2042,10 @@ const getTabletMMenuToolbar = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(mMenuFontFamily),
+                  choices: getWeightChoices({
+                    family: mMenuFontFamily,
+                    type: mMenuFontFamilyType
+                  }),
                   value: tabletMMenuFontWeight,
                   onChange: tabletFontWeight => {
                     return onChangeCustomTypography(
@@ -2823,7 +2109,8 @@ const getTabletMMenuToolbar = v => {
 
 const getTabletToolbar = v => {
   // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+  const { fontFamily, fontFamilyType } =
+    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const tabletFontStyle = v.tabletFontStyle;
   const {
@@ -2834,7 +2121,7 @@ const getTabletToolbar = v => {
   } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   const subMenuFontStyle = v.subMenuFontStyle;
-  const { subMenuFontFamily } =
+  const { subMenuFontFamily, subMenuFontFamilyType } =
     subMenuFontStyle === ""
       ? v
       : renameKeys(subMenuKeys, getFontStyle(subMenuFontStyle));
@@ -2946,7 +2233,10 @@ const getTabletToolbar = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(fontFamily),
+                  choices: getWeightChoices({
+                    family: fontFamily,
+                    type: fontFamilyType
+                  }),
                   value: tabletFontWeight,
                   onChange: newTabletFontWeight =>
                     onChangeTypographyTablet(
@@ -3039,7 +2329,10 @@ const getTabletToolbar = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(subMenuFontFamily),
+                  choices: getWeightChoices({
+                    family: subMenuFontFamily,
+                    type: subMenuFontFamilyType
+                  }),
                   value: tabletSubMenuFontWeight,
                   onChange: tabletFontWeight => {
                     return onChangeCustomTypography(
@@ -3098,7 +2391,7 @@ export function getItemsForTablet(v) {
 
 const getMobileMMenuToolbar = v => {
   const mMenuFontStyle = v.mMenuFontStyle;
-  const { mMenuFontFamily } =
+  const { mMenuFontFamily, mMenuFontFamilyType } =
     mMenuFontStyle === ""
       ? v
       : renameKeys(mMenuKeys, getFontStyle(mMenuFontStyle));
@@ -3247,7 +2540,10 @@ const getMobileMMenuToolbar = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(mMenuFontFamily),
+                  choices: getWeightChoices({
+                    family: mMenuFontFamily,
+                    type: mMenuFontFamilyType
+                  }),
                   value: mobileMMenuFontWeight,
                   onChange: mobileFontWeight => {
                     return onChangeCustomTypography(
@@ -3311,7 +2607,8 @@ const getMobileMMenuToolbar = v => {
 
 const getMobileToolbar = v => {
   // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+  const { fontFamily, fontFamilyType } =
+    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const mobileFontStyle = v.mobileFontStyle;
   const {
@@ -3322,7 +2619,7 @@ const getMobileToolbar = v => {
   } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   const subMenuFontStyle = v.subMenuFontStyle;
-  const { subMenuFontFamily } =
+  const { subMenuFontFamily, subMenuFontFamilyType } =
     subMenuFontStyle === ""
       ? v
       : renameKeys(subMenuKeys, getFontStyle(subMenuFontStyle));
@@ -3434,7 +2731,10 @@ const getMobileToolbar = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(fontFamily),
+                  choices: getWeightChoices({
+                    family: fontFamily,
+                    type: fontFamilyType
+                  }),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
                     onChangeTypographyMobile(
@@ -3527,7 +2827,10 @@ const getMobileToolbar = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(subMenuFontFamily),
+                  choices: getWeightChoices({
+                    family: subMenuFontFamily,
+                    type: subMenuFontFamilyType
+                  }),
                   value: mobileSubMenuFontWeight,
                   onChange: mobileFontWeight => {
                     return onChangeCustomTypography(

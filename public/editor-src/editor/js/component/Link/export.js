@@ -10,6 +10,8 @@ export default function() {
 
       if ($target.length) {
         event.preventDefault();
+
+        $(document).trigger("brz.anchor.click", [this]);
         $("html, body")
           .stop()
           .animate(

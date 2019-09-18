@@ -14,6 +14,7 @@ export default class TooltipContent extends React.Component {
   };
 
   static defaultProps = {
+    className: "",
     isOpen: false,
     placement: "top-center",
     placementStyle: {},
@@ -22,6 +23,7 @@ export default class TooltipContent extends React.Component {
     arrowPlacementStyle: {},
     size: "",
     toolbar: null,
+    inPortal: false,
     node: null
   };
 
@@ -34,14 +36,17 @@ export default class TooltipContent extends React.Component {
       arrowPlacement
     };
     this.isRepositioning = false;
+    this.contentRef = React.createRef();
   }
 
   componentDidMount() {
-    const { isOpen, toolbar, node } = this.props;
+    const { isOpen, toolbar, inPortal, node } = this.props;
 
     if (isOpen) {
       if (toolbar) {
         this.repositionByToolbar(toolbar);
+      } else if (inPortal) {
+        this.repositionPortalByNode(node);
       } else {
         this.repositionByNode(node);
       }
@@ -53,25 +58,23 @@ export default class TooltipContent extends React.Component {
       return;
     }
 
-    const { toolbar, node } = this.props;
+    const { toolbar, inPortal, node } = this.props;
 
     if (toolbar) {
       this.repositionByToolbar(toolbar);
+    } else if (inPortal) {
+      this.repositionPortalByNode(node);
     } else {
       this.repositionByNode(node);
     }
   }
 
-  handleContentRef = el => {
-    this.content = el;
-  };
-
-  repositionByToolbar = toolbar => {
+  repositionByToolbar(toolbar) {
     const toolbarTarget = ReactDOM.findDOMNode(toolbar);
     const {
       width: contentWidth,
       height: contentHeight
-    } = this.content.getBoundingClientRect();
+    } = this.contentRef.current.getBoundingClientRect();
     const {
       top: targetTop,
       right: targetRight,
@@ -132,14 +135,14 @@ export default class TooltipContent extends React.Component {
       },
       () => (this.isRepositioning = false)
     );
-  };
+  }
 
-  repositionByNode = node => {
+  repositionByNode(node) {
     const { scrollY } = window.parent || window;
     const {
       width: contentWidth,
       height: contentHeight
-    } = this.content.getBoundingClientRect();
+    } = this.contentRef.current.getBoundingClientRect();
     const {
       top: targetTop,
       right: targetRight,
@@ -212,10 +215,87 @@ export default class TooltipContent extends React.Component {
       },
       () => (this.isRepositioning = false)
     );
-  };
+  }
+
+  repositionPortalByNode(node) {
+    const { scrollY } = window.parent || window;
+    const {
+      width: contentWidth,
+      height: contentHeight
+    } = this.contentRef.current.getBoundingClientRect();
+    const {
+      top: targetTop,
+      right: targetRight,
+      left: targetLeft,
+      height: targetHeight,
+      width: targetWidth
+    } = node.getBoundingClientRect();
+    const { clientWidth, clientHeight } = document.documentElement;
+
+    let { placement, arrowPlacementStyle } = this.props;
+
+    let contentTop = 0;
+    let contentLeft = 0;
+    const contentMinLeft = SIDEBAR_WIDTH;
+    const contentMaxLeft = clientWidth - contentWidth;
+    const contentMaxHeight = clientHeight;
+
+    // Check if is vertical settings
+    if (/top-/.test(placement)) {
+      contentTop =
+        scrollX + targetTop - contentHeight - TOOLTIP_STATIC_SPACE / 2;
+    } else {
+      contentTop =
+        scrollY + targetTop + targetHeight + TOOLTIP_STATIC_SPACE / 2;
+    }
+
+    // Check if is horizontal settings
+    if (/-center/.test(placement)) {
+      contentLeft = targetLeft + targetWidth / 2 - contentWidth / 2;
+    } else if (/-left/.test(placement)) {
+      contentLeft = targetLeft;
+    } else if (/-right/.test(placement)) {
+      contentLeft = targetRight - contentWidth;
+    }
+
+    if (contentTop <= scrollY) {
+      placement = `bottom-${placement.split("-")[1]}`;
+    }
+    if (contentTop >= contentMaxHeight) {
+      placement = `top-${placement.split("-")[1]}`;
+    }
+    if (contentLeft >= contentMaxLeft) {
+      contentLeft = targetRight - contentWidth;
+      placement = `${placement.split("-")[0]}-right`;
+      arrowPlacementStyle = {
+        left:
+          Math.floor(targetRight - contentLeft - targetWidth / 2) -
+          TOOLTIP_STATIC_SPACE / 2
+      };
+    }
+    if (contentLeft <= contentMinLeft) {
+      contentLeft = targetLeft;
+      placement = `${placement.split("-")[0]}-left`;
+      arrowPlacementStyle = { left: 0 };
+    }
+
+    this.isRepositioning = true;
+    this.setState(
+      {
+        placement,
+        placementStyle: {
+          top: contentTop,
+          left: contentLeft
+        },
+        arrowPlacement: placement,
+        arrowPlacementStyle
+      },
+      () => (this.isRepositioning = false)
+    );
+  }
 
   render() {
-    const { isOpen, size, arrow, children } = this.props;
+    const { className: _className, isOpen, size, arrow, children } = this.props;
     const {
       placement,
       placementStyle,
@@ -226,7 +306,8 @@ export default class TooltipContent extends React.Component {
       "brz-ed-animated brz-ed-animated--fadeInUp",
       `brz-ed-tooltip__overlay brz-ed-tooltip--${placement}`,
       { [`brz-ed-tooltip--${size}`]: size },
-      { "brz-invisible": !isOpen }
+      { "brz-invisible": !isOpen },
+      _className
     );
     const arrowClassName = classnames(
       "brz-ed-arrow",
@@ -234,14 +315,10 @@ export default class TooltipContent extends React.Component {
     );
 
     return (
-      <div
-        ref={this.handleContentRef}
-        className={className}
-        style={placementStyle}
-      >
-        {arrow ? (
+      <div ref={this.contentRef} className={className} style={placementStyle}>
+        {arrow && (
           <div className={arrowClassName} style={arrowPlacementStyle} />
-        ) : null}
+        )}
         {children}
       </div>
     );

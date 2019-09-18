@@ -25,19 +25,15 @@ class ProgressBar extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(_v, vs) {
-    const v = this.applyRulesToValue(_v, [
-      _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
-      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
-      _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
-    ]);
-
+  renderForEdit(v, vs, vd) {
+    const { className } = v;
     const classNameBg = classnames(
       "brz-progress-bar",
+      className,
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
-        styleBg(vs, v)
+        styleBg(v, vs, vd)
       )
     );
 
@@ -49,14 +45,14 @@ class ProgressBar extends EditorComponent {
       css(
         `${this.constructor.componentId}-bar`,
         `${this.getId()}-bar`,
-        styleBar(vs, v)
+        styleBar(v, vs, vd)
       )
     );
 
     const { text, percentage, showPercentage } = v;
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={classNameBg}>
             <BoxResizer

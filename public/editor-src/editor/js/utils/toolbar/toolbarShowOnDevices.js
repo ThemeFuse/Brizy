@@ -1,19 +1,21 @@
 import { t } from "visual/utils/i18n";
 
-export function toolbarShowOnDesktop({ v, position = 10 }) {
+export function toolbarShowOnDesktop({ v, position = 10, devices = "all" }) {
   return {
     id: "showOnDesktop",
     label: t("Show on Desktop"),
     position,
     type: "switch",
+    devices,
     value: v.showOnDesktop
   };
 }
 
-export function toolbarShowOnTablet({ v, position = 10 }) {
+export function toolbarShowOnTablet({ v, position = 10, devices = "all" }) {
   return {
     id: "showOnTablet",
     type: "toggle",
+    devices,
     position,
     choices: [
       {
@@ -31,10 +33,11 @@ export function toolbarShowOnTablet({ v, position = 10 }) {
   };
 }
 
-export function toolbarShowOnMobile({ v, position = 10 }) {
+export function toolbarShowOnMobile({ v, position = 10, devices = "all" }) {
   return {
     id: "showOnMobile",
     type: "toggle",
+    devices,
     position,
     choices: [
       {
@@ -50,4 +53,20 @@ export function toolbarShowOnMobile({ v, position = 10 }) {
     ],
     value: v.showOnMobile
   };
+}
+
+export function toolbarShowOnResponsive({
+  v,
+  device,
+  state,
+  devices = "all",
+  position = 10
+}) {
+  if (device === "tablet") {
+    return toolbarShowOnTablet({ v, position, devices });
+  } else if (device === "mobile") {
+    return toolbarShowOnMobile({ v, position, devices });
+  } else {
+    return {};
+  }
 }

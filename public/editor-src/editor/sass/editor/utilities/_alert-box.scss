@@ -51,3 +51,14 @@
   border-radius: 50%;
   margin-bottom: 10px;
 }
+
+// Pro
+.brz-ed-alert-pro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  color: $brand-primary-pro;
+  background-color: #e0e1e2;
+  padding: 21px 36px;
+}

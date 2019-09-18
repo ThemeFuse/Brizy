@@ -1,4 +1,5 @@
 import React from "react";
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 
 export default class BlockErrorBoundary extends React.Component {
@@ -18,6 +19,8 @@ export default class BlockErrorBoundary extends React.Component {
   };
 
   renderError() {
+    const urls = Config.get("urls");
+
     const style = {
       height: "200px",
       background: "lightgray",
@@ -44,7 +47,7 @@ export default class BlockErrorBoundary extends React.Component {
             {t("You can")}
             <a
               className="brz-a"
-              href="https://github.com/ThemeFuse/Brizy/issues"
+              href={urls.support}
               target="_blank"
               style={linkStyle}
             >

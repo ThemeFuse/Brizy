@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import _ from "underscore";
+import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -17,19 +17,12 @@ import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
-import { videoData as getVideoData } from "visual/utils/video";
 import Link from "visual/component/Link";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./Items";
-import {
-  bgStyleClassName,
-  bgStyleCSSVars,
-  containerStyleClassName,
-  containerStyleCSSVars,
-  styleClassName
-} from "./styles";
+import { css } from "visual/utils/cssStyle";
+import { styleBg, styleContainer } from "./styles";
 import defaultValue from "./defaultValue.json";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -224,7 +217,7 @@ class Row extends EditorComponent {
     return (
       <div className="brz-ed-row__toolbar">
         <Toolbar
-          {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+          {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
           onOpen={this.handleToolbarOpen}
           onClose={this.handleToolbarClose}
           onMouseEnter={this.handleToolbarEnter}
@@ -248,45 +241,40 @@ class Row extends EditorComponent {
     );
   }
 
-  renderContent(v) {
+  renderContent(v, vs, vd) {
     const {
-      media,
-      bgImageSrc,
-      bgColorOpacity,
-      bgVideo,
-      bgMapZoom,
-      bgMapAddress,
+      customClassName,
+      className,
       mobileReverseColumns,
       tabletReverseColumns
     } = v;
 
-    let bgProps = {
-      className: bgStyleClassName(v),
-      imageSrc: bgImageSrc,
-      colorOpacity: bgColorOpacity,
-      tabletImageSrc: tabletSyncOnChange(v, "bgImageSrc"),
-      tabletColorOpacity: tabletSyncOnChange(v, "bgColorOpacity"),
-      mobileImageSrc: mobileSyncOnChange(v, "bgImageSrc"),
-      mobileColorOpacity: mobileSyncOnChange(v, "bgColorOpacity")
-    };
+    const classNameBg = classnames(
+      "brz-d-xs-flex",
+      "brz-flex-xs-wrap",
+      customClassName,
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        styleBg(v, vs, vd)
+      )
+    );
 
-    if (media === "video") {
-      bgProps.video = getVideoData(bgVideo);
-    }
-
-    if (
-      media === "map" ||
-      mobileSyncOnChange(v, "media") === "map" ||
-      tabletSyncOnChange(v, "media") === "map"
-    ) {
-      bgProps.mapAddress = bgMapAddress;
-      bgProps.mapZoom = bgMapZoom;
-    }
+    const classNameContainer = classnames(
+      "brz-row",
+      { "brz-row--inner": this.isInnerRow() },
+      className,
+      css(
+        `${this.constructor.componentId}-container`,
+        `${this.getId()}-container`,
+        styleContainer(v, vs, vd)
+      )
+    );
 
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      containerClassName: containerStyleClassName(v, this.isInnerRow()),
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
+      containerClassName: classNameContainer,
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig, {
         filterExtendName: `${this.constructor.componentId}_child`
       }),
       meta: this.getMeta(v),
@@ -295,7 +283,7 @@ class Row extends EditorComponent {
     });
 
     return (
-      <Background {...bgProps}>
+      <Background className={classNameBg} value={v} meta={this.getMeta(v)}>
         <Items {...itemsProps} />
       </Background>
     );
@@ -334,9 +322,9 @@ class Row extends EditorComponent {
     return <EditorArrayComponent {...popupsProps} />;
   }
 
-  renderForEdit(v) {
-    const isInnerRow = this.isInnerRow();
+  renderForEdit(v, vs, vd) {
     const {
+      className,
       showToolbar,
       animationName,
       animationDuration,
@@ -345,22 +333,19 @@ class Row extends EditorComponent {
       linkPopup,
       popups
     } = v;
-    const styles = {
-      ...bgStyleCSSVars(v),
-      ...containerStyleCSSVars(v, isInnerRow)
-    };
+
+    const classNameRowContainer = classnames("brz-row__container", className);
 
     if (showToolbar === "off") {
       return (
         <SortableElement type="row" useHandle={true}>
           <Animation
-            className="brz-row__container"
-            style={styles}
+            className={classNameRowContainer}
             name={animationName !== "none" && animationName}
             duration={animationDuration}
             delay={animationDelay}
           >
-            {this.renderContent(v)}
+            {this.renderContent(v, vs, vd)}
           </Animation>
         </SortableElement>
       );
@@ -371,8 +356,7 @@ class Row extends EditorComponent {
         <SortableElement type="row" useHandle={true}>
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Animation
-              className="brz-row__container"
-              style={styles}
+              className={classNameRowContainer}
               name={animationName !== "none" && animationName}
               duration={animationDuration}
               delay={animationDelay}
@@ -380,7 +364,7 @@ class Row extends EditorComponent {
               <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
                 <Roles
                   allow={["admin"]}
-                  fallbackRender={() => this.renderContent(v)}
+                  fallbackRender={() => this.renderContent(v, vs, vd)}
                 >
                   <ContainerBorder
                     ref={input => {
@@ -394,7 +378,7 @@ class Row extends EditorComponent {
                     path={this.props.path}
                   >
                     {this.renderToolbar(v)}
-                    {this.renderContent(v)}
+                    {this.renderContent(v, vs, vd)}
                   </ContainerBorder>
                 </Roles>
               </ContextMenu>
@@ -409,8 +393,9 @@ class Row extends EditorComponent {
     );
   }
 
-  renderForView(v) {
+  renderForView(v, vs, vd) {
     const {
+      className,
       animationName,
       animationDuration,
       animationDelay,
@@ -429,16 +414,18 @@ class Row extends EditorComponent {
       popup: linkPopup
     };
 
+    const classNameRowContainer = classnames("brz-row__container", className);
+
     return (
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
-            className={styleClassName(v)}
+            className={classNameRowContainer}
             name={animationName !== "none" && animationName}
             duration={animationDuration}
             delay={animationDelay}
           >
-            {this.renderContent(v)}
+            {this.renderContent(v, vs, vd)}
             {linkHrefs[linkType] !== "" && (
               <Link
                 className="brz-link-container"

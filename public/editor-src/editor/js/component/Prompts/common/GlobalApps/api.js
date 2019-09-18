@@ -1,58 +1,63 @@
 import Config from "visual/global/Config";
-import { makeRequest } from "../../common/utils";
+import { makeUrl, parseJSON } from "../../common/utils";
+import { request2 } from "visual/utils/api/editor";
 
 export function getAccounts(data) {
   const { api } = Config.get("wp");
-
-  return makeRequest({
-    method: "GET",
-    url: api.url,
-    queryParams: {
-      action: api.getAccounts,
-      hash: api.hash,
-      ...(data ? data : {})
-    }
+  const version = Config.get("editorVersion");
+  const url = makeUrl(api.url, {
+    action: api.getAccounts,
+    hash: api.hash,
+    version,
+    ...(data ? data : {})
   });
+
+  return request2(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  })
+    .then(parseJSON)
+    .then(res => res);
 }
 
 export function addAccount(body) {
   const { api } = Config.get("wp");
+  const version = Config.get("editorVersion");
+  const url = makeUrl(api.url, {
+    action: api.addAccount,
+    hash: api.hash,
+    version
+  });
 
-  return makeRequest({
+  return request2(url, {
     method: "POST",
-    url: api.url,
-    queryParams: {
-      action: api.addAccount,
-      hash: api.hash
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(body)
-  });
-}
-
-export function updateAccount(body) {
-  const { api } = Config.get("wp");
-
-  return makeRequest({
-    method: "POST",
-    url: api.url,
-    queryParams: {
-      action: api.updateAccount,
-      hash: api.hash
-    },
-    body: JSON.stringify(body)
-  });
+  })
+    .then(parseJSON)
+    .then(res => res);
 }
 
 export function deleteAccount(id) {
   const { api } = Config.get("wp");
-
-  return makeRequest({
-    method: "DELETE",
-    url: api.url,
-    queryParams: {
-      action: api.deleteAccount,
-      hash: api.hash,
-      id
-    }
+  const version = Config.get("editorVersion");
+  const url = makeUrl(api.url, {
+    action: api.deleteAccount,
+    hash: api.hash,
+    version,
+    id
   });
+
+  return request2(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  })
+    .then(parseJSON)
+    .then(res => res);
 }

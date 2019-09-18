@@ -3,68 +3,55 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 export function toolbarGradientRange({ v, device, state, disabled }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const { hex: bgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device, state }),
-    defaultValueValue({ v, key: "bgColorPalette", device, state })
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
   );
 
   const { hex: gradientColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "gradientColorHex", device, state }),
-    defaultValueValue({ v, key: "gradientColorPalette", device, state })
+    dvv("gradientColorHex"),
+    dvv("gradientColorPalette")
   );
 
   return {
-    id: defaultValueKey({ key: "bgGradient", device, state }),
+    id: dvk("bgGradient"),
     type: "range",
     disabled,
     value: {
-      startPointer: defaultValueValue({
-        v,
-        key: "gradientStartPointer",
-        device,
-        state
-      }),
-      finishPointer: defaultValueValue({
-        v,
-        key: "gradientFinishPointer",
-        device,
-        state
-      }),
-      activePointer: defaultValueValue({
-        v,
-        key: "gradientActivePointer",
-        device,
-        state
-      }),
+      startPointer: dvv("gradientStartPointer"),
+      finishPointer: dvv("gradientFinishPointer"),
+      activePointer: dvv("gradientActivePointer"),
       bgColorHex,
       gradientColorHex
     },
     onChange: ({ startPointer, finishPointer, activePointer }) => {
       return {
-        [defaultValueKey({
-          key: "gradientStartPointer",
-          device,
-          state
-        })]: startPointer,
-        [defaultValueKey({
-          key: "gradientFinishPointer",
-          device,
-          state
-        })]: finishPointer,
-        [defaultValueKey({
-          key: "gradientActivePointer",
-          device,
-          state
-        })]: activePointer
+        [dvk("gradientStartPointer")]: startPointer,
+        [dvk("gradientFinishPointer")]: finishPointer,
+        [dvk("gradientActivePointer")]: activePointer
       };
     }
   };
 }
 
-export function toolbarGradientType({ v, device, state, className, disabled }) {
+export function toolbarGradientType({
+  v,
+  device,
+  state,
+  devices = "all",
+  className,
+  disabled
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "gradientType", device, state }),
+    id: dvk("gradientType"),
     type: "select",
+    devices,
     disabled,
     className,
     choices: [
@@ -77,30 +64,50 @@ export function toolbarGradientType({ v, device, state, className, disabled }) {
         value: "radial"
       }
     ],
-    value: defaultValueValue({ v, key: "gradientType", device, state })
+    value: dvv("gradientType")
   };
 }
 
-export function toolbarGradientLinearDegree({ v, device, state, disabled }) {
+export function toolbarGradientLinearDegree({
+  v,
+  device,
+  state,
+  devices = "all",
+  disabled
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "gradientLinearDegree", device, state }),
+    id: dvk("gradientLinearDegree"),
     type: "inputNumber",
     className: "brz-ed-grid__gradient__size",
+    devices,
     disabled,
     min: 0,
     max: 360,
-    value: defaultValueValue({ v, key: "gradientLinearDegree", device, state })
+    value: dvv("gradientLinearDegree")
   };
 }
 
-export function toolbarGradientRadialDegree({ v, device, state, disabled }) {
+export function toolbarGradientRadialDegree({
+  v,
+  device,
+  state,
+  devices = "all",
+  disabled
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "gradientRadialDegree", device, state }),
+    id: dvk("gradientRadialDegree"),
     type: "inputNumber",
     className: "brz-ed-grid__gradient__degree",
+    devices,
     disabled,
     min: 0,
     max: 1000,
-    value: defaultValueValue({ v, key: "gradientRadialDegree", device, state })
+    value: dvv("gradientRadialDegree")
   };
 }

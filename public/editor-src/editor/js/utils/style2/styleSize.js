@@ -1,19 +1,19 @@
 import { defaultValueValue } from "visual/utils/onChange";
 
-export function styleSizeWidthPercent({ v, device }) {
-  return `${defaultValueValue({ v, key: "width", device })}%`;
+export function styleSizeWidth({ v, device, state }) {
+  return defaultValueValue({ v, key: "width", device, state });
 }
 
-export function styleSizeHeightPx({ v, device }) {
-  return `${defaultValueValue({ v, key: "height", device })}px`;
+export function styleSizeHeight({ v, device }) {
+  return defaultValueValue({ v, key: "height", device });
 }
 
-export function styleSizeSizePercent({ v, device }) {
-  return `${defaultValueValue({ v, key: "size", device })}%`;
+export function styleSizeSize({ v, device }) {
+  return defaultValueValue({ v, key: "size", device });
 }
 
-export function styleSizeConatinerSizePercent({ v }) {
+export function styleSizeContainerSize({ v }) {
   const { containerSize } = v;
 
-  return `${containerSize}%`;
+  return containerSize;
 }

@@ -83,6 +83,9 @@ export default function() {
           if (redirect !== "") {
             window.location.replace(redirect);
           }
+
+          // Reset Forms Fields Value
+          resetFormValues($this);
         })
         .fail(function() {
           $this.addClass("brz-form__send--fail");
@@ -164,4 +167,13 @@ export default function() {
   function showFormMessage($form, message) {
     $form.after(message);
   }
+}
+
+function resetFormValues($form) {
+  $form.find(".brz-form__item").each(function() {
+    $(this)
+      .find("input, textarea, select")
+      .val("")
+      .trigger("change");
+  });
 }

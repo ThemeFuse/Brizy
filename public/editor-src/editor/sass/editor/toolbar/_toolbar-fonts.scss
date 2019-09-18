@@ -17,7 +17,34 @@ $toolbar-fonts-item-active: #3ebfe8;
     flex-grow: 1;
     border-right: 1px solid $toolbar-border-color;
     overflow: hidden; // FIXME
-    padding: 7px 3px 7px 0;
+    padding: 7px 3px 45px 0;
+    position: relative;
+
+    // scrollPane need height for first render
+    .brz-ed-scroll-pane {
+      height: 165px;
+      overflow: hidden;
+    }
+  }
+  &__typography-adder {
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 14px;
+    left: 27px;
+    color: #818a91;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s linear color;
+
+    &:hover {
+      color: $toolbar-fonts-item-active;
+      transition: 0.2s linear color;
+    }
+    .brz-icon-svg {
+      margin-right: 10px;
+    }
   }
   &__right {
     display: flex;
@@ -51,7 +78,7 @@ $toolbar-fonts-item-active: #3ebfe8;
     padding: 0;
     margin: 0 0 17px 27px;
     border: 0;
-    background-color: rgba(255, 255, 255, .3);
+    background-color: rgba(255, 255, 255, 0.3);
   }
 
   // Left content

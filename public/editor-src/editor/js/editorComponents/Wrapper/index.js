@@ -14,12 +14,10 @@ import * as toolbarExtendConfig from "./extendToolbar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import { percentageToPixels } from "visual/utils/meta";
-import {
-  styleClassName,
-  containerStyleClassName,
-  containerStyleCSSVars
-} from "./styles";
 import defaultValue from "./defaultValue.json";
+import classnames from "classnames";
+import { styleContainer, styleWrapper } from "./styles";
+import { css } from "visual/utils/cssStyle";
 
 class Wrapper extends EditorComponent {
   static get componentId() {
@@ -247,7 +245,7 @@ class Wrapper extends EditorComponent {
     return (
       <div className="brz-ed-wrapper__toolbar">
         <Toolbar
-          {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+          {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
           onOpen={this.handleToolbarOpen}
           onClose={this.handleToolbarClose}
           onMouseEnter={this.handleToolbarEnter}
@@ -269,8 +267,8 @@ class Wrapper extends EditorComponent {
     );
   }
 
-  renderContent(v) {
-    const { showToolbar } = v;
+  renderContent(v, vs, vd) {
+    const { showToolbar, className } = v;
     const toolbarExtendFilter =
       showToolbar === "on" || currentUserRole() !== "admin"
         ? toolbarExtendItems =>
@@ -282,7 +280,7 @@ class Wrapper extends EditorComponent {
       bindWithKey: "items",
       itemProps: {
         meta: this.getMeta(v),
-        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
+        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig, {
           allowExtend: true,
           allowExtendChild: false,
           extendFilter: toolbarExtendFilter
@@ -293,23 +291,47 @@ class Wrapper extends EditorComponent {
       }
     });
 
+    const classNameContainer = classnames(
+      "brz-d-xs-flex",
+      css(
+        `${this.constructor.componentId}-container`,
+        `${this.getId()}-container`,
+        styleContainer(v, vs, vd)
+      ),
+      className
+    );
+
     return (
-      <div className={containerStyleClassName(v)}>
+      <div className={classNameContainer}>
         <EditorArrayComponent {...itemsProps} />
       </div>
     );
   }
 
-  renderForEdit(v) {
-    const { animationName, animationDuration, animationDelay } = v;
+  renderForEdit(v, vs, vd) {
+    const {
+      animationName,
+      animationDuration,
+      animationDelay,
+      customClassName
+    } = v;
 
     const componentId = v.items[0].type;
+
+    const classNameWrapper = classnames(
+      "brz-wrapper",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleWrapper(v, vs, vd)
+      ),
+      customClassName
+    );
 
     return (
       <SortableElement type="shortcode">
         <Animation
-          className={styleClassName(v)}
-          style={containerStyleCSSVars(v)}
+          className={classNameWrapper}
           name={animationName !== "none" && animationName}
           duration={animationDuration}
           delay={animationDelay}
@@ -334,10 +356,10 @@ class Wrapper extends EditorComponent {
             >
               <Roles
                 allow={["admin"]}
-                fallbackRender={() => this.renderContent(v)}
+                fallbackRender={() => this.renderContent(v, vs, vd)}
               >
                 {this.renderToolbar(v)}
-                {this.renderContent(v)}
+                {this.renderContent(v, vs, vd)}
               </Roles>
             </ContainerBorder>
           </ContextMenu>
@@ -346,17 +368,32 @@ class Wrapper extends EditorComponent {
     );
   }
 
-  renderForView(v) {
-    const { animationName, animationDuration, animationDelay } = v;
+  renderForView(v, vs, vd) {
+    const {
+      animationName,
+      animationDuration,
+      animationDelay,
+      customClassName
+    } = v;
+
+    const classNameWrapper = classnames(
+      "brz-wrapper",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleWrapper(v, vs, vd)
+      ),
+      customClassName
+    );
 
     return (
       <Animation
-        className={styleClassName(v)}
+        className={classNameWrapper}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}
       >
-        {this.renderContent(v)}
+        {this.renderContent(v, vs, vd)}
       </Animation>
     );
   }

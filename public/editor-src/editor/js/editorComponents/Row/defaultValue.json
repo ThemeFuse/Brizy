@@ -16,7 +16,7 @@
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
 
-    "hoverMedia": null,
+    "hoverMedia": "image",
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
@@ -31,11 +31,15 @@
 
     "zIndex": 0,
 
+    "tabletPopups": null,
+
+    "tabletSize": null,
+
     "tabletReverseColumns": "off",
 
     "showOnTablet": "on",
 
-    "tabletMedia": null,
+    "tabletMedia": "image",
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
@@ -44,11 +48,19 @@
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
 
+    "tabletBgVideo": null,
+    "tabletBgVideoQuality": null,
+    "tabletBgVideoLoop": null,
+
     "tabletBgMapZoom": null,
 
     "showOnMobile": "on",
 
-    "mobileMedia": null,
+    "mobilePopups": null,
+
+    "mobileSize": null,
+
+    "mobileMedia": "image",
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
@@ -56,6 +68,10 @@
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
+
+    "mobileBgVideo": null,
+    "mobileBgVideoQuality": null,
+    "mobileBgVideoLoop": null,
 
     "mobileBgMapZoom": null,
 
@@ -74,15 +90,27 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
-    "linkPopup": ""
+    "linkPopup": "",
+
+    "tabletLinkType": null,
+    "tabletLinkPopup": null,
+
+    "mobileLinkType": null,
+    "mobileLinkPopup": null
   },
 
   "toolbar": {
-    "tabsState": "tabNormal",
+    "tabsState": "",
+    "tabsCurrentElement": "",
+    "tabsColor": "",
 
-    "tabsCurrentElement": "tabCurrentElement",
+    "tabletTabsState": null,
+    "tabletTabsCurrentElement": null,
+    "tabletTabsColor": null,
 
-    "tabsColor": "tabOverlay"
+    "mobileTabsState": null,
+    "mobileTabsCurrentElement": null,
+    "mobileTabsColor": null
   },
 
   "animation": {
@@ -219,7 +247,9 @@
     "tempHoverBorderColorOpacity": null,
     "tempHoverBorderColorPalette": null,
 
-    "boxShadow": "off",
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
@@ -239,6 +269,8 @@
     "tempBoxShadowHorizontal": 1,
 
     "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
 
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,
@@ -280,11 +312,15 @@
     "marginType": "grouped",
     "margin": 0,
     "marginTop": 0,
+    "marginRight": "auto",
     "marginBottom": 0,
+    "marginLeft": "auto",
 
     "marginSuffix": "px",
     "marginTopSuffix": "px",
+    "marginRightSuffix": "",
     "marginBottomSuffix": "px",
+    "marginLeftSuffix": "",
 
     "customClassName": "",
 
@@ -354,6 +390,8 @@
 
     "tabletBoxShadow": null,
 
+    "tempTabletBoxShadow": null,
+
     "tabletBoxShadowColorHex": null,
     "tabletBoxShadowColorOpacity": null,
     "tabletBoxShadowColorPalette": null,
@@ -370,6 +408,9 @@
     "tempTabletBoxShadowSpread": null,
     "tempTabletBoxShadowVertical": null,
     "tempTabletBoxShadowHorizontal": null,
+
+    "tabletColumnsHeightStyle": null,
+    "tabletColumnsHeight": null,
 
     "tabletPaddingType": "ungrouped",
     "tabletPadding": 0,
@@ -393,11 +434,15 @@
     "tabletMarginType": "grouped",
     "tabletMargin": 0,
     "tabletMarginTop": 10,
+    "tabletMarginRight": "auto",
     "tabletMarginBottom": 10,
+    "tabletMarginLeft": "auto",
 
     "tabletMarginSuffix": "px",
     "tabletMarginTopSuffix": "px",
+    "tabletMarginRightSuffix": "",
     "tabletMarginBottomSuffix": "px",
+    "tabletMarginLeftSuffix": "",
 
     "mobileReverseColumns": "off",
 
@@ -465,6 +510,8 @@
 
     "mobileBoxShadow": null,
 
+    "tempMobileBoxShadow": null,
+
     "mobileBoxShadowColorHex": null,
     "mobileBoxShadowColorOpacity": null,
     "mobileBoxShadowColorPalette": null,
@@ -481,6 +528,9 @@
     "tempMobileBoxShadowSpread": null,
     "tempMobileBoxShadowVertical": null,
     "tempMobileBoxShadowHorizontal": null,
+
+    "mobileColumnsHeightStyle": null,
+    "mobileColumnsHeight": null,
 
     "mobilePaddingType": "ungrouped",
     "mobilePadding": 0,
@@ -504,10 +554,14 @@
     "mobileMarginType": "grouped",
     "mobileMargin": 0,
     "mobileMarginTop": 10,
+    "mobileMarginRight": "auto",
     "mobileMarginBottom": 10,
+    "mobileMarginLeft": "auto",
 
     "mobileMarginSuffix": "px",
     "mobileMarginTopSuffix": "px",
-    "mobileMarginBottomSuffix": "px"
+    "mobileMarginRightSuffix": "",
+    "mobileMarginBottomSuffix": "px",
+    "mobileMarginLeftSuffix": ""
   }
 }

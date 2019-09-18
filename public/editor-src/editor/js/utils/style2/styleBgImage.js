@@ -4,26 +4,32 @@ import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 
 export function styleBgImage({ v, device, state }) {
   const isHover = styleState({ v, state });
+
   const media = defaultValueValue({ v, key: "media", device, state });
+
   const bgImageSrc = defaultValueValue({ v, key: "bgImageSrc", device, state });
+
   const bgPopulation = defaultValueValue({
     v,
     key: "bgPopulation",
     device,
     state
   });
+
   const hoverMedia = defaultValueValue({
     v,
     key: "media",
     device,
     state: "hover"
   });
+
   const hoverBgImageSrc = defaultValueValue({
     v,
     key: "bgImageSrc",
     device,
     state: "hover"
   });
+
   const hoverBgPopulation = defaultValueValue({
     v,
     key: "bgPopulation",
@@ -31,24 +37,24 @@ export function styleBgImage({ v, device, state }) {
     state: "hover"
   });
 
-  return isHover === "hover" &&
-    hoverMedia === "image" &&
-    hoverBgImageSrc !== "" &&
-    hoverBgPopulation === ""
-    ? `url(${imageUrl(hoverBgImageSrc)})`
-    : media === "image" && bgImageSrc !== "" && bgPopulation === ""
-    ? `url(${imageUrl(bgImageSrc)})`
-    : "none";
+  const hover =
+    hoverMedia === "image" && hoverBgImageSrc !== "" && hoverBgPopulation === ""
+      ? `url(${imageUrl(hoverBgImageSrc)})`
+      : "none";
+
+  const normal =
+    media === "image" && bgImageSrc !== "" && bgPopulation === ""
+      ? `url(${imageUrl(bgImageSrc)})`
+      : "none";
+
+  return isHover === "hover" ? hover : normal;
 }
 
 export function styleExportBgImage({ v, device, state }) {
   const media = defaultValueValue({ v, key: "media", device, state });
-  const bgImageSrc = defaultValueValue({
-    v,
-    key: "bgImageSrc",
-    device,
-    state
-  });
+
+  const bgImageSrc = defaultValueValue({ v, key: "bgImageSrc", device, state });
+
   const bgPopulation = defaultValueValue({
     v,
     key: "bgPopulation",
@@ -96,7 +102,7 @@ export function styleBgPositionX({ v, device, state }) {
     ? `${hoverBgPositionX}%`
     : bgPopulation === ""
     ? `${bgPositionX}%`
-    : "0%";
+    : 0;
 }
 
 export function styleBgPositionY({ v, device, state }) {
@@ -130,5 +136,5 @@ export function styleBgPositionY({ v, device, state }) {
     ? `${hoverBgPositionY}%`
     : bgPopulation === ""
     ? `${bgPositionY}%`
-    : "0%";
+    : 0;
 }

@@ -1,32 +1,45 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
-export function styleBg(vs, v) {
+export function styleBg(v, vs, vd) {
   const styles = {
-    ".brz &": [
-      "cssStyleSizeWidthPercent",
-      "cssStyleBorderRadiusGrouped",
-      "cssStyleBg2Color"
-    ]
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleSizeWidthPercent",
+        "cssStyleBorderRadius",
+        "cssStyleBg2Color",
+        "cssStyleBoxShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
+      ]
+    },
+    ".brz &&:hover .brz-progress-bar__wrapper": {
+      standart: ["cssStyleBgColor", "cssStyleBorderRadius", "cssStyleColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
+      ]
+    }
   };
 
-  return [renderStyles({ vs, styles }), renderStyles({ vs, v, styles })];
+  return renderStyles({ v, vs, vd, styles });
 }
 
-export function styleBar(vs, v) {
+export function styleBar(v, vs, vd) {
   const styles = {
-    ".brz &": [
-      "cssStyleSizeMaxWidthPercent",
-      "cssStyleElementProgressBarPadding",
-      "cssStyleBorderRadiusGrouped",
-      "cssStyleTypographyFontFamily",
-      "cssStyleTypographyFontSize",
-      "cssStyleTypographyLineHeight",
-      "cssStyleTypographyFontWeight",
-      "cssStyleTypographyLetterSpacing",
-      "cssStyleColor",
-      "cssStyleBgColor"
-    ]
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleSizeProgressBarMaxWidthPercent",
+        "cssStyleElementProgressBarPadding",
+        "cssStyleTypography2FontFamily",
+        "cssStyleTypography2FontSize",
+        "cssStyleTypography2LineHeight",
+        "cssStyleTypography2FontWeight",
+        "cssStyleTypography2LetterSpacing"
+      ]
+    }
   };
 
-  return [renderStyles({ vs, styles }), renderStyles({ vs, v, styles })];
+  return renderStyles({ v, vs, vd, styles });
 }

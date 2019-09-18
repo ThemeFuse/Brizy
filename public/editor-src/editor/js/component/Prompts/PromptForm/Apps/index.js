@@ -11,6 +11,8 @@ export { default as egoi } from "./Egoi";
 export { default as hubspot } from "./Hubspot";
 export { default as mailerlite } from "./Mailerlite";
 export { default as drip } from "./Drip";
+export { default as smtp } from "./Smtp";
+export { default as gmail_smtp } from "./Gmail";
 
 // Not Implemented
 export { default as mailgun } from "./Mailgun";
@@ -19,3 +21,6 @@ export { default as constantcontact } from "./ConstantContact";
 export { default as aweber } from "./Aweber";
 export { default as salesforce } from "./Salesforce";
 export { default as sendgrid } from "./SendGrid";
+
+// ReCaptcha
+export { default as recaptcha } from "./Recaptcha";

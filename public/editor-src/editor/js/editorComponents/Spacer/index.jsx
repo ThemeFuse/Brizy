@@ -1,9 +1,12 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import BoxResizer from "visual/component/BoxResizer";
+import classnames from "classnames";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
-import { styleClassName, styleCSSVars } from "./styles";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
+
 import defaultValue from "./defaultValue.json";
 
 const resizerPoints = ["bottomCenter"];
@@ -31,9 +34,18 @@ class Spacer extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
+    const className = classnames(
+      "brz-spacer",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <BoxResizer
           points={resizerPoints}
           restrictions={resizerRestrictions}
@@ -41,7 +53,7 @@ class Spacer extends EditorComponent {
           value={v}
           onChange={this.handleResizerChange}
         >
-          <div className={styleClassName(v)} style={styleCSSVars(v)} />
+          <div className={className} />
         </BoxResizer>
       </Toolbar>
     );

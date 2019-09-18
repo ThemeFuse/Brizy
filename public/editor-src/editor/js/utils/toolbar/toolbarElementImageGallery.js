@@ -1,9 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementImageGalleryGridColumn({ v, device }) {
+export function toolbarElementImageGalleryGridColumn({ v, device, state }) {
   return {
-    id: defaultValueKey({ key: "gridColumn", device }),
+    id: defaultValueKey({ key: "gridColumn", device, state }),
     label: t("Columns"),
     type: "slider",
     slider: {
@@ -18,18 +18,19 @@ export function toolbarElementImageGalleryGridColumn({ v, device }) {
       value: defaultValueValue({
         v,
         key: "gridColumn",
-        device
+        device,
+        state
       })
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ v, key: "gridColumn", device })]: value
+      [defaultValueKey({ v, key: "gridColumn", device, state })]: value
     })
   };
 }
 
-export function toolbarElementImageGallerySpacing({ v, device }) {
+export function toolbarElementImageGallerySpacing({ v, device, state }) {
   return {
-    id: defaultValueKey({ key: "spacing", device }),
+    id: defaultValueKey({ key: "spacing", device, state }),
     label: t("Spacing"),
     type: "slider",
     slider: {
@@ -54,20 +55,27 @@ export function toolbarElementImageGallerySpacing({ v, device }) {
       value: defaultValueValue({
         v,
         key: "spacing",
-        device
+        device,
+        state
       })
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ key: "spacing", device })]: value
+      [defaultValueKey({ key: "spacing", device, state })]: value
     })
   };
 }
 
-export function toolbarElementImageGalleryLightBox({ v }) {
+export function toolbarElementImageGalleryLightBox({
+  v,
+  device,
+  state,
+  devices = "all"
+}) {
   return {
-    id: "lightBox",
+    id: defaultValueKey({ v, key: "lightBox", device, state }),
     label: t("Open in Lightbox"),
     type: "switch",
-    value: v.lightBox
+    devices,
+    value: defaultValueValue({ v, key: "lightBox", device, state })
   };
 }

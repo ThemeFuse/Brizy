@@ -1,35 +1,39 @@
-export function styleShowOnDesktopFilter({ v }) {
-  const { showOnDesktop } = v;
+import { defaultValueValue } from "visual/utils/onChange";
 
-  return showOnDesktop == "on" ? "none" : "blur(3px)";
+export function styleShowOnDesktopFilter({ v }) {
+  const showOnDesktop = v.showOnDesktop;
+
+  return showOnDesktop === "on" || showOnDesktop === undefined
+    ? ""
+    : "blur(3px)";
 }
 
 export function styleShowOnDesktopOpacity({ v }) {
-  const { showOnDesktop } = v;
+  const showOnDesktop = v.showOnDesktop;
 
-  return showOnDesktop == "on" ? 1 : 0.9;
+  return showOnDesktop === "on" || showOnDesktop === undefined ? 1 : 0.9;
 }
 
 export function styleShowOnTabletFilter({ v }) {
-  const { showOnTablet } = v;
+  const showOnTablet = v.showOnTablet;
 
-  return showOnTablet == "on" ? "none" : "blur(3px)";
+  return showOnTablet === "on" || showOnTablet === undefined ? "" : "blur(3px)";
 }
 
 export function styleShowOnTabletOpacity({ v }) {
-  const { showOnTablet } = v;
+  const showOnTablet = v.showOnTablet;
 
-  return showOnTablet == "on" ? 1 : 0.9;
+  return showOnTablet === "on" || showOnTablet === undefined ? 1 : 0.9;
 }
 
 export function styleShowOnMobileFilter({ v }) {
-  const { showOnMobile } = v;
+  const showOnMobile = v.showOnMobile;
 
-  return showOnMobile == "on" ? "none" : "blur(3px)";
+  return showOnMobile === "on" || showOnMobile === undefined ? "" : "blur(3px)";
 }
 
 export function styleShowOnMobileOpacity({ v }) {
-  const { showOnMobile } = v;
+  const showOnMobile = v.showOnMobile;
 
-  return showOnMobile == "on" ? 1 : 0.9;
+  return showOnMobile === "on" || showOnMobile === undefined ? 1 : 0.9;
 }

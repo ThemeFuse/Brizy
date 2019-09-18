@@ -4,8 +4,8 @@ import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
+import { t } from "visual/utils/i18n";
 import Button from "../../Button";
-import { substrString } from "../../utils";
 
 class Account extends Component {
   static defaultProps = {
@@ -38,15 +38,15 @@ class Account extends Component {
     } = this.props;
     const options = accounts.map(({ name, id }) => (
       <RadioItem value={id} key={id}>
-        {name ? substrString(name) : `Account ${id}`}
+        {name ? name : `Account ${id}`}
         {id === usedAccount && completed && (
           <div
             title="Disconnect"
-            className="brz-ed-popup-integrations-account--delete"
+            className="brz-ed-popup-integrations--delete"
             onClick={onDisconnect}
           >
             <EditorIcon
-              icon={disconnectLoading ? "nc-circle-02" : "nc-lock"}
+              icon={disconnectLoading ? "nc-circle-02" : "nc-connection"}
               className={disconnectLoading ? "brz-ed-animated--spin" : ""}
             />
           </div>
@@ -81,7 +81,9 @@ class Account extends Component {
       <div className="brz-ed-alert brz-ed-alert-error">
         <span className="brz-span">
           {accounts.length === 0 &&
-            "Accounts are empty. Please connect a new account and try again."}
+            t(
+              "Accounts are empty. Please connect a new account and try again."
+            )}
           {error}
         </span>
       </div>
@@ -106,7 +108,7 @@ class Account extends Component {
         {(!hasAccounts || error) && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
           <p className="brz-p">
-            <strong className="brz-strong">SELECT ACCOUNT</strong>
+            <strong className="brz-strong">{t("SELECT ACCOUNT")}</strong>
           </p>
         </div>
         <div className="brz-ed-popup-integrations-step__body">
@@ -119,7 +121,7 @@ class Account extends Component {
               icon={connectLoading ? "nc-circle-02" : "nc-add"}
               className={connectLoading ? "brz-ed-animated--spin" : ""}
             />
-            Connect a new account
+            {t("Connect a new account")}
           </div>
           <div className="brz-ed-popup-integrations-step__buttons">
             <Button
@@ -128,7 +130,7 @@ class Account extends Component {
               loading={prevLoading}
               onClick={onPrev}
             >
-              Back
+              {t("Back")}
             </Button>
             <Button
               type="tail"
@@ -136,7 +138,7 @@ class Account extends Component {
               loading={nextLoading}
               onClick={onNext}
             >
-              Continue
+              {t("Continue")}
             </Button>
           </div>
         </div>

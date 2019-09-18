@@ -92,9 +92,11 @@ import $ from "jquery";
       this._loadIframe();
     },
     _updateSettings: function() {
-      var $iframe = this.$elem.find("iframe");
-      var initFn = playerInits[this.settings.type];
-      initFn.call($iframe.get(0), this.settings);
+      if (this.$elem) {
+        var $iframe = this.$elem.find("iframe");
+        var initFn = playerInits[this.settings.type];
+        initFn.call($iframe.get(0), this.settings);
+      }
     },
     _resizePlayer: function() {
       var $iframe = this.$elem.find("iframe");

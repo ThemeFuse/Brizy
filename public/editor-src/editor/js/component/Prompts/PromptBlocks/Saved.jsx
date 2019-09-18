@@ -1,134 +1,110 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
-import DataFilter from "./common/DataFilter";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
-import Editor from "visual/global/Editor";
 import { assetUrl } from "visual/utils/asset";
+import { blockThumbnailData } from "visual/utils/blocks";
 import {
-  blockThumbnailData,
-  placeholderBlockThumbnailUrl
-} from "visual/utils/blocks";
-import { savedBlocksSelector } from "visual/redux/selectors";
+  fontSelector,
+  savedBlocksAssembledSelector
+} from "visual/redux/selectors";
 import { deleteSavedBlock } from "visual/redux/actions";
+import {
+  getUsedModelsFonts,
+  getBlocksStylesFonts
+} from "visual/utils/traverse";
 import { t } from "visual/utils/i18n";
+import { normalizeFonts } from "visual/utils/fonts";
 
-class Saved extends React.Component {
+class Saved extends Component {
   static defaultProps = {
-    filterUI: {
-      search: true
-    },
-    blocksConfig: null,
+    showSearch: true,
+    blocksFilter: savedBlock => savedBlock,
     onAddBlocks: _.noop,
     onClose: _.noop
   };
 
-  constructor(props) {
-    super(props);
-
-    this.blocksConfig = props.blocksConfig || Editor.getBlocks();
-  }
-
   state = {
-    value: ""
+    search: ""
   };
 
-  handleThumbnailAdd = thumbnailData => {
-    const { onAddBlocks, onClose } = this.props;
+  handleThumbnailAdd = async thumbnailData => {
+    const { projectFonts, onAddBlocks, onClose } = this.props;
     const { resolve } = thumbnailData;
+    const fontsDiff = getBlocksStylesFonts(
+      getUsedModelsFonts({ models: resolve }),
+      projectFonts
+    );
+    const fonts = await normalizeFonts(fontsDiff);
 
-    onAddBlocks(resolve);
+    onAddBlocks({
+      block: resolve,
+      fonts
+    });
     onClose();
   };
 
   handleThumbnailRemove = thumbnailData => {
-    this.props.deleteSavedBlock({ id: thumbnailData.id });
+    this.props.dispatch(deleteSavedBlock({ id: thumbnailData.id }));
   };
 
-  renderDataFilter(data) {
-    const { HeaderSlotLeft, filterUI } = this.props;
-    const filterFn = (item, cf) => {
-      const categoryMatch =
-        cf.category === "*" || item.cat.includes(Number(cf.category));
-      const searchMatch =
-        cf.search === "" ||
-        new RegExp(cf.search.replace(/[.*+?^${}()|[\]\\]/g, ""), "i").test(
-          item.keywords
-        );
-
-      return categoryMatch && searchMatch;
-    };
-    const defaultFilter = {
-      category: "*",
-      search: ""
-    };
+  renderThumbnails(data) {
+    const { HeaderSlotLeft, showSearch } = this.props;
 
     return (
-      <DataFilter data={data} filterFn={filterFn} defaultFilter={defaultFilter}>
-        {(filteredThumbnails, currentFilter, setFilter) => (
-          <React.Fragment>
-            {filterUI.search && (
-              <HeaderSlotLeft>
-                <SearchInput
-                  className="brz-ed-popup-two-header__search"
-                  value={currentFilter.search}
-                  onChange={value => setFilter({ search: value })}
-                />
-              </HeaderSlotLeft>
-            )}
-            <div className="brz-ed-popup-two-body__content">
-              <ScrollPane
-                style={{
-                  overflow: "hidden",
-                  height: "100%"
-                }}
-                className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
-              >
-                {filteredThumbnails.length > 0 ? (
-                  <ThumbnailGrid
-                    data={filteredThumbnails}
-                    onThumbnailAdd={this.handleThumbnailAdd}
-                    onThumbnailRemove={this.handleThumbnailRemove}
-                  />
-                ) : (
-                  <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
-                    <p className="brz-ed-popup-two-blocks__grid-clear-text">
-                      {t("Nothing here, please refine your search.")}
-                    </p>
-                  </div>
-                )}
-              </ScrollPane>
-            </div>
-          </React.Fragment>
-        )}
-      </DataFilter>
-    );
-  }
-
-  renderClear() {
-    const { HeaderSlotLeft, filterUI } = this.props;
-
-    return (
-      <React.Fragment>
-        {filterUI.search && (
+      <Fragment>
+        {showSearch && (
           <HeaderSlotLeft>
             <SearchInput
               className="brz-ed-popup-two-header__search"
-              value={this.state.value}
-              onChange={value => this.setState({ value })}
+              value={this.state.search}
+              onChange={value => this.setState({ search: value })}
+            />
+          </HeaderSlotLeft>
+        )}
+        <div className="brz-ed-popup-two-body__content">
+          <ScrollPane
+            style={{
+              overflow: "hidden",
+              height: "100%"
+            }}
+            className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
+          >
+            <ThumbnailGrid
+              data={data}
+              onThumbnailAdd={this.handleThumbnailAdd}
+              onThumbnailRemove={this.handleThumbnailRemove}
+            />
+          </ScrollPane>
+        </div>
+      </Fragment>
+    );
+  }
+
+  renderEmpty() {
+    const { HeaderSlotLeft, showSearch } = this.props;
+
+    return (
+      <Fragment>
+        {showSearch && (
+          <HeaderSlotLeft>
+            <SearchInput
+              className="brz-ed-popup-two-header__search"
+              value={this.state.search}
+              onChange={search => this.setState({ search })}
             />
           </HeaderSlotLeft>
         )}
         <div className="brz-ed-popup-two-body__content">
           <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
-            {this.state.value !== "" ? (
+            {this.state.search !== "" ? (
               <p className="brz-ed-popup-two-blocks__grid-clear-text">
                 {t("Nothing here, please refine your search.")}
               </p>
             ) : (
-              <React.Fragment>
+              <Fragment>
                 <p className="brz-ed-popup-two-blocks__grid-clear-text">
                   {t("Nothing here yet, save a block first.")}
                 </p>
@@ -137,67 +113,29 @@ class Saved extends React.Component {
                     "editor/img/save_toolbar.gif"
                   )}?${Math.random()}`}
                   className="brz-ed-popup-two-blocks__grid-clear-image-saved"
+                  alt="Saved"
                 />
-              </React.Fragment>
+              </Fragment>
             )}
           </div>
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   }
 
   render() {
-    const { savedBlocks } = this.props;
-    const thumbnails = Object.entries(savedBlocks).reduce(
+    const { savedBlocks, blocksFilter } = this.props;
+    const thumbnails = blocksFilter(Object.entries(savedBlocks)).reduce(
       (acc, [savedBlockId, block]) => {
-        const blockData = Editor.getBlock(block.blockId);
-        let thumbnailData;
-
-        if (!blockData) {
-          if (
-            !this.blocksConfig.allowMissing ||
-            !this.blocksConfig.allowMissing(block)
-          ) {
-            return acc;
-          }
-
-          thumbnailData = {
-            id: savedBlockId,
-            thumbnailSrc: placeholderBlockThumbnailUrl(),
-            thumbnailWidth: 500,
-            thumbnailHeight: 200,
-            showRemoveIcon: true,
-            keywords: "",
-            cat: [],
-            type: -1,
-            resolve: block
-          };
-        } else {
-          const inCategories =
-            this.blocksConfig.categories.find(cat =>
-              blockData.cat.includes(cat.id)
-            ) !== undefined;
-          if (!inCategories) {
-            return acc;
-          }
-
-          const { keywords, cat } = blockData;
-          const { url, width, height } = blockThumbnailData(block, {
-            isSavedBlock: true
-          });
-
-          thumbnailData = {
-            id: savedBlockId,
-            thumbnailSrc: url,
-            thumbnailWidth: width,
-            thumbnailHeight: height,
-            showRemoveIcon: true,
-            keywords,
-            cat,
-            type: this.id,
-            resolve: block
-          };
-        }
+        const { url, width, height } = blockThumbnailData(block);
+        const thumbnailData = {
+          id: savedBlockId,
+          thumbnailSrc: url,
+          thumbnailWidth: width,
+          thumbnailHeight: height,
+          showRemoveIcon: true,
+          resolve: block
+        };
 
         acc.push(thumbnailData);
 
@@ -207,19 +145,14 @@ class Saved extends React.Component {
     );
 
     return thumbnails.length > 0
-      ? this.renderDataFilter(thumbnails)
-      : this.renderClear();
+      ? this.renderThumbnails(thumbnails)
+      : this.renderEmpty();
   }
 }
 
 const mapStateToProps = state => ({
-  savedBlocks: savedBlocksSelector(state)
+  savedBlocks: savedBlocksAssembledSelector(state),
+  projectFonts: fontSelector(state)
 });
-const mapDispatchToProps = {
-  deleteSavedBlock
-};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Saved);
+export default connect(mapStateToProps)(Saved);

@@ -9,6 +9,11 @@
     "popups": []
   },
 
+  "toolbar": {
+    "tabsState": "",
+    "tabsColor": ""
+  },
+
   "link": {
     "linkType": "external",
     "linkExternal": "",
@@ -33,7 +38,10 @@
     "largeIconSize": 32,
 
     "fontStyle": "button",
-    "fontFamily": "montserrat",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "montserrat"
+    },
     "fontSize": 12,
     "fontWeight": 700,
     "lineHeight": 1.8,
@@ -117,24 +125,30 @@
     "tempHoverBorderColorOpacity": 0.8,
     "tempHoverBorderColorPalette": "color3",
 
-    "hoverTransition": 50,
-
     "size": "medium",
 
     "smallFontSize": 11,
     "mediumFontSize": 12,
     "largeFontSize": 13,
 
-    "padding": 14,
     "paddingTB": 14,
     "paddingRL": 42,
+    "tempPaddingTB": 14,
+    "tempPaddingRL": 42,
+
+    "padding": 14,
     "paddingTop": 14,
     "paddingRight": 42,
     "paddingBottom": 14,
     "paddingLeft": 42,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
     "tempPadding": 14,
-    "tempPaddingTB": 14,
-    "tempPaddingRL": 42,
     "tempPaddingTop": 14,
     "tempPaddingRight": 42,
     "tempPaddingBottom": 14,
@@ -177,12 +191,43 @@
     "fillType": "filled",
     "tempFillType": "filled",
 
-    "borderWidth": 2,
-    "tempBorderWidth": 2,
-
     "borderStyle": "solid",
 
-    "boxShadow": "off",
+    "tempBorderStyle": "solid",
+
+    "hoverBorderStyle": null,
+
+    "tempHoverBorderStyle": null,
+
+    "borderWidthType": "grouped",
+    "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "tempBorderWidth": 2,
+    "tempBorderTopWidth": 2,
+    "tempBorderRightWidth": 2,
+    "tempBorderBottomWidth": 2,
+    "tempBorderLeftWidth": 2,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
@@ -203,6 +248,8 @@
 
     "hoverBoxShadow": null,
 
+    "tempHoverBoxShadow": null,
+
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,
     "hoverBoxShadowColorPalette": null,
@@ -220,19 +267,30 @@
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowHorizontal": null,
 
+    "hoverTransition": 50,
+
     "customCSS": "",
 
     "tabletSize": "small",
+
     "tabletPadding": 11,
     "tabletPaddingTB": 11,
     "tabletPaddingRL": 26,
+    "tempTabletPaddingTB": 11,
+    "tempTabletPaddingRL": 26,
+
     "tabletPaddingTop": 11,
     "tabletPaddingRight": 26,
     "tabletPaddingBottom": 11,
     "tabletPaddingLeft": 26,
+
+    "tabletPaddingSuffix": "px",
+    "tabletPaddingTopSuffix": "px",
+    "tabletPaddingRightSuffix": "px",
+    "tabletPaddingBottomSuffix": "px",
+    "tabletPaddingLeftSuffix": "px",
+
     "tempTabletPadding": 11,
-    "tempTabletPaddingTB": 11,
-    "tempTabletPaddingRL": 26,
     "tempTabletPaddingTop": 11,
     "tempTabletPaddingRight": 26,
     "tempTabletPaddingBottom": 11,
@@ -243,6 +301,8 @@
     "tabletFontWeight": 700,
     "tabletLineHeight": 1.8,
     "tabletLetterSpacing": 1,
+
+    "tabletBgColorType": null,
 
     "tabletBorderRadius": null,
     "tempTabletBorderRadius": 2,
@@ -267,16 +327,25 @@
     "tempTabletBoxShadowHorizontal": null,
 
     "mobileSize": "small",
-    "mobilePadding": 11,
+
     "mobilePaddingTB": 11,
     "mobilePaddingRL": 26,
+    "tempMobilePaddingTB": 11,
+    "tempMobilePaddingRL": 26,
+
+    "mobilePadding": 11,
     "mobilePaddingTop": 11,
     "mobilePaddingRight": 26,
     "mobilePaddingBottom": 11,
     "mobilePaddingLeft": 26,
+
+    "mobilePaddingSuffix": "px",
+    "mobilePaddingTopSuffix": "px",
+    "mobilePaddingRightSuffix": "px",
+    "mobilePaddingBottomSuffix": "px",
+    "mobilePaddingLeftSuffix": "px",
+
     "tempMobilePadding": 11,
-    "tempMobilePaddingTB": 11,
-    "tempMobilePaddingRL": 26,
     "tempMobilePaddingTop": 11,
     "tempMobilePaddingRight": 26,
     "tempMobilePaddingBottom": 11,
@@ -287,6 +356,8 @@
     "mobileFontWeight": 700,
     "mobileLineHeight": 1.8,
     "mobileLetterSpacing": 1,
+
+    "mobileBgColorType": null,
 
     "mobileBorderRadius": null,
     "tempMobileBorderRadius": 2,

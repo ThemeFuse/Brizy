@@ -25,7 +25,7 @@
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
 
-    "hoverMedia": null,
+    "hoverMedia": "image",
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
@@ -36,7 +36,7 @@
 
     "tabletWidth": null,
 
-    "tabletMedia": null,
+    "tabletMedia": "image",
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
@@ -49,7 +49,7 @@
 
     "mobileWidth": 100,
 
-    "mobileMedia": null,
+    "mobileMedia": "image",
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
@@ -64,13 +64,15 @@
 
     "zIndex": 0,
 
-    "showOnTablet": "on",
-
-    "showOnMobile": "on",
-
     "items": [],
 
-    "popups": []
+    "popups": [],
+
+    "showOnTablet": "on",
+    "tabletPopups": [],
+
+    "showOnMobile": "on",
+    "mobilePopups": []
   },
 
   "link": {
@@ -81,15 +83,25 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
-    "linkPopup": ""
+    "linkPopup": "",
+
+    "tabletLinkType": null,
+    "tabletLinkPopup": null,
+
+    "mobileLinkType": null,
+    "mobileLinkPopup": null
   },
 
   "toolbar": {
-    "tabsState": "tabNormal",
+    "tabsState": "",
+    "tabsCurrentElement": "",
+    "tabsColor": "",
 
-    "tabsCurrentElement": "tabCurrentElement",
+    "tabletTabsState": null,
+    "tabletTabsColor": null,
 
-    "tabsColor": "tabOverlay"
+    "mobileTabsState": null,
+    "mobileTabsColor": null
   },
 
   "style": {
@@ -219,7 +231,9 @@
     "tempHoverBorderColorOpacity": null,
     "tempHoverBorderColorPalette": null,
 
-    "boxShadow": "off",
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
@@ -239,6 +253,8 @@
     "tempBoxShadowHorizontal": 1,
 
     "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
 
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,
@@ -355,6 +371,8 @@
 
     "tabletBoxShadow": null,
 
+    "tempTabletBoxShadow": null,
+
     "tabletBoxShadowColorHex": null,
     "tabletBoxShadowColorOpacity": null,
     "tabletBoxShadowColorPalette": null,
@@ -387,11 +405,11 @@
     "tabletPaddingBottomSuffix": "px",
     "tabletPaddingLeftSuffix": "px",
 
-    "tempTabletPadding": 10,
-    "tempTabletPaddingTop": 10,
-    "tempTabletPaddingRight": 10,
-    "tempTabletPaddingBottom": 10,
-    "tempTabletPaddingLeft": 10,
+    "tempTabletPadding": 15,
+    "tempTabletPaddingTop": 5,
+    "tempTabletPaddingRight": 15,
+    "tempTabletPaddingBottom": 5,
+    "tempTabletPaddingLeft": 15,
 
     "tabletMarginType": "ungrouped",
     "tabletMargin": 0,
@@ -469,6 +487,8 @@
     "tempMobileBorderColorPalette": null,
 
     "mobileBoxShadow": null,
+
+    "tempMobileBoxShadow": null,
 
     "mobileBoxShadowColorHex": null,
     "mobileBoxShadowColorOpacity": null,

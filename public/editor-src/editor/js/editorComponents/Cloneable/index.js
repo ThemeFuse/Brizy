@@ -6,15 +6,9 @@ import Animation from "visual/component/Animation";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./items";
 import * as toolbarExtendConfig from "./extendToolbar";
-import {
-  styleClassName,
-  wrapStyleClassName,
-  wrapStyleCSSVars,
-  containerStyleClassName,
-  containerStyleCSSVars,
-  itemsStyleClassName,
-  itemsStyleCSSVars
-} from "./styles";
+import classnames from "classnames";
+import { styleContainer, styleItem, styleWrap, style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 
 class Cloneable extends EditorComponent {
@@ -207,17 +201,48 @@ class Cloneable extends EditorComponent {
     });
   }
 
-  renderContent(v) {
+  renderContent(v, vs, vd) {
+    const { className, itemClassName } = v;
+
+    const classNameContainer = classnames(
+      "brz-d-xs-flex brz-flex-xs-wrap",
+      css(
+        `${this.constructor.componentId}-container`,
+        `${this.getId()}-container`,
+        styleContainer(v, vs, vd)
+      ),
+      className
+    );
+
+    const classNameItem = classnames(
+      "brz-wrapper-clone__item",
+      css(
+        `${this.constructor.componentId}-item`,
+        `${this.getId()}-item`,
+        styleItem(v, vs, vd)
+      ),
+      itemClassName
+    );
+
+    const classNameWrapper = classnames(
+      "brz-wrapper-clone__wrap",
+      css(
+        `${this.constructor.componentId}-wrap`,
+        `${this.getId()}-wrap`,
+        styleWrap(v, vs, vd)
+      )
+    );
+
     const { minItems, maxItems, blockType } = v;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       blockType,
-      containerClassName: containerStyleClassName(v),
-      itemClassName: itemsStyleClassName(v),
+      containerClassName: classNameContainer,
+      itemClassName: classNameItem,
       minItems,
       maxItems,
       meta: this.getMeta(v),
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig),
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
       onSortableStart: this.handleSortableStart,
       onSortableEnd: this.handleSortableEnd,
       itemProps: {
@@ -227,25 +252,36 @@ class Cloneable extends EditorComponent {
     });
 
     return (
-      <div className={wrapStyleClassName(v)}>
+      <div className={classNameWrapper}>
         <Items {...itemsProps} />
       </div>
     );
   }
 
-  renderForEdit(v) {
-    const { showBorder } = this.props;
-    const style = {
-      ...wrapStyleCSSVars(v),
-      ...containerStyleCSSVars(v),
-      ...itemsStyleCSSVars(v)
-    };
-    const { animationName, animationDuration, animationDelay } = v;
+  renderForEdit(v, vs, vd) {
+    const { showBorder, propsClassName } = this.props;
+
+    const {
+      animationName,
+      animationDuration,
+      animationDelay,
+      customClassName
+    } = v;
+
+    const className = classnames(
+      "brz-wrapper-clone",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      ),
+      customClassName,
+      propsClassName
+    );
 
     return (
       <Animation
-        className={styleClassName(v, this.props)}
-        style={style}
+        className={className}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}
@@ -265,23 +301,41 @@ class Cloneable extends EditorComponent {
           ]}
           path={this.props.path}
         >
-          {this.renderContent(v)}
+          {this.renderContent(v, vs, vd)}
         </ContainerBorder>
       </Animation>
     );
   }
 
-  renderForView(v) {
-    const { animationName, animationDuration, animationDelay } = v;
+  renderForView(v, vs, vd) {
+    const {
+      animationName,
+      animationDuration,
+      animationDelay,
+      customClassName
+    } = v;
+
+    const { propsClassName } = this.props;
+
+    const className = classnames(
+      "brz-wrapper-clone",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      ),
+      customClassName,
+      propsClassName
+    );
 
     return (
       <Animation
-        className={styleClassName(v, this.props)}
+        className={className}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}
       >
-        {this.renderContent(v)}
+        {this.renderContent(v, vs, vd)}
       </Animation>
     );
   }

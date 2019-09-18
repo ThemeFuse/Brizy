@@ -7,6 +7,7 @@ import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
+import { t } from "visual/utils/i18n";
 import Button from "../../Button";
 
 class RadioFields extends Component {
@@ -17,10 +18,10 @@ class RadioFields extends Component {
     description: "",
     img: "",
     active: "",
+    listPro: false,
     lists: [],
-    listApiKeys: [],
+    listsCreate: [],
     apiKeyValue: {},
-    pro: false,
     hasConfirmation: false,
     createLoading: false,
     confirmationNeeded: false,
@@ -46,15 +47,15 @@ class RadioFields extends Component {
     const {
       active,
       lists,
-      listApiKeys,
+      listsCreate,
       hasConfirmation,
       onActive
     } = this.props;
-    const hasApiKeys = listApiKeys && listApiKeys.length > 0;
+    const hasListToCreate = listsCreate && listsCreate.length > 0;
     const className = classnames(
-      "brz-ed-scroll-pane brz-ed-popup-integrations__scroll-pane",
+      "brz-ed-popup-integrations__scroll-pane",
       { "brz-ed-popup-integrations__scroll-pane--big": hasConfirmation },
-      { "brz-ed-popup-integrations__scroll-pane--small": !hasApiKeys }
+      { "brz-ed-popup-integrations__scroll-pane--small": !hasListToCreate }
     );
     const options = lists.map(({ name, id }) => {
       return (
@@ -86,7 +87,7 @@ class RadioFields extends Component {
 
     return (
       <div className="brz-ed-popup-integrations__confirmation">
-        <p className="brz-p">Email confirmation to join the list</p>
+        <p className="brz-p">{t("Email confirmation to join the list")}</p>
         <Select
           defaultValue={confirmationNeeded}
           className="brz-control__select--white"
@@ -94,8 +95,8 @@ class RadioFields extends Component {
           itemHeight="30"
           onChange={onConfirm}
         >
-          <SelectItem value={false}>Not Required</SelectItem>
-          <SelectItem value={true}>Required</SelectItem>
+          <SelectItem value={false}>{t("Not Required")}</SelectItem>
+          <SelectItem value={true}>{t("Required")}</SelectItem>
         </Select>
       </div>
     );
@@ -113,7 +114,7 @@ class RadioFields extends Component {
           icon={createLoading ? "nc-circle-02" : "nc-add"}
           className={createLoading ? "brz-ed-animated--spin" : ""}
         />
-        Create a new list
+        {t("Create a new list")}
       </div>
     );
   }
@@ -127,17 +128,17 @@ class RadioFields extends Component {
         name="proList"
         defaultValue="none"
       >
-        <RadioItem value="none">None</RadioItem>
+        <RadioItem value="none">{t("None")}</RadioItem>
       </Radio>
     );
   }
 
   render() {
     const {
+      listPro,
       lists,
-      listApiKeys,
+      listsCreate,
       hasConfirmation,
-      pro,
       error,
       nextLoading,
       prevLoading,
@@ -145,20 +146,20 @@ class RadioFields extends Component {
       onNext
     } = this.props;
     const hasLists = lists.length > 0;
-    const hasApiKeys = listApiKeys && listApiKeys.length > 0;
+    const hasListToCreate = listsCreate && listsCreate.length > 0;
 
     return (
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__lists">
         {error && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
           <p className="brz-p">
-            <strong className="brz-strong">SELECT LIST</strong>
+            <strong className="brz-strong">{t("SELECT LIST")}</strong>
           </p>
         </div>
         <div className="brz-ed-popup-integrations-step__body">
           {hasLists && this.renderList()}
-          {pro && this.renderProList()}
-          {hasApiKeys && this.renderCreateList()}
+          {listPro && this.renderProList()}
+          {hasListToCreate && this.renderCreateList()}
           {hasConfirmation && this.renderConfirmation()}
 
           <div className="brz-ed-popup-integrations-step__buttons">
@@ -169,17 +170,17 @@ class RadioFields extends Component {
                 loading={prevLoading}
                 onClick={onPrev}
               >
-                Back
+                {t("Back")}
               </Button>
             )}
             {nextLoading !== null && (
               <Button
-                type={hasLists || pro ? "tail" : "gray"}
+                type={hasLists || listPro ? "tail" : "gray"}
                 rightIcon="nc-arrow-right"
                 loading={nextLoading}
-                onClick={hasLists || pro ? onNext : null}
+                onClick={hasLists || listPro ? onNext : null}
               >
-                Continue
+                {t("Continue")}
               </Button>
             )}
           </div>

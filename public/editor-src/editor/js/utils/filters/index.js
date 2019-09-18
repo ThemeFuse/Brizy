@@ -30,16 +30,3 @@ export function applyFilter(name, value, ...extraArgs) {
     return cb(acc, ...extraArgs);
   }, value);
 }
-
-export async function applyAsyncFilter(name, value, ...extraArgs) {
-  if (filterMap[name] === undefined) {
-    return Promise.resolve(value);
-  }
-
-  let result = value;
-  for (let { cb } of filterMap[name]) {
-    result = await cb(result, ...extraArgs);
-  }
-
-  return result;
-}

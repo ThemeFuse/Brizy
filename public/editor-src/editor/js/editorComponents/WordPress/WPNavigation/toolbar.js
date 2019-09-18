@@ -9,6 +9,9 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
+
+import { toolbarColor2, toolbarColorHexField2 } from "visual/utils/toolbar";
+
 import { t } from "visual/utils/i18n";
 
 export default menus => {
@@ -25,8 +28,14 @@ const getItemsForDesktop = menuList => v => {
   const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
-  const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
-    fontStyle === "" ? v : getFontStyle(fontStyle);
+  const {
+    fontSize,
+    fontFamily,
+    fontFamilyType,
+    fontWeight,
+    lineHeight,
+    letterSpacing
+  } = fontStyle === "" ? v : getFontStyle(fontStyle);
 
   // Colors
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -97,17 +106,15 @@ const getItemsForDesktop = menuList => v => {
                   label: t("Font Family"),
                   type: "fontFamily",
                   value: fontFamily,
-                  onChange: ({ id }) => {
-                    return {
-                      ...onChangeTypography(
-                        {
-                          fontFamily: id,
-                          fontWeight: getWeight(fontWeight, id)
-                        },
-                        v
-                      )
-                    };
-                  }
+                  onChange: ({ id, weights, type }) =>
+                    onChangeTypography(
+                      {
+                        fontFamily: id,
+                        fontFamilyType: type,
+                        fontWeight: getWeight(fontWeight, weights)
+                      },
+                      v
+                    )
                 }
               ]
             },
@@ -122,11 +129,9 @@ const getItemsForDesktop = menuList => v => {
                   className: "brz-ed-popover__font-style",
                   display: "block",
                   value: fontStyle,
-                  onChange: newFontStyle => {
-                    return {
-                      fontStyle: newFontStyle
-                    };
-                  }
+                  onChange: newFontStyle => ({
+                    fontStyle: newFontStyle
+                  })
                 },
                 {
                   type: "grid",
@@ -169,7 +174,10 @@ const getItemsForDesktop = menuList => v => {
                           label: t("Weight"),
                           type: "select",
                           display: "block",
-                          choices: getWeightChoices(fontFamily),
+                          choices: getWeightChoices({
+                            family: fontFamily,
+                            type: fontFamilyType
+                          }),
                           value: fontWeight,
                           onChange: newFontWeight =>
                             onChangeTypography({ fontWeight: newFontWeight }, v)
@@ -202,8 +210,9 @@ const getItemsForDesktop = menuList => v => {
     {
       id: "toolbarColor",
       type: "popover",
-      roles: ["admin"],
       size: "auto",
+      title: t("Colors"),
+      roles: ["admin"],
       position: 80,
       icon: {
         style: {
@@ -211,26 +220,19 @@ const getItemsForDesktop = menuList => v => {
         }
       },
       options: [
-        {
-          id: "color",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: colorHex,
-            opacity: v.colorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => ({
-            colorHex: hex,
-            colorOpacity: opacity,
-            colorPalette: isChanged === "hex" ? "" : v.colorPalette
-          })
-        },
-        {
-          id: "colorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: v.colorPalette
-        },
+        toolbarColor2({
+          v,
+          device,
+          state: "normal",
+          onChangeHex: [
+            "onChangeColorHexAndOpacity",
+            "onChangeColorHexAndOpacityPalette"
+          ],
+          onChangePalette: [
+            "onChangeColorPalette",
+            "onChangeColorPaletteOpacity"
+          ]
+        }),
         {
           type: "grid",
           className: "brz-ed-grid__color-fileds",
@@ -238,20 +240,15 @@ const getItemsForDesktop = menuList => v => {
             {
               width: 100,
               options: [
-                {
-                  id: "colorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: colorHex,
-                    opacity: v.colorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    colorPalette: isChanged === "hex" ? "" : v.colorPalette,
-                    colorHex: hex,
-                    colorOpacity: opacity
-                  })
-                }
+                toolbarColorHexField2({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ]
+                })
               ]
             }
           ]
@@ -272,7 +269,8 @@ const getItemsForDesktop = menuList => v => {
 
 const getItemsForTablet = v => {
   // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+  const { fontFamily, fontFamilyType } =
+    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const tabletFontStyle = v.tabletFontStyle;
   const {
@@ -381,7 +379,10 @@ const getItemsForTablet = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(fontFamily),
+                  choices: getWeightChoices({
+                    family: fontFamily,
+                    type: fontFamilyType
+                  }),
                   value: tabletFontWeight,
                   onChange: newTabletFontWeight =>
                     onChangeTypographyTablet(
@@ -424,7 +425,8 @@ const getItemsForTablet = v => {
 
 const getItemsForMobile = v => {
   // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+  const { fontFamily, fontFamilyType } =
+    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const mobileFontStyle = v.mobileFontStyle;
   const {
@@ -533,7 +535,10 @@ const getItemsForMobile = v => {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(fontFamily),
+                  choices: getWeightChoices({
+                    family: fontFamily,
+                    type: fontFamilyType
+                  }),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
                     onChangeTypographyMobile(

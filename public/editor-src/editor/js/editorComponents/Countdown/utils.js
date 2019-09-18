@@ -1,8 +1,5 @@
 import _ from "underscore";
-import Config from "visual/global/Config";
 import * as languages from "./languages";
-
-const pageLoadTime = Math.floor(Date.now());
 
 export const formatDate = (date, template = "d/m/Y") => {
   date = new Date(date);
@@ -38,14 +35,6 @@ function isValidDate(date) {
     composedDate.getMonth() == m &&
     composedDate.getFullYear() == y
   );
-}
-
-export function getServerTimestamp() {
-  const serverTime = parseInt(Config.get("serverTimestamp") * 1000);
-  const currentTime = Math.floor(Date.now());
-  const delta = currentTime - pageLoadTime;
-
-  return serverTime + delta;
 }
 
 export function getTime(date, hours, minutes) {

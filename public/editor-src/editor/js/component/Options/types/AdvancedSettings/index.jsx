@@ -3,10 +3,15 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
-import { currentTooltip } from "visual/component/Controls/Tooltip";
+import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
+import { filterOptionsData } from "visual/component/Options";
 import RightSidebar from "./RightSidebar";
 
 class AdvancedSettingsOptionType extends React.Component {
+  static shouldOptionBeFiltered({ options }) {
+    return filterOptionsData(options).length === 0;
+  }
+
   static defaultProps = {
     className: "",
     icon: null,
@@ -30,7 +35,11 @@ class AdvancedSettingsOptionType extends React.Component {
           isSidebarOpen: true
         },
         () => {
-          currentTooltip && currentTooltip.hide();
+          const tooltip = getCurrentTooltip();
+
+          if (tooltip) {
+            tooltip.reposition();
+          }
         }
       );
     }
