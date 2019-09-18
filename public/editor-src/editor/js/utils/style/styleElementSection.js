@@ -81,23 +81,23 @@ export function styleElementSectionBoxShadow({ v, device, state }) {
   );
   const hoverInBoth = hoverBoxShadowVertical === 0;
 
-  return isHover === "hover" && hoverBoxShadow === "on"
+  const prefix = boxShadow === "inset" ? "inset " : "";
+  const hoverPrefix = hoverBoxShadow === "inset" ? "inset " : "";
+
+  return isHover === "hover" &&
+    (hoverBoxShadow === "on" || hoverBoxShadow === "inset")
     ? hoverInBoth
-      ? `inset 0 ${hoverBoxShadowVertical +
-          hoverDiff}px ${hoverBoxShadowBlur}px -${hoverBoxShadowBlur}px ${hoverColor},
-      inset 0 -${hoverBoxShadowVertical +
-        hoverDiff}px ${hoverBoxShadowBlur}px -${hoverBoxShadowBlur}px ${hoverColor}`
-      : `inset 0 ${hoverBoxShadowVertical +
-          hoverDiff}px ${hoverBoxShadowBlur}px -${hoverBoxShadowBlur}px ${hoverColor},
-            inset 0 0 0 0 ${hoverColor}`
-    : boxShadow === "on"
+      ? `${hoverPrefix} 0 ${hoverBoxShadowVertical +
+          hoverDiff}px ${hoverBoxShadowBlur}px -${hoverBoxShadowBlur}px ${hoverColor}, ${hoverPrefix} 0 -${hoverBoxShadowVertical +
+          hoverDiff}px ${hoverBoxShadowBlur}px -${hoverBoxShadowBlur}px ${hoverColor}`
+      : `${hoverPrefix} 0 ${hoverBoxShadowVertical +
+          hoverDiff}px ${hoverBoxShadowBlur}px -${hoverBoxShadowBlur}px ${hoverColor}, ${hoverPrefix} 0 0 0 0 ${hoverColor}`
+    : boxShadow === "on" || boxShadow === "inset"
     ? inBoth
-      ? `inset 0 ${boxShadowVertical +
-          diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color},
-          inset 0 -${boxShadowVertical +
-            diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color}`
-      : `inset 0 ${boxShadowVertical +
-          diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color},
-          inset 0 0 0 0 ${color}`
+      ? `${prefix} 0 ${boxShadowVertical +
+          diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color}, ${prefix} 0 -${boxShadowVertical +
+          diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color}`
+      : `${prefix} 0 ${boxShadowVertical +
+          diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${color}, ${prefix} 0 0 0 0 ${color}`
     : "none";
 }

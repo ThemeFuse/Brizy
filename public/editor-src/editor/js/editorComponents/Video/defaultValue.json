@@ -17,11 +17,9 @@
   },
 
   "toolbar": {
-    "tabsState": "tabNormal",
-
-    "tabsCurrentElement": "tabCurrentElement",
-
-    "tabsColor": "tabOverlay"
+    "tabsState": "",
+    "tabsCurrentElement": "",
+    "tabsColor": ""
   },
 
   "style": {
@@ -105,6 +103,20 @@
     "tempBgColorOpacity": 0.75,
     "tempBgColorPalette": "",
 
+    "colorHex": "#0000ee",
+    "colorOpacity": 1.0,
+    "colorPalette": "",
+
+    "tempColorOpacity": 1.0,
+    "tempColorPalette": "color8",
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
+
     "hoverBgColorHex": "#239ddb",
     "hoverBgColorOpacity": 0.75,
     "hoverBgColorPalette": "",
@@ -130,7 +142,9 @@
 
     "size": 100,
 
-    "boxShadow": "off",
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
@@ -150,6 +164,8 @@
     "tempBoxShadowHorizontal": 1,
 
     "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
 
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,

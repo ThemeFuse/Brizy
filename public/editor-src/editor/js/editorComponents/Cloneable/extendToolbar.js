@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarHorizontalAlign,
   toolbarElementCloneableSpacing,
@@ -8,17 +9,28 @@ import {
   toolbarZIndex,
   toolbarCustomCSSClass,
   toolbarEntranceAnimation,
-  toolbarShowOnTablet,
-  toolbarShowOnMobile
+  toolbarShowOnResponsive
 } from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
-  const device = "desktop";
-
+export function getItems({ v, device }) {
   return [
-    toolbarHorizontalAlign({ v, device }),
+    toolbarHorizontalAlign({
+      v,
+      device,
+      state: "normal"
+    }),
+    toolbarShowOnResponsive({
+      v,
+      device,
+      state: "normal",
+      devices: "responsive"
+    }),
     {
-      id: "toolbarCurrentShortcode",
+      id: defaultValueKey({
+        key: "toolbarCurrentShortcode",
+        device,
+        state: "normal"
+      }),
       type: "popover",
       options: [
         {
@@ -28,14 +40,24 @@ export function getItemsForDesktop(v) {
           tabs: [
             {
               id: "currentShortcodeTab",
-              options: [toolbarElementCloneableSpacing({ v, device })]
+              options: [
+                toolbarElementCloneableSpacing({
+                  v,
+                  device,
+                  state: "normal"
+                })
+              ]
             }
           ]
         }
       ]
     },
     {
-      id: "advancedSettings",
+      id: defaultValueKey({
+        key: "advancedSettings",
+        device,
+        state: "normal"
+      }),
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
@@ -43,9 +65,26 @@ export function getItemsForDesktop(v) {
       icon: "nc-cog",
       title: t("Settings"),
       options: [
+        toolbarPadding({
+          v,
+          device,
+          devices: "responsive",
+          state: "normal",
+          onChangeGrouped: ["onChangePaddingGrouped"],
+          onChangeUngrouped: ["onChangePaddingUngrouped"]
+        }),
+        toolbarMargin({
+          v,
+          device,
+          devices: "responsive",
+          state: "normal",
+          onChangeGrouped: ["onChangeMarginGrouped"],
+          onChangeUngrouped: ["onChangeMarginUngrouped"]
+        }),
         {
           id: "settingsTabs",
           type: "tabs",
+          devices: "desktop",
           align: "start",
           tabs: [
             {
@@ -56,6 +95,7 @@ export function getItemsForDesktop(v) {
                 toolbarPadding({
                   v,
                   device,
+                  devices: "desktop",
                   state: "normal",
                   onChangeGrouped: ["onChangePaddingGrouped"],
                   onChangeUngrouped: ["onChangePaddingUngrouped"]
@@ -63,6 +103,7 @@ export function getItemsForDesktop(v) {
                 toolbarMargin({
                   v,
                   device,
+                  devices: "desktop",
                   state: "normal",
                   onChangeGrouped: ["onChangeMarginGrouped"],
                   onChangeUngrouped: ["onChangeMarginUngrouped"]
@@ -70,122 +111,43 @@ export function getItemsForDesktop(v) {
               ]
             },
             {
-              id: "moreSettingsAdvanced",
+              id: defaultValueKey({
+                key: "moreSettingsAdvanced",
+                device,
+                state: "normal"
+              }),
               label: t("Advanced"),
+              devices: "desktop",
               tabIcon: "nc-cog",
               options: [
-                toolbarShowOnDesktop({ v }),
-                toolbarZIndex({ v }),
-                toolbarCustomCSSClass({ v }),
-                toolbarEntranceAnimation({ v })
+                toolbarShowOnDesktop({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop"
+                }),
+                toolbarZIndex({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop"
+                }),
+                toolbarCustomCSSClass({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop"
+                }),
+                toolbarEntranceAnimation({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop"
+                })
               ]
             }
           ]
         }
-      ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  const device = "tablet";
-  const state = "normal";
-
-  return [
-    {
-      id: "tabletToolbarCurrentShortcode",
-      type: "popover",
-      options: [
-        {
-          id: "currentShortcodeTabs",
-          className: "",
-          type: "tabs",
-          tabs: [
-            {
-              id: "currentShortcodeTab",
-              options: [toolbarElementCloneableSpacing({ v, device })]
-            }
-          ]
-        }
-      ]
-    },
-    toolbarShowOnTablet({ v }),
-    toolbarHorizontalAlign({ v, device }),
-    {
-      id: "tabletToolbarSettings",
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: [
-        toolbarPadding({
-          v,
-          device,
-          state,
-          onChangeGrouped: ["onChangePaddingGrouped"],
-          onChangeUngrouped: ["onChangePaddingUngrouped"]
-        }),
-        toolbarMargin({
-          v,
-          device,
-          state,
-          onChangeGrouped: ["onChangeMarginGrouped"],
-          onChangeUngrouped: ["onChangeMarginUngrouped"]
-        })
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  const device = "mobile";
-  const state = "normal";
-
-  return [
-    {
-      id: "mobileToolbarCurrentShortcode",
-      type: "popover",
-      options: [
-        {
-          id: "currentShortcodeTabs",
-          className: "",
-          type: "tabs",
-          tabs: [
-            {
-              id: "currentShortcodeTab",
-              options: [toolbarElementCloneableSpacing({ v, device })]
-            }
-          ]
-        }
-      ]
-    },
-    toolbarShowOnMobile({ v }),
-    toolbarHorizontalAlign({ v, device }),
-    {
-      id: "mobileToolbarSettings",
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: [
-        toolbarPadding({
-          v,
-          device,
-          state,
-          onChangeGrouped: ["onChangePaddingGrouped"],
-          onChangeUngrouped: ["onChangePaddingUngrouped"]
-        }),
-        toolbarMargin({
-          v,
-          device,
-          state,
-          onChangeGrouped: ["onChangeMarginGrouped"],
-          onChangeUngrouped: ["onChangeMarginUngrouped"]
-        })
       ]
     }
   ];

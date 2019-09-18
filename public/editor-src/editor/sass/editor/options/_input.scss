@@ -4,11 +4,9 @@
     margin-left: 10px;
   }
 }
-
 .brz-ed-option__input-number-wrap {
   position: relative;
 }
-
 .brz-ed-option__input-container {
   position: relative;
 
@@ -47,25 +45,25 @@
     background-color: transparent;
     border: none;
     outline: 0;
-
     color: $options-label-color;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     text-align: left;
     text-transform: uppercase;
-
     padding: 2px 0;
+    transition: 0.2s linear color, 0.2s border-color linear;
 
     &:hover {
       border-bottom: 1px solid $options-label-color;
+      transition: 0.2s border-color linear;
     }
-
     &:focus,
     &:active {
-      border-bottom: 1px solid #33beea;
+      border-bottom: 1px solid $brand-primary;
+      color: #fff;
+      transition: 0.2s linear color, 0.2s border-color linear;
     }
   }
 }
-
 .brz-ed-option__multi-input {
   .brz-input {
     width: 17px;
@@ -82,8 +80,7 @@
   .brz-icon {
     color: $options-label-color;
     margin-right: 11px;
-    width: 13px;
-    height: 13px;
+    font-size: 13px;
   }
 
   .brz-input:last-child {

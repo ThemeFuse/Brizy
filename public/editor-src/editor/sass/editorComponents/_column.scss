@@ -5,8 +5,16 @@
   flex-direction: column;
   min-height: 1px;
   flex-basis: 100%;
+  will-change: flex, max-width;
 
   > .brz-bg {
     flex: 1 1 auto;
+  }
+  & .brz-container-link {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
   }
 }

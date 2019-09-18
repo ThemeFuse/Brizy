@@ -1,19 +1,41 @@
 import { defaultValueValue } from "visual/utils/onChange";
 
-export function stylePadding({ v, device, state, current, hasItems = true }) {
-  return hasItems
-    ? defaultValueValue({ v, key: "paddingType", device, state }) === "grouped"
-      ? `${defaultValueValue({
-          v,
-          key: "padding",
-          device,
-          state
-        })}${defaultValueValue({ v, key: "paddingSuffix", device, state })}`
-      : `${defaultValueValue({
-          v,
-          key: current,
-          device,
-          state
-        })}${defaultValueValue({ v, key: `${current}Suffix`, device, state })}`
-    : "initial";
+export function stylePaddingType({ v, device, state }) {
+  return defaultValueValue({ v, key: "paddingType", device, state });
+}
+
+export function stylePaddingGrouped({ v, device, state }) {
+  return defaultValueValue({ v, key: "padding", device, state });
+}
+
+export function stylePaddingUngrouped({ v, device, state, current }) {
+  return defaultValueValue({ v, key: current, device, state });
+}
+
+export function stylePaddingGroupedSuffix({ v, device, state }) {
+  return defaultValueValue({ v, key: "paddingSuffix", device, state });
+}
+
+export function stylePaddingUngroupedSuffix({ v, device, state, current }) {
+  return defaultValueValue({ v, key: current, device, state });
+}
+
+export function styleItemPaddingTop({ v, device }) {
+  return `${defaultValueValue({ v, key: "itemPaddingTop", device })}px`;
+}
+
+export function styleItemPaddingRight({ v, device }) {
+  return `${parseFloat(
+    defaultValueValue({ v, key: "itemPaddingRight", device }) / 2
+  )}px`;
+}
+
+export function styleItemPaddingBottom({ v, device }) {
+  return `${defaultValueValue({ v, key: "itemPaddingBottom", device })}px`;
+}
+
+export function styleItemPaddingLeft({ v, device }) {
+  return `${parseFloat(
+    defaultValueValue({ v, key: "itemPaddingLeft", device }) / 2
+  )}px`;
 }

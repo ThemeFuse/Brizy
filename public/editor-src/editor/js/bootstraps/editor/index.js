@@ -5,26 +5,33 @@ import "@babel/polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import deepMerge from "deepmerge";
 
 import Config from "visual/global/Config";
 
 import {
+  getProject,
   getPages,
   createPage,
-  getGlobals,
   getGlobalBlocks,
   getSavedBlocks
 } from "visual/utils/api/editor";
-import { applyAsyncFilter } from "visual/utils/filters";
+import { assetUrl } from "visual/utils/asset";
+
+import {
+  getUsedModelsFonts,
+  getUsedStylesFonts,
+  getBlocksStylesFonts
+} from "visual/utils/traverse";
+import { normalizeFonts } from "visual/utils/fonts";
+import { flatMap } from "visual/utils/array";
 
 import { createStore } from "visual/redux/store";
-import middleware from "./middleware";
+import getMiddleware from "./middleware";
 import { hydrate, editorRendered } from "visual/redux/actions";
 
 import Editor from "visual/component/Editor";
 import "../registerEditorParts";
-
-import "visual/experimental/screenshots";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
@@ -38,11 +45,18 @@ const pageCurtain = window.parent.document.querySelector(
       throw new Error("could not find #brz-ed-root");
     }
 
-    const [pages, globals, globalBlocks, savedBlocks] = await Promise.all([
+    const [
+      project,
+      pages,
+      globalBlocks,
+      savedBlocks,
+      blocksThumbnailSizes
+    ] = await Promise.all([
+      getProject(),
       getPages(),
-      getGlobals(),
       getGlobalBlocks(),
-      getSavedBlocks()
+      getSavedBlocks(),
+      fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then(r => r.json())
     ]);
 
     // create the index page when api returns no pages
@@ -67,27 +81,54 @@ const pageCurtain = window.parent.document.querySelector(
     }
 
     if (process.env.NODE_ENV === "development") {
+      console.log("Project loaded", project);
       console.log("Pages loaded", pages);
-      console.log("Globals loaded", globals);
       console.log("Global blocks loaded", globalBlocks);
       console.log("Saved blocks loaded", savedBlocks);
     }
 
-    const store = createStore({
-      middleware: await applyAsyncFilter(
-        "bootstraps.editor.middleware",
-        middleware
-      )
-    });
-
     const indexPage = pages.find(page => page.is_index);
-    store.dispatch(
-      hydrate({ page: indexPage, globals, globalBlocks, savedBlocks })
+
+    // NEW FONTS FOUND
+    // some fonts are found in models
+    // that are not present in project
+    // we need to find them in google
+    // and add them to the project
+    const { styles, extraFontStyles = [], fonts } = project.data;
+    const pageFonts = getUsedModelsFonts({
+      models: indexPage.data,
+      globalBlocks
+    });
+    const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
+    const stylesFonts = getUsedStylesFonts([...fontStyles, ...extraFontStyles]);
+    const fontsDiff = await normalizeFonts(
+      getBlocksStylesFonts([...pageFonts, ...stylesFonts], fonts)
+    );
+    const newFonts = fontsDiff.reduce(
+      (acc, { type, fonts }) => ({ ...acc, [type]: { data: fonts } }),
+      {}
     );
 
-    // if (process.env.NODE_ENV === "development") {
-    global.brzStore = store; // think about putting it in development mode later
-    // }
+    const store = createStore({
+      middleware: await getMiddleware()
+    });
+
+    store.dispatch(
+      hydrate({
+        project,
+        fonts: deepMerge(fonts, newFonts),
+        page: indexPage,
+        globalBlocks,
+        savedBlocks,
+        blocksThumbnailSizes
+      })
+    );
+
+    // think about putting it only in development mode later
+    if (IS_EDITOR) {
+      window.brzStore = store;
+      window.parent.brzStore = store;
+    }
 
     ReactDOM.render(
       <Provider store={store}>

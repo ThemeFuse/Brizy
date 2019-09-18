@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import Tooltip from "visual/component/Controls/Tooltip";
 import Select from "visual/component/Controls/Select";
 import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -17,25 +18,32 @@ class SelectOptionType extends React.Component {
     attr: {},
     helper: false,
     helperContent: "",
+    helperPlacement: "top-center",
     onChange: _.noop
   };
 
   renderLabel() {
-    const { label, helper: _helper, helperContent } = this.props;
-    const helper = _helper ? (
-      <div className="brz-ed-option__helper">
-        <EditorIcon icon="nc-alert-circle-que" />
-        <div
-          className="brz-ed-option__helper__content"
-          dangerouslySetInnerHTML={{ __html: helperContent }}
-        />
-      </div>
-    ) : null;
+    const { label, helper, helperContent, helperPlacement } = this.props;
 
     return (
       <div className="brz-ed-option__label brz-ed-option__select__label">
         {label}
-        {helper}
+        {helper && (
+          <div className="brz-ed-option__helper">
+            <Tooltip
+              placement={helperPlacement}
+              openOnClick={false}
+              overlay={
+                <div
+                  className="brz-ed-option__helper__content"
+                  dangerouslySetInnerHTML={{ __html: helperContent }}
+                />
+              }
+            >
+              <EditorIcon icon="nc-alert-circle-que" />
+            </Tooltip>
+          </div>
+        )}
       </div>
     );
   }

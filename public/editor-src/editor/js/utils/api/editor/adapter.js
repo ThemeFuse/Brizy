@@ -1,3 +1,29 @@
+// project
+
+export const parseProject = project => {
+  let data;
+
+  if (!project.data) {
+    throw new Error("Project data should exist");
+  } else {
+    try {
+      data = JSON.parse(project.data);
+    } catch (e) {
+      throw `Failed to parse project data ${project.data}`;
+    }
+  }
+
+  return { ...project, data };
+};
+
+export const stringifyProject = project => {
+  let data = JSON.stringify(project.data);
+
+  return { ...project, data };
+};
+
+// page
+
 export const parsePage = page => {
   const id = String(page.id);
   let data;
@@ -21,16 +47,49 @@ export const stringifyPage = page => {
   return { ...page, data };
 };
 
-export const parseGlobals = globals => {
-  if (!globals) {
-    return {};
+// global blocks
+
+export const parseGlobalBlock = globalBlock => {
+  let data;
+
+  if (!globalBlock.data) {
+    throw new Error("globalBlock data should exist");
+  } else {
+    try {
+      data = JSON.parse(globalBlock.data);
+    } catch (e) {
+      throw `Failed to parse globalBlock data ${globalBlock.data}`;
+    }
   }
 
-  try {
-    return JSON.parse(globals);
-  } catch (e) {
-    throw `Failed to parse globals ${globals}`;
-  }
+  return { ...globalBlock, data };
 };
 
-export const stringifyGlobals = globals => JSON.stringify(globals);
+export const stringifyGlobalBlock = globalBlock => {
+  let data = JSON.stringify(globalBlock.data);
+
+  return { ...globalBlock, data };
+};
+
+// saved blocks
+export const parseSavedBlock = savedBlock => {
+  let data;
+
+  if (!savedBlock.data) {
+    throw new Error("savedBlock data should exist");
+  } else {
+    try {
+      data = JSON.parse(savedBlock.data);
+    } catch (e) {
+      throw `Failed to parse savedBlock data ${savedBlock.data}`;
+    }
+  }
+
+  return { ...savedBlock, data };
+};
+
+export const stringifySavedBlock = savedBlock => {
+  let data = JSON.stringify(savedBlock.data);
+
+  return { ...savedBlock, data };
+};

@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
 import Options from "visual/component/Options";
 import Option from "visual/component/Options/Option";

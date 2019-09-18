@@ -6,6 +6,10 @@ import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 
 class PopoverOptionType extends React.Component {
+  static shouldOptionBeFiltered({ options }) {
+    return filterOptionsData(options).length === 0;
+  }
+
   static defaultProps = {
     className: "",
     icon: "nc-cog",

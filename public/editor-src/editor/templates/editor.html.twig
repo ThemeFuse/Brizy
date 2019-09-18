@@ -55,9 +55,10 @@
             <script src="{{ assetsUrl }}/editor/js/editor.vendor.js"></script>
             <script>
               window.__VISUAL_CONFIG__ = {{ editorData | json_encode }};
-            {% if DEV is defined and DEV %}
-              window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-            {% endif %}
+
+              {% if DEV is defined and DEV %}
+                window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+              {% endif %}
             </script>
             <script src="{{ assetsUrl }}/editor/js/editor.js"></script>
 

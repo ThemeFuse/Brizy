@@ -6,11 +6,17 @@ import {
   saveOnChanges
 } from "visual/utils/onChange";
 
-export function toolbarElementProgressBarPercentage({ v, device }) {
+export function toolbarElementProgressBarPercentage({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "percentage",
+    id: defaultValueKey({ key: "percentage", device, state }),
     label: t("Percentage"),
     type: "slider",
+    devices,
     slider: {
       min: 1,
       max: 100
@@ -28,20 +34,36 @@ export function toolbarElementProgressBarPercentage({ v, device }) {
       ]
     },
     value: {
-      value: v.percentage
+      value: defaultValueValue({
+        v,
+        key: "percentage",
+        device,
+        state
+      })
     },
-    onChange: ({ value: percentage }) => ({
-      percentage
+    onChange: ({ value }) => ({
+      [defaultValueKey({ v, key: "percentage", device, state })]: value
     })
   };
 }
 
-export function toolbarElementProgressBarShowPercentage({ v }) {
+export function toolbarElementProgressBarShowPercentage({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
     id: "showPercentage",
+    devices,
     label: t("Show Percentage"),
     type: "switch",
-    value: v.showPercentage
+    value: defaultValueValue({
+      v,
+      key: "showPercentage",
+      device,
+      state
+    })
   };
 }
 

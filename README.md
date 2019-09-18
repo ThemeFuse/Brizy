@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.1<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.81<br>
+Stable tag: 1.0.82<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,28 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.82 - 2019-09-18 ###
+* New: Custom fonts
+* New: Text image mask
+* New: Text shadow
+* New: Text gradient color
+* New: Block shape dividers were moved from PRO to Free
+* Improved: Migrated Soundcloud, Counter, Facebook Group, Page and Comments to a new CSS system meant to clean up the DOM
+* Improved: Reduced JavaScript file size
+* Improved: Improved error handling in api
+* Fixed: Unable to “unglobal” Header and Footer blocks
+* Fixed: Unable to use drag and drop in a global Popup block
+* Fixed: Inputs, selects and textareas not being cleared when successfully submitting a form
+* Fixed: Changing Section width in desktop mode affected other modes as well
+* Fixed: RichText putting extra whitespace sometimes
+* Fixed: SVG for two Section dividers
+* Fixed: Wrong submit settings action call
+* Fixed: Media asset processor
+* Fixed: Template view on network sites
+* Fixed: Fixed the case for duplicated global blocks in database
+* Fixed: Media asset processor to replace all image urls from static css
+* Fixed: Fixed ajax urls
 
 ### 1.0.81 - 2019-05-29 ###
 * Fixed: Popup option not working for certain users

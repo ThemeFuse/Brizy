@@ -41,9 +41,7 @@ export function defaultValueValue({
 }) {
   const deviceKey = defaultValueKey({ key, device, state });
 
-  return v[deviceKey] === null || v[deviceKey] === undefined
-    ? v[key]
-    : v[deviceKey];
+  return v[deviceKey] === null ? v[key] : v[deviceKey];
 }
 
 function defaultValueKeyByState(key, state) {
@@ -68,4 +66,30 @@ function defaultValueKeyByDevice(key, device) {
     : device === "tablet"
     ? `tablet${capitalize(key)}`
     : key;
+}
+
+export function deviceStateValueByKey(v, key) {
+  const states = [
+    { device: "desktop", state: "normal" },
+    { device: "desktop", state: "hover" },
+    { device: "tablet", state: "normal" },
+    { device: "mobile", state: "normal" }
+  ];
+
+  return states.reduce((acc, state) => {
+    return acc || defaultValueValue({ v, key, ...state });
+  }, "");
+}
+
+export function makeKeyByStateDevice(v, key) {
+  const states = [
+    { device: "desktop", state: "normal" },
+    { device: "desktop", state: "hover" },
+    { device: "tablet", state: "normal" },
+    { device: "tablet", state: "hover" },
+    { device: "mobile", state: "normal" },
+    { device: "mobile", state: "hover" }
+  ];
+
+  return states.map(state => defaultValueKey({ key, ...state }));
 }

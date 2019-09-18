@@ -1,37 +1,39 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarReverseColumns({ v, device, position = 20 }) {
+export function toolbarReverseColumns({
+  v,
+  device,
+  devices = "all",
+  state,
+  position = 20
+}) {
   const reverseColumnsKey = defaultValueKey({
     v,
     key: "reverseColumns",
-    device
+    device,
+    state
   });
   const reverseColumnsValue = defaultValueValue({
     v,
     key: "reverseColumns",
-    device
+    device,
+    state
   });
-
-  const iconOn =
-    device === "tablet" ? "nc-reverse-columns-right" : "nc-reverse-columns-top";
-  const iconOff =
-    device === "tablet"
-      ? "nc-reverse-columns-left"
-      : "nc-reverse-columns-bottom";
 
   return {
     id: reverseColumnsKey,
     type: "toggle",
     position,
+    devices,
     choices: [
       {
-        icon: iconOn,
+        icon: "nc-switch",
         title: t("Reverse Columns"),
         value: "on"
       },
       {
-        icon: iconOff,
+        icon: "nc-switch",
         title: t("Reverse Columns"),
         value: "off"
       }

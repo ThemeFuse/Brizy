@@ -5,12 +5,13 @@ import HotKeys from "visual/component/HotKeys";
 
 class Fixed extends React.Component {
   static defaultProps = {
-    onClose: _.noop,
-    className: ""
+    className: "",
+    onClose: _.noop
   };
 
   render() {
-    const className = classnames("brz-ed-fixed", this.props.className);
+    const { className: _className, children, onClose } = this.props;
+    const className = classnames("brz-ed-fixed", _className);
 
     return (
       <div className={className}>
@@ -19,8 +20,8 @@ class Fixed extends React.Component {
           id="key-helper-prompt-esc"
           onKeyUp={this.props.onClose}
         />
-        <div className="brz-ed-fixed-overlay" onClick={this.props.onClose} />
-        <div className="brz-ed-fixed-scroll">{this.props.children}</div>
+        <div className="brz-ed-fixed-overlay" onClick={onClose} />
+        <div className="brz-ed-fixed-scroll">{children}</div>
       </div>
     );
   }

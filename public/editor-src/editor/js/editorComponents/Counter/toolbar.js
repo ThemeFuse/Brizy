@@ -1,33 +1,23 @@
 import { hexToRgba } from "visual/utils/color";
-import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import {
-  defaultValueValue,
-  onChangeTypography,
-  onChangeTypographyTablet,
-  onChangeTypographyMobile
-} from "visual/utils/onChange";
-
+import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementCounterStart,
   toolbarElementCounterEnd,
   toolbarElementCounterDuration,
-  toolbarColorHexAndOpacity,
-  toolbarColorPalette,
-  toolbarColorFields,
-  toolbarCustomCSS
+  toolbarColor2,
+  toolbarColorHexField2,
+  toolbarTypography2FontFamily,
+  toolbarTypography2FontStyle,
+  toolbarTypography2FontSize,
+  toolbarTypography2LineHeight,
+  toolbarTypography2FontWeight,
+  toolbarTypography2LetterSpacing
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
 
-export function getItemsForDesktop(v) {
-  const device = "desktop";
-  // Typography
-  const fontStyle = v.fontStyle;
-  const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
-    fontStyle === "" ? v : getFontStyle(fontStyle);
-
-  // Color
+export function getItems({ v, device }) {
   const { hex: colorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "colorHex", device }),
     defaultValueValue({ v, key: "colorPalette", device })
@@ -35,22 +25,42 @@ export function getItemsForDesktop(v) {
 
   return [
     {
-      id: "toolbarCurrentShortcode",
+      id: defaultValueKey({
+        key: "toolbarCurrentShortcode",
+        device,
+        state: "normal"
+      }),
       type: "popover",
+      devices: "desktop",
       icon: "nc-counter-outline",
       title: t("Counter"),
       position: 70,
       options: [
-        toolbarElementCounterStart({ v }),
-        toolbarElementCounterEnd({ v }),
-        toolbarElementCounterDuration({ v })
+        toolbarElementCounterStart({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        }),
+        toolbarElementCounterEnd({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        }),
+        toolbarElementCounterDuration({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        })
       ]
     },
     {
-      id: "toolbarTypography",
+      id: defaultValueKey({ key: "popoverTypography", device }),
       type: "popover",
       icon: "nc-font",
-      size: "large",
+      size: device === "desktop" ? "large" : "auto",
       title: t("Typography"),
       roles: ["admin"],
       position: 70,
@@ -62,42 +72,20 @@ export function getItemsForDesktop(v) {
             {
               width: 54,
               options: [
-                {
-                  id: "fontFamily",
-                  label: t("Font Family"),
-                  type: "fontFamily",
-                  value: fontFamily,
-                  onChange: ({ id }) => {
-                    return {
-                      ...onChangeTypography(
-                        {
-                          fontFamily: id,
-                          fontWeight: getWeight(fontWeight, id)
-                        },
-                        v
-                      )
-                    };
-                  }
-                }
+                toolbarTypography2FontFamily({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal",
+                  onChange: ["onChangeTypography2"]
+                })
               ]
             },
             {
               width: 46,
               className: "brz-ed-popover__typography",
               options: [
-                {
-                  id: "fontStyle",
-                  type: "fontStyle",
-                  label: t("Typography"),
-                  className: "brz-ed-popover__font-style",
-                  display: "block",
-                  value: fontStyle,
-                  onChange: newFontStyle => {
-                    return {
-                      fontStyle: newFontStyle
-                    };
-                  }
-                },
+                toolbarTypography2FontStyle({ v, device, state: "normal" }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__typography",
@@ -105,60 +93,35 @@ export function getItemsForDesktop(v) {
                     {
                       width: "50",
                       options: [
-                        {
-                          id: "fontSize",
-                          label: t("Size"),
-                          type: "stepper",
-                          display: "block",
-                          min: 1,
-                          max: 100,
-                          step: 1,
-                          value: fontSize,
-                          onChange: newFontSize =>
-                            onChangeTypography({ fontSize: newFontSize }, v)
-                        },
-                        {
-                          id: "lineHeight",
-                          label: t("Line Hgt."),
-                          type: "stepper",
-                          display: "block",
-                          min: 1,
-                          max: 10,
-                          step: 0.1,
-                          value: lineHeight,
-                          onChange: newLineHeight =>
-                            onChangeTypography({ lineHeight: newLineHeight }, v)
-                        }
+                        toolbarTypography2FontSize({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: ["onChangeTypography2"]
+                        }),
+                        toolbarTypography2LineHeight({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: ["onChangeTypography2"]
+                        })
                       ]
                     },
                     {
                       width: "50",
                       options: [
-                        {
-                          id: "fontWeight",
-                          label: t("Weight"),
-                          type: "select",
-                          display: "block",
-                          choices: getWeightChoices(fontFamily),
-                          value: fontWeight,
-                          onChange: newFontWeight =>
-                            onChangeTypography({ fontWeight: newFontWeight }, v)
-                        },
-                        {
-                          id: "letterSpacing",
-                          label: t("Letter Sp."),
-                          type: "stepper",
-                          display: "block",
-                          min: -20,
-                          max: 20,
-                          step: 0.5,
-                          value: letterSpacing,
-                          onChange: newLetterSpacing =>
-                            onChangeTypography(
-                              { letterSpacing: newLetterSpacing },
-                              v
-                            )
-                        }
+                        toolbarTypography2FontWeight({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: ["onChangeTypography2"]
+                        }),
+                        toolbarTypography2LetterSpacing({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: ["onChangeTypography2"]
+                        })
                       ]
                     }
                   ]
@@ -169,12 +132,14 @@ export function getItemsForDesktop(v) {
         }
       ]
     },
+
     {
-      id: "toolbarColor",
+      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
       type: "popover",
       size: "auto",
       title: t("Colors"),
       roles: ["admin"],
+      devices: "desktop",
       position: 90,
       icon: {
         style: {
@@ -183,45 +148,58 @@ export function getItemsForDesktop(v) {
       },
       options: [
         {
-          id: "color",
+          id: "tabsState",
           tabsPosition: "left",
           type: "tabs",
+          value: v.tabsState,
           tabs: [
             {
+              id: "tabNormal",
               tabIcon: "nc-circle",
               title: t("Normal"),
               options: [
-                toolbarColorHexAndOpacity({
-                  v,
-                  state: "normal",
-                  onChange: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarColorPalette({
-                  v,
-                  state: "normal",
-                  onChange: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
+                  id: "tabsColor",
+                  type: "tabs",
+                  value: v.tabsColor,
+                  tabs: [
                     {
-                      width: 100,
+                      id: "tabText",
+                      label: t("Text"),
                       options: [
-                        toolbarColorFields({
+                        toolbarColor2({
                           v,
+                          device,
                           state: "normal",
-                          onChange: [
+                          onChangeHex: [
                             "onChangeColorHexAndOpacity",
                             "onChangeColorHexAndOpacityPalette"
+                          ],
+                          onChangePalette: [
+                            "onChangeColorPalette",
+                            "onChangeColorPaletteOpacity"
                           ]
-                        })
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeColorHexAndOpacity",
+                                    "onChangeColorHexAndOpacityPalette"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
                       ]
                     }
                   ]
@@ -229,40 +207,52 @@ export function getItemsForDesktop(v) {
               ]
             },
             {
+              id: "tabHover",
               tabIcon: "nc-hover",
               title: t("Hover"),
               options: [
-                toolbarColorHexAndOpacity({
-                  v,
-                  state: "hover",
-                  onChange: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarColorPalette({
-                  v,
-                  state: "hover",
-                  onChange: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
+                  id: "tabsColor",
+                  type: "tabs",
+                  value: v.tabsColor,
+                  tabs: [
                     {
-                      width: 100,
+                      id: "tabText",
+                      label: t("Text"),
                       options: [
-                        toolbarColorFields({
+                        toolbarColor2({
                           v,
+                          device,
                           state: "hover",
-                          onChange: [
+                          onChangeHex: [
                             "onChangeColorHexAndOpacity",
                             "onChangeColorHexAndOpacityPalette"
+                          ],
+                          onChangePalette: [
+                            "onChangeColorPalette",
+                            "onChangeColorPaletteOpacity"
                           ]
-                        })
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  state: "hover",
+                                  onChange: [
+                                    "onChangeColorHexAndOpacity",
+                                    "onChangeColorHexAndOpacityPalette"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
                       ]
                     }
                   ]
@@ -271,10 +261,13 @@ export function getItemsForDesktop(v) {
             }
           ]
         }
-      ]
+      ],
+      onChange: (_, { isOpen }) => ({
+        tabsState: !isOpen ? "" : v.tabsState
+      })
     },
     {
-      id: "toolbarSettings",
+      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
@@ -282,13 +275,18 @@ export function getItemsForDesktop(v) {
       position: 110,
       options: [
         {
-          id: "advancedSettings",
+          id: defaultValueKey({
+            key: "advancedSettings",
+            device,
+            state: "normal"
+          }),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
           options: [
             {
               id: "settingsTabs",
+              devices: "desktop",
               type: "tabs",
               align: "start",
               tabs: [
@@ -299,7 +297,11 @@ export function getItemsForDesktop(v) {
                   options: []
                 },
                 {
-                  id: "moreSettingsAdvanced",
+                  id: defaultValueKey({
+                    key: "moreSettingsAdvanced",
+                    device,
+                    state: "normal"
+                  }),
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
                   options: []
@@ -309,230 +311,6 @@ export function getItemsForDesktop(v) {
           ]
         }
       ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
-
-  const tabletFontStyle = v.tabletFontStyle;
-  const {
-    tabletFontSize,
-    tabletFontWeight,
-    tabletLineHeight,
-    tabletLetterSpacing
-  } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
-
-  return [
-    {
-      id: "tabletToolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: "auto",
-      title: t("Typography"),
-      roles: ["admin"],
-      position: 70,
-      options: [
-        {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          columns: [
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "tabletFontSize",
-                  label: t("Size"),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 100,
-                  step: 1,
-                  value: tabletFontSize,
-                  onChange: newTabletFontSize =>
-                    onChangeTypographyTablet(
-                      { tabletFontSize: newTabletFontSize },
-                      v
-                    )
-                },
-                {
-                  id: "tabletLineHeight",
-                  label: t("Line Hgt."),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 10,
-                  step: 0.1,
-                  value: tabletLineHeight,
-                  onChange: newTabletLineHeight =>
-                    onChangeTypographyTablet(
-                      { tabletLineHeight: newTabletLineHeight },
-                      v
-                    )
-                }
-              ]
-            },
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "tabletFontWeight",
-                  label: t("Weight"),
-                  type: "select",
-                  display: "block",
-                  choices: getWeightChoices(fontFamily),
-                  value: tabletFontWeight,
-                  onChange: newTabletFontWeight =>
-                    onChangeTypographyTablet(
-                      { tabletFontWeight: newTabletFontWeight },
-                      v
-                    )
-                },
-                {
-                  id: "tabletLetterSpacing",
-                  label: t("Letter Sp."),
-                  type: "stepper",
-                  display: "block",
-                  min: -20,
-                  max: 20,
-                  step: 0.5,
-                  value: tabletLetterSpacing,
-                  onChange: newTabletLetterSpacing =>
-                    onChangeTypographyTablet(
-                      { tabletLetterSpacing: newTabletLetterSpacing },
-                      v
-                    )
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: []
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
-
-  const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
-
-  return [
-    {
-      id: "mobileToolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: "auto",
-      title: t("Typography"),
-      roles: ["admin"],
-      position: 70,
-      options: [
-        {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          columns: [
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "mobileFontSize",
-                  label: t("Size"),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 100,
-                  step: 1,
-                  value: mobileFontSize,
-                  onChange: newMobileFontSize =>
-                    onChangeTypographyMobile(
-                      { mobileFontSize: newMobileFontSize },
-                      v
-                    )
-                },
-                {
-                  id: "mobileLineHeight",
-                  label: t("Line Hgt."),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 10,
-                  step: 0.1,
-                  value: mobileLineHeight,
-                  onChange: newMobileLineHeight =>
-                    onChangeTypographyMobile(
-                      { mobileLineHeight: newMobileLineHeight },
-                      v
-                    )
-                }
-              ]
-            },
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "mobileFontWeight",
-                  label: t("Weight"),
-                  type: "select",
-                  display: "block",
-                  choices: getWeightChoices(fontFamily),
-                  value: mobileFontWeight,
-                  onChange: newMobileFontWeight =>
-                    onChangeTypographyMobile(
-                      { mobileFontWeight: newMobileFontWeight },
-                      v
-                    )
-                },
-                {
-                  id: "mobileLetterSpacing",
-                  label: t("Letter Sp."),
-                  type: "stepper",
-                  display: "block",
-                  min: -20,
-                  max: 20,
-                  step: 0.5,
-                  value: mobileLetterSpacing,
-                  onChange: newMobileLetterSpacing =>
-                    onChangeTypographyMobile(
-                      { mobileLetterSpacing: newMobileLetterSpacing },
-                      v
-                    )
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: []
     }
   ];
 }

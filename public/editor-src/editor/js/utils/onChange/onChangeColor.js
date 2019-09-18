@@ -1,19 +1,24 @@
-import { capitalize } from "visual/utils/string";
+import { capByPrefix, capitalize } from "visual/utils/string";
 import { defaultValueValue, defaultValueKey } from "./device";
 
 export function onChangeColorHexAndOpacity({
   v,
+  device,
   state,
   prefix = "color",
   hex,
-  opacity = undefined,
+  opacity,
   isChanged = "hex",
   opacityDragEnd = false
 }) {
-  const upperPrefix = capitalize(prefix);
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  const tempPrefix = `temp${capitalize(prefix)}`;
 
   opacity = onChangeColorOpacity({
     v,
+    device,
     state,
     prefix,
     opacity,
@@ -23,29 +28,37 @@ export function onChangeColorHexAndOpacity({
   const tempOpacity =
     opacity > 0 && opacityDragEnd
       ? opacity
-      : defaultValueValue({ v, key: `temp${upperPrefix}Opacity`, state });
+      : dvv(capByPrefix(tempPrefix, "opacity"));
+
+  console.log({
+    [dvk(capByPrefix(prefix, "hex"))]: hex,
+    [dvk(capByPrefix(prefix, "opacity"))]: opacity,
+    [dvk(capByPrefix(tempPrefix, "opacity"))]: tempOpacity
+  });
 
   return {
-    [defaultValueKey({ key: `${prefix}Hex`, state })]: hex,
-    [defaultValueKey({ key: `${prefix}Opacity`, state })]: opacity,
-    [defaultValueKey({
-      key: `temp${upperPrefix}Opacity`,
-      state
-    })]: tempOpacity
+    [dvk(capByPrefix(prefix, "hex"))]: hex,
+    [dvk(capByPrefix(prefix, "opacity"))]: opacity,
+    [dvk(capByPrefix(tempPrefix, "opacity"))]: tempOpacity
   };
 }
 
 export function onChangeColorHexAndOpacityPalette({
   v,
+  device,
   state,
   prefix = "color",
-  opacity = undefined,
+  opacity,
   isChanged = "hex"
 }) {
-  const upperPrefix = capitalize(prefix);
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  const tempPrefix = `temp${capitalize(prefix)}`;
 
   opacity = onChangeColorOpacity({
     v,
+    device,
     state,
     prefix,
     opacity,
@@ -56,68 +69,87 @@ export function onChangeColorHexAndOpacityPalette({
     isChanged === "hex" || opacity === 0
       ? ""
       : opacity > 0
-      ? defaultValueValue({ v, key: `temp${upperPrefix}Palette`, state })
-      : defaultValueValue({ v, key: `${prefix}Palette`, state });
+      ? dvv(capByPrefix(tempPrefix, "palette"))
+      : dvv(capByPrefix(prefix, "palette"));
 
   const tempPalette =
-    isChanged === "hex"
-      ? ""
-      : defaultValueValue({ v, key: `temp${upperPrefix}Palette`, state });
+    isChanged === "hex" ? "" : dvv(capByPrefix(tempPrefix, "palette"));
+
+  console.log({
+    [dvk(capByPrefix(prefix, "palette"))]: palette,
+    [dvk(capByPrefix(tempPrefix, "palette"))]: tempPalette
+  });
 
   return {
-    [defaultValueKey({ key: `${prefix}Palette`, state })]: palette,
-    [defaultValueKey({
-      key: `temp${upperPrefix}Palette`,
-      state
-    })]: tempPalette
+    [dvk(capByPrefix(prefix, "palette"))]: palette,
+    [dvk(capByPrefix(tempPrefix, "palette"))]: tempPalette
   };
 }
 
-export function onChangeColorPalette({ state, prefix = "color", palette }) {
-  const upperPrefix = capitalize(prefix);
+export function onChangeColorPalette({
+  device,
+  state,
+  prefix = "color",
+  palette
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+
+  const tempPrefix = `temp${capitalize(prefix)}`;
+
+  console.log({
+    [dvk(capByPrefix(prefix, "palette"))]: palette,
+    [dvk(capByPrefix(tempPrefix, "palette"))]: palette
+  });
 
   return {
-    [defaultValueKey({ key: `${prefix}Palette`, state })]: palette,
-    [defaultValueKey({
-      key: `temp${upperPrefix}Palette`,
-      state
-    })]: palette
+    [dvk(capByPrefix(prefix, "palette"))]: palette,
+    [dvk(capByPrefix(tempPrefix, "palette"))]: palette
   };
 }
 
 export function onChangeColorPaletteOpacity({
   v,
+  device,
   state,
   prefix = "color",
   opacity = undefined,
   isChanged = "hex"
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+
   opacity = onChangeColorOpacity({
     v,
+    device,
     state,
     prefix,
     opacity,
     isChanged
   });
 
+  console.log({
+    [dvk(capByPrefix(prefix, "opacity"))]: opacity
+  });
+
   return {
-    [defaultValueKey({ key: `${prefix}Opacity`, state })]: opacity
+    [dvk(capByPrefix(prefix, "opacity"))]: opacity
   };
 }
 
 function onChangeColorOpacity({
   v,
+  device,
   state,
   prefix = "color",
-  opacity,
-  isChanged
+  opacity = undefined,
+  isChanged = "hex"
 }) {
-  const upperPrefix = capitalize(prefix);
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
-  return isChanged === "hex" &&
-    defaultValueValue({ v, key: `${prefix}Opacity`, state }) === 0
-    ? defaultValueValue({ v, key: `temp${upperPrefix}Opacity`, state })
+  const tempPrefix = `temp${capitalize(prefix)}`;
+
+  return isChanged === "hex" && dvv(capByPrefix(prefix, "opacity")) === 0
+    ? dvv(capByPrefix(tempPrefix, "opacity"))
     : opacity === undefined
-    ? defaultValueValue({ v, key: `${prefix}Opacity`, state })
+    ? dvv(capByPrefix(prefix, "opacity"))
     : opacity;
 }

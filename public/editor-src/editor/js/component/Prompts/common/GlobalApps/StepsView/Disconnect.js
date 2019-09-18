@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from "underscore";
+import { t } from "visual/utils/i18n";
 import Button from "../../Button";
 
 class Disconnect extends Component {
@@ -36,19 +37,19 @@ class Disconnect extends Component {
     return (
       <div className="brz-ed-popup-integrations__connect">
         <div className="brz-ed-popup-integrations__connect-head">
-          <img className="brz-img" src={img} title={title} />
+          <img className="brz-img" src={img} alt={title} />
           <p className="brz-p">{descriptions}</p>
         </div>
         <div className="brz-ed-popup-integrations__connect-body">
           {error && this.renderError()}
           {nextLoading !== null && (
             <Button type="red" loading={nextLoading} onClick={onNext}>
-              Disconnect
+              {t("Disconnect")}
             </Button>
           )}
           {prevLoading !== null && (
             <Button type="default" loading={prevLoading} onClick={onPrev}>
-              Cancel
+              {t("Cancel")}
             </Button>
           )}
         </div>

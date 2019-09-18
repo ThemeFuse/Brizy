@@ -1,7 +1,13 @@
 import classnames from "classnames";
 import { css } from "glamor";
 import { getFontById } from "visual/utils/fonts";
-import { styleBorderColor, styleColor, styleBgColor } from "visual/utils/style";
+import {
+  styleBorderColor,
+  styleColor,
+  styleBgColor,
+  styleBorderWidth
+} from "visual/utils/style";
+
 // Accordion Style
 export function styleClassName(v) {
   const { className } = v;
@@ -66,6 +72,7 @@ export function styleClassName(v) {
   } else {
     const {
       fontFamily,
+      fontFamilyType,
       fontSize,
       lineHeight,
       fontWeight,
@@ -105,14 +112,20 @@ export function styleClassName(v) {
 
     glamorObj = {
       ".brz &": {
-        fontFamily: getFontById(fontFamily).family,
+        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
+          .family,
         fontSize,
         lineHeight,
         fontWeight,
         letterSpacing,
 
         "& .brz-accordion__content": {
-          marginTop: `-${borderWidth}px`,
+          marginTop: `-${styleBorderWidth({
+            v,
+            device: "desktop",
+            state: "normal",
+            current: "borderWidth"
+          })}`,
           paddingTop:
             paddingType === "grouped" ? `${padding}px` : `${paddingTop}px`,
           paddingRight:
@@ -134,7 +147,12 @@ export function styleClassName(v) {
             device: "desktop",
             state: "normal"
           }),
-          borderWidth
+          borderWidth: styleBorderWidth({
+            v,
+            device: "desktop",
+            state: "normal",
+            current: "borderWidth"
+          })
         }
       },
       "@media (max-width: 991px)": {
@@ -204,6 +222,7 @@ export function styleCSSVars(v) {
 
   const {
     fontFamily,
+    fontFamilyType,
     fontSize,
     fontWeight,
     lineHeight,
@@ -243,7 +262,8 @@ export function styleCSSVars(v) {
 
   return {
     // Typography
-    "--fontFamily": getFontById(fontFamily).family,
+    "--fontFamily": getFontById({ family: fontFamily, type: fontFamilyType })
+      .family,
     "--fontWeight": fontWeight,
     "--fontSize": `${fontSize}px`,
     "--lineHeight": lineHeight,
@@ -263,8 +283,18 @@ export function styleCSSVars(v) {
     }),
 
     // Border
-    "--borderWidth": `${borderWidth}px`,
-    "--marginTop": `-${borderWidth}px`,
+    "--borderWidth": styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderWidth"
+    }),
+    "--marginTop": `-${styleBorderWidth({
+      v,
+      device: "desktop",
+      state: "normal",
+      current: "borderWidth"
+    })}`,
 
     // Padding Tab
     "--paddingTop":

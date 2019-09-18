@@ -1,0 +1,65 @@
+// ColorPalette
+.brz-ed-option__color-palette2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 0;
+  border-bottom: 0;
+
+  &__item {
+    width: 18px;
+    height: 18px;
+    border-radius: 2px;
+    margin-left: 2px;
+    cursor: pointer;
+    border: 1px solid #3a3d43;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    &.active {
+      border: 2px solid #fff;
+    }
+  }
+  &__icon {
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
+    display: flex;
+    color: $options-label-color;
+    transition: color 0.2s linear;
+
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+}
+
+// ColorPalette Editor
+.brz-ed-option__color-palette2-editor {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    width: 23px;
+    height: 23px;
+    border: 1px solid #1e232a;
+    border-radius: 2px;
+    margin-left: 3px;
+    cursor: pointer;
+    transition: border 0.2s linear;
+
+    &:hover,
+    &.active {
+      border: 2px solid $brand-primary;
+    }
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+// ColorPalette Sidebar
+.brz-ed-sidebar-option__color-palette2-editor {
+  margin-bottom: 32px !important;
+}

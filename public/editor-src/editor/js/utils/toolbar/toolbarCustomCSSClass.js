@@ -1,17 +1,28 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarCustomCSSClass({ v, position = 40 }) {
+export function toolbarCustomCSSClass({
+  v,
+  position = 40,
+  device,
+  state,
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: "customClassName",
+    id: dvk("customClassName"),
     label: t("CSS Class"),
     position,
     display: "block",
     type: "input",
+    devices,
     value: {
-      value: v.customClassName
+      value: dvv("customClassName")
     },
-    onChange: ({ value: customClassName }) => ({
-      customClassName
+    onChange: ({ value }) => ({
+      [dvk("customClassName")]: value
     })
   };
 }

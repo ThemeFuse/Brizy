@@ -1,29 +1,53 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementVideoLink({ v, population }) {
+export function toolbarElementVideoLink({
+  v,
+  device,
+  devices = "all",
+  state,
+  population
+}) {
   return {
-    id: "video",
+    id: defaultValueKey({ key: "video", device, state }),
     label: t("Link"),
     type: "input",
+    devices,
     placeholder: t("YouTube or Vimeo"),
     population: {
       show: population.length > 0,
       choices: population
     },
     value: {
-      population: v.videoPopulation,
-      value: v.video
+      population: defaultValueValue({
+        v,
+        key: "videoPopulation",
+        device,
+        state
+      }),
+      value: defaultValueValue({ v, key: "video", device, state })
     },
-    onChange: ({ value: video, population: videoPopulation }) => ({
-      videoPopulation,
-      video
+    onChange: ({ value, population }) => ({
+      [defaultValueKey({
+        v,
+        key: "videoPopulation",
+        device,
+        state
+      })]: population,
+      [defaultValueKey({ v, key: "video", device, state })]: value
     })
   };
 }
 
-export function toolbarElementVideoRatio({ v }) {
+export function toolbarElementVideoRatio({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "ratio",
+    id: defaultValueKey({ key: "ratio", device, state }),
+    devices,
     label: t("Ratio"),
     type: "select",
     roles: ["admin"],
@@ -37,49 +61,72 @@ export function toolbarElementVideoRatio({ v }) {
         value: "4:3"
       }
     ],
-    value: v.ratio
+    value: defaultValueValue({ v, key: "ratio", device, state })
   };
 }
 
-export function toolbarElementVideoControls({ v }) {
+export function toolbarElementVideoControls({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "controls",
+    id: defaultValueKey({ key: "controls", device, state }),
     label: t("Controls"),
+    devices,
     type: "switch",
     roles: ["admin"],
-    value: v.controls
+    value: defaultValueValue({ v, key: "controls", device, state })
   };
 }
 
-export function toolbarElementVideoCover({ v }) {
+export function toolbarElementVideoCover({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "cover",
+    id: defaultValueKey({ key: "cover", device, state }),
+    devices,
     label: t("Cover"),
     type: "imageSetter",
     value: {
-      width: v.coverImageWidth,
-      height: v.coverImageHeight,
-      src: v.coverImageSrc,
-      x: v.coverPositionX,
-      y: v.coverPositionY
+      width: defaultValueValue({ v, key: "coverImageWidth", device, state }),
+      height: defaultValueValue({ v, key: "coverImageHeight", device, state }),
+      src: defaultValueValue({ v, key: "coverImageSrc", device, state }),
+      x: defaultValueValue({ v, key: "coverPositionX", device, state }),
+      y: defaultValueValue({ v, key: "coverPositionY", device, state })
     },
     onChange: ({ width, height, src, x, y }) => {
       return {
-        coverImageWidth: width,
-        coverImageHeight: height,
-        coverImageSrc: src,
-        coverPositionX: x,
-        coverPositionY: y
+        [defaultValueKey({ v, key: "coverImageWidth", device, state })]: width,
+        [defaultValueKey({
+          v,
+          key: "coverImageHeight",
+          device,
+          state
+        })]: height,
+        [defaultValueKey({ v, key: "coverImageSrc", device, state })]: src,
+        [defaultValueKey({ v, key: "coverPositionX", device, state })]: x,
+        [defaultValueKey({ v, key: "coverPositionY", device, state })]: y
       };
     }
   };
 }
 
-export function toolbarElementVideoCoverZoom({ v }) {
+export function toolbarElementVideoCoverZoom({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "coverZoom",
+    id: defaultValueKey({ key: "coverZoom", device, state }),
     label: t("Zoom"),
     type: "slider",
+    devices,
     slider: {
       min: 100,
       max: 200
@@ -99,19 +146,32 @@ export function toolbarElementVideoCoverZoom({ v }) {
       ]
     },
     value: {
-      value: v.coverZoom
+      value: defaultValueValue({
+        v,
+        key: "coverZoom",
+        device,
+        state
+      })
     },
-    onChange: ({ value: coverZoom }) => {
-      return { coverZoom };
+    onChange: ({ value }) => {
+      return {
+        [defaultValueKey({ v, key: "coverZoom", device, state })]: value
+      };
     }
   };
 }
 
-export function toolbarElementVideoPlaySize({ v }) {
+export function toolbarElementVideoPlaySize({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "iconSize",
+    id: defaultValueKey({ key: "iconSize", device, state }),
     label: t("Play"),
     type: "slider",
+    devices,
     roles: ["admin"],
     slider: {
       min: 50,
@@ -132,14 +192,20 @@ export function toolbarElementVideoPlaySize({ v }) {
       ]
     },
     value: {
-      value: v.iconSize
+      value: defaultValueValue({
+        v,
+        key: "iconSize",
+        device,
+        state
+      })
     },
-    onChange: ({ value: iconSize }) => {
+    onChange: ({ value }) => {
       return {
-        iconSize,
-        iconSizeWidth: iconSize,
-        iconSizeHeight: iconSize
+        [defaultValueKey({ v, key: "iconSize", device, state })]: value,
+        [defaultValueKey({ v, key: "iconSizeWidth", device, state })]: value,
+        [defaultValueKey({ v, key: "iconSizeHeight", device, state })]: value
       };
     }
   };
 }
+

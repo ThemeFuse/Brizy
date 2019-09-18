@@ -1,8 +1,7 @@
 import { t } from "visual/utils/i18n";
 import {
-  toolbarColorHexAndOpacity,
-  toolbarColorPalette,
-  toolbarColorFields,
+  toolbarColor2,
+  toolbarColorHexField2,
   toolbarShowOnDesktop,
   toolbarShowOnTablet,
   toolbarShowOnMobile,
@@ -185,39 +184,40 @@ const getSliderTabs = (v, component) => {
   return tabs;
 };
 
-const getSliderColorsTabs = ({ v, state }) => {
+const getSliderColorsTabs = ({ v, device, state }) => {
   if (v.slider === "off") return [];
 
   return [
     {
       id: "dots",
       label: t("Dots"),
-      disabled: v.slider === "off",
       options: [
-        toolbarColorHexAndOpacity({
+        toolbarColor2({
           v,
+          device,
           state,
+          disabled: v.slider === "off",
           prefix: "sliderDotsColor",
-          onChange: [
+          onChangeHex: [
             "onChangeColorHexAndOpacity",
             "onChangeColorHexAndOpacityPalette"
+          ],
+          onChangePalette: [
+            "onChangeColorPalette",
+            "onChangeColorPaletteOpacity"
           ]
-        }),
-        toolbarColorPalette({
-          v,
-          state,
-          prefix: "sliderDotsColor",
-          onChange: ["onChangeColorPalette", "onChangeColorPaletteOpacity"]
         }),
         {
           type: "grid",
+          disabled: v.slider === "off",
           className: "brz-ed-grid__color-fileds",
           columns: [
             {
               width: 100,
               options: [
-                toolbarColorFields({
+                toolbarColorHexField2({
                   v,
+                  device,
                   state,
                   prefix: "sliderDotsColor",
                   onChange: [
@@ -234,32 +234,33 @@ const getSliderColorsTabs = ({ v, state }) => {
     {
       id: "arrows",
       label: t("Arrows"),
-      disabled: v.slider === "off",
       options: [
-        toolbarColorHexAndOpacity({
+        toolbarColor2({
           v,
+          device,
           state,
+          disabled: v.slider === "off",
           prefix: "sliderArrowsColor",
-          onChange: [
+          onChangeHex: [
             "onChangeColorHexAndOpacity",
             "onChangeColorHexAndOpacityPalette"
+          ],
+          onChangePalette: [
+            "onChangeColorPalette",
+            "onChangeColorPaletteOpacity"
           ]
-        }),
-        toolbarColorPalette({
-          v,
-          state,
-          prefix: "sliderArrowsColor",
-          onChange: ["onChangeColorPalette", "onChangeColorPaletteOpacity"]
         }),
         {
           type: "grid",
+          disabled: v.slider === "off",
           className: "brz-ed-grid__color-fileds",
           columns: [
             {
               width: 100,
               options: [
-                toolbarColorFields({
+                toolbarColorHexField2({
                   v,
+                  device,
                   state,
                   prefix: "sliderArrowsColor",
                   onChange: [
@@ -277,6 +278,8 @@ const getSliderColorsTabs = ({ v, state }) => {
 };
 
 export function getItemsForDesktop(v, component) {
+  const device = "desktop";
+
   return [
     {
       id: "toolbarSlider",
@@ -312,7 +315,7 @@ export function getItemsForDesktop(v, component) {
                 {
                   id: "tabsColor",
                   type: "tabs",
-                  tabs: getSliderColorsTabs({ v, state: "normal" })
+                  tabs: getSliderColorsTabs({ v, device, state: "normal" })
                 }
               ]
             },
@@ -324,7 +327,7 @@ export function getItemsForDesktop(v, component) {
                 {
                   id: "tabsColor",
                   type: "tabs",
-                  tabs: getSliderColorsTabs({ v, state: "hover" })
+                  tabs: getSliderColorsTabs({ v, device, state: "hover" })
                 }
               ]
             }

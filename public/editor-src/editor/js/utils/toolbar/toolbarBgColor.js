@@ -1,3 +1,5 @@
+import { t } from "visual/utils/i18n";
+import { capByPrefix } from "visual/utils/string";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
   defaultValueKey,
@@ -5,116 +7,181 @@ import {
   saveOnChanges
 } from "visual/utils/onChange";
 
-export function toolbarBgColorHexAndOpacity({
+export function toolbarBgColor2({
   v,
   device,
   state,
-  prefix = "bg",
+  devices = "all",
   disabled = false,
-  onChange
+  prefix = "bg",
+  showSelect = true,
+  onChangeType,
+  onChangeHex,
+  onChangePalette,
+  onChangeGradientHex,
+  onChangeGradientPalette,
+  onChangeGradient
 }) {
-  const { hex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `${prefix}ColorHex`, device, state }),
-    defaultValueValue({ v, key: `${prefix}ColorPalette`, device, state })
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  const bgColorTypeValue = dvv(capByPrefix(prefix, "colorType"));
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    dvv(capByPrefix(prefix, "colorHex")),
+    dvv(capByPrefix(prefix, "colorPalette"))
   );
-  const prefixColorKey = defaultValueKey({
-    key: `${prefix}Color`,
-    device,
-    state
-  });
-  const prefixColorOpacityValue = defaultValueValue({
-    v,
-    key: `${prefix}ColorOpacity`,
-    device,
-    state
-  });
+
+  const { hex: gradientColorHex } = getOptionColorHexByPalette(
+    dvv("gradientColorHex"),
+    dvv("gradientColorPalette")
+  );
+
+  const activePointerValue = dvv("gradientActivePointer");
 
   return {
-    id: prefixColorKey,
-    type: "colorPicker",
+    id: dvk(capByPrefix(prefix, "color")),
+    type: "colorPicker2",
     disabled,
-    value: {
-      hex,
-      opacity: prefixColorOpacityValue
+    devices,
+    select: {
+      show: showSelect,
+      choices: [
+        {
+          title: t("Solid"),
+          value: "solid"
+        },
+        {
+          title: t("Gradient"),
+          value: "gradient"
+        }
+      ]
     },
-    onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-      const values = {
-        ...{ v, device, state, prefix, onChange },
-        ...{ hex, opacity, isChanged, opacityDragEnd }
+    gradient: {
+      show: bgColorTypeValue === "gradient"
+    },
+    value: {
+      hex: bgColorHex,
+      opacity: dvv(capByPrefix(prefix, "colorOpacity")),
+      palette: dvv(capByPrefix(prefix, "colorPalette")),
+
+      select: bgColorTypeValue,
+
+      gradientColorHex,
+      gradientColorOpacity: dvv("gradientColorOpacity"),
+      gradientColorPalette: dvv("gradientColorPalette"),
+
+      startPointer: dvv("gradientStartPointer"),
+      finishPointer: dvv("gradientFinishPointer"),
+      activePointer: activePointerValue
+    },
+    onChange: ({
+      hex,
+      opacity,
+      palette,
+      select: bgColorType,
+      opacityDragEnd,
+      startPointer,
+      finishPointer,
+      activePointer,
+      isChanged
+    }) => {
+      const valuesBgColorType = {
+        ...{ v, device, state, prefix, onChange: onChangeType },
+        ...{
+          bgColorType
+        }
       };
-      return saveOnChanges(values);
+
+      const valuesBgColorHex = {
+        ...{
+          v,
+          device,
+          state,
+          prefix:
+            activePointer === "startPointer" || bgColorTypeValue === "solid"
+              ? prefix
+              : "gradient",
+          onChange:
+            activePointer === "startPointer" || bgColorTypeValue === "solid"
+              ? onChangeHex
+              : onChangeGradientHex
+        },
+        ...{
+          hex,
+          opacity,
+          isChanged,
+          opacityDragEnd
+        }
+      };
+
+      const valuesBgColorPalette = {
+        ...{
+          v,
+          device,
+          state,
+          prefix:
+            activePointer === "startPointer" || bgColorTypeValue === "solid"
+              ? prefix
+              : "gradient",
+          onChange:
+            activePointer === "startPointer" || bgColorTypeValue === "solid"
+              ? onChangePalette
+              : onChangeGradientPalette
+        },
+        ...{
+          opacity,
+          palette
+        }
+      };
+
+      const valuesGradientRange = {
+        ...{ v, device, state, prefix, onChange: onChangeGradient },
+        ...{
+          startPointer,
+          finishPointer,
+          activePointer
+        }
+      };
+
+      return isChanged === "select"
+        ? saveOnChanges(valuesBgColorType)
+        : isChanged === "hex" || isChanged === "opacity"
+        ? saveOnChanges(valuesBgColorHex)
+        : isChanged === "palette"
+        ? saveOnChanges(valuesBgColorPalette)
+        : saveOnChanges(valuesGradientRange);
     }
   };
 }
 
-export function toolbarBgColorPalette({
+export function toolbarBgColorHexField2({
   v,
   device,
   state,
-  prefix = "bg",
-  disabled = false,
-  onChange
-}) {
-  const prefixColorPaletteKey = defaultValueKey({
-    key: "borderColorPalette",
-    device,
-    state
-  });
-  const prefixColorPaletteValue = defaultValueValue({
-    v,
-    key: `${prefix}ColorPalette`,
-    device,
-    state
-  });
-
-  return {
-    id: prefixColorPaletteKey,
-    type: "colorPalette",
-    disabled,
-    value: prefixColorPaletteValue,
-    onChange: palette => {
-      const values = {
-        ...{ v, device, state, prefix, onChange },
-        ...{ palette }
-      };
-      return saveOnChanges(values);
-    }
-  };
-}
-
-export function toolbarBgColorFields({
-  v,
-  device,
-  state,
+  devices = "all",
   prefix = "bg",
   className = "",
   disabled = false,
   onChange
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const { hex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `${prefix}ColorHex`, device, state }),
-    defaultValueValue({ v, key: `${prefix}ColorPalette`, device, state })
+    dvv(capByPrefix(prefix, "colorHex")),
+    dvv(capByPrefix(prefix, "colorPalette"))
   );
-  const prefixColorFieldsKey = defaultValueKey({
-    key: `${prefix}ColorFields`,
-    device,
-    state
-  });
-  const prefixColorOpacityValue = defaultValueValue({
-    v,
-    key: `${prefix}ColorOpacity`,
-    device,
-    state
-  });
 
   return {
-    id: prefixColorFieldsKey,
+    id: dvk(capByPrefix(prefix, "colorField")),
     type: "colorFields",
+    devices,
     disabled,
     className,
     value: {
       hex,
-      opacity: prefixColorOpacityValue
+      opacity: dvv(capByPrefix(prefix, "colorOpacity"))
     },
     onChange: ({ hex }) => {
       const values = {

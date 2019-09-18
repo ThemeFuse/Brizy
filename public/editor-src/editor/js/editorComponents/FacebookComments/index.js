@@ -4,7 +4,9 @@ import React from "react";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import { styleClassName, styleCSSVars } from "./styles";
+import classnames from "classnames";
+import { css } from "visual/utils/cssStyle";
+import { style } from "./styles";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
@@ -33,7 +35,7 @@ class FacebookComments extends EditorComponent {
     };
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
     const { numPosts, darkScheme, targetUrl, href } = v;
     const appData = this.getAppData();
     const data = {
@@ -44,10 +46,19 @@ class FacebookComments extends EditorComponent {
       lang: "en_US" //appData.lang
     };
 
+    const className = classnames(
+      "brz-fb-comments",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={styleClassName(v)} style={styleCSSVars(v)}>
+          <div className={className}>
             <Facebook appId={appData.appId} type="Comments" data={data} />
           </div>
         </CustomCSS>
@@ -55,7 +66,7 @@ class FacebookComments extends EditorComponent {
     );
   }
 
-  renderForView(v) {
+  renderForView(v, vs, vd) {
     const { numPosts, darkScheme, targetUrl, href } = v;
     const appData = this.getAppData();
     const data = {
@@ -66,9 +77,18 @@ class FacebookComments extends EditorComponent {
       "data-lang": appData.lang
     };
 
+    const className = classnames(
+      "brz-fb-comments",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
+        <div className={className}>
           <Facebook appId={appData.appId} type="Comments" data={data} />
         </div>
       </CustomCSS>

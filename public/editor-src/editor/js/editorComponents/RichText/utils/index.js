@@ -1,20 +1,27 @@
 import { isHex } from "visual/utils/color";
-import { getUsedFonts } from "visual/utils/fonts";
+import { getFontStyle, getUsedFonts } from "visual/utils/fonts";
 import { getDynamicContentByPlaceholder } from "visual/utils/options";
 import { decodeFromString } from "visual/utils/string";
 
 const DEFAULT_LINE_HEIGHT = 1.5;
 
-const rgbTohex = (rgb = "rgb(0, 0, 0)") => {
-  rgb = rgb.match(
+const rgbaTohex = (rgba = "rgba(0, 0, 0, 1)") => {
+  rgba = rgba.match(
     /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/i
   );
-  return rgb
-    ? "#" +
-        ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2)
-    : rgb;
+
+  return rgba
+    ? {
+        hex: `#${toHexadecimal(rgba[1])}${toHexadecimal(
+          rgba[2]
+        )}${toHexadecimal(rgba[3])}`,
+        opacity: rgba[4]
+      }
+    : rgba;
+
+  function toHexadecimal(number) {
+    return ("0" + parseInt(number, 10).toString(16)).slice(-2);
+  }
 };
 
 const formatStr = str => {
@@ -23,6 +30,33 @@ const formatStr = str => {
     .toLowerCase()
     .replace(/"|'/g, "")
     .replace(/ /g, "_");
+};
+
+const flatFormats = format => {
+  return Object.entries(format).reduce((acc, [key, value]) => {
+    acc[key] = Array.isArray(value) ? value[0] : value;
+    return acc;
+  }, {});
+};
+
+const parseShadow = str => {
+  const [, rgba, shadow] = str.match(/^(rgb.*\)) (.*)/) || [];
+
+  if (rgba && shadow) {
+    let { hex, opacity } = rgbaTohex(rgba);
+    const [horizontal, vertical, blur] = shadow.split(" ");
+    opacity = parseFloat(opacity);
+
+    return {
+      hex,
+      opacity: !isNaN(opacity) ? opacity : 1,
+      vertical: parseInt(vertical),
+      horizontal: parseInt(horizontal),
+      blur: parseInt(blur)
+    };
+  }
+
+  return {};
 };
 
 const getTagName = ({ header, pre }, $elem) => {
@@ -39,17 +73,19 @@ const getTagName = ({ header, pre }, $elem) => {
   return preTagName || headerTagName;
 };
 
-const getFirstValue = format => (Array.isArray(format) ? format[0] : format);
-
 const getCurrentFont = font => {
-  const fontKeys = getUsedFonts().map(item => item["id"]);
+  const fontFamilies = getUsedFonts().map(({ family }) => family);
   const currentFonts = font.split(",");
 
   const currentFont = currentFonts.find(item =>
-    fontKeys.includes(formatStr(item))
+    fontFamilies.includes(item.replace(/"/g, ""))
   );
 
   return currentFont ? formatStr(currentFont) : null;
+};
+
+const getCurrentFontStyle = fontStyle => {
+  return getFontStyle(fontStyle) || {};
 };
 
 const getLink = value => {
@@ -77,58 +113,123 @@ const getLink = value => {
 };
 
 export const getFormats = ($elem, format = {}, deviceMode) => {
+  format = flatFormats(format);
   const $blockElement = $elem.closest("p, :header, pre, div");
-  const size = parseInt($elem.css("fontSize"));
+  const cssFontSize = parseInt($elem.css("fontSize"));
   const cssColor = $elem.css("color");
   const cssOpacity = $elem.css("opacity");
+  const cssShadow = $elem.css("text-shadow");
   const cssMarginTop = parseFloat($blockElement.css("marginTop"));
   const cssMarginBottom = parseFloat($blockElement.css("marginBottom"));
   const cssHeight = parseFloat($elem.css("lineHeight"));
-  const letterSpacing = parseFloat($elem.css("letterSpacing"));
-  const height = isNaN(cssHeight) ? DEFAULT_LINE_HEIGHT : cssHeight / size;
+  const cssLetterSpacing = parseFloat($elem.css("letterSpacing"));
+  const cssLineHeight = isNaN(cssHeight)
+    ? DEFAULT_LINE_HEIGHT
+    : cssHeight / cssFontSize;
   const cssAlign = $elem.css("textAlign");
   const align = ["left", "center", "right", "justify"].includes(cssAlign)
     ? cssAlign
     : "left";
-  const font = $elem.css("fontFamily");
-  const weight = parseInt($elem.css("fontWeight"));
+  const cssFontFamily = $elem.css("fontFamily");
+  const cssFontWeight = parseInt($elem.css("fontWeight"));
 
-  const formatSize = format[`${deviceMode}Size`];
-  const formatWeight = format[`${deviceMode}Weight`];
-  const formatHeight = format[`${deviceMode}Height`];
-  const formatLetterSpacing = format[`${deviceMode}LetterSpacing`];
   const marginTop = format[`${deviceMode}MarginTop`];
   const marginBottom = format[`${deviceMode}MarginBottom`];
 
-  const link = format.link ? getLink(getFirstValue(format.link)) : {};
+  const link = format.link ? getLink(format.link) : {};
   const populationColor = format.populationColor
     ? { populationColor: decodeFromString(format.populationColor) }
     : {};
 
-  let hex = format.color ? getFirstValue(format.color) : cssColor;
+  let hex = format.color ? format.color : cssColor;
 
   if (!isHex(hex)) {
-    hex = rgbTohex(hex);
+    hex = rgbaTohex(hex).hex;
   }
+
+  const cfs = getCurrentFontStyle(format.fontStyle) || {};
+
+  const lineHeight = format.lineHeight
+    ? format.lineHeight.replace("_", ".")
+    : null;
+
+  const tabletLineHeight = format.tabletLineHeight
+    ? format.tabletLineHeight.replace("_", ".")
+    : null;
+
+  const mobileLineHeight = format.mobileLineHeight
+    ? format.mobileLineHeight.replace("_", ".")
+    : null;
+
+  const letterSpacing = format.letterSpacing
+    ? format.letterSpacing.replace("m_", "-").replace("_", ".")
+    : null;
+
+  const tabletLetterSpacing = format.tabletLetterSpacing
+    ? format.tabletLetterSpacing.replace("m_", "-").replace("_", ".")
+    : null;
+
+  const mobileLetterSpacing = format.mobileLetterSpacing
+    ? format.mobileLetterSpacing.replace("m_", "-").replace("_", ".")
+    : null;
+
+  const opacity = format.opacity || cssOpacity;
 
   return {
     ...format,
 
     color: {
       hex,
-      opacity: format.opacity ? getFirstValue(format.opacity) : cssOpacity
+      opacity: !isNaN(opacity) ? opacity : 1
     },
-    colorPalette: format.colorPalette || null,
-    font: format.font ? getFirstValue(format.font) : getCurrentFont(font),
+    colorPalette: format.colorPalette || "",
+
+    shadow: parseShadow(format.shadow || cssShadow),
+    shadowColorPalette: format.shadowColorPalette || "",
+
+    fontFamily:
+      format.fontFamily || cfs.fontFamily || getCurrentFont(cssFontFamily),
+    tabletFontFamily: null,
+    mobileFontFamily: null,
+    fontFamilyType: cfs.fontFamilyType || format.fontFamilyType || "google",
+    tabletFontFamilyType: null,
+    mobileFontFamilyType: null,
+
     fontStyle: format.fontStyle || null,
-    height: formatHeight
-      ? getFirstValue(formatHeight).replace("_", ".")
-      : String(height),
+
+    fontWeight: Number(format.fontWeight) || cfs.fontWeight || cssFontWeight,
+    tabletFontWeight:
+      Number(format.tabletFontWeight) || cfs.tabletFontWeight || null,
+    mobileFontWeight:
+      Number(format.mobileFontWeight) || cfs.mobileFontWeight || null,
+
+    lineHeight: Number(lineHeight) || cfs.lineHeight || cssLineHeight,
+    tabletLineHeight: Number(tabletLineHeight) || cfs.tabletLineHeight || null,
+    mobileLineHeight: Number(mobileLineHeight) || cfs.mobileLineHeight || null,
+
+    fontSize: format.fontSize || cfs.fontSize || cssFontSize,
+    tabletFontSize: format.tabletFontSize || cfs.tabletFontSize || null,
+    mobileFontSize: format.mobileFontSize || cfs.mobileFontSize || null,
+
+    letterSpacing: !isNaN(Number(tabletLetterSpacing))
+      ? Number(letterSpacing)
+      : cfs.letterSpacing || cssLetterSpacing,
+    tabletLetterSpacing:
+      tabletLetterSpacing && !isNaN(Number(tabletLetterSpacing))
+        ? Number(tabletLetterSpacing)
+        : cfs.tabletLetterSpacing || null,
+    mobileLetterSpacing:
+      mobileLetterSpacing && !isNaN(Number(mobileLetterSpacing))
+        ? Number(mobileLetterSpacing)
+        : cfs.mobileLetterSpacing || null,
+
+    backgroundImage: format.backgroundImage || null,
+    backgroundGradient: format.backgroundGradient || null,
     horizontalAlign: format.horizontalAlign || align,
-    intermediateTabletHeight: format.intermediateTabletHeight || null,
-    intermediateMobileHeight: format.intermediateMobileHeight || null,
-    intermediateTabletSize: format.intermediateTabletSize || null,
-    intermediateMobileSize: format.intermediateMobileSize || null,
+    intermediateTabletLineHeight: format.intermediateTabletLineHeight || null,
+    intermediateMobileLineHeight: format.intermediateMobileLineHeight || null,
+    intermediateTabletFontSize: format.intermediateTabletFontSize || null,
+    intermediateMobileFontSize: format.intermediateMobileFontSize || null,
     intermediateTabletLetterSpacing:
       format.intermediateTabletLetterSpacing || null,
     intermediateMobileLetterSpacing:
@@ -136,22 +237,16 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     intermediateTabletWeight: format.intermediateTabletWeight || null,
     intermediateMobileWeight: format.intermediateMobileWeight || null,
 
-    letterSpacing: formatLetterSpacing
-      ? getFirstValue(formatLetterSpacing)
-          .replace("m_", "-")
-          .replace("_", ".")
-      : String(letterSpacing),
     ...link,
     ...populationColor,
-    list: format.list ? getFirstValue(format.list) : null,
-    marginBottom: marginBottom ? getFirstValue(marginBottom) : cssMarginBottom,
-    marginTop: marginTop ? getFirstValue(marginTop) : cssMarginTop,
-    tabletHeight: format.tabletHeight || null,
-    mobileHeight: format.mobileHeight || null,
+
+    list: format.list ? format.list : null,
+    marginBottom: marginBottom ? marginBottom : cssMarginBottom,
+    marginTop: marginTop ? marginTop : cssMarginTop,
+
     tabletHorizontalAlign: format.tabletHorizontalAlign || align,
     mobileHorizontalAlign: format.mobileHorizontalAlign || align,
-    tabletSize: format.tabletSize || null,
-    mobileSize: format.mobileSize || null,
+
     population: format.population
       ? {
           population: format.population,
@@ -165,10 +260,6 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     prepopulation: format.prepopulation
       ? $elem.closest(".brz-pre-population-visible").text()
       : null,
-    tabletWeight: format.tabletWeight || null,
-    mobileWeight: format.mobileWeight || null,
-    size: formatSize ? getFirstValue(formatSize) : size,
-    tagName: getTagName(format, $elem),
-    weight: formatWeight ? getFirstValue(formatWeight) : String(weight)
+    tagName: getTagName(format, $elem)
   };
 };

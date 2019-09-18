@@ -10,6 +10,13 @@
   .brz-text__editor,
   .brz-text-btn {
     width: 100%;
+    white-space: pre-wrap;
+  }
+
+  // Add word wrap for buttons
+  // if button is large break word
+  .brz-wrapper-clone {
+    @include word-wrap;
   }
 
   .brz-icon__container {

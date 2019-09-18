@@ -3,8 +3,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
+export { default as CheckGroupItem } from "./CheckGroupItem";
+
 export default class CheckGroup extends React.Component {
   static propTypes = {
+    name: PropTypes.string,
     className: PropTypes.string,
     defaultValue: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired
@@ -42,7 +45,7 @@ export default class CheckGroup extends React.Component {
 
   render() {
     const className = classnames(
-      "brz-ed-control__check-group",
+      "brz-control__check-group",
       this.props.className
     );
 

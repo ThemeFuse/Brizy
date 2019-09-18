@@ -5,7 +5,9 @@ import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
+import classnames from "classnames";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -18,7 +20,9 @@ class WPPosts extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
+    const { className } = v;
+
     const attributes = {
       numberposts: v.numberPosts,
       category: v.category,
@@ -32,16 +36,24 @@ class WPPosts extends EditorComponent {
       post_status: v.postStatus
     };
 
+    const classNameWP = classnames(
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      ),
+      className
+    );
+
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <WPShortcode
             name="brizy_posts"
             attributes={attributes}
             placeholderIcon="wp-shortcode"
             placeholderContainerWidth={this.props.meta.desktopW}
-            className={styleClassName(v)}
-            style={styleCSSVars(v)}
+            className={classNameWP}
             resizerPoints={resizerPoints}
             resizerMeta={this.props.meta}
             resizerValue={v}

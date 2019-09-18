@@ -1,56 +1,16 @@
-import classnames from "classnames";
-import { css } from "glamor";
+import { renderStyles } from "visual/utils/cssStyle";
 
-export function styleClassName(v) {
-  const { className } = v;
-  let glamorObj;
+export function style(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover": { standart: ["cssStyleElementIconBoxFlexDirection"] },
 
-  if(IS_EDITOR) {
-    glamorObj = {
-      ".brz &": {
-        flexDirection: "var(--iconPosition)",
-
-        "& .brz-icon__container": {
-          marginLeft: "var(--iconSpacingLeft)",
-          marginRight: "var(--iconSpacingRight)",
-        }
-      },
+    ".brz &&:hover .brz-icon__container": {
+      standart: [
+        "cssStyleElementIconBoxMarginLeft",
+        "cssStyleElementIconBoxMarginRight"
+      ]
     }
-  } else {
-    const {
-      iconPosition,
-      iconSpacing
-    } = v;
-
-    const marginColumn = iconPosition === "right" ? "marginLeft" : "marginRight";
-
-    glamorObj = {
-      ".brz &": {
-        flexDirection: iconPosition === "right" ? "row-reverse" : "row",
-
-        "& .brz-icon__container": {
-          [marginColumn]: `${iconSpacing}px`,
-        }
-      },
-    }
-  }
-
-  const glamorClassName = String(css(glamorObj));
-
-  return classnames("brz-icon-text", glamorClassName, className);
-}
-
-export function styleCSSVars(v) {
-  if (IS_PREVIEW) return;
-
-  const {
-    iconPosition,
-    iconSpacing
-  } = v;
-
-  return {
-    "--iconPosition": iconPosition === "right" ? "row-reverse" : "row",
-    "--iconSpacingLeft": iconPosition === "right" ? `${iconSpacing}px` : "auto",
-    "--iconSpacingRight": iconPosition === "left" ? `${iconSpacing}px` : "auto"
   };
+
+  return renderStyles({ v, vs, vd, styles });
 }

@@ -13,3 +13,25 @@
   width: 100% !important;
   min-width: 100% !important;
 }
+
+.brz-fb-page,
+.brz-fb-embed,
+.brz-fb-group {
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+    pointer-events: none;
+  }
+}
+
+.brz-fb-comments {
+  width: 100%;
+}

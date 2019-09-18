@@ -7,15 +7,51 @@
     "horizontalAlign": "left",
 
     "fontStyle": "",
-    "fontFamily": "noto_serif",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "noto_serif"
+    },
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.5,
     "letterSpacing": 0,
 
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "tempBorderWidth": 2,
+    "tempBorderTopWidth": 2,
+    "tempBorderRightWidth": 2,
+    "tempBorderBottomWidth": 2,
+    "tempBorderLeftWidth": 2,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
     "colorHex": "#73777f",
     "colorOpacity": 0.7,
     "colorPalette": "",
+
+    "tempColorOpacity": 0.7,
+    "tempColorPalette": "color8",
 
     "bgColorType": "solid",
 
@@ -23,10 +59,15 @@
     "bgColorOpacity": 1,
     "bgColorPalette": "",
 
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
     "borderColorHex": "#dcdee1",
     "borderColorOpacity": 1,
     "borderColorPalette": "",
-    "borderWidth": 2,
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
 
     "paddingType": "ungrouped",
     "padding": 0,

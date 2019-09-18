@@ -1,20 +1,21 @@
 import { t } from "visual/utils/i18n";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 
 import {
-  toolbarBoxShadowHexAndOpacity,
-  toolbarBoxShadowPalette,
-  toolbarBoxShadowFields,
-  toolbarBoxShadow,
-  toolbarHoverTransition
+  toolbarElementFbCommentsNumPosts,
+  toolbarElementFbCommentsTargetUrl,
+  toolbarElementFbCommentsHref,
+  toolbarBoxShadow2,
+  toolbarBoxShadowHexField2,
+  toolbarBoxShadowFields2,
+  toolbarCustomCSS,
+  toolbarHoverTransition,
+  toolbarDisabledHorizontalAlign
 } from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
-  const device = "desktop";
-
+export function getItems({ v, device }) {
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "boxShadowColorHex", device }),
     defaultValueValue({ v, key: "boxShadowColorPalette", device })
@@ -26,35 +27,23 @@ export function getItemsForDesktop(v) {
 
   return [
     {
-      id: "toolbarCurrentElement",
+      id: defaultValueKey({
+        key: "toolbarCurrentElement",
+        device,
+        state: "normal"
+      }),
       type: "popover",
       icon: "nc-facebook",
       title: t("Comments"),
+      devices: "desktop",
       position: 70,
       options: [
-        {
-          id: "numPosts",
-          label: t("Posts"),
-          type: "slider",
-          slider: {
-            min: 5,
-            max: 20
-          },
-          input: {
-            show: true,
-            min: 5,
-            max: 20
-          },
-          suffix: {
-            show: false
-          },
-          value: {
-            value: v.numPosts
-          },
-          onChange: ({ value: numPosts }, { sliderDragEnd }) => {
-            return sliderDragEnd && { numPosts };
-          }
-        }
+        toolbarElementFbCommentsNumPosts({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        })
         /*{
           id: "darkScheme",
           type: "switch",
@@ -64,10 +53,11 @@ export function getItemsForDesktop(v) {
       ]
     },
     {
-      id: "toolbarColor",
+      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
       type: "popover",
       size: "auto",
       title: t("Colors"),
+      devices: "desktop",
       roles: ["admin"],
       position: 80,
       icon: {
@@ -97,24 +87,23 @@ export function getItemsForDesktop(v) {
                       id: "tabBoxShadow",
                       label: t("Shadow"),
                       options: [
-                        toolbarBoxShadowHexAndOpacity({
+                        toolbarBoxShadow2({
                           v,
                           device,
                           state: "normal",
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeBoxShadowHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBoxShadowPalette({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBoxShadowPalette",
-                            "onChangeBoxShadowPaletteOpacity",
-                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          onChangeType: [
+                            "onChangeBoxShadowType2",
+                            "onChangeBoxShadowTypeDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBoxShadowPalette2",
+                            "onChangeBoxShadowPaletteOpacity2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
                         }),
                         {
@@ -124,14 +113,14 @@ export function getItemsForDesktop(v) {
                             {
                               width: 41,
                               options: [
-                                toolbarBoxShadowFields({
+                                toolbarBoxShadowHexField2({
                                   v,
                                   device,
                                   state: "normal",
                                   onChange: [
-                                    "onChangeBoxShadowHexAndOpacity",
-                                    "onChangeBoxShadowHexAndOpacityPalette",
-                                    "onChangeBoxShadowHexAndOpacityDependencies"
+                                    "onChangeBoxShadowHexAndOpacity2",
+                                    "onChangeBoxShadowHexAndOpacityPalette2",
+                                    "onChangeBoxShadowHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
@@ -139,10 +128,14 @@ export function getItemsForDesktop(v) {
                             {
                               width: 59,
                               options: [
-                                toolbarBoxShadow({
+                                toolbarBoxShadowFields2({
                                   v,
                                   device,
-                                  state: "normal"
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeBoxShadowFields2",
+                                    "onChangeBoxShadowFieldsDependencies2"
+                                  ]
                                 })
                               ]
                             }
@@ -177,24 +170,23 @@ export function getItemsForDesktop(v) {
                         }
                       },
                       options: [
-                        toolbarBoxShadowHexAndOpacity({
+                        toolbarBoxShadow2({
                           v,
                           device,
                           state: "hover",
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeBoxShadowHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBoxShadowPalette({
-                          v,
-                          device,
-                          state: "hover",
-                          onChange: [
-                            "onChangeBoxShadowPalette",
-                            "onChangeBoxShadowPaletteOpacity",
-                            "onChangeBoxShadowHexAndOpacityDependencies"
+                          onChangeType: [
+                            "onChangeBoxShadowType2",
+                            "onChangeBoxShadowTypeDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBoxShadowPalette2",
+                            "onChangeBoxShadowPaletteOpacity2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
                         }),
                         {
@@ -204,14 +196,14 @@ export function getItemsForDesktop(v) {
                             {
                               width: 41,
                               options: [
-                                toolbarBoxShadowFields({
+                                toolbarBoxShadowHexField2({
                                   v,
                                   device,
                                   state: "hover",
                                   onChange: [
-                                    "onChangeBoxShadowHexAndOpacity",
-                                    "onChangeBoxShadowHexAndOpacityPalette",
-                                    "onChangeBoxShadowHexAndOpacityDependencies"
+                                    "onChangeBoxShadowHexAndOpacity2",
+                                    "onChangeBoxShadowHexAndOpacityPalette2",
+                                    "onChangeBoxShadowHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
@@ -219,10 +211,14 @@ export function getItemsForDesktop(v) {
                             {
                               width: 59,
                               options: [
-                                toolbarBoxShadow({
+                                toolbarBoxShadowFields2({
                                   v,
                                   device,
-                                  state: "hover"
+                                  state: "hover",
+                                  onChange: [
+                                    "onChangeBoxShadowFields2",
+                                    "onChangeBoxShadowFieldsDependencies2"
+                                  ]
                                 })
                               ]
                             }
@@ -238,50 +234,32 @@ export function getItemsForDesktop(v) {
         }
       ],
       onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "tabNormal" : v.tabsState
+        tabsState: !isOpen ? "" : v.tabsState
       })
     },
     {
-      id: "toolbarLink",
+      id: defaultValueKey({ key: "toolbarLink", device, state: "normal" }),
       type: "popover",
       icon: "nc-link",
       title: t("Link"),
       position: 80,
       options: [
-        {
-          id: "targetUrl",
-          label: t("Target URL"),
-          type: "select",
-          choices: [
-            {
-              title: t("Current Page"),
-              value: "current"
-            },
-            {
-              title: t("Custom Page"),
-              value: "custom"
-            }
-          ],
-          value: v.targetUrl
-        },
-
-        {
-          id: "href",
-          label: t("Link"),
-          type: "input",
-          disabled: v.targetUrl === "current" ? true : false,
-          placeholder: "http://",
-          value: {
-            value: v.href
-          },
-          onChange: ({ value: href }) => ({
-            href
-          })
-        }
+        toolbarElementFbCommentsTargetUrl({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        }),
+        toolbarElementFbCommentsHref({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        })
       ]
     },
     {
-      id: "toolbarSettings",
+      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
@@ -289,7 +267,11 @@ export function getItemsForDesktop(v) {
       position: 110,
       options: [
         {
-          id: "advancedSettings",
+          id: defaultValueKey({
+            key: "advancedSettings",
+            device,
+            state: "normal"
+          }),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
@@ -297,6 +279,7 @@ export function getItemsForDesktop(v) {
             {
               id: "settingsTabs",
               type: "tabs",
+              devices: "desktop",
               align: "start",
               tabs: [
                 {
@@ -306,12 +289,27 @@ export function getItemsForDesktop(v) {
                   options: []
                 },
                 {
-                  id: "moreSettingsAdvanced",
+                  id: defaultValueKey({
+                    key: "moreSettingsAdvanced",
+                    device,
+                    state: "normal"
+                  }),
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
                   options: [
-                    toolbarCustomCSS({ v }),
-                    toolbarHoverTransition({ v, position: 100 })
+                    toolbarCustomCSS({
+                      v,
+                      device,
+                      state: "normal",
+                      devices: "desktop"
+                    }),
+                    toolbarHoverTransition({
+                      v,
+                      device,
+                      state: "normal",
+                      devices: "desktop",
+                      position: 100
+                    })
                   ]
                 }
               ]
@@ -320,11 +318,10 @@ export function getItemsForDesktop(v) {
         }
       ]
     },
-    {
-      id: "horizontalAlign",
-      type: "toggle",
-      disabled: true
-    }
+    toolbarDisabledHorizontalAlign({
+      device,
+      state: "normal"
+    })
     /*{
       id: "apps",
       type: "integrationsApps",
@@ -335,203 +332,5 @@ export function getItemsForDesktop(v) {
         group: "social"
       }
     }*/
-  ];
-}
-
-export function getItemsForTablet(v) {
-  const device = "tablet";
-
-  const { hex: tabletBoxShadowColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "boxShadowColorHex", device }),
-    defaultValueValue({ v, key: "boxShadowColorPalette", device })
-  );
-  return [
-    {
-      id: "tabletToolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(
-            tabletBoxShadowColorHex,
-            v.tabletBoxShadowColorOpacity
-          )
-        }
-      },
-      options: [
-        {
-          id: "tabletTabsColor",
-          type: "tabs",
-          hideHandlesWhenOne: false,
-          tabs: [
-            {
-              id: "tabletBoxShadow",
-              label: t("Shadow"),
-              options: [
-                toolbarBoxShadowHexAndOpacity({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowHexAndOpacity",
-                    "onChangeBoxShadowHexAndOpacityPalette",
-                    "onChangeBoxShadowHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBoxShadowPalette({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowPalette",
-                    "onChangeBoxShadowPaletteOpacity",
-                    "onChangeBoxShadowHexAndOpacityDependencies"
-                  ]
-                }),
-                {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 41,
-                      options: [
-                        toolbarBoxShadowFields({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeBoxShadowHexAndOpacityDependencies"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 59,
-                      options: [
-                        toolbarBoxShadow({
-                          v,
-                          device,
-                          state: "normal"
-                        })
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "tabletHorizontalAlign",
-      type: "toggle",
-      disabled: true
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  const device = "mobile";
-
-  const { hex: mobileBoxShadowColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "boxShadowColorHex", device }),
-    defaultValueValue({ v, key: "boxShadowColorPallete", device })
-  );
-
-  return [
-    {
-      id: "mobileToolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(
-            mobileBoxShadowColorHex,
-            v.mobileBoxShadowColorOpacity
-          )
-        }
-      },
-      options: [
-        {
-          id: "mobileTabsColor",
-          className: "",
-          type: "tabs",
-          hideHandlesWhenOne: false,
-          tabs: [
-            {
-              id: "mobileBoxShadow",
-              label: t("Shadow"),
-              options: [
-                toolbarBoxShadowHexAndOpacity({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowHexAndOpacity",
-                    "onChangeBoxShadowHexAndOpacityPalette",
-                    "onChangeBoxShadowHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBoxShadowPalette({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowPalette",
-                    "onChangeBoxShadowPaletteOpacity",
-                    "onChangeBoxShadowHexAndOpacityDependencies"
-                  ]
-                }),
-                {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 41,
-                      options: [
-                        toolbarBoxShadowFields({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeBoxShadowHexAndOpacityDependencies"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 59,
-                      options: [
-                        toolbarBoxShadow({
-                          v,
-                          device,
-                          state: "normal"
-                        })
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "mobileHorizontalAlign",
-      type: "toggle",
-      disabled: true
-    }
   ];
 }

@@ -1,16 +1,56 @@
-import getFontById from "./getFontById";
+import {
+  getDefaultFont,
+  getGoogleFontDetails,
+  getUploadFontDetails
+} from "visual/utils/fonts";
 
-export const makeRichTextFontFamiliesCSS = fonts => {
+const makeCSS = ({ id, family }) =>
+  `.brz .brz-ff-${id}{font-family:${family}!important;}`;
+
+export const makeRichTextFontGoogleCSS = fonts => {
   return fonts
-    .map(id => {
-      const { family } = getFontById(id) || {};
+    .map(font => {
+      const { id, family, deleted = false } = getGoogleFontDetails(font) || {};
 
-      if (!family) {
-        console.warn(`There isn't family: ${id}`);
+      if (!id || !family) {
+        console.warn(`There isn't family: ${JSON.stringify(font)}`);
         return "";
       }
 
-      return `.brz .brz-ff-${id}{font-family:${family}!important;}`;
+      // If the font was deleted generate className with
+      // old id and defaultFont Family
+      if (deleted) {
+        return makeCSS({
+          id,
+          family: getGoogleFontDetails(getDefaultFont().font).family
+        });
+      }
+
+      return makeCSS({ id, family });
+    })
+    .join("");
+};
+
+export const makeRichTextFontUploadCSS = fonts => {
+  return fonts
+    .map(font => {
+      const { id, family, deleted = false } = getUploadFontDetails(font) || {};
+
+      if (!id || !family) {
+        console.warn(`There isn't family: ${JSON.stringify(font)}`);
+        return "";
+      }
+
+      // If the font was deleted generate className with
+      // old id and defaultFont Family
+      if (deleted) {
+        return makeCSS({
+          id,
+          family: getGoogleFontDetails(getDefaultFont().font).family
+        });
+      }
+
+      return makeCSS({ id, family });
     })
     .join("");
 };

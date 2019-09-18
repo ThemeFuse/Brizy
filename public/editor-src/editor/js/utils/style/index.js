@@ -60,7 +60,7 @@ export {
   styleSizeWidthPercent,
   styleSizeHeightPx,
   styleSizeSizePercent,
-  styleSizeConatinerSizePercent
+  styleSizeContainerSizePercent
 } from "./styleSize";
 
 // Container Type

@@ -5,6 +5,7 @@ import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import Button from "../../Button";
 import { isMaxFields } from "../../utils";
+import { t } from "visual/utils/i18n";
 
 class SelectFields extends Component {
   static defaultProps = {
@@ -13,17 +14,9 @@ class SelectFields extends Component {
     shortTitle: "",
     description: "",
     img: "",
-    form: {},
+    fields: [],
     formFields: [],
-
-    usedAccount: "",
-    accounts: [],
-
-    usedList: "",
-    lists: [],
-
-    fieldsMap: "",
-    fieldsList: [],
+    restrictions: {},
     error: null,
     nextLoading: null,
     prevLoading: null,
@@ -101,7 +94,7 @@ class SelectFields extends Component {
     return (
       <ScrollPane
         style={{ maxHeight: 255 }}
-        className="brz-ed-scroll-pane brz-ed-popup-integrations__scroll-pane"
+        className="brz-ed-popup-integrations__scroll-pane"
       >
         {options}
       </ScrollPane>
@@ -120,7 +113,7 @@ class SelectFields extends Component {
     return (
       <div className="brz-ed-alert brz-ed-alert-error">
         <span className="brz-span">
-          Fields are empty. Please add fields and try again.
+          {t("Fields are empty. Please add fields and try again.")}
         </span>
       </div>
     );
@@ -142,10 +135,12 @@ class SelectFields extends Component {
         {error && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
           <p className="brz-p">
-            <strong className="brz-strong">FORM FIELDS</strong>
+            <strong className="brz-strong">{t("FORM FIELDS")}</strong>
           </p>
           <p className="brz-p">
-            <strong className="brz-strong">{title} FIELDS</strong>
+            <strong className="brz-strong">
+              {title} {t("FIELDS")}
+            </strong>
           </p>
         </div>
         <div className="brz-ed-popup-integrations-step__body">
@@ -158,7 +153,7 @@ class SelectFields extends Component {
                 loading={prevLoading}
                 onClick={onPrev}
               >
-                Back
+                {t("Back")}
               </Button>
             )}
             {nextLoading !== null && (
@@ -168,7 +163,7 @@ class SelectFields extends Component {
                 loading={nextLoading}
                 onClick={onNext}
               >
-                Continue
+                {t("Continue")}
               </Button>
             )}
           </div>

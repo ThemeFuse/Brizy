@@ -2,22 +2,42 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getFontById } from "visual/utils/fonts";
 
 export function styleTypographyFontFamily({ v }) {
-  const { fontFamily } = v;
-  return getFontById(fontFamily).family;
+  const { fontFamily, fontFamilyType } = v;
+  return fontFamily === undefined
+    ? fontFamily
+    : getFontById({ family: fontFamily, type: fontFamilyType }).family;
 }
 
-export function styleTypographyFontSize({ v, device }) {
-  return `${defaultValueValue({ v, key: "fontSize", device })}px`;
+export function styleTypographyFontSize({ v, device, state }) {
+  const fontSize = defaultValueValue({
+    v,
+    key: "fontSize",
+    device,
+    state
+  });
+
+  return fontSize;
 }
 
-export function styleTypographyLineHeight({ v, device }) {
-  return defaultValueValue({ v, key: "lineHeight", device });
+export function styleTypographyLineHeight({ v, device, state }) {
+  const lineHeight = defaultValueValue({ v, key: "lineHeight", device, state });
+
+  return lineHeight;
 }
 
-export function styleTypographyFontWeight({ v, device }) {
-  return defaultValueValue({ v, key: "fontWeight", device });
+export function styleTypographyFontWeight({ v, device, state }) {
+  const fontWeight = defaultValueValue({ v, key: "fontWeight", device, state });
+
+  return fontWeight;
 }
 
-export function styleTypographyLetterSpacing({ v, device }) {
-  return `${defaultValueValue({ v, key: "letterSpacing", device })}px`;
+export function styleTypographyLetterSpacing({ v, device, state }) {
+  const letterSpacing = defaultValueValue({
+    v,
+    key: "letterSpacing",
+    device,
+    state
+  });
+
+  return letterSpacing;
 }

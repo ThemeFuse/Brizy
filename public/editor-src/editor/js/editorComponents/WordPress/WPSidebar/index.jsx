@@ -5,7 +5,9 @@ import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import toolbarConfigFn from "./toolbar";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
+import classnames from "classnames";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 import { getSidebars } from "visual/utils/api/editor";
 
 const resizerPoints = ["centerLeft", "centerRight"];
@@ -34,11 +36,23 @@ class WPSidebar extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
+    const { className } = v;
+
     const toolbarConfig = toolbarConfigFn(this.state.sidebars);
     const attributes = {
       id: v.sidebar
     };
+
+    const classNameWP = classnames(
+      "brz-wp__sidebar",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      ),
+      className
+    );
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
@@ -48,8 +62,7 @@ class WPSidebar extends EditorComponent {
             attributes={attributes}
             placeholderIcon="wp-shortcode"
             placeholderContainerWidth={this.props.meta.desktopW}
-            className={styleClassName(v)}
-            style={styleCSSVars(v)}
+            className={classNameWP}
             resizerPoints={resizerPoints}
             resizerMeta={this.props.meta}
             resizerValue={v}

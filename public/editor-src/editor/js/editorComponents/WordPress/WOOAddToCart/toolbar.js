@@ -1,11 +1,19 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
+import { defaultValueKey } from "visual/utils/onChange";
+import {
+  toolbarElementWOOAddToCartProductID,
+  toolbarElementWOOAddToCartStyle,
+  toolbarCustomCSS
+} from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
+export function getItems({ v, device }) {
   return [
     {
-      id: "toolbarWOOAddToCart",
+      id: defaultValueKey({
+        key: "toolbarWOOProductPage",
+        device,
+        state: "normal"
+      }),
       type: "popover",
       icon: "nc-woo-2",
       position: 10,
@@ -18,36 +26,24 @@ export function getItemsForDesktop(v) {
               id: "queryTab",
               label: t("Query"),
               options: [
-                {
-                  id: "productID",
-                  label: t("Product"),
-                  type: "input",
-                  placeholder: t("Product ID or SKU"),
-                  value: {
-                    value: v.productID
-                  },
-                  onChange: ({ value: productID }) => ({
-                    productID
-                  })
-                }
+                toolbarElementWOOAddToCartProductID({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                })
               ]
             },
             {
               id: "layoutTab",
               label: t("Layout"),
               options: [
-                {
-                  id: "style",
-                  label: t("Style"),
-                  type: "input",
-                  placeholder: t("Style Add to Cart"),
-                  value: {
-                    value: v.style
-                  },
-                  onChange: ({ value: style }) => ({
-                    style
-                  })
-                }
+                toolbarElementWOOAddToCartStyle({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                })
               ]
             }
           ]
@@ -55,141 +51,27 @@ export function getItemsForDesktop(v) {
       ]
     },
     {
-      id: "toolbarSettings",
+      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",
       roles: ["admin"],
       icon: "nc-cog",
       position: 110,
       options: [
+        toolbarSizeWidthWidthPercent({
+          v,
+          device,
+          state: "normal"
+        }),
         {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        },
-        {
-          id: "advancedSettings",
+          id: defaultValueKey({
+            key: "advancedSettings",
+            device,
+            state: "normal"
+          }),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  return [
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      roles: ["admin"],
-      icon: "nc-cog",
-      position: 110,
-      options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  return [
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      roles: ["admin"],
-      icon: "nc-cog",
-      position: 110,
-      options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
+          options: []
         }
       ]
     }

@@ -32,14 +32,15 @@ const mapDispatchToProps = dispatch => ({
 });
 const areStatesEqual = (state, prevState) =>
   state.page === prevState.page &&
-  state.globals === prevState.globals &&
+  state.currentStyleId === prevState.currentStyleId &&
+  state.currentStyle === prevState.currentStyle &&
+  state.extraFontStyles === prevState.extraFontStyles &&
+  state.fonts === prevState.fonts &&
   state.copiedElement === prevState.copiedElement;
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
   null,
-  {
-    areStatesEqual
-  }
+  { areStatesEqual }
 )(EditorPage);

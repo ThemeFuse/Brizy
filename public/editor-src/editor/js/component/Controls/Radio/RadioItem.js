@@ -3,6 +3,7 @@ import classnames from "classnames";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
+import { uuid } from "visual/utils/uuid";
 
 export default class RadioItem extends React.Component {
   static defaultProps = {
@@ -50,11 +51,12 @@ export default class RadioItem extends React.Component {
       { "brz-control__radio-option--active": active },
       _className
     );
+    const id = uuid();
 
     return (
       <div className={className} onClick={onClick}>
         <input
-          id={value}
+          id={id}
           className="brz-input"
           type="radio"
           name={name}
@@ -65,7 +67,7 @@ export default class RadioItem extends React.Component {
           data-label={this.props["data-label"]}
           onChange={() => {}}
         />
-        <label className="brz-label" htmlFor={value}>
+        <label className="brz-label" htmlFor={id}>
           <ThemeIcon
             className="brz-control__radio-icon brz-control__radio--check"
             type="editor"

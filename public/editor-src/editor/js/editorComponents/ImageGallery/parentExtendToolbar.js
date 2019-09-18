@@ -5,24 +5,29 @@ import {
   toolbarElementImageGalleryLightBox,
   toolbarCustomCSS
 } from "visual/utils/toolbar";
+import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItemsForDesktop(v) {
-  const device = "desktop";
+export function getItems({ v, device }) {
   return [
     {
-      id: "toolbarGallery",
+      id: defaultValueKey({ key: "toolbarGallery", device, state: "normal" }),
       type: "popover",
       icon: "nc-gallery",
       title: t("Gallery"),
       position: 80,
       options: [
-        toolbarElementImageGalleryGridColumn({ v, device }),
-        toolbarElementImageGallerySpacing({ v, device }),
-        toolbarElementImageGalleryLightBox({ v, device })
+        toolbarElementImageGalleryGridColumn({ v, device, state: "normal" }),
+        toolbarElementImageGallerySpacing({ v, device, state: "normal" }),
+        toolbarElementImageGalleryLightBox({
+          v,
+          device,
+          state: "normal",
+          devices: "desktop"
+        })
       ]
     },
     {
-      id: "advancedSettings",
+      id: defaultValueKey({ key: "advancedSettings", device, state: "normal" }),
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
@@ -36,47 +41,17 @@ export function getItemsForDesktop(v) {
           align: "start",
           tabs: [
             {
-              id: "moreSettingsAdvanced",
+              id: defaultValueKey({
+                key: "moreSettingsAdvanced",
+                device,
+                state: "normal"
+              }),
               label: t("Advanced"),
               tabIcon: "nc-cog",
               options: []
             }
           ]
         }
-      ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  const device = "tablet";
-  return [
-    {
-      id: "tabletToolbarGallery",
-      type: "popover",
-      icon: "nc-gallery",
-      title: t("Gallery"),
-      position: 80,
-      options: [
-        toolbarElementImageGalleryGridColumn({ v, device }),
-        toolbarElementImageGallerySpacing({ v, device })
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  const device = "mobile";
-  return [
-    {
-      id: "mobileToolbarGallery",
-      type: "popover",
-      icon: "nc-gallery",
-      title: t("Gallery"),
-      position: 80,
-      options: [
-        toolbarElementImageGalleryGridColumn({ v, device }),
-        toolbarElementImageGallerySpacing({ v, device })
       ]
     }
   ];

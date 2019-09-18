@@ -1,25 +1,34 @@
-import _ from "underscore";
 import jQuery from "jquery";
 import Config from "visual/global/Config";
 import {
   parsePage,
   stringifyPage,
-  parseGlobals,
-  stringifyGlobals
+  parseProject,
+  stringifyProject,
+  parseGlobalBlock,
+  stringifyGlobalBlock,
+  parseSavedBlock,
+  stringifySavedBlock
 } from "./adapter";
 
+const apiUrl = Config.get("urls").api;
+const paginationData = {
+  page: 1,
+  count: 200
+};
 const hardcodedAjaxSettings = {
   xhrFields: {
     withCredentials: true
   },
-  ...(process.env.NODE_ENV === "development"
-    ? {
-        beforeSend(xhr) {
-          xhr.setRequestHeader("x-auth-user-token", Config.get("accessToken"));
-        }
-      }
-    : {})
+  beforeSend(xhr) {
+    xhr.setRequestHeader("x-editor-version", Config.get("editorVersion"));
+
+    if (process.env.NODE_ENV === "development") {
+      xhr.setRequestHeader("x-auth-user-token", Config.get("accessToken"));
+    }
+  }
 };
+const uidToApiId = {};
 
 export function request(ajaxSettings) {
   return new Promise((resolve, reject) => {
@@ -64,12 +73,61 @@ export function persistentRequest(ajaxSettings) {
   });
 }
 
-const apiUrl = Config.get("urls").api;
-const paginationData = {
-  page: 1,
-  count: 200
-};
-const uidToApiId = {};
+// a thin wrapper around fetch
+export function request2(url, config = {}) {
+  const defaultHeaders = {
+    "x-editor-version": Config.get("editorVersion")
+  };
+
+  if (process.env.NODE_ENV === "development") {
+    return fetch(url, {
+      ...config,
+      headers: {
+        ...config.headers,
+        ...defaultHeaders,
+        "x-auth-user-token": Config.get("accessToken")
+      }
+    });
+  } else {
+    return fetch(url, {
+      credentials: "same-origin",
+      ...config,
+      headers: {
+        ...config.headers,
+        ...defaultHeaders
+      }
+    });
+  }
+}
+
+// Project
+
+export function getProject() {
+  const project = Config.get("project").id;
+
+  return persistentRequest({
+    type: "GET",
+    dataType: "json",
+    url: apiUrl + "/projects/" + project
+  }).then(parseProject);
+}
+
+export function updateProject(project, meta = {}) {
+  const projectId = Config.get("project").id;
+  const { is_autosave = 1 } = meta;
+  const { data } = stringifyProject(project);
+  const requestData = {
+    data,
+    is_autosave
+  };
+
+  return persistentRequest({
+    type: "PUT",
+    dataType: "json",
+    url: apiUrl + "/projects/" + projectId,
+    data: requestData
+  });
+}
 
 // page
 
@@ -133,36 +191,6 @@ export function deletePage(id) {
   });
 }
 
-// globals
-
-export function getGlobals() {
-  const project = Config.get("project").id;
-
-  return persistentRequest({
-    type: "GET",
-    dataType: "json",
-    url: apiUrl + "/projects/" + project
-  }).then(r => {
-    return parseGlobals(r.globals);
-  });
-}
-
-export function updateGlobals(data, meta = {}) {
-  const project = Config.get("project").id;
-  const { is_autosave = 1 } = meta;
-  const requestData = {
-    globals: stringifyGlobals(data),
-    is_autosave
-  };
-
-  return persistentRequest({
-    type: "PUT",
-    dataType: "json",
-    url: apiUrl + "/projects/" + project,
-    data: requestData
-  });
-}
-
 // global blocks
 
 export function getGlobalBlocks() {
@@ -178,24 +206,25 @@ export function getGlobalBlocks() {
     url: apiUrl + "/global_blocks",
     data: requestData
   }).then(r => {
-    return r.reduce((acc, { id, uid, data }) => {
+    return r.map(parseGlobalBlock).reduce((acc, { id, uid, data }) => {
       // map uids to ids to use them in updates
       uidToApiId[uid] = id;
 
-      acc[uid] = JSON.parse(data);
+      acc[uid] = data;
 
       return acc;
     }, {});
   });
 }
 
-export function createGlobalBlock({ id: uid, data }, meta = {}) {
-  const project = Config.get("project").id;
+export function createGlobalBlock(globalBlock, meta = {}) {
+  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
+  const projectId = Config.get("project").id;
   const { is_autosave = 0 } = meta;
   const requestData = {
     uid,
-    project,
-    data: JSON.stringify(data),
+    project: projectId,
+    data,
     is_autosave
   };
 
@@ -210,12 +239,13 @@ export function createGlobalBlock({ id: uid, data }, meta = {}) {
   });
 }
 
-export function updateGlobalBlock({ id: uid, data }, meta = {}) {
+export function updateGlobalBlock(globalBlock, meta = {}) {
+  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
   if (uidToApiId[uid]) {
     const { is_autosave = 1 } = meta;
     const requestData = {
       uid,
-      data: JSON.stringify(data),
+      data,
       is_autosave
     };
 
@@ -246,24 +276,25 @@ export function getSavedBlocks() {
     url: apiUrl + "/saved_blocks",
     data: requestData
   }).then(r => {
-    return r.reduce((acc, { id, uid, data }) => {
+    return r.map(parseSavedBlock).reduce((acc, { id, uid, data }) => {
       // map uids to ids to use them in updates
       uidToApiId[uid] = id;
 
-      acc[uid] = JSON.parse(data);
+      acc[uid] = data;
 
       return acc;
     }, {});
   });
 }
 
-export function createSavedBlock({ id: uid, data }, meta = {}) {
-  const library = Config.get("library").id;
+export function createSavedBlock(savedBlock, meta = {}) {
+  const { id: uid, data } = stringifySavedBlock(savedBlock);
+  const libraryId = Config.get("library").id;
   const { is_autosave = 0 } = meta;
   const requestData = {
     uid,
-    library,
-    data: JSON.stringify(data),
+    library: libraryId,
+    data,
     is_autosave
   };
 
@@ -278,12 +309,13 @@ export function createSavedBlock({ id: uid, data }, meta = {}) {
   });
 }
 
-export function updateSavedBlock({ id: uid, data }, meta = {}) {
+export function updateSavedBlock(savedBlock, meta = {}) {
+  const { id: uid, data } = stringifySavedBlock(savedBlock);
   if (uidToApiId[uid]) {
     const { is_autosave = 1 } = meta;
     const requestData = {
       uid,
-      data: JSON.stringify(data),
+      data,
       is_autosave
     };
 
@@ -325,4 +357,41 @@ export function uploadImage(data) {
     url: apiUrl + "/media",
     data: requestData
   });
+}
+
+// fonts
+
+export function getUploadedFonts() {
+  const { api } = Config.get("urls");
+
+  // mapped uid cloud to font id what used in models
+  return request2(`${api}/fonts`, {
+    method: "GET"
+  })
+    .then(r => r.json())
+    .then(r => r.map(({ uid, ...data }) => ({ ...data, id: uid })));
+}
+
+// screenshots
+
+export function createBlockScreenshot({ base64 }) {
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+
+  return request2(`${apiUrl}/screenshots`, {
+    method: "POST",
+    body: new URLSearchParams({
+      attachment
+    })
+  }).then(r => r.json());
+}
+
+export function updateBlockScreenshot({ id, base64 }) {
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+
+  return request2(`${apiUrl}/screenshots/${id}`, {
+    method: "PUT",
+    body: new URLSearchParams({
+      attachment
+    })
+  }).then(r => r.json());
 }

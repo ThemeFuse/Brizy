@@ -11,11 +11,11 @@ export default class extends Component {
     const os = detectOS();
     const isMac = os === "MacOS";
     const src = isMac
-      ? `${assetUrl("editor/img/mac-keyboard@1x.png")} 1x , ${assetUrl(
-          "editor/img/mac-keyboard@2x.png"
+      ? `${assetUrl("editor/img/mac-keyboard1x.png")} 1x , ${assetUrl(
+          "editor/img/mac-keyboard2x.png"
         )} 2x`
-      : `${assetUrl("editor/img/pc-keyboard@1x.png")} 1x , ${assetUrl(
-          "editor/img/pc-keyboard@2x.png"
+      : `${assetUrl("editor/img/pc-keyboard1x.png")} 1x , ${assetUrl(
+          "editor/img/pc-keyboard2x.png"
         )} 2x`;
 
     return (

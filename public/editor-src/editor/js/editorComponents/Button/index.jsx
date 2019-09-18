@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import TextEditor from "visual/editorComponents/Text/Editor";
+import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -9,12 +10,8 @@ import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
-import {
-  styleClassName,
-  styleCSSVars,
-  iconStyleClassName,
-  iconStyleCSSVars
-} from "./styles";
+import { style, styleIcon } from "./styles";
+import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 
 class Button extends EditorComponent {
@@ -28,33 +25,48 @@ class Button extends EditorComponent {
     this.patchValue({ text });
   };
 
-  renderIcon(v) {
+  renderIcon(v, vs, vd) {
+    const iconClassName = classnames(
+      css(
+        `${this.constructor.componentId}-icon`,
+        `${this.getId()}-icon`,
+        styleIcon(v, vs, vd)
+      )
+    );
     const { iconName, iconType } = v;
 
     return (
-      <ThemeIcon
-        className={iconStyleClassName(v)}
-        name={iconName}
-        type={iconType}
-      />
+      <ThemeIcon className={iconClassName} name={iconName} type={iconType} />
     );
   }
 
-  renderSubmit(v, content) {
-    const style = { ...styleCSSVars(v), ...iconStyleCSSVars(v) };
+  renderSubmit(v, vs, vd, content) {
+    const className = classnames(
+      "brz-btn",
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        style(v, vs, vd)
+      )
+    );
 
     return IS_EDITOR ? (
-      <a className={styleClassName(v)} style={style}>
-        {content}
-      </a>
+      <a className={className}>{content}</a>
     ) : (
-      <button className={styleClassName(v)} style={style}>
-        {content}
-      </button>
+      <button className={className}>{content}</button>
     );
   }
 
-  renderLink(v, content) {
+  renderLink(v, vs, vd, content) {
+    const className = classnames(
+      "brz-btn",
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        style(v, vs, vd)
+      )
+    );
+
     const {
       linkType,
       linkAnchor,
@@ -70,11 +82,10 @@ class Button extends EditorComponent {
     };
     let props = {
       type: linkType,
-      style: { ...styleCSSVars(v), ...iconStyleCSSVars(v) },
       href: hrefs[linkType],
       target: linkExternalBlank,
       rel: linkExternalRel,
-      className: styleClassName(v)
+      className: className
     };
 
     if (IS_EDITOR) {
@@ -121,18 +132,28 @@ class Button extends EditorComponent {
     return <EditorArrayComponent {...popupsProps} />;
   }
 
-  renderForEdit(_v) {
+  renderForEdit(_v, _vs, _vd) {
     const v = this.applyRulesToValue(_v, [
       _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
       _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
+    ]);
+    const vs = this.applyRulesToValue(_vs, [
+      _vs.fontStyle && `${_vs.fontStyle}__fsDesktop`,
+      _vs.tabletFontStyle && `${_vs.tabletFontStyle}__fsTablet`,
+      _vs.mobileFontStyle && `${_vs.mobileFontStyle}__fsMobile`
+    ]);
+    const vd = this.applyRulesToValue(_vs, [
+      _vd.fontStyle && `${_vd.fontStyle}__fsDesktop`,
+      _vd.tabletFontStyle && `${_vd.tabletFontStyle}__fsTablet`,
+      _vd.mobileFontStyle && `${_vd.mobileFontStyle}__fsMobile`
     ]);
 
     const { text, type, iconName, iconType, linkType, linkPopup, popups } = v;
     const renderIcon = iconName && iconType;
     const content = (
       <Fragment>
-        {renderIcon && this.renderIcon(v)}
+        {renderIcon && this.renderIcon(v, vs, vd)}
         <TextEditor value={text} onChange={this.handleTextChange} />
       </Fragment>
     );
@@ -142,8 +163,8 @@ class Button extends EditorComponent {
         <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             {type === "link"
-              ? this.renderLink(v, content)
-              : this.renderSubmit(v, content)}
+              ? this.renderLink(v, vs, vd, content)
+              : this.renderSubmit(v, vs, vd, content)}
           </CustomCSS>
         </Toolbar>
         {popups.length > 0 &&

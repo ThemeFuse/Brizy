@@ -15,6 +15,9 @@
   &--auto {
     width: auto;
   }
+  &--small {
+    width: $toolbar-tooltip-sm-width;
+  }
   &--medium {
     width: $toolbar-tooltip-md-width;
   }
@@ -30,7 +33,18 @@
     $spaceBetween: 6px + 3px; // 6px is Arrow | 3px is space between target and content
 
     position: relative;
+    display: flex;
+    justify-content: center;
 
+    .brz-ed-tooltip--top-center {
+      top: auto;
+      bottom: calc(100% + #{$spaceBetween});
+      left: auto;
+    }
+    .brz-ed-tooltip--bottom-center {
+      top: calc(100% + #{$spaceBetween});
+      left: auto;
+    }
     .brz-ed-tooltip--top-right,
     .brz-ed-tooltip--bottom-right {
       left: auto;
@@ -42,12 +56,43 @@
     }
     .brz-ed-tooltip--top-right,
     .brz-ed-tooltip--top-left {
-      bottom: calc(100% + #{$spaceBetween});
       top: auto;
+      bottom: calc(100% + #{$spaceBetween});
     }
     .brz-ed-tooltip--bottom-right,
     .brz-ed-tooltip--bottom-left {
       top: calc(100% + #{$spaceBetween});
     }
+  }
+
+  // Delay
+  &--delay-1 {
+    animation-delay: 0.6s;
+  }
+  &--delay-2 {
+    animation-delay: 1s;
+  }
+}
+
+// Pro Uses for PromptBlocks | Fonts
+.brz-ed-tooltip-content__pro {
+  font-family: $font-family-1;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 18px 18px 18px 22px;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: left;
+
+  &-title {
+    margin-bottom: 17px;
+  }
+  &-body .brz-icon-svg {
+    font-size: 10px;
+    margin-right: 8px;
+  }
+  .brz-p {
+    font-size: inherit;
+    font-weight: 600;
   }
 }

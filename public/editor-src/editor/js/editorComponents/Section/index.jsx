@@ -1,14 +1,16 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import SectionItems from "./Items";
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { uuid } from "visual/utils/uuid";
 import { stripIds } from "visual/utils/models";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import { sectionStyleClassName, sectionStyleCSSVars } from "./styles";
+import { styleSection } from "./styles";
+import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 
 class Section extends EditorComponent {
@@ -79,12 +81,24 @@ class Section extends EditorComponent {
     return <SectionItems {...itemsProps} />;
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
+    const { className, customClassName } = v;
+
+    const classNameSection = classnames(
+      "brz-section",
+      className,
+      customClassName,
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleSection(v, vs, vd)
+      )
+    );
+
     return (
       <section
         id={this.getId()}
-        className={sectionStyleClassName(v)}
-        style={sectionStyleCSSVars(v)}
+        className={classNameSection}
         data-block-id={this.props.blockId}
       >
         {this.renderItems(v)}
@@ -92,11 +106,24 @@ class Section extends EditorComponent {
     );
   }
 
-  renderForView(v) {
+  renderForView(v, vs, vd) {
+    const { className, customClassName } = v;
+
+    const classNameSection = classnames(
+      "brz-section",
+      className,
+      customClassName,
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleSection(v, vs, vd)
+      )
+    );
+
     return (
       <section
         id={v.anchorName || this.getId()}
-        className={sectionStyleClassName(v)}
+        className={classNameSection}
         data-uid={this.getId()}
       >
         {this.renderItems(v)}
@@ -169,7 +196,7 @@ class Section extends EditorComponent {
       meta: { globalBlockId },
       onChange
     } = this.props;
-    const globalBlocks = globalBlocksSelector(getStore().getState());
+    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
     const globalsData = stripIds(globalBlocks[globalBlockId]);
     globalsData.value._id = this.getId();

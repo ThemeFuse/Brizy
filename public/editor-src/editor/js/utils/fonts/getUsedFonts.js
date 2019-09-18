@@ -1,27 +1,24 @@
-import Config from "visual/global/Config";
-import { getFontById } from "visual/utils/fonts";
 import { getStore } from "visual/redux/store";
-import { globalsSelector } from "visual/redux/selectors";
-
-export function getUsedFonts() {
-  const globalsExtraFonts = globalsSelector(getStore().getState()).extraFonts;
-  const configFonts = Config.get("fonts").map(getFontById);
-  const extraFonts = globalsExtraFonts
-    ? globalsExtraFonts.map(getFontById)
-    : [];
-
-  return [...extraFonts, ...configFonts];
-}
+import { unDeletedFontSelector } from "visual/redux/selectors";
 
 export function getUsedFontsDetails() {
-  const globalsExtraFonts = globalsSelector(getStore().getState()).extraFonts;
-  const configFonts = Config.get("fonts").map(getFontById);
-  const extraFonts = globalsExtraFonts
-    ? globalsExtraFonts.map(getFontById)
-    : [];
+  const {
+    config = {},
+    blocks = {},
+    google = {},
+    upload = {}
+  } = unDeletedFontSelector(getStore().getState());
 
   return {
-    extraFonts: extraFonts,
-    configFonts: configFonts
+    config: config.data || [],
+    blocks: blocks.data || [],
+    google: google.data || [],
+    upload: upload.data || []
   };
+}
+
+export function getUsedFonts() {
+  return Object.values(getUsedFontsDetails()).reduce((acc, cur) => {
+    return [...acc, ...cur];
+  }, []);
 }

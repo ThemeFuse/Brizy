@@ -4,7 +4,23 @@ $option-color: #626b70;
 // --
 .brz-ed-popup-integrations {
   font-family: $font-family-1;
-  transform: translate(-50%, -50%);
+
+  // Scroll
+  .brz-ed-fixed-scroll {
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Popup Wrapper
+  .brz-ed-popup-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    overflow: hidden;
+  }
 
   // Popup Content
   .brz-ed-popup-content {
@@ -32,9 +48,20 @@ $option-color: #626b70;
     }
   }
 
+  // Description
+  &__description {
+    font-size: 15px;
+    font-weight: 500;
+    color: #626b70;
+    margin-top: 18px;
+  }
+
   // Apps
   &__apps {
     margin: 22px 18px 0 24px;
+  }
+  &-apps__scroll-pane {
+    overflow: auto;
   }
   &-apps__scroll-pane.brz-ed-scroll-pane {
     > .brz-ed-tall-track {
@@ -85,6 +112,28 @@ $option-color: #626b70;
       border-color: $brand-primary;
     }
   }
+  &__app--pro {
+    color: $brand-primary-pro;
+
+    .brz-ed-popup-integrations__app-logo--open,
+    .brz-ed-popup-integrations__app-logo:hover {
+      &:after {
+        border-color: $brand-primary-pro;
+        background-color: rgba(255, 255, 255, 0.9);
+        transition: 0.2s linear border-color, 0.2s linear background-color;
+      }
+      .brz-ed-popup-integrations__app-icon {
+        opacity: 1;
+        transition: 0.2s linear opacity;
+      }
+    }
+    .brz-ed-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      z-index: 1;
+    }
+  }
   &__app-logo {
     position: relative;
     margin-bottom: 12px;
@@ -98,7 +147,7 @@ $option-color: #626b70;
       width: 100%;
       height: 100%;
       border: 3px solid transparent;
-      transition: 0.2s linear border-color;
+      transition: 0.2s linear border-color, 0.2s linear background-color;
     }
     &:hover:after {
       border-color: $brand-primary;
@@ -125,6 +174,21 @@ $option-color: #626b70;
       font-size: 12px;
       line-height: 16px;
     }
+  }
+  &__app-icon--pro {
+    color: inherit;
+    font-size: 16px;
+    top: 50%;
+    left: 50%;
+    background-color: transparent;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: 0.2s linear opacity;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
   }
   &__app-title {
     font-family: inherit;
@@ -197,8 +261,6 @@ $option-color: #626b70;
     position: relative;
     display: block;
     width: 283px;
-    margin-left: auto;
-    margin-right: auto;
     margin: 0 auto 14px;
 
     &:last-of-type {
@@ -324,30 +386,15 @@ $option-color: #626b70;
       margin-right: 0;
     }
   }
-  &-account--delete {
-    cursor: pointer;
-    margin-left: auto;
-    color: $option-color;
-    transition: 0.2s linear color;
-    font-size: 0;
-    line-height: 1;
-
-    &:hover {
-      color: $brand-primary;
-      transition: 0.2s linear color;
-    }
-    .brz-icon-svg {
-      font-size: 16px;
-    }
-  }
   &-option__radio {
     color: $option-color;
 
     .brz-control__radio-option {
+      position: relative;
       font-size: 15px;
       font-weight: 500;
       border-bottom: 1px solid rgba(#000, 0.1);
-      padding: 17px 9px 16px 4px;
+      padding: 17px 30px 16px 4px;
       height: 51px;
       cursor: pointer;
       white-space: nowrap;
@@ -403,6 +450,25 @@ $option-color: #626b70;
       font-size: 15px;
     }
   }
+  &--delete {
+    cursor: pointer;
+    color: $option-color;
+    transition: 0.2s linear color;
+    font-size: 0;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+
+    &:hover {
+      color: $floating-button-red;
+      transition: 0.2s linear color;
+    }
+    .brz-icon-svg {
+      font-size: 16px;
+    }
+  }
 
   // Fields
   &-step__fields {
@@ -417,21 +483,62 @@ $option-color: #626b70;
       }
     }
   }
+  &-fields__tooltip {
+    font-size: 0;
+    line-height: 1;
+    margin-left: 7px;
+    color: #92989c;
+    cursor: pointer;
+
+    .brz-icon-svg {
+      font-size: 13px;
+    }
+  }
+  &-fields__info {
+    line-height: 1.5;
+    font-family: $font-family-1;
+    background-color: #03080f;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: left;
+    padding: 18px 20px;
+    border-radius: 10px;
+    max-width: 240px;
+    font-size: 13px;
+    font-weight: 500;
+
+    .brz-span {
+      color: #91cb8a;
+    }
+    .brz-p {
+      font-size: 13px;
+      font-weight: 600;
+
+      &:first-child {
+        margin-bottom: 13px;
+      }
+    }
+  }
   &-step__fields-option {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 4px;
     color: $option-color;
     border-bottom: 1px solid rgba(#000, 0.1);
 
-    .brz-p {
-      font-size: 15px;
-      font-weight: 500;
+    > .brz-d-xs-flex {
       flex-basis: 40%;
       max-width: 40%;
     }
+    .brz-p {
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+  &-step__fields-option--big {
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
   &-step__fields-select {
     max-width: 223px;
@@ -454,8 +561,7 @@ $option-color: #626b70;
   &-step__fields-input {
     max-width: 223px;
     width: 100%;
-  }
-  &-step__fields-input {
+
     .brz-textarea,
     .brz-input {
       width: 100%;
@@ -475,7 +581,25 @@ $option-color: #626b70;
       padding: 10px;
     }
   }
+  &-step__fields-upload {
+    flex-basis: 60%;
+    max-width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
+    .brz-span {
+      font-size: 13px;
+      color: rgba(43, 48, 57, 0.85);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .brz-button {
+      margin-left: 14px;
+    }
+  }
   // Done
   &-step__done {
     display: flex;
@@ -508,6 +632,112 @@ $option-color: #626b70;
 }
 .brz-ed-popup-integration {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+
+  // Email
+  &-email {
+    position: relative;
+  }
+  &-email__template {
+    padding: 0 36px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    transform: translateY(calc(100% - 60px));
+    transition: 0.18s ease-out transform;
+
+    &--open {
+      transform: translate(0);
+      transition: 0.18s ease-in transform;
+    }
+    &-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+    &-body {
+      margin-bottom: 23px;
+      color: #626b70;
+
+      .brz-textarea {
+        display: block;
+        width: 100%;
+        height: 120px;
+        max-height: 230px;
+        min-height: 40px;
+        font-size: 13px;
+        border-radius: 5px;
+        resize: vertical;
+        padding: 10px;
+        background-color: #fff;
+        border-color: transparent;
+        color: #383e48;
+        margin-bottom: 16px;
+        outline: none;
+      }
+      .brz-p {
+        font-size: 13px;
+        font-weight: 500;
+      }
+    }
+  }
+  &-email__info {
+    color: #91cb8a;
+    padding: 20px;
+
+    .brz-icon-svg {
+      font-size: 8px;
+      margin-right: auto;
+      vertical-align: middle;
+      color: rgba(#fff, 0.6);
+      opacity: 0;
+      transition: 0.2s linear opacity;
+    }
+    .brz-ed-animated {
+      animation-duration: 0.7s;
+    }
+    .brz-p {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .brz-span:first-child {
+        margin-right: 7px;
+      }
+    }
+    .brz-p:hover .brz-icon-svg {
+      opacity: 1;
+      transition: 0.2s linear opacity;
+    }
+    .brz-p:not(:last-child) {
+      margin-bottom: 3px;
+    }
+  }
+  &-email__tooltip {
+    margin-left: 5px;
+
+    .brz-ed-tooltip__content {
+      color: #92989c;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+
+  // Fonts
+  &__font-name.brz-p {
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.2s linear color;
+
+    &:hover {
+      color: $brand-primary;
+      transition: 0.2s linear color;
+    }
+  }
 }
 
 // --- Responsive

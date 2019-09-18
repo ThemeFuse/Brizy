@@ -6,7 +6,8 @@ import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
-import { styleClassName, styleCSSVars } from "./styles";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 
 const URL = "https://www.google.com/maps/embed/v1/place";
@@ -108,12 +109,19 @@ class Map extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(resizerTransformPatch(patch));
 
-
-
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
     const { address, addressPopulation, zoom } = v;
     const addressSrc = addressPopulation === "" ? address : addressPopulation;
     const src = `${URL}?key=${KEY}&q=${addressSrc}&zoom=${zoom}`;
+
+    const className = classnames(
+      "brz-map",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
 
     const content =
       !address && !addressPopulation ? (
@@ -126,14 +134,14 @@ class Map extends EditorComponent {
           />
         </div>
       );
-    
+
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
         onClose={this.handleToolbarClose}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={styleClassName(v)} style={styleCSSVars(v)}>
+          <div className={className}>
             <BoxResizer
               points={resizerPoints}
               restrictions={resizerRestrictions}

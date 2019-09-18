@@ -39,7 +39,11 @@ export function styleClassName(v) {
         backgroundColor: "var(--backgroundColor)",
         backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
-        borderStyle: "var(--borderStyle)"
+        borderStyle: "var(--borderStyle)",
+        boxShadow: "var(--boxShadow)",
+
+        transition: "var(--hoverTransition)",
+        transitionProperty: "var(--hoverTransitionProperty)"
       },
       ".brz &:hover": {
         color: "var(--hoverColor)",
@@ -54,7 +58,6 @@ export function styleClassName(v) {
         padding: "var(--padding)",
         borderRadius: "var(--borderRadius)",
         strokeWidth: "var(--strokeWidth)",
-        boxShadow: "var(--boxShadow)",
 
         transition: "var(--hoverTransition)",
         transitionProperty: "var(--hoverTransitionProperty)",
@@ -69,8 +72,7 @@ export function styleClassName(v) {
         fontSize: "var(--tabletFontSize)",
         padding: "var(--tabletPadding)",
         borderRadius: "var(--tabletBorderRadius)",
-        strokeWidth: "var(--tabletStrokeWidth)",
-        boxShadow: "var(--tabletBoxShadow)"
+        strokeWidth: "var(--tabletStrokeWidth)"
       },
       ".brz-ed--mobile &": {
         width: "var(--mobileWidth)",
@@ -78,8 +80,7 @@ export function styleClassName(v) {
         fontSize: "var(--mobileFontSize)",
         padding: "var(--mobilePadding)",
         borderRadius: "var(--mobileBorderRadius)",
-        strokeWidth: "var(--mobileStrokeWidth)",
-        boxShadow: "var(--mobileBoxShadow)"
+        strokeWidth: "var(--mobileStrokeWidth)"
       }
     };
   } else {
@@ -201,8 +202,7 @@ export function styleClassName(v) {
           fontSize: `${tabletCustomSize}px`,
           padding: `${tabletPadding}px`,
           borderRadius: `${tabletBorderRadius}px`,
-          strokeWidth: tabletStrokeWidth,
-          boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" })
+          strokeWidth: tabletStrokeWidth
         }
       },
 
@@ -213,8 +213,7 @@ export function styleClassName(v) {
           fontSize: `${mobileCustomSize}px`,
           padding: `${mobilePadding}px`,
           borderRadius: `${mobileBorderRadius}px`,
-          strokeWidth: mobileStrokeWidth,
-          boxShadow: styleBoxShadow({ v, device: "mobile", state: "normal" })
+          strokeWidth: mobileStrokeWidth
         }
       }
     };
@@ -336,6 +335,10 @@ export function styleCSSVars(v) {
       state: "hover"
     }),
 
+    // Hover Transition
+    "--hoverTransition": styleHoverTransition({ v }),
+    "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
+
     //Tablet
     "--tabletWidth": `${tabletIconSize}px`,
     "--tabletHeight": `${tabletIconSize}px`,
@@ -344,26 +347,12 @@ export function styleCSSVars(v) {
     "--tabletBorderRadius": `${tabletBorderRadius}px`,
     "--tabletStrokeWidth": tabletStrokeWidth,
 
-    // Box Shadow
-    "--tabletBoxShadow": styleBoxShadow({
-      v,
-      device: "tablet",
-      state: "normal"
-    }),
-
     // Mobile
     "--mobileWidth": `${mobileIconSize}px`,
     "--mobileHeight": `${mobileIconSize}px`,
     "--mobileFontSize": `${mobileCustomSize}px`,
     "--mobilePadding": `${mobilePadding}px`,
     "--mobileBorderRadius": `${mobileBorderRadius}px`,
-    "--mobileStrokeWidth": mobileStrokeWidth,
-
-    // Box Shadow
-    "--mobileBoxShadow": styleBoxShadow({
-      v,
-      device: "mobile",
-      state: "normal"
-    })
+    "--mobileStrokeWidth": mobileStrokeWidth
   };
 }

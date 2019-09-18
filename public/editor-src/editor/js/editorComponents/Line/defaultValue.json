@@ -4,8 +4,20 @@
 
     "borderStyle": "solid",
 
+    "tempBorderStyle": "solid",
+
     "borderWidthType": "grouped",
     "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "tempBorderWidth": 2,
+    "tempBorderTopWidth": 2,
+    "tempBorderRightWidth": 2,
+    "tempBorderBottomWidth": 2,
+    "tempBorderLeftWidth": 2,
 
     "borderColorHex": "#73777f",
     "borderColorOpacity": 0.75,

@@ -11,7 +11,7 @@ const translationsMap = {
   EmbedCode: t("Embed"),
   Form: t("Form"),
   IconText: t("Icon Box"),
-  SoundCloud: t("SndCloud"),
+  SoundCloud: t("SoundCloud"),
   Counter: t("Counter"),
   Countdown: t("Countdown"),
   Tabs: t("Tabs"),

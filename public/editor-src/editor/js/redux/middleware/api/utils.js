@@ -1,7 +1,7 @@
 import _ from "underscore";
 import {
+  updateProject as apiUpdateProject,
   updatePage as apiUpdatePage,
-  updateGlobals as apiUpdateGlobals,
   createGlobalBlock as apiCreateGlobalBlock,
   updateGlobalBlock as apiUpdateGlobalBlock,
   createSavedBlock as apiCreateSavedBlock,
@@ -10,8 +10,8 @@ import {
 } from "visual/utils/api/editor";
 
 export {
+  apiUpdateProject,
   apiUpdatePage,
-  apiUpdateGlobals,
   apiCreateGlobalBlock,
   apiUpdateGlobalBlock,
   apiCreateSavedBlock,
@@ -21,12 +21,12 @@ export {
 
 const DEBOUNCE_WAIT = 2000;
 
-export const debouncedApiUpdatePage = _.debounce(apiUpdatePage, DEBOUNCE_WAIT);
-
-export const debouncedApiUpdateGlobals = _.debounce(
-  apiUpdateGlobals,
+export const debouncedApiUpdateProject = _.debounce(
+  apiUpdateProject,
   DEBOUNCE_WAIT
 );
+
+export const debouncedApiUpdatePage = _.debounce(apiUpdatePage, DEBOUNCE_WAIT);
 
 export const debouncedApiCreateGlobalBlock = debounceById(
   apiCreateGlobalBlock,

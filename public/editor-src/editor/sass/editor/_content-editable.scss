@@ -40,7 +40,7 @@ div[contenteditable] {
   }
 
   // Data Population Ribons
-  span[data-population] {
+  span[data-population], .brz-population-mask {
     text-decoration: underline;
     text-decoration-style: dashed;
   }

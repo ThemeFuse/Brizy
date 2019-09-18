@@ -1,5 +1,4 @@
 {% set assetsUrl = editorData.urls.assets %}
-{% set serverTimestamp = editorData.serverTimestamp %}
 {% set meta = page.meta %}
 {% set blocks = page.blocks %}
 {% spaceless %}
@@ -18,13 +17,6 @@
   <body class="brz">{% endspaceless %}{{ blocks.body | raw }}{% spaceless %}
 
     <script src="{{ assetsUrl }}/editor/js/polyfill.js"></script>
-
-    <script>
-      var __CONFIG__ = {
-        serverTimestamp: {{ serverTimestamp }}
-      };
-    </script>
-
     <script src="{{ assetsUrl }}/editor/js/preview.js"></script>
 
   {% for script in scriptTags %}

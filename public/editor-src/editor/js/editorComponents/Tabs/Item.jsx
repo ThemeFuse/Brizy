@@ -16,34 +16,14 @@ class Tab extends EditorComponent {
   static defaultValue = defaultValue;
 
   renderForEdit(v) {
-    const {
-      customClassName,
-      bgImageSrc,
-      bgColorOpacity,
-      tabletBgImageSrc,
-      tabletBgColorOpacity,
-      mobileBgImageSrc,
-      mobileBgColorOpacity
-    } = v;
-
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       className: "brz-tab",
       meta: this.props.meta
     });
 
-    const bgProps = {
-      className: customClassName,
-      imageSrc: bgImageSrc,
-      colorOpacity: bgColorOpacity,
-      tabletImageSrc: tabletBgImageSrc,
-      tabletColorOpacity: tabletBgColorOpacity,
-      mobileImageSrc: mobileBgImageSrc,
-      mobileColorOpacity: mobileBgColorOpacity
-    };
-
     return (
-      <Background {...bgProps}>
+      <Background className={v.customClassName} value={v}>
         <ItemItems {...itemsProps} />
       </Background>
     );

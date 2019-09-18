@@ -11,4 +11,5 @@ export { default as ImageGallery } from "./ImageGallery/export.js";
 export { default as ProgressBar } from "./ProgressBar/export.js";
 export { default as SectionHeader } from "./SectionHeader/export.js";
 export { default as SectionPopup } from "./SectionPopup/export.js";
+export { default as SectionPopup2 } from "./SectionPopup2/export.js";
 export { default as Menu } from "./Menu/export.js";

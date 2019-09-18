@@ -4,19 +4,18 @@ import {
   toolbarPadding,
   toolbarMargin,
   toolbarShowOnDesktop,
-  toolbarShowOnTablet,
-  toolbarShowOnMobile,
+  toolbarShowOnResponsive,
   toolbarZIndex,
   toolbarCustomCSSClass,
   toolbarEntranceAnimation
 } from "visual/utils/toolbar";
+import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItemsForDesktop(v) {
-  const device = "desktop";
-
+export function getItems({ v, device }) {
   return [
+    toolbarShowOnResponsive({ v, device, devices: "responsive" }),
     {
-      id: "advancedSettings",
+      id: defaultValueKey({ key: "advancedSettings", device }),
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       icon: "nc-cog",
@@ -27,6 +26,7 @@ export function getItemsForDesktop(v) {
         {
           id: "settingsTabs",
           type: "tabs",
+          devices: "desktop",
           align: "start",
           tabs: [
             {
@@ -54,6 +54,7 @@ export function getItemsForDesktop(v) {
               id: "moreSettingsAdvanced",
               label: t("Advanced"),
               tabIcon: "nc-cog",
+              device: "desktop",
               options: [
                 toolbarShowOnDesktop({ v }),
                 toolbarZIndex({ v }),
@@ -62,66 +63,18 @@ export function getItemsForDesktop(v) {
               ]
             }
           ]
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  const device = "tablet";
-
-  return [
-    toolbarShowOnTablet({ v }),
-    {
-      id: "tabletAdvancedSettings",
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
-      roles: ["admin"],
-      position: 110,
-      title: t("Settings"),
-      options: [
+        },
         toolbarPadding({
           v,
           device,
+          devices: "responsive",
           onChangeGrouped: ["onChangePaddingGrouped"],
           onChangeUngrouped: ["onChangePaddingUngrouped"]
         }),
         toolbarMargin({
           v,
           device,
-          onChangeGrouped: ["onChangeMarginGrouped"],
-          onChangeUngrouped: ["onChangeMarginUngrouped"]
-        })
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  const device = "mobile";
-
-  return [
-    toolbarShowOnMobile({ v }),
-    {
-      id: "mobileAdvancedSettings",
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: [
-        toolbarPadding({
-          v,
-          device,
-          onChangeGrouped: ["onChangePaddingGrouped"],
-          onChangeUngrouped: ["onChangePaddingUngrouped"]
-        }),
-        toolbarMargin({
-          v,
-          device,
+          devices: "responsive",
           onChangeGrouped: ["onChangeMarginGrouped"],
           onChangeUngrouped: ["onChangeMarginUngrouped"]
         })

@@ -7,7 +7,11 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
+import {
+  toolbarColor2,
+  toolbarColorHexField2,
+  toolbarCustomCSS
+} from "visual/utils/toolbar";
 
 const configMenuValue = Config.get("menuData");
 const getMenuChoices = () => {
@@ -168,42 +172,14 @@ export function getItemsForDesktop(v) {
         }
       },
       options: [
-        {
-          id: "mMenuIconColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: mMenuIconColorHex,
-            opacity: v.mMenuIconColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            const mMenuIconColorOpacity =
-              hex !== v.mMenuIconColorHex && v.mMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : opacity;
-
-            return {
-              mMenuIconColorHex: hex,
-              mMenuIconColorOpacity: mMenuIconColorOpacity,
-              mMenuIconColorPalette:
-                isChanged === "hex" ? "" : v.mMenuIconColorPalette
-            };
-          }
-        },
-        {
-          id: "mMenuIconColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: v.mMenuIconColorPalette,
-          onChange: mMenuIconColorPalette => ({
-            mMenuIconColorPalette,
-            mMenuIconColorHex: "",
-            mMenuIconColorOpacity:
-              v.mMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : v.mMenuIconColorOpacity
-          })
-        },
+        toolbarColor2({
+          v,
+          device,
+          prefix: "mMenuIconColor",
+          state: "normal",
+          onChangeHex: ["onChangeColorHexIconMenu2"],
+          onChangePalette: ["onChangeColorPaletteIconMenu2"]
+        }),
         {
           type: "grid",
           className: "brz-ed-grid__color-fileds",
@@ -211,29 +187,13 @@ export function getItemsForDesktop(v) {
             {
               width: 100,
               options: [
-                {
-                  id: "mMenuIconColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: mMenuIconColorHex,
-                    opacity: v.mMenuIconColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    const mMenuIconColorOpacity =
-                      hex !== v.mMenuIconColorHex &&
-                      v.mMenuIconColorOpacity === 0
-                        ? v.mMenuTempIconColorOpacity
-                        : opacity;
-
-                    return {
-                      mMenuIconColorPalette:
-                        isChanged === "hex" ? "" : v.mMenuIconColorPalette,
-                      mMenuIconColorHex: hex,
-                      mMenuIconColorOpacity: mMenuIconColorOpacity
-                    };
-                  }
-                }
+                toolbarColorHexField2({
+                  v,
+                  device,
+                  prefix: "mMenuIconColor",
+                  state: "normal",
+                  onChange: ["onChangeColorFieldsIconMenu2"]
+                })
               ]
             }
           ]
@@ -298,12 +258,12 @@ export function getItemsForDesktop(v) {
 
 export function getItemsForTablet(v) {
   const device = "tablet";
+  const state = "normal";
 
   const { hex: tabletMMenuIconColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "mMenuIconColorHex", device }),
     defaultValueValue({ v, key: "mMenuIconColorPalette", device })
   );
-
   return [
     {
       id: "tabletToolbarMenu",
@@ -422,43 +382,14 @@ export function getItemsForTablet(v) {
         }
       },
       options: [
-        {
-          id: "tabletMMenuIconColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: tabletMMenuIconColorHex,
-            opacity: tabletSyncOnChange(v, "mMenuIconColorOpacity")
-          },
-          onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-            const tabletMMenuIconColorOpacity =
-              hex !== v.tabletMMenuIconColorHex &&
-              v.tabletMMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : opacity;
-
-            return {
-              tabletMMenuIconColorHex: hex,
-              tabletMMenuIconColorOpacity: tabletMMenuIconColorOpacity,
-              tabletMMenuIconColorPalette:
-                isChanged === "hex" ? "" : v.tabletMMenuIconColorPalette
-            };
-          }
-        },
-        {
-          id: "tabletMMenuIconColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: tabletSyncOnChange(v, "mMenuIconColorPalette"),
-          onChange: tabletMMenuIconColorPalette => ({
-            tabletMMenuIconColorPalette,
-            tabletMMenuIconColorHex: "",
-            tabletMMenuIconColorOpacity:
-              v.tabletMMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : v.tabletMMenuIconColorOpacity
-          })
-        },
+        toolbarColor2({
+          v,
+          device,
+          prefix: "tabletMMenuIconColor",
+          state,
+          onChangeHex: ["onChangeTabletColorHexIconMMenu2"],
+          onChangePalette: ["onChangeTabletColorPaletteIconMMenu2"]
+        }),
         {
           type: "grid",
           className: "brz-ed-grid__color-fileds",
@@ -466,31 +397,13 @@ export function getItemsForTablet(v) {
             {
               width: 100,
               options: [
-                {
-                  id: "tabletMMenuIconColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: tabletMMenuIconColorHex,
-                    opacity: tabletSyncOnChange(v, "mMenuIconColorOpacity")
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    const tabletMMenuIconColorOpacity =
-                      hex !== v.tabletMMenuIconColorHex &&
-                      v.tabletMMenuIconColorOpacity === 0
-                        ? v.mMenuTempIconColorOpacity
-                        : opacity;
-
-                    return {
-                      tabletMMenuIconColorPalette:
-                        isChanged === "hex"
-                          ? ""
-                          : v.tabletMMenuIconColorPalette,
-                      tabletMMenuIconColorHex: hex,
-                      tabletMMenuIconColorOpacity: tabletMMenuIconColorOpacity
-                    };
-                  }
-                }
+                toolbarColorHexField2({
+                  v,
+                  device,
+                  prefix: "tabletMMenuIconColor",
+                  state,
+                  onChange: ["onChangeTabletColorFieldsIconMMenu2"]
+                })
               ]
             }
           ]
@@ -525,12 +438,12 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   const device = "mobile";
+  const state = "normal"
 
   const { hex: mobileMMenuIconColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "mMenuIconColorHex", device }),
     defaultValueValue({ v, key: "mMenuIconColorPalette", device })
   );
-
   return [
     {
       id: "mobileToolbarMenu",
@@ -649,43 +562,14 @@ export function getItemsForMobile(v) {
         }
       },
       options: [
-        {
-          id: "mobileMMenuIconColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: mobileMMenuIconColorHex,
-            opacity: mobileSyncOnChange(v, "mMenuIconColorOpacity")
-          },
-          onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-            const mobileMMenuIconColorOpacity =
-              hex !== v.mobileMMenuIconColorHex &&
-              v.mobileMMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : opacity;
-
-            return {
-              mobileMMenuIconColorHex: hex,
-              mobileMMenuIconColorOpacity: mobileMMenuIconColorOpacity,
-              mobileMMenuIconColorPalette:
-                isChanged === "hex" ? "" : v.mobileMMenuIconColorPalette
-            };
-          }
-        },
-        {
-          id: "mobileMMenuIconColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: mobileSyncOnChange(v, "mMenuIconColorPalette"),
-          onChange: mobileMMenuIconColorPalette => ({
-            mobileMMenuIconColorPalette,
-            mobileMMenuIconColorHex: "",
-            mobileMMenuIconColorOpacity:
-              v.mobileMMenuIconColorOpacity === 0
-                ? v.mMenuTempIconColorOpacity
-                : v.mobileMMenuIconColorOpacity
-          })
-        },
+        toolbarColor2({
+          v,
+          device,
+          prefix: "mobileMMenuIconColor",
+          state,
+          onChangeHex: ["onChangeMobileColorHexIconMMenu2"],
+          onChangePalette: ["onChangeMobileColorPaletteIconMMenu2"]
+        }),
         {
           type: "grid",
           className: "brz-ed-grid__color-fileds",
@@ -693,31 +577,13 @@ export function getItemsForMobile(v) {
             {
               width: 100,
               options: [
-                {
-                  id: "mobileMMenuIconColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: mobileMMenuIconColorHex,
-                    opacity: mobileSyncOnChange(v, "mMenuIconColorOpacity")
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => {
-                    const mobileMMenuIconColorOpacity =
-                      hex !== v.mobileMMenuIconColorHex &&
-                      v.mobileMMenuIconColorOpacity === 0
-                        ? v.mMenuTempIconColorOpacity
-                        : opacity;
-
-                    return {
-                      mobileMMenuIconColorPalette:
-                        isChanged === "hex"
-                          ? ""
-                          : v.mobileMMenuIconColorPalette,
-                      mobileMMenuIconColorHex: hex,
-                      mobileMMenuIconColorOpacity: mobileMMenuIconColorOpacity
-                    };
-                  }
-                }
+                toolbarColorHexField2({
+                  v,
+                  device,
+                  prefix: "mobileMMenuIconColor",
+                  state,
+                  onChange: ["onChangeMobileColorFieldsIconMMenu2"]
+                })
               ]
             }
           ]

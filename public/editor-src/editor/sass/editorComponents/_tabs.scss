@@ -10,15 +10,18 @@
     padding: 0;
   }
   &__nav--item {
+    position: relative;
     list-style: none;
+    // this is put to solve z-index issues
+    // with ContainerBorder that result in
+    // being unable to click the tab handles
+    z-index: var(--zIndex);
 
     &:not(:last-child) {
       margin-right: 3px;
     }
   }
   &__nav--active {
-    position: relative;
-
     &:before,
     &:after {
       content: "";

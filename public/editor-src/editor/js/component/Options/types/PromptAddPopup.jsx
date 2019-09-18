@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import _ from "underscore";
 import classnames from "classnames";
 import deepMerge from "deepmerge";
-import Editor from "visual/global/Editor";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import UIState from "visual/global/UIState";
 import EditorIcon from "visual/component/EditorIcon";
@@ -17,29 +16,9 @@ import {
   pageBlocksSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
-import { updateGlobalBlock } from "visual/redux/actions";
+import { addFonts, updateGlobalBlock } from "visual/redux/actions";
 
 const MAX_CONTAINER_WIDTH = 140;
-
-const getBlocksConfig = _.memoize(() => {
-  const blocksConfig = Editor.getBlocks();
-  const popupCategory =
-    blocksConfig.categories.find(category => category.slug === "popup") || {};
-
-  const categories = blocksConfig.categories.filter(
-    category => category.id === popupCategory.id
-  );
-  const blocks = blocksConfig.blocks.filter(block =>
-    block.cat.includes(popupCategory.id)
-  );
-
-  return {
-    ...blocksConfig,
-    categories,
-    blocks,
-    allowMissing: block => block.type === "SectionPopup"
-  };
-});
 
 class PromptAddPopupOptionType extends React.Component {
   static defaultProps = {
@@ -71,25 +50,48 @@ class PromptAddPopupOptionType extends React.Component {
   handleCreate = () => {
     UIState.set("prompt", {
       prompt: "blocks",
-      templatesConfig: {}, // this disables the "Pages" tab
-      blocksConfig: getBlocksConfig(),
-      filterUI: {
-        sidebar: false,
-        categories: false,
-        type: false,
-        search: false
+      tabs: {
+        templates: false // this disables the "Pages" tab
       },
-      onAddBlocks: this.handleAddBlocks
+      tabProps: {
+        blocks: {
+          showSidebar: false,
+          showCategories: false,
+          showType: false,
+          showSearch: false,
+          type: "popups",
+          onAddBlocks: this.handleAddBlocks
+        },
+        saved: {
+          showSearch: false,
+          blocksFilter: blocks => {
+            return blocks.filter(([_, block]) => block.type === "SectionPopup");
+          },
+          onAddBlocks: this.handleAddBlocks
+        },
+        global: {
+          showSearch: false,
+          blocksFilter: blocks => {
+            return blocks.filter(([_, block]) => block.type === "SectionPopup");
+          },
+          onAddBlocks: this.handleAddBlocks
+        }
+      }
     });
   };
 
-  handleAddBlocks = blockData => {
+  handleAddBlocks = data => {
     const {
       value: { popups },
       globalBlocks,
-      updateGlobalBlock
+      dispatch
     } = this.props;
+    let { block: blockData, fonts } = data;
     let popupId;
+
+    if (fonts) {
+      dispatch(addFonts(fonts));
+    }
 
     if (blockData.type !== "GlobalBlock") {
       popupId = uuid();
@@ -109,17 +111,19 @@ class PromptAddPopupOptionType extends React.Component {
         // legacy global popups do not have value.popupId so we add it
         popupId = uuid();
 
-        updateGlobalBlock({
-          id: globalBlockId,
-          data: deepMerge(globalBlock, {
-            value: {
-              popupId
+        dispatch(
+          updateGlobalBlock({
+            id: globalBlockId,
+            data: deepMerge(globalBlock, {
+              value: {
+                popupId
+              }
+            }),
+            meta: {
+              is_autosave: 0
             }
-          }),
-          meta: {
-            is_autosave: 0
-          }
-        });
+          })
+        );
       }
     }
 
@@ -158,11 +162,23 @@ class PromptAddPopupOptionType extends React.Component {
   };
 
   handleDelete = () => {
-    const { value, popups } = this.props.value;
+    const {
+      value: { value, popups },
+      globalBlocks
+    } = this.props;
 
     this.props.onChange({
       value: "",
-      popups: popups.filter(item => item.value.popupId !== value)
+      popups: popups.filter(item => {
+        if (item.type !== "GlobalBlock") {
+          return item.value.popupId !== value;
+        } else {
+          const globalBlockId = item.value.globalBlockId;
+          const globalBlock = globalBlocks[globalBlockId];
+
+          return globalBlock ? globalBlock.value.popupId !== value : true;
+        }
+      })
     });
   };
 
@@ -198,7 +214,9 @@ class PromptAddPopupOptionType extends React.Component {
 
       return block.value.popupId === value;
     });
-    const { url, width, height } = blockThumbnailData(block);
+    const { url, width, height } = blockThumbnailData(block, {
+      searchScreenshotInStoreFirst: true
+    });
     const { width: wrapperWidth, height: wrapperHeight } = imageWrapperSize(
       width,
       height,
@@ -239,7 +257,9 @@ class PromptAddPopupOptionType extends React.Component {
       canDelete
     } = this.props;
     let block = pageBlocks.find(block => block.value._id === value);
-    const { url, width, height } = blockThumbnailData(block);
+    const { url, width, height } = blockThumbnailData(block, {
+      searchScreenshotInStoreFirst: true
+    });
     const { width: wrapperWidth, height: wrapperHeight } = imageWrapperSize(
       width,
       height,
@@ -324,11 +344,4 @@ const mapStateToProps = state => ({
   pageBlocks: pageBlocksSelector(state),
   globalBlocks: globalBlocksSelector(state)
 });
-const mapDispatchToProps = {
-  updateGlobalBlock
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PromptAddPopupOptionType);
+export default connect(mapStateToProps)(PromptAddPopupOptionType);

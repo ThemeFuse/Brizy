@@ -146,13 +146,13 @@ export function styleBgGradient({ v, device, state }) {
           hoverGradientColorHex,
           hoverGradientColorOpacity
         )} ${hoverGradientFinishPointer}%)`
-      : `radial-gradient(circle ${hoverGradientRadialDegree}px, ${hexToRgba(
+      : `radial-gradient(circle ${hoverGradientRadialDegree}px,${hexToRgba(
           hoverBgColorHex,
-          hoverbgColorOpacity
+          hoverBgColorOpacity
         )} ${hoverGradientStartPointer}%, ${hexToRgba(
           hoverGradientColorHex,
           hoverGradientColorOpacity
-        )} ${hovergradientFinishPointer}%)`
+        )} ${hoverGradientFinishPointer}%)`
     : isHover === "hover" && hoverBgColorType === "solid"
     ? "none"
     : bgColorType === "gradient"

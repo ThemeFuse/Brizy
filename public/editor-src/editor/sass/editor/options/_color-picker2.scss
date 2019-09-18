@@ -1,0 +1,37 @@
+// Option Color Picker
+.brz-ed-option__colorPicker2 {
+  position: relative;
+  padding-top: 0;
+  border-bottom: 0;
+
+  // Select
+  .brz-control__select {
+    position: absolute;
+    z-index: 2;
+    font-size: 12px;
+    margin-top: 6px;
+    margin-left: 4px;
+  }
+  .brz-control__select-current,
+  .brz-control__select-option {
+    display: flex;
+    font-size: 12px;
+    height: 24px;
+    align-items: center;
+    line-height: normal;
+  }
+  .brz-control__select-option {
+    padding-right: 30px;
+  }
+
+  // Range
+  .brz-ed-option__range {
+    max-width: 100%;
+    margin-bottom: 5px;
+  }
+
+  // Palette
+  .brz-ed-option__color-palette2 {
+    margin-top: 10px;
+  }
+}

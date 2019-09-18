@@ -1,13 +1,8 @@
-import _ from "underscore";
 import { applyFilter } from "visual/utils/filters";
 
 let components = {};
 let notFoundComponent;
-let blocks = {};
-let templates = {};
-let templateThumbnailUrlHandlers = [];
 let shortcodes = {};
-let styles = [];
 
 const Editor = {
   // components
@@ -44,41 +39,6 @@ const Editor = {
     return notFoundComponent;
   },
 
-  // blocks
-
-  registerBlocks(config) {
-    blocks = config;
-  },
-
-  getBlocks: _.memoize(() => {
-    const filteredBlocks = applyFilter("getBlocks", blocks);
-
-    filteredBlocks.blocks = _.sortBy(
-      filteredBlocks.blocks,
-      block => block.position || 10
-    );
-
-    return filteredBlocks;
-  }),
-
-  getBlock(id) {
-    return this.getBlocks().blocks.find(block => block.id === id);
-  },
-
-  getBlockThumbnailUrlHandlers() {
-    return blockThumbnailUrlHandlers;
-  },
-
-  // templates
-
-  getTemplates() {
-    return applyFilter("getTemplates", templates);
-  },
-
-  getTemplateThumbnailUrlHandlers() {
-    return templateThumbnailUrlHandlers;
-  },
-
   // shortcodes
 
   registerShortcode(shortcodeComponents) {
@@ -87,20 +47,6 @@ const Editor = {
 
   getShortcodes() {
     return applyFilter("getShortcodes", shortcodes);
-  },
-
-  // styles
-
-  registerStyles(stylesConfig) {
-    styles.push(...stylesConfig);
-  },
-
-  getStyles() {
-    return applyFilter("getStyles", styles);
-  },
-
-  getStyle(id) {
-    return this.getStyles().find(style => style.id === id);
   }
 };
 

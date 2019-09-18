@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from "underscore";
+import { t } from "visual/utils/i18n";
 import Button from "../../../common/Button";
 
 class Connect extends Component {
@@ -57,7 +58,7 @@ class Connect extends Component {
           />
           <p className="brz-p">
             <strong className="brz-strong">
-              {title} <span className="brz-span">(required)</span>
+              {title} <span className="brz-span">({t("required")})</span>
             </strong>
           </p>
         </label>
@@ -88,12 +89,12 @@ class Connect extends Component {
           {this.renderInputs()}
           {nextLoading !== null && (
             <Button type="tail" loading={nextLoading} onClick={onNext}>
-              Connect
+              {t("Connect")}
             </Button>
           )}
           {prevLoading !== null && (
             <Button type="default" loading={prevLoading} onClick={onPrev}>
-              Cancel
+              {t("Cancel")}
             </Button>
           )}
         </div>

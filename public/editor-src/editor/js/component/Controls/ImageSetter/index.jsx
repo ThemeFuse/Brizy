@@ -37,9 +37,15 @@ export default class ImageSetter extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.src !== nextProps.src) {
+    if (
+      this.props.src !== nextProps.src ||
+      this.props.x !== nextProps.x ||
+      this.props.y !== nextProps.y
+    ) {
       this.setState({
-        src: nextProps.src
+        src: nextProps.src,
+        x: nextProps.x,
+        y: nextProps.y
       });
     }
   }

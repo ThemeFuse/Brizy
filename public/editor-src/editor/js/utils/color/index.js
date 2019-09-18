@@ -45,7 +45,7 @@ export function hexToRgba(hex, opacity) {
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
   }
 
-  return null;
+  return undefined;
 }
 
 function rgbToHex(rgb) {

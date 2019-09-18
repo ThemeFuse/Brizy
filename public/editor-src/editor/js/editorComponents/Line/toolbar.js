@@ -1,20 +1,15 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 import {
-  toolbarElementLineBorderStyle,
-  toolbarElementLineBorderWidth,
-  toolbarBorderColorHexAndOpacity,
-  toolbarBorderColorPalette,
-  toolbarBorderColorFields,
-  toolbarSizeWidthWidthPercent,
-  toolbarCustomCSS
+  toolbarBorder2,
+  toolbarBorderColorHexField2,
+  toolbarBorderWidthOneField2,
+  toolbarSizeWidthWidthPercent
 } from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
-  const device = "desktop";
-
+export function getItems({ v, device }) {
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "borderColorHex", device }),
     defaultValueValue({ v, key: "borderColorPalette", device })
@@ -22,22 +17,12 @@ export function getItemsForDesktop(v) {
 
   return [
     {
-      id: "toolbarLine",
-      type: "popover",
-      icon: "nc-divider",
-      title: t("Line"),
-      position: 80,
-      options: [
-        toolbarElementLineBorderStyle({ v }),
-        toolbarElementLineBorderWidth({ v, device })
-      ]
-    },
-    {
-      id: "toolbarColor",
+      id: defaultValueKey({ key: "toolbarColor", device }),
       type: "popover",
       size: "auto",
       title: t("Colors"),
       roles: ["admin"],
+      devices: "desktop",
       position: 90,
       icon: {
         style: {
@@ -45,20 +30,35 @@ export function getItemsForDesktop(v) {
         }
       },
       options: [
-        toolbarBorderColorHexAndOpacity({
+        toolbarBorder2({
           v,
           device,
-          onChange: [
-            "onChangeBorderColorHexAndOpacity",
-            "onChangeBorderColorHexAndOpacityPalette"
-          ]
-        }),
-        toolbarBorderColorPalette({
-          v,
-          device,
-          onChange: [
-            "onChangeBorderColorPalette",
-            "onChangeBorderColorPaletteOpacity"
+          state: "normal",
+          selectChoices: [
+            {
+              value: "solid",
+              icon: "nc-solid"
+            },
+            {
+              value: "dashed",
+              icon: "nc-dashed"
+            },
+            {
+              value: "dotted",
+              icon: "nc-dotted"
+            }
+          ],
+          onChangeStyle: [
+            "onChangeBorderStyle2",
+            "onChangeElementBorderStyleDependencies2"
+          ],
+          onChangeHex: [
+            "onChangeBorderColorHexAndOpacity2",
+            "onChangeBorderColorHexAndOpacityPalette2"
+          ],
+          onChangePalette: [
+            "onChangeBorderColorPalette2",
+            "onChangeBorderColorPaletteOpacity2"
           ]
         }),
         {
@@ -68,13 +68,24 @@ export function getItemsForDesktop(v) {
             {
               width: 100,
               options: [
-                toolbarBorderColorFields({
+                toolbarBorderColorHexField2({
                   v,
                   device,
                   onChange: [
-                    "onChangeBorderColorHexAndOpacity",
-                    "onChangeBorderColorHexAndOpacityPalette"
+                    "onChangeBorderColorHexAndOpacity2",
+                    "onChangeBorderColorHexAndOpacityPalette2"
                   ]
+                })
+              ]
+            },
+            {
+              width: 62,
+              options: [
+                toolbarBorderWidthOneField2({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: ["onChangeBorderWidthGrouped2"]
                 })
               ]
             }
@@ -83,7 +94,7 @@ export function getItemsForDesktop(v) {
       ]
     },
     {
-      id: "toolbarSettings",
+      id: defaultValueKey({ key: "toolbarSettings", device }),
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
@@ -92,7 +103,7 @@ export function getItemsForDesktop(v) {
       options: [
         toolbarSizeWidthWidthPercent({ v, device }),
         {
-          id: "advancedSettings",
+          id: defaultValueKey({ key: "advancedSettings", device }),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
@@ -100,6 +111,7 @@ export function getItemsForDesktop(v) {
             {
               id: "settingsTabs",
               type: "tabs",
+              devices: "desktop",
               align: "start",
               tabs: [
                 {
@@ -119,54 +131,6 @@ export function getItemsForDesktop(v) {
           ]
         }
       ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  const device = "tablet";
-  return [
-    {
-      id: "tabletToolbarLine",
-      type: "popover",
-      icon: "nc-divider",
-      title: t("Line"),
-      roles: ["admin"],
-      position: 90,
-      options: [toolbarElementLineBorderWidth({ v, device })]
-    },
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: [toolbarSizeWidthWidthPercent({ v, device })]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  const device = "mobile";
-  return [
-    {
-      id: "mobileToolbarLine",
-      type: "popover",
-      icon: "nc-divider",
-      title: t("Line"),
-      roles: ["admin"],
-      position: 90,
-      options: [toolbarElementLineBorderWidth({ v, device })]
-    },
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: [toolbarSizeWidthWidthPercent({ v, device })]
     }
   ];
 }

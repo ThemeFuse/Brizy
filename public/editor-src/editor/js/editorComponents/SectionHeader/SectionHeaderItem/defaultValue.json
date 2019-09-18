@@ -11,7 +11,7 @@
     "bgPositionX": 50,
     "bgPopulation": "",
 
-    "hoverMedia": null,
+    "hoverMedia": "image",
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
@@ -20,12 +20,16 @@
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
 
+    "tabletMedia": null,
+
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
     "tabletBgImageSrc": null,
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
+
+    "mobileMedia": null,
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
@@ -36,11 +40,9 @@
   },
 
   "toolbar": {
-    "tabsState": "tabNormal",
-
-    "tabsCurrentElement": "tabCurrentElement",
-
-    "tabsColor": "tabOverlay"
+    "tabsState": "",
+    "tabsCurrentElement": "",
+    "tabsColor": ""
   },
 
   "style": {
@@ -178,13 +180,19 @@
     "paddingType": "grouped",
     "padding": 75,
     "paddingTop": 75,
+    "paddingRight": "initial",
     "paddingBottom": 75,
+    "paddingLeft": "initial",
 
     "paddingSuffix": "px",
     "paddingTopSuffix": "px",
+    "paddingRightSuffix": "",
     "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "",
 
-    "boxShadow": "off",
+    "boxShadow": "",
+
+    "tempBoxShadow": "inset",
 
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
@@ -205,6 +213,8 @@
 
     "hoverBoxShadow": null,
 
+    "tempHoverBoxShadow": null,
+
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,
     "hoverBoxShadowColorPalette": null,
@@ -214,17 +224,30 @@
 
     "hoverBoxShadowBlur": null,
     "hoverBoxShadowVertical": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowHorizontal": null,
 
     "tempHoverBoxShadowBlur": null,
     "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowHorizontal": null,
 
     "shape": "top",
+
     "shapeTopColorHex": "#000000",
     "shapeTopColorOpacity": 1,
     "shapeTopColorPalette": "",
+
+    "tempShapeTopColorOpacity": 1,
+    "tempShapeTopColorPalette": "",
+
     "shapeBottomColorHex": "#000000",
     "shapeBottomColorOpacity": 1,
     "shapeBottomColorPalette": "",
+
+    "tempShapeBottomColorOpacity": 1,
+    "tempShapeBottomColorPalette": "",
+
     "tempShapeColorOpacity": 1,
     "shapeTopHeight": 100,
     "shapeTopHeightSuffix": "px",
@@ -304,6 +327,19 @@
     "tempTabletBorderColorOpacity": null,
     "tempTabletBorderColorPalette": null,
 
+    "tabletPaddingType": "grouped",
+    "tabletPadding": 50,
+    "tabletPaddingTop": 50,
+    "tabletPaddingRight": "initial",
+    "tabletPaddingBottom": 50,
+    "tabletPaddingLeft": "initial",
+
+    "tabletPaddingSuffix": "px",
+    "tabletPaddingTopSuffix": "px",
+    "tabletPaddingRightSuffix": "",
+    "tabletPaddingBottomSuffix": "px",
+    "tabletPaddingLeftSuffix": "",
+
     "tabletBoxShadow": null,
 
     "tabletBoxShadowColorHex": null,
@@ -322,15 +358,6 @@
     "tempTabletBoxShadowSpread": null,
     "tempTabletBoxShadowVertical": null,
     "tempTabletBoxShadowHorizontal": null,
-
-    "tabletPaddingType": "grouped",
-    "tabletPadding": 50,
-    "tabletPaddingTop": 50,
-    "tabletPaddingBottom": 50,
-
-    "tabletPaddingSuffix": "px",
-    "tabletPaddingTopSuffix": "px",
-    "tabletPaddingBottomSuffix": "px",
 
     "tabletShape": null,
     "tabletShapeTopHeight": null,
@@ -422,11 +449,15 @@
     "mobilePaddingType": "grouped",
     "mobilePadding": 25,
     "mobilePaddingTop": 25,
+    "mobilePaddingRight": "initial",
     "mobilePaddingBottom": 25,
+    "mobilePaddingLeft": "initial",
 
     "mobilePaddingSuffix": "px",
     "mobilePaddingTopSuffix": "px",
+    "mobilePaddingRightSuffix": "",
     "mobilePaddingBottomSuffix": "px",
+    "mobilePaddingLeftSuffix": "",
 
     "mobileShape": null,
     "mobileShapeTopHeight": null,

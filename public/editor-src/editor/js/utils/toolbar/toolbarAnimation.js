@@ -1,18 +1,30 @@
 import { t } from "visual/utils/i18n";
 import { getAnimations } from "visual/utils/options";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarEntranceAnimation({ v, position = 60 }) {
+export function toolbarEntranceAnimation({
+  v,
+  position = 60,
+  device,
+  state,
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const getAnimationChoices = () => {
-    const { animationName } = v;
-    if (animationName !== "none" || animationName === "initial") {
+    if (dvv("animationName") !== "none" || dvv("animationName") === "initial") {
       const choices =
-        animationName === "initial" ? v.tempAnimationName : animationName;
+        dvv("animationName") === "initial"
+          ? dvv("tempAnimationName")
+          : dvv("animationName");
       return {
         [`${choices}`]: [
           {
-            id: "animationDuration",
+            id: dvk("animationDuration"),
             label: t("Duration"),
             type: "slider",
+            devices,
             slider: {
               min: 0,
               max: 5,
@@ -32,17 +44,19 @@ export function toolbarEntranceAnimation({ v, position = 60 }) {
               ]
             },
             value: {
-              value: v.animationDuration / 1000
+              value: dvv("animationDuration") / 1000
             },
             onChange: ({ value: animationDuration }, { sliderDragEnd }) => {
               return {
-                animationName: sliderDragEnd ? v.tempAnimationName : "initial",
+                animationName: sliderDragEnd
+                  ? dvv("tempAnimationName")
+                  : "initial",
                 animationDuration: animationDuration * 1000
               };
             }
           },
           {
-            id: "animationDelay",
+            id: dvk("animationDelay"),
             label: t("Delay"),
             type: "slider",
             slider: {
@@ -64,11 +78,13 @@ export function toolbarEntranceAnimation({ v, position = 60 }) {
               ]
             },
             value: {
-              value: v.animationDelay / 1000
+              value: dvv("animationDelay") / 1000
             },
             onChange: ({ value: animationDelay }, { sliderDragEnd }) => {
               return {
-                animationName: sliderDragEnd ? v.tempAnimationName : "initial",
+                animationName: sliderDragEnd
+                  ? dvv("tempAnimationName")
+                  : "initial",
                 animationDelay: animationDelay * 1000
               };
             }
@@ -81,16 +97,18 @@ export function toolbarEntranceAnimation({ v, position = 60 }) {
   };
 
   return {
-    id: "animation",
+    id: dvk("animation"),
     type: "multiPicker",
     position,
     picker: {
-      id: "animationName",
+      id: dvk("animationName"),
       label: t("Entrance Animation"),
       type: "select",
       choices: getAnimations(),
       value:
-        v.animationName === "initial" ? v.tempAnimationName : v.animationName,
+        dvv("animationName") === "initial"
+          ? dvv("tempAnimationName")
+          : dvv("animationName"),
       onChange: animationName => ({
         animationName,
         tempAnimationName: animationName

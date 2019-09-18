@@ -3,7 +3,7 @@ import {
   applyMiddleware,
   compose
 } from "redux";
-// import { reduxBatch } from "@manaflair/redux-batch";
+import { reduxBatch } from "@manaflair/redux-batch";
 import rootReducer from "./reducers";
 
 let store;
@@ -15,11 +15,10 @@ export function createStore({ middleware = [] } = {}) {
 
   store = reduxCreateStore(
     rootReducer,
-    applyMiddleware(...middleware)
-    // compose(
-    //   reduxBatch,
-    //   applyMiddleware(...middleware)
-    // )
+    compose(
+      reduxBatch,
+      applyMiddleware(...middleware)
+    )
   );
 
   return store;

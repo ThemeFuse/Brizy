@@ -6,13 +6,13 @@ import { styleState } from "visual/utils/style";
 export function styleBoxShadow({ v, device, state }) {
   const isHover = styleState({ v, state });
   const boxShadow = defaultValueValue({ v, key: "boxShadow", device, state });
-  const boxShadowHorizontal = defaultValueValue({
+  let boxShadowHorizontal = defaultValueValue({
     v,
     key: "boxShadowHorizontal",
     device,
     state
   });
-  const boxShadowVertical = defaultValueValue({
+  let boxShadowVertical = defaultValueValue({
     v,
     key: "boxShadowVertical",
     device,
@@ -47,13 +47,13 @@ export function styleBoxShadow({ v, device, state }) {
     device,
     state: "hover"
   });
-  const hoverBoxShadowHorizontal = defaultValueValue({
+  let hoverBoxShadowHorizontal = defaultValueValue({
     v,
     key: "boxShadowHorizontal",
     device,
     state: "hover"
   });
-  const hoverBoxShadowVertical = defaultValueValue({
+  let hoverBoxShadowVertical = defaultValueValue({
     v,
     key: "boxShadowVertical",
     device,
@@ -92,17 +92,35 @@ export function styleBoxShadow({ v, device, state }) {
     state: "hover"
   });
 
-  return isHover === "hover" && hoverBoxShadow === "on"
-    ? `${hoverBoxShadowHorizontal}px ${hoverBoxShadowVertical}px ${hoverBoxShadowBlur}px ${hoverBoxShadowSpread}px ${hexToRgba(
+  const prefix = boxShadow === "inset" ? "inset " : "";
+  const hoverPrefix = hoverBoxShadow === "inset" ? "inset " : "";
+
+  boxShadowHorizontal =
+    boxShadow === "inset" ? boxShadowHorizontal * -1 : boxShadowHorizontal;
+
+  boxShadowVertical =
+    boxShadow === "inset" ? boxShadowVertical * -1 : boxShadowVertical;
+
+  hoverBoxShadowHorizontal =
+    hoverBoxShadow === "inset"
+      ? hoverBoxShadowHorizontal * -1
+      : hoverBoxShadowHorizontal;
+
+  hoverBoxShadowVertical =
+    hoverBoxShadow === "inset"
+      ? hoverBoxShadowVertical * -1
+      : hoverBoxShadowVertical;
+
+  return isHover === "hover" &&
+    (hoverBoxShadow === "on" || hoverBoxShadow === "inset")
+    ? `${hoverPrefix}${hoverBoxShadowHorizontal}px ${hoverBoxShadowVertical}px ${hoverBoxShadowBlur}px ${hoverBoxShadowSpread}px ${hexToRgba(
         hoverBoxShadowColorHex,
         hoverBoxShadowColorOpacity
       )}`
-    : boxShadow === "on"
-    ? `${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
+    : boxShadow === "on" || boxShadow === "inset"
+    ? `${prefix}${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${hexToRgba(
         boxShadowColorHex,
         boxShadowColorOpacity
       )}`
     : "none";
 }
-
-

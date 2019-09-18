@@ -3,7 +3,6 @@ const path = require("path");
 module.exports = function argv(argv) {
   const argv_ = require("minimist")(argv.slice(2));
 
-  const TEMPLATE_NAME = "brizy";
   const TARGET = argv_.target || argv_.t || "none";
   const IS_PRODUCTION = Boolean(argv_.production);
   const IS_EXPORT = Boolean(argv_.export || argv_.e);
@@ -17,7 +16,9 @@ module.exports = function argv(argv) {
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
-    template: path.resolve(__dirname, `../templates/${TEMPLATE_NAME}`),
+    kits: path.resolve(__dirname, "../kits"),
+    templates: path.resolve(__dirname, "../templates"),
+    popups: path.resolve(__dirname, "../popups"),
     build: BUILD_DIR
       ? path.isAbsolute(BUILD_DIR)
         ? BUILD_DIR
@@ -27,7 +28,7 @@ module.exports = function argv(argv) {
           __dirname,
           "../../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
         )
-      : path.resolve(__dirname, `../build/${TEMPLATE_NAME}/free`),
+      : path.resolve(__dirname, `../build/free`),
     buildPro: BUILD_DIR_PRO
       ? path.isAbsolute(BUILD_DIR_PRO)
         ? BUILD_DIR_PRO
@@ -37,12 +38,11 @@ module.exports = function argv(argv) {
           __dirname,
           "../../../apache/wordpress/wp-content/plugins/brizy-pro/public/editor-build"
         )
-      : path.resolve(__dirname, `../build/${TEMPLATE_NAME}/pro`),
-    buildLocal: path.resolve(__dirname, `../build/${TEMPLATE_NAME}`)
+      : path.resolve(__dirname, `../build/pro`),
+    buildLocal: path.resolve(__dirname, `../build`)
   };
 
   return {
-    TEMPLATE_NAME,
     TARGET,
     IS_PRODUCTION,
     IS_EXPORT,

@@ -10,64 +10,32 @@ export function toolbarBgImage({
   v,
   device,
   state,
+  devices = "all",
   disabled = false,
   onChange
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const imageDynamicContentChoices = getDynamicContentChoices("image");
-  const bgImageKey = defaultValueKey({ key: "bgImage", device, state });
-  const bgImageWidthValue = defaultValueValue({
-    v,
-    key: "bgImageWidth",
-    device,
-    state
-  });
-  const bgImageHeightValue = defaultValueValue({
-    v,
-    key: "bgImageHeight",
-    device,
-    state
-  });
-  const bgImageSrcValue = defaultValueValue({
-    v,
-    key: "bgImageSrc",
-    device,
-    state
-  });
-  const bgPositionXValue = defaultValueValue({
-    v,
-    key: "bgPositionX",
-    device,
-    state
-  });
-  const bgPositionYValue = defaultValueValue({
-    v,
-    key: "bgPositionY",
-    device,
-    state
-  });
-  const bgPopulationValue = defaultValueValue({
-    v,
-    key: "bgPopulation",
-    device,
-    state
-  });
 
   return {
-    id: bgImageKey,
+    id: dvk("bgImage"),
     label: t("Image"),
     type: "imageSetter",
+    devices,
     disabled,
     population: {
       show: imageDynamicContentChoices.length > 0,
       choices: imageDynamicContentChoices
     },
     value: {
-      width: bgImageWidthValue,
-      height: bgImageHeightValue,
-      src: bgImageSrcValue,
-      x: bgPositionXValue,
-      y: bgPositionYValue,
-      population: bgPopulationValue
+      width: dvv("bgImageWidth"),
+      height: dvv("bgImageHeight"),
+      src: dvv("bgImageSrc"),
+      x: dvv("bgPositionX"),
+      y: dvv("bgPositionY"),
+      population: dvv("bgPopulation")
     },
     onChange: ({ width, height, src, x, y, population }, { isChanged }) => {
       const values = {

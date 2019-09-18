@@ -9,7 +9,10 @@
     "itemPadding": 15,
 
     "fontStyle": "",
-    "fontFamily": "roboto",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "roboto"
+    },
     "fontSize": 14,
     "fontWeight": 600,
     "lineHeight": 1.3,
@@ -18,6 +21,9 @@
     "colorHex": "#33344b",
     "colorOpacity": 1,
     "colorPalette": "",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "",
 
     "tabletWidth": null,
     "tabletItemPadding": null,

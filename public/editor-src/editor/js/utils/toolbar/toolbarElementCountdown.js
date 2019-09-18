@@ -1,27 +1,45 @@
 import { t } from "visual/utils/i18n";
 import _ from "underscore";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementCountdownDate({ v }) {
+export function toolbarElementCountdownDate({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "date",
+    id: defaultValueKey({ key: "date", device, state }),
     label: t("Date"),
     type: "input",
+    devices,
     inputSize: "medium",
     placeholder: "dd/mm/yyyy",
     value: {
-      value: v.date
+      value: defaultValueValue({
+        v,
+        key: "date",
+        device,
+        state
+      })
     },
-    onChange: ({ value: date }) => ({
-      date
+    onChange: ({ value }) => ({
+      [defaultValueKey({ key: "date", device, state })]: value
     })
   };
 }
 
-export function toolbarElementCountdownHour({ v }) {
+export function toolbarElementCountdownHour({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "hours",
+    id: defaultValueKey({ key: "hours", device, state }),
     type: "select",
     label: t("Hour"),
+    devices,
     choices: _.times(24, index => {
       const hour = (index + 12) % 12 || 12;
       const suffix = index >= 12 ? "pm" : "am";
@@ -31,14 +49,25 @@ export function toolbarElementCountdownHour({ v }) {
         value: `${hour} ${suffix}`
       };
     }),
-    value: v.hours
+    value: defaultValueValue({
+      v,
+      key: "hours",
+      device,
+      state
+    })
   };
 }
 
-export function toolbarElementCountdownMinute({ v }) {
+export function toolbarElementCountdownMinute({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "minutes",
+    id: defaultValueKey({ key: "minutes", device, state }),
     type: "select",
+    devices,
     label: t("Minutes"),
     choices: _.times(6, index => {
       const current = index * 10;
@@ -47,15 +76,26 @@ export function toolbarElementCountdownMinute({ v }) {
         value: current
       };
     }),
-    value: v.minutes
+    value: defaultValueValue({
+      v,
+      key: "minutes",
+      device,
+      state
+    })
   };
 }
 
-export function toolbarElementCountdownTimeZone({ v }) {
+export function toolbarElementCountdownTimeZone({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "timeZone",
+    id: defaultValueKey({ key: "timeZone", device, state }),
     label: t("Time Zone"),
     type: "select",
+    devices,
     choices: [
       {
         value: "660",
@@ -127,7 +167,7 @@ export function toolbarElementCountdownTimeZone({ v }) {
       },
       {
         value: "-360",
-        title: t("+ 6:00 (Astana)")
+        title: t("+ 6:00 (Nur-Sultan)")
       },
       {
         value: "-420",
@@ -143,7 +183,7 @@ export function toolbarElementCountdownTimeZone({ v }) {
       },
       {
         value: "-600",
-        title: t("+ 10:00 (Sidney, Melbourne)")
+        title: t("+ 10:00 (Sydney, Melbourne)")
       },
       {
         value: "-660",
@@ -154,15 +194,26 @@ export function toolbarElementCountdownTimeZone({ v }) {
         title: t("+ 12:00 (Auckland)")
       }
     ],
-    value: v.timeZone
+    value: defaultValueValue({
+      v,
+      key: "timeZone",
+      device,
+      state
+    })
   };
 }
 
-export function toolbarElementCountdownLanguage({ v }) {
+export function toolbarElementCountdownLanguage({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: "language",
+    id: defaultValueKey({ key: "language", device, state }),
     label: t("Language"),
     type: "select",
+    devices,
     choices: [
       {
         title: t("German"),
@@ -193,6 +244,11 @@ export function toolbarElementCountdownLanguage({ v }) {
         value: "ru"
       }
     ],
-    value: v.language
+    value: defaultValueValue({
+      v,
+      key: "language",
+      device,
+      state
+    })
   };
 }

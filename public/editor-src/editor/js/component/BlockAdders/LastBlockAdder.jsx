@@ -1,13 +1,15 @@
 import React from "react";
 import classnames from "classnames";
+import { connect } from "react-redux";
 import UIState from "visual/global/UIState";
 import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
 import { t } from "visual/utils/i18n";
-import { getBlocksConfig } from "./utils";
+import { addBlock, importTemplate } from "visual/redux/actions";
 
 class LastBlockAdder extends React.Component {
   static defaultProps = {
+    insertIndex: 0,
     blocks: []
   };
 
@@ -15,11 +17,48 @@ class LastBlockAdder extends React.Component {
     return false;
   }
 
+  handleTemplateAdd = data => {
+    const { insertIndex, dispatch } = this.props;
+    const meta = { insertIndex };
+    dispatch(importTemplate(data, meta));
+  };
+
+  handleBlockAdd = data => {
+    const { insertIndex, dispatch } = this.props;
+    const meta = { insertIndex };
+    dispatch(addBlock(data, meta));
+  };
+
   open = () => {
     UIState.set("prompt", {
       prompt: "blocks",
-      blocksConfig: getBlocksConfig(),
-      onAddBlocks: this.props.onAddBlocks
+      tabProps: {
+        blocks: {
+          categoriesFilter: categories => {
+            return TARGET === "WP"
+              ? categories
+              : categories.filter(
+                  ({ slug }) => slug !== "header" && slug !== "footer"
+                );
+          },
+          onAddBlocks: this.handleBlockAdd
+        },
+        saved: {
+          blocksFilter: blocks => {
+            return blocks.filter(([_, block]) => block.type !== "SectionPopup");
+          },
+          onAddBlocks: this.handleBlockAdd
+        },
+        global: {
+          blocksFilter: blocks => {
+            return blocks.filter(([_, block]) => block.type !== "SectionPopup");
+          },
+          onAddBlocks: this.handleBlockAdd
+        },
+        templates: {
+          onAddBlocks: this.handleTemplateAdd
+        }
+      }
     });
   };
 
@@ -45,5 +84,5 @@ class LastBlockAdder extends React.Component {
 
 export default rolesHOC({
   allow: ["admin"],
-  component: LastBlockAdder
+  component: connect()(LastBlockAdder)
 });

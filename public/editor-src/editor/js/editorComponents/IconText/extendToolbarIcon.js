@@ -1,140 +1,80 @@
 import { t } from "visual/utils/i18n";
-
+import { defaultValueKey } from "visual/utils/onChange";
 import {
-  toolbarDisabledShowOnTablet,
-  toolbarDisabledShowOnMobile
+  toolbarElementIconTextIconPosition,
+  toolbarElementIconTextIconSpacing,
+  toolbarDisabledLink,
+  toolbarElementIconDisabledSettings,
+  toolbarDisabledHorizontalAlign,
+  toolbarDisabledShowOnResponsive
 } from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
+export function getItems({ v, device }) {
   return [
     {
-      id: "toolbarCurrentShortcode",
+      id: defaultValueKey({
+        key: "toolbarCurrentShortcode",
+        device,
+        state: "normal"
+      }),
       type: "popover",
+      devices: "desktop",
       icon: "nc-star",
       position: 70,
       options: [
         {
-          id: "currentShortcodeTabs",
+          id: defaultValueKey({
+            key: "currentShortcodeTabs",
+            device,
+            state: "normal"
+          }),
           className: "",
           type: "tabs",
           tabs: [
             {
-              id: "currentShortcodeTab",
+              id: defaultValueKey({
+                key: "currentShortcodeTab",
+                device,
+                state: "normal"
+              }),
               label: t("Icon"),
               options: [
-                {
-                  id: "iconPosition",
-                  label: t("Position"),
-                  type: "radioGroup",
-                  roles: ["admin"],
-                  position: 50,
-                  choices: [
-                    {
-                      value: "left",
-                      icon: "nc-align-left"
-                    },
-                    {
-                      value: "right",
-                      icon: "nc-align-right"
-                    }
-                  ],
-                  value: v.iconPosition
-                },
-                {
-                  id: "iconSpacing",
-                  label: t("Spacing"),
-                  type: "slider",
-                  roles: ["admin"],
-                  slider: {
-                    min: 0,
-                    max: 100
-                  },
-                  input: {
-                    show: true
-                  },
-                  suffix: {
-                    show: true,
-                    choices: [
-                      {
-                        title: "px",
-                        value: "px"
-                      }
-                    ]
-                  },
-                  position: 70,
-                  value: {
-                    value: v.iconSpacing
-                  },
-                  onChange: ({ value: iconSpacing }) => {
-                    return {
-                      iconSpacing
-                    };
-                  }
-                }
+                toolbarElementIconTextIconPosition({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                toolbarElementIconTextIconSpacing({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                })
               ]
             }
           ]
         }
       ]
     },
-    {
-      id: "toolbarSettings",
-      type: "popover",
-      disabled: true
-    },
-    {
-      id: "toolbarLink",
-      type: "popover",
-      disabled: true
-    },
-    {
-      id: "horizontalAlign",
-      type: "toggle",
-      disabled: true
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  return [
-    toolbarDisabledShowOnTablet(),
-    {
-      id: "tabletHorizontalAlign",
-      type: "toggle",
-      disabled: true
-    },
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      options: [
-        {
-          id: "tabletAdvancedSettings",
-          type: "advancedSettings",
-          disabled: true
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  return [
-    toolbarDisabledShowOnMobile(),
-    {
-      id: "mobileHorizontalAlign",
-      type: "toggle",
-      disabled: true
-    },
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      options: [
-        {
-          id: "mobileAdvancedSettings",
-          type: "advancedSettings",
-          disabled: true
-        }
-      ]
-    }
+    toolbarDisabledLink({
+      v,
+      device,
+      state: "normal"
+    }),
+    toolbarElementIconDisabledSettings({
+      v,
+      device,
+      devices: "responsive",
+      state: "normal"
+    }),
+    toolbarDisabledHorizontalAlign({
+      v,
+      device,
+      state: "normal"
+    }),
+    toolbarDisabledShowOnResponsive({
+      device
+    })
   ];
 }
