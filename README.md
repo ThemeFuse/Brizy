@@ -1,7 +1,7 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.2.1<br>
+Tested up to: 5.2.3<br>
 Requires PHP: 5.6<br>
 Stable tag: 1.0.82<br>
 License: GPLv3<br>
@@ -119,7 +119,6 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 ## Changelog
 
 ### 1.0.82 - 2019-09-18 ###
-* New: Custom fonts
 * New: Text image mask
 * New: Text shadow
 * New: Text gradient color
