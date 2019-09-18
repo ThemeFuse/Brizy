@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { getOptionColorHexByPalette, getShapes } from "visual/utils/options";
 import {
   defaultValueValue,
   tabletSyncOnChange,
@@ -8,28 +8,22 @@ import {
 } from "visual/utils/onChange";
 import {
   toolbarBgImage,
-  toolbarBorderStyle,
-  toolbarBorderWidth,
-  toolbarBorderRadius,
-  toolbarBgType,
-  toolbarGradientRange,
+  toolbarBgColor2,
+  toolbarBgColorHexField2,
   toolbarGradientType,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
-  toolbarBgColorHexAndOpacity,
-  toolbarBgColorPalette,
-  toolbarBgColorFields,
-  toolbarBorderColorHexAndOpacity,
-  toolbarBorderColorPalette,
-  toolbarBorderColorFields,
-  toolbarBorderWidthBorderColorPicker,
+  toolbarBorderRadius,
+  toolbarBorder2,
+  toolbarBorderColorHexField2,
+  toolbarColor2,
+  toolbarColorHexField2,
+  toolbarBorderWidthFourFields2,
   toolbarHoverTransition,
-  toolbarBoxShadowHexAndOpacity,
-  toolbarBoxShadowPalette,
-  toolbarBoxShadowFields,
+  toolbarBoxShadow2,
+  toolbarBoxShadowHexField2,
   toolbarElementSectionBoxShadow,
-  toolbarCustomCSSClass,
-  toolbarCustomCSS
+  toolbarCustomCSSClass
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v, meta) {
@@ -38,6 +32,16 @@ export function getItemsForDesktop(v, meta) {
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "bgColorHex", device }),
     defaultValueValue({ v, key: "bgColorPalette", device })
+  );
+
+  const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "shapeTopColorHex", device }),
+    defaultValueValue({ v, key: "shapeTopColorPalette", device })
+  );
+
+  const { hex: shapeBottomColorHex } = getOptionColorHexByPalette(
+    defaultValueValue({ v, key: "shapeBottomColorHex", device }),
+    defaultValueValue({ v, key: "shapeBottomColorPalette", device })
   );
 
   return [
@@ -79,47 +83,6 @@ export function getItemsForDesktop(v, meta) {
                           ]
                         })
                       ]
-                    },
-                    {
-                      id: "tabCurrentElementStyling",
-                      label: t("Styling"),
-                      options: [
-                        toolbarBorderStyle({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBorderStyle",
-                            "onChangeBorderStyleDependencies"
-                          ]
-                        }),
-                        toolbarBorderWidth({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeGrouped: [
-                            "onChangeBorderWidthGrouped",
-                            "onChangeBorderWidthGroupedDependencies"
-                          ],
-                          onChangeUngrouped: [
-                            "onChangeBorderWidthUngrouped",
-                            "onChangeBorderWidthUngroupedDependencies"
-                          ]
-                        }),
-                        toolbarBorderRadius({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeGrouped: [
-                            "onChangeBorderRadiusGrouped",
-                            "onChangeBorderRadiusGroupedDependencies"
-                          ],
-                          onChangeUngrouped: [
-                            "onChangeBorderRadiusUngrouped",
-                            "onChangeBorderRadiusUngroupedDependencies"
-                          ]
-                        })
-                      ]
                     }
                   ]
                 }
@@ -150,32 +113,6 @@ export function getItemsForDesktop(v, meta) {
                           ]
                         })
                       ]
-                    },
-                    {
-                      id: "tabCurrentElementStyling",
-                      label: t("Styling"),
-                      options: [
-                        toolbarBorderStyle({
-                          v,
-                          device,
-                          state: "hover",
-                          onChange: ["onChangeBorderStyle"]
-                        }),
-                        toolbarBorderWidth({
-                          v,
-                          device,
-                          state: "hover",
-                          onChangeGrouped: ["onChangeBorderWidthGrouped"],
-                          onChangeUngrouped: ["onChangeBorderWidthUngrouped"]
-                        }),
-                        toolbarBorderRadius({
-                          v,
-                          device,
-                          state: "hover",
-                          onChangeGrouped: ["onChangeBorderRadiusGrouped"],
-                          onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
-                        })
-                      ]
                     }
                   ]
                 }
@@ -185,7 +122,7 @@ export function getItemsForDesktop(v, meta) {
         }
       ],
       onChange: (_, { isOpen }) => ({
-        tabsCurrentElement: !isOpen ? "tabCurrentElement" : v.tabsCurrentElement
+        tabsCurrentElement: !isOpen ? "" : v.tabsCurrentElement
       })
     },
     {
@@ -220,84 +157,32 @@ export function getItemsForDesktop(v, meta) {
                       id: "tabOverlay",
                       label: t("Overlay"),
                       options: [
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__gradient",
-                          columns: [
-                            {
-                              width: 43,
-                              options: [
-                                toolbarBgType({ v, device, state: "normal" })
-                              ]
-                            },
-                            {
-                              width: 57,
-                              options: [
-                                toolbarGradientRange({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  disabled: v.bgColorType === "solid"
-                                })
-                              ]
-                            }
-                          ]
-                        },
-                        toolbarBgColorHexAndOpacity({
+                        toolbarBgColor2({
                           v,
                           device,
                           state: "normal",
-                          prefix: "bg",
-                          disabled:
-                            v.bgColorType === "gradient" &&
-                            v.gradientActivePointer === "finishPointer",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette",
-                            "onChangeBgColorHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBgColorPalette({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix: "bg",
-                          disabled:
-                            v.bgColorType === "gradient" &&
-                            v.gradientActivePointer === "finishPointer",
-                          onChange: [
-                            "onChangeBgColorPalette",
-                            "onChangeBgColorPaletteOpacity",
-                            "onChangeBgColorHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBgColorHexAndOpacity({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix: "gradient",
-                          disabled:
-                            v.bgColorType === "solid" ||
-                            v.gradientActivePointer === "startPointer",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette",
-                            "onChangeBgColorHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBgColorPalette({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix: "gradient",
-                          disabled:
-                            v.bgColorType === "solid" ||
-                            v.gradientActivePointer === "startPointer",
-                          onChange: [
-                            "onChangeBgColorPalette",
-                            "onChangeBgColorPaletteOpacity",
-                            "onChangeBgColorHexAndOpacityDependencies"
-                          ]
+                          onChangeType: ["onChangeBgColorType2"],
+                          onChangeHex: [
+                            "onChangeBgColorHexAndOpacity2",
+                            "onChangeBgColorHexAndOpacityPalette2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBgColorPalette2",
+                            "onChangeBgColorPaletteOpacity2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangeGradientHex: [
+                            "onChangeBgColorHexAndOpacity2",
+                            "onChangeBgColorHexAndOpacityPalette2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangeGradientPalette: [
+                            "onChangeBgColorPalette2",
+                            "onChangeBgColorPaletteOpacity2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangeGradient: ["onChangeGradientRange2"]
                         }),
                         {
                           type: "grid",
@@ -306,32 +191,23 @@ export function getItemsForDesktop(v, meta) {
                             {
                               width: 30,
                               options: [
-                                toolbarBgColorFields({
+                                toolbarBgColorHexField2({
                                   v,
                                   device,
                                   state: "normal",
-                                  prefix: "bg",
-                                  disabled:
-                                    v.bgColorType === "gradient" &&
-                                    v.gradientActivePointer === "finishPointer",
+                                  prefix:
+                                    defaultValueValue({
+                                      v,
+                                      key: "gradientActivePointer",
+                                      device,
+                                      state: "normal"
+                                    }) === "startPointer"
+                                      ? "bg"
+                                      : "gradient",
                                   onChange: [
-                                    "onChangeBgColorHexAndOpacity",
-                                    "onChangeBgColorHexAndOpacityPalette",
-                                    "onChangeBgColorHexAndOpacityDependencies"
-                                  ]
-                                }),
-                                toolbarBgColorFields({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  prefix: "gradient",
-                                  disabled:
-                                    v.bgColorType === "solid" ||
-                                    v.gradientActivePointer === "startPointer",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity",
-                                    "onChangeBgColorHexAndOpacityPalette",
-                                    "onChangeBgColorHexAndOpacityDependencies"
+                                    "onChangeBgColorHexAndOpacity2",
+                                    "onChangeBgColorHexAndOpacityPalette2",
+                                    "onChangeBgColorHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
@@ -345,7 +221,13 @@ export function getItemsForDesktop(v, meta) {
                                   state: "normal",
                                   className:
                                     "brz-ed__select--transparent brz-ed__select--align-right",
-                                  disabled: v.bgColorType === "solid"
+                                  disabled:
+                                    defaultValueValue({
+                                      v,
+                                      key: "bgColorType",
+                                      device,
+                                      state: "normal"
+                                    }) === "solid"
                                 })
                               ]
                             },
@@ -357,16 +239,36 @@ export function getItemsForDesktop(v, meta) {
                                   device,
                                   state: "normal",
                                   disabled:
-                                    v.bgColorType === "solid" ||
-                                    v.gradientType === "radial"
+                                    defaultValueValue({
+                                      v,
+                                      key: "bgColorType",
+                                      device,
+                                      state: "normal"
+                                    }) === "solid" ||
+                                    defaultValueValue({
+                                      v,
+                                      key: "gradientType",
+                                      device,
+                                      state: "normal"
+                                    }) === "radial"
                                 }),
                                 toolbarGradientRadialDegree({
                                   v,
                                   device,
                                   state: "normal",
                                   disabled:
-                                    v.bgColorType === "solid" ||
-                                    v.gradientType === "linear"
+                                    defaultValueValue({
+                                      v,
+                                      key: "bgColorType",
+                                      device,
+                                      state: "normal"
+                                    }) === "solid" ||
+                                    defaultValueValue({
+                                      v,
+                                      key: "gradientType",
+                                      device,
+                                      state: "normal"
+                                    }) === "linear"
                                 })
                               ]
                             }
@@ -378,24 +280,23 @@ export function getItemsForDesktop(v, meta) {
                       id: "tabBorder",
                       label: t("Border"),
                       options: [
-                        toolbarBorderColorHexAndOpacity({
+                        toolbarBorder2({
                           v,
                           device,
                           state: "normal",
-                          onChange: [
-                            "onChangeBorderColorHexAndOpacity",
-                            "onChangeBorderColorHexAndOpacityPalette",
-                            "onChangeBorderColorHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBorderColorPalette({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBorderColorPalette",
-                            "onChangeBorderColorPaletteOpacity",
-                            "onChangeBorderColorHexAndOpacityDependencies"
+                          onChangeStyle: [
+                            "onChangeBorderStyle2",
+                            "onChangeContainerBorderStyleDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBorderColorHexAndOpacity2",
+                            "onChangeBorderColorHexAndOpacityPalette2",
+                            "onChangeContainerBorderColorHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBorderColorPalette2",
+                            "onChangeBorderColorPaletteOpacity2",
+                            "onChangeContainerBorderColorHexAndOpacityDependencies2"
                           ]
                         }),
                         {
@@ -403,30 +304,35 @@ export function getItemsForDesktop(v, meta) {
                           className: "brz-ed-grid__color-fileds",
                           columns: [
                             {
-                              width: 51,
+                              width: 38,
                               options: [
-                                toolbarBorderColorFields({
+                                toolbarBorderColorHexField2({
                                   v,
                                   device,
                                   state: "normal",
                                   onChange: [
-                                    "onChangeBorderColorHexAndOpacity",
-                                    "onChangeBorderColorHexAndOpacityPalette",
-                                    "onChangeBorderColorHexAndOpacityDependencies"
+                                    "onChangeBorderColorHexAndOpacity2",
+                                    "onChangeBorderColorHexAndOpacityPalette2",
+                                    "onChangeContainerBorderColorHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
                             },
                             {
-                              width: 49,
+                              width: 54,
                               options: [
-                                toolbarBorderWidthBorderColorPicker({
+                                toolbarBorderWidthFourFields2({
                                   v,
                                   device,
                                   state: "normal",
-                                  onChange: [
-                                    "onChangeBorderWidthGrouped",
-                                    "onChangeBorderWidthGroupedDependencies"
+                                  onChangeType: ["onChangeBorderWidthType2"],
+                                  onChangeGrouped: [
+                                    "onChangeBorderWidthGrouped2",
+                                    "onChangeBorderWidthGroupedDependencies2"
+                                  ],
+                                  onChangeUngrouped: [
+                                    "onChangeBorderWidthUngrouped2",
+                                    "onChangeBorderWidthUngroupedDependencies2"
                                   ]
                                 })
                               ]
@@ -439,24 +345,24 @@ export function getItemsForDesktop(v, meta) {
                       id: "tabBoxShadow",
                       label: t("Shadow"),
                       options: [
-                        toolbarBoxShadowHexAndOpacity({
+                        toolbarBoxShadow2({
                           v,
                           device,
                           state: "normal",
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBoxShadowPalette({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBoxShadowPalette",
-                            "onChangeBoxShadowPaletteOpacity",
-                            "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                          choices: "inset",
+                          onChangeType: [
+                            "onChangeBoxShadowType2",
+                            "onChangeBoxShadowTypeDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBoxShadowPalette2",
+                            "onChangeBoxShadowPaletteOpacity2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
                         }),
                         {
@@ -466,14 +372,14 @@ export function getItemsForDesktop(v, meta) {
                             {
                               width: 65,
                               options: [
-                                toolbarBoxShadowFields({
+                                toolbarBoxShadowHexField2({
                                   v,
                                   device,
                                   state: "normal",
                                   onChange: [
-                                    "onChangeBoxShadowHexAndOpacity",
-                                    "onChangeBoxShadowHexAndOpacityPalette",
-                                    "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                                    "onChangeBoxShadowHexAndOpacity2",
+                                    "onChangeBoxShadowHexAndOpacityPalette2",
+                                    "onChangeBoxShadowHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
@@ -484,7 +390,11 @@ export function getItemsForDesktop(v, meta) {
                                 toolbarElementSectionBoxShadow({
                                   v,
                                   device,
-                                  state: "normal"
+                                  state: "normal",
+                                  onChange: [
+                                    "onChangeBoxShadowFields2",
+                                    "onChangeBoxShadowFieldsDependencies2"
+                                  ]
                                 })
                               ]
                             }
@@ -510,126 +420,32 @@ export function getItemsForDesktop(v, meta) {
                       id: "tabOverlay",
                       label: t("Overlay"),
                       options: [
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__gradient",
-                          columns: [
-                            {
-                              width: 43,
-                              options: [
-                                toolbarBgType({ v, device, state: "hover" })
-                              ]
-                            },
-                            {
-                              width: 57,
-                              options: [
-                                toolbarGradientRange({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "hover"
-                                    }) === "solid"
-                                })
-                              ]
-                            }
-                          ]
-                        },
-                        toolbarBgColorHexAndOpacity({
+                        toolbarBgColor2({
                           v,
                           device,
                           state: "hover",
-                          prefix: "bg",
-                          disabled:
-                            defaultValueValue({
-                              v,
-                              key: "bgColorType",
-                              device,
-                              state: "hover"
-                            }) === "gradient" &&
-                            defaultValueValue({
-                              v,
-                              key: "gradientActivePointer",
-                              device,
-                              state: "hover"
-                            }) === "finishPointer",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette"
-                          ]
-                        }),
-                        toolbarBgColorPalette({
-                          v,
-                          device,
-                          state: "hover",
-                          prefix: "bg",
-                          disabled:
-                            defaultValueValue({
-                              v,
-                              key: "bgColorType",
-                              device,
-                              state: "hover"
-                            }) === "gradient" &&
-                            defaultValueValue({
-                              v,
-                              key: "gradientActivePointer",
-                              device,
-                              state: "hover"
-                            }) === "finishPointer",
-                          onChange: [
-                            "onChangeBgColorPalette",
-                            "onChangeBgColorPaletteOpacity"
-                          ]
-                        }),
-                        toolbarBgColorHexAndOpacity({
-                          v,
-                          device,
-                          state: "hover",
-                          prefix: "gradient",
-                          disabled:
-                            defaultValueValue({
-                              v,
-                              key: "bgColorType",
-                              device,
-                              state: "hover"
-                            }) === "solid" ||
-                            defaultValueValue({
-                              v,
-                              key: "gradientActivePointer",
-                              device,
-                              state: "hover"
-                            }) === "startPointer",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette"
-                          ]
-                        }),
-                        toolbarBgColorPalette({
-                          v,
-                          device,
-                          state: "hover",
-                          prefix: "gradient",
-                          disabled:
-                            defaultValueValue({
-                              v,
-                              key: "bgColorType",
-                              device,
-                              state: "hover"
-                            }) === "solid" ||
-                            defaultValueValue({
-                              v,
-                              key: "gradientActivePointer",
-                              device,
-                              state: "hover"
-                            }) === "startPointer",
-                          onChange: [
-                            "onChangeBgColorPalette",
-                            "onChangeBgColorPaletteOpacity"
-                          ]
+                          onChangeType: ["onChangeBgColorType2"],
+                          onChangeHex: [
+                            "onChangeBgColorHexAndOpacity2",
+                            "onChangeBgColorHexAndOpacityPalette2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBgColorPalette2",
+                            "onChangeBgColorPaletteOpacity2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangeGradientHex: [
+                            "onChangeBgColorHexAndOpacity2",
+                            "onChangeBgColorHexAndOpacityPalette2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangeGradientPalette: [
+                            "onChangeBgColorPalette2",
+                            "onChangeBgColorPaletteOpacity2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
+                          ],
+                          onChangeGradient: ["onChangeGradientRange2"]
                         }),
                         {
                           type: "grid",
@@ -638,50 +454,23 @@ export function getItemsForDesktop(v, meta) {
                             {
                               width: 30,
                               options: [
-                                toolbarBgColorFields({
+                                toolbarBgColorHexField2({
                                   v,
                                   device,
                                   state: "hover",
-                                  prefix: "bg",
-                                  disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "hover"
-                                    }) === "gradient" &&
+                                  prefix:
                                     defaultValueValue({
                                       v,
                                       key: "gradientActivePointer",
                                       device,
                                       state: "hover"
-                                    }) === "finishPointer",
+                                    }) === "startPointer"
+                                      ? "bg"
+                                      : "gradient",
                                   onChange: [
-                                    "onChangeBgColorHexAndOpacity",
-                                    "onChangeBgColorHexAndOpacityPalette"
-                                  ]
-                                }),
-                                toolbarBgColorFields({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  prefix: "gradient",
-                                  disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "hover"
-                                    }) === "solid" ||
-                                    defaultValueValue({
-                                      v,
-                                      key: "gradientActivePointer",
-                                      device,
-                                      state: "hover"
-                                    }) === "startPointer",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity",
-                                    "onChangeBgColorHexAndOpacityPalette"
+                                    "onChangeBgColorHexAndOpacity2",
+                                    "onChangeBgColorHexAndOpacityPalette2",
+                                    "onChangeBgColorHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
@@ -754,22 +543,23 @@ export function getItemsForDesktop(v, meta) {
                       id: "tabBorder",
                       label: t("Border"),
                       options: [
-                        toolbarBorderColorHexAndOpacity({
+                        toolbarBorder2({
                           v,
                           device,
                           state: "hover",
-                          onChange: [
-                            "onChangeBorderColorHexAndOpacity",
-                            "onChangeBorderColorHexAndOpacityPalette"
-                          ]
-                        }),
-                        toolbarBorderColorPalette({
-                          v,
-                          device,
-                          state: "hover",
-                          onChange: [
-                            "onChangeBorderColorPalette",
-                            "onChangeBorderColorPaletteOpacity"
+                          onChangeStyle: [
+                            "onChangeBorderStyle2",
+                            "onChangeContainerBorderStyleDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBorderColorHexAndOpacity2",
+                            "onChangeBorderColorHexAndOpacityPalette2",
+                            "onChangeContainerBorderColorHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBorderColorPalette2",
+                            "onChangeBorderColorPaletteOpacity2",
+                            "onChangeContainerBorderColorHexAndOpacityDependencies2"
                           ]
                         }),
                         {
@@ -777,27 +567,36 @@ export function getItemsForDesktop(v, meta) {
                           className: "brz-ed-grid__color-fileds",
                           columns: [
                             {
-                              width: 51,
+                              width: 38,
                               options: [
-                                toolbarBorderColorFields({
+                                toolbarBorderColorHexField2({
                                   v,
                                   device,
                                   state: "hover",
                                   onChange: [
-                                    "onChangeBorderColorHexAndOpacity",
-                                    "onChangeBorderColorHexAndOpacityPalette"
+                                    "onChangeBorderColorHexAndOpacity2",
+                                    "onChangeBorderColorHexAndOpacityPalette2",
+                                    "onChangeContainerBorderColorHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
                             },
                             {
-                              width: 49,
+                              width: 54,
                               options: [
-                                toolbarBorderWidthBorderColorPicker({
+                                toolbarBorderWidthFourFields2({
                                   v,
                                   device,
                                   state: "hover",
-                                  onChange: ["onChangeBorderWidthGrouped"]
+                                  onChangeType: ["onChangeBorderWidthType2"],
+                                  onChangeGrouped: [
+                                    "onChangeBorderWidthGrouped2",
+                                    "onChangeBorderWidthGroupedDependencies2"
+                                  ],
+                                  onChangeUngrouped: [
+                                    "onChangeBorderWidthUngrouped2",
+                                    "onChangeBorderWidthUngroupedDependencies2"
+                                  ]
                                 })
                               ]
                             }
@@ -809,24 +608,24 @@ export function getItemsForDesktop(v, meta) {
                       id: "tabBoxShadow",
                       label: t("Shadow"),
                       options: [
-                        toolbarBoxShadowHexAndOpacity({
+                        toolbarBoxShadow2({
                           v,
                           device,
                           state: "hover",
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBoxShadowPalette({
-                          v,
-                          device,
-                          state: "hover",
-                          onChange: [
-                            "onChangeBoxShadowPalette",
-                            "onChangeBoxShadowPaletteOpacity",
-                            "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                          choices: "inset",
+                          onChangeType: [
+                            "onChangeBoxShadowType2",
+                            "onChangeBoxShadowTypeDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBoxShadowPalette2",
+                            "onChangeBoxShadowPaletteOpacity2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
                         }),
                         {
@@ -836,14 +635,14 @@ export function getItemsForDesktop(v, meta) {
                             {
                               width: 65,
                               options: [
-                                toolbarBoxShadowFields({
+                                toolbarBoxShadowHexField2({
                                   v,
                                   device,
                                   state: "hover",
                                   onChange: [
-                                    "onChangeBoxShadowHexAndOpacity",
-                                    "onChangeBoxShadowHexAndOpacityPalette",
-                                    "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                                    "onChangeBoxShadowHexAndOpacity2",
+                                    "onChangeBoxShadowHexAndOpacityPalette2",
+                                    "onChangeBoxShadowHexAndOpacityDependencies2"
                                   ]
                                 })
                               ]
@@ -854,7 +653,11 @@ export function getItemsForDesktop(v, meta) {
                                 toolbarElementSectionBoxShadow({
                                   v,
                                   device,
-                                  state: "hover"
+                                  state: "hover",
+                                  onChange: [
+                                    "onChangeBoxShadowFields2",
+                                    "onChangeBoxShadowFieldsDependencies2"
+                                  ]
                                 })
                               ]
                             }
@@ -870,7 +673,7 @@ export function getItemsForDesktop(v, meta) {
         }
       ],
       onChange: (_, { isOpen }) => ({
-        tabsColor: !isOpen ? "tabOverlay" : v.tabsColor
+        tabsColor: !isOpen ? "" : v.tabsColor
       })
     },
     {
@@ -1074,6 +877,322 @@ export function getItemsForDesktop(v, meta) {
                           }
                         ]
                       }
+                    },
+                    toolbarBorderRadius({
+                      v,
+                      device,
+                      state: "normal",
+                      onChangeGrouped: [
+                        "onChangeBorderRadiusGrouped",
+                        "onChangeBorderRadiusGroupedDependencies"
+                      ],
+                      onChangeUngrouped: [
+                        "onChangeBorderRadiusUngrouped",
+                        "onChangeBorderRadiusUngroupedDependencies"
+                      ]
+                    }),
+                    {
+                      type: "multiPicker",
+                      picker: {
+                        id: "shape",
+                        label: t("Dividers"),
+                        type: "radioGroup",
+                        choices: [
+                          {
+                            value: "top",
+                            icon: "nc-dividers-top"
+                          },
+                          {
+                            value: "bottom",
+                            icon: "nc-dividers-bottom"
+                          }
+                        ],
+                        value: v.shape
+                      },
+                      choices: {
+                        top: [
+                          {
+                            id: "shapeTopType",
+                            label: t("Type"),
+                            type: "select",
+                            className: "brz-control__select-option--icon",
+                            choices: getShapes(),
+                            value: v.shapeTopType
+                          },
+                          {
+                            id: "shapeTopColors",
+                            type: "popover",
+                            size: "auto",
+                            label: t("Color"),
+                            title: t("Color"),
+                            disabled: v.shapeTopType === "none",
+                            icon: {
+                              style: {
+                                backgroundColor: hexToRgba(
+                                  shapeTopColorHex,
+                                  v.shapeTopColorOpacity
+                                )
+                              }
+                            },
+                            options: [
+                              toolbarColor2({
+                                v,
+                                device,
+                                prefix: "shapeTopColor",
+
+                                state: "normal",
+                                onChangeHex: [
+                                  "onChangeColorHexAndOpacity",
+                                  "onChangeColorHexAndOpacityPalette"
+                                ],
+                                onChangePalette: [
+                                  "onChangeColorPalette",
+                                  "onChangeColorPaletteOpacity"
+                                ]
+                              }),
+                              {
+                                type: "grid",
+                                className: "brz-ed-grid__color-fileds",
+                                columns: [
+                                  {
+                                    width: 100,
+                                    options: [
+                                      toolbarColorHexField2({
+                                        v,
+                                        device,
+                                        prefix: "shapeTopColor",
+                                        state: "normal",
+                                        onChange: [
+                                          "onChangeColorHexAndOpacity",
+                                          "onChangeColorHexAndOpacityPalette"
+                                        ]
+                                      })
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            id: "shapeTopHeight",
+                            type: "slider",
+                            icon: "nc-height",
+                            disabled: v.shapeTopType === "none",
+                            slider: {
+                              min: 0,
+                              max: v.shapeTopHeightSuffix === "px" ? 500 : 100
+                            },
+                            input: {
+                              show: true
+                            },
+                            suffix: {
+                              show: true,
+                              choices: [
+                                {
+                                  title: "px",
+                                  value: "px"
+                                },
+                                {
+                                  title: "%",
+                                  value: "%"
+                                }
+                              ]
+                            },
+                            value: {
+                              value: v.shapeTopHeight,
+                              suffix: v.shapeTopHeightSuffix
+                            },
+                            onChange: ({
+                              value: shapeTopHeight,
+                              suffix: shapeTopHeightSuffix
+                            }) => ({
+                              shapeTopHeight,
+                              shapeTopHeightSuffix
+                            })
+                          },
+                          {
+                            id: "shapeTopFlip",
+                            label: t("Flip"),
+                            type: "checkGroup",
+                            disabled: v.shapeTopType === "none",
+                            choices: [
+                              {
+                                value: "shapeTopHorizontal",
+                                icon: "nc-flip-horizontal"
+                              }
+                            ],
+                            value: {
+                              shapeTopHorizontal: v.shapeTopHorizontal === "on"
+                            },
+                            onChange: ({ shapeTopHorizontal }) => {
+                              return {
+                                shapeTopHorizontal: shapeTopHorizontal
+                                  ? "on"
+                                  : "off"
+                              };
+                            }
+                          },
+                          {
+                            id: "shapeTopIndex",
+                            type: "radioGroup",
+                            label: t("Arrangement"),
+                            disabled: v.shapeTopType === "none",
+                            choices: [
+                              {
+                                value: "auto",
+                                icon: "nc-send-to-back"
+                              },
+                              {
+                                value: "10",
+                                icon: "nc-bring-to-top"
+                              }
+                            ],
+                            value: v.shapeTopIndex
+                          }
+                        ],
+                        bottom: [
+                          {
+                            id: "shapeBottomType",
+                            label: t("Type"),
+                            type: "select",
+                            className:
+                              "brz-control__select-option--icon brz-control__select-option--icon--bottom",
+                            choices: getShapes(),
+                            value: v.shapeBottomType
+                          },
+                          {
+                            id: "shapeBottomColors",
+                            type: "popover",
+                            size: "auto",
+                            label: t("Color"),
+                            title: t("Color"),
+                            disabled: v.shapeBottomType === "none",
+                            icon: {
+                              style: {
+                                backgroundColor: hexToRgba(
+                                  shapeBottomColorHex,
+                                  v.shapeBottomColorOpacity
+                                )
+                              }
+                            },
+                            options: [
+                              toolbarColor2({
+                                v,
+                                device,
+                                prefix: "shapeBottomColor",
+                                state: "normal",
+                                onChangeHex: [
+                                  "onChangeColorHexAndOpacity",
+                                  "onChangeColorHexAndOpacityPalette"
+                                ],
+                                onChangePalette: [
+                                  "onChangeColorPalette",
+                                  "onChangeColorPaletteOpacity"
+                                ]
+                              }),
+                              {
+                                type: "grid",
+                                className: "brz-ed-grid__color-fileds",
+                                columns: [
+                                  {
+                                    width: 100,
+                                    options: [
+                                      toolbarColorHexField2({
+                                        v,
+                                        device,
+                                        prefix: "shapeBottomColor",
+                                        state: "normal",
+                                        onChange: [
+                                          "onChangeColorHexAndOpacity",
+                                          "onChangeColorHexAndOpacityPalette"
+                                        ]
+                                      })
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            id: "shapeBottomHeight",
+                            type: "slider",
+                            icon: "nc-height",
+                            disabled: v.shapeBottomType === "none",
+                            slider: {
+                              min: 0,
+                              max:
+                                v.shapeBottomHeightSuffix === "px" ? 500 : 100
+                            },
+                            input: {
+                              show: true
+                            },
+                            suffix: {
+                              show: true,
+                              choices: [
+                                {
+                                  title: "px",
+                                  value: "px"
+                                },
+                                {
+                                  title: "%",
+                                  value: "%"
+                                }
+                              ]
+                            },
+                            value: {
+                              value: v.shapeBottomHeight,
+                              suffix: v.shapeBottomHeightSuffix
+                            },
+                            onChange: ({
+                              value: shapeBottomHeight,
+                              suffix: shapeBottomHeightSuffix
+                            }) => ({
+                              shapeBottomHeight,
+                              shapeBottomHeightSuffix
+                            })
+                          },
+                          {
+                            id: "shapeBottomFlip",
+                            label: t("Flip"),
+                            type: "checkGroup",
+                            disabled: v.shapeBottomType === "none",
+                            choices: [
+                              {
+                                value: "shapeBottomHorizontal",
+                                icon: "nc-flip-horizontal"
+                              }
+                            ],
+                            value: {
+                              shapeBottomHorizontal:
+                                v.shapeBottomHorizontal === "on"
+                            },
+                            onChange: ({ shapeBottomHorizontal }) => {
+                              return {
+                                shapeBottomHorizontal: shapeBottomHorizontal
+                                  ? "on"
+                                  : "off"
+                              };
+                            }
+                          },
+                          {
+                            id: "shapeBottomIndex",
+                            type: "radioGroup",
+                            label: t("Arrangement"),
+                            disabled: v.shapeBottomType === "none",
+                            choices: [
+                              {
+                                value: "auto",
+                                icon: "nc-send-to-back"
+                              },
+                              {
+                                value: "10",
+                                icon: "nc-bring-to-top"
+                              }
+                            ],
+                            value: v.shapeBottomIndex
+                          }
+                        ]
+                      }
                     }
                   ]
                 },
@@ -1131,47 +1250,6 @@ export function getItemsForTablet(v) {
                   ]
                 })
               ]
-            },
-            {
-              id: "tabletTabCurrentElementStyling",
-              label: t("Styling"),
-              options: [
-                toolbarBorderStyle({
-                  v,
-                  device,
-                  state,
-                  onChange: [
-                    "onChangeBorderStyle",
-                    "onChangeBorderStyleDependencies"
-                  ]
-                }),
-                toolbarBorderWidth({
-                  v,
-                  device,
-                  state,
-                  onChangeGrouped: [
-                    "onChangeBorderWidthGrouped",
-                    "onChangeBorderWidthGroupedDependencies"
-                  ],
-                  onChangeUngrouped: [
-                    "onChangeBorderWidthUngrouped",
-                    "onChangeBorderWidthUngroupedDependencies"
-                  ]
-                }),
-                toolbarBorderRadius({
-                  v,
-                  device,
-                  state,
-                  onChangeGrouped: [
-                    "onChangeBorderRadiusGrouped",
-                    "onChangeBorderRadiusGroupedDependencies"
-                  ],
-                  onChangeUngrouped: [
-                    "onChangeBorderRadiusUngrouped",
-                    "onChangeBorderRadiusUngroupedDependencies"
-                  ]
-                })
-              ]
             }
           ]
         }
@@ -1200,87 +1278,32 @@ export function getItemsForTablet(v) {
               id: "tabletTabOverlay",
               label: t("Overlay"),
               options: [
-                {
-                  type: "grid",
-                  className: "brz-ed-grid__gradient",
-                  columns: [
-                    {
-                      width: 43,
-                      options: [toolbarBgType({ v, device, state })]
-                    },
-                    {
-                      width: 57,
-                      options: [
-                        toolbarGradientRange({
-                          v,
-                          device,
-                          state,
-                          disabled:
-                            tabletSyncOnChange(v, "bgColorType") === "solid"
-                        })
-                      ]
-                    }
-                  ]
-                },
-                toolbarBgColorHexAndOpacity({
+                toolbarBgColor2({
                   v,
                   device,
                   state,
-                  prefix: "bg",
-                  disabled:
-                    tabletSyncOnChange(v, "bgColorType") === "gradient" &&
-                    tabletSyncOnChange(v, "gradientActivePointer") ===
-                      "finishPointer",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state,
-                  prefix: "bg",
-                  disabled:
-                    tabletSyncOnChange(v, "bgColorType") === "gradient" &&
-                    tabletSyncOnChange(v, "gradientActivePointer") ===
-                      "finishPointer",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBgColorHexAndOpacity({
-                  v,
-                  device,
-                  state,
-                  prefix: "gradient",
-                  disabled:
-                    tabletSyncOnChange(v, "bgColorType") === "solid" ||
-                    tabletSyncOnChange(v, "gradientActivePointer") ===
-                      "startPointer",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state,
-                  prefix: "gradient",
-                  disabled:
-                    tabletSyncOnChange(v, "bgColorType") === "solid" ||
-                    tabletSyncOnChange(v, "gradientActivePointer") ===
-                      "startPointer",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
+                  onChangeType: ["onChangeBgColorType2"],
+                  onChangeHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangeGradientHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangeGradientPalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangeGradient: ["onChangeGradientRange2"]
                 }),
                 {
                   type: "grid",
@@ -1289,35 +1312,23 @@ export function getItemsForTablet(v) {
                     {
                       width: 30,
                       options: [
-                        toolbarBgColorFields({
+                        toolbarBgColorHexField2({
                           v,
                           device,
                           state,
-                          prefix: "bg",
-                          disabled:
-                            tabletSyncOnChange(v, "bgColorType") ===
-                              "gradient" &&
-                            tabletSyncOnChange(v, "gradientActivePointer") ===
-                              "finishPointer",
+                          prefix:
+                            defaultValueValue({
+                              v,
+                              key: "gradientActivePointer",
+                              device,
+                              state
+                            }) === "startPointer"
+                              ? "bg"
+                              : "gradient",
                           onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette",
-                            "onChangeBgColorHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBgColorFields({
-                          v,
-                          device,
-                          state,
-                          prefix: "gradient",
-                          disabled:
-                            tabletSyncOnChange(v, "bgColorType") === "solid" ||
-                            tabletSyncOnChange(v, "gradientActivePointer") ===
-                              "startPointer",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette",
-                            "onChangeBgColorHexAndOpacityDependencies"
+                            "onChangeBgColorHexAndOpacity2",
+                            "onChangeBgColorHexAndOpacityPalette2",
+                            "onChangeBgColorHexAndOpacityDependencies2"
                           ]
                         })
                       ]
@@ -1332,7 +1343,12 @@ export function getItemsForTablet(v) {
                           className:
                             "brz-ed__select--transparent brz-ed__select--align-right",
                           disabled:
-                            tabletSyncOnChange(v, "bgColorType") === "solid"
+                            defaultValueValue({
+                              v,
+                              key: "bgColorType",
+                              device,
+                              state
+                            }) === "solid"
                         })
                       ]
                     },
@@ -1344,16 +1360,36 @@ export function getItemsForTablet(v) {
                           device,
                           state,
                           disabled:
-                            tabletSyncOnChange(v, "bgColorType") === "solid" ||
-                            tabletSyncOnChange(v, "gradientType") === "radial"
+                            defaultValueValue({
+                              v,
+                              key: "bgColorType",
+                              device,
+                              state
+                            }) === "solid" ||
+                            defaultValueValue({
+                              v,
+                              key: "gradientType",
+                              device,
+                              state
+                            }) === "radial"
                         }),
                         toolbarGradientRadialDegree({
                           v,
                           device,
                           state,
                           disabled:
-                            tabletSyncOnChange(v, "bgColorType") === "solid" ||
-                            tabletSyncOnChange(v, "gradientType") === "linear"
+                            defaultValueValue({
+                              v,
+                              key: "bgColorType",
+                              device,
+                              state
+                            }) === "solid" ||
+                            defaultValueValue({
+                              v,
+                              key: "gradientType",
+                              device,
+                              state
+                            }) === "linear"
                         })
                       ]
                     }
@@ -1365,24 +1401,23 @@ export function getItemsForTablet(v) {
               id: "tabletTabBorder",
               label: t("Border"),
               options: [
-                toolbarBorderColorHexAndOpacity({
+                toolbarBorder2({
                   v,
                   device,
                   state,
-                  onChange: [
-                    "onChangeBorderColorHexAndOpacity",
-                    "onChangeBorderColorHexAndOpacityPalette",
-                    "onChangeBorderColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBorderColorPalette({
-                  v,
-                  device,
-                  state,
-                  onChange: [
-                    "onChangeBorderColorPalette",
-                    "onChangeBorderColorPaletteOpacity",
-                    "onChangeBorderColorHexAndOpacityDependencies"
+                  onChangeStyle: [
+                    "onChangeBorderStyle2",
+                    "onChangeContainerBorderStyleDependencies2"
+                  ],
+                  onChangeHex: [
+                    "onChangeBorderColorHexAndOpacity2",
+                    "onChangeBorderColorHexAndOpacityPalette2",
+                    "onChangeContainerBorderColorHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBorderColorPalette2",
+                    "onChangeBorderColorPaletteOpacity2",
+                    "onChangeContainerBorderColorHexAndOpacityDependencies2"
                   ]
                 }),
                 {
@@ -1390,30 +1425,35 @@ export function getItemsForTablet(v) {
                   className: "brz-ed-grid__color-fileds",
                   columns: [
                     {
-                      width: 51,
+                      width: 38,
                       options: [
-                        toolbarBorderColorFields({
+                        toolbarBorderColorHexField2({
                           v,
                           device,
                           state,
                           onChange: [
-                            "onChangeBorderColorHexAndOpacity",
-                            "onChangeBorderColorHexAndOpacityPalette",
-                            "onChangeBorderColorHexAndOpacityDependencies"
+                            "onChangeBorderColorHexAndOpacity2",
+                            "onChangeBorderColorHexAndOpacityPalette2",
+                            "onChangeContainerBorderColorHexAndOpacityDependencies2"
                           ]
                         })
                       ]
                     },
                     {
-                      width: 49,
+                      width: 54,
                       options: [
-                        toolbarBorderWidthBorderColorPicker({
+                        toolbarBorderWidthFourFields2({
                           v,
                           device,
                           state,
-                          onChange: [
-                            "onChangeBorderWidthGrouped",
-                            "onChangeBorderWidthGroupedDependencies"
+                          onChangeType: ["onChangeBorderWidthType2"],
+                          onChangeGrouped: [
+                            "onChangeBorderWidthGrouped2",
+                            "onChangeBorderWidthGroupedDependencies2"
+                          ],
+                          onChangeUngrouped: [
+                            "onChangeBorderWidthUngrouped2",
+                            "onChangeBorderWidthUngroupedDependencies2"
                           ]
                         })
                       ]
@@ -1423,27 +1463,27 @@ export function getItemsForTablet(v) {
               ]
             },
             {
-              id: "tabletBoxShadow",
+              id: "tabletTabBoxShadow",
               label: t("Shadow"),
               options: [
-                toolbarBoxShadowHexAndOpacity({
+                toolbarBoxShadow2({
                   v,
                   device,
                   state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowHexAndOpacity",
-                    "onChangeBoxShadowHexAndOpacityPalette",
-                    "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBoxShadowPalette({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowPalette",
-                    "onChangeBoxShadowPaletteOpacity",
-                    "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                  choices: "inset",
+                  onChangeType: [
+                    "onChangeBoxShadowType2",
+                    "onChangeBoxShadowTypeDependencies2"
+                  ],
+                  onChangeHex: [
+                    "onChangeBoxShadowHexAndOpacity2",
+                    "onChangeBoxShadowHexAndOpacityPalette2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBoxShadowPalette2",
+                    "onChangeBoxShadowPaletteOpacity2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
                   ]
                 }),
                 {
@@ -1453,14 +1493,14 @@ export function getItemsForTablet(v) {
                     {
                       width: 65,
                       options: [
-                        toolbarBoxShadowFields({
+                        toolbarBoxShadowHexField2({
                           v,
                           device,
                           state: "normal",
                           onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
                         })
                       ]
@@ -1471,7 +1511,11 @@ export function getItemsForTablet(v) {
                         toolbarElementSectionBoxShadow({
                           v,
                           device,
-                          state: "normal"
+                          state: "normal",
+                          onChange: [
+                            "onChangeBoxShadowFields2",
+                            "onChangeBoxShadowFieldsDependencies2"
+                          ]
                         })
                       ]
                     }
@@ -1613,6 +1657,125 @@ export function getItemsForTablet(v) {
               }
             ]
           }
+        },
+        toolbarBorderRadius({
+          v,
+          device,
+          state,
+          onChangeGrouped: [
+            "onChangeBorderRadiusGrouped",
+            "onChangeBorderRadiusGroupedDependencies"
+          ],
+          onChangeUngrouped: [
+            "onChangeBorderRadiusUngrouped",
+            "onChangeBorderRadiusUngroupedDependencies"
+          ]
+        }),
+        {
+          type: "multiPicker",
+          disabled: v.shapeTopType === "none" && v.shapeBottomType === "none",
+          picker: {
+            id: "tabletShape",
+            label: t("Dividers"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "top",
+                icon: "nc-align-top"
+              },
+              {
+                value: "bottom",
+                icon: "nc-align-bottom"
+              }
+            ],
+            value: tabletSyncOnChange(v, "shape")
+          },
+          choices: {
+            top: [
+              {
+                id: "tabletShapeTopHeight",
+                type: "slider",
+                icon: "nc-height",
+                disabled: v.shapeTopType === "none",
+                slider: {
+                  min: 0,
+                  max:
+                    tabletSyncOnChange(v, "shapeTopHeightSuffix") === "px"
+                      ? 500
+                      : 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: tabletSyncOnChange(v, "shapeTopHeight"),
+                  suffix: tabletSyncOnChange(v, "shapeTopHeightSuffix")
+                },
+                onChange: ({
+                  value: tabletShapeTopHeight,
+                  suffix: tabletShapeTopHeightSuffix
+                }) => ({
+                  tabletShapeTopHeight,
+                  tabletShapeTopHeightSuffix
+                })
+              }
+            ],
+            bottom: [
+              {
+                id: "tabletShapeBottomHeight",
+                type: "slider",
+                icon: "nc-height",
+                disabled: v.shapeBottomType === "none",
+                slider: {
+                  min: 0,
+                  max:
+                    tabletSyncOnChange(v, "shapeBottomHeightSuffix") === "px"
+                      ? 500
+                      : 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: tabletSyncOnChange(v, "shapeBottomHeight"),
+                  suffix: tabletSyncOnChange(v, "shapeBottomHeightSuffix")
+                },
+                onChange: ({
+                  value: tabletShapeBottomHeight,
+                  suffix: tabletShapeBottomHeightSuffix
+                }) => ({
+                  tabletShapeBottomHeight,
+                  tabletShapeBottomHeightSuffix
+                })
+              }
+            ]
+          }
         }
       ]
     }
@@ -1655,47 +1818,6 @@ export function getItemsForMobile(v) {
                   ]
                 })
               ]
-            },
-            {
-              id: "mobileTabCurrentElementStyling",
-              label: t("Styling"),
-              options: [
-                toolbarBorderStyle({
-                  v,
-                  device,
-                  state,
-                  onChange: [
-                    "onChangeBorderStyle",
-                    "onChangeBorderStyleDependencies"
-                  ]
-                }),
-                toolbarBorderWidth({
-                  v,
-                  device,
-                  state,
-                  onChangeGrouped: [
-                    "onChangeBorderWidthGrouped",
-                    "onChangeBorderWidthGroupedDependencies"
-                  ],
-                  onChangeUngrouped: [
-                    "onChangeBorderWidthUngrouped",
-                    "onChangeBorderWidthUngroupedDependencies"
-                  ]
-                }),
-                toolbarBorderRadius({
-                  v,
-                  device,
-                  state,
-                  onChangeGrouped: [
-                    "onChangeBorderRadiusGrouped",
-                    "onChangeBorderRadiusGroupedDependencies"
-                  ],
-                  onChangeUngrouped: [
-                    "onChangeBorderRadiusUngrouped",
-                    "onChangeBorderRadiusUngroupedDependencies"
-                  ]
-                })
-              ]
             }
           ]
         }
@@ -1724,87 +1846,32 @@ export function getItemsForMobile(v) {
               id: "mobileTabOverlay",
               label: t("Overlay"),
               options: [
-                {
-                  type: "grid",
-                  className: "brz-ed-grid__gradient",
-                  columns: [
-                    {
-                      width: 43,
-                      options: [toolbarBgType({ v, device, state })]
-                    },
-                    {
-                      width: 57,
-                      options: [
-                        toolbarGradientRange({
-                          v,
-                          device,
-                          state,
-                          disabled:
-                            mobileSyncOnChange(v, "bgColorType") === "solid"
-                        })
-                      ]
-                    }
-                  ]
-                },
-                toolbarBgColorHexAndOpacity({
+                toolbarBgColor2({
                   v,
                   device,
                   state,
-                  prefix: "bg",
-                  disabled:
-                    mobileSyncOnChange(v, "bgColorType") === "gradient" &&
-                    mobileSyncOnChange(v, "gradientActivePointer") ===
-                      "finishPointer",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state,
-                  prefix: "bg",
-                  disabled:
-                    mobileSyncOnChange(v, "bgColorType") === "gradient" &&
-                    mobileSyncOnChange(v, "gradientActivePointer") ===
-                      "finishPointer",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBgColorHexAndOpacity({
-                  v,
-                  device,
-                  state,
-                  prefix: "gradient",
-                  disabled:
-                    mobileSyncOnChange(v, "bgColorType") === "solid" ||
-                    mobileSyncOnChange(v, "gradientActivePointer") ===
-                      "startPointer",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state,
-                  prefix: "gradient",
-                  disabled:
-                    mobileSyncOnChange(v, "bgColorType") === "solid" ||
-                    mobileSyncOnChange(v, "gradientActivePointer") ===
-                      "startPointer",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity",
-                    "onChangeBgColorHexAndOpacityDependencies"
-                  ]
+                  onChangeType: ["onChangeBgColorType2"],
+                  onChangeHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangeGradientHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangeGradientPalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2",
+                    "onChangeBgColorHexAndOpacityDependencies2"
+                  ],
+                  onChangeGradient: ["onChangeGradientRange2"]
                 }),
                 {
                   type: "grid",
@@ -1813,31 +1880,19 @@ export function getItemsForMobile(v) {
                     {
                       width: 30,
                       options: [
-                        toolbarBgColorFields({
+                        toolbarBgColorHexField2({
                           v,
                           device,
                           state,
-                          prefix: "bg",
-                          disabled:
-                            mobileSyncOnChange(v, "bgColorType") ===
-                              "gradient" &&
-                            mobileSyncOnChange(v, "gradientActivePointer") ===
-                              "finishPointer",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette",
-                            "onChangeBgColorHexAndOpacityDependencies"
-                          ]
-                        }),
-                        toolbarBgColorFields({
-                          v,
-                          device,
-                          state,
-                          prefix: "gradient",
-                          disabled:
-                            mobileSyncOnChange(v, "bgColorType") === "solid" ||
-                            mobileSyncOnChange(v, "gradientActivePointer") ===
-                              "startPointer",
+                          prefix:
+                            defaultValueValue({
+                              v,
+                              key: "gradientActivePointer",
+                              device,
+                              state
+                            }) === "startPointer"
+                              ? "bg"
+                              : "gradient",
                           onChange: [
                             "onChangeBgColorHexAndOpacity",
                             "onChangeBgColorHexAndOpacityPalette",
@@ -1856,7 +1911,12 @@ export function getItemsForMobile(v) {
                           className:
                             "brz-ed__select--transparent brz-ed__select--align-right",
                           disabled:
-                            mobileSyncOnChange(v, "bgColorType") === "solid"
+                            defaultValueValue({
+                              v,
+                              key: "bgColorType",
+                              device,
+                              state
+                            }) === "solid"
                         })
                       ]
                     },
@@ -1868,16 +1928,36 @@ export function getItemsForMobile(v) {
                           device,
                           state,
                           disabled:
-                            mobileSyncOnChange(v, "bgColorType") === "solid" ||
-                            mobileSyncOnChange(v, "gradientType") === "radial"
+                            defaultValueValue({
+                              v,
+                              key: "bgColorType",
+                              device,
+                              state
+                            }) === "solid" ||
+                            defaultValueValue({
+                              v,
+                              key: "gradientType",
+                              device,
+                              state
+                            }) === "radial"
                         }),
                         toolbarGradientRadialDegree({
                           v,
                           device,
                           state,
                           disabled:
-                            mobileSyncOnChange(v, "bgColorType") === "solid" ||
-                            mobileSyncOnChange(v, "gradientType") === "linear"
+                            defaultValueValue({
+                              v,
+                              key: "bgColorType",
+                              device,
+                              state
+                            }) === "solid" ||
+                            defaultValueValue({
+                              v,
+                              key: "gradientType",
+                              device,
+                              state
+                            }) === "linear"
                         })
                       ]
                     }
@@ -1889,24 +1969,23 @@ export function getItemsForMobile(v) {
               id: "mobileTabBorder",
               label: t("Border"),
               options: [
-                toolbarBorderColorHexAndOpacity({
+                toolbarBorder2({
                   v,
                   device,
                   state,
-                  onChange: [
-                    "onChangeBorderColorHexAndOpacity",
-                    "onChangeBorderColorHexAndOpacityPalette",
-                    "onChangeBorderColorHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBorderColorPalette({
-                  v,
-                  device,
-                  state,
-                  onChange: [
-                    "onChangeBorderColorPalette",
-                    "onChangeBorderColorPaletteOpacity",
-                    "onChangeBorderColorHexAndOpacityDependencies"
+                  onChangeStyle: [
+                    "onChangeBorderStyle2",
+                    "onChangeContainerBorderStyleDependencies2"
+                  ],
+                  onChangeHex: [
+                    "onChangeBorderColorHexAndOpacity2",
+                    "onChangeBorderColorHexAndOpacityPalette2",
+                    "onChangeContainerBorderColorHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBorderColorPalette2",
+                    "onChangeBorderColorPaletteOpacity2",
+                    "onChangeContainerBorderColorHexAndOpacityDependencies2"
                   ]
                 }),
                 {
@@ -1914,30 +1993,35 @@ export function getItemsForMobile(v) {
                   className: "brz-ed-grid__color-fileds",
                   columns: [
                     {
-                      width: 51,
+                      width: 38,
                       options: [
-                        toolbarBorderColorFields({
+                        toolbarBorderColorHexField2({
                           v,
                           device,
                           state,
                           onChange: [
-                            "onChangeBorderColorHexAndOpacity",
-                            "onChangeBorderColorHexAndOpacityPalette",
-                            "onChangeBorderColorHexAndOpacityDependencies"
+                            "onChangeBorderColorHexAndOpacity2",
+                            "onChangeBorderColorHexAndOpacityPalette2",
+                            "onChangeContainerBorderColorHexAndOpacityDependencies2"
                           ]
                         })
                       ]
                     },
                     {
-                      width: 49,
+                      width: 54,
                       options: [
-                        toolbarBorderWidthBorderColorPicker({
+                        toolbarBorderWidthFourFields2({
                           v,
                           device,
                           state,
-                          onChange: [
-                            "onChangeBorderWidthGrouped",
-                            "onChangeBorderWidthGroupedDependencies"
+                          onChangeType: ["onChangeBorderWidthType2"],
+                          onChangeGrouped: [
+                            "onChangeBorderWidthGrouped2",
+                            "onChangeBorderWidthGroupedDependencies2"
+                          ],
+                          onChangeUngrouped: [
+                            "onChangeBorderWidthUngrouped2",
+                            "onChangeBorderWidthUngroupedDependencies2"
                           ]
                         })
                       ]
@@ -1947,27 +2031,27 @@ export function getItemsForMobile(v) {
               ]
             },
             {
-              id: "mobileBoxShadow",
+              id: "mobileTabBoxShadow",
               label: t("Shadow"),
               options: [
-                toolbarBoxShadowHexAndOpacity({
+                toolbarBoxShadow2({
                   v,
                   device,
                   state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowHexAndOpacity",
-                    "onChangeBoxShadowHexAndOpacityPalette",
-                    "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
-                  ]
-                }),
-                toolbarBoxShadowPalette({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBoxShadowPalette",
-                    "onChangeBoxShadowPaletteOpacity",
-                    "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                  choices: "inset",
+                  onChangeType: [
+                    "onChangeBoxShadowType2",
+                    "onChangeBoxShadowTypeDependencies2"
+                  ],
+                  onChangeHex: [
+                    "onChangeBoxShadowHexAndOpacity2",
+                    "onChangeBoxShadowHexAndOpacityPalette2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBoxShadowPalette2",
+                    "onChangeBoxShadowPaletteOpacity2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
                   ]
                 }),
                 {
@@ -1977,14 +2061,14 @@ export function getItemsForMobile(v) {
                     {
                       width: 65,
                       options: [
-                        toolbarBoxShadowFields({
+                        toolbarBoxShadowHexField2({
                           v,
                           device,
                           state: "normal",
                           onChange: [
-                            "onChangeBoxShadowHexAndOpacity",
-                            "onChangeBoxShadowHexAndOpacityPalette",
-                            "onChangeElementSectionBoxShadowHexAndOpacityDependencies"
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
                         })
                       ]
@@ -1995,7 +2079,11 @@ export function getItemsForMobile(v) {
                         toolbarElementSectionBoxShadow({
                           v,
                           device,
-                          state: "normal"
+                          state: "normal",
+                          onChange: [
+                            "onChangeBoxShadowFields2",
+                            "onChangeBoxShadowFieldsDependencies2"
+                          ]
                         })
                       ]
                     }
@@ -2134,6 +2222,125 @@ export function getItemsForMobile(v) {
                         : v.mobilePadding
                   };
                 }
+              }
+            ]
+          }
+        },
+        toolbarBorderRadius({
+          v,
+          device,
+          state,
+          onChangeGrouped: [
+            "onChangeBorderRadiusGrouped",
+            "onChangeBorderRadiusGroupedDependencies"
+          ],
+          onChangeUngrouped: [
+            "onChangeBorderRadiusUngrouped",
+            "onChangeBorderRadiusUngroupedDependencies"
+          ]
+        }),
+        {
+          type: "multiPicker",
+          disabled: v.shapeTopType === "none" && v.shapeBottomType === "none",
+          picker: {
+            id: "mobileShape",
+            label: t("Dividers"),
+            type: "radioGroup",
+            choices: [
+              {
+                value: "top",
+                icon: "nc-align-top"
+              },
+              {
+                value: "bottom",
+                icon: "nc-align-bottom"
+              }
+            ],
+            value: mobileSyncOnChange(v, "shape")
+          },
+          choices: {
+            top: [
+              {
+                id: "mobileShapeTopHeight",
+                type: "slider",
+                icon: "nc-height",
+                disabled: v.shapeTopType === "none",
+                slider: {
+                  min: 0,
+                  max:
+                    mobileSyncOnChange(v, "shapeTopHeightSuffix") === "px"
+                      ? 500
+                      : 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: mobileSyncOnChange(v, "shapeTopHeight"),
+                  suffix: mobileSyncOnChange(v, "shapeTopHeightSuffix")
+                },
+                onChange: ({
+                  value: mobileShapeTopHeight,
+                  suffix: mobileShapeTopHeightSuffix
+                }) => ({
+                  mobileShapeTopHeight,
+                  mobileShapeTopHeightSuffix
+                })
+              }
+            ],
+            bottom: [
+              {
+                id: "mobileShapeBottomHeight",
+                type: "slider",
+                icon: "nc-height",
+                disabled: v.shapeBottomType === "none",
+                slider: {
+                  min: 0,
+                  max:
+                    mobileSyncOnChange(v, "shapeBottomHeightSuffix") === "px"
+                      ? 500
+                      : 100
+                },
+                input: {
+                  show: true
+                },
+                suffix: {
+                  show: true,
+                  choices: [
+                    {
+                      title: "px",
+                      value: "px"
+                    },
+                    {
+                      title: "%",
+                      value: "%"
+                    }
+                  ]
+                },
+                value: {
+                  value: mobileSyncOnChange(v, "shapeBottomHeight"),
+                  suffix: mobileSyncOnChange(v, "shapeBottomHeightSuffix")
+                },
+                onChange: ({
+                  value: mobileShapeBottomHeight,
+                  suffix: mobileShapeBottomHeightSuffix
+                }) => ({
+                  mobileShapeBottomHeight,
+                  mobileShapeBottomHeightSuffix
+                })
               }
             ]
           }

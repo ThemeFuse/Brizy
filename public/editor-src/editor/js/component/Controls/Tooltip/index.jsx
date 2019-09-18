@@ -4,19 +4,27 @@ import Portal from "visual/component/Portal";
 import ClickOutside from "visual/component/ClickOutside";
 import Content from "./Content";
 
-export let currentTooltip = null;
+let stack = [];
+
+export let getCurrentTooltip = () => {
+  return stack[stack.length - 1];
+};
 
 export default class Tooltip extends React.Component {
   static defaultProps = {
     className: "",
+    overlayClassName: "",
     arrow: true,
     placement: "top-center",
     openOnClick: true,
+    closeDelay: 0,
     overlay: "",
-    size: "",
+    size: "", // small, medium, big, large
     title: "",
     toolbar: null,
+    inPortal: false,
     clickOutsideExceptions: [],
+    nodeRef: null,
     onOpen: () => {},
     onClose: () => {}
   };
@@ -26,13 +34,23 @@ export default class Tooltip extends React.Component {
     isHidden: false
   };
 
-  componentWillUnmount() {
-    currentTooltip = null;
+  isMounted = false;
+
+  contentRef = React.createRef();
+
+  componentDidMount() {
+    this.isMounted = true;
   }
 
-  handleContentRef = el => {
-    this.content = el;
-  };
+  componentWillUnmount() {
+    const index = stack.indexOf(this);
+
+    if (index !== -1) {
+      stack.splice(index);
+    }
+
+    this.isMounted = false;
+  }
 
   handleClickOutside = () => {
     const { isOpen } = this.state;
@@ -56,12 +74,33 @@ export default class Tooltip extends React.Component {
     }
   };
 
+  handleMouseEnter = () => {
+    this.setState({
+      needClose: false
+    });
+
+    this.open();
+  };
+
+  handleMouseLeave = () => {
+    this.setState({
+      needClose: true
+    });
+
+    // Close with delay
+    setTimeout(() => {
+      if (this.isMounted && this.state.needClose) {
+        this.close();
+      }
+    }, this.props.closeDelay);
+  };
+
   open() {
     const { isOpen } = this.state;
 
     if (!isOpen) {
       this.setState({ isOpen: true }, () => {
-        currentTooltip = this;
+        stack.push(this);
         this.props.onOpen();
       });
     }
@@ -72,7 +111,7 @@ export default class Tooltip extends React.Component {
 
     if (isOpen) {
       this.setState({ isOpen: false }, () => {
-        currentTooltip = null;
+        stack.pop();
         this.props.onClose();
       });
     }
@@ -98,31 +137,43 @@ export default class Tooltip extends React.Component {
     this.forceUpdate();
   }
 
-  renderOverlay = () => {
+  renderOverlay() {
     const { isOpen, isHidden } = this.state;
 
     if (!isOpen) {
       return null;
     }
 
-    const { overlay, arrow, placement, size, toolbar } = this.props;
+    const {
+      overlayClassName,
+      nodeRef,
+      overlay,
+      arrow,
+      placement,
+      size,
+      toolbar,
+      inPortal
+    } = this.props;
+    const node = (nodeRef && nodeRef.current) || this.contentRef.current;
 
     const content = (
       <Content
-        node={this.content}
+        className={overlayClassName}
+        node={node}
         arrow={arrow}
         placement={placement}
         size={size}
         isOpen={isOpen}
         toolbar={toolbar}
+        inPortal={inPortal}
       >
         {overlay}
       </Content>
     );
 
-    return toolbar ? (
+    return inPortal || toolbar ? (
       <Portal
-        node={this.content.ownerDocument.body}
+        node={node.ownerDocument.body}
         className={classnames(
           "brz-reset-all",
           "brz-ed-tooltip__content-portal",
@@ -136,7 +187,7 @@ export default class Tooltip extends React.Component {
     ) : (
       content
     );
-  };
+  }
 
   render() {
     const {
@@ -147,28 +198,29 @@ export default class Tooltip extends React.Component {
       clickOutsideExceptions: _clickOutsideExceptions,
       openOnClick
     } = this.props;
-    const { isOpen } = this.state;
-    const className = classnames(
-      "brz-ed-tooltip",
-      { "brz-ed-tooltip__static": !toolbar },
-      { "brz-ed-tooltip--opened": isOpen },
-      _className
-    );
     const clickOutsideExceptions = [
       ..._clickOutsideExceptions,
       ".brz-ed-tooltip__content-portal"
     ];
-    const attributes = {
-      ref: this.handleContentRef,
+    let attributes = {
+      className: classnames(
+        "brz-ed-tooltip",
+        { "brz-ed-tooltip__static": !toolbar },
+        { "brz-ed-tooltip--opened": this.state.isOpen },
+        _className
+      )
+    };
+    let contentAttributes = {
+      ref: this.contentRef,
       title,
       className: "brz-ed-tooltip__content"
     };
 
     if (openOnClick) {
-      attributes.onClick = this.handleContentClick;
+      contentAttributes.onClick = this.handleContentClick;
     } else {
-      attributes.onMouseEnter = this.handleContentClick;
-      attributes.onMouseLeave = this.handleContentClick;
+      attributes.onMouseEnter = this.handleMouseEnter;
+      attributes.onMouseLeave = this.handleMouseLeave;
     }
 
     return (
@@ -176,8 +228,8 @@ export default class Tooltip extends React.Component {
         onClickOutside={this.handleClickOutside}
         exceptions={clickOutsideExceptions}
       >
-        <div className={className}>
-          <div {...attributes}>{children}</div>
+        <div {...attributes}>
+          <div {...contentAttributes}>{children}</div>
           {this.renderOverlay()}
         </div>
       </ClickOutside>

@@ -1,18 +1,12 @@
-export function getItemsForDesktop(v) {
+import { toolbarElementIconTextListDisabled } from "visual/utils/toolbar";
+
+export function getItems({ v, device }) {
   return [
-    {
-      id: "list",
-      type: "toggle",
-      disabled: true
-    }
+    toolbarElementIconTextListDisabled({
+      v,
+      device,
+      devices: "desktop",
+      state: "normal"
+    })
   ];
-}
-
-export function getItemsForTablet(v) {
-  return [];
-}
-
-
-export function getItemsForMobile(v) {
-  return [];
 }

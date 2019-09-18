@@ -33,6 +33,7 @@ import SectionHeaderItem from "./SectionHeader/SectionHeaderItem";
 import SectionHeaderStickyItem from "./SectionHeader/SectionHeaderStickyItem";
 import ImageGallery from "./ImageGallery";
 import SectionPopup from "./SectionPopup";
+import SectionPopup2 from "./SectionPopup2";
 import Carousel from "./Carousel";
 import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
@@ -79,6 +80,7 @@ export default {
   GlobalBlock,
   ImageGallery,
   SectionPopup,
+  SectionPopup2,
   Carousel,
   Menu,
   MenuItem,

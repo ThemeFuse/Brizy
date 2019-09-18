@@ -175,4 +175,57 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $autosave;
 	}
 
+	/**
+	 * @param $type
+	 * @param array $arags
+	 *
+	 * @return array
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
+	public static function getBlocksByType( $type, $arags = array() ) {
+
+		$filterArgs = array(
+			'post_type'      => $type,
+			'posts_per_page' => - 1,
+			'post_status'    => 'any',
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
+		);
+		$filterArgs = array_merge( $filterArgs, $arags );
+
+		$wpBlocks = get_posts( $filterArgs );
+		$blocks   = array();
+
+		foreach ( $wpBlocks as $wpPost ) {
+			$blocks[] = self::postData( Brizy_Editor_Block::get( $wpPost ) );
+		}
+
+		return $blocks;
+	}
+
+
+	/**
+	 * @param Brizy_Editor_Block $post
+	 *
+	 * @return array
+	 */
+	public static function postData( Brizy_Editor_Block $post ) {
+
+		$p_id        = (int) $post->get_id();
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$global      = array(
+			'uid'    => $post->get_uid(),
+			'status' => get_post_status( $p_id ),
+			'data'   => $post->get_editor_data(),
+		);
+
+		if ( $post->get_wp_post()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {
+			$global['position'] = $post->getPosition();
+			$global['rules']    = $ruleManager->getRules( $p_id );
+		}
+
+		return $global;
+	}
+
+
 }

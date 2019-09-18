@@ -1,8 +1,14 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 import _ from "underscore";
 import classnames from "classnames";
 import ScrollPane from "visual/component/ScrollPane";
-import { getUsedFontsDetails } from "visual/utils/fonts";
+import EditorIcon from "visual/component/EditorIcon";
+import { Roles } from "visual/component/Roles";
+import UIState from "visual/global/UIState";
+import { fontTransform } from "visual/utils/fonts";
+import { projectSelector, unDeletedFontSelector } from "visual/redux/selectors";
+import { t } from "visual/utils/i18n";
 
 const fontSizeMap = {
   default: "17px", // 16
@@ -12,22 +18,40 @@ const fontSizeMap = {
   parisienne: "18px"
 };
 
-class FontFamily extends React.Component {
+class FontFamily extends Component {
   static defaultProps = {
-    value: "lato"
+    defaultFont: "",
+    value: "lato",
+    fonts: {},
+    onChange: _.noop
   };
 
-  handleFontClick = font => {
-    this.props.onChange(font);
+  checkCurrentFont() {
+    const { fonts, value } = this.props;
+
+    return Object.entries(fonts).some(item => {
+      const [type, fonts] = item;
+
+      return fonts.data.some(font => fontTransform[type](font).id === value);
+    });
+  }
+
+  handleOpenFonts = event => {
+    event.preventDefault();
+
+    UIState.set("prompt", {
+      prompt: "fonts"
+    });
   };
 
-  renderFontList = fonts => {
-    const value = this.props.value;
+  renderFontList(fonts, type, existedFonts) {
+    const { value, defaultFont, onChange } = this.props;
 
-    return _.map(fonts, font => {
-      const { id, family, title } = font;
+    return fonts.map(font => {
+      const normalizeFont = fontTransform[type](font);
+      const { id, family, title } = normalizeFont;
       const className = classnames("brz-ed-font__name", {
-        active: id === value
+        active: existedFonts ? id === value : id === defaultFont
       });
       const style = {
         fontFamily: family,
@@ -39,32 +63,66 @@ class FontFamily extends React.Component {
           key={id}
           className={className}
           style={style}
-          onClick={() => this.handleFontClick(font)}
+          onClick={() => onChange({ ...normalizeFont, type })}
         >
           {title}
         </div>
       );
     });
-  };
+  }
 
   render() {
-    const { configFonts, extraFonts } = getUsedFontsDetails();
+    const {
+      config: configFonts = {},
+      blocks: blocksFonts = {},
+      google: googleFonts = {},
+      upload: uploadFonts = {}
+    } = this.props.fonts;
+    const existedFonts = this.checkCurrentFont();
+    const needSeparator =
+      (uploadFonts.data && uploadFonts.data.length > 0) ||
+      (googleFonts.data && googleFonts.data.length > 0);
 
     return (
       <div className="brz-ed-font__typography">
         <ScrollPane
-          className="brz-ed-scroll-pane brz-ed-scroll--dark brz-ed-scroll--small"
+          className="brz-ed-scroll--dark brz-ed-scroll--small"
           style={{ height: "100%" }}
         >
-          {this.renderFontList(extraFonts)}
-          {extraFonts.length !== 0 ? (
-            <hr className="brz-hr brz-ed-font__separator" />
-          ) : null}
-          {this.renderFontList(configFonts)}
+          {uploadFonts.data &&
+            uploadFonts.data.length > 0 &&
+            this.renderFontList(uploadFonts.data, "upload", existedFonts)}
+
+          {googleFonts.data &&
+            googleFonts.data.length > 0 &&
+            this.renderFontList(googleFonts.data, "google", existedFonts)}
+
+          {needSeparator && <hr className="brz-hr brz-ed-font__separator" />}
+
+          {blocksFonts.data &&
+            this.renderFontList(blocksFonts.data, "google", existedFonts)}
+          {this.renderFontList(configFonts.data, "google", existedFonts)}
         </ScrollPane>
+        <Roles allow={["admin"]}>
+          <div
+            className="brz-ed-font__typography-adder"
+            onClick={this.handleOpenFonts}
+          >
+            <EditorIcon icon="nc-add" />
+            {t("Add New Font")}
+          </div>
+        </Roles>
       </div>
     );
   }
 }
 
-export default FontFamily;
+const mapStateToProps = state => ({
+  fonts: unDeletedFontSelector(state),
+  defaultFont: projectSelector(state).data.font
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(FontFamily);

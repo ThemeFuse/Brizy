@@ -1,0 +1,13 @@
+{% for family,font in fonts %}
+    /* {{ family }} */
+    {% for weight,fontData in font %}
+        {% for type,font_url in fontData %}
+        @font-face {
+            font-family: '{{ family }}';
+            font-style: {{ weight|fontStyle }};
+            font-weight: {{ weight|fontWeight }};
+            src: local('{{ family }}'), url({{ font_url }}) format('{{ type | fontType }}');
+        }
+        {% endfor %}
+    {% endfor %}
+{% endfor %}

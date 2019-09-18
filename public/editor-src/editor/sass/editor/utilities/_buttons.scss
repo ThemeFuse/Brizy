@@ -57,6 +57,14 @@
       animation-timing-function: linear;
     }
   }
+
+  // Disabled
+  &--disabled {
+    pointer-events: none !important;
+    color: #fff !important;
+    background-color: rgba(#292e37, 0.5) !important;
+    border-color: transparent !important;
+  }
 }
 .brz-ed-btn-rounded {
   border-radius: 3px;
@@ -75,6 +83,10 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
+}
+.brz-ed-btn-xs {
+  font-size: 10px;
+  padding: 9px 18px
 }
 .brz-ed-btn-full {
   width: 100%;
@@ -98,6 +110,8 @@
     background-color: transparent;
   }
 }
+
+// Dark
 .brz-ed-btn-dark {
   border-color: #3b474b;
   background-color: #3b474b;
@@ -118,9 +132,11 @@
     color: #fff !important;
   }
 }
+
+// Teal
 .brz-ed-btn-teal {
-  border-color: #34beea;
-  background-color: #34beea;
+  border-color: $floating-button-blue;
+  background-color: $floating-button-blue;
   color: #fff !important;
 
   &:hover {
@@ -139,6 +155,8 @@
     color: #fff !important;
   }
 }
+
+// Green
 .brz-ed-btn-green {
   border-color: #8dc63f;
   background-color: #8dc63f;
@@ -160,6 +178,8 @@
     color: #fff !important;
   }
 }
+
+// Gray
 .brz-ed-btn-gray {
   border-color: transparent;
   background-color: rgba(#292e37, 0.5);
@@ -181,9 +201,11 @@
     color: #fff !important;
   }
 }
+
+// Red
 .brz-ed-btn-red {
-  border-color: transparent;
-  background-color: #df3c3c;
+  border-color: $floating-button-red;
+  background-color: $floating-button-red;
   color: #fff !important;
 
   &:hover,
@@ -201,4 +223,30 @@
     background-color: #df3c3c;
     color: #fff !important;
   }
+}
+
+// PRO
+.brz-ed-btn-pro {
+  border-color: transparent;
+  background-color: $brand-primary-pro;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+
+  &:hover,
+  &:focus {
+    border-color: transparent;
+    background-color: rgba($brand-primary-pro, 0.8);
+  }
+}
+
+// Hover
+// Teal
+.brz-ed-btn-teal--hover:hover {
+  border-color: $floating-button-blue !important;
+  background-color: $floating-button-blue !important;
+}
+.brz-ed-btn-red--hover:hover {
+  border-color: $floating-button-red !important;
+  background-color: $floating-button-red !important;
 }

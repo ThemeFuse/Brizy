@@ -23,9 +23,25 @@ import { responseToSvg } from "../utils";
     init: function() {
       $(this.element).each(function() {
         var $this = $(this);
-        var href = $this.data().href;
+        var data = $this.data();
+        var href = data.href;
+        var id = data.id;
 
-        if (href) {
+        if (id) {
+          try {
+            var doc = $("#" + id).html();
+            var $svg = $(responseToSvg(doc));
+            var attributes = $this.get(0).attributes;
+
+            for (var i = 0; i < attributes.length; i++) {
+              $svg.attr(attributes[i].nodeName, attributes[i].nodeValue);
+            }
+
+            $this.replaceWith($svg);
+          } catch (error) {
+            console.error(error);
+          }
+        } else if (href) {
           $.ajax({
             method: "GET",
             url: href,

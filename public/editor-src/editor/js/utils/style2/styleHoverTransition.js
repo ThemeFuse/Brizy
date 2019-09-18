@@ -1,9 +1,12 @@
-export function styleHoverTransition({ v }) {
-  const { hoverTransition } = v;
+import { defaultValueValue } from "visual/utils/onChange";
 
-  return `all 0.${hoverTransition}s ease-in-out`;
-}
+export function styleHoverTransition({ v, device, state }) {
+  const hoverTransition = defaultValueValue({
+    v,
+    key: "hoverTransition",
+    device,
+    state
+  });
 
-export function styleHoverTransitionProperty() {
-  return "background, border-radius, color, border-color";
+  return hoverTransition;
 }

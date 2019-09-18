@@ -1,18 +1,22 @@
 import React from "react";
+import { connect } from "react-redux";
 import classnames from "classnames";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { preloadImage } from "visual/utils/image";
-import { getStore } from "visual/redux/store";
-import { pageDataSelector, pageBlocksSelector } from "visual/redux/selectors";
-import { updatePage } from "visual/redux/actions";
+import {
+  pageDataSelector,
+  pageBlocksAssembledSelector,
+  globalBlocksAssembled2Selector
+} from "visual/redux/selectors";
+import { updatePage, updateGlobalBlock } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
 const MAX_THUMBNAIL_WIDTH = 132;
 
-export default class BlockThumbnail extends React.Component {
+class BlockThumbnail extends React.Component {
   static defaultProps = {
     label: "",
     className: "",
@@ -38,8 +42,7 @@ export default class BlockThumbnail extends React.Component {
   };
 
   handleInputChange = _.debounce((text, id) => {
-    const store = getStore();
-    const pageData = pageDataSelector(store.getState());
+    const { pageData, globalBlocks, dispatch } = this.props;
     const blocks = pageData.items || [];
     const encodedText = encodeURIComponent(text);
 
@@ -50,7 +53,13 @@ export default class BlockThumbnail extends React.Component {
       // and transform it to "contact-2"
       const blockAnchorNames = blocks
         .filter(block => block.value._id !== id)
-        .map(block => block.value.anchorName);
+        .map(block => {
+          if (block.type === "GlobalBlock") {
+            block = globalBlocks[block.value.globalBlockId];
+          }
+
+          return block.value.anchorName;
+        });
       let foundDuplicateAnchorName = false;
       let retriesCount = 0;
       do {
@@ -66,26 +75,45 @@ export default class BlockThumbnail extends React.Component {
       } while (foundDuplicateAnchorName);
     }
 
-    const updatedBlocks = blocks.map(block => {
-      return block.value._id === id
-        ? {
-            ...block,
+    const blockToUpdate = blocks.find(block => block.value._id === id);
+    if (blockToUpdate.type !== "GlobalBlock") {
+      const updatedBlocks = blocks.map(block => {
+        return block.value._id === id
+          ? {
+              ...block,
+              value: {
+                ...block.value,
+                anchorName
+              }
+            }
+          : block;
+      });
+
+      dispatch(
+        updatePage({
+          data: {
+            ...pageData,
+            items: updatedBlocks
+          }
+        })
+      );
+    } else {
+      const globalBlockId = blockToUpdate.value.globalBlockId;
+      const globalBlock = globalBlocks[globalBlockId];
+
+      dispatch(
+        updateGlobalBlock({
+          id: globalBlockId,
+          data: {
+            ...globalBlock,
             value: {
-              ...block.value,
+              ...globalBlock.value,
               anchorName
             }
           }
-        : block;
-    });
-
-    store.dispatch(
-      updatePage({
-        data: {
-          ...pageData,
-          items: updatedBlocks
-        }
-      })
-    );
+        })
+      );
+    }
 
     this.anchorInputRefs[id].setValue(anchorName);
   }, 1000);
@@ -111,12 +139,16 @@ export default class BlockThumbnail extends React.Component {
   }
 
   renderThumbnails() {
-    const { value } = this.props;
-    const blocks = pageBlocksSelector(getStore().getState()).filter(
+    const { value, pageBlocksAssembled, globalBlocks } = this.props;
+    const blocks = pageBlocksAssembled.filter(
       block => block.value._blockVisibility !== "unlisted"
     );
 
     return blocks.map(block => {
+      if (block.type === "GlobalBlock") {
+        block = globalBlocks[block.value.globalBlockId];
+      }
+
       const { _id, anchorName } = block.value;
       const className = classnames("brz-ed-option__block-thumbnail-item", {
         active: _id === value
@@ -275,3 +307,11 @@ class AnchorInput extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  pageData: pageDataSelector(state),
+  pageBlocksAssembled: pageBlocksAssembledSelector(state),
+  globalBlocks: globalBlocksAssembled2Selector(state)
+});
+
+export default connect(mapStateToProps)(BlockThumbnail);

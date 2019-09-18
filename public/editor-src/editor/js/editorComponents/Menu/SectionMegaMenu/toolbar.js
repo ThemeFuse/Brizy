@@ -1,16 +1,16 @@
-import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { hexToRgba } from "visual/utils/color";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
+  toolbarBgColor2,
+  toolbarBgColorHexField2,
+  toolbarBorder2,
+  toolbarBorderColorHexField2,
+  toolbarBorderWidthFourFields2,
   toolbarShowOnDesktop,
   toolbarShowOnMobile,
   toolbarCustomCSSClass
-} from "visual/utils/toolbar";
-import { defaultValueValue } from "visual/utils/onChange";
-import {
-  toolbarBgColorHexAndOpacity,
-  toolbarBgColorPalette,
-  toolbarBgColorFields
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -19,10 +19,6 @@ export function getItemsForDesktop(v) {
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "bgColorHex", device }),
     defaultValueValue({ v, key: "bgColorPalette", device })
-  );
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device }),
-    defaultValueValue({ v, key: "borderColorPalette", device })
   );
 
   return [
@@ -129,22 +125,18 @@ export function getItemsForDesktop(v) {
             {
               label: t("Overlay"),
               options: [
-                toolbarBgColorHexAndOpacity({
+                toolbarBgColor2({
                   v,
                   device,
                   state: "normal",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity"
+                  showSelect: false,
+                  onChangeHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2"
                   ]
                 }),
                 {
@@ -152,15 +144,15 @@ export function getItemsForDesktop(v) {
                   className: "brz-ed-grid__color-fileds",
                   columns: [
                     {
-                      width: 100,
+                      width: 30,
                       options: [
-                        toolbarBgColorFields({
+                        toolbarBgColorHexField2({
                           v,
                           device,
                           state: "normal",
                           onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette"
+                            "onChangeBgColorHexAndOpacity2",
+                            "onChangeBgColorHexAndOpacityPalette2"
                           ]
                         })
                       ]
@@ -172,122 +164,61 @@ export function getItemsForDesktop(v) {
             {
               label: t("Border"),
               options: [
-                {
-                  id: "borderColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: borderColorHex,
-                    opacity: v.borderColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-                    const borderColorOpacity =
-                      hex !== v.borderColorHex && v.borderColorOpacity === 0
-                        ? v.tempBorderColorOpacity
-                        : opacity;
-
-                    return {
-                      borderColorHex: hex,
-                      borderColorOpacity: borderColorOpacity,
-                      borderColorPalette:
-                        isChanged === "hex" ? "" : v.borderColorPalette,
-
-                      tempBorderColorOpacity:
-                        borderColorOpacity > 0 && opacityDragEnd
-                          ? borderColorOpacity
-                          : v.tempBorderColorOpacity,
-
-                      borderWidth:
-                        borderColorOpacity === 0
-                          ? 0
-                          : borderColorOpacity > 0
-                          ? v.tempBorderWidth
-                          : v.borderWidth,
-
-                      borderTopWidth:
-                        borderColorOpacity === 0
-                          ? 0
-                          : borderColorOpacity > 0
-                          ? v.tempBorderTopWidth
-                          : v.borderTopWidth,
-
-                      borderRightWidth:
-                        borderColorOpacity === 0
-                          ? 0
-                          : borderColorOpacity > 0
-                          ? v.tempBorderRightWidth
-                          : v.borderRightWidth,
-
-                      borderBottomWidth:
-                        borderColorOpacity === 0
-                          ? 0
-                          : borderColorOpacity > 0
-                          ? v.tempBorderBottomWidth
-                          : v.borderBottomWidth,
-
-                      borderLeftWidth:
-                        borderColorOpacity === 0
-                          ? 0
-                          : borderColorOpacity > 0
-                          ? v.tempBorderLeftWidth
-                          : v.borderLeftWidth
-                    };
-                  }
-                },
-                {
-                  id: "borderColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.borderColorPalette,
-                  onChange: value => ({
-                    borderColorPalette: value,
-                    borderColorHex: "",
-                    borderColorOpacity:
-                      v.borderColorOpacity === 0
-                        ? v.tempBorderColorOpacity
-                        : v.borderColorOpacity,
-
-                    borderWidth:
-                      v.borderColorOpacity === 0
-                        ? v.tempBorderWidth
-                        : v.borderWidth
-                  })
-                },
+                toolbarBorder2({
+                  v,
+                  device,
+                  state: "normal",
+                  onChangeStyle: [
+                    "onChangeBorderStyle2",
+                    "onChangeElementrBorderStyleDependencies2"
+                  ],
+                  onChangeHex: [
+                    "onChangeBorderColorHexAndOpacity2",
+                    "onChangeBorderColorHexAndOpacityPalette2",
+                    "onChangeElementBorderColorHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBorderColorPalette2",
+                    "onChangeBorderColorPaletteOpacity2",
+                    "onChangeElementBorderColorHexAndOpacityDependencies2"
+                  ]
+                }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
                   columns: [
                     {
-                      width: 100,
+                      width: 38,
                       options: [
-                        {
-                          id: "borderColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: borderColorHex,
-                            opacity: v.borderColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => {
-                            const borderColorOpacity =
-                              hex !== v.borderColorHex &&
-                              v.borderColorOpacity === 0
-                                ? v.tempBorderColorOpacity
-                                : opacity;
-
-                            return {
-                              borderColorPalette:
-                                isChanged === "hex" ? "" : v.borderColorPalette,
-                              borderColorHex: hex,
-                              borderColorOpacity: borderColorOpacity,
-
-                              borderWidth:
-                                v.borderColorOpacity === 0
-                                  ? v.tempBorderWidth
-                                  : v.borderWidth
-                            };
-                          }
-                        }
+                        toolbarBorderColorHexField2({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBorderColorHexAndOpacity2",
+                            "onChangeBorderColorHexAndOpacityPalette2",
+                            "onChangeElementBorderColorHexAndOpacityDependencies2"
+                          ]
+                        })
+                      ]
+                    },
+                    {
+                      width: 54,
+                      options: [
+                        toolbarBorderWidthFourFields2({
+                          v,
+                          device,
+                          state: "normal",
+                          onChangeType: ["onChangeBorderWidthType2"],
+                          onChangeGrouped: [
+                            "onChangeBorderWidthGrouped2",
+                            "onChangeBorderWidthGroupedDependencies2"
+                          ],
+                          onChangeUngrouped: [
+                            "onChangeBorderWidthUngrouped2",
+                            "onChangeBorderWidthUngroupedDependencies2"
+                          ]
+                        })
                       ]
                     }
                   ]
@@ -499,395 +430,6 @@ export function getItemsForDesktop(v) {
                           }
                         ]
                       }
-                    },
-                    {
-                      type: "multiPicker",
-                      picker: {
-                        id: "borderWidthType",
-                        label: t("Border"),
-                        type: "radioGroup",
-                        choices: [
-                          {
-                            value: "grouped",
-                            icon: "nc-styling-all"
-                          },
-                          {
-                            value: "ungrouped",
-                            icon: "nc-styling-individual"
-                          }
-                        ],
-                        value: v.borderWidthType
-                      },
-                      choices: {
-                        grouped: [
-                          {
-                            id: "borderWidth",
-                            type: "slider",
-                            slider: {
-                              min: 0,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.borderWidth
-                            },
-                            onChange: (
-                              { value: borderWidth },
-                              { sliderDragEnd }
-                            ) => {
-                              const tempBorderWidth =
-                                borderWidth > 0 && sliderDragEnd
-                                  ? borderWidth
-                                  : v.tempBorderWidth;
-
-                              return {
-                                borderWidth,
-                                borderTopWidth: borderWidth,
-                                borderRightWidth: borderWidth,
-                                borderBottomWidth: borderWidth,
-                                borderLeftWidth: borderWidth,
-
-                                tempBorderWidth: tempBorderWidth,
-                                tempBorderTopWidth: tempBorderWidth,
-                                tempBorderRightWidth: tempBorderWidth,
-                                tempBorderBottomWidth: tempBorderWidth,
-                                tempBorderLeftWidth: tempBorderWidth,
-
-                                borderColorOpacity:
-                                  borderWidth === 0
-                                    ? 0
-                                    : borderWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity,
-
-                                borderBottomRightRadius:
-                                  borderWidth === 0 && v.bgColorOpacity === 0
-                                    ? 0
-                                    : borderWidth > 0 &&
-                                      v.borderTopLeftRadius === 0 &&
-                                      v.borderTopRightRadius === 0 &&
-                                      v.borderBottomLeftRadius === 0
-                                    ? v.tempBorderBottomRightRadius
-                                    : v.borderBottomRightRadius
-                              };
-                            }
-                          }
-                        ],
-                        ungrouped: [
-                          {
-                            id: "borderTopWidth",
-                            icon: "nc-styling-top",
-                            type: "slider",
-                            slider: {
-                              min: 0,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.borderTopWidth
-                            },
-                            onChange: (
-                              { value: borderTopWidth },
-                              { sliderDragEnd }
-                            ) => {
-                              return {
-                                borderTopWidth,
-
-                                borderWidth:
-                                  borderTopWidth === v.borderRightWidth &&
-                                  borderTopWidth === v.borderBottomWidth &&
-                                  borderTopWidth === v.borderLeftWidth
-                                    ? borderTopWidth
-                                    : v.borderWidth,
-
-                                tempBorderTopWidth: borderTopWidth,
-
-                                tempBorderRightWidth:
-                                  v.borderRightWidth === 0
-                                    ? 0
-                                    : v.tempBorderRightWidth,
-
-                                tempBorderBottomWidth:
-                                  v.borderBottomWidth === 0
-                                    ? 0
-                                    : v.tempBorderBottomWidth,
-
-                                tempBorderLeftWidth:
-                                  v.borderLeftWidth === 0
-                                    ? 0
-                                    : v.tempBorderLeftWidth,
-
-                                tempBorderWidth:
-                                  sliderDragEnd &&
-                                  borderTopWidth === v.borderRightWidth &&
-                                  borderTopWidth === v.borderBottomWidth &&
-                                  borderTopWidth === v.borderLeftWidth
-                                    ? borderTopWidth
-                                    : v.tempBorderWidth,
-
-                                borderColorOpacity:
-                                  borderTopWidth === 0 &&
-                                  v.borderRightWidth === 0 &&
-                                  v.borderBottomWidth === 0 &&
-                                  v.borderLeftWidth === 0
-                                    ? 0
-                                    : borderTopWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
-                              };
-                            }
-                          },
-                          {
-                            id: "borderRightWidth",
-                            icon: "nc-styling-right",
-                            type: "slider",
-                            slider: {
-                              min: 0,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.borderRightWidth
-                            },
-                            onChange: (
-                              { value: borderRightWidth },
-                              { sliderDragEnd }
-                            ) => {
-                              return {
-                                borderRightWidth,
-
-                                borderWidth:
-                                  borderRightWidth === v.borderTopWidth &&
-                                  borderRightWidth === v.borderBottomWidth &&
-                                  borderRightWidth === v.borderLeftWidth
-                                    ? borderRightWidth
-                                    : v.borderWidth,
-
-                                tempBorderRightWidth: borderRightWidth,
-
-                                tempBorderLeftWidth:
-                                  v.borderLeftWidth === 0
-                                    ? 0
-                                    : v.tempBorderLeftWidth,
-
-                                tempBorderBottomWidth:
-                                  v.borderBottomWidth === 0
-                                    ? 0
-                                    : v.tempBorderBottomWidth,
-
-                                tempBorderTopWidth:
-                                  v.borderTopWidth === 0
-                                    ? 0
-                                    : v.tempBorderTopWidth,
-
-                                tempBorderWidth:
-                                  sliderDragEnd &&
-                                  borderRightWidth === v.borderTopWidth &&
-                                  borderRightWidth === v.borderBottomWidth &&
-                                  borderRightWidth === v.borderLeftWidth
-                                    ? borderRightWidth
-                                    : v.tempBorderWidth,
-
-                                borderColorOpacity:
-                                  borderRightWidth === 0 &&
-                                  v.borderTopWidth === 0 &&
-                                  v.borderBottomWidth === 0 &&
-                                  v.borderLeftWidth === 0
-                                    ? 0
-                                    : borderRightWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
-                              };
-                            }
-                          },
-                          {
-                            id: "borderBottomWidth",
-                            icon: "nc-styling-bottom",
-                            type: "slider",
-                            slider: {
-                              min: 0,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.borderBottomWidth
-                            },
-                            onChange: (
-                              { value: borderBottomWidth },
-                              { sliderDragEnd }
-                            ) => {
-                              return {
-                                borderBottomWidth,
-
-                                borderWidth:
-                                  borderBottomWidth === v.borderRightWidth &&
-                                  borderBottomWidth === v.borderTopWidth &&
-                                  borderBottomWidth === v.borderLeftWidth
-                                    ? borderBottomWidth
-                                    : v.borderWidth,
-
-                                tempBorderRightWidth:
-                                  v.borderRightWidth === 0
-                                    ? 0
-                                    : v.tempBorderRightWidth,
-
-                                tempBorderTopWidth:
-                                  v.borderTopWidth === 0
-                                    ? 0
-                                    : v.tempBorderTopWidth,
-
-                                tempBorderLeftWidth:
-                                  v.borderLeftWidth === 0
-                                    ? 0
-                                    : v.tempBorderLeftWidth,
-
-                                tempBorderBottomWidth: borderBottomWidth,
-
-                                tempBorderWidth:
-                                  sliderDragEnd &&
-                                  borderBottomWidth === v.borderRightWidth &&
-                                  borderBottomWidth === v.borderTopWidth &&
-                                  borderBottomWidth === v.borderLeftWidth
-                                    ? borderBottomWidth
-                                    : v.tempBorderWidth,
-
-                                borderColorOpacity:
-                                  borderBottomWidth === 0 &&
-                                  v.borderTopWidth === 0 &&
-                                  v.borderRightWidth === 0 &&
-                                  v.borderLeftWidth === 0
-                                    ? 0
-                                    : borderBottomWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
-                              };
-                            }
-                          },
-                          {
-                            id: "borderLeftWidth",
-                            icon: "nc-styling-left",
-                            type: "slider",
-                            slider: {
-                              min: 0,
-                              max: 100
-                            },
-                            input: {
-                              show: true,
-                              min: 0
-                            },
-                            suffix: {
-                              show: true,
-                              choices: [
-                                {
-                                  title: "px",
-                                  value: "px"
-                                }
-                              ]
-                            },
-                            value: {
-                              value: v.borderLeftWidth
-                            },
-                            onChange: (
-                              { value: borderLeftWidth },
-                              { sliderDragEnd }
-                            ) => {
-                              return {
-                                borderLeftWidth,
-
-                                borderWidth:
-                                  borderLeftWidth === v.borderRightWidth &&
-                                  borderLeftWidth === v.borderBottomWidth &&
-                                  borderLeftWidth === v.borderTopWidth
-                                    ? borderLeftWidth
-                                    : v.borderWidth,
-
-                                tempBorderRightWidth:
-                                  v.borderRightWidth === 0
-                                    ? 0
-                                    : v.tempBorderRightWidth,
-
-                                tempBorderTopWidth:
-                                  v.borderTopWidth === 0
-                                    ? 0
-                                    : v.tempBorderTopWidth,
-
-                                tempBorderBottomWidth:
-                                  v.borderBottomWidth === 0
-                                    ? 0
-                                    : v.tempBorderBottomWidth,
-
-                                tempBorderLeftWidth: borderLeftWidth,
-
-                                tempBorderWidth:
-                                  sliderDragEnd &&
-                                  borderLeftWidth === v.borderRightWidth &&
-                                  borderLeftWidth === v.borderBottomWidth &&
-                                  borderLeftWidth === v.borderTopWidth
-                                    ? borderLeftWidth
-                                    : v.tempBorderWidth,
-
-                                borderColorOpacity:
-                                  borderLeftWidth === 0 &&
-                                  v.borderTopWidth === 0 &&
-                                  v.borderRightWidth === 0 &&
-                                  v.borderBottomWidth === 0
-                                    ? 0
-                                    : borderLeftWidth > 0
-                                    ? v.tempBorderColorOpacity
-                                    : v.borderColorOpacity
-                              };
-                            }
-                          }
-                        ]
-                      }
                     }
                   ]
                 },
@@ -915,6 +457,7 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   const device = "mobile";
+  const state = "normal";
 
   const { hex: mobileBgColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "bgColorHex", device }),
@@ -973,64 +516,36 @@ export function getItemsForMobile(v) {
         }
       },
       options: [
-        {
-          id: "mobileBgColor",
-          type: "colorPicker",
-          position: 10,
-          value: {
-            hex: mobileBgColorHex,
-            opacity: v.mobileBgColorOpacity
-          },
-          onChange: ({ hex, opacity, isChanged }) => {
-            const bgColorOpacity =
-              hex !== v.mobileBgColorHex && v.mobileBgColorOpacity === 0
-                ? v.tempBgColorOpacity
-                : opacity;
-
-            return {
-              mobileBgColorHex: hex,
-              mobileBgColorOpacity: bgColorOpacity,
-              mobileBgColorPalette:
-                isChanged === "hex" ? "" : v.mobileBgColorPalette
-            };
-          }
-        },
-        {
-          id: "mobileBgColorPalette",
-          type: "colorPalette",
-          position: 20,
-          value: v.mobileBgColorPalette,
-          onChange: value => ({
-            mobileBgColorPalette: value,
-            mobileBgColorHex: "",
-            mobileBgColorOpacity:
-              v.mobileBgColorOpacity === 0
-                ? v.tempBgColorOpacity
-                : v.mobileBgColorOpacity
-          })
-        },
+        toolbarBgColor2({
+          v,
+          device,
+          state,
+          showSelect: false,
+          onChangeHex: [
+            "onChangeBgColorHexAndOpacity2",
+            "onChangeBgColorHexAndOpacityPalette2"
+          ],
+          onChangePalette: [
+            "onChangeBgColorPalette2",
+            "onChangeBgColorPaletteOpacity2"
+          ]
+        }),
         {
           type: "grid",
           className: "brz-ed-grid__color-fileds",
           columns: [
             {
-              width: 100,
+              width: 30,
               options: [
-                {
-                  id: "mobileBgColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: mobileBgColorHex,
-                    opacity: v.mobileBgColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    mobileBgColorPalette:
-                      isChanged === "hex" ? "" : v.mobileBgColorPalette,
-                    mobileBgColorHex: hex,
-                    mobileBgColorOpacity: opacity
-                  })
-                }
+                toolbarBgColorHexField2({
+                  v,
+                  device,
+                  state,
+                  onChange: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2"
+                  ]
+                })
               ]
             }
           ]

@@ -168,7 +168,7 @@
 //
 // Links
 //
-.brz-a {
+.brz-a:not(.brz-btn) {
   color: $link-color;
   text-decoration: $link-decoration;
   background-color: transparent; // Remove the gray background on active links in IE 10.
@@ -298,6 +298,9 @@ svg:not(:root) {
 .brz-input[type="checkbox"] {
   box-sizing: border-box; // 1. Add the correct box sizing in IE 10-
   padding: 0; // 2. Remove the padding in IE 10-
+}
+.brz-input[type="number"] {
+  -moz-appearance: textfield;
 }
 .brz-input[type="date"],
 .brz-input[type="time"],

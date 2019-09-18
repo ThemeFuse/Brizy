@@ -10,6 +10,7 @@ import { currentUserRole } from "visual/component/Roles";
 import { updateUI } from "visual/redux/actions";
 import items from "./items";
 import DrawerOptions from "./components/Options";
+import EditorIcon from "visual/component/EditorIcon";
 
 const itemsById = [...items.top].reduce((acc, item) => {
   acc[item.id] = item;
@@ -55,10 +56,10 @@ class LeftSidebar extends React.Component {
         typeof item.iconProps === "object"
           ? item.iconProps
           : typeof item.iconProps === "function"
-            ? item.iconProps({
-                activeClass: "brz-ed-sidebar__control__item--active"
-              })
-            : {};
+          ? item.iconProps({
+              activeClass: "brz-ed-sidebar__control__item--active"
+            })
+          : {};
 
       return (
         <Icon
@@ -75,18 +76,20 @@ class LeftSidebar extends React.Component {
 
   render() {
     const { drawerContentType } = this.props;
-
     const topIcons = this.renderIcons(items.top);
-
     const showDrawer = Boolean(drawerContentType && !this.deviceModeChanged);
     let drawerTitle = "";
-    let drawerContent = null;
+    let DrawerContent = null;
+    let WrapperHeaderComponent = ({ children }) => children;
 
     if (showDrawer) {
       const drawerItem = itemsById[drawerContentType];
 
       drawerTitle = drawerItem.drawerTitle;
-      drawerContent = React.createElement(drawerItem.drawerComponent);
+      DrawerContent = drawerItem.drawerComponent;
+      if (drawerItem.wrapperHeaderComponent) {
+        WrapperHeaderComponent = drawerItem.wrapperHeaderComponent;
+      }
     }
 
     return (
@@ -106,7 +109,11 @@ class LeftSidebar extends React.Component {
               data={items.bottom}
             />
             <DrawerAnimation in={showDrawer}>
-              <Drawer headerText={drawerTitle}>{drawerContent}</Drawer>
+              <WrapperHeaderComponent>
+                <Drawer headerText={drawerTitle}>
+                  {DrawerContent && <DrawerContent />}
+                </Drawer>
+              </WrapperHeaderComponent>
             </DrawerAnimation>
           </div>
         </PointerEvents>

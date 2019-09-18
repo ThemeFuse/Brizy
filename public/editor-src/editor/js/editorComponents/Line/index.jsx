@@ -20,14 +20,14 @@ class Line extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
-  renderForEdit(v, vs) {
+  renderForEdit(v, vs, vd) {
     const className = classnames(
       "brz-line",
-      css(this.constructor.componentId, this.getId(), style(vs, v))
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <BoxResizer

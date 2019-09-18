@@ -13,14 +13,14 @@ export function styleClassName(v) {
       ".brz & .menu": {
         fontFamily: "var(--fontFamily)"
       },
-      ".brz & .menu > .menu-item a": {
+      ".brz & .menu > li[class*='menu-item'] a": {
         color: "var(--color)"
       },
       ".brz-ed--desktop &": {
         maxWidth: "var(--maxWidth)",
         width: "var(--width)",
 
-        "& .menu > .menu-item": {
+        "& .menu > li[class*='menu-item']": {
           fontSize: "var(--fontSize)",
           lineHeight: "var(--lineHeight)",
           fontWeight: "var(--fontWeight)",
@@ -55,7 +55,7 @@ export function styleClassName(v) {
         maxWidth: "var(--mobileMaxWidth)",
         width: "var(--width)",
 
-        "& .menu > .menu-item": {
+        "& .menu > li[class*='menu-item']": {
           fontSize: "var(--mobileFontSize)",
           lineHeight: "var(--mobileLineHeight)",
           fontWeight: "var(--mobileFontWeight)",
@@ -76,6 +76,7 @@ export function styleClassName(v) {
     const {
       menuName,
       fontFamily,
+      fontFamilyType,
       fontSize,
       lineHeight,
       fontWeight,
@@ -104,9 +105,10 @@ export function styleClassName(v) {
         width: menuName ? "auto" : "100%"
       },
       ".brz & .menu": {
-        fontFamily: getFontById(fontFamily).family
+        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
+          .family
       },
-      ".brz & .menu > .menu-item": {
+      ".brz & .menu > li[class*='menu-item']": {
         fontSize,
         lineHeight,
         fontWeight,
@@ -159,7 +161,7 @@ export function styleClassName(v) {
         ".brz &": {
           maxWidth: `${mobileSyncOnChange(v, "width")}%`
         },
-        ".brz & .menu > .menu-item": {
+        ".brz & .menu > li[class*='menu-item']": {
           fontSize: `${mobileFontSize}px`,
           lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
@@ -202,6 +204,7 @@ export function styleCSSVars(v) {
   const {
     menuName,
     fontFamily,
+    fontFamilyType,
     fontSize,
     fontWeight,
     lineHeight,
@@ -230,7 +233,8 @@ export function styleCSSVars(v) {
     "--width": menuName ? "auto" : "100%",
 
     // Typography
-    "--fontFamily": getFontById(fontFamily).family,
+    "--fontFamily": getFontById({ family: fontFamily, type: fontFamilyType })
+      .family,
     "--fontWeight": fontWeight,
     "--fontSize": `${fontSize}px`,
     "--lineHeight": lineHeight,

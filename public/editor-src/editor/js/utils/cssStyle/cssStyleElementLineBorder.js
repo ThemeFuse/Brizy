@@ -1,17 +1,25 @@
 import {
-  styleBorderWidth,
+  styleBorderWidthUngrouped,
   styleBorderStyle,
   styleBorderColor
 } from "visual/utils/style2";
 
 export function cssStyleElementLineBorder({ v, device, state }) {
-  return `border-top:${styleBorderWidth({
+  const borderWidth = styleBorderWidthUngrouped({
+    v,
+    device,
+    state,
+    current: "borderTopWidth"
+  });
+  const borderStyle = styleBorderStyle({ v, device, state });
+
+  const borderColor = styleBorderColor({
     v,
     device,
     state
-  })} ${styleBorderStyle({ v, device, state })} ${styleBorderColor({
-    v,
-    device,
-    state
-  })};`;
+  });
+
+  return borderWidth === undefined
+    ? ""
+    : `border-top:${borderWidth}px ${borderStyle} ${borderColor};`;
 }

@@ -29,15 +29,21 @@ export default class ThemeIcon extends React.Component {
     }
   }
 
-  shouldComponentUpdate({ name, type, suffix }, { icon }) {
-    const { name: oldName, type: oldType, suffix: oldSuffix } = this.props;
+  shouldComponentUpdate({ name, type, suffix, className }, { icon }) {
+    const {
+      name: oldName,
+      type: oldType,
+      suffix: oldSuffix,
+      className: oldClassName
+    } = this.props;
     const { icon: oldIcon } = this.state;
 
     return (
       oldIcon !== icon ||
       oldName !== name ||
       oldType !== type ||
-      oldSuffix !== suffix
+      oldSuffix !== suffix ||
+      oldClassName !== className
     );
   }
 

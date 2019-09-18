@@ -1,11 +1,20 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementContainerTypeAll({ v }) {
+export function toolbarElementContainerTypeAll({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: "media",
+    id: dvk("media"),
     label: t("Type"),
     type: "radioGroup",
+    devices,
     choices: [
       {
         value: "image",
@@ -20,15 +29,24 @@ export function toolbarElementContainerTypeAll({ v }) {
         icon: "nc-media-map"
       }
     ],
-    value: v.media
+    value: dvv("media")
   };
 }
 
-export function toolbarElementContainerTypeImageMap({ v, device, state }) {
+export function toolbarElementContainerTypeImageMap({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "media", device, state }),
+    id: dvk("media"),
     label: t("Type"),
     type: "radioGroup",
+    devices,
     choices: [
       {
         value: "image",
@@ -39,9 +57,6 @@ export function toolbarElementContainerTypeImageMap({ v, device, state }) {
         icon: "nc-media-map"
       }
     ],
-    value:
-      defaultValueValue({ v, key: "media", device, state }) === "video"
-        ? "image"
-        : defaultValueValue({ v, key: "media", device, state })
+    value: dvv("media") === "video" ? "image" : dvv("media")
   };
 }

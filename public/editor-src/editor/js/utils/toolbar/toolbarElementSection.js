@@ -1,14 +1,18 @@
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import {
+  defaultValueKey,
+  defaultValueValue,
+  saveOnChanges
+} from "visual/utils/onChange";
 
-export function toolbarElementSectionBoxShadow({ v, device, state }) {
-  const boxShadowBlur = defaultValueValue({
+export function toolbarElementSectionBoxShadow({ v, device, state, onChange }) {
+  const boxShadowBlurValue = defaultValueValue({
     v,
     key: "boxShadowBlur",
     device,
     state
   });
 
-  const boxShadowVertical = defaultValueValue({
+  const boxShadowVerticalValue = defaultValueValue({
     v,
     key: "boxShadowVertical",
     device,
@@ -22,35 +26,17 @@ export function toolbarElementSectionBoxShadow({ v, device, state }) {
       defaultIcon: ["nc-shadow"],
       icons: ["nc-blur", "nc-vertical"]
     },
-    value: [boxShadowBlur, boxShadowVertical],
-    onChange: ([boxShadowBlur, boxShadowVertical]) => ({
-      [defaultValueKey({
-        key: "boxShadow",
-        device,
-        state
-      })]: "on",
+    value: [boxShadowBlurValue, boxShadowVerticalValue],
+    onChange: ([boxShadowBlur, boxShadowVertical]) => {
+      const values = {
+        ...{ v, device, state, onChange },
+        ...{
+          boxShadowBlur,
+          boxShadowVertical
+        }
+      };
 
-      [defaultValueKey({
-        key: "boxShadowBlur",
-        device,
-        state
-      })]: boxShadowBlur,
-      [defaultValueKey({
-        key: `tempBoxShadowBlur`,
-        device,
-        state
-      })]: boxShadowBlur,
-
-      [defaultValueKey({
-        key: "boxShadowVertical",
-        device,
-        state
-      })]: boxShadowVertical,
-      [defaultValueKey({
-        key: `tempBoxShadowVertical`,
-        device,
-        state
-      })]: boxShadowVertical
-    })
+      return saveOnChanges(values);
+    }
   };
 }

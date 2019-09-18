@@ -1,28 +1,18 @@
 import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
 
-export default class RadioGroupItem extends React.Component {
-  static defaultProps = {
-    className: "",
-    active: null,
-    value: null,
-    onClick: _.noop
-  };
-
-  getClassName = () => {
-    const { className, active } = this.props;
-    return classnames(
-      "brz-ed-control__radio-group-option",
-      { active },
-      className
-    );
-  };
-
+export default class RadioItem extends React.Component {
   render() {
+    const { className: _className, active, children, onClick } = this.props;
+    const className = classnames(
+      "brz-control__radio-option",
+      { active },
+      _className
+    );
+
     return (
-      <div className={this.getClassName()} onClick={this.props.onClick}>
-        {this.props.children}
+      <div className={className} onClick={onClick}>
+        {children}
       </div>
     );
   }

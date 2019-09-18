@@ -3,8 +3,9 @@ import _ from "underscore";
 import { mergeOptions, optionTraverse } from "visual/component/Options/utils";
 import { uuid } from "visual/utils/uuid";
 import { getStore } from "visual/redux/store";
-import { currentStyleSelector } from "visual/redux/selectors";
+import { rulesSelector, deviceModeSelector } from "visual/redux/selectors";
 import { applyFilter } from "visual/utils/filters";
+import { objectFlat } from "visual/utils/object";
 
 const capitalize = ([first, ...rest], lowerRest = false) =>
   first.toUpperCase() +
@@ -36,10 +37,30 @@ export class EditorComponent extends React.Component {
     }
 
     // check redux
-    if (props.reduxState.globals !== nextProps.reduxState.globals) {
-      // console.log("scu", this.constructor.componentId, "globals", true);
+    if (
+      props.reduxState.currentStyleId !== nextProps.reduxState.currentStyleId
+    ) {
+      // console.log("scu", this.constructor.componentId, "project", true);
       return true;
     }
+
+    if (props.reduxState.currentStyle !== nextProps.reduxState.currentStyle) {
+      // console.log("scu", this.constructor.componentId, "project", true);
+      return true;
+    }
+
+    if (
+      props.reduxState.extraFontStyles !== nextProps.reduxState.extraFontStyles
+    ) {
+      // console.log("scu", this.constructor.componentId, "project", true);
+      return true;
+    }
+
+    if (props.reduxState.fonts !== nextProps.reduxState.fonts) {
+      // console.log("scu", this.constructor.componentId, "project", true);
+      return true;
+    }
+
     if (props.reduxState.copiedElement !== nextProps.reduxState.copiedElement) {
       return true;
     }
@@ -85,10 +106,7 @@ export class EditorComponent extends React.Component {
   }
 
   getDefaultValue() {
-    const newDefaultValue = Object.assign(
-      {},
-      ...Object.values(this.constructor.defaultValue)
-    );
+    const newDefaultValue = objectFlat(this.constructor.defaultValue);
 
     return this.props.defaultValue
       ? { ...newDefaultValue, ...this.props.defaultValue } // allows defaultValue overriding
@@ -101,7 +119,7 @@ export class EditorComponent extends React.Component {
 
   getStylesValue() {
     const { _styles } = this.getDBValue() || {};
-    const currentStyleRules = currentStyleSelector(this.getReduxState()).rules;
+    const currentStyleRules = rulesSelector(this.getReduxState());
 
     if (!_styles || !currentStyleRules) {
       return null;
@@ -240,8 +258,7 @@ export class EditorComponent extends React.Component {
       onToolbarOpen,
       onToolbarClose,
       onToolbarEnter,
-      onToolbarLeave,
-      meta
+      onToolbarLeave
     } = this.props;
 
     // WARNING: we use getStore instead of this.getReduxState()
@@ -339,8 +356,109 @@ export class EditorComponent extends React.Component {
     return items;
   }
 
+  makeToolbarPropsFromConfig2(
+    config,
+    {
+      allowExtend = true,
+      allowExtendParent = null,
+      allowExtendChild = null,
+      extendFilter = null,
+      filterExtendName = null
+    } = {} /* options */
+  ) {
+    const {
+      onToolbarOpen,
+      onToolbarClose,
+      onToolbarEnter,
+      onToolbarLeave
+    } = this.props;
+
+    // WARNING: we use getStore instead of this.getReduxState()
+    // because the page does not rerender when changing deviceMode
+    // and thus we might get false (outdated) results
+    const getItems = (
+      deviceMode = deviceModeSelector(getStore().getState())
+    ) => {
+      if (process.env.NODE_ENV === "development") {
+        if (!config.getItems) {
+          console.warn(
+            `${
+              this.constructor.componentId
+            }. getItems not found in toolbarConfig`
+          );
+        }
+      }
+
+      const v = this.getValue();
+      let items = this.bindToolbarItems(
+        config.getItems
+          ? config.getItems({
+              v,
+              component: this,
+              device: deviceMode
+            })
+          : []
+      );
+
+      // allow extend from parent
+      if (
+        (allowExtendParent !== null ? allowExtendParent : allowExtend) &&
+        this.props.toolbarExtend
+      ) {
+        const { getItems } = this.props.toolbarExtend;
+        let extendItems = getItems(deviceMode);
+
+        if (extendFilter) {
+          extendItems = extendFilter(extendItems);
+        }
+
+        items = mergeOptions(items, extendItems);
+      }
+
+      // allow extend from child
+      if (
+        (allowExtendChild !== null ? allowExtendChild : allowExtend) &&
+        this.childToolbarExtend
+      ) {
+        const { getItems } = this.childToolbarExtend;
+        const extendItems = getItems(deviceMode);
+
+        items = mergeOptions(items, extendItems);
+      }
+
+      // allow extend from filter
+      const filterToolbarExtend = applyFilter(
+        `toolbarItemsExtend_${filterExtendName ||
+          this.constructor.componentId}`,
+        null
+      );
+      if (filterToolbarExtend && filterToolbarExtend.getItems) {
+        const filterItems = this.bindToolbarItems(
+          filterToolbarExtend.getItems({
+            v,
+            component: this,
+            device: deviceMode
+          })
+        );
+
+        items = mergeOptions(items, filterItems);
+      }
+
+      return items;
+    };
+
+    return {
+      getItems,
+      onBeforeOpen: () => (global.Brizy.activeEditorComponent = this),
+      onBeforeClose: () => (global.Brizy.activeEditorComponent = null),
+      onOpen: onToolbarOpen,
+      onClose: onToolbarClose,
+      onMouseEnter: onToolbarEnter,
+      onMouseLeave: onToolbarLeave
+    };
+  }
+
   render() {
-    // const v = this.getValue();
     const { v, vs, vd } = this.getValue2();
 
     if (IS_EDITOR) {
@@ -382,7 +500,7 @@ export class EditorComponent extends React.Component {
   }
 
   getRulesValue(rules) {
-    const currentStyleRules = currentStyleSelector(this.getReduxState()).rules;
+    const currentStyleRules = rulesSelector(this.getReduxState());
 
     if (!currentStyleRules) {
       return null;

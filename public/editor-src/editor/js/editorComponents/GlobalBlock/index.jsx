@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { updateGlobalBlock } from "visual/redux/actions";
 
 class GlobalBlock extends EditorComponent {
@@ -18,9 +18,12 @@ class GlobalBlock extends EditorComponent {
 
   shouldComponentUpdate(nextProps) {
     const { globalBlockId } = this.getDBValue();
+    // we check the reference equality on value and not on the
+    // whole object because of the way globalBlocksAssembled2Selector works
+    // in that the objects may be different even if the value did not change
     const globalBlockChanged =
-      nextProps.globalBlocks[globalBlockId] !==
-      this.props.globalBlocks[globalBlockId];
+      nextProps.globalBlocks[globalBlockId].value !==
+      this.props.globalBlocks[globalBlockId].value;
 
     return globalBlockChanged || this.optionalSCU(nextProps);
   }
@@ -29,10 +32,9 @@ class GlobalBlock extends EditorComponent {
     if (meta.intent === "replace_all") {
       this.props.onChange(value, meta);
     } else {
+      const { globalBlocks } = this.props;
       const { globalBlockId } = this.getDBValue();
-      const globalBlock = globalBlocksSelector(this.props.reduxState)[
-        globalBlockId
-      ];
+      const globalBlock = globalBlocks[globalBlockId];
       const updatedGlobalBlock = {
         ...globalBlock,
         value
@@ -96,7 +98,7 @@ class GlobalBlock extends EditorComponent {
 }
 
 const mapStateToProps = state => ({
-  globalBlocks: globalBlocksSelector(state)
+  globalBlocks: globalBlocksAssembled2Selector(state)
 });
 
 export default connect(mapStateToProps)(GlobalBlock);

@@ -7,15 +7,7 @@ class Tabs extends Component {
   constructor(props) {
     super(props);
 
-    const { currentTab, tabs: _tabs } = this.props;
-    const tabs = _tabs.filter(({ component }) => {
-      const { shouldRender } = component;
-
-      return (
-        typeof shouldRender === "undefined" ||
-        (typeof shouldRender === "function" && shouldRender())
-      );
-    });
+    const { currentTab, tabs } = this.props;
 
     this.state = {
       loading: true,
@@ -24,6 +16,12 @@ class Tabs extends Component {
     };
   }
 
+  static defaultProps = {
+    tabs: [],
+    currentTab: "",
+    blockTabsWhenLoading: true
+  };
+
   handleLoading = loading => {
     this.setState({
       loading
@@ -31,7 +29,7 @@ class Tabs extends Component {
   };
 
   handleTabChange(tabId) {
-    if (this.state.loading) {
+    if (this.state.loading && this.props.blockTabsWhenLoading) {
       return;
     }
 
@@ -74,7 +72,7 @@ class Tabs extends Component {
           )}
           {img ? (
             <div className="brz-ed-popup-tab-image">
-              <img className="brz-img" src={img} />
+              <img className="brz-img" src={img} alt={title} />
             </div>
           ) : (
             <div className="brz-ed-popup-tab-name">{title}</div>
@@ -114,23 +112,29 @@ class Tabs extends Component {
   renderTabs() {
     const { tabs, loading, currentTab } = this.state;
 
-    return tabs.map(({ id, component: Component }) => (
-      <Component
-        {...this.props}
-        key={id}
-        loading={loading}
-        className={id !== currentTab && "brz-hidden"}
-        onTabUpdate={tabData => {
-          this.handleTabUpdate(id, tabData);
-        }}
-      />
-    ));
+    return tabs.map(({ id, component: Component }) => {
+      const className = classnames(`brz-ed-popup-integration-${id}`, {
+        "brz-hidden": id !== currentTab
+      });
+
+      return (
+        <Component
+          {...this.props}
+          key={id}
+          loading={loading}
+          className={className}
+          onTabUpdate={tabData => {
+            this.handleTabUpdate(id, tabData);
+          }}
+        />
+      );
+    });
   }
 
   render() {
     return (
-      <Fixed onClose={this.props.onClose}>
-        <div className="brz-ed-popup-wrapper brz-ed-popup-integrations">
+      <Fixed className="brz-ed-popup-integrations" onClose={this.props.onClose}>
+        <div className="brz-ed-popup-wrapper">
           {this.renderHeader()}
           <div className="brz-ed-popup-content">
             {this.state.loading ? this.renderCurrentTab() : this.renderTabs()}

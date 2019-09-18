@@ -6,22 +6,45 @@ import {
   styleTypographyLetterSpacing
 } from "visual/utils/style2";
 
-export function cssStyleTypographyFontFamily({ v, device }) {
-  return `font-family:${styleTypographyFontFamily({ v, device })};`;
+export function cssStyleTypographyFontFamily({ v, device, state }) {
+  const fontFamily = styleTypographyFontFamily({ v, device, state });
+  return fontFamily === undefined ? "" : `font-family:${fontFamily};`;
 }
 
-export function cssStyleTypographyFontSize({ v, device }) {
-  return `font-size:${styleTypographyFontSize({ v, device })};`;
+export function cssStyleTypographyFontSize({ v, device, state }) {
+  const fontSize = styleTypographyFontSize({
+    v,
+    device,
+    state
+  });
+  return fontSize === undefined ? "" : `font-size:${fontSize}px;`;
 }
 
-export function cssStyleTypographyLineHeight({ v, device }) {
-  return `line-height:${styleTypographyLineHeight({ v, device })};`;
+export function cssStyleTypographyLineHeight({ v, device, state }) {
+  const lineHeight = styleTypographyLineHeight({
+    v,
+    device,
+    state
+  });
+  return lineHeight === undefined ? "" : `line-height:${lineHeight};`;
 }
 
-export function cssStyleTypographyFontWeight({ v, device }) {
-  return `font-weight:${styleTypographyFontWeight({ v, device })};`;
+export function cssStyleTypographyFontWeight({ v, device, state }) {
+  const fontWeight = styleTypographyFontWeight({
+    v,
+    device,
+    state
+  });
+  return fontWeight === undefined ? "" : `font-weight:${fontWeight};`;
 }
 
-export function cssStyleTypographyLetterSpacing({ v, device }) {
-  return `letter-spacing:${styleTypographyLetterSpacing({ v, device })};`;
+export function cssStyleTypographyLetterSpacing({ v, device, state }) {
+  const letterSpacing = styleTypographyLetterSpacing({
+    v,
+    device,
+    state
+  });
+  return letterSpacing === undefined
+    ? ""
+    : `letter-spacing:${letterSpacing}px;`;
 }

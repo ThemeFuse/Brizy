@@ -3,6 +3,7 @@
 // Gray scale and brand colors for use across Bootstrap.
 $brand-primary: #3dbfe8;
 $brand-options: #383e48;
+$brand-primary-pro: #d62c64;
 $brand-options-border: rgba(255, 255, 255, 0.1);
 $link-color: $brand-primary;
 $link-hover-color: darken($brand-primary, 10%);
@@ -35,7 +36,7 @@ $z-indexes: (
   "toolbar-collapsible": 1050,
   "section-menu": 1050,
   "toolbar-column": 1040,
-  "tooltip-overlay": 1070,
+  "tooltip-overlay": 1100,
   "cloneable-bar": 1030,
   "column-resize": 1030,
   "adder-block": 1051,
@@ -94,7 +95,7 @@ $toolbar-static-font-size: 12px;
 // Popover
 //
 // Sizes
-$toolbar-tooltip-sm-width: 230px !default;
+$toolbar-tooltip-sm-width: 171px !default;
 $toolbar-tooltip-md-width: 255px !default;
 $toolbar-tooltip-lg-width: 305px !default;
 $toolbar-tooltip-typo-width: 385px;
@@ -168,7 +169,7 @@ $spinner-border-animate-color: rgba(3, 8, 15, 0.9);
 //
 // Styles
 $floating-button-grey: #879294;
-$floating-button-blue: #22b0da;
+$floating-button-blue: $brand-primary;
 $floating-button-red: #ed2164;
 
 // Borders

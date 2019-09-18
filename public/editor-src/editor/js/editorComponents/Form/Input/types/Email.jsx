@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import TextField from "./common/TextField";
 import { t } from "visual/utils/i18n";
 
@@ -10,7 +10,7 @@ export default class Email extends TextField {
     return "Email";
   }
 
-  static pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$";
+  static pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
 
   renderForEdit = props => {
     return <input className="brz-input brz-form__field" {...props} />;

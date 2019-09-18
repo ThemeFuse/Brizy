@@ -30,7 +30,11 @@ class Brizy_Editor {
 
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
 		add_action( 'after_setup_theme', array( $this, 'loadCompatibilityClasses' ), - 2000 );
-		add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
+		try {
+			add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
+		} catch ( Exception $e ) {
+			return;
+		}
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
 
@@ -56,8 +60,8 @@ class Brizy_Editor {
 			$migrationManager->runMigrations( BRIZY_VERSION );
 		} catch ( Brizy_Admin_Migrations_UpgradeRequiredException $e ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Please upgrade Brizy to the latest version.' );
-
-			return;
+			Brizy_Logger::instance()->critical( 'Unknown migration found. The plugin must be downgraded to the previous version' );
+			throw new Exception( 'Halt plugin execution!' );
 		}
 	}
 
@@ -66,6 +70,7 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
+		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
 
 
@@ -91,7 +96,7 @@ class Brizy_Editor {
 
 		try {
 			// do not delete this line
-			$user    = Brizy_Editor_User::get();
+			$user = Brizy_Editor_User::get();
 
 			if ( $pid ) {
 				$post = Brizy_Editor_Post::get( $pid );
@@ -122,7 +127,7 @@ class Brizy_Editor {
 
 	public function revisionsToKeep( $num, $post ) {
 		try {
-			if(in_array($post->post_type,array( Brizy_Editor_Project::BRIZY_PROJECT ))) {
+			if ( in_array( $post->post_type, array( Brizy_Editor_Project::BRIZY_PROJECT ) ) ) {
 				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
 			}
 
@@ -130,6 +135,7 @@ class Brizy_Editor {
 				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
 			}
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
 
 		}
 
@@ -195,22 +201,23 @@ class Brizy_Editor {
 	function registerPageTemplates( $templates ) {
 		return array_merge( $templates,
 			array(
-				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __bt('brizy','Brizy').__( ' Template', 'brizy' )
+				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __bt( 'brizy', 'Brizy' ) . __( ' Template', 'brizy' )
 			) );
 	}
 
 
 	public function registerCustomPostTemplates() {
 		Brizy_Editor_Project::registerCustomPostType();
-		Brizy_Admin_Templates::registerCustomPostTemplate();
 		Brizy_Admin_Blocks_Main::registerCustomPosts();
-		Brizy_Admin_FormEntries::registerCustomPostTemplate();
+		Brizy_Admin_Fonts_Main::registerCustomPosts();
+		Brizy_Admin_FormEntries::registerCustomPost();
+		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}
 
 	/**
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function handleFrontEndEditor(  $post ) {
+	public function handleFrontEndEditor( $post ) {
 		try {
 			$main = new Brizy_Public_Main( $post );
 			$main->initialize_front_end();
@@ -222,7 +229,7 @@ class Brizy_Editor {
 	/**
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function handleBackEndEditor(  $post ) {
+	public function handleBackEndEditor( $post ) {
 
 		try {
 			$main = new Brizy_Public_Main( $post );
@@ -420,7 +427,7 @@ class Brizy_Editor {
 	}
 
 	public function get_name() {
-		return __bt('brizy','Brizy');
+		return __bt( 'brizy', 'Brizy' );
 	}
 
 	protected function get_post_types() {

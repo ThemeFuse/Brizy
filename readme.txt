@@ -3,8 +3,8 @@ Contributors: themefuse
 Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
 Requires at least: 4.5
 Tested up to: 5.2.1
-Requires PHP: 5.4
-Stable tag: 1.0.81
+Requires PHP: 5.6
+Stable tag: 1.0.82
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,28 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.82 - 2019-09-18 =
+* New: Custom fonts
+* New: Text image mask
+* New: Text shadow
+* New: Text gradient color
+* New: Block shape dividers were moved from PRO to Free
+* Improved: Migrated Soundcloud, Counter, Facebook Group, Page and Comments to a new CSS system meant to clean up the DOM
+* Improved: Reduced JavaScript file size
+* Improved: Improved error handling in api
+* Fixed: Unable to “unglobal” Header and Footer blocks
+* Fixed: Unable to use drag and drop in a global Popup block
+* Fixed: Inputs, selects and textareas not being cleared when successfully submitting a form
+* Fixed: Changing Section width in desktop mode affected other modes as well
+* Fixed: RichText putting extra whitespace sometimes
+* Fixed: SVG for two Section dividers
+* Fixed: Wrong submit settings action call
+* Fixed: Media asset processor
+* Fixed: Template view on network sites
+* Fixed: Fixed the case for duplicated global blocks in database
+* Fixed: Media asset processor to replace all image urls from static css
+* Fixed: Fixed ajax urls
 
 = 1.0.81 - 2019-05-29 =
 * Fixed: Popup option not working for certain users

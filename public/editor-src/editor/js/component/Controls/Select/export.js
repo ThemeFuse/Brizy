@@ -23,6 +23,13 @@ export default function() {
       $options.hide();
     });
 
+    // Reset Select to defaultValue when trigger onChange
+    $this.find("input[type=hidden]").on("change", function() {
+      var defaultValue = $option.html();
+      $currentOption.html(defaultValue);
+      $(this).val(defaultValue);
+    });
+
     $(window).on("click", function(e) {
       var $elem = $(e.target);
       if (!$elem.closest($this).length) {

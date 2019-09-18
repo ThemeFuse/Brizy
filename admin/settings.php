@@ -333,6 +333,10 @@ class Brizy_Admin_Settings {
 			return;
 		}
 
+		if(!isset($_POST['tab'])) {
+		    return;
+        }
+
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'] ) ) {
 			return;
 		}

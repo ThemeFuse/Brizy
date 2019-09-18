@@ -17,7 +17,7 @@ class Brizy_Public_Main {
 	 */
 	public function __construct( $post ) {
 
-		$this->post        = $post;
+		$this->post = $post;
 
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
@@ -138,6 +138,15 @@ class Brizy_Public_Main {
 		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${config_json};", 'before' );
 
 		do_action( 'brizy_editor_enqueue_scripts' );
+
+		// include REST api authenticate nonce
+		wp_localize_script( 'wp-api', 'wpApiSettings', array(
+			'root'          => esc_url_raw( rest_url() ),
+			'nonce'         => wp_create_nonce( 'wp_rest' ),
+			'editorVersion' => BRIZY_EDITOR_VERSION,
+			'pluginVersion' => BRIZY_VERSION,
+		) );
+
 	}
 
 	/**
@@ -170,7 +179,7 @@ class Brizy_Public_Main {
 		$postTypeLabel = $wp_post_types[ $type ]->labels->singular_name;
 		$args          = array(
 			'id'    => 'brizy_Edit_page_link',
-			'title' => __( "Edit " . $postTypeLabel . " with ". __bt('brizy','Brizy') ),
+			'title' => __( "Edit " . $postTypeLabel . " with " . __bt( 'brizy', 'Brizy' ) ),
 			'href'  => $this->post->edit_url(),
 			'meta'  => array()
 		);
@@ -400,7 +409,7 @@ class Brizy_Public_Main {
 		if ( $is_preview ) {
 			$user_id      = get_current_user_id();
 			$postParentId = $this->post->get_parent_id();
-			$autosaveId = Brizy_Editor_Post::getAutoSavePost( $postParentId, $user_id );
+			$autosaveId   = Brizy_Editor_Post::getAutoSavePost( $postParentId, $user_id );
 
 			if ( $autosaveId ) {
 				$this->post    = Brizy_Editor_Post::get( $autosaveId );

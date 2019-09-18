@@ -1,8 +1,11 @@
 <?php
 
-class Brizy_Editor_BlockScreenshotApi {
+class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 
-	const AJAX_SAVE_BLOCK_SCREENSHOT = 'brizy_save_block_screenshot';
+	const nonce = 'brizy-api';
+
+	const AJAX_CREATE_BLOCK_SCREENSHOT = 'brizy_create_block_screenshot';
+	const AJAX_UPDATE_BLOCK_SCREENSHOT = 'brizy_update_block_screenshot';
 
 	const BLOCK_TYPE_NORMAL = 'normal';
 	const BLOCK_TYPE_GLOBAL = 'global';
@@ -40,21 +43,29 @@ class Brizy_Editor_BlockScreenshotApi {
 	public function __construct( $post ) {
 		$this->post       = $post;
 		$this->blockTypes = array( self::BLOCK_TYPE_NORMAL, self::BLOCK_TYPE_GLOBAL, self::BLOCK_TYPE_SAVED );
-		$this->initialize();
+		parent::__construct();
+	}
+
+	protected function getRequestNonce() {
+		return self::nonce;
 	}
 
 
-	private function initialize() {
-		add_action( 'wp_ajax_' . self::AJAX_SAVE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
-		add_action( 'wp_ajax_nopriv_' . self::AJAX_SAVE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+	protected function initializeApiActions() {
+		add_action( 'wp_ajax_' . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		add_action( 'wp_ajax_nopriv_' . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		add_action( 'wp_ajax_' . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		add_action( 'wp_ajax_nopriv_' . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
 	}
 
 	public function saveBlockScreenShot() {
 
+		$this->verifyNonce( self::nonce );
+
 		session_write_close();
 
-		if ( empty( $_POST['block_type'] ) || ! in_array( $_POST['block_type'], $this->blockTypes ) || empty( $_POST['img'] ) || empty( $_POST['block_id'] ) ) {
-			wp_send_json( array(
+		if ( empty( $_REQUEST['block_type'] ) || ! in_array( $_REQUEST['block_type'], $this->blockTypes ) || empty( $_REQUEST['ibsf'] ) ) {
+			wp_send_json_error( array(
 				'success' => false,
 				'message' => esc_html__( 'Bad request', 'brizy' )
 			), 400 );
@@ -63,44 +74,77 @@ class Brizy_Editor_BlockScreenshotApi {
 		// obtain the image content from POST
 		$imageContent = null;
 		$fileName     = null;
+		$screenId     = null;
 
-		if ( preg_match( '/^data:image\/(\w+);base64,/', $_POST['img'], $img_type ) ) {
-			$base64     = $_POST['img'];
-			$img_base64 = substr( $base64, strpos( $base64, ',' ) + 1 );
-			$img_type   = strtolower( $img_type[1] ); // jpg, png, gif
-			$fileName   = sanitize_file_name( $_POST['block_id'] . ".{$img_type}" );
 
-			if ( ! in_array( $img_type, array( 'jpg', 'jpeg', 'gif', 'png' ) ) ) {
-				wp_send_json( array(
-					'success' => false,
-					'message' => esc_html__( 'Invalid image format', 'brizy' )
-				) );
-			}
+		$base64       = $_REQUEST['ibsf'];
+		$imageContent = base64_decode( $base64 );
 
-			$imageContent = base64_decode( $img_base64 );
 
-			if ( false === $base64 ) {
-				wp_send_json( array(
-					'success' => false,
-					'message' => esc_html__( 'Invalid image content', 'brizy' )
-				), 400 );
-			}
-
-			if ( ! $this->saveScreenshot( $_POST['block_type'], $fileName, $imageContent ) ) {
-				wp_send_json( array(
-					'success' => false,
-					'message' => esc_html__( 'Unable to store the block thumbnail', 'brizy' )
-				), 500 );
-			}
-
-		} else {
-			wp_send_json( array(
+		if ( false === $imageContent ) {
+			wp_send_json_error( array(
 				'success' => false,
-				'message' => esc_html__( 'Invalid image parameter format', 'brizy' )
+				'message' => esc_html__( 'Invalid image content', 'brizy' )
 			), 400 );
 		}
 
-		wp_send_json( array( 'success' => true ) );
+		$img_type = $this->getFileExtensionByContent( $imageContent );
+
+		if ( ! in_array( $img_type, array( 'jpg', 'jpeg', 'gif', 'png' ) ) ) {
+			wp_send_json_error( array(
+				'message' => esc_html__( 'Invalid image format', 'brizy' )
+			) );
+		}
+
+		if ( isset( $_REQUEST['id'] ) ) {
+			$screenId = $_REQUEST['id'];
+		} else {
+			$screenId = \Brizy\Utils\UUId::uuid();
+		}
+
+		$fileName = $screenId . '.' . $img_type;
+
+		if ( ! $this->saveScreenshot( $_REQUEST['block_type'], $fileName, $imageContent ) ) {
+			wp_send_json_error( array(
+				'message' => esc_html__( 'Unable to store the block thumbnail', 'brizy' )
+			), 500 );
+		}
+
+		wp_send_json_success( array( 'id' => $screenId, 'file_name' => $fileName ) );
+	}
+
+	protected function getFileExtensionByContent( $content ) {
+		$tmpfname = tempnam( "/tmp", "blockScreenShot" );
+
+		$handle = fopen( $tmpfname, "w" );
+		fwrite( $handle, $content );
+		fclose( $handle );
+
+		$mimeType = wp_get_image_mime( $tmpfname );
+
+		return $this->getExtentsionByMime( $mimeType );
+	}
+
+	/**
+	 * @param $filename
+	 * @param int $mode
+	 *
+	 * @return mixed|string
+	 */
+	protected function getExtentsionByMime( $mimeType ) {
+
+		$extensions = array(
+			'image/png'  => 'png',
+			'image/jpeg' => 'jpeg',
+			'image/jpg'  => 'jpg',
+			'image/gif'  => 'gif',
+		);
+
+		if ( isset( $extensions[ $mimeType ] ) ) {
+			return $extensions[ $mimeType ];
+		}
+
+		return null;
 	}
 
 	/**
@@ -170,9 +214,10 @@ class Brizy_Editor_BlockScreenshotApi {
 	private function resizeImage( $thumbnailFullPath ) {
 		try {
 			$imageEditor = wp_get_image_editor( $thumbnailFullPath );
-			
-			if($imageEditor instanceof WP_Error)
-				throw new Exception($imageEditor->get_error_message());
+
+			if ( $imageEditor instanceof WP_Error ) {
+				throw new Exception( $imageEditor->get_error_message() );
+			}
 
 			$imageEditor->resize( 600, 600 );
 			$result = $imageEditor->save( $thumbnailFullPath );

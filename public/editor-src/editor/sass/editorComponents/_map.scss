@@ -5,6 +5,25 @@
   display: inline-block;
   vertical-align: middle;
 
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+    pointer-events: none;
+  }
+
+  .brz-map-content {
+    overflow: hidden;
+    position: relative;
+
+    height: 100%;
+    width: 100%;
+  }
   .brz-iframe {
     position: absolute;
     top: 0;

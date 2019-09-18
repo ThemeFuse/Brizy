@@ -1,12 +1,13 @@
 import { getFontStyle } from "visual/utils/fonts";
 
-export function onChangeTypography (newValues, currentValues) {
+export function onChangeTypography(newValues, currentValues) {
   const {
     fontSize,
     fontFamily,
+    fontFamilyType,
     lineHeight,
     letterSpacing,
-    fontWeight,
+    fontWeight
   } =
     currentValues.fontStyle === ""
       ? currentValues
@@ -15,15 +16,16 @@ export function onChangeTypography (newValues, currentValues) {
   return {
     fontSize,
     fontFamily,
+    fontFamilyType,
     lineHeight,
     letterSpacing,
     fontWeight,
     fontStyle: "",
     ...newValues
   };
-};
+}
 
-export function onChangeTypographyTablet (newValues, currentValues) {
+export function onChangeTypographyTablet(newValues, currentValues) {
   const {
     tabletFontSize,
     tabletLineHeight,
@@ -42,9 +44,9 @@ export function onChangeTypographyTablet (newValues, currentValues) {
     tabletFontStyle: "",
     ...newValues
   };
-};
+}
 
-export function onChangeTypographyMobile (newValues, currentValues) {
+export function onChangeTypographyMobile(newValues, currentValues) {
   const {
     mobileFontSize,
     mobileLineHeight,
@@ -63,4 +65,4 @@ export function onChangeTypographyMobile (newValues, currentValues) {
     mobileFontStyle: "",
     ...newValues
   };
-};
+}

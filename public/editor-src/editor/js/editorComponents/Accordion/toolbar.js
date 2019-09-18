@@ -9,11 +9,15 @@ import {
 } from "visual/utils/onChange";
 
 import {
-  toolbarBgColorHexAndOpacity,
-  toolbarBgColorPalette,
-  toolbarBgColorFields,
+  toolbarBgColor2,
+  toolbarBgColorHexField2,
+  toolbarColor2,
+  toolbarColorHexField2,
   toolbarDisabledShowOnTablet,
-  toolbarDisabledShowOnMobile
+  toolbarDisabledShowOnMobile,
+  toolbarBorder2,
+  toolbarBorderColorHexField2,
+  toolbarBorderWidthOneField2
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
@@ -22,8 +26,14 @@ export function getItemsForDesktop(v) {
   const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
-  const { fontSize, fontFamily, fontWeight, lineHeight, letterSpacing } =
-    fontStyle === "" ? v : getFontStyle(fontStyle);
+  const {
+    fontSize,
+    fontFamily,
+    fontFamilyType,
+    fontWeight,
+    lineHeight,
+    letterSpacing
+  } = fontStyle === "" ? v : getFontStyle(fontStyle);
 
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -33,10 +43,6 @@ export function getItemsForDesktop(v) {
   const { hex: colorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "colorHex", device }),
     defaultValueValue({ v, key: "colorPalette", device })
-  );
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device }),
-    defaultValueValue({ v, key: "borderColorPalette", device })
   );
 
   return [
@@ -61,17 +67,15 @@ export function getItemsForDesktop(v) {
                   label: t("Font Family"),
                   type: "fontFamily",
                   value: fontFamily,
-                  onChange: ({ id }) => {
-                    return {
-                      ...onChangeTypography(
-                        {
-                          fontFamily: id,
-                          fontWeight: getWeight(fontWeight, id)
-                        },
-                        v
-                      )
-                    };
-                  }
+                  onChange: ({ id, weights, type }) =>
+                    onChangeTypography(
+                      {
+                        fontFamily: id,
+                        fontWeight: getWeight(fontWeight, weights),
+                        fontFamilyType: type
+                      },
+                      v
+                    )
                 }
               ]
             },
@@ -86,11 +90,9 @@ export function getItemsForDesktop(v) {
                   className: "brz-ed-popover__font-style",
                   display: "block",
                   value: fontStyle,
-                  onChange: newFontStyle => {
-                    return {
-                      fontStyle: newFontStyle
-                    };
-                  }
+                  onChange: newFontStyle => ({
+                    fontStyle: newFontStyle
+                  })
                 },
                 {
                   type: "grid",
@@ -133,7 +135,10 @@ export function getItemsForDesktop(v) {
                           label: t("Weight"),
                           type: "select",
                           display: "block",
-                          choices: getWeightChoices(fontFamily),
+                          choices: getWeightChoices({
+                            family: fontFamily,
+                            type: fontFamilyType
+                          }),
                           value: fontWeight,
                           onChange: newFontWeight =>
                             onChangeTypography({ fontWeight: newFontWeight }, v)
@@ -186,22 +191,18 @@ export function getItemsForDesktop(v) {
             {
               label: t("Background"),
               options: [
-                toolbarBgColorHexAndOpacity({
+                toolbarBgColor2({
                   v,
                   device,
                   state: "normal",
-                  onChange: [
-                    "onChangeBgColorHexAndOpacity",
-                    "onChangeBgColorHexAndOpacityPalette"
-                  ]
-                }),
-                toolbarBgColorPalette({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBgColorPalette",
-                    "onChangeBgColorPaletteOpacity"
+                  showSelect: false,
+                  onChangeHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2"
                   ]
                 }),
                 {
@@ -209,15 +210,15 @@ export function getItemsForDesktop(v) {
                   className: "brz-ed-grid__color-fileds",
                   columns: [
                     {
-                      width: 100,
+                      width: 30,
                       options: [
-                        toolbarBgColorFields({
+                        toolbarBgColorHexField2({
                           v,
                           device,
                           state: "normal",
                           onChange: [
-                            "onChangeBgColorHexAndOpacity",
-                            "onChangeBgColorHexAndOpacityPalette"
+                            "onChangeBgColorHexAndOpacity2",
+                            "onChangeBgColorHexAndOpacityPalette2"
                           ]
                         })
                       ]
@@ -229,26 +230,19 @@ export function getItemsForDesktop(v) {
             {
               label: t("Text"),
               options: [
-                {
-                  id: "color",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: colorHex,
-                    opacity: v.colorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    colorHex: hex,
-                    colorOpacity: opacity,
-                    colorPalette: isChanged === "hex" ? "" : v.colorPalette
-                  })
-                },
-                {
-                  id: "colorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.colorPalette
-                },
+                toolbarColor2({
+                  v,
+                  device,
+                  state: "normal",
+                  onChangeHex: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ],
+                  onChangePalette: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
@@ -256,21 +250,15 @@ export function getItemsForDesktop(v) {
                     {
                       width: 100,
                       options: [
-                        {
-                          id: "colorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: colorHex,
-                            opacity: v.colorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            colorPalette:
-                              isChanged === "hex" ? "" : v.colorPalette,
-                            colorHex: hex,
-                            colorOpacity: opacity
-                          })
-                        }
+                        toolbarColorHexField2({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeColorHexAndOpacity",
+                            "onChangeColorHexAndOpacityPalette"
+                          ]
+                        })
                       ]
                     }
                   ]
@@ -278,51 +266,53 @@ export function getItemsForDesktop(v) {
               ]
             },
             {
+              id: "tabBorder",
               label: t("Border"),
               options: [
-                {
-                  id: "borderColor",
-                  type: "colorPicker",
-                  position: 10,
-                  value: {
-                    hex: borderColorHex,
-                    opacity: v.borderColorOpacity
-                  },
-                  onChange: ({ hex, opacity, isChanged }) => ({
-                    borderColorHex: hex,
-                    borderColorOpacity: opacity,
-                    borderColorPalette:
-                      isChanged === "hex" ? "" : v.borderColorPalette
-                  })
-                },
-                {
-                  id: "borderColorPalette",
-                  type: "colorPalette",
-                  position: 20,
-                  value: v.borderColorPalette
-                },
+                toolbarBorder2({
+                  v,
+                  device,
+                  state: "normal",
+                  showSelect: false,
+                  onChangeHex: [
+                    "onChangeBorderColorHexAndOpacity2",
+                    "onChangeBorderColorHexAndOpacityPalette2",
+                    "onChangeElementBorderColorHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBorderColorPalette2",
+                    "onChangeBorderColorPaletteOpacity2",
+                    "onChangeElementBorderColorHexAndOpacityDependencies2"
+                  ]
+                }),
                 {
                   type: "grid",
                   className: "brz-ed-grid__color-fileds",
                   columns: [
                     {
-                      width: 100,
+                      width: 38,
                       options: [
-                        {
-                          id: "borderColorFields",
-                          type: "colorFields",
-                          position: 30,
-                          value: {
-                            hex: borderColorHex,
-                            opacity: v.borderColorOpacity
-                          },
-                          onChange: ({ hex, opacity, isChanged }) => ({
-                            borderColorPalette:
-                              isChanged === "hex" ? "" : v.borderColorPalette,
-                            borderColorHex: hex,
-                            borderColorOpacity: opacity
-                          })
-                        }
+                        toolbarBorderColorHexField2({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBorderColorHexAndOpacity2",
+                            "onChangeBorderColorHexAndOpacityPalette2",
+                            "onChangeElementBorderColorHexAndOpacityDependencies2"
+                          ]
+                        })
+                      ]
+                    },
+                    {
+                      width: 62,
+                      options: [
+                        toolbarBorderWidthOneField2({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: ["onChangeBorderWidthGrouped2"]
+                        })
                       ]
                     }
                   ]
@@ -570,7 +560,8 @@ export function getItemsForDesktop(v) {
 
 export function getItemsForTablet(v) {
   // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+  const { fontFamily, fontFamilyType } =
+    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const tabletFontStyle = v.tabletFontStyle;
   const {
@@ -640,7 +631,10 @@ export function getItemsForTablet(v) {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(fontFamily),
+                  choices: getWeightChoices({
+                    family: fontFamily,
+                    type: fontFamilyType
+                  }),
                   value: tabletFontWeight,
                   onChange: newTabletFontWeight =>
                     onChangeTypographyTablet(
@@ -905,7 +899,8 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   // Typography
-  const { fontFamily } = v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
+  const { fontFamily, fontFamilyType } =
+    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const mobileFontStyle = v.mobileFontStyle;
   const {
@@ -975,7 +970,10 @@ export function getItemsForMobile(v) {
                   label: t("Weight"),
                   type: "select",
                   display: "block",
-                  choices: getWeightChoices(fontFamily),
+                  choices: getWeightChoices({
+                    family: fontFamily,
+                    type: fontFamilyType
+                  }),
                   value: mobileFontWeight,
                   onChange: newMobileFontWeight =>
                     onChangeTypographyMobile(

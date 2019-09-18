@@ -9,10 +9,14 @@ import bindings from "./utils/bindings";
 import { getFormats } from "./utils";
 
 const DEFAULT = {
+  backgroundImage: null,
+  backgroundGradient: null,
   bold: false,
   color: "#000",
   colorPalette: null,
   population: null,
+  shadow: null,
+  shadowColorPalette: null,
   populationColor: {
     p: {
       hex: null,
@@ -50,12 +54,13 @@ const DEFAULT = {
       colorPalette: null
     }
   },
-  font: null,
+  fontFamily: null,
+  fontType: "google",
   fontStyle: null,
-  height: 1.6,
+  lineHeight: 1.6,
   horizontalAlign: "left",
-  intermediateMobileHeight: null,
-  intermediateMobileSize: null,
+  intermediateMobileLineHeight: null,
+  intermediateMobileFontSize: null,
   italic: false,
   letterSpacing: null,
   linkType: "external",
@@ -69,11 +74,11 @@ const DEFAULT = {
   list: null,
   marginBottom: "0",
   marginTop: "0",
-  mobileHeight: null,
-  mobileSize: null,
-  size: 16,
+  mobileLineHeight: null,
+  mobileFontSize: null,
+  fontsize: 16,
   tagName: null,
-  weight: ""
+  fontWeight: ""
 };
 
 let instances = [];

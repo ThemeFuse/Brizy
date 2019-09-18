@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { t } from "visual/utils/i18n";
 import { Connect } from "../../../common/GlobalApps/StepsView";
 import { addAccount, deleteAccount } from "../../../common/GlobalApps/api";
 import { Context } from "../../../common/GlobalApps/Context";
@@ -82,7 +83,7 @@ class FacebookConnect extends Component {
         if (status !== 200) {
           this.setState({
             nextLoading: false,
-            error: "Something went wrong"
+            error: t("Something went wrong")
           });
         }
       }
@@ -96,7 +97,7 @@ class FacebookConnect extends Component {
       if (status !== 200) {
         this.setState({
           nextLoading: false,
-          error: "Something went wrong"
+          error: t("Something went wrong")
         });
       } else {
         onChangeNext();

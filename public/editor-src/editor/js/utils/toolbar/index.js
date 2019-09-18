@@ -21,24 +21,11 @@ export {
   toolbarSliderColorFields
 } from "./toolbarSlider";
 
-// Border Style
-export { toolbarBorderStyle } from "./toolbarBorderStyle";
-
-// Border Width
-export {
-  toolbarBorderWidth,
-  toolbarBorderWidthBorderColorPicker
-} from "./toolbarBorderWidth";
-
 // Border Radius
 export { toolbarBorderRadius } from "./toolbarBorderRadius";
 
 // Color
-export {
-  toolbarColorHexAndOpacity,
-  toolbarColorPalette,
-  toolbarColorFields
-} from "./toolbarColor";
+export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
 
 // Gradient
 export {
@@ -49,35 +36,43 @@ export {
 } from "./toolbarGradient";
 
 // BG Color
-export {
-  toolbarBgColorHexAndOpacity,
-  toolbarBgColorPalette,
-  toolbarBgColorFields
-} from "./toolbarBgColor";
+export { toolbarBgColor2, toolbarBgColorHexField2 } from "./toolbarBgColor";
 
 // Border Color
 export {
-  toolbarBorderColorHexAndOpacity,
-  toolbarBorderColorPalette,
-  toolbarBorderColorFields
-} from "./toolbarBorderColor";
+  toolbarBorder2,
+  toolbarBorderColorHexField2,
+  toolbarBorderWidthOneField2,
+  toolbarBorderWidthFourFields2
+} from "./toolbarBorder";
+
+//Box Shadow
+export {
+  toolbarBoxShadow2,
+  toolbarBoxShadowHexField2,
+  toolbarBoxShadowFields2
+} from "./toolbarBoxShadow";
 
 // Anchor and URL
 export {
   toolbarLinkAnchor,
   toolbarLinkExternal,
   toolbarLinkExternalBlank,
-  toolbarLinkExternalRel
+  toolbarLinkExternalRel,
+  toolbarLinkTargetUrl,
+  toolbarLinkHref,
+  toolbarLinkPopup
 } from "./toolbarLink";
 
 // Horizontal Align
-export { toolbarHorizontalAlign } from "./toolbarAlign";
+export { toolbarHorizontalAlign, toolbarVerticalAlign } from "./toolbarAlign";
 
 // Size
 export {
   toolbarSizeWidthWidthPercent,
   toolbarSizeHeightHeightPx,
-  toolbarSizeSizeSizePercent
+  toolbarSizeSizeSizePercent,
+  toolbarSizeContainerSize
 } from "./toolbarSize";
 
 // Padding
@@ -90,7 +85,8 @@ export { toolbarMargin } from "./toolbarMargin";
 export {
   toolbarShowOnDesktop,
   toolbarShowOnTablet,
-  toolbarShowOnMobile
+  toolbarShowOnMobile,
+  toolbarShowOnResponsive
 } from "./toolbarShowOnDevices";
 
 // Revers Columns
@@ -111,22 +107,21 @@ export { toolbarEntranceAnimation } from "./toolbarAnimation";
 // Hover Transition
 export { toolbarHoverTransition } from "./toolbarHoverTransition";
 
-//Box Shadow
+// Filter
 export {
-  toolbarBoxShadowHexAndOpacity,
-  toolbarBoxShadowPalette,
-  toolbarBoxShadowFields,
-  toolbarBoxShadowBlur,
-  toolbarBoxShadowSpread,
-  toolbarBoxShadowVertical,
-  toolbarBoxShadowHorizontal,
-  toolbarBoxShadow
-} from "./toolbarBoxShadow";
+  toolbarFilterHue,
+  toolbarFilterSaturation,
+  toolbarFilterBrightness,
+  toolbarFilterContrast
+} from "./toolbarFilters";
 
 // Disabled
 export {
   toolbarDisabledHorizontalAlign,
   toolbarDisabledAdvancedSettings,
+  toolbarDisabledSettings,
+  toolbarDisabledLink,
+  toolbarDisabledShowOnResponsive,
   toolbarDisabledShowOnTablet,
   toolbarDisabledShowOnMobile
 } from "./toolbarDisabled";
@@ -139,6 +134,12 @@ export {
 
 // Element Section
 export { toolbarElementSectionBoxShadow } from "./toolbarElementSection";
+
+// Element Row
+export {
+  toolbarElementRowColumnsHeightStyle,
+  toolbarElementRowColumnsHeight
+} from "./toolbarElementRow";
 
 // Element Video
 export {
@@ -203,3 +204,110 @@ export {
 
 // Element Image
 export { toolbarImageLinkExternal } from "./toolbarElementImage";
+
+// Typography
+export {
+  toolbarTypography2FontFamily,
+  toolbarTypography2FontStyle,
+  toolbarTypography2FontSize,
+  toolbarTypography2LineHeight,
+  toolbarTypography2FontWeight,
+  toolbarTypography2LetterSpacing
+} from "./toolbarTypography2";
+
+// Element Facebook Button
+export {
+  toolbarElementFbButtonType,
+  toolbarElementFbButtonLayout,
+  toolbarElementFbButtonSize,
+  toolbarElementFbButtonShare,
+  toolbarElementFbButtonCounter,
+  toolbarElementFbButtonFriends
+} from "./toolbarElementFbButton";
+
+// Element Map
+export {
+  toolbarElementMapAddress,
+  toolbarElementMapZoom
+} from "./toolbarElementMap";
+
+// Element Facebook Page
+export {
+  toolbarElementFbPageTabs,
+  toolbarElementFbPageHeight,
+  toolbarElementFbPageSmallHeader,
+  toolbarElementFbPageHideCover,
+  toolbarElementFbPageShowFacepile,
+  toolbarElementFbPageLink
+} from "./toolbarElementFbPage";
+
+// Element Facebook Group
+export {
+  toolbarElementFbGroupWidth,
+  toolbarElementFbGroupSkin,
+  toolbarElementFbGroupShowSocialContext,
+  toolbarElementFbGroupShowMetaData,
+  toolbarElementFbGroupLink
+} from "./toolbarElementFbGroup";
+
+// Element Facebook Comments
+export {
+  toolbarElementFbCommentsNumPosts,
+  toolbarElementFbCommentsTargetUrl,
+  toolbarElementFbCommentsHref
+} from "./toolbarElementFbComments";
+
+// Element Facebook Embed
+export {
+  toolbarElementFbEmbedType,
+  toolbarElementFbEmbedPostAndVideoShowText,
+  toolbarElementFbEmbedVideoAllowFullScreen,
+  toolbarElementFbEmbedVideoAutoPlay,
+  toolbarElementFbEmbedVideoCaptions,
+  toolbarElementFbEmbedPostHref,
+  toolbarElementFbEmbedVideoHref
+} from "./toolbarElementFbEmbed";
+
+// Elements WOO
+export {
+  toolbarElementWOOProductPageProductID,
+  toolbarElementWOOCategoriesColumns,
+  toolbarElementWOOCategoriesNumber,
+  toolbarElementWOOCategoriesOrderBy,
+  toolbarElementWOOCategoriesOrder,
+  toolbarElementWOOPagesShortCode
+} from "./toolbarElementsWOO";
+
+//Element WP Posts
+export {
+  toolbarElementWPPostsType,
+  toolbarElementWPPostsNumber,
+  toolbarElementWPPostsCategory,
+  toolbarElementWPPostsAuthor,
+  toolbarElementWPPostsInclude,
+  toolbarElementWPPostsExclude,
+  toolbarElementWPPostsStatus,
+  toolbarElementWPPostsMetaKey,
+  toolbarElementWPPostsMetaValue,
+  toolbarElementWPPostsOrderBy,
+  toolbarElementWPPostsOrder
+} from "./toolbarElementWPPosts";
+
+// WP Custom Shortcode
+export {
+  toolbarElementWPCustomShortCode
+} from "./toolbarElementWPCustomShortCode";
+
+// Elements WOO
+export {
+  toolbarElementWOOAddToCartProductID,
+  toolbarElementWOOAddToCartStyle
+} from "./toolbarElementsWOO";
+
+// Element Icon Text
+export {
+  toolbarElementIconTextListDisabled,
+  toolbarElementIconTextIconPosition,
+  toolbarElementIconTextIconSpacing,
+  toolbarElementIconDisabledSettings
+} from "./toolbarElementIconText";

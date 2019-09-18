@@ -35,7 +35,9 @@ export function imageStylesClassName(v, sizes, props) {
         maxWidth: `${Math.round(Math.abs((dW * 100) / desktopW))}%`,
         height: !imageSrc && !imagePopulation ? `${dH}px` : "auto",
         borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`,
-        filter: `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`,
+        filter: `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`
+      },
+      ".brz &:before": {
         boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
       },
 
@@ -43,7 +45,11 @@ export function imageStylesClassName(v, sizes, props) {
         transition: styleHoverTransition({ v }),
         transitionProperty: styleHoverTransitionProperty(),
 
-        ".brz &:hover": {
+        ".brz &:before": {
+          transition: styleHoverTransition({ v }),
+          transitionProperty: styleHoverTransitionProperty()
+        },
+        ".brz &:hover:before": {
           boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
         }
       },
@@ -158,6 +164,15 @@ export function wrapperStyleClassName(v) {
       transition: "var(--hoverTransition)",
       transitionProperty: "var(--hoverTransitionProperty)",
 
+      ":before": {
+        boxShadow: "var(--boxShadow)",
+
+        transition: "var(--hoverTransition)",
+        transitionProperty: "var(--hoverTransitionProperty)"
+      },
+      ":hover:before": {
+        boxShadow: "var(--hoverBoxShadow)"
+      },
       ":hover": {
         boxShadow: "var(--hoverBoxShadow)"
       }
@@ -166,13 +181,21 @@ export function wrapperStyleClassName(v) {
       width: "var(--tabletWidth)",
       height: "var(--tabletHeight)",
       borderRadius: "var(--tabletBorderRadius)",
-      boxShadow: "var(--tabletBoxShadow)"
+      boxShadow: "var(--tabletBoxShadow)",
+
+      ":before": {
+        boxShadow: "var(--tabletBoxShadow)"
+      }
     },
     ".brz-ed--mobile &": {
       width: "var(--mobileWidth)",
       height: "var(--mobileHeight)",
       borderRadius: "var(--mobileBorderRadius)",
-      boxShadow: "var(--mobileBoxShadow)"
+      boxShadow: "var(--mobileBoxShadow)",
+
+      ":before": {
+        boxShadow: "var(--mobileBoxShadow)"
+      }
     }
   };
   const glamorClassName = String(css(glamorObj));

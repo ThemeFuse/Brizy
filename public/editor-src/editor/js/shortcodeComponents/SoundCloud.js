@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "soundCloud",
-  title: t("SndCloud"),
+  title: t("SoundCloud"),
   icon: "nc-sound-cloud",
   resolve: {
     type: "Wrapper",

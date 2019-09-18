@@ -11,8 +11,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const CREATE_GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
-	const CREATE_GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
+	const GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
+	const GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
 
 	const CREATE_GLOBAL_BLOCK_ACTION = 'brizy-create-global-block';
 	const CREATE_SAVED_BLOCK_ACTION = 'brizy-create-saved-block';
@@ -58,8 +58,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::CREATE_GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
-		add_action( 'wp_ajax_' . self::CREATE_GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
+		add_action( 'wp_ajax_' . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
+		add_action( 'wp_ajax_' . self::GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
 		add_action( 'wp_ajax_' . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
 		add_action( 'wp_ajax_' . self::UPDATE_SAVED_BLOCK_ACTION, array( $this, 'actionUpdateSavedBlock' ) );
@@ -73,7 +73,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = $this->getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
 			$this->success( $blocks );
 
@@ -86,7 +86,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$blocks = $this->getBlocksByType( Brizy_Admin_Blocks_Main::CP_SAVED );
+			$blocks = Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_SAVED );
 
 			$this->success( $blocks );
 
@@ -108,14 +108,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 			$editorData = stripslashes( $this->param( 'data' ) );
-			$position = stripslashes( $this->param( 'position' ) );
+			$position   = stripslashes( $this->param( 'position' ) );
 
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_GLOBAL );
 			$block->set_editor_data( $editorData );
 			$block->set_needs_compile( true );
 
 			if ( $position ) {
-				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars(json_decode($position)) ) );
+				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars( json_decode( $position ) ) ) );
 			}
 
 			// rules
@@ -128,7 +128,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -146,6 +146,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'Invalid data' );
 		}
 
+
 		try {
 			$data  = stripslashes( $this->param( 'data' ) );
 			$block = $this->createBlock( $this->param( 'uid' ), 'publish', Brizy_Admin_Blocks_Main::CP_SAVED );
@@ -155,7 +156,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( $block );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -184,7 +185,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$position = stripslashes( $this->param( 'position' ) );
 
 			if ( $position ) {
-				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars(json_decode($position)) ) );
+				$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars( json_decode( $position ) ) ) );
 			}
 
 			// rules
@@ -200,7 +201,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $block->convertToOptionValue() );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 		} catch
 		( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -223,14 +224,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 
-			if ( (int) $this->param( 'autosave' ) ) {
+			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->auto_save_post();
 			} else {
 				$block->save();
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $block->convertToOptionValue() );
+			$this->success( Brizy_Editor_Block::postData( $block ) );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
@@ -301,33 +302,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->success( '200', json_encode( $positionObject ) );
 	}
 
-	/**
-	 * @param $type
-	 * @param array $arags
-	 *
-	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	private function getBlocksByType( $type, $arags = array() ) {
-
-		$filterArgs = array(
-			'post_type'      => $type,
-			'posts_per_page' => - 1,
-			'post_status'    => 'any',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-		);
-		$filterArgs = array_merge( $filterArgs, $arags );
-
-		$wpBlocks = get_posts( $filterArgs );
-		$blocks   = array();
-
-		foreach ( $wpBlocks as $wpPost ) {
-			$blocks[] = $this->postData( Brizy_Editor_Block::get( $wpPost ) );
-		}
-
-		return $blocks;
-	}
 
 	/**
 	 * @param $uid
@@ -344,6 +318,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								meta_key='brizy_post_uid' and 
 								meta_value='%s'   
 								WHERE p.post_type IN ('%s')
+								ORDER BY p.ID DESC
 								LIMIT 1", array( $uid, $postType ) );
 
 		return $wpdb->get_var( $prepare );
@@ -363,6 +338,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								pm.post_id=p.ID and 
 								meta_key='brizy_post_uid' and 
 								meta_value='%s'   
+								ORDER BY p.ID DESC
 								LIMIT 1", array( $uid, ) );
 
 		return $wpdb->get_var( $prepare );
@@ -390,7 +366,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	private function createBlock( $uid, $status, $type ) {
+		$name = md5( time() );
 		$post = wp_insert_post( array(
+			'post_title'  => $name,
+			'post_name'   => $name,
 			'post_status' => $status,
 			'post_type'   => $type
 		) );
@@ -421,23 +400,4 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 
-	/**
-	 * @param Brizy_Editor_Block $post
-	 *
-	 * @return array
-	 */
-	public function postData( Brizy_Editor_Block $post ) {
-
-		$p_id = (int) $post->get_id();
-
-		$global = array(
-			'uid'      => $post->get_uid(),
-			'status'   => get_post_status( $p_id ),
-			'data'     => $post->get_editor_data(),
-			'position' => $post->getPosition(),
-			'rules'    => $this->ruleManager->getRules( $p_id ),
-		);
-
-		return $global;
-	}
 }

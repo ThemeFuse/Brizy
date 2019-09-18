@@ -3,6 +3,7 @@ import Quill from "quill";
 let Inline = Quill.import("blots/inline");
 
 class Population extends Inline {
+  static className = "text-population";
   static create(value) {
     const node = super.create(value);
     this.setValue(value, node);
@@ -10,7 +11,7 @@ class Population extends Inline {
   }
 
   static formats(node) {
-    const population = node.getAttribute('data-population');
+    const population = node.getAttribute("data-population");
 
     if (population) {
       return population;
@@ -21,24 +22,25 @@ class Population extends Inline {
 
   static setValue(population, node) {
     if (population) {
-      node.setAttribute('data-population', population);
+      node.setAttribute("data-population", population);
     }
   }
 
   static removeValue(node) {
-    node.removeAttribute('data-population');
+    node.removeAttribute("data-population");
   }
-
 
   format(name, value) {
     if (name !== this.statics.blotName) {
       super.format(name, value);
     } else {
-      value ? this.constructor.setValue(value, this.domNode) : this.constructor.removeValue(this.domNode)
+      value
+        ? this.constructor.setValue(value, this.domNode)
+        : this.constructor.removeValue(this.domNode);
     }
   }
 }
-Population.blotName = 'population';
-Population.tagName = 'SPAN';
+Population.blotName = "population";
+Population.tagName = "span";
 
 export { Population as default };

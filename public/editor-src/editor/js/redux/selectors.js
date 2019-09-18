@@ -1,41 +1,219 @@
 import { createSelector } from "reselect";
 import produce from "immer";
-import Editor from "visual/global/Editor";
-import objectTraverse from "visual/utils/objectTraverse";
-import { getGeneratedGlobalBlocksInPage } from "visual/utils/blocks";
+import configRules from "visual/config/rules";
+import { objectTraverse2, objectFromEntries } from "visual/utils/object";
 
-export const pageDataSelector = state => state.page.data || {};
+// === 0 DEPENDENCIES ===
+
+export const pageSelector = state => state.page;
+
+export const projectSelector = state => state.project || {};
 
 export const globalBlocksSelector = state => state.globalBlocks || {};
 
+export const globalBlocksUpdatesSelector = state => state.globalBlocksUpdates;
+
 export const savedBlocksSelector = state => state.savedBlocks || {};
+
+export const stylesSelector = state => state.styles || [];
+
+export const fontSelector = state => state.fonts || {};
 
 export const deviceModeSelector = state => state.ui.deviceMode;
 
-export const globalsSelector = state => state.globals || {};
-
 export const copiedElementSelector = state => state.copiedElement;
+
+export const currentStyleIdSelector = state => state.currentStyleId;
+
+export const currentStyleSelector = state => state.currentStyle;
+
+export const extraFontStylesSelector = state => state.extraFontStyles;
+
+export const screenshotsSelector = state => state.screenshots || {};
+
+// === END 0 DEPENDENCIES ===
+
+// === 1 DEPENDENCY ===
+
+export const pageDataSelector = createSelector(
+  pageSelector,
+  page => page.data || {}
+);
 
 export const pageBlocksSelector = createSelector(
   pageDataSelector,
   pageData => pageData.items || []
 );
 
-export const currentStyleSelector = createSelector(
-  globalsSelector,
-  globals => {
-    const { styles: globalStyles = {} } = globals;
-    const currentStyleId =
-      globalStyles._selected && Editor.getStyle(globalStyles._selected)
-        ? globalStyles._selected
-        : "default";
-    const currentStyle = {
-      ...Editor.getStyle(currentStyleId),
-      ...globalStyles[currentStyleId]
-    };
+export const unDeletedFontSelector = createSelector(
+  fontSelector,
+  fonts => {
+    return Object.entries(fonts).reduce((acc, curr) => {
+      const [type, { data = [] }] = curr;
 
+      return {
+        ...acc,
+        [`${type}`]: {
+          data: data.filter(i => i.deleted !== true)
+        }
+      };
+    }, {});
+  }
+);
+
+export const disabledElementsSelector = createSelector(
+  projectSelector,
+  project => project.data.disabledElements || []
+);
+
+// === END 1 DEPENDENCY ===
+
+// === 2 DEPENDENCIES ===
+
+export const pageAssembledSelector = createSelector(
+  pageSelector,
+  screenshotsSelector,
+  (page, screenshots) => {
+    if (Object.keys(screenshots).length === 0) {
+      return page;
+    }
+
+    return produce(page, draft => {
+      objectTraverse2(draft, obj => {
+        if (
+          obj.type &&
+          obj.type !== "GlobalBlock" &&
+          obj.value &&
+          obj.value._id &&
+          screenshots[obj.value._id]
+        ) {
+          Object.assign(obj.value, screenshots[obj.value._id]);
+        }
+      });
+    });
+  }
+);
+
+export const savedBlocksAssembledSelector = createSelector(
+  savedBlocksSelector,
+  screenshotsSelector,
+  (savedBlocks, screenshots) => {
+    const savedBlocksScreenshotsExist = Object.values(screenshots).find(
+      s => s.blockScreenshot === "saved"
+    );
+    if (savedBlocksScreenshotsExist) {
+      return savedBlocks;
+    }
+
+    return objectFromEntries(
+      Object.entries(savedBlocks).map(entry => {
+        const [key, value] = entry;
+        const blockScreenshot = screenshots[key];
+
+        if (!blockScreenshot) {
+          return entry;
+        }
+
+        const newValue = {
+          ...value,
+          value: {
+            ...value.value,
+            ...blockScreenshot
+          }
+        };
+
+        return [key, newValue];
+      })
+    );
+  }
+);
+
+export const globalBlocksInPageSelector = createSelector(
+  globalBlocksSelector,
+  pageBlocksSelector,
+  (globalBlocks, pageBlocks) => {
+    const acc = {};
+
+    extractGlobalBlocks(pageBlocks);
+
+    return acc;
+
+    function extractGlobalBlocks(obj) {
+      // global blocks can be deep in the tree (like popups)
+      // that's why it's not sufficient to search only with a simple reduce
+      objectTraverse2(obj, obj => {
+        if (obj.type && obj.type === "GlobalBlock" && obj.value) {
+          const { globalBlockId } = obj.value;
+
+          if (!acc[globalBlockId]) {
+            acc[globalBlockId] = globalBlocks[globalBlockId];
+            extractGlobalBlocks(globalBlocks[globalBlockId]);
+          }
+        }
+      });
+    }
+  }
+);
+
+// published globalBlocks + their updates
+// this is used when rendering globalBlocks refs in the page
+// and purposefully omits screenshots, to prevent a rerender when screenshots change
+export const globalBlocksAssembled2Selector = createSelector(
+  globalBlocksSelector,
+  globalBlocksUpdatesSelector,
+  (globalBlocks, globalBlocksUpdates) => {
+    return objectFromEntries(
+      Object.entries(globalBlocks).map(entry => {
+        const [key, value] = entry;
+        const update = globalBlocksUpdates[key];
+
+        if (!update) {
+          return entry;
+        }
+
+        const value_ = { ...value, value: update };
+
+        return [key, value_];
+      })
+    );
+  }
+);
+
+// published globalBlocks + published screenshots (those made when the global blocks is created)
+// this is when saving the screenshot, after the globalBlock was created
+export const globalBlocksAssembled3Selector = createSelector(
+  globalBlocksSelector,
+  screenshotsSelector,
+  (globalBlocks, screenshots) => {
+    return objectFromEntries(
+      Object.entries(globalBlocks).map(entry => {
+        const [key, value] = entry;
+        const screenshot =
+          screenshots._published && screenshots._published[key];
+
+        if (!screenshot) {
+          return entry;
+        }
+
+        const value_ = {
+          ...value,
+          value: {
+            ...value.value,
+            ...screenshot
+          }
+        };
+
+        return [key, value_];
+      })
+    );
+  }
+);
+
+export const rulesSelector = createSelector(
+  currentStyleSelector,
+  extraFontStylesSelector,
+  (currentStyle, extraFontStyles) => {
     const { colorPalette, fontStyles } = currentStyle;
-    const { _extraFontStyles: extraFontStyles = [] } = globalStyles;
     const mergedFontStyles = fontStyles.concat(extraFontStyles);
 
     const generatedColorRules = colorPalette.reduce(
@@ -142,6 +320,7 @@ export const currentStyleSelector = createSelector(
         ...acc,
         [`${font.id}__fsDesktop`]: {
           fontFamily: font.fontFamily,
+          fontFamilyType: font.fontFamilyType,
           fontSize: font.fontSize,
           fontWeight: font.fontWeight,
           lineHeight: font.lineHeight,
@@ -161,6 +340,7 @@ export const currentStyleSelector = createSelector(
         },
         [`${font.id}__subMenuFsDesktop`]: {
           subMenuFontFamily: font.fontFamily,
+          subMenuFontFamilyType: font.fontFamilyType,
           subMenuFontSize: font.fontSize,
           subMenuFontWeight: font.fontWeight,
           subMenuLineHeight: font.lineHeight,
@@ -180,6 +360,7 @@ export const currentStyleSelector = createSelector(
         },
         [`${font.id}__mMenuFsDesktop`]: {
           mMenuFontFamily: font.fontFamily,
+          mMenuFontFamilyType: font.fontFamilyType,
           mMenuFontSize: font.fontSize,
           mMenuFontWeight: font.fontWeight,
           mMenuLineHeight: font.lineHeight,
@@ -200,70 +381,44 @@ export const currentStyleSelector = createSelector(
       }),
       {}
     );
-    const rules = {
-      ...Editor.getStyle("default").rules,
-      ...currentStyle.rules,
+
+    return {
+      ...configRules,
       ...generatedColorRules,
       ...generatedFontRules
     };
-
-    return {
-      id: currentStyleId,
-      colorPalette,
-      fontStyles,
-      extraFontStyles,
-      mergedFontStyles,
-      rules
-    };
   }
 );
 
+// all global block refs are replaced with their data
 export const pageDataNoRefsSelector = createSelector(
   pageDataSelector,
-  globalBlocksSelector,
+  globalBlocksAssembled2Selector,
   (pageData, globalBlocks) => {
-    return produce(pageData, draft => {
-      objectTraverse(draft, (key, value, obj) => {
-        if (obj.type && obj.type === "GlobalBlock" && obj.value) {
-          const { globalBlockId } = obj.value;
+    return transformData(pageData);
 
-          if (globalBlocks[globalBlockId]) {
-            Object.assign(obj, globalBlocks[globalBlockId]);
+    function transformData(data) {
+      return produce(data, draft => {
+        objectTraverse2(draft, obj => {
+          if (obj.type && obj.type === "GlobalBlock" && obj.value) {
+            const { globalBlockId } = obj.value;
+
+            if (globalBlocks[globalBlockId]) {
+              transformData(Object.assign(obj, globalBlocks[globalBlockId]));
+            }
           }
-        }
+        });
       });
-    });
-  }
-);
-
-export const globalBlocksInPageSelector = createSelector(
-  globalBlocksSelector,
-  pageBlocksSelector,
-  (globalBlocks, pageBlocks) => {
-    const acc = {};
-
-    // global blocks can be deep in the tree (like popups)
-    // that's why it's not sufficient to search only with a simple reduce
-    objectTraverse(pageBlocks, (key, value, obj) => {
-      if (obj.type && obj.type === "GlobalBlock" && obj.value) {
-        const { globalBlockId } = obj.value;
-
-        if (!acc[globalBlockId]) {
-          acc[globalBlockId] = globalBlocks[globalBlockId];
-        }
-      }
-    });
-
-    return acc;
+    }
   }
 );
 
 export const copiedElementNoRefsSelector = createSelector(
   copiedElementSelector,
-  globalBlocksSelector,
+  globalBlocksAssembled2Selector,
   (copiedElement, globalBlocks) => {
     return produce(copiedElement, draft => {
-      objectTraverse(draft, (key, value, obj) => {
+      objectTraverse2(draft, obj => {
         if (obj.type && obj.type === "GlobalBlock" && obj.value) {
           const { globalBlockId } = obj.value;
 
@@ -275,3 +430,93 @@ export const copiedElementNoRefsSelector = createSelector(
     });
   }
 );
+
+// === END 2 DEPENDENCIES ===
+
+// === 3 DEPENDENCIES ===
+
+export const globalBlocksAssembledSelector = createSelector(
+  globalBlocksSelector,
+  globalBlocksUpdatesSelector,
+  screenshotsSelector,
+  (globalBlocks, globalBlocksUpdates, screenshots) => {
+    return objectFromEntries(
+      Object.entries(globalBlocks).map(entry => {
+        const [key, value] = entry;
+        const update = globalBlocksUpdates[key];
+        const screenshot = screenshots[key];
+
+        if (!update && !screenshot) {
+          return entry;
+        }
+
+        let value_ = produce(value, draft => {
+          if (update) {
+            draft.value = update;
+          }
+
+          if (screenshot) {
+            Object.assign(draft.value, screenshot);
+          }
+
+          objectTraverse2(draft.value, obj => {
+            if (
+              obj.type &&
+              obj.type !== "GlobalBlock" &&
+              obj.value &&
+              obj.value._id &&
+              screenshots[obj.value._id]
+            ) {
+              Object.assign(obj.value, screenshots[obj.value._id]);
+            }
+          });
+        });
+
+        return [key, value_];
+      })
+    );
+  }
+);
+
+// ==== END 3 DEPENDENCIES ===
+
+// === 6 DEPENDENCIES ===
+
+export const projectAssembled = createSelector(
+  projectSelector,
+  fontSelector,
+  stylesSelector,
+  currentStyleIdSelector,
+  currentStyleSelector,
+  extraFontStylesSelector,
+  (project, fonts, styles, currentStyleId, currentStyle, extraFontStyles) => {
+    return produce(project, draft => {
+      draft.data.fonts = fonts;
+      draft.data.styles = styles;
+      draft.data.selectedStyle = currentStyleId;
+      draft.data.extraFontStyles = extraFontStyles;
+
+      for (let i = 0; i < draft.data.styles.length; i++) {
+        if (draft.data.styles[i].id === currentStyle.id) {
+          draft.data.styles[i] = currentStyle;
+        }
+      }
+    });
+  }
+);
+
+// === END 6 DEPENDENCIES ===
+
+// === ANOMALIES ===
+
+export const pageDataAssembledSelector = createSelector(
+  pageAssembledSelector,
+  page => page.data || {}
+);
+
+export const pageBlocksAssembledSelector = createSelector(
+  pageDataAssembledSelector,
+  pageData => pageData.items || []
+);
+
+// === END ANOMALIES ===

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { t } from "visual/utils/i18n";
 import { Disconnect as ViewDisconnect } from "../../common/GlobalApps/StepsView";
 import { deleteAccount } from "../../common/GlobalApps/api";
 import { Context } from "../../common/GlobalApps/Context";
@@ -33,7 +34,7 @@ class Disconnect extends Component {
     } else {
       this.setState({
         nextLoading: false,
-        error: "Something went wrong"
+        error: t("Something went wrong")
       });
     }
   };
@@ -55,7 +56,7 @@ class Disconnect extends Component {
     return (
       <ViewDisconnect
         {...this.context.app}
-        descriptions="Are you want to delete account ?"
+        descriptions={`${t("Are you want to delete account")} ?`}
         nextLoading={nextLoading}
         prevLoading={prevLoading}
         error={error}

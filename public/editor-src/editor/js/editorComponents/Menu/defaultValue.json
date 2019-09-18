@@ -23,7 +23,14 @@
     "tempColorOpacity": 1,
     "tempHoverColorOpacity": 1,
     "fontStyle": "button",
-    "fontFamily": "montserrat",
+    "fontFamilyType": "google",
+    "subMenuFontFamilyType": "google",
+    "mMenuFontFamilyType": "google",
+    "families": {
+      "fontFamily": "montserrat",
+      "subMenuFontFamily": "montserrat",
+      "mMenuFontFamily": "montserrat"
+    },
     "fontSize": 12,
     "fontWeight": 700,
     "lineHeight": 1.8,
@@ -78,12 +85,17 @@
     "subMenuTempColorOpacity": 1,
     "subMenuTempHoverColorOpacity": 1,
 
+    "subMenuBgColorType": "solid",
+
     "subMenuBgColorHex": "#333333",
     "subMenuBgColorOpacity": 1,
     "subMenuBgColorPalette": "",
+
+    "subMenuHoverBgColorType": "solid",
     "subMenuHoverBgColorHex": "#333333",
     "subMenuHoverBgColorOpacity": 1,
     "subMenuHoverBgColorPalette": "",
+
     "subMenuTempBgColorOpacity": 1,
     "subMenuTempHoverBgColorOpacity": 1,
 
@@ -99,7 +111,7 @@
     "subMenuIconSpacing": 15,
 
     "subMenuFontStyle": "button",
-    "subMenuFontFamily": "montserrat",
+
     "subMenuFontSize": 12,
     "subMenuFontWeight": 700,
     "subMenuLineHeight": 1.8,
@@ -118,16 +130,47 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
-    "boxShadow": "off",
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
     "boxShadowColorHex": "#000000",
     "boxShadowColorOpacity": 1,
     "boxShadowColorPalette": "",
-    "boxShadowBlur": 4,
-    "boxShadowSpread": 0,
-    "boxShadowVertical": 2,
-    "boxShadowHorizontal": 1,
-    "tempBoxShadowColorPalette": "",
+
     "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorOpacity": null,
+    "hoverBoxShadowColorPalette": null,
+
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowHorizontal": null,
 
     "tabletSubMenuFontStyle": "button",
     "tabletSubMenuFontSize": 11,
@@ -143,7 +186,6 @@
 
     "mMenuSize": 18,
     "mMenuFontStyle": "button",
-    "mMenuFontFamily": "montserrat",
     "mMenuFontSize": 12,
     "mMenuFontWeight": 700,
     "mMenuLineHeight": 1.8,
@@ -159,9 +201,12 @@
     "mMenuTempColorOpacity": 1,
     "mMenuTempHoverColorOpacity": 1,
 
+    "mMenuBgColorType": "solid",
+
     "mMenuBgColorHex": "#333333",
     "mMenuBgColorOpacity": 1,
     "mMenuBgColorPalette": "",
+
     "mMenuTempBgColorOpacity": 1,
 
     "mMenuBorderColorHex": "#555555",

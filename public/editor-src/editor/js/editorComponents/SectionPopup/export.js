@@ -1,10 +1,12 @@
 import $ from "jquery";
 
 export default function() {
-  $(document).on("click", '[data-brz-link-type="popup"]', function(e) {
+  const $document = $(document);
+
+  $document.on("click", '[data-brz-link-type="popup"]', function(e) {
     e.preventDefault();
 
-    var popupId = this.getAttribute("href").slice(1); // without the `#`
+    const popupId = this.getAttribute("href").slice(1); // without the `#`
 
     if (popupId) {
       $('[data-brz-popup="' + popupId + '"]').addClass("brz-popup--opened");
@@ -12,16 +14,29 @@ export default function() {
     }
   });
 
-  $(".brz-popup").on("click", function(e) {
-    var clickedInsideContent =
+  $document.on("click", ".brz-popup", function(e) {
+    const clickedInsideContent =
       $(e.target).closest(".brz-container").length === 0;
 
     if (clickedInsideContent) {
-      $(this).removeClass("brz-popup--opened");
-      $("html").removeClass("brz-ow-hidden");
-
-      // trigger an event so that other components could listen
-      $(document).trigger("brz.popup.close", [this]);
+      closePopup(this);
     }
   });
+
+  // closes a popup when an anchor link is clicked inside it
+  $document.on("brz.anchor.click", function(e, anchor) {
+    const $closestPopup = $(anchor).closest(".brz-popup");
+
+    if ($closestPopup.length > 0) {
+      closePopup($closestPopup);
+    }
+  });
+
+  function closePopup(popup) {
+    $(popup).removeClass("brz-popup--opened");
+    $("html").removeClass("brz-ow-hidden");
+
+    // trigger an event so that other components could listen
+    $(document).trigger("brz.popup.close", [popup]);
+  }
 }

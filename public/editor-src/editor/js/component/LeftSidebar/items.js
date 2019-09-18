@@ -42,8 +42,7 @@ export default {
           type: "link",
           icon: "nc-back",
           label: t("Back to Brizy"),
-          link: urls.backToDashboard,
-          linkTarget: "_blank"
+          link: urls.backToDashboard
         }
       ]
     }

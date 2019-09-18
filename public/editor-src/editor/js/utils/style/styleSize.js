@@ -12,7 +12,7 @@ export function styleSizeSizePercent({ v, device }) {
   return `${defaultValueValue({ v, key: "size", device })}%`;
 }
 
-export function styleSizeConatinerSizePercent({ v }) {
+export function styleSizeContainerSizePercent({ v }) {
   const { containerSize } = v;
 
   return `${containerSize}%`;

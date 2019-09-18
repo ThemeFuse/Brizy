@@ -12,22 +12,13 @@ export function toolbarBorderRadius({
   onChangeGrouped,
   onChangeUngrouped
 }) {
-  const borderRadiusTypeKey = defaultValueKey({
-    key: "borderRadiusType",
-    device,
-    state
-  });
-  const borderRadiusTypeValue = defaultValueValue({
-    v,
-    key: "borderRadiusType",
-    device,
-    state
-  });
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
     type: "multiPicker",
     picker: {
-      id: borderRadiusTypeKey,
+      id: dvk("borderRadiusType"),
       label: t("Corner"),
       type: "radioGroup",
       choices: [
@@ -40,7 +31,7 @@ export function toolbarBorderRadius({
           icon: "nc-corners-individual"
         }
       ],
-      value: borderRadiusTypeValue
+      value: dvv("borderRadiusType")
     },
     choices: {
       ...toolbarBorderRadiusGrouped({
@@ -60,22 +51,13 @@ export function toolbarBorderRadius({
 }
 
 export function toolbarBorderRadiusGrouped({ v, device, state, onChange }) {
-  const borderRadiusKey = defaultValueKey({
-    key: "borderRadius",
-    device,
-    state
-  });
-  const borderRadiusValue = defaultValueValue({
-    v,
-    key: "borderRadius",
-    device,
-    state
-  });
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
     grouped: [
       {
-        id: borderRadiusKey,
+        id: dvk("borderRadius"),
         type: "slider",
         slider: {
           min: 0,
@@ -95,7 +77,7 @@ export function toolbarBorderRadiusGrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: borderRadiusValue
+          value: dvv("borderRadius")
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -110,58 +92,13 @@ export function toolbarBorderRadiusGrouped({ v, device, state, onChange }) {
 }
 
 export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
-  const borderTopLeftRadiusKey = defaultValueKey({
-    key: "borderTopLeftRadius",
-    device,
-    state
-  });
-  const borderTopLeftRadiusValue = defaultValueValue({
-    v,
-    key: "borderTopLeftRadius",
-    device,
-    state
-  });
-
-  const borderTopRightRadiusKey = defaultValueKey({
-    key: "borderTopRightRadius",
-    device,
-    state
-  });
-  const borderTopRightRadiusValue = defaultValueValue({
-    v,
-    key: "borderTopRightRadius",
-    device,
-    state
-  });
-
-  const borderBottomLeftRadiusKey = defaultValueKey({
-    key: "borderBottomLeftRadius",
-    device,
-    state
-  });
-  const borderBottomLeftRadiusValue = defaultValueValue({
-    v,
-    key: "borderBottomLeftRadius",
-    device,
-    state
-  });
-
-  const borderBottomRightRadiusKey = defaultValueKey({
-    key: "borderBottomRightRadius",
-    device,
-    state
-  });
-  const borderBottomRightRadiusValue = defaultValueValue({
-    v,
-    key: "borderBottomRightRadius",
-    device,
-    state
-  });
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
     ungrouped: [
       {
-        id: borderTopLeftRadiusKey,
+        id: dvk("borderTopLeftRadius"),
         icon: "nc-corners-top-left",
         type: "slider",
         slider: {
@@ -182,7 +119,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: borderTopLeftRadiusValue
+          value: dvv("borderTopLeftRadius")
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -197,7 +134,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: borderTopRightRadiusKey,
+        id: dvk("borderTopRightRadius"),
         icon: "nc-corners-top-right",
         type: "slider",
         slider: {
@@ -218,7 +155,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: borderTopRightRadiusValue
+          value: dvv("borderTopRightRadius")
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -233,7 +170,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: borderBottomRightRadiusKey,
+        id: dvk("borderBottomRightRadius"),
         icon: "nc-corners-bottom-right",
         type: "slider",
         slider: {
@@ -254,7 +191,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: borderBottomRightRadiusValue
+          value: dvv("borderBottomRightRadius")
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
@@ -269,7 +206,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: borderBottomLeftRadiusKey,
+        id: dvk("borderBottomLeftRadius"),
         icon: "nc-corners-bottom-left",
         type: "slider",
         slider: {
@@ -290,7 +227,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: borderBottomLeftRadiusValue
+          value: dvv("borderBottomLeftRadius")
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {

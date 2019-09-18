@@ -16,6 +16,9 @@ class Brizy_Admin_Migrations_CleanInvalidBlocksMigration implements Brizy_Admin_
 	 */
 	public function execute() {
 
+		// disable this migration because of suspected data loss
+		return;
+
 		try {
 			global $wpdb;
 
@@ -34,6 +37,10 @@ class Brizy_Admin_Migrations_CleanInvalidBlocksMigration implements Brizy_Admin_
 		} catch ( Exception $e ) {
 			return;
 		}
+	}
+
+	public function getPriority() {
+		return 0;
 	}
 
 }

@@ -5,7 +5,6 @@ import Toolbar from "./Toolbar";
 import monitor from "../monitor";
 
 let portalNodesByDocument = new WeakMap();
-let portalNode;
 
 class PortalToolbar extends React.Component {
   static defaultProps = {
@@ -26,11 +25,22 @@ class PortalToolbar extends React.Component {
 
   node = null;
 
-  manualPropsGetter = null;
+  state = {
+    opened: false
+  };
 
   componentDidMount() {
+    this.node = ReactDOM.findDOMNode(this);
+
+    if (!portalNodesByDocument.get(this.node.ownerDocument)) {
+      const portalNode = this.node.ownerDocument.createElement("div");
+
+      portalNode.id = "brz-toolbar-portal";
+      this.node.ownerDocument.body.appendChild(portalNode);
+      portalNodesByDocument.set(this.node.ownerDocument, portalNode);
+    }
+
     if (!this.props.manualControl) {
-      this.node = ReactDOM.findDOMNode(this);
       this.node.addEventListener(
         "click",
         event => {
@@ -46,20 +56,9 @@ class PortalToolbar extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    if (monitor.getActive() === this) {
-      const props = this.props.manualControl
-        ? this.manualPropsGetter()
-        : this.props;
-
-      this.renderPortal(props);
-    }
-  }
-
   componentWillUnmount() {
     monitor.unsetIfActive(this);
     this.node = null;
-    this.manualPropsGetter = null;
   }
 
   handleClickOutside = () => {
@@ -67,42 +66,26 @@ class PortalToolbar extends React.Component {
   };
 
   handleMonitorActivationRequest() {
-    this.show(this.props);
+    this.show();
   }
 
   handleMonitorDeactivationRequest() {
     this.hide();
   }
 
-  show(props) {
-    if (this.props.manualControl) {
-      const { getProps } = props;
-      this.manualPropsGetter = getProps;
-
-      props = getProps();
-      this.node = props.node;
-    }
-
-    if (monitor.getActive() === this) {
-      this.renderPortal(props);
-    } else {
+  show() {
+    if (monitor.getActive() !== this) {
       monitor.setActive(this);
-      setTimeout(() => {
-        this.node = ReactDOM.findDOMNode(this);
-        props.onBeforeOpen();
-        this.renderPortal(props);
-        props.onOpen();
-      }, 0);
+      this.props.onBeforeOpen();
+      this.setState({ opened: true }, this.props.onOpen);
     }
   }
 
   hide() {
-    const ownerDocument = this.node.ownerDocument;
-    const portalNode = portalNodesByDocument.get(ownerDocument);
-
-    this.props.onBeforeClose();
-    ReactDOM.unmountComponentAtNode(portalNode);
-    this.props.onClose();
+    if (this.state.opened) {
+      this.props.onBeforeClose();
+      this.setState({ opened: false }, this.props.onClose);
+    }
   }
 
   clickOutsideException = clickTarget => {
@@ -123,46 +106,42 @@ class PortalToolbar extends React.Component {
     ];
   };
 
-  renderPortal = props => {
-    const items = props.getItems();
+  renderToolbar() {
+    const items = this.props.getItems();
 
     if (!items || items.length === 0) {
       return;
     }
 
     const ownerDocument = this.node.ownerDocument;
-    let portalNode = portalNodesByDocument.get(ownerDocument);
+    const portalNode = portalNodesByDocument.get(ownerDocument);
 
-    if (!portalNode) {
-      portalNode = ownerDocument.createElement("div");
-      portalNode.id = "brz-toolbar-portal";
-
-      ownerDocument.body.appendChild(portalNode);
-      portalNodesByDocument.set(ownerDocument, portalNode);
-    }
-
-    const node = props.node || ReactDOM.findDOMNode(this);
-    const toolbar = (
+    return ReactDOM.createPortal(
       <ClickOutside
         exceptions={this.getOutSideExceptions()}
         onClickOutside={this.handleClickOutside}
       >
         <Toolbar
-          {...props}
+          {...this.props}
           window={ownerDocument.defaultView}
           items={items}
-          node={node}
-          onMouseEnter={props.onMouseEnter}
-          onMouseLeave={props.onMouseLeave}
+          node={this.node}
         />
-      </ClickOutside>
+      </ClickOutside>,
+      portalNode
     );
-
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, toolbar, portalNode);
-  };
+  }
 
   render() {
-    return React.Children.only(this.props.children);
+    const { children } = this.props;
+    const { opened } = this.state;
+
+    return (
+      <React.Fragment>
+        {children}
+        {opened && this.renderToolbar()}
+      </React.Fragment>
+    );
   }
 }
 

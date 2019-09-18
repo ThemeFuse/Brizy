@@ -2,10 +2,13 @@
   &-validation-error {
     text-align: left;
   }
+  &-validation-error .brz-p {
+    max-width: 100%;
+    margin-bottom: 5px;
+  }
   &__connect {
-    padding-left: 20px;
-    padding-right: 20px;
-    
+    height: 100%;
+
     .brz-img,
     .brz-label {
       margin-bottom: 34px;
@@ -13,6 +16,22 @@
     .brz-input {
       margin-right: 10px;
     }
+    .brz-label {
+      line-height: 1.5;
+    }
+    &:before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+  &__container {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
   }
   &__confirmation {
     font-size: 14px;

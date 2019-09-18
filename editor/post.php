@@ -258,18 +258,24 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	/**
+	 *  Mark all brizy post that needs compile
+	 */
+	public static function mark_all_for_compilation() {
+		global $wpdb;
+		$wpdb->update( $wpdb->postmeta, array( 'meta_value' => 1 ), array( 'meta_key' => self::BRIZY_POST_NEEDS_COMPILE_KEY ) );
+	}
+
+	/**
 	 * @return Brizy_Editor_Post[]
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
 	 * @todo: We need to move this method from here
-	 *
-	 *
 	 */
-	public static function get_all_brizy_posts() {
+	public static function foreach_brizy_post( $callback ) {
 		global $wpdb;
 		$posts = $wpdb->get_results(
 			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'
+									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision' and p.post_type<>'attachment'
 									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
 		);
 
@@ -277,13 +283,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		foreach ( $posts as $p ) {
 			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
 
-				if ( in_array( $p->post_type, array(
-					Brizy_Admin_Blocks_Main::CP_GLOBAL,
-					Brizy_Admin_Blocks_Main::CP_SAVED
-				) ) ) {
-					$result[] = Brizy_Editor_Block::get( $p->post_id );
-				} else {
-					$result[] = Brizy_Editor_Post::get( $p->post_id );
+				if ( is_callable( $callback ) ) {
+					$callback( $p );
 				}
 			}
 		}
@@ -300,23 +301,13 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		global $wpdb;
 		$posts = $wpdb->get_results(
 			$wpdb->prepare( "SELECT p.ID FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'
+									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'  and p.post_type<>'attachment'
 									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
 		);
 
 		return array_map( function ( $o ) {
 			return (int) $o->ID;
 		}, $posts );
-	}
-
-	public static function clear_compiled_cache() {
-
-		$posts = self::get_all_brizy_post_ids();
-		remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-		foreach ( $posts as $id ) {
-			update_metadata( 'post', $id, self::BRIZY_POST_NEEDS_COMPILE_KEY, true );
-			//wp_update_post( array( 'ID' => $id ) );
-		}
 	}
 
 	/**

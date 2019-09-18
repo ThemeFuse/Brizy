@@ -8,13 +8,15 @@ class Brizy_Config {
 	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor';
-	const MEDIA_IMAGE_URL = '/storage/media';
+	const MEDIA_IMAGE_URL = '/media';
+	const FONTS_URL = 'https://www.brizy.cloud/fonts/wp?path=%s';
 
 	const EDITOR_HOST_API = 'api.testblox.info';
 	const EDITOR_HOST_BASE = 'www.testblox.info';
 	const EDITOR_HOST_ORIGIN = 'testblox.info';
 	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
+	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'https://api.brizy.io';
 
 	const BRIZY_REGISTRATION_CREDENTIALS = '/wordpress/credentials';
@@ -33,7 +35,7 @@ class Brizy_Config {
 	const PLATFORM_EMAIL = "admin@admin.com";
 
 	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/brizy-pro-pricing/";
-	const SUPPORT_URL = "https://github.com/ThemeFuse/Brizy/issues";
+	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
 	const SHORTPIXEL_CONFIG = "https://www.brizy.cloud/shortpixel.txt";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
@@ -41,19 +43,19 @@ class Brizy_Config {
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://compiler.brizy.io/compile',
-				'http://compiler1.brizycompiler.run/compile',
-				'http://compiler2.brizycompiler.run/compile'
+				'http://compiler.brizy.io/compile/v2',
+				'http://compiler1.brizycompiler.run/compile/v2',
+				'http://compiler2.brizycompiler.run/compile/v2'
 			)
 		);
 	}
 
-	static public function getStaticBrizyUrls() {
+	static public function getStaticUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'https://static.brizy.io/%s/%s',
-				'http://static1.brizycompiler.run/%s/%s',
-				'http://static2.brizycompiler.run/%s/%s'
+				'https://static.brizy.io/builds/free/%s',
+				'http://static1.brizycompiler.run/builds/free/%s',
+				'http://static2.brizycompiler.run/builds/free/%s'
 			)
 		);
 	}
@@ -61,9 +63,9 @@ class Brizy_Config {
 	static public function getEditorBaseUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'https://app.brizy.io',
-				'http://app1.brizycompiler.run',
-				'http://app2.brizycompiler.run'
+				'https://brizy.cloud',
+				'http://media1.brizycompiler.run',
+				'http://media2.brizycompiler.run'
 			)
 		);
 	}
@@ -71,7 +73,7 @@ class Brizy_Config {
 	static public function getOptimizerConfig( $className ) {
 		switch ( $className ) {
 			case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
-				return array('API_KEY'=>'uunlmNjZZBtKLfCSg4OK');
+				return array( 'API_KEY' => 'uunlmNjZZBtKLfCSg4OK' );
 		}
 	}
 

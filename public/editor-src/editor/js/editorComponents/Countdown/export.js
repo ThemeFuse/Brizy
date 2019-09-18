@@ -6,8 +6,6 @@ export default function() {
   $(".brz-countdown").each(function() {
     var $this = $(this);
 
-    var pageLoadTime = Math.floor(Date.now() / 1000);
-
     // timer
     var $daysNumber = $this.find(
       ".brz-countdown__days > .brz-countdown__number"
@@ -42,7 +40,7 @@ export default function() {
     };
 
     $this.countdown({
-      now: getTimestamp() * 1000,
+      now: Date.now(),
       endDate: endTime,
       timeZoneOffset: -timezone * 60 * 1000,
       tickInterval: 1000,
@@ -59,11 +57,5 @@ export default function() {
         $secondsLabel.text(remaining.seconds.title);
       }
     });
-
-    function getTimestamp() {
-      var currentTime = Math.floor(Date.now() / 1000),
-        delta = currentTime - pageLoadTime;
-      return parseInt(__CONFIG__.serverTimestamp) + delta;
-    }
   });
 }

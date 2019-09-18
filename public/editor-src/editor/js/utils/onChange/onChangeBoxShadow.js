@@ -1,92 +1,42 @@
 // ToDo.. De ce ColorFields accepta 2 valori HEX si Opacity eu cerd ca e nevoie doar de HEX opacity nu e nevoie de el
+
 import { onChangeDependeciesGrouped } from "./onChange";
 import { defaultValueValue, defaultValueKey } from "./device";
 
-export function onChangeBoxShadowHexAndOpacity({
-  v,
-  device,
-  state,
-  hex,
-  opacity = undefined,
-  isChanged = "hex",
-  opacityDragEnd = false
-}) {
-  opacity = onChangeBoxShadowOpacity({
-    v,
-    device,
-    state,
-    opacity,
-    isChanged
+export function onChangeBoxShadowType2({ v, device, state, boxShadowType }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  console.log({
+    [dvk("boxShadow")]: boxShadowType,
+    [dvk("tempBoxShadow")]:
+      boxShadowType !== "" ? boxShadowType : dvv("tempBoxShadow")
   });
 
-  const tempOpacity =
-    opacity > 0 && opacityDragEnd
-      ? opacity
-      : defaultValueValue({
-          v,
-          key: "tempBoxShadowColorOpacity",
-          device,
-          state
-        });
   return {
-    [defaultValueKey({ key: "boxShadowColorHex", device, state })]: hex,
-    [defaultValueKey({ key: "boxShadowColorOpacity", device, state })]: opacity,
-    [defaultValueKey({
-      key: "tempBoxShadowColorOpacity",
-      device,
-      state
-    })]: tempOpacity,
-    [defaultValueKey({ key: "boxShadow", device, state })]: "on"
+    [dvk("boxShadow")]: boxShadowType,
+    [dvk("tempBoxShadow")]:
+      boxShadowType !== "" ? boxShadowType : dvv("tempBoxShadow")
   };
 }
 
-export function onChangeBoxShadowHexAndOpacityPalette({
+export function onChangeBoxShadowTypeDependencies2({
   v,
   device,
   state,
-  opacity = undefined,
-  isChanged = "hex"
-}) {
-  const palette =
-    isChanged === "hex" || opacity === 0
-      ? ""
-      : opacity > 0
-      ? defaultValueValue({
-          v,
-          key: "tempBoxShadowColorPalette",
-          device,
-          state
-        })
-      : defaultValueValue({ v, key: "boxShadowColorPalette", device, state });
-
-  const tempPalette =
-    isChanged === "hex"
-      ? ""
-      : defaultValueValue({
-          v,
-          key: "tempBoxShadowColorPalette",
-          device,
-          state
-        });
-  return {
-    [defaultValueKey({ key: "boxShadowColorPalette", device, state })]: palette,
-    [defaultValueKey({
-      key: "tempBoxShadowColorPalette",
-      device,
-      state
-    })]: tempPalette,
-    [defaultValueKey({ key: "boxShadow", device, state })]: "on"
-  };
-}
-
-export function onChangeBoxShadowHexAndOpacityDependencies({
-  v,
-  device,
-  state,
-  opacity = undefined,
-  isChanged = "hex"
+  boxShadowType
 }) {
   const dependencies = {
+    boxShadowColorOpacity: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowColorPalette: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
     boxShadowBlur: {
       childs: [],
       nullValue: [],
@@ -109,13 +59,152 @@ export function onChangeBoxShadowHexAndOpacityDependencies({
     }
   };
 
-  opacity = onChangeBoxShadowOpacity({
+  console.log(
+    onChangeDependeciesGrouped({
+      v,
+      device,
+      state,
+      value: boxShadowType,
+      dependencies
+    })
+  );
+
+  return onChangeDependeciesGrouped({
+    v,
+    device,
+    state,
+    value: boxShadowType,
+    dependencies
+  });
+}
+
+export function onChangeBoxShadowHexAndOpacity2({
+  v,
+  device,
+  state,
+  hex,
+  opacity,
+  isChanged = "hex",
+  opacityDragEnd = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  opacity = onChangeBoxShadowOpacity2({
     v,
     device,
     state,
     opacity,
     isChanged
   });
+
+  const tempOpacity =
+    opacity > 0 && opacityDragEnd ? opacity : dvv("tempBoxShadowColorOpacity");
+
+  console.log({
+    [dvk("boxShadowColorHex")]: hex,
+    [dvk("boxShadowColorOpacity")]: opacity,
+    [dvk("tempBoxShadowColorOpacity")]: tempOpacity
+  });
+
+  return {
+    [dvk("boxShadowColorHex")]: hex,
+    [dvk("boxShadowColorOpacity")]: opacity,
+    [dvk("tempBoxShadowColorOpacity")]: tempOpacity
+  };
+}
+
+export function onChangeBoxShadowHexAndOpacityPalette2({
+  v,
+  device,
+  state,
+  opacity,
+  isChanged = "hex"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  opacity = onChangeBoxShadowOpacity2({
+    v,
+    device,
+    state,
+    opacity,
+    isChanged
+  });
+
+  const palette =
+    isChanged === "hex" || opacity === 0
+      ? ""
+      : opacity > 0
+      ? dvv("tempBoxShadowColorPalette")
+      : dvv("boxShadowColorPalette");
+
+  const tempPalette =
+    isChanged === "hex" ? "" : dvv("tempBoxShadowColorPalette");
+
+  console.log({
+    [dvk("boxShadowColorPalette")]: palette,
+    [dvk("tempBoxShadowColorPalette")]: tempPalette
+  });
+
+  return {
+    [dvk("boxShadowColorPalette")]: palette,
+    [dvk("tempBoxShadowColorPalette")]: tempPalette
+  };
+}
+
+export function onChangeBoxShadowHexAndOpacityDependencies2({
+  v,
+  device,
+  state,
+  opacity,
+  isChanged
+}) {
+  const dependencies = {
+    boxShadow: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowBlur: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowSpread: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowVertical: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowHorizontal: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    }
+  };
+
+  opacity = onChangeBoxShadowOpacity2({
+    v,
+    device,
+    state,
+    opacity,
+    isChanged
+  });
+
+  console.log(
+    onChangeDependeciesGrouped({
+      v,
+      device,
+      state,
+      value: opacity,
+      dependencies
+    })
+  );
 
   return onChangeDependeciesGrouped({
     v,
@@ -126,42 +215,152 @@ export function onChangeBoxShadowHexAndOpacityDependencies({
   });
 }
 
-export function onChangeBoxShadowPalette({ v, device, state, palette }) {
+export function onChangeBoxShadowPalette2({ v, device, state, palette }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+
+  console.log({
+    [dvk("boxShadowColorPalette")]: palette,
+    [dvk("tempBoxShadowColorPalette")]: palette
+  });
+
   return {
-    [defaultValueKey({ key: "boxShadowColorPalette", device, state })]: palette,
-    [defaultValueKey({
-      key: "tempBoxShadowColorPalette",
-      device,
-      state
-    })]: palette
+    [dvk("boxShadowColorPalette")]: palette,
+    [dvk("tempBoxShadowColorPalette")]: palette
   };
 }
 
-export function onChangeBoxShadowPaletteOpacity({
+export function onChangeBoxShadowPaletteOpacity2({
   v,
   device,
   state,
-  opacity = undefined,
-  isChanged = "hex"
+  opacity,
+  isChanged
 }) {
-  opacity = onChangeBoxShadowOpacity({
+  const dvk = key => defaultValueKey({ key, device, state });
+
+  opacity = onChangeBoxShadowOpacity2({
     v,
     device,
     state,
     opacity,
     isChanged
   });
+
+  console.log({
+    [dvk("boxShadowColorOpacity")]: opacity
+  });
+
   return {
-    [defaultValueKey({ key: "boxShadowColorOpacity", device, state })]: opacity,
-    [defaultValueKey({ key: "boxShadow", device, state })]: "on"
+    [dvk("boxShadowColorOpacity")]: opacity
   };
 }
 
-function onChangeBoxShadowOpacity({ v, device, state, opacity, isChanged }) {
-  return isChanged === "hex" &&
-    defaultValueValue({ v, key: "boxShadowColorOpacity", device, state }) === 0
-    ? defaultValueValue({ v, key: "tempBoxShadowColorOpacity", device, state })
+export function onChangeBoxShadowFields2({
+  v,
+  device,
+  state,
+  boxShadowBlur = 0,
+  boxShadowSpread = 0,
+  boxShadowVertical = 0,
+  boxShadowHorizontal = 0
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+
+  console.log({
+    [dvk("boxShadowBlur")]: boxShadowBlur,
+    [dvk("tempBoxShadowBlur")]: boxShadowBlur,
+
+    [dvk("boxShadowSpread")]: boxShadowSpread,
+    [dvk("tempBoxShadowSpread")]: boxShadowSpread,
+
+    [dvk("boxShadowVertical")]: boxShadowVertical,
+    [dvk("tempBoxShadowVertical")]: boxShadowVertical,
+
+    [dvk("boxShadowHorizontal")]: boxShadowHorizontal,
+    [dvk("tempBoxShadowHorizontal")]: boxShadowHorizontal
+  });
+
+  return {
+    [dvk("boxShadowBlur")]: boxShadowBlur,
+    [dvk("tempBoxShadowBlur")]: boxShadowBlur,
+
+    [dvk("boxShadowSpread")]: boxShadowSpread,
+    [dvk("tempBoxShadowSpread")]: boxShadowSpread,
+
+    [dvk("boxShadowVertical")]: boxShadowVertical,
+    [dvk("tempBoxShadowVertical")]: boxShadowVertical,
+
+    [dvk("boxShadowHorizontal")]: boxShadowHorizontal,
+    [dvk("tempBoxShadowHorizontal")]: boxShadowHorizontal
+  };
+}
+
+export function onChangeBoxShadowFieldsDependencies2({
+  v,
+  device,
+  state,
+  boxShadowBlur = 0,
+  boxShadowSpread = 0,
+  boxShadowVertical = 0,
+  boxShadowHorizontal = 0
+}) {
+  const value = Math.max(
+    boxShadowBlur,
+    boxShadowSpread,
+    boxShadowVertical,
+    boxShadowHorizontal
+  );
+
+  const dependencies = {
+    boxShadow: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowColorOpacity: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    },
+    boxShadowColorPalette: {
+      childs: [],
+      nullValue: [],
+      tempValue: []
+    }
+  };
+
+  console.log(
+    onChangeDependeciesGrouped({
+      v,
+      device,
+      state,
+      value,
+      dependencies
+    })
+  );
+
+  return onChangeDependeciesGrouped({
+    v,
+    device,
+    state,
+    value,
+    dependencies
+  });
+}
+
+function onChangeBoxShadowOpacity2({
+  v,
+  device,
+  state,
+  opacity = undefined,
+  isChanged = "hex"
+}) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return (isChanged === "hex" || isChanged === "palette") &&
+    dvv("boxShadowColorOpacity") === 0
+    ? dvv("tempBoxShadowColorOpacity")
     : opacity === undefined
-    ? defaultValueValue({ v, key: "boxShadowColorOpacity", device, state })
+    ? dvv("boxShadowColorOpacity")
     : opacity;
 }

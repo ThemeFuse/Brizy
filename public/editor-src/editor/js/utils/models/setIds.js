@@ -1,5 +1,5 @@
 import Editor from "visual/global/Editor";
-import objectTraverse from "visual/utils/objectTraverse";
+import { objectTraverse } from "visual/utils/object";
 import { uuid } from "visual/utils/uuid";
 
 const setIdsCb = (key, value, obj, options) => {

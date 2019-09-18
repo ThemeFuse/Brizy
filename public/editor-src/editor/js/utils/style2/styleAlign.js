@@ -1,23 +1,36 @@
 import { defaultValueValue } from "visual/utils/onChange";
 
-export function styleAlignVerticalAlign({ v, device, hasItems = true }) {
+export function styleAlignFlexVerticalAlign({ v, device, state }) {
   const aligns = {
     top: "flex-start",
     center: "center",
     bottom: "flex-end"
   };
 
-  return hasItems
-    ? aligns[defaultValueValue({ v, key: "verticalAlign", device })]
-    : "stretch";
+  const type = defaultValueValue({ v, key: "verticalAlign", device, state });
+
+  return type === undefined ? type : aligns[type];
 }
 
-export function styleAlignHorizontalAlign({ v, device }) {
+export function styleAlignFlexHorizontalAlign({ v, device, state }) {
   const aligns = {
     left: "flex-start",
     center: "center",
     right: "flex-end"
   };
 
-  return aligns[defaultValueValue({ v, key: "horizontalAlign", device })];
+  const horizontalAlign = defaultValueValue({
+    v,
+    key: "horizontalAlign",
+    device,
+    state
+  });
+
+  return horizontalAlign === undefined
+    ? horizontalAlign
+    : aligns[horizontalAlign];
+}
+
+export function styleAlignHorizontalAlign({ v, device, state }) {
+  return defaultValueValue({ v, key: "horizontalAlign", device, state });
 }

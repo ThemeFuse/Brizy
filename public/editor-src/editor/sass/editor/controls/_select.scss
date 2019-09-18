@@ -303,6 +303,11 @@ $scroll-border-radius: 4px;
   }
 }
 
+// Full Width
+.brz-control__select--full-width {
+  width: 100%;
+}
+
 // Popup Control Select Light
 .brz-ed-popup-control__select--light {
   $control-background-color: #fff;

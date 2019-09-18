@@ -1,3 +1,4 @@
+import { capByPrefix } from "visual/utils/string";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
   defaultValueKey,
@@ -5,109 +6,82 @@ import {
   saveOnChanges
 } from "visual/utils/onChange";
 
-export function toolbarColorHexAndOpacity({
+export function toolbarColor2({
   v,
   device,
   state,
+  disabled = false,
   prefix = "color",
-  onChange
+  devices = "all",
+  onChangeHex,
+  onChangePalette
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const { hex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `${prefix}Hex`, state }),
-    defaultValueValue({ v, key: `${prefix}Palette`, state })
+    dvv(capByPrefix(prefix, "hex")),
+    dvv(capByPrefix(prefix, "palette"))
   );
-  const colorKey = defaultValueKey({ key: prefix, device, state });
-  const colorOpacityValue = defaultValueValue({
-    v,
-    key: `${prefix}Opacity`,
-    device,
-    state
-  });
 
   return {
-    id: colorKey,
-    type: "colorPicker",
+    id: dvk(prefix),
+    type: "colorPicker2",
+    disabled,
+    devices,
+    select: {
+      show: false
+    },
     value: {
       hex,
-      opacity: colorOpacityValue
+      opacity: dvv(capByPrefix(prefix, "opacity")),
+      palette: dvv(capByPrefix(prefix, "palette"))
     },
-    onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
-      const values = {
-        ...{ v, state, prefix, onChange },
+    onChange: ({ hex, opacity, palette, isChanged, opacityDragEnd }) => {
+      const valuesHex = {
+        ...{ v, device, state, prefix, onChange: onChangeHex },
         ...{ hex, opacity, isChanged, opacityDragEnd }
       };
-      return saveOnChanges(values);
-    }
-  };
-}
-
-export function toolbarColorPalette({
-  v,
-  device,
-  state,
-  prefix = "color",
-  onChange
-}) {
-  const colorPaletteKey = defaultValueKey({
-    key: `${prefix}Palette`,
-    device,
-    state
-  });
-  const colorPaletteValue = defaultValueValue({
-    v,
-    key: `${prefix}Palette`,
-    device,
-    state
-  });
-
-  return {
-    id: colorPaletteKey,
-    type: "colorPalette",
-    value: colorPaletteValue,
-    onChange: palette => {
-      const values = {
-        ...{ v, state, prefix, onChange },
-        ...{ palette }
+      const valuesPalette = {
+        ...{ v, device, state, prefix, onChange: onChangePalette },
+        ...{ opacity, palette }
       };
-      return saveOnChanges(values);
+
+      return isChanged === "hex" || isChanged === "opacity"
+        ? saveOnChanges(valuesHex)
+        : saveOnChanges(valuesPalette);
     }
   };
 }
 
-export function toolbarColorFields({
+export function toolbarColorHexField2({
   v,
   device,
   state,
+  devices = "all",
   prefix = "color",
   onChange
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const { hex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `${prefix}Hex`, device, state }),
-    defaultValueValue({ v, key: `${prefix}Palette`, device, state })
+    dvv(capByPrefix(prefix, "hex")),
+    dvv(capByPrefix(prefix, "palette"))
   );
-  const colorFieldsKey = defaultValueKey({
-    key: `${prefix}Fields`,
-    device,
-    state
-  });
-  const colorOpacityValue = defaultValueValue({
-    v,
-    key: `${prefix}Opacity`,
-    device,
-    state
-  });
 
   return {
-    id: colorFieldsKey,
+    id: dvk(capByPrefix(prefix, "field")),
     type: "colorFields",
+    devices,
     value: {
       hex,
-      opacity: colorOpacityValue
+      opacity: dvv(capByPrefix(prefix, "opacity"))
     },
-    onChange: ({ hex, opacity, isChanged, opacityDragEnd }) => {
+    onChange: ({ hex }) => {
       const values = {
-        ...{ v, state, prefix, onChange },
-        ...{ hex, opacity, isChanged, opacityDragEnd }
+        ...{ v, device, state, prefix, onChange },
+        ...{ hex }
       };
       return saveOnChanges(values);
     }

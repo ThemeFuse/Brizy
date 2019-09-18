@@ -1,10 +1,22 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarHoverTransition({ v, position = 150 }) {
+export function toolbarHoverTransition({
+  v,
+  position = 150,
+  device,
+  state,
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: "hoverTransition",
+    id: dvk("hoverTransition"),
     label: t("Hover Transition"),
+    devices,
     position,
+    devices,
     type: "slider",
     slider: {
       min: 0,
@@ -25,8 +37,10 @@ export function toolbarHoverTransition({ v, position = 150 }) {
       ]
     },
     value: {
-      value: v.hoverTransition
+      value: dvv("hoverTransition")
     },
-    onChange: ({ value: hoverTransition }) => ({ hoverTransition })
+    onChange: ({ value }) => ({
+      [dvk("hoverTransition")]: value
+    })
   };
 }

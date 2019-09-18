@@ -39,7 +39,7 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
-    return [];
+  return [];
 }
 
 export function getItemsForMobile(v) {

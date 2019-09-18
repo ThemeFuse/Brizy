@@ -3,6 +3,7 @@ import {
   onChangeUngroupedByUngrouped,
   onChangeGroupedByUngrouped
 } from "./onChange";
+import { defaultValueKey } from "./device";
 
 export function onChangePaddingGrouped({
   v,
@@ -93,7 +94,11 @@ export function onChangePaddingUngrouped({
      *
      * paddingTopSuffix,
      */
-    [`${current}Suffix`]: suffix,
+    [`${defaultValueKey({
+      key: `${current}Suffix`,
+      device,
+      state
+    })}`]: suffix,
 
     /**
      * ### OUTPUT EXAMPLE

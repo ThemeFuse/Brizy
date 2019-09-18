@@ -205,7 +205,7 @@ class Brizy_Admin_FormEntries {
 		return $fields;
 	}
 
-	static public function registerCustomPostTemplate() {
+	static public function registerCustomPost() {
 
 		$labels = array(
 			'name'               => _x( 'Leads', 'post type general name' ),

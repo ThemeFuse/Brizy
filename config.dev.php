@@ -9,12 +9,14 @@ class Brizy_Config {
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
 	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor';
 	const MEDIA_IMAGE_URL = '/media';
+	const FONTS_URL = 'http://editor:3000/static';
 
 	const EDITOR_HOST_API = 'api.brizy.org';
 	const EDITOR_HOST_BASE = 'www.brizy.org';
 	const EDITOR_HOST_ORIGIN = 'brizy.org';
 	const EDITOR_HOST_PRIMARY = 'brizy.org';
 
+	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'http://api.brizy.org';
 
 	const BRIZY_REGISTRATION_CREDENTIALS = 'http://www.brizy.org/wordpress/credentials';
@@ -33,19 +35,21 @@ class Brizy_Config {
 	const PLATFORM_EMAIL = "admin@admin.com";
 
 	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/brizy-pro-pricing/";
-	const SUPPORT_URL = "https://github.com/ThemeFuse/Brizy/issues";
+	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
 	const SHORTPIXEL_CONFIG = "https://www.brizy.cloud/shortpixel.txt";
+	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
 				'http://editor:3000/wp-compile'
+				// "http://localhost:5000/compile/v2"
 			)
 		);
 	}
 
-	static public function getStaticBrizyUrls() {
+	static public function getStaticUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
 				'http://bitblox.local/static'
@@ -55,10 +59,11 @@ class Brizy_Config {
 
 	static public function getEditorBaseUrls() {
 		return new Brizy_Admin_UrlIterator(
-			array( 'http://www.brizy.org' )
+			array(
+				'http://www.brizysites.com'
+			)
 		);
 	}
-
 
 	static public function getOptimizerConfig( $className ) {
 		switch ( $className ) {

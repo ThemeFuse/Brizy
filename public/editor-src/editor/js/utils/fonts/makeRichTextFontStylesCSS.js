@@ -1,7 +1,8 @@
-import getFontById from "./getFontById";
+import { getFontById } from "./getFontById";
 
 const generateStyles = ({
   fontFamily,
+  fontFamilyType,
   fontSize,
   fontWeight,
   letterSpacing,
@@ -15,7 +16,7 @@ const generateStyles = ({
   mobileLetterSpacing,
   mobileLineHeight
 }) => {
-  const { family } = getFontById(fontFamily);
+  const { family } = getFontById({ family: fontFamily, type: fontFamilyType });
 
   const desktop = [
     `font-family: ${family};`,

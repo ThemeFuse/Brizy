@@ -6,7 +6,7 @@ export default function() {
   if ($animated.length > 0) {
     var handleIntersection = function(entries) {
       entries.map(function(entry) {
-        if (entry.isIntersecting) {
+        if (entry.intersectionRatio > 0) {
           var target = entry.target;
           var animateClassName = target.dataset.animateName;
           target.classList.add("brz-animate", animateClassName);
@@ -17,7 +17,7 @@ export default function() {
     var observerOptions = {
       root: null,
       rootMargin: "0px",
-      threshold: [0.35]
+      threshold: 0.35
     };
     var observer = new IntersectionObserver(
       handleIntersection,

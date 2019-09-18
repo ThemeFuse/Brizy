@@ -5,11 +5,19 @@
     "duration": 2
   },
 
+  "toolbar": {
+    "tabsState": "",
+    "tabsColor": ""
+  },
+
   "style": {
     "className": "",
 
     "fontStyle": "",
-    "fontFamily": "roboto",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "roboto"
+    },
     "fontSize": 56,
     "fontWeight": 400,
     "lineHeight": 1.3,
@@ -32,12 +40,20 @@
     "customCSS": "",
 
     "tabletFontStyle": "",
+    "tabletFontFamilyType": null,
+    "tabletFamilies": {
+      "tabletFontFamily": null
+    },
     "tabletFontSize": 56,
     "tabletFontWeight": 400,
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
 
     "mobileFontStyle": "",
+    "mobileFontFamilyType": null,
+    "mobileFamilies": {
+      "mobileFontFamily": null
+    },
     "mobileFontSize": 56,
     "mobileFontWeight": 400,
     "mobileLineHeight": 1.3,

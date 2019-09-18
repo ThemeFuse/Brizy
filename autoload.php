@@ -40,7 +40,7 @@ function brizyAutoload( $class_name ) {
 
 function camelCaseToPath( $apath ) {
 	$matches = array();
-	preg_match_all( '/(.[a-z]+|.[A-Z]+|.[A-Z].[a-z]+)/', $apath, $matches );
+	preg_match_all( '/(.[a-z0-9]+|.[A-Z0-9]+|.[A-Z0-9].[a-z0-9]+)/', $apath, $matches );
 	$path = null;
 
 	if ( isset($matches[1]) && count( $matches[1] ) > 1 ) {

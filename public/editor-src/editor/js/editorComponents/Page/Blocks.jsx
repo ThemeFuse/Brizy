@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import {
   FirstBlockAdder,
@@ -7,9 +8,9 @@ import {
 } from "visual/component/BlockAdders";
 import HotKeys from "visual/component/HotKeys";
 import UIState from "visual/global/UIState";
-import { getBlocksConfig } from "visual/component/BlockAdders/utils";
 import BlockErrorBoundary from "./BlockErrorBoundary";
 import { hideToolbar } from "visual/component/Toolbar";
+import { addBlock, importTemplate } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
 class Blocks extends EditorArrayComponent {
@@ -17,21 +18,50 @@ class Blocks extends EditorArrayComponent {
     return "Page.Items";
   }
 
-  handleBlocksAdd = (index, blockData) => {
-    if (Array.isArray(blockData)) {
-      this.insertItemsBatch(index, blockData);
-    } else {
-      this.insertItem(index, blockData);
-    }
+  blockAdderRef = React.createRef();
+
+  handleTemplateAdd = data => {
+    const meta = { insertIndex: this.getValue().length };
+    this.props.dispatch(importTemplate(data, meta));
+  };
+
+  handleBlockAdd = data => {
+    const meta = { insertIndex: this.getValue().length };
+    this.props.dispatch(addBlock(data, meta));
   };
 
   handleKeyDown = () => {
-    const itemsLength = this.getValue().length;
+    /**
+     * this will replace all below code once we update react-redux
+     * (version 5.x does not support ref forwarding)
+     */
+    // this.blockAdderRef.current.open();
 
     UIState.set("prompt", {
       prompt: "blocks",
-      blocksConfig: getBlocksConfig(),
-      onAddBlocks: this.handleBlocksAdd.bind(null, itemsLength)
+      tabProps: {
+        blocks: {
+          categoriesFilter: categories => {
+            return categories.filter(({ slug }) => slug !== "popup");
+          },
+          onAddBlocks: this.handleBlockAdd
+        },
+        saved: {
+          blocksFilter: blocks => {
+            return blocks.filter((_, { type }) => type !== "SectionPopup");
+          },
+          onAddBlocks: this.handleBlockAdd
+        },
+        global: {
+          blocksFilter: blocks => {
+            return blocks.filter((_, { type }) => type !== "SectionPopup");
+          },
+          onAddBlocks: this.handleBlockAdd
+        },
+        templates: {
+          onAddBlocks: this.handleTemplateAdd
+        }
+      }
     });
   };
 
@@ -87,11 +117,7 @@ class Blocks extends EditorArrayComponent {
         <BlockErrorBoundary onRemove={() => this.removeItem(itemIndex)}>
           {item}
         </BlockErrorBoundary>
-        {showMiddleAdder && (
-          <MiddleBlockAdder
-            onAddBlocks={this.handleBlocksAdd.bind(null, nextItemIndex)}
-          />
-        )}
+        {showMiddleAdder && <MiddleBlockAdder insertIndex={nextItemIndex} />}
       </div>
     );
   }
@@ -108,7 +134,7 @@ class Blocks extends EditorArrayComponent {
     if (items.length === 0 || allItemsAreUnlisted) {
       return (
         <React.Fragment>
-          <FirstBlockAdder onAddBlocks={this.handleBlocksAdd.bind(null, 0)} />,
+          <FirstBlockAdder ref={this.blockAdderRef} insertIndex={0} />
           <HotKeys
             keyNames={[
               "ctrl+shift+A",
@@ -128,9 +154,7 @@ class Blocks extends EditorArrayComponent {
     return (
       <div className="brz-ed-wrap-block-wrap">
         {items}
-        <LastBlockAdder
-          onAddBlocks={this.handleBlocksAdd.bind(null, items.length)}
-        />
+        <LastBlockAdder ref={this.blockAdderRef} insertIndex={items.length} />
         <HotKeys
           keyNames={[
             "ctrl+shift+A",
@@ -148,4 +172,4 @@ class Blocks extends EditorArrayComponent {
   }
 }
 
-export default Blocks;
+export default connect()(Blocks);

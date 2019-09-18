@@ -14,7 +14,10 @@ const getExtensions = target => {
   }
 };
 
-module.exports = options => {
+module.exports = (options = {}) => {
+  // extracted variable to make phpstorm work with aliases
+  const BUILD_PATH = options.BUILD_PATH || path.resolve(__dirname, "build");
+
   return {
     mode: options.IS_PRODUCTION ? "production" : "development",
     entry: {
@@ -25,13 +28,12 @@ module.exports = options => {
       ]
     },
     output: {
-      path: path.resolve(options.BUILD_PATH, `editor/js`),
+      path: path.resolve(BUILD_PATH, `editor/js`),
       filename: "[name].js"
     },
     resolve: {
       alias: {
-        visual: path.resolve(__dirname, "editor/js"),
-        "visual-template": options.TEMPLATE_PATH
+        visual: path.resolve(__dirname, "editor/js")
       },
       extensions: getExtensions(options.TARGET)
     },
@@ -73,7 +75,7 @@ module.exports = options => {
     devtool: options.IS_PRODUCTION ? false : "cheap-module-eval-source-map",
     watch: !options.NO_WATCH && !options.IS_PRODUCTION,
     watchOptions: {
-      ignored: new RegExp(`templates/${options.TEMPLATE_NAME}`)
+      ignored: new RegExp(`config/icons`)
     }
   };
 };

@@ -5,7 +5,10 @@
 
   "style": {
     "fontStyle": "",
-    "fontFamily": "noto_serif",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "noto_serif"
+    },
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.5,
@@ -14,6 +17,9 @@
     "colorHex": "#73777f",
     "colorOpacity": 0.7,
     "colorPalette": "",
+
+    "tempColorOpacity": 0.7,
+    "tempColorPalette": "color8",
 
     "bgColorType": "solid",
 
@@ -28,6 +34,9 @@
     "borderColorOpacity": 1,
     "borderColorPalette": "",
 
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
     "size": "medium",
     "padding": 15,
     "paddingTop": 0,
@@ -37,9 +46,35 @@
     "borderRadiusType": "square",
     "fillType": "filled",
     "tempFillType": "filled",
+
     "borderRadius": 0,
-    "borderWidth": 1,
+
     "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 1,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+
+    "borderBottomLeftRadius": 0,
+    "borderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+    "tempBorderBottomRightRadius": 0,
 
     "tabletFontStyle": "",
     "tabletFontSize": 14,

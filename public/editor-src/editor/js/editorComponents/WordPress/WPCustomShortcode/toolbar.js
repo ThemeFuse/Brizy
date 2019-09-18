@@ -1,159 +1,54 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
+import { defaultValueKey } from "visual/utils/onChange";
+import {
+  toolbarElementWPCustomShortCode,
+  toolbarSizeWidthWidthPercent,
+  toolbarCustomCSS
+} from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
+export function getItems({ v, device }) {
   return [
     {
-      id: "toolbarWPCustomShortcode",
+      id: defaultValueKey({
+        key: "toolbarWPCustomShortcode",
+        device,
+        state: "normal"
+      }),
       type: "popover",
       icon: "nc-iframe",
+      devices: "desktop",
       position: 10,
       options: [
-        {
-          id: "shortcode",
-          type: "textarea",
-          placeholder: t("Paste your wordpress shortcode here..."),
-          value: v.shortcode
-        }
+        toolbarElementWPCustomShortCode({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        })
       ]
     },
     {
-      id: "toolbarSettings",
+      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",
       icon: "nc-cog",
       roles: ["admin"],
       position: 110,
       options: [
+        toolbarSizeWidthWidthPercent({
+          v,
+          device,
+          state: "normal"
+        }),
         {
-          id: "width",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
-        },
-        {
-          id: "advancedSettings",
+          id: defaultValueKey({
+            key: "advancedSettings",
+            device,
+            state: "normal"
+          }),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  return [
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      roles: ["admin"],
-      icon: "nc-cog",
-      position: 110,
-      options: [
-        {
-          id: "tabletWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
-        }
-      ]
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  return [
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      roles: ["admin"],
-      position: 110,
-      options: [
-        {
-          id: "mobileWidth",
-          label: t("Width"),
-          type: "slider",
-          slider: {
-            min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
+          options: []
         }
       ]
     }

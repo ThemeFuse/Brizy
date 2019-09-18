@@ -70,7 +70,12 @@ class Brizy_Logger {
 	private function write_log( $type, $message, $context = array() ) {
 		global $wpdb;
 
-		if ( ! BRIZY_LOG ) {
+		if ( ! BRIZY_LOG && ! in_array( $type, [
+				self::EMERGENCY_LOG,
+				self::ALERT_LOG,
+				self::CRITICAL_LOG,
+				self::ERROR_LOG,
+			] ) ) {
 			return;
 		}
 
@@ -80,13 +85,7 @@ class Brizy_Logger {
 			'context'    => serialize( $context ),
 			'session_id' => session_id(),
 			'date'       => current_time( 'mysql', 1 )
-		), array(
-			'%s',
-			'%s',
-			'%s',
-			'%s',
-			'%s'
-		) );
+		), array( '%s', '%s', '%s', '%s', '%s' ) );
 	}
 
 	/**

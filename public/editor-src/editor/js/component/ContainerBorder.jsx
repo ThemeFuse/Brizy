@@ -19,15 +19,27 @@ class ContainerBorder extends React.Component {
     path: ""
   };
 
+  containerRef = React.createRef();
+
+  border1Ref = React.createRef();
+
+  border2Ref = React.createRef();
+
   constructor(props) {
     super(props);
     const { path, showBorders } = this.props;
 
-    this.state = {
-      active: false,
-      hovered: false,
-      showBorders
-    };
+    /**
+     * the below three variables were used to be stored in local state.
+     * but the problem with that was that we needed to update the state
+     * VERY frequently and thus causing many rerenders that were stressing
+     * the main thread.
+     * we moved to a less idiomatic but way more performant solution that
+     * involves changing the css classes directly with the DOM api
+     */
+    this.isActive = false;
+    this.isHovered = false;
+    this.showBorders = showBorders;
 
     if (path) {
       instancesByPath[path] = this;
@@ -52,52 +64,59 @@ class ContainerBorder extends React.Component {
   }
 
   handleClickOutside = () => {
-    if (this.state.active) {
-      this.setState({ active: false });
+    if (this.isActive) {
+      this.isActive = false;
       currentContainerBorder = null;
+      this.setClasses();
     }
   };
 
   handleClick = e => {
-    this.setState({ active: true });
+    this.isActive = true;
     currentContainerBorder = this;
+    this.setClasses();
   };
 
-  handleOver = e => {
+  handleMouseOver = e => {
     if (global.BRZ_IS_DRAGGING) {
       return;
     }
 
-    if (!this.state.hovered) {
-      this.setState({ hovered: true });
+    if (!this.isHovered) {
+      this.isHovered = true;
+      this.setClasses();
     }
   };
 
-  handleOut = e => {
+  handleMouseOut = e => {
     if (global.BRZ_IS_DRAGGING) {
       return;
     }
 
-    if (this.state.hovered) {
-      this.setState({ hovered: false });
+    if (this.isHovered) {
+      this.isHovered = false;
+      this.setClasses();
     }
   };
 
   setActive = active => {
-    if (this.state.active !== active) {
-      this.setState({ active });
+    if (this.isActive !== active) {
+      this.isActive = active;
+      this.setClasses();
     }
   };
 
   setHover = hovered => {
-    if (this.state.hovered !== hovered) {
-      this.setState({ hovered });
+    if (this.isHovered !== hovered) {
+      this.isHovered = hovered;
+      this.setClasses();
     }
   };
 
   setShowBorder = showBorders => {
-    if (this.state.showBorders !== showBorders) {
-      this.setState({ showBorders });
+    if (this.showBorders !== showBorders) {
+      this.showBorders = showBorders;
+      this.setClasses();
     }
   };
 
@@ -106,61 +125,78 @@ class ContainerBorder extends React.Component {
 
     Object.keys(instancesByPath).forEach(instancePathStr => {
       if (pathStr.indexOf(instancePathStr) === 0) {
-        instancesByPath[instancePathStr].setState({ hovered });
+        instancesByPath[instancePathStr].setHover(hovered);
       }
     });
   };
 
+  setClasses() {
+    const { activeBorderStyle } = this.props;
+
+    if (this.isHovered || this.isActive) {
+      this.containerRef.current.classList.add("active");
+    } else {
+      this.containerRef.current.classList.remove("active");
+    }
+
+    if (
+      (this.showBorders || this.isActive) &&
+      (this.isActive || this.isHovered)
+    ) {
+      this.border1Ref.current.classList.add(
+        "brz-ed-border--active",
+        `brz-ed-border--active-${activeBorderStyle}`
+      );
+      this.border2Ref.current.classList.add(
+        "brz-ed-border--active",
+        `brz-ed-border--active-${activeBorderStyle}`
+      );
+    } else {
+      this.border1Ref.current.classList.remove(
+        "brz-ed-border--active",
+        `brz-ed-border--active-${activeBorderStyle}`
+      );
+      this.border2Ref.current.classList.remove(
+        "brz-ed-border--active",
+        `brz-ed-border--active-${activeBorderStyle}`
+      );
+    }
+  }
+
   render() {
-    const { active, hovered, showBorders } = this.state;
     const {
-      className: _className,
+      className: className_,
       borderColor,
       borderStyle,
-      activeBorderStyle,
       outSide,
       clickOutsideExceptions,
       reactToHover,
       reactToClick,
       children
     } = this.props;
-    const className = classnames("brz-ed-border", _className, {
-      active: hovered || active
+    const className = classnames("brz-ed-border", className_);
+
+    const border1ClassName = classnames("brz-ed-border__inner-1", {
+      "brz-ed-border--no-space": !outSide,
+      [`brz-ed-border--${borderColor}`]: borderColor,
+      [`brz-ed-border--${borderStyle}`]: borderStyle
     });
-    let borders;
-
-    if (showBorders || active) {
-      const toolsBorder1 = classnames(
-        "brz-ed-border__inner-1",
-        { "brz-ed-border--no-space": !outSide },
-        { [`brz-ed-border--${borderColor}`]: borderColor },
-        { [`brz-ed-border--${borderStyle}`]: borderStyle },
-        { "brz-ed-border--active": active || hovered },
-        { [`brz-ed-border--active-${activeBorderStyle}`]: active || hovered }
-      );
-      const toolsBorder2 = classnames(
-        "brz-ed-border__inner-2",
-        { "brz-ed-border--no-space": !outSide },
-        { [`brz-ed-border--${borderColor}`]: borderColor },
-        { [`brz-ed-border--${borderStyle}`]: borderStyle },
-        { "brz-ed-border--active": active || hovered },
-        { [`brz-ed-border--active-${activeBorderStyle}`]: active || hovered }
-      );
-
-      borders = [
-        <div key="border1" className={toolsBorder1} />,
-        <div key="border2" className={toolsBorder2} />
-      ];
-    }
+    const border2ClassName = classnames("brz-ed-border__inner-2", {
+      "brz-ed-border--no-space": !outSide,
+      [`brz-ed-border--${borderColor}`]: borderColor,
+      [`brz-ed-border--${borderStyle}`]: borderStyle
+    });
 
     const content = (
       <div
+        ref={this.containerRef}
         className={className}
-        onMouseOver={reactToHover ? this.handleOver : null}
-        onMouseOut={reactToHover ? this.handleOut : null}
+        onMouseOver={reactToHover ? this.handleMouseOver : null}
+        onMouseOut={reactToHover ? this.handleMouseOut : null}
         onClick={reactToClick ? this.handleClick : null}
       >
-        {borders}
+        <div ref={this.border1Ref} className={border1ClassName} />
+        <div ref={this.border2Ref} className={border2ClassName} />
         {children}
       </div>
     );

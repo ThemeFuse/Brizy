@@ -69,10 +69,12 @@ class Brizy_Admin_Main {
 		add_filter( 'wp_import_existing_post', array( $this, 'handleNewProjectPostImport' ), 10, 2 );
 		add_filter( 'wp_import_post_meta', array( $this, 'handleNewProjectMetaImport' ), 10, 3 );
 
+		add_filter( 'wp_import_posts', array( $this, 'handlePostsImport' ) );
+
+
 		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
 
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
-
 	}
 
 	public function addFocalPoint( $content, $postId, $thumbId ) {
@@ -117,7 +119,6 @@ class Brizy_Admin_Main {
 			if ( wp_is_post_autosave( $post ) || wp_is_post_revision( $post ) ) {
 				return;
 			}
-
 
 			$bpost = Brizy_Editor_Post::get( $post );
 
@@ -283,21 +284,24 @@ class Brizy_Admin_Main {
 		);
 
 		$get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
+
 		wp_localize_script(
 			Brizy_Editor::get()->get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
 			array(
-				'url'         => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-				'pluginUrl'   => BRIZY_PLUGIN_URL,
-				'ruleApiHash' => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
-				'id'          => get_the_ID(),
-				'page'        => array(
+				'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+				'pluginUrl'     => BRIZY_PLUGIN_URL,
+				'ruleApiHash'   => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
+				'id'            => get_the_ID(),
+				'page'          => array(
 					'focalPoint' => $get_post_focal ? $get_post_focal : array( 'x' => 50, 'y' => 50 )
 				),
-				'actions'     => array(
+				'actions'       => array(
 					'enable'  => '_brizy_admin_editor_enable',
 					'disable' => '_brizy_admin_editor_disable',
-				)
+				),
+				'editorVersion' => BRIZY_EDITOR_VERSION,
+				'pluginVersion' => BRIZY_VERSION,
 			)
 		);
 	}
@@ -497,12 +501,43 @@ class Brizy_Admin_Main {
 		exit;
 	}
 
+	public function handlePostsImport( $posts ) {
+
+		$incompatibleBrizyPosts = array();
+
+		foreach ( $posts as $i => $post ) {
+			if ( ! isset( $post['postmeta'] ) ) {
+				continue;
+			}
+
+			foreach ( $post['postmeta'] as $meta ) {
+				if ( $meta['key'] == 'brizy-post-plugin-version' && ! Brizy_Editor_Data_ProjectMergeStrategy::checkVersionCompatibility( $meta['value'] ) ) {
+					$incompatibleBrizyPosts[] = array(
+						'post_title' => $post['post_title'],
+						'version'    => $meta['value']
+					);
+					unset( $posts[ $i ] );
+				}
+			}
+		}
+
+		if ( count( $incompatibleBrizyPosts ) ) {
+			foreach ( $incompatibleBrizyPosts as $brizy_post ) {
+				printf( __( 'Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s ', 'brizy' ),
+					esc_html( $brizy_post['post_title'] ), esc_html( $brizy_post['version'] ) );
+				echo '<br />';
+			}
+		}
+
+		return $posts;
+	}
+
 	public function handleNewProjectPostImport( $existing, $post ) {
 
 		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
 
 			$currentProject        = Brizy_Editor_Project::get();
-			$currentProjectGlobals = $currentProject->getDecodedGlobals();
+			$currentProjectGlobals = $currentProject->getDecodedData();
 			$currentProjectPostId  = $currentProject->getWpPost()->ID;
 			$currentProjectStorage = Brizy_Editor_Storage_Project::instance( $currentProjectPostId );
 
@@ -519,57 +554,19 @@ class Brizy_Admin_Main {
 				// force import if the project data is not found in current project.
 				return 0;
 			}
+			$projectData = json_decode( base64_decode( $projectMeta['data'] ) );
 
-			$projectData = json_decode( base64_decode( $projectMeta['globals'] ) );
+			$mergeStrategy = Brizy_Editor_Data_ProjectMergeStrategy::getMergerInstance( $projectMeta['pluginVersion'] );
 
-			// merge savedBlocks
-			$currentProjectGlobals->project->savedBlocks = array_merge(
-				(array) ( isset( $currentProjectGlobals->project->savedBlocks ) ? $currentProjectGlobals->project->savedBlocks : array() ),
-				(array) ( isset( $projectData->project->savedBlocks ) ? $projectData->project->savedBlocks : array() ) );
-
-			// merge global blocks
-			$currentProjectGlobals->project->globalBlocks = (object) array_merge(
-				(array) ( isset( $currentProjectGlobals->project->globalBlocks ) ? $currentProjectGlobals->project->globalBlocks : array() ),
-				(array) ( isset( $projectData->project->globalBlocks ) ? $projectData->project->globalBlocks : array() )
-			);
-
-			// MERGE STYLES
-			// 1. merge extra fonts
-			$currentProjectGlobals->project->extraFonts = array_unique(
-				array_merge(
-					(array) ( isset( $currentProjectGlobals->project->extraFonts ) ? $currentProjectGlobals->project->extraFonts : array() ),
-					(array) ( isset( $projectData->project->extraFonts ) ? $projectData->project->extraFonts : array() )
-				)
-			);
-			// 2. merge extra fonts styles
-
-			if ( ! isset( $currentProjectGlobals->project->styles ) ) {
-				$currentProjectGlobals->project->styles = (object) array( '_extraFontStyles' => array() );
-			}
-
-			$currentProjectGlobals->project->styles->_extraFontStyles = array_merge(
-				(array) ( isset( $currentProjectGlobals->project->styles->_extraFontStyles ) ? $currentProjectGlobals->project->styles->_extraFontStyles : array() ),
-				(array) ( isset( $projectData->project->styles->_extraFontStyles ) ? $projectData->project->styles->_extraFontStyles : array() )
-			);
-
-
-			$currentProjectGlobals->project->styles->default = $projectData->project->styles->default;
-
-			if ( $projectData->project->styles && isset( $projectData->project->styles->_selected ) ) {
-				$selected                                          = $projectData->project->styles->_selected;
-				$currentProjectGlobals->project->styles->_selected = $selected;
-				if ( $selected ) {
-					$currentProjectGlobals->project->styles->$selected = $projectData->project->styles->$selected;
-				}
-			}
+			$mergedData = $mergeStrategy->merge( $currentProjectGlobals, $projectData );
 
 			// create project data backup
 			$data = $currentProjectStorage->get_storage();
 			update_post_meta( $currentProjectPostId, 'brizy-project-import-backup-' . md5( time() ), $data );
 			//---------------------------------------------------------
 
-			$currentProject->setGlobals( $currentProjectGlobals );
-
+			$currentProject->setDataAsJson( json_encode( $mergedData ) );
+			$currentProject->save();
 			return $currentProjectPostId;
 		}
 
@@ -584,19 +581,10 @@ class Brizy_Admin_Main {
 		return $postMeta;
 	}
 
+	/**
+	 * Mark all post to be compiled next time
+	 */
 	public function global_data_updated() {
-		// mark all brizy post to be compiled on next view
-		$posts = Brizy_Editor_Post::get_all_brizy_posts();
-
-		// we need to trigger a post update action to make sure the cache plugins will update clear the cache
-		remove_action( 'save_post', array( Brizy_Admin_Main::instance(), 'compile_post_action' ) );
-		// mark all post to be compiled on next view
-		foreach ( $posts as $bpost ) {
-			if ( ! $bpost->get_needs_compile() ) {
-				$bpost->set_needs_compile( true );
-				$bpost->save();
-			}
-			// wp_update_post( array( 'ID' => $bpost->get_id() ) );
-		}
+		Brizy_Editor_Post::mark_all_for_compilation();
 	}
 }

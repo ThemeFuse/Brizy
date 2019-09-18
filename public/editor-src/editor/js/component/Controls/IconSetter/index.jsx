@@ -4,9 +4,7 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import UIState from "visual/global/UIState";
-import Config from "visual/global/Config";
-
-const { types: TYPES } = Config.get("icons");
+import ConfigIcons from "visual/config/icons";
 
 export default class IconSetter extends React.Component {
   static defaultProps = {
@@ -58,7 +56,7 @@ export default class IconSetter extends React.Component {
 
   renderIcon = () => {
     const { name, type } = this.props.value;
-    const { name: typeName } = _.find(TYPES, { name: type });
+    const { name: typeName } = _.find(ConfigIcons.types, { name: type });
 
     return [
       <div

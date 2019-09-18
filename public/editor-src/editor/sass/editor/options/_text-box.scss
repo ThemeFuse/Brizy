@@ -77,11 +77,13 @@
   left: 0;
   width: 105%;
   height: 100%;
+  transition: 0.2s linear color;
 
   &:focus,
   &:active {
     background-color: transparent;
-    color: $options-label-color;
+    color: #fff;
+    transition: 0.2s linear color;
     box-shadow: none;
     border: none;
     outline: 0;

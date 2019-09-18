@@ -28,8 +28,9 @@ class BaseIntegration extends Component {
     error: null
   };
 
-  appsData = {};
+  appsData = [];
   appsComponent = {};
+  proExceptions = false;
 
   getContextValue() {
     const { formId, formFields } = this.props.value;
@@ -190,7 +191,7 @@ class BaseIntegration extends Component {
     return (
       <Fragment>
         {this.state.error && this.renderError()}
-        <AppList apps={this.appsData} />
+        <AppList apps={this.appsData} proExceptions={this.proExceptions} />
       </Fragment>
     );
   }
