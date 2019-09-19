@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.2.1
+Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 1.0.83
+Stable tag: 1.0.84
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,11 +139,14 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.84 - 2019-09-19 =
+* Fixed: Editor version
+* Fixed: Read me files
+
 = 1.0.83 - 2019-09-18 =
 * Fixed: Fonts with Mega Menu section
 
 = 1.0.82 - 2019-09-18 =
-* New: Custom fonts
 * New: Text image mask
 * New: Text shadow
 * New: Text gradient color

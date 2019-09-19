@@ -44,22 +44,6 @@ class Brizy_Editor_UrlBuilder
     }
 
 
-//	/**
-//	 * @return Brizy_Admin_UrlIterator
-//	 */
-//	public function application_form_url() {
-//
-//		$form_url = sprintf( Brizy_Config::BRIZY_APPLICATION_FORM_URL, Brizy_Config::BRIZY_APPLICATION_FORM_ID, urlencode( $this->multipass_url() ) );
-//
-//		$urls = array();
-//
-//		foreach ( Brizy_Config::getEditorBaseUrls() as $url ) {
-//			$urls[] = $url . $form_url;
-//		}
-//
-//		return new Brizy_Admin_UrlIterator( $urls );
-//	}
-
     public function application_form_notification_url()
     {
 

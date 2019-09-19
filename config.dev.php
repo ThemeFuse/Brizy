@@ -5,28 +5,17 @@ class Brizy_Config {
 
 	const SITE_URL_PLACEHOLDER = '{@brizy_SITE_URL_PLACEHOLDER@}';
 	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
-	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
-	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor';
 	const MEDIA_IMAGE_URL = '/media';
 	const FONTS_URL = 'http://editor:3000/static';
-
-	const EDITOR_HOST_API = 'api.brizy.org';
-	const EDITOR_HOST_BASE = 'www.brizy.org';
-	const EDITOR_HOST_ORIGIN = 'brizy.org';
-	const EDITOR_HOST_PRIMARY = 'brizy.org';
 
 	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'http://api.brizy.org';
 
-	const BRIZY_REGISTRATION_CREDENTIALS = 'http://www.brizy.org/wordpress/credentials';
-
 	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-header-footer-template.php';
 
-	const BRIZY_APPLICATION_INTEGRATION_URL = 'http://ec2-52-203-33-55.compute-1.amazonaws.com';
 	const BRIZY_APPLICATION_FORM_ID = '4_4sh251774pwkgswwcow4ssgkkgosk4wowgss00k8w0ggs8808o';
-	const BRIZY_APPLICATION_FORM_URL = 'http://www.brizy.org/client_id/%s?multipass_url=%s';
 	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = 'http://cloud.bodnar.site/form/submit';
 	const BRIZY_PLATFORM_MULTIPASS_LOGIN = '/multipass/login/%s/%s?email=%s';
 
@@ -37,7 +26,6 @@ class Brizy_Config {
 	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/brizy-pro-pricing/";
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
-	const SHORTPIXEL_CONFIG = "https://www.brizy.cloud/shortpixel.txt";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
 	static public function getCompilerUrls() {
