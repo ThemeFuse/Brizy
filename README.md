@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.2.1<br>
+Tested up to: 5.2.3<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.83<br>
+Stable tag: 1.0.84<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,11 +118,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 1.0.84 - 2019-09-19 ###
+* Fixed: Editor version
+* Fixed: Read me files
+
 ### 1.0.83 - 2019-09-18 ###
 * Fixed: Fonts with Mega Menu section
 
 ### 1.0.82 - 2019-09-18 ###
-* New: Custom fonts
 * New: Text image mask
 * New: Text shadow
 * New: Text gradient color

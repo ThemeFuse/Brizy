@@ -5,28 +5,17 @@ class Brizy_Config {
 
 	const SITE_URL_PLACEHOLDER = '{@brizy_SITE_URL_PLACEHOLDER@}';
 	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
-	const LOCAL_PAGE_MEDIA_STATIC_URL = '/brizy/media';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
-	const BRIZY_WP_EDITOR_ASSET_PATH = '/brizy/editor';
 	const MEDIA_IMAGE_URL = '/media';
 	const FONTS_URL = 'https://www.brizy.cloud/fonts/wp?path=%s';
-
-	const EDITOR_HOST_API = 'api.testblox.info';
-	const EDITOR_HOST_BASE = 'www.testblox.info';
-	const EDITOR_HOST_ORIGIN = 'testblox.info';
-	const EDITOR_HOST_PRIMARY = 'testblox.info';
 
 	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'https://api.brizy.io';
 
-	const BRIZY_REGISTRATION_CREDENTIALS = '/wordpress/credentials';
-
 	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-header-footer-template.php';
 
-	const BRIZY_APPLICATION_INTEGRATION_URL = 'https://forms.brizy.io';
 	const BRIZY_APPLICATION_FORM_ID = '6_5968m8wd3r8kcwww8o480w4c4c84sc8gw4kwk80s4k0c48ogkc';
-	const BRIZY_APPLICATION_FORM_URL = '/client_id/%s?multipass_url=%s';
 	const BRIZY_APPLICATION_FORM_NOTIFICATION_URL = 'http://cloud.bodnar.site/form/submit';
 	const BRIZY_PLATFORM_MULTIPASS_LOGIN = '/multipass/login/%s/%s?email=%s';
 
@@ -36,8 +25,7 @@ class Brizy_Config {
 
 	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/brizy-pro-pricing/";
 	const SUPPORT_URL = "https://support.brizy.io";
-	const ABOUT_URL = "https://brizy.io";
-	const SHORTPIXEL_CONFIG = "https://www.brizy.cloud/shortpixel.txt";
+	const ABOUT_URL = "https://www.brizy.io";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
 	static public function getCompilerUrls() {
@@ -63,7 +51,7 @@ class Brizy_Config {
 	static public function getEditorBaseUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'https://brizy.cloud',
+				'https://www.brizy.cloud',
 				'http://media1.brizycompiler.run',
 				'http://media2.brizycompiler.run'
 			)
