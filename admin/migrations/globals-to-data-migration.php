@@ -23,6 +23,8 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 			$projectPost = $this->getProjectPost();
 
 			if ( ! $projectPost ) {
+				Brizy_Logger::instance()->critical( 'Filed migration Brizy_Admin_Migrations_GlobalsToDataMigration. We did not found any projects.', [] );
+
 				return;
 			}
 
@@ -44,7 +46,8 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 			}
 
 		} catch ( Exception $e ) {
-			return;
+			Brizy_Logger::instance()->critical( 'Filed migration Brizy_Admin_Migrations_GlobalsToDataMigration', [ $e ] );
+			throw $e;
 		}
 	}
 
