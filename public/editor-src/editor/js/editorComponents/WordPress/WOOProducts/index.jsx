@@ -39,7 +39,6 @@ class WOOProducts extends EditorComponent {
       orderby: v.orderBy,
       order: v.order
     };
-
     const className = classnames(
       css(
         `${this.constructor.componentId}`,
@@ -56,7 +55,7 @@ class WOOProducts extends EditorComponent {
             attributes={attributes}
             placeholderIcon="woo-2"
             placeholderContainerWidth={this.props.meta.desktopW}
-            className={classNames}
+            className={className}
             resizerPoints={resizerPoints}
             resizerMeta={this.props.meta}
             resizerValue={v}
