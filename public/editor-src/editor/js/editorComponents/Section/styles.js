@@ -3,10 +3,11 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleSection(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleZIndex", "cssStyleVisible|||preview"]
+      standart: ["cssStyleZIndex"],
+      interval: ["cssStyleVisibleMode|||preview"]
     },
     ".brz &&:hover .brz-container__wrap": {
-      interval: ["cssStyleVisible|||editor"]
+      interval: ["cssStyleVisibleMode|||editor"]
     },
     ".brz &&:hover .brz-section__content": {
       standart: ["cssStyleSectionSliderHeight"]

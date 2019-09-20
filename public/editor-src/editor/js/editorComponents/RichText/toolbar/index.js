@@ -532,8 +532,34 @@ const getItems = (v, onChange) => ({ device, component }) => {
       onChange
     ),
     {
-      ...toolbarHorizontalAlign({ v, device }),
+      id: "horizontalAlign",
+      label: t("Align"),
+      type: "toggle",
       position: 30,
+      disabled: isPopulationBlock,
+      choices: [
+        {
+          icon: "nc-text-align-left",
+          title: t("Align"),
+          value: "left"
+        },
+        {
+          icon: "nc-text-align-center",
+          title: t("Align"),
+          value: "center"
+        },
+        {
+          icon: "nc-text-align-right",
+          title: t("Align"),
+          value: "right"
+        },
+        {
+          icon: "nc-text-align-justify",
+          title: t("Align"),
+          value: "justify"
+        }
+      ],
+      value: device === "desktop" ? v.horizontalAlign : v[`${device}HorizontalAlign`],
       onChange: value =>
         onChange({ [`${device}HorizontalAlign`]: String(value) })
     },
