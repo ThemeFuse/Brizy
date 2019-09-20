@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 1.0.84
+Stable tag: 1.0.85
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,10 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.85 - 2019-09-20 =
+* Fixed: Globals to data migration
+* Fixed: WOOProducts shortcode
 
 = 1.0.84 - 2019-09-19 =
 * Fixed: Editor version
