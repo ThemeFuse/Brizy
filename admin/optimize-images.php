@@ -47,7 +47,7 @@ class Brizy_Admin_OptimizeImages {
 	}
 
 	public function addSubmenuPage() {
-		$this->screenName  = add_submenu_page( Brizy_Admin_Settings::menu_slug(),
+		$this->screenName = add_submenu_page( Brizy_Admin_Settings::menu_slug(),
 			__( 'Optimize Images' ),
 			__( 'Optimize Images' ),
 			'manage_options',
@@ -247,10 +247,12 @@ class Brizy_Admin_OptimizeImages {
 					$attachment = $attachments[0];
 				}
 
+				if ( !isset($attachment) ) {
+					continue;
+				}
+
 				$media_url = get_attached_file( $attachment->ID );
-
 				$brizy_media = basename( $media_url );
-
 			}
 
 
