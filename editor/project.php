@@ -291,12 +291,31 @@ class Brizy_Editor_Project implements Serializable {
 		}
 	}
 
+	private function get_last_autosave( $postParentId, $user_id ) {
+		global $wpdb;
+
+		$postParentId = (int) $postParentId;
+		$user_id      = (int) $user_id;
+
+		$query = sprintf( "SELECT ID FROM {$wpdb->posts} WHERE  post_parent = %d AND post_type= 'revision' AND post_status= 'inherit'AND post_name LIKE '%d-autosave%%'", $postParentId, $postParentId );
+
+		if ( is_integer( $user_id ) ) {
+			$query .= " AND post_author={$user_id}";
+		}
+
+		$query .= " ORDER BY post_date DESC";
+
+		return (int)$wpdb->get_var( $query );
+
+	}
+
 	public function auto_save_post() {
 		try {
 			$user_id                   = get_current_user_id();
 			$post                      = $this->post;
 			$postParentId              = $this->get_parent_id();
-			$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
+			$old_autosave              = $this->get_last_autosave( $postParentId, $user_id );
+			//$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
 			$post_data                 = get_object_vars( $post );
 			$post_data['post_content'] = md5( time() );
 			$autosavePost              = null;
@@ -307,7 +326,7 @@ class Brizy_Editor_Project implements Serializable {
 
 			if ( $old_autosave ) {
 				$new_autosave                = _wp_post_revision_data( $post_data, true );
-				$new_autosave['ID']          = $old_autosave->ID;
+				$new_autosave['ID']          = $old_autosave;
 				$new_autosave['post_author'] = $user_id;
 
 				// If the new autosave has the same content as the post, delete the autosave.
@@ -321,7 +340,7 @@ class Brizy_Editor_Project implements Serializable {
 				}
 
 				if ( ! $autosave_is_different ) {
-					wp_delete_post_revision( $old_autosave->ID );
+					wp_delete_post_revision( $old_autosave );
 
 					return new WP_Error( 'rest_autosave_no_changes',
 						__( 'There is nothing to save. The autosave and the post content are the same.' ),
