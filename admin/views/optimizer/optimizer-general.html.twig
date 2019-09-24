@@ -85,7 +85,7 @@
         <p>There are <b>{{ count }}</b> images that can be optimized.</p>
     </div>
 
-    {% if not enabled %}
+    {% if enabled %}
         {% if count>0 %}
             <button type="submit" id="optimize-submit" class="button button-primary"
                     onclick="startOptimize(); jQuery(this).prop('disabled',true);">

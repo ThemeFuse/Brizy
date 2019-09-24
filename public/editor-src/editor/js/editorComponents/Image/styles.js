@@ -35,10 +35,13 @@ export function imageStylesClassName(v, sizes, props) {
         maxWidth: `${Math.round(Math.abs((dW * 100) / desktopW))}%`,
         height: !imageSrc && !imagePopulation ? `${dH}px` : "auto",
         borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`,
+        boxShadow: styleBoxShadow({ v, device: "tablet", state: "normal" }),
+
         filter: `brightness(${imageBrightness}%) hue-rotate(${imageHue}deg) saturate(${imageSaturation}%) contrast(${imageContrast}%)`
       },
       ".brz &:before": {
-        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
+        // boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" })
+        // borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`
       },
 
       "@media (min-width: 991px)": {
@@ -46,11 +49,14 @@ export function imageStylesClassName(v, sizes, props) {
         transitionProperty: styleHoverTransitionProperty(),
 
         ".brz &:before": {
-          transition: styleHoverTransition({ v }),
-          transitionProperty: styleHoverTransitionProperty()
+          // transition: styleHoverTransition({ v }),
+          // transitionProperty: styleHoverTransitionProperty()
+        },
+        ".brz &:hover": {
+          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
         },
         ".brz &:hover:before": {
-          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
+          // boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
         }
       },
 
