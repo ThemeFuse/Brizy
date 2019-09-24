@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.87
+ * Version: 1.0.88
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
