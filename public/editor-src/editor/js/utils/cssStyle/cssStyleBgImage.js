@@ -24,11 +24,11 @@ export function cssStyleBgImagePosition({ v, device, state }) {
     : `background-position:${positionX} ${positionY};`;
 }
 
-export function cssStyleBgImageAttachment({ v, props }) {
+export function cssStyleBgImageAttachment({ v, device, state, props }) {
   const { isSlider } = props.meta.section;
   const bgAttachment = styleBgAttachment({ v, isSlider });
 
-  return bgAttachment === undefined
+  return device !== "desktop" || bgAttachment === undefined
     ? ""
     : `background-attachment:${bgAttachment};`;
 }
