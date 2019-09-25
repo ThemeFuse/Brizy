@@ -28,6 +28,7 @@ class Brizy_Admin_Popups_Main {
 	public function initialize() {
 		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
 		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
+		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'removePageAttributes' ) );
@@ -91,6 +92,17 @@ class Brizy_Admin_Popups_Main {
 		$types[] = self::CP_POPUP;
 
 		return $types;
+	}
+
+	public function afterBrizyEnabledForPopup( $post ) {
+		if ( $post->post_type === Brizy_Admin_Popups_Main::CP_POPUP ) {
+			$manager = new Brizy_Admin_Rules_Manager();
+			if ( count( $manager->getRules( $post->ID ) ) == 0 ) {
+				$manager->saveRules( $post->ID, array(
+					new Brizy_Admin_Rule( null, Brizy_Admin_Rule::TYPE_INCLUDE, '*', '*', array() )
+				) );
+			}
+		}
 	}
 
 	/**

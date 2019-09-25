@@ -66,8 +66,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		$this->setAppliedFor( $applied_for );
 		$this->setEntityType( $entity_type );
 		$this->setEntityValues( array_filter( (array) $entities, array( $this, 'filter' ) ) );
-
-
 	}
 
 	function filter( $v ) {

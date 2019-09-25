@@ -36,7 +36,7 @@ class RulesApiCest {
 			]
 		] );
 
-		$I->sendGET( $I->ajaxUrl( 'brizy_list_rules', [ 'post' => $postId ] ) );
+		$I->sendGET( $I->ajaxUrl( 'brizy_list_rules', [ 'version' => BRIZY_EDITOR_VERSION, 'post' => $postId ] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -79,7 +79,10 @@ class RulesApiCest {
 			"entityType"   => "post",
 			"entityValues" => [ 3, 4 ]
 		] );
-		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [ 'post' => $postId ] ), $newRule->convertToOptionValue() );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [
+			'version' => BRIZY_EDITOR_VERSION,
+			'post'    => $postId
+		] ), $newRule->convertToOptionValue() );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -177,6 +180,7 @@ class RulesApiCest {
 		$postId = $I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Popups_Main::CP_POPUP,
 			'post_status' => 'publish',
+
 		] );
 
 		$I->haveHttpHeader( 'Content-Type', 'application/json' );
@@ -195,7 +199,10 @@ class RulesApiCest {
 			]
 		];
 
-		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rules', [ 'post' => $postId ] ), $rules );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rules', [
+			'post'    => $postId,
+			'version' => BRIZY_EDITOR_VERSION
+		] ), $rules );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -243,7 +250,11 @@ class RulesApiCest {
 			]
 		];
 
-		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rules', [ 'post' => $postId ] ), $rules );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rules',
+			[
+				'post'    => $postId,
+				'version' => BRIZY_EDITOR_VERSION
+			] ), $rules );
 
 		$I->seeResponseCodeIs( 400 );
 
@@ -291,7 +302,10 @@ class RulesApiCest {
 			]
 		];
 
-		$I->sendPOST( $I->ajaxUrl( 'brizy_update_rules', [ 'post' => $postId ] ), $rules );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_update_rules', [
+			'version' => BRIZY_EDITOR_VERSION,
+			'post'    => $postId
+		] ), $rules );
 
 		$I->seeResponseCodeIsSuccessful();
 
@@ -340,7 +354,10 @@ class RulesApiCest {
 			]
 		];
 
-		$I->sendPOST( $I->ajaxUrl( 'brizy_update_rules', [ 'post' => $postId ] ), $rules );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_update_rules', [
+			'version' => BRIZY_EDITOR_VERSION,
+			'post'    => $postId
+		] ), $rules );
 
 		$I->seeResponseCodeIs( 400 );
 
@@ -375,7 +392,11 @@ class RulesApiCest {
 			]
 		] );
 
-		$I->sendGET( $I->ajaxUrl( 'brizy_delete_rule', [ 'post' => $postId, 'rule' => $ruleId ] ) );
+		$I->sendGET( $I->ajaxUrl( 'brizy_delete_rule', [
+			'version' => BRIZY_EDITOR_VERSION,
+			'post'    => $postId,
+			'rule'    => $ruleId
+		] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 

@@ -248,7 +248,7 @@ class Brizy_Editor_Editor_Editor {
 				'l10n'            => (object) Brizy_Public_EditorBuild_Texts::get_editor_texts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
 				'isTemplate'      => $isTemplate,
-				'isPopup'         => $isPopup,
+				'isGlobalPopup'   => $isPopup,
 				'availableRoles'  => $this->roleList()
 			),
 			'applications'    => array(
