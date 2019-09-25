@@ -30,7 +30,7 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 
 			$storage = Brizy_Editor_Storage_Project::instance( $projectPost->ID );
 
-			if ( $globals = $storage->get( 'globals' ) ) {
+			if ( $globals = $storage->get( 'globals', false ) ) {
 				update_post_meta( $projectPost->ID, 'brizy-bk-' . get_class( $this ) . '-' . $this->getVersion(), $storage->get_storage() );
 
 				$beforeMergeGlobals = json_decode( base64_decode( $globals ) );
