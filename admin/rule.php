@@ -286,10 +286,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 
 		$weight += count( $values );
 
-		if ( $this->getType() == self::TYPE_EXCLUDE ) {
-			$weight += 10;
-		}
-
 		return $weight;
 	}
 

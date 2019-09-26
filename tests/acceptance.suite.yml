@@ -40,7 +40,7 @@ modules:
             urlReplacement: true #replace the hardcoded dump URL with the one above
             tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
 
-        WPWebDriver:
+        WPBrowser:
             url: '%TEST_SITE_WP_URL%'
             browser: chrome
             port: 9515
