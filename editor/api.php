@@ -22,6 +22,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
 	const AJAX_MEDIA_METAKEY = 'brizy_get_media_key';
+	const AJAX_CREATE_ATTACHMENT_UID = 'brizy_create_attachment_uid';
 
 	const AJAX_SET_FEATURED_IMAGE = 'brizy_set_featured_image';
 	const AJAX_SET_FEATURED_IMAGE_FOCAL_POINT = 'brizy_set_featured_image_focal_point';
@@ -66,6 +67,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
 			add_action( 'wp_ajax_' . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
 			add_action( 'wp_ajax_' . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
+			add_action( 'wp_ajax_' . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
 			add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT, array(
@@ -492,11 +494,37 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$apost         = (int) $_REQUEST['post_id'];
 			$attachment_id = (int) $_REQUEST['attachment_id'];
 
-			if ( ! $attachment_id ) {
+			if ( ! $attachment_id || get_post_status( $attachment_id ) === false ) {
+				$this->error( 400, 'Invalid attachment id' );
+			}
+			$uid = $this->createMediaKey( $apost, $attachment_id );
+
+			$this->success( array( 'uid' => $uid ) );
+
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+
+			return;
+		}
+	}
+
+	public function get_attachment_key() {
+		try {
+			session_write_close();
+
+			$this->verifyNonce( self::nonce );
+			$attachmentId = (int) $_REQUEST['attachment_id'];
+
+			if ( ! $attachmentId || get_post_status( $attachmentId ) === false ) {
 				$this->error( 400, 'Invalid attachment id' );
 			}
 
-			$uid = $this->createMediaKey( $apost, $attachment_id );
+			$uid = get_post_meta( $attachmentId, 'brizy_post_uid', true );
+
+			if ( ! $uid ) {
+				$uid = "wp-" . md5( $attachmentId . time() );
+				update_post_meta( $attachmentId, 'brizy_post_uid', $uid );
+			}
 
 			$this->success( array( 'uid' => $uid ) );
 

@@ -153,7 +153,7 @@ class Brizy_Editor_Editor_Editor {
 			),
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
-			'wp'            => array(
+			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
 				'ruleMatches'     => $ruleMatches,
@@ -190,6 +190,7 @@ class Brizy_Editor_Editor_Editor {
 					'media'              => Brizy_Editor_API::AJAX_MEDIA,
 					'downloadMedia'      => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
 					'getMediaUid'        => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+					'getAttachmentUid'   => Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
 					'getServerTimeStamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
 
 
@@ -242,13 +243,13 @@ class Brizy_Editor_Editor_Editor {
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
 				'isTemplate'      => $isTemplate
 			),
-			'applications'  => array(
+			'applications'    => array(
 				'form' => array(
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 				)
 			),
-			'branding'      => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
-			'editorVersion' => BRIZY_EDITOR_VERSION
+			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
