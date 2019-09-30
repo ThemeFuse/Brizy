@@ -147,6 +147,7 @@ class Brizy_Editor_Editor_Editor {
 				'support'            => __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) ),
 				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
+				'customFile'         => home_url( '?brizy_attachment=' )
 			),
 			'form'            => array(
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
