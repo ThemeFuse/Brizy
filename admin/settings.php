@@ -139,13 +139,13 @@ class Brizy_Admin_Settings {
 		$tabs         = array(
 			array(
 				'id'          => 'general',
-				'label'       => 'General',
+				'label'       => __bt( 'General', 'General' ),
 				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
 			),
 			array(
 				'id'          => 'roles',
-				'label'       => 'Role Manager',
+				'label'       => __bt( 'Role Manager', 'Role Manager' ),
 				'is_selected' => $selected_tab == 'roles',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=roles"
 			),
