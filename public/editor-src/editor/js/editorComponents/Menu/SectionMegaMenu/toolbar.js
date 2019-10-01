@@ -46,63 +46,77 @@ export function getItemsForDesktop(v) {
       position: 80,
       options: [
         {
-          id: "bgImage",
+          id: "image",
           label: t("Image"),
-          type: "imageSetter",
-          value: {
-            width: v.bgImageWidth,
-            height: v.bgImageHeight,
-            src: v.bgImageSrc,
-            x: v.bgPositionX,
-            y: v.bgPositionY
-          },
-          onChange: ({ width, height, src, x, y }) => ({
-            bgImageWidth: width,
-            bgImageHeight: height,
-            bgImageSrc: src,
-            bgPositionX: x,
-            bgPositionY: y,
+          options: [
+            {
+              id: "bgImage",
+              label: t("Image"),
+              type: "imageSetter",
+              value: {
+                width: v.bgImageWidth,
+                height: v.bgImageHeight,
+                src: v.bgImageSrc,
+                x: v.bgPositionX,
+                y: v.bgPositionY
+              },
+              onChange: ({ width, height, src, x, y }) => ({
+                bgImageWidth: width,
+                bgImageHeight: height,
+                bgImageSrc: src,
+                bgPositionX: x,
+                bgPositionY: y,
 
-            bgColorOpacity:
-              src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.bgColorOpacity,
+                bgColorOpacity:
+                  src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.bgColorOpacity,
 
-            tempBgColorOpacity:
-              src !== "" && v.bgColorOpacity === 1 ? 0.9 : v.tempBgColorOpacity,
+                tempBgColorOpacity:
+                  src !== "" && v.bgColorOpacity === 1
+                    ? 0.9
+                    : v.tempBgColorOpacity,
 
-            // Mobile
-            mobileBgImageWidth:
-              v.bgImageWidth === v.mobileBgImageWidth
-                ? width
-                : v.mobileBgImageWidth,
+                // Mobile
+                mobileBgImageWidth:
+                  v.bgImageWidth === v.mobileBgImageWidth
+                    ? width
+                    : v.mobileBgImageWidth,
 
-            mobileBgImageHeight:
-              v.bgImageHeight === v.mobileBgImageHeight
-                ? height
-                : v.mobileBgImageHeight,
+                mobileBgImageHeight:
+                  v.bgImageHeight === v.mobileBgImageHeight
+                    ? height
+                    : v.mobileBgImageHeight,
 
-            mobileBgImageSrc:
-              v.bgImageSrc === v.mobileBgImageSrc ? src : v.mobileBgImageSrc,
+                mobileBgImageSrc:
+                  v.bgImageSrc === v.mobileBgImageSrc
+                    ? src
+                    : v.mobileBgImageSrc,
 
-            mobileBgPositionX:
-              v.bgPositionX === v.mobileBgPositionX ? x : v.mobileBgPositionX,
+                mobileBgPositionX:
+                  v.bgPositionX === v.mobileBgPositionX
+                    ? x
+                    : v.mobileBgPositionX,
 
-            mobileBgPositionY:
-              v.bgPositionX === v.mobileBgPositionX ? y : v.mobileBgPositionY,
+                mobileBgPositionY:
+                  v.bgPositionX === v.mobileBgPositionX
+                    ? y
+                    : v.mobileBgPositionY,
 
-            mobileBgColorOpacity:
-              src !== "" &&
-              v.bgImageSrc === v.mobileBgImageSrc &&
-              v.mobileBgColorOpacity === 1
-                ? 0.9
-                : v.mobileBgColorOpacity,
+                mobileBgColorOpacity:
+                  src !== "" &&
+                  v.bgImageSrc === v.mobileBgImageSrc &&
+                  v.mobileBgColorOpacity === 1
+                    ? 0.9
+                    : v.mobileBgColorOpacity,
 
-            tempMobileBgColorOpacity:
-              src !== "" &&
-              v.bgImageSrc === v.mobileBgImageSrc &&
-              v.mobileBgColorOpacity === 1
-                ? 0.9
-                : v.tempMobileBgColorOpacity
-          })
+                tempMobileBgColorOpacity:
+                  src !== "" &&
+                  v.bgImageSrc === v.mobileBgImageSrc &&
+                  v.mobileBgColorOpacity === 1
+                    ? 0.9
+                    : v.tempMobileBgColorOpacity
+              })
+            }
+          ]
         }
       ]
     },

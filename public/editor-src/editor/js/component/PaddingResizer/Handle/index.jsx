@@ -78,11 +78,6 @@ export default class PaddingResizerHandle extends Component {
       "brz-ed-draggable__padding--bottom": position === "bottom",
       "brz-ed-draggable-active": this.state.active
     });
-    const style = {
-      "--height": value,
-      "--tabletHeight": tabletValue,
-      "--mobileHeight": mobileValue
-    };
 
     return (
       <MouseEventsDelayed
@@ -94,7 +89,6 @@ export default class PaddingResizerHandle extends Component {
       >
         <Draggable
           className={className}
-          style={style}
           onDrag={this.handleDrag}
           onDragEnd={this.handleDragEnd}
         >

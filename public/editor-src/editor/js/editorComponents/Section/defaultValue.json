@@ -6,12 +6,23 @@
     "fullHeight": "off",
 
     "slider": "off",
+    "hoverSlider": null,
 
     "showOnDesktop": "on",
 
     "zIndex": 0,
 
+    "tabletAnchorName": null,
+    "tabletFullHeight": null,
+
+    "tabletSlider": null,
+
     "showOnTablet": "on",
+
+    "mobileAnchorName": null,
+    "mobileFullHeight": null,
+
+    "mobileSlider": null,
 
     "showOnMobile": "on"
   },
@@ -19,7 +30,13 @@
   "animation": {
     "sliderAnimation": "none",
     "sliderAutoPlay": "off",
-    "sliderAutoPlaySpeed": 3
+    "sliderAutoPlaySpeed": 3,
+
+    "tabletSliderAutoPlay": null,
+    "tabletSliderAutoPlaySpeed": null,
+
+    "mobileSliderAutoPlay": null,
+    "mobileSliderAutoPlaySpeed": null
   },
 
   "toolbar": {
@@ -61,6 +78,26 @@
     "hoverSliderArrowsColorPalette": "",
 
     "tempHoverSliderArrowsColorOpacity": 1,
-    "tempHoverSliderArrowsColorPalette": ""
+    "tempHoverSliderArrowsColorPalette": "",
+
+    "tabletSliderDots": null,
+    "tabletSliderArrows": null,
+
+    "tabletSliderDotsColorHex": null,
+    "tabletSliderDotsColorOpacity": null,
+    "tabletSliderDotsColorPalette": null,
+
+    "tempTabletSliderDotsColorOpacity": null,
+    "tempTabletSliderDotsColorPalette": null,
+
+    "mobileSliderDots": null,
+    "mobileSliderArrows": null,
+
+    "mobileSliderDotsColorHex": null,
+    "mobileSliderDotsColorOpacity": null,
+    "mobileSliderDotsColorPalette": null,
+
+    "tempMobileSliderDotsColorOpacity": null,
+    "tempMobileSliderDotsColorPalette": null
   }
 }

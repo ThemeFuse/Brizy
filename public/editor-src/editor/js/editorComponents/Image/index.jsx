@@ -332,6 +332,7 @@ class Image extends EditorComponent {
       linkLightBox,
       linkExternalType,
       linkPopup,
+      linkUpload,
       popups
     } = v;
     const { desktopW, tabletW, mobileW, inGallery = false } = this.props.meta;
@@ -398,6 +399,7 @@ class Image extends EditorComponent {
       anchor: linkAnchor,
       external: v[linkExternalType],
       popup: linkPopup,
+      upload: linkUpload,
       lightBox: imagePopulation
         ? imagePopulationUrl(imagePopulation)
         : imageUrl(imageSrc, { iW: 1200, iH: "any" })
@@ -529,6 +531,7 @@ class Image extends EditorComponent {
       linkLightBox,
       linkExternalType,
       linkPopup,
+      linkUpload,
       popups
     } = v;
 
@@ -688,6 +691,7 @@ class Image extends EditorComponent {
       anchor: linkAnchor,
       external: v[linkExternalType],
       popup: linkPopup,
+      upload: linkUpload,
       lightBox: imagePopulation
         ? imagePopulationUrl(imagePopulation)
         : imageUrl(imageSrc, { iW: 1200, iH: "any" })

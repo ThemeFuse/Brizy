@@ -3,6 +3,7 @@ import UIState from "visual/global/UIState";
 import { AddElements } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
+import { Settings } from "./components/Settings";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
 
@@ -12,6 +13,7 @@ export default {
   top: [AddElements, BlocksSortable, Styling],
   bottom: [
     DeviceModes,
+    Settings,
     {
       id: "popover",
       icon: "nc-menu",

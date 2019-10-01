@@ -4,7 +4,13 @@
 
     "type": "fixed",
 
-    "anchorName": ""
+    "anchorName": "",
+
+    "showOnDesktop": "on",
+
+    "showOnTablet": "on",
+
+    "showOnMobile": "on"
   },
 
   "style": {

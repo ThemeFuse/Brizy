@@ -157,14 +157,26 @@ export {
   cssStyleElementSoundCloudPropertyHoverTransition
 } from "./cssStyleElementSoundCloud";
 
+// Element Popup2
+export {
+  cssStyleContainerPopup2ContainerWidth,
+  cssStyleContainerPopup2CloseState,
+  cssStyleContainerPopup2ClosePosition,
+  cssStyleContainerPopup2CloseFontSize,
+  cssStyleContainerPopup2CloseBgSize,
+  cssStyleContainerPopup2CloseBorderRadius,
+  cssStyleContainerPopup2CloseColor,
+  cssStyleContainerPopup2CloseBgColor,
+  cssStyleContainerPopup2RowFlexVerticalAlign
+} from "./cssStyleContainerPopup2";
+
 // ZIndex
-export { cssStyleZIndex, cssStyleContainerZIndex } from "./cssStyleZIndex";
+export { cssStyleZIndex } from "./cssStyleZIndex";
 
 // Align
 export {
   cssStyleFlexVerticalAlign,
-  cssStyleFlexHorizontalAlign,
-  cssStyleHorizontalAlign
+  cssStyleFlexHorizontalAlign
 } from "./cssStyleAlign";
 
 // Flex
@@ -172,24 +184,35 @@ export { cssStyleFlexColumn } from "./cssStyleFlexColumn";
 
 // Padding
 export {
-  cssStylePadding,
-  cssStylePaddingColumn,
-  cssStyleItemPadding,
-  cssStylePaddingSection
+  cssStylePaddingFourFields,
+  cssStylePaddingPreview,
+  cssStylePaddingTopForEditorResizer,
+  cssStylePaddingBottomForEditorResizer,
+  cssStylePaddingRightLeftForEditor,
+  cssStyleItemPadding
 } from "./cssStylePadding";
 
 // Margin
+export { cssStyleMargin, cssStyleItemMargin } from "./cssStyleMargin";
+
+// Display
 export {
-  cssStyleMargin,
-  cssStyleMarginColumn,
-  cssStyleItemMargin
-} from "./cssStyleMargin";
+  cssStyleDisplayFlex,
+  cssStyleDisplayInlineFlex,
+  cssStyleDisplayBlock
+} from "./cssStyleDisplay";
 
 // Visible
-export { cssStyleVisible, cssStyleVisibleMode } from "./cssStyleVisible";
+export {
+  cssStyleVisible,
+  cssStyleVisibleEditorDisplayNoneOrFlex,
+  cssStyleVisibleEditorDisplayNoneOrBlock,
+  cssStyleVisibleEditorDisplayNoneOrInlineFlex,
+  cssStyleVisibleMode
+} from "./cssStyleVisible";
 
 // Filter
-export { cssStyleVideoFilter } from "./cssStyleFilter";
+export { cssStyleFilter } from "./cssStyleFilter";
 
 // Element Video
 export {
@@ -203,8 +226,6 @@ export {
   cssStyleElementVideoBgColorRatio,
   cssStyleElementVideoCoverSrc,
   cssStyleElementVideoCoverPosition,
-  cssStyleElementVideoIconSizeWidth,
-  cssStyleElementVideoIconSizeHeight,
   cssStyleElementVideoPropertyHoverTransition
 } from "./cssStyleElementVideo";
 
@@ -226,3 +247,12 @@ export {
 
 // Section Popup
 export { cssStyleSectionPopupContainerWrap } from "./cssStyleSectionPopup";
+
+// Element Breadcrumbs
+export {
+  cssStyleElementBreadcrumbsWidth,
+  cssStyleElementBreadcrumbsSpacing,
+  cssStyleElementBreadcrumbsArrowSize,
+  cssStyleElementBreadcrumbsColorActive,
+  cssStyleElementBreadcrumbsColorArrows
+} from "./cssStyleElementBreadcrumbs";

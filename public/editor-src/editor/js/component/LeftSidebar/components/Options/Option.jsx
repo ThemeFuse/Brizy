@@ -18,8 +18,9 @@ class Option extends React.Component {
         ? data.extraProps()
         : {};
     const className = classnames(
-      data.className,
+      "brz-ed-sidebar__control__item",
       _className,
+      data.className,
       extraProps.className
     );
     const finalProps = {

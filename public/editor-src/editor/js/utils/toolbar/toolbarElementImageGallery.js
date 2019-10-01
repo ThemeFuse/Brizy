@@ -39,8 +39,7 @@ export function toolbarElementImageGallerySpacing({ v, device, state }) {
     },
     input: {
       show: true,
-      min: 0,
-      max: 20
+      min: 0
     },
     suffix: {
       show: true,

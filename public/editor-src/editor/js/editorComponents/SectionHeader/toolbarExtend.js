@@ -1,99 +1,96 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey } from "visual/utils/onChange";
+import {
+  toolbarElementSectionHeaderType,
+  toolbarElementSectionGlobal,
+  toolbarElementSectionSaved,
+  toolbarShowOnDesktop,
+  toolbarShowOnResponsive,
+  toolbarAnchorName
+} from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v, component) {
+export function getItems({ v, device, component }) {
+  const dvk = key => defaultValueKey({ key, device, state: "normal" });
+
   return [
+    toolbarShowOnResponsive({
+      v,
+      device,
+      devices: "responsive",
+      closeTooltip: true
+    }),
     {
-      id: "toolbarSticky",
+      id: dvk("toolbarSticky"),
       type: "popover",
       icon: "nc-sticky-menu",
       title: t("Menu"),
+      devices: "desktop",
       position: 10,
       options: [
-        {
-          id: "type",
-          label: t("Header"),
-          type: "select",
-          choices: [
-            {
-              title: t("Static"),
-              value: "static"
-            },
-            {
-              title: t("Fixed"),
-              value: "fixed"
-            },
-            {
-              title: t("Sticky"),
-              value: "animated"
-            }
-          ],
-          value: v.type
-        },
-        {
-          id: "makeItGlobal",
-          label: t("Make it Global"),
-          type: "switch",
-          value: component.props.meta.globalBlockId ? "on" : "off",
-          onChange: value => {
-            value === "on"
-              ? component.becomeGlobal()
-              : component.becomeNormal();
-          }
-        }
+        toolbarElementSectionHeaderType({
+          v,
+          device,
+          devices: "desktop",
+          state: "normal"
+        }),
+        toolbarElementSectionGlobal({
+          device,
+          component,
+          state: "normal",
+          devices: "desktop"
+        })
       ]
     },
+    toolbarElementSectionSaved({
+      device,
+      state: "normal",
+      component,
+      devices: "desktop"
+    }),
     {
-      id: "makeItSaved",
-      type: "buttonTooltip",
-      icon: "nc-save-section",
-      position: 100,
-      title: t("Save"),
-      tooltipContent: t("Saved"),
-      onChange: () => {
-        component.becomeSaved();
-      }
-    },
-    {
-      id: "toolbarSettings",
+      id: dvk("toolbarSettings"),
       type: "popover",
       position: 110,
+      title: t("Settings"),
       options: [
         {
-          id: "advancedSettings",
+          id: dvk("advancedSettings"),
           type: "advancedSettings",
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),
           icon: "nc-cog",
+          devices: "desktop",
           options: [
             {
-              id: "settingsTabs",
+              id: dvk("settingsTabs"),
               type: "tabs",
               align: "start",
+              devices: "desktop",
               tabs: [
                 {
-                  id: "settingsStyling",
+                  id: dvk("settingsStyling"),
                   label: t("Styling"),
                   tabIcon: "nc-styling",
+                  devices: "desktop",
                   options: []
                 },
                 {
-                  id: "moreSettingsAdvanced",
+                  id: dvk("moreSettingsAdvanced"),
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
+                  devices: "desktop",
                   options: [
-                    {
-                      id: "anchorName",
-                      label: t("Anchor Name"),
-                      type: "input",
-                      display: "block",
-                      position: 10,
-                      value: {
-                        value: v.anchorName
-                      },
-                      onChange: ({ value: anchorName }) => ({
-                        anchorName
-                      })
-                    }
+                    toolbarShowOnDesktop({
+                      v,
+                      device,
+                      closeTooltip: true
+                    }),
+                    toolbarAnchorName({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal"
+                    })
                   ]
                 }
               ]
@@ -103,12 +100,4 @@ export function getItemsForDesktop(v, component) {
       ]
     }
   ];
-}
-
-export function getItemsForTablet(v) {
-  return [];
-}
-
-export function getItemsForMobile(v) {
-  return [];
 }

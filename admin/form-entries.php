@@ -106,7 +106,7 @@ class Brizy_Admin_FormEntries {
 	}
 
 	public function addSubmenuPage() {
-		add_submenu_page( 'brizy-settings', 'Leads', 'Leads', 'manage_options', 'edit.php?post_type=' . self::CP_FORM_ENTRY, null );
+		add_submenu_page( 'brizy-settings', __('Leads','brizy'), __('Leads','brizy'), 'manage_options', 'edit.php?post_type=' . self::CP_FORM_ENTRY, null );
 	}
 
 	public function handleEnableButton() {

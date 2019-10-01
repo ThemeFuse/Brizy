@@ -11,6 +11,11 @@
     "bgPositionX": 50,
     "bgPopulation": "",
 
+    "brightness": 100,
+    "hue": 0,
+    "saturation": 100,
+    "contrast": 100,
+
     "hoverMedia": "image",
 
     "hoverBgImageWidth": null,
@@ -19,6 +24,11 @@
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
+
+    "hoverBrightness": null,
+    "hoverHue": null,
+    "hoverSaturation": null,
+    "hoverContrast": null,
 
     "tabletMedia": null,
 
@@ -29,6 +39,11 @@
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
 
+    "tabletBrightness": null,
+    "tabletHue": null,
+    "tabletSaturation": null,
+    "tabletContrast": null,
+
     "mobileMedia": null,
 
     "mobileBgImageWidth": null,
@@ -36,7 +51,12 @@
     "mobileBgImageSrc": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
-    "mobileBgPopulation": null
+    "mobileBgPopulation": null,
+
+    "mobileBrightness": null,
+    "mobileHue": null,
+    "mobileSaturation": null,
+    "mobileContrast": null
   },
 
   "toolbar": {
@@ -177,18 +197,59 @@
     "containerType": "boxed",
     "containerSize": 100,
 
-    "paddingType": "grouped",
+    "paddingType": "ungrouped",
+    "tempPaddingType": "ungrouped",
+
     "padding": 75,
     "paddingTop": 75,
-    "paddingRight": "initial",
+    "paddingRight": 0,
     "paddingBottom": 75,
-    "paddingLeft": "initial",
+    "paddingLeft": 0,
+
+    "tempPadding": 75,
+    "tempPaddingTop": 75,
+    "tempPaddingRight": 0,
+    "tempPaddingBottom": 75,
+    "tempPaddingLeft": 0,
 
     "paddingSuffix": "px",
     "paddingTopSuffix": "px",
-    "paddingRightSuffix": "",
+    "paddingRightSuffix": "px",
     "paddingBottomSuffix": "px",
-    "paddingLeftSuffix": "",
+    "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "hoverPaddingType": null,
+    "tempHoverPaddingType": null,
+
+    "hoverPadding": null,
+    "hoverPaddingTop": null,
+    "hoverPaddingRight": null,
+    "hoverPaddingBottom": null,
+    "hoverPaddingLeft": null,
+
+    "tempHoverPadding": null,
+    "tempHoverPaddingTop": null,
+    "tempHoverPaddingRight": null,
+    "tempHoverPaddingBottom": null,
+    "tempHoverPaddingLeft": null,
+
+    "hoverPaddingSuffix": null,
+    "hoverPaddingTopSuffix": null,
+    "hoverPaddingRightSuffix": null,
+    "hoverPaddingBottomSuffix": null,
+    "hoverPaddingLeftSuffix": null,
+
+    "tempHoverPaddingSuffix": null,
+    "tempHoverPaddingTopSuffix": null,
+    "tempHoverPaddingRightSuffix": null,
+    "tempHoverPaddingBottomSuffix": null,
+    "tempHoverPaddingLeftSuffix": null,
 
     "boxShadow": "",
 
@@ -327,18 +388,32 @@
     "tempTabletBorderColorOpacity": null,
     "tempTabletBorderColorPalette": null,
 
-    "tabletPaddingType": "grouped",
+    "tabletPaddingType": "ungrouped",
+    "tempTabletPaddingType": "ungrouped",
+
     "tabletPadding": 50,
     "tabletPaddingTop": 50,
-    "tabletPaddingRight": "initial",
+    "tabletPaddingRight": 0,
     "tabletPaddingBottom": 50,
-    "tabletPaddingLeft": "initial",
+    "tabletPaddingLeft": 0,
+
+    "tempTabletPadding": 50,
+    "tempTabletPaddingTop": 50,
+    "tempTabletPaddingRight": 0,
+    "tempTabletPaddingBottom": 50,
+    "tempTabletPaddingLeft": 0,
 
     "tabletPaddingSuffix": "px",
     "tabletPaddingTopSuffix": "px",
-    "tabletPaddingRightSuffix": "",
+    "tabletPaddingRightSuffix": "px",
     "tabletPaddingBottomSuffix": "px",
-    "tabletPaddingLeftSuffix": "",
+    "tabletPaddingLeftSuffix": "px",
+
+    "tempTabletPaddingSuffix": "px",
+    "tempTabletPaddingTopSuffix": "px",
+    "tempTabletPaddingRightSuffix": "px",
+    "tempTabletPaddingBottomSuffix": "px",
+    "tempTabletPaddingLeftSuffix": "px",
 
     "tabletBoxShadow": null,
 
@@ -358,6 +433,9 @@
     "tempTabletBoxShadowSpread": null,
     "tempTabletBoxShadowVertical": null,
     "tempTabletBoxShadowHorizontal": null,
+
+    "tabletShapeTopType": null,
+    "tabletShapeBottomType": null,
 
     "tabletShape": null,
     "tabletShapeTopHeight": null,
@@ -446,18 +524,35 @@
     "tempMobileBoxShadowVertical": null,
     "tempMobileBoxShadowHorizontal": null,
 
-    "mobilePaddingType": "grouped",
+    "mobilePaddingType": "ungrouped",
+    "tempMobilePaddingType": "ungrouped",
+
     "mobilePadding": 25,
     "mobilePaddingTop": 25,
-    "mobilePaddingRight": "initial",
+    "mobilePaddingRight": 0,
     "mobilePaddingBottom": 25,
-    "mobilePaddingLeft": "initial",
+    "mobilePaddingLeft": 0,
+
+    "tempMobilePadding": 25,
+    "tempMobilePaddingTop": 25,
+    "tempMobilePaddingRight": 0,
+    "tempMobilePaddingBottom": 25,
+    "tempMobilePaddingLeft": 0,
 
     "mobilePaddingSuffix": "px",
     "mobilePaddingTopSuffix": "px",
-    "mobilePaddingRightSuffix": "",
+    "mobilePaddingRightSuffix": "px",
     "mobilePaddingBottomSuffix": "px",
-    "mobilePaddingLeftSuffix": "",
+    "mobilePaddingLeftSuffix": "px",
+
+    "tempMobilePaddingSuffix": "px",
+    "tempMobilePaddingTopSuffix": "px",
+    "tempMobilePaddingRightSuffix": "px",
+    "tempMobilePaddingBottomSuffix": "px",
+    "tempMobilePaddingLeftSuffix": "px",
+
+    "mobileShapeTopType": null,
+    "mobileShapeBottomType": null,
 
     "mobileShape": null,
     "mobileShapeTopHeight": null,

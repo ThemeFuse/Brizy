@@ -31,6 +31,8 @@ export const extraFontStylesSelector = state => state.extraFontStyles;
 
 export const screenshotsSelector = state => state.screenshots || {};
 
+export const hiddenElementsSelector = state => state.showHiddenElements;
+
 // === END 0 DEPENDENCIES ===
 
 // === 1 DEPENDENCY ===

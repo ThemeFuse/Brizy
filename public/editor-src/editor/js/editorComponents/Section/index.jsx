@@ -50,6 +50,7 @@ class Section extends EditorComponent {
 
   renderItems(v) {
     const {
+      showOnDesktop,
       showOnMobile,
       showOnTablet,
       slider,
@@ -62,6 +63,7 @@ class Section extends EditorComponent {
     const meta = Object.assign({}, this.props.meta, {
       section: {
         isSlider: slider === "on",
+        showOnDesktop: showOnDesktop === "on",
         showOnMobile: showOnMobile === "on",
         showOnTablet: showOnTablet === "on"
       }
@@ -75,7 +77,7 @@ class Section extends EditorComponent {
       sliderAutoPlay: sliderAutoPlay === "on",
       sliderAutoPlaySpeed,
       meta,
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig)
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig)
     });
 
     return <SectionItems {...itemsProps} />;

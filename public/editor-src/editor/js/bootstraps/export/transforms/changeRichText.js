@@ -1,6 +1,9 @@
 import { getStore } from "visual/redux/store";
+import Config from "visual/global/Config";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
+
+const isWP = Config.get("wp");
 
 const linkClassNames = ["link--anchor", "link--external", "is-empty"];
 
@@ -116,6 +119,11 @@ function getLinkContentByType(type, href) {
       const anchorName = (blockByHref && blockByHref.value.anchorName) || href;
 
       return `#${anchorName}`;
+    case "upload":
+      const { customFile } = Config.get("urls");
+      const [name] = href.split("|||", 1);
+
+      return isWP ? `${customFile}${name}` : `${customFile}/${name}`;
     case "popup":
     case "lightBox":
     case "external":

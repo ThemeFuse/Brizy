@@ -303,11 +303,12 @@ class Brizy_Editor {
 		try {
 			$url_builder = new Brizy_Editor_UrlBuilder( null );
 
-			$config          = null;
-			$proxy           = new Brizy_Public_AssetProxy( $url_builder, $config );
-			$crop_roxy       = new Brizy_Public_CropProxy( $url_builder, $config );
-			$screenshot_roxy = new Brizy_Public_BlockScreenshotProxy( new Brizy_Editor_UrlBuilder( null ), $config );
-			$screenshot_roxy = new Brizy_Public_FileProxy( new Brizy_Editor_UrlBuilder( null ), $config );
+			$config           = null;
+			$proxy            = new Brizy_Public_AssetProxy( $url_builder, $config );
+			$crop_proxy       = new Brizy_Public_CropProxy( $url_builder, $config );
+			$attachment_proxy = new Brizy_Public_AttachmentProxy( $url_builder, $config );
+			$screenshot_roxy  = new Brizy_Public_BlockScreenshotProxy( new Brizy_Editor_UrlBuilder( null ), $config );
+			$screenshot_roxy  = new Brizy_Public_FileProxy( new Brizy_Editor_UrlBuilder( null ), $config );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}

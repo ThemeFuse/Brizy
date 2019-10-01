@@ -1161,7 +1161,7 @@ export function getItemsForDesktop(v) {
             },
             {
               id: "anchor",
-              label: t("Anchor"),
+              label: t("Block"),
               options: [toolbarLinkAnchor({ v })]
             }
           ]

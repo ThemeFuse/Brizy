@@ -147,13 +147,14 @@ class Brizy_Editor_Editor_Editor {
 				'support'            => __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) ),
 				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
+				'customFile'         => home_url( '?brizy_attachment=' )
 			),
 			'form'            => array(
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 			),
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
-			'wp'            => array(
+			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
 				'ruleMatches'     => $ruleMatches,
@@ -190,6 +191,7 @@ class Brizy_Editor_Editor_Editor {
 					'media'              => Brizy_Editor_API::AJAX_MEDIA,
 					'downloadMedia'      => Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
 					'getMediaUid'        => Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+					'getAttachmentUid'   => Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
 					'getServerTimeStamp' => Brizy_Editor_API::AJAX_TIMESTAMP,
 
 
@@ -242,13 +244,13 @@ class Brizy_Editor_Editor_Editor {
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
 				'isTemplate'      => $isTemplate
 			),
-			'applications'  => array(
+			'applications'    => array(
 				'form' => array(
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
 				)
 			),
-			'branding'      => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
-			'editorVersion' => BRIZY_EDITOR_VERSION
+			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
+			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
 
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
@@ -394,19 +396,7 @@ class Brizy_Editor_Editor_Editor {
 							return addQueryStringToUrl( $link, 'preview=1' );
 						}
 
-						global $wp_post_types;
-
-						$archivePostTypes = array_filter( $wp_post_types, function ( $type ) {
-							return $type->public && $type->show_ui && $type->has_archive;
-						} );
-
-						if ( count( $archivePostTypes ) == 0 ) {
-							break;
-						}
-
-						$postTypes = array_pop( $archivePostTypes );
-
-						$link = get_post_type_archive_link( $postTypes->name );
+						$link = $this->getOneArchiveLink();
 
 						return addQueryStringToUrl( $link, 'preview=1' );
 						break;
@@ -555,5 +545,92 @@ class Brizy_Editor_Editor_Editor {
 				'value' => (object) array( 'items' => array() )
 			) )
 		);
+	}
+
+	private function getOneArchiveLink( $args = '' ) {
+		global $wpdb, $wp_locale;
+
+		$defaults = array(
+			'type'            => 'monthly',
+			'limit'           => '',
+			'order'           => 'DESC',
+			'post_type'       => 'post',
+			'year'            => get_query_var( 'year' ),
+			'monthnum'        => get_query_var( 'monthnum' ),
+			'day'             => get_query_var( 'day' ),
+			'w'               => get_query_var( 'w' ),
+		);
+
+		$r = wp_parse_args( $args, $defaults );
+
+		$post_type_object = get_post_type_object( $r['post_type'] );
+		if ( ! is_post_type_viewable( $post_type_object ) ) {
+			return;
+		}
+		$r['post_type'] = $post_type_object->name;
+
+		if ( '' == $r['type'] ) {
+			$r['type'] = 'monthly';
+		}
+
+		if ( ! empty( $r['limit'] ) ) {
+			$r['limit'] = absint( $r['limit'] );
+			$r['limit'] = ' LIMIT ' . $r['limit'];
+		}
+
+		$order = strtoupper( $r['order'] );
+		if ( $order !== 'ASC' ) {
+			$order = 'DESC';
+		}
+
+		// this is what will separate dates on weekly archive links
+		$archive_week_separator = '&#8211;';
+
+		$sql_where = $wpdb->prepare( "WHERE post_type = %s AND post_status = 'publish'", $r['post_type'] );
+
+		/**
+		 * Filters the SQL WHERE clause for retrieving archives.
+		 *
+		 * @since 2.2.0
+		 *
+		 * @param string $sql_where Portion of SQL query containing the WHERE clause.
+		 * @param array  $r         An array of default arguments.
+		 */
+		$where = apply_filters( 'getarchives_where', $sql_where, $r );
+
+		/**
+		 * Filters the SQL JOIN clause for retrieving archives.
+		 *
+		 * @since 2.2.0
+		 *
+		 * @param string $sql_join Portion of SQL query containing JOIN clause.
+		 * @param array  $r        An array of default arguments.
+		 */
+		$join = apply_filters( 'getarchives_join', '', $r );
+
+		$output = '';
+
+		$last_changed = wp_cache_get_last_changed( 'posts' );
+
+		$limit = $r['limit'];
+
+		if ( 'monthly' == $r['type'] ) {
+			$query = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, count(ID) as posts FROM $wpdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date $order $limit";
+			$key   = md5( $query );
+			$key   = "wp_get_archives:$key:$last_changed";
+			if ( ! $results = wp_cache_get( $key, 'posts' ) ) {
+				$results = $wpdb->get_results( $query );
+				wp_cache_set( $key, $results, 'posts' );
+			}
+			if ( $results ) {
+				foreach ( (array) $results as $result ) {
+					$url = get_month_link( $result->year, $result->month );
+					if ( 'post' !== $r['post_type'] ) {
+						$url = add_query_arg( 'post_type', $r['post_type'], $url );
+					}
+					return $url;
+				}
+			}
+		}
 	}
 }

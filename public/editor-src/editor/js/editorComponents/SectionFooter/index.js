@@ -116,7 +116,7 @@ class SectionFooter extends EditorComponent {
     const { globalBlockId } = this.props.meta;
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
         className="brz-ed-collapsible__section brz-ed-collapsible--big"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}

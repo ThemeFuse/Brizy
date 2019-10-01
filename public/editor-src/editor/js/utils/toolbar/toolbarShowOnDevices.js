@@ -1,22 +1,34 @@
 import { t } from "visual/utils/i18n";
 
-export function toolbarShowOnDesktop({ v, position = 10, devices = "all" }) {
+export function toolbarShowOnDesktop({
+  v,
+  position = 10,
+  devices = "all",
+  closeTooltip = true
+}) {
   return {
     id: "showOnDesktop",
     label: t("Show on Desktop"),
     position,
+    closeTooltip,
     type: "switch",
     devices,
     value: v.showOnDesktop
   };
 }
 
-export function toolbarShowOnTablet({ v, position = 10, devices = "all" }) {
+export function toolbarShowOnTablet({
+  v,
+  position = 10,
+  devices = "all",
+  closeTooltip = true
+}) {
   return {
     id: "showOnTablet",
     type: "toggle",
     devices,
     position,
+    closeTooltip,
     choices: [
       {
         icon: "nc-eye-17",
@@ -33,12 +45,18 @@ export function toolbarShowOnTablet({ v, position = 10, devices = "all" }) {
   };
 }
 
-export function toolbarShowOnMobile({ v, position = 10, devices = "all" }) {
+export function toolbarShowOnMobile({
+  v,
+  position = 10,
+  devices = "all",
+  closeTooltip = true
+}) {
   return {
     id: "showOnMobile",
     type: "toggle",
     devices,
     position,
+    closeTooltip,
     choices: [
       {
         icon: "nc-eye-17",
@@ -60,12 +78,13 @@ export function toolbarShowOnResponsive({
   device,
   state,
   devices = "all",
-  position = 10
+  position = 10,
+  closeTooltip = true
 }) {
   if (device === "tablet") {
-    return toolbarShowOnTablet({ v, position, devices });
+    return toolbarShowOnTablet({ v, position, devices, closeTooltip });
   } else if (device === "mobile") {
-    return toolbarShowOnMobile({ v, position, devices });
+    return toolbarShowOnMobile({ v, position, devices, closeTooltip });
   } else {
     return {};
   }

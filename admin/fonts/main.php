@@ -64,7 +64,7 @@ class Brizy_Admin_Fonts_Main {
 				'labels'              => $labels,
 				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __( 'Brizy font.', 'brizy' ),
+				'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'font', 'brizy' ) . '.',
 				'publicly_queryable'  => false,
 				'show_ui'             => false,
 				'show_in_menu'        => false,

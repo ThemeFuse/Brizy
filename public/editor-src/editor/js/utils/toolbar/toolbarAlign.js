@@ -1,17 +1,23 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarHorizontalAlign({
   v,
   device,
   devices = "all",
+  disabled = false,
   state,
   position = 100
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "horizontalAlign", device, state }),
+    id: dvk("horizontalAlign"),
     type: "toggle",
     devices,
+    disabled,
     position,
     choices: [
       {
@@ -30,22 +36,32 @@ export function toolbarHorizontalAlign({
         value: "right"
       }
     ],
-    value: defaultValueValue({ v, key: "horizontalAlign", device, state }),
+    value: dvv("horizontalAlign"),
     onChange: value => ({
-      [defaultValueKey({ key: "horizontalAlign", device, state })]: value
+      [dvk("horizontalAlign")]: value
     })
   };
 }
 
-export function toolbarVerticalAlign({ v, device, state, devices = "all" }) {
+export function toolbarVerticalAlign({
+  v,
+  device,
+  state,
+  position = 100,
+  prefix = "",
+  disabled = false,
+  devices = "all"
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
-    id: dvk("verticalAlign"),
+    id: dvk(capByPrefix(prefix, "verticalAlign")),
     label: t("Content"),
     type: "radioGroup",
     devices,
+    position,
+    disabled,
     choices: [
       {
         value: "top",
@@ -60,6 +76,49 @@ export function toolbarVerticalAlign({ v, device, state, devices = "all" }) {
         icon: "nc-align-bottom"
       }
     ],
-    value: dvv("verticalAlign")
+    value: dvv(capByPrefix(prefix, "verticalAlign"))
+  };
+}
+
+export function toolbarVerticalAlignToggle({
+  v,
+  device,
+  state,
+  prefix = "",
+  disabled = false,
+  position = 100,
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk(capByPrefix(prefix, "verticalAlign")),
+    type: "toggle",
+    position,
+    devices,
+    disabled,
+    className: "brz-popup2__vertical-align",
+    choices: [
+      {
+        icon: "nc-text-align-left",
+        title: t("Align"),
+        value: "top"
+      },
+      {
+        icon: "nc-text-align-center",
+        title: t("Align"),
+        value: "center"
+      },
+      {
+        icon: "nc-text-align-right",
+        title: t("Align"),
+        value: "bottom"
+      }
+    ],
+    value: dvv(capByPrefix(prefix, "verticalAlign")),
+    onChange: value => ({
+      [dvk(capByPrefix(prefix, "verticalAlign"))]: value
+    })
   };
 }

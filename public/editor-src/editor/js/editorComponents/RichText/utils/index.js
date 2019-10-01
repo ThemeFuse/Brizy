@@ -97,7 +97,8 @@ const getLink = value => {
     externalRel,
     population,
     externalType,
-    popup = ""
+    popup = "",
+    upload
   } = decodeFromString(value);
 
   return {
@@ -108,7 +109,8 @@ const getLink = value => {
     linkExternalRel: externalRel,
     linkPopulation: population,
     linkExternalType: externalType,
-    linkPopup: popup.replace("#", "")
+    linkPopup: popup.replace("#", ""),
+    linkUpload: upload
   };
 };
 

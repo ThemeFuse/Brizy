@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.89
+ * Version: 1.0.91
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,8 +19,8 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.89' );
-define( 'BRIZY_EDITOR_VERSION', '108' );
+define( 'BRIZY_VERSION', '1.0.91' );
+define( 'BRIZY_EDITOR_VERSION', '110' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
@@ -50,9 +50,9 @@ function brizy_notices() {
 	?>
     <div class="notice notice-error is-dismissible">
         <p>
-	        <?php echo __bt( 'brziy', 'Brizy' ) ?> requires PHP version 5.6+, you currently running
+	        <?php echo __bt( 'brizy', 'Brizy' ) ?> requires PHP version 5.6+, you currently running
             PHP <?php echo PHP_VERSION ?>.
-            <b><?php echo strtoupper( __bt( 'brziy', 'Brizy' ) ) ?> IS NOT RUNNING. </b>
+            <b><?php echo strtoupper( __bt( 'brizy', 'Brizy' ) ) ?> IS NOT RUNNING. </b>
         </p>
     </div>
 	<?php

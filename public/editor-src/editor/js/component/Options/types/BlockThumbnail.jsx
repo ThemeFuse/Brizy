@@ -295,7 +295,7 @@ class AnchorInput extends React.Component {
           className="brz-input"
           type="text"
           autoComplete="off"
-          placeholder={t("anchor-name")}
+          placeholder={t("block-name")}
           value={this.state.inputValue}
           onChange={this.handleInputChange}
           id={inputID}

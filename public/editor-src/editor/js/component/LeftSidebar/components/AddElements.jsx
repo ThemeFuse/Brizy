@@ -128,7 +128,10 @@ class DrawerComponent extends Component {
       const iconElem = this.renderIcon(title, icon);
 
       return isEditMode ? (
-        <div className="brz-ed-sidebar__add-elements__item" key={id}>
+        <div
+          className="brz-ed-sidebar__add-elements__item brz-ed-sidebar__add-elements__item-edit"
+          key={id}
+        >
           <div
             className={classnames("brz-ed-sidebar__edit", {
               "brz-ed-sidebar__edit--checked": !disabledElements[id]

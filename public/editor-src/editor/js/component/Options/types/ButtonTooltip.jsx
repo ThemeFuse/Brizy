@@ -81,6 +81,7 @@ class ButtonTooltip extends React.Component {
 
     const className = classnames(
       "brz-ed-option__button",
+      "brz-p-relative",
       { "brz-ed-toolbar--active": value },
       _className,
       attr.className

@@ -20,7 +20,8 @@ export class WPShortcode extends Component {
     mobileToggleMenu: false,
     tabletToggleMenu: false,
     className: "",
-    style: {}
+    style: {},
+    blocked: true
   };
 
   id = uuid(3);
@@ -162,14 +163,23 @@ class Inner extends Component {
   }
 
   renderForEdit() {
-    const { className: _className, style, placeholderIcon } = this.props;
+    const {
+      className: _className,
+      style,
+      placeholderIcon,
+      blocked
+    } = this.props;
     const { shortcodeHTML } = this.state;
 
     return shortcodeHTML ? (
-      <div
-        className="brz-blocked"
-        dangerouslySetInnerHTML={{ __html: shortcodeHTML }}
-      />
+      blocked ? (
+        <div
+          className="brz-blocked"
+          dangerouslySetInnerHTML={{ __html: shortcodeHTML }}
+        />
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: shortcodeHTML }} />
+      )
     ) : (
       <Placeholder icon={placeholderIcon} />
     );

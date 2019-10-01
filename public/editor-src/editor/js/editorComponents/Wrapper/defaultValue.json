@@ -19,17 +19,58 @@
     "horizontalAlign": "center",
 
     "paddingType": "grouped",
+    "tempPaddingType": "grouped",
+
     "padding": 0,
     "paddingTop": 0,
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
 
+    "tempPadding": 0,
+    "tempPaddingTop": 0,
+    "tempPaddingRight": 0,
+    "tempPaddingBottom": 0,
+    "tempPaddingLeft": 0,
+
     "paddingSuffix": "px",
     "paddingTopSuffix": "px",
     "paddingRightSuffix": "px",
     "paddingBottomSuffix": "px",
     "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "hoverPaddingType": null,
+    "tempHoverPaddingType": null,
+
+    "hoverPadding": null,
+    "hoverPaddingTop": null,
+    "hoverPaddingRight": null,
+    "hoverPaddingBottom": null,
+    "hoverPaddingLeft": null,
+
+    "tempHoverPadding": null,
+    "tempHoverPaddingTop": null,
+    "tempHoverPaddingRight": null,
+    "tempHoverPaddingBottom": null,
+    "tempHoverPaddingLeft": null,
+
+    "hoverPaddingSuffix": null,
+    "hoverPaddingTopSuffix": null,
+    "hoverPaddingRightSuffix": null,
+    "hoverPaddingBottomSuffix": null,
+    "hoverPaddingLeftSuffix": null,
+
+    "tempHoverPaddingSuffix": null,
+    "tempHoverPaddingTopSuffix": null,
+    "tempHoverPaddingRightSuffix": null,
+    "tempHoverPaddingBottomSuffix": null,
+    "tempHoverPaddingLeftSuffix": null,
 
     "marginType": "ungrouped",
     "margin": 0,
@@ -49,17 +90,31 @@
     "tabletHorizontalAlign": null,
 
     "tabletPaddingType": "grouped",
+    "tempTabletPaddingType": "grouped",
+
     "tabletPadding": 0,
     "tabletPaddingTop": 0,
     "tabletPaddingRight": 0,
     "tabletPaddingBottom": 0,
     "tabletPaddingLeft": 0,
 
+    "tempTabletPadding": 0,
+    "tempTabletPaddingTop": 0,
+    "tempTabletPaddingRight": 0,
+    "tempTabletPaddingBottom": 0,
+    "tempTabletPaddingLeft": 0,
+
     "tabletPaddingSuffix": "px",
     "tabletPaddingTopSuffix": "px",
     "tabletPaddingRightSuffix": "px",
     "tabletPaddingBottomSuffix": "px",
     "tabletPaddingLeftSuffix": "px",
+
+    "tempTabletPaddingSuffix": "px",
+    "tempTabletPaddingTopSuffix": "px",
+    "tempTabletPaddingRightSuffix": "px",
+    "tempTabletPaddingBottomSuffix": "px",
+    "tempTabletPaddingLeftSuffix": "px",
 
     "tabletMarginType": "ungrouped",
     "tabletMargin": 0,
@@ -77,17 +132,31 @@
     "mobileHorizontalAlign": null,
 
     "mobilePaddingType": "grouped",
+    "tempMobilePaddingType": "grouped",
+
     "mobilePadding": 0,
     "mobilePaddingTop": 0,
     "mobilePaddingRight": 0,
     "mobilePaddingBottom": 0,
     "mobilePaddingLeft": 0,
 
+    "tempMobilePadding": 0,
+    "tempMobilePaddingTop": 0,
+    "tempMobilePaddingRight": 0,
+    "tempMobilePaddingBottom": 0,
+    "tempMobilePaddingLeft": 0,
+
     "mobilePaddingSuffix": "px",
     "mobilePaddingTopSuffix": "px",
     "mobilePaddingRightSuffix": "px",
     "mobilePaddingBottomSuffix": "px",
     "mobilePaddingLeftSuffix": "px",
+
+    "tempMobilePaddingSuffix": "px",
+    "tempMobilePaddingTopSuffix": "px",
+    "tempMobilePaddingRightSuffix": "px",
+    "tempMobilePaddingBottomSuffix": "px",
+    "tempMobilePaddingLeftSuffix": "px",
 
     "mobileMarginType": "ungrouped",
     "mobileMargin": 0,

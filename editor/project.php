@@ -159,6 +159,11 @@ class Brizy_Editor_Project implements Serializable {
 			OBJECT
 		);
 
+		if ( is_null( $row ) ) {
+			Brizy_Logger::instance()->critical( 'Failed to check if the project exist.', [] );
+			throw new Exception( 'Failed to check if the project exist.' );
+		}
+
 		if ( isset( $row[0] ) ) {
 			return WP_Post::get_instance( $row[0]->ID );
 		}

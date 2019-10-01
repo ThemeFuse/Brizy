@@ -1,0 +1,72 @@
+.brz-ed-option__file_upload {
+  height: 79px;
+  padding-top: 15px !important;
+
+  .brz-file-upload {
+    position: relative;
+    overflow: hidden;
+    font-weight: bold;
+    width: 48px;
+    height: 48px;
+    border: 1px dashed #444952;
+    background-color: #2d323b;
+    color: rgba(94, 100, 111, 0.6);
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border 0.2s linear;
+
+    input {
+      cursor: pointer;
+      font-size: 200px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      opacity: 0;
+    }
+    .brz-icon-svg {
+      color: inherit;
+      transition: color 0.2s linear;
+    }
+
+    &:hover {
+      border-color: #5e6470;
+      color: #5e646f;
+    }
+  }
+
+  .brz-file-name {
+    color: #fff;
+
+    .brz-file-title {
+      width: 140px;
+      height: 16px;
+      overflow: hidden;
+      margin-right: 10px;
+      text-align: right;
+      font-weight: 600;
+    }
+    .brz-file-remove {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .brz-icon-svg {
+        color: #11141d;
+        font-size: 14px;
+      }
+    }
+
+    .brz-icon-svg {
+      cursor: pointer;
+    }
+  }
+}

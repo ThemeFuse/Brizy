@@ -73,12 +73,14 @@ class Button extends EditorComponent {
       linkExternalBlank,
       linkExternalType,
       linkExternalRel,
-      linkPopup
+      linkPopup,
+      linkUpload
     } = v;
     const hrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
-      popup: linkPopup
+      popup: linkPopup,
+      upload: linkUpload
     };
     let props = {
       type: linkType,

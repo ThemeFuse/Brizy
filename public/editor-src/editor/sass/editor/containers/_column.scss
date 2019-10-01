@@ -22,10 +22,12 @@
       }
     }
   }
-  .brz-ed-border__column--empty {
-    min-height: 125px;
 
-    > .brz-bg {
+  // Empty
+  &--empty {
+    min-height: 0;
+
+    > .brz-ed-border > .brz-bg {
       padding: 0;
       margin: 0;
       align-items: stretch;

@@ -19,7 +19,7 @@ const Bogdan14Popup = require("./blocks/Bogdan14Popup");
 module.exports = {
   blocks: [
     Blank0001Popup,
-    // Blank0001Popup2test,
+    //Blank0001Popup2test,
     Blank0002Popup,
     Bogdan01Popup,
     Bogdan02Popup,

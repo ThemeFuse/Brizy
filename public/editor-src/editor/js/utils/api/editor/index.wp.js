@@ -322,6 +322,15 @@ export function getUploadedFonts() {
   return request(apiConfig.getFonts, {}).then(({ data }) => data);
 }
 
+export function getAttachmentById(id) {
+  const apiConfig = Config.get("wp").api;
+  const data = {
+    attachment_id: id
+  };
+
+  return request(apiConfig.getAttachmentUid, data).then(({ data }) => data);
+}
+
 // screenshots
 
 export function createBlockScreenshot({ base64, blockType }) {

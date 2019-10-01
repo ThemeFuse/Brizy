@@ -40,12 +40,13 @@ class SectionItem extends EditorComponent {
   shouldComponentUpdate(nextProps) {
     const {
       meta: {
-        section: { isSlider, showOnMobile, showOnTablet }
+        section: { isSlider, showOnDesktop, showOnMobile, showOnTablet }
       }
     } = this.props;
     const {
       meta: {
         section: {
+          showOnDesktop: newShowOnDesktop,
           showOnMobile: newShowOnMobile,
           showOnTablet: newShowOnTablet
         }
@@ -53,6 +54,7 @@ class SectionItem extends EditorComponent {
     } = nextProps;
     const { deviceMode } = getStore().getState().ui;
     const deviceUpdate =
+      (deviceMode === "desktop" && showOnDesktop !== newShowOnDesktop) ||
       (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
       (deviceMode === "tablet" && showOnTablet !== newShowOnTablet);
 
@@ -126,7 +128,7 @@ class SectionItem extends EditorComponent {
 
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
         className="brz-ed-collapsible__section brz-ed-collapsible--big"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}

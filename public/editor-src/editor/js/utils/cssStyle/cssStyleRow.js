@@ -1,6 +1,7 @@
 import {
   styleElementColumnMinHeightType,
   styleElementColumnMinHeight,
+  styleElementColumnMinHeightSuffix,
   styleReverseColumnsRow,
   styleReverseColumnsWrap,
   styleReverseColumnsJustify
@@ -10,7 +11,12 @@ export function cssStyleRowMinHeight({ v, device }) {
   const minHeightType = styleElementColumnMinHeightType({ v, device });
   const minHeight =
     minHeightType === "custom"
-      ? `${styleElementColumnMinHeight({ v, device })}px`
+      ? `${styleElementColumnMinHeight({
+          v,
+          device
+        })}${styleElementColumnMinHeightSuffix({ v, device })}`
+      : minHeightType === "fullHeight"
+      ? "100vh"
       : "auto";
 
   return `min-height: ${minHeight};`;

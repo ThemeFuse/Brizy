@@ -4,7 +4,6 @@ import { imageUrl } from "visual/utils/image";
 import { hexToRgba } from "visual/utils/color";
 import { styleBorderColor, styleBgColor } from "visual/utils/style";
 
-
 export function sectionStyleClassName(v) {
   const {
     showOnDesktop,
@@ -195,6 +194,10 @@ export function bgStyleCSSVars(v) {
     bgImageSrc,
     bgPositionX,
     bgPositionY,
+    brightness,
+    hue,
+    saturation,
+    contrast,
     bgColorHex,
     bgColorOpacity,
     borderWidth,

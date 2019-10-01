@@ -8,15 +8,17 @@ import Portal from "visual/component/Portal";
 import Sticky from "visual/component/Sticky";
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
-import { currentTooltip } from "visual/component/Controls/Tooltip";
+import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import { uuid } from "visual/utils/uuid";
 import { stripIds } from "visual/utils/models";
 import { capitalize } from "visual/utils/string";
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
+import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import { styleSection } from "./styles";
 
 const STICKY_ITEM_INDEX = 1;
 
@@ -52,6 +54,21 @@ class SectionHeader extends EditorComponent {
   isSticky = false;
   isUpdated = false;
 
+  sectionNode = React.createRef();
+  stickyNode = React.createRef();
+
+  getMeta(v) {
+    const { showOnDesktop, showOnMobile, showOnTablet } = v;
+
+    return Object.assign({}, this.props.meta, {
+      section: {
+        showOnDesktop: showOnDesktop === "on",
+        showOnMobile: showOnMobile === "on",
+        showOnTablet: showOnTablet === "on"
+      }
+    });
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const stateUpdate = this.state.height !== nextState.height;
 
@@ -68,7 +85,7 @@ class SectionHeader extends EditorComponent {
     if (type !== "fixed") {
       fixedContainerPlus({
         fixed: false,
-        node: this.sectionNode
+        node: this.sectionNode.current
       });
     }
   }
@@ -77,36 +94,25 @@ class SectionHeader extends EditorComponent {
     if (meta.patch.type && meta.patch.type !== "fixed") {
       this.isUpdated = true;
 
-      this.setState(
-        {
-          height: "auto"
-        },
-        () => (this.isUpdated = false)
-      );
+      this.setState({ height: "auto" }, () => (this.isUpdated = false));
     }
 
     this.props.onChange(newValue, meta);
   }
 
-  handleSectionRef = el => {
-    this.sectionNode = el;
-  };
-
-  handleStickyRef = el => {
-    this.stickyNode = el;
-  };
-
   handleStickyChange = isSticky => {
     hideToolbar();
 
-    if (currentTooltip) {
-      currentTooltip.hide();
+    const tooltip = getCurrentTooltip();
+
+    if (tooltip) {
+      tooltip.hide();
     }
 
     if (this.getValue().type === "fixed") {
       fixedContainerPlus({
         fixed: isSticky,
-        node: this.sectionNode,
+        node: this.sectionNode.current,
         height: this.state.height
       });
       this.isSticky = isSticky;
@@ -119,11 +125,11 @@ class SectionHeader extends EditorComponent {
   };
 
   handleUpdateHeight = () => {
-    const { height } = this.stickyNode.getBoundingClientRect();
+    const { height } = this.stickyNode.current.getBoundingClientRect();
 
     fixedContainerPlus({
       fixed: this.isSticky,
-      node: this.sectionNode,
+      node: this.sectionNode.current,
       height
     });
 
@@ -138,12 +144,12 @@ class SectionHeader extends EditorComponent {
     return v.type === "fixed" ? { height: this.state.height } : null;
   }
 
-  renderAnimated = () => {
+  renderAnimated({ v, vs, vd }) {
     let sticky = (
       <Sticky
         refSelector={`#${this.getId()}`}
         type="animated"
-        render={this.renderAnimatedSticky}
+        render={isSticky => this.renderAnimatedSticky({ v, vs, vd, isSticky })}
         onChange={this.handleStickyChange}
       />
     );
@@ -160,23 +166,30 @@ class SectionHeader extends EditorComponent {
     }
 
     return (
-      <React.Fragment>
+      <>
         {sticky}
-        {this.renderStatic()}
-      </React.Fragment>
+        {this.renderStatic({ v })}
+      </>
     );
-  };
+  }
 
-  renderAnimatedSticky = isSticky => {
-    const className = classnames("brz-section__header--animated", {
-      "brz-section__header--animated-opened": isSticky
-    });
+  renderAnimatedSticky({ v, vs, vd, isSticky }) {
+    const className = classnames(
+      "brz-section__header--animated",
+      { "brz-section__header--animated-opened": isSticky },
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleSection(v, vs, vd)
+      )
+    );
+
     const stickyItemProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       sliceStartIndex: STICKY_ITEM_INDEX,
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig),
-        meta: this.props.meta
+        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
+        meta: this.getMeta(v)
       }
     });
 
@@ -189,20 +202,20 @@ class SectionHeader extends EditorComponent {
         </div>
       </SortableZIndex>
     );
-  };
+  }
 
-  renderFixed = () => {
+  renderFixed({ v }) {
     return (
       <Sticky
         refSelector={`#${this.getId()}`}
         type="fixed"
-        render={this.renderFixedSticky}
+        render={isSticky => this.renderFixedSticky({ v, isSticky })}
         onChange={this.handleStickyChange}
       />
     );
-  };
+  }
 
-  renderFixedSticky = isSticky => {
+  renderFixedSticky({ v, isSticky }) {
     const className = classnames("brz-section__header--fixed", {
       "brz-section__header--fixed-opened": isSticky
     });
@@ -210,56 +223,69 @@ class SectionHeader extends EditorComponent {
 
     return (
       <SortableZIndex zindex={1}>
-        <div className={className} ref={this.handleStickyRef}>
+        <div className={className} ref={this.stickyNode}>
           <ToolbarExtend position={toolbarPosition}>
-            {this.renderStatic()}
+            {this.renderStatic({ v })}
           </ToolbarExtend>
           <ResizeAware onResize={this.handleUpdateHeight} />
         </div>
       </SortableZIndex>
     );
-  };
+  }
 
-  renderStatic = () => {
+  renderStatic({ v }) {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       sliceStartIndex: 0,
       sliceEndIndex: STICKY_ITEM_INDEX,
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig),
-        meta: this.props.meta
+        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
+        meta: this.getMeta(v)
       }
     });
 
     return <EditorArrayComponent {...itemsProps} />;
-  };
+  }
 
-  renderForEdit(v) {
-    let className = "brz-section__header";
-    let content = this[`render${capitalize(v.type)}`]();
+  renderForEdit(v, vs, vd) {
+    const className = classnames(
+      "brz-section__header",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleSection(v, vs, vd)
+      )
+    );
 
     return (
       <section
         id={this.getId()}
         className={className}
         style={this.getStyle(v)}
-        ref={this.handleSectionRef}
+        ref={this.sectionNode}
       >
-        {content}
+        {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>
     );
   }
 
-  renderForView(v) {
-    let content = this[`render${capitalize(v.type)}`]();
+  renderForView(v, vs, vd) {
+    const className = classnames(
+      "brz-section__header",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleSection(v, vs, vd)
+      )
+    );
 
     return (
       <section
         id={v.anchorName || this.getId()}
-        className="brz-section__header"
+        className={className}
         data-uid={this.getId()}
       >
-        {content}
+        {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>
     );
   }

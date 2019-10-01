@@ -10,7 +10,11 @@ export function styleBg(v, vs, vd, props) {
       ]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
-      standart: ["cssStyleBgImage", "cssStyleBgImagePosition"],
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition"
+      ],
       interval: [
         "cssStyleBgImageAttachment",
         "cssStyleHoverTransition",
@@ -25,7 +29,18 @@ export function styleBg(v, vs, vd, props) {
       ]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-map": {
-      standart: ["cssStyleBgMap"]
+      standart: ["cssStyleFilter", "cssStyleBgMap"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleSectionPropertyHoverTransition"
+      ]
+    },
+    ".brz &&:hover > .brz-bg-media > .brz-bg-video": {
+      standart: ["cssStyleFilter"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleSectionPropertyHoverTransition"
+      ]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-shape__top": {
       standart: [
@@ -42,6 +57,15 @@ export function styleBg(v, vs, vd, props) {
         "cssStyleShapeBottomFlip",
         "cssStyleShapeBottomIndex"
       ]
+    },
+    ".brz &&:hover > .brz-bg-content": {
+      standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
+    },
+    ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {
+      standart: ["cssStylePaddingTopForEditorResizer"]
+    },
+    ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--bottom": {
+      standart: ["cssStylePaddingBottomForEditorResizer"]
     }
   };
 
@@ -62,7 +86,6 @@ export function styleContainer(v, vs, vd) {
 export function styleContainerWrap(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStylePaddingSection"],
       interval: ["cssStyleSectionContainerType"]
     }
   };

@@ -5,27 +5,9 @@ import {
 } from "./onChange";
 import { defaultValueKey } from "./device";
 
-export function onChangeMarginGrouped({
-  v,
-  device,
-  state,
-  childs = undefined,
-  marginType = "default",
-  value,
-  suffix
-}) {
-  /**
-   * ### OUTPUT EXAMPLE
-   *
-   * [marginTopSuffix, marginRightSuffix, marginBottomSuffix, marginLeftSuffix]
-   */
+export function onChangeMarginGrouped({ v, device, state, value, suffix }) {
   const parent = "margin";
-  childs =
-    childs === undefined
-      ? marginType === "topBottom"
-        ? ["marginTop", "marginBottom"]
-        : ["marginTop", "marginRight", "marginBottom", "marginLeft"]
-      : childs;
+  const childs = ["marginTop", "marginRight", "marginBottom", "marginLeft"];
 
   const childsSuffix = [];
   for (var i = 0; i < childs.length; i++) {

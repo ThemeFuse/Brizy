@@ -5,7 +5,7 @@ import {
   styleFilterContrast
 } from "visual/utils/style2";
 
-export function cssStyleVideoFilter({ v, device, state }) {
+export function cssStyleFilter({ v, device, state }) {
   const brightness = styleFilterBrightness({ v, device, state });
   const hue = styleFilterHue({ v, device, state });
   const saturation = styleFilterSaturation({ v, device, state });

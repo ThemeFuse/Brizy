@@ -34,6 +34,7 @@
     font-weight: 600;
     color: #818a91;
     text-transform: uppercase;
+    letter-spacing: 0.8px;
 
     &::before,
     &::after {
@@ -653,6 +654,15 @@
           opacity: 1;
           visibility: visible;
           transition-delay: 750ms;
+        }
+      }
+      &-edit:hover {
+        .brz-ed-sidebar__add-elements__icon {
+          border-color: #818a91;
+          color: #fff;
+        }
+        .brz-ed-sidebar__add-elements__text {
+          color: #fff;
         }
       }
     }

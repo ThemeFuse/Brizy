@@ -12,6 +12,7 @@ export default {
 
 function getItems(v, component) {
   const { base } = Editor.getShortcodes();
+
   const { icon = "" } =
     base.find(
       ({

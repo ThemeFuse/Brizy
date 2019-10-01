@@ -13,12 +13,6 @@ export function onChangeBorderStyle2({ v, device, state, borderStyle }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
-  console.log({
-    [dvk("borderStyle")]: borderStyle,
-    [dvk("tempBorderStyle")]:
-      borderStyle !== "" ? borderStyle : dvv("tempBorderStyle")
-  });
-
   return {
     [dvk("borderStyle")]: borderStyle,
     [dvk("tempBorderStyle")]:
@@ -54,16 +48,6 @@ export function onChangeElementBorderStyleDependencies2({
       tempValue: []
     }
   };
-
-  console.log(
-    onChangeDependeciesGrouped({
-      v,
-      device,
-      state,
-      value: borderStyle,
-      dependencies
-    })
-  );
 
   return onChangeDependeciesGrouped({
     v,
@@ -113,16 +97,6 @@ export function onChangeContainerBorderStyleDependencies2({
     }
   };
 
-  console.log(
-    onChangeDependeciesGrouped({
-      v,
-      device,
-      state,
-      value: borderStyle,
-      dependencies
-    })
-  );
-
   return onChangeDependeciesGrouped({
     v,
     device,
@@ -154,12 +128,6 @@ export function onChangeBorderColorHexAndOpacity2({
 
   const tempOpacity =
     opacity > 0 && opacityDragEnd ? opacity : dvv("tempBorderColorOpacity");
-
-  console.log({
-    [dvk("borderColorHex")]: hex,
-    [dvk("borderColorOpacity")]: opacity,
-    [dvk("tempBorderColorOpacity")]: tempOpacity
-  });
 
   return {
     [dvk("borderColorHex")]: hex,
@@ -194,11 +162,6 @@ export function onChangeBorderColorHexAndOpacityPalette2({
       : dvv("borderColorPalette");
 
   const tempPalette = isChanged === "hex" ? "" : dvv("tempBorderColorPalette");
-
-  console.log({
-    [dvk("borderColorPalette")]: palette,
-    [dvk("tempBorderColorPalette")]: tempPalette
-  });
 
   return {
     [dvk("borderColorPalette")]: palette,
@@ -238,16 +201,6 @@ export function onChangeElementBorderColorHexAndOpacityDependencies2({
     opacity,
     isChanged
   });
-
-  console.log(
-    onChangeDependeciesGrouped({
-      v,
-      device,
-      state,
-      value: opacity,
-      dependencies
-    })
-  );
 
   return onChangeDependeciesGrouped({
     v,
@@ -300,16 +253,6 @@ export function onChangeContainerBorderColorHexAndOpacityDependencies2({
     opacity,
     isChanged
   });
-
-  console.log(
-    onChangeDependeciesGrouped({
-      v,
-      device,
-      state,
-      value: opacity,
-      dependencies
-    })
-  );
 
   return onChangeDependeciesGrouped({
     v,
@@ -399,11 +342,6 @@ export function onChangeBorderColorHexAndOpacityColumnAndRowSyncMobile2({
 export function onChangeBorderColorPalette2({ device, state, palette }) {
   const dvk = key => defaultValueKey({ key, device, state });
 
-  console.log({
-    [dvk("borderColorPalette")]: palette,
-    [dvk("tempBorderColorPalette")]: palette
-  });
-
   return {
     [dvk("borderColorPalette")]: palette,
     [dvk("tempBorderColorPalette")]: palette
@@ -427,10 +365,6 @@ export function onChangeBorderColorPaletteOpacity2({
     isChanged
   });
 
-  console.log({
-    [dvk("borderColorOpacity")]: opacity
-  });
-
   return {
     [dvk("borderColorOpacity")]: opacity
   };
@@ -438,8 +372,6 @@ export function onChangeBorderColorPaletteOpacity2({
 
 export function onChangeBorderWidthType2({ v, device, state, type }) {
   const dvk = key => defaultValueKey({ key, device, state });
-
-  console.log({ [dvk("borderWidthType")]: type });
 
   return { [dvk("borderWidthType")]: type };
 }
@@ -460,20 +392,6 @@ export function onChangeBorderWidthGrouped2({
   ];
   const temp = true;
   const tempZero = false;
-
-  console.log(
-    onChangeGroupedAndUngroupedByGrouped({
-      v,
-      device,
-      state,
-      parent,
-      childs,
-      value,
-      sliderDragEnd,
-      temp,
-      tempZero
-    })
-  );
 
   return onChangeGroupedAndUngroupedByGrouped({
     v,
@@ -522,16 +440,6 @@ export function onChangeBorderWidthGroupedDependencies2({
     }
   };
 
-  console.log(
-    onChangeDependeciesGrouped({
-      v,
-      device,
-      state,
-      value,
-      dependencies
-    })
-  );
-
   return onChangeDependeciesGrouped({
     v,
     device,
@@ -556,28 +464,6 @@ export function onChangeBorderWidthUngrouped2({
     "borderLeftWidth"
   ];
   const temp = true;
-
-  console.log({
-    ...onChangeUngroupedByUngrouped({
-      v,
-      device,
-      state,
-      childs,
-      current,
-      value,
-      temp
-    }),
-    ...onChangeGroupedByUngrouped({
-      v,
-      device,
-      state,
-      parent,
-      childs,
-      current,
-      value,
-      temp
-    })
-  });
 
   return {
     ...onChangeUngroupedByUngrouped({
@@ -644,19 +530,6 @@ export function onChangeBorderWidthUngroupedDependencies2({
       tempValue: []
     }
   };
-
-  console.log(
-    onChangeDependeciesUngrouped({
-      v,
-      device,
-      state,
-      parent,
-      childs,
-      current,
-      value,
-      dependencies
-    })
-  );
 
   return onChangeDependeciesUngrouped({
     v,

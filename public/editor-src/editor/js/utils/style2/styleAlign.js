@@ -1,13 +1,15 @@
 import { defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
-export function styleAlignFlexVerticalAlign({ v, device, state }) {
+export function styleAlignFlexVerticalAlign({ v, device, state, prefix = "" }) {
   const aligns = {
     top: "flex-start",
     center: "center",
     bottom: "flex-end"
   };
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
-  const type = defaultValueValue({ v, key: "verticalAlign", device, state });
+  const type = dvv(capByPrefix(prefix, "verticalAlign"));
 
   return type === undefined ? type : aligns[type];
 }
@@ -29,8 +31,4 @@ export function styleAlignFlexHorizontalAlign({ v, device, state }) {
   return horizontalAlign === undefined
     ? horizontalAlign
     : aligns[horizontalAlign];
-}
-
-export function styleAlignHorizontalAlign({ v, device, state }) {
-  return defaultValueValue({ v, key: "horizontalAlign", device, state });
 }

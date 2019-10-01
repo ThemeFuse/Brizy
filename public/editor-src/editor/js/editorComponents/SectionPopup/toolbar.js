@@ -55,12 +55,39 @@ export function getItems({ v, device, component }) {
       title: t("Background"),
       position: 80,
       options: [
-        toolbarBgImage({
-          v,
-          device,
-          state: "normal",
-          onChange: ["onChangeBgImage", "onChangeBgImageBgOpacity"]
-        })
+        {
+          id: defaultValueKey({
+            key: "tabsCurrentElement",
+            device,
+            state: "normal"
+          }),
+          label: t("Background"),
+          type: "tabs",
+          value: defaultValueValue({
+            v,
+            key: "tabsCurrentElement",
+            device,
+            state: "normal"
+          }),
+          tabs: [
+            {
+              id: defaultValueKey({
+                key: "tabCurrentElement",
+                device,
+                state: "normal"
+              }),
+              label: t("Image"),
+              options: [
+                toolbarBgImage({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: ["onChangeBgImage", "onChangeBgImageBgOpacity"]
+                })
+              ]
+            }
+          ]
+        }
       ]
     },
     {
