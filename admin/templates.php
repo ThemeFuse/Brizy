@@ -357,7 +357,10 @@ class Brizy_Admin_Templates {
 		);
 
 		if ( $context != 'template-rules' ) {
-			$list[] = array( 'title' => 'Brizy Templates', 'value' => 'brizy_template', 'groupValue' => Brizy_Admin_Rule::BRIZY_TEMPLATE );
+			$list[] = array( 'title'      => 'Brizy Templates',
+			                 'value'      => 'brizy_template',
+			                 'groupValue' => Brizy_Admin_Rule::BRIZY_TEMPLATE
+			);
 		}
 
 		return $list;
@@ -502,9 +505,14 @@ class Brizy_Admin_Templates {
 				$needs_compile = ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
 
 				if ( $needs_compile ) {
-					$this->template->compile_page();
-					if ( ! $is_preview && $needs_compile ) {
-						$this->template->save();
+					try {
+						$this->template->compile_page();
+						if ( ! $is_preview && $needs_compile ) {
+							$this->template->save();
+						}
+					} catch ( Exception $e ) {
+						//ignore
+						Brizy_Logger::instance()->error( $e->getMessage(), [] );
 					}
 				}
 
@@ -524,7 +532,7 @@ class Brizy_Admin_Templates {
 
 		} catch ( Exception $e ) {
 			//ignore
-            Brizy_Logger::instance()->error($e->getMessage(),[$e]);
+			Brizy_Logger::instance()->error( $e->getMessage(), [] );
 		}
 	}
 
