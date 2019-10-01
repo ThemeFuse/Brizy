@@ -6,15 +6,6 @@
  * Time: 10:59 AM
  */
 
-add_filter( 'brizy_supported_post_types', 'brizy_addBlockSupport' );
-
-function brizy_addBlockSupport( $posts ) {
-	$posts[] = Brizy_Admin_Blocks_Main::CP_GLOBAL;
-	$posts[] = Brizy_Admin_Blocks_Main::CP_SAVED;
-
-	return $posts;
-}
-
 
 class Brizy_Admin_Blocks_Main {
 

@@ -4,6 +4,76 @@ class Brizy_Admin_Rules_Manager {
 
 
 	/**
+	 * @return array|null
+	 */
+	static function getCurrentPageGroupAndType() {
+		global $wp_query;
+
+		if ( ! isset( $wp_query ) || is_admin() ) {
+			return null;
+		}
+
+		$applyFor     = Brizy_Admin_Rule::TEMPLATE;
+		$entityType   = null;
+		$entityValues = array();
+
+		if ( is_404() ) {
+			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+			$entityType = '404';
+		} elseif ( is_author() ) {
+			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+			$entityType = 'author';
+		} elseif ( is_search() ) {
+			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+			$entityType = 'search';
+		} elseif ( is_front_page() ) {
+			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+			$entityType = 'front_page';
+		} elseif ( is_home() ) {
+			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+			$entityType = 'home_page';
+		} elseif ( is_category() || is_tag() || is_tax() ) {
+			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
+			$entityType     = $wp_query->queried_object->taxonomy;
+			$entityValues[] = $wp_query->queried_object_id;
+		} elseif ( is_archive() ) {
+			$applyFor = Brizy_Admin_Rule::ARCHIVE;
+			if ( $wp_query->queried_object ) {
+				$entityType = $wp_query->queried_object->name;
+			}
+		} elseif ( ( $wp_query->queried_object instanceof WP_Post || $wp_query->post instanceof WP_Post ) && get_queried_object() ) {
+			$applyFor       = Brizy_Admin_Rule::POSTS;
+			$entityType     = get_queried_object()->post_type;
+			$entityValues[] = get_queried_object_id();
+		}
+
+		return array( $applyFor, $entityType, $entityValues );
+	}
+
+	/**
+	 * @param $entities
+	 *
+	 * @return mixed
+	 */
+	static function sortEntitiesByRuleWeight($entities) {
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		// sort templates by rule set weight
+		usort( $entities, function ( $t1, $t2 ) use ( $ruleManager ) {
+			$ruleSetT1      = $ruleManager->getRuleSet( $t1->ID );
+			$ruleSetT2      = $ruleManager->getRuleSet( $t2->ID );
+			$rule_weight_t1 = $ruleSetT1->getRuleWeight();
+			$rule_weight_t2 = $ruleSetT2->getRuleWeight();
+			if ( $rule_weight_t1 == $rule_weight_t2 ) {
+				return 0;
+			}
+
+			return ( $rule_weight_t1 < $rule_weight_t2 ) ? 1 : - 1;
+		} );
+
+		return $entities;
+	}
+
+	/**
 	 * @param $jsonString
 	 * @param string $postType
 	 *
@@ -17,7 +87,14 @@ class Brizy_Admin_Rules_Manager {
 		return $rule;
 	}
 
-	public function createRulesFromJson( $jsonString, $postType = Brizy_Admin_Templates::CP_TEMPLATE, $forceValidation = true ) {
+	/**
+	 * @param $jsonString
+	 * @param string $postType
+	 *
+	 * @return array
+	 * @throws Exception
+	 */
+	public function createRulesFromJson( $jsonString, $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
 		$rulesJson = json_decode( $jsonString );
 		$rules     = array();
 
@@ -27,19 +104,14 @@ class Brizy_Admin_Rules_Manager {
 			}
 		}
 
-		if ( $forceValidation ) {
-			if ( $this->validateRules( $postType, $rules ) ) {
-				throw new Exception( 'One or more rules are already used or are overridden by an existent rule' );
-			}
-		}
-
 		return $rules;
 	}
 
 	/**
-	 * @param int $postId
+	 * @param $postId
 	 *
 	 * @return array
+	 * @throws Exception
 	 */
 	public function getRules( $postId ) {
 		$rules = array();
@@ -55,12 +127,11 @@ class Brizy_Admin_Rules_Manager {
 
 			foreach ( $meta_value as $v ) {
 				$brizy_admin_rule = Brizy_Admin_Rule::createFromSerializedData( $v );
-				$brizy_admin_rule->setTemplateId( $postId );
 				$rules[] = $brizy_admin_rule;
 			}
 		}
 
-		$rules = $this->sortRules( $rules );
+		$rules = Brizy_Admin_Rules_AbstractValidator::sortRules( $rules );
 
 		return $rules;
 	}
@@ -132,99 +203,145 @@ class Brizy_Admin_Rules_Manager {
 	public function getRuleSet( $postId ) {
 		return new Brizy_Admin_RuleSet( $this->getRules( $postId ) );
 	}
-
-	public function getAllRulesSet( $args = array(), $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
-
-		$defaults = array(
-			'post_type'      => $postType,
-			'posts_per_page' => - 1,
-			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
-		);
-
-		$r = wp_parse_args( $args, $defaults );
-
-		$templates = get_posts( $r );
-
-		$rules = array();
-
-		foreach ( $templates as $template ) {
-			$tRules = $this->getRules( $template->ID );
-			$rules  = array_merge( $rules, $tRules );
-		}
-
-		$rules = $this->sortRules( $rules );
-
-		$ruleSet = new Brizy_Admin_RuleSet( $rules );
-
-		return $ruleSet;
-	}
-
-	private function sortRules( $rules ) {
-		// sort the rules by how specific they are
-		usort( $rules, function ( $a, $b ) {
-			/**
-			 * @var Brizy_Admin_Rule $a ;
-			 * @var Brizy_Admin_Rule $b ;
-			 */
-
-			$la = $a->getRuleWeight();
-			$lb = $b->getRuleWeight();
-			if ( $lb == $la ) {
-				return 0;
-			}
-
-			return $la < $lb ? 1 : - 1;
-		} );
-
-		return $rules;
-	}
-
-	/**
-	 * @param $postType
-	 * @param Brizy_Admin_Rule $rule
-	 *
-	 * @return object|null
-	 */
-	public function validateRule( $postType, Brizy_Admin_Rule $rule ) {
-		$ruleSet = $this->getAllRulesSet( array(), $postType );
-		foreach ( $ruleSet->getRules() as $arule ) {
-
-			if ( $rule->isEqual( $arule ) ) {
-				return (object) array(
-					'message' => 'The rule is already used',
-					'rule'    => $arule->getId()
-				);
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * @param $postType
-	 * @param array $rules
-	 *
-	 * @return array
-	 */
-	public function validateRules( $postType, array $rules ) {
-		// validate rule
-		$ruleSet = $this->getAllRulesSet( array(), $postType );
-		$errors  = array();
-		foreach ( $ruleSet->getRules() as $arule ) {
-			foreach ( $rules as $newRule ) {
-				if ( $newRule->isEqual( $arule ) ) {
-					$errors[] = (object) array(
-						'message' => 'The rule is already used',
-						'rule'    => $arule->getId()
-					);
-				}
-			}
-		}
-
-		if ( count( $errors ) > 0 ) {
-			return $errors;
-		}
-
-		return array();
-	}
+//
+//	public function getAllRulesSet( $args = array(), $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
+//
+//		$defaults = array(
+//			'post_type'      => $postType,
+//			'posts_per_page' => - 1,
+//			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
+//		);
+//
+//		$r = wp_parse_args( $args, $defaults );
+//
+//		$templates = get_posts( $r );
+//
+//		$rules = array();
+//
+//		foreach ( $templates as $template ) {
+//			$tRules = $this->getRules( $template->ID );
+//			$rules  = array_merge( $rules, $tRules );
+//		}
+//
+//		$rules = $this->sortRules( $rules );
+//
+//		$ruleSet = new Brizy_Admin_RuleSet( $rules );
+//
+//		return $ruleSet;
+//	}
+//
+//	public function getAllRulesSetByPostId( $args = array(), $postId ) {
+//
+//		$defaults = array(
+//			'post_type'      => $postType,
+//			'posts_per_page' => - 1,
+//			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
+//		);
+//
+//		$r = wp_parse_args( $args, $defaults );
+//
+//		$templates = get_posts( $r );
+//
+//		$rules = array();
+//
+//		foreach ( $templates as $template ) {
+//			$tRules = $this->getRules( $template->ID );
+//			$rules  = array_merge( $rules, $tRules );
+//		}
+//
+//		$rules = $this->sortRules( $rules );
+//
+//		$ruleSet = new Brizy_Admin_RuleSet( $rules );
+//
+//		return $ruleSet;
+//	}
+//
+//	private function sortRules( $rules ) {
+//		// sort the rules by how specific they are
+//		usort( $rules, function ( $a, $b ) {
+//			/**
+//			 * @var Brizy_Admin_Rule $a ;
+//			 * @var Brizy_Admin_Rule $b ;
+//			 */
+//
+//			$la = $a->getRuleWeight();
+//			$lb = $b->getRuleWeight();
+//			if ( $lb == $la ) {
+//				return 0;
+//			}
+//
+//			return $la < $lb ? 1 : - 1;
+//		} );
+//
+//		return $rules;
+//	}
+//
+//	/**
+//	 * @param $postType
+//	 * @param Brizy_Admin_Rule $rule
+//	 *
+//	 * @return object|null
+//	 */
+//	public function validateRuleByPost( $postId, Brizy_Admin_Rule $rule ) {
+//		$ruleSet = $this->getAllRulesSet( array(), $postType );
+//		foreach ( $ruleSet->getRules() as $arule ) {
+//
+//			if ( $rule->isEqual( $arule ) ) {
+//				return (object) array(
+//					'message' => 'The rule is already used',
+//					'rule'    => $arule->getId()
+//				);
+//			}
+//		}
+//
+//		return null;
+//	}
+//	/**
+//	 * @param $postType
+//	 * @param Brizy_Admin_Rule $rule
+//	 *
+//	 * @return object|null
+//	 */
+//	public function validateRule( $postType, Brizy_Admin_Rule $rule ) {
+//		$ruleSet = $this->getAllRulesSet( array(), $postType );
+//		foreach ( $ruleSet->getRules() as $arule ) {
+//
+//			if ( $rule->isEqual( $arule ) ) {
+//				return (object) array(
+//					'message' => 'The rule is already used',
+//					'rule'    => $arule->getId()
+//				);
+//			}
+//		}
+//
+//		return null;
+//	}
+//
+//	/**
+//	 * @param $postType
+//	 * @param array $rules
+//	 *
+//	 * @return array
+//	 */
+//	public function validateRules( $postType, array $rules ) {
+//		// validate rule
+//		$ruleSet = $this->getAllRulesSet( array(), $postType );
+//		$errors  = array();
+//		foreach ( $ruleSet->getRules() as $arule ) {
+//			foreach ( $rules as $newRule ) {
+//				if ( $newRule->isEqual( $arule ) ) {
+//					$errors[] = (object) array(
+//						'message' => 'The rule is already used',
+//						'rule'    => $arule->getId()
+//					);
+//				}
+//			}
+//		}
+//
+//		if ( count( $errors ) > 0 ) {
+//			return $errors;
+//		}
+//
+//		return array();
+//	}
 }

@@ -1,0 +1,42 @@
+{% if custom_css is defined %}
+    <!-- CUSTOM CSS -->
+    <style>
+        {{ custom_css | raw }}
+    </style>
+    <!-- END CUSTOM CSS -->
+{% endif %}
+
+
+{% if code_injection['header_code'] is defined %}
+    <!-- HEADER SCRIPT INJECTION -->
+    {{ code_injection['header_code']|raw }}
+    <!-- END HEADER SCRIPT INJECTION -->
+{% endif %}
+
+
+<link rel="icon" type="image/png" href="{{ site_settings['favicon_url'] }}">
+
+<!-- Search Engine -->
+<meta name="description" content="{{ site_settings['title'] }}">
+
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="{{ site_settings['title'] }}">
+<meta itemprop="description" content="{{ site_settings['description'] }}">
+<meta itemprop="image" content="{{ social_sharing['thumbnail_url'] }}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ social_sharing['title'] }}">
+<meta name="twitter:description" content="{{ social_sharing['description'] }}">
+<meta name="twitter:image:src" content="{{ social_sharing['thumbnail_url'] }}">
+
+<!-- Twitter - Article -->
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="{{ social_sharing['title'] }}">
+<meta property="og:description" content="{{ social_sharing['description'] }}">
+<meta property="og:image" content="{{ social_sharing['thumbnail_url'] }}">
+<meta property="og:url" content="{{ site_url }}">
+<meta property="og:site_name" content="{{ site_settings['title'] }}">
+<meta property="og:locale" content="{{ language }}">
+<meta property="og:type" content="article">
+

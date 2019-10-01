@@ -6602,8 +6602,7 @@ body.modal-open .mm-slideout {
         top: 0;
         left: 0; }
     .brz .brz-row__bg {
-      width: 100%;
-      font-size: initial; }
+      width: 100%; }
   .brz .brz-columns {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -8240,8 +8239,6 @@ body.modal-open .mm-slideout {
         margin-top: 1px; }
       .brz .brz-breadcrumbs .brz-li:last-child .brz-a {
         margin-right: 0; }
-    .brz .brz-breadcrumbs .brz-li:not(:last-child) .brz-a {
-      color: inherit; }
   @media (max-width: 767px) {
     .brz .brz-fs-xs-6 {
       font-size: 6px !important; }

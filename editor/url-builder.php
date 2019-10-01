@@ -78,7 +78,7 @@ class Brizy_Editor_UrlBuilder
         // do not move this line
         $params['brizy'] = $end_point;
 
-        return add_query_arg($params, home_url());
+        return add_query_arg($params, home_url('/'));
     }
 
     /**

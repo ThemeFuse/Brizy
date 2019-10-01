@@ -220,6 +220,7 @@ class Brizy_Admin_Templates {
 				//'map_meta_cap'        => true,
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
+				'can_export'          => true,
 				'exclude_from_search' => true,
 				'supports'            => array( 'title', 'revisions', 'page-attributes' )
 			)
@@ -357,58 +358,14 @@ class Brizy_Admin_Templates {
 		);
 
 		if ( $context != 'template-rules' ) {
-			$list[] = array( 'title'      => 'Brizy Templates',
-			                 'value'      => 'brizy_template',
-			                 'groupValue' => Brizy_Admin_Rule::BRIZY_TEMPLATE
+			$list[] = array(
+				'title'      => 'Brizy Templates',
+				'value'      => 'brizy_template',
+				'groupValue' => Brizy_Admin_Rule::BRIZY_TEMPLATE
 			);
 		}
 
 		return $list;
-	}
-
-	static function getCurrentPageGroupAndType() {
-		global $wp_query;
-
-		if ( ! isset( $wp_query ) || is_admin() ) {
-			return null;
-		}
-
-		$applyFor     = Brizy_Admin_Rule::TEMPLATE;
-		$entityType   = null;
-		$entityValues = array();
-
-		if ( is_404() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = '404';
-		} elseif ( is_author() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'author';
-		} elseif ( is_search() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'search';
-		} elseif ( is_front_page() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'front_page';
-		} elseif ( is_home() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'home_page';
-		} elseif ( is_category() || is_tag() || is_tax() ) {
-			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
-			$entityType     = $wp_query->queried_object->taxonomy;
-			$entityValues[] = $wp_query->queried_object_id;
-		} elseif ( is_archive() ) {
-			$applyFor = Brizy_Admin_Rule::ARCHIVE;
-			if ( $wp_query->queried_object ) {
-				$entityType = $wp_query->queried_object->name;
-			}
-		} elseif ( ( $wp_query->queried_object instanceof WP_Post || $wp_query->post instanceof WP_Post ) && get_queried_object() ) {
-			$applyFor       = Brizy_Admin_Rule::POSTS;
-			$entityType     = get_queried_object()->post_type;
-			$entityValues[] = get_queried_object_id();
-		}
-
-		return array( $applyFor, $entityType, $entityValues );
-
 	}
 
 
@@ -418,7 +375,7 @@ class Brizy_Admin_Templates {
 	 */
 	public function getTemplateForCurrentPage() {
 
-		list( $applyFor, $entityType, $entityValues ) = self::getCurrentPageGroupAndType();
+		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
 		$is_preview = is_preview();
 
@@ -428,19 +385,7 @@ class Brizy_Admin_Templates {
 			'post_status' => $is_preview ? 'any' : 'publish'
 		) );
 
-		$ruleManager = $this->ruleManager;
-		// sort templates by rule set weight
-		usort( $templates, function ( $t1, $t2 ) use ( $ruleManager ) {
-			$ruleSetT1      = $ruleManager->getRuleSet( $t1->ID );
-			$ruleSetT2      = $ruleManager->getRuleSet( $t2->ID );
-			$rule_weight_t1 = $ruleSetT1->getRuleWeight();
-			$rule_weight_t2 = $ruleSetT2->getRuleWeight();
-			if ( $rule_weight_t1 == $rule_weight_t2 ) {
-				return 0;
-			}
-
-			return ( $rule_weight_t1 < $rule_weight_t2 ) ? 1 : - 1;
-		} );
+		$templates = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $templates );
 
 		foreach ( $templates as $atemplate ) {
 			$ruleSet = $this->ruleManager->getRuleSet( $atemplate->ID );
@@ -532,7 +477,7 @@ class Brizy_Admin_Templates {
 
 		} catch ( Exception $e ) {
 			//ignore
-			Brizy_Logger::instance()->error( $e->getMessage(), [] );
+			Brizy_Logger::instance()->error( $e->getMessage(), [  ] );
 		}
 	}
 
@@ -589,14 +534,16 @@ class Brizy_Admin_Templates {
 
 		$compiled_page = $this->template->get_compiled_page();
 
-		//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
+//		//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
+//
+//		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
+//
+//		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+//
+//		$head = $mainProcessor->process( $compiled_page->get_head() );
 
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
 
-		$mainProcessor = new Brizy_Content_MainProcessor( $context );
-
-		$head = $mainProcessor->process( $compiled_page->get_head() );
-
+		$head = apply_filters( 'brizy_content', $compiled_page->get_head(), Brizy_Editor_Project::get(), $post, 'head' );
 		?>
         <!-- BRIZY HEAD -->
 		<?php echo $head; ?>
@@ -626,15 +573,16 @@ class Brizy_Admin_Templates {
 		if ( $pid ) {
 			$post = get_post( $pid );
 		}
-
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
-
 		$compiled_page = $this->template->get_compiled_page();
 
-		$mainProcessor = new Brizy_Content_MainProcessor( $context );
 
-		$content = $mainProcessor->process( $compiled_page->get_body() );
+//		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
+//
+//		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+//
+//		$content = $mainProcessor->process( $compiled_page->get_body() );
 
+		$content = apply_filters( 'brizy_content', $compiled_page->get_body(), Brizy_Editor_Project::get(), $post, 'body' );
 		echo do_shortcode( $content );
 	}
 
@@ -649,16 +597,15 @@ class Brizy_Admin_Templates {
 		if ( ! $this->template ) {
 			return $content;
 		}
-		$pid       = Brizy_Editor::get()->currentPostId();
-		$brizyPost = get_post( $pid );
-
-		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $brizyPost, null );
-
+		$pid           = Brizy_Editor::get()->currentPostId();
+		$brizyPost     = get_post( $pid );
 		$compiled_page = $this->template->get_compiled_page();
 
-		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+//      $context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $brizyPost, null );
+//		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+//		return $mainProcessor->process( $compiled_page->get_body() );
 
-		return $mainProcessor->process( $compiled_page->get_body() );
+		return apply_filters( 'brizy_content', $compiled_page->get_body(), Brizy_Editor_Project::get(), $brizyPost, 'body' );
 	}
 
 	/**

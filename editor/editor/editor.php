@@ -84,15 +84,19 @@ class Brizy_Editor_Editor_Editor {
 		$change_template_url = null;
 		$templates           = null;
 		$isTemplate          = false;
+		$isPopup             = false;
 		$ruleMatches         = array();
 
+
 		if ( ! is_null( $this->post ) ) {
+			$parent_post_type  = get_post_type( $this->get_post()->get_parent_id() );
 			$wp_post_id        = $this->post->get_wp_post()->ID;
 			$preview_post_link = $this->getPreviewUrl( $this->post->get_wp_post() );
 
 			$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' ) );
 			$templates           = apply_filters( "brizy:templates", $this->post->get_templates() );
-			$isTemplate          = $this->post->get_wp_post()->post_type == Brizy_Admin_Templates::CP_TEMPLATE;
+			$isTemplate          = $parent_post_type == Brizy_Admin_Templates::CP_TEMPLATE;
+			$isPopup             = $parent_post_type == Brizy_Admin_Popups_Main::CP_POPUP;
 		}
 
 		$post_thumbnail = $this->getThumbnailData( $wp_post_id );
@@ -179,6 +183,7 @@ class Brizy_Editor_Editor_Editor {
 					'getRuleGroupList'     => Brizy_Admin_Templates::RULE_GROUP_LIST,
 					'createRule'           => Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
 					'createRules'          => Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
+					'updateRules'          => Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
 					'deleteRule'           => Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
 					'getRuleList'          => Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 					'updateBlockPositions' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
@@ -242,7 +247,9 @@ class Brizy_Editor_Editor_Editor {
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => (object) Brizy_Public_EditorBuild_Texts::get_editor_texts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
-				'isTemplate'      => $isTemplate
+				'isTemplate'      => $isTemplate,
+				'isGlobalPopup'   => $isPopup,
+				'availableRoles'  => $this->roleList()
 			),
 			'applications'    => array(
 				'form' => array(
@@ -545,6 +552,21 @@ class Brizy_Editor_Editor_Editor {
 				'value' => (object) array( 'items' => array() )
 			) )
 		);
+	}
+
+	/**
+	 * @return array
+	 */
+	private function roleList() {
+		$editable_roles = wp_roles()->roles;
+		$editable_roles = apply_filters( 'editable_roles', $editable_roles );
+		foreach ( $editable_roles as $role => $details ) {
+			$sub['role'] = esc_attr( $role );
+			$sub['name'] = translate_user_role( $details['name'] );
+			$roles[]     = $sub;
+		}
+
+		return $roles;
 	}
 
 	private function getOneArchiveLink( $args = '' ) {
