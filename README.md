@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.3<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.89<br>
+Stable tag: 1.0.91<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,15 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.91 - 2019-10-01 ###
+* New: Added indicator to show or hide all hidden blocks
+* Improved: Slider dots and arrows color can now be set per device
+* Fixed: The preview Url for archive Brizy templates
+* Fixed: Show the latest compiled page if the compiler fails
+* Fixed: Text translations
+* Fixed: Checking for failed DB request when getting the project instance
+* Fixed: Globals data migration
 
 ### 1.0.89 - 2019-09-24 ###
 * Fixed: Disabled Block Background Attachment Fixed for Responsive
