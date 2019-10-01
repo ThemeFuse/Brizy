@@ -13,6 +13,11 @@
     "bgPositionX": 50,
     "bgPopulation": "",
 
+    "brightness": 100,
+    "hue": 0,
+    "saturation": 100,
+    "contrast": 100,
+
     "hoverMedia": "image",
 
     "hoverBgImageWidth": null,
@@ -21,6 +26,11 @@
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
+
+    "hoverBrightness": null,
+    "hoverHue": null,
+    "hoverSaturation": null,
+    "hoverContrast": null,
 
     "tabletMedia": "image",
 
@@ -31,6 +41,11 @@
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
 
+    "tabletBrightness": null,
+    "tabletHue": null,
+    "tabletSaturation": null,
+    "tabletContrast": null,
+
     "mobileMedia": "image",
 
     "mobileBgImageWidth": null,
@@ -38,7 +53,12 @@
     "mobileBgImageSrc": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
-    "mobileBgPopulation": null
+    "mobileBgPopulation": null,
+
+    "mobileBrightness": null,
+    "mobileHue": null,
+    "mobileSaturation": null,
+    "mobileContrast": null
   },
 
   "toolbar": {

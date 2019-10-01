@@ -35,7 +35,7 @@ export function getItems({ v, device }) {
       }),
       type: "popover",
       devices: "desktop",
-      icon: "nc-progress",
+      icon: "nc-progress-bar",
       title: t("Progress"),
       position: 70,
       options: [
@@ -320,7 +320,7 @@ export function getItems({ v, device }) {
                           device,
                           state: "normal",
                           showSelect: false,
-                          choices: "outline",
+                          choices: "outset",
                           onChangeStyle: [
                             "onChangeBoxShadowType2",
                             "onChangeBoxShadowTypeDependencies2"
@@ -517,7 +517,7 @@ export function getItems({ v, device }) {
                           device,
                           state: "hover",
                           showSelect: false,
-                          choices: "outline",
+                          choices: "outset",
                           onChangeStyle: [
                             "onChangeBoxShadowType2",
                             "onChangeBoxShadowTypeDependencies2"

@@ -9,6 +9,7 @@ import WOOCategories from "./WordPress/WOOCategories";
 // import WOOAddToCart from "./WordPress/WOOAddToCart";
 import WOOPages from "./WordPress/WOOPages";
 import Posts from "./Posts";
+import WPBreadcrumbs from "./WordPress/WPBreadcrumbs";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 
@@ -18,6 +19,7 @@ export default {
   ...(hasSidebars() ? { WPSidebar } : {}),
   WPCustomShortcode,
   WPNavigation,
+  WPBreadcrumbs,
   ...(pluginActivated("woocommerce")
     ? {
         WOOProducts,

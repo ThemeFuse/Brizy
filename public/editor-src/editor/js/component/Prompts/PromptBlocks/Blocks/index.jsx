@@ -77,6 +77,7 @@ class BlocksContainer extends Component {
     );
 
     return {
+      kits,
       styles,
       types,
       categories: categoriesData,

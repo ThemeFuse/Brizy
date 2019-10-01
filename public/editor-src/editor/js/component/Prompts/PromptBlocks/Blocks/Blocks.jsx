@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import _ from "underscore";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
@@ -36,11 +36,36 @@ class Blocks extends Component {
     onChangeKit: _.noop
   };
 
-  handleThumbnailAdd = async thumbnailData => {
+  getData(kits, kitId) {
+    const { categoriesFilter } = this.props;
+    const kit = kits.find(({ id }) => id === kitId);
+    const { categories, blocks, styles, types } = kit;
+
+    // categories
+    const categoriesData = categoriesFilter([
+      { id: "*", title: t("All Categories") },
+      ...categories
+    ]);
+
+    // filter blocks
+    const categoryIds = new Map(categoriesData.map(cat => [cat.id, true]));
+    const blocksData = blocks.filter(block =>
+      block.cat.some(cat => categoryIds.get(cat))
+    );
+
+    return {
+      styles,
+      types,
+      categories: categoriesData,
+      blocks: blocksData
+    };
+  }
+
+  handleThumbnailAdd = thumbnailData => {
     this.props.onChange(thumbnailData);
   };
 
-  handleImportKit = async kitId => {
+  handleImportKit = kitId => {
     this.props.onChangeKit(kitId);
   };
 
@@ -48,7 +73,7 @@ class Blocks extends Component {
     const { showSidebar, showSearch, HeaderSlotLeft } = this.props;
 
     return (
-      <Fragment>
+      <>
         {showSearch && (
           <HeaderSlotLeft>
             <SearchInput className="brz-ed-popup-two-header__search" />
@@ -62,7 +87,7 @@ class Blocks extends Component {
         <div className="brz-ed-popup-two-body__content brz-ed-popup-two-body__content--loading">
           <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
         </div>
-      </Fragment>
+      </>
     );
   }
 
@@ -144,7 +169,7 @@ class Blocks extends Component {
           }
 
           return (
-            <Fragment>
+            <>
               {showSearch && (
                 <HeaderSlotLeft>
                   <SearchInput
@@ -219,7 +244,7 @@ class Blocks extends Component {
                   )}
                 </ScrollPane>
               </div>
-            </Fragment>
+            </>
           );
         }}
       </DataFilter>

@@ -1,30 +1,17 @@
-import {
-  onChangeGroupedAndUngroupedByGrouped,
-  onChangeUngroupedByUngrouped,
-  onChangeGroupedByUngrouped
-} from "./onChange";
-import { defaultValueKey } from "./device";
+import { onChangeMeGrouped, onChangeMeUngrouped } from "./onChange";
 
 export function onChangePaddingGrouped({
   v,
   device,
   state,
-  childs = undefined,
+  me = "padding",
+  childs,
   value,
-  suffix
+  suffix,
+  sliderDragEnd
 }) {
-  /**
-   * ### OUTPUT EXAMPLE
-   *
-   * [paddingTopSuffix, paddingRightSuffix, paddingBottomSuffix, paddingLeftSuffix]
-   */
-  const parent = "padding";
-  childs =
-    childs === undefined
-      ? ["paddingTop", "paddingRight", "paddingBottom", "paddingLeft"]
-      : childs;
-
   const childsSuffix = [];
+
   for (var i = 0; i < childs.length; i++) {
     childsSuffix[i] = `${childs[i]}Suffix`;
   }
@@ -39,13 +26,14 @@ export function onChangePaddingGrouped({
      * paddingBottomSuffix: suffix,
      * paddingLeftSuffix: suffix
      */
-    ...onChangeGroupedAndUngroupedByGrouped({
+    ...onChangeMeGrouped({
       v,
       device,
       state,
-      parent: `${parent}Suffix`,
+      me: `${me}Suffix`,
       childs: childsSuffix,
-      value: suffix
+      value: suffix,
+      dragEnd: sliderDragEnd
     }),
 
     /**
@@ -57,13 +45,14 @@ export function onChangePaddingGrouped({
      * paddingBottom: padding,
      * paddingLeft: padding
      */
-    ...onChangeGroupedAndUngroupedByGrouped({
+    ...onChangeMeGrouped({
       v,
       device,
       state,
-      parent,
+      me,
       childs,
-      value
+      value,
+      dragEnd: sliderDragEnd
     })
   };
 }
@@ -72,68 +61,25 @@ export function onChangePaddingUngrouped({
   v,
   device,
   state,
+  me = "padding",
   current,
+  childs,
   value,
-  suffix
+  suffix,
+  sliderDragEnd
 }) {
-  /**
-   * ### OUTPUT EXAMPLE
-   *
-   * [paddingTopSuffix, paddingRightSuffix, paddingBottomSuffix, paddingLeftSuffix]
-   */
-  const parent = "padding";
-  const childs = ["paddingTop", "paddingRight", "paddingBottom", "paddingLeft"];
-
   const childsSuffix = [];
+
   for (var i = 0; i < childs.length; i++) {
     childsSuffix[i] = `${childs[i]}Suffix`;
   }
+
   return {
     /**
      * ### OUTPUT EXAMPLE
      *
      * paddingTopSuffix,
      */
-    [`${defaultValueKey({
-      key: `${current}Suffix`,
-      device,
-      state
-    })}`]: suffix,
-
-    /**
-     * ### OUTPUT EXAMPLE
-     *
-     * paddingTop
-     * */
-    ...onChangeUngroupedByUngrouped({
-      v,
-      device,
-      state,
-      childs,
-      current,
-      value
-    }),
-
-    /**
-     * ### OUTPUT EXAMPLE
-     *
-     * padding:
-     *  paddingTop === v.paddingRight &&
-     *  paddingTop === v.paddingLeft &&
-     *  paddingTop === v.paddingBottom
-     *    ? paddingTop
-     *    : v.padding
-     * */
-    ...onChangeGroupedByUngrouped({
-      v,
-      device,
-      state,
-      parent,
-      childs,
-      current,
-      value
-    }),
-
     /**
      * ### OUTPUT EXAMPLE
      *
@@ -144,14 +90,42 @@ export function onChangePaddingUngrouped({
      *    ? paddingTopSuffix
      *    : v.paddingSuffix
      * */
-    ...onChangeGroupedByUngrouped({
+
+    ...onChangeMeUngrouped({
       v,
       device,
       state,
-      parent: `${parent}Suffix`,
+      me: `${me}Suffix`,
       childs: childsSuffix,
       current: `${current}Suffix`,
-      value: suffix
+      value: suffix,
+      dragEnd: sliderDragEnd
+    }),
+
+    /**
+     * ### OUTPUT EXAMPLE
+     *
+     * paddingTop
+     * */
+    /**
+     * ### OUTPUT EXAMPLE
+     *
+     * padding:
+     *  paddingTop === v.paddingRight &&
+     *  paddingTop === v.paddingLeft &&
+     *  paddingTop === v.paddingBottom
+     *    ? paddingTop
+     *    : v.padding
+     * */
+    ...onChangeMeUngrouped({
+      v,
+      device,
+      state,
+      me,
+      childs,
+      current,
+      value,
+      dragEnd: sliderDragEnd
     })
   };
 }

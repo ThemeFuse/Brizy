@@ -3,7 +3,11 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleSection(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      interval: ["cssStyleVisible"]
+      interval: [
+        "cssStyleDisplayBlock",
+        "cssStyleVisibleMode|||preview",
+        "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
+      ]
     }
   };
 
@@ -12,6 +16,7 @@ export function styleSection(v, vs, vd) {
 
 export function styleBg(v, vs, vd) {
   const styles = {
+    ".brz &&:hover": { interval: ["cssStyleVisibleMode|||editor"] },
     ".brz &&:hover > .brz-bg-media": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius"],
       interval: [
@@ -20,7 +25,11 @@ export function styleBg(v, vs, vd) {
       ]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
-      standart: ["cssStyleBgImage", "cssStyleBgImagePosition"],
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleSectionPropertyHoverTransition"
@@ -50,11 +59,21 @@ export function styleBg(v, vs, vd) {
       ]
     },
     ".brz &&:hover > .brz-bg-content": {
-      standart: ["cssStyleBoxShadowSection"],
+      standart: [
+        "cssStyleBoxShadowSection",
+        "cssStylePaddingPreview",
+        "cssStylePaddingRightLeftForEditor"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleSectionPropertyHoverTransition"
       ]
+    },
+    ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {
+      standart: ["cssStylePaddingTopForEditorResizer"]
+    },
+    ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--bottom": {
+      standart: ["cssStylePaddingBottomForEditorResizer"]
     }
   };
 
@@ -75,7 +94,7 @@ export function styleContainer(v, vs, vd) {
 export function styleContainerWrap(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSectionContainerType", "cssStylePaddingSection"]
+      standart: ["cssStyleSectionContainerType"]
     }
   };
 

@@ -9,7 +9,7 @@ import {
   toolbarBgColorHexField2,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
-  toolbarPadding,
+  toolbarPaddingFourFields,
   toolbarMargin,
   toolbarBorderRadius,
   toolbarBorder2,
@@ -61,17 +61,30 @@ export function getItems({ v, device }) {
               tabIcon: "nc-circle",
               title: t("Normal"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies",
-                    "onChangeBgImageColumnAndRowSyncMobile"
+                {
+                  id: dvk("tabsCurrentElement"),
+                  type: "tabs",
+                  value: dvv("tabsCurrentElement"),
+                  tabs: [
+                    {
+                      id: dvk("tabCurrentElement"),
+                      label: t("Image"),
+                      options: [
+                        toolbarBgImage({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBgImage",
+                            "onChangeBgImageBgOpacity",
+                            "onChangeBgImageDependencies",
+                            "onChangeBgImageColumnAndRowSyncMobile"
+                          ]
+                        })
+                      ]
+                    }
                   ]
-                })
+                }
               ]
             },
             {
@@ -79,18 +92,31 @@ export function getItems({ v, device }) {
               tabIcon: "nc-hover",
               title: t("Hover"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  state: "hover",
-                  devices: "desktop",
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies",
-                    "onChangeBgImageColumnAndRowSyncMobile"
+                {
+                  id: dvk("tabsCurrentElement"),
+                  type: "tabs",
+                  value: dvv("tabsCurrentElement"),
+                  tabs: [
+                    {
+                      id: dvk("tabCurrentElement"),
+                      label: t("Image"),
+                      options: [
+                        toolbarBgImage({
+                          v,
+                          device,
+                          state: "hover",
+                          devices: "desktop",
+                          onChange: [
+                            "onChangeBgImage",
+                            "onChangeBgImageBgOpacity",
+                            "onChangeBgImageDependencies",
+                            "onChangeBgImageColumnAndRowSyncMobile"
+                          ]
+                        })
+                      ]
+                    }
                   ]
-                })
+                }
               ]
             }
           ]
@@ -662,7 +688,7 @@ export function getItems({ v, device }) {
             },
             {
               id: dvk("anchor"),
-              label: t("Anchor"),
+              label: t("Block"),
               options: [
                 toolbarLinkAnchor({
                   v,
@@ -708,13 +734,11 @@ export function getItems({ v, device }) {
                   label: t("Styling"),
                   tabIcon: "nc-styling",
                   options: [
-                    toolbarPadding({
+                    toolbarPaddingFourFields({
                       v,
                       device,
                       state: "normal",
-                      devices: "desktop",
-                      onChangeGrouped: ["onChangePaddingGrouped"],
-                      onChangeUngrouped: ["onChangePaddingUngrouped"]
+                      devices: "desktop"
                     }),
                     toolbarMargin({
                       v,
@@ -798,13 +822,11 @@ export function getItems({ v, device }) {
               label: t("Styling"),
               tabIcon: "nc-styling",
               options: [
-                toolbarPadding({
+                toolbarPaddingFourFields({
                   v,
                   device,
                   state: "normal",
-                  devices: "responsive",
-                  onChangeGrouped: ["onChangePaddingGrouped"],
-                  onChangeUngrouped: ["onChangePaddingUngrouped"]
+                  devices: "responsive"
                 }),
                 toolbarMargin({
                   v,

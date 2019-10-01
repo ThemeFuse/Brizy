@@ -15,7 +15,7 @@ export function style(v, vs, vd) {
         "cssStyleBgGradient",
         "cssStyleBoxShadow",
         "cssStyleElementButtonBorderRadius",
-        "cssStylePadding",
+        "cssStylePaddingFourFields",
         "cssStyleElementButtonIconPosition"
       ],
       interval: [

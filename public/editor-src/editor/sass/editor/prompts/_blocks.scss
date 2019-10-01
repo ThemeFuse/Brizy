@@ -174,7 +174,9 @@
       &:hover {
         color: rgba(255, 255, 255, 0.9);
       }
-
+      &:last-child {
+        padding-bottom: 0;
+      }
       &-active {
         color: $brand-primary;
 
@@ -221,9 +223,6 @@
           padding-top: 1px;
         }
       }
-    }
-    li:last-of-type {
-      padding-bottom: 0;
     }
     &-title {
       color: rgba(255, 255, 255, 0.9);

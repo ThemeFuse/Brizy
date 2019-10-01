@@ -113,8 +113,8 @@ export function onChangeElementButtonBorderColorPalette2({ v, palette }) {
 export function onChangeElementButtonBorderColorFields2({
   v,
   hex,
-  opacity,
-  isChanged
+  opacity = undefined,
+  isChanged = "hex"
 }) {
   return {
     borderColorPalette: isChanged === "hex" ? "" : v.borderColorPalette,
@@ -158,8 +158,8 @@ export function onChangeElementButtonBorderHoverColorPalette2({ v, palette }) {
 export function onChangeElementButtonBorderHoverColorFields2({
   v,
   hex,
-  opacity,
-  isChanged
+  opacity = undefined,
+  isChanged = "hex"
 }) {
   return {
     hoverBorderColorPalette:
@@ -301,7 +301,12 @@ export function onChangeBgColorPaletteButton2({ v, palette }) {
   };
 }
 
-export function onChangeBgColorFieldsButton2({ v, hex, opacity, isChanged }) {
+export function onChangeBgColorFieldsButton2({
+  v,
+  hex,
+  opacity = undefined,
+  isChanged = "hex"
+}) {
   return {
     bgColorPalette: isChanged === "hex" ? "" : v.bgColorPalette,
 
@@ -407,8 +412,8 @@ export function onChangeHoverBgColorPaletteButton2({ v, palette }) {
 export function onChangeHoverBgColorFieldsButton2({
   v,
   hex,
-  opacity,
-  isChanged
+  opacity = undefined,
+  isChanged = "hex"
 }) {
   return {
     hoverBgColorPalette: isChanged === "hex" ? "" : v.hoverBgColorPalette,

@@ -6,12 +6,6 @@ export function onChangeBgColorType2({ v, device, state, bgColorType }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
-  console.log({
-    [dvk("bgColorType")]: bgColorType,
-    [dvk("gradientActivePointer")]:
-      bgColorType === "solid" ? "startPointer" : dvv("gradientActivePointer")
-  });
-
   return {
     [dvk("bgColorType")]: bgColorType,
     [dvk("gradientActivePointer")]:
@@ -27,12 +21,6 @@ export function onChangeGradientRange2({
   activePointer
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
-
-  console.log({
-    [dvk("gradientStartPointer")]: startPointer,
-    [dvk("gradientFinishPointer")]: finishPointer,
-    [dvk("gradientActivePointer")]: activePointer
-  });
 
   return {
     [dvk("gradientStartPointer")]: startPointer,
@@ -69,12 +57,6 @@ export function onChangeBgColorHexAndOpacity2({
     opacity > 0 && opacityDragEnd
       ? opacity
       : dvv(capByPrefix(tempPrefix, "colorOpacity"));
-
-  console.log({
-    [dvk(capByPrefix(prefix, "colorHex"))]: hex,
-    [dvk(capByPrefix(prefix, "colorOpacity"))]: opacity,
-    [dvk(capByPrefix(tempPrefix, "colorOpacity"))]: tempOpacity
-  });
 
   return {
     [dvk(capByPrefix(prefix, "colorHex"))]: hex,
@@ -115,11 +97,6 @@ export function onChangeBgColorHexAndOpacityPalette2({
   const tempPalette =
     isChanged === "hex" ? "" : dvv(capByPrefix(tempPrefix, "colorPalette"));
 
-  console.log({
-    [dvk(capByPrefix(prefix, "colorPalette"))]: palette,
-    [dvk(capByPrefix(tempPrefix, "colorPalette"))]: tempPalette
-  });
-
   return {
     [dvk(capByPrefix(prefix, "colorPalette"))]: palette,
     [dvk(capByPrefix(tempPrefix, "colorPalette"))]: tempPalette
@@ -155,16 +132,6 @@ export function onChangeBgColorHexAndOpacityDependencies2({
     opacity,
     isChanged
   });
-
-  console.log(
-    onChangeDependeciesGrouped({
-      v,
-      device,
-      state,
-      value: opacity,
-      dependencies
-    })
-  );
 
   return onChangeDependeciesGrouped({
     v,
@@ -219,11 +186,6 @@ export function onChangeBgColorPalette2({ device, state, prefix, palette }) {
 
   const tempPrefix = `temp${capitalize(prefix)}`;
 
-  console.log({
-    [dvk(capByPrefix(prefix, "colorPalette"))]: palette,
-    [dvk(capByPrefix(tempPrefix, "colorPalette"))]: palette
-  });
-
   return {
     [dvk(capByPrefix(prefix, "colorPalette"))]: palette,
     [dvk(capByPrefix(tempPrefix, "colorPalette"))]: palette
@@ -247,10 +209,6 @@ export function onChangeBgColorPaletteOpacity2({
     prefix,
     opacity,
     isChanged
-  });
-
-  console.log({
-    [dvk(capByPrefix(prefix, "colorOpacity"))]: opacity
   });
 
   return {

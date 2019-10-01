@@ -270,7 +270,7 @@ const BrizyDefault = require("./styles/default");
 
 module.exports = {
   id: "kxnmljnsniklnqftyvrkkzwhcvudtcmxikok",
-  name: "Brizy default",
+  name: "Kit #1",
   blocks: [
     Blank000Dark,
     Blank000Light,

@@ -1283,7 +1283,7 @@ const getToolbar = v => {
                         toolbarBoxShadow2({
                           v,
                           device,
-                          choices: "outline",
+                          choices: "outset",
                           state: "normal",
                           onChangeType: [
                             "onChangeBoxShadowType2",
@@ -1326,7 +1326,7 @@ const getToolbar = v => {
                                   v,
                                   device,
                                   state: "normal",
-                                  choices: "outline",
+                                  choices: "outset",
                                   onChange: [
                                     "onChangeBoxShadowFields2",
                                     "onChangeBoxShadowFieldsDependencies2"
@@ -1422,7 +1422,7 @@ const getToolbar = v => {
                         toolbarBoxShadow2({
                           v,
                           device,
-                          choices: "outline",
+                          choices: "outset",
                           state: "hover",
                           onChangeType: [
                             "onChangeBoxShadowType2",
@@ -1465,7 +1465,7 @@ const getToolbar = v => {
                                   v,
                                   device,
                                   state: "hover",
-                                  choices: "outline",
+                                  choices: "outset",
                                   onChange: [
                                     "onChangeBoxShadowFields2",
                                     "onChangeBoxShadowFieldsDependencies2"

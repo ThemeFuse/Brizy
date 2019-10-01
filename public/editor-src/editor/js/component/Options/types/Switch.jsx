@@ -1,14 +1,18 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import { connect } from "react-redux";
 import SwitchControl from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
+import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
+import { hiddenElementsSelector } from "visual/redux/selectors";
 
 class SwitchOptionType extends React.Component {
   static defaultProps = {
     label: "",
     display: "inline",
     className: "",
+    closeTooltip: false,
     value: "off",
     valueMap: {
       true: "on",
@@ -20,25 +24,37 @@ class SwitchOptionType extends React.Component {
     onChange: _.noop
   };
 
-  renderLabel = () => {
-    const { label, helper: _helper, helperContent } = this.props;
-    const helper = _helper ? (
-      <div className="brz-ed-option__helper">
-        <EditorIcon icon="nc-alert-circle-que" />
-        <div
-          className="brz-ed-option__helper__content"
-          dangerouslySetInnerHTML={{ __html: helperContent }}
-        />
-      </div>
-    ) : null;
+  handleChange = value => {
+    const { closeTooltip, showHiddenElements, onChange } = this.props;
+
+    if (value === "off" && closeTooltip && !showHiddenElements) {
+      const tooltip = getCurrentTooltip();
+
+      if (tooltip && tooltip.state.isOpen) {
+        tooltip.close();
+      }
+    }
+
+    onChange(value);
+  };
+  renderLabel() {
+    const { label, helper, helperContent } = this.props;
 
     return (
       <div className="brz-ed-option__label brz-ed-option__switch__label">
         {label}
-        {helper}
+        {helper && (
+          <div className="brz-ed-option__helper">
+            <EditorIcon icon="nc-alert-circle-que" />
+            <div
+              className="brz-ed-option__helper__content"
+              dangerouslySetInnerHTML={{ __html: helperContent }}
+            />
+          </div>
+        )}
       </div>
     );
-  };
+  }
 
   render() {
     const {
@@ -48,8 +64,7 @@ class SwitchOptionType extends React.Component {
       value,
       valueMap,
       attr,
-      className: _className,
-      onChange
+      className: _className
     } = this.props;
     const className = classnames(
       "brz-ed-option__switch",
@@ -65,11 +80,15 @@ class SwitchOptionType extends React.Component {
           key={value}
           defaultValue={value}
           valueMap={valueMap}
-          onChange={onChange}
+          onChange={this.handleChange}
         />
       </div>
     );
   }
 }
 
-export default SwitchOptionType;
+const mapStateToProps = state => ({
+  showHiddenElements: hiddenElementsSelector(state)
+});
+
+export default connect(mapStateToProps)(SwitchOptionType);

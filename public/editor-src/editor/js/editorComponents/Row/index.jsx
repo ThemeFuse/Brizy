@@ -42,7 +42,7 @@ class Row extends EditorComponent {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    return this.props.meta.sectionPopup2 || this.optionalSCU(nextProps);
   }
 
   componentWillUnmount() {
@@ -250,8 +250,8 @@ class Row extends EditorComponent {
     } = v;
 
     const classNameBg = classnames(
-      "brz-d-xs-flex",
       "brz-flex-xs-wrap",
+      "brz-row__bg",
       customClassName,
       css(
         `${this.constructor.componentId}-bg`,
@@ -275,7 +275,8 @@ class Row extends EditorComponent {
       bindWithKey: "items",
       containerClassName: classNameContainer,
       toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig, {
-        filterExtendName: `${this.constructor.componentId}_child`
+        filterExtendName: `${this.constructor.componentId}_child`,
+        allowExtend: false
       }),
       meta: this.getMeta(v),
       tabletReversed: tabletReverseColumns,
@@ -405,13 +406,15 @@ class Row extends EditorComponent {
       linkExternalBlank,
       linkExternalRel,
       linkPopup,
+      linkUpload,
       popups
     } = v;
 
     const linkHrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
-      popup: linkPopup
+      popup: linkPopup,
+      upload: linkUpload
     };
 
     const classNameRowContainer = classnames("brz-row__container", className);

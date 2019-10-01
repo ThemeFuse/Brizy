@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 export default {
   id: "progressBar",
   title: t("Progress"),
-  icon: "nc-progress",
+  icon: "nc-progress-bar",
   resolve: {
     type: "Wrapper",
     value: {

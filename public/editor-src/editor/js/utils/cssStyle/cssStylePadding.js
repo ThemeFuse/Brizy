@@ -10,53 +10,93 @@ import {
   styleItemPaddingLeft
 } from "visual/utils/style2";
 
-export function cssStylePadding({ v, device, state }) {
+export function cssStylePaddingFourFields({ v, device, state }) {
   let r = "";
-  let paddingType = "";
+  const p = cssStylePadding({ v, device, state });
+
+  const noEmptyGrouped =
+    p.paddingTop === p.paddingRight &&
+    p.paddingTop === p.paddingBottom &&
+    p.paddingTop === p.paddingLeft &&
+    p.paddingTop > 0;
+
+  const empty =
+    p.paddingTop === 0 &&
+    p.paddingRight === 0 &&
+    p.paddingBottom === 0 &&
+    p.paddingLeft === 0;
+
+  if (empty) r = "padding:0;";
+  else if (noEmptyGrouped) r = `padding:${p.paddingTop}${p.paddingTopSuffix};`;
+  else
+    r = `padding:${p.paddingTop}${p.paddingTopSuffix} ${p.paddingRight}${p.paddingRightSuffix} ${p.paddingBottom}${p.paddingBottomSuffix} ${p.paddingLeft}${p.paddingLeftSuffix};`;
+
+  return r;
+}
+
+export function cssStylePaddingPreview({ v, device, state }) {
+  if (IS_PREVIEW) return cssStylePaddingFourFields({ v, device, state });
+}
+
+export function cssStylePaddingTopForEditorResizer({ v, device, state }) {
+  if (IS_EDITOR) {
+    let r = "";
+    const p = cssStylePadding({ v, device, state });
+
+    r = `height:${p.paddingTop}${p.paddingTopSuffix};`;
+
+    return r;
+  }
+}
+
+export function cssStylePaddingBottomForEditorResizer({ v, device, state }) {
+  if (IS_EDITOR) {
+    let r = "";
+    const p = cssStylePadding({ v, device, state });
+
+    r = `height:${p.paddingBottom}${p.paddingBottomSuffix};`;
+
+    return r;
+  }
+}
+
+export function cssStylePaddingRightLeftForEditor({ v, device, state }) {
+  if (IS_EDITOR) {
+    let r = "";
+    const p = cssStylePadding({ v, device, state });
+
+    r = `padding-right:${p.paddingRight}${p.paddingRightSuffix};padding-left:${p.paddingLeft}${p.paddingLeftSuffix};`;
+
+    return r;
+  }
+}
+
+function cssStylePadding({ v, device, state }) {
+  let r = "";
+  let paddingType = "grouped";
   let paddingTop = 0;
   let paddingRight = 0;
   let paddingBottom = 0;
   let paddingLeft = 0;
-  let paddingTopSuffix = "";
-  let paddingRightSuffix = "";
-  let paddingBottomSuffix = "";
-  let paddingLeftSuffix = "";
+  let paddingTopSuffix = "px";
+  let paddingRightSuffix = "px";
+  let paddingBottomSuffix = "px";
+  let paddingLeftSuffix = "px";
 
   paddingType = stylePaddingType({ v, device, state });
 
   if (paddingType === "grouped") {
-    paddingRight = stylePaddingUngrouped({
-      v,
-      device,
-      state,
-      current: "paddingRight"
-    });
-
-    if (paddingRight === "initial") {
-      paddingTop = paddingBottom = stylePaddingGrouped({
+    paddingTop = paddingRight = paddingBottom = paddingLeft = stylePaddingGrouped(
+      {
         v,
         device,
         state
-      });
+      }
+    );
 
-      paddingTopSuffix = paddingBottomSuffix = stylePaddingGroupedSuffix({
-        v,
-        device,
-        state
-      });
-    } else {
-      paddingTop = paddingRight = paddingBottom = paddingLeft = stylePaddingGrouped(
-        {
-          v,
-          device,
-          state
-        }
-      );
-
-      paddingTopSuffix = paddingRightSuffix = paddingBottomSuffix = paddingLeftSuffix = stylePaddingGroupedSuffix(
-        { v, device, state }
-      );
-    }
+    paddingTopSuffix = paddingRightSuffix = paddingBottomSuffix = paddingLeftSuffix = stylePaddingGroupedSuffix(
+      { v, device, state }
+    );
   } else {
     paddingTop = stylePaddingUngrouped({
       v,
@@ -109,28 +149,19 @@ export function cssStylePadding({ v, device, state }) {
     });
   }
 
-  const noEmptyGrouped =
-    paddingTop === paddingRight &&
-    paddingTop === paddingBottom &&
-    paddingTop === paddingLeft &&
-    paddingTop > 0;
-
-  const noEmptyUngrouped =
-    paddingTop > 0 || paddingRight > 0 || paddingBottom > 0 || paddingLeft > 0;
-
-  if (paddingRight === "initial") {
-    paddingRight = paddingLeft = 0;
-  }
-
-  if (paddingTop === undefined) r = "";
-  else if (noEmptyGrouped) r = `padding:${paddingTop}${paddingTopSuffix};`;
-  else if (noEmptyUngrouped)
-    r = `padding:${paddingTop}${paddingTopSuffix} ${paddingRight}${paddingRightSuffix} ${paddingBottom}${paddingBottomSuffix} ${paddingLeft}${paddingLeftSuffix};`;
-  else r = "padding:0;";
-
-  return r;
+  return {
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingLeft,
+    paddingTopSuffix,
+    paddingRightSuffix,
+    paddingBottomSuffix,
+    paddingLeftSuffix
+  };
 }
 
+// #####
 export function cssStyleItemPadding({ v, device, state }) {
   const paddingTop = styleItemPaddingTop({
     v,
@@ -154,8 +185,4 @@ export function cssStyleItemPadding({ v, device, state }) {
   });
 
   return `padding:${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft};`;
-}
-
-export function cssStylePaddingSection({ v, device, state }) {
-  if (IS_PREVIEW) return cssStylePadding({ v, device, state });
 }

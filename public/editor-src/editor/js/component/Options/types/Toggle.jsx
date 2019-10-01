@@ -1,43 +1,56 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import { connect } from "react-redux";
 import IconToggle from "visual/component/Controls/IconToggle";
 import IconToggleItem from "visual/component/Controls/IconToggle/IconToggleItem";
+import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
+import { hiddenElementsSelector } from "visual/redux/selectors";
 
 class ToggleOptionType extends React.Component {
   static defaultProps = {
     className: "",
     attr: {},
+    closeTooltip: false,
     value: "",
     choices: []
   };
 
+  handleChange = value => {
+    const { closeTooltip, showHiddenElements, onChange } = this.props;
+
+    if (value === "off" && closeTooltip && !showHiddenElements) {
+      const tooltip = getCurrentTooltip();
+
+      if (tooltip) {
+        tooltip.close();
+      }
+    }
+
+    onChange(value);
+  };
+
   render() {
-    const {
-      className: _className,
-      attr: _attr,
-      choices,
-      value,
-      onChange
-    } = this.props;
+    const { className: _className, attr, choices, value } = this.props;
     const toggleItems = _.map(choices, ({ icon, value }) => (
       <IconToggleItem key={icon} value={value} icon={icon} />
     ));
     const className = classnames(
       "brz-ed-option__toggle",
       _className,
-      _attr.className
+      attr.className
     );
-    const attr = _.omit(_attr, "className");
-    const { title: choicesTitle = "" } = choices.filter((el) => el.value === value)[0];
+    const { title: choicesTitle = "" } = choices.filter(
+      el => el.value === value
+    )[0];
 
     return (
       <IconToggle
-        className={className}
         value={value}
         title={choicesTitle}
-        onChange={onChange}
+        onChange={this.handleChange}
         {...attr}
+        className={className}
       >
         {toggleItems}
       </IconToggle>
@@ -45,4 +58,8 @@ class ToggleOptionType extends React.Component {
   }
 }
 
-export default ToggleOptionType;
+const mapStateToProps = state => ({
+  showHiddenElements: hiddenElementsSelector(state)
+});
+
+export default connect(mapStateToProps)(ToggleOptionType);

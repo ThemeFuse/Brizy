@@ -31,18 +31,38 @@ export function toolbarDisabledSettings({ device, devices = "all" }) {
   };
 }
 
-export function toolbarDisabledShowOnTablet() {
+export function toolbarDisabledShowOnDesktop({ devices = "desktop" }) {
   return {
-    id: "showOnTablet",
-    type: "toggle",
-    disabled: true
+    id: "showOnDesktop",
+    type: "switch",
+    disabled: true,
+    devices
   };
 }
 
-export function toolbarDisabledShowOnMobile() {
+export function toolbarDisabledShowOnTablet({ devices = "responsive" }) {
+  return {
+    id: "showOnTablet",
+    type: "toggle",
+    disabled: true,
+    devices
+  };
+}
+
+export function toolbarDisabledShowOnMobile({ devices = "responsive" }) {
   return {
     id: "showOnMobile",
     type: "toggle",
+    disabled: true,
+    devices
+  };
+}
+
+
+export function toolbarDisabledZIndex() {
+  return {
+    id: "zIndex",
+    type: "slider",
     disabled: true
   };
 }

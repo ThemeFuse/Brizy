@@ -31,7 +31,8 @@ const translationsMap = {
   FacebookComments: t("Facebook Comments"),
   FacebookEmbed: t("Facebook Embed"),
   FacebookPage: t("Facebook Page"),
-  FacebookGroup: t("Facebook Group")
+  FacebookGroup: t("Facebook Group"),
+  WPBreadcrumbs: t("Breadcrumbs")
 };
 
 export default {
@@ -40,6 +41,7 @@ export default {
 
 function getItems(v, component) {
   const { base } = Editor.getShortcodes();
+
   const { icon = "" } =
     base.find(
       ({

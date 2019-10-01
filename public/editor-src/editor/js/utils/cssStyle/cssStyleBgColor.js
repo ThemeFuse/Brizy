@@ -6,7 +6,7 @@ export function cssStyleBgColor({ v, device, state }) {
     device,
     state
   });
-  return `background-color:${bgColor};`;
+  return bgColor === undefined ? "" : `background-color:${bgColor};`;
 }
 
 export function cssStyleBg2Color({ v, device, state }) {
@@ -16,5 +16,5 @@ export function cssStyleBg2Color({ v, device, state }) {
     prefix: "bg2",
     state
   });
-  return `background-color:${bg2Color};`;
+  return bg2Color === undefined ? "" : `background-color:${bg2Color};`;
 }

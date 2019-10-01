@@ -51,5 +51,5 @@ export function cssStyleSectionColorArrows({
 }
 
 export function cssStyleSectionPropertyHoverTransition() {
-  return `transition-property: background, border, border-radius;`;
+  return `transition-property: filter, background, border, border-radius;`;
 }

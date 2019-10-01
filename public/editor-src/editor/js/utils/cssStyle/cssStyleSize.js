@@ -36,8 +36,8 @@ export function cssStyleSizeSizePercent({ v, device, state }) {
   return width === undefined ? "" : `width:${width}%;`;
 }
 
-export function cssStyleSizeMaxWidthContainer({ v, device }) {
-  const maxWidth = styleSizeContainerSize({ v });
+export function cssStyleSizeMaxWidthContainer({ v, device, state }) {
+  const maxWidth = styleSizeContainerSize({ v, device, state });
 
   return device === "desktop" ? `max-width: ${maxWidth}%;` : "";
 }

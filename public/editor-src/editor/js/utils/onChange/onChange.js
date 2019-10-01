@@ -11,6 +11,86 @@ export function saveOnChanges(values) {
   }, {});
 }
 
+export function onChangeMeGrouped({
+  v,
+  device,
+  state,
+  me = undefined,
+  childs = undefined,
+  value,
+  dragEnd = true,
+  tempZero = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  let r = {};
+
+  if (dvv(me) !== value || dragEnd) {
+    r = {
+      [dvk(me)]: value,
+      ...(childs
+        ? childs.reduce((acc, p) => {
+            acc[dvk(p)] = value;
+            return acc;
+          }, {})
+        : {}),
+      ...(dragEnd && (tempZero || (!tempZero && value !== 0 && value !== ""))
+        ? {
+            [dvk(`temp${capitalize(me)}`)]: value,
+            ...(childs
+              ? childs.reduce((acc, p) => {
+                  acc[dvk(`temp${capitalize(p)}`)] = value;
+                  return acc;
+                }, {})
+              : {})
+          }
+        : {})
+    };
+  }
+
+  return r;
+}
+
+export function onChangeMeUngrouped({
+  v,
+  device,
+  state,
+  me = undefined,
+  childs = undefined,
+  current = undefined,
+  value,
+  dragEnd = true,
+  tempZero = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  let r = {};
+
+  if (dvv(current) !== value || dragEnd) {
+    r = {
+      [dvk(current)]: value,
+      ...(dragEnd && (tempZero || (!tempZero && value !== 0 && value !== ""))
+        ? {
+            [dvk(`temp${capitalize(current)}`)]: value
+          }
+        : {}),
+      ...(childs.filter(p => p !== current).every(z => v[z] === value)
+        ? {
+            [dvk(me)]: value,
+            ...(dragEnd &&
+            (tempZero || (!tempZero && value !== 0 && value !== ""))
+              ? { [dvk(`temp${capitalize(me)}`)]: value }
+              : {})
+          }
+        : {})
+    };
+  }
+
+  return r;
+}
+
 // Slider DragEndEnd are sens doar daca este valoarea TEMP // Margin, Padding nu au nevoie // BorderWidth si BorderCorner are nevoie
 // Temp value are sens pentru cazul cind exista interactiune intre 2 valori gen Brder Width si Border Radius chiar daca Border Radius poate sa fie si 0
 // Temp Poate sa fie 0 pentru Border Radius din motiv ca el interactioneaza cu Border Width

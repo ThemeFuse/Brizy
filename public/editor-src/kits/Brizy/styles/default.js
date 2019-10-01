@@ -1,6 +1,6 @@
 module.exports = {
   id: "kldugntsakdckzxhreidncqvgunudghrcuzv",
-  title: "Brizy default",
+  title: "Kit #1 Default",
   colorPalette: [
     { id: "color1", hex: "#191b21" },
     { id: "color2", hex: "#142850" },

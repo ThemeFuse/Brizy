@@ -12,8 +12,8 @@ class Options extends React.Component {
   render() {
     const {
       className: _className,
-      data: _data,
       optionClassName,
+      data: _data,
       meta
     } = this.props;
     const className = classnames(
@@ -24,7 +24,7 @@ class Options extends React.Component {
     const options = data.map((option, index) => (
       <Option
         key={index}
-        className={classnames("brz-ed-sidebar__control__item", optionClassName)}
+        className={optionClassName}
         data={option}
         meta={meta}
       />

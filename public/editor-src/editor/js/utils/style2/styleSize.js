@@ -12,8 +12,13 @@ export function styleSizeSize({ v, device }) {
   return defaultValueValue({ v, key: "size", device });
 }
 
-export function styleSizeContainerSize({ v }) {
-  const { containerSize } = v;
+export function styleSizeContainerSize({ v, device, state }) {
+  const containerSize = defaultValueValue({
+    v,
+    key: "containerSize",
+    device,
+    state
+  });
 
   return containerSize;
 }

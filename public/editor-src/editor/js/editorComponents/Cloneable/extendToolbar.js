@@ -3,7 +3,7 @@ import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarHorizontalAlign,
   toolbarElementCloneableSpacing,
-  toolbarPadding,
+  toolbarPaddingFourFields,
   toolbarMargin,
   toolbarShowOnDesktop,
   toolbarZIndex,
@@ -13,6 +13,8 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
+  const dvk = key => defaultValueKey({ key, device, state: "normal" });
+
   return [
     toolbarHorizontalAlign({
       v,
@@ -26,20 +28,15 @@ export function getItems({ v, device }) {
       devices: "responsive"
     }),
     {
-      id: defaultValueKey({
-        key: "toolbarCurrentShortcode",
-        device,
-        state: "normal"
-      }),
+      id: dvk("toolbarCurrentShortcode"),
       type: "popover",
       options: [
         {
-          id: "currentShortcodeTabs",
-          className: "",
+          id: dvk("currentShortcodeTabs"),
           type: "tabs",
           tabs: [
             {
-              id: "currentShortcodeTab",
+              id: dvk("currentShortcodeTab"),
               options: [
                 toolbarElementCloneableSpacing({
                   v,
@@ -53,11 +50,7 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: defaultValueKey({
-        key: "advancedSettings",
-        device,
-        state: "normal"
-      }),
+      id: dvk("advancedSettings"),
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
@@ -65,13 +58,11 @@ export function getItems({ v, device }) {
       icon: "nc-cog",
       title: t("Settings"),
       options: [
-        toolbarPadding({
+        toolbarPaddingFourFields({
           v,
           device,
-          devices: "responsive",
           state: "normal",
-          onChangeGrouped: ["onChangePaddingGrouped"],
-          onChangeUngrouped: ["onChangePaddingUngrouped"]
+          devices: "responsive"
         }),
         toolbarMargin({
           v,
@@ -82,23 +73,21 @@ export function getItems({ v, device }) {
           onChangeUngrouped: ["onChangeMarginUngrouped"]
         }),
         {
-          id: "settingsTabs",
+          id: dvk("settingsTabs"),
           type: "tabs",
           devices: "desktop",
           align: "start",
           tabs: [
             {
-              id: "settingsStyling",
+              id: dvk("settingsStyling"),
               label: t("Styling"),
               tabIcon: "nc-styling",
               options: [
-                toolbarPadding({
+                toolbarPaddingFourFields({
                   v,
                   device,
-                  devices: "desktop",
                   state: "normal",
-                  onChangeGrouped: ["onChangePaddingGrouped"],
-                  onChangeUngrouped: ["onChangePaddingUngrouped"]
+                  devices: "desktop"
                 }),
                 toolbarMargin({
                   v,
@@ -111,11 +100,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: defaultValueKey({
-                key: "moreSettingsAdvanced",
-                device,
-                state: "normal"
-              }),
+              id: dvk("moreSettingsAdvanced"),
               label: t("Advanced"),
               devices: "desktop",
               tabIcon: "nc-cog",

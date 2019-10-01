@@ -1,0 +1,27 @@
+.brz-breadcrumbs {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  word-break: break-all;
+
+  .brz-li {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+
+    .brz-a {
+      cursor: pointer;
+    }
+    .brz-icon-svg {
+      margin-top: 1px;
+    }
+    &:last-child .brz-a {
+      margin-right: 0;
+    }
+  }
+  .brz-li:not(:last-child) .brz-a {
+    color: inherit;
+  }
+}

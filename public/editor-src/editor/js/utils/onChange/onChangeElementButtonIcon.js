@@ -33,7 +33,12 @@ export function onChangeColorPaletteButtonIcon2({ v, palette }) {
   };
 }
 
-export function onChangeColorFieldsButtonIcon2({ v, hex, opacity, isChanged }) {
+export function onChangeColorFieldsButtonIcon2({
+  v,
+  hex,
+  opacity = undefined,
+  isChanged = "hex"
+}) {
   return {
     colorPalette: isChanged === "hex" ? "" : v.colorPalette,
     colorHex: hex,
@@ -44,8 +49,8 @@ export function onChangeColorFieldsButtonIcon2({ v, hex, opacity, isChanged }) {
 export function onChangeHoverColorHexButtonIcon2({
   v,
   hex,
-  opacity,
-  isChanged
+  opacity = undefined,
+  isChanged = "hex"
 }) {
   return {
     hoverColorHex: hex,
@@ -69,8 +74,8 @@ export function onChangeHoverColorPaletteButtonIcon2({ v, palette }) {
 export function onChangeHoverColorFieldsButtonIcon2({
   v,
   hex,
-  opacity,
-  isChanged
+  opacity = undefined,
+  isChanged = "hex"
 }) {
   return {
     hoverColorPalette: isChanged === "hex" ? "" : v.hoverColorPalette,

@@ -10,8 +10,8 @@ export function toolbarMargin({
   device,
   state,
   devices = "all",
+  disabled = false,
   position = 60,
-  marginType = "default",
   onChangeGrouped,
   onChangeUngrouped
 }) {
@@ -23,6 +23,7 @@ export function toolbarMargin({
     type: "multiPicker",
     position,
     devices,
+    disabled,
     picker: {
       id: dvk("marginType"),
       label: t("Margin"),
@@ -44,14 +45,12 @@ export function toolbarMargin({
         v,
         device,
         state,
-        marginType,
         onChange: onChangeGrouped
       }),
       ...toolbarMarginUngrouped({
         v,
         device,
         state,
-        marginType,
         onChange: onChangeUngrouped
       })
     }
@@ -161,48 +160,56 @@ export function toolbarMarginUngrouped({
           return saveOnChanges(values);
         }
       },
-      marginType === "topBottom"
-        ? {}
-        : {
-            id: dvk("marginRight"),
-            icon: "nc-styling-right",
-            type: "slider",
-            slider: {
-              min: -100,
-              max: 100
+      {
+        id: defaultValueKey({ key: "marginRight", device, state }),
+        icon: "nc-styling-right",
+        type: "slider",
+        slider: {
+          min: -100,
+          max: 100
+        },
+        input: {
+          show: true
+        },
+        suffix: {
+          show: true,
+          choices: [
+            {
+              title: "px",
+              value: "px"
             },
-            input: {
-              show: true
-            },
-            suffix: {
-              show: true,
-              choices: [
-                {
-                  title: "px",
-                  value: "px"
-                },
-                {
-                  title: "%",
-                  value: "%"
-                }
-              ]
-            },
-            value: {
-              value: dvv("marginRight"),
-              suffix: dvv("marginRightSuffix")
-            },
-            onChange: ({ value, suffix }) => {
-              const values = {
-                ...{ v, device, state, onChange },
-                ...{
-                  current: "marginRight",
-                  value,
-                  suffix
-                }
-              };
-              return saveOnChanges(values);
+            {
+              title: "%",
+              value: "%"
             }
-          },
+          ]
+        },
+        value: {
+          value: defaultValueValue({
+            v,
+            key: "marginRight",
+            device,
+            state
+          }),
+          suffix: defaultValueValue({
+            v,
+            key: "marginRightSuffix",
+            device,
+            state
+          })
+        },
+        onChange: ({ value, suffix }) => {
+          const values = {
+            ...{ v, device, state, onChange },
+            ...{
+              current: "marginRight",
+              value,
+              suffix
+            }
+          };
+          return saveOnChanges(values);
+        }
+      },
       {
         id: dvk("marginBottom"),
         icon: "nc-styling-bottom",
@@ -243,48 +250,51 @@ export function toolbarMarginUngrouped({
           return saveOnChanges(values);
         }
       },
-      marginType === "topBottom"
-        ? {}
-        : {
-            id: dvk("marginLeft"),
-            icon: "nc-styling-left",
-            type: "slider",
-            slider: {
-              min: -100,
-              max: 100
+      {
+        id: defaultValueKey({ key: "marginLeft", device, state }),
+        icon: "nc-styling-left",
+        type: "slider",
+        slider: {
+          min: -100,
+          max: 100
+        },
+        input: {
+          show: true
+        },
+        suffix: {
+          show: true,
+          choices: [
+            {
+              title: "px",
+              value: "px"
             },
-            input: {
-              show: true
-            },
-            suffix: {
-              show: true,
-              choices: [
-                {
-                  title: "px",
-                  value: "px"
-                },
-                {
-                  title: "%",
-                  value: "%"
-                }
-              ]
-            },
-            value: {
-              value: dvv("marginLeft"),
-              suffix: dvv("marginLeftSuffix")
-            },
-            onChange: ({ value, suffix }) => {
-              const values = {
-                ...{ v, device, state, onChange },
-                ...{
-                  current: "marginLeft",
-                  value,
-                  suffix
-                }
-              };
-              return saveOnChanges(values);
+            {
+              title: "%",
+              value: "%"
             }
-          }
+          ]
+        },
+        value: {
+          value: defaultValueValue({ v, key: "marginLeft", device, state }),
+          suffix: defaultValueValue({
+            v,
+            key: "marginLeftSuffix",
+            device,
+            state
+          })
+        },
+        onChange: ({ value, suffix }) => {
+          const values = {
+            ...{ v, device, state, onChange },
+            ...{
+              current: "marginLeft",
+              value,
+              suffix
+            }
+          };
+          return saveOnChanges(values);
+        }
+      }
     ]
   };
 }

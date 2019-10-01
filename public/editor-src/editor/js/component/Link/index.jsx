@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
+
+const isWP = Config.get("wp");
 
 class Link extends Component {
   static defaultProps = {
@@ -51,6 +54,11 @@ class Link extends Component {
         break;
       case "popup":
         href = `#${_href}`;
+        break;
+      case "upload":
+        const { customFile } = Config.get("urls");
+        const [name] = _href.split("|||", 1);
+        href = isWP ? `${customFile}${name}` : `${customFile}/${name}`;
         break;
       case "lightBox":
       case "external":

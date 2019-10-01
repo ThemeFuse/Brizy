@@ -24,6 +24,7 @@ class SectionHeaderItemItems extends EditorArrayComponent {
           id: "duplicate",
           type: "button",
           icon: "nc-duplicate",
+          title: t("Duplicate"),
           position: 200,
           onChange: () => {
             this.cloneItem(itemIndex);
@@ -33,6 +34,7 @@ class SectionHeaderItemItems extends EditorArrayComponent {
           id: "remove",
           type: "button",
           icon: "nc-trash",
+          title: t("Delete"),
           position: 250,
           onChange: () => {
             hideToolbar();
