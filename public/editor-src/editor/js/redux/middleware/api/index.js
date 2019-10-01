@@ -16,6 +16,7 @@ import {
   IMPORT_TEMPLATE,
   IMPORT_KIT,
   ADD_BLOCK,
+  REMOVE_BLOCK,
   ADD_FONTS,
   DELETE_FONTS,
   UPDATE_SCREENSHOT,
@@ -184,16 +185,23 @@ function handleProject({ action, state, oldState }) {
 }
 
 function handlePage({ action, state }) {
-  if (action.type === UPDATE_PAGE) {
-    const { page } = state;
+  switch (action.type) {
+    case UPDATE_PAGE:
+    case ADD_BLOCK:
+    case REMOVE_BLOCK: {
+      const { page } = state;
 
-    debouncedApiUpdatePage(page, action.meta);
-  } else if (action.type === UNDO || action.type === REDO) {
-    const { page: currentPage } = action.currentSnapshot;
-    const { page: nextPage } = action.nextSnapshot;
+      debouncedApiUpdatePage(page, action.meta);
+      break;
+    }
+    case UNDO:
+    case REDO: {
+      const { page: currentPage } = action.currentSnapshot;
+      const { page: nextPage } = action.nextSnapshot;
 
-    if (currentPage !== nextPage) {
-      debouncedApiUpdatePage(nextPage);
+      if (currentPage !== nextPage) {
+        debouncedApiUpdatePage(nextPage);
+      }
     }
   }
 }

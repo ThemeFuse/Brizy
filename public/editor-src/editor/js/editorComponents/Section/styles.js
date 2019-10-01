@@ -4,7 +4,11 @@ export function styleSection(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       standart: ["cssStyleZIndex"],
-      interval: ["cssStyleVisibleMode|||preview"]
+      interval: [
+        "cssStyleDisplayBlock",
+        "cssStyleVisibleMode|||preview",
+        "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
+      ]
     },
     ".brz &&:hover .brz-container__wrap": {
       interval: ["cssStyleVisibleMode|||editor"]

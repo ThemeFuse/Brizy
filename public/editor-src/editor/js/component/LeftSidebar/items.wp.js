@@ -84,7 +84,7 @@ export default {
         {
           type: "link",
           icon: "nc-back",
-          label: t("Back to WordPress"),
+          label: t("Back to Dashboard"),
           link: urls.backToDashboard
         }
       ]

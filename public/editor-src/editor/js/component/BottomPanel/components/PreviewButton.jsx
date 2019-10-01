@@ -11,7 +11,7 @@ const PreviewButtons = () => {
       title="Preview"
     >
       <a href={url} className="brz-a" target="_blank">
-        <EditorIcon icon="nc-eye-17" />
+        <EditorIcon icon="nc-preview" />
       </a>
     </li>
   );

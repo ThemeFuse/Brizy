@@ -385,7 +385,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
             },
             {
               id: "anchor",
-              label: t("Anchor"),
+              label: t("Block"),
               options: [toolbarLinkAnchor({ v })]
             }
           ]

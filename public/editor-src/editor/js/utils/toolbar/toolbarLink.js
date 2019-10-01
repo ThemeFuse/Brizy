@@ -8,10 +8,20 @@ export function toolbarLinkAnchor({ v, device, state, devices = "all" }) {
 
   return {
     id: dvk("linkAnchor"),
-    label: t("Anchor"),
+    label: t("Block"),
     type: "blockThumbnail",
     devices,
     value: dvv("linkAnchor")
+  };
+}
+
+export function toolbarLinkUpload({ v, device, state, devices = "all" }) {
+  return {
+    id: defaultValueKey({ key: "linkUpload", device, state }),
+    label: t("File"),
+    type: "fileUpload",
+    devices,
+    value: defaultValueValue({ v, key: "linkUpload", device, state })
   };
 }
 

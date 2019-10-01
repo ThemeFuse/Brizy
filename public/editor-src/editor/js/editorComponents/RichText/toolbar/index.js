@@ -6,7 +6,6 @@ import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
 
 import {
-  toolbarHorizontalAlign,
   toolbarTypography2FontFamily,
   toolbarTypography2FontStyle,
   toolbarTypography2FontSize,
@@ -17,7 +16,8 @@ import {
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
   toolbarLinkAnchor,
-  toolbarLinkPopup
+  toolbarLinkPopup,
+  toolbarLinkUpload
 } from "visual/utils/toolbar";
 
 import { defaultValueKey } from "visual/utils/onChange";
@@ -97,6 +97,9 @@ const calcIntermediateStyle = (
   { toDec = false, min = 1, max = 100 }
 ) => {
   const round = number => Math.round(number * 10) / 10;
+  // it's only for situations when intermediateValue doesn't exist(normally it should never happen)
+  intermediateValue = intermediateValue || value || "";
+
   const newValue =
     Number(intermediateValue) + (Number(value) - Number(oldValue));
   const roundedValue = toDec ? round(newValue) : Math.round(newValue);
@@ -326,7 +329,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                             ) {
                               const intermediateMobileLineHeight =
                                 v.intermediateMobileLineHeight ||
-                                styles.intermediateMobileLineHeight;
+                                styles.intermediateMobileLineHeight ||
+                                "";
                               newHeight.intermediateMobileLineHeight = String(
                                 calcIntermediateStyle(
                                   v.lineHeight,
@@ -350,7 +354,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                             ) {
                               const intermediateTabletLineHeight =
                                 v.intermediateTabletLineHeight ||
-                                styles.intermediateTabletLineHeight;
+                                styles.intermediateTabletLineHeight ||
+                                "";
                               newHeight.intermediateTabletLineHeight = String(
                                 calcIntermediateStyle(
                                   v.lineHeight,
@@ -472,7 +477,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                             ) {
                               const intermediateMobileLetterSpacing =
                                 v.intermediateMobileLetterSpacing ||
-                                styles.intermediateMobileLetterSpacing;
+                                styles.intermediateMobileLetterSpacing ||
+                                "";
                               const newNumberLetterSpacing = calcIntermediateStyle(
                                 v.letterSpacing,
                                 value,
@@ -495,7 +501,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                             ) {
                               const intermediateTabletLetterSpacing =
                                 v.intermediateTabletLetterSpacing ||
-                                styles.intermediateTabletLetterSpacing;
+                                styles.intermediateTabletLetterSpacing ||
+                                "";
                               const newNumberLetterSpacing = calcIntermediateStyle(
                                 v.letterSpacing,
                                 value,
@@ -532,7 +539,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
       onChange
     ),
     {
-      id: "horizontalAlign",
+      id: device === "desktop" ? "horizontalAlign" : `${device}HorizontalAlign`,
       label: t("Align"),
       type: "toggle",
       position: 30,
@@ -559,7 +566,10 @@ const getItems = (v, onChange) => ({ device, component }) => {
           value: "justify"
         }
       ],
-      value: device === "desktop" ? v.horizontalAlign : v[`${device}HorizontalAlign`],
+      value:
+        device === "desktop"
+          ? v.horizontalAlign
+          : v[`${device}HorizontalAlign`],
       onChange: value =>
         onChange({ [`${device}HorizontalAlign`]: String(value) })
     },
@@ -643,7 +653,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                           externalType:
                             changed === "value" ? "external" : "population",
                           population: linkPopulation,
-                          popup: v.linkPopup ? `#${v.linkPopup}` : ""
+                          popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                          upload: v.linkUpload
                         })
                       });
                     }
@@ -661,7 +672,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                         externalRel: v.linkExternalRel,
                         externalType: v.linkExternalType,
                         population: v.linkPopulation,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : ""
+                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                        upload: v.linkUpload
                       })
                     })
                 },
@@ -677,7 +689,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                         externalRel: linkExternalRel,
                         externalType: v.linkExternalType,
                         population: v.linkPopulation,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : ""
+                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                        upload: v.linkUpload
                       })
                     })
                 }
@@ -685,7 +698,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
             },
             {
               id: "anchor",
-              label: t("Anchor"),
+              label: t("Block"),
               options: [
                 {
                   ...toolbarLinkAnchor({ v }),
@@ -699,7 +712,32 @@ const getItems = (v, onChange) => ({ device, component }) => {
                         externalRel: v.linkExternalRel,
                         externalType: v.linkExternalType,
                         population: v.linkPopulation,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : ""
+                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                        upload: v.linkUpload
+                      })
+                    })
+                }
+              ]
+            },
+            {
+              id: "upload",
+              label: t("File"),
+              options: [
+                {
+                  ...toolbarLinkUpload({ v, component }),
+                  disabled: !proEnabled,
+                  onChange: upload =>
+                    onChange({
+                      link: encodeToString({
+                        type: v.linkType,
+                        anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                        external: v.linkExternal,
+                        externalBlank: v.linkExternalBlank,
+                        externalRel: v.linkExternalRel,
+                        externalType: v.linkExternalType,
+                        population: v.linkPopulation,
+                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                        upload
                       })
                     })
                 }
@@ -722,7 +760,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                         externalRel: v.linkExternalRel,
                         externalType: v.linkExternalType,
                         population: v.linkPopulation,
-                        popup: linkPopup ? `#${linkPopup}` : ""
+                        popup: linkPopup ? `#${linkPopup}` : "",
+                        upload: v.linkUpload
                       }),
                       popups
                     })
@@ -740,7 +779,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
                 externalRel: v.linkExternalRel,
                 externalType: v.linkExternalType,
                 population: v.linkPopulation,
-                popup: v.linkPopup ? `#${v.linkPopup}` : ""
+                popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                upload: v.linkUpload
               })
             })
         }

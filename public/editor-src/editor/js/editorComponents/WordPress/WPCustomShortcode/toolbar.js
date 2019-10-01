@@ -15,7 +15,8 @@ export function getItems({ v, device }) {
         state: "normal"
       }),
       type: "popover",
-      icon: "nc-iframe",
+      icon: "nc-wp-shortcode",
+      size: "large",
       devices: "desktop",
       position: 10,
       options: [

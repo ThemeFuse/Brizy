@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 import {
   toolbarHorizontalAlign,
-  toolbarPadding,
+  toolbarPaddingFourFields,
   toolbarMargin,
   toolbarShowOnDesktop,
   toolbarShowOnResponsive,
@@ -44,12 +44,10 @@ export function getItems({ v, device }) {
                   label: t("Styling"),
                   tabIcon: "nc-styling",
                   options: [
-                    toolbarPadding({
+                    toolbarPaddingFourFields({
                       v,
                       device,
-                      state: "normal",
-                      onChangeGrouped: ["onChangePaddingGrouped"],
-                      onChangeUngrouped: ["onChangePaddingUngrouped"]
+                      state: "normal"
                     }),
                     toolbarMargin({
                       v,
@@ -74,13 +72,11 @@ export function getItems({ v, device }) {
                 }
               ]
             },
-            toolbarPadding({
+            toolbarPaddingFourFields({
               v,
               device,
               devices: "responsive",
-              state: "normal",
-              onChangeGrouped: ["onChangePaddingGrouped"],
-              onChangeUngrouped: ["onChangePaddingUngrouped"]
+              state: "normal"
             }),
             toolbarMargin({
               v,

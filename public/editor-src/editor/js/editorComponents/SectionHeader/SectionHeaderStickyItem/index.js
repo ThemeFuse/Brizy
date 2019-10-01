@@ -14,6 +14,7 @@ import {
   wInFullPage
 } from "visual/config/columns";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
+import { getStore } from "visual/redux/store";
 import * as toolbarConfig from "./toolbar";
 import { styleBg, styleContainer, styleContainerWrap } from "./styles";
 import { css } from "visual/utils/cssStyle";
@@ -32,12 +33,36 @@ class SectionHeaderStickyItem extends EditorComponent {
 
   mounted = false;
 
+  shouldMetaUpdate(nextProps) {
+    const {
+      meta: {
+        section: { showOnDesktop, showOnMobile, showOnTablet }
+      }
+    } = this.props;
+    const {
+      meta: {
+        section: {
+          showOnDesktop: newShowOnDesktop,
+          showOnMobile: newShowOnMobile,
+          showOnTablet: newShowOnTablet
+        }
+      }
+    } = nextProps;
+    const { deviceMode } = getStore().getState().ui;
+
+    return (
+      (deviceMode === "desktop" && showOnDesktop !== newShowOnDesktop) ||
+      (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
+      (deviceMode === "tablet" && showOnTablet !== newShowOnTablet)
+    );
+  }
+
   componentDidMount() {
     this.mounted = true;
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    return this.shouldMetaUpdate(nextProps) || this.optionalSCU(nextProps);
   }
 
   componentWillUnmount() {
@@ -107,7 +132,7 @@ class SectionHeaderStickyItem extends EditorComponent {
 
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig(toolbarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
         className="brz-ed-collapsible__section brz-ed-collapsible--big"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}

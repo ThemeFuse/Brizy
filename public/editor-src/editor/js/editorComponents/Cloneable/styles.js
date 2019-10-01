@@ -3,7 +3,11 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      interval: ["cssStyleVisibleMode|||preview"]
+      interval: [
+        "cssStyleDisplayBlock",
+        "cssStyleVisibleMode|||preview",
+        "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
+      ]
     }
   };
   return renderStyles({ v, vs, vd, styles });
@@ -24,7 +28,7 @@ export function styleContainer(v, vs, vd) {
     ".brz &&:hover": {
       standart: [
         "cssStyleFlexHorizontalAlign",
-        "cssStylePadding",
+        "cssStylePaddingFourFields",
         "cssStyleItemMargin"
       ]
     }

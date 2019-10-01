@@ -1,7 +1,6 @@
 import {
   styleAlignFlexVerticalAlign,
-  styleAlignFlexHorizontalAlign,
-  styleAlignHorizontalAlign
+  styleAlignFlexHorizontalAlign
 } from "visual/utils/style2";
 
 export function cssStyleFlexVerticalAlign({ v, device, state }) {
@@ -14,10 +13,4 @@ export function cssStyleFlexHorizontalAlign({ v, device, state }) {
   const alignItems = styleAlignFlexHorizontalAlign({ v, device, state });
 
   return alignItems === undefined ? "" : `justify-content:${alignItems};`;
-}
-
-export function cssStyleHorizontalAlign({ v, device, state }) {
-  const textAlign = styleAlignHorizontalAlign({ v, device, state });
-
-  return textAlign === undefined ? "" : `text-align:${textAlign};`;
 }

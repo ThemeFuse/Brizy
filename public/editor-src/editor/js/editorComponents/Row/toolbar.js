@@ -25,7 +25,7 @@ import {
   toolbarHoverTransition,
   toolbarShowOnDesktop,
   toolbarShowOnResponsive,
-  toolbarPadding,
+  toolbarPaddingFourFields,
   toolbarMargin,
   toolbarZIndex,
   toolbarCustomCSSClass,
@@ -52,6 +52,7 @@ export function getItems({ v, device, component }) {
   );
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const media = dvv("media");
   const tabsCurrentElement = dvv("tabsCurrentElement");
@@ -734,8 +735,12 @@ export function getItems({ v, device, component }) {
       title: t("Link"),
       size: "medium",
       position: 100,
-      devices: "desktop",
-      disabled: v.linkLightBox === "on",
+      disabled:
+        inPopup || inPopup2
+          ? true
+          : device === "desktop"
+          ? v.linkLightBox === "on"
+          : dvv("linkType") !== "popup" || dvv("linkPopup") === "",
       options: [
         {
           id: dvk("linkType"),
@@ -768,7 +773,7 @@ export function getItems({ v, device, component }) {
             },
             {
               id: dvk("anchor"),
-              label: t("Anchor"),
+              label: t("Block"),
               options: [
                 toolbarLinkAnchor({
                   v,
@@ -805,7 +810,7 @@ export function getItems({ v, device, component }) {
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
-      position: 110,
+      position: 100,
       devices: "desktop",
       options: [
         toolbarSizeSizeSizePercent({
@@ -815,10 +820,12 @@ export function getItems({ v, device, component }) {
           devices: "desktop",
           min: 40,
           max: 100,
-          disabled: inPopup
+          disabled: inPopup || inPopup2
         }),
         {
           type: dvk("multiPicker"),
+          disabled: inPopup2,
+          position: 90,
           picker: toolbarElementRowColumnsHeightStyle({
             v,
             device,
@@ -848,6 +855,7 @@ export function getItems({ v, device, component }) {
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),
           icon: "nc-cog",
+          position: 110,
           options: [
             {
               id: dvk("settingsTabs"),
@@ -859,20 +867,17 @@ export function getItems({ v, device, component }) {
                   label: t("Styling"),
                   tabIcon: "nc-styling",
                   options: [
-                    toolbarPadding({
+                    toolbarPaddingFourFields({
                       v,
                       device,
                       state: "normal",
-                      devices: "desktop",
-                      onChangeGrouped: ["onChangePaddingGrouped"],
-                      onChangeUngrouped: ["onChangePaddingUngrouped"]
+                      devices: "desktop"
                     }),
                     toolbarMargin({
                       v,
                       device,
                       state: "normal",
                       devices: "desktop",
-                      marginType: "topBottom",
                       disabled: inPopup,
                       onChangeGrouped: ["onChangeMarginGrouped"],
                       onChangeUngrouped: ["onChangeMarginUngrouped"]
@@ -940,20 +945,17 @@ export function getItems({ v, device, component }) {
       position: 110,
       devices: "responsive",
       options: [
-        toolbarPadding({
+        toolbarPaddingFourFields({
           v,
           device,
           state: "normal",
-          devices: "responsive",
-          onChangeGrouped: ["onChangePaddingGrouped"],
-          onChangeUngrouped: ["onChangePaddingUngrouped"]
+          devices: "responsive"
         }),
         toolbarMargin({
           v,
           device,
           state: "normal",
           devices: "responsive",
-          marginType: "topBottom",
           disabled: inPopup,
           onChangeGrouped: ["onChangeMarginGrouped"],
           onChangeUngrouped: ["onChangeMarginUngrouped"]

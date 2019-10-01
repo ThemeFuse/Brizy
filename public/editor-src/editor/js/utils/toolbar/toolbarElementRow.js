@@ -5,6 +5,7 @@ export function toolbarElementRowColumnsHeightStyle({
   v,
   device,
   devices = "all",
+  disabled = false,
   state
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -15,6 +16,7 @@ export function toolbarElementRowColumnsHeightStyle({
     label: t("Height"),
     type: "select",
     devices,
+    disabled,
     choices: [
       {
         title: t("Auto"),
@@ -33,6 +35,7 @@ export function toolbarElementRowColumnsHeight({
   v,
   device,
   devices = "all",
+  disabled = false,
   state
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -41,6 +44,7 @@ export function toolbarElementRowColumnsHeight({
   return {
     id: dvk("columnsHeight"),
     devices,
+    disabled,
     type: "slider",
     slider: {
       min: 20,

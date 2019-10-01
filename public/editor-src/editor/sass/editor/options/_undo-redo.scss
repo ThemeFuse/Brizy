@@ -45,8 +45,7 @@
       border-right: none;
     }
     .brz-icon-svg {
-      width: 1.2em;
-      height: 1.2em;
+      font-size: 14px;
     }
   }
   &__preview {
@@ -56,11 +55,16 @@
     .brz-a {
       color: #fff;
       transition: color 150ms linear;
+      font-size: 0;
       padding: 14px;
     }
     &:hover .brz-a {
       color: $brand-primary;
     }
+  }
+  &__hidden_elements {
+    cursor: pointer;
+    color: #fff;
   }
   &__btn {
     padding: 8px 13px;

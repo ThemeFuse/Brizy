@@ -3,12 +3,17 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleBg(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleZIndex", "cssStyleMargin"],
+      standart: [
+        "cssStyleZIndex",
+        "cssStyleMargin",
+        "cssStyleFlexVerticalAlign"
+      ],
       interval: [
-        "cssStyleFlexVerticalAlign",
         "cssStyleSizeMaxWidthSize",
         "cssStyleRowMinHeight",
-        "cssStyleVisible"
+        "cssStyleDisplayInlineFlex",
+        "cssStyleVisible",
+        "cssStyleVisibleEditorDisplayNoneOrInlineFlex|||editor"
       ]
     },
     ".brz &&:hover > .brz-bg-media": {
@@ -16,7 +21,11 @@ export function styleBg(v, vs, vd) {
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
-      standart: ["cssStyleBgImage", "cssStyleBgImagePosition"],
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition"
+      ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-color": {
@@ -24,7 +33,11 @@ export function styleBg(v, vs, vd) {
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-map": {
-      standart: ["cssStyleBgMap"]
+      standart: ["cssStyleFilter", "cssStyleBgMap"]
+    },
+    ".brz &&:hover > .brz-bg-media > .brz-bg-video": {
+      standart: ["cssStyleFilter"],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg-content": {
       standart: ["cssStyleBorderTransparentColor"],
@@ -41,7 +54,7 @@ export function styleBg(v, vs, vd) {
 export function styleContainer(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStylePadding"]
+      standart: ["cssStylePaddingFourFields"]
     }
   };
 

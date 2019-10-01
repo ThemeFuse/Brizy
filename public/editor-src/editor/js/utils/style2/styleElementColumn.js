@@ -7,3 +7,7 @@ export function styleElementColumnMinHeightType({ v, device }) {
 export function styleElementColumnMinHeight({ v, device }) {
   return defaultValueValue({ v, key: "columnsHeight", device });
 }
+
+export function styleElementColumnMinHeightSuffix({ v, device }) {
+  return defaultValueValue({ v, key: "columnsHeightSuffix", device });
+}

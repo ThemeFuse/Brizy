@@ -10,8 +10,6 @@
   &__close {
     position: absolute;
     z-index: 2;
-    top: 36px;
-    left: 50px;
     color: #fff;
     font-size: 0;
     cursor: pointer;
@@ -25,15 +23,54 @@
     height: 100%;
   }
 
+  .brz-container__wrap {
+    position: relative;
+  }
+
   &__inner {
     height: 100%;
 
+    // Добавить в editor
     & > .brz-bg-content {
       max-height: 100%;
-      overflow: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
+      display: flex;
+
+      & > .brz-container__wrap {
+        margin: 0;
+        padding: 0;
+        min-width: 300px;
+      }
     }
+  }
+
+  &__vertical-align {
+    transform: rotate(270deg);
+  }
+
+  &__button-go-to-editor {
+    display: inline-block;
+    position: absolute;
+    left: 40px;
+    top: 34px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 13px 23px 13px 18px;
+    color: #fff;
+    background-color: rgba(3, 8, 15, 0.92);
+    border: none;
+    border-radius: 100px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 9999;
+
+    &:hover {
+      color: #3dbfe8;
+    }
+  }
+
+  &__icon-go-to-editor {
+    vertical-align: text-top;
+    margin-right: 16px;
   }
 }
 

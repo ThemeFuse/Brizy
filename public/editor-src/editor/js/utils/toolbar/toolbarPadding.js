@@ -5,14 +5,61 @@ import {
   saveOnChanges
 } from "visual/utils/onChange";
 
-export function toolbarPadding({
+export function toolbarPaddingFourFields({
+  v,
+  device,
+  state,
+  devices,
+  position
+}) {
+  return toolbarPadding({
+    v,
+    device,
+    state,
+    devices,
+    position
+  });
+}
+
+export function toolbarPaddingFourFieldsPxSuffix({
+  v,
+  device,
+  state,
+  devices,
+  position
+}) {
+  return toolbarPadding({
+    v,
+    device,
+    state,
+    devices,
+    position,
+    suffixChoices: [
+      {
+        title: "px",
+        value: "px"
+      }
+    ]
+  });
+}
+
+function toolbarPadding({
   v,
   device,
   state,
   devices = "all",
   position = 50,
-  onChangeGrouped,
-  onChangeUngrouped
+  childs = ["paddingTop", "paddingRight", "paddingBottom", "paddingLeft"],
+  suffixChoices = [
+    {
+      title: "px",
+      value: "px"
+    },
+    {
+      title: "%",
+      value: "%"
+    }
+  ]
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -43,19 +90,30 @@ export function toolbarPadding({
         v,
         device,
         state,
-        onChange: onChangeGrouped
+        childs,
+        suffixChoices,
+        onChange: ["onChangePaddingGrouped"]
       }),
       ...toolbarPaddingUngrouped({
         v,
         device,
         state,
-        onChange: onChangeUngrouped
+        childs,
+        suffixChoices,
+        onChange: ["onChangePaddingUngrouped"]
       })
     }
   };
 }
 
-export function toolbarPaddingGrouped({ v, device, state, onChange }) {
+function toolbarPaddingGrouped({
+  v,
+  device,
+  state,
+  childs,
+  suffixChoices,
+  onChange
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
@@ -74,25 +132,16 @@ export function toolbarPaddingGrouped({ v, device, state, onChange }) {
         },
         suffix: {
           show: true,
-          choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
-          ]
+          choices: suffixChoices
         },
         value: {
           value: dvv("padding"),
           suffix: dvv("paddingSuffix")
         },
-        onChange: ({ value, suffix }) => {
+        onChange: ({ value, suffix }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
-            ...{ value, suffix }
+            ...{ v, device, state, childs, onChange },
+            ...{ value, suffix, sliderDragEnd }
           };
           return saveOnChanges(values);
         }
@@ -101,7 +150,14 @@ export function toolbarPaddingGrouped({ v, device, state, onChange }) {
   };
 }
 
-export function toolbarPaddingUngrouped({ v, device, state, onChange }) {
+function toolbarPaddingUngrouped({
+  v,
+  device,
+  state,
+  childs,
+  suffixChoices,
+  onChange
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
@@ -121,74 +177,60 @@ export function toolbarPaddingUngrouped({ v, device, state, onChange }) {
         },
         suffix: {
           show: true,
-          choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
-          ]
+          choices: suffixChoices
         },
         value: {
           value: dvv("paddingTop"),
           suffix: dvv("paddingTopSuffix")
         },
-        onChange: ({ value, suffix }) => {
+        onChange: ({ value, suffix }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, childs, onChange },
             ...{
               current: "paddingTop",
               value,
-              suffix
+              suffix,
+              sliderDragEnd
             }
           };
           return saveOnChanges(values);
         }
       },
-      {
-        id: dvk("paddingRight"),
-        icon: "nc-styling-right",
-        type: "slider",
-        slider: {
-          min: 0,
-          max: 100
-        },
-        input: {
-          show: true,
-          min: 0
-        },
-        suffix: {
-          show: true,
-          choices: [
-            {
-              title: "px",
-              value: "px"
+      childs.includes("paddingRight")
+        ? {
+            id: dvk("paddingRight"),
+            icon: "nc-styling-right",
+            type: "slider",
+            slider: {
+              min: 0,
+              max: 100
             },
-            {
-              title: "%",
-              value: "%"
+            input: {
+              show: true,
+              min: 0
+            },
+            suffix: {
+              show: true,
+              choices: suffixChoices
+            },
+            value: {
+              value: dvv("paddingRight"),
+              suffix: dvv("paddingRightSuffix")
+            },
+            onChange: ({ value, suffix }, { sliderDragEnd }) => {
+              const values = {
+                ...{ v, device, state, childs, onChange },
+                ...{
+                  current: "paddingRight",
+                  value,
+                  suffix,
+                  sliderDragEnd
+                }
+              };
+              return saveOnChanges(values);
             }
-          ]
-        },
-        value: {
-          value: dvv("paddingRight"),
-          suffix: dvv("paddingRightSuffix")
-        },
-        onChange: ({ value, suffix }) => {
-          const values = {
-            ...{ v, device, state, onChange },
-            ...{
-              current: "paddingRight",
-              value,
-              suffix
-            }
-          };
-          return saveOnChanges(values);
-        }
-      },
+          }
+        : {},
       {
         id: dvk("paddingBottom"),
         icon: "nc-styling-bottom",
@@ -203,74 +245,60 @@ export function toolbarPaddingUngrouped({ v, device, state, onChange }) {
         },
         suffix: {
           show: true,
-          choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
-          ]
+          choices: suffixChoices
         },
         value: {
           value: dvv("paddingBottom"),
           suffix: dvv("paddingBottomSuffix")
         },
-        onChange: ({ value, suffix }) => {
+        onChange: ({ value, suffix }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, childs, onChange },
             ...{
               current: "paddingBottom",
               value,
-              suffix
+              suffix,
+              sliderDragEnd
             }
           };
           return saveOnChanges(values);
         }
       },
-      {
-        id: dvk("paddingLeft"),
-        icon: "nc-styling-left",
-        type: "slider",
-        slider: {
-          min: 0,
-          max: 100
-        },
-        input: {
-          show: true,
-          min: 0
-        },
-        suffix: {
-          show: true,
-          choices: [
-            {
-              title: "px",
-              value: "px"
+      childs.includes("paddingLeft")
+        ? {
+            id: dvk("paddingLeft"),
+            icon: "nc-styling-left",
+            type: "slider",
+            slider: {
+              min: 0,
+              max: 100
             },
-            {
-              title: "%",
-              value: "%"
+            input: {
+              show: true,
+              min: 0
+            },
+            suffix: {
+              show: true,
+              choices: suffixChoices
+            },
+            value: {
+              value: dvv("paddingLeft"),
+              suffix: dvv("paddingLeftSuffix")
+            },
+            onChange: ({ value, suffix }, { sliderDragEnd }) => {
+              const values = {
+                ...{ v, device, state, childs, onChange },
+                ...{
+                  current: "paddingLeft",
+                  value,
+                  suffix,
+                  sliderDragEnd
+                }
+              };
+              return saveOnChanges(values);
             }
-          ]
-        },
-        value: {
-          value: dvv("paddingLeft"),
-          suffix: dvv("paddingLeftSuffix")
-        },
-        onChange: ({ value, suffix }) => {
-          const values = {
-            ...{ v, device, state, onChange },
-            ...{
-              current: "paddingLeft",
-              value,
-              suffix
-            }
-          };
-          return saveOnChanges(values);
-        }
-      }
+          }
+        : {}
     ]
   };
 }

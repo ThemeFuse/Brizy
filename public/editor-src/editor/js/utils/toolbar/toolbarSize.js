@@ -8,6 +8,7 @@ export function toolbarSizeSizeSizePercent({
   state,
   min = 1,
   max = 100,
+  position = 80,
   disabled = false
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -18,6 +19,7 @@ export function toolbarSizeSizeSizePercent({
     label: t("Size"),
     type: "slider",
     devices,
+    position,
     disabled,
     slider: {
       min,

@@ -1,0 +1,93 @@
+{
+  "toolbar": {
+    "tabsState": "",
+    "tabsColor": "",
+
+    "tabletTabsState": null,
+    "tabletTabsColor": null,
+
+    "mobileTabsState": null,
+    "mobileTabsColor": null
+  },
+
+  "style": {
+    "customCSS": "",
+
+    "textSpacing": 5,
+
+    "fontStyle": "",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "lato"
+    },
+    "fontFamily": "",
+    "fontSize": 16,
+    "fontWeight": 400,
+    "lineHeight": 1.3,
+    "letterSpacing": 0,
+
+    "colorHex": "#ffffff",
+    "colorOpacity": 1,
+    "colorPalette": "color3",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color3",
+
+    "activeColorHex": "#239ddb",
+    "activeColorOpacity": 1,
+    "activeColorPalette": "color2",
+
+    "tempActiveColorOpacity": 1,
+    "tempActiveColorPalette": "color2",
+
+    "arrowsColorHex": "#239ddb",
+    "arrowsColorOpacity": 0.35,
+    "arrowsColorPalette": "color2",
+
+    "tempArrowsColorOpacity": 0.35,
+    "tempArrowsColorPalette": "color2",
+
+    "hoverColorHex": "#009900",
+    "hoverColorOpacity": null,
+    "hoverColorPalette": "color1",
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": "color1",
+
+    "hoverActiveColorHex": null,
+    "hoverActiveColorOpacity": null,
+    "hoverActiveColorPalette": null,
+
+    "tempHoverActiveColorOpacity": null,
+    "tempHoverActiveColorPalette": null,
+
+    "hoverArrowsColorHex": null,
+    "hoverArrowsColorOpacity": null,
+    "hoverArrowsColorPalette": null,
+
+    "tempHoverArrowsColorOpacity": null,
+    "tempHoverArrowsColorPalette": null,
+
+    "hoverTransition": 50,
+
+    "tabletFontStyle": "",
+    "tabletFontFamilyType": null,
+    "tabletFamilies": {
+      "tabletFontFamily": null
+    },
+    "tabletFontSize": 15,
+    "tabletFontWeight": 400,
+    "tabletLineHeight": 1.3,
+    "tabletLetterSpacing": 0,
+
+    "mobileFontStyle": "",
+    "mobileFontFamilyType": null,
+    "mobileFamilies": {
+      "mobileFontFamily": null
+    },
+    "mobileFontSize": 15,
+    "mobileFontWeight": 400,
+    "mobileLineHeight": 1.3,
+    "mobileLetterSpacing": 0
+  }
+}

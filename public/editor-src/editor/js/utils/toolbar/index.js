@@ -61,11 +61,17 @@ export {
   toolbarLinkExternalRel,
   toolbarLinkTargetUrl,
   toolbarLinkHref,
-  toolbarLinkPopup
+  toolbarLinkPopup,
+  toolbarLinkUpload
 } from "./toolbarLink";
 
 // Horizontal Align
-export { toolbarHorizontalAlign, toolbarVerticalAlign } from "./toolbarAlign";
+export {
+  toolbarHorizontalAlign,
+  toolbarVerticalAlign,
+  toolbarVerticalAlignExtend,
+  toolbarVerticalAlignToggle
+} from "./toolbarAlign";
 
 // Size
 export {
@@ -76,7 +82,10 @@ export {
 } from "./toolbarSize";
 
 // Padding
-export { toolbarPadding } from "./toolbarPadding";
+export {
+  toolbarPaddingFourFields,
+  toolbarPaddingFourFieldsPxSuffix
+} from "./toolbarPadding";
 
 // Margin
 export { toolbarMargin } from "./toolbarMargin";
@@ -122,18 +131,29 @@ export {
   toolbarDisabledSettings,
   toolbarDisabledLink,
   toolbarDisabledShowOnResponsive,
+  toolbarDisabledShowOnDesktop,
   toolbarDisabledShowOnTablet,
-  toolbarDisabledShowOnMobile
+  toolbarDisabledShowOnMobile,
+  toolbarDisabledZIndex
 } from "./toolbarDisabled";
 
 // Element Containers
 export {
   toolbarElementContainerTypeAll,
-  toolbarElementContainerTypeImageMap
+  toolbarElementContainerTypeImageMap,
+  toolbarElementContainerType
 } from "./toolbarElementContainer";
 
 // Element Section
-export { toolbarElementSectionBoxShadow } from "./toolbarElementSection";
+export {
+  toolbarElementSectionBoxShadow,
+  toolbarElementSectionSaved,
+  toolbarElementSectionFullHeight,
+  toolbarElementSectionSlider,
+  toolbarElementSectionSliderColor,
+  toolbarElementSectionGlobal,
+  toolbarElementSectionHeaderType
+} from "./toolbarElementSection";
 
 // Element Row
 export {
@@ -204,6 +224,23 @@ export {
 
 // Element Image
 export { toolbarImageLinkExternal } from "./toolbarElementImage";
+
+// Element Popup2
+export {
+  toolbarContainerPopup2ContainerWidth,
+  toolbarContainerPopup2ContainerType,
+  toolbarContainerPopup2ContainerHeight,
+  toolbarContainerPopup2CloseHorizontalPosition,
+  toolbarContainerPopup2CloseVerticalPosition,
+  toolbarContainerPopup2CloseFill,
+  toolbarContainerPopup2CloseBorderRadius,
+  toolbarContainerPopup2CloseAlign,
+  toolbarContainerPopup2CloseCustomSize,
+  toolbarContainerPopup2CloseBgSize,
+  toolbarContainerPopup2ClosePosition,
+  toolbarContainerPopup2ShowCloseButton,
+  toolbarContainerPopup2ShowCloseButtonAfter
+} from "./toolbarContainerPopup2";
 
 // Typography
 export {
@@ -311,3 +348,24 @@ export {
   toolbarElementIconTextIconSpacing,
   toolbarElementIconDisabledSettings
 } from "./toolbarElementIconText";
+
+// Shape
+export {
+  toolbarShape,
+  toolbarShapeTopType,
+  toolbarShapeTopColor,
+  toolbarShapeTopHeight,
+  toolbarShapeTopFlip,
+  toolbarShapeTopIndex,
+  toolbarShapeBottomType,
+  toolbarShapeBottomColor,
+  toolbarShapeBottomHeight,
+  toolbarShapeBottomFlip,
+  toolbarShapeBottomIndex
+} from "./toolbarShape";
+
+// Anchor Name
+export { toolbarAnchorName } from "./toolbarAnchorName";
+
+// Element Breadcrumbs
+export { toolbarElementBreadcrumbsSpacing } from "./toolbarElementBreadcrumbs";

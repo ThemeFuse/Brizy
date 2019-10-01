@@ -49,8 +49,7 @@ export {
 // Align
 export {
   styleAlignFlexVerticalAlign,
-  styleAlignFlexHorizontalAlign,
-  styleAlignHorizontalAlign
+  styleAlignFlexHorizontalAlign
 } from "./styleAlign";
 
 // ReverseColumns
@@ -130,20 +129,10 @@ export {
 
 // Show on Devices
 export {
-  styleShowOnDesktopFilter,
-  styleShowOnDesktopOpacity,
-  styleShowOnTabletFilter,
-  styleShowOnTabletOpacity,
-  styleShowOnMobileFilter,
-  styleShowOnMobileOpacity
+  styleShowOnEditorFilter,
+  styleShowOnEditorOpacity,
+  styleShowOnPreview
 } from "./styleShowOnDevices";
-
-// Display -> Export
-export {
-  styleDisplayShowOnDesktop,
-  styleDisplayShowOnTablet,
-  styleDisplayShowOnMobile
-} from "./styleDisplay";
 
 // Z Index
 export { styleZIndex } from "./styleZIndex";
@@ -177,7 +166,8 @@ export {
 // Element Column
 export {
   styleElementColumnMinHeightType,
-  styleElementColumnMinHeight
+  styleElementColumnMinHeight,
+  styleElementColumnMinHeightSuffix
 } from "./styleElementColumn";
 
 //Element ProgressBar
@@ -224,3 +214,22 @@ export {
   styleElementButtonIconMargin,
   styleElementIconStrokeWidth
 } from "./styleElementButton";
+
+// Element Popup2
+export {
+  styleContainerPopup2ContainerWidth,
+  styleContainerPopup2ContainerWidthSuffix,
+  styleContainerPopup2CloseState,
+  styleContainerPopup2CloseAlign,
+  styleContainerPopup2ClosePosition,
+  styleContainerPopup2CloseHorizontalPosition,
+  styleContainerPopup2CloseHorizontalPositionSuffix,
+  styleContainerPopup2CloseVerticalPosition,
+  styleContainerPopup2CloseVerticalPositionSuffix,
+  styleContainerPopup2CloseCustomSize,
+  styleContainerPopup2CloseBgSize,
+  styleContainerPopup2CloseBorderRadius
+} from "./styleContainerPopup2";
+
+// Element Breadcrumbs
+export { styleElementBreadcrumbsSpacing } from "./styleElementBreadcrumbs";

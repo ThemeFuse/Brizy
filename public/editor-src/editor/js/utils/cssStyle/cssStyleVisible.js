@@ -1,73 +1,88 @@
 import {
-  styleShowOnDesktopFilter,
-  styleShowOnDesktopOpacity,
-  styleShowOnTabletFilter,
-  styleShowOnTabletOpacity,
-  styleShowOnMobileFilter,
-  styleShowOnMobileOpacity,
-  styleDisplayShowOnDesktop,
-  styleDisplayShowOnTablet,
-  styleDisplayShowOnMobile
+  styleShowOnEditorFilter,
+  styleShowOnEditorOpacity,
+  styleShowOnPreview
 } from "visual/utils/style2";
 
 export function cssStyleVisible({ v, device, state }) {
-  let desktopFilter;
-  let desktopOpacity;
-  let tabletFilter;
-  let tabletOpacity;
-  let mobileFilter;
-  let mobileOpacity;
-  let desktopPreview;
-  let tabletPreview;
-  let mobilePreview;
-  let r;
+  let r = "";
 
   if (IS_EDITOR) {
-    if (device === "desktop") {
-      desktopFilter = styleShowOnDesktopFilter({ v, device, state });
-      desktopOpacity = styleShowOnDesktopOpacity({ v, device, state });
-    } else if (device === "tablet") {
-      tabletFilter = styleShowOnTabletFilter({ v, device, state });
-      tabletOpacity = styleShowOnTabletOpacity({ v, device, state });
-    } else {
-      mobileFilter = styleShowOnMobileFilter({ v, device, state });
-      mobileOpacity = styleShowOnMobileOpacity({ v, device, state });
-    }
-  } else {
-    if (device === "desktop") {
-      desktopPreview = styleDisplayShowOnDesktop({ v, device, state });
-    } else if (device === "tablet") {
-      tabletPreview = styleDisplayShowOnTablet({ v, device, state });
-    } else {
-      mobilePreview = styleDisplayShowOnMobile({ v, device, state });
-    }
-  }
+    const filter = styleShowOnEditorFilter({
+      v,
+      device,
+      state
+    });
 
-  if (IS_EDITOR) {
-    if (device === "desktop" && desktopFilter !== "") {
-      r = `filter:${desktopFilter};opacity:${desktopOpacity};`;
-    } else if (device === "tablet" && tabletFilter !== "") {
-      r = `filter:${tabletFilter};opacity:${tabletOpacity};`;
-    } else if (device === "mobile" && mobileFilter !== "") {
-      r = `filter:${mobileFilter};opacity:${mobileOpacity};`;
-    } else {
-      r = "";
-    }
-  } else if (IS_PREVIEW) {
-    if (device === "desktop" && desktopPreview === "none") {
-      r = `display:${desktopPreview};`;
-    } else if (device === "tablet" && tabletPreview === "none") {
-      r = `display:${tabletPreview};`;
-    } else if (device === "mobile" && mobilePreview === "none") {
-      r = `display:${mobilePreview};`;
-    } else {
-      r = "";
-    }
+    const opacity = styleShowOnEditorOpacity({
+      v,
+      device,
+      state
+    });
+
+    r = filter !== "" ? `filter:${filter};opacity:${opacity};` : "";
   } else {
-    r = "";
+    const display = styleShowOnPreview({
+      v,
+      device,
+      state
+    });
+
+    r = display === "none" ? `display:${display};` : "";
   }
 
   return r;
+}
+
+export function cssStyleVisibleEditorDisplayNoneOrFlex({
+  v,
+  device,
+  state,
+  mode = "editor"
+}) {
+  const filter = styleShowOnEditorFilter({
+    v,
+    device,
+    state
+  });
+
+  return IS_EDITOR && mode === "editor" && filter !== ""
+    ? `display:var(--elements-visibility, flex);`
+    : "";
+}
+
+export function cssStyleVisibleEditorDisplayNoneOrInlineFlex({
+  v,
+  device,
+  state,
+  mode = "editor"
+}) {
+  const filter = styleShowOnEditorFilter({
+    v,
+    device,
+    state
+  });
+
+  return IS_EDITOR && mode === "editor" && filter !== ""
+    ? `display:var(--elements-visibility, inline-flex);`
+    : "";
+}
+
+export function cssStyleVisibleEditorDisplayNoneOrBlock({
+  v,
+  device,
+  state,
+  mode = "editor"
+}) {
+  const filter = styleShowOnEditorFilter({
+    v,
+    device,
+    state
+  });
+
+  return IS_EDITOR && mode === "editor" && filter !== ""
+    ? `display:var(--elements-visibility, block);`
+    : "";
 }
 
 export function cssStyleVisibleMode({ v, device, state, mode = "editor" }) {

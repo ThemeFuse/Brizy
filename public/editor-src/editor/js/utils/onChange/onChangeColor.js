@@ -30,12 +30,6 @@ export function onChangeColorHexAndOpacity({
       ? opacity
       : dvv(capByPrefix(tempPrefix, "opacity"));
 
-  console.log({
-    [dvk(capByPrefix(prefix, "hex"))]: hex,
-    [dvk(capByPrefix(prefix, "opacity"))]: opacity,
-    [dvk(capByPrefix(tempPrefix, "opacity"))]: tempOpacity
-  });
-
   return {
     [dvk(capByPrefix(prefix, "hex"))]: hex,
     [dvk(capByPrefix(prefix, "opacity"))]: opacity,
@@ -75,11 +69,6 @@ export function onChangeColorHexAndOpacityPalette({
   const tempPalette =
     isChanged === "hex" ? "" : dvv(capByPrefix(tempPrefix, "palette"));
 
-  console.log({
-    [dvk(capByPrefix(prefix, "palette"))]: palette,
-    [dvk(capByPrefix(tempPrefix, "palette"))]: tempPalette
-  });
-
   return {
     [dvk(capByPrefix(prefix, "palette"))]: palette,
     [dvk(capByPrefix(tempPrefix, "palette"))]: tempPalette
@@ -95,11 +84,6 @@ export function onChangeColorPalette({
   const dvk = key => defaultValueKey({ key, device, state });
 
   const tempPrefix = `temp${capitalize(prefix)}`;
-
-  console.log({
-    [dvk(capByPrefix(prefix, "palette"))]: palette,
-    [dvk(capByPrefix(tempPrefix, "palette"))]: palette
-  });
 
   return {
     [dvk(capByPrefix(prefix, "palette"))]: palette,
@@ -124,10 +108,6 @@ export function onChangeColorPaletteOpacity({
     prefix,
     opacity,
     isChanged
-  });
-
-  console.log({
-    [dvk(capByPrefix(prefix, "opacity"))]: opacity
   });
 
   return {

@@ -345,7 +345,6 @@ class Column extends EditorComponent {
       meta: this.getMeta(v)
     });
     const classNameBg = classnames(
-      "brz-d-xs-flex",
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
@@ -408,14 +407,10 @@ class Column extends EditorComponent {
       path
     } = this.props;
     const isInnerRow = this.isInnerRow();
-
-    const borderClassName = classnames("brz-ed-border__column", {
-      "brz-ed-border__column--empty": items.length === 0
-    });
-
     const classNameColumn = classnames(
       "brz-columns",
       { "brz-columns__posts": IS_EDITOR && posts },
+      { "brz-columns--empty": IS_EDITOR && items.length === 0 },
       css(
         `${this.constructor.componentId}-column`,
         `${this.getId()}-column`,
@@ -442,7 +437,7 @@ class Column extends EditorComponent {
                     ref={input => {
                       this.containerBorder = input;
                     }}
-                    className={borderClassName}
+                    className="brz-ed-border__column"
                     borderColor={isInnerRow && inGrid ? "red" : "blue"}
                     borderStyle="solid"
                     reactToClick={false}
@@ -477,13 +472,15 @@ class Column extends EditorComponent {
       linkExternalBlank,
       linkExternalRel,
       linkPopup,
+      linkUpload,
       popups
     } = v;
 
     const linkHrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
-      popup: linkPopup
+      popup: linkPopup,
+      upload: linkUpload
     };
 
     const classNameColumn = classnames(

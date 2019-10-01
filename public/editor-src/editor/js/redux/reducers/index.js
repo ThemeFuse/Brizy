@@ -32,7 +32,8 @@ import {
   DELETE_FONTS,
   PUBLISH,
   UPDATE_SCREENSHOT,
-  UPDATE_DISABLED_ELEMENTS
+  UPDATE_DISABLED_ELEMENTS,
+  SHOW_HIDDEN_ELEMENTS
 } from "../actions";
 
 // project
@@ -406,6 +407,15 @@ export function copiedElement(state = copiedElementDefault, action) {
   }
 }
 
+export function showHiddenElements(state = false, action) {
+  switch (action.type) {
+    case SHOW_HIDDEN_ELEMENTS:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
 // screenshots
 
 function parseScreenshots(data) {
@@ -505,7 +515,8 @@ export default historyEnhancer(
       extraFontStyles,
       fonts,
       ui,
-      copiedElement
+      copiedElement,
+      showHiddenElements
     },
     {
       screenshots

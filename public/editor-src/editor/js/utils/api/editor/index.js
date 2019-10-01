@@ -395,3 +395,29 @@ export function updateBlockScreenshot({ id, base64 }) {
     })
   }).then(r => r.json());
 }
+
+export async function uploadFile(file) {
+  const project = Config.get("project").id;
+  const base64 = await toBase64(file);
+  const attachment = base64.replace(/.+;base64,/, "");
+
+  return request2(`${apiUrl}/custom_files `, {
+    method: "POST",
+    body: new URLSearchParams({
+      attachment,
+      project,
+      filename: file.name
+    })
+  })
+    .then(r => r.json())
+    .then(value => value);
+
+  async function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+}

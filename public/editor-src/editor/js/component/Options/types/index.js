@@ -37,6 +37,7 @@ import InputNumber from "./InputNumber";
 import Range from "./Range";
 import Range2 from "./Range2";
 import IntegrationsApps from "./IntegrationsApps";
+import FileUpload from "./FileUpload";
 
 export default {
   advancedSettings: AdvancedSettings,
@@ -76,5 +77,6 @@ export default {
   inputNumber: InputNumber,
   range: Range,
   range2: Range2,
-  integrationsApps: IntegrationsApps
+  integrationsApps: IntegrationsApps,
+  fileUpload: FileUpload
 };

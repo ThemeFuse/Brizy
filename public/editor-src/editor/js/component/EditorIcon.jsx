@@ -4,13 +4,13 @@ import classnames from "classnames";
 import { editorIconUrl } from "visual/utils/icons";
 
 function EditorIcon(
-  { className: _className = "", icon = "nc-circle-add", onClick = _.noop },
+  { className: _className, icon = "nc-circle-add", style, onClick = _.noop },
   ref
 ) {
   const className = classnames("brz-icon-svg", _className);
 
   return (
-    <svg ref={ref} className={className} onClick={onClick}>
+    <svg ref={ref} className={className} onClick={onClick} style={style}>
       <use xlinkHref={editorIconUrl(icon)} />
     </svg>
   );

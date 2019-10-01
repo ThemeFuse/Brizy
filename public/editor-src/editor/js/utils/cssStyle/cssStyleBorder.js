@@ -172,8 +172,6 @@ export function cssStyleBorder({ v, device, state, borderColor = "color" }) {
     r = `border:0px ${hoverBorderStyle} ${hoverBorderColor};`;
   else r = `border:0px solid ${borderColor};`;
 
-  //console.log(r);
-
   return r;
 }
 
