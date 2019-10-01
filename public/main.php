@@ -417,11 +417,11 @@ class Brizy_Public_Main {
 			}
 		}
 
-		if ( $is_preview || $needs_compile ) {
-			$this->post->compile_page();
-		}
-
 		try {
+			if ( $is_preview || $needs_compile ) {
+				$this->post->compile_page();
+			}
+
 			if ( ! $is_preview && $needs_compile ) {
 				$this->post->save();
 			}
