@@ -573,16 +573,11 @@ class Brizy_Admin_Templates {
 		if ( $pid ) {
 			$post = get_post( $pid );
 		}
+
 		$compiled_page = $this->template->get_compiled_page();
 
-
-//		$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
-//
-//		$mainProcessor = new Brizy_Content_MainProcessor( $context );
-//
-//		$content = $mainProcessor->process( $compiled_page->get_body() );
-
 		$content = apply_filters( 'brizy_content', $compiled_page->get_body(), Brizy_Editor_Project::get(), $post, 'body' );
+
 		echo do_shortcode( $content );
 	}
 
@@ -600,10 +595,6 @@ class Brizy_Admin_Templates {
 		$pid           = Brizy_Editor::get()->currentPostId();
 		$brizyPost     = get_post( $pid );
 		$compiled_page = $this->template->get_compiled_page();
-
-//      $context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $brizyPost, null );
-//		$mainProcessor = new Brizy_Content_MainProcessor( $context );
-//		return $mainProcessor->process( $compiled_page->get_body() );
 
 		return apply_filters( 'brizy_content', $compiled_page->get_body(), Brizy_Editor_Project::get(), $brizyPost, 'body' );
 	}

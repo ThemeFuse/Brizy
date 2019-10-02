@@ -18,8 +18,6 @@ class Brizy_Public_Main {
 	public function __construct( $post ) {
 
 		$this->post = $post;
-
-		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 4 );
 	}
 
 	public function initialize_wordpress_editor() {
@@ -72,14 +70,6 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			$this->plugin_live_composer_fixes();
 		}
-	}
-
-	public function brizy_content( $content, $project, $wpPost, $contentType ) {
-
-		$context       = Brizy_Content_ContextFactory::createContext( $project, null, $wpPost, null );
-		$mainProcessor = new Brizy_Content_MainProcessor( $context );
-
-		return $mainProcessor->process( $content );
 	}
 
 	/**

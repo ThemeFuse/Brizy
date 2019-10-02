@@ -293,6 +293,16 @@ class Brizy_Editor {
 		if ( $post && $post->uses_editor() ) {
 			$this->handleFrontEndEditor( $post );
 		}
+
+		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 4 );
+	}
+
+	public function brizy_content( $content, $project, $wpPost, $contentType ) {
+
+		$context       = Brizy_Content_ContextFactory::createContext( $project, null, $wpPost, null );
+		$mainProcessor = new Brizy_Content_MainProcessor( $context );
+
+		return $mainProcessor->process( $content );
 	}
 
 	private function loadShortcodes() {
