@@ -99,7 +99,7 @@ class Brizy_Admin_Popups_Main {
 			$manager = new Brizy_Admin_Rules_Manager();
 			if ( count( $manager->getRules( $post->ID ) ) == 0 ) {
 				$manager->saveRules( $post->ID, array(
-					new Brizy_Admin_Rule( null, Brizy_Admin_Rule::TYPE_INCLUDE, '*', '*', array() )
+					new Brizy_Admin_Rule( null, Brizy_Admin_Rule::TYPE_INCLUDE, '', '', array() )
 				) );
 			}
 		}

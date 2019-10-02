@@ -124,7 +124,6 @@ class PopupsMainCest {
 		$I->assertStringContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_body(), 'It should include HTML code in body' );
 	}
 
-
 	public function testExcludeRule( FunctionalTester $I ) {
 
 		global $wp_query;

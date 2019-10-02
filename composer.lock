@@ -360,12 +360,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "afc52609e590998fd293028699ad4a61d6afd7bc"
+                "reference": "d639ff7b75720a516008a9691a4874fc35bac6e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/afc52609e590998fd293028699ad4a61d6afd7bc",
-                "reference": "afc52609e590998fd293028699ad4a61d6afd7bc",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/d639ff7b75720a516008a9691a4874fc35bac6e3",
+                "reference": "d639ff7b75720a516008a9691a4874fc35bac6e3",
                 "shasum": ""
             },
             "require": {
@@ -447,7 +447,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2019-09-14T13:53:56+00:00"
+            "time": "2019-10-01T09:03:28+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
@@ -623,12 +623,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "a066dd9e00e0b703fdd97ccd6f562e1fd0559e25"
+                "reference": "34a32c31b4cc46cb4505af87d19957d2f6cab49b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/a066dd9e00e0b703fdd97ccd6f562e1fd0559e25",
-                "reference": "a066dd9e00e0b703fdd97ccd6f562e1fd0559e25",
+                "url": "https://api.github.com/repos/composer/composer/zipball/34a32c31b4cc46cb4505af87d19957d2f6cab49b",
+                "reference": "34a32c31b4cc46cb4505af87d19957d2f6cab49b",
                 "shasum": ""
             },
             "require": {
@@ -695,7 +695,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2019-09-04T05:31:05+00:00"
+            "time": "2019-09-28T09:26:11+00:00"
         },
         {
             "name": "composer/semver",
@@ -864,16 +864,16 @@
         },
         {
             "name": "dg/mysql-dump",
-            "version": "v1.5.0",
+            "version": "v1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/MySQL-dump.git",
-                "reference": "6c9cf07092bcc4a140bef01c64d883ebfccfccfa"
+                "reference": "e0e287b715b43293773a8b0edf8514f606e01780"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/MySQL-dump/zipball/6c9cf07092bcc4a140bef01c64d883ebfccfccfa",
-                "reference": "6c9cf07092bcc4a140bef01c64d883ebfccfccfa",
+                "url": "https://api.github.com/repos/dg/MySQL-dump/zipball/e0e287b715b43293773a8b0edf8514f606e01780",
+                "reference": "e0e287b715b43293773a8b0edf8514f606e01780",
                 "shasum": ""
             },
             "require": {
@@ -900,7 +900,7 @@
             "keywords": [
                 "mysql"
             ],
-            "time": "2018-10-31T00:31:09+00:00"
+            "time": "2019-09-10T21:36:25+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -2065,12 +2065,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "382e9bde2374c824c050580e72b9472889733072"
+                "reference": "fa35bb3f3ad02945733134c262859c7ef3e304a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/382e9bde2374c824c050580e72b9472889733072",
-                "reference": "382e9bde2374c824c050580e72b9472889733072",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/fa35bb3f3ad02945733134c262859c7ef3e304a3",
+                "reference": "fa35bb3f3ad02945733134c262859c7ef3e304a3",
                 "shasum": ""
             },
             "require": {
@@ -2101,7 +2101,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2019-09-17T12:45:18+00:00"
+            "time": "2019-09-26T08:57:41+00:00"
         },
         {
             "name": "illuminate/support",
@@ -2109,12 +2109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "786d5b1fce30452fe0d2dee27a562a192639f53f"
+                "reference": "4d2a3e06d7c4ddf1396a15400bd8e6413016c961"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/786d5b1fce30452fe0d2dee27a562a192639f53f",
-                "reference": "786d5b1fce30452fe0d2dee27a562a192639f53f",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/4d2a3e06d7c4ddf1396a15400bd8e6413016c961",
+                "reference": "4d2a3e06d7c4ddf1396a15400bd8e6413016c961",
                 "shasum": ""
             },
             "require": {
@@ -2163,7 +2163,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2019-09-17T20:37:47+00:00"
+            "time": "2019-09-26T08:57:41+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2549,16 +2549,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.25.0-beta.2",
+            "version": "2.25.0-beta.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "380e7daf0daa68f87757e4e6dbb528ab61a5eb9c"
+                "reference": "b70da677101cca7b584c7489770d2677c2733593"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/380e7daf0daa68f87757e4e6dbb528ab61a5eb9c",
-                "reference": "380e7daf0daa68f87757e4e6dbb528ab61a5eb9c",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b70da677101cca7b584c7489770d2677c2733593",
+                "reference": "b70da677101cca7b584c7489770d2677c2733593",
                 "shasum": ""
             },
             "require": {
@@ -2612,7 +2612,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-09-13T20:03:07+00:00"
+            "time": "2019-09-30T16:22:22+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -4456,12 +4456,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "83a3fb1d3b8cbea63b1ca74dea76e5e9a77043ef"
+                "reference": "117563a4a2bb704d0c30c6cef5e93c42a85c65aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/83a3fb1d3b8cbea63b1ca74dea76e5e9a77043ef",
-                "reference": "83a3fb1d3b8cbea63b1ca74dea76e5e9a77043ef",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/117563a4a2bb704d0c30c6cef5e93c42a85c65aa",
+                "reference": "117563a4a2bb704d0c30c6cef5e93c42a85c65aa",
                 "shasum": ""
             },
             "require": {
@@ -4509,7 +4509,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2019-09-16T08:12:51+00:00"
+            "time": "2019-09-27T17:11:11+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5161,12 +5161,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "baddff9b0322de9c4ed106b0886deee456548d71"
+                "reference": "110e3e9eaa7827def84cb1cfee95a6cfde4bf608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/baddff9b0322de9c4ed106b0886deee456548d71",
-                "reference": "baddff9b0322de9c4ed106b0886deee456548d71",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/110e3e9eaa7827def84cb1cfee95a6cfde4bf608",
+                "reference": "110e3e9eaa7827def84cb1cfee95a6cfde4bf608",
                 "shasum": ""
             },
             "require": {
@@ -5212,7 +5212,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2019-09-20T14:23:06+00:00"
+            "time": "2019-09-25T18:53:23+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -5738,12 +5738,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/db-command.git",
-                "reference": "dc0f8e4d5783d8a4ee01da1119b8fe8038fe1aa0"
+                "reference": "0cce781beb00c9dd4c4992464b324da7b96486a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/db-command/zipball/dc0f8e4d5783d8a4ee01da1119b8fe8038fe1aa0",
-                "reference": "dc0f8e4d5783d8a4ee01da1119b8fe8038fe1aa0",
+                "url": "https://api.github.com/repos/wp-cli/db-command/zipball/0cce781beb00c9dd4c4992464b324da7b96486a9",
+                "reference": "0cce781beb00c9dd4c4992464b324da7b96486a9",
                 "shasum": ""
             },
             "require": {
@@ -5800,7 +5800,7 @@
             ],
             "description": "Performs basic database operations using credentials stored in wp-config.php.",
             "homepage": "https://github.com/wp-cli/db-command",
-            "time": "2019-04-25T00:28:40+00:00"
+            "time": "2019-09-25T14:14:43+00:00"
         },
         {
             "name": "wp-cli/embed-command",
@@ -6521,12 +6521,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/media-command.git",
-                "reference": "29050e15fc985da54fd1ad109760aefd6a220316"
+                "reference": "98102a52d0102fbda6644f100cebbd96f0e9199a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/media-command/zipball/29050e15fc985da54fd1ad109760aefd6a220316",
-                "reference": "29050e15fc985da54fd1ad109760aefd6a220316",
+                "url": "https://api.github.com/repos/wp-cli/media-command/zipball/98102a52d0102fbda6644f100cebbd96f0e9199a",
+                "reference": "98102a52d0102fbda6644f100cebbd96f0e9199a",
                 "shasum": ""
             },
             "require": {
@@ -6534,6 +6534,7 @@
             },
             "require-dev": {
                 "wp-cli/entity-command": "^1.3 || ^2",
+                "wp-cli/extension-command": "^2.0",
                 "wp-cli/wp-cli-tests": "^2.1"
             },
             "type": "wp-cli-package",
@@ -6570,7 +6571,7 @@
             ],
             "description": "Imports files as attachments, regenerates thumbnails, or lists registered image sizes.",
             "homepage": "https://github.com/wp-cli/media-command",
-            "time": "2019-08-13T13:11:27+00:00"
+            "time": "2019-09-25T14:13:32+00:00"
         },
         {
             "name": "wp-cli/mustangostang-spyc",
@@ -7139,16 +7140,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/widget-command.git",
-                "reference": "58a1b2d2221cee852eb8a589535aaadb1217bb74"
+                "reference": "ad69fa608a30d17f8a73c94fdd64e91c7de458d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/widget-command/zipball/58a1b2d2221cee852eb8a589535aaadb1217bb74",
-                "reference": "58a1b2d2221cee852eb8a589535aaadb1217bb74",
+                "url": "https://api.github.com/repos/wp-cli/widget-command/zipball/ad69fa608a30d17f8a73c94fdd64e91c7de458d2",
+                "reference": "ad69fa608a30d17f8a73c94fdd64e91c7de458d2",
                 "shasum": ""
             },
             "require": {
-                "wp-cli/wp-cli": "^2"
+                "wp-cli/wp-cli": "dev-master"
             },
             "require-dev": {
                 "wp-cli/extension-command": "^1.2 || ^2",
@@ -7194,7 +7195,7 @@
             ],
             "description": "Adds, moves, and removes widgets; lists sidebars.",
             "homepage": "https://github.com/wp-cli/widget-command",
-            "time": "2019-04-25T00:25:21+00:00"
+            "time": "2019-10-01T08:37:32+00:00"
         },
         {
             "name": "wp-cli/wp-cli",
@@ -7202,12 +7203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "466b8122be54f0eae45a586a67e298cc765dea46"
+                "reference": "f731dd5c34f2222c94350d672198f179a1b3b069"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/466b8122be54f0eae45a586a67e298cc765dea46",
-                "reference": "466b8122be54f0eae45a586a67e298cc765dea46",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/f731dd5c34f2222c94350d672198f179a1b3b069",
+                "reference": "f731dd5c34f2222c94350d672198f179a1b3b069",
                 "shasum": ""
             },
             "require": {
@@ -7256,7 +7257,7 @@
                 "cli",
                 "wordpress"
             ],
-            "time": "2019-09-20T11:03:21+00:00"
+            "time": "2019-10-01T11:57:40+00:00"
         },
         {
             "name": "wp-cli/wp-cli-bundle",
@@ -7373,12 +7374,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zordius/lightncandy.git",
-                "reference": "94c39e3b2211fd23e2399a8b9f4b410095ff24dd"
+                "reference": "02f77fc6f65c2385f0804d6704992ade86336086"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zordius/lightncandy/zipball/94c39e3b2211fd23e2399a8b9f4b410095ff24dd",
-                "reference": "94c39e3b2211fd23e2399a8b9f4b410095ff24dd",
+                "url": "https://api.github.com/repos/zordius/lightncandy/zipball/02f77fc6f65c2385f0804d6704992ade86336086",
+                "reference": "02f77fc6f65c2385f0804d6704992ade86336086",
                 "shasum": ""
             },
             "require": {
@@ -7417,7 +7418,7 @@
                 "php",
                 "template"
             ],
-            "time": "2019-07-28T03:28:15+00:00"
+            "time": "2019-10-01T06:06:17+00:00"
         }
     ],
     "aliases": [],
