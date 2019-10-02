@@ -5,6 +5,7 @@ class ApiCest {
 
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 	/**
@@ -34,6 +35,7 @@ class ApiCest {
 				'attachment_id' => $attachmentId,
 				'version'       => BRIZY_EDITOR_VERSION
 			] ) );
+		$response = $I->grabResponse();
 		$I->seeResponseCodeIs( 200 );
 
 		$response = $I->grabResponse();
