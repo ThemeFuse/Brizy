@@ -131,7 +131,7 @@ class Brizy_Editor {
 	public function revisionsToKeep( $num, $post ) {
 		try {
 			if ( in_array( $post->post_type, array( Brizy_Editor_Project::BRIZY_PROJECT ) ) ) {
-				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
+				return BRIZY_MAX_REVISIONS_TO_KEEP;
 			}
 
 			if ( Brizy_Editor_Post::get( $post )->uses_editor() ) {
