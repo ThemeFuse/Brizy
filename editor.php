@@ -310,6 +310,7 @@ class Brizy_Editor {
 		$b = new Brizy_Shortcode_Posts();
 		$c = new Brizy_Shortcode_Navigation();
 		$c = new Brizy_Shortcode_PostField();
+		$c = new Brizy_Shortcode_PostInfo();
 	}
 
 	private function initializeAssetLoaders() {
