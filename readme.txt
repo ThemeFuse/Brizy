@@ -139,6 +139,10 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+
+= 1.0.92 - 2019-10-03 =
+* Fixed: Header, translation
+
 = 1.0.91 - 2019-10-01 =
 * New: Added indicator to show or hide all hidden blocks
 * Improved: Slider dots and arrows color can now be set per device
