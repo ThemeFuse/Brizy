@@ -118,6 +118,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 1.0.92 - 2019-10-03 ###
+* Fixed: Header, translation
+
 ### 1.0.91 - 2019-10-01 ###
 * New: Added indicator to show or hide all hidden blocks
 * Improved: Slider dots and arrows color can now be set per device

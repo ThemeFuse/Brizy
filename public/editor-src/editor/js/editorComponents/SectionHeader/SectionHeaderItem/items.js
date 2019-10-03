@@ -5,6 +5,7 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
+import { t } from "visual/utils/i18n";
 
 class SectionHeaderItemItems extends EditorArrayComponent {
   static get componentId() {
