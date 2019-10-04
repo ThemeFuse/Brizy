@@ -8214,6 +8214,7 @@ body.modal-open .mm-slideout {
       z-index: 2;
       display: block;
       pointer-events: none; }
+  .brz .brz-fb-page,
   .brz .brz-fb-comments {
     width: 100%; }
   .brz .brz-breadcrumbs {

@@ -20,7 +20,7 @@ class FacebookGroup extends EditorComponent {
   getAppData() {
     return {
       appId: 113869198637480,
-      lang: "{{ brizy_dc_group_language }}"
+      lang: "{{ brizy_dc_page_language }}"
     };
   }
 
