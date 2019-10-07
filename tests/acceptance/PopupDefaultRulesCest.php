@@ -5,6 +5,9 @@ class PopupDefaultRulesCest {
 
 	public function _before( AcceptanceTester $I ) {
 		$I->loginAs( 'admin', 'admin' );
+
+		$I->amOnPluginsPage();
+		$I->activatePlugin( 'brizy' );
 	}
 
 	/**
@@ -13,7 +16,6 @@ class PopupDefaultRulesCest {
 	public function settingsPopupLayoutTest( AcceptanceTester $I ) {
 
 		$I->amOnPage( '/wp-admin/edit.php?post_type=brizy-popup' );
-		$response = $I->grabResponse();
 		//$I->waitForPageLoad( $I );
 
 		// click on Add new
