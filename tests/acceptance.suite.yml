@@ -8,10 +8,10 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - WPDb
-        - WPBrowser
-        - REST
         - \Helper\Acceptance
+        - REST
+        - WPDb
+        - WPWebDriver
         - WPFilesystem
     config:
         WPLoader:
@@ -34,20 +34,27 @@ modules:
             #import the dump before the tests; this means the test site database will be repopulated before the tests.
             populate: true
             # re-import the dump between tests; this means the test site database will be repopulated between the tests.
-            cleanup: false
+            cleanup: true
             waitlock: 10
             url: '%TEST_SITE_WP_URL%'
             urlReplacement: true #replace the hardcoded dump URL with the one above
             tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
         WPBrowser:
             url: '%TEST_SITE_WP_URL%'
-            browser: chrome
-            port: 9515
-            restart: true
-            wait: 10
             adminUsername: '%TEST_SITE_ADMIN_USERNAME%'
             adminPassword: '%TEST_SITE_ADMIN_PASSWORD%'
-            adminUrl: /wp-admin/
+            adminPath: '%TEST_SITE_WP_ADMIN_PATH%'
+        WPWebDriver:
+            url: '%TEST_SITE_WP_URL%'
+            browser: chromium
+            port: 9515
+            window_size: false
+            capabilities:
+                chromeOptions:
+                    args: ["--headless", "--disable-gpu", "window-size=1920x1080","w3c=false"]
+            adminUsername: '%TEST_SITE_ADMIN_USERNAME%'
+            adminPassword: '%TEST_SITE_ADMIN_PASSWORD%'
+            adminPath: '%TEST_SITE_WP_ADMIN_PATH%'
         REST:
             depends: WPBrowser
             url: '%TEST_SITE_WP_URL%/wp-admin/'
