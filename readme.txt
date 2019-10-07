@@ -139,6 +139,9 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.92 - 2019-10-04 =
+* Fixed: Show on tablet & mobile
+* Fixed: Facebook Elements Fix
 
 = 1.0.92 - 2019-10-03 =
 * Fixed: Header, translation

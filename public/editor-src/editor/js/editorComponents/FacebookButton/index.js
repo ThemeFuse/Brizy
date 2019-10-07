@@ -24,7 +24,7 @@ class FacebookButton extends EditorComponent {
     return {
       //appId: facebook && facebook.appid ? facebook.appid : "nick",
 
-      appId: "nick",
+      appId: 113869198637480,
       href: "{{ brizy_dc_current_page_unique_url }}",
       lang: "{{ brizy_dc_page_language }}"
     };
@@ -62,7 +62,7 @@ class FacebookButton extends EditorComponent {
     };
 
     const className = classnames(
-      "brz-facebook",
+      "brz-fb-like",
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -112,7 +112,7 @@ class FacebookButton extends EditorComponent {
       "data-lang": appData.lang
     };
     const className = classnames(
-      "brz-facebook",
+      "brz-fb-like",
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,

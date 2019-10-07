@@ -118,6 +118,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 1.0.92 - 2019-10-04 ###
+* Fixed: Show on tablet & mobile
+* Fixed: Facebook Elements Fix
+
 ### 1.0.92 - 2019-10-03 ###
 * Fixed: Header, translation
 

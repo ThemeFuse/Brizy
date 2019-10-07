@@ -26,12 +26,14 @@ class FacebookComments extends EditorComponent {
     return {
       // appId: facebook && facebook.appid ? facebook.appid : "nick",
 
-      appId: "nick",
-      href: "{{ brizy_dc_current_page_unique_url }}",
-      // href: "http://unimedia.md",
+      // comments au nevoie obligatoriu de appId si lang si in editor noi nu avem replacer, cind o sa avem o sa schimbam
 
-      lang: "{{ brizy_dc_page_language }}"
-      // lang: "en_US"
+      appId: 113869198637480,
+      //href: "{{ brizy_dc_current_page_unique_url }}",
+      href: "http://brizy.io",
+
+      //lang: "{{ brizy_dc_page_language }}"
+      lang: "en_US"
     };
   }
 
@@ -42,8 +44,8 @@ class FacebookComments extends EditorComponent {
       width: "100%",
       numPosts,
       colorScheme: darkScheme === "on" ? "dark" : "light",
-      href: "http://unimedia.md", // targetUrl === "custom" && href !== "" ? href : appData.href,
-      lang: "en_US" //appData.lang
+      href: targetUrl === "custom" && href !== "" ? href : appData.href,
+      lang: appData.lang
     };
 
     const className = classnames(

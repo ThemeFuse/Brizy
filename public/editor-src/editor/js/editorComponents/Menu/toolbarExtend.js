@@ -2385,7 +2385,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       disabled: true
     },
-    toolbarDisabledShowOnTablet()
+    toolbarDisabledShowOnTablet({})
   ];
 }
 
@@ -2883,6 +2883,6 @@ export function getItemsForMobile(v) {
       type: "popover",
       disabled: true
     },
-    toolbarDisabledShowOnMobile()
+    toolbarDisabledShowOnMobile({})
   ];
 }

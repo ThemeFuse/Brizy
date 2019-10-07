@@ -79,9 +79,9 @@ export function toolbarDisabledLink({ device, devices = "all" }) {
 export function toolbarDisabledShowOnResponsive({ device }) {
   let r;
   if (device === "tablet") {
-    r = toolbarDisabledShowOnTablet();
+    r = toolbarDisabledShowOnTablet({});
   } else if (device === "mobile") {
-    r = toolbarDisabledShowOnMobile();
+    r = toolbarDisabledShowOnMobile({});
   } else {
     r = {};
   }

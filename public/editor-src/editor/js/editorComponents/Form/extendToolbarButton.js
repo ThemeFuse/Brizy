@@ -117,7 +117,7 @@ export function getItemsForDesktop(v) {
 
 export function getItemsForTablet(v) {
   return [
-    toolbarDisabledShowOnTablet(),
+    toolbarDisabledShowOnTablet({}),
     {
       id: "tabletHorizontalAlign",
       type: "toggle",
@@ -150,7 +150,7 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   return [
-    toolbarDisabledShowOnMobile(),
+    toolbarDisabledShowOnMobile({}),
     {
       id: "mobileHorizontalAlign",
       type: "toggle",
