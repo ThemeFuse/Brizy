@@ -24,7 +24,7 @@ class FacebookEmbed extends EditorComponent {
     return {
       //appId: facebook && facebook.appid ? facebook.appid : "nick",
 
-      appId: "nick",
+      appId: 113869198637480,
       lang: "{{ brizy_dc_page_language }}"
     };
   }

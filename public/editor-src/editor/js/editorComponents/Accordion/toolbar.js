@@ -572,7 +572,7 @@ export function getItemsForTablet(v) {
   } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   return [
-    toolbarDisabledShowOnTablet(),
+    toolbarDisabledShowOnTablet({}),
     {
       id: "tabletToolbarTypography",
       type: "popover",
@@ -911,7 +911,7 @@ export function getItemsForMobile(v) {
   } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
-    toolbarDisabledShowOnMobile(),
+    toolbarDisabledShowOnMobile({}),
     {
       id: "mobileToolbarTypography",
       type: "popover",
