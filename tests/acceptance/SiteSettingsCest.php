@@ -1,12 +1,14 @@
 <?php
 
 
-class SiteSettingsCept {
+class SiteSettingsCest {
 
 	public function _before( AcceptanceTester $I ) {
-		$I->loginAs( 'admin', 'admin' );
-		$I->amOnPluginsPage();
 		@$I->cleanUploadsDir();
+		$I->loginAs( 'admin', 'admin' );
+		$reposnse = $I->grabResponse();
+		$I->amOnPluginsPage();
+
 		$I->activatePlugin( 'brizy' );
 	}
 

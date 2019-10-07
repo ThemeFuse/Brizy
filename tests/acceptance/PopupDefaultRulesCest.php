@@ -1,7 +1,7 @@
 <?php
 
 
-class PopupDefaultRulesCept {
+class PopupDefaultRulesCest {
 
 	public function _before( AcceptanceTester $I ) {
 		$I->loginAs( 'admin', 'admin' );

@@ -39,16 +39,15 @@ modules:
             url: '%TEST_SITE_WP_URL%'
             urlReplacement: true #replace the hardcoded dump URL with the one above
             tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
-
         WPBrowser:
             url: '%TEST_SITE_WP_URL%'
             browser: chrome
             port: 9515
             restart: true
-            wait: 2
+            wait: 10
             adminUsername: '%TEST_SITE_ADMIN_USERNAME%'
             adminPassword: '%TEST_SITE_ADMIN_PASSWORD%'
-            adminUrl: /wp-admin
+            adminUrl: /wp-admin/
         REST:
             depends: WPBrowser
             url: '%TEST_SITE_WP_URL%/wp-admin/'
