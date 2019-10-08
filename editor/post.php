@@ -86,6 +86,11 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	static private $compiled_page;
 
+
+	public static function cleanClassCache() {
+		self::$instance = array();
+	}
+
 	/**
 	 * Brizy_Editor_Post constructor.
 	 *
