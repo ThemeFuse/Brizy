@@ -45,7 +45,7 @@ export function toolbarElementSectionBoxShadow({ v, device, state, onChange }) {
 export function toolbarElementSectionSaved({
   device,
   component,
-  position = 100,
+  position = 90,
   devices = "all",
   state
 }) {

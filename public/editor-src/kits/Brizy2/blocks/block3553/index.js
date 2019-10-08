@@ -7,7 +7,7 @@ module.exports = {
   keywords: "background,icons,slider,team",
   cat: [5594],
   type: 1,
-  pro: true,
+  
   
   resolve: {
     "type": "Section",

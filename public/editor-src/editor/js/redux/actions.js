@@ -6,6 +6,7 @@ import { fontSelector } from "./selectors";
 export const HYDRATE = "HYDRATE";
 export const EDITOR_RENDERED = "EDITOR_RENDERED";
 export const UPDATE_PAGE = "UPDATE_PAGE";
+export const UPDATE_BLOCKS = "UPDATE_BLOCKS";
 export const ADD_BLOCK = "ADD_BLOCK";
 export const REMOVE_BLOCK = "REMOVE_BLOCK";
 export const REORDER_BLOCKS = "REORDER_BLOCKS";
@@ -15,6 +16,8 @@ export const DELETE_GLOBAL_BLOCK = "DELETE_GLOBAL_BLOCK";
 export const CREATE_SAVED_BLOCK = "CREATE_SAVED_BLOCK";
 export const UPDATE_SAVED_BLOCK = "UPDATE_SAVED_BLOCK";
 export const DELETE_SAVED_BLOCK = "DELETE_SAVED_BLOCK";
+export const CREATE_RULES = "CREATE_RULES";
+export const UPDATE_RULES = "UPDATE_RULES";
 export const UPDATE_UI = "UPDATE_UI";
 export const COPY_ELEMENT = "COPY_ELEMENT";
 export const IMPORT_TEMPLATE = "IMPORT_TEMPLATE";
@@ -29,6 +32,7 @@ export const DELETE_FONTS = "DELETE_FONTS";
 export const UPDATE_SCREENSHOT = "UPDATE_SCREENSHOT";
 export const UPDATE_DISABLED_ELEMENTS = "UPDATE_DISABLED_ELEMENTS";
 export const SHOW_HIDDEN_ELEMENTS = "SHOW_HIDDEN_ELEMENTS";
+export const UPDATE_TRIGGERS = "UPDATE_TRIGGERS";
 
 export function hydrate({
   project,
@@ -157,6 +161,14 @@ export function deleteFont({ type, fonts: removedFonts }) {
   };
 }
 
+export function updateRules({ data, meta }) {
+  return {
+    type: UPDATE_RULES,
+    payload: data,
+    meta
+  };
+}
+
 // pages
 
 export function updatePage({ data, status, meta }) {
@@ -165,6 +177,19 @@ export function updatePage({ data, status, meta }) {
     payload: {
       data,
       ...(status ? { status } : {})
+    },
+    meta: {
+      is_autosave: 1,
+      ...meta
+    }
+  };
+}
+
+export function updateBlocks({ blocks, meta }) {
+  return {
+    type: UPDATE_BLOCKS,
+    payload: {
+      blocks
     },
     meta: {
       is_autosave: 1,
@@ -328,6 +353,18 @@ export function updateHiddenElements(value) {
   return {
     type: SHOW_HIDDEN_ELEMENTS,
     value
+  };
+}
+
+// update triggers
+
+export function updateTriggers(data, meta) {
+  return {
+    type: UPDATE_TRIGGERS,
+    payload: {
+      data
+    },
+    meta
   };
 }
 

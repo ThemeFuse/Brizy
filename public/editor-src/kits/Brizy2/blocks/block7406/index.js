@@ -7,7 +7,7 @@ module.exports = {
   keywords: "address,button,contact,email,map,phone",
   cat: [5586],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

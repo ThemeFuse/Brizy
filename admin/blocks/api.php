@@ -120,7 +120,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			// rules
 			$rulesData = stripslashes( $this->param( 'rules' ) );
-			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL, false );
+			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
 			$this->ruleManager->addRules( $block->get_wp_post()->ID, $rules );
 
@@ -190,7 +190,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			// rules
 			$rulesData = stripslashes( $this->param( 'rules' ) );
-			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL, false );
+			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
 			$this->ruleManager->setRules( $block->get_wp_post()->ID, $rules );
 
@@ -202,8 +202,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			}
 
 			$this->success( Brizy_Editor_Block::postData( $block ) );
-		} catch
-		( Exception $exception ) {
+		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
 	}

@@ -1,5 +1,6 @@
 import "@babel/polyfill";
 import jQuery from "jquery";
+import addTriggersForPopups from "./addTriggersForPopups.js";
 import * as Components from "../../component/index.export.js";
 import * as EditorComponents from "../../editorComponents/index.export.js";
 
@@ -12,3 +13,5 @@ jQuery(document).ready(function() {
     fn();
   });
 });
+
+addTriggersForPopups();

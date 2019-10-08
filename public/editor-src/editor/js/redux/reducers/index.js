@@ -10,7 +10,8 @@ import { objectTraverse2 } from "visual/utils/object";
 import historyEnhancer from "./historyEnhancer";
 import {
   HYDRATE,
-  UPDATE_PAGE,
+  UPDATE_RULES,
+  UPDATE_BLOCKS,
   REORDER_BLOCKS,
   REMOVE_BLOCK,
   CREATE_GLOBAL_BLOCK,
@@ -33,7 +34,8 @@ import {
   PUBLISH,
   UPDATE_SCREENSHOT,
   UPDATE_DISABLED_ELEMENTS,
-  SHOW_HIDDEN_ELEMENTS
+  SHOW_HIDDEN_ELEMENTS,
+  UPDATE_TRIGGERS
 } from "../actions";
 
 // project
@@ -208,82 +210,83 @@ export function page(state = {}, action, fullState) {
 
       return page;
     }
+    case PUBLISH: {
+      return {
+        ...pageAssembledSelector(fullState),
+        status: "publish"
+      };
+    }
+    case UPDATE_TRIGGERS: {
+      const { data: triggers } = action.payload;
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          triggers
+        }
+      };
+    }
+    case UPDATE_RULES: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          rulesAmount: action.payload.length
+        }
+      };
+    }
+    default:
+      return state;
+  }
+}
+
+export function pageBlocks(state = [], action) {
+  switch (action.type) {
+    case HYDRATE: {
+      const { page } = action.payload;
+
+      return page.data.items || [];
+    }
     case ADD_BLOCK: {
-      const {
-        data: { items: pageBlocks = [] }
-      } = state;
       const { block } = action.payload;
       const { insertIndex } = action.meta;
       const newPageBlocks = EditorArrayComponent.insertItemsBatch(
-        pageBlocks,
+        state,
         insertIndex,
         [block]
       );
 
-      return produce(state, draft => {
-        draft.data.items = newPageBlocks;
-      });
+      return newPageBlocks;
     }
     case REMOVE_BLOCK: {
       const { index } = action.payload;
-      const blocks = state.data.items || [];
-      const newBlocks = removeAt(blocks, index);
+      const newBlocks = removeAt(state, index);
 
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          items: newBlocks
-        }
-      };
+      return newBlocks;
     }
     case REORDER_BLOCKS: {
       const { oldIndex, newIndex } = action.payload;
-      const blocks = state.data.items || [];
-      const movedBlock = blocks[oldIndex];
-      const newBlocks = insert(
-        removeAt(blocks, oldIndex),
-        newIndex,
-        movedBlock
-      );
+      const movedBlock = state[oldIndex];
+      const newBlocks = insert(removeAt(state, oldIndex), newIndex, movedBlock);
 
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          items: newBlocks
-        }
-      };
+      return newBlocks;
     }
-    case UPDATE_PAGE: {
-      const { data, status = state.status } = action.payload;
+    case UPDATE_BLOCKS: {
+      const { blocks } = action.payload;
 
-      return {
-        ...state,
-        data,
-        status
-      };
+      return blocks;
     }
     case IMPORT_TEMPLATE: {
-      const {
-        data: { items: pageBlocks = [] }
-      } = state;
       const { blocks: templateBlocks } = action.payload;
       const { insertIndex } = action.meta;
       const newPageBlocks = EditorArrayComponent.insertItemsBatch(
-        pageBlocks,
+        state,
         insertIndex,
         templateBlocks
       );
 
-      return produce(state, draft => {
-        draft.data.items = newPageBlocks;
-      });
-    }
-    case PUBLISH: {
-      return produce(pageAssembledSelector(fullState), draft => {
-        draft.status = "publish";
-      });
+      return newPageBlocks;
     }
     default:
       return state;
@@ -513,6 +516,7 @@ export default historyEnhancer(
       currentStyleId,
       currentStyle,
       extraFontStyles,
+      pageBlocks,
       fonts,
       ui,
       copiedElement,
@@ -524,7 +528,7 @@ export default historyEnhancer(
   ),
   {
     keysToTrack: [
-      "page",
+      "pageBlocks",
       "currentStyleId",
       "currentStyle",
       "extraFontStyles",

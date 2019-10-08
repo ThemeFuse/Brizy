@@ -7,7 +7,7 @@ module.exports = {
   keywords: "background,button,call to action,image",
   cat: [5590],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

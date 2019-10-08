@@ -23,6 +23,7 @@ import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
 import Input from "./Input";
 import Textarea from "./Textarea";
 import Popover from "./Popover";
+import PopupConditions from "./PopupConditions";
 import PromptAddPopup from "./PromptAddPopup";
 import PromptIcon from "./PromptIcon";
 import RadioGroup from "./RadioGroup";
@@ -64,6 +65,7 @@ export default {
   input: Input,
   textarea: Textarea,
   popover: Popover,
+  popupConditions: PopupConditions,
   promptAddPopup: PromptAddPopup,
   promptIcon: PromptIcon,
   radioGroup: RadioGroup,

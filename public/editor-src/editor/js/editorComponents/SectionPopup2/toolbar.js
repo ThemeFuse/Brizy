@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
@@ -9,22 +10,27 @@ import {
   toolbarBgColor2,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
-  toolbarHorizontalAlign,
+  toolbarHorizontalAlign2,
   toolbarContainerPopup2ContainerWidth,
   toolbarContainerPopup2ContainerType,
   toolbarContainerPopup2ContainerHeight,
   toolbarVerticalAlignToggle,
+  toolbarElementSectionSaved,
+  toolbarContainerPopup2ScrollPage,
+  toolbarContainerPopup2ClickOutsideToClose,
   toolbarContainerPopup2ShowCloseButton,
   toolbarContainerPopup2ShowCloseButtonAfter
 } from "visual/utils/toolbar";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 export function getItems({ v, device, component }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
-    dvv("bgColorHex"),
-    dvv("bgColorPalette")
+  const { hex: closeBgColorHex } = getOptionColorHexByPalette(
+    dvv("closeBgColorHex"),
+    dvv("closeBgColorPalette")
   );
 
   return [
@@ -36,28 +42,61 @@ export function getItems({ v, device, component }) {
       position: 70,
       options: [
         {
-          id: dvk("makeItGlobal"),
-          label: t("Make it Global"),
-          type: "switch",
-          devices: "desktop",
-          value: component.props.meta.globalBlockId ? "on" : "off",
-          onChange: value => {
-            value === "on"
-              ? component.becomeGlobal()
-              : component.becomeNormal();
-          }
-        },
-        toolbarContainerPopup2ShowCloseButton({
-          v,
-          device,
-          state: "normal"
-        }),
-        toolbarContainerPopup2ShowCloseButtonAfter({
-          v,
-          device,
-          state: "normal",
-          disabled: dvv("showCloseButton") === "off"
-        })
+          id: dvk("tabsPopup"),
+          type: "tabs",
+          tabs: [
+            {
+              id: dvk("tabPopup"),
+              label: t("Popup"),
+              options: [
+                {
+                  id: dvk("makeItGlobal"),
+                  label: t("Make it Global"),
+                  type: "switch",
+                  devices: "desktop",
+                  value: component.props.meta.globalBlockId ? "on" : "off",
+                  onChange: value => {
+                    value === "on"
+                      ? component.becomeGlobal()
+                      : component.becomeNormal();
+                  }
+                },
+                {
+                  id: "popupConditions",
+                  type: "popupConditions",
+                  disabled: !IS_GLOBAL_POPUP
+                },
+                toolbarContainerPopup2ScrollPage({
+                  v,
+                  device,
+                  state: "normal"
+                })
+              ]
+            },
+            {
+              id: dvk("tabClose"),
+              label: t("Close"),
+              options: [
+                toolbarContainerPopup2ClickOutsideToClose({
+                  v,
+                  device,
+                  state: "normal"
+                }),
+                toolbarContainerPopup2ShowCloseButton({
+                  v,
+                  device,
+                  state: "normal"
+                }),
+                toolbarContainerPopup2ShowCloseButtonAfter({
+                  v,
+                  device,
+                  state: "normal",
+                  disabled: dvv("showCloseButton") === "off"
+                })
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -68,31 +107,33 @@ export function getItems({ v, device, component }) {
       position: 80,
       options: [
         {
-          id: defaultValueKey({ key: "background", device, state: "normal" }),
-          label: t("tabsCurrentElement"),
+          id: dvk("tabsState"),
           type: "tabs",
-          value: defaultValueValue({
-            v,
-            key: "tabsCurrentElement",
-            device,
-            state: "normal"
-          }),
           tabs: [
             {
-              id: defaultValueKey({
-                v,
-                key: "tabCurrentElement",
-                device,
-                state: "normal"
-              }),
-              label: t("Image"),
+              id: dvk("tabNormal"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: ["onChangeBgImage", "onChangeBgImageBgOpacity"]
-                })
+                {
+                  id: dvk("tabsMedia"),
+                  type: "tabs",
+                  tabs: [
+                    {
+                      id: dvk("tabMedia"),
+                      label: t("Image"),
+                      options: [
+                        toolbarBgImage({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBgImage",
+                            "onChangeBgImageBgOpacity"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
+                }
               ]
             }
           ]
@@ -107,7 +148,10 @@ export function getItems({ v, device, component }) {
       position: 90,
       icon: {
         style: {
-          backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+          backgroundColor: hexToRgba(
+            closeBgColorHex,
+            dvv("closeBgColorOpacity")
+          )
         }
       },
       options: [
@@ -212,7 +256,13 @@ export function getItems({ v, device, component }) {
         }
       ]
     },
-    toolbarHorizontalAlign({
+    toolbarElementSectionSaved({
+      device,
+      state: "normal",
+      component,
+      devices: "desktop"
+    }),
+    toolbarHorizontalAlign2({
       v,
       device,
       position: 90,
@@ -224,18 +274,6 @@ export function getItems({ v, device, component }) {
       disabled: dvv("columnsHeightStyle") === "fullHeight",
       state: "normal"
     }),
-    {
-      id: dvk("makeItSaved"),
-      type: "buttonTooltip",
-      icon: "nc-save-section",
-      position: 100,
-      title: t("Save"),
-      devices: "desktop",
-      tooltipContent: t("Saved"),
-      onChange: () => {
-        component.becomeSaved();
-      }
-    },
     {
       id: dvk("toolbarSettings"),
       type: "popover",
@@ -285,6 +323,17 @@ export function getItems({ v, device, component }) {
           ]
         }
       ]
+    },
+    {
+      id: "remove",
+      type: "button",
+      disabled: !IS_GLOBAL_POPUP,
+      title: t("Delete"),
+      icon: "nc-trash",
+      position: 250,
+      onChange: () => {
+        component.handleDropClick();
+      }
     }
   ];
 }

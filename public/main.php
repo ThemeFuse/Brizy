@@ -18,8 +18,6 @@ class Brizy_Public_Main {
 	public function __construct( $post ) {
 
 		$this->post = $post;
-
-		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
 
 	public function initialize_wordpress_editor() {
@@ -72,14 +70,6 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			$this->plugin_live_composer_fixes();
 		}
-	}
-
-	public function brizy_content( $content, $project, $wpPost ) {
-
-		$context       = Brizy_Content_ContextFactory::createContext( $project, null, $wpPost, null );
-		$mainProcessor = new Brizy_Content_MainProcessor( $context );
-
-		return $mainProcessor->process( $content );
 	}
 
 	/**
@@ -149,14 +139,26 @@ class Brizy_Public_Main {
 
 	}
 
+
 	/**
 	 * @internal
 	 */
 	public function _action_enqueue_preview_assets() {
 		$config_object = $this->getConfigObject();
 		$assets_url    = $config_object->urls->assets;
+		$current_user  = wp_get_current_user();
 		$config_json   = json_encode( array(
-			'serverTimestamp' => time()
+			'serverTimestamp' => time(),
+			'currentUser'     => [
+				'user_login'     => $current_user->user_login,
+				'user_email'     => $current_user->user_email,
+				'user_level'     => $current_user->user_level,
+				'user_firstname' => $current_user->user_firstname,
+				'user_lastname'  => $current_user->user_lastname,
+				'display_name'   => $current_user->display_name,
+				'ID'             => $current_user->ID,
+				'roles'          => $current_user->roles
+			]
 		) );
 
 		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), BRIZY_EDITOR_VERSION );
@@ -337,7 +339,6 @@ class Brizy_Public_Main {
 
 			$compiled_html_head = $this->post->get_compiled_html_head();
 			$compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_head );
-
 			$this->post->set_needs_compile( true )
 			           ->save();
 
@@ -349,7 +350,8 @@ class Brizy_Public_Main {
 			$params['content'] = $head;
 		}
 
-		$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post() );
+		$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->get_wp_post(), 'head' );
+
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
 		                     ->render( 'head-partial.html.twig', $params );
 
@@ -379,7 +381,7 @@ class Brizy_Public_Main {
 			$content       = $compiled_page->get_body();
 		}
 
-		$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->get_wp_post() );
+		$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->get_wp_post(), 'body' );
 
 		return $content;
 	}

@@ -336,9 +336,12 @@ class Brizy_Admin_Main {
 		}
 
 		try {
+			do_action( 'brizy_before_disable_for_post', $p );
 			Brizy_Editor_Post::get( $p->ID )
 			                 ->disable_editor()
 			                 ->save();
+
+			do_action( 'brizy_after_disable_for_post', $p );
 		} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to disabled the editor. Please try again later.' );
 		}
@@ -483,12 +486,13 @@ class Brizy_Admin_Main {
 			if ( $update_post ) {
 				wp_update_post( $p );
 			}
+			do_action( 'brizy_before_enabled_for_post', $p );
 
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->set_plugin_version( BRIZY_VERSION );
 			$post->save();
-
+			do_action( 'brizy_after_enabled_for_post', $p );
 			// redirect
 			wp_redirect( $post->edit_url() );
 
@@ -567,6 +571,7 @@ class Brizy_Admin_Main {
 
 			$currentProject->setDataAsJson( json_encode( $mergedData ) );
 			$currentProject->save();
+
 			return $currentProjectPostId;
 		}
 

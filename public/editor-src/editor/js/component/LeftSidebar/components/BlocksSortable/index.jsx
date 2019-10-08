@@ -11,7 +11,10 @@ import EditorIcon from "visual/component/EditorIcon";
 import { pageAssembledSelector } from "visual/redux/selectors";
 import { removeBlock, reorderBlocks } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
 import BlockThumbnail from "./BlockThumbnail";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const DragHandle = SortableHandle(({ item }) => (
   <BlockThumbnail blockData={item} />
@@ -144,6 +147,7 @@ const mapStateToProps = state => ({
 export const BlocksSortable = {
   id: "blocksSortable",
   icon: "nc-reorder",
+  disabled: IS_GLOBAL_POPUP,
   drawerTitle: t("Reorder Blocks"),
   drawerComponent: connect(mapStateToProps)(DrawerComponent)
 };

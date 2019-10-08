@@ -62,13 +62,15 @@
   },
 
   "toolbar": {
+    "tabsMedia": "",
     "tabsState": "",
-    "tabsCurrentElement": "",
     "tabsColor": "",
 
+    "tabletTabsMedia": null,
     "tabletTabsState": null,
     "tabletTabsColor": null,
 
+    "mobileTabsMedia": null,
     "mobileTabsState": null,
     "mobileTabsColor": null
   },

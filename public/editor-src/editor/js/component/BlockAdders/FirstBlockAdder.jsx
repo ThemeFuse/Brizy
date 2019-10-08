@@ -1,23 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
+import Config from "visual/global/Config";
 import UIState from "visual/global/UIState";
 import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
 import { setDeviceMode, addBlock, importTemplate } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+
 const textsByDeviceMode = {
   desktop: {
-    title: t("START BUILDING YOUR PAGE"),
-    description: t("Press the button above to add blocks")
+    title: IS_GLOBAL_POPUP
+      ? t("START BUILDING YOUR POPUP")
+      : t("START BUILDING YOUR PAGE"),
+    description: IS_GLOBAL_POPUP
+      ? t("Press the button above to add popup")
+      : t("Press the button above to add blocks")
   },
   tablet: {
-    title: "SWITCH TO DESKTOP",
-    description: "Switch to desktop to add blocks"
+    title: t("SWITCH TO DESKTOP"),
+    description: IS_GLOBAL_POPUP
+      ? t("Switch to desktop to add popup")
+      : t("Switch to desktop to add blocks")
   },
   mobile: {
     title: t("SWITCH TO DESKTOP"),
-    description: t("Switch to desktop to add blocks")
+    description: IS_GLOBAL_POPUP
+      ? t("Switch to desktop to add popup")
+      : t("Switch to desktop to add blocks")
   }
 };
 
@@ -39,7 +50,7 @@ class FirstBlockAdder extends React.Component {
   };
 
   open = () => {
-    const { deviceMode, dispatch } = this.props;
+    const { promptData, deviceMode, dispatch } = this.props;
 
     if (deviceMode === "desktop") {
       UIState.set("prompt", {
@@ -74,7 +85,8 @@ class FirstBlockAdder extends React.Component {
           templates: {
             onAddBlocks: this.handleTemplateAdd
           }
-        }
+        },
+        ...promptData
       });
     } else {
       dispatch(setDeviceMode("desktop"));

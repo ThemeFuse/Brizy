@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import EditorGlobal from "visual/global/Editor";
-import { pageDataSelector } from "visual/redux/selectors";
-import { updatePage } from "visual/redux/actions";
+import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
+import { updateBlocks } from "visual/redux/actions";
 
 class EditorPage extends Component {
-  handlePageChange = (pageValue, meta) => {
-    this.props.reduxDispatch(updatePage({ data: pageValue, meta }));
+  handlePageChange = ({ items: blocks }, meta) => {
+    this.props.reduxDispatch(updateBlocks({ blocks, meta }));
   };
 
   render() {
     const { Page } = EditorGlobal.getComponents();
     const { reduxState, reduxDispatch } = this.props;
-
     return (
       <Page
-        dbValue={pageDataSelector(reduxState)}
+        dbValue={pageDataDraftBlocksSelector(reduxState)}
         reduxState={reduxState}
         reduxDispatch={reduxDispatch}
         onChange={this.handlePageChange}
@@ -31,7 +30,7 @@ const mapDispatchToProps = dispatch => ({
   reduxDispatch: dispatch
 });
 const areStatesEqual = (state, prevState) =>
-  state.page === prevState.page &&
+  state.pageBlocks === prevState.pageBlocks &&
   state.currentStyleId === prevState.currentStyleId &&
   state.currentStyle === prevState.currentStyle &&
   state.extraFontStyles === prevState.extraFontStyles &&

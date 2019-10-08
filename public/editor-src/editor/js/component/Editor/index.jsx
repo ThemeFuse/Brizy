@@ -6,6 +6,10 @@ import BottomPanel from "visual/component/BottomPanel";
 import Prompts from "visual/component/Prompts";
 import HotKeys from "visual/component/HotKeys";
 import Portal from "visual/component/Portal";
+import Config from "visual/global/Config";
+import EditorPopup from "./EditorPopup";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class Editor extends React.Component {
   constructor(props) {
@@ -23,7 +27,7 @@ class Editor extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <EditorPage />
+        {IS_GLOBAL_POPUP ? <EditorPopup /> : <EditorPage />}
         <Portal node={this.parentWindowDocument.body}>
           <LeftSidebar />
         </Portal>

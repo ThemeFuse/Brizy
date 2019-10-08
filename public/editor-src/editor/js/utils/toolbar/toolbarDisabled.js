@@ -31,6 +31,17 @@ export function toolbarDisabledSettings({ device, devices = "all" }) {
   };
 }
 
+export function toolbarDisabledMedia({ device, state, devices = "all" }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+
+  return {
+    id: dvk("toolbarMedia"),
+    type: "popover",
+    devices,
+    disabled: true
+  };
+}
+
 export function toolbarDisabledShowOnDesktop({ devices = "desktop" }) {
   return {
     id: "showOnDesktop",
@@ -57,7 +68,6 @@ export function toolbarDisabledShowOnMobile({ devices = "responsive" }) {
     devices
   };
 }
-
 
 export function toolbarDisabledZIndex() {
   return {

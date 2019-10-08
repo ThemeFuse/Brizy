@@ -7,7 +7,7 @@ module.exports = {
   keywords: "gallery,image",
   cat: [5588],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

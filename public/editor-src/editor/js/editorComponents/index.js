@@ -1,4 +1,5 @@
 import Page from "./Page";
+import PagePopup from "./PagePopup";
 import Section from "./Section";
 import SectionItem from "./Section/SectionItem";
 import Row from "./Row";
@@ -46,6 +47,7 @@ import FacebookGroup from "./FacebookGroup";
 
 export default {
   Page,
+  PagePopup,
   Section,
   SectionItem,
   SectionHeader,

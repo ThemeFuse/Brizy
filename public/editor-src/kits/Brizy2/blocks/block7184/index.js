@@ -7,7 +7,7 @@ module.exports = {
   keywords: "background,contact,forms",
   cat: [5586],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

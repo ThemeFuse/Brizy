@@ -17,9 +17,10 @@ import {
 import {
   HYDRATE,
   ADD_BLOCK,
+  UPDATE_PAGE,
+  UPDATE_BLOCKS,
   REMOVE_BLOCK,
   REORDER_BLOCKS,
-  UPDATE_PAGE,
   UPDATE_GLOBAL_BLOCK,
   UPDATE_UI,
   COPY_ELEMENT,
@@ -55,6 +56,7 @@ export default config => store => next => action => {
     case REMOVE_BLOCK:
     case REORDER_BLOCKS:
     case UPDATE_PAGE:
+    case UPDATE_BLOCKS:
     case UPDATE_GLOBAL_BLOCK:
     case UPDATE_CURRENT_STYLE_ID:
     case UPDATE_CURRENT_STYLE:

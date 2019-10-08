@@ -8,6 +8,7 @@ actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+        - Codeception\Extension\RemoteDebug
     commands:
         - Codeception\Command\GenerateWPUnit
         - Codeception\Command\GenerateWPRestApi
@@ -16,6 +17,9 @@ extensions:
         - Codeception\Command\GenerateWPAjax
         - Codeception\Command\GenerateWPCanonical
         - Codeception\Command\GenerateWPXMLRPC
+    config:
+        Codeception\Extension\RemoteDebug:
+            sessionName: XDEBUG_ECLIPSE
 params:
     - .env.testing
 settings:

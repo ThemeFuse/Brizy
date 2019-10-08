@@ -14,21 +14,17 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device }),
-    defaultValueValue({ v, key: "bgColorPalette", device })
-  );
+  const dvk = key => defaultValueKey({ key, device, state: "normal" });
+  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
-  const tabsColor = defaultValueValue({
-    v,
-    key: "tabsColor",
-    device,
-    state: "normal"
-  });
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
+  );
 
   return [
     {
-      id: defaultValueKey({ key: "toolbarPopup", device, state: "normal" }),
+      id: dvk("toolbarPopup"),
       type: "popover",
       icon: "nc-popup",
       title: "Popup",
@@ -36,7 +32,7 @@ export function getItems({ v, device, component }) {
       position: 70,
       options: [
         {
-          id: defaultValueKey({ key: "makeItGlobal", device, state: "normal" }),
+          id: dvk("makeItGlobal"),
           label: t("Make it Global"),
           type: "switch",
           value: component.props.meta.globalBlockId ? "on" : "off",
@@ -45,106 +41,93 @@ export function getItems({ v, device, component }) {
               ? component.becomeGlobal()
               : component.becomeNormal();
           }
+        },
+        {
+          id: "popupConditions",
+          type: "popupConditions"
         }
       ]
     },
     {
-      id: defaultValueKey({ key: "toolbarMedia", device, state: "normal" }),
+      id: dvk("toolbarMedia"),
       type: "popover",
       icon: "nc-background",
       title: t("Background"),
       position: 80,
       options: [
         {
-          id: defaultValueKey({
-            key: "tabsCurrentElement",
-            device,
-            state: "normal"
-          }),
-          label: t("Background"),
+          id: dvk("tabsState"),
+          tabsPosition: "left",
           type: "tabs",
-          value: defaultValueValue({
-            v,
-            key: "tabsCurrentElement",
-            device,
-            state: "normal"
-          }),
+          value: dvv("tabsState"),
           tabs: [
             {
-              id: defaultValueKey({
-                key: "tabCurrentElement",
-                device,
-                state: "normal"
-              }),
-              label: t("Image"),
+              id: dvk("tabNormal"),
+              tabIcon: "nc-circle",
+              title: t("Normal"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  state: "normal",
-                  onChange: ["onChangeBgImage", "onChangeBgImageBgOpacity"]
-                })
+                {
+                  id: dvk("tabsMedia"),
+                  label: t("Background"),
+                  type: "tabs",
+                  value: dvv("tabsMedia"),
+                  tabs: [
+                    {
+                      id: dvk("tabMedia"),
+                      label: t("Image"),
+                      options: [
+                        toolbarBgImage({
+                          v,
+                          device,
+                          state: "normal",
+                          onChange: [
+                            "onChangeBgImage",
+                            "onChangeBgImageBgOpacity"
+                          ]
+                        })
+                      ]
+                    }
+                  ]
+                }
               ]
             }
           ]
         }
-      ]
+      ],
+      onChange: (_, { isOpen }) => ({
+        [dvk("tabsMedia")]: !isOpen ? "" : dvv("tabsMedia")
+      })
     },
     {
-      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
+      id: dvk("toolbarColor"),
       type: "popover",
       size: "auto",
       title: t("Colors"),
       position: 90,
       icon: {
         style: {
-          backgroundColor: hexToRgba(
-            bgColorHex,
-            defaultValueValue({
-              v,
-              key: "bgColorOpacity",
-              device,
-              state: "normal"
-            })
-          )
+          backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
         }
       },
       options: [
         {
-          id: defaultValueKey({ key: "tabsState", device, state: "normal" }),
+          id: dvk("tabsState"),
           tabsPosition: "left",
           type: "tabs",
-          value: defaultValueValue({
-            v,
-            key: "tabsState",
-            device,
-            state: "normal"
-          }),
+          value: dvv("tabsState"),
           tabs: [
             {
-              id: defaultValueKey({
-                key: "tabNormal",
-                device,
-                state: "normal"
-              }),
+              id: dvk("tabNormal"),
               tabIcon: "nc-circle",
               title: t("Normal"),
               options: [
                 {
-                  id: defaultValueKey({
-                    key: "tabsColor",
-                    device,
-                    state: "normal"
-                  }),
+                  id: dvk("tabsColor"),
                   type: "tabs",
-                  value: tabsColor,
+                  value: dvv("tabsColor"),
                   tabs: [
                     {
-                      id: defaultValueKey({
-                        key: "tabOverlay",
-                        device,
-                        state: "normal"
-                      }),
+                      id: dvk("tabOverlay"),
                       label: t("Overlay"),
                       options: [
                         toolbarBgColor2({
@@ -186,12 +169,8 @@ export function getItems({ v, device, component }) {
                                   device,
                                   state: "normal",
                                   prefix:
-                                    defaultValueValue({
-                                      v,
-                                      key: "gradientActivePointer",
-                                      device,
-                                      state: "normal"
-                                    }) === "startPointer"
+                                    dvv("gradientActivePointer") ===
+                                    "startPointer"
                                       ? "bg"
                                       : "gradient",
                                   onChange: [
@@ -211,13 +190,7 @@ export function getItems({ v, device, component }) {
                                   state: "normal",
                                   className:
                                     "brz-ed__select--transparent brz-ed__select--align-right",
-                                  disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "normal"
-                                    }) === "solid"
+                                  disabled: dvv("bgColorType") === "solid"
                                 })
                               ]
                             },
@@ -229,36 +202,16 @@ export function getItems({ v, device, component }) {
                                   device,
                                   state: "normal",
                                   disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "normal"
-                                    }) === "solid" ||
-                                    defaultValueValue({
-                                      v,
-                                      key: "gradientType",
-                                      device,
-                                      state: "normal"
-                                    }) === "radial"
+                                    dvv("bgColorType") === "solid" ||
+                                    dvv("gradientType") === "radial"
                                 }),
                                 toolbarGradientRadialDegree({
                                   v,
                                   device,
                                   state: "normal",
                                   disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "normal"
-                                    }) === "solid" ||
-                                    defaultValueValue({
-                                      v,
-                                      key: "gradientType",
-                                      device,
-                                      state: "normal"
-                                    }) === "linear"
+                                    dvv("bgColorType") === "solid" ||
+                                    dvv("gradientType") === "linear"
                                 })
                               ]
                             }
@@ -267,12 +220,7 @@ export function getItems({ v, device, component }) {
                       ]
                     },
                     {
-                      id: defaultValueKey({
-                        key: "tabClose",
-                        device,
-                        state: "normal",
-                        devices: "desktop"
-                      }),
+                      id: dvk("tabClose"),
                       label: t("Close"),
                       options: [
                         toolbarColor2({
@@ -325,27 +273,19 @@ export function getItems({ v, device, component }) {
               ]
             },
             {
-              id: defaultValueKey({ key: "tabHover", device, state: "normal" }),
+              id: dvk("tabHover"),
               tabIcon: "nc-hover",
               title: t("Hover"),
               devices: "desktop",
               options: [
                 {
-                  id: defaultValueKey({
-                    key: "tabsColor",
-                    device,
-                    state: "normal"
-                  }),
+                  id: dvk("tabsColor"),
                   type: "tabs",
-                  value: tabsColor,
+                  value: dvv("tabsColor"),
                   hideHandlesWhenOne: false,
                   tabs: [
                     {
-                      id: defaultValueKey({
-                        key: "tabClose",
-                        device,
-                        state: "normal"
-                      }),
+                      id: dvk("tabClose"),
                       label: t("Close"),
                       options: [
                         toolbarColor2({
@@ -401,11 +341,11 @@ export function getItems({ v, device, component }) {
         }
       ],
       onChange: (_, { isOpen }) => ({
-        tabsColor: !isOpen ? "" : tabsColor
+        [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor")
       })
     },
     {
-      id: defaultValueKey({ key: "makeItSaved", device, state: "normal" }),
+      id: dvk("makeItSaved"),
       type: "buttonTooltip",
       icon: "nc-save-section",
       position: 100,
@@ -417,7 +357,7 @@ export function getItems({ v, device, component }) {
       }
     },
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: dvk("toolbarSettings"),
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
@@ -426,30 +366,18 @@ export function getItems({ v, device, component }) {
       position: 110,
       options: [
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: dvk("advancedSettings"),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
           options: [
             {
-              id: defaultValueKey({
-                key: "settingsTabs",
-                device,
-                state: "normal"
-              }),
+              id: dvk("settingsTabs"),
               type: "tabs",
               align: "start",
               tabs: [
                 {
-                  id: defaultValueKey({
-                    key: "moreSettingsAdvanced",
-                    device,
-                    state: "normal"
-                  }),
+                  id: dvk("moreSettingsAdvanced"),
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
                   options: []

@@ -7,7 +7,7 @@ module.exports = {
   keywords: "button,hero,icons,image,testimonial",
   cat: [5582],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

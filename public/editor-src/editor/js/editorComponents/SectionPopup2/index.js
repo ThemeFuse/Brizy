@@ -11,10 +11,10 @@ import EditorIcon from "visual/component/EditorIcon";
 import Toolbar, { CollapsibleToolbar } from "visual/component/Toolbar";
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
+import HotKeys from "visual/component/HotKeys";
 import { uuid } from "visual/utils/uuid";
 import { stripIds } from "visual/utils/models";
 import {
-  wInBoxedPage,
   wInTabletPage,
   wInMobilePage,
   wInFullPage
@@ -22,6 +22,8 @@ import {
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
+import { globalBlocksSelector, triggersSelector } from "visual/redux/selectors";
+import Config from "visual/global/Config";
 import * as toolbarConfig from "./toolbar";
 import { style } from "./styles";
 import * as toolbarExtendConfig from "./extendToolbar";
@@ -31,13 +33,17 @@ import defaultValue from "./defaultValue.json";
 
 export let SectionPopup2Instances = new Map();
 
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+
 class SectionPopup2 extends EditorComponent {
   static get componentId() {
     return "SectionPopup2";
   }
 
   static defaultProps = {
-    meta: {}
+    meta: {},
+    onOpen: () => {},
+    onClose: () => {}
   };
 
   static defaultValue = defaultValue;
@@ -54,7 +60,8 @@ class SectionPopup2 extends EditorComponent {
 
     if (IS_EDITOR) {
       this.state = {
-        isOpened: SectionPopup2.tmpGlobal === this.getId()
+        isOpened:
+          this.props.isOpened || SectionPopup2.tmpGlobal === this.getId()
       };
       SectionPopup2.tmpGlobal = null;
 
@@ -122,29 +129,12 @@ class SectionPopup2 extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      containerSize,
-      containerType,
-      borderWidthType,
-      borderWidth,
-      borderLeftWidth,
-      borderRightWidth
-    } = v;
-
-    const borderWidthW =
-      borderWidthType === "grouped"
-        ? Number(borderWidth) * 2
-        : Number(borderLeftWidth) + Number(borderRightWidth);
+    const { widthSuffix, width } = v;
 
     const desktopW =
-      containerType === "fullWidth"
-        ? wInFullPage - borderWidthW
-        : Math.round(
-            (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
-          ) / 10;
-
-    const tabletW = wInTabletPage - borderWidthW;
-    const mobileW = wInMobilePage - borderWidthW;
+      widthSuffix === "px" ? width : Math.round((wInFullPage / 100) * width);
+    const tabletW = wInTabletPage;
+    const mobileW = wInMobilePage;
 
     return {
       ...meta,
@@ -198,12 +188,21 @@ class SectionPopup2 extends EditorComponent {
       }
     });
 
+    const className = classnames(
+      "brz-popup2__close",
+      IS_PREVIEW
+        ? {
+            "brz-hidden": v.showCloseButtonAfter
+          }
+        : {}
+    );
+
     return (
       <Background className={classNameBg} value={v} meta={meta}>
         <SortableZIndex zindex={1}>
           <div className="brz-container__wrap">
             <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfigClose)}>
-              <div className="brz-popup2__close">
+              <div className={className}>
                 <ThemeIcon name="close-popup" type="editor" />
               </div>
             </Toolbar>
@@ -233,23 +232,25 @@ class SectionPopup2 extends EditorComponent {
       customClassName
     );
 
-    return ReactDOM.createPortal(
+    let content = (
       <CustomCSS selectorName={id} css={v.customCSS}>
         <div
           id={id}
           className={classNameClose}
           data-block-id={this.props.blockId}
         >
-          <button
-            className="brz-popup2__button-go-to-editor"
-            onClick={this.handleDropClick}
-          >
-            <EditorIcon
-              icon="nc-arrow-left"
-              className="brz-popup2__icon-go-to-editor"
-            />
-            Go Back
-          </button>
+          {!IS_GLOBAL_POPUP && (
+            <button
+              className="brz-popup2__button-go-to-editor"
+              onClick={this.handleDropClick}
+            >
+              <EditorIcon
+                icon="nc-arrow-left"
+                className="brz-popup2__icon-go-to-editor"
+              />
+              Go Back
+            </button>
+          )}
           <Roles
             allow={["admin"]}
             fallbackRender={() => this.renderItems(v, vs, vd)}
@@ -267,24 +268,86 @@ class SectionPopup2 extends EditorComponent {
             </ContainerBorder>
           </Roles>
         </div>
-      </CustomCSS>,
-      this.el
+      </CustomCSS>
     );
+
+    if (!IS_GLOBAL_POPUP) {
+      content = (
+        <HotKeys
+          keyNames={["esc"]}
+          id="key-helper-prompt-esc"
+          onKeyUp={this.handleDropClick}
+        >
+          {content}
+        </HotKeys>
+      );
+    }
+
+    return ReactDOM.createPortal(content, this.el);
   }
 
   renderForView(v, vs, vd) {
     const { className, customClassName } = v;
 
+    const triggers = triggersSelector(getStore().getState());
+
+    let attr = {};
+    if (IS_GLOBAL_POPUP) {
+      const encodeIdsList = [
+        "scrolling",
+        "showing",
+        "devices",
+        "referrer",
+        "loggedIn"
+      ];
+      const encodeData = data => encodeURIComponent(JSON.stringify(data));
+      const decodeData = data => JSON.parse(decodeURIComponent(data));
+      const convertString = name =>
+        name.replace(/([A-Z])/g, letter => `_${letter.toLowerCase()}`);
+
+      attr = triggers.reduce((acc, item) => {
+        if (item.active) {
+          const convertedKey = `data-${convertString(item.id)}`;
+          if (encodeIdsList.includes(item.id)) {
+            acc[convertedKey] = acc[convertedKey]
+              ? encodeData([...decodeData(acc[convertedKey]), item.value])
+              : encodeData([item.value]);
+          } else {
+            acc[convertedKey] = item.value;
+          }
+        }
+
+        return acc;
+      }, {});
+    }
+
+    if (v.scrollPage === "on") {
+      attr["data-scroll_page"] = "true";
+    }
+    if (v.clickOutsideToClose === "on") {
+      attr["data-click_outside_to_close"] = "true";
+    }
+    if (v.showCloseButtonAfter) {
+      attr["data-show-close-button-after"] = v.showCloseButtonAfter;
+    }
+
     const classNameClose = classnames(
       "brz-popup2",
       "brz-popup2__preview",
+      {
+        "brz-conditions-popup": IS_GLOBAL_POPUP
+      },
       className,
       customClassName
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={classNameClose} data-brz-popup={this.instanceKey}>
+        <div
+          className={classNameClose}
+          data-brz-popup={this.instanceKey}
+          {...attr}
+        >
           {this.renderItems(v, vs, vd)}
         </div>
       </CustomCSS>
@@ -293,6 +356,7 @@ class SectionPopup2 extends EditorComponent {
 
   open() {
     document.documentElement.classList.add("brz-ow-hidden");
+    this.props.onOpen();
     this.setState({
       isOpened: true
     });
@@ -300,6 +364,7 @@ class SectionPopup2 extends EditorComponent {
 
   close() {
     document.documentElement.classList.remove("brz-ow-hidden");
+    this.props.onClose();
     this.setState({
       isOpened: false
     });

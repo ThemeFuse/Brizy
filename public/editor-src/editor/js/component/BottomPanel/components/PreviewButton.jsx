@@ -2,8 +2,11 @@ import React from "react";
 import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
 
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+
 const PreviewButtons = () => {
-  const url = Config.get("urls").pagePreview;
+  const { site, pagePreview } = Config.get("urls");
+  const url = IS_GLOBAL_POPUP ? site : pagePreview;
 
   return (
     <li

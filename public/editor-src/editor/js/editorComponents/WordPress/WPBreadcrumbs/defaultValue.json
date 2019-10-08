@@ -70,6 +70,8 @@
 
     "hoverTransition": 50,
 
+    "tabletTextSpacing": null,
+
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
     "tabletFamilies": {
@@ -79,6 +81,8 @@
     "tabletFontWeight": 400,
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
+
+    "mobileTextSpacing": null,
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,

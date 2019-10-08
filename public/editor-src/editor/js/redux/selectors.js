@@ -7,6 +7,8 @@ import { objectTraverse2, objectFromEntries } from "visual/utils/object";
 
 export const pageSelector = state => state.page;
 
+export const pageBlocksSelector = state => state.pageBlocks;
+
 export const projectSelector = state => state.project || {};
 
 export const globalBlocksSelector = state => state.globalBlocks || {};
@@ -37,16 +39,6 @@ export const hiddenElementsSelector = state => state.showHiddenElements;
 
 // === 1 DEPENDENCY ===
 
-export const pageDataSelector = createSelector(
-  pageSelector,
-  page => page.data || {}
-);
-
-export const pageBlocksSelector = createSelector(
-  pageDataSelector,
-  pageData => pageData.items || []
-);
-
 export const unDeletedFontSelector = createSelector(
   fontSelector,
   fonts => {
@@ -68,32 +60,32 @@ export const disabledElementsSelector = createSelector(
   project => project.data.disabledElements || []
 );
 
+export const pageDataSelector = createSelector(
+  pageSelector,
+  page => page.data || {}
+);
+
+export const triggersSelector = createSelector(
+  pageDataSelector,
+  pageData => pageData.triggers || []
+);
+
+export const rulesAmountSelector = createSelector(
+  pageDataSelector,
+  pageData => pageData.rulesAmount
+);
+
 // === END 1 DEPENDENCY ===
 
 // === 2 DEPENDENCIES ===
 
-export const pageAssembledSelector = createSelector(
-  pageSelector,
-  screenshotsSelector,
-  (page, screenshots) => {
-    if (Object.keys(screenshots).length === 0) {
-      return page;
-    }
-
-    return produce(page, draft => {
-      objectTraverse2(draft, obj => {
-        if (
-          obj.type &&
-          obj.type !== "GlobalBlock" &&
-          obj.value &&
-          obj.value._id &&
-          screenshots[obj.value._id]
-        ) {
-          Object.assign(obj.value, screenshots[obj.value._id]);
-        }
-      });
-    });
-  }
+export const pageDataDraftBlocksSelector = createSelector(
+  pageDataSelector,
+  pageBlocksSelector,
+  (pageData, pageBlocks) =>
+    produce(pageData, draft => {
+      draft.items = pageBlocks;
+    })
 );
 
 export const savedBlocksAssembledSelector = createSelector(
@@ -436,6 +428,31 @@ export const copiedElementNoRefsSelector = createSelector(
 // === END 2 DEPENDENCIES ===
 
 // === 3 DEPENDENCIES ===
+
+export const pageAssembledSelector = createSelector(
+  pageSelector,
+  pageBlocksSelector,
+  screenshotsSelector,
+  (page, blocks, screenshots) => {
+    return produce(page, draft => {
+      draft.data.items = blocks;
+
+      if (Object.keys(screenshots).length > 0) {
+        objectTraverse2(draft, obj => {
+          if (
+            obj.type &&
+            obj.type !== "GlobalBlock" &&
+            obj.value &&
+            obj.value._id &&
+            screenshots[obj.value._id]
+          ) {
+            Object.assign(obj.value, screenshots[obj.value._id]);
+          }
+        });
+      }
+    });
+  }
+);
 
 export const globalBlocksAssembledSelector = createSelector(
   globalBlocksSelector,

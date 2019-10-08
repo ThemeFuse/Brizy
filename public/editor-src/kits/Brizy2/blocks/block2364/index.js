@@ -7,7 +7,7 @@ module.exports = {
   keywords: "button,plan,pricing",
   cat: [5596],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

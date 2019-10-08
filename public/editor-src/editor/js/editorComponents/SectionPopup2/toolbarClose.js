@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
+  toolbarDisabledMedia,
   toolbarContainerPopup2CloseFill,
   toolbarContainerPopup2CloseBorderRadius,
   toolbarContainerPopup2CloseCustomSize,
@@ -22,11 +23,12 @@ export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
-    dvv("colorHex"),
-    dvv("colorPalette")
+  const { hex: closeColorHex } = getOptionColorHexByPalette(
+    dvv("closeColorHex"),
+    dvv("closeColorPalette")
   );
   return [
+    toolbarDisabledMedia({ device, state: "normal" }),
     {
       id: "toolbarCurrentElement",
       type: "popover",
@@ -36,12 +38,11 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "toolbarCurrentElementTabs",
-          className: "",
           type: "tabs",
           tabs: [
             {
               id: "toolbarCurrentElementTabClose",
-              label: t("Close"),
+              label: t("Icon"),
               options: [
                 toolbarContainerPopup2ClosePosition({
                   v,
@@ -62,10 +63,15 @@ export function getItems({ v, device }) {
                   v,
                   device,
                   state: "normal"
+                }),
+                toolbarContainerPopup2CloseBgSize({
+                  v,
+                  device,
+                  state: "normal"
                 })
               ]
-            },
-            {
+            }
+            /* {
               id: "toolbarCurrentElementTabBackground",
               label: t("Background"),
               options: [
@@ -78,14 +84,9 @@ export function getItems({ v, device }) {
                   v,
                   device,
                   state: "normal"
-                }),
-                toolbarContainerPopup2CloseBgSize({
-                  v,
-                  device,
-                  state: "normal"
                 })
               ]
-            }
+            }*/
           ]
         }
       ]
@@ -98,7 +99,7 @@ export function getItems({ v, device }) {
       position: 90,
       icon: {
         style: {
-          backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+          backgroundColor: hexToRgba(closeColorHex, dvv("closeColorOpacity"))
         }
       },
       options: [
@@ -120,7 +121,7 @@ export function getItems({ v, device }) {
                   tabs: [
                     {
                       id: dvk("tabClose"),
-                      label: t("Close"),
+                      label: t("Icon"),
                       options: [
                         toolbarColor2({
                           v,
