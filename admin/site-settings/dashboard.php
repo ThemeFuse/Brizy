@@ -16,12 +16,8 @@ class Brizy_Admin_SiteSettings_Dashboard {
 	}
 
 	public function run() {
-		try {
-			$this->handleSubmits();
-			$this->action_enqueue_scripts();
-		} catch ( \Exception $e ) {
-			echo '0';
-		}
+		$this->handleSubmits();
+		$this->action_enqueue_scripts();
 	}
 
 	private function handleSubmits() {

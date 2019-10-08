@@ -15,10 +15,6 @@
                     </div>
                 </div>
 
-                {% if data.posts is not empty %}
-                    <div class="brz-pagination js-unchanged-content clearfix" data-pages="{{ data.max_num_pages }}" data-post-type="{{ data.post_type.id }}"></div>
-                {% endif %}
-
                 <div class="pages-list-items" id="{{ data.post_type.id }}ListItems">
                     {% if data.posts is empty %}
                         <div class="brz-no-posts">This post type has no posts.</div>
@@ -45,12 +41,9 @@
             </div>
             <div class="footer-col">
                 <div class="footer-info">
-                    <svg class="brz-icon-svg">
-                        <use xlink:href="{{ base_url }}fonts/symbol-defs.svg#icon-Info"></use>
-                    </svg>
-                    <p>
-                        Create new items
-                    </p>
+                    {% if data.posts is not empty %}
+                        <div class="brz-pagination js-unchanged-content clearfix" data-pages="{{ data.max_num_pages }}" data-post-type="{{ data.post_type.id }}"></div>
+                    {% endif %}
                 </div>
             </div>
         </div>
