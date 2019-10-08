@@ -62,15 +62,12 @@
   },
 
   "toolbar": {
-    "tabsCurrentElement": "",
     "tabsState": "",
     "tabsColor": "",
 
-    "tabletTabsCurrentElement": null,
     "tabletTabsState": null,
     "tabletTabsColor": null,
 
-    "mobileTabsCurrentElement": null,
     "mobileTabsState": null,
     "mobileTabsColor": null
   },
@@ -134,6 +131,9 @@
 
     "closeAlign": "topRight",
 
+    "scrollPage": "on",
+    "clickOutsideToClose": "on",
+
     "showCloseButton": "on",
     "showCloseButtonAfter": 0,
 
@@ -190,27 +190,6 @@
 
     "hoverGradientLinearDegree": null,
     "hoverGradientRadialDegree": null,
-
-    "borderColorHex": "#66738d",
-    "borderColorOpacity": 0,
-    "borderColorPalette": "",
-
-    "tempBorderColorOpacity": 1,
-    "tempBorderColorPalette": "",
-
-    "borderWidthType": "grouped",
-
-    "borderWidth": 0,
-    "borderTopWidth": 0,
-    "borderRightWidth": 0,
-    "borderBottomWidth": 0,
-    "borderLeftWidth": 0,
-
-    "tempBorderWidth": 8,
-    "tempBorderTopWidth": 8,
-    "tempBorderRightWidth": 8,
-    "tempBorderBottomWidth": 8,
-    "tempBorderLeftWidth": 8,
 
     "verticalAlign": "center",
     "horizontalAlign": "center",

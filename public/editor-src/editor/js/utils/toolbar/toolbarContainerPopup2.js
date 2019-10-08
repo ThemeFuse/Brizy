@@ -504,6 +504,42 @@ export function toolbarContainerPopup2ClosePosition({
   };
 }
 
+export function toolbarContainerPopup2ScrollPage({
+  v,
+  device,
+  state,
+  devices = "desktop"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("scrollPage"),
+    label: t("Scroll Page"),
+    type: "switch",
+    devices,
+    value: dvv("scrollPage")
+  };
+}
+
+export function toolbarContainerPopup2ClickOutsideToClose({
+  v,
+  device,
+  state,
+  devices = "desktop"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("clickOutsideToClose"),
+    label: t("Click Outside To Close"),
+    type: "switch",
+    devices,
+    value: dvv("clickOutsideToClose")
+  };
+}
+
 export function toolbarContainerPopup2ShowCloseButton({
   v,
   device,
@@ -534,7 +570,7 @@ export function toolbarContainerPopup2ShowCloseButtonAfter({
 
   return {
     id: dvk("showCloseButtonAfter"),
-    label: t("Show Button After"),
+    label: t("Show After"),
     type: "input",
     devices,
     disabled,

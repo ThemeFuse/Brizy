@@ -24,6 +24,8 @@ import { defaultValueKey } from "visual/utils/onChange";
 
 const proEnabled = Boolean(Config.get("pro"));
 
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+
 const getBlockTag = value => {
   switch (value) {
     case "p":
@@ -749,7 +751,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
               options: [
                 {
                   ...toolbarLinkPopup({ v, component }),
-                  disabled: !proEnabled || inPopup,
+                  disabled: !proEnabled || inPopup || IS_GLOBAL_POPUP,
                   onChange: ({ value: linkPopup, popups }) =>
                     onChange({
                       link: encodeToString({

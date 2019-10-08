@@ -7,11 +7,11 @@ import EditorIcon from "visual/component/EditorIcon";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { preloadImage } from "visual/utils/image";
 import {
-  pageDataSelector,
+  pageBlocksSelector,
   pageBlocksAssembledSelector,
   globalBlocksAssembled2Selector
 } from "visual/redux/selectors";
-import { updatePage, updateGlobalBlock } from "visual/redux/actions";
+import { updateBlocks, updateGlobalBlock } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
 
 const MAX_THUMBNAIL_WIDTH = 132;
@@ -42,8 +42,7 @@ class BlockThumbnail extends React.Component {
   };
 
   handleInputChange = _.debounce((text, id) => {
-    const { pageData, globalBlocks, dispatch } = this.props;
-    const blocks = pageData.items || [];
+    const { pageBlocks: blocks, globalBlocks, dispatch } = this.props;
     const encodedText = encodeURIComponent(text);
 
     let anchorName = encodedText;
@@ -89,14 +88,7 @@ class BlockThumbnail extends React.Component {
           : block;
       });
 
-      dispatch(
-        updatePage({
-          data: {
-            ...pageData,
-            items: updatedBlocks
-          }
-        })
-      );
+      dispatch(updateBlocks({ blocks: updatedBlocks }));
     } else {
       const globalBlockId = blockToUpdate.value.globalBlockId;
       const globalBlock = globalBlocks[globalBlockId];
@@ -309,7 +301,7 @@ class AnchorInput extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  pageData: pageDataSelector(state),
+  pageBlocks: pageBlocksSelector(state),
   pageBlocksAssembled: pageBlocksAssembledSelector(state),
   globalBlocks: globalBlocksAssembled2Selector(state)
 });

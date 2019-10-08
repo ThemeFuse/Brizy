@@ -43,6 +43,47 @@ export function toolbarHorizontalAlign({
   };
 }
 
+export function toolbarHorizontalAlign2({
+  v,
+  device,
+  devices = "all",
+  disabled = false,
+  state,
+  position = 100
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("horizontalAlign"),
+    type: "toggle",
+    devices,
+    disabled,
+    position,
+    choices: [
+      {
+        icon: "nc-hrz-align-left",
+        title: t("Align"),
+        value: "left"
+      },
+      {
+        icon: "nc-hrz-align-center",
+        title: t("Align"),
+        value: "center"
+      },
+      {
+        icon: "nc-hrz-align-right",
+        title: t("Align"),
+        value: "right"
+      }
+    ],
+    value: dvv("horizontalAlign"),
+    onChange: value => ({
+      [dvk("horizontalAlign")]: value
+    })
+  };
+}
+
 export function toolbarVerticalAlign({
   v,
   device,
@@ -86,7 +127,7 @@ export function toolbarVerticalAlignToggle({
   state,
   prefix = "",
   disabled = false,
-  position = 100,
+  position = 110,
   devices = "all"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -98,20 +139,19 @@ export function toolbarVerticalAlignToggle({
     position,
     devices,
     disabled,
-    className: "brz-popup2__vertical-align",
     choices: [
       {
-        icon: "nc-text-align-left",
+        icon: "nc-ver-align-top",
         title: t("Align"),
         value: "top"
       },
       {
-        icon: "nc-text-align-center",
+        icon: "nc-ver-align-middle",
         title: t("Align"),
         value: "center"
       },
       {
-        icon: "nc-text-align-right",
+        icon: "nc-ver-align-bottom",
         title: t("Align"),
         value: "bottom"
       }

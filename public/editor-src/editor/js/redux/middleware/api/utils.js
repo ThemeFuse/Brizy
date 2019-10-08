@@ -6,7 +6,8 @@ import {
   updateGlobalBlock as apiUpdateGlobalBlock,
   createSavedBlock as apiCreateSavedBlock,
   updateSavedBlock as apiUpdateSavedBlock,
-  deleteSavedBlock as apiDeleteSavedBlock
+  deleteSavedBlock as apiDeleteSavedBlock,
+  updateRules as apiUpdateRules
 } from "visual/utils/api/editor";
 
 export {
@@ -16,7 +17,8 @@ export {
   apiUpdateGlobalBlock,
   apiCreateSavedBlock,
   apiUpdateSavedBlock,
-  apiDeleteSavedBlock
+  apiDeleteSavedBlock,
+  apiUpdateRules
 };
 
 const DEBOUNCE_WAIT = 2000;

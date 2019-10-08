@@ -471,6 +471,36 @@ const block11872 = require("./blocks/block11872");
 const block2422 = require("./blocks/block2422");
 const block11924 = require("./blocks/block11924");
 const block2429 = require("./blocks/block2429");
+const block14810 = require("./blocks/block14810");
+const block14771 = require("./blocks/block14771");
+const block14860 = require("./blocks/block14860");
+const block14836 = require("./blocks/block14836");
+const block14893 = require("./blocks/block14893");
+const block14876 = require("./blocks/block14876");
+const block14929 = require("./blocks/block14929");
+const block14911 = require("./blocks/block14911");
+const block14972 = require("./blocks/block14972");
+const block14955 = require("./blocks/block14955");
+const block15013 = require("./blocks/block15013");
+const block14999 = require("./blocks/block14999");
+const block15041 = require("./blocks/block15041");
+const block15031 = require("./blocks/block15031");
+const block15060 = require("./blocks/block15060");
+const block15050 = require("./blocks/block15050");
+const block15094 = require("./blocks/block15094");
+const block15084 = require("./blocks/block15084");
+const block15174 = require("./blocks/block15174");
+const block15154 = require("./blocks/block15154");
+const block15200 = require("./blocks/block15200");
+const block15183 = require("./blocks/block15183");
+const block15241 = require("./blocks/block15241");
+const block15209 = require("./blocks/block15209");
+const block15265 = require("./blocks/block15265");
+const block15252 = require("./blocks/block15252");
+const block15292 = require("./blocks/block15292");
+const block15283 = require("./blocks/block15283");
+const block15552 = require("./blocks/block15552");
+const block15311 = require("./blocks/block15311");
 
 const Style1 = require("./styles/Style1");
 const Style2 = require("./styles/Style2");
@@ -957,7 +987,37 @@ block2415,
 block11872,
 block2422,
 block11924,
-block2429
+block2429,
+block14810,
+block14771,
+block14860,
+block14836,
+block14893,
+block14876,
+block14929,
+block14911,
+block14972,
+block14955,
+block15013,
+block14999,
+block15041,
+block15031,
+block15060,
+block15050,
+block15094,
+block15084,
+block15174,
+block15154,
+block15200,
+block15183,
+block15241,
+block15209,
+block15265,
+block15252,
+block15292,
+block15283,
+block15552,
+block15311
   ],
   styles: [
     Style1,
@@ -986,5 +1046,5 @@ block2429
       icon: "nc-dark"
     }
   ],
-  categories:[{"id":0,"slug":"blank","title":"Blank","hidden":true},{"id":5582,"slug":"hero","title":"Hero"},{"id":5584,"slug":"features","title":"Features"},{"id":5586,"slug":"contact","title":"Contact"},{"id":5588,"slug":"gallery","title":"Gallery"},{"id":5590,"slug":"cta","title":"CTA"},{"id":5592,"slug":"text","title":"Text"},{"id":5594,"slug":"team","title":"Team"},{"id":5596,"slug":"pricing","title":"Pricing"},{"id":5602,"slug":"testimonials","title":"Testimonials"}]
+  categories:[{"id":0,"slug":"blank","title":"Blank","hidden":true},{"id":5582,"slug":"hero","title":"Hero"},{"id":5584,"slug":"features","title":"Features"},{"id":5586,"slug":"contact","title":"Contact"},{"id":5588,"slug":"gallery","title":"Gallery"},{"id":5590,"slug":"cta","title":"CTA"},{"id":5592,"slug":"text","title":"Text"},{"id":5594,"slug":"team","title":"Team"},{"id":5596,"slug":"pricing","title":"Pricing"},{"id":5602,"slug":"testimonials","title":"Testimonials"},{"id":14769,"slug":"header","title":"Header"},{"id":15152,"slug":"footers","title":"Footers"}]
 };

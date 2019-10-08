@@ -21,6 +21,8 @@ import {
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
+import { triggersSelector } from "visual/redux/selectors";
+import Config from "visual/global/Config";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
 import {
@@ -34,13 +36,17 @@ import defaultValue from "./defaultValue.json";
 
 export let SectionPopupInstances = new Map();
 
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+
 class SectionPopup extends EditorComponent {
   static get componentId() {
     return "SectionPopup";
   }
 
   static defaultProps = {
-    meta: {}
+    meta: {},
+    onOpen: () => {},
+    onClose: () => {}
   };
 
   static defaultValue = defaultValue;
@@ -57,7 +63,7 @@ class SectionPopup extends EditorComponent {
 
     if (IS_EDITOR) {
       this.state = {
-        isOpened: SectionPopup.tmpGlobal === this.getId()
+        isOpened: this.props.isOpened || SectionPopup.tmpGlobal === this.getId()
       };
       SectionPopup.tmpGlobal = null;
 
@@ -117,11 +123,6 @@ class SectionPopup extends EditorComponent {
     if (this.containerBorderRef.current) {
       this.containerBorderRef.current.setActive(false);
     }
-
-    this.patchValue({
-      tabsState: "tabNormal",
-      tabsColor: "tabOverlay"
-    });
   };
 
   handleDropClick = () => {
@@ -290,10 +291,42 @@ class SectionPopup extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { className, customClassName } = v;
+    const triggers = triggersSelector(getStore().getState());
+
+    let attr = {};
+    if (IS_GLOBAL_POPUP) {
+      const encodeIdsList = [
+        "scrolling",
+        "showing",
+        "devices",
+        "referrer",
+        "loggedIn"
+      ];
+      const encodeData = data => encodeURIComponent(JSON.stringify(data));
+      const decodeData = data => JSON.parse(decodeURIComponent(data));
+      const convertString = name =>
+        name.replace(/([A-Z])/g, letter => `_${letter.toLowerCase()}`);
+
+      attr = triggers.reduce((acc, item) => {
+        if (item.active) {
+          const convertedKey = `data-${convertString(item.id)}`;
+          if (encodeIdsList.includes(item.id)) {
+            acc[convertedKey] = acc[convertedKey]
+              ? encodeData([...decodeData(acc[convertedKey]), item.value])
+              : encodeData([item.value]);
+          } else {
+            acc[convertedKey] = item.value;
+          }
+        }
+
+        return acc;
+      }, {});
+    }
 
     const classNameClose = classnames(
       "brz-popup",
       "brz-popup__preview",
+      { "brz-conditions-popup": IS_GLOBAL_POPUP },
       className,
       customClassName,
       css(
@@ -305,7 +338,11 @@ class SectionPopup extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={classNameClose} data-brz-popup={this.instanceKey}>
+        <div
+          className={classNameClose}
+          data-brz-popup={this.instanceKey}
+          {...attr}
+        >
           <div className="brz-popup__close">
             <ThemeIcon name="close-popup" type="editor" />
           </div>
@@ -317,6 +354,7 @@ class SectionPopup extends EditorComponent {
 
   open() {
     document.documentElement.classList.add("brz-ow-hidden");
+    this.props.onOpen();
     this.setState({
       isOpened: true
     });
@@ -324,6 +362,7 @@ class SectionPopup extends EditorComponent {
 
   close() {
     document.documentElement.classList.remove("brz-ow-hidden");
+    this.props.onClose();
     this.setState({
       isOpened: false
     });

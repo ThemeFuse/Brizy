@@ -7,7 +7,7 @@ module.exports = {
   keywords: "background,button,countdown,hero,image",
   cat: [5582],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

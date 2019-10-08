@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import _ from "underscore";
 import classnames from "classnames";
+import Config from "visual/global/Config";
 import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
@@ -11,6 +12,8 @@ import Layouts from "./Layouts";
 import Blocks from "./Blocks";
 import Saved from "./Saved";
 import Global from "./Global";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const TABS = [
   {
@@ -21,19 +24,19 @@ const TABS = [
   },
   {
     id: "blocks",
-    title: t("Blocks"),
+    title: IS_GLOBAL_POPUP ? t("Popups") : t("Blocks"),
     icon: "nc-blocks",
     component: Blocks
   },
   {
     id: "saved",
-    title: t("Saved Blocks"),
+    title: IS_GLOBAL_POPUP ? t("Saved Popups") : t("Saved Blocks"),
     icon: "nc-save-section",
     component: Saved
   },
   {
     id: "global",
-    title: t("Global Blocks"),
+    title: IS_GLOBAL_POPUP ? t("Global Popups") : t("Global Blocks"),
     icon: "nc-global",
     component: Global
   }

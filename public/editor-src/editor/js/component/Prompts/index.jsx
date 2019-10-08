@@ -8,6 +8,7 @@ import Blocks from "./PromptBlocks";
 import Form from "./PromptForm";
 import KeyHelper from "./KeyHelper";
 import Fonts from "./PromptFonts";
+import Conditions from "./PromoptConditions";
 import { CSSTransition } from "react-transition-group";
 
 class Prompts extends React.Component {
@@ -71,6 +72,8 @@ class Prompts extends React.Component {
         case "fonts":
           content = <Fonts {...props} onClose={this.close} />;
           break;
+        case "conditions":
+          content = <Conditions {...props} onClose={this.close} />;
       }
     }
 

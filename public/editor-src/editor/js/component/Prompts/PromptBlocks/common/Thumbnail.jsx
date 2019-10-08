@@ -8,6 +8,8 @@ import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
 import { t } from "visual/utils/i18n";
 
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+
 const MAX_CONTAINER_WIDTH = 292;
 
 const animationStyle = {
@@ -77,13 +79,15 @@ export default class Thumbnail extends Component {
   }
 
   renderBlank() {
+    const title = IS_GLOBAL_POPUP ? t("Add a blank popup") : t("Add a blank block");
+
     return (
       <div
         onClick={this.handleClick}
         className="brz-ed-popup-two-block-item brz-ed-popup-two-block__blank brz-ed-popup-two-block__blank-first"
       >
         <div className="brz-ed-container-trigger brz-ed-container-trigger--small" />
-        <p className="brz-p">{t("Add a blank block")}</p>
+        <p className="brz-p">{title}</p>
       </div>
     );
   }

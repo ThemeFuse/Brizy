@@ -10,7 +10,6 @@ import HotKeys from "visual/component/HotKeys";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { t } from "visual/utils/i18n";
-import { templateIconUrl } from "visual/utils/icons";
 import { setDataSortable, normalizeCarouselColumns } from "./utils";
 
 // className is added by react-slick
@@ -227,10 +226,6 @@ class Items extends EditorArrayComponent {
     } = this.props;
 
     if (IS_PREVIEW) {
-      const arrowIcon =
-        sliderArrows !== "none" &&
-        templateIconUrl("editor", `right-arrow-${sliderArrows}`);
-
       const responsive = [
         {
           breakpoint: 991,
@@ -256,14 +251,19 @@ class Items extends EditorArrayComponent {
           data-arrows={sliderArrows !== "none"}
           data-dots={sliderDots !== "none"}
           data-dots-class={`brz-slick-slider__dots brz-slick-slider__dots--${sliderDots}`}
-          data-next-arrow={arrowIcon}
-          data-prev-arrow={arrowIcon}
           data-auto-play={sliderAutoPlay === "on"}
           data-auto-play-speed={sliderAutoPlaySpeed * 1000}
           data-swipe={swipe === "on"}
           data-responsive={encodeURIComponent(JSON.stringify(responsive))}
         >
           {content}
+          {sliderArrows !== "none" && (
+            <ThemeIcon
+              type="editor"
+              name={`right-arrow-${sliderArrows}`}
+              className="brz-hidden"
+            />
+          )}
         </div>
       );
     }
