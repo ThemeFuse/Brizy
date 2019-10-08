@@ -18,77 +18,120 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
+  const dvk = key => defaultValueKey({ key, device, state: "normal" });
+  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+
   const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device }),
-    defaultValueValue({ v, key: "borderColorPalette", device })
+    dvv("borderColorHex"),
+    dvv("borderColorPalette")
   );
 
   return [
     {
-      id: defaultValueKey({
-        key: "toolbarCurrentElement",
-        device,
-        state: "normal"
-      }),
+      id: dvk("toolbarCurrentElement"),
       type: "popover",
       devices: "desktop",
       icon: "nc-pin",
       title: t("Map"),
       position: 90,
       options: [
-        toolbarElementMapAddress({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        }),
-        toolbarElementMapZoom({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        })
-      ]
+        {
+          id: dvk("tabsState"),
+          tabsPosition: "left",
+          type: "tabs",
+          value: dvv("tabsState"),
+          tabs: [
+            {
+              id: dvk("tabNormal"),
+              tabIcon: "nc-circle",
+              title: t("Normal"),
+              options: [
+                {
+                  id: dvk("tabsCurrentElement"),
+                  type: "tabs",
+                  value: dvv("tabsCurrentElement"),
+                  tabs: [
+                    {
+                      id: dvk("tabCurrentElement"),
+                      label: t("Map"),
+                      options: [
+                        toolbarElementMapAddress({
+                          v,
+                          device,
+                          state: "normal"
+                        }),
+                        toolbarElementMapZoom({
+                          v,
+                          device,
+                          state: "normal"
+                        })
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: dvk("tabHover"),
+              tabIcon: "nc-hover",
+              title: t("Hover"),
+              options: [
+                {
+                  id: dvk("tabsCurrentElement"),
+                  type: "tabs",
+                  value: dvv("tabsCurrentElement"),
+                  tabs: []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      onChange: (_, { isOpen }) => ({
+        [dvk("tabsCurrentElement")]: !isOpen ? "" : dvv("tabsCurrentElement"),
+        [dvk("tabsState")]: !isOpen ? "" : dvv("tabsState")
+      })
     },
     {
-      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
+      id: dvk("toolbarColor"),
       type: "popover",
       size: "auto",
       title: t("Colors"),
       roles: ["admin"],
       position: 90,
       devices: "desktop",
-      disabled: v.coverImageSrc === "",
+      disabled: dvv("coverImageSrc") === "",
       icon: {
         style: {
-          backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+          backgroundColor: hexToRgba(borderColorHex, dvv("borderColorOpacity"))
         }
       },
       options: [
         {
-          id: "tabsState",
+          id: dvk("tabsState"),
           tabsPosition: "left",
           type: "tabs",
-          value: v.tabsState,
+          value: dvv("tabsState"),
           tabs: [
             {
-              id: "tabNormal",
+              id: dvk("tabNormal"),
               tabIcon: "nc-circle",
               title: t("Normal"),
               options: [
                 {
-                  id: "tabsColor",
+                  id: dvk("tabsColor"),
                   type: "tabs",
-                  value: v.tabsColor,
+                  value: dvv("tabsColor"),
                   tabs: [
                     {
-                      id: "tabBorder",
+                      id: dvk("tabBorder"),
                       label: t("Border"),
                       options: [
                         toolbarBorder2({
                           v,
                           device,
                           state: "normal",
+                          devices: "desktop",
                           onChangeStyle: [
                             "onChangeBorderStyle2",
                             "onChangeElementBorderStyleDependencies2"
@@ -115,6 +158,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "normal",
+                                  devices: "desktop",
                                   onChange: [
                                     "onChangeBorderColorHexAndOpacity2",
                                     "onChangeBorderColorHexAndOpacityPalette2",
@@ -130,6 +174,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "normal",
+                                  devices: "desktop",
                                   onChangeType: ["onChangeBorderWidthType2"],
                                   onChangeGrouped: [
                                     "onChangeBorderWidthGrouped2",
@@ -147,13 +192,14 @@ export function getItems({ v, device }) {
                       ]
                     },
                     {
-                      id: "tabBoxShadow",
+                      id: dvk("tabBoxShadow"),
                       label: t("Shadow"),
                       options: [
                         toolbarBoxShadow2({
                           v,
                           device,
                           state: "normal",
+                          devices: "desktop",
                           onChangeType: [
                             "onChangeBoxShadowType2",
                             "onChangeBoxShadowTypeDependencies2"
@@ -180,6 +226,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "normal",
+                                  devices: "desktop",
                                   onChange: [
                                     "onChangeBoxShadowHexAndOpacity2",
                                     "onChangeBoxShadowHexAndOpacityPalette2",
@@ -195,6 +242,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "normal",
+                                  devices: "desktop",
                                   onChange: [
                                     "onChangeBoxShadowFields2",
                                     "onChangeBoxShadowFieldsDependencies2"
@@ -211,23 +259,24 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: "tabHover",
+              id: dvk("tabHover"),
               tabIcon: "nc-hover",
               title: t("Hover"),
               options: [
                 {
-                  id: "tabsColor",
+                  id: dvk("tabsColor"),
                   type: "tabs",
-                  value: v.tabsColor,
+                  value: dvv("tabsColor"),
                   tabs: [
                     {
-                      id: "tabBorder",
+                      id: dvk("tabBorder"),
                       label: t("Border"),
                       options: [
                         toolbarBorder2({
                           v,
                           device,
                           state: "hover",
+                          devices: "desktop",
                           onChangeStyle: [
                             "onChangeBorderStyle2",
                             "onChangeElementBorderStyleDependencies2"
@@ -254,6 +303,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "hover",
+                                  devices: "desktop",
                                   onChange: [
                                     "onChangeBorderColorHexAndOpacity2",
                                     "onChangeBorderColorHexAndOpacityPalette2",
@@ -269,6 +319,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "hover",
+                                  devices: "desktop",
                                   onChangeType: ["onChangeBorderWidthType2"],
                                   onChangeGrouped: [
                                     "onChangeBorderWidthGrouped2",
@@ -286,13 +337,14 @@ export function getItems({ v, device }) {
                       ]
                     },
                     {
-                      id: "tabBoxShadow",
+                      id: dvk("tabBoxShadow"),
                       label: t("Shadow"),
                       options: [
                         toolbarBoxShadow2({
                           v,
                           device,
                           state: "hover",
+                          devices: "desktop",
                           onChangeType: [
                             "onChangeBoxShadowType2",
                             "onChangeBoxShadowTypeDependencies2"
@@ -319,6 +371,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "hover",
+                                  devices: "desktop",
                                   onChange: [
                                     "onChangeBoxShadowHexAndOpacity2",
                                     "onChangeBoxShadowHexAndOpacityPalette2",
@@ -334,6 +387,7 @@ export function getItems({ v, device }) {
                                   v,
                                   device,
                                   state: "hover",
+                                  devices: "desktop",
                                   onChange: [
                                     "onChangeBoxShadowFields2",
                                     "onChangeBoxShadowFieldsDependencies2"
@@ -353,11 +407,12 @@ export function getItems({ v, device }) {
         }
       ],
       onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "" : v.tabsState
+        [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor"),
+        [dvk("tabsState")]: !isOpen ? "" : dvv("tabsState")
       })
     },
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: dvk("toolbarSettings"),
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
@@ -381,23 +436,19 @@ export function getItems({ v, device }) {
           }
         }),
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: dvk("advancedSettings"),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
           options: [
             {
-              id: "settingsTabs",
+              id: dvk("settingsTabs"),
               type: "tabs",
               devices: "desktop",
               align: "start",
               tabs: [
                 {
-                  id: "settingsStyling",
+                  id: dvk("settingsStyling"),
                   label: t("Styling"),
                   tabIcon: "nc-styling",
                   devices: "desktop",
@@ -419,11 +470,7 @@ export function getItems({ v, device }) {
                   ]
                 },
                 {
-                  id: defaultValueKey({
-                    key: "moreSettingsAdvanced",
-                    device,
-                    state: "normal"
-                  }),
+                  id: dvk("moreSettingsAdvanced"),
                   label: t("Advanced"),
                   tabIcon: "nc-cog",
                   options: [

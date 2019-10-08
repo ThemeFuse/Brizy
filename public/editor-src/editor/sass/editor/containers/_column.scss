@@ -12,6 +12,7 @@
   }
   > .brz-ed-border > .brz-bg {
     flex: 1 1 auto;
+    min-width: 0;
   }
   &:first-child {
     > .brz-ed-border {

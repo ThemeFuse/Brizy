@@ -9,16 +9,17 @@ export default function() {
     const popupId = this.getAttribute("href").slice(1); // without the `#`
 
     if (popupId) {
-      $('[data-brz-popup="' + popupId + '"]').addClass("brz-popup2--opened");
-      $("html").addClass("brz-ow-hidden");
+      showPopup($('[data-brz-popup="' + popupId + '"]'));
     }
   });
 
   $document.on("click", ".brz-popup2", function(e) {
-    const clickedInsideContent =
+    const clickedOutSideToClose = $(this).attr("data-click_outside_to_close");
+    const clickedOutSideContent =
       $(e.target).closest(".brz-container").length === 0;
+    const clickedTheCross = $(e.target).closest(".brz-popup2__close").length;
 
-    if (clickedInsideContent) {
+    if (clickedTheCross || (clickedOutSideContent && clickedOutSideToClose)) {
       closePopup(this);
     }
   });
@@ -31,6 +32,22 @@ export default function() {
       closePopup($closestPopup);
     }
   });
+
+  function showPopup($popup) {
+    const scrollPage = $popup.attr("data-scroll_page");
+    const showAfter = $popup.attr("data-show-close-button-after");
+
+    if (showAfter) {
+      setTimeout(() => {
+        $popup.find(".brz-popup2__close").removeClass("brz-hidden");
+      }, Number(showAfter) * 1000);
+    }
+    $popup.addClass("brz-popup2--opened");
+
+    if (!scrollPage) {
+      $("html").addClass("brz-ow-hidden");
+    }
+  }
 
   function closePopup(popup) {
     $(popup).removeClass("brz-popup2--opened");

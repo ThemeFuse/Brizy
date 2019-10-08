@@ -67,9 +67,9 @@ export {
 
 // Horizontal Align
 export {
+  toolbarHorizontalAlign2,
   toolbarHorizontalAlign,
   toolbarVerticalAlign,
-  toolbarVerticalAlignExtend,
   toolbarVerticalAlignToggle
 } from "./toolbarAlign";
 
@@ -126,6 +126,7 @@ export {
 
 // Disabled
 export {
+  toolbarDisabledMedia,
   toolbarDisabledHorizontalAlign,
   toolbarDisabledAdvancedSettings,
   toolbarDisabledSettings,
@@ -238,6 +239,8 @@ export {
   toolbarContainerPopup2CloseCustomSize,
   toolbarContainerPopup2CloseBgSize,
   toolbarContainerPopup2ClosePosition,
+  toolbarContainerPopup2ScrollPage,
+  toolbarContainerPopup2ClickOutsideToClose,
   toolbarContainerPopup2ShowCloseButton,
   toolbarContainerPopup2ShowCloseButtonAfter
 } from "./toolbarContainerPopup2";

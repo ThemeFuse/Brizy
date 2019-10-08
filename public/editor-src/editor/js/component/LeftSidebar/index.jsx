@@ -42,9 +42,10 @@ class LeftSidebar extends React.Component {
       onDrawerContentTypeChange
     } = this.props;
     const filteredItems = items.filter(
-      ({ showInDeviceModes }) =>
+      el =>
         currentUserRole() === "admin" &&
-        (!showInDeviceModes || showInDeviceModes.includes(deviceMode))
+        (!el.showInDeviceModes || el.showInDeviceModes.includes(deviceMode)) &&
+        !el.disabled
     );
 
     return filteredItems.map(item => {

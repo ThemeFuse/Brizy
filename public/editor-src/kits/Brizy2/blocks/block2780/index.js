@@ -7,7 +7,7 @@ module.exports = {
   keywords: "button,text",
   cat: [5592],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

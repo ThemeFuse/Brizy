@@ -8,7 +8,7 @@ import {
 import {
   EDITOR_RENDERED,
   UPDATE_UI,
-  UPDATE_PAGE,
+  UPDATE_BLOCKS,
   CREATE_GLOBAL_BLOCK,
   UPDATE_GLOBAL_BLOCK,
   CREATE_SAVED_BLOCK,
@@ -21,7 +21,6 @@ import {
 import { ActionTypes as HistoryActionTypes } from "visual/redux/reducers/historyEnhancer";
 import { updateScreenshot } from "visual/redux/actions";
 import {
-  pageDataSelector as getPageData,
   pageBlocksSelector as getPageBlocks,
   savedBlocksSelector as getSavedBlocks,
   globalBlocksSelector as getGlobalBlocks,
@@ -78,7 +77,7 @@ export default store => next => action => {
   }
 
   if (
-    action.type === UPDATE_PAGE ||
+    action.type === UPDATE_BLOCKS ||
     action.type === ADD_BLOCK ||
     action.type === UPDATE_GLOBAL_BLOCK ||
     action.type === UNDO ||
@@ -441,9 +440,9 @@ async function globalBlockTaskCb(
     if (options.sourceBlockId) {
       sourceBlockId = options.sourceBlockId;
     } else {
-      const pageData = getPageData(store.getState());
+      const pageBlocks = getPageBlocks(store.getState());
       const { obj: sourceBlock } = findDeep(
-        pageData,
+        pageBlocks,
         obj => obj.value && obj.value.globalBlockId === globalBlockId
       );
 
@@ -538,12 +537,10 @@ async function globalBlockTaskCb(
   }
 }
 async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
-  const { path: pathToPopup_, domId: popupDOMId } = options.popup;
-  // pathToPopup_ gets us to value, but we need one level higher
-  // to the object containing { type, value }
-  const pathToPopup = pathToPopup_.slice(0, -1);
-  const pageData = getPageData(store.getState());
-  const popup = getIn(pageData, pathToPopup);
+  const { path, domId: popupDOMId } = options.popup;
+  const pathToPopupInBlocks = path.slice(1, -1);
+  const pageBlocks = getPageBlocks(store.getState());
+  const popup = getIn(pageBlocks, pathToPopupInBlocks);
   const popupId = popup.value._id;
   let screenshotId;
   let screenshot;
@@ -567,8 +564,8 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
 
   // upload screenshot
   {
-    const pageData = getPageData(store.getState());
-    const popup = getIn(pageData, pathToPopup);
+    const pageBlocks = getPageBlocks(store.getState());
+    const popup = getIn(pageBlocks, pathToPopupInBlocks);
     const popupIsInPage = popup && popup.value && popup.value._id === popupId;
     if (!popupIsInPage) {
       return;
@@ -613,8 +610,8 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
 
   // update store
   {
-    const pageData = getPageData(store.getState());
-    const popup = getIn(pageData, pathToPopup);
+    const pageBlocks = getPageBlocks(store.getState());
+    const popup = getIn(pageBlocks, pathToPopupInBlocks);
     const popupIsInPage = (popup && popup.value && popup.value._id) === popupId;
     if (!popupIsInPage) {
       return;

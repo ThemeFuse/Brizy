@@ -12,9 +12,12 @@ import HotKeys from "visual/component/HotKeys";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
+import Config from "visual/global/Config";
 import Quill from "./Quill";
 import toolbarConfigFn from "./toolbar";
 import defaultValue from "./defaultValue.json";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class RichText extends EditorComponent {
   static get componentId() {
@@ -237,7 +240,7 @@ class RichText extends EditorComponent {
                   forceUpdate={!isToolbarOpened}
                   onSelectionChange={this.handleSelectionChange}
                   onTextChange={this.handleTextChange}
-                  initDelay={inPopup ? 1000 : 0}
+                  initDelay={inPopup || IS_GLOBAL_POPUP ? 1000 : 0}
                 />
               </div>
             </Toolbar>

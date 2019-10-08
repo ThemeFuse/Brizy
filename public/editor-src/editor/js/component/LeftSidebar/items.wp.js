@@ -9,6 +9,7 @@ import { t } from "visual/utils/i18n";
 const urls = Config.get("urls");
 const wp = Config.get("wp");
 const proEnabled = Boolean(Config.get("pro"));
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 export default {
   top: [AddElements, BlocksSortable, Styling],
@@ -19,6 +20,7 @@ export default {
       icon: "nc-page",
       title: t("Page"),
       type: "popover",
+      disabled: IS_GLOBAL_POPUP,
       options: [
         {
           type: "wpTemplate",

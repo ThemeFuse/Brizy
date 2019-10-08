@@ -13,7 +13,9 @@ $containers-width: map-get($container-max-widths, "lg");
   // will-change: transform;
 
   &.brz-ed-iframe--desktop {
-    width: calc(100% - #{$desktop-paddings}) !important; // temporary bug chrome (blink)
+    width: calc(
+      100% - #{$desktop-paddings}
+    ) !important; // temporary bug chrome (blink)
   }
 }
 

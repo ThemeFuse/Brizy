@@ -20,6 +20,13 @@ export function style(v, vs, vd) {
         "cssStyleHoverTransition",
         "cssStyleElementMapPropertyHoverTransition"
       ]
+    },
+    ".brz &&:hover .brz-iframe": {
+      standart: ["cssStyleFilter"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementMapPropertyHoverTransition"
+      ]
     }
   };
 

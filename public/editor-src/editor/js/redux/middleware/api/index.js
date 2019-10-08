@@ -1,7 +1,9 @@
 import _ from "underscore";
 import produce from "immer";
+import Config from "visual/global/Config";
 import {
   UPDATE_PAGE,
+  UPDATE_BLOCKS,
   CREATE_GLOBAL_BLOCK,
   UPDATE_GLOBAL_BLOCK,
   DELETE_GLOBAL_BLOCK,
@@ -20,7 +22,9 @@ import {
   ADD_FONTS,
   DELETE_FONTS,
   UPDATE_SCREENSHOT,
-  UPDATE_DISABLED_ELEMENTS
+  UPDATE_DISABLED_ELEMENTS,
+  UPDATE_RULES,
+  UPDATE_TRIGGERS
 } from "../../actions";
 import { ActionTypes as HistoryActionTypes } from "../../reducers/historyEnhancer";
 import {
@@ -33,7 +37,8 @@ import {
   debouncedApiUpdateGlobalBlock,
   debouncedApiCreateSavedBlock,
   debouncedApiDUpdateSavedBlock,
-  debouncedApiDeleteSavedBlock
+  debouncedApiDeleteSavedBlock,
+  apiUpdateRules
 } from "./utils";
 import {
   projectSelector,
@@ -41,11 +46,14 @@ import {
   fontSelector,
   stylesSelector,
   pageSelector,
+  pageBlocksSelector,
   globalBlocksSelector,
   globalBlocksAssembled3Selector,
   globalBlocksInPageSelector,
   savedBlocksAssembledSelector
 } from "../../selectors";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const { UNDO, REDO } = HistoryActionTypes;
 
@@ -62,6 +70,7 @@ export default store => next => action => {
   handleGlobalBlocks({ action, state, oldState });
   handleSavedBlocks({ action, state, oldState });
   handleScreenshots({ action, state, oldState });
+  IS_GLOBAL_POPUP && handlePopupRules({ action, state, oldState });
 };
 
 function handlePublish({ action, state }) {
@@ -137,6 +146,18 @@ function handleProject({ action, state, oldState }) {
         .catch(onError);
       break;
     }
+    case UPDATE_TRIGGERS: {
+      const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+      const meta = {
+        is_autosave: 0
+      };
+      const project = projectSelector(state);
+
+      apiUpdateProject(project, meta)
+        .then(syncSuccess)
+        .catch(syncFail);
+      break;
+    }
     case ADD_BLOCK:
     case ADD_FONTS:
     case DELETE_FONTS: {
@@ -190,6 +211,14 @@ function handlePage({ action, state }) {
     case ADD_BLOCK:
     case REMOVE_BLOCK: {
       const { page } = state;
+
+      debouncedApiUpdatePage(page, action.meta);
+      break;
+    }
+    case UPDATE_BLOCKS: {
+      const page = produce(pageSelector(state), draft => {
+        draft.data.items = pageBlocksSelector(state);
+      });
 
       debouncedApiUpdatePage(page, action.meta);
       break;
@@ -297,5 +326,25 @@ function handleScreenshots({ action, state }) {
         debouncedApiUpdateGlobalBlock(blockId)(data, meta);
       }
     }
+  }
+}
+
+function handlePopupRules({ action, state }) {
+  if (action.type === UPDATE_RULES) {
+    const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+    apiUpdateRules(action.payload, action.meta)
+      .then(syncSuccess)
+      .catch(syncFail);
+  }
+  if (action.type === UPDATE_RULES || action.type === UPDATE_TRIGGERS) {
+    const { page } = state;
+    const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+    const meta = {
+      is_autosave: 0
+    };
+
+    apiUpdatePage(page, meta)
+      .then(syncSuccess)
+      .catch(syncFail);
   }
 }

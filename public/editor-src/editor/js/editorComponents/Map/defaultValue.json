@@ -9,11 +9,22 @@
   "toolbar": {
     "tabsState": "",
     "tabsCurrentElement": "",
-    "tabsColor": ""
+    "tabsColor": "",
+
+    "tabletTabsState": null,
+    "tabletTabsCurrentElement": null,
+
+    "mobileTabsState": null,
+    "mobileTabsCurrentElement": null
   },
 
   "style": {
     "className": "",
+
+    "brightness": 100,
+    "hue": 0,
+    "saturation": 100,
+    "contrast": 100,
 
     "size": 100,
     "height": 400,
@@ -38,6 +49,11 @@
     "tempBorderRightWidth": 4,
     "tempBorderBottomWidth": 4,
     "tempBorderLeftWidth": 4,
+
+    "hoverBrightness": null,
+    "hoverHue": null,
+    "hoverSaturation": null,
+    "hoverContrast": null,
 
     "hoverBorderWidthType": null,
     "hoverBorderWidth": null,
@@ -138,6 +154,11 @@
 
     "hoverTransition": 50,
 
+    "tabletBrightness": null,
+    "tabletHue": null,
+    "tabletSaturation": null,
+    "tabletContrast": null,
+
     "tabletSize": null,
     "tabletHeight": null,
 
@@ -196,6 +217,11 @@
     "tempTabletBoxShadowSpread": null,
     "tempTabletBoxShadowVertical": null,
     "tempTabletBoxShadowHorizontal": null,
+
+    "mobileBrightness": null,
+    "mobileHue": null,
+    "mobileSaturation": null,
+    "mobileContrast": null,
 
     "mobileSize": null,
     "mobileHeight": null,

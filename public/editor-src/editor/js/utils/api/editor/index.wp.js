@@ -129,6 +129,49 @@ export function updatePage(page, meta = {}) {
   });
 }
 
+// rules changes
+
+export function updateRules(data) {
+  const {
+    api: { updateRules, hash, url },
+    page
+  } = Config.get("wp");
+  const version = Config.get("editorVersion");
+
+  return request2(
+    `${url}?action=${updateRules}&hash=${hash}&post=${page}&version=${version}`,
+    {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }
+  );
+}
+
+export function getRulesList() {
+  const {
+    api: { getRuleList, hash, url },
+    page
+  } = Config.get("wp");
+  const version = Config.get("editorVersion");
+
+  return request2(url, {
+    method: "POST",
+    credentials: "same-origin",
+    body: new URLSearchParams({
+      action: getRuleList,
+      hash,
+      post: page,
+      version
+    })
+  })
+    .then(r => r.json())
+    .then(({ data }) => data);
+}
+
 // global blocks
 
 export function getGlobalBlocks() {
@@ -390,4 +433,15 @@ export function updateBlockScreenshot({ id, base64, blockType }) {
 
       throw rj;
     });
+}
+export function getPostObjects(postType) {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.getPostObjects, { postType }).then(
+    ({ data }) => data
+  );
+}
+
+export function getConditions() {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.getRuleGroupList, {}).then(({ data }) => data);
 }

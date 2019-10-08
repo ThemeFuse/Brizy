@@ -7,7 +7,7 @@ module.exports = {
   keywords: "background,button,hero,slider",
   cat: [5582],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

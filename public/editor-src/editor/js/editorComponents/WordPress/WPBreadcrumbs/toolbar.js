@@ -32,12 +32,10 @@ export function getItems({ v, device }) {
       icon: "nc-wp-shortcode",
       title: t("Breadcrumbs"),
       position: 60,
-      devices: "desktop",
       options: [
         toolbarElementBreadcrumbsSpacing({
           v,
           device,
-          devices: "desktop",
           state: "normal"
         })
       ]

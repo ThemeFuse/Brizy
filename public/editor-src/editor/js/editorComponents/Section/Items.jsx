@@ -5,7 +5,6 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
-import { templateIconUrl } from "visual/utils/icons";
 import { t } from "visual/utils/i18n";
 
 // className is added by react-slick
@@ -167,9 +166,6 @@ class SectionItems extends EditorArrayComponent {
 
       if (IS_PREVIEW) {
         const { sliderAutoPlay, sliderAutoPlaySpeed } = this.props;
-        const arrowIcon =
-          sliderArrows !== "none" &&
-          templateIconUrl("editor", `right-arrow-${sliderArrows}`);
 
         const responsive = [
           {
@@ -187,8 +183,6 @@ class SectionItems extends EditorArrayComponent {
             data-slides-to-show={1}
             data-slides-to-scroll={1}
             data-arrows={sliderArrows !== "none"}
-            data-next-arrow={arrowIcon}
-            data-prev-arrow={arrowIcon}
             data-dots={sliderDots !== "none"}
             data-dots-class={`brz-slick-slider__dots brz-slick-slider__dots--${sliderDots}`}
             data-fade={sliderAnimation === "fade"}
@@ -199,6 +193,13 @@ class SectionItems extends EditorArrayComponent {
             data-responsive={encodeURIComponent(JSON.stringify(responsive))}
           >
             {items}
+            {sliderArrows !== "none" && (
+              <ThemeIcon
+                className="brz-hidden"
+                type="editor"
+                name={`right-arrow-${sliderArrows}`}
+              />
+            )}
           </div>
         );
       }

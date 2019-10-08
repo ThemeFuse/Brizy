@@ -7,7 +7,7 @@ module.exports = {
   keywords: "call to action,forms,icons",
   cat: [5590],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",

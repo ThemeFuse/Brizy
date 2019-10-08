@@ -13,6 +13,7 @@ import { Roles } from "visual/component/Roles";
 import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
+import Config from "visual/global/Config";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./extendToolbar";
 import ContextMenu from "visual/component/ContextMenu";
@@ -23,6 +24,8 @@ import Items from "./Items";
 import { css } from "visual/utils/cssStyle";
 import { styleBg, styleContainer } from "./styles";
 import defaultValue from "./defaultValue.json";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -52,7 +55,7 @@ class Row extends EditorComponent {
   handleValueChange(value, meta) {
     const inPopup = Boolean(this.props.meta.sectionPopup);
 
-    if (value.items.length === 0 && !inPopup) {
+    if (value.items.length === 0 && (!inPopup || !IS_GLOBAL_POPUP)) {
       this.selfDestruct();
     } else {
       super.handleValueChange(value, meta);
@@ -71,12 +74,6 @@ class Row extends EditorComponent {
 
     this.containerBorder.setActive(false);
     this.floatingButton.setActive(false);
-
-    this.patchValue({
-      tabsState: "tabNormal",
-      tabsCurrentElement: "tabCurrentElement",
-      tabsColor: "tabOverlay"
-    });
   };
 
   handleToolbarEnter = () => {

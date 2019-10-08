@@ -48,6 +48,7 @@
   }
 
   &__button-go-to-editor {
+    font-family: $font-family-1;
     display: inline-block;
     position: absolute;
     left: 40px;
@@ -62,6 +63,7 @@
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     cursor: pointer;
     z-index: 9999;
+    outline: none;
 
     &:hover {
       color: #3dbfe8;

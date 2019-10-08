@@ -7,7 +7,7 @@ module.exports = {
   keywords: "icons,slider,testimonial",
   cat: [5602],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "Section",
