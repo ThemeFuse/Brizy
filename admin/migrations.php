@@ -50,16 +50,19 @@ class Brizy_Admin_Migrations {
 			return $this->existinMigrations;
 		}
 
-		$path = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR . '*-migration.php';
-
-		$migrations = array();
-
-		foreach ( glob( $path ) as $file ) {
-			$baseName  = basename( $file );
-			$className = $this->getMigrationClassName( $baseName );
-
-			$migrations[] = new $className;
-		}
+		$migrations = array(
+			new Brizy_Admin_Migrations_BlockPostTitleMigration,
+			new Brizy_Admin_Migrations_CleanInvalidBlocksMigration,
+			new Brizy_Admin_Migrations_CleanLogsMigration,
+			new Brizy_Admin_Migrations_FormSerializationMigration,
+			new Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration,
+			new Brizy_Admin_Migrations_GlobalVersionsMigration,
+			new Brizy_Admin_Migrations_GlobalsToDataMigration,
+			new Brizy_Admin_Migrations_NullMigration,
+			new Brizy_Admin_Migrations_ProjectToCustomPostMigration,
+			new Brizy_Admin_Migrations_RulesMigration,
+			new Brizy_Admin_Migrations_ShortcodesMobileOneMigration,
+		);
 
 		usort( $migrations, function ( $a, $b ) {
 			return version_compare( $a->getVersion(), $b->getVersion() );
@@ -72,22 +75,6 @@ class Brizy_Admin_Migrations {
 		return $this->existinMigrations = $migrations;
 	}
 
-	/**
-	 * @param $file
-	 *
-	 * @return string
-	 */
-	private function getMigrationClassName( $file ) {
-		$matches = array();
-		preg_match( "/^(.*)-migration\.php$/", $file, $matches );
-
-		$classNamePart = '';
-		foreach ( explode( '-', $matches['1'] ) as $part ) {
-			$classNamePart .= ucfirst( $part );
-		}
-
-		return sprintf( 'Brizy_Admin_Migrations_%sMigration', $classNamePart );
-	}
 
 	/**
 	 * @return Brizy_Admin_Migrations_MigrationInterface|mixed
