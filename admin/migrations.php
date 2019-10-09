@@ -163,7 +163,6 @@ class Brizy_Admin_Migrations {
 			try {
 				foreach ( $versionMigrations as $migration ) {
 
-
 					$wpdb->query( 'START TRANSACTION ' );
 
 					$migrationClass = get_class( $migration );
@@ -174,6 +173,10 @@ class Brizy_Admin_Migrations {
 
 					$this->globalStorage->addMigration( $migration )->save();
 
+					Brizy_Editor_Project::cleanClassCache();
+					Brizy_Editor_Post::cleanClassCache();
+					Brizy_Editor_Block::cleanClassCache();
+
 					$wpdb->query( 'COMMIT' );
 				}
 			} catch ( Exception $e ) {
@@ -182,6 +185,7 @@ class Brizy_Admin_Migrations {
 				break;
 			}
 		}
+
 
 		Brizy_Logger::instance()->debug( 'Migration process successful' );
 	}
