@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4b74f9f27a705537cff67ebcba8c4f1",
+    "content-hash": "2140320e27cb1022240a255b088e19a8",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-migration-utils",
-            "version": "1.2",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
-                "reference": "3d690afe94071c22ea8848b4245545f291149665"
+                "reference": "186518e0d5db68fa2ac37818803bbcb76ad8f578"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/3d690afe94071c22ea8848b4245545f291149665",
-                "reference": "3d690afe94071c22ea8848b4245545f291149665",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/186518e0d5db68fa2ac37818803bbcb76ad8f578",
+                "reference": "186518e0d5db68fa2ac37818803bbcb76ad8f578",
                 "shasum": ""
             },
             "require-dev": {
@@ -42,10 +42,10 @@
             ],
             "description": "Data migration utils",
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.2",
+                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.2.1",
                 "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
             },
-            "time": "2019-10-09T15:05:01+00:00"
+            "time": "2019-10-09T16:04:43+00:00"
         },
         {
             "name": "knplabs/gaufrette",
@@ -360,12 +360,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "77ac9c098f5c737b90e4650f23b6fee23a0cef8d"
+                "reference": "ca8531bb62e82df3e5ea318ae836a2dc995fcb81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/77ac9c098f5c737b90e4650f23b6fee23a0cef8d",
-                "reference": "77ac9c098f5c737b90e4650f23b6fee23a0cef8d",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/ca8531bb62e82df3e5ea318ae836a2dc995fcb81",
+                "reference": "ca8531bb62e82df3e5ea318ae836a2dc995fcb81",
                 "shasum": ""
             },
             "require": {
@@ -447,7 +447,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2019-10-09T14:48:37+00:00"
+            "time": "2019-10-09T15:03:14+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
