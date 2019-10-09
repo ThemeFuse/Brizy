@@ -27,7 +27,7 @@ class Brizy_Admin_Popups_Main {
 
 	public function initialize() {
 		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
-		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
+		//add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
 
 		if ( is_admin() ) {
@@ -114,7 +114,7 @@ class Brizy_Admin_Popups_Main {
 	 * @return mixed
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-	public function insertPopupsHtml( $content, $project, $wpPost, $context ) {
+	public function insertPopupsHtml( $content, $project, $wpPost, $context = 'document' ) {
 		$popups = $this->getMatchingBrizyPopups();
 
 		foreach ( $popups as $brizyPopup ) {

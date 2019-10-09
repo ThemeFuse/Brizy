@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "315b49d14e5940c87e1ccd8a48e74250",
+    "content-hash": "2140320e27cb1022240a255b088e19a8",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-migration-utils",
-            "version": "1.1",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
-                "reference": "4f9bc4276457677682323e477b0022b41515c7c6"
+                "reference": "186518e0d5db68fa2ac37818803bbcb76ad8f578"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/4f9bc4276457677682323e477b0022b41515c7c6",
-                "reference": "4f9bc4276457677682323e477b0022b41515c7c6",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/186518e0d5db68fa2ac37818803bbcb76ad8f578",
+                "reference": "186518e0d5db68fa2ac37818803bbcb76ad8f578",
                 "shasum": ""
             },
             "require-dev": {
@@ -42,10 +42,10 @@
             ],
             "description": "Data migration utils",
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.1",
+                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.2.1",
                 "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
             },
-            "time": "2019-07-24T13:12:12+00:00"
+            "time": "2019-10-09T16:04:43+00:00"
         },
         {
             "name": "knplabs/gaufrette",
@@ -360,12 +360,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "d639ff7b75720a516008a9691a4874fc35bac6e3"
+                "reference": "ca8531bb62e82df3e5ea318ae836a2dc995fcb81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/d639ff7b75720a516008a9691a4874fc35bac6e3",
-                "reference": "d639ff7b75720a516008a9691a4874fc35bac6e3",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/ca8531bb62e82df3e5ea318ae836a2dc995fcb81",
+                "reference": "ca8531bb62e82df3e5ea318ae836a2dc995fcb81",
                 "shasum": ""
             },
             "require": {
@@ -447,7 +447,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2019-10-01T09:03:28+00:00"
+            "time": "2019-10-09T15:03:14+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
@@ -623,12 +623,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "34a32c31b4cc46cb4505af87d19957d2f6cab49b"
+                "reference": "f753c15664c24d95bb64bd99ddc32cb01d1e32b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/34a32c31b4cc46cb4505af87d19957d2f6cab49b",
-                "reference": "34a32c31b4cc46cb4505af87d19957d2f6cab49b",
+                "url": "https://api.github.com/repos/composer/composer/zipball/f753c15664c24d95bb64bd99ddc32cb01d1e32b8",
+                "reference": "f753c15664c24d95bb64bd99ddc32cb01d1e32b8",
                 "shasum": ""
             },
             "require": {
@@ -664,7 +664,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9-dev"
+                    "dev-master": "1.10-dev"
                 }
             },
             "autoload": {
@@ -695,7 +695,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2019-09-28T09:26:11+00:00"
+            "time": "2019-10-06T20:15:11+00:00"
         },
         {
             "name": "composer/semver",
@@ -1087,16 +1087,16 @@
         },
         {
             "name": "gettext/gettext",
-            "version": "v4.6.3",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oscarotero/Gettext.git",
-                "reference": "70c6ff2fecd275e6ef9cdd542f55939a3d1904d6"
+                "reference": "739c935503853759b1607f375960c73a5b03909b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oscarotero/Gettext/zipball/70c6ff2fecd275e6ef9cdd542f55939a3d1904d6",
-                "reference": "70c6ff2fecd275e6ef9cdd542f55939a3d1904d6",
+                "url": "https://api.github.com/repos/oscarotero/Gettext/zipball/739c935503853759b1607f375960c73a5b03909b",
+                "reference": "739c935503853759b1607f375960c73a5b03909b",
                 "shasum": ""
             },
             "require": {
@@ -1130,9 +1130,9 @@
             "authors": [
                 {
                     "name": "Oscar Otero",
-                    "role": "Developer",
                     "email": "oom@oscarotero.com",
-                    "homepage": "http://oscarotero.com"
+                    "homepage": "http://oscarotero.com",
+                    "role": "Developer"
                 }
             ],
             "description": "PHP gettext manager",
@@ -1145,7 +1145,7 @@
                 "po",
                 "translation"
             ],
-            "time": "2019-07-15T12:56:31+00:00"
+            "time": "2019-10-07T11:40:33+00:00"
         },
         {
             "name": "gettext/languages",
@@ -2549,16 +2549,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.25.0",
+            "version": "2.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "b70da677101cca7b584c7489770d2677c2733593"
+                "reference": "d59c6cea9c4a3547bb6c0dfec451319abdaa4fb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b70da677101cca7b584c7489770d2677c2733593",
-                "reference": "b70da677101cca7b584c7489770d2677c2733593",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d59c6cea9c4a3547bb6c0dfec451319abdaa4fb1",
+                "reference": "d59c6cea9c4a3547bb6c0dfec451319abdaa4fb1",
                 "shasum": ""
             },
             "require": {
@@ -2612,7 +2612,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-09-30T16:22:22+00:00"
+            "time": "2019-10-05T15:52:23+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -2984,12 +2984,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "aa0d179a13284c7420fc281fc32750e6cc7c9e2f"
+                "reference": "78cd2a6bbca64901a0a39e4cbd2e723a09e8501b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/aa0d179a13284c7420fc281fc32750e6cc7c9e2f",
-                "reference": "aa0d179a13284c7420fc281fc32750e6cc7c9e2f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/78cd2a6bbca64901a0a39e4cbd2e723a09e8501b",
+                "reference": "78cd2a6bbca64901a0a39e4cbd2e723a09e8501b",
                 "shasum": ""
             },
             "require": {
@@ -3039,7 +3039,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-09-17T06:24:36+00:00"
+            "time": "2019-10-09T11:58:34+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3187,12 +3187,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "995192df77f63a59e47f025390d2d1fdf8f425ff"
+                "reference": "36bdcb91de0484f77e256fd3d6119dcf7171c164"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/995192df77f63a59e47f025390d2d1fdf8f425ff",
-                "reference": "995192df77f63a59e47f025390d2d1fdf8f425ff",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/36bdcb91de0484f77e256fd3d6119dcf7171c164",
+                "reference": "36bdcb91de0484f77e256fd3d6119dcf7171c164",
                 "shasum": ""
             },
             "require": {
@@ -3228,7 +3228,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2019-09-17T06:23:10+00:00"
+            "time": "2019-10-05T05:20:56+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -3318,12 +3318,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "014d250daebff39eba15ba990eeb2a140798e77c"
+                "reference": "fc1bc363ecf887921e3897c7b1dad3587ae154eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/014d250daebff39eba15ba990eeb2a140798e77c",
-                "reference": "014d250daebff39eba15ba990eeb2a140798e77c",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/fc1bc363ecf887921e3897c7b1dad3587ae154eb",
+                "reference": "fc1bc363ecf887921e3897c7b1dad3587ae154eb",
                 "shasum": ""
             },
             "require": {
@@ -3359,7 +3359,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2018-12-29T15:36:03+00:00"
+            "time": "2019-10-04T14:07:35+00:00"
         },
         {
             "name": "psr/http-message",
@@ -4451,12 +4451,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "117563a4a2bb704d0c30c6cef5e93c42a85c65aa"
+                "reference": "0961866cf457cda10838e052d65e712417ad864c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/117563a4a2bb704d0c30c6cef5e93c42a85c65aa",
-                "reference": "117563a4a2bb704d0c30c6cef5e93c42a85c65aa",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/0961866cf457cda10838e052d65e712417ad864c",
+                "reference": "0961866cf457cda10838e052d65e712417ad864c",
                 "shasum": ""
             },
             "require": {
@@ -4504,7 +4504,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2019-09-27T17:11:11+00:00"
+            "time": "2019-10-09T13:24:13+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5156,12 +5156,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "110e3e9eaa7827def84cb1cfee95a6cfde4bf608"
+                "reference": "e108a6013d8d53f0c0b6d1c6589cf3fc3a391e98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/110e3e9eaa7827def84cb1cfee95a6cfde4bf608",
-                "reference": "110e3e9eaa7827def84cb1cfee95a6cfde4bf608",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e108a6013d8d53f0c0b6d1c6589cf3fc3a391e98",
+                "reference": "e108a6013d8d53f0c0b6d1c6589cf3fc3a391e98",
                 "shasum": ""
             },
             "require": {
@@ -5207,7 +5207,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2019-09-25T18:53:23+00:00"
+            "time": "2019-10-07T11:33:25+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -5604,17 +5604,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/core-command.git",
-                "reference": "f8b57976792ab55967f3109154878528bd82d971"
+                "reference": "6532da4185b31e92cce8df17927d6346b10a51fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/core-command/zipball/f8b57976792ab55967f3109154878528bd82d971",
-                "reference": "f8b57976792ab55967f3109154878528bd82d971",
+                "url": "https://api.github.com/repos/wp-cli/core-command/zipball/6532da4185b31e92cce8df17927d6346b10a51fc",
+                "reference": "6532da4185b31e92cce8df17927d6346b10a51fc",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^1.4",
-                "wp-cli/wp-cli": "^2.2"
+                "wp-cli/wp-cli": "dev-master"
             },
             "require-dev": {
                 "wp-cli/checksum-command": "^1 || ^2",
@@ -5663,7 +5663,7 @@
             ],
             "description": "Downloads, installs, updates, and manages a WordPress installation.",
             "homepage": "https://github.com/wp-cli/core-command",
-            "time": "2019-06-04T16:07:46+00:00"
+            "time": "2019-10-08T06:20:00+00:00"
         },
         {
             "name": "wp-cli/cron-command",
