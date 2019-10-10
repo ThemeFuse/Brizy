@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2140320e27cb1022240a255b088e19a8",
+    "content-hash": "4c9262a63e1e25f900387625478ea2e6",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-migration-utils",
-            "version": "1.2.1",
+            "version": "1.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
-                "reference": "186518e0d5db68fa2ac37818803bbcb76ad8f578"
+                "reference": "22f262e2abc0c5e98826e726813abc8be57406ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/186518e0d5db68fa2ac37818803bbcb76ad8f578",
-                "reference": "186518e0d5db68fa2ac37818803bbcb76ad8f578",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/22f262e2abc0c5e98826e726813abc8be57406ab",
+                "reference": "22f262e2abc0c5e98826e726813abc8be57406ab",
                 "shasum": ""
             },
             "require-dev": {
@@ -42,10 +42,10 @@
             ],
             "description": "Data migration utils",
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.2.1",
+                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.3",
                 "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
             },
-            "time": "2019-10-09T16:04:43+00:00"
+            "time": "2019-10-10T07:44:31+00:00"
         },
         {
             "name": "knplabs/gaufrette",
