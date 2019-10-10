@@ -7,13 +7,13 @@
             <div class="pages-list-slug">{{ post.post_name }}</div>
         </div>
         <div class="pages-list-col">
-            <div class="pages-list-actions">
+            <div class="pages-list-actions" id="brz-js-collapse-parent-{{ post.ID }}">
                 <a href="{{ post.brizy_edit_url | raw }}" class="pages-list-actions__icon" data-title="Edit Page">
                     <svg class="brz-icon-svg">
                         <use xlink:href="{{ base_url }}fonts/symbol-defs.svg#icon-Edit-Page"></use>
                     </svg>
                 </a>
-                <a href="javascript:void(0);" class="pages-list-actions__icon" data-title="Settings" data-toggle="collapse" data-target="#post_{{ post.ID }}" aria-expanded="false" aria-controls="pagesListItem1">
+                <a href="javascript:void(0);" class="pages-list-actions__icon" data-title="Settings" data-toggle="collapse" data-target="#post_{{ post.ID }}" aria-expanded="false" aria-controls="pagesListItem1" data-parent="#brz-js-collapse-parent-{{ post.ID }}">
                     <svg class="brz-icon-svg">
                         <use xlink:href="{{ base_url }}fonts/symbol-defs.svg#icon-Gear"></use>
                     </svg>

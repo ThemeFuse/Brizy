@@ -65,11 +65,6 @@ function bindFormInputEvents( parent ) {
 
     } );
 
-    $( '.submit', parent ).on( 'click', function () {
-        var form = $( this ).parents( 'form:first' );
-        submitForm( form );
-    } );
-
     $( ".upload-file-btn > input", parent ).change( function () {
         var inputFileVal = $( this ).val();
         $( '.brz-favicon-path-text' ).text( inputFileVal );
@@ -107,6 +102,10 @@ function bindFormInputEvents( parent ) {
                     },
                     success: function ( response ) {
                         $( '#' + post_type + 'ListItems' ).html( response );
+
+                        $('[data-toggle="collapse"]').collapse({
+                            toggle: false
+                        });
                     }
                 });
             }
@@ -114,8 +113,13 @@ function bindFormInputEvents( parent ) {
     } );
 }
 
-jQuery(document).ready(function ($) {
+jQuery( document ).ready( function ( $ ) {
     "use strict";
+
+    $( document ) .on( 'click', '.submit', function () {
+        var form = $( this ).parents( 'form:first' );
+        submitForm( form );
+    } );
 
     // Disable Empty Links
     $( 'a[href="#"]' ).click( function ( event ) {

@@ -1459,6 +1459,44 @@ a {
   margin-right:0;
 }
 
+.brz-pagination .paginationjs .paginationjs-pages li {
+  border: none;
+}
+
+.brz-pagination .paginationjs .paginationjs-pages li:not(:first-child):not(:last-child) > a {
+  color: #3dbfe8;
+}
+.brz-pagination .paginationjs .paginationjs-pages li:first-child > a,
+.brz-pagination .paginationjs .paginationjs-pages li:last-child > a {
+  color: #818A91;
+}
+
+.brz-pagination .paginationjs .paginationjs-pages li.active > a {
+  background: transparent;
+  color: #21252B !important;
+}
+
+.brz-pagination .paginationjs .paginationjs-pages li:last-child {
+  border: none;
+}
+
+.brz-pagination .paginationjs .paginationjs-go-button > input[type=button] {
+  background: #818A91;
+  border: none;
+  color: #fff;
+}
+
+.brz-pagination .paginationjs .paginationjs-go-button > input[type=button]:hover {
+  background: #6e777d;
+  border: none;
+  color: #fff;
+}
+
+.brz-pagination .paginationjs .paginationjs-go-input > input[type=text] {
+  border: 1px solid #818A91;
+  color: #818A91;
+}
+
 .brz-no-posts {
   padding: 25px 0 25px 20px;
   font-size: 15px;

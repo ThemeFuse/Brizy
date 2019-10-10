@@ -22,46 +22,41 @@ class Brizy_Admin_SiteSettings_Dashboard {
 
 	private function handleSubmits() {
 
-		if ( isset( $_REQUEST['brizy-settings-tab-submit'] ) ) {
-			switch ( $_REQUEST['brizy-settings-tab-submit'] ) {
-				case 'site-settings':
-					$this->handleSettingsTabSubmit();
-					break;
-
-				case 'social-sharing':
-					$this->handleSocialSharingSubmit();
-					break;
-
-				case 'custom-css':
-					$this->handleCustomCssSubmit();
-					break;
-
-				case 'code-injection':
-					$this->handleCodeInjectionSubmit();
-					break;
-
-				case 'update-post':
-					$this->handleUpdatePostSubmit();
-					break;
-
-				case 'delete-post':
-					$this->handleDeletePostSubmit();
-					break;
-
-				case 'create-post':
-					$this->handleCreatePostSubmit();
-					break;
-			}
-
-			$query = build_query(
-				[
-					'brizy-site-settings' => '',
-					'brizy-settings-tab'  => $_REQUEST['brizy-settings-tab-submit']
-				]
-			);
-
-			wp_redirect( home_url( $query ) );
+		if ( ! isset( $_REQUEST['brizy-settings-tab-submit'] ) ) {
+			return;
 		}
+
+		switch ( $_REQUEST['brizy-settings-tab-submit'] ) {
+			case 'site-settings':
+				$this->handleSettingsTabSubmit();
+				break;
+
+			case 'social-sharing':
+				$this->handleSocialSharingSubmit();
+				break;
+
+			case 'custom-css':
+				$this->handleCustomCssSubmit();
+				break;
+
+			case 'code-injection':
+				$this->handleCodeInjectionSubmit();
+				break;
+
+			case 'update-post':
+				$this->handleUpdatePostSubmit();
+				break;
+
+			case 'delete-post':
+				$this->handleDeletePostSubmit();
+				break;
+
+			case 'create-post':
+				$this->handleCreatePostSubmit();
+				break;
+		}
+
+		wp_redirect( home_url( build_query( [ 'brizy-site-settings' => '' ] ) ) );
 	}
 
 	public function action_enqueue_scripts() {
@@ -276,6 +271,9 @@ class Brizy_Admin_SiteSettings_Dashboard {
 
 	private function get_post_types() {
 
+		/*
+		// Extract all post types as vertical tabs. At the moment this is not necessary we had only some hardcoded post types.
+
 		$exclude_posts_types = [
 			'attachment'
 		];
@@ -301,6 +299,29 @@ class Brizy_Admin_SiteSettings_Dashboard {
 				'singular_name' => $val->labels->singular_name
 			];
 		}, array_filter( array_merge( $post_types, $include_posts_types ) ) );
+
+		*/
+
+		$post_types = [
+			[
+				'id'            => 'post',
+				'icon'          => 'symbol-defs.svg#icon-post-type-post',
+				'name'          => esc_html__( 'Posts', 'brizy' ),
+				'singular_name' => esc_html__( 'Post', 'brizy' )
+			],
+			[
+				'id'            => 'page',
+				'icon'          => 'symbol-defs.svg#icon-post-type-page',
+				'name'          => esc_html__( 'Pages', 'brizy' ),
+				'singular_name' => esc_html__( 'Page', 'brizy' )
+			],
+//			[
+//				'id'            => 'brizy_template',
+//				'icon'          => 'symbol-defs.svg#icon-post-type-brizy_template',
+//				'name'          => esc_html__( 'Templates', 'brizy' ),
+//				'singular_name' => esc_html__( 'Template', 'brizy' )
+//			]
+		];
 
 		return $post_types;
 	}
