@@ -29,7 +29,6 @@ class Brizy_Editor {
 	private function __construct() {
 
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
-		add_action( 'after_setup_theme', array( $this, 'loadCompatibilityClasses' ), - 2000 );
 		try {
 			add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
 		} catch ( Exception $e ) {
@@ -69,6 +68,8 @@ class Brizy_Editor {
 
 	public function wordpressInit() {
 
+		$this->registerCustomPostTemplates();
+
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
@@ -78,7 +79,6 @@ class Brizy_Editor {
 
 
 		$this->loadShortcodes();
-		$this->registerCustomPostTemplates();
 		$this->initializeAssetLoaders();
 
 		$supported_post_types   = $this->supported_post_types();
@@ -168,36 +168,6 @@ class Brizy_Editor {
 		return $num;
 	}
 
-	public function loadCompatibilityClasses() {
-
-		global $wp_version;
-
-		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
-			new Brizy_Compatibilities_Wtc();
-		}
-
-		$version_compare = version_compare( $wp_version, '5' );
-
-		if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
-			new Brizy_Compatibilities_Gutenberg();
-		}
-
-		if ( function_exists( 'autoptimize' ) ) {
-			new Brizy_Compatibilities_Autoptimize();
-		}
-
-		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
-			new Brizy_Compatibilities_WPML();
-		}
-
-		if ( class_exists( 'LiteSpeed_Cache_Config' ) ) {
-			new Brizy_Compatibilities_LiteSpeed();
-		}
-
-		if ( function_exists( 'fvm_cachepath' ) ) {
-			new Brizy_Compatibilities_FastVelocityMinify();
-		}
-	}
 
 	/**
 	 * @param $templates
