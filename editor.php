@@ -30,8 +30,10 @@ class Brizy_Editor {
 
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
 		try {
+			add_action( 'init', array( $this, 'registerCustomPostTemplates' ), - 4000 );
 			add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( 'Migration process ERROR', [ $e ] );
 			return;
 		}
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
@@ -67,8 +69,6 @@ class Brizy_Editor {
 	}
 
 	public function wordpressInit() {
-
-		$this->registerCustomPostTemplates();
 
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
