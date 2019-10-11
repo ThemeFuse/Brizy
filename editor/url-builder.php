@@ -246,7 +246,7 @@ class Brizy_Editor_UrlBuilder
      */
     public function editor_build_url()
     {
-        return BRIZY_PLUGIN_URL . '/public/editor-build';
+        return Brizy_Config::getEditorBuildUrl();
     }
 
     /**
@@ -254,9 +254,13 @@ class Brizy_Editor_UrlBuilder
      *
      * @return string
      */
-    public function editor_build_path()
+    static public function editor_build_path($path)
     {
-        return BRIZY_PLUGIN_PATH . '/public/editor-build';
+        if ($path) {
+            $path = DIRECTORY_SEPARATOR . ltrim( str_replace( array( '/', '\\' ), DIRECTORY_SEPARATOR, $path ), DIRECTORY_SEPARATOR );
+        }
+
+        return Brizy_Config::getEditorBuildPath() . $path;
     }
 
     /**
