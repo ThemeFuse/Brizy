@@ -332,6 +332,17 @@ class Brizy_Editor_Editor_Editor {
 			$ruleManager = new Brizy_Admin_Rules_Manager();
 			$rules       = $ruleManager->getRules( $wp_post->ID );
 			$rule        = null;
+
+
+			function addQueryStringToUrl( $link, $query ) {
+				$parsedUrl = parse_url( $link );
+				$separator = ( ! isset( $parsedUrl['query'] ) || $parsedUrl['query'] == null ) ? '?' : '&';
+				$link      .= $separator . $query;
+
+				return $link;
+			}
+
+
 			// find first include rule
 			foreach ( $rules as $rule ) {
 				/**
@@ -340,14 +351,6 @@ class Brizy_Editor_Editor_Editor {
 				if ( $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ) {
 					break;
 				}
-			}
-
-			function addQueryStringToUrl( $link, $query ) {
-				$parsedUrl = parse_url( $link );
-				$separator = ( ! isset( $parsedUrl['query'] ) || $parsedUrl['query'] == null ) ? '?' : '&';
-				$link      .= $separator . $query;
-
-				return $link;
 			}
 
 			if ( $rule ) {
@@ -427,7 +430,14 @@ class Brizy_Editor_Editor_Editor {
 								return addQueryStringToUrl( get_search_link( 'find-me' ), 'preview=1' );
 								break;
 							case '404':
-								//return addQueryStringToUrl( get_post_permalink( new WP_Post((object)array("ID"=>time())) ), 'preview=1' );
+								return addQueryStringToUrl( get_home_url( null, (string)time() ), 'preview=1' );
+								break;
+							case 'home_page':
+								$get_option = get_option( 'page_for_posts' );
+
+								if ( $get_option ) {
+									return addQueryStringToUrl( get_permalink( $get_option ), 'preview=1' );
+								}
 								break;
 							case 'front_page':
 								return addQueryStringToUrl( home_url(), 'preview=1' );
@@ -573,14 +583,14 @@ class Brizy_Editor_Editor_Editor {
 		global $wpdb, $wp_locale;
 
 		$defaults = array(
-			'type'            => 'monthly',
-			'limit'           => '',
-			'order'           => 'DESC',
-			'post_type'       => 'post',
-			'year'            => get_query_var( 'year' ),
-			'monthnum'        => get_query_var( 'monthnum' ),
-			'day'             => get_query_var( 'day' ),
-			'w'               => get_query_var( 'w' ),
+			'type'      => 'monthly',
+			'limit'     => '',
+			'order'     => 'DESC',
+			'post_type' => 'post',
+			'year'      => get_query_var( 'year' ),
+			'monthnum'  => get_query_var( 'monthnum' ),
+			'day'       => get_query_var( 'day' ),
+			'w'         => get_query_var( 'w' ),
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -613,20 +623,22 @@ class Brizy_Editor_Editor_Editor {
 		/**
 		 * Filters the SQL WHERE clause for retrieving archives.
 		 *
+		 * @param string $sql_where Portion of SQL query containing the WHERE clause.
+		 * @param array $r An array of default arguments.
+		 *
 		 * @since 2.2.0
 		 *
-		 * @param string $sql_where Portion of SQL query containing the WHERE clause.
-		 * @param array  $r         An array of default arguments.
 		 */
 		$where = apply_filters( 'getarchives_where', $sql_where, $r );
 
 		/**
 		 * Filters the SQL JOIN clause for retrieving archives.
 		 *
+		 * @param string $sql_join Portion of SQL query containing JOIN clause.
+		 * @param array $r An array of default arguments.
+		 *
 		 * @since 2.2.0
 		 *
-		 * @param string $sql_join Portion of SQL query containing JOIN clause.
-		 * @param array  $r        An array of default arguments.
 		 */
 		$join = apply_filters( 'getarchives_join', '', $r );
 
@@ -650,6 +662,7 @@ class Brizy_Editor_Editor_Editor {
 					if ( 'post' !== $r['post_type'] ) {
 						$url = add_query_arg( 'post_type', $r['post_type'], $url );
 					}
+
 					return $url;
 				}
 			}

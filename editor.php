@@ -365,7 +365,10 @@ class Brizy_Editor {
 		} elseif
 		( isset( $_REQUEST['brizy_post'] ) ) {
 			$pid = (int) $_REQUEST['brizy_post'];
-		} elseif
+		} elseif ($wp_query->is_posts_page) {
+			$pid = (int)  get_queried_object_id();
+		}
+		elseif
 		( ( $apid = get_queried_object_id() ) && ( is_single() || is_page() ) && $wp_query->queried_object instanceof WP_Post ) {
 			$pid = (int) $apid;
 		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
