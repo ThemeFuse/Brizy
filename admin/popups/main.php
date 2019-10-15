@@ -139,24 +139,24 @@ class Brizy_Admin_Popups_Main {
 
 	private function insertHead( $target, $headContent ) {
 
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT START-->\n\n";
+		return $target . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n";
 	}
 
 	private function insertBody( $target, $bodyContent ) {
 
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT START-->\n\n";
+		return $target . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n";
 	}
 
 	private function insertInDocumentHead( $target, $headContent ) {
 
-		$target = preg_replace( "/(<head[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT START-->\n\n", $target );
+		$target = preg_replace( "/(<head[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n", $target );
 
 		return $target;
 	}
 
 	private function insertInDocumentBody( $target, $bodyContent ) {
 
-		$target = preg_replace( "/(<body[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT START-->\n\n", $target );
+		$target = preg_replace( "/(<body[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n", $target );
 
 		return $target;
 	}
