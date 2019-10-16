@@ -773,15 +773,23 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 * @return array
 	 */
 	public function get_templates() {
-		$type = get_post_type( $this->get_id() );
-		$list = array(
+
+		$type      = get_post_type( $this->get_id() );
+		$templates = array(
 			array(
 				'id'    => '',
-				'title' => __( 'Default' )
+				'title' => __( 'Default', 'brizy' )
 			)
 		);
 
-		return apply_filters( "brizy:$type:templates", $list );
+		foreach ( wp_get_theme()->get_page_templates( null, $type ) as $key => $title ) {
+			$templates[] = [
+				'id'    => $key,
+				'title' => $title
+			];
+		}
+
+		return apply_filters( "brizy:$type:templates", $templates );
 	}
 
 	/**
