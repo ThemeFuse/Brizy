@@ -48,6 +48,7 @@ class Brizy_Admin_Fonts_Main {
 		$mime_types['eot']   = 'application/vnd.ms-fontobject';
 		$mime_types['woff']  = 'application/x-font-woff';
 		$mime_types['woff2'] = 'application/x-font-woff2';
+		$mime_types['svg']   = 'image/svg+xml';
 
 		return $mime_types;
 	}
