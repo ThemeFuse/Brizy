@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-10-01 15:51+0300\n"
+"POT-Creation-Date: 2019-10-17 16:49+0300\n"
 "PO-Revision-Date: 2018-08-14 16:04+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -69,24 +69,24 @@ msgstr ""
 msgid "Reviews"
 msgstr ""
 
-#: brizy-pro/main.php:113
+#: brizy-pro/main.php:112
 msgid "Brizy Pro is inactive. Please install and activate Brizy FREE first.!"
 msgstr ""
 
-#: brizy-pro/main.php:124
+#: brizy-pro/main.php:123
 #, php-format
 msgid "Brizy Pro %s requires Brizy FREE to be %s or newer"
 msgstr ""
 
-#: brizy-pro/main.php:235
+#: brizy-pro/main.php:234
 msgid "Dynamic content"
 msgstr ""
 
-#: brizy/admin/blocks/main.php:116 brizy/admin/blocks/main.php:138
+#: brizy/admin/blocks/main.php:107 brizy/admin/blocks/main.php:129
 msgid "global block."
 msgstr ""
 
-#: brizy/admin/fonts/main.php:67
+#: brizy/admin/fonts/main.php:68
 msgid "font"
 msgstr ""
 
@@ -139,15 +139,15 @@ msgstr ""
 msgid "Go Pro"
 msgstr ""
 
-#: brizy/admin/main.php:410
+#: brizy/admin/main.php:413
 msgid "Edit with "
 msgstr ""
 
-#: brizy/admin/main.php:473
+#: brizy/admin/main.php:476
 msgid "Auto Draft"
 msgstr ""
 
-#: brizy/admin/main.php:526
+#: brizy/admin/main.php:530
 #, php-format
 msgid "Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s "
 msgstr ""
@@ -162,6 +162,46 @@ msgstr ""
 
 #: brizy/admin/optimize-images.php:191 brizy/languages/texts.php:500
 msgid "Save"
+msgstr ""
+
+#: brizy/admin/popups/main.php:51
+msgid "Add New Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:52
+msgid "New Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:53
+msgid "Edit Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:54
+msgid "View Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:55 brizy/admin/popups/main.php:68
+msgid "Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:56
+msgid "Search Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:57
+msgid "Parent Popups:"
+msgstr ""
+
+#: brizy/admin/popups/main.php:58
+msgid "No Popups found."
+msgstr ""
+
+#: brizy/admin/popups/main.php:59
+msgid "No Popups found in Trash."
+msgstr ""
+
+#: brizy/admin/popups/main.php:60
+msgid "Popup attributes:"
 msgstr ""
 
 #: brizy/admin/settings.php:103
@@ -254,7 +294,7 @@ msgstr ""
 msgid " templates."
 msgstr ""
 
-#: brizy/admin/templates.php:230
+#: brizy/admin/templates.php:231
 msgid "Display Conditions"
 msgstr ""
 
@@ -291,7 +331,11 @@ msgid "Go PRO"
 msgstr ""
 
 #: brizy/admin/views/settings/general.php:12
-msgid "Activate "
+msgid "Activate"
+msgstr ""
+
+#: brizy/admin/views/settings/general.php:12
+msgid "For"
 msgstr ""
 
 #: brizy/admin/views/settings/general.php:32
@@ -307,16 +351,16 @@ msgstr ""
 msgid "Continue to edit with "
 msgstr ""
 
-#: brizy/editor.php:204
+#: brizy/editor.php:200
 msgid " Template"
 msgstr ""
 
-#: brizy/editor/block.php:102 brizy/editor/post.php:367
+#: brizy/editor/block.php:106 brizy/editor/post.php:372
 #: brizy/editor/project.php:317
 msgid "There is nothing to save. The autosave and the post content are the same."
 msgstr ""
 
-#: brizy/editor/post.php:775
+#: brizy/editor/post.php:780
 msgid "Default"
 msgstr ""
 
@@ -2089,14 +2133,14 @@ msgstr ""
 msgid "It's a sample"
 msgstr ""
 
-#: brizy/public/main.php:93
+#: brizy/public/main.php:83
 msgid "Preview"
 msgstr ""
 
-#: brizy/public/main.php:104
+#: brizy/public/main.php:94
 msgid "View"
 msgstr ""
 
-#: brizy/public/main.php:182
+#: brizy/public/main.php:184
 msgid "Edit "
 msgstr ""
