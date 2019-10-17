@@ -57,12 +57,12 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
             fontFamilies.add(splitFont(font));
           } else {
             // if type doesn't exist
-            // set it to google
-            // this case is used for old Block
+            // set it to unknowns
+            // and parse all fonts
             fontFamilies.add(
               splitFont({
                 family: font.family,
-                type: "google"
+                type: "unknowns"
               })
             );
           }
@@ -112,6 +112,15 @@ export const getBlocksStylesFonts = (fonts, projectFonts_) => {
 
   return uniqFonts.reduce((acc, curr) => {
     const { type, family } = curr;
+
+    // find in all project -> fonts
+    if (type === "unknowns") {
+      return Object.entries(projectFonts).find(([type, data]) =>
+        findFonts(data, family, type)
+      )
+        ? acc
+        : [...acc, curr];
+    }
 
     return findFonts(projectFonts[type], family, type) ? acc : [...acc, curr];
   }, []);
