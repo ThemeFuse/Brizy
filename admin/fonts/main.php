@@ -29,7 +29,7 @@ class Brizy_Admin_Fonts_Main {
 	 */
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_filter( 'upload_mimes', array( $this, 'addFOntTypes' ), 1, 1 );
+		add_filter( 'upload_mimes', array( $this, 'addFOntTypes' ) );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );

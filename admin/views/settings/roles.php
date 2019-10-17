@@ -21,6 +21,6 @@
         <button type="submit"
                 id="submit"
                 class="button button-primary"
-        ><?php _e( 'Save Changes' ); ?></button>
+        ><?php echo __( 'Save Changes' ); ?></button>
     </p>
 </form>
