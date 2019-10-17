@@ -177,6 +177,9 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
 
   const opacity = format.opacity || cssOpacity;
 
+  // it's only for situations when colorPalette contain this data - "color2, color3" (normally it should never happen)
+  const palette = format.colorPalette ? format.colorPalette.split(",")[0] : "";
+
   return {
     ...format,
 
@@ -184,7 +187,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
       hex,
       opacity: !isNaN(opacity) ? opacity : 1
     },
-    colorPalette: format.colorPalette || "",
+    colorPalette: palette,
 
     shadow: parseShadow(format.shadow || cssShadow),
     shadowColorPalette: format.shadowColorPalette || "",

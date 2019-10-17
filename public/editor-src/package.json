@@ -105,6 +105,8 @@
     "build": "npm-run-all --parallel \"build:brizy -- {@}\" \"server -- {@}\" --",
     "build:brizy": "gulp build",
     "server": "node ./backend/server.js",
+    "server:docker": "node ./backend/server.js --build-dir ../../../bitblox-editor-build --build-dir-pro ../../../bitblox-editor-pro-build",
+    "server:docker:debug": "node --inspect=0.0.0.0:9222 ./backend/server.js --build-dir ../../../bitblox-editor-build --build-dir-pro ../../../bitblox-editor-pro-build",
     "compiler": "../../",
     "build:github": "npm run build:brizy -- -t WP --build-dir ../editor-build"
   },

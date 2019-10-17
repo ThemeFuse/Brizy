@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.3<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.97<br>
+Stable tag: 1.0.98<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.98 - 2019-10-17 ###
+* Fixed: Register custom templates if upgrading from a version < 1.0.70
+* Fixed: Dynamic content context generation
+* Fixed: Template preview URL for Blogs/Posts page
+* Fixed: Template preview URL for 404 page
 
 ### 1.0.97 - 2019-10-10 ###
 * Fixed: Dynamic content form templates

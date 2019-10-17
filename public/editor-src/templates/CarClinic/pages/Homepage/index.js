@@ -1167,7 +1167,7 @@ module.exports = {
                                                   value: {
                                                     _styles: ["richText"],
                                                     text:
-                                                      '<h5 class="brz-tp-heading5"><span class="brz-cp-color2,color5">Free winter checks with any engine work</span></h5>'
+                                                      '<h5 class="brz-tp-heading5"><span class="brz-cp-color2">Free winter checks with any engine work</span></h5>'
                                                   }
                                                 }
                                               ],
