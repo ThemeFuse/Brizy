@@ -78,6 +78,7 @@ export const normalizeFonts = async newFonts => {
   }
 
   const fonts = new Map();
+  const makeFontWithId = font => ({ brizyId: uuid(), ...font });
 
   const [googleFonts, uploadedFonts] = await Promise.all([
     getGoogleFonts(),
@@ -87,23 +88,41 @@ export const normalizeFonts = async newFonts => {
   newFonts.forEach(({ type, family }) => {
     if (type === "google") {
       const normalizeFont = findFonts(googleFonts, family);
-      const font = {
-        brizyId: uuid(),
-        ...normalizeFont
-      };
-      const currentFonts = fonts.get("blocks") || [];
 
-      fonts.set("blocks", [...currentFonts, font]);
+      if (normalizeFont) {
+        const currentFonts = fonts.get("blocks") || [];
+
+        fonts.set("blocks", [...currentFonts, makeFontWithId(normalizeFont)]);
+      }
     }
     if (type === "upload") {
       const normalizeFont = findFonts(uploadedFonts, family, "upload");
-      const font = {
-        brizyId: uuid(),
-        ...normalizeFont
-      };
-      const currentFonts = fonts.get("upload") || [];
 
-      fonts.set("upload", [...currentFonts, font]);
+      if (normalizeFont) {
+        const currentFonts = fonts.get("upload") || [];
+
+        fonts.set("upload", [...currentFonts, makeFontWithId(normalizeFont)]);
+      }
+    }
+
+    // has problems with RichText
+    // old blocks and sometime type has not existed
+    if (type === "unknowns") {
+      const normalizeFont = findFonts(uploadedFonts, family, "upload");
+
+      if (normalizeFont) {
+        const currentFonts = fonts.get("upload") || [];
+
+        fonts.set("upload", [...currentFonts, makeFontWithId(normalizeFont)]);
+      } else {
+        const normalizeFont = findFonts(googleFonts, family);
+
+        if (normalizeFont) {
+          const currentFonts = fonts.get("blocks") || [];
+
+          fonts.set("blocks", [...currentFonts, makeFontWithId(normalizeFont)]);
+        }
+      }
     }
   });
 

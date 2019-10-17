@@ -143,10 +143,26 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   const { upload = [], google = [] } = projectFontsData(_fonts);
 
   parsedFonts.forEach(({ type, family }) => {
-    if (type === "upload") {
-      fontMap.upload.push(findFonts(upload, family, "upload"));
-    } else {
-      fontMap.google.push(findFonts(google, family));
+    switch (type) {
+      case "upload": {
+        fontMap.upload.push(findFonts(upload, family, "upload"));
+        break;
+      }
+      case "google": {
+        fontMap.google.push(findFonts(google, family));
+        break;
+      }
+      case "unknowns": {
+        const uploadFont = findFonts(upload, family, "upload");
+
+        if (uploadFont) {
+          fontMap.upload.push(uploadFont);
+        } else {
+          const googleFont = findFonts(google, family);
+          fontMap.google.push(googleFont);
+        }
+        break;
+      }
     }
   });
 

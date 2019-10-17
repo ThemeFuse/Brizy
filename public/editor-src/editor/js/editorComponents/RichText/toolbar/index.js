@@ -84,6 +84,7 @@ const getDesktopFontStyles = (fontStyle, value) => {
       .replace(".", "_")
       .replace("-", "m_"),
     fontFamily: String(styles.fontFamily),
+    fontFamilyType: String(styles.fontFamilyType),
     fontWeight: String(styles.fontWeight),
     intermediateTabletWeight: String(styles.tabletFontWeight),
     intermediateMobileWeight: String(styles.mobileFontWeight),

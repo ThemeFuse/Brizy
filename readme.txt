@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 1.0.97
+Stable tag: 1.0.98
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,12 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.98 - 2019-10-17 =
+* Fixed: Register custom templates if upgrading from a version < 1.0.70
+* Fixed: Dynamic content context generation
+* Fixed: Template preview URL for Blogs/Posts page
+* Fixed: Template preview URL for 404 page
 
 = 1.0.97 - 2019-10-10 =
 * Fixed: Dynamic content form templates

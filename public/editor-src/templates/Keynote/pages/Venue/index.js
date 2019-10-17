@@ -371,7 +371,7 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         text:
-                                          '<p class="brz-tp-heading6"><span class="brz-cp-color5">HOW TO GET THERE:</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color2,color7">Be fast:</span>&nbsp;<span class="brz-cp-color7">Subway - \u201cNicolae Teclu\u201d station and a 7 minute walk to the venue. See the city: Tram no. 27 or no. 40</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color2,color7">Be eco:</span>&nbsp;<span class="brz-cp-color7">take a ride on the bike (approximately 30 minutes from Unirii Square)</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color2,color7">Be comfortable:</span>&nbsp;<span class="brz-cp-color7">Car/Taxi (15 \u2013 20 minutes from Unirii Square)</span></p>'
+                                          '<p class="brz-tp-heading6"><span class="brz-cp-color5">HOW TO GET THERE:</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color2">Be fast:</span>&nbsp;<span class="brz-cp-color7">Subway - \u201cNicolae Teclu\u201d station and a 7 minute walk to the venue. See the city: Tram no. 27 or no. 40</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color2">Be eco:</span>&nbsp;<span class="brz-cp-color7">take a ride on the bike (approximately 30 minutes from Unirii Square)</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color2">Be comfortable:</span>&nbsp;<span class="brz-cp-color7">Car/Taxi (15 \u2013 20 minutes from Unirii Square)</span></p>'
                                       }
                                     }
                                   ]
