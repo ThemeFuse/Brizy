@@ -39,8 +39,7 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 				$url = wp_get_attachment_url( $attachment->ID );
 				wp_redirect( $url );
 				exit;
-			}
-			catch (Exception $e ) {
+			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
 				status_header( 404 );
 				global $wp_query;
@@ -56,17 +55,52 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 		if ( is_numeric( $hash ) ) {
 			$attachment = get_post( (int) $hash );
 		} else {
-			$attachments = get_posts( array(
-				'meta_key'   => 'brizy_post_uid',
-				'meta_value' => $hash,
-				'post_type'  => 'attachment',
-			) );
+			$attachment = $this->getAttachmentByPostId( $hash );
 
-			if ( isset( $attachments[0] ) ) {
-				$attachment = $attachments[0];
+			if ( ! $attachment ) {
+				$attachment = $this->getAttachmentByAttachmentUId( $hash );
 			}
 		}
 
 		return $attachment;
+	}
+
+
+	/**
+	 * @param $hash
+	 *
+	 * @return int|WP_Post|null
+	 */
+	private function getAttachmentByPostId( $hash ) {
+		$attachments = get_posts( array(
+			'meta_key'   => 'brizy_post_uid',
+			'meta_value' => $hash,
+			'post_type'  => 'attachment',
+		) );
+
+		if ( isset( $attachments[0] ) ) {
+			return $attachments[0];
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param $hash
+	 *
+	 * @return int|WP_Post|null
+	 */
+	private function getAttachmentByAttachmentUId( $hash ) {
+		$attachments = get_posts( array(
+			'meta_key'   => 'brizy_attachment_uid',
+			'meta_value' => $hash,
+			'post_type'  => 'attachment',
+		) );
+
+		if ( isset( $attachments[0] ) ) {
+			return $attachments[0];
+		}
+
+		return null;
 	}
 }
