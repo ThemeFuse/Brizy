@@ -55,8 +55,8 @@ class Brizy_Admin_FormEntries {
 		foreach ( $columns as $key => $column ) {
 			$newColumns[ $key ] = $column;
 			if ( $key == 'cb' ) {
-				$newColumns['data']         = 'Leads details';
-				$newColumns['created_date'] = 'Date';
+				$newColumns['data']         = __( 'Leads details', 'brizy' );
+				$newColumns['created_date'] = __( 'Date', 'brizy' );
 			}
 		}
 
@@ -106,7 +106,7 @@ class Brizy_Admin_FormEntries {
 	}
 
 	public function addSubmenuPage() {
-		add_submenu_page( 'brizy-settings', __('Leads','brizy'), __('Leads','brizy'), 'manage_options', 'edit.php?post_type=' . self::CP_FORM_ENTRY, null );
+		add_submenu_page( 'brizy-settings', __( 'Leads', 'brizy' ), __( 'Leads', 'brizy' ), 'manage_options', 'edit.php?post_type=' . self::CP_FORM_ENTRY, null );
 	}
 
 	public function handleEnableButton() {
@@ -129,11 +129,11 @@ class Brizy_Admin_FormEntries {
 
 		if ( self::CP_FORM_ENTRY == $screen->post_type ) {
 			if ( $this->enableLog ) {
-				$label = 'Disable';
+				$label = __( 'Disable', 'brizy' );
 				$class = 'disableFormLogs';
 				$val   = 0;
 			} else {
-				$label = 'Enable ';
+				$label = __( 'Enable ', 'brizy' );
 				$class = 'enableFormLogs';
 				$val   = 1;
 			}
@@ -208,20 +208,20 @@ class Brizy_Admin_FormEntries {
 	static public function registerCustomPost() {
 
 		$labels = array(
-			'name'               => _x( 'Leads', 'post type general name' ),
-			'singular_name'      => _x( 'Lead', 'post type singular name' ),
-			'menu_name'          => _x( 'Leads', 'admin menu' ),
-			'name_admin_bar'     => _x( 'Lead', 'add new on admin bar' ),
-			'add_new'            => _x( 'Add New', self::CP_FORM_ENTRY ),
-			'add_new_item'       => __( 'Add New Lead' ),
-			'new_item'           => __( 'New Lead' ),
-			'edit_item'          => __( 'Edit Lead' ),
-			'view_item'          => __( 'View Lead' ),
-			'all_items'          => __( 'Leads' ),
-			'search_items'       => __( 'Search Leads' ),
-			'parent_item_colon'  => __( 'Parent Leads:' ),
-			'not_found'          => __( 'No Leads found.' ),
-			'not_found_in_trash' => __( 'No Leads found in Trash.' )
+			'name'               => _x( 'Leads', 'post type general name', 'brizy' ),
+			'singular_name'      => _x( 'Lead', 'post type singular name', 'brizy' ),
+			'menu_name'          => _x( 'Leads', 'admin menu', 'brizy' ),
+			'name_admin_bar'     => _x( 'Lead', 'add new on admin bar', 'brizy' ),
+			'add_new'            => _x( 'Add New', self::CP_FORM_ENTRY, 'brizy' ),
+			'add_new_item'       => __( 'Add New Lead', 'brizy' ),
+			'new_item'           => __( 'New Lead', 'brizy' ),
+			'edit_item'          => __( 'Edit Lead', 'brizy' ),
+			'view_item'          => __( 'View Lead', 'brizy' ),
+			'all_items'          => __( 'Leads', 'brizy' ),
+			'search_items'       => __( 'Search Leads', 'brizy' ),
+			'parent_item_colon'  => __( 'Parent Leads:', 'brizy' ),
+			'not_found'          => __( 'No Leads found.', 'brizy' ),
+			'not_found_in_trash' => __( 'No Leads found in Trash.', 'brizy' )
 		);
 
 		register_post_type( self::CP_FORM_ENTRY,
@@ -229,7 +229,7 @@ class Brizy_Admin_FormEntries {
 				'labels'              => $labels,
 				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __( 'Leads' ),
+				'description'         => __( 'Leads', 'brizy' ),
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
 				'show_ui'             => true,
 				'show_in_menu'        => false, //Brizy_Admin_Settings::menu_slug(),

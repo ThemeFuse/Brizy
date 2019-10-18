@@ -189,20 +189,20 @@ class Brizy_Admin_Templates {
 
 
 		$labels = array(
-			'name'               => _x( 'Templates', 'post type general name' ),
-			'singular_name'      => _x( 'Template', 'post type singular name' ),
-			'menu_name'          => _x( 'Templates', 'admin menu' ),
-			'name_admin_bar'     => _x( 'Template', 'add new on admin bar' ),
-			'add_new'            => _x( 'Add New', self::CP_TEMPLATE ),
-			'add_new_item'       => __( 'Add New Template' ),
-			'new_item'           => __( 'New Template' ),
-			'edit_item'          => __( 'Edit Template' ),
-			'view_item'          => __( 'View Template' ),
-			'all_items'          => __( 'Templates' ),
-			'search_items'       => __( 'Search Templates' ),
-			'parent_item_colon'  => __( 'Parent Templates:' ),
-			'not_found'          => __( 'No Templates found.' ),
-			'not_found_in_trash' => __( 'No Templates found in Trash.' )
+			'name'               => _( 'Templates', 'post type general name', 'brizy' ),
+			'singular_name'      => _x( 'Template', 'post type singular name', 'brizy' ),
+			'menu_name'          => _x( 'Templates', 'admin menu', 'brizy' ),
+			'name_admin_bar'     => _x( 'Template', 'add new on admin bar', 'brizy' ),
+			'add_new'            => _x( 'Add New', self::CP_TEMPLATE, 'brizy' ),
+			'add_new_item'       => __( 'Add New Template', 'brizy' ),
+			'new_item'           => __( 'New Template', 'brizy' ),
+			'edit_item'          => __( 'Edit Template', 'brizy' ),
+			'view_item'          => __( 'View Template', 'brizy' ),
+			'all_items'          => __( 'Templates', 'brizy' ),
+			'search_items'       => __( 'Search Templates', 'brizy' ),
+			'parent_item_colon'  => __( 'Parent Templates:', 'brizy' ),
+			'not_found'          => __( 'No Templates found.', 'brizy' ),
+			'not_found_in_trash' => __( 'No Templates found in Trash.', 'brizy' )
 		);
 
 		register_post_type( self::CP_TEMPLATE,
@@ -210,7 +210,7 @@ class Brizy_Admin_Templates {
 				'labels'              => $labels,
 				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __( __bt( 'brizy', 'Brizy' ) . ' templates.' ),
+				'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'templates','brizy' ) . '.',
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
 				'show_ui'             => true,
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),

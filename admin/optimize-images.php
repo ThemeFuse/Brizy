@@ -133,7 +133,6 @@ class Brizy_Admin_OptimizeImages {
 		$context['count']        = count( $urls );
 		$context['svgObject']    = file_get_contents( str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/spinner.svg" ) );
 		$context['svg']          = str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_URL . "/admin/static/img/spinner.svg#circle" );
-		$context['submit_label'] = __( 'Optimize images' );
 		$context['enabled']      = ( isset( $settings['shortpixel']['API_KEY'] ) && $settings['shortpixel']['API_KEY'] != '' ) ? 1 : 0;
 
 
@@ -247,11 +246,11 @@ class Brizy_Admin_OptimizeImages {
 					$attachment = $attachments[0];
 				}
 
-				if ( !isset($attachment) ) {
+				if ( ! isset( $attachment ) ) {
 					continue;
 				}
 
-				$media_url = get_attached_file( $attachment->ID );
+				$media_url   = get_attached_file( $attachment->ID );
 				$brizy_media = basename( $media_url );
 			}
 
@@ -295,13 +294,13 @@ class Brizy_Admin_OptimizeImages {
 		$tabs         = array(
 			array(
 				'id'          => 'general',
-				'label'       => 'Optimize',
+				'label'       => __( 'Optimize', 'brizy' ),
 				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
 			),
 			array(
 				'id'          => 'settings',
-				'label'       => 'Settings',
+				'label'       => __( 'Settings', 'brizy' ),
 				'is_selected' => $selected_tab == 'settings',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=settings"
 			),

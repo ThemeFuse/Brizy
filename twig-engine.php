@@ -62,6 +62,10 @@ class Brizy_TwigEngine {
 			return __( $key, $value );
 		} ) );
 
+		$this->environment->addFunction( new Twig_SimpleFunction( 'sprintf', function ( $string, $args ) {
+			return sprintf( $string, $args );
+		} ) );
+
 		if ( WP_DEBUG ) {
 			$this->environment->addFunction( new Twig_SimpleFunction( 'dump', function ( $value ) {
 				var_dump( $value );

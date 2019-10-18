@@ -82,7 +82,7 @@
         })(jQuery);
     </script>
     <div id="optimize-results">
-        <p>There are <b>{{ count }}</b> images that can be optimized.</p>
+        <p>{{ sprintf(__('There are <b>%d</b> images that can be optimized.','brizy') ,count) |raw }}</p>
     </div>
 
     {% if enabled %}
