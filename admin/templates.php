@@ -1,13 +1,5 @@
 <?php
 
-add_filter( 'brizy_supported_post_types', 'brizy_addTemplateSupport' );
-
-function brizy_addTemplateSupport( $posts ) {
-	$posts[] = Brizy_Admin_Templates::CP_TEMPLATE;
-
-	return $posts;
-}
-
 class Brizy_Admin_Templates {
 
 	const CP_TEMPLATE = 'brizy_template';
@@ -185,24 +177,31 @@ class Brizy_Admin_Templates {
 		}
 	}
 
+	static public function registerSupportedPostType() {
+		add_filter( 'brizy_supported_post_types', function ( $posts ) {
+			$posts[] = Brizy_Admin_Templates::CP_TEMPLATE;
+
+			return $posts;
+		} );
+	}
+
 	static public function registerCustomPostTemplate() {
 
-
 		$labels = array(
-			'name'               => _x( 'Templates', 'post type general name' ),
-			'singular_name'      => _x( 'Template', 'post type singular name' ),
-			'menu_name'          => _x( 'Templates', 'admin menu' ),
-			'name_admin_bar'     => _x( 'Template', 'add new on admin bar' ),
-			'add_new'            => _x( 'Add New', self::CP_TEMPLATE ),
-			'add_new_item'       => __( 'Add New Template' ),
-			'new_item'           => __( 'New Template' ),
-			'edit_item'          => __( 'Edit Template' ),
-			'view_item'          => __( 'View Template' ),
-			'all_items'          => __( 'Templates' ),
-			'search_items'       => __( 'Search Templates' ),
-			'parent_item_colon'  => __( 'Parent Templates:' ),
-			'not_found'          => __( 'No Templates found.' ),
-			'not_found_in_trash' => __( 'No Templates found in Trash.' )
+			'name'               => _x( 'Templates', 'post type general name', 'brizy' ),
+			'singular_name'      => _x( 'Template', 'post type singular name', 'brizy' ),
+			'menu_name'          => _x( 'Templates', 'admin menu', 'brizy' ),
+			'name_admin_bar'     => _x( 'Template', 'add new on admin bar', 'brizy' ),
+			'add_new'            => _x( 'Add New', self::CP_TEMPLATE, 'brizy' ),
+			'add_new_item'       => __( 'Add New Template', 'brizy' ),
+			'new_item'           => __( 'New Template', 'brizy' ),
+			'edit_item'          => __( 'Edit Template', 'brizy' ),
+			'view_item'          => __( 'View Template', 'brizy' ),
+			'all_items'          => __( 'Templates', 'brizy' ),
+			'search_items'       => __( 'Search Templates', 'brizy' ),
+			'parent_item_colon'  => __( 'Parent Templates:', 'brizy' ),
+			'not_found'          => __( 'No Templates found.', 'brizy' ),
+			'not_found_in_trash' => __( 'No Templates found in Trash.', 'brizy' )
 		);
 
 		register_post_type( self::CP_TEMPLATE,
