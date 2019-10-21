@@ -299,17 +299,15 @@ export function css(
       cssOrdered.default.push(defaultData);
       cssCache.set(defaultID, defaultData);
     } else {
-      if (process.env.NODE_ENV === "development") {
-        const { node, className, cssText } = defaultData;
-        const cssTextNext = replacePlaceholders(defaultStyle, className);
+      const { node, className, cssText } = defaultData;
+      const cssTextNext = replacePlaceholders(defaultStyle, className);
 
-        if (cssTextNext !== cssText) {
-          if (!css.isServer) {
-            node.childNodes[0].nodeValue = cssTextNext;
-          }
-
-          defaultData.cssText = cssTextNext;
+      if (cssTextNext !== cssText) {
+        if (!css.isServer) {
+          node.childNodes[0].nodeValue = cssTextNext;
         }
+
+        defaultData.cssText = cssTextNext;
       }
     }
   }

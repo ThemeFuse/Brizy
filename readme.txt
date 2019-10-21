@@ -139,6 +139,11 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.99 - 2019-10-21 =
+* Fixed: Register Brizy supported custom posts on plugin initialization to be able to run migrations
+* Fixed: Button not changing colors when switching styles
+* Fixed: Load default project font on preview
+
 = 1.0.98 - 2019-10-17 =
 * Fixed: Register custom templates if upgrading from a version < 1.0.70
 * Fixed: Dynamic content context generation

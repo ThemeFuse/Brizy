@@ -1,13 +1,5 @@
 <?php
 
-add_filter( 'brizy_supported_post_types', 'brizy_addTemplateSupport' );
-
-function brizy_addTemplateSupport( $posts ) {
-	$posts[] = Brizy_Admin_Templates::CP_TEMPLATE;
-
-	return $posts;
-}
-
 class Brizy_Admin_Templates {
 
 	const CP_TEMPLATE = 'brizy_template';
@@ -185,8 +177,15 @@ class Brizy_Admin_Templates {
 		}
 	}
 
-	static public function registerCustomPostTemplate() {
+	static public function registerSupportedPostType() {
+		add_filter( 'brizy_supported_post_types', function ( $posts ) {
+			$posts[] = Brizy_Admin_Templates::CP_TEMPLATE;
 
+			return $posts;
+		} );
+	}
+
+	static public function registerCustomPostTemplate() {
 
 		$labels = array(
 			'name'               => _( 'Templates', 'post type general name', 'brizy' ),

@@ -31,14 +31,15 @@ class Brizy_Admin_Blocks_Main {
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_filter( 'brizy_global_data', array( $this, 'populateGlobalData' ) );
-		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
 	}
 
-	public function populateSupportedPosts( $types ) {
-		$types[] = self::CP_SAVED;
-		$types[] = self::CP_GLOBAL;
+	static public function registerSupportedPostType() {
+		add_filter( 'brizy_supported_post_types', function ( $posts ) {
+			$posts[] = self::CP_SAVED;
+			$posts[] = self::CP_GLOBAL;
 
-		return $types;
+			return $posts;
+		} );
 	}
 
 	/**

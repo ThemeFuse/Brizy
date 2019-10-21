@@ -26,7 +26,6 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
-		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
 		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
 
@@ -37,6 +36,14 @@ class Brizy_Admin_Popups_Main {
 
 	public function removePageAttributes() {
 		remove_meta_box( 'pageparentdiv', self::CP_POPUP, 'side' );
+	}
+
+	static public function registerSupportedPostType() {
+		add_filter( 'brizy_supported_post_types', function ( $posts ) {
+			$posts[] = self::CP_POPUP;
+
+			return $posts;
+		} );
 	}
 
 	static public function registerCustomPosts() {
@@ -84,16 +91,10 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	/**
-	 * @param $types
+	 * @param $post
 	 *
-	 * @return array
+	 * @throws Exception
 	 */
-	public function populateSupportedPosts( $types ) {
-		$types[] = self::CP_POPUP;
-
-		return $types;
-	}
-
 	public function afterBrizyEnabledForPopup( $post ) {
 		if ( $post->post_type === Brizy_Admin_Popups_Main::CP_POPUP ) {
 			$manager = new Brizy_Admin_Rules_Manager();
