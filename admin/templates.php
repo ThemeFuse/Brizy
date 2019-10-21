@@ -188,7 +188,7 @@ class Brizy_Admin_Templates {
 	static public function registerCustomPostTemplate() {
 
 		$labels = array(
-			'name'               => _( 'Templates', 'post type general name', 'brizy' ),
+			'name'               => _x( 'Templates', 'post type general name', 'brizy' ),
 			'singular_name'      => _x( 'Template', 'post type singular name', 'brizy' ),
 			'menu_name'          => _x( 'Templates', 'admin menu', 'brizy' ),
 			'name_admin_bar'     => _x( 'Template', 'add new on admin bar', 'brizy' ),
