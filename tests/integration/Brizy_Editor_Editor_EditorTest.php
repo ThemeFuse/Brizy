@@ -1,7 +1,7 @@
 <?php
 
 
-class Brizy_Editor_Editor_EditorTest extends \Codeception\Test\Unit {
+class Brizy_Editor_Editor_EditorTest extends \Codeception\TestCase\WPTestCase {
 
 
 	/**
