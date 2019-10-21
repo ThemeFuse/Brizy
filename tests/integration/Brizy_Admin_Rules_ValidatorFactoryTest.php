@@ -1,7 +1,7 @@
 <?php
 
 
-class Brizy_Admin_Rules_ValidatorFactoryTest extends \Codeception\Test\Unit {
+class Brizy_Admin_Rules_ValidatorFactoryTest extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * @var \IntegrationTester

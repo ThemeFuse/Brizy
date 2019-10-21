@@ -32,6 +32,7 @@ class Brizy_Content_MainProcessor {
 
 		$this->processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
 		$this->processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
+		$this->processors[] = new Brizy_Editor_Asset_SvgAssetProcessor(  );
 
 		$this->processors = apply_filters( 'brizy_content_processors', $this->processors, $context );
 

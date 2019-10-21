@@ -1,6 +1,6 @@
 <?php
 
-class BlockTest extends \Codeception\Test\Unit {
+class BlockTest extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * @var \UnitTester
