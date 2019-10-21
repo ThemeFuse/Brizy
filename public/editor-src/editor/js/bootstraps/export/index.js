@@ -17,7 +17,11 @@ import {
   getUsedStylesFonts,
   getBlocksStylesFonts
 } from "visual/utils/traverse";
-import { findFonts, projectFontsData } from "visual/utils/fonts";
+import {
+  findFonts,
+  projectFontsData,
+  getDefaultFont
+} from "visual/utils/fonts";
 
 import { createStore } from "visual/redux/store";
 import { hydrate } from "visual/redux/actions";
@@ -79,7 +83,7 @@ function getPageMeta({ page }) {
 function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   const store = createStore();
   const project = parseProject(_project);
-  const { fonts } = project.data;
+  const { fonts, font: projectDefaultFont } = project.data;
 
   // NEW FONTS FOUND
   // some fonts are found in models
@@ -141,8 +145,13 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
     upload: []
   };
   const { upload = [], google = [] } = projectFontsData(_fonts);
+  let includedDefaultProjectFont = false;
 
   parsedFonts.forEach(({ type, family }) => {
+    if (!includedDefaultProjectFont) {
+      includedDefaultProjectFont = projectDefaultFont === family;
+    }
+
     switch (type) {
       case "upload": {
         fontMap.upload.push(findFonts(upload, family, "upload"));
@@ -165,6 +174,17 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
       }
     }
   });
+
+  // Added Default project font
+  if (!includedDefaultProjectFont) {
+    const { group, font } = getDefaultFont();
+
+    if (group === "upload") {
+      fontMap.upload.push(font);
+    } else {
+      fontMap.google.push(font);
+    }
+  }
 
   // transforms
   changeRichTextDCColor($pageHTML);
