@@ -26,8 +26,10 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
-		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
+		//add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
+		add_action( 'wp_head', array( $this, 'insertPopupsInHead' ) );
+		add_action( 'wp_footer', array( $this, 'insertPopupsInFooter' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'removePageAttributes' ) );
@@ -47,7 +49,6 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	static public function registerCustomPosts() {
-
 
 		$labels = array(
 			'name'               => _x( 'Popups', 'post type general name' ),
@@ -74,7 +75,7 @@ class Brizy_Admin_Popups_Main {
 				'has_archive'         => false,
 				'description'         => __( 'Popups', 'brizy' ),
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
-				'show_ui'             => defined('BRIZY_PRO_VERSION'),
+				'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => 'brizy-popup' ),
@@ -106,61 +107,26 @@ class Brizy_Admin_Popups_Main {
 		}
 	}
 
-	/**
-	 * @param $content
-	 * @param $project
-	 * @param $wpPost
-	 * @param $context
-	 *
-	 * @return mixed
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function insertPopupsHtml( $content, $project, $wpPost, $context = 'document' ) {
-		$popups = $this->getMatchingBrizyPopups();
-
+	public function insertPopupsInHead() {
+		$popups    = $this->getMatchingBrizyPopups();
+		$pid       = Brizy_Editor::get()->currentPostId();
+		$brizyPost = get_post( $pid );
 		foreach ( $popups as $brizyPopup ) {
 			$compiledPage = $brizyPopup->get_compiled_page();
-
-			if ( $context == 'document' ) {
-				$content = $this->insertInDocumentHead( $content, $compiledPage->get_head() );
-				$content = $this->insertInDocumentBody( $content, $compiledPage->get_body() );
-			}
-
-			if ( $context == 'head' ) {
-				$content = $this->insertHead( $content, $compiledPage->get_head() );
-			}
-
-			if ( $context == 'body' ) {
-				$content = $this->insertBody( $content, $compiledPage->get_body() );
-			}
+			echo "\n\n<!-- POPUP HEAD INSERT START-->\n" . apply_filters( 'brizy_content', $compiledPage->get_head(), Brizy_Editor_Project::get(), $brizyPost ) . "\n<!-- POPUP HEAD INSERT END-->\n\n";
 		}
-
-		return $content;
 	}
 
-	private function insertHead( $target, $headContent ) {
-
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n";
+	public function insertPopupsInFooter() {
+		$popups    = $this->getMatchingBrizyPopups();
+		$pid       = Brizy_Editor::get()->currentPostId();
+		$brizyPost = get_post( $pid );
+		foreach ( $popups as $brizyPopup ) {
+			$compiledPage = $brizyPopup->get_compiled_page();
+			echo "\n\n<!-- POPUP BODY INSERT START-->\n" . apply_filters( 'brizy_content', $compiledPage->get_body(), Brizy_Editor_Project::get(), $brizyPost ) . "\n<!-- POPUP BODY INSERT END-->\n\n";
+		}
 	}
 
-	private function insertBody( $target, $bodyContent ) {
-
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n";
-	}
-
-	private function insertInDocumentHead( $target, $headContent ) {
-
-		$target = preg_replace( "/(<head[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n", $target );
-
-		return $target;
-	}
-
-	private function insertInDocumentBody( $target, $bodyContent ) {
-
-		$target = preg_replace( "/(<body[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n", $target );
-
-		return $target;
-	}
 
 	/**
 	 * @return array

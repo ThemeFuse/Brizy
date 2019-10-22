@@ -119,7 +119,7 @@ class Brizy_Admin_OptimizeImages {
 
 				$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
 
-				$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $brizyPost->get_wp_post(), 'document' );
+				$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $brizyPost->get_wp_post());
 
 				$urls = array_merge( $urls, $this->extract_media_urls( $content, $filesystem ) );
 			} catch ( Exception $e ) {

@@ -36,7 +36,6 @@ class PopupsMainCest {
 			],
 		] );
 
-
 		$I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Popups_Main::CP_POPUP,
 			'post_title'  => 'Popup',
@@ -70,6 +69,8 @@ class PopupsMainCest {
 				] ),
 			],
 		] );
+
+		$I->havePostInDatabase( [ 'post_type' => 'page' ] );
 	}
 
 	public function testInsertPopupsHtml( FunctionalTester $I ) {
@@ -113,22 +114,22 @@ class PopupsMainCest {
 <body class="test-class"></body>
 </html>';
 
-		$main    = new Brizy_Admin_Popups_Main();
-		$content = $main->insertPopupsHtml( $targetHtml, null, null, 'document' );
+		$pageId = $I->havePostInDatabase( [ 'post_type' => 'page' ] );
+		$pageUrl = get_permalink( $pageId );
 
-		$compiledHtml = new Brizy_Editor_CompiledHtml( $content );
-		$I->assertStringContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_head(), 'It should include styles in head' );
-		$I->assertStringNotContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_body(), 'It should not include styles in body' );
+		$I->sendGET( $pageUrl );
+		$response = $I->grabResponse();
 
-		$I->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_head(), 'It should not include HTML code in head' );
-		$I->assertStringContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_body(), 'It should include HTML code in body' );
+
+		$I->assertStringContainsString( 'INCLUDE THIS CSS CODE', $response, 'It should include styles in head' );
+		$I->assertStringContainsString( 'INCLUDE THIS HTML CODE', $response, 'It should include HTML code in body' );
 	}
 
 	public function testExcludeRule( FunctionalTester $I ) {
 
 		global $wp_query;
 
-		$I->dontHavePostInDatabase(['post_type'=>Brizy_Admin_Popups_Main::CP_POPUP]);
+		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Popups_Main::CP_POPUP ] );
 
 		$postId = $I->havePostInDatabase( [
 			'post_type'   => 'post',
@@ -221,29 +222,16 @@ class PopupsMainCest {
 		] );
 
 
-		$wp_query->post              = $wp_query->queried_object = get_post( $postId );
-		$wp_query->queried_object_id = $postId;
+		$pageUrl = get_permalink( $postId );
 
-		$targetHtml = '<!DOCTYPE html>
-						<html lang="en">
-						<head>
-						    <meta charset="UTF-8">
-						    <title>Title</title>
-						</head>
-						<body class="test-class"></body>
-						</html>';
+		$I->sendGET( $pageUrl );
+		$response = $I->grabResponse();
 
-		$main    = new Brizy_Admin_Popups_Main();
+		$I->assertStringNotContainsString( 'INCLUDE THIS CSS CODE', $response, 'It should not include styles in head' );
+		$I->assertStringNotContainsString( 'INCLUDE THIS CSS CODE', $response, 'It should not include styles in body' );
 
-		// it should not be applied bacause of exclude rule
-		$content = $main->insertPopupsHtml( $targetHtml, null, null, 'document' );
-
-		$compiledHtml = new Brizy_Editor_CompiledHtml( $content );
-		$I->assertStringNotContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_head(), 'It should not include styles in head' );
-		$I->assertStringNotContainsString( 'INCLUDE THIS CSS CODE', $compiledHtml->get_body(), 'It should not include styles in body' );
-
-		$I->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_head(), 'It should not include HTML code in head' );
-		$I->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $compiledHtml->get_body(), 'It should not include HTML code in body' );
+		$I->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $response, 'It should not include HTML code in head' );
+		$I->assertStringNotContainsString( 'INCLUDE THIS HTML CODE', $response, 'It should not include HTML code in body' );
 	}
 
 }
