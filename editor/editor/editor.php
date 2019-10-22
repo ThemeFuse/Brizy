@@ -94,7 +94,7 @@ class Brizy_Editor_Editor_Editor {
 			$preview_post_link = $this->getPreviewUrl( $this->post->get_wp_post() );
 
 			$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' ) );
-			$templates           = apply_filters( "brizy:templates", $this->post->get_templates() );
+			$templates           = $this->post->get_templates();
 			$isTemplate          = $parent_post_type == Brizy_Admin_Templates::CP_TEMPLATE;
 			$isPopup             = $parent_post_type == Brizy_Admin_Popups_Main::CP_POPUP;
 		}
