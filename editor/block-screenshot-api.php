@@ -114,7 +114,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function getFileExtensionByContent( $content ) {
-		$tmpfname = tempnam( "/tmp", "blockScreenShot" );
+		$tmpfname = tempnam( sys_get_temp_dir(), "blockScreenShot" );
 
 		$handle = fopen( $tmpfname, "w" );
 		fwrite( $handle, $content );

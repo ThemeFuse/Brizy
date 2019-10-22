@@ -99,7 +99,7 @@ class Integration extends \Codeception\Module {
 
 
 	public function makeTemporaryFile( $sourcePath ) {
-		$tmpfname = tempnam( "/tmp", basename( $sourcePath ) );
+		$tmpfname = tempnam( sys_get_temp_dir(), basename( $sourcePath ) );
 		if ( copy( $sourcePath, $tmpfname ) ) {
 			return $tmpfname;
 		}
