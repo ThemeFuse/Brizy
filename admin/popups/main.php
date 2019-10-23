@@ -169,9 +169,7 @@ class Brizy_Admin_Popups_Main {
 	public function getMatchingBrizyPopups() {
 		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
-		$popups = $this->findMatchingPopups( $applyFor, $entityType, $entityValues );
-
-		return $popups;
+		return $this->findMatchingPopups( $applyFor, $entityType, $entityValues );
 	}
 
 	/**

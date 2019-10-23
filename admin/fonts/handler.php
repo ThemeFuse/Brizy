@@ -66,11 +66,10 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 		$twigEngine->getEnvironment()
 		           ->addFilter( new Twig_SimpleFilter( 'fontType', function ( $type ) {
 
-			           switch ( $type ) {
-				           case 'ttf':
-					           return 'truetype';
-				           default:
-					           return $type;
+			           if ( $type == 'ttf' ) {
+				           return 'truetype';
+			           } else {
+				           return $type;
 			           }
 
 		           } ) );

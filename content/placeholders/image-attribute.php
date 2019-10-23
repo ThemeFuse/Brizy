@@ -71,18 +71,18 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 	protected function getAttachmentIdByByUid( $uid, Brizy_Content_Context $context ) {
 		global $wpdb;
 
-		$posts_table  = $wpdb->posts;
-		$meta_table   = $wpdb->postmeta;
+		$pt  = $wpdb->posts;
+		$mt   = $wpdb->postmeta;
 		$attachmentId = $wpdb->get_var( $wpdb->prepare(
 			"SELECT 
-						{$posts_table}.ID
-					FROM {$posts_table}
-						INNER JOIN {$meta_table} ON ( {$posts_table}.ID = {$meta_table}.post_id )
+						{$pt}.ID
+					FROM {$pt}
+						INNER JOIN {$mt} ON ( {$pt}.ID = {$mt}.post_id )
 					WHERE 
-						( {$meta_table}.meta_key = 'brizy_attachment_uid' 
-						AND {$meta_table}.meta_value = %s )
-						AND {$posts_table}.post_type = 'attachment'
-					ORDER BY {$posts_table}.post_date DESC",
+						( {$mt}.meta_key = 'brizy_attachment_uid' 
+						AND {$mt}.meta_value = %s )
+						AND {$pt}.post_type = 'attachment'
+					ORDER BY {$pt}.post_date DESC",
 			$uid
 		) );
 

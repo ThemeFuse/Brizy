@@ -22,7 +22,7 @@ class Brizy_Compatibilities_WPML {
 		global $wpml_post_translations;
 		$postType = $post->post_type;
 
-		if(isset($_POST['langs']) && isset($_POST['langs']) ) {
+		if(isset($_POST['langs'])  ) {
 			if ( $wpml_post_translations && is_post_type_translated( $postType ) ) {
 				$currentBrizyPost = Brizy_Editor_Post::get( (int) $postId );
 				$originalBrizyPost = Brizy_Editor_Post::get( (int) $_POST['post_id'] );

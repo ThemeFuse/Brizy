@@ -313,7 +313,6 @@ class Brizy_Editor_UrlBuilder
 	 * @param null $template_version
 	 *
 	 * @return Brizy_Admin_UrlIterator
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
     public function external_asset_url($path = null, $template_version = null)
     {
@@ -334,11 +333,10 @@ class Brizy_Editor_UrlBuilder
         return new Brizy_Admin_UrlIterator($urls);
     }
 
-    /**
+	/**
 	 * @param null $template_version
 	 *
-	 * @return Brizy_Admin_UrlIterator
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return string
 	 */
     public function external_fonts_url($template_version = null)
     {
@@ -348,6 +346,7 @@ class Brizy_Editor_UrlBuilder
         }
 
         $url = Brizy_Config::FONTS_URL;
+
         return sprintf($url, $template_version);
     }
 }

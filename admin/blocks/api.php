@@ -298,7 +298,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->error( '400', 'Unable to save block positions' );
 		}
 
-		$this->success( '200', json_encode( $positionObject ) );
+		$this->success( json_encode( $positionObject ) );
 	}
 
 

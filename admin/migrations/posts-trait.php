@@ -64,7 +64,7 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			if ( is_array( $value ) ) {
 				$value = $this->array_walk_recursive_and_delete( $value, $callback, $userdata );
 				// if is shortcode parse recursive
-				if ( isset( $value['type'] ) && isset( $value['value'] ) ) {
+				if ( isset( $value['type'], $value['value'] ) ) {
 					$this->parse_shortcodes( $value );
 				}
 			}
@@ -87,7 +87,7 @@ trait Brizy_Admin_Migrations_PostsTrait {
 				return empty( $value );
 			}
 
-			if ( isset( $value['type'] ) && isset( $value['value'] ) ) {
+			if ( isset( $value['type'], $value['value'] ) ) {
 				// if is shortcode return true
 				return true;
 			}
@@ -129,9 +129,7 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			foreach ( $atts['delete_keys'] as $key_to_delete ) {
 				// replace "prefix" with empty string then make first letter lowercase
 				$key = lcfirst( str_replace( $atts['key_prefix'], "", $key_to_delete ) );
-				if ( isset( $array['value'][ $key ] )
-				     && isset( $array['value'][ $key_to_delete ] )
-				     && $array['value'][ $key ] === $array['value'][ $key_to_delete ] ) {
+				if ( isset( $array['value'][ $key ], $array['value'][ $key_to_delete ] ) && $array['value'][ $key ] === $array['value'][ $key_to_delete ] ) {
 					$keys_to_remove[] = $key_to_delete;
 				}
 			}

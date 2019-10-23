@@ -131,7 +131,7 @@ class Brizy_Admin_Settings {
 	}
 
 	private function get_selected_tab() {
-		return $tab = ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : null;
+		return  ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : null;
 	}
 
 	private function get_tabs() {

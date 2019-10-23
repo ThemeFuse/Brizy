@@ -108,9 +108,7 @@ abstract class Brizy_Admin_Rules_AbstractValidator implements Brizy_Admin_Rules_
 
 		$rules = self::sortRules( $rules );
 
-		$ruleSet = new Brizy_Admin_RuleSet( $rules );
-
-		return $ruleSet;
+		return new Brizy_Admin_RuleSet( $rules );
 	}
 
 	/**

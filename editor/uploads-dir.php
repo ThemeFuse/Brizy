@@ -57,7 +57,7 @@ class Brizy_Editor_UploadsDir {
 			$path .=  $rel;
 		}
 
-		if ( ! file_exists( $path ) && ! mkdir( $path ) ) {
+		if ( ! file_exists( $path ) && ! mkdir( $path ) && ! is_dir( $path ) ) {
 			throw new Brizy_Editor_Exceptions_AccessDenied(
 				'Cannot create static directory. Please check permissions'
 			);

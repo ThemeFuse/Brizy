@@ -50,7 +50,9 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			$dir_path = dirname( $asset_path );
 
 			if ( ! file_exists( $dir_path ) ) {
-				@mkdir( $dir_path, 0755, true );
+				if ( ! mkdir( $dir_path, 0755, true ) && ! is_dir( $dir_path ) ) {
+					throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $dir_path ) );
+				}
 			}
 
 			$content = self::get_asset_content( $asset_source );

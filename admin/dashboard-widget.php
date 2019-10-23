@@ -50,7 +50,7 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 				return $request->get_error_message();
 
-			} elseif ( ! isset( $request['response'] ) || ! isset( $request['response']['code'] ) || ! is_array( $request['response'] ) ) {
+			} elseif ( ! isset( $request['response'], $request['response']['code'] ) || ! is_array( $request['response'] ) ) {
 
 				return esc_html__( 'Something went wrong. There is no a valid response code.', 'brizy' );
 

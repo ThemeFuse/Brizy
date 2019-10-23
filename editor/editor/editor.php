@@ -430,7 +430,7 @@ class Brizy_Editor_Editor_Editor {
 								return addQueryStringToUrl( get_search_link( 'find-me' ), 'preview=1' );
 								break;
 							case '404':
-								return addQueryStringToUrl( get_home_url( null, (string)time() ), 'preview=1' );
+								return addQueryStringToUrl( get_home_url( null, (string) time() ), 'preview=1' );
 								break;
 							case 'home_page':
 								$get_option = get_option( 'page_for_posts' );
@@ -570,6 +570,7 @@ class Brizy_Editor_Editor_Editor {
 	private function roleList() {
 		$editable_roles = wp_roles()->roles;
 		$editable_roles = apply_filters( 'editable_roles', $editable_roles );
+		$roles          = array();
 		foreach ( $editable_roles as $role => $details ) {
 			$sub['role'] = esc_attr( $role );
 			$sub['name'] = translate_user_role( $details['name'] );
