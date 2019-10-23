@@ -94,8 +94,12 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   let blocksFonts = [];
 
   getBlocksStylesFonts(parsedFonts, fonts).forEach(({ type, family }) => {
-    if (type === "google") {
-      blocksFonts.push(findFonts(googleFonts, family));
+    if (type === "google" || type === "unknowns") {
+      const font = findFonts(googleFonts, family);
+
+      if (font) {
+        blocksFonts.push(font);
+      }
     }
   });
 
@@ -168,7 +172,10 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
           fontMap.upload.push(uploadFont);
         } else {
           const googleFont = findFonts(google, family);
-          fontMap.google.push(googleFont);
+
+          if (googleFont) {
+            fontMap.google.push(googleFont);
+          }
         }
         break;
       }

@@ -19,7 +19,7 @@ class FacebookComments extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  getAppData() {
+  getAppDataEditor() {
     //const { social = [] } = Config.get("applications");
     //const facebook = social.find(({ service }) => service === "facebook");
 
@@ -29,17 +29,29 @@ class FacebookComments extends EditorComponent {
       // comments au nevoie obligatoriu de appId si lang si in editor noi nu avem replacer, cind o sa avem o sa schimbam
 
       appId: 113869198637480,
-      //href: "{{ brizy_dc_current_page_unique_url }}",
       href: "http://brizy.io",
-
-      //lang: "{{ brizy_dc_page_language }}"
       lang: "en_US"
+    };
+  }
+
+  getAppDataPreview() {
+    //const { social = [] } = Config.get("applications");
+    //const facebook = social.find(({ service }) => service === "facebook");
+
+    return {
+      //appId: facebook && facebook.appid ? facebook.appid : "nick",
+
+      // comments au nevoie obligatoriu de appId si lang si in editor noi nu avem replacer, cind o sa avem o sa schimbam
+
+      appId: 113869198637480,
+      href: "{{ brizy_dc_current_page_unique_url }}",
+      lang: "{{ brizy_dc_page_language }}"
     };
   }
 
   renderForEdit(v, vs, vd) {
     const { numPosts, darkScheme, targetUrl, href } = v;
-    const appData = this.getAppData();
+    const appData = this.getAppDataEditor();
     const data = {
       width: "100%",
       numPosts,
@@ -70,7 +82,7 @@ class FacebookComments extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { numPosts, darkScheme, targetUrl, href } = v;
-    const appData = this.getAppData();
+    const appData = this.getAppDataPreview();
     const data = {
       "data-width": "100%",
       "data-numposts": numPosts,
