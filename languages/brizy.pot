@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-10-18 11:56+0300\n"
+"POT-Creation-Date: 2019-10-23 14:55+0300\n"
 "PO-Revision-Date: 2018-08-14 16:04+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;esc_attr_e\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;esc_attr_e;_bt\n"
 "X-Poedit-SearchPath-0: brizy/languages\n"
 "X-Poedit-SearchPath-1: brizy\n"
 "X-Poedit-SearchPath-2: brizy-pro\n"
@@ -112,16 +112,16 @@ msgstr ""
 msgid "Dynamic content"
 msgstr ""
 
-#: brizy/admin/blocks/main.php:99
+#: brizy/admin/blocks/main.php:100
 msgctxt "post type general name"
 msgid "Global blocks"
 msgstr ""
 
-#: brizy/admin/blocks/main.php:107 brizy/admin/blocks/main.php:129
+#: brizy/admin/blocks/main.php:108 brizy/admin/blocks/main.php:130
 msgid "global block."
 msgstr ""
 
-#: brizy/admin/blocks/main.php:121
+#: brizy/admin/blocks/main.php:122
 msgctxt "brizy"
 msgid "Saved blocks"
 msgstr ""
@@ -246,68 +246,72 @@ msgstr ""
 msgid "Optimize"
 msgstr ""
 
-#: brizy/admin/popups/main.php:46
+#: brizy/admin/popups/main.php:53
 msgctxt "post type general name"
 msgid "Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:47
+#: brizy/admin/popups/main.php:54
 msgctxt "post type singular name"
 msgid "Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:48
+#: brizy/admin/popups/main.php:55
 msgctxt "admin menu"
 msgid "Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:49
+#: brizy/admin/popups/main.php:56
 msgctxt "add new on admin bar"
 msgid "Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:51
+#: brizy/admin/popups/main.php:58
 msgid "Add New Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:52
+#: brizy/admin/popups/main.php:59
 msgid "New Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:53
+#: brizy/admin/popups/main.php:60
 msgid "Edit Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:54
+#: brizy/admin/popups/main.php:61
 msgid "View Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:55 brizy/admin/popups/main.php:68
+#: brizy/admin/popups/main.php:62 brizy/admin/popups/main.php:75
 msgid "Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:56
+#: brizy/admin/popups/main.php:63
 msgid "Search Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:57
+#: brizy/admin/popups/main.php:64
 msgid "Parent Popups:"
 msgstr ""
 
-#: brizy/admin/popups/main.php:58
+#: brizy/admin/popups/main.php:65
 msgid "No Popups found."
 msgstr ""
 
-#: brizy/admin/popups/main.php:59
+#: brizy/admin/popups/main.php:66
 msgid "No Popups found in Trash."
 msgstr ""
 
-#: brizy/admin/popups/main.php:60
+#: brizy/admin/popups/main.php:67
 msgid "Popup attributes:"
 msgstr ""
 
-#: brizy/admin/settings.php:103
+#: brizy/admin/settings.php:103 brizy/admin/settings.php:148
 msgid "Role Manager"
+msgstr ""
+
+#: brizy/admin/settings.php:142
+msgid "General"
 msgstr ""
 
 #: brizy/admin/settings.php:255
@@ -318,108 +322,113 @@ msgstr ""
 msgid "Full Access"
 msgstr ""
 
-#: brizy/admin/templates.php:122 brizy/admin/templates.php:125
+#: brizy/admin/templates.php:114 brizy/admin/templates.php:117
 msgid "Template updated."
 msgstr ""
 
-#: brizy/admin/templates.php:123
+#: brizy/admin/templates.php:115
 msgid "Custom field updated."
 msgstr ""
 
-#: brizy/admin/templates.php:124
+#: brizy/admin/templates.php:116
 msgid "Custom field deleted."
 msgstr ""
 
-#: brizy/admin/templates.php:127
+#: brizy/admin/templates.php:119
 #, php-format
 msgid "Template restored to revision from %s"
 msgstr ""
 
-#: brizy/admin/templates.php:128
+#: brizy/admin/templates.php:120
 msgid "Template published."
 msgstr ""
 
-#: brizy/admin/templates.php:129
+#: brizy/admin/templates.php:121
 msgid "Template saved."
 msgstr ""
 
-#: brizy/admin/templates.php:130
+#: brizy/admin/templates.php:122
 msgid "Template submitted."
 msgstr ""
 
-#: brizy/admin/templates.php:132
+#: brizy/admin/templates.php:124
 #, php-format
 msgid "Template scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: brizy/admin/templates.php:134
+#: brizy/admin/templates.php:126
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: brizy/admin/templates.php:136
+#: brizy/admin/templates.php:128
 msgid "Template draft updated."
 msgstr ""
 
-#: brizy/admin/templates.php:142 brizy/admin/templates.php:200
+#: brizy/admin/templates.php:134 brizy/admin/templates.php:199
 msgid "View Template"
 msgstr ""
 
-#: brizy/admin/templates.php:148
+#: brizy/admin/templates.php:140
 msgid "Preview Template"
 msgstr ""
 
-#: brizy/admin/templates.php:192 brizy/admin/templates.php:201
+#: brizy/admin/templates.php:191
+msgctxt "post type general name"
 msgid "Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:193
+#: brizy/admin/templates.php:192
 msgctxt "post type singular name"
 msgid "Template"
 msgstr ""
 
-#: brizy/admin/templates.php:194
+#: brizy/admin/templates.php:193
 msgctxt "admin menu"
 msgid "Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:195
+#: brizy/admin/templates.php:194
 msgctxt "add new on admin bar"
 msgid "Template"
 msgstr ""
 
-#: brizy/admin/templates.php:197
+#: brizy/admin/templates.php:196
 msgid "Add New Template"
 msgstr ""
 
-#: brizy/admin/templates.php:198
+#: brizy/admin/templates.php:197
 msgid "New Template"
 msgstr ""
 
-#: brizy/admin/templates.php:199
+#: brizy/admin/templates.php:198
 msgid "Edit Template"
 msgstr ""
 
-#: brizy/admin/templates.php:202
+#: brizy/admin/templates.php:200
+msgid "Templates"
+msgstr ""
+
+#: brizy/admin/templates.php:201
 msgid "Search Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:203
+#: brizy/admin/templates.php:202
 msgid "Parent Templates:"
 msgstr ""
 
-#: brizy/admin/templates.php:204
+#: brizy/admin/templates.php:203
 msgid "No Templates found."
 msgstr ""
 
-#: brizy/admin/templates.php:205
+#: brizy/admin/templates.php:204
 msgid "No Templates found in Trash."
 msgstr ""
 
-#: brizy/admin/templates.php:213
+#: brizy/admin/templates.php:212
 msgid "templates"
 msgstr ""
 
-#: brizy/admin/templates.php:231
+#: brizy/admin/templates.php:230
 msgid "Display Conditions"
 msgstr ""
 
@@ -480,7 +489,7 @@ msgstr ""
 msgid "Continue to edit with "
 msgstr ""
 
-#: brizy/editor.php:200
+#: brizy/editor.php:178
 msgid " Template"
 msgstr ""
 
@@ -489,7 +498,7 @@ msgstr ""
 msgid "There is nothing to save. The autosave and the post content are the same."
 msgstr ""
 
-#: brizy/editor/post.php:780
+#: brizy/editor/post.php:781
 msgid "Default"
 msgstr ""
 
