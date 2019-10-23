@@ -106,7 +106,7 @@ export const normalizeFonts = async newFonts => {
     }
 
     // has problems with RichText
-    // old blocks and sometime type has not existed
+    // old blocks sometime don't have type
     if (type === "unknowns") {
       const normalizeFont = findFonts(uploadedFonts, family, "upload");
 
