@@ -111,10 +111,12 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 	/**
 	 * @param $data
 	 *
+	 * @param null $instance
+	 *
 	 * @return Brizy_Editor_Forms_ServiceIntegration|Brizy_Editor_Forms_WordpressIntegration|void|null
 	 */
 	public static function createFromSerializedData( $data, $instance = null ) {
-		$instance = null;
+
 		if ( $data instanceof Brizy_Editor_Forms_WordpressIntegration ||
 		     $data instanceof Brizy_Editor_Forms_ServiceIntegration ) {
 			return $data;
