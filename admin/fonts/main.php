@@ -30,6 +30,7 @@ class Brizy_Admin_Fonts_Main {
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_filter( 'upload_mimes', array( $this, 'addFOntTypes' ) );
+		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 5 );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );
@@ -53,6 +54,31 @@ class Brizy_Admin_Fonts_Main {
 		return $mime_types;
 	}
 
+	public function wp_check_filetype_and_ext( $data, $file, $filename, $mimes, $real_mime ) {
+
+		if ( is_null( $data['ext'] ) ) {
+
+			// Do basic extension validation and MIME mapping
+			$wp_filetype = wp_check_filetype( $filename, $mimes );
+			$ext         = $wp_filetype['ext'];
+			$type        = $wp_filetype['type'];
+
+			if ( $ext === 'ttf' ) {
+				return array( 'ext' => $ext, 'type' => 'application/x-font-ttf', 'proper_filename' => false );
+			}
+			if ( $ext === 'eot' ) {
+				return array( 'ext' => $ext, 'type' => 'application/vnd.ms-fontobject', 'proper_filename' => false );
+			}
+			if ( $ext === 'woff' ) {
+				return array( 'ext' => $ext, 'type' => 'application/x-font-woff', 'proper_filename' => false );
+			}
+			if ( $ext === 'woff2' ) {
+				return array( 'ext' => $ext, 'type' => 'application/x-font-woff2', 'proper_filename' => false );
+			}
+		}
+
+		return $data;
+	}
 
 	static public function registerCustomPosts() {
 
