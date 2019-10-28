@@ -187,7 +187,7 @@ class Brizy_Admin_OptimizeImages {
 
 	private function get_settings_tab( $context ) {
 		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
-		$context['submit_label'] = __( 'Save' );
+		$context['submit_label'] = __( 'Save Settings', 'brizy' );
 		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
 			'API_KEY' => '',
 			"lossy"   => 1
