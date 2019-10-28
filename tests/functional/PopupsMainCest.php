@@ -72,6 +72,14 @@ class PopupsMainCest {
 		] );
 	}
 
+	public function testPopulateSupportedPosts( FunctionalTester $I) {
+		$main  = new Brizy_Admin_Popups_Main();
+		$posts = Brizy_Editor::get()->supported_post_types();
+
+		$I->assertContains( Brizy_Admin_Popups_Main::CP_POPUP , $posts, 'It should contain the supported popup post type' );
+	}
+
+
 	public function testInsertPopupsHtml( FunctionalTester $I ) {
 
 		global $wp_query;
