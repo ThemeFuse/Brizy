@@ -558,6 +558,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_editor_data( $content ) {
 
+		//preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $string)
+
 		if ( base64_encode( base64_decode( $content, true ) ) === $content ) {
 			$this->editor_data = $content;
 		} else {
