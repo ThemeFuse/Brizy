@@ -305,16 +305,16 @@ class Brizy_Editor_Project implements Serializable {
 
 		$query .= " ORDER BY post_date DESC";
 
-		return (int)$wpdb->get_var( $query );
+		return (int) $wpdb->get_var( $query );
 
 	}
 
 	public function auto_save_post() {
 		try {
-			$user_id                   = get_current_user_id();
-			$post                      = $this->post;
-			$postParentId              = $this->get_parent_id();
-			$old_autosave              = $this->get_last_autosave( $postParentId, $user_id );
+			$user_id      = get_current_user_id();
+			$post         = $this->post;
+			$postParentId = $this->get_parent_id();
+			$old_autosave = $this->get_last_autosave( $postParentId, $user_id );
 			//$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
 			$post_data                 = get_object_vars( $post );
 			$post_data['post_content'] = md5( time() );
@@ -694,7 +694,13 @@ class Brizy_Editor_Project implements Serializable {
 	}
 
 	public function setDataAsJson( $data ) {
-		$this->setData( base64_encode( $data ) );
+		$encodedData = base64_encode( $data );
+
+		if ( $encodedData === false ) {
+			throw new Exception( 'Failed to base54 encode the project data' );
+		}
+		
+		$this->setData( $encodedData );
 
 		return $this;
 	}

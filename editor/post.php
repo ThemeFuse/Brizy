@@ -273,32 +273,32 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$wpdb->update( $wpdb->postmeta, array( 'meta_value' => 1 ), array( 'meta_key' => self::BRIZY_POST_NEEDS_COMPILE_KEY ) );
 	}
 
-	/**
-	 * @return Brizy_Editor_Post[]
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
-	 * @todo: We need to move this method from here
-	 */
-	public static function foreach_brizy_post( $callback ) {
-		global $wpdb;
-		$posts = $wpdb->get_results(
-			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision' and p.post_type<>'attachment'
-									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
-		);
-
-		$result = array();
-		foreach ( $posts as $p ) {
-			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
-
-				if ( is_callable( $callback ) ) {
-					$callback( $p );
-				}
-			}
-		}
-
-		return $result;
-	}
+//	/**
+//	 * @return Brizy_Editor_Post[]
+//	 * @throws Brizy_Editor_Exceptions_NotFound
+//	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+//	 * @todo: We need to move this method from here
+//	 */
+//	public static function foreach_brizy_post( $callback ) {
+//		global $wpdb;
+//		$posts = $wpdb->get_results(
+//			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm
+//									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision' and p.post_type<>'attachment'
+//									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
+//		);
+//
+//		$result = array();
+//		foreach ( $posts as $p ) {
+//			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
+//
+//				if ( is_callable( $callback ) ) {
+//					$callback( $p );
+//				}
+//			}
+//		}
+//
+//		return $result;
+//	}
 
 	/**
 	 * @return Brizy_Editor_Post[]
@@ -501,7 +501,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	public function isCompiledWithCurrentVersion() {
-		return $this->get_compiler_version() == BRIZY_EDITOR_VERSION;
+		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION;
 	}
 
 	/**
@@ -556,10 +556,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function get_editor_data() {
 
-		if ( base64_encode( base64_decode( $this->editor_data, true ) ) === $this->editor_data ) {
-			$base_64_decode = base64_decode( $this->editor_data, true );
-
-			return $base_64_decode;
+		if ( ($decodedData = base64_decode( $this->editor_data, true ))!==false ) {
+			return $decodedData;
 		}
 
 		return $this->editor_data;
@@ -572,7 +570,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_editor_data( $content ) {
 
-		if ( base64_encode( base64_decode( $content, true ) ) === $content ) {
+		if ( base64_decode( $content, true )!==false ) {
 			$this->editor_data = $content;
 		} else {
 			$this->editor_data = base64_encode( $content );
@@ -624,8 +622,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_encoded_compiled_html( $compiled_html ) {
 
-		if ( base64_encode( base64_decode( $compiled_html, true ) ) === $compiled_html ) {
-			$this->set_compiled_html( base64_decode( $compiled_html, true ) );
+		if (  ($decodedData = base64_decode( $compiled_html, true ))!==false ) {
+			$this->set_compiled_html( $decodedData );
 		} else {
 			$this->set_compiled_html( $compiled_html );
 		}
