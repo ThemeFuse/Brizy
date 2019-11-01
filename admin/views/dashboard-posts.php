@@ -1,7 +1,7 @@
 <?php if ( count( $posts ) ) : ?>
     <div class="brizy-overview__recently-edited">
         <h3 class="brizy-overview__heading">
-            <?php echo __( 'Recently Edited', 'elementor' ); ?>
+            <?php echo __( 'Recently Edited', 'brizy' ); ?>
         </h3>
         <ul class="brizy-overview__posts">
             <?php foreach ( $posts as $apost ) : ?>
