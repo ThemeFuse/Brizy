@@ -77,4 +77,31 @@ class ApiCest {
 		$I->sendAjaxGetRequest( '/?' . build_query( [ 'brizy_attachment' => 'unknown uid' ] ) );
 		$I->seeResponseCodeIs( 404 );
 	}
+
+	public function getPostList( FunctionalTester $I ) {
+		$I->haveManyPostsInDatabase( 5, [
+			'post_type'  => 'page',
+			'post_title' => 'Title {{n}}'
+		] );
+
+		// test with invalid attachment
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'filterTerm' => 'Title',
+				'action'     => 'brizy_get_posts',
+				'version'    => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		foreach ( $response->data->posts as $apost ) {
+			$postAsArray = (array) $apost;
+			$I->assertArrayHasKey( 'ID', $postAsArray, 'It should return the post id' );
+			$I->assertArrayHasKey( 'uid', $postAsArray, 'It should create and return the post uid' );
+			$I->assertArrayHasKey( 'post_type', $postAsArray, 'It should return the post type' );
+			$I->assertArrayHasKey( 'post_title', $postAsArray, 'It should return the post title' );
+			$I->assertArrayHasKey( 'post_type_label', $postAsArray, 'It should return the post type label' );
+		}
+
+	}
 }
