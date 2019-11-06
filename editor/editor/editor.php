@@ -131,8 +131,9 @@ class Brizy_Editor_Editor_Editor {
 					'heartBeat'  => Brizy_Editor_API::AJAX_HEARTBEAT,
 					'takeOver'   => Brizy_Editor_API::AJAX_TAKE_OVER,
 					'removeLock' => Brizy_Editor_API::AJAX_REMOVE_LOCK,
-					'getPage'    => Brizy_Editor_API::AJAX_GET,
-					'updatePage' => Brizy_Editor_API::AJAX_UPDATE,
+					'getPage'     => Brizy_Editor_API::AJAX_GET,
+					'getPostInfo' => Brizy_Editor_API::AJAX_GET_POST_INFO,
+					'updatePage'  => Brizy_Editor_API::AJAX_UPDATE,
 
 					'getProject'     => Brizy_Editor_API::AJAX_GET_PROJECT,
 					'setProject'     => Brizy_Editor_API::AJAX_SET_PROJECT,

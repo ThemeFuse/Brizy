@@ -3,6 +3,7 @@
 class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
+	const AJAX_GET_POST_INFO = 'brizy_get_post_info';
 	const AJAX_GET = 'brizy_editor_get_items';
 	const AJAX_UPDATE = 'brizy_update_item';
 	const AJAX_GET_PROJECT = 'brizy_get_project';
@@ -63,6 +64,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			add_action( 'wp_ajax_' . self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
 			add_action( 'wp_ajax_' . self::AJAX_TAKE_OVER, array( $this, 'takeOver' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
+			add_action( 'wp_ajax_' . self::AJAX_GET_POST_INFO, array( $this, 'get_post_info' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_PROJECT, array( $this, 'set_project' ) );
@@ -301,6 +303,41 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$data['is_index'] = true;
 
 			$this->success( array( $data ) );
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( 500, $exception->getMessage() );
+			exit;
+		}
+	}
+
+	/**
+	 * @internal
+	 **/
+	public function get_post_info() {
+		try {
+			$this->verifyNonce( self::nonce );
+
+			$postId        = (int) $this->param( 'post_id' ) ;
+			$defaultFields = [ 'ID', 'post_title', 'post_content' ];
+			$post_fields   = array_intersect( $this->param( 'fields' ), $defaultFields );
+
+			if ( count( $post_fields ) == 0 ) {
+				$post_fields = $defaultFields;
+			}
+
+			if ( ! $postId ) {
+				$this->error( 400, 'Invalid post id' );
+			}
+
+			$post = get_post( $postId, ARRAY_A );
+
+			if(!$post) {
+				$this->error( 404, 'Invalid post id' );
+			}
+
+			$data = array_intersect_key( $post, array_flip( $defaultFields ) );
+
+			$this->success( $data );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( 500, $exception->getMessage() );

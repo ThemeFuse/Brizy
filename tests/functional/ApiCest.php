@@ -324,4 +324,63 @@ class ApiCest {
 		$I->assertFalse( $data->lockedBy, 'LockedBy should be false' );
 	}
 
+	public function getPostInfo( FunctionalTester $I ) {
+		$postId = $I->havePostInDatabase( [
+			'post_type'    => 'page',
+			'post_title'   => 'Title {{n}}',
+			'post_content' => 'Page content'
+		] );
+
+		// test with invalid attachment
+		$fields = [ 'ID', 'post_title', 'post_content' ];
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'post_id' => $postId,
+				'fields'  => $fields,
+				'action'  => 'brizy_get_post_info',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIsSuccessful();
+
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$returnedKeys = array_keys( (array) $response->data );
+
+		$I->assertEmpty( array_diff( $returnedKeys, $fields ), 'It should not return unknown keys' );
+		$I->assertEqualsCanonicalizing( array_intersect( $returnedKeys, $fields ), $fields, 'It should return the requested fields' );
+
+
+		// test with invalid attachment
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'post_id' => $postId,
+				'action'  => 'brizy_get_post_info',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIsSuccessful();
+
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$returnedKeys = array_keys( (array) $response->data );
+
+		$I->assertEmpty( array_diff( $returnedKeys, $fields ), 'It should not return unknown keys' );
+		$I->assertEqualsCanonicalizing( array_intersect( $returnedKeys, $fields ), $fields, 'It should return the requested fields' );
+	}
+
+	public function getInvalidPostInfo( FunctionalTester $I ) {
+
+		// test with invalid attachment
+		$fields = [ 'ID', 'post_title', 'post_content' ];
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'post_id' => 12333333333,
+				'fields'  => $fields,
+				'action'  => 'brizy_get_post_info',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs( 404 );
+	}
+
 }
