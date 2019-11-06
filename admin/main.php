@@ -287,7 +287,7 @@ class Brizy_Admin_Main {
 			Brizy_Editor::get()->get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
 			array(
-				'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+				'url'           => admin_url( 'admin-ajax.php' ),
 				'pluginUrl'     => BRIZY_PLUGIN_URL,
 				'ruleApiHash'   => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
 				'id'            => get_the_ID(),
@@ -300,6 +300,7 @@ class Brizy_Admin_Main {
 				),
 				'editorVersion' => BRIZY_EDITOR_VERSION,
 				'pluginVersion' => BRIZY_VERSION,
+				'nonce'         => wp_create_nonce( 'brizy-admin-nonce' )
 			)
 		);
 	}
