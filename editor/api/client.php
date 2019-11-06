@@ -221,7 +221,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 			'page'       => $page
 		);
 
-		return Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/public/editor-build/editor/views/" )
+		return Brizy_TwigEngine::instance( Brizy_Editor_UrlBuilder::editor_build_path( 'editor/views/' ) )
 		                       ->render( 'static.html.twig', $template_context );
 	}
 

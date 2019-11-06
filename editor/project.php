@@ -202,7 +202,7 @@ class Brizy_Editor_Project implements Serializable {
 			'signature'                => Brizy_Editor_Signature::get(),
 			'accounts'                 => array(),
 			'forms'                    => array(),
-			'data'                     => base64_encode( file_get_contents( BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "editor-build" . DIRECTORY_SEPARATOR . "defaults.json" ) ),
+			'data'                     => base64_encode( file_get_contents( Brizy_Editor_UrlBuilder::editor_build_path( 'defaults.json' ) ) ),
 			'brizy-license-key'        => null,
 			'brizy-cloud-token'        => null,
 			'brizy-cloud-project'      => null,

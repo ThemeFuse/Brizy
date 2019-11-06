@@ -28,6 +28,14 @@ class Brizy_Config {
 	const ABOUT_URL = "https://brizy.io";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
+	static public function getEditorBuildPath() {
+		return BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR .'public'. DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
+	}
+
+	static public function getEditorBuildUrl() {
+		return BRIZY_PLUGIN_URL . '/public/editor-build/dev';
+	}
+
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
