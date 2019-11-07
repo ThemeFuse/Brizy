@@ -6,10 +6,11 @@ import {
   styleBorderColor,
   styleColor,
   styleBgColor,
-  styleBoxShadow,
   styleHoverTransition,
   styleHoverTransitionProperty
 } from "visual/utils/style";
+
+import { cssStyleBoxShadowSuffixForGlamour } from "visual/utils/cssStyle";
 
 const getIconStrokeWidth = (v, iconSize) => {
   const { type } = v;
@@ -32,6 +33,17 @@ export function styleClassName(v) {
   let glamorObj;
 
   if (IS_EDITOR) {
+    const shadowDesktopNormal = cssStyleBoxShadowSuffixForGlamour({
+      v,
+      device: "desktop",
+      state: "normal"
+    });
+    const shadowDesktopHover = cssStyleBoxShadowSuffixForGlamour({
+      v,
+      device: "desktop",
+      state: "hover"
+    });
+
     glamorObj = {
       ".brz &": {
         color: "var(--color)",
@@ -40,7 +52,10 @@ export function styleClassName(v) {
         backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
         borderStyle: "var(--borderStyle)",
-        boxShadow: "var(--boxShadow)",
+
+        ...(shadowDesktopNormal !== ""
+          ? { boxShadow: "var(--boxShadow)" }
+          : {}),
 
         transition: "var(--hoverTransition)",
         transitionProperty: "var(--hoverTransitionProperty)"
@@ -63,7 +78,9 @@ export function styleClassName(v) {
         transitionProperty: "var(--hoverTransitionProperty)",
 
         ":hover": {
-          boxShadow: "var(--hoverBoxShadow)"
+          ...(shadowDesktopHover !== ""
+            ? { boxShadow: "var(--hoverBoxShadow)" }
+            : {})
         }
       },
       ".brz-ed--tablet &": {
@@ -141,6 +158,17 @@ export function styleClassName(v) {
     const tabletStrokeWidth = getIconStrokeWidth(v, tabletCustomSize);
     const mobileStrokeWidth = getIconStrokeWidth(v, mobileCustomSize);
 
+    const shadowDesktopNormal = cssStyleBoxShadowSuffixForGlamour({
+      v,
+      device: "desktop",
+      state: "normal"
+    });
+    const shadowDesktopHover = cssStyleBoxShadowSuffixForGlamour({
+      v,
+      device: "desktop",
+      state: "hover"
+    });
+
     glamorObj = {
       ".brz &": {
         color: styleColor({ v, device: "desktop", state: "normal" }),
@@ -167,7 +195,10 @@ export function styleClassName(v) {
         padding: `${padding}px`,
         borderRadius,
         strokeWidth,
-        boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
+
+        ...(shadowDesktopNormal !== ""
+          ? { boxShadow: shadowDesktopNormal }
+          : {}),
 
         transition: styleHoverTransition({ v }),
         transitionProperty: styleHoverTransitionProperty()
@@ -191,7 +222,10 @@ export function styleClassName(v) {
             device: "desktop",
             state: "hover"
           }),
-          boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
+
+          ...(shadowDesktopHover !== ""
+            ? { boxShadow: shadowDesktopHover }
+            : {})
         }
       },
 
@@ -281,6 +315,18 @@ export function styleCSSVars(v) {
   const tabletStrokeWidth = getIconStrokeWidth(v, tabletCustomSize);
   const mobileStrokeWidth = getIconStrokeWidth(v, mobileCustomSize);
 
+  const shadowDesktopNormal = cssStyleBoxShadowSuffixForGlamour({
+    v,
+    device: "desktop",
+    state: "normal"
+  }).replace(";", "");
+
+  const shadowDesktopHover = cssStyleBoxShadowSuffixForGlamour({
+    v,
+    device: "desktop",
+    state: "hover"
+  }).replace(";", "");
+
   return {
     "--color": styleColor({ v, device: "desktop", state: "normal" }),
     "--borderColor": styleBorderColor({
@@ -317,23 +363,20 @@ export function styleCSSVars(v) {
       state: "hover"
     }),
 
-    // Hover Transition
-    "--hoverTransition": styleHoverTransition({ v }),
-    "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
-
     "--width": `${iconSize}px`,
     "--height": `${iconSize}px`,
     "--fontSize": `${customSize}px`,
     "--padding": `${padding}px`,
     "--borderRadius": `${borderRadius}px`,
     "--strokeWidth": strokeWidth,
-    "--boxShadow": styleBoxShadow({ v, device: "desktop", state: "normal" }),
 
-    "--hoverBoxShadow": styleBoxShadow({
-      v,
-      device: "desktop",
-      state: "hover"
-    }),
+    ...(shadowDesktopNormal !== ""
+      ? { "--boxShadow": shadowDesktopNormal }
+      : {}),
+
+    ...(shadowDesktopHover !== ""
+      ? { "--hoverBoxShadow": shadowDesktopHover }
+      : {}),
 
     // Hover Transition
     "--hoverTransition": styleHoverTransition({ v }),

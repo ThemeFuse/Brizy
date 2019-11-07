@@ -1,29 +1,34 @@
+import { capByPrefix } from "visual/utils/string";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
 
-export function styleFilterBrightness({ v, device, state }) {
+export function styleFilterBrightness({ v, device, state, prefix = "" }) {
   state = getState(v, state);
-  const brightness = defaultValueValue({ v, key: "brightness", device, state });
 
-  return brightness;
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "brightness"));
 }
-export function styleFilterHue({ v, device, state }) {
+export function styleFilterHue({ v, device, state, prefix = "" }) {
   state = getState(v, state);
-  const hue = defaultValueValue({ v, key: "hue", device, state });
 
-  return hue;
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "hue"));
 }
-export function styleFilterSaturation({ v, device, state }) {
+export function styleFilterSaturation({ v, device, state, prefix = "" }) {
   state = getState(v, state);
-  const saturation = defaultValueValue({ v, key: "saturation", device, state });
 
-  return saturation;
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "saturation"));
 }
-export function styleFilterContrast({ v, device, state }) {
+export function styleFilterContrast({ v, device, state, prefix = "" }) {
   state = getState(v, state);
-  const contrast = defaultValueValue({ v, key: "contrast", device, state });
 
-  return contrast;
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "contrast"));
 }
 
 const getState = (v, state) =>
