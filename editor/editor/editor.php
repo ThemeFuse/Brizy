@@ -33,7 +33,7 @@ class Brizy_Editor_Editor_Editor {
 	 *
 	 * @return Brizy_Editor_Editor_Editor
 	 */
-	public static function get( $project, $post = null ) {
+	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 
 		if ( self::$insance ) {
 			return self::$insance;
@@ -48,24 +48,10 @@ class Brizy_Editor_Editor_Editor {
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 */
-	public function __construct( $project, $post = null ) {
+	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
 		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->get_parent_id() : null );
-	}
-
-	/**
-	 * @return Brizy_Editor_Post
-	 * @throws Exception
-	 */
-	protected function get_post() {
-
-		if ( ! ( $this->post instanceof Brizy_Editor_Post ) ) {
-			$class = get_class( $this );
-			throw new Exception( "The class {$class} must be initialize with all parameters" );
-		}
-
-		return $this->post;
 	}
 
 	/**
@@ -83,48 +69,16 @@ class Brizy_Editor_Editor_Editor {
 		$preview_post_link   = null;
 		$change_template_url = null;
 		$templates           = null;
-		$isTemplate          = false;
-		$isPopup             = false;
-		$ruleMatches         = array();
 
+		$parent_post_type  = get_post_type( $this->post->get_parent_id() );
+		$wp_post_id        = $this->post->get_wp_post()->ID;
+		$preview_post_link = $this->getPreviewUrl( $this->post->get_wp_post() );
 
-		if ( ! is_null( $this->post ) ) {
-			$parent_post_type  = get_post_type( $this->get_post()->get_parent_id() );
-			$wp_post_id        = $this->post->get_wp_post()->ID;
-			$preview_post_link = $this->getPreviewUrl( $this->post->get_wp_post() );
+		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->get_parent_id() . '&action=_brizy_change_template' ) );
+		$templates           = $this->post->get_templates();
+		$isTemplate          = $parent_post_type === Brizy_Admin_Templates::CP_TEMPLATE;
+		$isPopup             = $parent_post_type === Brizy_Admin_Popups_Main::CP_POPUP;
 
-			$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->get_post()->get_parent_id() . '&action=_brizy_change_template' ) );
-			$templates           = $this->post->get_templates();
-			$isTemplate          = $parent_post_type == Brizy_Admin_Templates::CP_TEMPLATE;
-			$isPopup             = $parent_post_type == Brizy_Admin_Popups_Main::CP_POPUP;
-		}
-
-		$post_thumbnail = $this->getThumbnailData( $wp_post_id );
-
-
-		if ( $isTemplate ) {
-			$rule_manager   = new Brizy_Admin_Rules_Manager();
-			$template_rules = $rule_manager->getRules( $wp_post_id );
-
-			foreach ( $template_rules as $rule ) {
-				/**
-				 * @var Brizy_Admin_Rule $rule ;
-				 */
-				$ruleMatches[] = array(
-					'type'       => $rule->getType(),
-					'group'      => $rule->getAppliedFor(),
-					'entityType' => $rule->getEntityType(),
-					'values'     => $rule->getEntityValues()
-				);
-			}
-		} else {
-			$ruleMatches[] = array(
-				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
-				'group'      => Brizy_Admin_Rule::POSTS,
-				'entityType' => $this->post->get_wp_post()->post_type,
-				'values'     => array( $wp_post_id )
-			);
-		}
 
 		$config = array(
 			'user'            => array( 'role' => 'admin' ),
@@ -161,8 +115,8 @@ class Brizy_Editor_Editor_Editor {
 			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
-				'ruleMatches'     => $ruleMatches,
-				'featuredImage'   => $post_thumbnail,
+				'ruleMatches'     => $this->getTempalteRuleMatches( $isTemplate, $wp_post_id ),
+				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
 				'api'             => array(
@@ -208,44 +162,32 @@ class Brizy_Editor_Editor_Editor {
 					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
 					'getTerms'         => Brizy_Editor_API::AJAX_GET_TERMS,
 
-					//'ping'                       => Brizy_Editor_API::AJAX_PING, // ???
-					//'buildContent'               => Brizy_Editor_API::AJAX_BUILD, // ???
-					//'sidebarContent'             => Brizy_Editor_API::AJAX_SIDEBAR_CONTENT, // ???
-					//'shortcodeList'              => Brizy_Editor_API::AJAX_SHORTCODE_LIST, // ???
-					//'getTemplates'               => Brizy_Editor_API::AJAX_GET_TEMPLATES, // ???
-					//'getInternalLinks'           => Brizy_Editor_API::AJAX_GET_INTERNAL_LINKS, // ???
-					//'updatePost'                 => Brizy_Editor_API::AJAX_SAVE_TRIGGER, // ???
-					//'savePage'                   => Brizy_Editor_API::AJAX_SAVE_TRIGGER, // ???
-					'getPostObjects'   => Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
-					//'getTaxonomies'              => Brizy_Editor_API::AJAX_GET_TAXONOMIES, // ??
+
+					'getPostObjects' => Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
 
 					'setFeaturedImage'           => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
 					'setFeaturedImageFocalPoint' => Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT,
 					'removeFeaturedImage'        => Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
 
-					//'getDefaultForm'             => Brizy_Editor_Forms_Api::AJAX_GET_DEFAULT_FORM, // ???
-					'getForm'                    => Brizy_Editor_Forms_Api::AJAX_GET_FORM,
-					'createForm'                 => Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
-					'deleteForm'                 => Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
-					//'submitForm'        => Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM, // ???
-					'getIntegration'             => Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
-					'createIntegration'          => Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
-					'updateIntegration'          => Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
-					'deleteIntegration'          => Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
+					'getForm'    => Brizy_Editor_Forms_Api::AJAX_GET_FORM,
+					'createForm' => Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
+					'deleteForm' => Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
+
+					'getIntegration'    => Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
+					'createIntegration' => Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
+					'updateIntegration' => Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
+					'deleteIntegration' => Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
 
 					'createFont' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
 					'deleteFont' => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
 					'getFonts'   => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION
-
-					//'updateMenuData'             => Brizy_Editor_API::AJAX_UPDATE_MENU_DATA, // ???
-					//'updateMenuItemData'         => Brizy_Editor_API::AJAX_UPDATE_MENU_ITEM_DATA, // ???
 				),
 				'plugins'         => array(
 					'dummy'       => true,
 					'woocommerce' => $this->get_woocomerce_plugin_info(),
 				),
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
-				'l10n'            => (object) Brizy_Public_EditorBuild_Texts::get_editor_texts(),
+				'l10n'            => $this->getTexts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
 				'isTemplate'      => $isTemplate,
 				'isGlobalPopup'   => $isPopup,
@@ -263,6 +205,9 @@ class Brizy_Editor_Editor_Editor {
 		return self::$config = apply_filters( 'brizy_editor_config', $config );
 	}
 
+	/**
+	 * @return object
+	 */
 	private function get_page_attachments() {
 		global $wpdb;
 		$query = $wpdb->prepare(
@@ -283,6 +228,9 @@ class Brizy_Editor_Editor_Editor {
 		return (object) $attachment_data;
 	}
 
+	/**
+	 * @return array|null
+	 */
 	private function get_woocomerce_plugin_info() {
 		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {
 			return array( 'version' => WooCommerce::instance()->version );
@@ -456,7 +404,9 @@ class Brizy_Editor_Editor_Editor {
 		) );
 	}
 
-
+	/**
+	 * @return array
+	 */
 	private function get_menu_data() {
 		$menus     = wp_get_nav_menus();
 		$menu_data = array();
@@ -668,5 +618,62 @@ class Brizy_Editor_Editor_Editor {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
+	private function getTexts() {
+		$brizy_public_editor_build_texts = "\Brizy_Public_EditorBuild_" . ( BRIZY_DEVELOPMENT ? "Dev" : BRIZY_EDITOR_VERSION ) . "_Texts";
+
+		if ( ! class_exists( $brizy_public_editor_build_texts ) ) {
+			if ( BRIZY_DEVELOPMENT ) {
+				throw new \Exception( 'You must build the editor first.' );
+			} else {
+				throw new \Exception( 'Unable to find class ' . $brizy_public_editor_build_texts );
+			}
+		}
+
+		return (object) $brizy_public_editor_build_texts::get_editor_texts();
+	}
+
+	/**
+	 * @param $isTemplate
+	 * @param $wp_post_id
+	 * @param array $ruleMatches
+	 *
+	 * @return array
+	 * @throws Exception
+	 */
+	private function getTempalteRuleMatches( $isTemplate, $wp_post_id ) {
+
+		$ruleMatches = array();
+
+		if ( $isTemplate ) {
+			$rule_manager   = new Brizy_Admin_Rules_Manager();
+			$template_rules = $rule_manager->getRules( $wp_post_id );
+
+			foreach ( $template_rules as $rule ) {
+				/**
+				 * @var Brizy_Admin_Rule $rule ;
+				 */
+				$ruleMatches[] = array(
+					'type'       => $rule->getType(),
+					'group'      => $rule->getAppliedFor(),
+					'entityType' => $rule->getEntityType(),
+					'values'     => $rule->getEntityValues()
+				);
+			}
+		} else {
+			$ruleMatches[] = array(
+				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
+				'group'      => Brizy_Admin_Rule::POSTS,
+				'entityType' => $this->post->get_wp_post()->post_type,
+				'values'     => array( $wp_post_id )
+			);
+		}
+
+		return $ruleMatches;
 	}
 }
