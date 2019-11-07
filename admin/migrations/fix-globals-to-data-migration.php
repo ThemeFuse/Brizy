@@ -33,9 +33,7 @@ class Brizy_Admin_Migrations_FixGlobalsToDataMigration implements Brizy_Admin_Mi
 				update_post_meta( $projectPost->ID, 'brizy-bk-' . get_class( $this ) . '-' . $this->getVersion(), $storage->get_storage() );
 
 				$beforeMergeGlobals = json_decode( base64_decode( $data ) );
-				$editorBuildPath    = BRIZY_PLUGIN_PATH .
-				                      DIRECTORY_SEPARATOR . "public" .
-				                      DIRECTORY_SEPARATOR . "editor-build";
+				$editorBuildPath    = Brizy_Editor_UrlBuilder::editor_build_path();
 
 				$context          = new \Brizy\DataToProjectContext( $beforeMergeGlobals, $editorBuildPath );
 				$projectMigration = new \Brizy\FixDataToProjectTransformer();

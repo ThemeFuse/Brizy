@@ -27,14 +27,8 @@ class Brizy_Config {
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
-
-	static public function getEditorBuildPath() {
-		return BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR .'public'. DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
-	}
-
-	static public function getEditorBuildUrl() {
-		return BRIZY_PLUGIN_URL . '/public/editor-build/dev';
-	}
+	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
+	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/dev';
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
@@ -45,26 +39,26 @@ class Brizy_Config {
 		);
 	}
 
-	static public function getStaticUrls() {
-		return new Brizy_Admin_UrlIterator(
-			array(
-				'http://bitblox.local/static'
-			)
-		);
-	}
+static public function getStaticUrls() {
+	return new Brizy_Admin_UrlIterator(
+		array(
+			'http://bitblox.local/static'
+		)
+	);
+}
 
 	static public function getEditorBaseUrls() {
-		return new Brizy_Admin_UrlIterator(
-			array(
-				'http://www.brizysites.com'
-			)
-		);
-	}
+	return new Brizy_Admin_UrlIterator(
+		array(
+			'http://www.brizysites.com'
+		)
+	);
+}
 
 	static public function getOptimizerConfig( $className ) {
-		switch ( $className ) {
-			case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
-				return array('API_KEY'=>'uunlmNjZZBtKLfCSg4OK');
-		}
+	switch ( $className ) {
+		case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
+			return array( 'API_KEY' => 'uunlmNjZZBtKLfCSg4OK' );
 	}
+}
 }

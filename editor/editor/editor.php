@@ -282,12 +282,15 @@ class Brizy_Editor_Editor_Editor {
 			$rule        = null;
 
 
-			function addQueryStringToUrl( $link, $query ) {
-				$parsedUrl = parse_url( $link );
-				$separator = ( ! isset( $parsedUrl['query'] ) || $parsedUrl['query'] == null ) ? '?' : '&';
-				$link      .= $separator . $query;
+			if(!function_exists('addQueryStringToUrl'))
+			{
+				function addQueryStringToUrl( $link, $query ) {
+					$parsedUrl = parse_url( $link );
+					$separator = ( ! isset( $parsedUrl['query'] ) || $parsedUrl['query'] == null ) ? '?' : '&';
+					$link      .= $separator . $query;
 
-				return $link;
+					return $link;
+				}
 			}
 
 

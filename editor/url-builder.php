@@ -246,7 +246,7 @@ class Brizy_Editor_UrlBuilder
      */
     public function editor_build_url()
     {
-        return Brizy_Config::getEditorBuildUrl();
+        return Brizy_Config::EDITOR_BUILD_URL;
     }
 
     /**
@@ -260,7 +260,7 @@ class Brizy_Editor_UrlBuilder
             $path = DIRECTORY_SEPARATOR . ltrim( str_replace( array( '/', '\\' ), DIRECTORY_SEPARATOR, $path ), DIRECTORY_SEPARATOR );
         }
 
-        return Brizy_Config::getEditorBuildPath() . $path;
+        return Brizy_Config::EDITOR_BUILD_PATH . $path;
     }
 
     /**
