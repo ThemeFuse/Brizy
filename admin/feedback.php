@@ -27,7 +27,7 @@ class Brizy_Admin_Feedback {
 				</div>
 				<div class="brz-notice-content">
 					<div class="brz-notice-heading">
-						<?php esc_html_e( 'Hello! Seems like you have used Brizy plugin to build this website — Thanks a ton!', 'brizy' ); ?>
+						<?php esc_html_e( 'Hello! Seems like you are using Brizy to build your website - Thanks a lot!', 'brizy' ); ?>
 					</div>
 					<?php esc_html_e( 'Could you please do us a BIG favor and give it a 5-star rating on WordPress? This would boost our motivation and help other users make a comfortable decision while choosing the Brizy plugin.', 'brizy' ); ?>
 					<br/>
