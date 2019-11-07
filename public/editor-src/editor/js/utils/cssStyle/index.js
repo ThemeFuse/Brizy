@@ -66,6 +66,7 @@ export { cssStyleColor } from "./cssStyleColor";
 //Box Shadow
 export {
   cssStyleBoxShadow,
+  cssStyleBoxShadowSuffixForGlamour,
   cssStyleBoxShadowSection
 } from "./cssStyleBoxShadow";
 
@@ -212,7 +213,10 @@ export {
 } from "./cssStyleVisible";
 
 // Filter
-export { cssStyleFilter } from "./cssStyleFilter";
+export {
+  cssStyleFilter,
+  cssStyleFilterSuffixForGlamour
+} from "./cssStyleFilter";
 
 // Element Video
 export {

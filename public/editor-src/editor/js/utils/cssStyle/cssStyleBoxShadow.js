@@ -7,68 +7,70 @@ import {
   styleBoxShadowSpread
 } from "visual/utils/style2";
 
-export function cssStyleBoxShadow({ v, device, state }) {
-  const boxShadowType = styleBoxShadowType({ v, device, state });
-  const boxShadowColor = styleBoxShadowColor({ v, device, state });
-  let boxShadowHorizontal = styleBoxShadowHorizontal({ v, device, state });
-  let boxShadowVertical = styleBoxShadowVertical({ v, device, state });
-  const boxShadowBlur = styleBoxShadowBlur({ v, device, state });
-  const boxShadowSpread = styleBoxShadowSpread({ v, device, state });
+// Functia asta nu e nevoie de ea. Codul din ea trebuei sa fie in cssStyleBoxShadow
+// Ea a fost facuta doar ca sa rezolvam problema cu safari in elementul image care folosea glamour
+export function cssStyleBoxShadowSuffixForGlamour({
+  v,
+  device,
+  state,
+  prefix = ""
+}) {
+  const type = styleBoxShadowType({ v, device, state, prefix });
+  const color = styleBoxShadowColor({ v, device, state, prefix });
+  const blur = styleBoxShadowBlur({ v, device, state, prefix });
+  const spread = styleBoxShadowSpread({ v, device, state, prefix });
+  const horizontal =
+    type === "inset"
+      ? styleBoxShadowHorizontal({ v, device, state, prefix }) * -1
+      : styleBoxShadowHorizontal({ v, device, state, prefix });
+  const vertical =
+    type === "inset"
+      ? styleBoxShadowVertical({ v, device, state, prefix }) * -1
+      : styleBoxShadowVertical({ v, device, state, prefix });
 
-  const prefix = boxShadowType === "inset" ? "inset " : "";
-
-  boxShadowHorizontal =
-    boxShadowType === "inset" ? boxShadowHorizontal * -1 : boxShadowHorizontal;
-
-  boxShadowVertical =
-    boxShadowType === "inset" ? boxShadowVertical * -1 : boxShadowVertical;
-
-  const boxShadowUndefined =
-    boxShadowHorizontal === undefined ||
-    boxShadowVertical === undefined ||
-    boxShadowBlur === undefined ||
-    boxShadowSpread === undefined;
-
-  const boxShadowNone =
-    boxShadowHorizontal === 0 &&
-    boxShadowVertical === 0 &&
-    boxShadowBlur === 0 &&
-    boxShadowSpread === 0;
-
-  if (boxShadowUndefined) {
+  if (
+    type === "" ||
+    type === "off" ||
+    (horizontal === 0 && vertical === 0 && blur === 0 && spread === 0)
+  ) {
     return "";
-  } else if (boxShadowNone) {
-    return `box-shadow:none;`;
   } else {
-    return `box-shadow:${prefix}${boxShadowHorizontal}px ${boxShadowVertical}px ${boxShadowBlur}px ${boxShadowSpread}px ${boxShadowColor};`;
+    const inset = type === "inset" ? "inset " : "";
+
+    return `${inset}${horizontal}px ${vertical}px ${blur}px ${spread}px ${color};`;
   }
 }
 
-export function cssStyleBoxShadowSection({ v, device, state }) {
-  let boxShadowVertical = styleBoxShadowVertical({ v, device, state });
-  const boxShadowBlur = styleBoxShadowBlur({ v, device, state });
-  const boxShadowColor = styleBoxShadowColor({ v, device, state });
+export function cssStyleBoxShadow({ v, device, state, prefix = "" }) {
+  const shadow = cssStyleBoxShadowSuffixForGlamour({
+    v,
+    device,
+    state,
+    prefix
+  });
 
-  const diff = boxShadowVertical < 0 ? -boxShadowBlur : boxShadowBlur;
-  const inBoth = boxShadowVertical === 0;
+  if (shadow === "") return "";
+  else return `box-shadow:${shadow};`;
+}
 
-  const boxShadowUndefined =
-    boxShadowVertical === undefined || boxShadowBlur === undefined;
+export function cssStyleBoxShadowSection({ v, device, state, prefix = "" }) {
+  const vertical = styleBoxShadowVertical({ v, device, state, prefix });
+  const blur = styleBoxShadowBlur({ v, device, state, prefix });
+  const color = styleBoxShadowColor({ v, device, state, prefix });
 
-  const boxShadowNone = boxShadowVertical === 0 && boxShadowBlur === 0;
+  const diff = vertical < 0 ? -blur : blur;
+  const inBoth = vertical === 0;
 
-  if (boxShadowUndefined) {
+  if (type === "" || type === "off" || (vertical === 0 && blur === 0)) {
     return "";
-  } else if (boxShadowNone) {
-    return `box-shadow: none;`;
   } else {
     if (inBoth) {
-      return `box-shadow: inset 0 ${boxShadowVertical +
-        diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${boxShadowColor}, inset 0 -${boxShadowVertical +
-        diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${boxShadowColor};`;
+      return `box-shadow:inset 0 ${vertical +
+        diff}px ${blur}px -${blur}px ${color}, inset 0 -${vertical +
+        diff}px ${blur}px -${blur}px ${color};`;
     } else {
-      return `box-shadow: inset 0 ${boxShadowVertical +
-        diff}px ${boxShadowBlur}px -${boxShadowBlur}px ${boxShadowColor}, inset 0 0 0 0 ${boxShadowColor};`;
+      return `box-shadow:inset 0 ${vertical +
+        diff}px ${blur}px -${blur}px ${color}, inset 0 0 0 0 ${color};`;
     }
   }
 }
