@@ -86,6 +86,9 @@ jQuery(document).ready(function ($) {
 
             overlay.addClass( 'brz-deactivate-overlay' );
 
+            $( '.brz-feedback-text' ).addClass( 'hidden' );
+            $( '.brz-deactivate-modal input:radio' ).prop( 'checked', false );
+
             // close dialog by clicking the overlay behind it
             overlay.bind( 'click', function () {
                 $( '#brz-deactivate-feedback-dialog' ).dialog( 'close' );
