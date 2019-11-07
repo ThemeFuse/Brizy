@@ -344,7 +344,8 @@
 .brz-deactivate-overlay {
     animation: brz-feedback-overlay-fadein .5s linear;
 }
-.brz-deactivate-feedback-logo {
+.brz-deactivate-feedback-dialog-logo {
+    width: 40px;
     vertical-align: middle;
 }
 .brz-deactivate-modal .ui-dialog-titlebar {

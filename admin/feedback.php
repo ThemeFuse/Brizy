@@ -23,15 +23,7 @@ class Brizy_Admin_Feedback {
 		<div class="brz-notice notice is-dismissible">
 			<div class="brz-notice-container">
 				<div class="brz-notice-image">
-                    <svg width="60px" height="60px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="brz-custom-logo">
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g>
-                                <path d="M1.76744915,5.42394877 L8.14019105,9.76033448 L14.2328753,5.45506181 L7.85965616,1.20869949 L1.76744915,5.42394877 Z" id="Path" stroke="#05b3e6" stroke-width="2"></path>
-                                <polygon id="Path-2" fill="#05b3e6" points="0 10.4572332 2.11320755 8.83953968 8.1509434 12.9993231 13.9874214 8.95508922 16 10.4572332 8.1509434 15.8880615"></polygon>
-                            </g>
-                        </g>
-                    </svg>
-<!--                    <img src="--><?php //echo plugins_url( '/static/img/logo.png', __FILE__ ) ?><!--" class="brz-custom-logo" alt="Brizy" itemprop="logo">-->
+                    <img src="<?php echo plugins_url( 'static/img/logo.svg', __FILE__ ) ?>" alt="brizy-logo">
 				</div>
 				<div class="brz-notice-content">
 					<div class="brz-notice-heading">
@@ -146,14 +138,7 @@ class Brizy_Admin_Feedback {
 
         <div id="brz-deactivate-feedback-dialog" class="hidden">
             <div class="brz-deactivate-feedback-dialog-header">
-                <svg width="22px" height="22px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="brz-deactivate-feedback-logo">
-                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g>
-                            <path d="M1.76744915,5.42394877 L8.14019105,9.76033448 L14.2328753,5.45506181 L7.85965616,1.20869949 L1.76744915,5.42394877 Z" id="Path" stroke="#05b3e6" stroke-width="2"></path>
-                            <polygon id="Path-2" fill="#05b3e6" points="0 10.4572332 2.11320755 8.83953968 8.1509434 12.9993231 13.9874214 8.95508922 16 10.4572332 8.1509434 15.8880615"></polygon>
-                        </g>
-                    </g>
-                </svg>
+                <img class="brz-deactivate-feedback-dialog-logo" src="<?php echo plugins_url( 'static/img/logo.svg', __FILE__ ) ?>" alt="brizy-logo">
                 <span class="brz-deactivate-feedback-dialog-header-title"><?php echo __( 'Quick Feedback', 'brizy' ); ?></span>
             </div>
             <form class="brz-deactivate-feedback-dialog-form" method="post">
