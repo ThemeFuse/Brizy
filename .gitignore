@@ -3,8 +3,7 @@
 vendor/
 nohup.out
 **/node_modules/
-public/editor-build/template
-public/editor-build/pro
+public/editor-build/dev
 tests/_output
 codeception.yml
 .env.local

@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_Texts {
+class Brizy_Public_EditorBuild_119_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			"%s does not have any menu items" => __("%s does not have any menu items", "brizy"),
