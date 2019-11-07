@@ -318,9 +318,10 @@
 .brz-review-notice-container .dashicons:first-child {
     padding-left: 0;
 }
-.brz-notice-image img {
-    max-width: 90px;
+.brz-notice-image {
+    max-width: 100px;
 }
+
 .brz-notice-content .brz-notice-heading {
     padding-bottom: 5px;
 }
@@ -338,6 +339,13 @@
 /* Admin deactivate plugin modal */
 .brz-deactivate-modal {
     border-radius:3px;
+    animation: brz-feedback-modal-fadein .5s linear;
+}
+.brz-deactivate-overlay {
+    animation: brz-feedback-overlay-fadein .5s linear;
+}
+.brz-deactivate-feedback-logo {
+    vertical-align: middle;
 }
 .brz-deactivate-modal .ui-dialog-titlebar {
     display: none;
@@ -397,7 +405,7 @@
     float:none;
 }
 .brz-feedback-submit {
-    background-color: #0274be;
+    background-color: #05b3e6;
     color: #fff;
     width: 180px;
     height: 38px;
@@ -406,7 +414,7 @@
 .brz-feedback-submit:hover,
 .brz-feedback-submit:focus {
     opacity: 0.9;
-    background-color: #0274be;
+    background-color: #05b3e6;
     color: #fff;
 }
 .brz-feedback-skip {
@@ -435,6 +443,24 @@
     max-width: fit-content;
     color: #b01b1b;
     padding: 0;
+}
+@-webkit-keyframes brz-feedback-modal-fadein {
+    0% {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes brz-feedback-overlay-fadein {
+    0% {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.7;
+    }
 }
 @-webkit-keyframes brz-rotation {
     0% {

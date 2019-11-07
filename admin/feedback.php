@@ -14,8 +14,7 @@ class Brizy_Admin_Feedback {
 	}
 
 	public function admin_notices() {
-        //delete_transient( 'brizy-notice-rating' );
-        //delete_user_meta( get_current_user_id(), 'brizy-notice-rating' );
+
 	    if ( 'dismissed' == get_user_meta( get_current_user_id(), 'brizy-notice-rating', true ) || get_transient( 'brizy-notice-rating' ) ) {
 	        return;
         }
@@ -24,7 +23,15 @@ class Brizy_Admin_Feedback {
 		<div class="brz-notice notice is-dismissible">
 			<div class="brz-notice-container">
 				<div class="brz-notice-image">
-					<img src="<?php echo plugins_url( '/static/img/logo.png', __FILE__ ) ?>" class="brz-custom-logo" alt="Brizy" itemprop="logo">
+                    <svg width="60px" height="60px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="brz-custom-logo">
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g>
+                                <path d="M1.76744915,5.42394877 L8.14019105,9.76033448 L14.2328753,5.45506181 L7.85965616,1.20869949 L1.76744915,5.42394877 Z" id="Path" stroke="#05b3e6" stroke-width="2"></path>
+                                <polygon id="Path-2" fill="#05b3e6" points="0 10.4572332 2.11320755 8.83953968 8.1509434 12.9993231 13.9874214 8.95508922 16 10.4572332 8.1509434 15.8880615"></polygon>
+                            </g>
+                        </g>
+                    </svg>
+<!--                    <img src="--><?php //echo plugins_url( '/static/img/logo.png', __FILE__ ) ?><!--" class="brz-custom-logo" alt="Brizy" itemprop="logo">-->
 				</div>
 				<div class="brz-notice-content">
 					<div class="brz-notice-heading">
@@ -57,7 +64,7 @@ class Brizy_Admin_Feedback {
 		check_ajax_referer( 'brizy-admin-nonce', 'nonce' );
 
 		if ( $_POST['repeat'] == 'true' ) {
-			set_transient( 'brizy-notice-rating', true, MONTH_IN_SECONDS );
+			set_transient( 'brizy-notice-rating', true, WEEK_IN_SECONDS );
 		} else {
 			update_user_meta( get_current_user_id(), 'brizy-notice-rating', 'dismissed' );
 		}
@@ -72,10 +79,6 @@ class Brizy_Admin_Feedback {
 		parse_str( $_POST['form'], $form );
 
 		$reason_key = $form['reason_key'];
-
-		if ( 'temporary_deactivation' === $reason_key || 'brizy_pro' === $reason_key ) {
-			wp_send_json_success();
-        }
 
 		$body = [
 			'version'      => BRIZY_VERSION,
@@ -96,11 +99,20 @@ class Brizy_Admin_Feedback {
 	}
 
 	public function admin_enqueue_scripts() {
+
+		if ( ! $this->is_plugins_page() ) {
+			return;
+		}
+
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	}
 
 	public function admin_footer() {
+
+	    if ( ! $this->is_plugins_page() ) {
+	        return;
+        }
 
 		$deactivate_reasons = [
 			'no_longer_needed' => [
@@ -134,7 +146,14 @@ class Brizy_Admin_Feedback {
 
         <div id="brz-deactivate-feedback-dialog" class="hidden">
             <div class="brz-deactivate-feedback-dialog-header">
-                <i class="eicon-brz-square" aria-hidden="true"></i>
+                <svg width="22px" height="22px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="brz-deactivate-feedback-logo">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g>
+                            <path d="M1.76744915,5.42394877 L8.14019105,9.76033448 L14.2328753,5.45506181 L7.85965616,1.20869949 L1.76744915,5.42394877 Z" id="Path" stroke="#05b3e6" stroke-width="2"></path>
+                            <polygon id="Path-2" fill="#05b3e6" points="0 10.4572332 2.11320755 8.83953968 8.1509434 12.9993231 13.9874214 8.95508922 16 10.4572332 8.1509434 15.8880615"></polygon>
+                        </g>
+                    </g>
+                </svg>
                 <span class="brz-deactivate-feedback-dialog-header-title"><?php echo __( 'Quick Feedback', 'brizy' ); ?></span>
             </div>
             <form class="brz-deactivate-feedback-dialog-form" method="post">
@@ -159,4 +178,10 @@ class Brizy_Admin_Feedback {
         </div>
 		<?php
 	}
+
+	private function is_plugins_page() {
+		global $pagenow;
+
+		return 'plugins.php' === $pagenow;
+    }
 }

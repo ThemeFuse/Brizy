@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
         closeOnEscape: true,
         buttons: [
             {
-                text: 'Submit & Deactivate',
+                text: Brizy_Admin_Data.l10n.deactivateFeedbackSubmitBtn,
                 class: 'brz-feedback-submit',
                 click: function () {
 
@@ -64,11 +64,13 @@ jQuery(document).ready(function ($) {
                         }
                     } );
 
-                    //location.href = $( 'tr[data-slug="brizy"] .deactivate a' ).attr( 'href' );
+                    setTimeout( function() {
+                        location.href = $( 'tr[data-slug="brizy"] .deactivate a' ).attr( 'href' );
+                    }, 1500 );
                 }
             },
             {
-                text: 'Skip & Deactivate',
+                text: Brizy_Admin_Data.l10n.deactivateFeedbackSkipBtn,
                 class: 'brz-feedback-skip',
                 click: function () {
                     location.href = $( 'tr[data-slug="brizy"] .deactivate a' ).attr( 'href' );
@@ -77,16 +79,15 @@ jQuery(document).ready(function ($) {
         ],
         show: {
             effect: 'blind',
-            duration: 4000
-        },
-        position: {
-            my: 'center',
-            at: 'center',
-            of: window
+            duration: 5000
         },
         open: function () {
+            var overlay = $('.ui-widget-overlay');
+
+            overlay.addClass( 'brz-deactivate-overlay' );
+
             // close dialog by clicking the overlay behind it
-            $( '.ui-widget-overlay' ).bind( 'click', function () {
+            overlay.bind( 'click', function () {
                 $( '#brz-deactivate-feedback-dialog' ).dialog( 'close' );
             } )
         },
@@ -102,8 +103,18 @@ jQuery(document).ready(function ($) {
     } );
 
     $( '#brz-deactivate-feedback-dialog input:radio' ).change( function () {
+
+        var radio = $( this ),
+            submitBtn = $( '.brz-feedback-submit' );
+
         $( '.brz-feedback-text' ).addClass( 'hidden' );
-        $( this ).parent().find( '.brz-feedback-text' ).removeClass( 'hidden' );
+        submitBtn.prop( 'disabled', false );
+
+        if ( radio.val() === 'brizy_pro' ) {
+            submitBtn.prop( 'disabled', true );
+        }
+
+        radio.parent().find( '.brz-feedback-text' ).removeClass( 'hidden' );
     } );
 
     $('.enable-brizy-editor').on('click', function (event) {

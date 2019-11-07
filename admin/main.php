@@ -300,7 +300,11 @@ class Brizy_Admin_Main {
 				),
 				'editorVersion' => BRIZY_EDITOR_VERSION,
 				'pluginVersion' => BRIZY_VERSION,
-				'nonce'         => wp_create_nonce( 'brizy-admin-nonce' )
+				'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
+				'l10n'          => [
+					'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
+					'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
+				]
 			)
 		);
 	}
