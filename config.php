@@ -28,8 +28,10 @@ class Brizy_Config {
 	const ABOUT_URL = "https://www.brizy.io";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
-	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
-	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/'.BRIZY_EDITOR_VERSION;
+	// const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
+	// const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/'.BRIZY_EDITOR_VERSION;
+	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build';
+	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build';
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(

@@ -628,7 +628,8 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	private function getTexts() {
-		$brizy_public_editor_build_texts = "\Brizy_Public_EditorBuild_" . ( BRIZY_DEVELOPMENT ? "Dev" : BRIZY_EDITOR_VERSION ) . "_Texts";
+		// $brizy_public_editor_build_texts = "\Brizy_Public_EditorBuild_" . ( BRIZY_DEVELOPMENT ? "Dev" : BRIZY_EDITOR_VERSION ) . "_Texts";
+		$brizy_public_editor_build_texts = "\Brizy_Public_EditorBuild_Texts";
 
 		if ( ! class_exists( $brizy_public_editor_build_texts ) ) {
 			if ( BRIZY_DEVELOPMENT ) {
