@@ -140,6 +140,7 @@ class Brizy_Editor_Project implements Serializable {
 			}
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
+			throw $e;
 		}
 
 		return self::$instance[ $wp_post->ID ] = new self( $wp_post );
@@ -178,15 +179,14 @@ class Brizy_Editor_Project implements Serializable {
 	 * @throws Exception
 	 */
 	private static function createPost() {
-		$post_id = wp_insert_post( array(
-			'post_type'      => self::BRIZY_PROJECT,
-			'post_title'     => 'Brizy Project',
-			'post_status'    => 'publish',
-			'comment_status' => 'closed',
-			'ping_status'    => 'closed'
-		) );
 
-		Brizy_Logger::instance()->notice( 'Create new project', array( 'id' => $post_id ) );
+		$defaultJsonPath = Brizy_Editor_UrlBuilder::editor_build_path( 'defaults.json' );
+
+		if ( ! file_exists( $defaultJsonPath ) ) {
+			$message = 'Failed to create the default project data. ' . $defaultJsonPath . ' was not found. ';
+			Brizy_Logger::instance()->critical( $message, [ $message ] );
+			throw new Exception( $message );
+		}
 
 		$project_data = array(
 			'id'                       => md5( uniqid( 'Local project', true ) ),
@@ -202,12 +202,22 @@ class Brizy_Editor_Project implements Serializable {
 			'signature'                => Brizy_Editor_Signature::get(),
 			'accounts'                 => array(),
 			'forms'                    => array(),
-			'data'                     => base64_encode( file_get_contents( Brizy_Editor_UrlBuilder::editor_build_path( 'defaults.json' ) ) ),
+			'data'                     => base64_encode( file_get_contents( $defaultJsonPath ) ),
 			'brizy-license-key'        => null,
 			'brizy-cloud-token'        => null,
 			'brizy-cloud-project'      => null,
 			'image-optimizer-settings' => array(),
 		);
+
+		$post_id = wp_insert_post( array(
+			'post_type'      => self::BRIZY_PROJECT,
+			'post_title'     => 'Brizy Project',
+			'post_status'    => 'publish',
+			'comment_status' => 'closed',
+			'ping_status'    => 'closed'
+		) );
+
+		Brizy_Logger::instance()->notice( 'Create new project', array( 'id' => $post_id ) );
 
 
 		$storage = Brizy_Editor_Storage_Project::instance( $post_id );
