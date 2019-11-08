@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import Toolbar from "visual/component/Toolbar";
+import EditorIcon from "visual/component/EditorIcon";
 
 class ColorPalette extends React.Component {
   static defaultProps = {

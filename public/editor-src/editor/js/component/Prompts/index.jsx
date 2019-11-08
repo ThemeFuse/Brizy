@@ -60,9 +60,9 @@ class Prompts extends React.Component {
         case "apps-integrations":
           content = <Apps {...props} onClose={this.close} />;
           break;
-        case "popup":
-          content = <Popup {...props} onClose={this.close} />;
-          break;
+        // case "popup":
+        //   content = <Popup {...props} onClose={this.close} />;
+        //   break;
         case "blocks":
           content = <Blocks {...props} onClose={this.close} />;
           break;
