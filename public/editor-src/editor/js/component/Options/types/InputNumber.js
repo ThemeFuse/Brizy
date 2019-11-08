@@ -2,6 +2,7 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
+import EditorIcon from "visual/component/EditorIcon";
 
 class InputNumberOptionType extends React.Component {
   static defaultProps = {

@@ -2,6 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import EditorIcon from "visual/component/EditorIcon";
 
 export default function PopulationSelect({ choices, value, onChange }) {
   const className = classnames(

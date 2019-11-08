@@ -120,12 +120,12 @@ export default config => store => next => action => {
 
   const state = store.getState();
   callbacks.onAfterNext.forEach(task =>
-    task({ config, state, oldState, action })
+    task({ config, state, oldState, store, action })
   );
 };
 
 function handleHydrate(callbacks) {
-  callbacks.onAfterNext.push(({ state, config }) => {
+  callbacks.onAfterNext.push(({ state, store, config }) => {
     const { document, parentDocument } = config;
     const currentFonts = projectFontsData(unDeletedFontSelector(state));
     const allFonts = projectFontsData(fontSelector(state));
