@@ -54,6 +54,7 @@ export function cssStyleBoxShadow({ v, device, state, prefix = "" }) {
 }
 
 export function cssStyleBoxShadowSection({ v, device, state, prefix = "" }) {
+  const type = styleBoxShadowType({ v, device, state, prefix });
   const vertical = styleBoxShadowVertical({ v, device, state, prefix });
   const blur = styleBoxShadowBlur({ v, device, state, prefix });
   const color = styleBoxShadowColor({ v, device, state, prefix });

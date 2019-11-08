@@ -3,7 +3,7 @@ import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementWOOAddToCartProductID,
   toolbarElementWOOAddToCartStyle,
-  toolbarCustomCSS
+  toolbarSizeWidthWidthPercent
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {

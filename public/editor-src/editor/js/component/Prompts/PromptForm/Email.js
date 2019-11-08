@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import classnames from "classnames";
+import _ from "underscore";
 import Config from "visual/global/Config";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import AppList from "../common/GlobalApps/StepsView/AppsList";
