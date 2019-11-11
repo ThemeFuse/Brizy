@@ -75,6 +75,7 @@ class Brizy_Editor {
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
 		Brizy_Admin_Fonts_Main::_init();
+		Brizy_Admin_Svg_Main::_init();
 		Brizy_Admin_Popups_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
 
