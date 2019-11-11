@@ -358,7 +358,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 	}
 
-
 //	public function auto_save_post_deperecated() {
 //		try {
 //			$user_id                   = get_current_user_id();
@@ -422,17 +421,26 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$post_type        = $this->get_wp_post()->post_type;
 		$post_type_object = get_post_type_object( $post_type );
-		$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
-		$post_status      = $can_publish ? 'publish' : 'pending';
+
+		if ( ! $post_type_object ) {
+			Brizy_Logger::instance()->critical( 'Invalid post type provided on save_wp_post', [ 'post_type' => $post_type ] );
+			return;
+		}
+
+		$can_publish = current_user_can( $post_type_object->cap->publish_posts );
+		$post_status = $can_publish ? 'publish' : 'pending';
 
 		$brizy_compiled_page = $this->get_compiled_page();
 
 		$this->deleteOldAutoSaves( $this->get_parent_id() );
 
+		$body = $brizy_compiled_page->get_body();
+
+
 		wp_update_post( array(
 			'ID'           => $this->get_parent_id(),
 			'post_status'  => $post_status,
-			'post_content' => $brizy_compiled_page->get_body()
+			'post_content' => $body
 		) );
 	}
 
@@ -556,7 +564,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function get_editor_data() {
 
-		if ( ($decodedData = base64_decode( $this->editor_data, true ))!==false ) {
+		if ( ( $decodedData = base64_decode( $this->editor_data, true ) ) !== false ) {
 			return $decodedData;
 		}
 
@@ -570,7 +578,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_editor_data( $content ) {
 
-		if ( base64_decode( $content, true )!==false ) {
+		if ( base64_decode( $content, true ) !== false ) {
 			$this->editor_data = $content;
 		} else {
 			$this->editor_data = base64_encode( $content );
@@ -622,7 +630,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_encoded_compiled_html( $compiled_html ) {
 
-		if (  ($decodedData = base64_decode( $compiled_html, true ))!==false ) {
+		if ( ( $decodedData = base64_decode( $compiled_html, true ) ) !== false ) {
 			$this->set_compiled_html( $decodedData );
 		} else {
 			$this->set_compiled_html( $compiled_html );
