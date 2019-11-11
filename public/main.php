@@ -425,6 +425,7 @@ class Brizy_Public_Main {
 
 			if ( ! $is_preview && $needs_compile ) {
 				$this->post->save();
+				$this->post->save_wp_post();
 			}
 
 		} catch ( Exception $e ) {
