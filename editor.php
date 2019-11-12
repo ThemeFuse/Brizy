@@ -446,6 +446,33 @@ class Brizy_Editor {
 		return 'brizy';
 	}
 
+	/**
+	 * @param $wp_post_id
+	 * @param bool $throw
+	 *
+	 * @return bool
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+	 */
+	public static function checkIfPostTypeIsSupported( $wp_post_id, $throw = true ) {
+		$type = get_post_type( $wp_post_id );
+
+		$supported_post_types   = self::get()->supported_post_types();
+		$supported_post_types[] = 'revision';
+
+		if ( ! in_array( $type, $supported_post_types ) ) {
+
+			if ( $throw ) {
+				throw new Brizy_Editor_Exceptions_UnsupportedPostType(
+					"Brizy editor doesn't support '{$type}' post type"
+				);
+			} else {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public function supported_post_types() {
 		$types = $this->get_post_types();
 

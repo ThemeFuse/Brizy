@@ -465,8 +465,7 @@ class Brizy_Admin_Main {
 		try {
 			$post = Brizy_Editor_Post::get( $p->ID );
 		} catch ( Exception $exception ) {
-			$project = Brizy_Editor_Project::get();
-			$post    = Brizy_Editor_Post::create( $project, $p );
+
 		}
 
 		if ( ! $post ) {
