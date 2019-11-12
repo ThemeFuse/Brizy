@@ -13,7 +13,9 @@
     "facebook/webdriver": "^1.7",
     "codeception/codeception": "^3.0",
     "codeception/remote-debug": "*",
-    "lucatume/wp-browser": "^2.2"
+    "lucatume/wp-browser": "^2.2",
+    "squizlabs/php_codesniffer": "^3.0@dev",
+    "wp-coding-standards/wpcs": "2.1.1"
   },
   "require": {
     "twig/twig": "1.33.0",
@@ -26,5 +28,8 @@
       "type": "vcs",
       "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git"
     }
-  ]
+  ],
+  "scripts": {
+    "phpcs": "phpcs --standard=phpcs.xml"
+  }
 }
