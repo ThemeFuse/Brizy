@@ -32,7 +32,6 @@ class Brizy_Admin_Fonts_Main {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_filter( 'upload_mimes', array( $this, 'addFontTypes' ) );
 		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 3 );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );
