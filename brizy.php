@@ -40,6 +40,7 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.6.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
+
 		return;
 	}
 
@@ -76,6 +77,7 @@ function brizy_install() {
 
 function brizy_clean() {
 	Brizy_Logger::clean();
+	flush_rewrite_rules();
 }
 
 new Brizy_Compatibilities_Init();
