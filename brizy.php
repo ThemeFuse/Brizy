@@ -62,7 +62,7 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
 		foreach ( $options['plugins'] as $plugin ) {
 			if ( $plugin == BRIZY_PLUGIN_BASE ) {
-				flush_rewrite_rules();
+				add_option('brizy-regenerate-permalinks',1);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 function brizy_install() {
 	Brizy_Logger::install();
 	Brizy_Editor::get()->registerCustomPostTemplates();
-	flush_rewrite_rules();
+	add_option('brizy-regenerate-permalinks',1);
 }
 
 function brizy_clean() {
