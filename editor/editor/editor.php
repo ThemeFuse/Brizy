@@ -628,7 +628,15 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	private function getTexts() {
-		$brizy_public_editor_build_texts = "\Brizy_Public_EditorBuild_" . ( BRIZY_DEVELOPMENT ? "Dev" : BRIZY_EDITOR_VERSION ) . "_Texts";
+		if (BRIZY_DEVELOPMENT) {
+			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Dev_Texts';
+		} else {
+			$version = '';
+			foreach ( explode( '-', BRIZY_EDITOR_VERSION ) as $tmp ) {
+				$version .= ucfirst( $tmp );
+			}
+			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_' . $version . '_Texts';
+		}
 
 		if ( ! class_exists( $brizy_public_editor_build_texts ) ) {
 			if ( BRIZY_DEVELOPMENT ) {
