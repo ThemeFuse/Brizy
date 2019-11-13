@@ -87,6 +87,8 @@
 
     "customClassName": "",
 
+    "customID": "",
+
     "tabletHorizontalAlign": null,
 
     "tabletPaddingType": "grouped",

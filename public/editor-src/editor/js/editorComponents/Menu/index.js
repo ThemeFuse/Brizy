@@ -167,7 +167,6 @@ export default class Menu extends EditorComponent {
   }
 
   renderMenu(v, id) {
-    const { onToolbarEnter, onToolbarLeave } = this.props;
     const { mMenu, tabletMMenu, mobileMMenu } = v;
     const hasMMenu =
       (mMenu === "on" || tabletMMenu === "on" || mobileMMenu === "on") && id;
@@ -177,9 +176,7 @@ export default class Menu extends EditorComponent {
         mMenu: hasMMenu,
         toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
           allowExtend: !hasMMenu
-        }),
-        onToolbarEnter,
-        onToolbarLeave
+        })
       }
     });
 

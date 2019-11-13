@@ -25,7 +25,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		$vars = unserialize( $data );
 
-		return self::createFromSerializedData($vars);
+		return self::createFromSerializedData( $vars );
 	}
 
 	public function jsonSerialize() {
@@ -83,28 +83,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 		return $this;
 	}
 
-	/**
-	 * @return Brizy_Editor_Forms_Form
-	 * @throws Exception
-	 */
-	public static function create_from_post() {
-		$instance = new self();
-
-		$stripcslashes = stripcslashes( $_POST['form'] );
-		$json_obj      = json_decode( $stripcslashes );
-
-		if ( ! isset( $json_obj ) ) {
-			throw new Exception( 'Bad Request', 400 );
-		}
-
-		$_POST['form'] = get_object_vars( $json_obj );
-
-		if ( isset( $_POST['form']['id'] ) ) {
-			$instance->setId( $_POST['form']['id'] );
-		}
-
-		return $instance;
-	}
 
 
 	/**

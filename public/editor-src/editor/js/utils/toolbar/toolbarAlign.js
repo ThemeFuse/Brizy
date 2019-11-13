@@ -46,9 +46,9 @@ export function toolbarHorizontalAlign({
 export function toolbarHorizontalAlign2({
   v,
   device,
+  state,
   devices = "all",
   disabled = false,
-  state,
   position = 100
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -88,7 +88,7 @@ export function toolbarVerticalAlign({
   v,
   device,
   state,
-  position = 100,
+  position = 110,
   prefix = "",
   disabled = false,
   devices = "all"

@@ -15,17 +15,17 @@ export default function Showing(props) {
         onChange={value => onChange({ ...triggerValue, value })}
       >
         <SelectItem key="views" value="views">
-          page views
+          Page Views
         </SelectItem>
         <SelectItem key="sessions" value="sessions">
-          sessions
+          Sessions
         </SelectItem>
       </Select>
       <div className="brz-control__select">
         <input
           className="brz-input"
           type="number"
-          placeholder=""
+          placeholder="Number of"
           value={triggerValue[triggerValue.value]}
           onChange={({ target: { value } }) =>
             onChange({ ...triggerValue, [triggerValue.value]: value })

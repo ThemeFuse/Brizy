@@ -69,7 +69,6 @@ class SectionPopup extends EditorComponent {
 
       this.mounted = false;
       this.popupRef = React.createRef();
-      this.containerBorderRef = React.createRef();
       this.popupsContainer = document.getElementById("brz-popups");
       this.el = document.createElement("div");
     }
@@ -108,22 +107,6 @@ class SectionPopup extends EditorComponent {
       })
     );
   }
-
-  handleToolbarOpen = () => {
-    if (this.containerBorderRef.current) {
-      this.containerBorderRef.current.setActive(true);
-    }
-  };
-
-  handleToolbarClose = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    if (this.containerBorderRef.current) {
-      this.containerBorderRef.current.setActive(false);
-    }
-  };
 
   handleDropClick = () => {
     this.close();
@@ -172,11 +155,9 @@ class SectionPopup extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, {
           allowExtend: false
         })}
-        className="brz-ed-collapsible__section brz-ed-collapsible--big"
+        className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
-        onOpen={this.handleToolbarOpen}
-        onClose={this.handleToolbarClose}
       />
     );
   }
@@ -271,15 +252,8 @@ class SectionPopup extends EditorComponent {
             allow={["admin"]}
             fallbackRender={() => this.renderItems(v, vs, vd)}
           >
-            <ContainerBorder
-              ref={this.containerBorderRef}
-              borderStyle="none"
-              activeBorderStyle="none"
-              reactToClick={false}
-              showBorders={false}
-              path={this.getPath()}
-            >
-              {this.renderToolbar(v)}
+            <ContainerBorder showBorder={false} activateOnContentClick={false}>
+              {this.renderToolbar()}
               {this.renderItems(v, vs, vd)}
             </ContainerBorder>
           </Roles>

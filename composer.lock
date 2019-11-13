@@ -360,12 +360,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "ca8531bb62e82df3e5ea318ae836a2dc995fcb81"
+                "reference": "48e08e0e92ed903a842fb8d60d4fba7e2d10fa85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/ca8531bb62e82df3e5ea318ae836a2dc995fcb81",
-                "reference": "ca8531bb62e82df3e5ea318ae836a2dc995fcb81",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/48e08e0e92ed903a842fb8d60d4fba7e2d10fa85",
+                "reference": "48e08e0e92ed903a842fb8d60d4fba7e2d10fa85",
                 "shasum": ""
             },
             "require": {
@@ -398,6 +398,7 @@
                 "pda/pheanstalk": "~3.0",
                 "php-amqplib/php-amqplib": "~2.4",
                 "predis/predis": "^1.0",
+                "ramsey/uuid-doctrine": "^1.5",
                 "squizlabs/php_codesniffer": "~2.0",
                 "symfony/process": ">=2.7 <5.0",
                 "vlucas/phpdotenv": "^3.0"
@@ -447,7 +448,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2019-10-09T15:03:14+00:00"
+            "time": "2019-10-14T06:57:34+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
@@ -975,12 +976,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "7c71fc2932158d00f24f10635bf3b3b8b6ee5b68"
+                "reference": "67dbbd519b584fdfb9f8d028912eb404ab411f8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/7c71fc2932158d00f24f10635bf3b3b8b6ee5b68",
-                "reference": "7c71fc2932158d00f24f10635bf3b3b8b6ee5b68",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/67dbbd519b584fdfb9f8d028912eb404ab411f8a",
+                "reference": "67dbbd519b584fdfb9f8d028912eb404ab411f8a",
                 "shasum": ""
             },
             "require": {
@@ -1023,7 +1024,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-07-02T13:37:32+00:00"
+            "time": "2019-10-14T11:56:32+00:00"
         },
         {
             "name": "facebook/webdriver",
@@ -1269,12 +1270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "a7010cc9b52ecfa00051bb26e4ae025958fe9851"
+                "reference": "bcbb52f6f8b28de44b7515519e3d2d9c640d40ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/a7010cc9b52ecfa00051bb26e4ae025958fe9851",
-                "reference": "a7010cc9b52ecfa00051bb26e4ae025958fe9851",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/bcbb52f6f8b28de44b7515519e3d2d9c640d40ab",
+                "reference": "bcbb52f6f8b28de44b7515519e3d2d9c640d40ab",
                 "shasum": ""
             },
             "require": {
@@ -1327,7 +1328,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-08-23T22:16:30+00:00"
+            "time": "2019-10-14T09:23:25+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -2233,16 +2234,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "2.2.29",
+            "version": "2.2.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "72caed66bcc09310a96f116900850193326fa079"
+                "reference": "5b632b7101247c91749d8bfaf0de785734ec97dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/72caed66bcc09310a96f116900850193326fa079",
-                "reference": "72caed66bcc09310a96f116900850193326fa079",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/5b632b7101247c91749d8bfaf0de785734ec97dd",
+                "reference": "5b632b7101247c91749d8bfaf0de785734ec97dd",
                 "shasum": ""
             },
             "require": {
@@ -2301,7 +2302,7 @@
                 "codeception",
                 "wordpress"
             ],
-            "time": "2019-09-24T12:25:42+00:00"
+            "time": "2019-10-14T09:34:52+00:00"
         },
         {
             "name": "mck89/peast",
@@ -2549,16 +2550,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.25.1",
+            "version": "2.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "d59c6cea9c4a3547bb6c0dfec451319abdaa4fb1"
+                "reference": "443fe5f1498147e0fbc792142b5dc43e2e8a533f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d59c6cea9c4a3547bb6c0dfec451319abdaa4fb1",
-                "reference": "d59c6cea9c4a3547bb6c0dfec451319abdaa4fb1",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/443fe5f1498147e0fbc792142b5dc43e2e8a533f",
+                "reference": "443fe5f1498147e0fbc792142b5dc43e2e8a533f",
                 "shasum": ""
             },
             "require": {
@@ -2612,7 +2613,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-10-05T15:52:23+00:00"
+            "time": "2019-10-14T14:18:59+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -2620,12 +2621,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/manifest.git",
-                "reference": "8c8bd1bb1a22f311b1b4886662b989d0d02aab77"
+                "reference": "6008a32fa23816a6ac71889c80da7d58c056c2bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/manifest/zipball/8c8bd1bb1a22f311b1b4886662b989d0d02aab77",
-                "reference": "8c8bd1bb1a22f311b1b4886662b989d0d02aab77",
+                "url": "https://api.github.com/repos/phar-io/manifest/zipball/6008a32fa23816a6ac71889c80da7d58c056c2bb",
+                "reference": "6008a32fa23816a6ac71889c80da7d58c056c2bb",
                 "shasum": ""
             },
             "require": {
@@ -2656,22 +2657,22 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "role": "Developer",
-                    "email": "sebastian@phpeople.de"
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "Developer",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2019-07-09T12:18:04+00:00"
+            "time": "2019-10-11T06:20:36+00:00"
         },
         {
             "name": "phar-io/version",
@@ -5308,16 +5309,16 @@
         },
         {
             "name": "voku/portable-ascii",
-            "version": "1.2.3",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "d29f78e8ead9cfef6a09208c27716737c1ac56be"
+                "reference": "d3553af811794c377ea2afff5494b343bcef5b76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/d29f78e8ead9cfef6a09208c27716737c1ac56be",
-                "reference": "d29f78e8ead9cfef6a09208c27716737c1ac56be",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/d3553af811794c377ea2afff5494b343bcef5b76",
+                "reference": "d3553af811794c377ea2afff5494b343bcef5b76",
                 "shasum": ""
             },
             "require": {
@@ -5353,7 +5354,7 @@
                 "clean",
                 "php"
             ],
-            "time": "2019-09-10T13:53:07+00:00"
+            "time": "2019-10-14T09:49:39+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5604,12 +5605,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/core-command.git",
-                "reference": "6532da4185b31e92cce8df17927d6346b10a51fc"
+                "reference": "f57503d15ecd4e59d4eec8af120df75c941f6152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/core-command/zipball/6532da4185b31e92cce8df17927d6346b10a51fc",
-                "reference": "6532da4185b31e92cce8df17927d6346b10a51fc",
+                "url": "https://api.github.com/repos/wp-cli/core-command/zipball/f57503d15ecd4e59d4eec8af120df75c941f6152",
+                "reference": "f57503d15ecd4e59d4eec8af120df75c941f6152",
                 "shasum": ""
             },
             "require": {
@@ -5663,7 +5664,7 @@
             ],
             "description": "Downloads, installs, updates, and manages a WordPress installation.",
             "homepage": "https://github.com/wp-cli/core-command",
-            "time": "2019-10-08T06:20:00+00:00"
+            "time": "2019-10-15T05:53:21+00:00"
         },
         {
             "name": "wp-cli/cron-command",
@@ -7369,12 +7370,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zordius/lightncandy.git",
-                "reference": "02f77fc6f65c2385f0804d6704992ade86336086"
+                "reference": "2d8a8a2e8c9d6a6cee46f435eafe06c53efe31a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zordius/lightncandy/zipball/02f77fc6f65c2385f0804d6704992ade86336086",
-                "reference": "02f77fc6f65c2385f0804d6704992ade86336086",
+                "url": "https://api.github.com/repos/zordius/lightncandy/zipball/2d8a8a2e8c9d6a6cee46f435eafe06c53efe31a2",
+                "reference": "2d8a8a2e8c9d6a6cee46f435eafe06c53efe31a2",
                 "shasum": ""
             },
             "require": {
@@ -7413,7 +7414,7 @@
                 "php",
                 "template"
             ],
-            "time": "2019-10-01T06:06:17+00:00"
+            "time": "2019-10-14T02:51:44+00:00"
         }
     ],
     "aliases": [],

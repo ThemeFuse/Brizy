@@ -12,7 +12,8 @@ import {
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
-  toolbarHoverTransition
+  toolbarHoverTransition,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -348,6 +349,7 @@ export function getItems({ v, device }) {
         tabsState: !isOpen ? "" : v.tabsState
       })
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",

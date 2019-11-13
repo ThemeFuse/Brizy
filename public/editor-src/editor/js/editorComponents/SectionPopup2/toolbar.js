@@ -11,15 +11,14 @@ import {
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
   toolbarHorizontalAlign2,
-  toolbarContainerPopup2ContainerWidth,
-  toolbarContainerPopup2ContainerType,
-  toolbarContainerPopup2ContainerHeight,
-  toolbarVerticalAlignToggle,
   toolbarElementSectionSaved,
   toolbarContainerPopup2ScrollPage,
   toolbarContainerPopup2ClickOutsideToClose,
   toolbarContainerPopup2ShowCloseButton,
-  toolbarContainerPopup2ShowCloseButtonAfter
+  toolbarContainerPopup2ContainerWidth,
+  toolbarContainerPopup2ContainerTypeAndHeight,
+  toolbarVerticalAlign,
+  toolbarVerticalAlignToggle
 } from "visual/utils/toolbar";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
@@ -28,9 +27,9 @@ export function getItems({ v, device, component }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: closeBgColorHex } = getOptionColorHexByPalette(
-    dvv("closeBgColorHex"),
-    dvv("closeBgColorPalette")
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
   );
 
   return [
@@ -40,6 +39,7 @@ export function getItems({ v, device, component }) {
       icon: "nc-popup",
       title: "Popup",
       position: 70,
+      devices: "desktop",
       options: [
         {
           id: dvk("tabsPopup"),
@@ -69,7 +69,8 @@ export function getItems({ v, device, component }) {
                 toolbarContainerPopup2ScrollPage({
                   v,
                   device,
-                  state: "normal"
+                  state: "normal",
+                  position: 50
                 })
               ]
             },
@@ -86,12 +87,6 @@ export function getItems({ v, device, component }) {
                   v,
                   device,
                   state: "normal"
-                }),
-                toolbarContainerPopup2ShowCloseButtonAfter({
-                  v,
-                  device,
-                  state: "normal",
-                  disabled: dvv("showCloseButton") === "off"
                 })
               ]
             }
@@ -148,10 +143,7 @@ export function getItems({ v, device, component }) {
       position: 90,
       icon: {
         style: {
-          backgroundColor: hexToRgba(
-            closeBgColorHex,
-            dvv("closeBgColorOpacity")
-          )
+          backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
         }
       },
       options: [
@@ -283,23 +275,18 @@ export function getItems({ v, device, component }) {
       position: 110,
       options: [
         toolbarContainerPopup2ContainerWidth({ v, device, state: "normal" }),
-        {
-          type: "multiPicker",
-          picker: toolbarContainerPopup2ContainerType({
-            v,
-            device,
-            state: "normal"
-          }),
-          choices: {
-            custom: [
-              toolbarContainerPopup2ContainerHeight({
-                v,
-                device,
-                state: "normal"
-              })
-            ]
-          }
-        },
+        toolbarContainerPopup2ContainerTypeAndHeight({
+          v,
+          device,
+          state: "normal"
+        }),
+        toolbarVerticalAlign({
+          v,
+          device,
+          state: "normal",
+          prefix: "popupRow",
+          disabled: dvv("columnsHeightStyle") === "auto"
+        }),
         {
           id: dvk("advancedSettings"),
           type: "advancedSettings",

@@ -9,7 +9,8 @@ export {
   cssStyleSizeMinHeightPx,
   cssStyleSizeMaxWidthSize,
   cssStyleSizeSizePercent,
-  cssStyleSizeMaxWidthContainer
+  cssStyleSizeMaxWidthContainer,
+  cssStyleSizeTextSpacing
 } from "./cssStyleSize";
 
 // Element Line
@@ -254,9 +255,13 @@ export { cssStyleSectionPopupContainerWrap } from "./cssStyleSectionPopup";
 
 // Element Breadcrumbs
 export {
-  cssStyleElementBreadcrumbsWidth,
-  cssStyleElementBreadcrumbsSpacing,
   cssStyleElementBreadcrumbsArrowSize,
   cssStyleElementBreadcrumbsColorActive,
   cssStyleElementBreadcrumbsColorArrows
 } from "./cssStyleElementBreadcrumbs";
+
+// Element Post Info
+export {
+  cssStyleElementPostInfoColorText,
+  cssStyleElementPostInfoColorIcons
+} from "./cssStyleElementPostInfo";

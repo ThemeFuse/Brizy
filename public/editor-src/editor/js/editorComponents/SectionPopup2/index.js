@@ -59,22 +59,21 @@ class SectionPopup2 extends EditorComponent {
     this.instanceKey = this.props.instanceKey || this.getId();
 
     if (IS_EDITOR) {
-      this.state = {
-        isOpened:
-          this.props.isOpened || SectionPopup2.tmpGlobal === this.getId()
-      };
+      const isOpened =
+        this.props.isOpened || SectionPopup2.tmpGlobal === this.getId();
+
+      this.state = { isOpened };
+
+      isOpened && document.documentElement.classList.add("brz-ow-hidden");
       SectionPopup2.tmpGlobal = null;
 
-      this.mounted = false;
       this.popupRef = React.createRef();
-      this.containerBorderRef = React.createRef();
       this.popupsContainer = document.getElementById("brz-popups");
       this.el = document.createElement("div");
     }
   }
 
   componentDidMount() {
-    this.mounted = true;
     this.popupsContainer.appendChild(this.el);
     SectionPopup2Instances.set(this.instanceKey, this);
   }
@@ -85,7 +84,6 @@ class SectionPopup2 extends EditorComponent {
   }
 
   componentWillUnmount() {
-    this.mounted = false;
     this.popupsContainer.removeChild(this.el);
     this.popupsContainer = null;
     this.el = null;
@@ -107,26 +105,9 @@ class SectionPopup2 extends EditorComponent {
     );
   }
 
-  handleToolbarOpen = () => {
-    if (this.containerBorderRef.current) {
-      this.containerBorderRef.current.setActive(true);
-    }
-  };
-
-  handleToolbarClose = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    if (this.containerBorderRef.current) {
-      this.containerBorderRef.current.setActive(false);
-    }
-  };
-
   handleDropClick = () => {
     this.close();
   };
-
   getMeta(v) {
     const { meta } = this.props;
     const { widthSuffix, width } = v;
@@ -153,11 +134,9 @@ class SectionPopup2 extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, {
           allowExtend: false
         })}
-        className="brz-ed-collapsible__section brz-ed-collapsible--big"
+        className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
-        onOpen={this.handleToolbarOpen}
-        onClose={this.handleToolbarClose}
       />
     );
   }
@@ -171,11 +150,12 @@ class SectionPopup2 extends EditorComponent {
       "brz-d-xs-flex",
       "brz-flex-xs-wrap",
       css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
         style(v, vs, vd)
       )
     );
+
     const classNameContainer = classnames("brz-container", containerClassName);
 
     const itemsProps = this.makeSubcomponentProps({
@@ -224,7 +204,7 @@ class SectionPopup2 extends EditorComponent {
     const { className, customClassName } = v;
     const id = this.getId();
 
-    const classNameClose = classnames(
+    const classNamePopup = classnames(
       "brz-popup2",
       "brz-popup2__editor",
       { "brz-popup2--opened": this.state.isOpened },
@@ -236,7 +216,7 @@ class SectionPopup2 extends EditorComponent {
       <CustomCSS selectorName={id} css={v.customCSS}>
         <div
           id={id}
-          className={classNameClose}
+          className={classNamePopup}
           data-block-id={this.props.blockId}
         >
           {!IS_GLOBAL_POPUP && (
@@ -255,15 +235,8 @@ class SectionPopup2 extends EditorComponent {
             allow={["admin"]}
             fallbackRender={() => this.renderItems(v, vs, vd)}
           >
-            <ContainerBorder
-              ref={this.containerBorderRef}
-              borderStyle="none"
-              activeBorderStyle="none"
-              reactToClick={false}
-              showBorders={false}
-              path={this.getPath()}
-            >
-              {this.renderToolbar(v)}
+            <ContainerBorder showBorder={false} activateOnContentClick={false}>
+              {this.renderToolbar()}
               {this.renderItems(v, vs, vd)}
             </ContainerBorder>
           </Roles>
@@ -331,7 +304,7 @@ class SectionPopup2 extends EditorComponent {
       attr["data-show-close-button-after"] = v.showCloseButtonAfter;
     }
 
-    const classNameClose = classnames(
+    const classNamePopup = classnames(
       "brz-popup2",
       "brz-popup2__preview",
       {
@@ -344,7 +317,7 @@ class SectionPopup2 extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div
-          className={classNameClose}
+          className={classNamePopup}
           data-brz-popup={this.instanceKey}
           {...attr}
         >

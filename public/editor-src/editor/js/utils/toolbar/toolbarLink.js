@@ -155,3 +155,23 @@ export function toolbarLinkHref({ v, device, devices = "all", state }) {
     })
   };
 }
+
+export function toolbarActionClosePopup({
+  v,
+  device,
+  state,
+  devices = "desktop",
+  disabled = true
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("actionClosePopup"),
+    label: t("Close Popup"),
+    type: "switch",
+    devices,
+    disabled,
+    value: dvv("actionClosePopup")
+  };
+}

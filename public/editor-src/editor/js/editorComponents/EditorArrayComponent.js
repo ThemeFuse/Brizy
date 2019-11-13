@@ -4,6 +4,7 @@ import { insert, removeAt, replaceAt, setIn, getIn } from "timm";
 import Editor from "visual/global/Editor";
 import { getStore } from "visual/redux/store";
 import {
+  pageDataDraftBlocksSelector,
   pageDataNoRefsSelector,
   copiedElementNoRefsSelector
 } from "visual/redux/selectors";
@@ -432,7 +433,7 @@ export default class EditorArrayComponent extends EditorComponent {
   copy(index) {
     const dispatch = this.getReduxDispatch();
     const shortcodePath = [...this.getPath(), index];
-    const pageData = this.getReduxState().page.data;
+    const pageData = pageDataDraftBlocksSelector(this.getReduxState());
 
     dispatch(updateCopiedElement({ value: pageData, path: shortcodePath }));
   }

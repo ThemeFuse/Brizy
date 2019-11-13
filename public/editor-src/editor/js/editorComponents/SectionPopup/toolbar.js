@@ -41,10 +41,6 @@ export function getItems({ v, device, component }) {
               ? component.becomeGlobal()
               : component.becomeNormal();
           }
-        },
-        {
-          id: "popupConditions",
-          type: "popupConditions"
         }
       ]
     },

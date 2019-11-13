@@ -52,7 +52,7 @@ class Brizy_Editor_Http_Client {
 		$options['method']  = $method;
 		$options['timeout'] = 30;
 		$options            = $this->prepare_options( $options );
-		$wp_response        = null;
+		$response           = null;
 
 		if ( is_string( $url ) ) {
 			Brizy_Logger::instance()->notice( "{$method} request to {$url}", array( 'options' => $options ) );
@@ -78,12 +78,7 @@ class Brizy_Editor_Http_Client {
 			}
 		}
 
-		Brizy_Logger::instance()->debug( "Request {{$url}} status " . $response->get_status_code(), array(
-			'status'   => $response->get_status_code(),
-			'response' => $wp_response
-		) );
-
-		if ( $response->is_ok() ) {
+		if ( $response && $response->is_ok() ) {
 			return $response;
 		}
 

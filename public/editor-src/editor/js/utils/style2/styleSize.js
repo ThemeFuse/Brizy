@@ -22,3 +22,7 @@ export function styleSizeContainerSize({ v, device, state }) {
 
   return containerSize;
 }
+
+export function styleSizeTextSpacing({ v, device, state }) {
+  return `${defaultValueValue({ v, key: "textSpacing", device, state })}`;
+}

@@ -4,10 +4,12 @@ import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 import {
   toolbarDisabledShowOnTablet,
-  toolbarDisabledShowOnMobile
+  toolbarDisabledShowOnMobile,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
+  const device = "desktop";
   const fields = _.pluck(v.items[0].value.items, "value");
 
   return [
@@ -98,11 +100,6 @@ export function getItemsForDesktop(v) {
       value: v.horizontalAlign
     },
     {
-      id: "toolbarSettings",
-      type: "popover",
-      disabled: true
-    },
-    {
       id: "apps",
       type: "formApps",
       icon: "nc-extensions-2",
@@ -111,11 +108,13 @@ export function getItemsForDesktop(v) {
         id: v._id,
         fields
       }
-    }
+    },
+    toolbarDisabledAdvancedSettings({ device })
   ];
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
   return [
     toolbarDisabledShowOnTablet({}),
     {
@@ -139,16 +138,12 @@ export function getItemsForTablet(v) {
         }
       ],
       value: tabletSyncOnChange(v, "horizontalAlign")
-    },
-    {
-      id: "tabletToolbarSettings",
-      type: "popover",
-      disabled: true
     }
   ];
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
   return [
     toolbarDisabledShowOnMobile({}),
     {
@@ -172,11 +167,6 @@ export function getItemsForMobile(v) {
         }
       ],
       value: mobileSyncOnChange(v, "horizontalAlign")
-    },
-    {
-      id: "mobileToolbarSettings",
-      type: "popover",
-      disabled: true
     }
   ];
 }

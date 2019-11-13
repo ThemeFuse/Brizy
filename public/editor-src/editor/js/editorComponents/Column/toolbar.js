@@ -23,6 +23,7 @@ import {
   toolbarShowOnResponsive,
   toolbarZIndex,
   toolbarCustomCSSClass,
+  toolbarCSSID,
   toolbarEntranceAnimation,
   toolbarImageLinkExternal,
   toolbarLinkExternalBlank,
@@ -771,6 +772,12 @@ export function getItems({ v, device }) {
                   options: [
                     toolbarShowOnDesktop({ v, devices: "desktop" }),
                     toolbarZIndex({
+                      v,
+                      device,
+                      state: "normal",
+                      devices: "desktop"
+                    }),
+                    toolbarCSSID({
                       v,
                       device,
                       state: "normal",

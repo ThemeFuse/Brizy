@@ -293,6 +293,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @param $data
 	 *
 	 * @return Brizy_Admin_Rule|void
+	 * @throws Exception
 	 */
 	static public function createFromSerializedData( $data ) {
 
@@ -312,11 +313,12 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	/**
 	 * @param $data
 	 *
-	 * @return Brizy_Admin_Rule|void
+	 * @return Brizy_Admin_Rule
+	 * @throws Exception
 	 */
 	static public function createFromRequestData( $data ) {
 
-		if ( is_null( $data ) || ! $data ) {
+		if ( is_null( $data )  ) {
 			throw new Exception( 'Invalid parameter provided' );
 		}
 

@@ -84,10 +84,10 @@
     "closeVerticalPositionSuffix": "px",
 
     "closeSize": "small",
-    "closeCustomSize": 26,
-    "closeSmallSize": 32,
-    "closeMediumSize": 48,
-    "closeLargeSize": 64,
+    "closeCustomSize": 16,
+    "closeSmallSize": 16,
+    "closeMediumSize": 24,
+    "closeLargeSize": 32,
 
     "closeFillType": "default",
     "tempCloseFillType": "filled",
@@ -131,7 +131,7 @@
 
     "closeAlign": "topRight",
 
-    "scrollPage": "on",
+    "scrollPage": "off",
     "clickOutsideToClose": "on",
 
     "showCloseButton": "on",
@@ -222,6 +222,7 @@
     "customCSS": "",
 
     "tabletClosePosition": null,
+    "tabletPopupRowVerticalAlign": null,
 
     "tabletCloseHorizontalPosition": null,
     "tabletCloseHorizontalPositionSuffix": null,
@@ -313,6 +314,7 @@
     "tempTabletBorderBottomRightRadius": null,
 
     "mobileClosePosition": null,
+    "mobilePopupRowVerticalAlign": null,
 
     "mobileCloseHorizontalPosition": null,
     "mobileCloseHorizontalPositionSuffix": null,

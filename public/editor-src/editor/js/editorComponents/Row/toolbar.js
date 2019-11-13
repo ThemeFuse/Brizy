@@ -29,6 +29,7 @@ import {
   toolbarPaddingFourFields,
   toolbarMargin,
   toolbarZIndex,
+  toolbarCSSID,
   toolbarCustomCSSClass,
   toolbarEntranceAnimation,
   toolbarElementContainerTypeImageMap,
@@ -36,7 +37,7 @@ import {
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
   toolbarLinkAnchor,
-  toolbarSizeSizeSizePercent,
+  toolbarSizeWidthSizePercent,
   toolbarElementRowColumnsHeightStyle,
   toolbarElementRowColumnsHeight,
   toolbarVerticalAlign
@@ -813,7 +814,7 @@ export function getItems({ v, device, component }) {
       position: 100,
       devices: "desktop",
       options: [
-        toolbarSizeSizeSizePercent({
+        toolbarSizeWidthSizePercent({
           v,
           device,
           state: "normal",
@@ -910,6 +911,12 @@ export function getItems({ v, device, component }) {
                       devices: "desktop"
                     }),
                     toolbarCustomCSSClass({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal"
+                    }),
+                    toolbarCSSID({
                       v,
                       device,
                       devices: "desktop",

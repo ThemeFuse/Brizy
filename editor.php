@@ -49,7 +49,6 @@ class Brizy_Editor {
 			Brizy_Admin_Rules_Api::_init();
 		}
 
-		add_filter( "brizy:templates", array( $this, 'filterPublicTemplates' ) );
 		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
 		add_action( 'wp_head', array( $this, 'brizy_settings_header' ) );
 		add_action( 'wp_footer', array( $this, 'brizy_settings_footer' ) );
@@ -168,27 +167,6 @@ class Brizy_Editor {
 		return $num;
 	}
 
-
-	/**
-	 * @param $templates
-	 *
-	 * @return array
-	 */
-	public function filterPublicTemplates( $templates ) {
-
-		$list = wp_get_theme()->get_page_templates();
-
-		foreach ( $list as $key => $title ) {
-			$templates[] = array(
-				'id'    => $key,
-				'title' => $title
-			);
-		}
-
-		return $templates;
-	}
-
-
 	/**
 	 * @param $templates
 	 *
@@ -271,7 +249,7 @@ class Brizy_Editor {
 			}
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
-			wp_redirect( $_SERVER['HTTP_REFERER'] );
+			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
 			exit;
 		}
 	}
@@ -285,11 +263,11 @@ class Brizy_Editor {
 	}
 
 	private function loadShortcodes() {
-		$a = new Brizy_Shortcode_Sidebar();
-		$b = new Brizy_Shortcode_Posts();
-		$c = new Brizy_Shortcode_Navigation();
-		$c = new Brizy_Shortcode_PostField();
-		$c = new Brizy_Shortcode_PostInfo();
+		new Brizy_Shortcode_Sidebar();
+		new Brizy_Shortcode_Posts();
+		new Brizy_Shortcode_Navigation();
+		new Brizy_Shortcode_PostField();
+		new Brizy_Shortcode_PostInfo();
 	}
 
 	private function initializeAssetLoaders() {

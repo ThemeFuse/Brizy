@@ -65,9 +65,9 @@ class Brizy_Admin_SiteSettings_Main {
 
 	private function render() {
 
-		include dirname( __FILE__ ) . '/views/header.php';
+		include __DIR__ . '/views/header.php';
 		$this->getPopupContent();
-		include dirname( __FILE__ ) . '/views/footer.php';
+		include __DIR__ . '/views/footer.php';
 	}
 
 	private function handleSettingsTabSubmit() {

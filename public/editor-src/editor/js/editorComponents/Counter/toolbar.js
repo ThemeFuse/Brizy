@@ -1,3 +1,4 @@
+import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
@@ -12,10 +13,9 @@ import {
   toolbarTypography2FontSize,
   toolbarTypography2LineHeight,
   toolbarTypography2FontWeight,
-  toolbarTypography2LetterSpacing
+  toolbarTypography2LetterSpacing,
+  toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
-
-import { t } from "visual/utils/i18n";
 
 export function getItems({ v, device }) {
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -132,9 +132,8 @@ export function getItems({ v, device }) {
         }
       ]
     },
-
     {
-      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
+      id: defaultValueKey({ key: "popoverColor", device, state: "normal" }),
       type: "popover",
       size: "auto",
       title: t("Colors"),
@@ -266,47 +265,41 @@ export function getItems({ v, device }) {
         tabsState: !isOpen ? "" : v.tabsState
       })
     },
+    toolbarDisabledToolbarSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
-      type: "popover",
-      icon: "nc-cog",
+      id: defaultValueKey({
+        key: "advancedSettings",
+        device,
+        state: "normal"
+      }),
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      position: 110,
       title: t("Settings"),
       roles: ["admin"],
-      position: 110,
+      icon: "nc-cog",
       options: [
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
+          id: "settingsTabs",
+          devices: "desktop",
+          type: "tabs",
+          align: "start",
+          tabs: [
             {
-              id: "settingsTabs",
-              devices: "desktop",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: defaultValueKey({
-                    key: "moreSettingsAdvanced",
-                    device,
-                    state: "normal"
-                  }),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
+              id: "settingsStyling",
+              label: t("Styling"),
+              tabIcon: "nc-styling",
+              options: []
+            },
+            {
+              id: defaultValueKey({
+                key: "moreSettingsAdvanced",
+                device,
+                state: "normal"
+              }),
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              options: []
             }
           ]
         }

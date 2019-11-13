@@ -206,6 +206,7 @@ class RichText extends EditorComponent {
     const { meta = {} } = this.props;
     const { popups } = v;
     const inPopup = Boolean(meta.sectionPopup);
+    const inPopup2 = Boolean(meta.sectionPopup2);
     const shortcutsTypes = ["copy", "paste", "delete"];
     const toolbarConfig = toolbarConfigFn(
       {
@@ -240,7 +241,7 @@ class RichText extends EditorComponent {
                   forceUpdate={!isToolbarOpened}
                   onSelectionChange={this.handleSelectionChange}
                   onTextChange={this.handleTextChange}
-                  initDelay={inPopup || IS_GLOBAL_POPUP ? 1000 : 0}
+                  initDelay={inPopup || inPopup2 || IS_GLOBAL_POPUP ? 1000 : 0}
                 />
               </div>
             </Toolbar>

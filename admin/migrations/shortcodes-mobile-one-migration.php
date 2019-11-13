@@ -33,7 +33,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 */
 	public function posts_migration() {
 		$result = $this->get_posts_and_meta();
-		$class  = get_class();
+		$class  = __CLASS__;
 
 		// parse each post
 		foreach ( $result as $item ) {
@@ -80,7 +80,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 	 * Globals migration
 	 */
 	public function globals_migration() {
-		$class  = get_class();
+		$class  = __CLASS__;
 		$result = $this->get_globals_posts();
 		foreach ($result as $item) {
 			$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $item->ID );
@@ -421,9 +421,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 		}
 
 		if ( $shortcode == $array['type'] ) {
-			if ( isset( $array['value']['horizontalAlign'] )
-				&& isset( $array['value']['mobileHorizontalAlign'] )
-				&& $array['value']['horizontalAlign'] === $array['value']['mobileHorizontalAlign'] )
+			if ( isset( $array['value']['horizontalAlign'], $array['value']['mobileHorizontalAlign'] ) && $array['value']['horizontalAlign'] === $array['value']['mobileHorizontalAlign'] )
 			{
 				unset( $array['value']['mobileHorizontalAlign'] );
 			}
@@ -431,7 +429,7 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 			{
 				// !Attention this need only 1-time execution in JSON (to not apply to the same JSON 2 times)
 				if ( isset( $array['value']['horizontalAlign'] )
-					&& $array['value']['horizontalAlign'] !== "center"
+				     && ( $array['value']['horizontalAlign'] !== "center" )
 					&& !isset( $array['value']['mobileHorizontalAlign'] ) )
 				{
 					$array['value']['mobileHorizontalAlign'] = "center";

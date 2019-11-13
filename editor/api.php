@@ -68,7 +68,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			add_action( 'wp_ajax_' . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
 			add_action( 'wp_ajax_' . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
 			add_action( 'wp_ajax_' . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
-			add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
+			//add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT, array(
 				$this,
@@ -139,57 +139,57 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 
-	public function multipass_create() {
-		$this->verifyNonce( self::nonce );
-		try {
-			$client_id = $_REQUEST['client_id'];
-
-			if ( ! $client_id ) {
-				throw new Exception( 'Bad request' );
-			}
-
-//			$platform = new Brizy_Editor_API_Platform();
-//			if ( $platform->isUserCreatedLocally() ) {
-//				$platform->createUser( null, false );
+//	public function multipass_create() {
+//		$this->verifyNonce( self::nonce );
+//		try {
+//			$client_id = $_REQUEST['client_id'];
+//
+//			if ( ! $client_id ) {
+//				throw new Exception( 'Bad request' );
 //			}
-
-			$user = Brizy_Editor_User::get();
-
-			if ( ! $user ) {
-				throw new Exception( "Unable to create user" );
-			}
-
-			$email               = $user->getPlatformUserEmail();
-			$secret              = $user->getPlatformUserSignature();
-			$platformCredentials = Brizy_Editor_API_Platform::getCredentials();
-			$urlBuilder          = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
-
-			$platform_client_id = $platformCredentials->client_id;
-
-			date_default_timezone_set( "UTC" );
-
-			$date = new \DateTime();
-
-			$user_data = array(
-				"user_id"    => $user->getPlatformUserId(),
-				"created_at" => $date->format( DateTime::ISO8601 ),
-				'client_id'  => $client_id
-			);
-
-			$multipass = new Brizy_Editor_Multipass( $secret );
-
-			$token = $multipass->encode( $user_data );
-
-			$redirect_uri = sprintf( Brizy_Config::getEditorBaseUrls() . Brizy_Config::BRIZY_PLATFORM_MULTIPASS_LOGIN, $platform_client_id, $token, $email );
-
-			wp_redirect( $redirect_uri );
-			exit;
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( 500, "Bad request" );
-			exit;
-		}
-	}
+//
+////			$platform = new Brizy_Editor_API_Platform();
+////			if ( $platform->isUserCreatedLocally() ) {
+////				$platform->createUser( null, false );
+////			}
+//
+//			$user = Brizy_Editor_User::get();
+//
+//			if ( ! $user ) {
+//				throw new Exception( "Unable to create user" );
+//			}
+//
+//			$email               = $user->getPlatformUserEmail();
+//			$secret              = $user->getPlatformUserSignature();
+//			$platformCredentials = Brizy_Editor_API_Platform::getCredentials();
+//			$urlBuilder          = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
+//
+//			$platform_client_id = $platformCredentials->client_id;
+//
+//			date_default_timezone_set( "UTC" );
+//
+//			$date = new \DateTime();
+//
+//			$user_data = array(
+//				"user_id"    => $user->getPlatformUserId(),
+//				"created_at" => $date->format( DateTime::ISO8601 ),
+//				'client_id'  => $client_id
+//			);
+//
+//			$multipass = new Brizy_Editor_Multipass( $secret );
+//
+//			$token = $multipass->encode( $user_data );
+//
+//			$redirect_uri = sprintf( Brizy_Config::getEditorBaseUrls() . Brizy_Config::BRIZY_PLATFORM_MULTIPASS_LOGIN, $platform_client_id, $token, $email );
+//
+//			wp_redirect( $redirect_uri );
+//			exit;
+//		} catch ( Exception $exception ) {
+//			Brizy_Logger::instance()->exception( $exception );
+//			$this->error( 500, "Bad request" );
+//			exit;
+//		}
+//	}
 
 
 	/**

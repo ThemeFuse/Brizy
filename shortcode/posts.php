@@ -73,7 +73,8 @@ class Brizy_Shortcode_Posts extends Brizy_Shortcode_AbstractShortcode {
 					</div>
 				<?php } ?>
 			</article>
-		<?php }
+		<?php
+		}
 
 		return ob_get_clean();
 	}

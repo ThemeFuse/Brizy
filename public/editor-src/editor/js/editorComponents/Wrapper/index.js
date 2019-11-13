@@ -1,11 +1,9 @@
 import React from "react";
-import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import SortableElement from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import ContainerBorder from "visual/component/ContainerBorder";
-import FloatingButton from "visual/component/FloatingButton";
 import Animation from "visual/component/Animation";
 import { Roles, currentUserRole } from "visual/component/Roles";
 import Toolbar from "visual/component/Toolbar";
@@ -30,48 +28,10 @@ class Wrapper extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  mounted = false;
-
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-  handleContainerBorderRef = el => {
-    this.containerBorder = el;
-  };
-
-  handleFloatingButtonRef = el => {
-    this.floatingButton = el;
-  };
+  containerBorder = React.createRef();
 
   handleExtendParentToolbar = childToolbarExtend => {
     this.childToolbarExtend = childToolbarExtend;
-  };
-
-  handleToolbarOpen = () => {
-    this.containerBorder.setActive(true);
-    this.floatingButton.setActive(true);
-  };
-
-  handleToolbarClose = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    this.containerBorder.setActive(false);
-    this.floatingButton.setActive(false);
-  };
-
-  handleToolbarEnter = () => {
-    this.containerBorder.setParentsHover(true);
-  };
-
-  handleToolbarLeave = () => {
-    this.containerBorder.setParentsHover(false);
   };
 
   getMeta(v) {
@@ -237,35 +197,15 @@ class Wrapper extends EditorComponent {
     };
   }
 
-  renderToolbar(v) {
-    if (v.showToolbar === "off") {
-      return;
-    }
-
+  renderToolbar = ContainerBorderButton => {
     return (
-      <div className="brz-ed-wrapper__toolbar">
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
-          onOpen={this.handleToolbarOpen}
-          onClose={this.handleToolbarClose}
-          onMouseEnter={this.handleToolbarEnter}
-          onMouseLeave={this.handleToolbarLeave}
-        >
-          <SortableHandle>
-            <div
-              onMouseEnter={this.handleButtonEnter}
-              onMouseLeave={this.handleButtonLeave}
-            >
-              <FloatingButton
-                reactToClick={false}
-                ref={this.handleFloatingButtonRef}
-              />
-            </div>
-          </SortableHandle>
-        </Toolbar>
-      </div>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+        <SortableHandle>
+          <ContainerBorderButton />
+        </SortableHandle>
+      </Toolbar>
     );
-  }
+  };
 
   renderContent(v, vs, vd) {
     const { showToolbar, className } = v;
@@ -285,8 +225,6 @@ class Wrapper extends EditorComponent {
           allowExtendChild: false,
           extendFilter: toolbarExtendFilter
         }),
-        onToolbarEnter: this.handleToolbarEnter,
-        onToolbarLeave: this.handleToolbarLeave,
         extendParentToolbar: this.handleExtendParentToolbar
       }
     });
@@ -313,7 +251,8 @@ class Wrapper extends EditorComponent {
       animationName,
       animationDuration,
       animationDelay,
-      customClassName
+      customClassName,
+      customID
     } = v;
 
     const componentId = v.items[0].type;
@@ -332,6 +271,7 @@ class Wrapper extends EditorComponent {
       <SortableElement type="shortcode">
         <Animation
           className={classNameWrapper}
+          customID={customID}
           name={animationName !== "none" && animationName}
           duration={animationDuration}
           delay={animationDelay}
@@ -342,26 +282,21 @@ class Wrapper extends EditorComponent {
               componentId
             }}
           >
-            <ContainerBorder
-              ref={this.handleContainerBorderRef}
-              className="brz-ed-border__wrapper"
-              borderStyle="dotted"
-              activeBorderStyle="dotted"
-              clickOutsideExceptions={[
-                ".brz-ed-sidebar__right",
-                "#brz-toolbar-portal",
-                ".brz-ed-tooltip__content-portal"
-              ]}
-              path={this.props.path}
+            <Roles
+              allow={["admin"]}
+              fallbackRender={() => this.renderContent(v, vs, vd)}
             >
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderContent(v, vs, vd)}
+              <ContainerBorder
+                ref={this.containerBorder}
+                color="grey"
+                borderStyle="dotted"
+                showButton={v.showToolbar === "on"}
+                buttonPosition="topRight"
+                renderButtonWrapper={this.renderToolbar}
               >
-                {this.renderToolbar(v)}
                 {this.renderContent(v, vs, vd)}
-              </Roles>
-            </ContainerBorder>
+              </ContainerBorder>
+            </Roles>
           </ContextMenu>
         </Animation>
       </SortableElement>
@@ -373,7 +308,8 @@ class Wrapper extends EditorComponent {
       animationName,
       animationDuration,
       animationDelay,
-      customClassName
+      customClassName,
+      customID
     } = v;
 
     const classNameWrapper = classnames(
@@ -389,6 +325,7 @@ class Wrapper extends EditorComponent {
     return (
       <Animation
         className={classNameWrapper}
+        customID={customID}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}

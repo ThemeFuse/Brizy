@@ -24,16 +24,17 @@ class IconText extends EditorComponent {
   static defaultValue = defaultValue;
 
   componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig2(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      parentToolbarExtend,
+      {
+        allowExtend: false,
+        filterExtendName: `${this.constructor.componentId}_parent`
+      }
+    );
     this.props.extendParentToolbar(toolbarExtend);
   }
 
   renderForEdit(v, vs, vd) {
-    const { onToolbarEnter, onToolbarLeave } = this.props;
-
     const meta = { ...this.props.meta, inIconText: true };
 
     const iconProps = this.makeSubcomponentProps({
@@ -42,9 +43,12 @@ class IconText extends EditorComponent {
       sliceEndIndex: TEXT_ITEM_INDEX,
       itemProps: {
         meta,
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfigIcon),
-        onToolbarEnter,
-        onToolbarLeave
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendConfigIcon,
+          {
+            allowExtend: false
+          }
+        )
       }
     });
     const icon = <EditorArrayComponent {...iconProps} />;
@@ -64,9 +68,7 @@ class IconText extends EditorComponent {
                 {
                   allowExtend: false
                 }
-              ),
-              onToolbarEnter,
-              onToolbarLeave
+              )
             };
             break;
           case BUTTONS_ITEM_INDEX:

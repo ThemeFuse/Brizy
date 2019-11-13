@@ -28,9 +28,8 @@ const getMediaProps = v => {
   };
 };
 
-const getImage = v => {
-  return deviceStateValueByKey(v, "bgImageSrc") || v.bgPopulation;
-};
+const getImage = v => deviceStateValueByKey(v, "bgImageSrc") || v.bgPopulation;
+const getBoxShadow = v => deviceStateValueByKey(v, "boxShadow");
 
 const getBorder = v => {
   const currentKeys =
@@ -77,6 +76,7 @@ export default function BackgroundContainer({
     children,
     image: media && getImage(value),
     border: getBorder(value),
+    boxShadow: getBoxShadow(value),
     parallax: getParallax(value, meta),
     shapeTop: shapeTopType && shapeTopType !== "none",
     shapeBottom: shapeBottomType && shapeBottomType !== "none"

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-10-01 15:51+0300\n"
+"POT-Creation-Date: 2019-10-23 14:55+0300\n"
 "PO-Revision-Date: 2018-08-14 16:04+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -13,23 +13,24 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: _e;esc_attr_e;__\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;esc_attr_e;_bt\n"
 "X-Poedit-SearchPath-0: brizy/languages\n"
 "X-Poedit-SearchPath-1: brizy\n"
 "X-Poedit-SearchPath-2: brizy-pro\n"
 "X-Poedit-SearchPathExcluded-0: brizy/public/editor-build\n"
 "X-Poedit-SearchPathExcluded-1: brizy/public/editor-src\n"
 "X-Poedit-SearchPathExcluded-2: brizy/vendor\n"
+"X-Poedit-SearchPathExcluded-3: brizy/vendor\n"
 
-#: brizy-pro/admin/integrations.php:40 brizy-pro/admin/integrations.php:64
+#: brizy-pro/admin/integrations.php:39 brizy-pro/admin/integrations.php:63
 msgid "Integrations"
 msgstr ""
 
-#: brizy-pro/admin/license.php:93 brizy-pro/admin/license.php:94
+#: brizy-pro/admin/license.php:92 brizy-pro/admin/license.php:93
 msgid "License"
 msgstr ""
 
-#: brizy-pro/admin/license.php:131
+#: brizy-pro/admin/license.php:130
 msgid "Deactivate"
 msgstr ""
 
@@ -65,34 +66,114 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
+#: brizy-pro/content/providers/woocommerce.php:93
+#, php-format
+msgid "%s customer review"
+msgid_plural "%s customer reviews"
+msgstr[0] ""
+msgstr[1] ""
+
+#: brizy-pro/content/providers/woocommerce.php:231
+#, php-format
+msgid "%1$s review for %2$s"
+msgid_plural "%1$s reviews for %2$s"
+msgstr[0] ""
+msgstr[1] ""
+
 #: brizy-pro/content/providers/woocommerce.php:237
 msgid "Reviews"
 msgstr ""
 
-#: brizy-pro/main.php:113
+#: brizy-pro/content/providers/wp.php:245
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr ""
+
+#: brizy-pro/content/providers/wp.php:247
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr ""
+
+#: brizy-pro/content/providers/wp.php:249
+msgctxt "daily archives date format"
+msgid "F j, Y"
+msgstr ""
+
+#: brizy-pro/main.php:112
 msgid "Brizy Pro is inactive. Please install and activate Brizy FREE first.!"
 msgstr ""
 
-#: brizy-pro/main.php:124
+#: brizy-pro/main.php:123
 #, php-format
 msgid "Brizy Pro %s requires Brizy FREE to be %s or newer"
 msgstr ""
 
-#: brizy-pro/main.php:235
+#: brizy-pro/main.php:234
 msgid "Dynamic content"
 msgstr ""
 
-#: brizy/admin/blocks/main.php:116 brizy/admin/blocks/main.php:138
+#: brizy/admin/blocks/main.php:100
+msgctxt "post type general name"
+msgid "Global blocks"
+msgstr ""
+
+#: brizy/admin/blocks/main.php:108 brizy/admin/blocks/main.php:130
 msgid "global block."
 msgstr ""
 
-#: brizy/admin/fonts/main.php:67
+#: brizy/admin/blocks/main.php:122
+msgctxt "brizy"
+msgid "Saved blocks"
+msgstr ""
+
+#: brizy/admin/fonts/main.php:60
+msgctxt "post type general name"
+msgid "Fonts"
+msgstr ""
+
+#: brizy/admin/fonts/main.php:68
 msgid "font"
+msgstr ""
+
+#: brizy/admin/form-entries.php:58
+msgid "Leads details"
+msgstr ""
+
+#: brizy/admin/form-entries.php:59 brizy/languages/texts.php:314
+msgid "Date"
 msgstr ""
 
 #: brizy/admin/form-entries.php:109 brizy/admin/form-entries.php:220
 #: brizy/admin/form-entries.php:232
 msgid "Leads"
+msgstr ""
+
+#: brizy/admin/form-entries.php:132
+msgid "Disable"
+msgstr ""
+
+#: brizy/admin/form-entries.php:136
+msgid "Enable "
+msgstr ""
+
+#: brizy/admin/form-entries.php:211
+msgctxt "post type general name"
+msgid "Leads"
+msgstr ""
+
+#: brizy/admin/form-entries.php:212
+msgctxt "post type singular name"
+msgid "Lead"
+msgstr ""
+
+#: brizy/admin/form-entries.php:213
+msgctxt "admin menu"
+msgid "Leads"
+msgstr ""
+
+#: brizy/admin/form-entries.php:214
+msgctxt "add new on admin bar"
+msgid "Lead"
 msgstr ""
 
 #: brizy/admin/form-entries.php:216
@@ -131,7 +212,8 @@ msgstr ""
 msgid "Edit or Update Image"
 msgstr ""
 
-#: brizy/admin/main.php:237 brizy/languages/texts.php:181
+#: brizy/admin/main.php:237 brizy/admin/optimize-images.php:303
+#: brizy/languages/texts.php:181
 msgid "Settings"
 msgstr ""
 
@@ -139,15 +221,15 @@ msgstr ""
 msgid "Go Pro"
 msgstr ""
 
-#: brizy/admin/main.php:410
+#: brizy/admin/main.php:413
 msgid "Edit with "
 msgstr ""
 
-#: brizy/admin/main.php:473
+#: brizy/admin/main.php:476
 msgid "Auto Draft"
 msgstr ""
 
-#: brizy/admin/main.php:526
+#: brizy/admin/main.php:530
 #, php-format
 msgid "Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s "
 msgstr ""
@@ -156,102 +238,194 @@ msgstr ""
 msgid "Optimize Images"
 msgstr ""
 
-#: brizy/admin/optimize-images.php:136
-msgid "Optimize images"
-msgstr ""
-
-#: brizy/admin/optimize-images.php:191 brizy/languages/texts.php:500
+#: brizy/admin/optimize-images.php:190 brizy/languages/texts.php:500
 msgid "Save"
 msgstr ""
 
-#: brizy/admin/settings.php:103
+#: brizy/admin/optimize-images.php:297
+msgid "Optimize"
+msgstr ""
+
+#: brizy/admin/popups/main.php:53
+msgctxt "post type general name"
+msgid "Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:54
+msgctxt "post type singular name"
+msgid "Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:55
+msgctxt "admin menu"
+msgid "Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:56
+msgctxt "add new on admin bar"
+msgid "Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:58
+msgid "Add New Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:59
+msgid "New Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:60
+msgid "Edit Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:61
+msgid "View Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:62 brizy/admin/popups/main.php:75
+msgid "Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:63
+msgid "Search Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:64
+msgid "Parent Popups:"
+msgstr ""
+
+#: brizy/admin/popups/main.php:65
+msgid "No Popups found."
+msgstr ""
+
+#: brizy/admin/popups/main.php:66
+msgid "No Popups found in Trash."
+msgstr ""
+
+#: brizy/admin/popups/main.php:67
+msgid "Popup attributes:"
+msgstr ""
+
+#: brizy/admin/settings.php:103 brizy/admin/settings.php:148
 msgid "Role Manager"
 msgstr ""
 
-#: brizy/admin/templates.php:122 brizy/admin/templates.php:125
+#: brizy/admin/settings.php:142
+msgid "General"
+msgstr ""
+
+#: brizy/admin/settings.php:255
+msgid "No Access"
+msgstr ""
+
+#: brizy/admin/settings.php:256
+msgid "Full Access"
+msgstr ""
+
+#: brizy/admin/templates.php:114 brizy/admin/templates.php:117
 msgid "Template updated."
 msgstr ""
 
-#: brizy/admin/templates.php:123
+#: brizy/admin/templates.php:115
 msgid "Custom field updated."
 msgstr ""
 
-#: brizy/admin/templates.php:124
+#: brizy/admin/templates.php:116
 msgid "Custom field deleted."
 msgstr ""
 
-#: brizy/admin/templates.php:127
+#: brizy/admin/templates.php:119
 #, php-format
 msgid "Template restored to revision from %s"
 msgstr ""
 
-#: brizy/admin/templates.php:128
+#: brizy/admin/templates.php:120
 msgid "Template published."
 msgstr ""
 
-#: brizy/admin/templates.php:129
+#: brizy/admin/templates.php:121
 msgid "Template saved."
 msgstr ""
 
-#: brizy/admin/templates.php:130
+#: brizy/admin/templates.php:122
 msgid "Template submitted."
 msgstr ""
 
-#: brizy/admin/templates.php:132
+#: brizy/admin/templates.php:124
 #, php-format
 msgid "Template scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: brizy/admin/templates.php:134
+#: brizy/admin/templates.php:126
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: brizy/admin/templates.php:136
+#: brizy/admin/templates.php:128
 msgid "Template draft updated."
 msgstr ""
 
-#: brizy/admin/templates.php:142 brizy/admin/templates.php:200
+#: brizy/admin/templates.php:134 brizy/admin/templates.php:199
 msgid "View Template"
 msgstr ""
 
-#: brizy/admin/templates.php:148
+#: brizy/admin/templates.php:140
 msgid "Preview Template"
 msgstr ""
 
-#: brizy/admin/templates.php:197
-msgid "Add New Template"
-msgstr ""
-
-#: brizy/admin/templates.php:198
-msgid "New Template"
-msgstr ""
-
-#: brizy/admin/templates.php:199
-msgid "Edit Template"
-msgstr ""
-
-#: brizy/admin/templates.php:201
+#: brizy/admin/templates.php:191
+msgctxt "post type general name"
 msgid "Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:202
+#: brizy/admin/templates.php:192
+msgctxt "post type singular name"
+msgid "Template"
+msgstr ""
+
+#: brizy/admin/templates.php:193
+msgctxt "admin menu"
+msgid "Templates"
+msgstr ""
+
+#: brizy/admin/templates.php:194
+msgctxt "add new on admin bar"
+msgid "Template"
+msgstr ""
+
+#: brizy/admin/templates.php:196
+msgid "Add New Template"
+msgstr ""
+
+#: brizy/admin/templates.php:197
+msgid "New Template"
+msgstr ""
+
+#: brizy/admin/templates.php:198
+msgid "Edit Template"
+msgstr ""
+
+#: brizy/admin/templates.php:200
+msgid "Templates"
+msgstr ""
+
+#: brizy/admin/templates.php:201
 msgid "Search Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:203
+#: brizy/admin/templates.php:202
 msgid "Parent Templates:"
 msgstr ""
 
-#: brizy/admin/templates.php:204
+#: brizy/admin/templates.php:203
 msgid "No Templates found."
 msgstr ""
 
-#: brizy/admin/templates.php:205
+#: brizy/admin/templates.php:204
 msgid "No Templates found in Trash."
 msgstr ""
 
-#: brizy/admin/templates.php:213
-msgid " templates."
+#: brizy/admin/templates.php:212
+msgid "templates"
 msgstr ""
 
 #: brizy/admin/templates.php:230
@@ -290,8 +464,16 @@ msgstr ""
 msgid "Go PRO"
 msgstr ""
 
+#: brizy/admin/views/notice.php:14
+msgid "Dismiss this notice"
+msgstr ""
+
 #: brizy/admin/views/settings/general.php:12
-msgid "Activate "
+msgid "Activate"
+msgstr ""
+
+#: brizy/admin/views/settings/general.php:12
+msgid "For"
 msgstr ""
 
 #: brizy/admin/views/settings/general.php:32
@@ -307,16 +489,16 @@ msgstr ""
 msgid "Continue to edit with "
 msgstr ""
 
-#: brizy/editor.php:204
+#: brizy/editor.php:178
 msgid " Template"
 msgstr ""
 
-#: brizy/editor/block.php:102 brizy/editor/post.php:367
+#: brizy/editor/block.php:106 brizy/editor/post.php:372
 #: brizy/editor/project.php:317
 msgid "There is nothing to save. The autosave and the post content are the same."
 msgstr ""
 
-#: brizy/editor/post.php:775
+#: brizy/editor/post.php:781
 msgid "Default"
 msgstr ""
 
@@ -1337,10 +1519,6 @@ msgstr ""
 msgid "Reverse Columns"
 msgstr ""
 
-#: brizy/languages/texts.php:314
-msgid "Date"
-msgstr ""
-
 #: brizy/languages/texts.php:315
 msgid "Hour"
 msgstr ""
@@ -2089,14 +2267,14 @@ msgstr ""
 msgid "It's a sample"
 msgstr ""
 
-#: brizy/public/main.php:93
+#: brizy/public/main.php:83
 msgid "Preview"
 msgstr ""
 
-#: brizy/public/main.php:104
+#: brizy/public/main.php:94
 msgid "View"
 msgstr ""
 
-#: brizy/public/main.php:182
+#: brizy/public/main.php:184
 msgid "Edit "
 msgstr ""

@@ -82,9 +82,8 @@ class Brizy_Admin_Rules_Manager {
 	 */
 	public function createRuleFromJson( $jsonString, $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
 		$ruleJson = json_decode( $jsonString );
-		$rule     = Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
 
-		return $rule;
+		return Brizy_Admin_Rule::createFromJsonObject( $ruleJson );
 	}
 
 	/**

@@ -125,8 +125,7 @@ class Sortable extends React.Component {
           data-sortable-path={path.join(".")}
           data-sortable-disabled={disabled}
         >
-          <div className="brz-ed-border__sortable brz-ed-border__inner-1 brz-ed-border--no-space brz-ed-border--grey brz-ed-border--dotted brz-ed-border--active" />
-          <div className="brz-ed-border__sortable brz-ed-border__inner-2 brz-ed-border--no-space brz-ed-border--grey brz-ed-border--dotted brz-ed-border--active" />
+          <div className="brz-ed-border__sortable brz-ed-border__inner brz-ed-border--no-space brz-ed-border--grey brz-ed-border--dotted" />
           <div
             className="brz-ed-container-trigger brz-ed-container-trigger--small"
             onClick={this.handleEmptyClick}

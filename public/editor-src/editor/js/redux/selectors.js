@@ -21,7 +21,7 @@ export const stylesSelector = state => state.styles || [];
 
 export const fontSelector = state => state.fonts || {};
 
-export const deviceModeSelector = state => state.ui.deviceMode;
+export const uiSelector = state => state.ui || {};
 
 export const copiedElementSelector = state => state.copiedElement;
 
@@ -32,8 +32,6 @@ export const currentStyleSelector = state => state.currentStyle;
 export const extraFontStylesSelector = state => state.extraFontStyles;
 
 export const screenshotsSelector = state => state.screenshots || {};
-
-export const hiddenElementsSelector = state => state.showHiddenElements;
 
 // === END 0 DEPENDENCIES ===
 
@@ -70,9 +68,24 @@ export const triggersSelector = createSelector(
   pageData => pageData.triggers || []
 );
 
+export const triggersAmountSelector = createSelector(
+  pageDataSelector,
+  pageData => (pageData.triggers ? pageData.triggers.length : null)
+);
+
 export const rulesAmountSelector = createSelector(
   pageDataSelector,
-  pageData => pageData.rulesAmount
+  pageData => pageData.rulesAmount || null
+);
+
+export const deviceModeSelector = createSelector(
+  uiSelector,
+  ui => ui.deviceMode
+);
+
+export const showHiddenElementsSelector = createSelector(
+  uiSelector,
+  ui => ui.showHiddenElements
 );
 
 // === END 1 DEPENDENCY ===
@@ -386,7 +399,7 @@ export const rulesSelector = createSelector(
 
 // all global block refs are replaced with their data
 export const pageDataNoRefsSelector = createSelector(
-  pageDataSelector,
+  pageDataDraftBlocksSelector,
   globalBlocksAssembled2Selector,
   (pageData, globalBlocks) => {
     return transformData(pageData);

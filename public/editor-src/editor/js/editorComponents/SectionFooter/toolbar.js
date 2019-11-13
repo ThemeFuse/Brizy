@@ -804,7 +804,6 @@ export function getItems({ v, device, component }) {
                     toolbarAnchorName({
                       v,
                       device,
-                      position: 50,
                       devices: "desktop",
                       state: "normal"
                     }),

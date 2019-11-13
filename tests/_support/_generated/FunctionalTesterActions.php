@@ -6643,19 +6643,28 @@ trait FunctionalTesterActions
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
-     * Fetches all values from the column in database.
+     * Fetches a single column value from a database.
      * Provide table name, desired column and criteria.
      *
      * ``` php
      * <?php
-     * $mails = $I->grabFromDatabase('users', 'email', array('name' => 'RebOOter'));
+     * $mail = $I->grabFromDatabase('users', 'email', array('name' => 'Davert'));
      * ```
+     * Comparison expressions can be used as well:
+     *
+     * ```php
+     * <?php
+     * $post = $I->grabFromDatabase('posts', ['num_comments >=' => 100]);
+     * $user = $I->grabFromDatabase('users', ['email like' => 'miles%']);
+     * ```
+     *
+     * Supported operators: `<`, `>`, `>=`, `<=`, `!=`, `like`.
      *
      * @param string $table
      * @param string $column
-     * @param array  $criteria
+     * @param array $criteria
      *
-     * @return mixed
+     * @return mixed Returns a single column value or false
      * @see \Codeception\Module\Db::grabFromDatabase()
      */
     public function grabFromDatabase($table, $column, $criteria = null) {

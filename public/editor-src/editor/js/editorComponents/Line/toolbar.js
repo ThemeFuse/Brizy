@@ -6,7 +6,8 @@ import {
   toolbarBorder2,
   toolbarBorderColorHexField2,
   toolbarBorderWidthOneField2,
-  toolbarSizeWidthWidthPercent
+  toolbarSizeWidthWidthPercent,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -93,6 +94,7 @@ export function getItems({ v, device }) {
         }
       ]
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: defaultValueKey({ key: "toolbarSettings", device }),
       type: "popover",

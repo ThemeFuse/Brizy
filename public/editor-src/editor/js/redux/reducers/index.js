@@ -34,7 +34,6 @@ import {
   PUBLISH,
   UPDATE_SCREENSHOT,
   UPDATE_DISABLED_ELEMENTS,
-  SHOW_HIDDEN_ELEMENTS,
   UPDATE_TRIGGERS
 } from "../actions";
 
@@ -378,7 +377,8 @@ const uiDefault = {
   leftSidebar: {
     isOpen: false,
     drawerContentType: null
-  }
+  },
+  showHiddenElements: false
 };
 export function ui(state = uiDefault, action) {
   switch (action.type) {
@@ -405,15 +405,6 @@ export function copiedElement(state = copiedElementDefault, action) {
         ...state,
         ...action.value
       };
-    default:
-      return state;
-  }
-}
-
-export function showHiddenElements(state = false, action) {
-  switch (action.type) {
-    case SHOW_HIDDEN_ELEMENTS:
-      return action.value;
     default:
       return state;
   }
@@ -519,8 +510,7 @@ export default historyEnhancer(
       pageBlocks,
       fonts,
       ui,
-      copiedElement,
-      showHiddenElements
+      copiedElement
     },
     {
       screenshots

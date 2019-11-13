@@ -3,6 +3,8 @@ $resize-width: 20px;
 
 // ---
 .brz-ed-draggable__column {
+  visibility: hidden;
+  opacity: 0;
   position: absolute;
   top: 0;
   z-index: z("column-resize");

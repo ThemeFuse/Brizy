@@ -131,7 +131,7 @@ class Brizy_Admin_Settings {
 	}
 
 	private function get_selected_tab() {
-		return $tab = ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : null;
+		return  ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : null;
 	}
 
 	private function get_tabs() {
@@ -139,13 +139,13 @@ class Brizy_Admin_Settings {
 		$tabs         = array(
 			array(
 				'id'          => 'general',
-				'label'       => __bt( 'General', 'General' ),
+				'label'       => __( 'General', 'brizy' ),
 				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
 			),
 			array(
 				'id'          => 'roles',
-				'label'       => __bt( 'Role Manager', 'Role Manager' ),
+				'label'       => __( 'Role Manager',  'brizy'  ),
 				'is_selected' => $selected_tab == 'roles',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=roles"
 			),
@@ -252,8 +252,8 @@ class Brizy_Admin_Settings {
 	 */
 	public function get_capability_options() {
 		return apply_filters( 'brizy_settings_capability_options', array(
-			array( 'capability' => '', 'label' => 'No Access' ),
-			array( 'capability' => Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE, 'label' => 'Full Access' )
+			array( 'capability' => '', 'label' => __('No Access') ),
+			array( 'capability' => Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE, 'label' => __('Full Access','brizy') )
 		) );
 	}
 

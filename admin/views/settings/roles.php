@@ -9,8 +9,10 @@
     <table class="form-table">
         <tbody>
 		<?php
-		foreach ( $roles as $role ) {
-			do_action( 'brizy_settings_role_capability_row', $role );
+		if ( is_array( $roles ) ) {
+			foreach ( $roles as $role ) {
+				do_action( 'brizy_settings_role_capability_row', $role );
+			}
 		}
 		?>
         </tbody>
@@ -21,6 +23,6 @@
         <button type="submit"
                 id="submit"
                 class="button button-primary"
-        ><?php _e( 'Save Changes' ); ?></button>
+        ><?php echo __( 'Save Changes' ); ?></button>
     </p>
 </form>

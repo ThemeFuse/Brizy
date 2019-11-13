@@ -1,0 +1,41 @@
+{
+  "style": {
+    "fontStyle": "paragraph",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "montserrat"
+    },
+    "fontFamily": "",
+    "fontSize": 12,
+    "fontWeight": 700,
+    "lineHeight": 1.8,
+    "letterSpacing": 3,
+
+    "colorHex": "#000000",
+    "colorOpacity": 1,
+    "colorPalette": "color1",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color1",
+
+    "tabletFontStyle": "",
+    "tabletFontFamilyType": null,
+    "tabletFamilies": {
+      "tabletFontFamily": null
+    },
+    "tabletFontSize": 11,
+    "tabletFontWeight": 700,
+    "tabletLineHeight": 1.8,
+    "tabletLetterSpacing": 1,
+
+    "mobileFontStyle": "",
+    "mobileFontFamilyType": null,
+    "mobileFamilies": {
+      "mobileFontFamily": null
+    },
+    "mobileFontSize": 11,
+    "mobileFontWeight": 700,
+    "mobileLineHeight": 1.8,
+    "mobileLetterSpacing": 1
+  }
+}

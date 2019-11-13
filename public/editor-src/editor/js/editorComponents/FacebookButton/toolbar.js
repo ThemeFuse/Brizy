@@ -15,7 +15,8 @@ import {
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
   toolbarCustomCSS,
-  toolbarHoverTransition
+  toolbarHoverTransition,
+  toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -305,60 +306,53 @@ export function getItems({ v, device }) {
         toolbarLinkHref({ v, device, devices: "desktop", state: "normal" })
       ]
     },
+    toolbarDisabledToolbarSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: defaultValueKey({
+        key: "advancedSettings",
+        device,
+        state: "normal"
+      }),
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
+      icon: "nc-cog",
       options: [
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
+          id: "settingsTabs",
+          type: "tabs",
+          devices: "desktop",
+          align: "start",
+          tabs: [
             {
-              id: "settingsTabs",
-              type: "tabs",
-              devices: "desktop",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: defaultValueKey({
-                    key: "moreSettingsAdvanced",
-                    device,
-                    state: "normal"
-                  }),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarCustomCSS({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarHoverTransition({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      position: 100
-                    })
-                  ]
-                }
+              id: "settingsStyling",
+              label: t("Styling"),
+              tabIcon: "nc-styling",
+              options: []
+            },
+            {
+              id: defaultValueKey({
+                key: "moreSettingsAdvanced",
+                device,
+                state: "normal"
+              }),
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              options: [
+                toolbarCustomCSS({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop"
+                }),
+                toolbarHoverTransition({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop",
+                  position: 100
+                })
               ]
             }
           ]

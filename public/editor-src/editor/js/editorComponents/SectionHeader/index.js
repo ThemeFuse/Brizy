@@ -248,8 +248,11 @@ class SectionHeader extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const className = classnames(
+    const { className, customClassName } = v;
+    const classNameSection = classnames(
       "brz-section__header",
+      className,
+      customClassName,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -260,7 +263,7 @@ class SectionHeader extends EditorComponent {
     return (
       <section
         id={this.getId()}
-        className={className}
+        className={classNameSection}
         style={this.getStyle(v)}
         ref={this.sectionNode}
       >
@@ -270,8 +273,11 @@ class SectionHeader extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const className = classnames(
+    const { className, customClassName } = v;
+    const classNameSection = classnames(
       "brz-section__header",
+      className,
+      customClassName,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -282,7 +288,7 @@ class SectionHeader extends EditorComponent {
     return (
       <section
         id={v.anchorName || this.getId()}
-        className={className}
+        className={classNameSection}
         data-uid={this.getId()}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}

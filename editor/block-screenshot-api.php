@@ -197,7 +197,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		$path = dirname( $thumbnailFullPath );
 
 		if ( ! file_exists( $path ) ) {
-			if ( ! @mkdir( $path, 0755, true ) ) {
+			if ( ! mkdir( $path, 0755, true ) && ! is_dir( $path ) ) {
 				return false;
 			}
 		}

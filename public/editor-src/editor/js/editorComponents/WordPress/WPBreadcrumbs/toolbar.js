@@ -13,7 +13,8 @@ import {
   toolbarColor2,
   toolbarColorHexField2,
   toolbarCustomCSS,
-  toolbarHoverTransition
+  toolbarHoverTransition,
+  toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -430,45 +431,39 @@ export function getItems({ v, device }) {
         [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor")
       })
     },
+    toolbarDisabledToolbarSettings({ device }),
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
+      id: dvk("advancedSettings"),
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
+      icon: "nc-cog",
       options: [
         {
-          id: dvk("advancedSettings"),
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
+          id: dvk("settingsTabs"),
+          type: "tabs",
+          align: "start",
+          tabs: [
             {
-              id: dvk("settingsTabs"),
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: dvk("settingsStyling"),
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: dvk("moreSettingsAdvanced"),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarCustomCSS({ v, devices: "desktop" }),
-                    toolbarHoverTransition({
-                      v,
-                      device,
-                      state: "normal",
-                      position: 70,
-                      devices: "desktop"
-                    })
-                  ]
-                }
+              id: dvk("settingsStyling"),
+              label: t("Styling"),
+              tabIcon: "nc-styling",
+              options: []
+            },
+            {
+              id: dvk("moreSettingsAdvanced"),
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              options: [
+                toolbarCustomCSS({ v, devices: "desktop" }),
+                toolbarHoverTransition({
+                  v,
+                  device,
+                  state: "normal",
+                  position: 70,
+                  devices: "desktop"
+                })
               ]
             }
           ]

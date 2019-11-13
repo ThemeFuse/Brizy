@@ -345,7 +345,6 @@ class Brizy_Public_Main {
 			$params['content'] = $compiled_html_head;
 		} else {
 			$compiled_page = $this->post->get_compiled_page();
-			//$compiled_page->addAssetProcessor( new Brizy_Editor_Asset_StripTagsProcessor( array( '<title>' ) ) );
 			$head              = $compiled_page->get_head();
 			$params['content'] = $head;
 		}

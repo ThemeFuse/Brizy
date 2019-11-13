@@ -9,7 +9,7 @@
     <table class="form-table">
         <tbody>
         <tr>
-            <th scope="row"><?php echo __( 'Activate '.__bt('brizy','Brizy').' For' ); ?></th>
+            <th scope="row"><?php echo __( 'Activate' ) . ' ' . __bt( 'brizy', 'Brizy' ) . ' ' . __( 'For' ); ?></th>
             <td>
                 <fieldset>
 					<?php foreach ( $types as $type ) {
@@ -29,6 +29,6 @@
                 name="brizy-general-submit"
                 id="submit"
                 class="button button-primary"
-        ><?php _e( 'Save Changes' ); ?></button>
+        ><?php echo __( 'Save Changes' ); ?></button>
     </p>
 </form>

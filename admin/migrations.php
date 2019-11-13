@@ -50,16 +50,20 @@ class Brizy_Admin_Migrations {
 			return $this->existinMigrations;
 		}
 
-		$path = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR . '*-migration.php';
-
-		$migrations = array();
-
-		foreach ( glob( $path ) as $file ) {
-			$baseName  = basename( $file );
-			$className = $this->getMigrationClassName( $baseName );
-
-			$migrations[] = new $className;
-		}
+		$migrations = array(
+			new Brizy_Admin_Migrations_BlockPostTitleMigration,
+			new Brizy_Admin_Migrations_CleanInvalidBlocksMigration,
+			new Brizy_Admin_Migrations_CleanLogsMigration,
+			new Brizy_Admin_Migrations_FormSerializationMigration,
+			new Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration,
+			new Brizy_Admin_Migrations_GlobalVersionsMigration,
+			new Brizy_Admin_Migrations_GlobalsToDataMigration,
+			new Brizy_Admin_Migrations_NullMigration,
+			new Brizy_Admin_Migrations_ProjectToCustomPostMigration,
+			new Brizy_Admin_Migrations_RulesMigration,
+			new Brizy_Admin_Migrations_ShortcodesMobileOneMigration,
+			new Brizy_Admin_Migrations_FixGlobalsToDataMigration,
+		);
 
 		usort( $migrations, function ( $a, $b ) {
 			return version_compare( $a->getVersion(), $b->getVersion() );
@@ -72,22 +76,6 @@ class Brizy_Admin_Migrations {
 		return $this->existinMigrations = $migrations;
 	}
 
-	/**
-	 * @param $file
-	 *
-	 * @return string
-	 */
-	private function getMigrationClassName( $file ) {
-		$matches = array();
-		preg_match( "/^(.*)-migration\.php$/", $file, $matches );
-
-		$classNamePart = '';
-		foreach ( explode( '-', $matches['1'] ) as $part ) {
-			$classNamePart .= ucfirst( $part );
-		}
-
-		return sprintf( 'Brizy_Admin_Migrations_%sMigration', $classNamePart );
-	}
 
 	/**
 	 * @return Brizy_Admin_Migrations_MigrationInterface|mixed
@@ -161,10 +149,9 @@ class Brizy_Admin_Migrations {
 		// run migrations
 		foreach ( $migrations as $versionMigrations ) {
 			try {
+				$wpdb->query( 'START TRANSACTION ' );
+
 				foreach ( $versionMigrations as $migration ) {
-
-					$wpdb->query( 'START TRANSACTION ' );
-
 					$migrationClass = get_class( $migration );
 
 					$migration->execute();
@@ -176,9 +163,9 @@ class Brizy_Admin_Migrations {
 					Brizy_Editor_Project::cleanClassCache();
 					Brizy_Editor_Post::cleanClassCache();
 					Brizy_Editor_Block::cleanClassCache();
-
-					$wpdb->query( 'COMMIT' );
 				}
+
+				$wpdb->query( 'COMMIT' );
 			} catch ( Exception $e ) {
 				$wpdb->query( 'ROLLBACK' );
 				Brizy_Logger::instance()->critical( 'Migration process ERROR', [ $e ] );

@@ -1,9 +1,13 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
+import {
+  toolbarDisabledToolbarSettings,
+  toolbarDisabledHorizontalAlign
+} from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   return [
+    toolbarDisabledHorizontalAlign({ v, device }),
     {
       id: defaultValueKey({
         key: "advancedSettings",
@@ -36,6 +40,7 @@ export function getItems({ v, device }) {
           ]
         }
       ]
-    }
+    },
+    toolbarDisabledToolbarSettings({ device })
   ];
 }

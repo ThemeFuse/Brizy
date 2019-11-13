@@ -4,8 +4,8 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
 import Background from "visual/component/Background";
-import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
+import ContainerBorder from "visual/component/ContainerBorder";
 import { Roles } from "visual/component/Roles";
 import {
   wInBoxedPage,
@@ -65,19 +65,9 @@ class SectionItem extends EditorComponent {
     this.mounted = false;
   }
 
-  handleToolbarOpen = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setActive(true);
-    }
-  };
-
   handleToolbarClose = () => {
     if (!this.mounted) {
       return;
-    }
-
-    if (this.containerBorder) {
-      this.containerBorder.setActive(false);
     }
 
     this.patchValue({
@@ -123,17 +113,15 @@ class SectionItem extends EditorComponent {
     };
   }
 
-  renderToolbar(_v) {
+  renderToolbar() {
     const { globalBlockId } = this.props.meta;
 
     return (
       <CollapsibleToolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
-        className="brz-ed-collapsible__section brz-ed-collapsible--big"
+        className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
-        onOpen={this.handleToolbarOpen}
-        onClose={this.handleToolbarClose}
       />
     );
   }
@@ -183,7 +171,6 @@ class SectionItem extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { className } = v;
-
     const classNameSectionContent = classnames(
       "brz-section__content",
       className
@@ -196,17 +183,8 @@ class SectionItem extends EditorComponent {
             allow={["admin"]}
             fallbackRender={() => this.renderItems(v, vs, vd)}
           >
-            <ContainerBorder
-              ref={el => {
-                this.containerBorder = el;
-              }}
-              borderStyle="none"
-              activeBorderStyle="none"
-              reactToClick={false}
-              showBorders={false}
-              path={this.getPath()}
-            >
-              {this.renderToolbar(v)}
+            <ContainerBorder showBorder={false} activateOnContentClick={false}>
+              {this.renderToolbar()}
               {this.renderItems(v, vs, vd)}
             </ContainerBorder>
           </Roles>

@@ -105,7 +105,7 @@ class Brizy_Admin_Post_RevisionManager {
 	private function copyMetaDataToRevision( $post, $revision, $monitor ) {
 
 		global $wpdb;
-		$tablePostMeta    = "{$wpdb->prefix}postmeta";
+		$tablePostMeta    = $wpdb->postmeta;
 		$meta_key_count   = count( $monitor->getPostMetaKeys() );
 		$meta_keys_params = rtrim( str_repeat( '%s,', $meta_key_count ), ',' );
 		$params           = array( (int) $revision, (int) $post );

@@ -12,7 +12,7 @@ class Link extends Component {
     style: null,
     href: "",
     target: null,
-    type: "external", // external | anchor | lightBox | popup
+    type: "external", // external | anchor | lightBox | popup | upload | action
     rel: null,
     attr: {
       title: ""
@@ -64,6 +64,9 @@ class Link extends Component {
       case "external":
         href = _href;
         break;
+      case "action":
+        href = "#";
+        break;
       default:
         throw new Error(`unknown link type ${type}`);
     }
@@ -78,7 +81,9 @@ class Link extends Component {
   getTarget() {
     const { type, target } = this.props;
 
-    return type === "external" && target === "on" ? "_blank" : null;
+    return (type === "external" && target === "on") || type === "upload"
+      ? "_blank"
+      : null;
   }
 
   getAttr() {

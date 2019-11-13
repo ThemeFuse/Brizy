@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -7,7 +7,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import SortableElement from "visual/component/Sortable/SortableElement";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
-import FloatingButton from "visual/component/FloatingButton";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
@@ -35,17 +34,14 @@ class Column extends EditorComponent {
   static defaultProps = {
     meta: {},
     popoverData: [],
+    onResizeStart: _.noop,
     onResize: _.noop,
     onResizeEnd: _.noop
   };
 
   static defaultValue = defaultValue;
 
-  mounted = false;
-
-  componentDidMount() {
-    this.mounted = true;
-  }
+  containerBorder = React.createRef();
 
   shouldComponentUpdate(nextProps) {
     const { meta, tabletReversed, mobileReversed } = this.props;
@@ -58,42 +54,24 @@ class Column extends EditorComponent {
     );
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
-  }
+  handleResizeStart = position => {
+    if (this.containerBorder.current) {
+      this.containerBorder.current.setActive(true);
+    }
 
-  handleToolbarOpen = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setActive(true);
-    }
-    if (this.floatingButton) {
-      this.floatingButton.setActive(true);
-    }
+    this.props.onResizeStart(position);
   };
 
-  handleToolbarClose = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    if (this.containerBorder) {
-      this.containerBorder.setActive(false);
-    }
-    if (this.floatingButton) {
-      this.floatingButton.setActive(false);
-    }
+  handleResize = (deltaX, position) => {
+    this.props.onResize(deltaX, position);
   };
 
-  handleToolbarEnter = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setParentsHover(true);
+  handleResizeEnd = position => {
+    if (this.containerBorder.current) {
+      this.containerBorder.current.setActive(false);
     }
-  };
 
-  handleToolbarLeave = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setParentsHover(false);
-    }
+    this.props.onResizeEnd(position);
   };
 
   getMeta(v) {
@@ -279,34 +257,15 @@ class Column extends EditorComponent {
     return meta.row && meta.row.isInner;
   }
 
-  renderToolbar(v) {
-    const { inGrid } = this.props.meta;
-    const isInnerRow = this.isInnerRow();
-
+  renderToolbar = ContainerBorderButton => {
     return (
-      <div className="brz-ed-column__toolbar">
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
-          onOpen={this.handleToolbarOpen}
-          onClose={this.handleToolbarClose}
-          onMouseEnter={this.handleToolbarEnter}
-          onMouseLeave={this.handleToolbarLeave}
-        >
-          <SortableHandle>
-            <div>
-              <FloatingButton
-                ref={el => {
-                  this.floatingButton = el;
-                }}
-                reactToClick={false}
-                color={isInnerRow && inGrid ? "red" : "blue"}
-              />
-            </div>
-          </SortableHandle>
-        </Toolbar>
-      </div>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+        <SortableHandle>
+          <ContainerBorderButton />
+        </SortableHandle>
+      </Toolbar>
     );
-  }
+  };
 
   renderResizer(position) {
     const {
@@ -332,8 +291,9 @@ class Column extends EditorComponent {
         popoverData={popoverData}
         position={position}
         color={isInnerRow && inGrid ? "red" : "blue"}
-        onResize={onResize}
-        onResizeEnd={onResizeEnd}
+        onResizeStart={this.handleResizeStart}
+        onResize={this.handleResize}
+        onResizeEnd={this.handleResizeEnd}
       />
     );
   }
@@ -400,7 +360,9 @@ class Column extends EditorComponent {
       items,
       linkType,
       linkPopup,
-      popups
+      popups,
+      customID,
+      customClassName
     } = v;
     const {
       meta: { inGrid, posts },
@@ -415,15 +377,17 @@ class Column extends EditorComponent {
         `${this.constructor.componentId}-column`,
         `${this.getId()}-column`,
         styleColumn(v, vs, vd)
-      )
+      ),
+      customClassName
     );
 
     return (
-      <Fragment>
+      <>
         <SortableElement type="column" useHandle={true}>
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Animation
               className={classNameColumn}
+              customID={customID}
               name={animationName !== "none" && animationName}
               duration={animationDuration}
               delay={animationDelay}
@@ -434,18 +398,16 @@ class Column extends EditorComponent {
               >
                 <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
                   <ContainerBorder
-                    ref={input => {
-                      this.containerBorder = input;
-                    }}
-                    className="brz-ed-border__column"
-                    borderColor={isInnerRow && inGrid ? "red" : "blue"}
+                    ref={this.containerBorder}
+                    color={isInnerRow && inGrid ? "red" : "blue"}
                     borderStyle="solid"
-                    reactToClick={false}
-                    path={path}
+                    activateOnContentClick={false}
+                    showButton={true}
+                    buttonPosition="topRight"
+                    renderButtonWrapper={this.renderToolbar}
                   >
                     {this.renderResizer("left")}
                     {this.renderResizer("right")}
-                    {this.renderToolbar(v)}
                     {this.renderContent(v, vs, vd)}
                   </ContainerBorder>
                 </ContextMenu>
@@ -457,7 +419,7 @@ class Column extends EditorComponent {
           linkType === "popup" &&
           linkPopup !== "" &&
           this.renderPopups()}
-      </Fragment>
+      </>
     );
   }
 
@@ -473,7 +435,9 @@ class Column extends EditorComponent {
       linkExternalRel,
       linkPopup,
       linkUpload,
-      popups
+      popups,
+      customID,
+      customClassName
     } = v;
 
     const linkHrefs = {
@@ -489,14 +453,16 @@ class Column extends EditorComponent {
         `${this.constructor.componentId}-column`,
         `${this.getId()}-column`,
         styleColumn(v, vs, vd)
-      )
+      ),
+      customClassName
     );
 
     return (
-      <Fragment>
+      <>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
             className={classNameColumn}
+            customID={customID}
             name={animationName !== "none" && animationName}
             duration={animationDuration}
             delay={animationDelay}
@@ -517,7 +483,7 @@ class Column extends EditorComponent {
           linkType === "popup" &&
           linkPopup !== "" &&
           this.renderPopups()}
-      </Fragment>
+      </>
     );
   }
 }

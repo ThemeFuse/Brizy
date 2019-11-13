@@ -46,7 +46,8 @@ import {
   toolbarFilterContrast,
   toolbarCustomCSS,
   toolbarLinkPopup,
-  toolbarLinkUpload
+  toolbarLinkUpload,
+  toolbarActionClosePopup
 } from "visual/utils/toolbar";
 
 global.Brizy = {
@@ -97,6 +98,7 @@ global.Brizy = {
     toolbarFilterContrast,
     toolbarCustomCSS,
     toolbarLinkPopup,
-    toolbarLinkUpload
+    toolbarLinkUpload,
+    toolbarActionClosePopup
   }
 };

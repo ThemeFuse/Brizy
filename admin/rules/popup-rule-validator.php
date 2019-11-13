@@ -38,8 +38,6 @@ class Brizy_Admin_Rules_PopupRuleValidator extends Brizy_Admin_Rules_AbstractVal
 
 		$rules = self::sortRules( $rules );
 
-		$ruleSet = new Brizy_Admin_RuleSet( $rules );
-
-		return $ruleSet;
+		return new Brizy_Admin_RuleSet( $rules );
 	}
 }

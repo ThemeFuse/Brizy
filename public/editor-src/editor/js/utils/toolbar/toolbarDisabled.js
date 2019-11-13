@@ -22,7 +22,7 @@ export function toolbarDisabledAdvancedSettings({ device, devices = "all" }) {
   };
 }
 
-export function toolbarDisabledSettings({ device, devices = "all" }) {
+export function toolbarDisabledToolbarSettings({ device, devices = "all" }) {
   return {
     id: defaultValueKey({ key: "toolbarSettings", device }),
     type: "popover",

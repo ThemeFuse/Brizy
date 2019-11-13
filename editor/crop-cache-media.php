@@ -141,7 +141,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 				throw new Exception( 'Crop not forced.' );
 			}
 
-			@mkdir( $resized_page_asset_path, 0755, true );
+			if ( ! mkdir( $resized_page_asset_path, 0755, true ) && ! is_dir( $resized_page_asset_path ) ) {
+				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $resized_page_asset_path ) );
+			}
 
 			$cropper = new Brizy_Editor_Asset_Crop_Cropper();
 
@@ -159,7 +161,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			};
 			add_filter( 'jpeg_quality', $closure );
 
-			@mkdir( $hq_image_path_dir, 0755, true );
+			if ( ! mkdir( $hq_image_path_dir, 0755, true ) && ! is_dir( $hq_image_path_dir ) ) {
+				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $hq_image_path_dir ) );
+			}
 
 			$cropper = new Brizy_Editor_Asset_Crop_Cropper();
 
@@ -172,7 +176,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$hq_wp_file_exists = file_exists( $hq_image_full_path );
 		if ( $force_optimize && $hq_wp_file_exists ) {
 			$optimizer = new Brizy_Editor_Asset_Optimize_Optimizer();
-			@mkdir( $optimized_image_path_dir, 0755, true );
+			if ( ! mkdir( $optimized_image_path_dir, 0755, true ) && ! is_dir( $optimized_image_path_dir ) ) {
+				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $optimized_image_path_dir ) );
+			}
 
 			if ( $optimizer->optimize( $hq_image_full_path, $optimized_image_full_path ) ) {
 				$resized_image_path = $optimized_image_full_path;
@@ -200,21 +206,21 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		global $wpdb;
 
-		$posts_table = $wpdb->posts;
-		$meta_table  = $wpdb->postmeta;
+		$pt = $wpdb->posts;
+		$mt  = $wpdb->postmeta;
 
 		return $wpdb->get_var( $wpdb->prepare(
 			"SELECT 
-						{$posts_table}.ID
-					FROM {$posts_table}
-						INNER JOIN {$meta_table} ON ( {$posts_table}.ID = {$meta_table}.post_id )
+						{$pt}.ID
+					FROM {$pt}
+						INNER JOIN {$mt} ON ( {$pt}.ID = {$mt}.post_id )
 					WHERE 
-						( {$meta_table}.meta_key = 'brizy_attachment_uid' 
-						AND {$meta_table}.meta_value = %s )
-						AND {$posts_table}.post_type = 'attachment'
-						AND {$posts_table}.post_status = 'inherit'
-					GROUP BY {$posts_table}.ID
-					ORDER BY {$posts_table}.post_date DESC",
+						( {$mt}.meta_key = 'brizy_attachment_uid' 
+						AND {$mt}.meta_value = %s )
+						AND {$pt}.post_type = 'attachment'
+						AND {$pt}.post_status = 'inherit'
+					GROUP BY {$pt}.ID
+					ORDER BY {$pt}.post_date DESC",
 			$media_name
 		) );
 

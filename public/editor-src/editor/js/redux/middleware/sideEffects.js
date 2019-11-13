@@ -101,6 +101,9 @@ export default config => store => next => action => {
   if (action.type === UPDATE_UI && action.key === "deviceMode") {
     handleDeviceModeChange(callbacks);
   }
+  if (action.type === UPDATE_UI && action.key === "showHiddenElements") {
+    handleHiddenElementsChange(callbacks);
+  }
 
   if (action.type === COPY_ELEMENT) {
     handleCopiedElementChange(callbacks);
@@ -175,6 +178,9 @@ function handleHydrate(callbacks) {
       .attr("id", "brz-rich-text-colors")
       .html(makeRichTextColorPaletteCSS(colorPalette));
     jQuery("head", document).append($richTextPaletteStyle);
+
+    // Hidden Elements
+    document.body.style.setProperty("--elements-visibility", "none");
 
     // clipboard sync between tabs
     jQuery(window).on("storage", e => {
@@ -279,6 +285,19 @@ function handleDeviceModeChange(callbacks) {
       brz.className = newBrzClassName;
       blocksIframe.style.maxWidth = iframeMaxWidth;
     });
+  });
+}
+
+function handleHiddenElementsChange(callbacks) {
+  callbacks.onAfterNext.push(({ config, action }) => {
+    const { document } = config;
+    const value = action.value;
+
+    if (value) {
+      document.body.style.removeProperty("--elements-visibility");
+    } else {
+      document.body.style.setProperty("--elements-visibility", "none");
+    }
   });
 }
 

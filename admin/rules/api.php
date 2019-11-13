@@ -64,9 +64,14 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
 
-		$rules = $this->manager->getRules( $postId );
+		try {
+			$rules = $this->manager->getRules( $postId );
 
-		$this->success( $rules );
+			$this->success( $rules );
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+			$this->error( 400, $e->getMessage() );
+		}
 
 		return null;
 	}
@@ -151,7 +156,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->manager->addRule( $postId, $newRule );
 		}
 
-		$this->success( $rules, 200 );
+		$this->success( $rules );
 
 		return null;
 	}
@@ -169,7 +174,12 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$rulesData = file_get_contents( "php://input" );
 
-		$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+		try {
+			$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+			$this->error( 400, $e->getMessage() );
+		}
 
 		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $postId );
 		if ( ! $validator ) {
@@ -205,6 +215,6 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$this->manager->deleteRule( $postId, $ruleId );
 
-		$this->success( null, 200 );
+		$this->success( null );
 	}
 }

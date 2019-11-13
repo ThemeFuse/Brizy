@@ -49,7 +49,7 @@ export default function Referrer(props) {
           <input
             className="brz-input"
             type="text"
-            placeholder=""
+            placeholder="URL"
             value={triggerValue.url}
             onChange={({ target: { value } }) =>
               onChange({ ...triggerValue, url: value })

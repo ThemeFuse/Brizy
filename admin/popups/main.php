@@ -74,7 +74,7 @@ class Brizy_Admin_Popups_Main {
 				'has_archive'         => false,
 				'description'         => __( 'Popups', 'brizy' ),
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
-				'show_ui'             => false,//defined('BRIZY_PRO_VERSION'),
+				'show_ui'             => defined('BRIZY_PRO_VERSION'),
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => 'brizy-popup' ),
@@ -140,24 +140,24 @@ class Brizy_Admin_Popups_Main {
 
 	private function insertHead( $target, $headContent ) {
 
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT START-->\n\n";
+		return $target . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n";
 	}
 
 	private function insertBody( $target, $bodyContent ) {
 
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT START-->\n\n";
+		return $target . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n";
 	}
 
 	private function insertInDocumentHead( $target, $headContent ) {
 
-		$target = preg_replace( "/(<head[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT START-->\n\n", $target );
+		$target = preg_replace( "/(<head[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n", $target );
 
 		return $target;
 	}
 
 	private function insertInDocumentBody( $target, $bodyContent ) {
 
-		$target = preg_replace( "/(<body[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT START-->\n\n", $target );
+		$target = preg_replace( "/(<body[^>]*>)/ium", "$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n", $target );
 
 		return $target;
 	}
@@ -169,9 +169,7 @@ class Brizy_Admin_Popups_Main {
 	public function getMatchingBrizyPopups() {
 		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
-		$popups = $this->findMatchingPopups( $applyFor, $entityType, $entityValues );
-
-		return $popups;
+		return $this->findMatchingPopups( $applyFor, $entityType, $entityValues );
 	}
 
 	/**

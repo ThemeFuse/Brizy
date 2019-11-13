@@ -5,21 +5,23 @@ import { setIn } from "timm";
 import deepMerge from "deepmerge";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
+import HotKeys from "visual/component/HotKeys";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import { MIN_COL_WIDTH } from "visual/config/columns";
-import { ContextMenuExtend } from "visual/component/ContextMenu";
-import HotKeys from "visual/component/HotKeys";
-import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { clamp } from "visual/utils/math";
-import { normalizeRowColumns } from "./utils";
-import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getStore } from "visual/redux/store";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { t } from "visual/utils/i18n";
+import { normalizeRowColumns } from "./utils";
 
 const MAX_ITEMS_IN_ROW = 6;
 
 const toDecimalTen = number => Math.round(number * 10) / 10;
 
-class Items extends EditorArrayComponent {
+class RowItems extends EditorArrayComponent {
   static get componentId() {
     return "Row.Items";
   }
@@ -72,8 +74,7 @@ class Items extends EditorArrayComponent {
       col2Index = index;
     }
 
-    const allColumnsWidth = _.reduce(
-      this.columnWidths,
+    const allColumnsWidth = this.columnWidths.reduce(
       (memo, num) => memo + num,
       0
     );
@@ -222,6 +223,8 @@ class Items extends EditorArrayComponent {
       meta,
       toolbarExtend,
       popoverData: this.getPopoverData,
+      onResizeStart: position =>
+        this.handleColumnResize(itemIndex, 0, position),
       onResize: (deltaX, position) =>
         this.handleColumnResize(itemIndex, deltaX, position),
       onResizeEnd: this.handleColumnResizeEnd
@@ -342,4 +345,4 @@ class Items extends EditorArrayComponent {
   }
 }
 
-export default Items;
+export default RowItems;

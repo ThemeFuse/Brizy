@@ -19,26 +19,36 @@ export function toolbarElementIconTextIconPosition({
   v,
   device,
   state,
-  devices = "all"
+  devices = "all",
+  disabled = false,
+  position = 90
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ v, key: "iconPosition", device, state }),
-    label: t("Position"),
-    type: "radioGroup",
+    id: dvk("iconPosition"),
+    type: "toggle",
     roles: ["admin"],
-    position: 50,
+    devices,
+    disabled,
+    position,
     choices: [
       {
-        value: "left",
-        icon: "nc-align-left"
+        icon: "nc-hrz-align-left",
+        title: t("Align"),
+        value: "left"
       },
       {
-        value: "right",
-        icon: "nc-align-right"
+        icon: "nc-hrz-align-right",
+        title: t("Align"),
+        value: "right"
       }
     ],
-    devices,
-    value: defaultValueValue({ v, key: "iconPosition", device, state })
+    value: dvv("iconPosition"),
+    onChange: value => ({
+      [dvk("iconPosition")]: value
+    })
   };
 }
 

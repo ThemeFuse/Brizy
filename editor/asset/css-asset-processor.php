@@ -22,8 +22,12 @@ class Brizy_Editor_Asset_CssAssetProcessor implements Brizy_Editor_Content_Proce
 	 * The css assets must be ignored as we have a special processor this.
 	 *
 	 * @param $content
+	 *
+	 * @param Brizy_Content_Context $context
+	 *
+	 * @return string
 	 */
-	public function process( $content ) {
+	public function process( $content, Brizy_Content_Context $context ) {
 
 		return $content;
 	}
