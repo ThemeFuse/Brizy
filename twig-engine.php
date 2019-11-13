@@ -116,7 +116,9 @@ class Brizy_TwigEngine {
 
 			Brizy_Admin_FileSystem::deleteAllDirectories( $twig_cache_root );
 
-			@mkdir( $twig_cache, 0755, true );
+			if ( !file_exists( $twig_cache ) && ! mkdir( $twig_cache, 0755, true ) && ! is_dir( $twig_cache ) ) {
+				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $twig_cache ) );
+			}
 		}
 
 		if ( file_exists( $twig_cache ) && is_writeable( $twig_cache ) ) {
