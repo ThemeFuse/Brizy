@@ -6,7 +6,8 @@ import {
   toolbarDisabledLink,
   toolbarElementIconDisabledSettings,
   toolbarDisabledHorizontalAlign,
-  toolbarDisabledShowOnResponsive
+  toolbarDisabledShowOnResponsive,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -39,12 +40,6 @@ export function getItems({ v, device }) {
               }),
               label: t("Icon"),
               options: [
-                toolbarElementIconTextIconPosition({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
                 toolbarElementIconTextIconSpacing({
                   v,
                   device,
@@ -57,6 +52,12 @@ export function getItems({ v, device }) {
         }
       ]
     },
+    toolbarElementIconTextIconPosition({
+      v,
+      device,
+      devices: "desktop",
+      state: "normal"
+    }),
     toolbarDisabledLink({
       v,
       device,
@@ -75,6 +76,7 @@ export function getItems({ v, device }) {
     }),
     toolbarDisabledShowOnResponsive({
       device
-    })
+    }),
+    toolbarDisabledAdvancedSettings({ device })
   ];
 }

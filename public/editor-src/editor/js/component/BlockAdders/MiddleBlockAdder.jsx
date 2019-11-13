@@ -61,12 +61,10 @@ class MiddleBlockAdder extends React.Component {
   render() {
     return (
       <div className="brz-ed-container-plus">
-        <div className="brz-ed-container-wrap">
-          <div
-            className="brz-ed-container-trigger brz-ed-container-trigger--small"
-            onClick={this.open}
-          />
-        </div>
+        <div
+          className="brz-ed-container-trigger brz-ed-container-trigger--small"
+          onClick={this.open}
+        />
       </div>
     );
   }

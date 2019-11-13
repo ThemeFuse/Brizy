@@ -7,6 +7,7 @@ import {
   toolbarMargin,
   toolbarShowOnDesktop,
   toolbarZIndex,
+  toolbarCSSID,
   toolbarCustomCSSClass,
   toolbarEntranceAnimation,
   toolbarShowOnResponsive
@@ -112,6 +113,12 @@ export function getItems({ v, device }) {
                   devices: "desktop"
                 }),
                 toolbarZIndex({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop"
+                }),
+                toolbarCSSID({
                   v,
                   device,
                   state: "normal",

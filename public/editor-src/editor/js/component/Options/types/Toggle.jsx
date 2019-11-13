@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import IconToggle from "visual/component/Controls/IconToggle";
 import IconToggleItem from "visual/component/Controls/IconToggle/IconToggleItem";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
-import { hiddenElementsSelector } from "visual/redux/selectors";
+import { showHiddenElementsSelector } from "visual/redux/selectors";
 
 class ToggleOptionType extends React.Component {
   static defaultProps = {
@@ -59,7 +59,7 @@ class ToggleOptionType extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  showHiddenElements: hiddenElementsSelector(state)
+  showHiddenElements: showHiddenElementsSelector(state)
 });
 
 export default connect(mapStateToProps)(ToggleOptionType);

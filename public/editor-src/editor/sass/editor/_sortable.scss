@@ -31,31 +31,24 @@ $helperSize: 30px;
     *:not(.brz-ed-border) {
       visibility: hidden;
     }
-    > .brz-ed-border {
-      > .brz-ed-border__inner-1,
-      > .brz-ed-border__inner-2 {
-        &:after,
-        &:before {
-          visibility: visible;
-          opacity: 1;
-        }
+    > .brz-ed-border > .brz-ed-border__inner {
+      top: -1px;
+      bottom: -1px;
+      visibility: visible;
+
+      &.brz-ed-border--grey {
+        border-color: $by-block-border-grey;
       }
-      > .brz-ed-border__inner-1:after {
-        top: -1px;
+      &.brz-ed-border--blue {
+        border-color: $by-block-border-blue;
       }
-      > .brz-ed-border__inner-2:after {
-        bottom: -1px;
+      &.brz-ed-border--red {
+        border-color: $by-block-border-red;
       }
     }
-    &.brz-columns__posts {
-      > .brz-ed-border {
-        > .brz-ed-border__inner-1:after {
-          top: -2px;
-        }
-        > .brz-ed-border__inner-2:after {
-          bottom: -2px;
-        }
-      }
+    &.brz-columns__posts > .brz-ed-border > .brz-ed-border__inner {
+      top: -2px;
+      bottom: -2px;
     }
   }
 
@@ -84,15 +77,23 @@ $helperSize: 30px;
         bottom: auto;
       }
     }
-    > .brz-columns:not(.brz-columns__posts) {
-      > .brz-ed-border {
-        > .brz-ed-border__inner-1:before,
-        > .brz-ed-border__inner-2:before {
-          top: -1px;
-          bottom: -1px;
-          visibility: visible;
-          opacity: 0.5;
-          transition: none;
+    > .brz-columns:not(.brz-columns__posts) > .brz-ed-border {
+      > .brz-ed-border__inner {
+        top: -1px;
+        bottom: -1px;
+        transition: none;
+
+        &.brz-ed-border--grey {
+          border-left-color: $by-block-border-grey;
+          border-right-color: $by-block-border-grey;
+        }
+        &.brz-ed-border--blue {
+          border-left-color: $by-block-border-blue;
+          border-right-color: $by-block-border-blue;
+        }
+        &.brz-ed-border--red {
+          border-left-color: $by-block-border-red;
+          border-right-color: $by-block-border-red;
         }
       }
     }
@@ -127,30 +128,40 @@ $helperSize: 30px;
     width: 2px;
     height: 100%;
   }
-  .sortable-hovered-left {
-    &:after {
-      left: 0;
+  .sortable-hovered-left > .brz-ed-border > .brz-ed-border__inner {
+    border-left-width: 4px;
+    border-radius: 4px;
+    transition: none;
+    top: -2px !important;
+    bottom: -2px !important;
+    left: -1px !important;
+
+    &.brz-ed-border--grey {
+      border-left-color: $by-block-border-grey;
     }
-    > .brz-ed-border {
-      > .brz-ed-border__inner-1:before {
-        transform: scaleX(2);
-        opacity: 1 !important;
-        transition: none;
-        border-radius: 4px;
-      }
+    &.brz-ed-border--blue {
+      border-left-color: $by-block-border-blue;
+    }
+    &.brz-ed-border--red {
+      border-left-color: $by-block-border-red;
     }
   }
-  .sortable-hovered-right {
-    &:after {
-      right: -2px;
+  .sortable-hovered-right > .brz-ed-border > .brz-ed-border__inner {
+    border-right-width: 4px;
+    border-radius: 4px;
+    transition: none;
+    right: -3px !important;
+    top: -2px !important;
+    bottom: -2px !important;
+
+    &.brz-ed-border--grey {
+      border-right-color: $by-block-border-grey;
     }
-    > .brz-ed-border {
-      > .brz-ed-border__inner-2:before {
-        transform: scaleX(2);
-        opacity: 1 !important;
-        transition: none;
-        border-radius: 4px;
-      }
+    &.brz-ed-border--blue {
+      border-right-color: $by-block-border-blue;
+    }
+    &.brz-ed-border--red {
+      border-right-color: $by-block-border-red;
     }
   }
 }
@@ -166,24 +177,24 @@ $helperSize: 30px;
 }
 
 // Sortable Empty
-.brz-ed {
-  .brz-ed-sortable--empty {
-    position: relative;
-    min-height: 125px;
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
-    margin: 10px;
+.brz-ed .brz-ed-sortable--empty {
+  position: relative;
+  min-height: 125px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  margin: 10px;
 
-    .brz-ed-border__inner-1,
-    .brz-ed-border__inner-2 {
-      opacity: 0.6;
-    }
-    .brz-ed-container-trigger {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      margin: 0;
-    }
+  .brz-ed-border__inner {
+    opacity: 0.6;
+  }
+  .brz-ed-border--grey {
+    border-color: $by-block-border-grey;
+  }
+  .brz-ed-container-trigger {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
   }
 }

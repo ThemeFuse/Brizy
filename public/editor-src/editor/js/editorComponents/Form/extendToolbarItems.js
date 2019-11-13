@@ -372,11 +372,6 @@ export function getItemsForDesktop(v) {
       type: "toggle",
       disabled: true
     },
-    {
-      id: "toolbarSettings",
-      type: "popover",
-      disabled: true
-    }
   ];
 }
 

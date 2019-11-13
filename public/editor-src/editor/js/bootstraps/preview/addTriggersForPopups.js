@@ -25,8 +25,35 @@ import $ from "jquery";
 
 export default function() {
   $(document).ready(function() {
+    $(document).on("brz.popup.close", function(e, el) {
+      if ($(el).hasClass("brz-conditions-popup")) {
+        var showedPopups = JSON.parse(
+          localStorage.getItem("showedPopups") || "[]"
+        );
+
+        var closedPopupId = $(el).attr("data-brz-popup");
+
+        localStorage.setItem(
+          "showedPopups",
+          JSON.stringify([...new Set([...showedPopups, closedPopupId])])
+        );
+      }
+    });
+
     $(".brz-conditions-popup").each(function() {
       var $this = $(this);
+      var trigger_once = $this.attr("data-trigger_once");
+      var popup = $this.popup();
+
+      var popupId = $this.attr("data-brz-popup");
+      var showedPopups = JSON.parse(
+        localStorage.getItem("showedPopups") || "[]"
+      );
+
+      if (trigger_once === "true" && showedPopups.includes(popupId)) {
+        return;
+      }
+
       var pageLoad = $this.attr("data-page_load");
       var click = $this.attr("data-click");
       var inactivity = $this.attr("data-inactivity");
@@ -221,20 +248,8 @@ export default function() {
       function showPopup() {
         setTimeout(() => {
           if (canShowPopup) {
-            const scrollPage = $this.attr("data-scroll_page");
-            const showAfter = $this.attr("data-show-close-button-after");
+            popup.show();
 
-            if (showAfter) {
-              setTimeout(() => {
-                $this.find(".brz-popup2__close").removeClass("brz-hidden");
-              }, Number(showAfter) * 1000);
-            }
-
-            $this.addClass("brz-popup2--opened");
-
-            if (!scrollPage) {
-              $("html").addClass("brz-ow-hidden");
-            }
             canShowPopup = false;
           }
         }, 0);

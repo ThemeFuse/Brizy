@@ -24,7 +24,8 @@ import {
   toolbarColorHexField2,
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2
+  toolbarBoxShadowFields2,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -589,6 +590,7 @@ export function getItems({ v, device }) {
         tabsColor: !isOpen ? "" : v.tabsColor
       })
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",

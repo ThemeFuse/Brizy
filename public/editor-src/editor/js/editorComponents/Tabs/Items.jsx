@@ -19,6 +19,8 @@ class TabsItems extends EditorArrayComponent {
     meta: {}
   };
 
+  containerBorder = React.createRef();
+
   getItemProps() {
     const { meta } = this.props;
 
@@ -46,13 +48,6 @@ class TabsItems extends EditorArrayComponent {
         arrayOperation: "itemChange"
       });
     }
-  };
-
-  handleToolbarEnter = () => {
-    this.containerBorder.setParentsHover(true);
-  };
-  handleToolbarLeave = () => {
-    this.containerBorder.setParentsHover(false);
   };
 
   removeItem(itemIndex) {
@@ -130,26 +125,7 @@ class TabsItems extends EditorArrayComponent {
       );
     });
 
-    let content = <ul className="brz-tabs__nav">{navItems}</ul>;
-
-    if (IS_EDITOR) {
-      content = (
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          borderStyle="none"
-          activeBorderStyle="none"
-          reactToClick={false}
-          showBorders={false}
-          path={this.getPath()}
-        >
-          {content}
-        </ContainerBorder>
-      );
-    }
-
-    return content;
+    return <ul className="brz-tabs__nav">{navItems}</ul>;
   }
 
   renderMobileNav(item, itemKey, itemIndex, itemData) {

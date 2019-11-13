@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
+const helperHTML = `
+<span>Add your custom block name, example: my-block </span>`;
+
 export function toolbarAnchorName({
   v,
   device,
@@ -13,11 +16,13 @@ export function toolbarAnchorName({
 
   return {
     id: dvk("anchorName"),
-    label: t("Anchor Name"),
+    label: t("Block Name"),
     type: "input",
     display: "block",
     position,
     devices,
+    helper: true,
+    helperContent: helperHTML,
     value: {
       value: dvv("anchorName")
     },

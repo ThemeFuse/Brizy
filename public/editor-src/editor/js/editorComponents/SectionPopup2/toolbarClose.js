@@ -44,11 +44,6 @@ export function getItems({ v, device }) {
               id: "toolbarCurrentElementTabClose",
               label: t("Icon"),
               options: [
-                toolbarContainerPopup2ClosePosition({
-                  v,
-                  device,
-                  state: "normal"
-                }),
                 toolbarContainerPopup2CloseHorizontalPosition({
                   v,
                   device,
@@ -63,19 +58,14 @@ export function getItems({ v, device }) {
                   v,
                   device,
                   state: "normal"
-                }),
-                toolbarContainerPopup2CloseBgSize({
-                  v,
-                  device,
-                  state: "normal"
                 })
               ]
-            }
-            /* {
+            },
+            {
               id: "toolbarCurrentElementTabBackground",
               label: t("Background"),
               options: [
-                toolbarContainerPopup2CloseFill({
+                toolbarContainerPopup2CloseBgSize({
                   v,
                   device,
                   state: "normal"
@@ -86,7 +76,7 @@ export function getItems({ v, device }) {
                   state: "normal"
                 })
               ]
-            }*/
+            }
           ]
         }
       ]
@@ -120,7 +110,7 @@ export function getItems({ v, device }) {
                   value: dvv("tabsColor"),
                   tabs: [
                     {
-                      id: dvk("tabClose"),
+                      id: dvk("tabIcon"),
                       label: t("Icon"),
                       options: [
                         toolbarColor2({
@@ -217,8 +207,8 @@ export function getItems({ v, device }) {
                   value: dvv("tabsColor"),
                   tabs: [
                     {
-                      id: dvk("tabClose"),
-                      label: t("Close"),
+                      id: dvk("tabIcon"),
+                      label: t("Icon"),
                       options: [
                         toolbarColor2({
                           v,
@@ -315,6 +305,11 @@ export function getItems({ v, device }) {
         [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor")
       })
     },
+    toolbarContainerPopup2ClosePosition({
+      v,
+      device,
+      state: "normal"
+    }),
     toolbarContainerPopup2CloseAlign({ v, device, state: "normal" }),
     {
       id: dvk("toolbarSettings"),

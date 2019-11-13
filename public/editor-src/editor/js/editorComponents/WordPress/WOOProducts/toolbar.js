@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
+import {
+  toolbarDisabledAdvancedSettings,
+  toolbarCustomCSS
+} from "visual/utils/toolbar";
 
 export default taxonomies => {
   const categoriesList = taxonomies.map(item => ({
@@ -110,6 +113,7 @@ const getItemsForDesktop = categoriesList => v => [
       }
     ]
   },
+  toolbarDisabledAdvancedSettings({ device: "desktop" }),
   {
     id: "toolbarSettings",
     type: "popover",
@@ -174,6 +178,7 @@ const getItemsForDesktop = categoriesList => v => [
 ];
 
 const getItemsForTablet = v => [
+  toolbarDisabledAdvancedSettings({ device: "tablet" }),
   {
     id: "tabletToolbarSettings",
     type: "popover",
@@ -211,6 +216,7 @@ const getItemsForTablet = v => [
 ];
 
 const getItemsForMobile = v => [
+  toolbarDisabledAdvancedSettings({ device: "mobile" }),
   {
     id: "mobileToolbarSettings",
     type: "popover",

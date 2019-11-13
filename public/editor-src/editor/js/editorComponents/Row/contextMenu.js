@@ -9,6 +9,7 @@ export default {
 
 function getItems(v, component) {
   const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   return [
     {
@@ -18,7 +19,11 @@ function getItems(v, component) {
       title: t("Row"),
       disabled: (item, meta) => {
         return (
-          v.showToolbar === "off" || inPopup || IS_GLOBAL_POPUP || meta.isInSubMenu
+          v.showToolbar === "off" ||
+          inPopup ||
+          inPopup2 ||
+          IS_GLOBAL_POPUP ||
+          meta.isInSubMenu
         );
       },
       items: []

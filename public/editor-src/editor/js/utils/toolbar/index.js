@@ -62,7 +62,8 @@ export {
   toolbarLinkTargetUrl,
   toolbarLinkHref,
   toolbarLinkPopup,
-  toolbarLinkUpload
+  toolbarLinkUpload,
+  toolbarActionClosePopup
 } from "./toolbarLink";
 
 // Horizontal Align
@@ -78,6 +79,7 @@ export {
   toolbarSizeWidthWidthPercent,
   toolbarSizeHeightHeightPx,
   toolbarSizeSizeSizePercent,
+  toolbarSizeWidthSizePercent,
   toolbarSizeContainerSize
 } from "./toolbarSize";
 
@@ -129,10 +131,10 @@ export {
   toolbarDisabledMedia,
   toolbarDisabledHorizontalAlign,
   toolbarDisabledAdvancedSettings,
-  toolbarDisabledSettings,
   toolbarDisabledLink,
   toolbarDisabledShowOnResponsive,
   toolbarDisabledShowOnDesktop,
+  toolbarDisabledToolbarSettings,
   toolbarDisabledShowOnTablet,
   toolbarDisabledShowOnMobile,
   toolbarDisabledZIndex
@@ -229,8 +231,7 @@ export { toolbarImageLinkExternal } from "./toolbarElementImage";
 // Element Popup2
 export {
   toolbarContainerPopup2ContainerWidth,
-  toolbarContainerPopup2ContainerType,
-  toolbarContainerPopup2ContainerHeight,
+  toolbarContainerPopup2ContainerTypeAndHeight,
   toolbarContainerPopup2CloseHorizontalPosition,
   toolbarContainerPopup2CloseVerticalPosition,
   toolbarContainerPopup2CloseFill,
@@ -241,8 +242,7 @@ export {
   toolbarContainerPopup2ClosePosition,
   toolbarContainerPopup2ScrollPage,
   toolbarContainerPopup2ClickOutsideToClose,
-  toolbarContainerPopup2ShowCloseButton,
-  toolbarContainerPopup2ShowCloseButtonAfter
+  toolbarContainerPopup2ShowCloseButton
 } from "./toolbarContainerPopup2";
 
 // Typography
@@ -370,5 +370,11 @@ export {
 // Anchor Name
 export { toolbarAnchorName } from "./toolbarAnchorName";
 
+//CSS ID
+export { toolbarCSSID } from "./toolbarCSSID";
+
 // Element Breadcrumbs
 export { toolbarElementBreadcrumbsSpacing } from "./toolbarElementBreadcrumbs";
+
+// Element Post info
+export { toolbarElementPostInfoSpacing } from "./toolbarElementPostInfo";

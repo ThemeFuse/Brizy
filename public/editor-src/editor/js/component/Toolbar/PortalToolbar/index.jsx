@@ -61,6 +61,22 @@ class PortalToolbar extends React.Component {
     this.node = null;
   }
 
+  handleMouseEnter = () => {
+    const e = new CustomEvent("brz.toolbar.mouseenter", {
+      bubbles: true
+    });
+    this.node.dispatchEvent(e);
+    this.props.onMouseEnter();
+  };
+
+  handleMouseLeave = () => {
+    const e = new CustomEvent("brz.toolbar.mouseleave", {
+      bubbles: true
+    });
+    this.node.dispatchEvent(e);
+    this.props.onMouseLeave();
+  };
+
   handleClickOutside = () => {
     monitor.unsetActive();
   };
@@ -77,14 +93,26 @@ class PortalToolbar extends React.Component {
     if (monitor.getActive() !== this) {
       monitor.setActive(this);
       this.props.onBeforeOpen();
-      this.setState({ opened: true }, this.props.onOpen);
+      this.setState({ opened: true }, () => {
+        const e = new CustomEvent("brz.toolbar.open", {
+          bubbles: true
+        });
+        this.node.dispatchEvent(e);
+        this.props.onOpen();
+      });
     }
   }
 
   hide() {
     if (this.state.opened) {
       this.props.onBeforeClose();
-      this.setState({ opened: false }, this.props.onClose);
+      this.setState({ opened: false }, () => {
+        const e = new CustomEvent("brz.toolbar.close", {
+          bubbles: true
+        });
+        this.node.dispatchEvent(e);
+        this.props.onClose();
+      });
     }
   }
 
@@ -126,6 +154,8 @@ class PortalToolbar extends React.Component {
           window={ownerDocument.defaultView}
           items={items}
           node={this.node}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
         />
       </ClickOutside>,
       portalNode

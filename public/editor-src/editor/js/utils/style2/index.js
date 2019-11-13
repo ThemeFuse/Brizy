@@ -64,7 +64,8 @@ export {
   styleSizeWidth,
   styleSizeHeight,
   styleSizeSize,
-  styleSizeContainerSize
+  styleSizeContainerSize,
+  styleSizeTextSpacing
 } from "./styleSize";
 
 // Container Type
@@ -230,6 +231,3 @@ export {
   styleContainerPopup2CloseBgSize,
   styleContainerPopup2CloseBorderRadius
 } from "./styleContainerPopup2";
-
-// Element Breadcrumbs
-export { styleElementBreadcrumbsSpacing } from "./styleElementBreadcrumbs";

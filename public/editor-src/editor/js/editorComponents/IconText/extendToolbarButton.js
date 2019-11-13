@@ -1,12 +1,12 @@
 import {
-  toolbarDisabledSettings,
+  toolbarDisabledToolbarSettings,
   toolbarDisabledAdvancedSettings,
   toolbarDisabledShowOnResponsive
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   return [
-    toolbarDisabledSettings({
+    toolbarDisabledToolbarSettings({
       device
     }),
     toolbarDisabledAdvancedSettings({

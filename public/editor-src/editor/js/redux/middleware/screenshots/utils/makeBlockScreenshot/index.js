@@ -62,9 +62,7 @@ export async function makeBlockScreenshot(block, options = {}) {
 
   if (nodeStyle.display === "none" || nodeStyle.opacity === "0") {
     return Promise.reject(
-      `Could not make screenshot for block with _id ${
-        block.value._id
-      } because it's hidden`
+      `Could not make screenshot for block with _id ${block.value._id} because it's hidden`
     );
   }
 

@@ -69,19 +69,9 @@ class SectionHeaderStickyItem extends EditorComponent {
     this.mounted = false;
   }
 
-  handleToolbarOpen = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setActive(true);
-    }
-  };
-
   handleToolbarClose = () => {
     if (!this.mounted) {
       return;
-    }
-
-    if (this.containerBorder) {
-      this.containerBorder.setActive(false);
     }
 
     this.patchValue({
@@ -127,18 +117,16 @@ class SectionHeaderStickyItem extends EditorComponent {
     };
   }
 
-  renderToolbar(_v) {
+  renderToolbar() {
     const { globalBlockId } = this.props.meta;
 
     return (
       <CollapsibleToolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
-        className="brz-ed-collapsible__section brz-ed-collapsible--big"
+        className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
-        onOpen={this.handleToolbarOpen}
         onClose={this.handleToolbarClose}
-        outSideExceptions={[".portal-menu__sticky"]}
       />
     );
   }
@@ -193,17 +181,8 @@ class SectionHeaderStickyItem extends EditorComponent {
           allow={["admin"]}
           fallbackRender={() => this.renderItems(v, vs, vd)}
         >
-          <ContainerBorder
-            ref={el => {
-              this.containerBorder = el;
-            }}
-            borderStyle="none"
-            activeBorderStyle="none"
-            reactToClick={false}
-            showBorders={false}
-            path={this.getPath()}
-          >
-            {this.renderToolbar(v)}
+          <ContainerBorder showBorder={false} activateOnContentClick={false}>
+            {this.renderToolbar()}
             {this.renderItems(v, vs, vd)}
           </ContainerBorder>
         </Roles>

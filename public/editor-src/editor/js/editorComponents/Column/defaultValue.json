@@ -369,6 +369,8 @@
 
     "customCSS": "",
 
+    "customID": "",
+
     "tabletBorderStyle": null,
 
     "tempTabletBorderStyle": null,

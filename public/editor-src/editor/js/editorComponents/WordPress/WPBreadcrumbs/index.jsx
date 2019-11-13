@@ -20,7 +20,7 @@ class WPBreadcrumbs extends EditorComponent {
     const { className } = v;
 
     const classNameBC = classnames(
-      "brz-wp__sidebar",
+      "brz-wp__breadcrumbs",
       className,
       css(
         `${this.constructor.componentId}`,

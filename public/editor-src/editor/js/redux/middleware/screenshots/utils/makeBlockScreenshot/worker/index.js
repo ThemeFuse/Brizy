@@ -55,8 +55,8 @@ function removeUnwantedNodes(node) {
       value: "brz-ed-draggable",
       canDelete: node => !hasClassName(node, "brz-ed-draggable__padding")
     },
-    { type: "className", value: "brz-ed-border__inner-1" },
-    { type: "className", value: "brz-ed-border__inner-2" },
+    { type: "className", value: "brz-ed-border__inner" },
+    { type: "className", value: "brz-ed-border__button" },
     { type: "className", value: "brz-ed-container-plus" },
     { type: "className", value: "brz-ed-container-trigger" },
     { type: "className", value: "brz-ed-toolbar" },

@@ -16,7 +16,8 @@ import {
   toolbarBoxShadowFields2,
   toolbarSizeWidthWidthPercent,
   toolbarSizeHeightHeightPx,
-  toolbarHoverTransition
+  toolbarHoverTransition,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -363,6 +364,7 @@ export function getItems({ v, device }) {
         tabsColor: !isOpen ? "" : v.tabsColor
       })
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",

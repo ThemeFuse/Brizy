@@ -19,7 +19,6 @@ import {
   toolbarElementSectionBoxShadow,
   toolbarElementContainerType,
   toolbarPaddingFourFieldsPxSuffix,
-  toolbarCustomCSSClass,
   toolbarShape,
   toolbarShapeTopType,
   toolbarShapeTopColor,
@@ -771,12 +770,6 @@ export function getItems({ v, device }) {
                   tabIcon: "nc-cog",
                   devices: "desktop",
                   options: [
-                    toolbarCustomCSSClass({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
                     toolbarHoverTransition({
                       v,
                       device,

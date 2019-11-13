@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import classnames from "classnames";
 import _ from "underscore";
 
 export default class MouseOverElement extends Component {

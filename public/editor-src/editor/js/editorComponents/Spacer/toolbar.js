@@ -4,10 +4,13 @@ import {
   toolbarDisabledHorizontalAlign,
   toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
+
 import { defaultValueKey } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
   return [
+    toolbarDisabledAdvancedSettings({ device }),
+
     {
       id: defaultValueKey({ key: "toolbarSettings", device }),
       type: "popover",

@@ -6,7 +6,11 @@ import { FirstBlockAdder } from "visual/component/BlockAdders";
 import HotKeys from "visual/component/HotKeys";
 import UIEvents from "visual/global/UIEvents";
 import { getStore } from "visual/redux/store";
-import { addFonts } from "visual/redux/actions";
+import {
+  triggersSelector,
+  triggersAmountSelector
+} from "visual/redux/selectors";
+import { addFonts, updateTriggers } from "visual/redux/actions";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import defaultValue from "./defaultValue.json";
@@ -35,6 +39,13 @@ class PagePopup extends EditorComponent {
   }
 
   componentDidMount() {
+    // it's a bit hacky. to find a better way to implement it
+    const valuesAmount = triggersAmountSelector(getStore().getState());
+    if (valuesAmount === null) {
+      const defaultValue = [{ id: "pageLoad", active: true, value: "1" }];
+      getStore().dispatch(updateTriggers(defaultValue));
+    }
+
     UIEvents.on("dnd.sort", this.handleDNDSort);
   }
 
@@ -43,7 +54,10 @@ class PagePopup extends EditorComponent {
   }
 
   blocksFilter(blocks) {
-    return blocks.filter(([_, block]) => block.type === "SectionPopup");
+    return blocks.filter(
+      ([_, block]) =>
+        block.type === "SectionPopup" || block.type === "SectionPopup2"
+    );
   }
 
   getPromptData() {
@@ -146,6 +160,7 @@ class PagePopup extends EditorComponent {
         <div className="brz-ed-wrap-block-wrap">
           <EditorArrayComponent {...popupsProps} />
         </div>
+        <div className="brz-root__container-after" />
       </div>
     );
   }

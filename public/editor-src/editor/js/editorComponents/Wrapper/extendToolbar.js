@@ -7,6 +7,7 @@ import {
   toolbarShowOnDesktop,
   toolbarShowOnResponsive,
   toolbarZIndex,
+  toolbarCSSID,
   toolbarCustomCSSClass,
   toolbarEntranceAnimation
 } from "visual/utils/toolbar";
@@ -66,6 +67,7 @@ export function getItems({ v, device }) {
                   options: [
                     toolbarShowOnDesktop({ v, device }),
                     toolbarZIndex({ v, device }),
+                    toolbarCSSID({ v, device }),
                     toolbarCustomCSSClass({ v, device }),
                     toolbarEntranceAnimation({ v, device })
                   ]
@@ -88,6 +90,68 @@ export function getItems({ v, device }) {
             })
           ]
         }
+      ]
+    },
+    {
+      id: defaultValueKey({ key: "advancedSettings", device }),
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      icon: "nc-cog",
+      position: 110,
+      options: [
+        {
+          id: "settingsTabs",
+          type: "tabs",
+          devices: "desktop",
+          align: "start",
+          tabs: [
+            {
+              id: "settingsStyling",
+              label: t("Styling"),
+              tabIcon: "nc-styling",
+              options: [
+                toolbarPaddingFourFields({
+                  v,
+                  device,
+                  state: "normal"
+                }),
+                toolbarMargin({
+                  v,
+                  device,
+                  state: "normal",
+                  onChangeGrouped: ["onChangeMarginGrouped"],
+                  onChangeUngrouped: ["onChangeMarginUngrouped"]
+                })
+              ]
+            },
+            {
+              id: "moreSettingsAdvanced",
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              devices: "desktop",
+              options: [
+                toolbarShowOnDesktop({ v, device }),
+                toolbarZIndex({ v, device }),
+                toolbarCustomCSSClass({ v, device }),
+                toolbarEntranceAnimation({ v, device })
+              ]
+            }
+          ]
+        },
+        toolbarPaddingFourFields({
+          v,
+          device,
+          devices: "responsive",
+          state: "normal"
+        }),
+        toolbarMargin({
+          v,
+          device,
+          devices: "responsive",
+          state: "normal",
+          onChangeGrouped: ["onChangeMarginGrouped"],
+          onChangeUngrouped: ["onChangeMarginUngrouped"]
+        })
       ]
     }
   ];

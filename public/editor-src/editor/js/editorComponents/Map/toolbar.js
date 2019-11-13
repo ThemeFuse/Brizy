@@ -14,7 +14,8 @@ import {
   toolbarBoxShadowFields2,
   toolbarSizeSizeSizePercent,
   toolbarSizeHeightHeightPx,
-  toolbarHoverTransition
+  toolbarHoverTransition,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
@@ -411,6 +412,7 @@ export function getItems({ v, device }) {
         [dvk("tabsState")]: !isOpen ? "" : dvv("tabsState")
       })
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: dvk("toolbarSettings"),
       type: "popover",

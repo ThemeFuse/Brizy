@@ -18,6 +18,9 @@
   &-plus {
     position: relative;
     z-index: z("adder-block");
+    height: 2px;
+    margin-top: -2px;
+    background-color: $brand-primary;
 
     &--fixed {
       position: fixed;
@@ -282,38 +285,35 @@
 }
 
 // Visual Wrap
-.brz-ed-wrap-block {
-  // Block empty page
-  &-empty-page {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 420px;
-    height: 300px;
-    cursor: pointer;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    border: 2px dashed $brand-primary;
-    padding: 62px 0;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    align-items: center;
+.brz-ed-wrap-block-empty-page {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 420px;
+  height: 300px;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  border: 2px dashed $brand-primary;
+  padding: 62px 0;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 
-    &-heading {
-      font-family: $font-family-1;
-      font-weight: bolder;
-      font-size: 15px;
-      color: #292e37;
-    }
-    &-heading2 {
-      font-family: $font-family-1;
-      font-style: italic;
-      font-size: 15px;
-      color: #9da0a6;
-    }
+  &-heading {
+    font-family: $font-family-1;
+    font-weight: bolder;
+    font-size: 15px;
+    color: #292e37;
+  }
+  &-heading2 {
+    font-family: $font-family-1;
+    font-style: italic;
+    font-size: 15px;
+    color: #9da0a6;
   }
 }
 
@@ -327,16 +327,15 @@
 }
 
 // Visual Events
-.brz-ed-wrap-block-item .brz-ed-container-wrap {
-  visibility: hidden;
+.brz-ed-wrap-block-item .brz-ed-container-plus {
   opacity: 0;
-  transition: visibility 0.15s linear, opacity 0.15s linear;
+  transition: opacity 0.15s linear;
 }
-.brz-ed-wrap-block-item:hover .brz-ed-container-wrap,
-.brz-ed-wrap-block-item.brz-ed-under-bar .brz-ed-container-wrap,
-.brz-ed-wrap-block-item .brz-ed-container-wrap.brz-ed-container-open {
-  visibility: visible;
+.brz-ed-wrap-block-item:hover .brz-ed-container-plus,
+.brz-ed-wrap-block-item.brz-ed-under-bar .brz-ed-container-plus,
+.brz-ed-wrap-block-item .brz-ed-container-plus.brz-ed-container-open {
   opacity: 1;
+  will-change: opacity;
 }
 
 // Hide when device mode is mobile

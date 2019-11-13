@@ -15,7 +15,8 @@
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
     "linkUpload": "",
-    "linkPopup": ""
+    "linkPopup": "",
+    "actionClosePopup": "off"
   },
 
   "toolbar": {

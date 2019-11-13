@@ -134,7 +134,7 @@ function allBlocks(store, next) {
     const currBlocks = getPageBlocks(currState);
 
     for (const block of currBlocks) {
-      if (block.type === "SectionPopup") {
+      if (block.type === "SectionPopup" || block.type === "SectionPopup2") {
         return;
       }
 

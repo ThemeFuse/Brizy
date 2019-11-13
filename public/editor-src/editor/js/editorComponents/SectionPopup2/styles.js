@@ -12,19 +12,25 @@ export function style(v, vs, vd) {
       standart: ["cssStyleFlexHorizontalAlign", "cssStyleFlexVerticalAlign"]
     },
     ".brz &&:hover > .brz-bg-content .brz-container__wrap": {
-      standart: ["cssStyleContainerPopup2ContainerWidth"]
+      standart: IS_PREVIEW
+        ? ["cssStyleContainerPopup2ContainerWidth"]
+        : ["cssStyleContainerPopup2ContainerWidth"]
     },
     ".brz &&:hover .brz-row__container > .brz-ed-border > .brz-bg ": {
-      standart: [
-        "cssStyleRowMinHeight|||editor",
-        "cssStyleContainerPopup2RowFlexVerticalAlign|||editor"
-      ]
+      standart: IS_EDITOR
+        ? [
+            "cssStyleRowMinHeight",
+            "cssStyleContainerPopup2RowFlexVerticalAlign"
+          ]
+        : []
     },
     ".brz &&:hover .brz-row__container > .brz-bg ": {
-      standart: [
-        "cssStyleRowMinHeight|||preview",
-        "cssStyleContainerPopup2RowFlexVerticalAlign|||preview"
-      ]
+      standart: IS_PREVIEW
+        ? [
+            "cssStyleRowMinHeight",
+            "cssStyleContainerPopup2RowFlexVerticalAlign"
+          ]
+        : []
     },
     ".brz && > .brz-bg-content .brz-container__wrap .brz-popup2__close:hover": {
       standart: [

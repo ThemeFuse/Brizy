@@ -10,7 +10,12 @@ import {
   mobileSyncOnChange
 } from "visual/utils/onChange";
 
-import { toolbarColor2, toolbarColorHexField2 } from "visual/utils/toolbar";
+import {
+  toolbarColor2,
+  toolbarColorHexField2,
+  toolbarDisabledToolbarSettings,
+  toolbarDisabledHorizontalAlign
+} from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
   const device = "desktop";
@@ -411,6 +416,8 @@ export function getItemsForDesktop(v) {
         }
       ]
     },
+    toolbarDisabledToolbarSettings({ device }),
+    toolbarDisabledHorizontalAlign({ v, device }),
     {
       id: "advancedSettings",
       type: "advancedSettings",
@@ -690,6 +697,7 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
   return [
     {
       id: "tabletToolbarCarousel",
@@ -748,13 +756,15 @@ export function getItemsForTablet(v) {
         }
       ]
     },
+    toolbarDisabledToolbarSettings({ device }),
+    toolbarDisabledHorizontalAlign({ v, device }),
     {
       id: "tabletAdvancedSettings",
       type: "advancedSettings",
       roles: ["admin"],
       options: [
         {
-          id: "padding",
+          id: "tabletPadding",
           type: "multiPicker",
           disabled: true
         },
@@ -1015,6 +1025,7 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
   return [
     {
       id: "mobileToolbarCarousel",
@@ -1055,13 +1066,15 @@ export function getItemsForMobile(v) {
         }
       ]
     },
+    toolbarDisabledToolbarSettings({ device }),
+    toolbarDisabledHorizontalAlign({ v, device }),
     {
       id: "mobileAdvancedSettings",
       type: "advancedSettings",
       roles: ["admin"],
       options: [
         {
-          id: "padding",
+          id: "mobilePadding",
           type: "multiPicker",
           disabled: true
         },

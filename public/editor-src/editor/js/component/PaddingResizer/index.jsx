@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { rolesHOC } from "visual/component/Roles";
 import { getStore } from "visual/redux/store";
 import Handle from "./Handle";
 
-class PaddingResizer extends Component {
+export default class PaddingResizer extends Component {
   startPosition = null;
 
   handleTopDrag = dragInfo => {
@@ -166,55 +165,3 @@ class PaddingResizer extends Component {
     return IS_EDITOR ? this.renderForEdit() : this.renderForView();
   }
 }
-
-export default rolesHOC({
-  allow: ["admin"],
-  component: PaddingResizer,
-  fallbackRender: ({ value, children }) => {
-    let {
-      padding,
-      paddingType,
-      paddingTop,
-      paddingBottom,
-      tabletPadding,
-      tabletPaddingType,
-      tabletPaddingTop,
-      tabletPaddingBottom,
-      mobilePadding,
-      mobilePaddingType,
-      mobilePaddingTop,
-      mobilePaddingBottom
-    } = value;
-
-    if (paddingType === "grouped") {
-      paddingTop = paddingBottom = padding;
-    }
-    if (tabletPaddingType === "grouped") {
-      tabletPaddingTop = tabletPaddingBottom = tabletPadding;
-    }
-    if (mobilePaddingType === "grouped") {
-      mobilePaddingTop = mobilePaddingBottom = mobilePadding;
-    }
-
-    const topStyle = {
-      visibility: "hidden",
-      "--height": `${paddingTop}px`,
-      "--tabletHeight": `${tabletPaddingTop}px`,
-      "--mobileHeight": `${mobilePaddingTop}px`
-    };
-    const bottomStyle = {
-      visibility: "hidden",
-      "--height": `${paddingBottom}px`,
-      "--tabletHeight": `${tabletPaddingBottom}px`,
-      "--mobileHeight": `${mobilePaddingBottom}px`
-    };
-
-    return (
-      <React.Fragment>
-        <div className="brz-ed-draggable__padding" style={topStyle} />
-        {children}
-        <div className="brz-ed-draggable__padding" style={bottomStyle} />
-      </React.Fragment>
-    );
-  }
-});

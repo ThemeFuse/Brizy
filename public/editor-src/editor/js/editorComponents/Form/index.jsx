@@ -35,7 +35,10 @@ class Form extends EditorComponent {
       itemProps: {
         meta: this.props.meta,
         toolbarExtend: this.makeToolbarPropsFromConfig(
-          toolbarExtendConfigButton
+          toolbarExtendConfigButton,
+          {
+            allowExtend: false
+          }
         )
       }
     });

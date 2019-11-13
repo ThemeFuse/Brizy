@@ -4,7 +4,6 @@ export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       standart: [
-        "cssStyleElementBreadcrumbsWidth",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -13,7 +12,7 @@ export function style(v, vs, vd) {
       ]
     },
     ".brz && .brz-breadcrumbs .brz-a:hover": {
-      standart: ["cssStyleElementBreadcrumbsSpacing"],
+      standart: ["cssStyleSizeTextSpacing"],
       interval: ["cssStyleHoverTransition"]
     },
     ".brz && .brz-breadcrumbs .brz-li:hover": {
@@ -21,12 +20,12 @@ export function style(v, vs, vd) {
     },
     ".brz &&:hover .brz-breadcrumbs .brz-icon-svg": {
       standart: [
-        "cssStyleElementBreadcrumbsSpacing",
+        "cssStyleSizeTextSpacing",
         "cssStyleElementBreadcrumbsArrowSize",
         "cssStyleElementBreadcrumbsColorArrows"
       ]
     },
-    ".brz && .brz-breadcrumbs > .brz-li:last-child .brz-a:hover": {
+    ".brz && .brz-breadcrumbs > .brz-li:last-child .brz-span:hover": {
       standart: ["cssStyleElementBreadcrumbsColorActive"]
     }
   };

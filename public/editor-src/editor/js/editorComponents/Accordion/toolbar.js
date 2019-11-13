@@ -559,6 +559,7 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
   // Typography
   const { fontFamily, fontFamilyType } =
     v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
@@ -898,6 +899,7 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
   // Typography
   const { fontFamily, fontFamilyType } =
     v.fontStyle === "" ? v : getFontStyle(v.fontStyle);

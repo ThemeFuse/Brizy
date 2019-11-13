@@ -60,7 +60,6 @@
       bottom: calc(100% + 8px);
       left: 50%;
       transform: translateX(-50%);
-      will-change: transform, opacity;
       opacity: 0;
 
       &:after {
@@ -105,26 +104,25 @@
 
 // Collapsible Defaults
 .brz-ed-collapsible {
-  // Wrap
-  &-wrap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: z("toolbar-collapsible");
-  }
+  position: relative;
 
   // Handle Icon
   &__icon {
     position: absolute;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $options-handle-size;
+    height: $options-handle-size;
+    border-radius: $options-handle-size;
+    font-size: $options-handle-font-size;
+    line-height: $options-handle-size + 4; // ?
     background-color: $toolbar-bg-color;
     box-shadow: $toolbar-box-shadow;
     color: #fff;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: 0.15s linear color;
 
     &:hover {
@@ -135,47 +133,18 @@
   // Badge Icon
   &__badge {
     position: absolute;
+    z-index: 10;
     top: -5px;
     left: -16px;
     width: 22px;
     height: 22px;
     font-size: 12px;
     line-height: 2.2;
+    border-radius: 11px;
     text-align: center;
     color: #fff;
     background-color: rgba($brand-primary, 0.92);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-    border-radius: 11px;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.15s linear;
-    z-index: 10;
-  }
-
-  // Size
-  &--big {
-    .brz-ed-collapsible__icon {
-      width: $options-handle-size;
-      height: $options-handle-size;
-      border-radius: $options-handle-size;
-      font-size: $options-handle-font-size;
-      line-height: $options-handle-size + 4; // ?
-    }
-    .brz-ed-collapsible__toolbar {
-      border-radius: $options-handle-size;
-    }
-  }
-  &--small {
-    .brz-ed-collapsible__icon {
-      width: $options-handle-size-small;
-      height: $options-handle-size-small;
-      border-radius: $options-handle-size-small;
-      font-size: $options-handle-font-size-small;
-      line-height: $options-handle-size-small + 4;
-    }
-    .brz-ed-collapsible__toolbar {
-      border-radius: $options-handle-size-small;
-    }
   }
 
   // Toolbar
@@ -183,6 +152,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    border-radius: $options-handle-size;
 
     .brz-ed-toolbar {
       position: static;
@@ -194,30 +164,20 @@
 }
 
 // Collapsible Toolbar Section
-.brz-ed-collapsible__section {
-  font-size: 0 !important;
-  line-height: 0 !important;
-  width: 0 !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
+.brz-ed-collapsible--section {
+  position: absolute;
+  top: 36px;
+  right: 40px;
+  left: auto;
+  z-index: z("toolbar-collapsible");
+  opacity: 0;
+  transition: 0.15s linear opacity;
 
-  .brz-ed-collapsible-wrap {
-    top: 36px;
-    right: 40px;
-    left: auto;
-  }
-  .brz-ed-collapsible__icon {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.1s linear;
-  }
   .brz-ed-collapsible__icon,
   .brz-ed-collapsible__toolbar {
     right: 0;
     left: auto;
-    margin: 4px;
-    margin-right: 0;
+    margin: 4px 0 4px 4px;
   }
 }
 
@@ -290,7 +250,7 @@
   }
 }
 
-// Icon
+// Icon Animation
 .fadeCollapsibleIcon-enter {
   opacity: 0.01;
 }
@@ -306,38 +266,7 @@
   transition: opacity 150ms ease-in;
 }
 
-// Toolbar Row & Toolbar Column & Toolbar Wrapper
-.brz-ed-row__toolbar,
-.brz-ed-column__toolbar,
-.brz-ed-wrapper__toolbar {
-  position: absolute;
-  top: -7px;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0.15s linear, opacity 0.15s linear;
-}
-
-// -- Row
-.brz-ed-row__toolbar {
-  left: -10px;
-  z-index: z("toolbar");
-}
-
-// -- Column
-.brz-ed-column__toolbar {
-  right: -7px;
-  z-index: z("toolbar-column");
-}
-
-// -- Wrapper
-.brz-ed-wrapper__toolbar {
-  right: -7px;
-  z-index: z("toolbar");
-}
-
 // Mobile
-&.brz-ed--mobile {
-  .brz-ed-collapsible-wrap {
-    right: 20px;
-  }
+&.brz-ed--mobile .brz-ed-collapsible--section {
+  right: 20px;
 }

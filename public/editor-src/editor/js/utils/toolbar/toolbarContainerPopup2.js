@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { capitalize } from "visual/utils/string";
+import { toolbarVerticalAlign } from "visual/utils/toolbar";
 
 export function toolbarContainerPopup2ContainerWidth({
   v,
@@ -20,12 +21,12 @@ export function toolbarContainerPopup2ContainerWidth({
     devices,
     position: 100,
     slider: {
-      min: widthSuffix === "px" ? 300 : 35,
+      min: widthSuffix === "px" ? 200 : 20,
       max: widthSuffix === "px" ? 1170 : 100
     },
     input: {
       show: true,
-      min: widthSuffix === "px" ? 300 : 35,
+      min: widthSuffix === "px" ? 200 : 20,
       max: widthSuffix === "px" ? 9999 : 100
     },
     suffix: {
@@ -52,7 +53,37 @@ export function toolbarContainerPopup2ContainerWidth({
   };
 }
 
-export function toolbarContainerPopup2ContainerType({
+export function toolbarContainerPopup2ContainerTypeAndHeight({
+  v,
+  device,
+  state,
+  devices = "all",
+  position = 100,
+  disabled = false
+}) {
+  return {
+    type: "multiPicker",
+    devices,
+    position,
+    disabled,
+    picker: toolbarContainerPopup2ContainerType({
+      v,
+      device,
+      state
+    }),
+    choices: {
+      custom: [
+        toolbarContainerPopup2ContainerHeight({
+          v,
+          device,
+          state
+        })
+      ]
+    }
+  };
+}
+
+function toolbarContainerPopup2ContainerType({
   v,
   device,
   state,
@@ -86,7 +117,7 @@ export function toolbarContainerPopup2ContainerType({
   };
 }
 
-export function toolbarContainerPopup2ContainerHeight({
+function toolbarContainerPopup2ContainerHeight({
   v,
   device,
   state,
@@ -146,11 +177,25 @@ export function toolbarContainerPopup2CloseHorizontalPosition({
 
   return {
     id: dvk("closeHorizontalPosition"),
-    label: t("Horizontal"),
-    type: "input",
+    label: t("Lateral"),
+    type: "slider",
     devices,
-    inputType: "number",
-    inputSize: "small",
+    slider: {
+      min: -50,
+      max: 50
+    },
+    input: {
+      show: true
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "px",
+          value: "px"
+        }
+      ]
+    },
     value: {
       value: dvv("closeHorizontalPosition")
     },
@@ -170,14 +215,27 @@ export function toolbarContainerPopup2CloseVerticalPosition({
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
   return {
     id: dvk("closeVerticalPosition"),
     label: t("Vertical"),
-    type: "input",
+    type: "slider",
     devices,
-    inputType: "number",
-    inputSize: "small",
+    slider: {
+      min: -50,
+      max: 50
+    },
+    input: {
+      show: true
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "px",
+          value: "px"
+        }
+      ]
+    },
     value: {
       value: dvv("closeVerticalPosition")
     },
@@ -271,7 +329,7 @@ export function toolbarContainerPopup2CloseBorderRadius({
               ? value
               : defaultValueValue("tempCloseBorderRadiusShape"),
           [dvk("closeBorderRadius")]:
-            value === "rounded" ? 50 : dvv("closeBorderRadius")
+            value === "rounded" ? 50 : dvv("tempCloseBorderRadius")
         };
       }
     },
@@ -315,6 +373,7 @@ export function toolbarContainerPopup2CloseAlign({
   v,
   device,
   state,
+  devices = "all",
   position = 100
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -323,6 +382,7 @@ export function toolbarContainerPopup2CloseAlign({
   return {
     id: dvk("closeAlign"),
     type: "toggle",
+    devices,
     position,
     choices: [
       {
@@ -371,15 +431,15 @@ export function toolbarContainerPopup2CloseCustomSize({
       choices: [
         {
           value: "small",
-          icon: "nc-32"
+          icon: "nc-16"
         },
         {
           value: "medium",
-          icon: "nc-48"
+          icon: "nc-24"
         },
         {
           value: "large",
-          icon: "nc-64"
+          icon: "nc-32"
         },
         {
           value: "custom",
@@ -405,8 +465,8 @@ export function toolbarContainerPopup2CloseCustomSize({
           type: "slider",
           devices,
           slider: {
-            min: 14,
-            max: 180
+            min: 8,
+            max: 50
           },
           input: {
             show: true
@@ -450,7 +510,7 @@ export function toolbarContainerPopup2CloseBgSize({
     devices,
     slider: {
       min: 0,
-      max: 180
+      max: 30
     },
     input: {
       show: true
@@ -479,28 +539,34 @@ export function toolbarContainerPopup2CloseBgSize({
 export function toolbarContainerPopup2ClosePosition({
   v,
   device,
+  state,
   devices = "all",
-  state
+  position = 100
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("closePosition"),
-    label: t("Position"),
-    type: "select",
+    type: "toggle",
     devices,
+    position,
     choices: [
       {
-        title: t("Inside"),
+        icon: "nc-position-in",
         value: "inside"
       },
       {
-        title: t("Outside"),
+        icon: "nc-position-out",
         value: "outside"
       }
     ],
-    value: dvv("closePosition")
+    value: dvv("closePosition"),
+    onChange: value => {
+      return {
+        [dvk("closePosition")]: value
+      };
+    }
   };
 }
 
@@ -515,9 +581,10 @@ export function toolbarContainerPopup2ScrollPage({
 
   return {
     id: dvk("scrollPage"),
-    label: t("Scroll Page"),
+    label: t("Scroll Page Behind"),
     type: "switch",
     devices,
+    position: 100,
     value: dvv("scrollPage")
   };
 }
@@ -526,16 +593,18 @@ export function toolbarContainerPopup2ClickOutsideToClose({
   v,
   device,
   state,
-  devices = "desktop"
+  devices = "all",
+  disabled = false
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("clickOutsideToClose"),
-    label: t("Click Outside To Close"),
+    label: t("Click Outside to Close"),
     type: "switch",
     devices,
+    disabled,
     value: dvv("clickOutsideToClose")
   };
 }
@@ -550,15 +619,28 @@ export function toolbarContainerPopup2ShowCloseButton({
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
-    id: dvk("showCloseButton"),
-    label: t("Close Button"),
-    type: "switch",
+    type: "multiPicker",
     devices,
-    value: dvv("showCloseButton")
+    picker: {
+      id: dvk("showCloseButton"),
+      label: t("Display Close Button"),
+      type: "switch",
+      value: dvv("showCloseButton")
+    },
+    choices: {
+      on: [
+        toolbarContainerPopup2ShowCloseButtonAfter({
+          v,
+          device,
+          state,
+          devices
+        })
+      ]
+    }
   };
 }
 
-export function toolbarContainerPopup2ShowCloseButtonAfter({
+function toolbarContainerPopup2ShowCloseButtonAfter({
   v,
   device,
   state,
@@ -570,19 +652,31 @@ export function toolbarContainerPopup2ShowCloseButtonAfter({
 
   return {
     id: dvk("showCloseButtonAfter"),
-    label: t("Show After"),
-    type: "input",
+    label: t("Delay"),
+    type: "slider",
     devices,
     disabled,
-    inputType: "number",
-    inputSize: "small",
+    slider: {
+      min: 0,
+      max: 10
+    },
+    input: {
+      show: true
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "s",
+          value: "s"
+        }
+      ]
+    },
     value: {
       value: dvv("showCloseButtonAfter")
     },
-    onChange: ({ value }) => {
-      return {
-        [dvk("showCloseButtonAfter")]: value
-      };
-    }
+    onChange: ({ value }) => ({
+      [dvk("showCloseButtonAfter")]: value
+    })
   };
 }
