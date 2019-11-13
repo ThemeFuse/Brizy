@@ -8,6 +8,8 @@ let observer = null;
 export default class Animation extends Component {
   static defaultProps = {
     className: "",
+    customID: "",
+
     style: {},
 
     observerRootSelector: null,
@@ -93,6 +95,7 @@ export default class Animation extends Component {
   renderForEdit() {
     const {
       className: _className,
+      customID,
       style: _style,
       name,
       delay,
@@ -120,18 +123,21 @@ export default class Animation extends Component {
           }
         : {})
     };
+    const props = {
+      ...(customID ? { id: customID } : {}),
+      className,
+      style,
+      ...otherProps
+    };
 
-    return (
-      <div className={className} style={style} {...otherProps}>
-        {this.props.children}
-      </div>
-    );
+    return <div {...props}>{children}</div>;
   }
 
   renderForView() {
-    const { className, name, delay, duration, children } = this.props;
+    const { className, customID, name, delay, duration, children } = this.props;
     const hasName = Boolean(name);
     const props = {
+      ...(customID ? { id: customID } : {}),
       className: classnames(className, {
         "brz-animated": hasName
       }),

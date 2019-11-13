@@ -18,11 +18,14 @@ class Cloneable extends EditorComponent {
 
   static defaultProps = {
     className: "",
+    customID: "",
     showBorder: true,
     meta: {}
   };
 
   static defaultValue = defaultValue;
+
+  containerBorder = React.createRef();
 
   handleValueChange(value, meta) {
     if (value.items.length === 0) {
@@ -32,21 +35,15 @@ class Cloneable extends EditorComponent {
     }
   }
 
-  handleToolbarEnter = () => {
-    this.containerBorder.setParentsHover(true);
-  };
-
-  handleToolbarLeave = () => {
-    this.containerBorder.setParentsHover(false);
-  };
-
   handleSortableStart = () => {
-    this.containerBorder.setActive(true);
+    if (this.containerBorder.current) {
+      this.containerBorder.current.setActive(true);
+    }
   };
 
   handleSortableEnd = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setActive(false);
+    if (this.containerBorder.current) {
+      this.containerBorder.current.setActive(false);
     }
   };
 
@@ -244,11 +241,7 @@ class Cloneable extends EditorComponent {
       meta: this.getMeta(v),
       toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
       onSortableStart: this.handleSortableStart,
-      onSortableEnd: this.handleSortableEnd,
-      itemProps: {
-        onToolbarEnter: this.handleToolbarEnter,
-        onToolbarLeave: this.handleToolbarLeave
-      }
+      onSortableEnd: this.handleSortableEnd
     });
 
     return (
@@ -260,14 +253,13 @@ class Cloneable extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
-
     const {
       animationName,
       animationDuration,
       animationDelay,
-      customClassName
+      customClassName,
+      customID
     } = v;
-
     const className = classnames(
       "brz-wrapper-clone",
       css(
@@ -282,27 +274,22 @@ class Cloneable extends EditorComponent {
     return (
       <Animation
         className={className}
+        customID={customID}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}
       >
-        <ContainerBorder
-          ref={el => {
-            this.containerBorder = el;
-          }}
-          className="brz-ed-border__wrapper"
-          borderStyle={showBorder ? "dotted" : "none"}
-          activeBorderStyle={showBorder ? "dotted" : "none"}
-          showBorders={showBorder}
-          clickOutsideExceptions={[
-            ".brz-ed-sidebar__right",
-            "#brz-toolbar-portal",
-            ".brz-ed-tooltip__content-portal"
-          ]}
-          path={this.props.path}
-        >
-          {this.renderContent(v, vs, vd)}
-        </ContainerBorder>
+        {showBorder ? (
+          <ContainerBorder
+            ref={this.containerBorder}
+            color="grey"
+            borderStyle="dotted"
+          >
+            {this.renderContent(v, vs, vd)}
+          </ContainerBorder>
+        ) : (
+          this.renderContent(v, vs, vd)
+        )}
       </Animation>
     );
   }
@@ -312,7 +299,8 @@ class Cloneable extends EditorComponent {
       animationName,
       animationDuration,
       animationDelay,
-      customClassName
+      customClassName,
+      customID
     } = v;
 
     const { propsClassName } = this.props;
@@ -331,6 +319,7 @@ class Cloneable extends EditorComponent {
     return (
       <Animation
         className={className}
+        customID={customID}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}

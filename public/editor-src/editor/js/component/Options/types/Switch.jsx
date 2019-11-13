@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import SwitchControl from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
-import { hiddenElementsSelector } from "visual/redux/selectors";
+import { showHiddenElementsSelector } from "visual/redux/selectors";
 
 class SwitchOptionType extends React.Component {
   static defaultProps = {
@@ -88,7 +88,7 @@ class SwitchOptionType extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  showHiddenElements: hiddenElementsSelector(state)
+  showHiddenElements: showHiddenElementsSelector(state)
 });
 
 export default connect(mapStateToProps)(SwitchOptionType);

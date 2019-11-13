@@ -48,6 +48,53 @@ export function toolbarSizeSizeSizePercent({
   };
 }
 
+export function toolbarSizeWidthSizePercent({
+  v,
+  device,
+  devices = "all",
+  state,
+  min = 1,
+  max = 100,
+  position = 80,
+  disabled = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("size"),
+    label: t("Width"),
+    type: "slider",
+    devices,
+    position,
+    disabled,
+    slider: {
+      min,
+      max
+    },
+    input: {
+      show: true,
+      min,
+      max
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "%",
+          value: "%"
+        }
+      ]
+    },
+    value: {
+      value: dvv("size")
+    },
+    onChange: ({ value }) => ({
+      [dvk("size")]: value
+    })
+  };
+}
+
 export function toolbarSizeWidthWidthPercent({
   v,
   device,

@@ -129,12 +129,11 @@ export function toolbarElementVideoCoverZoom({
     devices,
     slider: {
       min: 100,
-      max: 200
+      max: 300
     },
     input: {
       show: true,
-      min: 100,
-      max: 200
+      min: 100
     },
     suffix: {
       show: true,
@@ -208,4 +207,3 @@ export function toolbarElementVideoPlaySize({
     }
   };
 }
-

@@ -38,17 +38,6 @@ class SectionMegaMenu extends EditorComponent {
     return this.optionalSCU(nextProps);
   }
 
-  handleToolbarOpen = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setActive(true);
-    }
-  };
-  handleToolbarClose = () => {
-    if (this.containerBorder) {
-      this.containerBorder.setActive(false);
-    }
-  };
-
   handlePaddingResizerChange = patch => this.patchValue(patch);
 
   getMeta(v) {
@@ -87,10 +76,8 @@ class SectionMegaMenu extends EditorComponent {
     return (
       <CollapsibleToolbar
         {...this.makeToolbarPropsFromConfig(toolbarConfig)}
-        className="brz-ed-collapsible__section brz-ed-collapsible--big"
+        className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        onOpen={this.handleToolbarOpen}
-        onClose={this.handleToolbarClose}
       />
     );
   }

@@ -17,8 +17,7 @@ import {
   toolbarColorHexField2,
   toolbarBorder2,
   toolbarBorderColorHexField2,
-  toolbarBorderWidthOneField2,
-  toolbarCustomCSS
+  toolbarBorderWidthOneField2
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
@@ -601,6 +600,7 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
   // Typography
   const { fontFamily, fontFamilyType } =
     v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
@@ -940,6 +940,7 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
   // Typography
   const { fontFamily, fontFamilyType } =
     v.fontStyle === "" ? v : getFontStyle(v.fontStyle);

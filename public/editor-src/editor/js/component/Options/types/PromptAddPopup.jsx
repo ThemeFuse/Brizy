@@ -7,8 +7,8 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import UIState from "visual/global/UIState";
 import EditorIcon from "visual/component/EditorIcon";
 import { hideToolbar } from "visual/component/Toolbar";
+import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup";
-import { currentContainerBorder } from "visual/component/ContainerBorder";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { imageWrapperSize } from "visual/utils/image";
 import { uuid } from "visual/utils/uuid";
@@ -65,14 +65,20 @@ class PromptAddPopupOptionType extends React.Component {
         saved: {
           showSearch: false,
           blocksFilter: blocks => {
-            return blocks.filter(([_, block]) => block.type === "SectionPopup");
+            return blocks.filter(
+              ([_, block]) =>
+                block.type === "SectionPopup" || block.type === "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleAddBlocks
         },
         global: {
           showSearch: false,
           blocksFilter: blocks => {
-            return blocks.filter(([_, block]) => block.type === "SectionPopup");
+            return blocks.filter(
+              ([_, block]) =>
+                block.type === "SectionPopup" || block.type === "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleAddBlocks
         }
@@ -136,14 +142,11 @@ class PromptAddPopupOptionType extends React.Component {
   handleEdit = () => {
     const { popupKey } = this.props;
 
-    SectionPopupInstances.get(popupKey).open();
+    new Map([...SectionPopupInstances, ...SectionPopup2Instances])
+      .get(popupKey)
+      .open();
 
     hideToolbar();
-
-    // Hide Border
-    if (currentContainerBorder) {
-      currentContainerBorder.setParentsHover(false);
-    }
   };
 
   handleEditLegacy = () => {
@@ -151,14 +154,11 @@ class PromptAddPopupOptionType extends React.Component {
       value: { value }
     } = this.props;
 
-    SectionPopupInstances.get(value).open();
+    new Map([...SectionPopupInstances, ...SectionPopup2Instances])
+      .get(value)
+      .open();
 
     hideToolbar();
-
-    // Hide Border
-    if (currentContainerBorder) {
-      currentContainerBorder.setParentsHover(false);
-    }
   };
 
   handleDelete = () => {

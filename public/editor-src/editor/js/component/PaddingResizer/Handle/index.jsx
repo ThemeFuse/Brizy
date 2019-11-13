@@ -3,8 +3,9 @@ import _ from "underscore";
 import classnames from "classnames";
 import MouseEventsDelayed from "./MouseEventsDelayed";
 import Draggable from "visual/component/Draggable";
+import { rolesHOC } from "visual/component/Roles";
 
-export default class PaddingResizerHandle extends Component {
+class PaddingResizerHandle extends Component {
   static defaultProps = {
     position: "",
     value: "",
@@ -46,6 +47,14 @@ export default class PaddingResizerHandle extends Component {
     }
   };
 
+  handleDragStart = () => {
+    if (!this.state.active) {
+      this.setState({
+        active: true
+      });
+    }
+  };
+
   handleDrag = dragInfo => {
     if (!this.state.active) {
       return;
@@ -76,12 +85,12 @@ export default class PaddingResizerHandle extends Component {
     const className = classnames("brz-ed-draggable__padding", {
       "brz-ed-draggable__padding--top": position === "top",
       "brz-ed-draggable__padding--bottom": position === "bottom",
-      "brz-ed-draggable-active": this.state.active
+      "brz-ed-draggable__padding--active": this.state.active
     });
 
     return (
       <MouseEventsDelayed
-        delay={100}
+        delay={500}
         onEnter={this.handleMouseEnter}
         onEnterSuccess={this.handleMouseEnterSuccess}
         onLeave={this.handleMouseLeave}
@@ -89,6 +98,8 @@ export default class PaddingResizerHandle extends Component {
       >
         <Draggable
           className={className}
+          draggingCursor="ns-resize"
+          onDragStart={this.handleDragStart}
           onDrag={this.handleDrag}
           onDragEnd={this.handleDragEnd}
         >
@@ -106,3 +117,16 @@ export default class PaddingResizerHandle extends Component {
     );
   }
 }
+
+export default rolesHOC({
+  allow: ["admin"],
+  component: PaddingResizerHandle,
+  fallbackRender: ({ position }) => {
+    const className = classnames({
+      "brz-ed-draggable__padding--top": position === "top",
+      "brz-ed-draggable__padding--bottom": position === "bottom"
+    });
+
+    return <div className={className} />;
+  }
+});

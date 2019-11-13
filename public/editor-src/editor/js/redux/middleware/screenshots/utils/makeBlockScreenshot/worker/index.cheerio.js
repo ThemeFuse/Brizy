@@ -34,8 +34,7 @@ function removeEditorDOMNodes($) {
   const selector = [
     ".brz-ed-collapsible",
     ".brz-ed-draggable",
-    ".brz-ed-border__inner-1",
-    ".brz-ed-border__inner-2",
+    ".brz-ed-border__inner",
     ".brz-ed-container-plus",
     ".brz-ed-container-trigger",
     ".brz-ed-toolbar",

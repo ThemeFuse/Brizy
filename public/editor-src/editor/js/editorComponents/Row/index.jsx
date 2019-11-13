@@ -6,7 +6,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import SortableElement from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import ContainerBorder from "visual/component/ContainerBorder";
-import FloatingButton from "visual/component/FloatingButton";
 import Background from "visual/component/Background";
 import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
@@ -39,13 +38,14 @@ class Row extends EditorComponent {
   static defaultValue = defaultValue;
 
   mounted = false;
+  containerBorder = React.createRef();
 
   componentDidMount() {
     this.mounted = true;
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.meta.sectionPopup2 || this.optionalSCU(nextProps);
+    return this.optionalSCU(nextProps);
   }
 
   componentWillUnmount() {
@@ -54,43 +54,17 @@ class Row extends EditorComponent {
 
   handleValueChange(value, meta) {
     const inPopup = Boolean(this.props.meta.sectionPopup);
+    const inPopup2 = Boolean(this.props.meta.sectionPopup2);
 
-    if (value.items.length === 0 && (!inPopup || !IS_GLOBAL_POPUP)) {
+    if (
+      value.items.length === 0 &&
+      (!inPopup || !inPopup2 || !IS_GLOBAL_POPUP)
+    ) {
       this.selfDestruct();
     } else {
       super.handleValueChange(value, meta);
     }
   }
-
-  handleToolbarOpen = () => {
-    this.containerBorder.setActive(true);
-    this.floatingButton.setActive(true);
-  };
-
-  handleToolbarClose = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    this.containerBorder.setActive(false);
-    this.floatingButton.setActive(false);
-  };
-
-  handleToolbarEnter = () => {
-    this.containerBorder.setParentsHover(true);
-  };
-
-  handleToolbarLeave = () => {
-    this.containerBorder.setParentsHover(false);
-  };
-
-  handleButtonEnter = () => {
-    this.containerBorder.setShowBorder(true);
-  };
-
-  handleButtonLeave = () => {
-    this.containerBorder.setShowBorder(false);
-  };
 
   getMeta(v) {
     const { meta } = this.props;
@@ -210,33 +184,15 @@ class Row extends EditorComponent {
     return meta.row !== undefined;
   }
 
-  renderToolbar() {
+  renderToolbar = ContainerBorderButton => {
     return (
-      <div className="brz-ed-row__toolbar">
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
-          onOpen={this.handleToolbarOpen}
-          onClose={this.handleToolbarClose}
-          onMouseEnter={this.handleToolbarEnter}
-          onMouseLeave={this.handleToolbarLeave}
-        >
-          <SortableHandle>
-            <div
-              onMouseEnter={this.handleButtonEnter}
-              onMouseLeave={this.handleButtonLeave}
-            >
-              <FloatingButton
-                reactToClick={false}
-                ref={el => {
-                  this.floatingButton = el;
-                }}
-              />
-            </div>
-          </SortableHandle>
-        </Toolbar>
-      </div>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+        <SortableHandle>
+          <ContainerBorderButton className="brz-ed-border__button--row" />
+        </SortableHandle>
+      </Toolbar>
     );
-  }
+  };
 
   renderContent(v, vs, vd) {
     const {
@@ -249,7 +205,6 @@ class Row extends EditorComponent {
     const classNameBg = classnames(
       "brz-flex-xs-wrap",
       "brz-row__bg",
-      customClassName,
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
@@ -323,6 +278,8 @@ class Row extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const {
       className,
+      customID,
+      customClassName,
       showToolbar,
       animationName,
       animationDuration,
@@ -332,7 +289,11 @@ class Row extends EditorComponent {
       popups
     } = v;
 
-    const classNameRowContainer = classnames("brz-row__container", className);
+    const classNameRowContainer = classnames(
+      "brz-row__container",
+      className,
+      customClassName
+    );
 
     if (showToolbar === "off") {
       return (
@@ -355,6 +316,7 @@ class Row extends EditorComponent {
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Animation
               className={classNameRowContainer}
+              customID={customID}
               name={animationName !== "none" && animationName}
               duration={animationDuration}
               delay={animationDelay}
@@ -365,17 +327,14 @@ class Row extends EditorComponent {
                   fallbackRender={() => this.renderContent(v, vs, vd)}
                 >
                   <ContainerBorder
-                    ref={input => {
-                      this.containerBorder = input;
-                    }}
-                    className="brz-ed-border__row"
-                    borderStyle="none"
+                    ref={this.containerBorder}
+                    color="grey"
                     activeBorderStyle="dotted"
-                    showBorders={false}
-                    reactToClick={false}
-                    path={this.props.path}
+                    activateOnContentClick={false}
+                    showButton={true}
+                    buttonPosition="topLeft"
+                    renderButtonWrapper={this.renderToolbar}
                   >
-                    {this.renderToolbar(v)}
                     {this.renderContent(v, vs, vd)}
                   </ContainerBorder>
                 </Roles>
@@ -404,7 +363,9 @@ class Row extends EditorComponent {
       linkExternalRel,
       linkPopup,
       linkUpload,
-      popups
+      popups,
+      customClassName,
+      customID
     } = v;
 
     const linkHrefs = {
@@ -414,13 +375,18 @@ class Row extends EditorComponent {
       upload: linkUpload
     };
 
-    const classNameRowContainer = classnames("brz-row__container", className);
+    const classNameRowContainer = classnames(
+      "brz-row__container",
+      className,
+      customClassName
+    );
 
     return (
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
             className={classNameRowContainer}
+            customID={customID}
             name={animationName !== "none" && animationName}
             duration={animationDuration}
             delay={animationDelay}

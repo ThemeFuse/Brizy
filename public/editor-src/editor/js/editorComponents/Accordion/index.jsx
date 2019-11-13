@@ -47,7 +47,9 @@ class Accordion extends EditorComponent {
       handleNav: this.handleNav,
       activeAccordionItem,
       meta: this.props.meta,
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarConfig)
+      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarConfig, {
+        allowExtend: false
+      })
     });
 
     return (

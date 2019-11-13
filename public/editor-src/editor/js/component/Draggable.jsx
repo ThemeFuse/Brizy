@@ -10,8 +10,10 @@ const getClientOffset = event => ({
 
 class Draggable extends React.Component {
   static defaultProps = {
+    className: "",
     style: {},
-    renderPopover: _.noop,
+    draggingCursor: null,
+    renderPopover: null,
     onDragStart: _.noop,
     onDrag: _.noop,
     onDragEnd: _.noop
@@ -43,16 +45,31 @@ class Draggable extends React.Component {
       return;
     }
 
+    const { draggingCursor, onDragStart } = this.props;
+
+    const overlayNode = document.querySelector(".brz-root__container-after");
+    overlayNode.style.pointerEvents = "all";
+    if (draggingCursor) {
+      overlayNode.style.cursor = draggingCursor;
+    }
+
     global.BRZ_IS_DRAGGING = true;
 
     this.isMouseDown = true;
     this.currentPosition = this.startPosition = getClientOffset(e);
 
-    this.props.onDragStart();
+    document.body.classList.add("brz-ed-sorting");
+    onDragStart();
     this.initMouseEvents();
-    this.handleResize();
 
-    this.setState({ isDragging: true });
+    this.setState(
+      {
+        isDragging: true
+      },
+      () => {
+        requestAnimationFrame(this.update);
+      }
+    );
   };
 
   handleMouseMove = e => {
@@ -60,26 +77,32 @@ class Draggable extends React.Component {
   };
 
   handleMouseUp = e => {
+    const { draggingCursor, onDragEnd } = this.props;
+
+    const overlayNode = document.querySelector(".brz-root__container-after");
+    overlayNode.style.pointerEvents = "none";
+    if (draggingCursor) {
+      overlayNode.style.cursor = "auto";
+    }
+
     global.BRZ_IS_DRAGGING = false;
 
     this.isMouseDown = false;
     this.startPosition = null;
     this.lastDelta = null;
 
-    this.setState(
-      {
-        isDragging: false
-      },
-      () => {
-        this.cleanMouseEvents();
-        this.props.onDragEnd();
-      }
-    );
+    document.body.classList.remove("brz-ed-sorting");
+    this.cleanMouseEvents();
+    onDragEnd();
+
+    this.setState({
+      isDragging: false
+    });
   };
 
-  handleResize = () => {
+  update = () => {
     if (this.isMouseDown) {
-      requestAnimationFrame(this.handleResize);
+      requestAnimationFrame(this.update);
 
       const deltaX = this.currentPosition.x - this.startPosition.x;
       const deltaY = this.currentPosition.y - this.startPosition.y;
@@ -98,23 +121,15 @@ class Draggable extends React.Component {
     }
   };
 
-  initMouseEvents() {
-    jQuery("[contenteditable]").attr("contenteditable", false);
-    jQuery("input, textarea").attr("readonly", true);
-    jQuery("body").addClass("disable-select");
+  initMouseEvents = () => {
+    window.addEventListener("mousemove", this.handleMouseMove);
+    window.addEventListener("mouseup", this.handleMouseUp);
+  };
 
-    jQuery(window).on("mousemove", this.handleMouseMove);
-    jQuery(window).on("mouseup", this.handleMouseUp);
-  }
-
-  cleanMouseEvents() {
-    jQuery("[contenteditable]").attr("contenteditable", true);
-    jQuery("input, textarea").attr("readonly", false);
-    jQuery("body").removeClass("disable-select");
-
-    jQuery(window).off("mousemove", this.handleMouseMove);
-    jQuery(window).off("mouseup", this.handleMouseUp);
-  }
+  cleanMouseEvents = () => {
+    window.removeEventListener("mousemove", this.handleMouseMove);
+    window.removeEventListener("mouseup", this.handleMouseUp);
+  };
 
   render() {
     const { className: _className, style = null, renderPopover } = this.props;
@@ -122,7 +137,6 @@ class Draggable extends React.Component {
     const className = classnames(
       "brz-ed-draggable",
       "brz-ed-dd-cancel",
-      { "brz-ed-draggable--dragging": isDragging },
       _className
     );
 
@@ -134,7 +148,7 @@ class Draggable extends React.Component {
         onClick={this.handleClick}
       >
         {this.props.children}
-        {isDragging && renderPopover()}
+        {isDragging && renderPopover && renderPopover()}
       </div>
     );
   }

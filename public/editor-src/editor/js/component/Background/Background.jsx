@@ -18,6 +18,7 @@ class Background extends Component {
     image: false,
     opacity: false,
     border: false,
+    boxShadow: false,
     parallax: false,
 
     // Video
@@ -60,10 +61,20 @@ class Background extends Component {
       shapeTop,
       shapeBottom,
       border,
+      boxShadow,
       opacity
     } = this.props;
 
-    return { image, video, map, shapeTop, shapeBottom, border, opacity };
+    return {
+      image,
+      video,
+      map,
+      shapeTop,
+      shapeBottom,
+      border,
+      boxShadow,
+      opacity
+    };
   }
 
   componentDidMount() {

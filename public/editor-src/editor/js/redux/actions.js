@@ -31,7 +31,6 @@ export const ADD_FONTS = "ADD_FONTS";
 export const DELETE_FONTS = "DELETE_FONTS";
 export const UPDATE_SCREENSHOT = "UPDATE_SCREENSHOT";
 export const UPDATE_DISABLED_ELEMENTS = "UPDATE_DISABLED_ELEMENTS";
-export const SHOW_HIDDEN_ELEMENTS = "SHOW_HIDDEN_ELEMENTS";
 export const UPDATE_TRIGGERS = "UPDATE_TRIGGERS";
 
 export function hydrate({
@@ -345,14 +344,6 @@ export function updateDisabledElements(value) {
   return {
     type: UPDATE_DISABLED_ELEMENTS,
     payload: value
-  };
-}
-
-// hidden elements
-export function updateHiddenElements(value) {
-  return {
-    type: SHOW_HIDDEN_ELEMENTS,
-    value
   };
 }
 

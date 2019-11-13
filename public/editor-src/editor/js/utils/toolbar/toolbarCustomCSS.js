@@ -24,9 +24,9 @@ export function toolbarCustomCSS({
     type: "codeMirror",
     label: t("Custom CSS"),
     position,
+    display: "block",
     devices,
     helper: true,
-    display: "block",
     helperContent: helperHTML,
     placeholder: "element { code goes here }",
     value: dvv("customCSS")

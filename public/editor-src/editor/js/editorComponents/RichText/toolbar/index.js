@@ -2,6 +2,7 @@ import Config from "visual/global/Config";
 import { getWeight } from "visual/utils/fonts";
 import { encodeToString, capitalize } from "visual/utils/string";
 import { getFontStyles, getFontStyle } from "visual/utils/fonts";
+import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
 
@@ -125,6 +126,7 @@ export default function(v, onChange) {
 
 const getItems = (v, onChange) => ({ device, component }) => {
   const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const isPopulationBlock = v.population && v.population.display === "block";
 
   return [
@@ -752,7 +754,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
               options: [
                 {
                   ...toolbarLinkPopup({ v, component }),
-                  disabled: !proEnabled || inPopup || IS_GLOBAL_POPUP,
+                  disabled:
+                    !proEnabled || inPopup || inPopup2 || IS_GLOBAL_POPUP,
                   onChange: ({ value: linkPopup, popups }) =>
                     onChange({
                       link: encodeToString({
@@ -789,6 +792,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
         }
       ]
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",

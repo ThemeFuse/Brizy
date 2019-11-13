@@ -43,9 +43,13 @@ class PopupConditionsOptionType extends React.Component {
     const state = getStore().getState();
     let rulesAmount = rulesAmountSelector(state);
     // for cases when rule was created by WP
-    rulesAmount = rulesAmount === undefined ? 1 : rulesAmount;
+    rulesAmount = rulesAmount === null ? 1 : rulesAmount;
 
     const triggers = triggersSelector(state);
+    const triggerOnceExist = triggers.find(({ id }) => id === "triggerOnce");
+    const triggersLength = triggerOnceExist
+      ? triggers.length
+      : triggers.length + 1;
 
     const className = classNames(
       "brz-ed-option__popup_conditions",
@@ -57,9 +61,9 @@ class PopupConditionsOptionType extends React.Component {
     return (
       <div className={className} onMouseDown={this.handleMouseDown} {...attr}>
         <span className="brz-ed-option__popup_conditions-count">
-          {rulesAmount + triggers.length}
-        </span>{" "}
-        {t("Set up Popup")}
+          {rulesAmount + triggersLength}
+        </span>
+        {t(" Display Conditions")}
       </div>
     );
   }

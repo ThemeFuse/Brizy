@@ -33,6 +33,7 @@ const translationsMap = {
   FacebookPage: t("Facebook Page"),
   FacebookGroup: t("Facebook Group"),
   WPBreadcrumbs: t("Breadcrumbs")
+  // WPPostInfo: t("Post info")
 };
 
 export default {

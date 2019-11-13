@@ -1,7 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
 import {
-  toolbarVerticalAlign,
   toolbarDisabledZIndex,
   toolbarDisabledShowOnDesktop,
   toolbarDisabledShowOnMobile,
@@ -22,12 +21,6 @@ export function getItems({ v, device }) {
       position: 110,
       devices: "desktop",
       options: [
-        toolbarVerticalAlign({
-          v,
-          device,
-          prefix: "popupRow",
-          state: "normal"
-        }),
         {
           id: dvk("advancedSettings"),
           type: "advancedSettings",

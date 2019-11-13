@@ -29,7 +29,7 @@ export default function Scroll(props) {
           <input
             className="brz-input"
             type="number"
-            placeholder="Within(sec)"
+            placeholder="% of page height"
             value={triggerValue.within}
             onChange={({ target: { value: within } }) =>
               onChange({ ...triggerValue, within })

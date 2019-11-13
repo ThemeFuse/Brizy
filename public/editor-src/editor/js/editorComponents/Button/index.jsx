@@ -58,15 +58,6 @@ class Button extends EditorComponent {
   }
 
   renderLink(v, vs, vd, content) {
-    const className = classnames(
-      "brz-btn",
-      css(
-        `${this.constructor.componentId}-bg`,
-        `${this.getId()}-bg`,
-        style(v, vs, vd)
-      )
-    );
-
     const {
       linkType,
       linkAnchor,
@@ -74,14 +65,30 @@ class Button extends EditorComponent {
       linkExternalType,
       linkExternalRel,
       linkPopup,
-      linkUpload
+      linkUpload,
+      actionClosePopup
     } = v;
+
+    const className = classnames(
+      "brz-btn",
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        style(v, vs, vd)
+      ),
+      {
+        "brz-popup2__action-close":
+          linkType === "action" && actionClosePopup === "on"
+      }
+    );
+
     const hrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
       popup: linkPopup,
       upload: linkUpload
     };
+
     let props = {
       type: linkType,
       href: hrefs[linkType],

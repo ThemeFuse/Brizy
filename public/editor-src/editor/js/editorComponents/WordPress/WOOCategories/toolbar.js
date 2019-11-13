@@ -6,6 +6,7 @@ import {
   toolbarElementWOOCategoriesOrderBy,
   toolbarElementWOOCategoriesOrder,
   toolbarSizeWidthWidthPercent,
+  toolbarDisabledAdvancedSettings,
   toolbarCustomCSS
 } from "visual/utils/toolbar";
 
@@ -78,6 +79,7 @@ export function getItems({ v, device }) {
         }
       ]
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
       type: "popover",

@@ -139,6 +139,11 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.103 - 2019-11-13 =
+* Fixed: Create project method
+* Fixed: Temporary screenshot file path
+* Fixed: Translation function call
+
 = 1.0.102 - 2019-11-08 =
 * Fixed: Header/Footer box shadow
 

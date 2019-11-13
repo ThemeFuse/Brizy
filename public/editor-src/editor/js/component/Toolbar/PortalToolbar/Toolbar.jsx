@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import _ from "underscore";
 import ToolbarItems from "../ToolbarItems";
 import { clamp } from "visual/utils/math";
 
@@ -15,7 +14,6 @@ class Toolbar extends React.Component {
   static defaultProps = {
     arrow: true,
     items: [],
-    onChange: _.noop,
     offsetTop: 0,
     offsetBottom: 0,
     offsetLeft: 0,
@@ -116,14 +114,7 @@ class Toolbar extends React.Component {
   };
 
   render() {
-    const {
-      arrow,
-      items,
-      node,
-      onMouseEnter,
-      onMouseLeave,
-      onChange
-    } = this.props;
+    const { arrow, items, node, onMouseEnter, onMouseLeave } = this.props;
 
     return (
       <ToolbarItems

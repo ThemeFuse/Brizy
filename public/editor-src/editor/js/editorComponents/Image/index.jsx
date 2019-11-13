@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import _ from "underscore";
+import classnames from "classnames";
 import ResizeAware from "react-resize-aware";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -532,7 +533,8 @@ class Image extends EditorComponent {
       linkExternalType,
       linkPopup,
       linkUpload,
-      popups
+      popups,
+      actionClosePopup
     } = v;
 
     const { desktopW, tabletW, mobileW } = this.props.meta;
@@ -697,12 +699,18 @@ class Image extends EditorComponent {
         : imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
     if (linkHrefs[linkType] !== "") {
+      const className = classnames({
+        "brz-popup2__action-close":
+          linkType === "action" && actionClosePopup === "on"
+      });
+
       content = (
         <Link
           type={linkType}
           href={linkHrefs[linkType]}
           target={linkExternalBlank}
           rel={linkExternalRel}
+          className={className}
         >
           {content}
         </Link>

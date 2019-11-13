@@ -19,7 +19,8 @@ import {
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
-  toolbarHoverTransition
+  toolbarHoverTransition,
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export const getMinSize = () => 5;
@@ -392,6 +393,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
         }
       ]
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "toolbarSettings",
       type: "popover",
@@ -553,6 +555,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
 };
 
 export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
+  const device = "tablet";
   return [
     {
       id: "toolbarImage",
@@ -631,6 +634,7 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
       position: 90,
       options: []
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "tabletToolbarSettings",
       type: "popover",
@@ -691,6 +695,8 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
 };
 
 export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
+  const device = "mobile";
+
   return [
     {
       id: "toolbarImage",
@@ -781,6 +787,7 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
       position: 90,
       options: []
     },
+    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "mobileToolbarSettings",
       type: "popover",

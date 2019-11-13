@@ -3,6 +3,7 @@ import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import Population from "./common/Population";
+import Tooltip from "visual/component/Controls/Tooltip";
 
 const DEBOUNCE_WAIT = 1000;
 
@@ -103,11 +104,18 @@ class InputOptionType extends React.Component {
     const { label, helper: _helper, helperContent } = this.props;
     const helper = _helper ? (
       <div className="brz-ed-option__helper">
-        <EditorIcon icon="nc-alert-circle-que" />
-        <div
-          className="brz-ed-option__helper__content"
-          dangerouslySetInnerHTML={{ __html: helperContent }}
-        />
+        <Tooltip
+          placement="bottom-center"
+          openOnClick={false}
+          overlay={
+            <div
+              className="brz-ed-option__helper__content"
+              dangerouslySetInnerHTML={{ __html: helperContent }}
+            />
+          }
+        >
+          <EditorIcon icon="nc-alert-circle-que" />
+        </Tooltip>
       </div>
     ) : null;
 

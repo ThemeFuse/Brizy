@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -62,8 +63,10 @@ class Icon extends EditorComponent {
       linkExternalType,
       linkPopup,
       linkUpload,
-      popups
+      popups,
+      actionClosePopup
     } = v;
+
     const hrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
@@ -78,12 +81,18 @@ class Icon extends EditorComponent {
     );
 
     if (hrefs[linkType] !== "") {
+      const className = classnames({
+        "brz-popup2__action-close":
+          linkType === "action" && actionClosePopup === "on"
+      });
+
       content = (
         <Link
           type={linkType}
           href={hrefs[linkType]}
           target={linkExternalBlank}
           rel={linkExternalRel}
+          className={className}
         >
           {content}
         </Link>

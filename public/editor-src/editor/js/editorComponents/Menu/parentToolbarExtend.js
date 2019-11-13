@@ -10,7 +10,8 @@ import {
 import {
   toolbarColor2,
   toolbarColorHexField2,
-  toolbarCustomCSS
+  toolbarCustomCSS,
+  toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
 
 const configMenuValue = Config.get("menuData");
@@ -223,6 +224,7 @@ export function getItemsForDesktop(v) {
       ],
       value: v.horizontalAlign
     },
+    toolbarDisabledToolbarSettings({ device }),
     {
       id: "advancedSettings",
       type: "advancedSettings",
@@ -432,13 +434,14 @@ export function getItemsForTablet(v) {
         }
       ],
       value: tabletSyncOnChange(v, "horizontalAlign")
-    }
+    },
+    toolbarDisabledToolbarSettings({ device })
   ];
 }
 
 export function getItemsForMobile(v) {
   const device = "mobile";
-  const state = "normal"
+  const state = "normal";
 
   const { hex: mobileMMenuIconColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "mMenuIconColorHex", device }),
@@ -612,6 +615,7 @@ export function getItemsForMobile(v) {
         }
       ],
       value: mobileSyncOnChange(v, "horizontalAlign")
-    }
+    },
+    toolbarDisabledToolbarSettings({ device })
   ];
 }

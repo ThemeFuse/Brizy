@@ -89,6 +89,8 @@
   "style": {
     "className": "",
 
+    "customClassName": "",
+
     "borderStyle": "",
 
     "tempBorderStyle": "solid",

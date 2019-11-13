@@ -129,19 +129,22 @@ class CollapsibleToolbar extends React.Component {
 
   render() {
     const { className: _className, badge } = this.props;
-    const className = classnames("brz-ed-collapsible", _className);
+    const { opened } = this.state;
+    const className = classnames(
+      "brz-ed-collapsible",
+      { "brz-ed-collapsible--opened": opened },
+      _className
+    );
 
     return (
       <ClickOutside
         onClickOutside={this.onClickOutside}
         exceptions={this.getOutSideExceptions()}
       >
-        <div className={className}>
-          <TransitionGroup className="brz-ed-collapsible-wrap">
-            {badge && this.renderBadge()}
-            {this.state.opened ? this.renderToolbar() : this.renderIcon()}
-          </TransitionGroup>
-        </div>
+        <TransitionGroup className={className}>
+          {badge && this.renderBadge()}
+          {opened ? this.renderToolbar() : this.renderIcon()}
+        </TransitionGroup>
       </ClickOutside>
     );
   }

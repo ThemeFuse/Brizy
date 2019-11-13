@@ -50,6 +50,7 @@ class Page extends EditorComponent {
     return (
       <div className="brz-root__container brz-reset-all">
         <Blocks {...blocksProps} />
+        <div className="brz-root__container-after" />
       </div>
     );
   }

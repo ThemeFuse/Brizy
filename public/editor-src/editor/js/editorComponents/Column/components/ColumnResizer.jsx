@@ -3,6 +3,12 @@ import classnames from "classnames";
 import Draggable from "visual/component/Draggable";
 
 class ColumnResizer extends Component {
+  handleDragStart = () => {
+    const { position, onResizeStart } = this.props;
+
+    onResizeStart(position);
+  };
+
   handleDrag = ({ deltaX }) => {
     const { position, onResize } = this.props;
 
@@ -10,9 +16,9 @@ class ColumnResizer extends Component {
   };
 
   handleDragEnd = () => {
-    const { onResizeEnd } = this.props;
+    const { position, onResizeEnd } = this.props;
 
-    onResizeEnd();
+    onResizeEnd(position);
   };
 
   renderPopover = () => {
@@ -55,7 +61,9 @@ class ColumnResizer extends Component {
     return (
       <Draggable
         className={className}
+        draggingCursor="col-resize"
         renderPopover={this.renderPopover}
+        onDragStart={this.handleDragStart}
         onDrag={this.handleDrag}
         onDragEnd={this.handleDragEnd}
       >

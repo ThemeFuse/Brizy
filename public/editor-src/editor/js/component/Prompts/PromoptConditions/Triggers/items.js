@@ -11,9 +11,9 @@ const { availableRoles } = Config.get("wp");
 export default [
   {
     id: "pageLoad",
-    title: "On Page load",
+    title: "On Page Load",
     type: "number",
-    placeholder: "Within(sec)",
+    placeholder: "After (sec)",
     defaultValue: 5,
     Component: Input
   },
@@ -40,7 +40,7 @@ export default [
     id: "inactivity",
     title: "After Inactivity",
     type: "number",
-    placeholder: "Within(sec)",
+    placeholder: "After (sec)",
     defaultValue: 30,
     Component: Input
   },
@@ -51,7 +51,7 @@ export default [
   },
   {
     id: "showing",
-    title: "Show after X",
+    title: "Show After X",
     defaultValue: {
       value: "views",
       views: 5,
@@ -62,7 +62,7 @@ export default [
   },
   {
     id: "referrer",
-    title: "Arriving from",
+    title: "Arriving From",
     defaultValue: {
       value: "show",
       url: "",

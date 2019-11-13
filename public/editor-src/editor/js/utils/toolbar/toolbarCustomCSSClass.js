@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
+const helperHTML = `
+<span>Add your custom class without the .dot, example: my-class</span>`;
+
 export function toolbarCustomCSSClass({
   v,
   position = 40,
@@ -18,6 +21,8 @@ export function toolbarCustomCSSClass({
     display: "block",
     type: "input",
     devices,
+    helper: true,
+    helperContent: helperHTML,
     value: {
       value: dvv("customClassName")
     },

@@ -3,12 +3,15 @@ import {
   toolbarElementImageGalleryGridColumn,
   toolbarElementImageGallerySpacing,
   toolbarElementImageGalleryLightBox,
-  toolbarCustomCSS
+  toolbarDisabledToolbarSettings,
+  toolbarDisabledHorizontalAlign
 } from "visual/utils/toolbar";
 import { defaultValueKey } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
   return [
+    toolbarDisabledToolbarSettings({ device }),
+    toolbarDisabledHorizontalAlign({ device }),
     {
       id: defaultValueKey({ key: "toolbarGallery", device, state: "normal" }),
       type: "popover",

@@ -6,7 +6,8 @@ import {
   toolbarElementSectionSaved,
   toolbarShowOnDesktop,
   toolbarShowOnResponsive,
-  toolbarAnchorName
+  toolbarAnchorName,
+  toolbarCustomCSSClass
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
@@ -89,6 +90,11 @@ export function getItems({ v, device, component }) {
                       v,
                       device,
                       devices: "desktop",
+                      state: "normal"
+                    }),
+                    toolbarCustomCSSClass({
+                      v,
+                      device,
                       state: "normal"
                     })
                   ]
