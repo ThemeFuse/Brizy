@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
 
                     setTimeout( function() {
                         location.href = $( 'tr[data-slug="brizy"] .deactivate a' ).attr( 'href' );
-                    }, 1500 );
+                    }, 1000 );
                 }
             },
             {
@@ -107,14 +107,17 @@ jQuery(document).ready(function ($) {
 
     $( '#brz-deactivate-feedback-dialog input:radio' ).change( function () {
 
-        var radio = $( this ),
-            submitBtn = $( '.brz-feedback-submit' );
+        var radio     = $( this ),
+            submitBtn = $( '.brz-feedback-submit' ),
+            skipBtn   = $( '.brz-feedback-skip' );
 
         $( '.brz-feedback-text' ).addClass( 'hidden' );
         submitBtn.prop( 'disabled', false );
+        skipBtn.prop( 'disabled', false );
 
         if ( radio.val() === 'brizy_pro' ) {
             submitBtn.prop( 'disabled', true );
+            skipBtn.prop( 'disabled', true );
         }
 
         radio.parent().find( '.brz-feedback-text' ).removeClass( 'hidden' );
