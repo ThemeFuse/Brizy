@@ -118,6 +118,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 1.0.103 - 2019-11-13 ###
+* Fixed: Create project method
+* Fixed: Temporary screenshot file path
+* Fixed: Translation function call
+
 ### 1.0.102 - 2019-11-08 ###
 * Fixed: Header/Footer box shadow
 
