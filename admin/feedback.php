@@ -7,7 +7,7 @@ class Brizy_Admin_Feedback {
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_brizy-dismiss-notice', [ $this, 'ajax_dismiss_notice' ] );
-		add_action( 'wp_ajax_brizy-deactivate-feedback', [ $this, 'ajax_deactivate_feedback' ] );
+		add_action( 'wp_ajax_brizy-deactivate-feedback', [ $this, 'ajax_send_feedback' ] );
 		add_action( 'admin_notices', [ $this, 'admin_notices' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		add_action( 'admin_footer', [ $this, 'admin_footer' ] );
@@ -64,7 +64,7 @@ class Brizy_Admin_Feedback {
 		wp_send_json_success();
 	}
 
-	public function ajax_deactivate_feedback() {
+	public function ajax_send_feedback() {
 
 		check_ajax_referer( 'brizy-admin-nonce', 'nonce' );
 
