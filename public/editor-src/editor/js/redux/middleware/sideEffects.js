@@ -1,6 +1,8 @@
 import jQuery from "jquery";
 import _ from "underscore";
 import {
+  getDefaultFont,
+  makeDefaultFontCSS,
   makeRichTextFontStylesCSS,
   makeRichTextFontUploadCSS,
   makeUploadFontsUrl,
@@ -134,6 +136,15 @@ function handleHydrate(callbacks) {
     const allFonts = projectFontsData(fontSelector(state));
     const { colorPalette, fontStyles } = currentStyleSelector(state);
     const extraFontStyles = extraFontStylesSelector(state);
+    const defaultFont = getDefaultFont(state);
+
+    // Generate default @fontFace uses in project font
+    const $defaultFonts = jQuery("<style>")
+      .attr("id", "brz-project-default-font")
+      .html(makeDefaultFontCSS(defaultFont));
+
+    jQuery("head", document).append($defaultFonts);
+    jQuery("head", parentDocument).append($defaultFonts.clone());
 
     // added project fonts to Head
     const $googleFonts = jQuery("<link>").attr({

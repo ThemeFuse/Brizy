@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import { Popper } from "react-popper";
 
 const SIDEBAR_WIDTH = 48;
 const TOOLTIP_SPACE = 14;
-const TOOLTIP_STATIC_SPACE = 15;
 const TOOLBAR_PADDING = 12;
 
 export default class TooltipContent extends React.Component {
@@ -22,6 +22,7 @@ export default class TooltipContent extends React.Component {
     arrowPlacement: "top-center",
     arrowPlacementStyle: {},
     size: "",
+    offset: 15,
     toolbar: null,
     inPortal: false,
     node: null
@@ -40,16 +41,10 @@ export default class TooltipContent extends React.Component {
   }
 
   componentDidMount() {
-    const { isOpen, toolbar, inPortal, node } = this.props;
+    const { isOpen, toolbar } = this.props;
 
-    if (isOpen) {
-      if (toolbar) {
-        this.repositionByToolbar(toolbar);
-      } else if (inPortal) {
-        this.repositionPortalByNode(node);
-      } else {
-        this.repositionByNode(node);
-      }
+    if (isOpen && toolbar) {
+      this.repositionByToolbar(toolbar);
     }
   }
 
@@ -58,14 +53,10 @@ export default class TooltipContent extends React.Component {
       return;
     }
 
-    const { toolbar, inPortal, node } = this.props;
+    const { toolbar } = this.props;
 
     if (toolbar) {
       this.repositionByToolbar(toolbar);
-    } else if (inPortal) {
-      this.repositionPortalByNode(node);
-    } else {
-      this.repositionByNode(node);
     }
   }
 
@@ -83,7 +74,7 @@ export default class TooltipContent extends React.Component {
       width: targetWidth
     } = toolbarTarget.getBoundingClientRect();
 
-    let { placement, placementStyle, arrowPlacementStyle } = this.props;
+    let { placement, arrowPlacementStyle } = this.props;
     const { position } = this.context;
     const windowTop = position === "fixed" ? 0 : window.scrollY;
     const { toolbarItemIndex, toolbarItemsLength } = toolbar;
@@ -104,7 +95,7 @@ export default class TooltipContent extends React.Component {
     const contentMinLeft = SIDEBAR_WIDTH;
     const contentMaxLeft = document.documentElement.clientWidth - contentWidth;
 
-    placementStyle = { top: contentTop, left: contentLeft, position };
+    let placementStyle = { top: contentTop, left: contentLeft, position };
 
     if (contentTop <= windowTop) {
       placementStyle.top = windowTop + targetTop + targetHeight + TOOLTIP_SPACE;
@@ -137,164 +128,7 @@ export default class TooltipContent extends React.Component {
     );
   }
 
-  repositionByNode(node) {
-    const { scrollY } = window.parent || window;
-    const {
-      width: contentWidth,
-      height: contentHeight
-    } = this.contentRef.current.getBoundingClientRect();
-    const {
-      top: targetTop,
-      right: targetRight,
-      left: targetLeft,
-      height: targetHeight,
-      width: targetWidth
-    } = node.getBoundingClientRect();
-    const { clientWidth, clientHeight } = document.documentElement;
-
-    let { placement, arrowPlacementStyle } = this.props;
-
-    let contentTop;
-    let contentLeft;
-    const contentMinLeft = SIDEBAR_WIDTH;
-    const contentMaxLeft = clientWidth - contentWidth;
-    const contentMaxHeight = clientHeight;
-
-    // Check if is vertical settings
-    if (/top-/.test(placement)) {
-      contentTop =
-        scrollY +
-        targetHeight +
-        targetTop -
-        contentHeight +
-        TOOLTIP_STATIC_SPACE;
-    } else {
-      contentTop =
-        scrollY +
-        targetHeight +
-        targetTop +
-        contentHeight +
-        TOOLTIP_STATIC_SPACE;
-    }
-
-    // Check if is horizontal settings
-    if (/-center/.test(placement)) {
-      contentLeft = targetLeft + targetWidth / 2 - contentWidth / 2;
-    } else if (/-left/.test(placement)) {
-      contentLeft = targetLeft;
-    } else if (/-right/.test(placement)) {
-      contentLeft = targetRight - contentWidth;
-    }
-
-    if (contentTop <= scrollY) {
-      placement = `bottom-${placement.split("-")[1]}`;
-    }
-    if (contentTop >= contentMaxHeight) {
-      placement = `top-${placement.split("-")[1]}`;
-    }
-    if (contentLeft >= contentMaxLeft) {
-      const contentLeft = targetRight - contentWidth;
-      placement = `${placement.split("-")[0]}-right`;
-      arrowPlacementStyle = {
-        left:
-          Math.floor(targetRight - contentLeft - targetWidth / 2) -
-          TOOLTIP_STATIC_SPACE
-      };
-    }
-    if (contentLeft <= contentMinLeft) {
-      placement = `${placement.split("-")[0]}-left`;
-      arrowPlacementStyle = { left: 0 };
-    }
-
-    this.isRepositioning = true;
-    this.setState(
-      {
-        placement,
-        arrowPlacement: placement,
-        arrowPlacementStyle
-      },
-      () => (this.isRepositioning = false)
-    );
-  }
-
-  repositionPortalByNode(node) {
-    const { scrollY } = window.parent || window;
-    const {
-      width: contentWidth,
-      height: contentHeight
-    } = this.contentRef.current.getBoundingClientRect();
-    const {
-      top: targetTop,
-      right: targetRight,
-      left: targetLeft,
-      height: targetHeight,
-      width: targetWidth
-    } = node.getBoundingClientRect();
-    const { clientWidth, clientHeight } = document.documentElement;
-
-    let { placement, arrowPlacementStyle } = this.props;
-
-    let contentTop = 0;
-    let contentLeft = 0;
-    const contentMinLeft = SIDEBAR_WIDTH;
-    const contentMaxLeft = clientWidth - contentWidth;
-    const contentMaxHeight = clientHeight;
-
-    // Check if is vertical settings
-    if (/top-/.test(placement)) {
-      contentTop =
-        scrollX + targetTop - contentHeight - TOOLTIP_STATIC_SPACE / 2;
-    } else {
-      contentTop =
-        scrollY + targetTop + targetHeight + TOOLTIP_STATIC_SPACE / 2;
-    }
-
-    // Check if is horizontal settings
-    if (/-center/.test(placement)) {
-      contentLeft = targetLeft + targetWidth / 2 - contentWidth / 2;
-    } else if (/-left/.test(placement)) {
-      contentLeft = targetLeft;
-    } else if (/-right/.test(placement)) {
-      contentLeft = targetRight - contentWidth;
-    }
-
-    if (contentTop <= scrollY) {
-      placement = `bottom-${placement.split("-")[1]}`;
-    }
-    if (contentTop >= contentMaxHeight) {
-      placement = `top-${placement.split("-")[1]}`;
-    }
-    if (contentLeft >= contentMaxLeft) {
-      contentLeft = targetRight - contentWidth;
-      placement = `${placement.split("-")[0]}-right`;
-      arrowPlacementStyle = {
-        left:
-          Math.floor(targetRight - contentLeft - targetWidth / 2) -
-          TOOLTIP_STATIC_SPACE / 2
-      };
-    }
-    if (contentLeft <= contentMinLeft) {
-      contentLeft = targetLeft;
-      placement = `${placement.split("-")[0]}-left`;
-      arrowPlacementStyle = { left: 0 };
-    }
-
-    this.isRepositioning = true;
-    this.setState(
-      {
-        placement,
-        placementStyle: {
-          top: contentTop,
-          left: contentLeft
-        },
-        arrowPlacement: placement,
-        arrowPlacementStyle
-      },
-      () => (this.isRepositioning = false)
-    );
-  }
-
-  render() {
+  renderInToolbar() {
     const { className: _className, isOpen, size, arrow, children } = this.props;
     const {
       placement,
@@ -322,5 +156,52 @@ export default class TooltipContent extends React.Component {
         {children}
       </div>
     );
+  }
+
+  renderSimple() {
+    const {
+      className: _className,
+      size,
+      arrow,
+      node,
+      placement,
+      offset,
+      children
+    } = this.props;
+    const className = classnames(
+      "brz-ed-animated brz-ed-animated--fadeInUp",
+      "brz-ed-tooltip__overlay",
+      { [`brz-ed-tooltip--${size}`]: size },
+      _className
+    );
+
+    return (
+      <Popper
+        referenceElement={node}
+        placement={placement}
+        eventsEnabled={false}
+        modifiers={{
+          offset: { offset: `0, ${offset}px` },
+          computeStyle: { gpuAcceleration: false }
+        }}
+      >
+        {({ ref, style, arrowProps, placement }) => (
+          <div ref={ref} className={className} style={style}>
+            {arrow && (
+              <div
+                className={`brz-ed-arrow brz-ed-arrow--${placement}`}
+                ref={arrowProps.ref}
+                style={{ ...arrowProps.style, margin: "0" }}
+              />
+            )}
+            {children}
+          </div>
+        )}
+      </Popper>
+    );
+  }
+
+  render() {
+    return this.props.toolbar ? this.renderInToolbar() : this.renderSimple();
   }
 }

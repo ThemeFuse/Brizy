@@ -53,7 +53,8 @@ export default {
           icon: "nc-bug",
           linkTarget: "_blank",
           label: t("Submit an Issue"),
-          link: urls.support
+          link: urls.support,
+          roles: ["admin"]
         },
         {
           type: "link",

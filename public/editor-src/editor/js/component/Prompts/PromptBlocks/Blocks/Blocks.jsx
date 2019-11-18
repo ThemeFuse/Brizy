@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import EditorIcon from "visual/component/EditorIcon";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -223,13 +223,7 @@ class Blocks extends Component {
               )}
 
               <div className="brz-ed-popup-two-body__content">
-                <ScrollPane
-                  style={{
-                    overflow: "hidden",
-                    height: "100%"
-                  }}
-                  className="brz-ed-scroll--new-dark brz-ed-scroll--medium"
-                >
+                <Scrollbars>
                   {filteredThumbnails.length > 0 ? (
                     <ThumbnailGrid
                       data={filteredThumbnails}
@@ -242,7 +236,7 @@ class Blocks extends Component {
                       </p>
                     </div>
                   )}
-                </ScrollPane>
+                </Scrollbars>
               </div>
             </>
           );

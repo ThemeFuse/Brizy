@@ -63,7 +63,8 @@ function removeUnwantedNodes(node) {
     { type: "className", value: "brz-ed-row__toolbar" },
     { type: "className", value: "brz-ed-column__toolbar" },
     { type: "className", value: "brz-ed-wrapper__toolbar" },
-    { type: "className", value: "brz-form__select-list" }
+    { type: "className", value: "brz-form__select-list" },
+    { type: "className", value: "brz-popup2__button-go-to-editor" }
   ];
 
   selectors.forEach(({ type, value, canDelete = node => true }) => {

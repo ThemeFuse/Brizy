@@ -30,6 +30,7 @@ import EditorGlobal from "visual/global/Editor";
 import "../registerEditorParts";
 
 import addFonts from "./transforms/addFonts";
+import addDefaultFont from "./transforms/addDefaultFont";
 import addColorPaletteCSS from "./transforms/addColorPaletteCSS";
 import addFontStylesCSS from "./transforms/addFontStylesCSS";
 import addCustomCSS from "./transforms/addCustomCSS";
@@ -149,6 +150,7 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
     upload: []
   };
   const { upload = [], google = [] } = projectFontsData(_fonts);
+  const defaultFont = getDefaultFont(reduxState);
   let includedDefaultProjectFont = false;
 
   parsedFonts.forEach(({ type, family }) => {
@@ -198,6 +200,7 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   addColorPaletteCSS($pageHTML);
   addFontStylesCSS($pageHTML);
   addFonts($pageHTML, fontMap);
+  addDefaultFont($pageHTML, defaultFont);
   addCustomCSS($pageHTML);
   changeRichText($pageHTML);
   extractPopups($pageHTML);

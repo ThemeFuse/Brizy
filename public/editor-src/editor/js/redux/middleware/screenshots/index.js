@@ -87,7 +87,7 @@ export default store => next => action => {
 
     if (action.meta) {
       options = {
-        popup: action.meta.SectionPopup,
+        popup: action.meta.SectionPopup || action.meta.SectionPopup2,
         sourceBlockId: action.meta.sourceBlockId
       };
     }

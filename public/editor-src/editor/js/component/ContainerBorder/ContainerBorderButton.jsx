@@ -51,7 +51,12 @@ class ContainerBorderButton extends Component {
     });
 
     return (
-      <div ref={innerRef} className={className} onClick={onClick}>
+      <div
+        ref={innerRef}
+        className={className}
+        data-sortable-handle={this.props["data-sortable-handle"]}
+        onClick={onClick}
+      >
         {this.renderIcon()}
       </div>
     );

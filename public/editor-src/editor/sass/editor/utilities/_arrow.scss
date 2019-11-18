@@ -9,8 +9,6 @@
   &:after {
     content: "";
     display: block;
-    position: absolute;
-    bottom: $toolbar-arrow-size;
     border-bottom: $toolbar-arrow-size solid $toolbar-bg-color;
     border-left: $toolbar-arrow-size solid transparent;
     border-right: $toolbar-arrow-size solid transparent;
@@ -21,12 +19,11 @@
   &--top-right,
   &--top-center {
     top: auto;
-    bottom: -$toolbar-arrow-size;
+    bottom: -($toolbar-arrow-size * 2);
 
     &:after {
       border-top: $toolbar-arrow-size solid $toolbar-bg-color;
       border-bottom: $toolbar-arrow-size solid transparent;
-      bottom: -$toolbar-arrow-size;
     }
   }
 }

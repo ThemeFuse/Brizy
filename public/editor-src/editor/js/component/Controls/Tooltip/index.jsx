@@ -1,5 +1,7 @@
 import React from "react";
+import _ from "underscore";
 import classnames from "classnames";
+import { Manager, Reference } from "react-popper";
 import Portal from "visual/component/Portal";
 import ClickOutside from "visual/component/ClickOutside";
 import Content from "./Content";
@@ -21,8 +23,10 @@ export default class Tooltip extends React.Component {
     overlay: "",
     size: "", // small, medium, big, large
     title: "",
+    offset: 15,
     toolbar: null,
     inPortal: false,
+    portalNode: null,
     clickOutsideExceptions: [],
     nodeRef: null,
     onOpen: () => {},
@@ -151,10 +155,13 @@ export default class Tooltip extends React.Component {
       arrow,
       placement,
       size,
+      offset,
       toolbar,
-      inPortal
+      inPortal,
+      portalNode
     } = this.props;
     const node = (nodeRef && nodeRef.current) || this.contentRef.current;
+    const portal = portalNode || node.ownerDocument.body;
 
     const content = (
       <Content
@@ -163,6 +170,7 @@ export default class Tooltip extends React.Component {
         arrow={arrow}
         placement={placement}
         size={size}
+        offset={offset}
         isOpen={isOpen}
         toolbar={toolbar}
         inPortal={inPortal}
@@ -173,13 +181,11 @@ export default class Tooltip extends React.Component {
 
     return inPortal || toolbar ? (
       <Portal
-        node={node.ownerDocument.body}
+        node={portal}
         className={classnames(
           "brz-reset-all",
           "brz-ed-tooltip__content-portal",
-          {
-            "brz-invisible": isHidden
-          }
+          { "brz-invisible": isHidden }
         )}
       >
         {content}
@@ -189,48 +195,75 @@ export default class Tooltip extends React.Component {
     );
   }
 
+  renderInToolbar() {
+    const { title, children, openOnClick } = this.props;
+
+    return (
+      <>
+        <div
+          title={title}
+          ref={this.contentRef}
+          className="brz-ed-tooltip__content"
+          onClick={openOnClick ? this.handleContentClick : _.noop}
+        >
+          {children}
+        </div>
+        {this.renderOverlay()}
+      </>
+    );
+  }
+
+  renderSimple() {
+    const { title, children, openOnClick } = this.props;
+
+    return (
+      <Manager>
+        <Reference>
+          {() => (
+            <div
+              title={title}
+              ref={this.contentRef}
+              className="brz-ed-tooltip__content"
+              onClick={openOnClick ? this.handleContentClick : _.noop}
+            >
+              {children}
+            </div>
+          )}
+        </Reference>
+        {this.renderOverlay()}
+      </Manager>
+    );
+  }
+
   render() {
     const {
-      className: _className,
-      title,
       toolbar,
-      children,
-      clickOutsideExceptions: _clickOutsideExceptions,
-      openOnClick
+      openOnClick,
+      className: _className,
+      clickOutsideExceptions: _clickOutsideExceptions
     } = this.props;
+    const className = classnames(
+      "brz-ed-tooltip",
+      { "brz-ed-tooltip__static": !toolbar },
+      { "brz-ed-tooltip--opened": this.state.isOpen },
+      _className
+    );
     const clickOutsideExceptions = [
       ..._clickOutsideExceptions,
       ".brz-ed-tooltip__content-portal"
     ];
-    let attributes = {
-      className: classnames(
-        "brz-ed-tooltip",
-        { "brz-ed-tooltip__static": !toolbar },
-        { "brz-ed-tooltip--opened": this.state.isOpen },
-        _className
-      )
-    };
-    let contentAttributes = {
-      ref: this.contentRef,
-      title,
-      className: "brz-ed-tooltip__content"
-    };
-
-    if (openOnClick) {
-      contentAttributes.onClick = this.handleContentClick;
-    } else {
-      attributes.onMouseEnter = this.handleMouseEnter;
-      attributes.onMouseLeave = this.handleMouseLeave;
-    }
 
     return (
       <ClickOutside
         onClickOutside={this.handleClickOutside}
         exceptions={clickOutsideExceptions}
       >
-        <div {...attributes}>
-          <div {...contentAttributes}>{children}</div>
-          {this.renderOverlay()}
+        <div
+          className={className}
+          onMouseEnter={openOnClick ? _.noop : this.handleMouseEnter}
+          onMouseLeave={openOnClick ? _.noop : this.handleMouseLeave}
+        >
+          {toolbar ? this.renderInToolbar() : this.renderSimple()}
         </div>
       </ClickOutside>
     );

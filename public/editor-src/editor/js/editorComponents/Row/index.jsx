@@ -21,7 +21,7 @@ import Link from "visual/component/Link";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./Items";
 import { css } from "visual/utils/cssStyle";
-import { styleBg, styleContainer } from "./styles";
+import { styleRow, styleBg, styleContainer } from "./styles";
 import defaultValue from "./defaultValue.json";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
@@ -292,7 +292,12 @@ class Row extends EditorComponent {
     const classNameRowContainer = classnames(
       "brz-row__container",
       className,
-      customClassName
+      customClassName,
+      css(
+        `${this.constructor.componentId}-row`,
+        `${this.getId()}-row`,
+        styleRow(v, vs, vd)
+      )
     );
 
     if (showToolbar === "off") {
@@ -378,7 +383,12 @@ class Row extends EditorComponent {
     const classNameRowContainer = classnames(
       "brz-row__container",
       className,
-      customClassName
+      customClassName,
+      css(
+        `${this.constructor.componentId}-row`,
+        `${this.getId()}-row`,
+        styleRow(v, vs, vd)
+      )
     );
 
     return (

@@ -11,3 +11,18 @@
 .brz-section {
   position: relative;
 }
+
+// Section uses for full-height
+.brz-section__content {
+  > .brz-ed-border,
+  > .brz-ed-border > .brz-bg,
+  > .brz-ed-border > .brz-bg > .brz-bg-content {
+    height: 100%;
+  }
+  > .brz-ed-border > .brz-bg > .brz-bg-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: space-between;
+  }
+}

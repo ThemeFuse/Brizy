@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import { fontSelector, stylesSelector } from "visual/redux/selectors";
 import ImageLoad from "../common/ImageLoad";
 import { templateThumbnailUrl } from "visual/utils/templates";
@@ -202,12 +202,7 @@ class Details extends Component {
             </div>
 
             <div className="brz-ed-popup-two-details-page">
-              <ScrollPane
-                className="brz-ed-scroll--details brz-ed-scroll--medium brz-ed-scroll--new-dark"
-                style={{ overflow: "hidden", height: "100%" }}
-              >
-                {renderSectionPage}
-              </ScrollPane>
+              <Scrollbars>{renderSectionPage}</Scrollbars>
             </div>
           </div>
           <div className="brz-ed-popup-two-details-footer">
