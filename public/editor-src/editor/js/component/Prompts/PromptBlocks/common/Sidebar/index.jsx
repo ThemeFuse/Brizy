@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 
 export { Option as SidebarOption } from "./Option";
 export { List as SidebarList } from "./List";
@@ -8,18 +8,25 @@ export { List as SidebarList } from "./List";
 export default function Sidebar(props) {
   const { className: _className, children } = props;
   const className = classnames("brz-ed-popup-two-body__sidebar", _className);
+  const renderThumbs = ({ style, ...props }) => (
+    <div
+      {...props}
+      style={{
+        ...style,
+        borderRadius: "inherit",
+        backgroundColor: "rgba(129, 138, 145, 0.5)"
+      }}
+    />
+  );
 
   return (
     <div className={className}>
-      <ScrollPane
-        style={{
-          overflow: "hidden",
-          height: "100%"
-        }}
-        className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
+      <Scrollbars
+        renderThumbHorizontal={renderThumbs}
+        renderThumbVertical={renderThumbs}
       >
         <div className="brz-ed-popup-two-sidebar-body">{children}</div>
-      </ScrollPane>
+      </Scrollbars>
     </div>
   );
 }

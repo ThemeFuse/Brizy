@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import PropTypes from "prop-types";
 import Config from "visual/global/Config";
 import LazyLoadImage from "visual/component/LazyLoadImage";
 import Tooltip from "visual/component/Controls/Tooltip";
@@ -32,6 +33,16 @@ export default class Thumbnail extends Component {
     onImageLoaded: _.noop
   };
 
+  static propTypes = {
+    showRemoveIcon: PropTypes.bool,
+    blockData: PropTypes.object,
+    animation: PropTypes.bool,
+    isLayout: PropTypes.bool,
+    onAdd: PropTypes.func,
+    onRemove: PropTypes.func,
+    onImageLoaded: PropTypes.func
+  };
+
   state = {
     tooltipOpen: false
   };
@@ -39,15 +50,11 @@ export default class Thumbnail extends Component {
   iconRef = React.createRef();
 
   handleTooltipOpen = () => {
-    this.setState({
-      tooltipOpen: true
-    });
+    this.setState({ tooltipOpen: true });
   };
 
   handleTooltipClose = () => {
-    this.setState({
-      tooltipOpen: false
-    });
+    this.setState({ tooltipOpen: false });
   };
 
   handleClick = () => {
@@ -79,7 +86,9 @@ export default class Thumbnail extends Component {
   }
 
   renderBlank() {
-    const title = IS_GLOBAL_POPUP ? t("Add a blank popup") : t("Add a blank block");
+    const title = IS_GLOBAL_POPUP
+      ? t("Add a blank popup")
+      : t("Add a blank block");
 
     return (
       <div
@@ -109,7 +118,7 @@ export default class Thumbnail extends Component {
       this.state.tooltipOpen && "brz-ed-popup-two-block-item--active"
     );
     const content = (
-      <Fragment>
+      <>
         <LazyLoadImage
           observerRootSelector=".brz-ed-popup-two-blocks-body"
           style={animation ? animationStyle : {}}
@@ -119,7 +128,7 @@ export default class Thumbnail extends Component {
           onImageLoaded={onImageLoaded}
         />
         <p className="brz-p brz-ed-badge brz-ed-badge--pro">pro</p>
-      </Fragment>
+      </>
     );
 
     return isLayout ? (
@@ -130,9 +139,9 @@ export default class Thumbnail extends Component {
       <Tooltip
         overlayClassName="brz-ed-tooltip--delay-1"
         size="small"
+        offset="5"
         openOnClick={false}
         nodeRef={this.iconRef}
-        inPortal={true}
         overlay={this.renderProInfo()}
         onOpen={this.handleTooltipOpen}
         onClose={this.handleTooltipClose}

@@ -35,7 +35,7 @@ export default function() {
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
     $this.on("init", function() {
-      $(".brz-icon-svg", _this).brzThemeIcon();
+      $(".brz-icon-svg", _this).brzThemeIcon({ forceInit: true });
     });
 
     $this.on("breakpoint", function() {

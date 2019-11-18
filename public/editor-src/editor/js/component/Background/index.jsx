@@ -6,21 +6,28 @@ import {
 } from "visual/utils/onChange";
 import Background from "./Background";
 
-const toNormal = v => (a, c) => {
+const toNormal = v => (a = [], c) => {
   const cV = v[c];
-  return cV !== null && cV !== undefined ? [...a, cV] : a;
+  return cV !== null && cV !== undefined ? a.concat(cV) : a;
 };
 
 const getMediaProps = v => {
-  const opacityKey =
-    v.bgColorType === "solid" ? "bgColorOpacity" : "gradientColorOpacity";
   const normalKeyValue = toNormal(v);
-  const opacityKeyValue = makeKeyByStateDevice(v, opacityKey).reduce(
-    normalKeyValue,
-    []
-  );
+  let opacityKeyValue;
 
-  // Verify if opacity is less than 1
+  if (v.bgColorType === "solid") {
+    opacityKeyValue = makeKeyByStateDevice(v, "bgColorOpacity").reduce(
+      normalKeyValue,
+      []
+    );
+  } else {
+    const opacityKeys = ["bgColorOpacity", "gradientColorOpacity"];
+    opacityKeyValue = opacityKeys
+      .reduce((a, k) => a.concat(makeKeyByStateDevice(v, k)), [])
+      .reduce(normalKeyValue, []);
+  }
+
+  // Verify if media is less than 1
   // Verify if opacity is greater than 0
   return {
     media: opacityKeyValue.some(k => k < 1),

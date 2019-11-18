@@ -1,31 +1,42 @@
-import React, { Component, Fragment } from "react";
-import ScrollPane from "visual/component/ScrollPane";
+import React, { Component } from "react";
+import Scrollbars from "react-custom-scrollbars";
 
 export default class Drawer extends Component {
   static defaultProps = {
     headerText: ""
   };
 
+  renderThumbs = ({ style, ...props }) => (
+    <div
+      {...props}
+      style={{
+        ...style,
+        borderRadius: "inherit",
+        backgroundColor: "#3f4652"
+      }}
+    />
+  );
+
   render() {
     const { headerText, renderExtraHeader, children, ...props } = this.props;
 
     return (
-      <Fragment>
+      <>
         <div className="brz-ed-sidebar__header">
           <h3 className="brz-h3 brz-ed-sidebar__header__title">{headerText}</h3>
           {typeof renderExtraHeader === "function" && renderExtraHeader()}
         </div>
         <div className="brz-ed-sidebar__main">
           {children && (
-            <ScrollPane
-              className="brz-ed-scroll--medium brz-ed-scroll--darker"
-              style={{ height: "100%" }}
+            <Scrollbars
+              renderThumbHorizontal={this.renderThumbs}
+              renderThumbVertical={this.renderThumbs}
             >
               {React.cloneElement(children, props)}
-            </ScrollPane>
+            </Scrollbars>
           )}
         </div>
-      </Fragment>
+      </>
     );
   }
 }

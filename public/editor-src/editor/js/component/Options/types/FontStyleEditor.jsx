@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import Toolbar from "visual/component/Toolbar";
 import EditorIcon from "visual/component/EditorIcon";
 import TextEditor from "visual/editorComponents/Text/Editor";
@@ -415,6 +415,17 @@ class FontStyleEditor extends React.Component {
     onChange(newValue);
   };
 
+  renderThumbs = ({ style, ...props }) => (
+    <div
+      {...props}
+      style={{
+        ...style,
+        borderRadius: "inherit",
+        backgroundColor: "#3f4652"
+      }}
+    />
+  );
+
   render() {
     const { value } = this.props;
     const items = value
@@ -431,12 +442,12 @@ class FontStyleEditor extends React.Component {
     return (
       <div className="brz-ed-option__font-styles">
         <div className="brz-ed-option__font-styles--scroll-pane">
-          <ScrollPane
-            className="brz-ed-scroll--medium brz-ed-scroll--darker"
-            style={{ height: "100%" }}
+          <Scrollbars
+            renderThumbHorizontal={this.renderThumbs}
+            renderThumbVertical={this.renderThumbs}
           >
             {items}
-          </ScrollPane>
+          </Scrollbars>
         </div>
         <div
           className="brz-ed-option__font-styles--add"

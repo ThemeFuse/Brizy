@@ -2569,7 +2569,8 @@ body.modal-open .mm-slideout {
     -moz-osx-font-smoothing: grayscale; }
     .brz .brz-root__container.brz-reset-all {
       display: block;
-      overflow: hidden; }
+      overflow: hidden;
+      font-family: inherit; }
   .brz .brz-hr {
     -webkit-box-sizing: content-box;
             box-sizing: content-box;
@@ -6448,8 +6449,8 @@ body.modal-open .mm-slideout {
       transition: none !important; } }
   .brz .brz-animated {
     opacity: 0;
-    -webkit-animation-fill-mode: both;
-            animation-fill-mode: both; }
+    -webkit-animation-fill-mode: backwards;
+            animation-fill-mode: backwards; }
     .brz .brz-animated.brz-animate {
       opacity: 1; }
   .brz .brz-icon-svg {
@@ -6457,6 +6458,7 @@ body.modal-open .mm-slideout {
     width: 1em;
     height: 1em;
     stroke: none;
+    max-width: none;
     position: relative;
     fill: currentColor;
     color: currentColor; }
@@ -6481,6 +6483,7 @@ body.modal-open .mm-slideout {
     background-color: #fff;
     position: relative;
     margin: 0;
+    padding: 0;
     overflow: visible; }
     .brz .brz-section__content {
       position: relative;
@@ -6606,6 +6609,8 @@ body.modal-open .mm-slideout {
         top: 0;
         left: 0; }
     .brz .brz-row__bg {
+      margin-left: auto;
+      margin-right: auto;
       width: 100%;
       font-size: initial; }
   .brz .brz-columns {
@@ -7813,9 +7818,6 @@ body.modal-open .mm-slideout {
           flex-wrap: wrap; }
     .brz .brz-carousel > .slick-slider {
       overflow: hidden; }
-      .brz .brz-carousel > .slick-slider > .slick-list {
-        padding-top: 30px;
-        padding-bottom: 30px; }
       .brz .brz-carousel > .slick-slider .slick-slide {
         height: auto; }
       .brz .brz-carousel > .slick-slider > .slick-list > .slick-track > .slick-slide > div {
@@ -16099,8 +16101,8 @@ body.modal-open .mm-slideout {
       transition: none !important; } }
   .brz .brz-animated {
     opacity: 0;
-    -webkit-animation-fill-mode: both;
-            animation-fill-mode: both; }
+    -webkit-animation-fill-mode: backwards;
+            animation-fill-mode: backwards; }
     .brz .brz-animated.brz-animate {
       opacity: 1; }
   .brz .admin-bar .wp-env .visual-sidebar {

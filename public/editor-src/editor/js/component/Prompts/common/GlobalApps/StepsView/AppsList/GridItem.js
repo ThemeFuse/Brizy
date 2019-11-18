@@ -65,9 +65,9 @@ export default class GridItem extends Component {
         <Tooltip
           overlayClassName="brz-ed-tooltip--delay-2"
           size="small"
+          offset="5"
           openOnClick={false}
           nodeRef={this.iconRef}
-          inPortal={true}
           overlay={this.renderProInfo()}
           onOpen={this.handleTooltipOpen}
           onClose={this.handleTooltipClose}

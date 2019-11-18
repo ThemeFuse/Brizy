@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import SearchInput from "./common/SearchInput";
 import ThumbnailGrid from "./common/ThumbnailGrid";
 import { assetUrl } from "visual/utils/asset";
@@ -68,19 +68,13 @@ class Global extends Component {
           </HeaderSlotLeft>
         )}
         <div className="brz-ed-popup-two-body__content">
-          <ScrollPane
-            style={{
-              overflow: "hidden",
-              height: "100%"
-            }}
-            className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
-          >
+          <Scrollbars>
             <ThumbnailGrid
               data={thumbnails}
               onThumbnailAdd={this.handleThumbnailAdd}
               onThumbnailRemove={this.handleThumbnailRemove}
             />
-          </ScrollPane>
+          </Scrollbars>
         </div>
       </Fragment>
     );

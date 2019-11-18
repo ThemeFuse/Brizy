@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import Config from "visual/global/Config";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import Grid from "./Grid";
 import GridItem from "./GridItem";
 import { Context } from "../../Context";
@@ -67,10 +67,7 @@ class AppList extends Component {
     const { loadingApp, error } = this.state;
 
     return (
-      <ScrollPane
-        style={{ height }}
-        className="brz-ed-scroll-pane brz-ed-popup-integrations-apps__scroll-pane"
-      >
+      <Scrollbars style={{ height }}>
         {error && this.renderError()}
         {proExceptions && this.renderProException()}
         <Grid
@@ -87,7 +84,7 @@ class AppList extends Component {
             />
           )}
         />
-      </ScrollPane>
+      </Scrollbars>
     );
   }
 }

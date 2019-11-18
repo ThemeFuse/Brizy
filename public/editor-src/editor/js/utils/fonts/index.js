@@ -24,3 +24,6 @@ export {
   projectFontsData,
   normalizeFonts
 } from "./transform";
+
+// Default Font CSS
+export { makeDefaultFontCSS } from "./makeDefaultFontCSS";

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import EditorIcon from "visual/component/EditorIcon";
 import DataFilter from "../common/DataFilter";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
@@ -147,13 +147,7 @@ export default class List extends Component {
             )}
 
             <div className="brz-ed-popup-two-body__content brz-ed-popup-two-blocks-body-layouts">
-              <ScrollPane
-                style={{
-                  overflow: "hidden",
-                  height: "100%"
-                }}
-                className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
-              >
+              <Scrollbars>
                 {filteredThumbnails.length > 1 ? (
                   <ThumbnailGrid
                     data={filteredThumbnails}
@@ -168,7 +162,7 @@ export default class List extends Component {
                     </p>
                   </div>
                 )}
-              </ScrollPane>
+              </Scrollbars>
             </div>
           </Fragment>
         )}

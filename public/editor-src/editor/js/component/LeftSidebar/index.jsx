@@ -10,7 +10,6 @@ import { currentUserRole } from "visual/component/Roles";
 import { updateUI } from "visual/redux/actions";
 import items from "./items";
 import DrawerOptions from "./components/Options";
-import EditorIcon from "visual/component/EditorIcon";
 
 const itemsById = [...items.top].reduce((acc, item) => {
   acc[item.id] = item;
