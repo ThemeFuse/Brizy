@@ -6,6 +6,10 @@ import HotKeys from "visual/component/HotKeys";
 import Portal from "visual/component/Portal";
 
 function Fixed(props) {
+  if (IS_PREVIEW) {
+    return null;
+  }
+
   const { className: _className, opened, children, onClose } = props;
   const className = classnames("brz-ed-fixed", _className);
 

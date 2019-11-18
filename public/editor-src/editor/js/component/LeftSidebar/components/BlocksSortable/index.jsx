@@ -31,31 +31,38 @@ const SortableItem = SortableElement(({ item, onRemove }) => {
   );
 });
 
-const SortableList = SortableContainer(({ isSorting, items, onItemRemove }) => {
-  const filteredItems = [];
+const SortableList = SortableContainer(
+  ({ isSorting, items, innerRef, onItemRemove }) => {
+    const filteredItems = [];
 
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
 
-    if (item.value._blockVisibility === "unlisted") {
-      continue;
+      if (item.value._blockVisibility === "unlisted") {
+        continue;
+      }
+
+      filteredItems.push(
+        <SortableItem
+          key={item.value._id}
+          item={item}
+          index={i}
+          onRemove={() => onItemRemove(i)}
+        />
+      );
     }
 
-    filteredItems.push(
-      <SortableItem
-        key={item.value._id}
-        item={item}
-        index={i}
-        onRemove={() => onItemRemove(i)}
-      />
+    const className = classnames("brz-ed-sidebar-sortable", {
+      "brz-ed-sidebar-sortable--sorting": isSorting
+    });
+
+    return (
+      <div ref={innerRef} className={className}>
+        {filteredItems}
+      </div>
     );
   }
-
-  const className = classnames("brz-ed-sidebar-sortable", {
-    "brz-ed-sidebar-sortable--sorting": isSorting
-  });
-  return <div className={className}>{filteredItems}</div>;
-});
+);
 
 class DrawerComponent extends React.Component {
   static getDerivedStateFromProps(props, state) {
@@ -83,10 +90,20 @@ class DrawerComponent extends React.Component {
     isSorting: false
   };
 
+  content = React.createRef();
+
   handleBeforeSortStart = () => {
-    this.setState({
-      isSorting: true
-    });
+    this.setState({ isSorting: true });
+  };
+
+  getContentWindow = () => {
+    return window.parent;
+  };
+
+  getContainer = () => {
+    const node = this.content.current;
+
+    return node && node.parentElement;
   };
 
   handleSortEnd = ({ oldIndex, newIndex }) => {
@@ -131,7 +148,9 @@ class DrawerComponent extends React.Component {
         items={blocks}
         distance={5}
         useDragHandle={true}
-        contentWindow={() => window.parent}
+        innerRef={this.content}
+        contentWindow={this.getContentWindow}
+        getContainer={this.getContainer}
         onSortStart={this.handleBeforeSortStart}
         onSortEnd={this.handleSortEnd}
         onItemRemove={this.handleItemRemove}

@@ -1,20 +1,33 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
-export function styleBg(v, vs, vd) {
+export function styleRow(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleZIndex",
-        "cssStyleMargin",
-        "cssStyleFlexVerticalAlign"
-      ],
-      interval: [
-        "cssStyleSizeMaxWidthSize",
-        "cssStyleRowMinHeight",
-        "cssStyleDisplayInlineFlex",
-        "cssStyleVisible",
-        "cssStyleVisibleEditorDisplayNoneOrInlineFlex|||editor"
-      ]
+      interval: IS_EDITOR
+        ? ["cssStyleVisibleEditorDisplayNoneOrBlock|||editor"]
+        : ["cssStyleVisible"],
+      standart: ["cssStyleMargin"]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles });
+}
+
+export function styleBg(v, vs, vd) {
+  const bgInterval = [
+    "cssStyleSizeMaxWidthSize",
+    "cssStyleRowMinHeight",
+    "cssStyleDisplayFlex"
+  ];
+
+  if (IS_EDITOR) {
+    bgInterval.push("cssStyleVisible");
+  }
+
+  const styles = {
+    ".brz &&:hover": {
+      standart: ["cssStyleZIndex", "cssStyleFlexVerticalAlign"],
+      interval: bgInterval
     },
     ".brz &&:hover > .brz-bg-media": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],

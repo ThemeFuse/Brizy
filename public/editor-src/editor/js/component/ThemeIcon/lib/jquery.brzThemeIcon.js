@@ -1,20 +1,27 @@
 import $ from "jquery";
 import { responseToSvg } from "../utils";
 
-(function($, window, document) {
+const removeAttrs = (node, attrs) => {
+  attrs.forEach(attr => {
+    node.removeAttribute(attr);
+  });
+
+  return node;
+};
+
+(function($, window) {
   "use strict";
 
-  var pluginName = "brzThemeIcon";
-  var defaults = {
+  const pluginName = "brzThemeIcon";
+  const defaults = {
     type: "themeIcon",
-    node: window.document.body
+    node: window.document.body,
+    forceInit: false
   };
 
   function Plugin(element, options) {
     this.element = element;
     this.settings = $.extend({}, defaults, options);
-    this._defaults = defaults;
-    this._name = pluginName;
 
     this.init();
   }
@@ -22,16 +29,17 @@ import { responseToSvg } from "../utils";
   $.extend(Plugin.prototype, {
     init: function() {
       $(this.element).each(function() {
-        var $this = $(this);
-        var data = $this.data();
-        var href = data.href;
-        var id = data.id;
+        const $this = $(this);
+        const data = $this.data();
+        const href = data.href;
+        const id = data.id;
 
         if (id) {
           try {
-            var doc = $("#" + id).html();
-            var $svg = $(responseToSvg(doc));
-            var attributes = $this.get(0).attributes;
+            const doc = $("#" + id).html();
+            let $svg = $(responseToSvg(doc));
+            const node = removeAttrs($this.get(0), ["id"]);
+            const attributes = node.attributes;
 
             for (var i = 0; i < attributes.length; i++) {
               $svg.attr(attributes[i].nodeName, attributes[i].nodeValue);
@@ -39,7 +47,9 @@ import { responseToSvg } from "../utils";
 
             $this.replaceWith($svg);
           } catch (error) {
+            /* eslint-disable no-console */
             console.error(error);
+            /* eslint-enabled no-console */
           }
         } else if (href) {
           $.ajax({
@@ -49,20 +59,25 @@ import { responseToSvg } from "../utils";
           })
             .done(function(res) {
               try {
-                var $svg = $(responseToSvg(res));
-                var attributes = $this.get(0).attributes;
+                let $svg = $(responseToSvg(res));
+                const node = removeAttrs($this.get(0), ["data-href"]);
+                const attributes = node.attributes;
 
-                for (var i = 0; i < attributes.length; i++) {
+                for (let i = 0; i < attributes.length; i++) {
                   $svg.attr(attributes[i].nodeName, attributes[i].nodeValue);
                 }
 
                 $this.replaceWith($svg);
               } catch (error) {
+                /* eslint-disable no-console */
                 console.error(error);
+                /* eslint-enabled no-console */
               }
             })
             .fail(function(jqXHR, textStatus) {
+              /* eslint-disable no-console */
               console.warn("Request failed: " + textStatus);
+              /* eslint-enabled no-console */
             });
         }
       });
@@ -70,8 +85,10 @@ import { responseToSvg } from "../utils";
   });
 
   $.fn[pluginName] = function(options) {
+    const forceInit = options && options.forceInit;
+
     return this.each(function() {
-      if (!$.data(this, "plugin_" + pluginName)) {
+      if (!$.data(this, "plugin_" + pluginName) || forceInit) {
         $.data(this, "plugin_" + pluginName, new Plugin(this, options));
       }
     });

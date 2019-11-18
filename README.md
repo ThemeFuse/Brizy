@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.3<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.102<br>
+Stable tag: 1.0.104<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,20 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.104 - 2019-11-18 ###
+* Fixed: Row negative margin
+* Fixed: Sidebar scroll and reorder blocks
+* Fixed: Animation with zIndex
+* Fixed: Carousel with inner icons
+* Fixed: Section hidden gradient when both gradient are opacity 0
+* Fixed: Section full height in editor mode
+* Fixed: Popup screenshots
+* Fixed: PromptBlock, PromptFonts, PromptForms tooltip pro blocking scroll
+* Fixed: Columns Dragging
+* Fixed: Section conflicts padding with Twenty Twenty theme
+* Improved: Set up default project font to body
+* Improved: Leftsidebar disabled options for specific roles
 
 ### 1.0.103 - 2019-11-13 ###
 * Fixed: Create project method

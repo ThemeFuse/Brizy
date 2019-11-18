@@ -17,40 +17,43 @@ class Items extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex, items) {
     const cloneRemoveConfig = {
-      getItemsForDesktop: () => [
-        {
-          id: "duplicate",
-          type: "button",
-          icon: "nc-duplicate",
-          title: t("Duplicate"),
-          position: 200,
-          roles: ["admin"],
-          onChange: () => {
-            this.cloneItem(itemIndex);
+      getItems: () => {
+        return [
+          {
+            id: "duplicate",
+            type: "button",
+            icon: "nc-duplicate",
+            title: t("Duplicate"),
+            position: 200,
+            roles: ["admin"],
+            devices: "desktop",
+            onChange: () => {
+              this.cloneItem(itemIndex);
+            }
+          },
+          {
+            id: "remove",
+            type: "button",
+            icon: "nc-trash",
+            title: t("Delete"),
+            position: 250,
+            roles: ["admin"],
+            devices: "desktop",
+            disabled: items.length <= 1,
+            onChange: () => {
+              hideToolbar();
+              this.removeItem(itemIndex);
+            }
           }
-        },
-        {
-          id: "remove",
-          type: "button",
-          icon: "nc-trash",
-          title: t("Delete"),
-          position: 250,
-          roles: ["admin"],
-          onChange: () => {
-            hideToolbar();
-            this.removeItem(itemIndex);
-          }
-        }
-      ],
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+        ];
+      }
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
 
     return {
       ...super.getItemProps(itemData, itemIndex, items),
       toolbarExtend
-    };
+    }
   }
 
   renderItemWrapper(item, itemKey) {
