@@ -7,7 +7,7 @@ class Brizy_Admin_Feedback {
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_brizy-dismiss-notice', [ $this, 'ajax_dismiss_notice' ] );
-		add_action( 'wp_ajax_brizy-deactivate-feedback', [ $this, 'ajax_send_feedback' ] );
+		add_action( 'wp_ajax_brizy-send-feedback', [ $this, 'ajax_send_feedback' ] );
 		add_action( 'admin_notices', [ $this, 'admin_notices' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		add_action( 'admin_footer', [ $this, 'admin_footer' ] );
@@ -82,7 +82,7 @@ class Brizy_Admin_Feedback {
 			$body['feedback'] = sanitize_text_field( $form[ 'reason_' . $reason_key ] );
         }
 
-		wp_remote_post( 'http://test.themefuse.com/feedback/', [
+		$requst = wp_remote_post( 'http://brizy.local/', [
 			'timeout' => 30,
 			'body'    => $body,
 		] );
