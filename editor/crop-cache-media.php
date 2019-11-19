@@ -141,7 +141,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 				throw new Exception( 'Crop not forced.' );
 			}
 
-			if ( !file_exists( $resized_page_asset_path ) && ! mkdir( $resized_page_asset_path, 0755, true ) && ! is_dir( $resized_page_asset_path ) ) {
+			if ( !file_exists( $resized_page_asset_path ) && ! @mkdir( $resized_page_asset_path, 0755, true ) && ! is_dir( $resized_page_asset_path ) ) {
 				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $resized_page_asset_path ) );
 			}
 
@@ -161,7 +161,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			};
 			add_filter( 'jpeg_quality', $closure );
 
-			if ( !file_exists( $hq_image_path_dir ) && ! mkdir( $hq_image_path_dir, 0755, true ) && ! is_dir( $hq_image_path_dir ) ) {
+			if ( !file_exists( $hq_image_path_dir ) && ! @mkdir( $hq_image_path_dir, 0755, true ) && ! is_dir( $hq_image_path_dir ) ) {
 				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $hq_image_path_dir ) );
 			}
 
@@ -176,7 +176,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$hq_wp_file_exists = file_exists( $hq_image_full_path );
 		if ( $force_optimize && $hq_wp_file_exists ) {
 			$optimizer = new Brizy_Editor_Asset_Optimize_Optimizer();
-			if ( !file_exists( $optimized_image_path_dir ) && ! mkdir( $optimized_image_path_dir, 0755, true ) && ! is_dir( $optimized_image_path_dir ) ) {
+			if ( !file_exists( $optimized_image_path_dir ) && ! @mkdir( $optimized_image_path_dir, 0755, true ) && ! is_dir( $optimized_image_path_dir ) ) {
 				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $optimized_image_path_dir ) );
 			}
 
