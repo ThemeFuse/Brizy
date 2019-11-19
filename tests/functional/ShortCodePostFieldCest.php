@@ -13,10 +13,10 @@ class ShortCodePostFieldCest {
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',
 			'post_excerpt'   => 'field_post_excerpt',
-			'post_status'    => 'field_post_status',
+			'post_status'    => 'publish',
 			'comment_status' => 'field_comment_status',
 			'ping_status'    => 'field_ping_status',
-			'post_password'  => 'field_post_password',
+			'post_password'  => '',
 			'post_name'      => 'field_post_name',
 			'to_ping'        => 'field_to_ping',
 			'pinged'         => 'field_pinged',
@@ -47,7 +47,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_status"]',
-				'output' => 'field_post_status'
+				'output' => 'publish'
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="comment_status"]',
@@ -59,7 +59,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_password"]',
-				'output' => 'field_post_password'
+				'output' => ''
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_name"]',
@@ -117,7 +117,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field property="post_status"]',
-				'output' => 'field_post_status'
+				'output' => 'publish'
 			],
 			[
 				'input'  => '[brizy_post_field property="comment_status"]',
@@ -129,7 +129,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field property="post_password"]',
-				'output' => 'field_post_password'
+				'output' => ''
 			],
 			[
 				'input'  => '[brizy_post_field property="post_name"]',
