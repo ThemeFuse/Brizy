@@ -9,6 +9,7 @@ class ShortCodePostFieldCest {
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 
+		$I->dontHavePostInDatabase([]);
 		$this->postId = $I->havePostInDatabase( [
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',
@@ -23,7 +24,7 @@ class ShortCodePostFieldCest {
 			'post_parent'    => '0',
 			'guid'           => 'field_guid',
 			'menu_order'     => '0',
-			'post_type'      => 'field_post_type',
+			'post_type'      => 'post',
 			'post_mime_type' => 'field_post_mime_type',
 			'comment_count'  => '10',
 		] );
@@ -87,7 +88,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_type"]',
-				'output' => 'field_post_type'
+				'output' => 'post'
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_mime_type"]',
@@ -157,7 +158,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field property="post_type"]',
-				'output' => 'field_post_type'
+				'output' => 'post'
 			],
 			[
 				'input'  => '[brizy_post_field property="post_mime_type"]',

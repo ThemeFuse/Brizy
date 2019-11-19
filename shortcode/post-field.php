@@ -43,7 +43,9 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 		if ( isset( $atts['post'] ) ) {
 			return get_post( (int) $atts['post'] );
 		} else {
-			return get_post();
+			$post = get_posts();
+
+			return isset($post[0]) ?$post[0]: null;
 		}
 	}
 
