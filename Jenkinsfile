@@ -177,14 +177,18 @@ pipeline {
             steps {
                 sh 'git commit -a -m "Build '+params.buildVersion+'"'
 
-                 sshagent (credentials: ['Git']) {
-                    sh 'git push origin '+params.releaseBranch
-                 }
-
+                sshagent (credentials: ['Git']) {
+                   sh 'git push origin '+params.releaseBranch
+                }
 
                 sh 'git checkout -t origin/master'
                 sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
                 sh 'git tag '+params.buildVersion
+
+                sshagent (credentials: ['Git']) {
+                    sh 'git push origin master'
+                }
+
                 sh 'git checkout -t origin/develop'
                 sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
 
