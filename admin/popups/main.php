@@ -26,7 +26,7 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
-		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), PHP_INT_MIN, 4 );
+		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), -999999, 4 );
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
 
 		if ( is_admin() ) {
