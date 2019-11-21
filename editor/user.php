@@ -187,7 +187,7 @@ class Brizy_Editor_User {
 		$editor_data = $post->get_editor_data();
 
 		$config     = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
-		$urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post->get_parent_id() );
+		$urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post->getWpPostParentId() );
 
 
 		$page_html = $this->get_client()->compile_page( $project, $editor_data, $config, $urlBuilder->compiler_url() );

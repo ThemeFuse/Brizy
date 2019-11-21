@@ -12,6 +12,21 @@ class Brizy_Editor_PostCest {
 		$I->dontHavePostInDatabase( [ 'post_type' => 'revision', ] );
 	}
 
+	public function testCreateResponse( FunctionalTester $I ) {
+		$id    = wp_insert_post( [ 'post_type' => 'page', 'post_title' => 'Test' ] );
+		$block = Brizy_Editor_Post::get( $id );
+		$data  = $block->createResponse();
+
+		$I->assertArrayHasKey( 'title', $data, "It should contain key 'title'    " );
+		$I->assertArrayHasKey( 'slug', $data, "It should contain key 'slug'    " );
+		$I->assertArrayHasKey( 'status', $data, "It should contain key 'status'    " );
+		$I->assertArrayHasKey( 'url', $data, "It should contain key 'url'    " );
+		$I->assertArrayHasKey( 'data', $data, "It should contain key 'data'  " );
+		$I->assertArrayHasKey( 'is_index', $data, "It should contain key 'is_index'  " );
+		$I->assertArrayHasKey( 'template', $data, "It should contain key 'template'  " );
+		$I->assertArrayHasKey( 'dataVersion', $data, "It should contain key 'dataVersion'  " );
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -26,7 +41,7 @@ class Brizy_Editor_PostCest {
 		$decoded_editor_data = json_encode( [ 'test' => 1 ] );
 		$editor_data         = base64_encode( $decoded_editor_data );
 
-		$stub = Brizy_Editor_Post2::get( $postId );
+		$stub = Brizy_Editor_Post::get( $postId );
 		$I->dontSeePostMetaInDatabase( [ 'post_id' => $postId, 'meta_key' => 'brizy' ] );
 		$stub->set_needs_compile( true );
 		$stub->set_plugin_version( BRIZY_VERSION );
@@ -36,6 +51,7 @@ class Brizy_Editor_PostCest {
 		$stub->set_editor_data( $editor_data );
 		$stub->set_compiled_html( "<b></b>" );
 		$stub->set_template( "atemplate" );
+		$stub->setDataVersion(1);
 		$stub->save();
 
 		$storage = Brizy_Editor_Storage_Post::instance( $postId );
@@ -46,22 +62,22 @@ class Brizy_Editor_PostCest {
 
 		$I->canSeePostMetaInDatabase( [
 			'post_id'    => $postId,
-			'meta_key'   => Brizy_Editor_Post2::BRIZY_POST_NEEDS_COMPILE_KEY,
+			'meta_key'   => Brizy_Editor_Post::BRIZY_POST_NEEDS_COMPILE_KEY,
 			'meta_value' => 1
 		] );
 		$I->canSeePostMetaInDatabase( [
 			'post_id'    => $postId,
-			'meta_key'   => Brizy_Editor_Post2::BRIZY_POST_PLUGIN_VERSION,
+			'meta_key'   => Brizy_Editor_Post::BRIZY_POST_PLUGIN_VERSION,
 			'meta_value' => BRIZY_VERSION
 		] );
 		$I->canSeePostMetaInDatabase( [
 			'post_id'    => $postId,
-			'meta_key'   => Brizy_Editor_Post2::BRIZY_POST_EDITOR_VERSION,
+			'meta_key'   => Brizy_Editor_Post::BRIZY_POST_EDITOR_VERSION,
 			'meta_value' => BRIZY_VERSION
 		] );
 		$I->canSeePostMetaInDatabase( [
 			'post_id'    => $postId,
-			'meta_key'   => Brizy_Editor_Post2::BRIZY_POST_COMPILER_VERSION,
+			'meta_key'   => Brizy_Editor_Post::BRIZY_POST_COMPILER_VERSION,
 			'meta_value' => BRIZY_VERSION
 		] );
 		$I->canSeePostMetaInDatabase( [
@@ -76,7 +92,7 @@ class Brizy_Editor_PostCest {
 		] );
 
 		// check meta data values after save
-		$data = $storage->get( Brizy_Editor_Post2::BRIZY_POST );
+		$data = $storage->get( Brizy_Editor_Post::BRIZY_POST );
 
 		$I->assertEquals( $data['brizy-use-brizy'], true, 'It should have brizy-use-brizy equal to 1' );
 		$I->assertEquals( $data['compiled_html'], base64_encode( "<b></b>" ), 'It should have correct value for compiled_html' );
@@ -99,7 +115,7 @@ class Brizy_Editor_PostCest {
 		$encoded_html        = base64_encode( $html );
 		$decoded_editor_data = json_encode( [ 'test' => 1 ] );
 		$editor_data         = base64_encode( $decoded_editor_data );
-		$stub                = Brizy_Editor_Post2::get( $postId );
+		$stub                = Brizy_Editor_Post::get( $postId );
 
 		$stub->set_editor_data( $decoded_editor_data );
 		$I->assertEquals( $decoded_editor_data, $stub->get_editor_data(), 'It should have correct value for editor_data' );
@@ -124,7 +140,7 @@ class Brizy_Editor_PostCest {
 		$htmlBody            = "<b>test</b>";
 		$decoded_editor_data = json_encode( [ 'test' => 1 ] );
 		$editor_data         = base64_encode( $decoded_editor_data );
-		$stub                = Brizy_Editor_Post2::get( $postId );
+		$stub                = Brizy_Editor_Post::get( $postId );
 
 		$stub->set_editor_data( $decoded_editor_data );
 		$stub->set_needs_compile( true );
@@ -156,6 +172,58 @@ class Brizy_Editor_PostCest {
 	}
 
 
+	public function testAutoSave( FunctionalTester $I ) {
+		$postId = $I->havePostInDatabase( [
+			'post_title'  => 'Test',
+			'post_type'   => 'page',
+			'post_status' => 'publish'
+		] );
+
+		$html                 = "<html><head></head><body><b>test</b></body></html>";
+		$htmlBody             = "<b>test</b>";
+		$decoded_editor_data  = json_encode( [ 'test' => 1 ] );
+		$decoded_editor_data2 = json_encode( [ 'test' => 2 ] );
+		$editor_data          = base64_encode( $decoded_editor_data );
+		$editor_data2         = base64_encode( $decoded_editor_data2 );
+
+		$stub = Brizy_Editor_Post::get( $postId );
+		$stub->set_needs_compile( true );
+		$stub->set_plugin_version( BRIZY_VERSION );
+		$stub->set_editor_version( BRIZY_VERSION );
+		$stub->set_compiler_version( BRIZY_VERSION );
+		$stub->set_uses_editor( true );
+		$stub->set_editor_data( $editor_data );
+		$stub->set_compiled_html( "<b></b>" );
+		$stub->set_template( "atemplate" );
+		$stub->setDataVersion(1);
+		$stub->save( 0 );
+
+
+		$stub->set_needs_compile( true );
+		$stub->set_plugin_version( BRIZY_VERSION );
+		$stub->set_editor_version( BRIZY_VERSION );
+		$stub->set_compiler_version( BRIZY_VERSION );
+		$stub->set_uses_editor( true );
+		$stub->set_editor_data( $editor_data2 );
+		$stub->set_compiled_html( "<b>autosav</b>" );
+		$stub->set_template( "atemplate2" );
+		$stub->setDataVersion(2);
+
+		$stub->save( 1 );
+
+		$I->canSeePostInDatabase( [
+			'post_parent' => $postId,
+			'post_type'   => 'revision',
+			'post_name'   => $postId . '-autosave-v1'
+		] );
+
+		$I->dontSeePostInDatabase( [
+			'post_parent' => $postId,
+			'post_type'   => 'revision',
+			'post_name'   => $postId . '-revision-v1'
+		] );
+	}
+
 	public function testLoadInstanceFromSavedPost( FunctionalTester $I ) {
 		/**
 		 * @throws Exception
@@ -170,7 +238,7 @@ class Brizy_Editor_PostCest {
 		$html                = "<html><head></head><body><b>test</b></body></html>";
 		$decoded_editor_data = json_encode( [ 'test' => 1 ] );
 		$editor_data         = base64_encode( $decoded_editor_data );
-		$stub                = Brizy_Editor_Post2::get( $postId );
+		$stub                = Brizy_Editor_Post::get( $postId );
 
 		$stub->set_editor_data( $decoded_editor_data );
 		$stub->set_needs_compile( true );
@@ -184,7 +252,7 @@ class Brizy_Editor_PostCest {
 		$stub->save();
 		$stub->savePost();
 
-		$stub = Brizy_Editor_Post2::get( $postId );
+		$stub = Brizy_Editor_Post::get( $postId );
 
 		$data = $stub->convertToOptionValue();
 

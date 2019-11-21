@@ -2,6 +2,8 @@
 
 abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
+	const BRIZY_DATA_VERSION_KEY = 'brizy_data_version';
+
 	/**
 	 * @var string
 	 */
@@ -10,12 +12,17 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	/**
 	 * @var int
 	 */
-	private $wp_post_id;
+	protected $wp_post_id;
 
 	/**
 	 * @var WP_Post
 	 */
-	private $wp_post = null;
+	protected $wp_post = null;
+
+	/**
+	 * @var int
+	 */
+	protected $dataVersion = null;
 
 	/**
 	 * Brizy_Editor_Entity constructor.
@@ -46,6 +53,8 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	 */
 	abstract protected function loadInstanceData();
 
+	abstract public function createResponse();
+
 	/**
 	 * Save post data and and trigger post update
 	 *
@@ -55,8 +64,13 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
 	/**
 	 * @return $this
+	 * @throws Exception
 	 */
-	public function save() {
+	public function save( $autosave = 0 ) {
+
+		// check entity versions before saving.
+
+		$this->saveDataVersion();
 		$this->createUid();
 
 		return $this;
@@ -115,6 +129,44 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	}
 
 	/**
+	 * @return $this
+	 */
+	protected function saveDataVersion() {
+		$version = $this->getCurrentDataVersion();
+
+		if ( $this->dataVersion !== $version + 1 ) {
+			Brizy_Logger::instance()->critical( 'Unable to save entity. The data version is wrong.', [
+				'currentVersion' => $version,
+				'newVersion'     => $this->dataVersion
+			] );
+			throw new Exception( 'Unable to save entity. The data version is wrong.' );
+		}
+
+		update_post_meta( $this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, $this->dataVersion );
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCurrentDataVersion() {
+		return (int) ( get_post_meta( $this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, true ) ?: 0 );
+	}
+
+
+	/**
+	 * @param $dataVersion
+	 *
+	 * @return $this
+	 */
+	public function setDataVersion( $dataVersion ) {
+		$this->dataVersion = (int)$dataVersion;
+
+		return $this;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getUid() {
@@ -138,7 +190,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 			return $uid;
 		}
 
-		$post_parent_id = $this->getWpPostParentId() ?: $this->getWpPostId();
+		$post_parent_id = $this->getWpPostParentId();
 		$uid            = get_post_meta( $post_parent_id, 'brizy_post_uid', true );
 
 		if ( ! $uid ) {
@@ -148,5 +200,4 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
 		return $this->uid = $uid;
 	}
-
 }

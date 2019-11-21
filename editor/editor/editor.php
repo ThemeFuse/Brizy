@@ -51,7 +51,7 @@ class Brizy_Editor_Editor_Editor {
 	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->get_parent_id() : null );
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->getWpPostParentId() : null );
 	}
 
 	/**
@@ -70,11 +70,11 @@ class Brizy_Editor_Editor_Editor {
 		$change_template_url = null;
 		$templates           = null;
 
-		$parent_post_type  = get_post_type( $this->post->get_parent_id() );
-		$wp_post_id        = $this->post->get_wp_post()->ID;
-		$preview_post_link = $this->getPreviewUrl( $this->post->get_wp_post() );
+		$parent_post_type  = get_post_type( $this->post->getWpPostParentId() );
+		$wp_post_id        = $this->post->getWpPostId();
+		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 
-		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->get_parent_id() . '&action=_brizy_change_template' ) );
+		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostParentId() . '&action=_brizy_change_template' ) );
 		$templates           = $this->post->get_templates();
 		$isTemplate          = $parent_post_type === Brizy_Admin_Templates::CP_TEMPLATE;
 		$isPopup             = $parent_post_type === Brizy_Admin_Popups_Main::CP_POPUP;
@@ -235,7 +235,7 @@ class Brizy_Editor_Editor_Editor {
 					{$wpdb->prefix}postmeta pm 
 				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
 				WHERE pm.meta_key='brizy_attachment_uid'
-				GROUP BY pm.post_id", $this->post->get_uid() );
+				GROUP BY pm.post_id", $this->post->getUid() );
 
 		$results         = $wpdb->get_results( $query );
 		$attachment_data = array();
@@ -300,8 +300,7 @@ class Brizy_Editor_Editor_Editor {
 			$rule        = null;
 
 
-			if(!function_exists('addQueryStringToUrl'))
-			{
+			if ( ! function_exists( 'addQueryStringToUrl' ) ) {
 				function addQueryStringToUrl( $link, $query ) {
 					$parsedUrl = parse_url( $link );
 					$separator = ( ! isset( $parsedUrl['query'] ) || $parsedUrl['query'] == null ) ? '?' : '&';
@@ -342,7 +341,8 @@ class Brizy_Editor_Editor_Editor {
 								return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
 							}
 
-							if ( ! Brizy_Editor_Post::checkIfPostTypeIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+							if ( ! Brizy_Editor::checkIfPostTypeIsSupported( $p->ID, false ) ||
+							     ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
 								$wp_post = $p;
 								break;
 							}
@@ -713,7 +713,7 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	private function getTexts() {
-		if (BRIZY_DEVELOPMENT) {
+		if ( BRIZY_DEVELOPMENT ) {
 			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Dev_Texts';
 		} else {
 			$version = '';
@@ -765,7 +765,7 @@ class Brizy_Editor_Editor_Editor {
 			$ruleMatches[] = array(
 				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
 				'group'      => Brizy_Admin_Rule::POSTS,
-				'entityType' => $this->post->get_wp_post()->post_type,
+				'entityType' => $this->post->getWpPost()->post_type,
 				'values'     => array( $wp_post_id )
 			);
 		}

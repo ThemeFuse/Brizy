@@ -96,9 +96,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 
 		if ( $this->post && $this->post->uses_editor() ) {
-			set_post_thumbnail( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
+			set_post_thumbnail( $this->post->getWpPostId(), (int) $_REQUEST['attachmentId'] );
 
-			$uid = $this->createMediaKey( $this->post->get_id(), (int) $_REQUEST['attachmentId'] );
+			$uid = $this->createMediaKey( $this->post->getWpPostId(), (int) $_REQUEST['attachmentId'] );
 
 			$this->success( array( 'uid' => $uid ) );
 		}
@@ -115,7 +115,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 		if ( $this->post && $this->post->uses_editor() ) {
 
-			update_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point', array(
+			update_post_meta( $this->post->getWpPostId(), 'brizy_attachment_focal_point', array(
 				'x' => $_REQUEST['pointX'],
 				'y' => $_REQUEST['pointY']
 			) );
@@ -130,8 +130,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		if ( $this->post && $this->post->uses_editor() ) {
-			delete_post_thumbnail( $this->post->get_id() );
-			delete_post_meta( $this->post->get_id(), 'brizy_attachment_focal_point' );
+			delete_post_thumbnail( $this->post->getWpPostId() );
+			delete_post_meta( $this->post->getWpPostId(), 'brizy_attachment_focal_point' );
 			$this->success( null );
 		}
 
@@ -198,7 +198,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	public function get_project() {
 		try {
 			$this->verifyNonce( self::nonce );
-			$data = Brizy_Editor_Project::get()->create_post_data();
+			$data = Brizy_Editor_Project::get()->createResponse();
 
 			$this->success( $data );
 		} catch ( Exception $exception ) {
@@ -215,26 +215,34 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->verifyNonce( self::nonce );
 
 			// update project globas
-			$meta = stripslashes( $this->param( 'data' ) );
+			$meta        = stripslashes( $this->param( 'data' ) );
+			$dataVersion = (int)stripslashes( $this->param( 'dataVersion' ) );
 
 			if ( ! $meta ) {
-				Brizy_Logger::instance()->error( 'Invalid project meta provided', [ 'data' => $this->param( 'data' ) ] );
+				Brizy_Logger::instance()->error( 'Invalid project meta provided', [ 'data' => $meta ] );
+				throw new Exception( '', 400 );
+			}
+
+			if ( ! $dataVersion ) {
+				Brizy_Logger::instance()->error( 'No data version provided', [ 'data' => $dataVersion ] );
 				throw new Exception( '', 400 );
 			}
 
 			$project = Brizy_Editor_Project::get();
 			$project->setDataAsJson( $meta );
+			$project->setDataVersion( $dataVersion );
+
 
 			if ( (int) $this->param( 'is_autosave' ) === 1 ) {
-				$project->auto_save_post();
+				$project->save( 1 );
 			} else {
 				$project->save();
-				$project->save_wp_post();
+				$project->savePost();
 
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $project->create_post_data() );
+			$this->success( $project->createResponse() );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
@@ -248,9 +256,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	public function get_item() {
 		try {
 			$this->verifyNonce( self::nonce );
-			$post_arr             = self::create_post_arr( $this->post );
-			$post_arr['is_index'] = true; // this is for the case when the page we return is not an index page.. but the editor wants one.
-			$this->success( array( $post_arr ) );
+			$this->success( $this->post->createResponse() );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( 500, $exception->getMessage() );
@@ -282,10 +288,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$this->post->save( 1 );
 			} else {
 				$this->post->save( 0 );
-				$this->post->save_wp_post();
+				$this->post->savePost();
 			}
 
-			$this->success( self::create_post_arr( $this->post ) );
+			$this->success( $this->post->createResponse() );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( 500, $exception->getMessage() );
@@ -349,36 +355,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 
 		$this->success( $items );
-	}
-
-//	protected function error( $code, $message ) {
-//		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
-//	}
-//
-//	protected function success( $data ) {
-//		wp_send_json( $data );
-//	}
-//	protected function static_url() {
-//		return Brizy_Editor::get()->get_url( '/includes/editor/static' );
-//	}
-
-	public static function create_post_arr( Brizy_Editor_Post $post ) {
-
-		$p_id      = (int) $post->get_id();
-		$the_title = get_the_title( $p_id );
-
-		$global = array(
-			'title'    => $the_title,
-			'slug'     => sanitize_title( $the_title ),
-			'data'     => $post->get_editor_data(),
-			'id'       => $p_id,
-			'is_index' => false,
-			'template' => get_page_template_slug( $p_id ),
-			'status'   => get_post_status( $p_id ),
-			'url'      => get_the_permalink( $p_id )
-		);
-
-		return $global;
 	}
 
 
@@ -490,7 +466,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$apost   = (int) $_REQUEST['post_id'];
 			$post    = Brizy_Editor_Post::get( $apost );
 
-			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post->get_parent_id() );
+			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post->getWpPostParentId() );
 			$media_cacher->download_original_image( $_REQUEST['media'] );
 
 			$this->success( array(), 200 );
@@ -525,7 +501,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			session_write_close();
 
 			$this->verifyNonce( self::nonce );
-			$attachmentId = (int) $_REQUEST['attachment_id'];
+			$attachmentId = isset( $_REQUEST['attachment_id'] ) ? (int) $_REQUEST['attachment_id'] : null;
 
 			if ( ! $attachmentId || get_post_status( $attachmentId ) === false ) {
 				$this->error( 400, 'Invalid attachment id' );
@@ -558,7 +534,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 		if ( $postId ) {
 			$post    = Brizy_Editor_Post::get( $postId );
-			$post_ui = $post->get_uid();
+			$post_ui = $post->getUid();
 
 			$post_uids = get_post_meta( $attachmentId, 'brizy_post_uid' );
 

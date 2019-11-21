@@ -523,7 +523,7 @@ class Brizy_Admin_Templates {
 		}
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = $this->template->get_wp_post();
+		$post = $this->template->getWpPost();
 
 		if ( $pid ) {
 			$post = get_post( $pid );
@@ -555,7 +555,7 @@ class Brizy_Admin_Templates {
 
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = $this->template->get_wp_post();
+		$post = $this->template->getWpPost();
 
 		if ( $pid ) {
 			$post = get_post( $pid );

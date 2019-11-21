@@ -2,30 +2,17 @@
 
 trait Brizy_Editor_AutoSaveAware {
 
-	protected function get_last_autosave( $postParentId, $user_id ) {
-		global $wpdb;
-
-		$postParentId = (int) $postParentId;
-		$user_id      = (int) $user_id;
-
-		$query = sprintf( "SELECT ID FROM {$wpdb->posts} WHERE  post_parent = %d AND post_type= 'revision' AND post_status= 'inherit'AND post_name LIKE '%d-autosave%%'", $postParentId, $postParentId );
-
-		if ( is_integer( $user_id ) ) {
-			$query .= " AND post_author={$user_id}";
-		}
-
-		$query .= " ORDER BY post_date DESC";
-
-		return (int) $wpdb->get_var( $query );
-
-	}
-
-
+	/**
+	 * @param WP_Post $post
+	 * @param $callaback
+	 *
+	 * @return bool|WP_Error
+	 */
 	public function auto_save_post( \WP_Post $post, $callaback ) {
 		try {
 			$user_id                   = get_current_user_id();
 			$postParentId              = $post->post_parent;
-			$old_autosave              = $this->get_last_autosave( $postParentId, $user_id );
+			$old_autosave              = $this->getLastAutosave( $postParentId, $user_id );
 			$post_data                 = get_object_vars( $post );
 			$post_data['post_content'] .= "\n<!-- " . time() . "-->";
 			$autosavePost              = null;
@@ -69,7 +56,7 @@ trait Brizy_Editor_AutoSaveAware {
 				$autosavePost = self::get( $revId );
 			}
 
-			$callaback($autosavePost);
+			$callaback( $autosavePost );
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->critical( $exception );
@@ -78,12 +65,40 @@ trait Brizy_Editor_AutoSaveAware {
 		}
 	}
 
+
+	/**
+	 * @param $postId
+	 * @param $userId
+	 *
+	 * @return int|void|null
+	 * @throws Exception
+	 */
+	public static function getAutoSavePost( $postId, $userId ) {
+		$postParentId = wp_get_post_parent_id( $postId );
+		$autosave     = wp_get_post_autosave( $postParentId, $userId );
+
+		if ( ! $autosave ) {
+			return;
+		}
+
+		$post = get_post( $postId );
+
+		$postDate     = new DateTime( $post->post_modified );
+		$autosaveDate = new DateTime( $autosave->post_modified );
+
+		if ( $postDate > $autosaveDate ) {
+			return null;
+		}
+
+		return $autosave->ID;
+	}
+
 	/**
 	 * @param int $postParentId
 	 */
-	private function deleteOldAutoSaves($postParentId) {
+	private function deleteOldAutoSaves( $postParentId ) {
 		global $wpdb;
-		$user_id      = get_current_user_id();
+		$user_id = get_current_user_id();
 
 		$wpdb->query( $wpdb->prepare( "
 										DELETE FROM {$wpdb->posts} 
@@ -92,4 +107,34 @@ trait Brizy_Editor_AutoSaveAware {
 											  post_type = 'revision' and 
 											  post_name LIKE %s", $user_id, $postParentId, "{$postParentId}-autosave%" ) );
 	}
+
+	/**
+	 * @param int $postParentId
+	 * @param int $user_id
+	 *
+	 * @return int
+	 */
+	protected function getLastAutosave( $postParentId, $user_id ) {
+		global $wpdb;
+
+		$postParentId = (int) $postParentId;
+		$user_id      = (int) $user_id;
+
+		$query = sprintf( "SELECT ID FROM {$wpdb->posts} WHERE  post_parent = %d AND post_type= 'revision' AND post_status= 'inherit'AND post_name LIKE '%d-autosave%%'", $postParentId, $postParentId );
+
+		if ( is_integer( $user_id ) ) {
+			$query .= " AND post_author={$user_id}";
+		}
+
+		$query .= " ORDER BY post_date DESC";
+
+		return (int) $wpdb->get_var( $query );
+
+	}
+
+	/**
+	 * @return mixed
+	 */
+	abstract protected function populateAutoSavedData( $autosave );
+
 }

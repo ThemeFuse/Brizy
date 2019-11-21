@@ -40,4 +40,20 @@ class Brizy_Shortcode_PostInfo extends Brizy_Shortcode_PostField {
 		return $twig->render( 'post-info.html.twig', $params );
 	}
 
+	/**
+	 * @param $atts
+	 *
+	 * @return array|WP_Post|null
+	 */
+	protected function getPost( $atts ) {
+
+		if ( isset( $atts['post'] ) ) {
+			return parent::getPost( $atts );
+		} else {
+			$post = get_post();
+
+			return $post ?: null;
+		}
+	}
+
 }

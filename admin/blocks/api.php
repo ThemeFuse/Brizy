@@ -122,13 +122,13 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$rulesData = stripslashes( $this->param( 'rules' ) );
 			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
-			$this->ruleManager->addRules( $block->get_wp_post()->ID, $rules );
+			$this->ruleManager->addRules( $block->getWpPostId(), $rules );
 
 			$block->save();
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( Brizy_Editor_Block::postData( $block ) );
+			$this->success( $block->createResponse() );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -156,7 +156,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( Brizy_Editor_Block::postData( $block ) );
+			$this->success( $block->createResponse() );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -176,12 +176,17 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
+			if ( ! $this->param( 'dataVersion' ) ) {
+				$this->error( '400', 'Invalid data version' );
+			}
+
 
 			$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
 			/**
 			 * @var Brizy_Editor_Block $block ;
 			 */
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
+			$block->setDataVersion( $this->param( 'dataVersion' ) );
 			$position = stripslashes( $this->param( 'position' ) );
 
 			if ( $position ) {
@@ -192,16 +197,16 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$rulesData = stripslashes( $this->param( 'rules' ) );
 			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
-			$this->ruleManager->setRules( $block->get_wp_post()->ID, $rules );
+			$this->ruleManager->setRules( $block->getWpPostId(), $rules );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
-				$block->save(1);
+				$block->save( 1 );
 			} else {
-				$block->save(0);
+				$block->save( 0 );
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( Brizy_Editor_Block::postData( $block ) );
+			$this->success( $block->createResponse() );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
@@ -219,18 +224,27 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
+			if ( ! $this->param( 'dataVersion' ) ) {
+				$this->error( '400', 'Invalid data version' );
+			}
+
 			$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
 
+			if ( ! $block instanceof Brizy_Editor_Block ) {
+				$this->error( '404', 'Block not found' );
+			}
+
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
+			$block->setDataVersion( $this->param( 'dataVersion' ) );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
-				$block->save(1);
+				$block->save( 1 );
 			} else {
 				$block->save();
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( Brizy_Editor_Block::postData( $block ) );
+			$this->success( $block->createResponse() );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
@@ -271,6 +285,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		global $wpdb;
 
 		$this->verifyNonce( self::nonce );
+
+		if ( ! $this->param( 'dataVersion' ) ) {
+			$this->error( '400', 'Invalid data version' );
+		}
 
 		$positions      = file_get_contents( "php://input" );
 		$positionObject = json_decode( $positions );
@@ -377,6 +395,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$brizyPost = Brizy_Editor_Block::get( $post, $uid );
 			$brizyPost->set_uses_editor( true );
 			$brizyPost->set_needs_compile( true );
+			$brizyPost->setDataVersion( 1 );
 
 			return $brizyPost;
 		}

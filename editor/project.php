@@ -5,7 +5,10 @@
 include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
 include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
 
-class Brizy_Editor_Project implements Serializable {
+class Brizy_Editor_Project extends Brizy_Editor_Entity {
+
+	use Brizy_Editor_AutoSaveAware;
+
 
 	const BRIZY_PROJECT = 'brizy-project';
 
@@ -18,16 +21,6 @@ class Brizy_Editor_Project implements Serializable {
 	 * @var Brizy_Editor_API_Project
 	 */
 	protected $api_project = null;
-
-	/**
-	 * @var WP_Post
-	 */
-	protected $post = null;
-
-	/**
-	 * @var Brizy_Editor_Storage_Abstract
-	 */
-	protected $storage = null;
 
 	//---------------------------------------------------------------------------------------------------
 	protected $id;
@@ -55,42 +48,32 @@ class Brizy_Editor_Project implements Serializable {
 	 * Brizy_Editor_Project constructor.
 	 *
 	 * @param WP_Post $post
+	 *
+	 * @throws Exception
 	 */
-	protected function __construct( WP_Post $post ) {
-		$this->post    = $post;
-		$this->storage = Brizy_Editor_Storage_Project::instance( $this->post->ID );
-		$this->loadProjectData( $this->storage->get_storage() );
+	public function __construct( WP_Post $post ) {
+		$this->setWpPostId( $post->ID );
+		$this->loadInstanceData();
+	}
+
+	protected function getObjectKey() {
+		return self::BRIZY_PROJECT;
+	}
+
+	protected function loadInstanceData() {
+		$this->loadProjectData( $this->getStorage()->get_storage() );
+	}
+
+	protected function populateAutoSavedData( self $autosave ) {
+		$autosave->loadProjectData( $this->convertToOptionValue() );
+	}
+
+	public function getStorage() {
+		return Brizy_Editor_Storage_Project::instance( $this->getWpPostId() );
 	}
 
 	public static function cleanClassCache() {
 		self::$instance = array();
-	}
-
-	/**
-	 * This will be returned by api when project is requested
-	 */
-	public function create_post_data() {
-		$data = array(
-			'id'   => $this->getId(),
-			'data' => $this->getDataAsJson()
-		);
-
-		return $data;
-	}
-
-	public function serialize() {
-		$get_object_vars = get_object_vars( $this );
-
-		return serialize( $get_object_vars );
-	}
-
-	public function unserialize( $data ) {
-
-		$vars = unserialize( $data );
-
-		foreach ( $vars as $prop => $value ) {
-			$this->$prop = $value;
-		}
 	}
 
 	static public function registerCustomPostType() {
@@ -110,7 +93,6 @@ class Brizy_Editor_Project implements Serializable {
 			)
 		);
 	}
-
 
 	/**
 	 * @return Brizy_Editor_Project|mixed
@@ -150,7 +132,7 @@ class Brizy_Editor_Project implements Serializable {
 	 * @return false|WP_Post
 	 * @throws Exception
 	 */
-	static public function getPost() {
+	static protected function getPost() {
 		global $wpdb;
 
 		$row = $wpdb->get_results(
@@ -223,23 +205,37 @@ class Brizy_Editor_Project implements Serializable {
 		$storage = Brizy_Editor_Storage_Project::instance( $post_id );
 		$storage->loadStorage( $project_data );
 
+
 		return $post_id;
 	}
 
 	/**
+	 * This will be returned by api when project is requested
+	 */
+	public function createResponse() {
+		$data = array(
+			'id'          => $this->getId(),
+			'data'        => $this->getDataAsJson(),
+			'dataVersion' => $this->getCurrentDataVersion()
+		);
+
+		return $data;
+	}
+
+
+	/**
 	 * @return array
 	 */
-	protected function getProjectData() {
+	public function convertToOptionValue() {
 		return array(
 			'id'                       => $this->id,
 			'title'                    => $this->title,
-			//'globals'                  => $this->globals,
 			'name'                     => $this->name,
 			'user'                     => $this->user,
 			'template'                 => $this->template,
 			'created'                  => $this->created,
 			'updated'                  => $this->updated,
-			'languages'                => $this->languages,
+			//'languages'                => $this->languages,
 			'pluginVersion'            => $this->pluginVersion,
 			'editorVersion'            => $this->editorVersion,
 			'signature'                => $this->signature,
@@ -279,150 +275,48 @@ class Brizy_Editor_Project implements Serializable {
 	 *
 	 * @return bool
 	 */
-	public function save() {
+	public function save( $autosave = 0 ) {
 
 		try {
-			$value = $this->getProjectData();
-			$this->storage->loadStorage( $value );
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
+			parent::save($autosave);
 
-			return false;
-		}
-	}
-
-	private function get_last_autosave( $postParentId, $user_id ) {
-		global $wpdb;
-
-		$postParentId = (int) $postParentId;
-		$user_id      = (int) $user_id;
-
-		$query = sprintf( "SELECT ID FROM {$wpdb->posts} WHERE  post_parent = %d AND post_type= 'revision' AND post_status= 'inherit'AND post_name LIKE '%d-autosave%%'", $postParentId, $postParentId );
-
-		if ( is_integer( $user_id ) ) {
-			$query .= " AND post_author={$user_id}";
-		}
-
-		$query .= " ORDER BY post_date DESC";
-
-		return (int) $wpdb->get_var( $query );
-
-	}
-
-	public function auto_save_post() {
-		try {
-			$user_id      = get_current_user_id();
-			$post         = $this->post;
-			$postParentId = $this->get_parent_id();
-			$old_autosave = $this->get_last_autosave( $postParentId, $user_id );
-			//$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
-			$post_data                 = get_object_vars( $post );
-			$post_data['post_content'] = md5( time() );
-			$autosavePost              = null;
-
-			if ( $old_autosave ) {
-				$autosavePost = self::get( $old_autosave );
-			}
-
-			if ( $old_autosave ) {
-				$new_autosave                = _wp_post_revision_data( $post_data, true );
-				$new_autosave['ID']          = $old_autosave;
-				$new_autosave['post_author'] = $user_id;
-
-				// If the new autosave has the same content as the post, delete the autosave.
-				$autosave_is_different = false;
-
-				foreach ( array_intersect( array_keys( $new_autosave ), array_keys( _wp_post_revision_fields( $post ) ) ) as $field ) {
-					if ( normalize_whitespace( $new_autosave[ $field ] ) != normalize_whitespace( $post->$field ) ) {
-						$autosave_is_different = true;
-						break;
-					}
-				}
-
-				if ( ! $autosave_is_different ) {
-					wp_delete_post_revision( $old_autosave );
-
-					return new WP_Error( 'rest_autosave_no_changes',
-						__( 'There is nothing to save. The autosave and the post content are the same.' ),
-						array( 'status' => 400 ) );
-				}
-
-				/**
-				 * This filter is documented in wp-admin/post.php.
-				 */
-				do_action( 'wp_creating_autosave', $new_autosave );
-
-				// wp_update_post expects escaped array.
-				wp_update_post( wp_slash( $new_autosave ) );
-
+			if ( $autosave == 0 ) {
+				$value = $this->convertToOptionValue();
+				$this->getStorage()->loadStorage( $value );
 			} else {
-				// Create the new autosave as a special post revision.
-				$revId        = _wp_put_post_revision( $post_data, true );
-				$autosavePost = self::get( $revId );
+				$this->auto_save_post( $this->getWpPost(), function ( self $autoSaveObject ) {
+					$this->populateAutoSavedData( $autoSaveObject );
+					$autoSaveObject->save();
+				} );
 			}
-
-			// @todo: copy data to autosave instance
-			$data = $this->getProjectData();
-
-			$autosavePost->loadProjectData( $data );
-			$autosavePost->setImageOptimizerSettings( $data['image-optimizer-settings'] );
-
-			$autosavePost->save();
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 
 			return false;
 		}
+
+		return true;
 	}
+
 
 	/**
 	 * Create revision
 	 */
-	public function save_wp_post() {
+	public function savePost() {
 
-		$post_type        = $this->post->post_type;
+		$post_type        = $this->getWpPost()->post_type;
 		$post_type_object = get_post_type_object( $post_type );
 		$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
 		$post_status      = $can_publish ? 'publish' : 'pending';
 
-		$this->deleteOldAutoSaves();
+		$this->deleteOldAutoSaves( $this->getWpPostParentId() );
 
 		wp_update_post( array(
-			'ID'           => $this->get_parent_id(),
+			'ID'           => $this->getWpPostParentId(),
 			'post_status'  => $post_status,
 			'post_content' => md5( time() )
 		) );
-	}
-
-	/**
-	 * @return bool
-	 */
-	private function deleteOldAutoSaves() {
-		global $wpdb;
-		$user_id      = get_current_user_id();
-		$postParentId = $this->get_parent_id();
-
-		$wpdb->query( $wpdb->prepare( "
-										DELETE FROM {$wpdb->posts} 
-										WHERE post_author = %d and 
-											  post_parent = %d and 
-											  post_type = 'revision' and 
-											  post_name LIKE %s", $user_id, $postParentId, "{$postParentId}-autosave%" ) );
-
-	}
-
-	/**
-	 * @return false|int|mixed
-	 */
-	public function get_parent_id() {
-		$id = wp_is_post_revision( $this->post->ID );
-
-		if ( ! $id ) {
-			$id = $this->post->ID;
-		}
-
-		return $id;
 	}
 
 	/**
@@ -699,7 +593,7 @@ class Brizy_Editor_Project implements Serializable {
 		if ( $encodedData === false ) {
 			throw new Exception( 'Failed to base54 encode the project data' );
 		}
-		
+
 		$this->setData( $encodedData );
 
 		return $this;
@@ -777,6 +671,10 @@ class Brizy_Editor_Project implements Serializable {
 			$this->setCloudProject( $value );
 		}
 
+		if ( $key == 'image-optimizer-settings' ) {
+			$this->setImageOptimizerSettings( $value );
+		}
+
 		return $this->$key = $value;
 
 	}
@@ -799,6 +697,9 @@ class Brizy_Editor_Project implements Serializable {
 		}
 		if ( $key == 'brizy-cloud-project' ) {
 			$this->setCloudProject( null );
+		}
+		if ( $key == 'image-optimizer-settings' ) {
+			$this->setImageOptimizerSettings( null );
 		}
 
 		if ( isset( $this->$key ) ) {
@@ -828,6 +729,9 @@ class Brizy_Editor_Project implements Serializable {
 		if ( $key == 'brizy-cloud-project' ) {
 			return $this->getCloudProject();
 		}
+		if ( $key == 'image-optimizer-settings' ) {
+			return $this->getImageOptimizerSettings();
+		}
 
 		if ( isset( $this->$key ) ) {
 			return $this->$key;
@@ -841,13 +745,6 @@ class Brizy_Editor_Project implements Serializable {
 	 */
 	public function getApiProject() {
 		return $this->api_project;
-	}
-
-	/**
-	 * @return WP_Post
-	 */
-	public function getWpPost() {
-		return $this->post;
 	}
 
 }
