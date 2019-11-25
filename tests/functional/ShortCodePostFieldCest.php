@@ -36,7 +36,7 @@ class ShortCodePostFieldCest {
 		return [
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_content"]',
-				'output' => 'field_post_content'
+				'output' => "<p>field_post_content</p>\n"
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_title"]',
@@ -106,7 +106,7 @@ class ShortCodePostFieldCest {
 		return [
 			[
 				'input'  => '[brizy_post_field property="post_content"]',
-				'output' => 'field_post_content'
+				'output' => "<p>field_post_content</p>\n"
 			],
 			[
 				'input'  => '[brizy_post_field property="post_title"]',

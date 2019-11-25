@@ -45,7 +45,7 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 		} else {
 			$post = get_posts();
 
-			return isset($post[0]) ?$post[0]: null;
+			return isset( $post[0] ) ? $post[0] : null;
 		}
 	}
 
@@ -56,7 +56,9 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 			case 'post_excerpt':
 				return self::wp_trim_excerpt( $post->post_excerpt, $post );
 			case 'post_content':
-				return get_the_content( null, null, $post );
+				$content = apply_filters( 'the_content', $post->post_content );
+
+				return str_replace( ']]>', ']]&gt;', $content );
 			case 'post_password':
 				return '';
 			default:
@@ -91,28 +93,32 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 			/**
 			 * Filters the number of words in an excerpt.
 			 *
+			 * @param int $number The number of words. Default 55.
+			 *
 			 * @since 2.7.0
 			 *
-			 * @param int $number The number of words. Default 55.
 			 */
 			$excerpt_length = apply_filters( 'excerpt_length', 55 );
 			/**
 			 * Filters the string in the "more" link displayed after a trimmed excerpt.
 			 *
+			 * @param string $more_string The string shown within the more link.
+			 *
 			 * @since 2.9.0
 			 *
-			 * @param string $more_string The string shown within the more link.
 			 */
 			$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
 			$text         = wp_trim_words( $text, $excerpt_length, $excerpt_more );
 		}
+
 		/**
 		 * Filters the trimmed excerpt string.
 		 *
+		 * @param string $text The trimmed text.
+		 * @param string $raw_excerpt The text prior to trimming.
+		 *
 		 * @since 2.8.0
 		 *
-		 * @param string $text        The trimmed text.
-		 * @param string $raw_excerpt The text prior to trimming.
 		 */
 		return apply_filters( 'wp_trim_excerpt', $text, $raw_excerpt );
 	}
