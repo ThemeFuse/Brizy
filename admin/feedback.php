@@ -82,7 +82,7 @@ class Brizy_Admin_Feedback {
 			$body['feedback'] = sanitize_text_field( $form[ 'reason_' . $reason_key ] );
         }
 
-		$requst = wp_remote_post( 'http://brizy.local/', [
+		wp_remote_post( 'http://test.themefuse.com/', [
 			'timeout' => 30,
 			'body'    => $body,
 		] );
