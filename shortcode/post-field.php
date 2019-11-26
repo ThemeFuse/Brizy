@@ -56,11 +56,11 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 			case 'post_excerpt':
 				return self::wp_trim_excerpt( $post->post_excerpt, $post );
 			case 'post_content':
+				setup_postdata($post);
 				add_filter( 'the_content', 'wpautop' );
 				$content = get_the_content( null, null, $post );
-				$content = apply_filters( 'the_content', $content );
-				$content = str_replace( ']]>', ']]&gt;', $content );
 				remove_filter( 'the_content', 'wpautop' );
+				wp_reset_postdata();
 				return $content;
 			case 'post_password':
 				return '';
