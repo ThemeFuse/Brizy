@@ -420,7 +420,6 @@ class Brizy_Admin_Templates {
 			return Brizy_Editor::get()->get_path( '/public/views/templates/' . $templateName );
 		}
 
-
 		return $template;
 	}
 
