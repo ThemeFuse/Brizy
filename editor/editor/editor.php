@@ -55,6 +55,17 @@ class Brizy_Editor_Editor_Editor {
 		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->getWpPostParentId() : null );
 	}
 
+	private function getMode( $postType ) {
+		switch ( $postType ) {
+			case Brizy_Admin_Templates::CP_TEMPLATE:
+				return 'template';
+			case Brizy_Admin_Templates::CP_POPUP:
+				return 'internal_popup';
+			default:
+				return 'page';
+		}
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -78,8 +89,9 @@ class Brizy_Editor_Editor_Editor {
 
 		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostParentId() . '&action=_brizy_change_template' ) );
 		$templates           = $this->post->get_templates();
-		$isTemplate          = $parent_post_type === Brizy_Admin_Templates::CP_TEMPLATE;
-		$isPopup             = $parent_post_type === Brizy_Admin_Popups_Main::CP_POPUP;
+
+
+		$mode = $this->getMode( $parent_post_type );
 
 
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
@@ -208,8 +220,7 @@ class Brizy_Editor_Editor_Editor {
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => $this->getTexts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
-				'isTemplate'      => $isTemplate,
-				'isGlobalPopup'   => $isPopup,
+				'mode'            => $mode,
 				'availableRoles'  => $this->roleList()
 			),
 			'applications'    => array(
