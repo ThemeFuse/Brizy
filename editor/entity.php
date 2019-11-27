@@ -63,18 +63,29 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	abstract public function savePost();
 
 	/**
+	 * This will save ro create an autosave object the the data from entity
+	 * Also before saving the data version will be checked
+	 *
 	 * @return $this
 	 * @throws Exception
 	 */
 	public function save( $autosave = 0 ) {
 
 		// check entity versions before saving.
-
 		$this->saveDataVersion();
 		$this->createUid();
 
 		return $this;
 	}
+
+	/**
+	 * This will take all values from entity and save them to database
+	 */
+	public function saveStorage() {
+		$value = $this->convertToOptionValue();
+		$this->getStorage()->set( $this->getObjectKey(), $value );
+	}
+
 
 	/**
 	 * @return Brizy_Editor_Post[]
@@ -161,7 +172,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	 * @return $this
 	 */
 	public function setDataVersion( $dataVersion ) {
-		$this->dataVersion = (int)$dataVersion;
+		$this->dataVersion = (int) $dataVersion;
 
 		return $this;
 	}

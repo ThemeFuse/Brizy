@@ -221,23 +221,15 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 */
 	public function save( $autosave = 0 ) {
 
-		try {
-			parent::save( $autosave );
+		parent::save( $autosave );
 
-			if ( $autosave == 0 ) {
-				$value = $this->convertToOptionValue();
-				$this->getStorage()->set( self::BRIZY_POST, $value );
-			} else {
-				$this->auto_save_post( $this->getWpPost(), function ( $autosaveObject ) {
-					$autosavePost = $this->populateAutoSavedData( $autosaveObject );
-					$autosavePost->save();
-				} );
-			}
-
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-
-			return false;
+		if ( $autosave == 0 ) {
+			$this->saveStorage();
+		} else {
+			$this->auto_save_post( $this->getWpPost(), function ( $autosaveObject ) {
+				$autosavePost = $this->populateAutoSavedData( $autosaveObject );
+				$autosavePost->saveStorage();
+			} );
 		}
 
 		return true;
@@ -586,7 +578,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$storage = $this->getStorage();
 		//$storageData          = $storage->get_storage();
 		$using_editor_old = $storage->get( Brizy_Editor_Constants::USES_BRIZY, false );
-		$storage_post     = $storage->get( self::BRIZY_POST, false );
+		$storage_post     = $storage->get( $this->getObjectKey(), false );
 
 		// check for deprecated forms of posts
 		if ( $storage_post instanceof self ) {

@@ -125,7 +125,7 @@ class Brizy_Editor_Accounts_AbstractAccountManager {
 		}
 
 		$this->project->setAccounts( $data );
-		$this->project->save();
+		$this->project->saveStorage();
 	}
 
 	/**

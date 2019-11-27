@@ -59,7 +59,7 @@ trait Brizy_Editor_AutoSaveAware {
 			$callaback( $autosavePost );
 
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->critical( $exception );
+			Brizy_Logger::instance()->exception( $exception );
 
 			return false;
 		}

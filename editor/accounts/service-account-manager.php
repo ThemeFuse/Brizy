@@ -161,7 +161,7 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 		}
 
 		$this->project->setAccounts( $data );
-		$this->project->save();
+		$this->project->saveStorage();
 	}
 
 	/**

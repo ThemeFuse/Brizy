@@ -249,6 +249,7 @@ class Brizy_Editor_PostCest {
 		$stub->set_editor_data( $editor_data );
 		$stub->set_compiled_html( $html );
 		$stub->set_template( "atemplate" );
+		$stub->setDataVersion(1);
 		$stub->save();
 		$stub->savePost();
 

@@ -275,6 +275,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$data      = stripslashes( $this->param( 'data' ) );
 			$atemplate = $this->param( 'template' );
+			$dataVersion = (int) stripslashes( $this->param( 'dataVersion' ) );
 
 			if ( $atemplate ) {
 				$this->post->set_template( $atemplate );
@@ -284,6 +285,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$this->post->set_editor_data( $data );
 				$this->post->set_editor_version( BRIZY_EDITOR_VERSION );
 				$this->post->set_needs_compile( true );
+				$this->post->setDataVersion( $dataVersion );
 			}
 
 			if ( (int) $this->param( 'is_autosave' ) == 1 ) {

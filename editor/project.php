@@ -281,12 +281,11 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 			parent::save($autosave);
 
 			if ( $autosave == 0 ) {
-				$value = $this->convertToOptionValue();
-				$this->getStorage()->loadStorage( $value );
+				$this->saveStorage();
 			} else {
 				$this->auto_save_post( $this->getWpPost(), function ( self $autoSaveObject ) {
 					$this->populateAutoSavedData( $autoSaveObject );
-					$autoSaveObject->save();
+					$autoSaveObject->saveStorage();
 				} );
 			}
 
@@ -299,6 +298,10 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		return true;
 	}
 
+	public function saveStorage() {
+		$value = $this->convertToOptionValue();
+		$this->getStorage()->loadStorage( $value );
+	}
 
 	/**
 	 * Create revision
