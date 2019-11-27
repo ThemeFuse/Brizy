@@ -220,9 +220,9 @@ class Brizy_Editor_Editor_Editor {
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => $this->getTexts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
-				'mode'            => $mode,
 				'availableRoles'  => $this->roleList()
 			),
+			'mode'            => $mode,
 			'applications'    => array(
 				'form' => array(
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
