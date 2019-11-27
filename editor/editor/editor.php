@@ -59,7 +59,7 @@ class Brizy_Editor_Editor_Editor {
 		switch ( $postType ) {
 			case Brizy_Admin_Templates::CP_TEMPLATE:
 				return 'template';
-			case Brizy_Admin_Templates::CP_POPUP:
+			case Brizy_Admin_Popups_Main::CP_POPUP:
 				return 'internal_popup';
 			default:
 				return 'page';
