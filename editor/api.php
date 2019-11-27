@@ -216,7 +216,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			// update project globas
 			$meta        = stripslashes( $this->param( 'data' ) );
-			$dataVersion = (int)stripslashes( $this->param( 'dataVersion' ) );
+			$dataVersion = (int) stripslashes( $this->param( 'dataVersion' ) );
 
 			if ( ! $meta ) {
 				Brizy_Logger::instance()->error( 'Invalid project meta provided', [ 'data' => $meta ] );
@@ -256,7 +256,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	public function get_item() {
 		try {
 			$this->verifyNonce( self::nonce );
-			$this->success( $this->post->createResponse() );
+			$data             = $this->post->createResponse();
+			$data['is_index'] = true;
+			$this->success( array( $data ) );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( 500, $exception->getMessage() );

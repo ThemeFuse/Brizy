@@ -154,7 +154,7 @@ class ApiCest {
 			] ) );
 		$I->seeResponseCodeIs( 200 );
 		$response = json_decode( $I->grabResponse() );
-		$page     = (array) $response->data;
+		$page     = (array) $response->data[0];
 		$I->assertArrayHasKey( 'id', $page, 'It should return the page id' );
 		$I->assertArrayHasKey( 'data', $page, 'It should return the page data' );
 		$I->assertArrayHasKey( 'dataVersion', $page, 'It should return the page dataVersion' );
