@@ -53,6 +53,9 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	 */
 	abstract protected function loadInstanceData();
 
+	/**
+	 * @return mixed
+	 */
 	abstract public function createResponse();
 
 	/**
@@ -153,7 +156,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 				'currentVersion' => $version,
 				'newVersion'     => $this->dataVersion
 			] );
-			throw new Exception( 'Unable to save entity. The data version is wrong.' );
+			throw new Brizy_Editor_Exceptions_DataVersionMismatch( 'Unable to save entity. The data version is wrong.' );
 		}
 
 		update_post_meta( $this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, $this->dataVersion );
