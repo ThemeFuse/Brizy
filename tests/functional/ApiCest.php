@@ -9,7 +9,7 @@ class ApiCest {
 	}
 
 	/**
-	 * @param AcceptanceTester $I
+	 * @param FunctionalTester $I
 	 */
 	public function getServerTimestampTest( FunctionalTester $I ) {
 
@@ -26,6 +26,11 @@ class ApiCest {
 
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws \Gumlet\ImageResizeException
+	 */
 	public function getAttachmentUid( FunctionalTester $I ) {
 
 		$attachmentId = $I->haveAttachmentInDatabase( codecept_data_dir( 'dump.sql' ), null, [] );
@@ -65,6 +70,11 @@ class ApiCest {
 	}
 
 
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws \Gumlet\ImageResizeException
+	 */
 	public function downloadAttachmentUid( FunctionalTester $I ) {
 		$attachmentId = $I->haveAttachmentInDatabase( codecept_data_dir( 'dump.sql' ), null, [] );
 		$meta_value   = md5( $attachmentId );
@@ -104,6 +114,9 @@ class ApiCest {
 		}
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function getProjectTest( FunctionalTester $I ) {
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy_get_project',
@@ -118,6 +131,9 @@ class ApiCest {
 		$I->assertArrayHasKey( 'dataVersion', $project, 'It should return the project dataVersion' );
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function getPageTest( FunctionalTester $I ) {
 
 		$data   = 'eyJ0eXBlIjoiU2VjdGlvbiIsImJsb2NrSWQiOiJCbGFuazAwMExpZ2h0IiwidmFsdWUiOnsiX3N0eWxlcyI6WyJzZWN0aW9uIl0sIml0ZW1zIjpbeyJ0eXBlIjoiU2VjdGlvbkl0ZW0iLCJ2YWx1ZSI6eyJfc3R5bGVzIjpbInNlY3Rpb24taXRlbSJdLCJpdGVtcyI6W10sIl9pZCI6ImFsYWF5c3dlcnNxa3d0cmhxdGJxdmxjY2lqY3BzYXByaGxtcyJ9fV0sIl9pZCI6InljZ3dsd295d3l1bnRlb2NscWRkdGNyY3FxenVjeGpydWNnZSIsIl90aHVtYm5haWxTcmMiOiJxd2N2d2xzanRmdGR2cHh5Y2xkdXhqbnRkd25pcXR1aGZmaHkiLCJfdGh1bWJuYWlsV2lkdGgiOjYwMCwiX3RodW1ibmFpbEhlaWdodCI6NzAsIl90aHVtYm5haWxUaW1lIjoxNTU5ODkxMDY0OTQzfX0=';
@@ -169,5 +185,75 @@ class ApiCest {
 		$I->assertEquals( 'publish', $page['status'], 'It should return the correct status' );
 		$I->assertEquals( 0, $page['dataVersion'], 'It should return the correct dataVersion' );
 		$I->assertEquals( base64_decode( $data ), $page['data'], 'It should return the correct editor data' );
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 */
+	public function postProjectTest( FunctionalTester $I ) {
+
+		// get project
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_get_project',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$data              = $response->data;
+		$data->dataVersion += 1;
+
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_set_project',
+				'version' => BRIZY_EDITOR_VERSION
+			] ), (array) $data );
+		$I->seeResponseCodeIs( 200 );
+
+
+		// autosave
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'      => 'brizy_set_project',
+				'version'     => BRIZY_EDITOR_VERSION,
+				'is_autosave' => 1
+			] ), (array) $data );
+		$I->seeResponseCodeIs( 200 );
+
+
+		// the save should work with the latest version saved
+		$data              = $response->data;
+		$data->dataVersion += 1;
+
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_set_project',
+				'version' => BRIZY_EDITOR_VERSION
+			] ), (array) $data );
+		$I->seeResponseCodeIs( 200 );
+
+		$response = $I->grabResponse();
+
+		$response = json_decode( $response );
+	}
+
+
+	public function saveProjectWithWrongVersion( FunctionalTester $I ) {
+		// get project
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_get_project',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$data              = $response->data;
+		$data->dataVersion = 10;
+
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_set_project',
+				'version' => BRIZY_EDITOR_VERSION
+			] ), (array) $data );
+		$I->seeResponseCodeIs( 400 );
+
 	}
 }

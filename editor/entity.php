@@ -72,7 +72,10 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	public function save( $autosave = 0 ) {
 
 		// check entity versions before saving.
-		$this->saveDataVersion();
+		if ( (int) $autosave === 0 ) {
+			$this->saveDataVersion();
+		}
+
 		$this->createUid();
 
 		return $this;

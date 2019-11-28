@@ -245,7 +245,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->success( $project->createResponse() );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
+			$this->error( 400, $exception->getMessage() );
 			exit;
 		}
 	}

@@ -277,25 +277,16 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 */
 	public function save( $autosave = 0 ) {
 
-		try {
-			parent::save($autosave);
+		parent::save( $autosave );
 
-			if ( $autosave == 0 ) {
-				$this->saveStorage();
-			} else {
-				$this->auto_save_post( $this->getWpPost(), function ( self $autoSaveObject ) {
-					$this->populateAutoSavedData( $autoSaveObject );
-					$autoSaveObject->saveStorage();
-				} );
-			}
-
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-
-			return false;
+		if ( $autosave == 0 ) {
+			$this->saveStorage();
+		} else {
+			$this->auto_save_post( $this->getWpPost(), function ( self $autoSaveObject ) {
+				$this->populateAutoSavedData( $autoSaveObject );
+				$autoSaveObject->saveStorage();
+			} );
 		}
-
-		return true;
 	}
 
 	public function saveStorage() {
