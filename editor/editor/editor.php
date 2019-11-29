@@ -126,6 +126,7 @@ class Brizy_Editor_Editor_Editor {
 					'hash' => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 
+					'heartBeat'  => Brizy_Editor_API::AJAX_HEARTBEAT,
 					'getPage'    => Brizy_Editor_API::AJAX_GET,
 					'updatePage' => Brizy_Editor_API::AJAX_UPDATE,
 

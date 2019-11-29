@@ -210,6 +210,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->verifyNonce( self::nonce );
 			$data = Brizy_Editor_Project::get()->createResponse();
 
+			if ( ! Brizy_Editor::get()->checkIfProjectIsLocked() ) {
+				Brizy_Editor::get()->lockProject();
+			}
+
 			$this->success( $data );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -238,7 +242,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( '', 400 );
 			}
 
-			Brizy_Editor::get()->lockProject();
+			if ( ! Brizy_Editor::get()->checkIfProjectIsLocked() ) {
+				Brizy_Editor::get()->lockProject();
+			}
 
 			$project = Brizy_Editor_Project::get();
 			$project->setDataAsJson( $meta );
@@ -253,7 +259,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 				do_action( 'brizy_global_data_updated' );
 			}
-
 
 
 			$this->success( $project->createResponse() );
@@ -273,8 +278,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$data             = $this->post->createResponse();
 			$data['is_index'] = true;
 
-
-
 			$this->success( array( $data ) );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -290,8 +293,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 
-			$data      = stripslashes( $this->param( 'data' ) );
-			$atemplate = $this->param( 'template' );
+			$data        = stripslashes( $this->param( 'data' ) );
+			$atemplate   = $this->param( 'template' );
 			$dataVersion = (int) stripslashes( $this->param( 'dataVersion' ) );
 
 			if ( $atemplate ) {
