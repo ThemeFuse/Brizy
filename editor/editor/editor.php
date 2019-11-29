@@ -779,13 +779,13 @@ class Brizy_Editor_Editor_Editor {
 	/**
 	 * @return array
 	 */
-	private function getProjectStatus() {
+	public function getProjectStatus() {
 		$projectLockedBy = Brizy_Editor::get()->checkIfProjectIsLocked();
-		$userData        = (array) WP_User::get_data_by( 'id', $projectLockedBy );
-		unset( $userData['user_pass'] );
-		unset( $userData['user_registered'] );
-		unset( $userData['user_status'] );
-		unset( $userData['user_activation_key'] );
+		$userData        = WP_User::get_data_by( 'id', $projectLockedBy );
+		unset( $userData->user_pass );
+		unset( $userData->user_registered );
+		unset( $userData->user_status );
+		unset( $userData->user_activation_key );
 
 		return [
 			'locked'   => $projectLockedBy !== false,

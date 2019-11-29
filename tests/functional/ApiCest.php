@@ -229,12 +229,7 @@ class ApiCest {
 				'version' => BRIZY_EDITOR_VERSION
 			] ), (array) $data );
 		$I->seeResponseCodeIs( 200 );
-
-		$response = $I->grabResponse();
-
-		$response = json_decode( $response );
 	}
-
 
 	public function saveProjectWithWrongVersion( FunctionalTester $I ) {
 		// get project
@@ -254,6 +249,22 @@ class ApiCest {
 				'version' => BRIZY_EDITOR_VERSION
 			] ), (array) $data );
 		$I->seeResponseCodeIs( 400 );
+	}
 
+	public function heartBeatTest( FunctionalTester $I ) {
+		// get project
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_heartbeat',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs( 200 );
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$data = $response->data;
+
+		$I->assertFalse($data->locked,'Locked should be false');
+		$I->assertFalse($data->lockedBy,'LockedBy should be false');
 	}
 }

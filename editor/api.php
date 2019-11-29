@@ -14,6 +14,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_GET_POST_OBJECTS = 'brizy_get_posts';
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 	const AJAX_GET_TERMS = 'brizy_get_terms';
+	const AJAX_HEARTBEAT = 'brizy_heartbeat';
 	const AJAX_JWT_TOKEN = 'brizy_multipass_create';
 
 	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
@@ -56,6 +57,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	protected function initializeApiActions() {
 		if ( Brizy_Editor::is_user_allowed() ) {
+			add_action( 'wp_ajax_' . self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
@@ -81,6 +83,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	protected function getRequestNonce() {
 		return self::nonce;
+	}
+
+
+	public function heartbeat() {
+		$this->verifyNonce( self::nonce );
+
+		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
+		$this->success( $editor->getProjectStatus() );
 	}
 
 	public function timestamp() {

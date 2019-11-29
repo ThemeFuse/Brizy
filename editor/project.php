@@ -741,4 +741,6 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		return $this->api_project;
 	}
 
+
+
 }
