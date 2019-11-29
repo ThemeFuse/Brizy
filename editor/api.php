@@ -228,6 +228,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( '', 400 );
 			}
 
+			Brizy_Editor::get()->lockProject();
+
 			$project = Brizy_Editor_Project::get();
 			$project->setDataAsJson( $meta );
 			$project->setDataVersion( $dataVersion );
@@ -241,6 +243,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 				do_action( 'brizy_global_data_updated' );
 			}
+
+
 
 			$this->success( $project->createResponse() );
 		} catch ( Exception $exception ) {
