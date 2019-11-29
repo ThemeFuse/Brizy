@@ -258,6 +258,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->verifyNonce( self::nonce );
 			$data             = $this->post->createResponse();
 			$data['is_index'] = true;
+
+
+
 			$this->success( array( $data ) );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );

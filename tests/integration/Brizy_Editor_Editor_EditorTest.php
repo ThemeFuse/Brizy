@@ -42,4 +42,25 @@ class Brizy_Editor_Editor_EditorTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->tester->assertEquals( $roles, $config['wp']['availableRoles'], 'It should contain the available roles' );
 	}
+
+	public function testProjectStatus() {
+		$project = Brizy_Editor_Project::get();
+		wp_set_current_user( 1 );
+		Brizy_Editor::get()->lockProject();
+
+
+		wp_set_current_user( 2 );
+		$config = $this->editor->config();
+
+		$this->tester->assertArrayHasKey('status',$config['project'],'The project should contain a key status');
+		$this->tester->assertIsArray($config['project']['status'],'The project status should b an array');
+
+		$this->tester->assertArrayHasKey('locked',$config['project']['status'],'The project status should contain a key locked');
+		$this->tester->assertArrayHasKey('lockedBy',$config['project']['status'],'The project status should contain a key lockedBy');
+
+		$this->tester->assertTrue($config['project']['status']['locked'], 'The project should be locked' );
+	}
+
+
+
 }

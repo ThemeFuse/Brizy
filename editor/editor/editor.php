@@ -80,10 +80,13 @@ class Brizy_Editor_Editor_Editor {
 		$isPopup             = $parent_post_type === Brizy_Admin_Popups_Main::CP_POPUP;
 
 
+		$projectStatus = $this->getProjectStatus();
+
 		$config = array(
 			'user'            => array( 'role' => 'admin' ),
 			'project'         => array(
-				'id' => $this->project->getId()
+				'id'     => $this->project->getId(),
+				'status' => $projectStatus
 			),
 			'urls'            => array(
 				'site'               => home_url(),
@@ -771,5 +774,22 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		return $ruleMatches;
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getProjectStatus() {
+		$projectLockedBy = Brizy_Editor::get()->checkIfProjectIsLocked();
+		$userData        = (array)WP_User::get_data_by( 'id', $projectLockedBy );
+		unset( $userData['user_pass'] );
+		unset( $userData['user_registered'] );
+		unset( $userData['user_status'] );
+		unset( $userData['user_activation_key'] );
+
+		return [
+			'locked'   => $projectLockedBy !== false,
+			'lockedBy' => $userData,
+		];
 	}
 }
