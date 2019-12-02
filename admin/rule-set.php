@@ -23,11 +23,13 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 	}
 
 	/**
+	 * @param $context
+	 *
 	 * @return float|int
 	 */
-	public function getRuleWeight() {
-		return array_sum( array_map( function ( $v ) {
-			return $v->getRuleWeight();
+	public function getRuleWeight( $context ) {
+		return array_sum( array_map( function ( Brizy_Admin_RuleInterface $v ) use ( $context ) {
+			return $v->getRuleWeight( $context );
 		}, $this->rules ) );
 	}
 

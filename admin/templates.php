@@ -209,7 +209,7 @@ class Brizy_Admin_Templates {
 				'labels'              => $labels,
 				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'templates','brizy' ) . '.',
+				'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'templates', 'brizy' ) . '.',
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
 				'show_ui'             => true,
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
@@ -345,7 +345,7 @@ class Brizy_Admin_Templates {
 		} ) );
 	}
 
-	public function geTemplateList( $context) {
+	public function geTemplateList( $context ) {
 
 		$list = array(
 			array( 'title' => 'Author page', 'value' => 'author', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
@@ -384,7 +384,10 @@ class Brizy_Admin_Templates {
 			'post_status' => $is_preview ? 'any' : 'publish'
 		) );
 
-		$templates = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $templates );
+		$templates = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $templates, [ 'type'         => $applyFor,
+		                                                                                'entityType'   => $entityType,
+		                                                                                'entityValues' => $entityValues
+		] );
 
 		foreach ( $templates as $atemplate ) {
 			$ruleSet = $this->ruleManager->getRuleSet( $atemplate->ID );

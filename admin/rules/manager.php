@@ -52,17 +52,18 @@ class Brizy_Admin_Rules_Manager {
 
 	/**
 	 * @param $entities
+	 * @param $context
 	 *
 	 * @return mixed
 	 */
-	static function sortEntitiesByRuleWeight($entities) {
+	static function sortEntitiesByRuleWeight( $entities, $context ) {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		// sort templates by rule set weight
-		usort( $entities, function ( $t1, $t2 ) use ( $ruleManager ) {
+		usort( $entities, function ( $t1, $t2 ) use ( $ruleManager, $context ) {
 			$ruleSetT1      = $ruleManager->getRuleSet( $t1->ID );
 			$ruleSetT2      = $ruleManager->getRuleSet( $t2->ID );
-			$rule_weight_t1 = $ruleSetT1->getRuleWeight();
-			$rule_weight_t2 = $ruleSetT2->getRuleWeight();
+			$rule_weight_t1 = $ruleSetT1->getRuleWeight( $context );
+			$rule_weight_t2 = $ruleSetT2->getRuleWeight( $context );
 			if ( $rule_weight_t1 == $rule_weight_t2 ) {
 				return 0;
 			}
@@ -126,7 +127,7 @@ class Brizy_Admin_Rules_Manager {
 
 			foreach ( $meta_value as $v ) {
 				$brizy_admin_rule = Brizy_Admin_Rule::createFromSerializedData( $v );
-				$rules[] = $brizy_admin_rule;
+				$rules[]          = $brizy_admin_rule;
 			}
 		}
 

@@ -26,7 +26,7 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
-		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), -999999, 4 );
+		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), - 999999, 4 );
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
 
 		if ( is_admin() ) {
@@ -74,7 +74,7 @@ class Brizy_Admin_Popups_Main {
 				'has_archive'         => false,
 				'description'         => __( 'Popups', 'brizy' ),
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
-				'show_ui'             => defined('BRIZY_PRO_VERSION'),
+				'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => 'brizy-popup' ),
@@ -189,7 +189,11 @@ class Brizy_Admin_Popups_Main {
 			'post_status' => 'publish'
 		) );
 
-		$allPopups = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $allPopups );
+		$allPopups = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $allPopups, [
+			'type'         => $applyFor,
+			'entityType'   => $entityType,
+			'entityValues' => $entityValues
+		] );
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		foreach ( $allPopups as $aPopup ) {
