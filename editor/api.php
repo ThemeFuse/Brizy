@@ -88,7 +88,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	public function heartbeat() {
 		$this->verifyNonce( self::nonce );
-
+		Brizy_Editor::get()->lockProject();
 		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
 		$this->success( $editor->getProjectStatus() );
 	}
