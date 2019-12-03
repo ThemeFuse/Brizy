@@ -86,7 +86,7 @@ class Brizy_Editor_Editor_Editor {
 			'project'         => array(
 				'id'                => $this->project->getId(),
 				'status'            => $this->getProjectStatus(),
-				'heartBeatInterval' => $heartBeatInterval > 10 && $heartBeatInterval < 30 ? $heartBeatInterval : 30
+				'heartBeatInterval' => ( $heartBeatInterval > 10 && $heartBeatInterval < 30 ? $heartBeatInterval : 30 ) * 1000
 			),
 			'urls'            => array(
 				'site'               => home_url(),
