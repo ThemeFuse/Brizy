@@ -416,7 +416,10 @@
 .brz-feedback-submit:focus {
     opacity: 0.9;
     background-color: #05b3e6;
-    color: #fff;
+    color: #fff !important;
+}
+.brz-feedback-submit:disabled:hover {
+    color: #a4afb7 !important;
 }
 .brz-feedback-skip {
     font-size: 12px;
@@ -427,9 +430,13 @@
     border:none;
     box-shadow: none;
 }
-.brz-feedback-skip:hover {
+.brz-feedback-skip:hover,
+.brz-feedback-skip:active,
+.brz-feedback-skip:focus {
     opacity: 0.8;
     color: #a4afb7;
+    background: none;
+    box-shadow: none;
 }
 .brz-feedback-text {
     margin: 10px 0 0 30px;
