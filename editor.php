@@ -273,6 +273,8 @@ class Brizy_Editor {
 			if ( is_admin() ) {
 				Brizy_Admin_Main::instance();
 				Brizy_Admin_Settings::_init();
+
+				$this->initFeedback();
 			}
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
@@ -477,6 +479,25 @@ class Brizy_Editor {
 			Brizy_Editor_Storage_Common::instance()->set( self::$settings_key, $this->default_supported_post_types() );
 
 			return $this->default_supported_post_types();
+		}
+	}
+
+	private function initFeedback() {
+
+		$feedback = true;
+
+		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
+
+			$whiteLabel = BrizyPro_Admin_WhiteLabel::_init();
+			$callable   = is_callable( [ $whiteLabel, 'getEnabled' ] );
+
+			if ( ( $callable && $whiteLabel->getEnabled() ) || ! $callable ) {
+				$feedback = false;
+			}
+		}
+
+		if ( $feedback ) {
+			new Brizy_Admin_Feedback();
 		}
 	}
 }

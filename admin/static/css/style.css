@@ -300,3 +300,195 @@
 .brizy-dashboard-widget-footer__go-pro:hover {
     fill: #00a0d2;
 }
+
+/* Admin notice give us a rating */
+.brz-review-notice-container {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+}
+.brz-review-notice-container .dashicons {
+    font-size: 1.4em;
+    padding-left: 10px;
+}
+.brz-review-notice-container a {
+    padding-left: 5px;
+    text-decoration: none;
+}
+.brz-review-notice-container .dashicons:first-child {
+    padding-left: 0;
+}
+.brz-notice-image {
+    max-width: 100px;
+}
+
+.brz-notice-content .brz-notice-heading {
+    padding-bottom: 5px;
+}
+.brz-notice-content {
+    margin-left: 15px;
+}
+.brz-notice-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+/* Admin deactivate plugin modal */
+.brz-deactivate-modal {
+    border-radius:3px;
+    animation: brz-feedback-modal-fadein .5s linear;
+}
+.brz-deactivate-overlay {
+    animation: brz-feedback-overlay-fadein .5s linear;
+}
+.brz-deactivate-feedback-dialog-logo {
+    width: 40px;
+    vertical-align: middle;
+}
+.brz-deactivate-modal .ui-dialog-titlebar {
+    display: none;
+}
+.brz-deactivate-modal .ui-dialog-content {
+    padding: 0;
+}
+.brz-deactivate-feedback-dialog-header {
+    padding: 18px 15px;
+    box-shadow: 0 0 8px rgba(0,0,0,.1);
+    text-align: left;
+}
+.brz-deactivate-feedback-dialog-header-title {
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-left: 5px;
+    color: #495157;
+}
+.brz-deactivate-feedback-dialog-form {
+    padding: 30px;
+    text-align: left;
+}
+.brz-deactivate-feedback-dialog-form-caption {
+    font-weight: 700;
+    font-size: 15px;
+    color: #495157;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+.brz-deactivate-feedback-dialog-input {
+    float: left;
+    margin: 0 15px 0 0;
+    box-shadow: none;
+}
+.brz-deactivate-feedback-dialog-label {
+    display: block;
+    font-size: 13px;
+    color: #6d7882;
+}
+#brz-deactivate-feedback-dialog .brz-deactivate-feedback-dialog-input {
+    float: left;
+    margin: 0 15px 0 0;
+    box-shadow: none;
+}
+.brz-deactivate-feedback-dialog-input-wrapper {
+    line-height: 1.3;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.brz-deactivate-modal .ui-dialog-buttonpane {
+    border: none;
+    padding-bottom: 30px;
+    border-radius:3px;
+}
+.brz-deactivate-modal .ui-dialog-buttonset {
+    float:none;
+}
+.brz-feedback-submit {
+    background-color: #05b3e6;
+    color: #fff;
+    width: 180px;
+    height: 38px;
+    border:none;
+}
+.brz-feedback-submit:hover,
+.brz-feedback-submit:focus {
+    opacity: 0.9;
+    background-color: #05b3e6;
+    color: #fff;
+}
+.brz-feedback-skip {
+    font-size: 12px;
+    color: #a4afb7;
+    background: none;
+    float: right;
+    width: auto;
+    border:none;
+    box-shadow: none;
+}
+.brz-feedback-skip:hover {
+    opacity: 0.8;
+    color: #a4afb7;
+}
+.brz-feedback-text {
+    margin: 10px 0 0 30px;
+    padding: 5px;
+    font-size: 13px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: #fff;
+    width: 92%;
+}
+.brz-feedback-text-alert {
+    max-width: fit-content;
+    color: #b01b1b;
+    padding: 0;
+}
+@-webkit-keyframes brz-feedback-modal-fadein {
+    0% {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes brz-feedback-overlay-fadein {
+    0% {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.7;
+    }
+}
+@-webkit-keyframes brz-rotation {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes brz-rotation {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+.brz-loading:before {
+    display: inline-block;
+    content: "\f463";
+    font: 18px dashicons;
+    animation: brz-rotation 2s linear infinite;
+    margin-top:10px;
+}
