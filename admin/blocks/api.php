@@ -176,7 +176,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
-			if ( ! $this->param( 'dataVersion' ) ) {
+			if ( $this->param( 'dataVersion' ) === null ) {
 				$this->error( '400', 'Invalid data version' );
 			}
 
@@ -224,7 +224,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data' );
 			}
 
-			if ( ! $this->param( 'dataVersion' ) ) {
+			if ( $this->param( 'dataVersion' ) === null ) {
 				$this->error( '400', 'Invalid data version' );
 			}
 
@@ -286,7 +286,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		$this->verifyNonce( self::nonce );
 
-		if ( ! $this->param( 'dataVersion' ) ) {
+		if ( $this->param( 'dataVersion' ) === null ) {
 			$this->error( '400', 'Invalid data version' );
 		}
 
