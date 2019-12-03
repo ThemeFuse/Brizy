@@ -72,6 +72,7 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 function brizy_install() {
 	Brizy_Logger::install();
 	Brizy_Editor::get()->registerCustomPostTemplates();
+	Brizy_Editor::get()->reorderDashboardWidgets();
 	add_option('brizy-regenerate-permalinks',1);
 }
 
