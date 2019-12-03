@@ -256,7 +256,7 @@ class Brizy_Admin_Main {
 			Brizy_Editor::get()->get_slug() . '-admin-css',
 			Brizy_Editor::get()->get_url( 'admin/static/css/style.css' ),
 			array(),
-			true
+			Brizy_Editor::get()->get_version()
 		);
 		wp_enqueue_style(
 			Brizy_Editor::get()->get_slug() . '-select2',
