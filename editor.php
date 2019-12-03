@@ -131,7 +131,6 @@ class Brizy_Editor {
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
 
-
 	public function wordpressObjectCreated() {
 		$pid  = Brizy_Editor::get()->currentPostId();
 		$post = null;
@@ -209,7 +208,7 @@ class Brizy_Editor {
 		Brizy_Admin_Popups_Main::registerSupportedPostType();
 	}
 
-	public function reorder_dashboard_widgets() {
+	public function reorderDashboardWidgets() {
 		$meta   = get_user_meta( get_current_user_id(), 'meta-box-order_dashboard', true );
 		$normal = explode( ',', $meta['normal'] );
 		// If you enable Brizy the second time we already have the id, so we need to remove it.
