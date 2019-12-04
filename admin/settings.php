@@ -99,7 +99,7 @@ class Brizy_Admin_Settings {
 	 * @internal
 	 */
 	function actionRegisterRoleManagerPage() {
-		add_submenu_page( self::menu_slug(), __( 'Role Manager' ), __( 'Role Manager' ), 'manage_options', self::menu_slug(), array(
+		add_submenu_page( self::menu_slug(), __( 'Settings', 'brizy' ), __( 'Settings', 'brizy' ), 'manage_options', self::menu_slug(), array(
 			$this,
 			'render'
 		) );
@@ -151,7 +151,7 @@ class Brizy_Admin_Settings {
 
 		);
 
-		return apply_filters( 'brizy_settings_tabs', $tabs );
+		return apply_filters( 'brizy_settings_tabs', $tabs, $selected_tab );
 	}
 
 	private function get_tab_content( $tab ) {
@@ -327,7 +327,7 @@ class Brizy_Admin_Settings {
 	public function render_tab_content() {
 		$tab = $this->get_selected_tab();
 
-		echo apply_filters( 'brizy_settings_render_tab', $this->get_tab_content( $tab ) );
+		echo apply_filters( 'brizy_settings_render_tab', $this->get_tab_content( $tab ), $tab );
 	}
 
 
