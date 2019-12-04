@@ -71,7 +71,6 @@ class Brizy_Admin_Main {
 
 		add_filter( 'wp_import_posts', array( $this, 'handlePostsImport' ) );
 
-
 		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
 
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );

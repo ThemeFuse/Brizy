@@ -40,6 +40,7 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.6.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
+
 		return;
 	}
 
@@ -62,7 +63,7 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
 		foreach ( $options['plugins'] as $plugin ) {
 			if ( $plugin == BRIZY_PLUGIN_BASE ) {
-				flush_rewrite_rules();
+				flush_rewrite_rules( );
 			}
 		}
 	}
@@ -71,7 +72,7 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 function brizy_install() {
 	Brizy_Logger::install();
 	Brizy_Editor::get()->registerCustomPostTemplates();
-	flush_rewrite_rules();
+	flush_rewrite_rules( );
 }
 
 function brizy_clean() {
