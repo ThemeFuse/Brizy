@@ -267,4 +267,5 @@ class ApiCest {
 		$I->assertFalse($data->locked,'Locked should be false');
 		$I->assertFalse($data->lockedBy,'LockedBy should be false');
 	}
+
 }

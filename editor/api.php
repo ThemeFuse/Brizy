@@ -88,7 +88,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	public function heartbeat() {
 		$this->verifyNonce( self::nonce );
-		Brizy_Editor::get()->lockProject();
+
+		if(Brizy_Editor::get()->checkIfProjectIsLocked()===false)
+		{
+		    Brizy_Editor::get()->lockProject();
+		}
 		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
 		$this->success( $editor->getProjectStatus() );
 	}
@@ -242,7 +246,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( '', 400 );
 			}
 
-			if ( ! Brizy_Editor::get()->checkIfProjectIsLocked() ) {
+			if ( Brizy_Editor::get()->checkIfProjectIsLocked()===false ) {
 				Brizy_Editor::get()->lockProject();
 			}
 
