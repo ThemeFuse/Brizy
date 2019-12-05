@@ -214,7 +214,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->verifyNonce( self::nonce );
 			$data = Brizy_Editor_Project::get()->createResponse();
 
-			if ( ! Brizy_Editor::get()->checkIfProjectIsLocked() ) {
+			if ( Brizy_Editor::get()->checkIfProjectIsLocked()===false ) {
 				Brizy_Editor::get()->lockProject();
 			}
 
@@ -246,10 +246,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( '', 400 );
 			}
 
-			if ( Brizy_Editor::get()->checkIfProjectIsLocked()===false ) {
-				Brizy_Editor::get()->lockProject();
-			}
-
 			$project = Brizy_Editor_Project::get();
 			$project->setDataAsJson( $meta );
 			$project->setDataVersion( $dataVersion );
@@ -260,7 +256,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			} else {
 				$project->save();
 				$project->savePost();
-
+				Brizy_Editor::get()->lockProject();
 				do_action( 'brizy_global_data_updated' );
 			}
 
