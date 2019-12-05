@@ -127,6 +127,7 @@ class Brizy_Editor_Editor_Editor {
 					'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 
 					'heartBeat'  => Brizy_Editor_API::AJAX_HEARTBEAT,
+					'takeOver'   => Brizy_Editor_API::AJAX_TAKE_OVER,
 					'getPage'    => Brizy_Editor_API::AJAX_GET,
 					'updatePage' => Brizy_Editor_API::AJAX_UPDATE,
 

@@ -252,6 +252,7 @@ class ApiCest {
 	}
 
 	public function heartBeatTest( FunctionalTester $I ) {
+
 		// get project
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy_heartbeat',
@@ -264,8 +265,34 @@ class ApiCest {
 
 		$data = $response->data;
 
-		$I->assertFalse($data->locked,'Locked should be false');
-		$I->assertFalse($data->lockedBy,'LockedBy should be false');
+		$I->assertFalse( $data->locked, 'Locked should be false' );
+		$I->assertFalse( $data->lockedBy, 'LockedBy should be false' );
+	}
+
+
+	public function takeOverTest( FunctionalTester $I ) {
+
+		$project = Brizy_Editor_Project::get();
+		$I->havePostmetaInDatabase(
+			$project->getWpPostId(),
+			'_edit_lock',
+			time() . ':2'
+		);
+
+		// get project
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_take_over',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs( 200 );
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$data = $response->data;
+
+		$I->assertFalse( $data->locked, 'Locked should be false' );
+		$I->assertFalse( $data->lockedBy, 'LockedBy should be false' );
 	}
 
 }

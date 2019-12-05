@@ -15,6 +15,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 	const AJAX_GET_TERMS = 'brizy_get_terms';
 	const AJAX_HEARTBEAT = 'brizy_heartbeat';
+	const AJAX_TAKE_OVER = 'brizy_take_over';
 	const AJAX_JWT_TOKEN = 'brizy_multipass_create';
 
 	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
@@ -58,6 +59,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	protected function initializeApiActions() {
 		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'wp_ajax_' . self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
+			add_action( 'wp_ajax_' . self::AJAX_TAKE_OVER, array( $this, 'takeOver' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
@@ -89,10 +91,18 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	public function heartbeat() {
 		$this->verifyNonce( self::nonce );
 
-		if(Brizy_Editor::get()->checkIfProjectIsLocked()===false)
-		{
-		    Brizy_Editor::get()->lockProject();
+		if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
+			Brizy_Editor::get()->lockProject();
 		}
+		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
+		$this->success( $editor->getProjectStatus() );
+	}
+
+	public function takeOver() {
+		$this->verifyNonce( self::nonce );
+
+		Brizy_Editor::get()->lockProject();
+
 		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
 		$this->success( $editor->getProjectStatus() );
 	}
@@ -214,7 +224,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->verifyNonce( self::nonce );
 			$data = Brizy_Editor_Project::get()->createResponse();
 
-			if ( Brizy_Editor::get()->checkIfProjectIsLocked()===false ) {
+			if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
 				Brizy_Editor::get()->lockProject();
 			}
 
