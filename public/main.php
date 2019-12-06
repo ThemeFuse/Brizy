@@ -340,7 +340,7 @@ class Brizy_Public_Main {
 			$compiled_html_head = $this->post->get_compiled_html_head();
 			$compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_head );
 			$this->post->set_needs_compile( true )
-			           ->save();
+			           ->saveStorage();
 
 			$params['content'] = $compiled_html_head;
 		} else {
@@ -374,7 +374,7 @@ class Brizy_Public_Main {
 		if ( ! $this->post->get_compiled_html() ) {
 			$compiled_html_body = $this->post->get_compiled_html_body();
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
-			$this->post->set_needs_compile( true )->save();
+			$this->post->set_needs_compile( true )->saveStorage();
 		} else {
 			$compiled_page = $this->post->get_compiled_page();
 			$content       = $compiled_page->get_body();
