@@ -128,6 +128,7 @@ class Brizy_Editor_Editor_Editor {
 
 					'heartBeat'  => Brizy_Editor_API::AJAX_HEARTBEAT,
 					'takeOver'   => Brizy_Editor_API::AJAX_TAKE_OVER,
+					'removeLock' => Brizy_Editor_API::AJAX_REMOVE_LOCK,
 					'getPage'    => Brizy_Editor_API::AJAX_GET,
 					'updatePage' => Brizy_Editor_API::AJAX_UPDATE,
 

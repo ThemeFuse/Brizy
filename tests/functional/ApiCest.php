@@ -269,6 +269,36 @@ class ApiCest {
 		$I->assertFalse( $data->lockedBy, 'LockedBy should be false' );
 	}
 
+	public function removeLockTest( FunctionalTester $I ) {
+
+		$project = Brizy_Editor_Project::get();
+		$I->havePostmetaInDatabase(
+			$project->getWpPostId(),
+			'_edit_lock',
+			time() . ':1'
+		);
+
+		// get project
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy_remove_lock',
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs( 200 );
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$data = $response->data;
+
+		$I->assertFalse( $data->locked, 'Locked should be false' );
+		$I->assertFalse( $data->lockedBy, 'LockedBy should be false' );
+
+		$I->dontSeePostMetaInDatabase( [
+			'post_id'  => $project->getWpPostId(),
+			'meta_key' => '_edit_lock',
+		] );
+	}
+
 
 	public function takeOverTest( FunctionalTester $I ) {
 

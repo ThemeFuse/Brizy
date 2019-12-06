@@ -489,6 +489,10 @@ class Brizy_Editor {
 		wp_set_post_lock( Brizy_Editor_Project::get()->getWpPostId() );
 	}
 
+	public function removeProjectLock() {
+		delete_post_meta( Brizy_Editor_Project::get()->getWpPostId(), '_edit_lock' );
+	}
+
 	public function checkIfProjectIsLocked() {
 		if ( ! function_exists( 'wp_check_post_lock' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/post.php';

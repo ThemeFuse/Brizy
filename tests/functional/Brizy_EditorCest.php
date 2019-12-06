@@ -34,6 +34,22 @@ class Brizy_EditorCest {
 		] );
 	}
 
+	public function testRemoveProjectLock( FunctionalTester $I ) {
+
+		$project = Brizy_Editor_Project::get();
+		$I->havePostmetaInDatabase(
+			$project->getWpPostId(),
+			'_edit_lock',
+			time() . ':' . $this->userId1
+		);
+
+		Brizy_Editor::get()->removeProjectLock();
+		$I->dontSeePostMetaInDatabase( [
+			'post_id'  => $project->getWpPostId(),
+			'meta_key' => '_edit_lock',
+		] );
+	}
+
 	public function testNoProjectLock( FunctionalTester $I ) {
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
 		$I->assertFalse( $check, 'It should be return false as the project is not locked' );
