@@ -41,7 +41,7 @@ class Brizy_Admin_Templates {
 			add_action( 'admin_init', array( $this, 'addTemplateRoleCaps' ), 10000 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
 		} elseif ( ! defined( 'DOING_AJAX' ) && ! is_admin() ) {
-			add_action( 'wp', array( $this, 'templateFrontEnd' ) );
+			add_action( 'template_redirect', array( $this, 'templateFrontEnd' ) );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 20000 );
 		}
 	}
@@ -433,7 +433,6 @@ class Brizy_Admin_Templates {
 				$is_using_brizy = Brizy_Editor_Post::get( $pid )->uses_editor();
 			}
 		} catch ( Exception $e ) {
-
 		}
 		try {
 
