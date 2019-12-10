@@ -9,8 +9,8 @@ export function styleShapeTopType({ v, device, state }) {
 
 export function styleShapeTopSvg({ v, device, state }) {
   const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `shapeTopColorHex`, device, state }),
-    defaultValueValue({ v, key: `shapeTopColorPalette`, device, state })
+    defaultValueValue({ v, key: "shapeTopColorHex", device, state }),
+    defaultValueValue({ v, key: "shapeTopColorPalette", device, state })
   );
 
   const shapeTopColorOpacity = defaultValueValue({
@@ -57,8 +57,8 @@ export function styleShapeBottomType({ v, device, state }) {
 
 export function styleShapeBottomSvg({ v, device, state }) {
   const { hex: shapeBottomColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `shapeBottomColorHex`, device, state }),
-    defaultValueValue({ v, key: `shapeBottomColorPalette`, device, state })
+    defaultValueValue({ v, key: "shapeBottomColorHex", device, state }),
+    defaultValueValue({ v, key: "shapeBottomColorPalette", device, state })
   );
   const shapeBottomColorOpacity = defaultValueValue({
     v,

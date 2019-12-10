@@ -75,22 +75,22 @@ module.exports = {
                                         "value": {
                                             "_styles": [
                                                 "wrapper",
-                                                "wrapper--iconText"
+                                                "wrapper--form2"
                                             ],
                                             "items": [
                                                 {
-                                                    "type": "Form",
+                                                    "type": "Form2",
                                                     "value": {
                                                         "_styles": [
-                                                            "form"
+                                                            "form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "FormFields",
+                                                                "type": "Form2Fields",
                                                                 "value": {
                                                                     "items": [
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
                                                                                 "type": "Email",
                                                                                 "label": "EMAIL ADDRESS",
@@ -98,34 +98,57 @@ module.exports = {
                                                                                 "options": [
                                                                                     "Option 1",
                                                                                     "Option 2"
-                                                                                ]
+                                                                                ],
+                                                                                "placeholder": "EMAIL ADDRESS"
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
-                                                                                "type": "Text",
+                                                                                "type": "Password",
                                                                                 "label": "PASSWORD",
-                                                                                "required": "off",
+                                                                                "required": "on",
                                                                                 "options": [
                                                                                     "Option 1",
                                                                                     "Option 2"
-                                                                                ]
+                                                                                ],
+                                                                                "placeholder": "PASSWORD"
                                                                             }
                                                                         }
                                                                     ],
                                                                     "fontStyle": "abovetitle",
-                                                                    "fontSize": 17,
-                                                                    "fontFamily": "overpass",
-                                                                    "fontFamilyType": "google",
-                                                                    "lineHeight": 1.4,
-                                                                    "letterSpacing": 0,
-                                                                    "fontWeight": 400,
-                                                                    "colorHex": "#666666",
-                                                                    "colorOpacity": 0.46,
-                                                                    "tempColorOpacity": 0.46,
+                                                                    "borderRadius": 4,
+                                                                    "borderTopLeftRadius": 4,
+                                                                    "borderTopRightRadius": 4,
+                                                                    "borderBottomLeftRadius": 4,
+                                                                    "borderBottomRightRadius": 4,
+                                                                    "tempBorderRadius": 4,
+                                                                    "tempBorderTopLeftRadius": 4,
+                                                                    "tempBorderTopRightRadius": 4,
+                                                                    "tempBorderBottomLeftRadius": 4,
+                                                                    "tempBorderBottomRightRadius": 4,
+                                                                    "borderStyle": 0,
+                                                                    "borderWidth": 0,
+                                                                    "borderTopWidth": 0,
+                                                                    "borderRightWidth": 0,
+                                                                    "borderBottomWidth": 0,
+                                                                    "borderLeftWidth": 0,
+                                                                    "tempBorderTopWidth": 1,
+                                                                    "tempBorderRightWidth": 1,
+                                                                    "tempBorderBottomWidth": 1,
+                                                                    "tempBorderLeftWidth": 1,
+                                                                    "borderColorOpacity": 0,
+                                                                    "borderColorPalette": "",
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "",
                                                                     "colorPalette": "color7",
-                                                                    "tempColorPalette": "color7"
+                                                                    "tempColorPalette": "color7",
+                                                                    "colorOpacity": 0.5,
+                                                                    "colorHex": "#666666",
+                                                                    "tempColorOpacity": 0.5,
+                                                                    "borderColorHex": "#dcdee1",
+                                                                    "tempBorderColorOpacity": 1,
+                                                                    "tempBorderColorPalette": ""
                                                                 }
                                                             },
                                                             {
@@ -135,24 +158,9 @@ module.exports = {
                                                                         "button",
                                                                         "submit"
                                                                     ],
+                                                                    "text": "Create Free Account",
                                                                     "iconName": "",
                                                                     "iconType": "",
-                                                                    "borderRadiusType": "custom",
-                                                                    "tempBorderRadiusType": "custom",
-                                                                    "paddingRight": 26,
-                                                                    "paddingLeft": 26,
-                                                                    "fillType": "filled",
-                                                                    "borderRadius": 4,
-                                                                    "borderWidth": 2,
-                                                                    "borderColorOpacity": 0,
-                                                                    "borderColorPalette": 0,
-                                                                    "bgColorOpacity": 1,
-                                                                    "bgColorPalette": "color3",
-                                                                    "hoverBgColorOpacity": 0.8,
-                                                                    "hoverBorderColorOpacity": 0.8,
-                                                                    "tempBorderWidth": 2,
-                                                                    "tempBorderRadius": 4,
-                                                                    "text": "Create Free Account",
                                                                     "size": "small",
                                                                     "fontSize": 11,
                                                                     "paddingTB": 11,
@@ -162,25 +170,37 @@ module.exports = {
                                                                     "tempPaddingTop": 11,
                                                                     "tempPaddingBottom": 11,
                                                                     "paddingRL": 26,
+                                                                    "paddingRight": 26,
+                                                                    "paddingLeft": 26,
                                                                     "tempPaddingRL": 26,
                                                                     "tempPaddingRight": 26,
                                                                     "tempPaddingLeft": 26,
+                                                                    "borderRadius": 4,
+                                                                    "borderWidth": 0,
                                                                     "tabsState": "",
                                                                     "tabsColor": "",
                                                                     "colorPalette": "color2",
-                                                                    "colorOpacity": 1
+                                                                    "colorOpacity": 1,
+                                                                    "borderRadiusType": "custom",
+                                                                    "tempBorderRadiusType": "custom",
+                                                                    "fillType": "filled",
+                                                                    "borderColorOpacity": 0,
+                                                                    "borderColorPalette": 0,
+                                                                    "bgColorOpacity": 1,
+                                                                    "bgColorPalette": "color3",
+                                                                    "hoverBgColorOpacity": 0.8,
+                                                                    "hoverBorderColorOpacity": 0.8,
+                                                                    "tempBorderRadius": 4,
+                                                                    "tempBorderWidth": 2
                                                                 }
                                                             }
                                                         ],
+                                                        "submitWidth": 70,
+                                                        "tabletSubmitWidth": 75,
                                                         "mobileHorizontalAlign": "center"
                                                     }
                                                 }
-                                            ],
-                                            "paddingType": "ungrouped",
-                                            "paddingRightSuffix": "px",
-                                            "paddingRight": 0,
-                                            "padding": 0,
-                                            "paddingSuffix": "px"
+                                            ]
                                         }
                                     },
                                     {
@@ -391,7 +411,7 @@ module.exports = {
         "bgColorHex": "#a170d9",
         "bgColorOpacity": 0,
         "tempBgColorOpacity": 0.61,
-        "popupId": "tpdrqwyeydeffsqjtyjxrkgsqskhxpeywscx",
+        "popupId": "odophebamaijpwrjrglbkcbzthdtnaevqaay",
         "tempBgColorPalette": "color1",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,

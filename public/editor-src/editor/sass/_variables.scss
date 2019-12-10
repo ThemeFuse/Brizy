@@ -7,6 +7,7 @@ $brand-primary-pro: #d62c64;
 $brand-options-border: rgba(255, 255, 255, 0.1);
 $link-color: $brand-primary;
 $link-hover-color: darken($brand-primary, 10%);
+$required: #ff0e0e;
 
 // Options
 //
@@ -35,6 +36,8 @@ $z-indexes: (
   "sidebar": 1060,
   "toolbar-collapsible": 1050,
   "section-menu": 1050,
+  "section-popup": 1060,
+  "forms-select": 1065,
   "toolbar-column": 1040,
   "tooltip-overlay": 1100,
   "cloneable-bar": 1030,

@@ -1,12 +1,11 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import EditorIcon from "visual/component/EditorIcon";
 import ClickOutside from "visual/component/ClickOutside";
 import ToolbarItems from "./ToolbarItems";
 import monitor from "./monitor";
-
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const animationClassName = {
   leftToRight: "animation-left-right",
@@ -51,9 +50,7 @@ class CollapsibleToolbar extends React.Component {
     monitor.unsetIfActive(this);
 
     if (this.state.opened) {
-      this.setState({
-        opened: false
-      });
+      this.setState({ opened: false });
       this.props.onClose();
     }
   };

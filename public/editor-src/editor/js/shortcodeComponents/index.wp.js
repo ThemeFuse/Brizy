@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import nonWP from "./index.js";
 // import WPPosts from "./WordPress/WPPosts";
 import WPSidebar from "./WordPress/WPSidebar";
@@ -11,13 +12,17 @@ import WOOPages from "./WordPress/WOOPages";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 
+const IS_PRO = Config.get("pro");
+
 export default {
   ...nonWP,
   social: [],
-  wp: [
+  wordpress: [
     ...(hasSidebars() ? [WPSidebar] : []),
     WPCustomShortcode,
-    WPNavigation,
+    ...(!IS_PRO ? [WPNavigation] : [])
+  ],
+  woocommerce: [
     ...(pluginActivated("woocommerce")
       ? [WOOProducts, WOOProductPage, WOOCategories, WOOPages]
       : [])

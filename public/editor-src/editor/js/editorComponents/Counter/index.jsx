@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "underscore";
-import ReactDOM from "react-dom";
 import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -18,6 +17,8 @@ class Counter extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  content = React.createRef();
+
   componentDidMount() {
     this.updateCounter();
   }
@@ -34,25 +35,28 @@ class Counter extends EditorComponent {
 
   updateCounter = _.debounce(() => {
     const { start, end, duration } = this.getValue();
-    const $node = jQuery(ReactDOM.findDOMNode(this));
-    jQuery({ countNum: Number(start) }).animate(
-      {
-        countNum: Number(end)
-      },
-      {
-        duration: Number(duration * 1000),
-        queue: false,
-        easing: "linear",
+    const node = this.content.current;
 
-        step: function() {
-          $node.text(Math.floor(this.countNum));
-        },
+    if (node) {
+      const $node = jQuery(node);
 
-        complete: function() {
-          $node.text(this.countNum);
+      jQuery({ countNum: Number(start) }).animate(
+        { countNum: Number(end) },
+        {
+          duration: Number(duration * 1000),
+          queue: false,
+          easing: "linear",
+
+          step: function() {
+            $node.text(Math.floor(this.countNum));
+          },
+
+          complete: function() {
+            $node.text(this.countNum);
+          }
         }
-      }
-    );
+      );
+    }
   }, 1000);
 
   renderForEdit(v, vs, vd) {
@@ -71,6 +75,7 @@ class Counter extends EditorComponent {
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div
+            ref={this.content}
             className={className}
             data-start={start}
             data-end={end}

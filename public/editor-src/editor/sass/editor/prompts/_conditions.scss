@@ -9,7 +9,8 @@
   font-family: $font-family-1;
   font-size: 13px;
   font-weight: 600;
-  padding-bottom: 10px !important;
+  padding-bottom: 15px !important;
+  padding-top: 15px !important;
 }
 
 .brz-ed-popup-conditions {
@@ -22,7 +23,7 @@
   }
 
   &__condition {
-    padding: 10px 0;
+    padding: 15px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     align-items: center;
 
@@ -46,10 +47,10 @@
     font-weight: 600;
     line-height: 18px;
     cursor: pointer;
+
     &:hover {
       color: #2b3039;
     }
-
     &:first-child {
       margin-top: 10px;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -62,12 +63,13 @@
     margin-left: auto;
     cursor: pointer;
     color: #818a91;
+
     &:hover {
       color: #2b3039;
     }
   }
   &__head * {
-    margin: 0 0 22px 0;
+    margin: 0 0 22px;
     color: #2b3039;
     font-family: $font-family-1;
     font-size: 13px;
@@ -78,6 +80,7 @@
   &__trigger-once {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding-bottom: 15px;
     color: #818a91;
     font-family: $font-family-1;
@@ -85,8 +88,6 @@
     font-weight: 600;
     line-height: 18px;
     cursor: pointer;
-    display: flex;
-    justify-content: space-between;
   }
   .brz-ed-popup-conditions__type {
     display: flex;
@@ -101,7 +102,7 @@
       padding: 0 15px;
       display: flex;
       align-items: center;
-      color: #ffffff;
+      color: #fff;
       font-family: $font-family-1;
       line-height: 1;
       font-size: 14px;
@@ -115,11 +116,17 @@
     &-include {
       .brz-ed-popup-conditions__type-text {
         background-color: #3dbfe8;
+        &:hover{
+          background-color: #31a7cd;
+        }
       }
     }
     &-exclude {
       .brz-ed-popup-conditions__type-text {
         background-color: #d62c64;
+        &:hover{
+          background-color: #c12659;
+        }
       }
     }
   }
@@ -149,6 +156,7 @@
       }
       &-options {
         background: #fff;
+        width: 170px;
       }
     }
   }
@@ -161,7 +169,7 @@
       height: 39px;
       min-width: 102px;
       border-radius: 3px;
-      color: #ffffff;
+      color: #fff;
       font-family: $font-family-1;
       font-size: 14px;
       font-weight: 600;
@@ -195,7 +203,7 @@
     border-right-width: 0 !important;
   }
   .brz-ed-tall-track {
-    right: -20px !important;
+    right: 0px !important;
   }
 }
 .brz-ed-option__popup_conditions {
@@ -209,7 +217,7 @@
     height: 19px;
     border-radius: 50%;
     background-color: #3dbfe8;
-    color: #ffffff;
+    color: #03080f;
     font-family: $font-family-1;
     font-size: 12px;
     font-weight: 600;
@@ -228,7 +236,6 @@
 
     .brz-ed-option__popup_conditions-count {
       background: #fff;
-      color: #03080f;
     }
   }
 }

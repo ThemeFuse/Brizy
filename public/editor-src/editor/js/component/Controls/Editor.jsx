@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import ReactDOM from "react-dom";
 
 const keyCodes = {
   ENTER: 13,
@@ -22,6 +21,8 @@ class Editor extends React.Component {
     pattern: null,
     onChange: _.noop
   };
+
+  content = React.createRef();
 
   componentWillMount() {
     this.onChange = _.debounce(value => {
@@ -44,20 +45,24 @@ class Editor extends React.Component {
   }
 
   handleBlur = () => {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.content.current;
 
-    node.removeAttribute("contentEditable", "true");
-    node.classList.remove("brz-ed-dd-cancel");
+    if (node) {
+      node.removeAttribute("contentEditable", "true");
+      node.classList.remove("brz-ed-dd-cancel");
+    }
   };
 
   handleClick = e => {
     e.preventDefault();
 
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.content.current;
 
-    node.setAttribute("contentEditable", "true");
-    node.classList.add("brz-ed-dd-cancel");
-    node.focus();
+    if (node) {
+      node.setAttribute("contentEditable", "true");
+      node.classList.add("brz-ed-dd-cancel");
+      node.focus();
+    }
   };
 
   handleInput = e => {
@@ -114,6 +119,7 @@ class Editor extends React.Component {
     );
     return (
       <span
+        ref={this.content}
         className={className}
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}

@@ -53,8 +53,8 @@ module.exports = {
                                                                     "_styles": [
                                                                         "image"
                                                                     ],
-                                                                    "imageWidth": 1114,
-                                                                    "imageHeight": 1128,
+                                                                    "imageWidth": 1000,
+                                                                    "imageHeight": 1013,
                                                                     "imageSrc": "d03-funky-chair.jpg",
                                                                     "height": 100,
                                                                     "positionX": 50,

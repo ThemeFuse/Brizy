@@ -117,22 +117,22 @@ module.exports = {
                                         "value": {
                                             "_styles": [
                                                 "wrapper",
-                                                "wrapper--iconText"
+                                                "wrapper--form2"
                                             ],
                                             "items": [
                                                 {
-                                                    "type": "Form",
+                                                    "type": "Form2",
                                                     "value": {
                                                         "_styles": [
-                                                            "form"
+                                                            "form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "FormFields",
+                                                                "type": "Form2Fields",
                                                                 "value": {
                                                                     "items": [
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
                                                                                 "type": "Email",
                                                                                 "label": "EMAIL ADDRESS",
@@ -140,27 +140,46 @@ module.exports = {
                                                                                 "options": [
                                                                                     "Option 1",
                                                                                     "Option 2"
-                                                                                ]
+                                                                                ],
+                                                                                "placeholder": "EMAIL ADDRESS"
                                                                             }
                                                                         }
                                                                     ],
                                                                     "fontStyle": "abovetitle",
-                                                                    "fontSize": 17,
-                                                                    "fontFamily": "overpass",
-                                                                    "fontFamilyType": "google",
-                                                                    "lineHeight": 1.4,
-                                                                    "letterSpacing": 0,
-                                                                    "fontWeight": 400,
-                                                                    "colorHex": "#666666",
-                                                                    "colorOpacity": 0.46,
-                                                                    "tempColorOpacity": 0.46,
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "tabText",
                                                                     "colorPalette": "color7",
                                                                     "tempColorPalette": "color7",
-                                                                    "mobileFontSize": 14,
-                                                                    "mobileLineHeight": 2.2,
-                                                                    "mobileLetterSpacing": 0,
-                                                                    "mobileFontWeight": 400,
-                                                                    "mobileFontStyle": ""
+                                                                    "colorOpacity": 0.5,
+                                                                    "colorHex": "#666666",
+                                                                    "tempColorOpacity": 0.5,
+                                                                    "borderRadius": 4,
+                                                                    "borderTopLeftRadius": 4,
+                                                                    "borderTopRightRadius": 4,
+                                                                    "borderBottomLeftRadius": 4,
+                                                                    "borderBottomRightRadius": 4,
+                                                                    "tempBorderRadius": 4,
+                                                                    "tempBorderTopLeftRadius": 4,
+                                                                    "tempBorderTopRightRadius": 4,
+                                                                    "tempBorderBottomLeftRadius": 4,
+                                                                    "tempBorderBottomRightRadius": 4,
+                                                                    "borderStyle": "solid",
+                                                                    "borderWidth": 1,
+                                                                    "borderTopWidth": 1,
+                                                                    "borderRightWidth": 1,
+                                                                    "borderBottomWidth": 1,
+                                                                    "borderLeftWidth": 1,
+                                                                    "tempBorderTopWidth": 1,
+                                                                    "tempBorderRightWidth": 1,
+                                                                    "tempBorderBottomWidth": 1,
+                                                                    "tempBorderLeftWidth": 1,
+                                                                    "borderColorOpacity": 1,
+                                                                    "borderColorPalette": "",
+                                                                    "mobileSize": "medium",
+                                                                    "mobilePaddingTop": 14,
+                                                                    "mobilePaddingRight": 24,
+                                                                    "mobilePaddingBottom": 14,
+                                                                    "mobilePaddingLeft": 24
                                                                 }
                                                             },
                                                             {
@@ -170,15 +189,28 @@ module.exports = {
                                                                         "button",
                                                                         "submit"
                                                                     ],
+                                                                    "text": "Start 14 Days Free Trial",
                                                                     "iconName": "",
                                                                     "iconType": "",
+                                                                    "size": "medium",
+                                                                    "fontSize": 12,
+                                                                    "paddingTB": 14,
+                                                                    "paddingTop": 14,
+                                                                    "paddingBottom": 14,
+                                                                    "tempPaddingTB": 14,
+                                                                    "tempPaddingTop": 14,
+                                                                    "tempPaddingBottom": 14,
+                                                                    "paddingRL": 42,
+                                                                    "paddingRight": 42,
+                                                                    "paddingLeft": 42,
+                                                                    "tempPaddingRL": 42,
+                                                                    "tempPaddingRight": 42,
+                                                                    "tempPaddingLeft": 42,
+                                                                    "borderRadius": 4,
+                                                                    "borderWidth": 0,
                                                                     "borderRadiusType": "custom",
                                                                     "tempBorderRadiusType": "custom",
-                                                                    "paddingRight": 26,
-                                                                    "paddingLeft": 26,
                                                                     "fillType": "filled",
-                                                                    "borderRadius": 4,
-                                                                    "borderWidth": 2,
                                                                     "borderColorOpacity": 0,
                                                                     "borderColorPalette": 0,
                                                                     "bgColorOpacity": 1,
@@ -187,36 +219,7 @@ module.exports = {
                                                                     "hoverBorderColorOpacity": 0.8,
                                                                     "tempBorderWidth": 2,
                                                                     "tempBorderRadius": 4,
-                                                                    "text": "Start 14 Days Free Trial",
-                                                                    "size": "small",
-                                                                    "fontSize": 11,
-                                                                    "paddingTB": 11,
-                                                                    "paddingTop": 11,
-                                                                    "paddingBottom": 11,
-                                                                    "tempPaddingTB": 11,
-                                                                    "tempPaddingTop": 11,
-                                                                    "tempPaddingBottom": 11,
-                                                                    "paddingRL": 26,
-                                                                    "tempPaddingRL": 26,
-                                                                    "tempPaddingRight": 26,
-                                                                    "tempPaddingLeft": 26,
-                                                                    "tabsState": "",
-                                                                    "tabsColor": "",
-                                                                    "tabletSize": "small",
                                                                     "tabletFontSize": 15,
-                                                                    "tabletPaddingTB": 11,
-                                                                    "tabletPaddingTop": 11,
-                                                                    "tabletPaddingBottom": 11,
-                                                                    "tempTabletPaddingTB": 11,
-                                                                    "tempTabletPaddingTop": 11,
-                                                                    "tempTabletPaddingBottom": 11,
-                                                                    "tabletPaddingRL": 26,
-                                                                    "tabletPaddingRight": 26,
-                                                                    "tabletPaddingLeft": 26,
-                                                                    "tempTabletPaddingRL": 26,
-                                                                    "tempTabletPaddingRight": 26,
-                                                                    "tempTabletPaddingLeft": 26,
-                                                                    "tabletBorderRadius": 4,
                                                                     "tabletLineHeight": 1.6,
                                                                     "tabletLetterSpacing": 0,
                                                                     "tabletFontWeight": 700,
@@ -224,15 +227,12 @@ module.exports = {
                                                                 }
                                                             }
                                                         ],
-                                                        "horizontalAlign": "center"
+                                                        "submitWidth": 70,
+                                                        "horizontalAlign": "center",
+                                                        "tabletSubmitWidth": 65
                                                     }
                                                 }
-                                            ],
-                                            "paddingType": "ungrouped",
-                                            "paddingRightSuffix": "px",
-                                            "paddingRight": 0,
-                                            "padding": 0,
-                                            "paddingSuffix": "px"
+                                            ]
                                         }
                                     },
                                     {
@@ -408,7 +408,7 @@ module.exports = {
         "bgColorHex": "#1c1c1c",
         "bgColorOpacity": 0.9,
         "tempBgColorOpacity": 0.9,
-        "popupId": "tpdrqwyeydeffsqjtyjxrkgsqskhxpeywscx",
+        "popupId": "stfiylqegkgsgprgyontyivyosnthmezzkyp",
         "tempBgColorPalette": "color2",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,

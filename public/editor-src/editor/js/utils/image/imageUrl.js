@@ -24,3 +24,11 @@ export default function imageUrl(
 
   return null;
 }
+
+export function svgUrl(src) {
+  if (src) {
+    return [Config.get("urls").image, "original", src].join("/");
+  }
+
+  return null;
+}

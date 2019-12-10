@@ -43,14 +43,12 @@ export function styleElementButtonIconPositionCss({ v, device, state }) {
 }
 
 export function styleElementButtonIconCustomSize({ v, device, state }) {
-  const iconCustomSize = defaultValueValue({
+  return defaultValueValue({
     v,
     key: "iconCustomSize",
     device,
     state
   });
-
-  return iconCustomSize;
 }
 
 export function styleElementButtonIconMargin({ v, device, state }) {

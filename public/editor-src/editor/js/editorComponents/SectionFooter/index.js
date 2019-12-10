@@ -1,6 +1,7 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
+import CustomTag from "visual/component/CustomTag";
 import classnames from "classnames";
 import SectionFooterItems from "./Items";
 import Background from "visual/component/Background";
@@ -28,6 +29,11 @@ import {
 } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
+import { getContainerW } from "visual/utils/meta";
+import {
+  styleElementSectionContainerType,
+  styleSizeContainerSize
+} from "visual/utils/style2";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -70,29 +76,28 @@ class SectionFooter extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      containerSize,
-      containerType,
-      borderWidthType,
-      borderWidth,
-      borderLeftWidth,
-      borderRightWidth
-    } = v;
-
-    const borderWidthW =
-      borderWidthType === "grouped"
-        ? Number(borderWidth) * 2
-        : Number(borderLeftWidth) + Number(borderRightWidth);
-
-    const desktopW =
-      containerType === "fullWidth"
-        ? wInFullPage - borderWidthW
-        : Math.round(
-            (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
-          ) / 10;
-
-    const tabletW = wInTabletPage - borderWidthW;
-    const mobileW = wInMobilePage - borderWidthW;
+    const containerType = styleElementSectionContainerType({ v });
+    const size = styleSizeContainerSize({ v, device: "desktop" });
+    const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
+    const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
+    const desktopW = getContainerW({
+      v,
+      w: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
+      width: size,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: wInTabletPage,
+      width: tabletSize,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: wInMobilePage,
+      width: mobileSize,
+      device: "mobile"
+    });
 
     return {
       ...meta,
@@ -102,7 +107,26 @@ class SectionFooter extends EditorComponent {
     };
   }
 
-  renderToolbar(_v) {
+  getAttributes = customAttributes => {
+    let myAttributes = customAttributes
+      .split(" ")
+      .join("")
+      .split(":")
+      .join(" ")
+      .split("\n")
+      .join(" ");
+
+    let atributesToObj = [];
+    let atributesToMas = myAttributes.split(" ");
+
+    for (let i = 0; i < atributesToMas.length; i += 2) {
+      atributesToObj[atributesToMas[i]] = atributesToMas[i + 1];
+    }
+
+    return Object.assign({}, atributesToObj);
+  };
+
+  renderToolbar() {
     const { globalBlockId } = this.props.meta;
 
     return (
@@ -160,25 +184,30 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      customClassName,
+      cssClassPopulation,
+      customAttributes
+    } = v;
 
     const classNameSection = classnames(
       "brz-footer",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}-section`,
         `${this.getId()}-section`,
         styleSection(v, vs, vd)
       )
     );
-
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <footer
           id={this.getId()}
           className={classNameSection}
           data-block-id={this.props.blockId}
+          {...this.getAttributes(customAttributes)}
         >
           <Roles
             allow={["admin"]}
@@ -195,12 +224,19 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      tagName,
+      customClassName,
+      cssIDPopulation,
+      cssClassPopulation,
+      customAttributes
+    } = v;
 
     const classNameSection = classnames(
       "brz-footer",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}-section`,
         `${this.getId()}-section`,
@@ -210,13 +246,19 @@ class SectionFooter extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <footer
-          id={v.anchorName || this.getId()}
+        <CustomTag
+          tagName={tagName}
+          id={
+            cssIDPopulation === ""
+              ? v.anchorName || this.getId()
+              : cssIDPopulation
+          }
           className={classNameSection}
           data-uid={this.getId()}
+          {...this.getAttributes(customAttributes)}
         >
           {this.renderItems(v, vs, vd)}
-        </footer>
+        </CustomTag>
       </CustomCSS>
     );
   }

@@ -11,6 +11,9 @@ import {
   styleContainerPopup2CloseCustomSize,
   styleContainerPopup2CloseBgSize,
   styleContainerPopup2CloseBorderRadius,
+  styleContainerPopup2CustomHeightStyle,
+  styleContainerPopup2ColumnsHeight,
+  styleContainerPopup2ColumnsHeightSuffix,
   styleColor,
   styleBgColor,
   styleAlignFlexVerticalAlign
@@ -162,4 +165,42 @@ export function cssStyleContainerPopup2RowFlexVerticalAlign({
   });
 
   return alignItems === undefined ? "" : `align-items:${alignItems};`;
+}
+
+export function cssStyleContainerPopup2CustomHeight({ v, device, state }) {
+  const columnSizeStyle = styleContainerPopup2CustomHeightStyle({
+    v,
+    device,
+    state
+  });
+
+  const columnsHeight = styleContainerPopup2ColumnsHeight({
+    v,
+    device,
+    state
+  });
+  const columnsHeightSuffix = styleContainerPopup2ColumnsHeightSuffix({
+    v,
+    device,
+    state
+  });
+  return columnSizeStyle === "custom"
+    ? `height: ${columnsHeight}${columnsHeightSuffix};`
+    : "";
+}
+
+export function cssStyleContainerPopup2CustomHeightOverflow({
+  v,
+  device,
+  state
+}) {
+  const columnSizeStyle = styleContainerPopup2CustomHeightStyle({
+    v,
+    device,
+    state
+  });
+
+  return columnSizeStyle === "custom"
+    ? "max-height: 100%; overflow-x: hidden; overflow-y: auto;"
+    : "";
 }

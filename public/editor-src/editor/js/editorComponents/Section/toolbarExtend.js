@@ -5,17 +5,24 @@ import {
   toolbarShowOnResponsive,
   toolbarElementSectionSliderColor,
   toolbarZIndex,
+  toolbarMargin,
   toolbarCustomCSSClass,
+  toolbarAttributes,
   toolbarElementSectionSaved,
   toolbarElementSectionFullHeight,
-  toolbarAnchorName
+  toolbarAnchorName,
+  toolbarTags
 } from "visual/utils/toolbar";
+
+import { getDynamicContentChoices } from "visual/utils/options";
 
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device, component }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
+
+  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   return [
     toolbarShowOnResponsive({
@@ -107,7 +114,16 @@ export function getItems({ v, device, component }) {
                   id: dvk("settingsStyling"),
                   label: t("Styling"),
                   tabIcon: "nc-styling",
-                  options: []
+                  options: [
+                    toolbarMargin({
+                      v,
+                      device,
+                      state: "normal",
+                      devices: "desktop",
+                      onChangeGrouped: ["onChangeMarginGrouped"],
+                      onChangeUngrouped: ["onChangeMarginUngrouped"]
+                    })
+                  ]
                 },
                 {
                   id: dvk("moreSettingsAdvanced"),
@@ -127,9 +143,24 @@ export function getItems({ v, device, component }) {
                     toolbarAnchorName({
                       v,
                       device,
-                      state: "normal"
+                      devices: "desktop",
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
                     }),
                     toolbarCustomCSSClass({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
+                    }),
+                    toolbarAttributes({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal"
+                    }),
+                    toolbarTags({
                       v,
                       device,
                       state: "normal"
@@ -140,6 +171,21 @@ export function getItems({ v, device, component }) {
             }
           ]
         }
+      ]
+    },
+    {
+      id: dvk("advancedSettings"),
+      type: "advancedSettings",
+      devices: "responsive",
+      options: [
+        toolbarMargin({
+          v,
+          device,
+          state: "normal",
+          devices: "responsive",
+          onChangeGrouped: ["onChangeMarginGrouped"],
+          onChangeUngrouped: ["onChangeMarginUngrouped"]
+        })
       ]
     }
   ];

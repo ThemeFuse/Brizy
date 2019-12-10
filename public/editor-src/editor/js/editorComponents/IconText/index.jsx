@@ -2,6 +2,7 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
+import { noop } from "underscore";
 
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import * as toolbarExtendConfigIcon from "./extendToolbarIcon";
@@ -22,6 +23,10 @@ class IconText extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static defaultProps = {
+    extendParentToolbar: noop
+  };
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(

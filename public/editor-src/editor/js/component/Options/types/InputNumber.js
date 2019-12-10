@@ -24,21 +24,20 @@ class InputNumberOptionType extends React.Component {
   };
 
   renderLabel() {
-    const { label, helper: _helper, helperContent } = this.props;
-    const helper = _helper ? (
-      <div className="brz-ed-option__helper">
-        <EditorIcon icon="nc-alert-circle-que" />
-        <div
-          className="brz-ed-option__helper__content"
-          dangerouslySetInnerHTML={{ __html: helperContent }}
-        />
-      </div>
-    ) : null;
+    const { label, helper, helperContent } = this.props;
 
     return (
       <div className="brz-ed-option__label brz-ed-option__input-number__label">
         {label}
-        {helper}
+        {helper && (
+          <div className="brz-ed-option__helper">
+            <EditorIcon icon="nc-alert-circle-que" />
+            <div
+              className="brz-ed-option__helper__content"
+              dangerouslySetInnerHTML={{ __html: helperContent }}
+            />
+          </div>
+        )}
       </div>
     );
   }

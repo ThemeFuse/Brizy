@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleSection(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleZIndex"],
+      standart: ["cssStyleZIndex", "cssStyleMargin"],
       interval: [
         "cssStyleDisplayBlock",
         "cssStyleVisibleMode|||preview",
@@ -16,13 +16,20 @@ export function styleSection(v, vs, vd) {
     ".brz &&:hover .brz-section__content": {
       standart: ["cssStyleSectionSliderHeight"]
     },
-    ".brz && .brz-slick-slider__dots:hover": {
+    ".brz && > .slick-slider > .brz-slick-slider__dots:hover": {
       standart: ["cssStyleSectionColorDots"]
     },
-    ".brz && .brz-slick-slider__arrow:hover": {
+    ".brz && > .slick-slider > .brz-slick-slider__arrow:hover": {
       standart: ["cssStyleSectionColorArrows"]
     }
   };
+
+  if (IS_EDITOR) {
+    // Added offset for toolbar when uses marginTop in negative value
+    styles[".brz &&:hover .brz-ed-collapsible"] = {
+      standart: ["cssStyleSectionToolbarOffset"]
+    };
+  }
 
   return renderStyles({ v, vs, vd, styles });
 }

@@ -74,7 +74,7 @@
     }
   }
 }
-.brz-ed-control__tabs__content__left .brz-ed-control__tab__content {
+.brz-ed-control__tabs__content__left {
   min-height: 89px;
 }
 .brz-ed-tabs__option--inline + .brz-ed-option__advanced {
@@ -108,6 +108,26 @@
       width: 100%;
       max-width: 100%;
     }
+    .brz-ed-control__input--dynamic {
+      width: 88%;
+    }
+
+    .brz-ed-option__input__label--dynamic {
+      width: 100%;
+    }
+    .brz-ed-option__input-container--dynamic {
+      width: 88%;
+    }
+
+    .brz-ed-control__input--dynamic {
+      width: 88%;
+    }
+    .brz-ed-option__input-number-wrap {
+      position: relative;
+    }
+    .brz-control__select-population {
+      margin-top: 6px;
+    }
   }
   &__advanced {
     padding-top: 15px;
@@ -131,6 +151,7 @@
     }
   }
 
+
   // Option Label
   &__label {
     font-family: $font-family-1;
@@ -147,6 +168,11 @@
   &__slider__label {
     flex-basis: 65px;
   }
+}
+
+.brz-ed-option-input--dynamic {
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 // Popover Options

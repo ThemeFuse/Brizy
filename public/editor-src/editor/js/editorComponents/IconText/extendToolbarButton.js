@@ -4,16 +4,10 @@ import {
   toolbarDisabledShowOnResponsive
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems({ device }) {
   return [
-    toolbarDisabledToolbarSettings({
-      device
-    }),
-    toolbarDisabledAdvancedSettings({
-      device
-    }),
-    toolbarDisabledShowOnResponsive({
-      device
-    })
+    toolbarDisabledToolbarSettings({ device }),
+    toolbarDisabledAdvancedSettings({ device }),
+    toolbarDisabledShowOnResponsive({ device })
   ];
 }

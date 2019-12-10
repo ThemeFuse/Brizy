@@ -13,12 +13,12 @@ export default class Email extends TextField {
   static pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
 
   renderForEdit = props => {
-    return <input className="brz-input brz-form__field" {...props} />;
+    return <input className="brz-input brz-forms__field" {...props} />;
   };
 
   renderForView = props => {
     return (
-      <input className="brz-input brz-form__field" type="email" {...props} />
+      <input className="brz-input brz-forms__field" type="email" {...props} />
     );
   };
 }

@@ -7,7 +7,7 @@ export default class BlockErrorBoundary extends React.Component {
     error: null
   };
 
-  componentDidCatch(error, info) {
+  componentDidCatch() {
     this.setState({ error: true });
   }
 
@@ -49,6 +49,7 @@ export default class BlockErrorBoundary extends React.Component {
               className="brz-a"
               href={urls.support}
               target="_blank"
+              rel="noopener noreferrer"
               style={linkStyle}
             >
               {t("open an issue")}

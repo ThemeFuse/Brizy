@@ -17,10 +17,12 @@ import {
   toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+import { NORMAL, HOVER } from "visual/utils/stateMode";
+
+export function getItems({ v, device, state }) {
   const { hex: colorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "colorHex", device }),
-    defaultValueValue({ v, key: "colorPalette", device })
+    defaultValueValue({ v, key: "colorHex", device, state }),
+    defaultValueValue({ v, key: "colorPalette", device, state })
   );
 
   return [
@@ -147,111 +149,44 @@ export function getItems({ v, device }) {
       },
       options: [
         {
-          id: "tabsState",
-          tabsPosition: "left",
+          id: "tabsColor",
           type: "tabs",
-          value: v.tabsState,
           tabs: [
             {
-              id: "tabNormal",
-              tabIcon: "nc-circle",
-              title: t("Normal"),
+              id: "tabText",
+              label: t("Text"),
               options: [
-                {
-                  id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  tabs: [
-                    {
-                      id: "tabText",
-                      label: t("Text"),
-                      options: [
-                        toolbarColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeHex: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
+                toolbarColor2({
+                  v,
+                  device,
+                  states: [NORMAL, HOVER],
+                  state,
+                  onChangeHex: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ],
+                  onChangePalette: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
                   ]
-                }
-              ]
-            },
-            {
-              id: "tabHover",
-              tabIcon: "nc-hover",
-              title: t("Hover"),
-              options: [
+                }),
                 {
-                  id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  tabs: [
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: "tabText",
-                      label: t("Text"),
+                      width: 100,
                       options: [
-                        toolbarColor2({
+                        toolbarColorHexField2({
                           v,
                           device,
-                          state: "hover",
-                          onChangeHex: [
+                          states: [NORMAL, HOVER],
+                          state,
+                          onChange: [
                             "onChangeColorHexAndOpacity",
                             "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -260,10 +195,7 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "" : v.tabsState
-      })
+      ]
     },
     toolbarDisabledToolbarSettings({ device }),
     {

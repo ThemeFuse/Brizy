@@ -52,11 +52,7 @@ export function styleClassName(v) {
         backgroundImage: "var(--backgroundGradient)",
         borderWidth: "var(--borderWidth)",
         borderStyle: "var(--borderStyle)",
-
-        ...(shadowDesktopNormal !== ""
-          ? { boxShadow: "var(--boxShadow)" }
-          : {}),
-
+        boxShadow: shadowDesktopNormal !== "" ? "var(--boxShadow)" : null,
         transition: "var(--hoverTransition)",
         transitionProperty: "var(--hoverTransitionProperty)"
       },
@@ -78,9 +74,7 @@ export function styleClassName(v) {
         transitionProperty: "var(--hoverTransitionProperty)",
 
         ":hover": {
-          ...(shadowDesktopHover !== ""
-            ? { boxShadow: "var(--hoverBoxShadow)" }
-            : {})
+          boxShadow: shadowDesktopHover !== "" ? "var(--hoverBoxShadow)" : null
         }
       },
       ".brz-ed--tablet &": {
@@ -195,10 +189,7 @@ export function styleClassName(v) {
         padding: `${padding}px`,
         borderRadius,
         strokeWidth,
-
-        ...(shadowDesktopNormal !== ""
-          ? { boxShadow: shadowDesktopNormal }
-          : {}),
+        boxShadow: shadowDesktopNormal !== "" ? shadowDesktopNormal : null,
 
         transition: styleHoverTransition({ v }),
         transitionProperty: styleHoverTransitionProperty()
@@ -222,10 +213,7 @@ export function styleClassName(v) {
             device: "desktop",
             state: "hover"
           }),
-
-          ...(shadowDesktopHover !== ""
-            ? { boxShadow: shadowDesktopHover }
-            : {})
+          boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
         }
       },
 
@@ -369,14 +357,8 @@ export function styleCSSVars(v) {
     "--padding": `${padding}px`,
     "--borderRadius": `${borderRadius}px`,
     "--strokeWidth": strokeWidth,
-
-    ...(shadowDesktopNormal !== ""
-      ? { "--boxShadow": shadowDesktopNormal }
-      : {}),
-
-    ...(shadowDesktopHover !== ""
-      ? { "--hoverBoxShadow": shadowDesktopHover }
-      : {}),
+    "--boxShadow": shadowDesktopNormal !== "" ? shadowDesktopNormal : null,
+    "--hoverBoxShadow": shadowDesktopHover !== "" ? shadowDesktopHover : null,
 
     // Hover Transition
     "--hoverTransition": styleHoverTransition({ v }),

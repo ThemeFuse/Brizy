@@ -5,7 +5,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  z-index: z("toolbar");
+  z-index: z("section-popup");
 
   &__close {
     position: absolute;
@@ -18,61 +18,36 @@
       font-size: 26px;
     }
   }
-
-  & > .brz-ed-border {
-    height: 100%;
-  }
-
   .brz-container__wrap {
     position: relative;
   }
-
+  .brz-container__wrap .brz-container {
+    height: 100%;
+  }
+  .brz-container__wrap > .brz-container > .brz-row__container,
+  .brz-container__wrap > .brz-container > .brz-row__container  > .brz-row__bg {
+    max-height: 100%;
+    height: 100%;
+  }
   &__inner {
     height: 100%;
 
-    // Добавить в editor
     & > .brz-bg-content {
       max-height: 100%;
       display: flex;
+      overflow-x: hidden;
+      overflow-y: auto;
 
       & > .brz-container__wrap {
+        max-height: 100%;
         margin: 0;
         padding: 0;
         min-width: 300px;
       }
     }
   }
-
   &__vertical-align {
     transform: rotate(270deg);
-  }
-
-  &__button-go-to-editor {
-    font-family: $font-family-1;
-    display: inline-block;
-    position: absolute;
-    left: 40px;
-    top: 34px;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 13px 23px 13px 18px;
-    color: #fff;
-    background-color: rgba(3, 8, 15, 0.92);
-    border: none;
-    border-radius: 100px;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    z-index: 9999;
-    outline: none;
-
-    &:hover {
-      color: #3dbfe8;
-    }
-  }
-
-  &__icon-go-to-editor {
-    vertical-align: text-top;
-    margin-right: 16px;
   }
 }
 

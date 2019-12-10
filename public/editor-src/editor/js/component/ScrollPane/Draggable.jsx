@@ -17,6 +17,7 @@ export default class Draggable extends Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
   }
   componentDidMount() {
+    // eslint-disable-next-line react/no-find-dom-node
     const elem = ReactDOM.findDOMNode(this);
     this.document = jQuery(
       elem.style
@@ -60,7 +61,6 @@ export default class Draggable extends Component {
     const child = React.Children.only(this.props.children);
 
     // As the child is a DIV.. you cannot pass these: onDragStart,onDragMove
-    const { children, onDragStart, onDragMove } = this.props;
 
     return React.cloneElement(child, {
       onMouseDown: e => {

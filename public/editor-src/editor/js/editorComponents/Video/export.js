@@ -17,6 +17,7 @@ export default function() {
       var iframe = $("<iframe/>", {
         class: "brz-iframe",
         allowfullscreen: true,
+        allow: "autoplay",
         src: src
       });
 

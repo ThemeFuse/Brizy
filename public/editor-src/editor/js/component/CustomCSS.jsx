@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import classnames from "classnames";
 
 let styles = {};
 
@@ -29,6 +28,7 @@ export default class CustomCSS extends React.Component {
 
   updateCSS() {
     const { selectorName, css } = this.props;
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
     if (!css || styles[selectorName] === css) {
       return;
@@ -54,6 +54,7 @@ export default class CustomCSS extends React.Component {
   }
 
   renderForEdit() {
+    // eslint-disable-next-line no-unused-vars
     const { selectorName, css, children, ...otherProps } = this.props;
 
     // React.cloneElement is done because <CustomCSS> is often rendered

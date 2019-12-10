@@ -1,18 +1,10 @@
 import classnames from "classnames";
 import { css } from "glamor";
 import { imageUrl } from "visual/utils/image";
-import { hexToRgba } from "visual/utils/color";
 import { styleBorderColor, styleBgColor } from "visual/utils/style";
 
 export function sectionStyleClassName(v) {
-  const {
-    showOnDesktop,
-    showOnMobile,
-    className,
-    customClassName,
-    horizontalAlign,
-    mobileHorizontalAlign
-  } = v;
+  const { showOnDesktop, showOnMobile, className, customClassName } = v;
 
   let glamorObj;
   if (IS_EDITOR) {
@@ -90,16 +82,12 @@ export function bgStyleClassName(v) {
       bgImageSrc,
       bgPositionX,
       bgPositionY,
-      bgColorHex,
-      bgColorOpacity,
       borderWidth,
       borderWidthType,
       borderTopWidth,
       borderRightWidth,
       borderBottomWidth,
       borderLeftWidth,
-      borderColorHex,
-      borderColorOpacity,
       borderRadius,
       borderRadiusType,
       borderTopLeftRadius,
@@ -108,9 +96,7 @@ export function bgStyleClassName(v) {
       borderBottomRightRadius,
       mobileBgImageSrc,
       mobileBgPositionX,
-      mobileBgPositionY,
-      mobileBgColorHex,
-      mobileBgColorOpacity
+      mobileBgPositionY
     } = v;
 
     glamorObj = {
@@ -194,20 +180,12 @@ export function bgStyleCSSVars(v) {
     bgImageSrc,
     bgPositionX,
     bgPositionY,
-    brightness,
-    hue,
-    saturation,
-    contrast,
-    bgColorHex,
-    bgColorOpacity,
     borderWidth,
     borderWidthType,
     borderTopWidth,
     borderRightWidth,
     borderBottomWidth,
     borderLeftWidth,
-    borderColorHex,
-    borderColorOpacity,
     borderRadius,
     borderRadiusType,
     borderTopLeftRadius,
@@ -216,9 +194,7 @@ export function bgStyleCSSVars(v) {
     borderBottomRightRadius,
     mobileBgImageSrc,
     mobileBgPositionX,
-    mobileBgPositionY,
-    mobileBgColorHex,
-    mobileBgColorOpacity
+    mobileBgPositionY
   } = v;
 
   return {
@@ -330,7 +306,7 @@ export function itemsStyleClassName(v) {
       borderStyle: "solid",
 
       "@media (min-width: 768px)": {
-        maxWidth: containerType === "boxed" ? `${containerSize}%` : `100%`
+        maxWidth: containerType === "boxed" ? `${containerSize}%` : "100%"
       }
     };
   }
@@ -354,7 +330,7 @@ export function itemsStyleCSSVars(v) {
   } = v;
 
   return {
-    "--maxWidth": containerType === "boxed" ? `${containerSize}%` : `100%`,
+    "--maxWidth": containerType === "boxed" ? `${containerSize}%` : "100%",
     "--borderTopWidth":
       borderWidthType === "grouped"
         ? `${borderWidth}px`

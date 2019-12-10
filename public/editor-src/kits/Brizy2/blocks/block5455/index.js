@@ -598,7 +598,7 @@ module.exports = {
                     "tabsCurrentElement": "tabCurrentElement",
                     "bgImageWidth": 1440,
                     "bgImageHeight": 897,
-                    "bgImageSrc": "d08-background11.png",
+                    "bgImageSrc": "d08-d08-background11.jpg",
                     "bgColorOpacity": 0.75,
                     "tempBgColorOpacity": 0.75,
                     "borderRadius": 0,

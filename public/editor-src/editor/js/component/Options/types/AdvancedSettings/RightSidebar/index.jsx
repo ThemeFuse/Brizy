@@ -17,7 +17,7 @@ class RightSidebar extends React.Component {
   // };
 
   render() {
-    const { isOpen, title, options, onChange } = this.props;
+    const { isOpen, title, options } = this.props;
 
     return (
       <PointerEvents>
@@ -30,7 +30,7 @@ class RightSidebar extends React.Component {
               {isOpen && (
                 <ScrollPane
                   className="brz-ed-scroll-pane brz-ed-scroll--darker brz-ed-scroll--medium brz-ed-sidebar__right__scroll"
-                  style={{ height: `100%` }}
+                  style={{ height: "100%" }}
                 >
                   <Options
                     className="brz-ed-sidebar__right__tabs"

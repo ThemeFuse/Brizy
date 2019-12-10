@@ -53,7 +53,7 @@ class SelectFields extends Component {
       return (
         <SelectItem key={slug} value={slug}>
           <span className="brz-span">{name}</span>
-          {required && <strong className="brz-strong">*</strong>}
+          {required && <strong className="brz-strong brz--required">*</strong>}
         </SelectItem>
       );
     });

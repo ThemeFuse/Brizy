@@ -1,6 +1,7 @@
 {
   "content": {
     "media": "image",
+    "tagName": "div",
 
     "bgImageWidth": 0,
     "bgImageHeight": 0,
@@ -8,6 +9,7 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgImageExtension": "",
 
     "brightness": 100,
     "hue": 0,
@@ -29,6 +31,7 @@
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
+    "hoverBgImageExtension": null,
 
     "hoverBrightness": null,
     "hoverHue": null,
@@ -40,6 +43,8 @@
     "showOnDesktop": "on",
 
     "zIndex": 0,
+
+    "hoverZIndex": null,
 
     "tabletPopups": null,
 
@@ -57,6 +62,7 @@
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
+    "tabletBgImageExtension": null,
 
     "tabletBrightness": null,
     "tabletHue": null,
@@ -68,6 +74,8 @@
     "tabletBgVideoLoop": null,
 
     "tabletBgMapZoom": null,
+
+    "tabletZIndex": null,
 
     "showOnMobile": "on",
 
@@ -83,6 +91,7 @@
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
+    "homeBgImageExtension": null,
 
     "mobileBrightness": null,
     "mobileHue": null,
@@ -94,6 +103,8 @@
     "mobileBgVideoLoop": null,
 
     "mobileBgMapZoom": null,
+
+    "mobileZIndex": null,
 
     "size": 100,
 
@@ -391,6 +402,10 @@
 
     "customID": "",
 
+    "cssIDPopulation": "",
+
+    "cssClassPopulation": "",
+
     "tabletBorderStyle": null,
 
     "tempTabletBorderStyle": null,
@@ -478,8 +493,8 @@
     "tabletColumnsHeight": null,
     "tabletColumnsHeightSuffix": null,
 
-    "tabletPaddingType": "grouped",
-    "tempTabletPaddingType": "grouped",
+    "tabletPaddingType": "ungrouped",
+    "tempTabletPaddingType": "ungrouped",
 
     "tabletPadding": 0,
     "tabletPaddingTop": 0,
@@ -607,8 +622,8 @@
     "mobileColumnsHeight": null,
     "mobileColumnsHeightSuffix": null,
 
-    "mobilePaddingType": "grouped",
-    "tempMobilePaddingType": "grouped",
+    "mobilePaddingType": "ungrouped",
+    "tempMobilePaddingType": "ungrouped",
 
     "mobilePadding": 0,
     "mobilePaddingTop": 0,

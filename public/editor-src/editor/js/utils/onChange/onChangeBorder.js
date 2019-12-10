@@ -8,15 +8,24 @@ import {
   onChangeDependeciesUngrouped
 } from "./onChange";
 import { defaultValueKey, defaultValueValue } from "./device";
+import { capByPrefix } from "visual/utils/string";
 
-export function onChangeBorderStyle2({ v, device, state, borderStyle }) {
+export function onChangeBorderStyle2({
+  v,
+  device,
+  state,
+  borderStyle,
+  prefix = ""
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const style = capByPrefix(border, "style");
+  const tempStyle = capByPrefix("temp", style);
 
   return {
-    [dvk("borderStyle")]: borderStyle,
-    [dvk("tempBorderStyle")]:
-      borderStyle !== "" ? borderStyle : dvv("tempBorderStyle")
+    [dvk(style)]: borderStyle,
+    [dvk(tempStyle)]: borderStyle !== "" ? borderStyle : dvv(tempStyle)
   };
 }
 
@@ -24,25 +33,30 @@ export function onChangeElementBorderStyleDependencies2({
   v,
   device,
   state,
-  borderStyle
+  borderStyle,
+  prefix = ""
 }) {
+  const border = capByPrefix(prefix, "border");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
+  const colorPalette = capByPrefix(border, "colorPalette");
+  const width = capByPrefix(border, "width");
   const dependencies = {
-    borderColorOpacity: {
+    [colorOpacity]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    borderColorPalette: {
+    [colorPalette]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    borderWidth: {
+    [width]: {
       childs: [
-        "borderTopWidth",
-        "borderRightWidth",
-        "borderBottomWidth",
-        "borderLeftWidth"
+        capByPrefix(border, "topWidth"),
+        capByPrefix(border, "rightWidth"),
+        capByPrefix(border, "bottomWidth"),
+        capByPrefix(border, "leftWidth")
       ],
       nullValue: [],
       tempValue: []
@@ -112,27 +126,33 @@ export function onChangeBorderColorHexAndOpacity2({
   state,
   hex,
   opacity,
+  prefix = "",
   isChanged = "hex",
   opacityDragEnd = false
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const colorHex = capByPrefix(border, "colorHex");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
+  const tempColorOpacity = capByPrefix("temp", colorOpacity);
 
   opacity = onChangeBorderColorOpacity2({
     v,
     device,
     state,
     opacity,
+    prefix,
     isChanged
   });
 
   const tempOpacity =
-    opacity > 0 && opacityDragEnd ? opacity : dvv("tempBorderColorOpacity");
+    opacity > 0 && opacityDragEnd ? opacity : dvv(tempColorOpacity);
 
   return {
-    [dvk("borderColorHex")]: hex,
-    [dvk("borderColorOpacity")]: opacity,
-    [dvk("tempBorderColorOpacity")]: tempOpacity
+    [dvk(colorHex)]: hex,
+    [dvk(colorOpacity)]: opacity,
+    [dvk(tempColorOpacity)]: tempOpacity
   };
 }
 
@@ -141,16 +161,21 @@ export function onChangeBorderColorHexAndOpacityPalette2({
   device,
   state,
   opacity,
+  prefix = "",
   isChanged = "hex"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const colorPalette = capByPrefix(border, "colorPalette");
+  const tempColorPalette = capByPrefix("temp", colorPalette);
 
   opacity = onChangeBorderColorOpacity2({
     v,
     device,
     state,
     opacity,
+    prefix,
     isChanged
   });
 
@@ -158,14 +183,14 @@ export function onChangeBorderColorHexAndOpacityPalette2({
     isChanged === "hex" || opacity === 0
       ? ""
       : opacity > 0
-      ? dvv("tempBorderColorPalette")
-      : dvv("borderColorPalette");
+      ? dvv(tempColorPalette)
+      : dvv(colorPalette);
 
-  const tempPalette = isChanged === "hex" ? "" : dvv("tempBorderColorPalette");
+  const tempPalette = isChanged === "hex" ? "" : dvv(tempColorPalette);
 
   return {
-    [dvk("borderColorPalette")]: palette,
-    [dvk("tempBorderColorPalette")]: tempPalette
+    [dvk(colorPalette)]: palette,
+    [dvk(tempColorPalette)]: tempPalette
   };
 }
 
@@ -174,20 +199,24 @@ export function onChangeElementBorderColorHexAndOpacityDependencies2({
   device,
   state,
   opacity,
-  isChanged
+  isChanged,
+  prefix = ""
 }) {
+  const border = capByPrefix(prefix, "border");
+  const style = capByPrefix(border, "style");
+  const width = capByPrefix(border, "width");
   const dependencies = {
-    borderStyle: {
+    [style]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    borderWidth: {
+    [width]: {
       childs: [
-        "borderTopWidth",
-        "borderRightWidth",
-        "borderBottomWidth",
-        "borderLeftWidth"
+        capByPrefix(border, "topWidth"),
+        capByPrefix(border, "rightWidth"),
+        capByPrefix(border, "bottomWidth"),
+        capByPrefix(border, "leftWidth")
       ],
       nullValue: [],
       tempValue: []
@@ -199,6 +228,7 @@ export function onChangeElementBorderColorHexAndOpacityDependencies2({
     device,
     state,
     opacity,
+    prefix,
     isChanged
   });
 
@@ -266,7 +296,6 @@ export function onChangeContainerBorderColorHexAndOpacityDependencies2({
 export function onChangeBorderColorHexAndOpacityColumnAndRowSyncTablet2({
   v,
   device,
-  state,
   opacity,
   isChanged
 }) {
@@ -304,7 +333,6 @@ export function onChangeBorderColorHexAndOpacityColumnAndRowSyncTablet2({
 export function onChangeBorderColorHexAndOpacityColumnAndRowSyncMobile2({
   v,
   device,
-  state,
   opacity,
   isChanged
 }) {
@@ -339,12 +367,20 @@ export function onChangeBorderColorHexAndOpacityColumnAndRowSyncMobile2({
   }
 }
 
-export function onChangeBorderColorPalette2({ device, state, palette }) {
+export function onChangeBorderColorPalette2({
+  device,
+  state,
+  palette,
+  prefix = ""
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const colorPalette = capByPrefix(border, "colorPalette");
+  const tempColorPalette = capByPrefix("temp", colorPalette);
 
   return {
-    [dvk("borderColorPalette")]: palette,
-    [dvk("tempBorderColorPalette")]: palette
+    [dvk(colorPalette)]: palette,
+    [dvk(tempColorPalette)]: palette
   };
 }
 
@@ -353,27 +389,33 @@ export function onChangeBorderColorPaletteOpacity2({
   device,
   state,
   opacity,
-  isChanged
+  isChanged,
+  prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
 
   opacity = onChangeBorderColorOpacity2({
     v,
     device,
     state,
     opacity,
+    prefix,
     isChanged
   });
 
   return {
-    [dvk("borderColorOpacity")]: opacity
+    [dvk(colorOpacity)]: opacity
   };
 }
 
-export function onChangeBorderWidthType2({ v, device, state, type }) {
+export function onChangeBorderWidthType2({ device, state, type, prefix = "" }) {
   const dvk = key => defaultValueKey({ key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const widthType = capByPrefix(border, "widthType");
 
-  return { [dvk("borderWidthType")]: type };
+  return { [dvk(widthType)]: type };
 }
 
 export function onChangeBorderWidthGrouped2({
@@ -381,14 +423,16 @@ export function onChangeBorderWidthGrouped2({
   device,
   state,
   value,
-  sliderDragEnd
+  sliderDragEnd,
+  prefix = ""
 }) {
-  const parent = "borderWidth";
+  const border = capByPrefix(prefix, "border");
+  const parent = capByPrefix(border, "width");
   const childs = [
-    "borderTopWidth",
-    "borderRightWidth",
-    "borderBottomWidth",
-    "borderLeftWidth"
+    capByPrefix(border, "topWidth"),
+    capByPrefix(border, "rightWidth"),
+    capByPrefix(border, "bottomWidth"),
+    capByPrefix(border, "leftWidth")
   ];
   const temp = true;
   const tempZero = false;
@@ -410,30 +454,36 @@ export function onChangeBorderWidthGroupedDependencies2({
   v,
   device,
   state,
-  value
+  value,
+  prefix = ""
 }) {
+  const border = capByPrefix(prefix, "border");
+  const style = capByPrefix(border, "style");
+  const radius = capByPrefix(border, "radius");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
+  const colorPalette = capByPrefix(border, "colorPalette");
   const dependencies = {
-    borderStyle: {
+    [style]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    borderRadius: {
+    [radius]: {
       childs: [
-        "borderTopLeftRadius",
-        "borderTopRightRadius",
-        "borderBottomLeftRadius",
-        "borderBottomRightRadius"
+        capByPrefix(border, "topLeftRadius"),
+        capByPrefix(border, "topRightRadius"),
+        capByPrefix(border, "bottomLeftRadius"),
+        capByPrefix(border, "bottomRightRadius")
       ],
       nullValue: ["bgColorOpacity", "bgImageSrc"],
       tempValue: []
     },
-    borderColorOpacity: {
+    [colorOpacity]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    borderColorPalette: {
+    [colorPalette]: {
       childs: [],
       nullValue: [],
       tempValue: []
@@ -454,14 +504,16 @@ export function onChangeBorderWidthUngrouped2({
   device,
   state,
   current,
-  value
+  value,
+  prefix = ""
 }) {
-  const parent = "borderWidth";
+  const border = capByPrefix(prefix, "border");
+  const parent = capByPrefix(border, "width");
   const childs = [
-    "borderTopWidth",
-    "borderRightWidth",
-    "borderBottomWidth",
-    "borderLeftWidth"
+    capByPrefix(border, "topWidth"),
+    capByPrefix(border, "rightWidth"),
+    capByPrefix(border, "bottomWidth"),
+    capByPrefix(border, "leftWidth")
   ];
   const temp = true;
 
@@ -493,38 +545,44 @@ export function onChangeBorderWidthUngroupedDependencies2({
   device,
   state,
   current,
-  value
+  value,
+  prefix = ""
 }) {
-  const parent = "borderWidth";
+  const border = capByPrefix(prefix, "border");
+  const parent = capByPrefix(border, "width");
   const childs = [
-    "borderTopWidth",
-    "borderRightWidth",
-    "borderBottomWidth",
-    "borderLeftWidth"
+    capByPrefix(border, "topWidth"),
+    capByPrefix(border, "rightWidth"),
+    capByPrefix(border, "bottomWidth"),
+    capByPrefix(border, "leftWidth")
   ];
+  const style = capByPrefix(border, "style");
+  const radius = capByPrefix(border, "radius");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
+  const colorPalette = capByPrefix(border, "colorPalette");
 
   const dependencies = {
-    borderStyle: {
+    [style]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    borderRadius: {
+    [radius]: {
       childs: [
-        "borderTopLeftRadius",
-        "borderTopRightRadius",
-        "borderBottomLeftRadius",
-        "borderBottomRightRadius"
+        capByPrefix(border, "topLeftRadius"),
+        capByPrefix(border, "topRightRadius"),
+        capByPrefix(border, "bottomLeftRadius"),
+        capByPrefix(border, "bottomRightRadius")
       ],
       nullValue: ["bgColorOpacity", "bgImageSrc"],
       tempValue: []
     },
-    borderColorOpacity: {
+    [colorOpacity]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    borderColorPalette: {
+    [colorPalette]: {
       childs: [],
       nullValue: [],
       tempValue: []
@@ -547,15 +605,19 @@ function onChangeBorderColorOpacity2({
   v,
   device,
   state,
+  prefix = "",
   opacity = undefined,
   isChanged = "hex"
 }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
+  const tempColorOpacity = capByPrefix("temp", colorOpacity);
 
   return (isChanged === "hex" || isChanged === "palette") &&
-    dvv("borderColorOpacity") === 0
-    ? dvv("tempBorderColorOpacity")
+    dvv(colorOpacity) === 0
+    ? dvv(tempColorOpacity)
     : opacity === undefined
-    ? dvv("borderColorOpacity")
+    ? dvv(colorOpacity)
     : opacity;
 }

@@ -6,7 +6,6 @@ $dropdown-arrow-size: 7px;
 // Menu
 .brz-menu {
   &__container {
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: inherit;
@@ -344,17 +343,22 @@ $dropdown-arrow-size: 7px;
   }
 
   // Error
-  &--error {
+  &__error {
     height: 50px;
     line-height: 50px;
-    padding: 0 10px;
-    background-color: lightgrey;
+    padding: 0 20px;
+    border-radius: 3px;
+    background-color: #ececec;
+    font-family: $font-family-1;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 
-    &--not-found {
-      .brz-a {
-        text-decoration: underline;
-        margin-right: 1ch;
-      }
+    .brz-a {
+      font-weight: 700;
+      margin-right: 5px;
+      cursor: pointer;
     }
   }
 

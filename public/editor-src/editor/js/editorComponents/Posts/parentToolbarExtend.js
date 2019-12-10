@@ -9,7 +9,10 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
+import {
+  toolbarDisabledToolbarSettings,
+  toolbarCustomCSS
+} from "visual/utils/toolbar";
 
 const getToolbarArchives = v => [
   {
@@ -381,6 +384,7 @@ export function getItemsForDesktop(v) {
         }
       ]
     },
+    toolbarDisabledToolbarSettings({ device }),
     {
       id: "advancedSettings",
       type: "advancedSettings",
@@ -405,7 +409,7 @@ export function getItemsForDesktop(v) {
               id: "moreSettingsAdvanced",
               label: t("Advanced"),
               tabIcon: "nc-cog",
-              options: []
+              options: [toolbarCustomCSS({ v })]
             }
           ]
         }
@@ -415,7 +419,10 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
+  const device = "tablet";
+
   return [
+    toolbarDisabledToolbarSettings({ device }),
     {
       id: "tabletToolbarPosts",
       type: "popover",
@@ -468,7 +475,10 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
+  const device = "mobile";
+
   return [
+    toolbarDisabledToolbarSettings({ device }),
     {
       id: "mobileToolbarPosts",
       type: "popover",

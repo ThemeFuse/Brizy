@@ -11,12 +11,27 @@ export function style(v, vs, vd) {
     ".brz &&:hover > .brz-bg-content": {
       standart: ["cssStyleFlexHorizontalAlign", "cssStyleFlexVerticalAlign"]
     },
-    ".brz &&:hover > .brz-bg-content .brz-container__wrap": {
-      standart: IS_PREVIEW
-        ? ["cssStyleContainerPopup2ContainerWidth"]
-        : ["cssStyleContainerPopup2ContainerWidth"]
+    ".brz &&:hover > .brz-bg-content > .brz-container__wrap": {
+      standart: [
+        "cssStyleContainerPopup2ContainerWidth",
+        "cssStyleContainerPopup2CustomHeight"
+      ]
     },
-    ".brz &&:hover .brz-row__container > .brz-ed-border > .brz-bg ": {
+    ".brz &&:hover .brz-ed-border > .brz-row__bg > .brz-bg-content": {
+      standart: IS_EDITOR
+        ? [
+          "cssStyleContainerPopup2CustomHeightOverflow",
+        ]
+        : []
+    },
+    ".brz &&:hover .brz-row__bg > .brz-bg-content": {
+      standart: IS_PREVIEW
+        ? [
+          "cssStyleContainerPopup2CustomHeightOverflow",
+        ]
+        : []
+    },
+    ".brz &&:hover .brz-container > .brz-row__container > .brz-ed-border > .brz-bg": {
       standart: IS_EDITOR
         ? [
             "cssStyleRowMinHeight",
@@ -24,7 +39,7 @@ export function style(v, vs, vd) {
           ]
         : []
     },
-    ".brz &&:hover .brz-row__container > .brz-bg ": {
+    ".brz &&:hover .brz-container > .brz-row__container > .brz-bg": {
       standart: IS_PREVIEW
         ? [
             "cssStyleRowMinHeight",

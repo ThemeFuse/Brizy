@@ -27,6 +27,7 @@ class Toolbar extends React.Component {
   }
 
   reposition = () => {
+    // eslint-disable-next-line react/no-find-dom-node
     const bar = ReactDOM.findDOMNode(this);
     const {
       window,
@@ -114,7 +115,14 @@ class Toolbar extends React.Component {
   };
 
   render() {
-    const { arrow, items, node, onMouseEnter, onMouseLeave } = this.props;
+    const {
+      arrow,
+      items,
+      node,
+      onClick,
+      onMouseEnter,
+      onMouseLeave
+    } = this.props;
 
     return (
       <ToolbarItems
@@ -122,6 +130,7 @@ class Toolbar extends React.Component {
         items={items}
         toolbarNode={node}
         onContentChange={this.reposition}
+        onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />

@@ -11,18 +11,21 @@
     "bgImageHeight": 0,
     "bgPositionY": 50,
     "bgPositionX": 50,
+    "bgImageExtension": "",
 
     "tabletBgImageSrc": "",
     "tabletBgImageWidth": 0,
     "tabletBgImageHeight": 0,
     "tabletBgPositionY": 50,
     "tabletBgPositionX": 50,
+    "tabletBgImageExtension": "",
 
     "mobileBgImageSrc": "",
     "mobileBgImageWidth": 0,
     "mobileBgImageHeight": 0,
     "mobileBgPositionY": 50,
-    "mobileBgPositionX": 50
+    "mobileBgPositionX": 50,
+    "mobileBgImageExtension": ""
   },
 
   "style": {

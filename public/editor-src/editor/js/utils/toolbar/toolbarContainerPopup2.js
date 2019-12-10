@@ -1,7 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { capitalize } from "visual/utils/string";
-import { toolbarVerticalAlign } from "visual/utils/toolbar";
 
 export function toolbarContainerPopup2ContainerWidth({
   v,

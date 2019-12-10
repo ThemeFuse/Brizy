@@ -1,33 +1,35 @@
 import $ from "jquery";
 
 export default function() {
-  var $animated = $(".brz-animated");
+  const $animated = $(".brz-animated");
 
   if ($animated.length > 0) {
-    var handleIntersection = function(entries) {
+    const handleIntersection = function(entries) {
       entries.map(function(entry) {
         if (entry.intersectionRatio > 0) {
-          var target = entry.target;
-          var animateClassName = target.dataset.animateName;
+          let target = entry.target;
+          const animateClassName = target.dataset.animateName;
           target.classList.add("brz-animate", animateClassName);
           observer.unobserve(target);
         }
       });
     };
-    var observerOptions = {
+
+    const observerOptions = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.35
+      threshold: [0]
     };
-    var observer = new IntersectionObserver(
+
+    const observer = new IntersectionObserver(
       handleIntersection,
       observerOptions
     );
 
     $animated.each(function() {
-      var $this = $(this);
-      var delay = $this.data("animate-delay");
-      var duration = $this.data("animate-duration");
+      const $this = $(this);
+      const delay = $this.data("animate-delay");
+      const duration = $this.data("animate-duration");
 
       if (delay) {
         $this.css({

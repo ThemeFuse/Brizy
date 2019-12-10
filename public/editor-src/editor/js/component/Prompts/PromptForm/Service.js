@@ -1,9 +1,10 @@
+import produce from "immer";
 import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import * as AppsComponent from "./Apps";
-import { getForm, getIntegration, createIntegration } from "./api";
+import { getForm, createForm, getIntegration, createIntegration } from "./api";
 
 const IS_PRO = Config.get("pro");
 
@@ -16,15 +17,35 @@ class Service extends BaseIntegration {
     const url = assetUrl("integrations.json");
     const r = await fetch(url);
     const { services } = await r.json();
-    const { status, data } = await getForm(this.props.value.formId);
 
     this.appsData = services;
+    await this.getData();
+  }
+
+  async getData() {
+    const {
+      value: { formId }
+    } = this.props;
+    const { status, data } = await getForm({ formId });
 
     if (status !== 200) {
-      this.setState({
-        error: t("Something went wrong"),
-        loading: false
-      });
+      if (status === 404) {
+        const { status } = await createForm({ formId });
+
+        if (status >= 400) {
+          this.setState({
+            error: t("Something went wrong")
+          });
+        } else {
+          this.setState({
+            loading: false
+          });
+        }
+      } else {
+        this.setState({
+          error: t("Something went wrong")
+        });
+      }
     } else {
       this.setState({
         connectedApps: this.getConnectedApps(data.integrations),
@@ -34,52 +55,47 @@ class Service extends BaseIntegration {
   }
 
   handleConnectApp = async appData => {
-    const connectedApp = appData.id;
+    const { id, stages } = appData;
     const { formId } = this.props.value;
-    const { stages } = this.appsData.find(app => app.id === connectedApp);
 
-    let { status, data: integrationData } = await getIntegration({
-      appId: connectedApp,
-      formId
-    });
+    let { status, data } = await getIntegration({ formId, id });
 
     if (status !== 200) {
       if (status === 404) {
-        const { status, data } = await createIntegration({
-          formId,
-          body: {
-            id: connectedApp
-          }
-        });
+        ({ status, data } = await createIntegration({ formId, id }));
 
         if (status !== 200) {
           this.setState({
-            error: t("Something went wrong")
+            appError: t(
+              "The integration is not responding, please try again or verify the account credentials"
+            )
           });
 
           return;
-        } else {
-          integrationData = data;
         }
       } else {
         this.setState({
-          error: t("Something went wrong")
+          appError: t(
+            "The integration is not responding, please try again or verify the account credentials"
+          )
         });
 
         return;
       }
     }
 
-    const data = Object.assign({}, this.state.data, {
-      [`${connectedApp}`]: {
-        ...appData,
-        data: integrationData
+    this.setState(
+      produce(draft => {
+        draft.appError = null;
+        draft.stages = stages;
+        draft.connectedApp = id;
+        draft.data[id] = appData;
+        draft.data[id].data = data;
+      }),
+      () => {
+        this.handleNext();
       }
-    });
-
-    this.setState({ stages, connectedApp, data }, () => {
-      this.handleNext();
-    });
+    );
   };
 }
 

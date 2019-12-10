@@ -1,8 +1,6 @@
-import Config from "visual/global/Config";
-import { request2 } from "visual/utils/api/editor";
-import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
+import { addRecaptcha } from "visual/component/Prompts/PromptForm/api";
 
-export async function validateRecaptcha(data) {
+export async function validation(data) {
   try {
     return await createRecaptcha(data);
   } catch (error) {
@@ -10,7 +8,7 @@ export async function validateRecaptcha(data) {
   }
 }
 
-function createRecaptcha({ sitekey, secretkey }) {
+function createRecaptcha(data) {
   // Uses window.parent because have problems with inner iframe and recaptcha
   const _window = window.parent;
   const recaptchaDiv = createRecaptchaDiv(_window);
@@ -22,13 +20,15 @@ function createRecaptcha({ sitekey, secretkey }) {
 
       _window.onloadRecaptchaCallback = () => {
         const recaptchaId = grecaptcha.render(recaptchaDiv, {
-          sitekey,
+          sitekey: data.sitekey,
           size: "invisible",
           callback: async response => {
             // Validation response google hash and secretkey from the server
-            const { status } = await validateRecaptchaAccount({
-              secretKey: secretkey,
-              response: response
+            const { status } = await addRecaptcha({
+              group: "recaptcha",
+              service: "recaptcha",
+              ...data,
+              response
             });
 
             recaptchaDiv.remove();
@@ -77,27 +77,4 @@ function createRecaptchaDiv(_window) {
   body.append(divElement);
 
   return divElement;
-}
-
-function validateRecaptchaAccount(body) {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
-  const objectToUrlEncoded = Object.keys(body)
-    .map(key => `${key}=${body[key]}`)
-    .join("&");
-  const url = makeUrl(api.url, {
-    action: api.validateRecaptchaAccount,
-    hash: api.hash,
-    version
-  });
-
-  return request2(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8"
-    },
-    body: objectToUrlEncoded
-  })
-    .then(parseJSON)
-    .then(res => res);
 }

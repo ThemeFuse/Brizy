@@ -38,13 +38,7 @@ export default class Tooltip extends React.Component {
     isHidden: false
   };
 
-  isMounted = false;
-
   contentRef = React.createRef();
-
-  componentDidMount() {
-    this.isMounted = true;
-  }
 
   componentWillUnmount() {
     const index = stack.indexOf(this);
@@ -53,7 +47,7 @@ export default class Tooltip extends React.Component {
       stack.splice(index);
     }
 
-    this.isMounted = false;
+    clearTimeout(this.timeout);
   }
 
   handleClickOutside = () => {
@@ -92,8 +86,8 @@ export default class Tooltip extends React.Component {
     });
 
     // Close with delay
-    setTimeout(() => {
-      if (this.isMounted && this.state.needClose) {
+    this.timeout = setTimeout(() => {
+      if (this.state.needClose) {
         this.close();
       }
     }, this.props.closeDelay);

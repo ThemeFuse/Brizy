@@ -34,11 +34,7 @@ export function fieldStyleClassName(v) {
       }
     };
   } else {
-    const {
-      type,
-      width,
-      height
-    } = v;
+    const { type, width, height } = v;
 
     glamorObj = {
       ".brz &": {
@@ -68,7 +64,10 @@ export function fieldStyleClassName(v) {
           flexBasis: `${mobileSyncOnChange(v, "width")}%`,
 
           "& .brz-textarea": {
-            height: type === "Paragraph" ? `${mobileSyncOnChange(v, "height")}px` : null
+            height:
+              type === "Paragraph"
+                ? `${mobileSyncOnChange(v, "height")}px`
+                : null
           }
         }
       }
@@ -77,17 +76,13 @@ export function fieldStyleClassName(v) {
 
   const glamorClassName = String(css(glamorObj));
 
-  return classnames("brz-form__item", glamorClassName);
+  return classnames("brz-forms__item", glamorClassName);
 }
 
 export function fieldStyleCSSVars(v) {
   if (IS_PREVIEW) return null;
 
-  const {
-    type,
-    width,
-    height
-  } = v;
+  const { type, width, height } = v;
 
   return {
     "--width": `${width}%`,

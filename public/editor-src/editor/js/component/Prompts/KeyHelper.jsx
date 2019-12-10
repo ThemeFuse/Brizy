@@ -1,4 +1,3 @@
-import _ from "underscore";
 import React, { Component } from "react";
 import { assetUrl } from "visual/utils/asset";
 import { detectOS } from "visual/utils/dom/detectOS";
@@ -6,7 +5,7 @@ import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
-export default class extends Component {
+export default class KeyHelper extends Component {
   render() {
     const os = detectOS();
     const isMac = os === "MacOS";

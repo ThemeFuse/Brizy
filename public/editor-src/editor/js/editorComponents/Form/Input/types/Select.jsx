@@ -62,8 +62,8 @@ export default class Select extends TextField {
     const isDesktop = getStore().getState().ui.deviceMode === "desktop";
     return _.map(this.props.options, (item, index) => {
       return (
-        <div key={index} className="brz-form__select-item">
-          <div className="brz-form__select-item__input">
+        <div key={index} className="brz-forms__select-item">
+          <div className="brz-forms__select-item__input">
             <input
               className="brz-input"
               value={item}
@@ -72,7 +72,7 @@ export default class Select extends TextField {
           </div>
           {isDesktop ? (
             <div
-              className="brz-form__select-item__icon"
+              className="brz-forms__select-item__icon"
               onClick={() => this.handleOptionsRemove(index)}
             >
               <EditorIcon icon="nc-trash" />
@@ -91,8 +91,8 @@ export default class Select extends TextField {
 
     return (
       <ClickOutside onClickOutside={() => this.setState({ isOpen: false })}>
-        <div className="brz-form__select">
-          <div className="brz-form__select-current brz-form__field">
+        <div className="brz-forms__select">
+          <div className="brz-forms__select-current brz-forms__field">
             <input
               {...v}
               ref={el => {
@@ -108,16 +108,16 @@ export default class Select extends TextField {
             <ThemeIcon
               name="arrow-down"
               type="editor"
-              className="brz-form__select--arrow"
+              className="brz-forms__select--arrow"
             />
           </div>
           {isOpen && (
-            <div className="brz-form__select-list brz-ed-dd-cancel">
+            <div className="brz-forms__select-list brz-ed-dd-cancel">
               <ScrollPane style={{ height: scrollPaneHeight }}>
                 {this.renderOptions()}
                 {isDesktop ? (
-                  <div className="brz-form__select-item">
-                    <div className="brz-form__select-item__input">
+                  <div className="brz-forms__select-item">
+                    <div className="brz-forms__select-item__input">
                       <input
                         placeholder={t("Add new option")}
                         className="brz-input brz-input__select"
@@ -129,7 +129,7 @@ export default class Select extends TextField {
                       />
                     </div>
                     <div
-                      className="brz-form__select-item__icon"
+                      className="brz-forms__select-item__icon"
                       onClick={this.handleOptionsAdd}
                     >
                       <EditorIcon icon="nc-arrow-right" />
@@ -146,7 +146,6 @@ export default class Select extends TextField {
 
   renderForView = v => {
     const { label, options } = this.props;
-    const list = [label, ...options];
 
     return (
       <div data-label={label}>
@@ -156,7 +155,8 @@ export default class Select extends TextField {
           maxItems={options.length + 1}
           itemHeight={52}
         >
-          {list.map((item, index) => {
+          <SelectControlItem value="">{label}</SelectControlItem>
+          {options.map((item, index) => {
             return (
               <SelectControlItem key={index} value={index}>
                 {item}

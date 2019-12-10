@@ -10,6 +10,20 @@
     font-size: $control-font-size;
     letter-spacing: $control-letter-spacing;
   }
+  &-value-container-tag {
+    border-radius: $control-border-radius;
+    font-size: $control-font-size;
+    letter-spacing: $control-letter-spacing;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 5px;
+  }
+  &-value-container-tag .brz-control__select2-value {
+    height: 20px !important;
+    flex: 1;
+    margin-bottom: 5px;
+  }
   &-value {
     font: inherit;
     letter-spacing: inherit;
@@ -20,6 +34,24 @@
     background: none;
     padding-left: $control-padding;
     padding-right: $control-padding;
+  }
+  &-tag {
+    height: 20px;
+    padding: 5px;
+    line-height: 1;
+    color: #fff;
+    margin: 0 2px 5px;
+
+    .brz-icon-svg {
+      cursor: pointer;
+      font-size: 10px;
+      margin-left: 4px;
+      transition: 0.2s color linear;
+    }
+    .brz-icon-svg:hover {
+      color: $brand-primary;
+      transition: 0.2s color linear;
+    }
   }
 
   // Dropdown
@@ -48,7 +80,7 @@
       border-bottom-color: transparent;
     }
     &:hover,
-    &.active {
+    &--active {
       transition: color 0.15s linear;
       color: $brand-primary;
     }
@@ -67,9 +99,14 @@
 
 // Light
 .brz-control__select2--light {
-  .brz-control__select2-value-container {
+  .brz-control__select2-value-container,
+  .brz-control__select2-value-container-tag {
     background-color: #fff;
     color: #383e48;
+  }
+  .brz-control__select2-tag {
+    background-color: #383e48;
+    color: #fff;
   }
   .brz-control__select2-menu {
     background-color: #fff;

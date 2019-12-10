@@ -8,7 +8,8 @@ export { toolbarBgImage, toolbarBgImageAttachment } from "./toolbarBgImage";
 export {
   toolbarBgVideoUrl,
   toolbarBgVideoQuality,
-  toolbarBgVideoLoop
+  toolbarBgVideoLoop,
+  toolbarBgVideoStart
 } from "./toolbarBgVideo";
 
 // BG Map
@@ -22,7 +23,11 @@ export {
 } from "./toolbarSlider";
 
 // Border Radius
-export { toolbarBorderRadius } from "./toolbarBorderRadius";
+export {
+  toolbarBorderRadius,
+  toolbarBorderRadiusGrouped,
+  toolbarBorderRadiusUngrouped
+} from "./toolbarBorderRadius";
 
 // Color
 export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
@@ -63,7 +68,10 @@ export {
   toolbarLinkHref,
   toolbarLinkPopup,
   toolbarLinkUpload,
-  toolbarActionClosePopup
+  toolbarActionClosePopup,
+  toolbarLinkMessageSuccess,
+  toolbarLinkMessageError,
+  toolbarLinkMessageRedirect
 } from "./toolbarLink";
 
 // Horizontal Align
@@ -80,7 +88,8 @@ export {
   toolbarSizeHeightHeightPx,
   toolbarSizeSizeSizePercent,
   toolbarSizeWidthSizePercent,
-  toolbarSizeContainerSize
+  toolbarSizeContainerSize,
+  toolbarSizeSpacing
 } from "./toolbarSize";
 
 // Padding
@@ -112,11 +121,17 @@ export { toolbarCustomCSSClass } from "./toolbarCustomCSSClass";
 // Custom CSS
 export { toolbarCustomCSS } from "./toolbarCustomCSS";
 
+//Custom Attributes
+export { toolbarAttributes } from "./toolbarAttributes";
+
 // Entrance Animation
 export { toolbarEntranceAnimation } from "./toolbarAnimation";
 
 // Hover Transition
 export { toolbarHoverTransition } from "./toolbarHoverTransition";
+
+// Tags
+export { toolbarTags } from "./toolbarTags";
 
 // Filter
 export {
@@ -169,6 +184,7 @@ export {
   toolbarElementVideoLink,
   toolbarElementVideoRatio,
   toolbarElementVideoControls,
+  toolbarElementVideoStart,
   toolbarElementVideoCover,
   toolbarElementVideoCoverZoom,
   toolbarElementVideoPlaySize
@@ -255,6 +271,9 @@ export {
   toolbarTypography2LetterSpacing
 } from "./toolbarTypography2";
 
+// Icon
+export { toolbarIconSize, toolbarIconSpacing } from "./toolbarIcon";
+
 // Element Facebook Button
 export {
   toolbarElementFbButtonType,
@@ -338,6 +357,23 @@ export {
   toolbarElementWPCustomShortCode
 } from "./toolbarElementWPCustomShortCode";
 
+export {
+  toolbarElementForm2SpacingPx,
+  toolbarElementForm2Type,
+  toolbarElementForm2Required,
+  toolbarElementForm2DateTimeOptions,
+  toolbarElementForm2RadioCheckboxOptions,
+  toolbarElementForm2FileUploadOptions,
+  toolbarElementForm2SelectOptions,
+  toolbarElementForm2NumberOptions,
+  toolbarElementForm2Apps,
+  toolbarElementForm2LabelSwitch,
+  toolbarElementForm2Size,
+  toolbarElementForm2BorderRadius,
+  toolbarElementForm2PlaceholderSwitch,
+  toolbarElementForm2FieldsLabelSpacing
+} from "./toolbarElementForm2";
+
 // Elements WOO
 export {
   toolbarElementWOOAddToCartProductID,
@@ -378,3 +414,19 @@ export { toolbarElementBreadcrumbsSpacing } from "./toolbarElementBreadcrumbs";
 
 // Element Post info
 export { toolbarElementPostInfoSpacing } from "./toolbarElementPostInfo";
+
+// Element Star Rating
+export {
+  toolbarElementStarRatingRating,
+  toolbarElementStarRatingLabel
+} from "./toolbarElementStarRating";
+
+export {
+  toolbarElementAudioUpload,
+  toolbarElementAudioShowCurrentTime,
+  toolbarElementAudioShowDurationTime,
+  toolbarElementAudioShowProgressBarTrack,
+  toolbarElementAudioShowProgressBarVolume,
+  toolbarElementAudioIconSize,
+  toolbarElementAudioCover
+} from "./toolbarElementAudio";

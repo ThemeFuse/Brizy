@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
 import { hideToolbar } from "visual/component/Toolbar";

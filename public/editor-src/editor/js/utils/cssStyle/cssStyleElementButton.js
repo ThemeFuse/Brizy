@@ -21,10 +21,8 @@ export function cssStyleElementButtonIconPosition({ v, device, state }) {
 
 export function cssStyleElementButtonIconFontSize({ v, device, state }) {
   const iconCustomSize = styleElementButtonIconCustomSize({ v, device, state });
-  const r =
-    iconCustomSize === undefined ? "" : `font-size:${iconCustomSize}px;`;
 
-  return r;
+  return iconCustomSize === undefined ? "" : `font-size:${iconCustomSize}px;`;
 }
 
 export function cssStyleElementButtonIconMargin({ v, device, state }) {
@@ -49,5 +47,5 @@ export function cssStyleElementIconStrokeWidth({ v, device, state }) {
 }
 
 export function cssStyleElementButtonPropertyHoverTransition() {
-  return `transition-property: color, box-shadow, background, border-color;`;
+  return "transition-property: color, box-shadow, background, border-color;";
 }

@@ -109,7 +109,7 @@ class GoogleConnect extends Component {
 
   render() {
     const { app } = this.context;
-    const { prevLoading, nextLoading, error } = this.state;
+    const { selectedFont, prevLoading, nextLoading, error } = this.state;
 
     const fonts = app.data.fonts
       .filter(font => {
@@ -124,11 +124,23 @@ class GoogleConnect extends Component {
         value: font.family,
         label: font.family
       }));
-    const data = [{ title: t("Font name"), type: "search", choices: fonts }];
+    const data = [
+      {
+        title: t("Font name"),
+        type: "search",
+        choices: fonts,
+        value: selectedFont
+      }
+    ];
     const description = (
       <Fragment>
         {t("Tip: You can browse the Google font library")}{" "}
-        <a className="brz-a" href="https://fonts.google.com" target="_blank">
+        <a
+          className="brz-a"
+          href="https://fonts.google.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {t("here")}
         </a>
         .

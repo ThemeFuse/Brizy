@@ -1,16 +1,18 @@
 import React from "react";
 import classnames from "classnames";
 import Notifications from "visual/global/Notifications";
-import Draggable from "./Draggable";
 import EditorIcon from "visual/component/EditorIcon";
 import {
   uploadImage,
   preloadImage,
   imageUrl,
-  imageWrapperSize
+  svgUrl,
+  getImageFormat
 } from "visual/utils/image";
 
-const MAX_IMAGE_SETTER_WIDTH = 140;
+import Image from "./Image";
+
+const isSVG = extension => extension === "svg";
 
 export default class ImageSetter extends React.Component {
   static defaultProps = {
@@ -20,13 +22,18 @@ export default class ImageSetter extends React.Component {
     y: 50,
     width: 0,
     height: 0,
+    extension: null,
     onlyPointer: false,
+    showPointer: true,
     customUrl: false,
     onUpload: null
   };
 
   state = {
-    ...this.props,
+    src: this.props.src,
+    width: this.props.width,
+    height: this.props.height,
+    extension: this.props.extension,
     loading: false
   };
 
@@ -37,15 +44,9 @@ export default class ImageSetter extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      this.props.src !== nextProps.src ||
-      this.props.x !== nextProps.x ||
-      this.props.y !== nextProps.y
-    ) {
+    if (this.props.src !== nextProps.src) {
       this.setState({
-        src: nextProps.src,
-        x: nextProps.x,
-        y: nextProps.y
+        src: nextProps.src
       });
     }
   }
@@ -54,14 +55,25 @@ export default class ImageSetter extends React.Component {
     this.mounted = false;
   }
 
-  getNewValue = value => {
-    return Object.assign({}, this.state, { ...value });
+  handleChange = (value, meta) => {
+    const { x, y, extension } = this.props;
+    const { src, width, height } = this.state;
+
+    this.props.onChange(
+      { src, width, height, x, y, extension, ...value },
+      meta
+    );
   };
 
-  handleChangePosition = value => {
-    const newValue = this.getNewValue(value);
+  handleRemove = () => {
+    const newValue = {
+      src: "",
+      width: 0,
+      height: 0
+    };
+
     this.setState(newValue);
-    this.props.onChange(newValue, { isChanged: "pointer" });
+    this.props.onChange(newValue, { isChanged: "image" });
   };
 
   handleImageChange = e => {
@@ -74,21 +86,22 @@ export default class ImageSetter extends React.Component {
     this.setState({ loading: true });
 
     uploadImage(files[0], {
-      acceptedExtensions: ["jpeg", "jpg", "png", "gif"],
-      onUpload: ({ name: imageSrc }) => {
-        const imgUrl = imageUrl(imageSrc);
+      acceptedExtensions: ["jpeg", "jpg", "png", "gif", "svg"],
+      onUpload: ({ name: src }) => {
+        const extension = getImageFormat(src);
+        const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
 
         preloadImage(imgUrl).then(({ width, height }) => {
-          const newValue = this.getNewValue({
-            src: imageSrc,
-            loading: false,
-            width,
-            height
-          });
+          const { x, y } = this.props;
+          const newValue = { x, y, src, width, height, extension };
           if (this.mounted) {
-            this.setState(newValue);
+            this.setState({
+              ...newValue,
+              loading: false
+            });
           }
-          this.props.onChange(newValue, { isChanged: "image" });
+
+          this.handleChange(newValue, { isChanged: "image" });
         });
       },
       onError: e => {
@@ -96,7 +109,7 @@ export default class ImageSetter extends React.Component {
           id: "image-upload-fail",
           type: Notifications.notificationTypes.error,
           text:
-            "Failed to upload file. Please upload a valid JPG, PNG or GIF image."
+            "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
         });
 
         if (process.env.NODE_ENV === "development") {
@@ -106,52 +119,23 @@ export default class ImageSetter extends React.Component {
     });
   };
 
-  handleRemove = () => {
-    const newValue = this.getNewValue(this.constructor.defaultProps);
-    this.setState(newValue);
-    this.props.onChange(newValue, { isChanged: "image" });
-  };
-
   renderDraggable() {
-    const { customUrl } = this.props;
-    const {
-      src,
-      x,
-      y,
-      width: _width,
-      height: _height,
-      onlyPointer
-    } = this.state;
-    const position = { x, y };
-    const imgUrl = customUrl
-      ? src
-      : imageUrl(src, {
-          iW: MAX_IMAGE_SETTER_WIDTH,
-          iH: "any"
-        });
-
-    const { width, height } = imageWrapperSize(
-      _width,
-      _height,
-      MAX_IMAGE_SETTER_WIDTH
-    );
+    const { customUrl, onlyPointer, showPointer, x, y } = this.props;
+    const { src, width, height, extension } = this.state;
 
     let content = [
-      <div
-        key="setter"
-        className="brz-ed-control__focal-point__setter"
-        style={{ width: `${width}px`, height: `${height}px` }}
-      >
-        <img className="brz-img" src={imgUrl} />
-        <Draggable
-          bounds="parent"
-          position={position}
-          onDrag={this.handleChangePosition}
-          onDragEnd={this.handleChangePosition}
-        >
-          <div className="brz-ed-control__focal-point__point" />
-        </Draggable>
-      </div>
+      <Image
+        key="image"
+        src={src}
+        width={width}
+        height={height}
+        x={x}
+        y={y}
+        customUrl={customUrl}
+        extension={extension}
+        showPointer={showPointer}
+        onChange={this.handleChange}
+      />
     ];
 
     if (!onlyPointer) {

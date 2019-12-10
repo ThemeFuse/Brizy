@@ -10,6 +10,7 @@ export function toolbarColor2({
   v,
   device,
   state,
+  states,
   disabled = false,
   prefix = "color",
   devices = "all",
@@ -29,6 +30,7 @@ export function toolbarColor2({
     type: "colorPicker2",
     disabled,
     devices,
+    states,
     select: {
       show: false
     },
@@ -58,6 +60,7 @@ export function toolbarColorHexField2({
   v,
   device,
   state,
+  states,
   devices = "all",
   prefix = "color",
   onChange
@@ -74,6 +77,7 @@ export function toolbarColorHexField2({
     id: dvk(capByPrefix(prefix, "field")),
     type: "colorFields",
     devices,
+    states,
     value: {
       hex,
       opacity: dvv(capByPrefix(prefix, "opacity"))

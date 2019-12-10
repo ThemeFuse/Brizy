@@ -1,8 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { Component, createRef } from "react";
 import classnames from "classnames";
 
-class MenuDropDown extends React.Component {
+class MenuDropDown extends Component {
   static defaultProps = {
     className: "",
     position: "left",
@@ -13,16 +12,18 @@ class MenuDropDown extends React.Component {
     position: this.props.position
   };
 
+  content = createRef();
+
   componentDidMount() {
-    this.node = ReactDOM.findDOMNode(this);
+    this.node = this.content.current;
     this.reposition();
   }
 
   componentWillReceiveProps() {
-    if (this.state.position !== this.props.position) {
-      this.setState({
-        position: this.props.position
-      });
+    const { position } = this.props;
+
+    if (this.state.position !== position) {
+      this.setState({ position });
     }
   }
 
@@ -57,27 +58,21 @@ class MenuDropDown extends React.Component {
 
     if (right >= targetWidth) {
       this.isReposition = true;
-      this.setState(
-        {
-          position: "right"
-        },
-        () => (this.isReposition = false)
-      );
+      this.setState({ position: "right" }, () => (this.isReposition = false));
     }
 
     if (left <= 0) {
       this.isReposition = true;
-      this.setState(
-        {
-          position: "left"
-        },
-        () => (this.isReposition = false)
-      );
+      this.setState({ position: "left" }, () => (this.isReposition = false));
     }
   }
 
   render() {
-    return <ul className={this.getClassName()}>{this.props.children}</ul>;
+    return (
+      <ul ref={this.content} className={this.getClassName()}>
+        {this.props.children}
+      </ul>
+    );
   }
 }
 

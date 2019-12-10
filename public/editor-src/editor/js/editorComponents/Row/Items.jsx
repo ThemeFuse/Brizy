@@ -11,9 +11,7 @@ import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import { clamp } from "visual/utils/math";
-import { defaultValueValue } from "visual/utils/onChange";
 import { getStore } from "visual/redux/store";
-import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { normalizeRowColumns } from "./utils";
 
@@ -31,6 +29,8 @@ class RowItems extends EditorArrayComponent {
     meta: {},
     itemProps: {}
   };
+
+  nodeRef = React.createRef();
 
   columnWidths = null;
 
@@ -53,10 +53,10 @@ class RowItems extends EditorArrayComponent {
         this.handleDesktopColumnResize(index, deltaX, position);
         break;
       case "tablet":
-        this.handleTabletColumnResize(index, deltaX, position);
+        this.handleDeviceColumnResize(index, deltaX, "tabletWidth");
         break;
       case "mobile":
-        this.handleMobileColumnResize(index, deltaX, position);
+        this.handleDeviceColumnResize(index, deltaX, "mobileWidth");
         break;
       default:
         console.error("Invalid Column Resize. This should not happen");
@@ -113,44 +113,22 @@ class RowItems extends EditorArrayComponent {
     this.handleValueChange(newValue);
   };
 
-  handleTabletColumnResize = (index, deltaX) => {
-    const { tabletW } = this.props.meta;
+  handleDeviceColumnResize = (index, deltaX, key) => {
     this.columnWidths = this.columnWidths || this.getColumnWidthsInPx();
-
+    const node = this.nodeRef.current;
+    const parentWidth = node.getBoundingClientRect().width;
     const colWidthPx = clamp(
       this.columnWidths[index] + deltaX,
       MIN_COL_WIDTH,
-      tabletW
+      parentWidth
     );
-    const colWidthPercent = toDecimalTen((colWidthPx * 100) / tabletW);
+    const colWidthPercent = toDecimalTen((colWidthPx * 100) / parentWidth);
 
     this.popoverData = [colWidthPercent];
 
-    let newValue = setIn(
+    const newValue = setIn(
       this.getDBValue(),
-      [index, "value", "tabletWidth"],
-      colWidthPercent
-    );
-
-    this.handleValueChange(newValue);
-  };
-
-  handleMobileColumnResize = (index, deltaX) => {
-    const { mobileW } = this.props.meta;
-    this.columnWidths = this.columnWidths || this.getColumnWidthsInPx();
-
-    const colWidthPx = clamp(
-      this.columnWidths[index] + deltaX,
-      MIN_COL_WIDTH,
-      mobileW
-    );
-    const colWidthPercent = toDecimalTen((colWidthPx * 100) / mobileW);
-
-    this.popoverData = [colWidthPercent];
-
-    let newValue = setIn(
-      this.getDBValue(),
-      [index, "value", "mobileWidth"],
+      [index, "value", key],
       colWidthPercent
     );
 
@@ -251,6 +229,7 @@ class RowItems extends EditorArrayComponent {
   };
 
   getColumnWidthsInPx = () => {
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
 
     return _.map(node.children, elem => elem.getBoundingClientRect().width);
@@ -329,7 +308,9 @@ class RowItems extends EditorArrayComponent {
     }
 
     const sortableContent = items.length ? (
-      <div className={this.props.containerClassName}>{items}</div>
+      <div ref={this.nodeRef} className={this.props.containerClassName}>
+        {items}
+      </div>
     ) : null;
 
     return (

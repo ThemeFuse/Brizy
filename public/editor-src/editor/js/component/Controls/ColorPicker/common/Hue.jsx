@@ -11,7 +11,7 @@ export class Hue extends Component {
     this.unbindEventListeners();
   }
 
-  handleChange = (e, skip) => {
+  handleChange = e => {
     const contentWindow = this.props.contentWindow();
     const change = hue.calculateChange(
       e,
@@ -52,13 +52,13 @@ export class Hue extends Component {
         boxShadow: this.props.shadow
       },
       pointer: {
-        left: `${this.props.hsl.h * 100 / 360}%`
+        left: `${(this.props.hsl.h * 100) / 360}%`
       }
     };
 
     const pointerStyles = {
       left: "0px",
-      top: `${-(this.props.hsl.h * 100 / 360) + 100}%`
+      top: `${-((this.props.hsl.h * 100) / 360) + 100}%`
     };
 
     return (

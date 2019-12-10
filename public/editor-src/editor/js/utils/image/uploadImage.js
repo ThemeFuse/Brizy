@@ -1,12 +1,14 @@
 import _ from "underscore";
 import { uploadImage as apiUploadImage } from "visual/utils/api/editor";
 
+/* eslint-disable no-console, no-unused-vars */
 const defaultOptions = {
   acceptedExtensions: ["jpeg", "jpg", "png", "gif"],
   onBase64: base64 => {},
   onUpload: uploadData => {},
   onError: e => console.log("uploadImage default onError", e)
 };
+/* eslint-enabled no-console, no-unused-vars */
 
 export default function uploadImage(imageFile, options) {
   const { acceptedExtensions, onBase64, onUpload, onError } = _.extend(

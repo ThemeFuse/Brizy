@@ -8,6 +8,7 @@ class FileUpload extends React.Component {
   static defaultProps = {
     className: "",
     attr: {},
+    acceptedExtensions: [],
     label: "",
     placeholder: "",
     helper: null,
@@ -88,10 +89,15 @@ class FileUpload extends React.Component {
   }
 
   renderUploadButton() {
+    const { acceptedExtensions } = this.props;
     return (
       <div className="brz-file-upload">
         <EditorIcon icon="nc-add" />
-        <input type="file" onChange={this.handleChange} />
+        <input
+          type="file"
+          onChange={this.handleChange}
+          accept={acceptedExtensions.join(",")}
+        />
       </div>
     );
   }

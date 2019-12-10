@@ -10,6 +10,7 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgImageExtension": "",
 
     "brightness": 100,
     "hue": 0,
@@ -24,6 +25,7 @@
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
+    "hoverBgImageExtension": null,
 
     "hoverBrightness": null,
     "hoverHue": null,
@@ -38,6 +40,7 @@
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
+    "tabletBgImageExtension": null,
 
     "tabletBrightness": null,
     "tabletHue": null,
@@ -52,6 +55,7 @@
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
+    "mobileBgImageExtension": null,
 
     "mobileBrightness": null,
     "mobileHue": null,
@@ -326,6 +330,9 @@
 
     "customCSS": "",
 
+    "tabletContainerType": null,
+    "tabletContainerSize": null,
+
     "tabletBorderStyle": null,
 
     "tempTabletBorderStyle": null,
@@ -418,6 +425,20 @@
     "tabletShapeTopType": null,
     "tabletShapeBottomType": null,
 
+    "tabletShapeTopColorHex": null,
+    "tabletShapeTopColorOpacity": null,
+    "tabletShapeTopColorPalette": null,
+
+    "tempTabletShapeTopColorOpacity": null,
+    "tempTabletShapeTopColorPalette": null,
+
+    "tabletShapeBottomColorHex": null,
+    "tabletShapeBottomColorOpacity": null,
+    "tabletShapeBottomColorPalette": null,
+
+    "tempTabletShapeBottomColorOpacity": null,
+    "tempTabletShapeBottomColorPalette": null,
+
     "tabletShape": null,
     "tabletShapeTopHeight": null,
     "tabletShapeTopHeightSuffix": null,
@@ -444,6 +465,9 @@
     "tempTabletBoxShadowSpread": null,
     "tempTabletBoxShadowVertical": null,
     "tempTabletBoxShadowHorizontal": null,
+
+    "mobileContainerType": null,
+    "mobileContainerSize": null,
 
     "mobileBgColorType": null,
 
@@ -557,6 +581,20 @@
 
     "mobileShapeTopType": null,
     "mobileShapeBottomType": null,
+
+    "mobileShapeTopColorHex": null,
+    "mobileShapeTopColorOpacity": null,
+    "mobileShapeTopColorPalette": null,
+
+    "tempMobileShapeTopColorOpacity": null,
+    "tempMobileShapeTopColorPalette": null,
+
+    "mobileShapeBottomColorHex": null,
+    "mobileShapeBottomColorOpacity": null,
+    "mobileShapeBottomColorPalette": null,
+
+    "tempMobileShapeBottomColorOpacity": null,
+    "tempMobileShapeBottomColorPalette": null,
 
     "mobileShape": null,
     "mobileShapeTopHeight": null,

@@ -73,11 +73,14 @@
     width: 100%;
     transform: translate3d(0, -100%, 0);
     opacity: 0;
-    transition: transform 0.2s linear, opacity 0.2s linear;
+    transition: none;
 
     &-opened {
       transform: translate3d(0, 0, 0);
       opacity: 1;
+      transition: transform 0.2s linear, opacity 0.2s linear;
+    }
+    &-closed {
       transition: transform 0.2s linear, opacity 0.2s linear;
     }
   }
@@ -98,14 +101,4 @@
 // Section Popup
 .brz-popup__inner {
   height: 100%;
-}
-
-// Responsive
-@include media-breakpoint-down(sm) {
-  &.brz-ed .brz-section__header {
-    &--animated {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-  }
 }

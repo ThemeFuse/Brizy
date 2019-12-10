@@ -126,58 +126,68 @@ module.exports = {
                                         "value": {
                                             "_styles": [
                                                 "wrapper",
-                                                "wrapper--iconText"
+                                                "wrapper--form2"
                                             ],
                                             "items": [
                                                 {
-                                                    "type": "Form",
+                                                    "type": "Form2",
                                                     "value": {
                                                         "_styles": [
-                                                            "form"
+                                                            "form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "FormFields",
+                                                                "type": "Form2Fields",
                                                                 "value": {
                                                                     "items": [
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
                                                                                 "type": "Email",
                                                                                 "label": "Enter your email address",
-                                                                                "required": "off",
+                                                                                "required": "on",
                                                                                 "options": [
                                                                                     "Option 1",
                                                                                     "Option 2"
-                                                                                ]
+                                                                                ],
+                                                                                "placeholder": "Enter your email address",
+                                                                                "width": 100
                                                                             }
                                                                         }
                                                                     ],
-                                                                    "fontSize": 18,
-                                                                    "fontFamily": "quattrocento_sans",
-                                                                    "lineHeight": 1.2,
-                                                                    "letterSpacing": 0,
-                                                                    "fontWeight": 700,
                                                                     "fontStyle": "subtitle",
+                                                                    "borderRadius": 3,
+                                                                    "borderTopLeftRadius": 3,
+                                                                    "borderTopRightRadius": 3,
+                                                                    "borderBottomLeftRadius": 3,
+                                                                    "borderBottomRightRadius": 3,
+                                                                    "tempBorderRadius": 3,
+                                                                    "tempBorderTopLeftRadius": 3,
+                                                                    "tempBorderTopRightRadius": 3,
+                                                                    "tempBorderBottomLeftRadius": 3,
+                                                                    "tempBorderBottomRightRadius": 3,
+                                                                    "borderStyle": "solid",
+                                                                    "borderWidth": 1,
+                                                                    "borderTopWidth": 1,
+                                                                    "borderRightWidth": 1,
+                                                                    "borderBottomWidth": 1,
+                                                                    "borderLeftWidth": 1,
+                                                                    "tempBorderTopWidth": 1,
+                                                                    "tempBorderRightWidth": 1,
+                                                                    "tempBorderBottomWidth": 1,
+                                                                    "tempBorderLeftWidth": 1,
+                                                                    "borderColorOpacity": 1,
+                                                                    "borderColorPalette": "",
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "",
                                                                     "bgColorPalette": "color8",
-                                                                    "bgColorHex": "#ffffff",
+                                                                    "tempBgColorPalette": "color8",
                                                                     "bgColorOpacity": 1,
                                                                     "colorPalette": "color7",
-                                                                    "colorHex": "#666666",
-                                                                    "colorOpacity": 0.6,
-                                                                    "tabletFontSize": 17,
-                                                                    "tabletLineHeight": 1.5,
-                                                                    "tabletLetterSpacing": 0,
-                                                                    "tabletFontWeight": 400,
-                                                                    "tabletFontStyle": "",
-                                                                    "mobileFontSize": 16,
-                                                                    "mobileLineHeight": 1.5,
-                                                                    "mobileLetterSpacing": 0,
-                                                                    "mobileFontWeight": 400,
-                                                                    "mobileFontStyle": "",
-                                                                    "tempBgColorPalette": "color8",
                                                                     "tempColorPalette": "color7",
-                                                                    "tempColorOpacity": 0.6
+                                                                    "colorOpacity": 0.5,
+                                                                    "colorHex": "#666666",
+                                                                    "tempColorOpacity": 0.5
                                                                 }
                                                             },
                                                             {
@@ -187,23 +197,14 @@ module.exports = {
                                                                         "button",
                                                                         "submit"
                                                                     ],
-                                                                    "bgColorPalette": "color3",
-                                                                    "bgColorHex": "#17e8be",
-                                                                    "bgColorOpacity": 1,
-                                                                    "hoverBgColorPalette": "color1",
-                                                                    "hoverBgColorHex": "#a170d9",
-                                                                    "hoverBgColorOpacity": 1,
-                                                                    "colorPalette": "",
-                                                                    "colorHex": "#2c2f40",
+                                                                    "text": "Grab The Discount",
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "",
+                                                                    "colorPalette": "color2",
                                                                     "colorOpacity": 1,
-                                                                    "hoverColorPalette": "color8",
-                                                                    "hoverColorHex": "#2c2f40",
-                                                                    "hoverColorOpacity": 1,
                                                                     "iconName": "",
                                                                     "iconType": "",
-                                                                    "text": "Grab The Discount",
                                                                     "size": "medium",
-                                                                    "mobileSize": "small",
                                                                     "fontSize": 12,
                                                                     "paddingTB": 14,
                                                                     "paddingTop": 14,
@@ -219,54 +220,44 @@ module.exports = {
                                                                     "tempPaddingLeft": 42,
                                                                     "borderRadius": 4,
                                                                     "borderWidth": 0,
-                                                                    "mobilePaddingTop": 11,
-                                                                    "mobilePaddingRight": 26,
-                                                                    "mobilePaddingBottom": 11,
-                                                                    "mobilePaddingLeft": 26,
-                                                                    "fontFamily": "quattrocento_sans",
-                                                                    "lineHeight": 1.6,
-                                                                    "letterSpacing": 2,
-                                                                    "fontWeight": 700,
-                                                                    "fontStyle": "button",
-                                                                    "tabletFontSize": 15,
-                                                                    "tabletLineHeight": 1.8,
-                                                                    "tabletLetterSpacing": 1,
-                                                                    "tabletFontWeight": 700,
-                                                                    "tabletFontStyle": "",
-                                                                    "mobileFontSize": 14,
-                                                                    "mobileLineHeight": 1.8,
-                                                                    "mobileLetterSpacing": 0.5,
-                                                                    "mobileFontWeight": 700,
-                                                                    "mobileFontStyle": "",
                                                                     "borderRadiusType": "custom",
                                                                     "tempBorderRadiusType": "custom",
                                                                     "fillType": "filled",
                                                                     "borderColorOpacity": 0,
                                                                     "borderColorPalette": 0,
+                                                                    "bgColorOpacity": 1,
+                                                                    "bgColorPalette": "color3",
+                                                                    "hoverBgColorOpacity": 1,
                                                                     "hoverBorderColorOpacity": 0.8,
                                                                     "tempBorderRadius": 4,
                                                                     "tempBorderWidth": 2,
-                                                                    "tabsState": "",
-                                                                    "tabsColor": "",
-                                                                    "hoverBorderColorPalette": "color3",
-                                                                    "tempHoverBorderColorPalette": "color3",
+                                                                    "hoverBgColorPalette": "color1",
+                                                                    "hoverBorderColorPalette": "",
+                                                                    "tempHoverBorderColorPalette": "",
+                                                                    "hoverBgColorHex": "#a170d9",
                                                                     "tempHoverBgColorOpacity": 1,
                                                                     "tempHoverBgColorPalette": "color3",
-                                                                    "hoverBorderColorHex": "#239ddb"
+                                                                    "hoverBorderColorHex": "#a170d9"
                                                                 }
                                                             }
                                                         ],
-                                                        "horizontalAlign": "center"
+                                                        "submitWidth": 50,
+                                                        "horizontalAlign": "center",
+                                                        "mobileSubmitWidth": 60
                                                     }
                                                 }
                                             ],
                                             "paddingType": "ungrouped",
-                                            "paddingRight": 70,
                                             "paddingRightSuffix": "px",
-                                            "padding": 0,
-                                            "paddingLeft": 70,
+                                            "tempPaddingRightSuffix": "px",
+                                            "paddingSuffix": "px",
+                                            "tempPaddingSuffix": "px",
+                                            "paddingRight": 70,
+                                            "tempPaddingRight": 70,
                                             "paddingLeftSuffix": "px",
-                                            "paddingSuffix": "px"
+                                            "tempPaddingLeftSuffix": "px",
+                                            "paddingLeft": 70,
+                                            "tempPaddingLeft": 70
                                         }
                                     },
                                     {
@@ -417,7 +408,7 @@ module.exports = {
         "colorPalette": "",
         "colorHex": "#2c2f40",
         "colorOpacity": 1,
-        "popupId": "owiatukjrdmqrhuvyovceyjvcefwuatzpofz",
+        "popupId": "hrahwrbzathcnahvogmbxsvsdryhliihupcs",
         "tempBgColorPalette": "color4",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,

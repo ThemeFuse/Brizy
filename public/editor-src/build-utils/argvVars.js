@@ -19,26 +19,8 @@ module.exports = function argv(argv) {
     kits: path.resolve(__dirname, "../kits"),
     templates: path.resolve(__dirname, "../templates"),
     popups: path.resolve(__dirname, "../popups"),
-    build: BUILD_DIR
-      ? path.isAbsolute(BUILD_DIR)
-        ? BUILD_DIR
-        : path.resolve(__dirname, BUILD_DIR)
-      : TARGET === "WP" && !IS_PRODUCTION
-      ? path.resolve(
-          __dirname,
-          "../../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
-        )
-      : path.resolve(__dirname, `../build/free`),
-    buildPro: BUILD_DIR_PRO
-      ? path.isAbsolute(BUILD_DIR_PRO)
-        ? BUILD_DIR_PRO
-        : path.resolve(__dirname, BUILD_DIR_PRO)
-      : TARGET === "WP" && !IS_PRODUCTION
-      ? path.resolve(
-          __dirname,
-          "../../../apache/wordpress/wp-content/plugins/brizy-pro/public/editor-build"
-        )
-      : path.resolve(__dirname, `../build/pro`),
+    build: getBuildPath(),
+    buildPro: getBuildProPath(),
     buildLocal: path.resolve(__dirname, `../build`)
   };
 
@@ -55,4 +37,62 @@ module.exports = function argv(argv) {
     PORT,
     paths
   };
+
+  function getBuildPath() {
+    let r;
+
+    if (TARGET === "WP" && !IS_PRODUCTION) {
+      if (BUILD_DIR) {
+        r = path.isAbsolute(BUILD_DIR)
+          ? BUILD_DIR
+          : path.resolve(__dirname, BUILD_DIR);
+      } else {
+        r = path.resolve(
+          __dirname,
+          "../../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
+        );
+      }
+
+      r = path.resolve(r, "./dev");
+    } else {
+      if (BUILD_DIR) {
+        r = path.isAbsolute(BUILD_DIR)
+          ? BUILD_DIR
+          : path.resolve(__dirname, BUILD_DIR);
+      } else {
+        r = path.resolve(__dirname, "../build/free");
+      }
+    }
+
+    return r;
+  }
+
+  function getBuildProPath() {
+    let r;
+
+    if (TARGET === "WP" && !IS_PRODUCTION) {
+      if (BUILD_DIR_PRO) {
+        r = path.isAbsolute(BUILD_DIR_PRO)
+          ? BUILD_DIR_PRO
+          : path.resolve(__dirname, BUILD_DIR_PRO);
+      } else {
+        r = path.resolve(
+          __dirname,
+          "../../../apache/wordpress/wp-content/plugins/brizy-pro/public/editor-build"
+        );
+      }
+
+      r = path.resolve(r, "./dev");
+    } else {
+      if (BUILD_DIR_PRO) {
+        r = path.isAbsolute(BUILD_DIR_PRO)
+          ? BUILD_DIR_PRO
+          : path.resolve(__dirname, BUILD_DIR_PRO);
+      } else {
+        r = path.resolve(__dirname, `../build/pro`);
+      }
+    }
+
+    return r;
+  }
 };

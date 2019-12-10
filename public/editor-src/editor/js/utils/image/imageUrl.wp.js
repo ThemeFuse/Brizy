@@ -56,3 +56,13 @@ export default function imageUrl(
     return imageUrlPrefix + queryString;
   }
 }
+
+export function svgUrl(src) {
+  if (src) {
+    const { customFile } = Config.get("urls");
+
+    return `${customFile}${src}`;
+  }
+
+  return null;
+}

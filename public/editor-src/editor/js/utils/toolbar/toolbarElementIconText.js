@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 export function toolbarElementIconTextListDisabled({
-  v,
   device,
   state,
   devices = "all"
@@ -93,7 +92,6 @@ export function toolbarElementIconTextIconSpacing({
 }
 
 export function toolbarElementIconDisabledSettings({
-  v,
   device,
   devices = "all",
   state

@@ -30,7 +30,7 @@ export default class Button extends React.Component {
   startCookiePolling = () => {
     this.cookieCheckerInterval = setInterval(() => {
       let tokenCookie;
-      const parts = document.cookie.split(`file_download_token=`);
+      const parts = document.cookie.split("file_download_token=");
 
       if (parts.length === 2) {
         tokenCookie = parts[1].split(";")[0];
@@ -59,8 +59,6 @@ export default class Button extends React.Component {
   };
 
   render() {
-    const { loading, downloadToken } = this.state;
-
     const keysNames = ["ctrl+S", "cmd+S", "right_cmd+S"];
 
     return (
@@ -71,7 +69,7 @@ export default class Button extends React.Component {
           onKeyDown={this.handleSaveHtml}
         />
         <span className="brz-span" onClick={this.handleSaveHtml}>
-          {loading ? (
+          {this.state.loading ? (
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
           ) : (
             t("Save HTML")

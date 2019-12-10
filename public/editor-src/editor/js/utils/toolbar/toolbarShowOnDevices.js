@@ -76,7 +76,6 @@ export function toolbarShowOnMobile({
 export function toolbarShowOnResponsive({
   v,
   device,
-  state,
   devices = "all",
   position = 10,
   closeTooltip = true

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { t } from "visual/utils/i18n";
 import ViewFields from "./ViewFields";
 import { Context } from "../../../common/GlobalApps/Context";
-import { addAccount, deleteAccount } from "../../../common/GlobalApps/api";
+import { deleteAccount } from "../../../common/GlobalApps/api";
 import { fakeRequest } from "../../../common/utils";
-import { validateRecaptcha } from "./validation";
+import { validation } from "./validation";
 
 const apiKeys = [
   { name: "sitekey", title: "Site Key" },
@@ -74,27 +74,10 @@ class RecaptchaConnect extends Component {
         nextLoading: false
       });
     } else {
-      const validated = await validateRecaptcha(apiKeyValue);
+      const { data } = app;
 
-      if (validated) {
-        const { data, id } = app;
-
-        if (data) {
-          const { status } = await deleteAccount(data.id);
-
-          if (status !== 200) {
-            this.setState({
-              nextLoading: false,
-              error: t("Something went wrong")
-            });
-          }
-        }
-
-        const { status } = await addAccount({
-          service: id,
-          group: id,
-          ...apiKeyValue
-        });
+      if (data) {
+        const { status } = await deleteAccount(data.id);
 
         if (status !== 200) {
           this.setState({
@@ -102,7 +85,11 @@ class RecaptchaConnect extends Component {
             error: t("Something went wrong")
           });
         }
+      }
 
+      const validated = await validation(apiKeyValue);
+
+      if (validated) {
         onChangeNext();
       } else {
         this.setState({

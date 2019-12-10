@@ -138,7 +138,8 @@ class HotKeys extends React.Component {
     const excludeSelectors = [
       ".brz-ed-sidebar__right",
       "#brz-toolbar-portal",
-      ".brz-ed-tooltip__content-portal"
+      ".brz-ed-tooltip__content-portal",
+      ".brz-ed-popup-integrations"
     ];
 
     const deleteKeyWasPressed = keyNamesShortKeys.delete.includes(keyName);
@@ -147,7 +148,10 @@ class HotKeys extends React.Component {
     const textShortCutWasPressed =
       deleteKeyWasPressed || pasteKeyNamePressed || copyKeyNamePressed;
     const elementIsEditable =
-      e.target.closest("[contenteditable=true]") || e.target.closest("input");
+      e.target.closest("[contenteditable=true]") ||
+      e.target.closest("input") ||
+      e.target.closest("textarea");
+
     return (
       !e.target.closest(excludeSelectors.join(",")) &&
       !(elementIsEditable && textShortCutWasPressed)
@@ -155,12 +159,14 @@ class HotKeys extends React.Component {
   }
 
   getItems = () => {
+    /* eslint-disable no-unused-vars */
     let {
       children,
       shortcutsTypes = [],
       keyNames = [],
       ...restProps
     } = this.props;
+    /* eslint-enabled no-unused-vars */
     const { getParentContextMenuItems } = this.context;
     let props = {
       onKeyUp: () => {},

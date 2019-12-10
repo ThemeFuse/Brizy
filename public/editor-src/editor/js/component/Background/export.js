@@ -20,15 +20,15 @@ export default function() {
   $(".brz-bg-video").each(function() {
     var $this = $(this);
     var type = $this.attr("data-type");
-    var autoplay = $this.attr("data-autoplay");
     var quality = $this.attr("data-quality");
-    var mute = $this.attr("data-mute");
+    var loop = $this.attr("data-loop");
+    var start = $this.attr("data-start");
 
     $this.backgroundVideo({
-      mute: mute === "on",
-      autoplay: autoplay === "on",
       type: type,
-      quality: quality
+      quality: quality,
+      loop: loop,
+      start: start
     });
   });
 }

@@ -44,7 +44,12 @@ export default class GridItem extends Component {
           {t("You’ll need Brizy PRO to use this integration")}
         </p>
         <p className="brz-p brz-ed-tooltip-content__pro-body">
-          <a className="brz-a" href={ConfigUrl.upgradeToPro} target="_blank">
+          <a
+            className="brz-a"
+            href={ConfigUrl.upgradeToPro}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <EditorIcon icon="nc-lock" />
             {t("Get Brizy PRO")}
           </a>

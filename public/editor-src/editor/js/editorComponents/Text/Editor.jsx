@@ -1,7 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from "react";
 import _ from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import { t } from "visual/utils/i18n";
 
 const keyCodes = {
@@ -14,28 +12,26 @@ const keyCodes = {
   Z: 90
 };
 
-class TextEditor extends EditorComponent {
-  static get componentId() {
-    return "TextEditor";
-  }
-
+class TextEditor extends Component {
   static defaultProps = {
     value: t("Editable Text")
   };
+
+  content = React.createRef();
 
   componentDidMount() {
     this.mounted = true;
   }
 
   componentWillReceiveProps(nextProps) {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.content.current;
 
-    if (nextProps.value !== node.textContent) {
+    if (node && nextProps.value !== node.textContent) {
       node.textContent = nextProps.value;
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate() {
     return false;
   }
 
@@ -46,12 +42,12 @@ class TextEditor extends EditorComponent {
   handleClick = e => {
     e.preventDefault();
 
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.content.current;
 
     // issue - https://github.com/bagrinsergiu/blox-editor/issues/1848
     // What does it need for?
     // node.setAttribute("contentEditable", "true");
-    node.classList.add("brz-ed-dd-cancel");
+    node && node.classList.add("brz-ed-dd-cancel");
     // node.focus();
   };
 
@@ -94,10 +90,10 @@ class TextEditor extends EditorComponent {
   };
 
   handleBlur = () => {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.content.current;
 
     // node.removeAttribute("contentEditable", "true");
-    node.classList.remove("brz-ed-dd-cancel");
+    node && node.classList.remove("brz-ed-dd-cancel");
   };
 
   notifyChange = _.debounce(value => {
@@ -109,6 +105,7 @@ class TextEditor extends EditorComponent {
   render() {
     return (
       <span
+        ref={this.content}
         className="brz-span brz-text__editor"
         contentEditable={IS_EDITOR}
         onClick={this.handleClick}

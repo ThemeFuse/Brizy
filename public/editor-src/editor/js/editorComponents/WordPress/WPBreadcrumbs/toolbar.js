@@ -17,7 +17,9 @@ import {
   toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+import { NORMAL, HOVER } from "visual/utils/stateMode";
+
+export function getItems({ v, device, state }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
@@ -216,149 +218,47 @@ export function getItems({ v, device }) {
       },
       options: [
         {
-          id: dvk("tabsState"),
-          tabsPosition: "left",
+          id: dvk("tabsColor"),
           type: "tabs",
-          value: dvv("tabsState"),
           tabs: [
             {
-              id: dvk("tabNormal"),
-              tabIcon: "nc-circle",
-              title: t("Normal"),
+              id: dvk("tabLinks"),
+              label: t("Links"),
+              devices: "desktop",
               options: [
+                toolbarColor2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  devices: "desktop",
+                  onChangeHex: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ],
+                  onChangePalette: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
-                  id: dvk("tabsColor"),
-                  type: "tabs",
-                  value: dvv("tabsColor"),
-                  tabs: [
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: dvk("tabLinks"),
-                      label: t("Links"),
-                      devices: "desktop",
+                      width: 100,
                       options: [
-                        toolbarColor2({
+                        toolbarColorHexField2({
                           v,
                           device,
-                          state: "normal",
+                          state,
+                          states: [NORMAL, HOVER],
                           devices: "desktop",
-                          onChangeHex: [
+                          onChange: [
                             "onChangeColorHexAndOpacity",
                             "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  devices: "desktop",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: dvk("colorActive"),
-                      label: t("Active"),
-                      devices: "desktop",
-                      options: [
-                        toolbarColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix: "activeColor",
-                          devices: "desktop",
-                          onChangeHex: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  prefix: "activeColor",
-                                  devices: "desktop",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: dvk("colorArrows"),
-                      label: t("Arrows"),
-                      devices: "desktop",
-                      options: [
-                        toolbarColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix: "arrowsColor",
-                          devices: "desktop",
-                          onChangeHex: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  prefix: "arrowsColor",
-                                  devices: "desktop",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -366,57 +266,87 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabHover"),
-              tabIcon: "nc-hover",
-              title: t("Hover"),
+              id: dvk("colorActive"),
+              label: t("Active"),
+              devices: "desktop",
               options: [
-                {
-                  id: dvk("tabsColor"),
-                  type: "tabs",
+                toolbarColor2({
+                  v,
+                  device,
+                  state: "normal",
+                  prefix: "activeColor",
                   devices: "desktop",
-                  value: dvv("tabsColor"),
-                  hideHandlesWhenOne: false,
-                  tabs: [
+                  onChangeHex: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ],
+                  onChangePalette: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: dvk("tabLinks"),
-                      label: t("Links"),
-                      devices: "desktop",
+                      width: 100,
                       options: [
-                        toolbarColor2({
+                        toolbarColorHexField2({
                           v,
                           device,
-                          state: "hover",
+                          state: "normal",
+                          prefix: "activeColor",
                           devices: "desktop",
-                          onChangeHex: [
+                          onChange: [
                             "onChangeColorHexAndOpacity",
                             "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  devices: "desktop",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
+                        })
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: dvk("colorArrows"),
+              label: t("Arrows"),
+              devices: "desktop",
+              options: [
+                toolbarColor2({
+                  v,
+                  device,
+                  state: "normal",
+                  prefix: "arrowsColor",
+                  devices: "desktop",
+                  onChangeHex: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ],
+                  onChangePalette: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
+                    {
+                      width: 100,
+                      options: [
+                        toolbarColorHexField2({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "arrowsColor",
+                          devices: "desktop",
+                          onChange: [
+                            "onChangeColorHexAndOpacity",
+                            "onChangeColorHexAndOpacityPalette"
                           ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -425,11 +355,7 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        [dvk("tabsState")]: !isOpen ? "" : dvv("tabsState"),
-        [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor")
-      })
+      ]
     },
     toolbarDisabledToolbarSettings({ device }),
     {

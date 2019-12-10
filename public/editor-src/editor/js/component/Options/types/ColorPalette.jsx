@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { getColorPaletteColors } from "visual/utils/color";
@@ -30,7 +29,7 @@ class ColorPalettePicker extends React.Component {
       className
     );
     const colors = propColors || getColorPaletteColors();
-    const squares = colors.map((color, index) => {
+    const squares = colors.map(color => {
       const className = classnames("brz-ed-option__color-palette__item", {
         active: color.id === value
       });

@@ -1,5 +1,4 @@
 import React from "react";
-import jQuery from "jquery";
 import classnames from "classnames";
 import _ from "underscore";
 
@@ -58,25 +57,20 @@ class Draggable extends React.Component {
     this.isMouseDown = true;
     this.currentPosition = this.startPosition = getClientOffset(e);
 
-    document.body.classList.add("brz-ed-sorting");
+    window.parent.document.body.classList.add("brz-pointer-events-none");
     onDragStart();
     this.initMouseEvents();
 
-    this.setState(
-      {
-        isDragging: true
-      },
-      () => {
-        requestAnimationFrame(this.update);
-      }
-    );
+    this.setState({ isDragging: true }, () => {
+      requestAnimationFrame(this.update);
+    });
   };
 
   handleMouseMove = e => {
     this.currentPosition = getClientOffset(e);
   };
 
-  handleMouseUp = e => {
+  handleMouseUp = () => {
     const { draggingCursor, onDragEnd } = this.props;
 
     const overlayNode = document.querySelector(".brz-root__container-after");
@@ -91,7 +85,7 @@ class Draggable extends React.Component {
     this.startPosition = null;
     this.lastDelta = null;
 
-    document.body.classList.remove("brz-ed-sorting");
+    window.parent.document.body.classList.remove("brz-pointer-events-none");
     this.cleanMouseEvents();
     onDragEnd();
 

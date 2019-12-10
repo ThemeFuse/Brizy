@@ -4,11 +4,14 @@
     "videoPopulation": "",
     "ratio": "16:9",
     "controls": "on",
+    "start": 0,
 
     "coverImageSrc": "",
 
     "coverImageWidth": 0,
     "coverImageHeight": 0,
+
+    "coverImageExtension": "",
 
     "coverPositionY": 50,
     "coverPositionX": 50,

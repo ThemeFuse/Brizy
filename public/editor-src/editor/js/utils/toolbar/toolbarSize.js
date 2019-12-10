@@ -1,5 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarSizeSizeSizePercent({
   v,
@@ -98,13 +99,18 @@ export function toolbarSizeWidthSizePercent({
 export function toolbarSizeWidthWidthPercent({
   v,
   device,
-  devices = "all",
-  state
+  state,
+  prefix = "",
+  devices = "all"
 }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = key => defaultValueKey({ key, device, state });
+  const width = capByPrefix(prefix, "width");
+
   return {
-    id: defaultValueKey({ key: "width", device, state }),
-    label: t("Width"),
     devices,
+    id: dvk(width),
+    label: t("Width"),
     type: "slider",
     slider: {
       min: 1,
@@ -115,18 +121,13 @@ export function toolbarSizeWidthWidthPercent({
     },
     suffix: {
       show: true,
-      choices: [
-        {
-          title: "%",
-          value: "%"
-        }
-      ]
+      choices: [{ title: "%", value: "%" }]
     },
     value: {
-      value: defaultValueValue({ v, key: "width", device, state })
+      value: dvv(width)
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ key: "width", device, state })]: value
+      [dvk(width)]: value
     })
   };
 }
@@ -136,13 +137,15 @@ export function toolbarSizeHeightHeightPx({
   device,
   state,
   config,
-  devices = "all"
+  devices = "all",
+  disabled = false
 }) {
   return {
     id: defaultValueKey({ key: "height", device, state }),
     label: t("Height"),
     type: "slider",
     devices,
+    disabled,
     slider: {
       min: config.slider.min,
       max: config.slider.max
@@ -213,5 +216,42 @@ export function toolbarSizeContainerSize({
     onChange: ({ value: containerSize }) => ({
       containerSize
     })
+  };
+}
+
+export function toolbarSizeSpacing({ v, device, devices = "all", state }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("spacing"),
+    label: t("Spacing"),
+    type: "slider",
+    devices,
+    roles: ["admin"],
+    slider: {
+      min: 0,
+      max: 100
+    },
+    input: {
+      show: true
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "px",
+          value: "px"
+        }
+      ]
+    },
+    value: {
+      value: dvv("spacing")
+    },
+    onChange: ({ value: spacing }) => {
+      return {
+        [dvk("spacing")]: spacing
+      };
+    }
   };
 }

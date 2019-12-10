@@ -1,23 +1,48 @@
 import { defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
-export function stylePaddingType({ v, device, state }) {
-  return defaultValueValue({ v, key: "paddingType", device, state });
+export function stylePaddingType({ v, device, state, prefix = "" }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const padding = capByPrefix(prefix, "padding");
+
+  return dvv(capByPrefix(padding, "type"));
 }
 
-export function stylePaddingGrouped({ v, device, state }) {
-  return defaultValueValue({ v, key: "padding", device, state });
+export function stylePaddingGrouped({ v, device, state, prefix = "" }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "padding"));
 }
 
-export function stylePaddingUngrouped({ v, device, state, current }) {
-  return defaultValueValue({ v, key: current, device, state });
+export function stylePaddingUngrouped({
+  v,
+  device,
+  state,
+  prefix = "",
+  current = "paddingTop"
+}) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, current));
 }
 
-export function stylePaddingGroupedSuffix({ v, device, state }) {
-  return defaultValueValue({ v, key: "paddingSuffix", device, state });
+export function stylePaddingGroupedSuffix({ v, device, state, prefix = "" }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const padding = capByPrefix(prefix, "padding");
+
+  return dvv(capByPrefix(padding, "suffix"));
 }
 
-export function stylePaddingUngroupedSuffix({ v, device, state, current }) {
-  return defaultValueValue({ v, key: current, device, state });
+export function stylePaddingUngroupedSuffix({
+  v,
+  device,
+  state,
+  prefix = "",
+  current = "paddingTopSuffix"
+}) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, current));
 }
 
 export function styleItemPaddingTop({ v, device }) {

@@ -103,7 +103,6 @@ export function getItemsForDesktop(v) {
       id: "apps",
       type: "formApps",
       icon: "nc-extensions-2",
-      disabled: TARGET !== "WP",
       value: {
         id: v._id,
         fields
@@ -114,7 +113,6 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
-  const device = "tablet";
   return [
     toolbarDisabledShowOnTablet({}),
     {
@@ -143,7 +141,6 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
-  const device = "mobile";
   return [
     toolbarDisabledShowOnMobile({}),
     {

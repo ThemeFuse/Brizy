@@ -1,11 +1,26 @@
 import React from "react";
 import _ from "underscore";
-import { mergeOptions, optionTraverse } from "visual/component/Options/utils";
+import { mergeOptions, optionMap } from "visual/component/Options/utils";
 import { uuid } from "visual/utils/uuid";
 import { getStore } from "visual/redux/store";
 import { rulesSelector, deviceModeSelector } from "visual/redux/selectors";
 import { applyFilter } from "visual/utils/filters";
 import { objectFlat } from "visual/utils/object";
+import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
+import {
+  defaultValueKey2,
+  defaultValueValue2,
+  isDefault
+} from "visual/utils/onChange/device";
+import { valueToState } from "visual/utils/stateMode";
+import {
+  createOptionId,
+  inDevelopment,
+  optionMode,
+  optionState,
+  setOptionPrefix
+} from "./utils";
+import { getModel } from "visual/component/Options/types";
 
 const capitalize = ([first, ...rest], lowerRest = false) =>
   first.toUpperCase() +
@@ -172,31 +187,11 @@ export class EditorComponent extends React.Component {
   }
 
   makeNewValueFromPatch(patch) {
-    if (process.env.NODE_ENV === "development") {
-      this.validateValue(patch);
-    }
-
     return { ...this.getDBValue(), ...patch };
   }
 
   handleValueChange(newValue, meta) {
     this.props.onChange(newValue, meta);
-  }
-
-  validateValue(newValue) {
-    const defaultValueKeys = Object.keys(this.getDefaultValue());
-    const newValueKeys = Object.keys(_.omit(newValue, "_id", "_styles"));
-    const newValueDiffKeys = _.difference(newValueKeys, defaultValueKeys);
-
-    if (newValueDiffKeys.length > 0) {
-      const msg = [
-        `${this.constructor.name}.validateValue() called with value`,
-        `that contains keys [${newValueDiffKeys}]`,
-        `that are not specified in ${this.constructor.name}.defaultValue`
-      ].join("\n");
-
-      throw new Error(msg);
-    }
   }
 
   selfDestruct() {
@@ -206,12 +201,14 @@ export class EditorComponent extends React.Component {
   makeSubcomponentProps({ bindWithKey, ...otherProps }) {
     if (process.env.NODE_ENV === "development") {
       if (!(bindWithKey in this.getDefaultValue())) {
+        /* eslint-disable no-console */
         console.error(
           "Invalid value: %s for bindWithKey. Check that %s.getDefaultValue() contains the key %s",
           bindWithKey,
           this.constructor.name,
           bindWithKey
         );
+        /* eslint-enabled no-console */
       }
     }
 
@@ -269,17 +266,23 @@ export class EditorComponent extends React.Component {
 
       if (process.env.NODE_ENV === "development") {
         if (!config[getItemsFnName]) {
+          /* eslint-disable no-console */
           console.warn(
-            `${
-              this.constructor.componentId
-            }. ${getItemsFnName} not found in toolbarConfig`
+            `${this.constructor.componentId}. ${getItemsFnName} not found in toolbarConfig`
           );
+          /* eslint-enabled no-console */
         }
       }
 
       const getItemsFn = config[getItemsFnName];
       const v = this.getValue();
-      let items = this.bindToolbarItems(getItemsFn ? getItemsFn(v, this) : []);
+      const stateMode = v.tabsState;
+      let items = this.bindToolbarItems(
+        v,
+        deviceMode,
+        stateMode,
+        getItemsFn ? getItemsFn(v, this) : []
+      );
 
       // allow extend from parent
       if (
@@ -315,6 +318,9 @@ export class EditorComponent extends React.Component {
       );
       if (filterToolbarExtend && filterToolbarExtend[getItemsFnName]) {
         const filterItems = this.bindToolbarItems(
+          v,
+          deviceMode,
+          stateMode,
           filterToolbarExtend[getItemsFnName](v, this)
         );
 
@@ -335,25 +341,54 @@ export class EditorComponent extends React.Component {
     };
   }
 
-  bindToolbarItems(items) {
-    optionTraverse(items, option => {
-      const id = option.id;
-      const oldOnchange = option.onChange;
+  /**
+   * @param {object} v
+   * @param {string} device
+   * @param {string} state
+   * @param {object[]} items
+   * @return {object[]}
+   */
+  bindToolbarItems(v, device, state, items) {
+    return optionMap(option => {
+      const { id, type, onChange: oldOnchange } = option;
+      const stateOnChange = mode => this.patchValue({ tabsState: mode });
+
+      if (isDefault(device)) {
+        // Apply state mode only in desktop device mode
+        option = bindStateToOption(state, stateOnChange, option);
+      }
+
+      //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
+      const inDev = inDevelopment(type);
+      const defaultOnChange = (id, v) => (v !== undefined ? { [id]: v } : null);
+      const deps = option.dependencies || _.identity;
+
+      if (inDev) {
+        option.id = defaultValueKey2({
+          key: option.id,
+          device: optionMode(device, option),
+          state: optionState(state, option)
+        });
+
+        option.value = getModel(type)(key =>
+          defaultValueValue2({ v, key: createOptionId(id, key), device, state })
+        );
+      }
 
       option.onChange = (value, meta) => {
-        let patch = oldOnchange
+        let patch = inDev
+          ? deps(setOptionPrefix(option.id, value))
+          : oldOnchange
           ? oldOnchange(value, meta)
-          : value !== undefined
-          ? { [id]: value }
-          : null;
+          : defaultOnChange(option.id, value);
 
         if (patch) {
           this.patchValue(patch);
         }
       };
-    });
 
-    return items;
+      return option;
+    }, items);
   }
 
   makeToolbarPropsFromConfig2(
@@ -381,21 +416,26 @@ export class EditorComponent extends React.Component {
     ) => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
+          /* eslint-disable no-console */
           console.warn(
-            `${
-              this.constructor.componentId
-            }. getItems not found in toolbarConfig`
+            `${this.constructor.componentId}. getItems not found in toolbarConfig`
           );
+          /* eslint-enabled no-console */
         }
       }
 
       const v = this.getValue();
+      const stateMode = valueToState(v.tabsState);
       let items = this.bindToolbarItems(
+        v,
+        deviceMode,
+        stateMode,
         config.getItems
           ? config.getItems({
               v,
               component: this,
-              device: deviceMode
+              device: deviceMode,
+              state: stateMode
             })
           : []
       );
@@ -423,7 +463,7 @@ export class EditorComponent extends React.Component {
         const { getItems } = this.childToolbarExtend;
         const extendItems = getItems(deviceMode);
 
-        items = mergeOptions(items, extendItems);
+        items = mergeOptions(extendItems, items);
       }
 
       // allow extend from filter
@@ -434,10 +474,14 @@ export class EditorComponent extends React.Component {
       );
       if (filterToolbarExtend && filterToolbarExtend.getItems) {
         const filterItems = this.bindToolbarItems(
+          v,
+          deviceMode,
+          stateMode,
           filterToolbarExtend.getItems({
             v,
             component: this,
-            device: deviceMode
+            device: deviceMode,
+            state: stateMode
           })
         );
 
@@ -478,9 +522,11 @@ export class EditorComponent extends React.Component {
     }
   }
 
+  /* eslint-disable no-unused-vars */
   renderForEdit(v, vs, vd) {
     throw "renderForEdit: Not Implemented";
   }
+  /* eslint-enabled no-unused-vars */
 
   renderForView(v, vs, vd) {
     return this.renderForEdit(v, vs, vd);
@@ -510,15 +556,17 @@ export class EditorComponent extends React.Component {
       let overrides;
 
       switch (typeof rule) {
-        case "object":
+        case "object": {
           const { rule: ruleName, mapper } = rule;
 
           overrides =
             currentStyleRules[ruleName] && mapper(currentStyleRules[ruleName]);
           break;
-        case "string":
+        }
+        case "string": {
           overrides = currentStyleRules[rule];
           break;
+        }
         default:
           throw new Error("Invalid rule type");
       }

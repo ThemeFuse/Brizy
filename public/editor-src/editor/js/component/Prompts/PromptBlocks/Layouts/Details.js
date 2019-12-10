@@ -253,6 +253,7 @@ class Details extends Component {
                   <a
                     className="brz-ed-btn brz-ed-btn-width-2 brz-ed-btn-sm brz-ed-btn-icon brz-ed-btn-icon--left brz-ed-btn-rounded brz-ed-btn-pro"
                     href={urls.upgradeToPro}
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <EditorIcon icon="nc-lock" />

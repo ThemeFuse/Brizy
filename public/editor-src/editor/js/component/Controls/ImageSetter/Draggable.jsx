@@ -27,6 +27,7 @@ export default class Draggable extends React.Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
     const parent = node.parentNode || node.ownerDocument.body;
 
@@ -50,6 +51,7 @@ export default class Draggable extends React.Component {
   }
 
   componentWillUnmount() {
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
     const parent = node.parentNode || node.ownerDocument.body;
 
@@ -74,6 +76,7 @@ export default class Draggable extends React.Component {
 
   getBoundPosition = () => {
     let propsBound = this.props.bounds;
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
 
     if (typeof propsBound === "string") {
@@ -86,7 +89,7 @@ export default class Draggable extends React.Component {
         boundNode = ownerDocument.querySelector(propsBound);
         if (!boundNode)
           throw new Error(
-            'Bounds selector "' + propsBound + '" could not find an element.'
+            `Bounds selector ${propsBound} could not find an element.`
           );
       }
 
@@ -100,6 +103,7 @@ export default class Draggable extends React.Component {
   };
 
   getMouseCoordinates = evt => {
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
     const offsetParent = node.offsetParent || node.ownerDocument.body;
     const isBody = offsetParent === offsetParent.ownerDocument.body;

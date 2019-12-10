@@ -9,5 +9,5 @@ export function cssStyleHoverTransition({ v, device, state }) {
 }
 
 export function cssStylePropertyHoverTransition() {
-  return `transition-property: filter, box-shadow, background, border-radius, border-color;`;
+  return "transition-property: filter, box-shadow, background, border-radius, border-color;";
 }

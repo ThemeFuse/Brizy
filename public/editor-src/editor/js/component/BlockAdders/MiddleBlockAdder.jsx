@@ -30,23 +30,18 @@ class MiddleBlockAdder extends React.Component {
       prompt: "blocks",
       tabProps: {
         blocks: {
-          categoriesFilter: categories => {
-            return TARGET === "WP"
-              ? categories
-              : categories.filter(
-                  ({ slug }) => slug !== "header" && slug !== "footer"
-                );
-          },
           onAddBlocks: this.handleBlockAdd
         },
         saved: {
           blocksFilter: blocks => {
+            // eslint-disable-next-line no-unused-vars
             return blocks.filter(([_, block]) => block.type !== "SectionPopup");
           },
           onAddBlocks: this.handleBlockAdd
         },
         global: {
           blocksFilter: blocks => {
+            // eslint-disable-next-line no-unused-vars
             return blocks.filter(([_, block]) => block.type !== "SectionPopup");
           },
           onAddBlocks: this.handleBlockAdd

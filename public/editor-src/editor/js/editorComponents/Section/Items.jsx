@@ -58,7 +58,7 @@ class SectionItems extends EditorArrayComponent {
     }
   }
 
-  getItemProps(itemData, itemIndex, items) {
+  getItemProps(itemData, itemIndex) {
     const { showSlider } = this.state;
     const { meta } = this.props;
     const desktopItems = showSlider

@@ -7,18 +7,17 @@ import Background from "visual/component/Background";
 import PaddingResizer from "visual/component/PaddingResizer";
 import ContainerBorder from "visual/component/ContainerBorder";
 import { Roles } from "visual/component/Roles";
-import {
-  wInBoxedPage,
-  wInTabletPage,
-  wInMobilePage,
-  wInFullPage
-} from "visual/config/columns";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import { styleBg, styleContainer, styleContainerWrap } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { getStore } from "visual/redux/store";
+import {
+  styleElementSectionContainerType,
+  styleSizeContainerSize
+} from "visual/utils/style2";
+import { getContainerW } from "visual/utils/meta";
 
 class SectionItem extends EditorComponent {
   static get componentId() {
@@ -37,15 +36,22 @@ class SectionItem extends EditorComponent {
     this.mounted = true;
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldMetaUpdate(nextProps) {
     const {
       meta: {
-        section: { isSlider, showOnDesktop, showOnMobile, showOnTablet }
+        section: {
+          isSlider,
+          marginType,
+          showOnDesktop,
+          showOnMobile,
+          showOnTablet
+        }
       }
     } = this.props;
     const {
       meta: {
         section: {
+          marginType: newMarginType,
           showOnDesktop: newShowOnDesktop,
           showOnMobile: newShowOnMobile,
           showOnTablet: newShowOnTablet
@@ -57,8 +63,13 @@ class SectionItem extends EditorComponent {
       (deviceMode === "desktop" && showOnDesktop !== newShowOnDesktop) ||
       (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
       (deviceMode === "tablet" && showOnTablet !== newShowOnTablet);
+    const marginUpdate = marginType !== newMarginType;
 
-    return isSlider || deviceUpdate || this.optionalSCU(nextProps);
+    return isSlider || deviceUpdate || marginUpdate;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return this.shouldMetaUpdate(nextProps) || this.optionalSCU(nextProps);
   }
 
   componentWillUnmount() {
@@ -81,36 +92,30 @@ class SectionItem extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      containerSize,
-      containerType,
-      borderWidthType,
-      borderWidth,
-      borderLeftWidth,
-      borderRightWidth
-    } = v;
+    const containerType = styleElementSectionContainerType({ v });
+    const size = styleSizeContainerSize({ v, device: "desktop" });
+    const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
+    const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
+    const desktopW = getContainerW({
+      v,
+      w: containerType === "fullWidth" ? meta.desktopFullW : meta.desktopBoxedW,
+      width: size,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: meta.tabletW,
+      width: tabletSize,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: meta.mobileW,
+      width: mobileSize,
+      device: "mobile"
+    });
 
-    const borderWidthW =
-      borderWidthType === "grouped"
-        ? Number(borderWidth) * 2
-        : Number(borderLeftWidth) + Number(borderRightWidth);
-
-    const desktopW =
-      containerType === "fullWidth"
-        ? wInFullPage - borderWidthW
-        : Math.round(
-            (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
-          ) / 10;
-
-    const mobileW = wInMobilePage - borderWidthW - 30; // 30 is iframe default padding
-    const tabletW = wInTabletPage - borderWidthW - 30; // 30 is iframe default padding
-
-    return {
-      ...meta,
-      mobileW,
-      tabletW,
-      desktopW
-    };
+    return { ...meta, mobileW, tabletW, desktopW };
   }
 
   renderToolbar() {

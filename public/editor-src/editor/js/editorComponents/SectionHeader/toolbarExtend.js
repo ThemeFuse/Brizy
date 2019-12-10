@@ -1,5 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
+import { getDynamicContentChoices } from "visual/utils/options";
 import {
   toolbarElementSectionHeaderType,
   toolbarElementSectionGlobal,
@@ -7,11 +8,13 @@ import {
   toolbarShowOnDesktop,
   toolbarShowOnResponsive,
   toolbarAnchorName,
-  toolbarCustomCSSClass
+  toolbarCustomCSSClass,
+  toolbarAttributes
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
+  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   return [
     toolbarShowOnResponsive({
@@ -90,11 +93,20 @@ export function getItems({ v, device, component }) {
                       v,
                       device,
                       devices: "desktop",
-                      state: "normal"
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
                     }),
                     toolbarCustomCSSClass({
                       v,
                       device,
+                      devices: "desktop",
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
+                    }),
+                    toolbarAttributes({
+                      v,
+                      device,
+                      devices: "desktop",
                       state: "normal"
                     })
                   ]

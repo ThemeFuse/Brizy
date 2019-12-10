@@ -1202,8 +1202,6 @@ export function getItemsForDesktop(v) {
 }
 
 export function getItemsForTablet(v) {
-  const device = "tablet";
-
   return [
     {
       id: "tabletToolbarCurrentShortcode",
@@ -1325,8 +1323,6 @@ export function getItemsForTablet(v) {
 }
 
 export function getItemsForMobile(v) {
-  const device = "mobile";
-
   return [
     {
       id: "mobileToolbarCurrentShortcode",

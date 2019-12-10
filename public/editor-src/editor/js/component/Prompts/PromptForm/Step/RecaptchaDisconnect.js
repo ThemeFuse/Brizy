@@ -27,7 +27,7 @@ class RecaptchaDisconnect extends Component {
 
     const { status } = await deleteAccount(app.data.id);
 
-    if (status === 200) {
+    if (status < 400) {
       onDisconnectApp(app.id);
       onChange(app.id, null);
     } else {

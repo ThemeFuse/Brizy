@@ -72,6 +72,7 @@ class RangeOptionType extends React.Component {
   };
 
   handle = props => {
+    /* eslint-disable no-unused-vars */
     const {
       className: _className,
       dragging,
@@ -79,6 +80,7 @@ class RangeOptionType extends React.Component {
       index,
       ...restProps
     } = props;
+    /* eslint-enabled no-unused-vars */
     const className = classnames(_className, {
       "brz-ed-rc-slider-handle--active":
         (this.state.activePointer === "startPointer" && index === 0) ||

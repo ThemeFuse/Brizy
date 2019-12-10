@@ -24,7 +24,7 @@ export function cssStyleBgImagePosition({ v, device, state }) {
     : `background-position:${positionX} ${positionY};`;
 }
 
-export function cssStyleBgImageAttachment({ v, device, state, props }) {
+export function cssStyleBgImageAttachment({ v, device, props }) {
   const { isSlider } = props.meta.section;
   const bgAttachment = styleBgAttachment({ v, isSlider });
 

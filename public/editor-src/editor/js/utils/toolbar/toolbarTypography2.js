@@ -32,11 +32,7 @@ export function toolbarTypography2FontFamily({
     }),
     defaultValueValue({
       v,
-      key: defaultValueKey({
-        key: capByPrefix(prefix, "fontStyle"),
-        device,
-        state
-      }),
+      key: capByPrefix(prefix, "fontStyle"),
       device,
       state
     })

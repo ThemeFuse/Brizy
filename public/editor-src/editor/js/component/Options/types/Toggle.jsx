@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import _ from "underscore";
 import classnames from "classnames";
 import { connect } from "react-redux";
@@ -15,6 +16,31 @@ class ToggleOptionType extends React.Component {
     value: "",
     choices: []
   };
+
+  static propTypes = {
+    className: PropTypes.string,
+    attr: PropTypes.object,
+    closeTooltip: PropTypes.bool,
+    value: PropTypes.any,
+    choices: PropTypes.array.isRequired
+  };
+
+  getTitle() {
+    const { choices, value } = this.props;
+    const activeChoices = choices.find(el => el.value === value);
+
+    if (!activeChoices) {
+      if (process.env.NODE_ENV === "development") {
+        throw `cannot find choices {${
+          !value ? "__EMPTY VALUE__" : value
+        }} from ${JSON.stringify(choices)}`;
+      }
+
+      return "";
+    }
+
+    return activeChoices.title;
+  }
 
   handleChange = value => {
     const { closeTooltip, showHiddenElements, onChange } = this.props;
@@ -40,14 +66,11 @@ class ToggleOptionType extends React.Component {
       _className,
       attr.className
     );
-    const { title: choicesTitle = "" } = choices.filter(
-      el => el.value === value
-    )[0];
 
     return (
       <IconToggle
         value={value}
-        title={choicesTitle}
+        title={this.getTitle()}
         onChange={this.handleChange}
         {...attr}
         className={className}

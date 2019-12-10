@@ -111,8 +111,7 @@ export function onChangeBorderRadiusUngrouped({
   device,
   state,
   current,
-  value,
-  sliderDragEnd
+  value
 }) {
   const parent = "borderRadius";
   const childs = [

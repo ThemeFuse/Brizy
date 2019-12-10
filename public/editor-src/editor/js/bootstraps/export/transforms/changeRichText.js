@@ -1,11 +1,13 @@
 import { getStore } from "visual/redux/store";
 import Config from "visual/global/Config";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { imageUrl, imagePopulationUrl } from "visual/utils/image";
+import { imageUrl, svgUrl } from "visual/utils/image";
 
 const isWP = Config.get("wp");
 
 const linkClassNames = ["link--anchor", "link--external", "is-empty"];
+
+const isSVG = extension => extension === "svg";
 
 export default function changeRichText($) {
   // Change Links
@@ -34,11 +36,11 @@ export default function changeRichText($) {
 
       const target =
         newData.type === "external" && newData.externalBlank === "on"
-          ? `target="_blank"`
+          ? "target='_blank'"
           : "";
       const rel =
         newData.type === "external" && newData.externalRel === "on"
-          ? `rel="nofollow"`
+          ? "rel='nofollow'"
           : "";
 
       let url = newData[data.type];
@@ -54,7 +56,6 @@ export default function changeRichText($) {
           >${html}</a>`
         );
       } else {
-        const classNames = linkClassNames.join(" ");
         const newClassNames = className
           .split(" ")
           .filter(name => !linkClassNames.includes(name))
@@ -102,8 +103,11 @@ export default function changeRichText($) {
       const $this = $(this);
       const src = $this.attr("data-image_src");
       const population = $this.attr("data-image_population");
+      const extension = $this.attr("data-image_extension");
 
-      $this.css("background-image", `url(${population || imageUrl(src)})`);
+      const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
+
+      $this.css("background-image", `url(${population || imgUrl})`);
       $this.removeAttr("data-image_src");
       $this.removeAttr("data-image_population");
     });
@@ -111,7 +115,7 @@ export default function changeRichText($) {
 
 function getLinkContentByType(type, href) {
   switch (type) {
-    case "anchor":
+    case "anchor": {
       href = href.replace("#", "");
       const pageDataNoRefs = pageDataNoRefsSelector(getStore().getState());
       const pageBlocks = pageDataNoRefs.items || [];
@@ -119,11 +123,13 @@ function getLinkContentByType(type, href) {
       const anchorName = (blockByHref && blockByHref.value.anchorName) || href;
 
       return `#${anchorName}`;
-    case "upload":
+    }
+    case "upload": {
       const { customFile } = Config.get("urls");
       const [name] = href.split("|||", 1);
 
       return isWP ? `${customFile}${name}` : `${customFile}/${name}`;
+    }
     case "popup":
     case "lightBox":
     case "external":

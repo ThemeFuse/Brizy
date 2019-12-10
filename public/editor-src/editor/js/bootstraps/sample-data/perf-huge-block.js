@@ -1,21 +1,15 @@
 import { uuid } from "visual/utils/uuid";
-import deepMerge from 'deepmerge';
+import deepMerge from "deepmerge";
 
 export default function perfHugeBlock(data) {
   return deepMerge(
     data,
-    {
-      page: {
-        data: pageData
-      },
-      project
-    },
-    {
-      arrayMerge: (destinationArray, sourceArray, options) => sourceArray
-    }
+    { page: { data: pageData }, project },
+    { arrayMerge: (destinationArray, sourceArray) => sourceArray }
   );
 }
 
+/* eslint-disable */
 export const pageData = {
   _id: uuid(),
   items: [
@@ -143,8 +137,7 @@ export const pageData = {
                                                   colorOpacity: 1,
                                                   hoverBgColorHex: "#05b3e6",
                                                   tempHoverBgColorOpacity: 0.8,
-                                                  hoverBgColorPalette:
-                                                    "color3",
+                                                  hoverBgColorPalette: "color3",
                                                   tempHoverBgColorPalette:
                                                     "color3",
                                                   hoverBorderColorHex:
@@ -3303,8 +3296,7 @@ export const pageData = {
                                                   colorOpacity: 1,
                                                   hoverBgColorHex: "#05b3e6",
                                                   tempHoverBgColorOpacity: 0.8,
-                                                  hoverBgColorPalette:
-                                                    "color3",
+                                                  hoverBgColorPalette: "color3",
                                                   tempHoverBgColorPalette:
                                                     "color3",
                                                   hoverBorderColorHex:
@@ -6481,8 +6473,7 @@ export const pageData = {
                                                   colorOpacity: 1,
                                                   hoverBgColorHex: "#05b3e6",
                                                   tempHoverBgColorOpacity: 0.8,
-                                                  hoverBgColorPalette:
-                                                    "color3",
+                                                  hoverBgColorPalette: "color3",
                                                   tempHoverBgColorPalette:
                                                     "color3",
                                                   hoverBorderColorHex:
@@ -9022,8 +9013,7 @@ export const pageData = {
                                                   colorOpacity: 1,
                                                   hoverBgColorHex: "#05b3e6",
                                                   tempHoverBgColorOpacity: 0.8,
-                                                  hoverBgColorPalette:
-                                                    "color3",
+                                                  hoverBgColorPalette: "color3",
                                                   tempHoverBgColorPalette:
                                                     "color3",
                                                   hoverBorderColorHex:
@@ -12674,10 +12664,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "cvrpkbadlk",
                                             name: "move-06",
                                             type: "outline",
@@ -12695,10 +12682,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "mkvjxtsdln",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Drag &amp; Drop</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Position anything on the page by dragging &amp; dropping elements, columns, rows.</span></p>'
@@ -12741,10 +12725,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "bljqdjkthj",
                                             name: "eye-19",
                                             type: "outline",
@@ -12762,10 +12743,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "hfmpspgisv",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Real Time Editing</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Edit everything in real time right in front of your eyes directly on the front end.</span></p>'
@@ -12804,10 +12782,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "imegcbwaip",
                                             name: "puzzle-10",
                                             type: "outline",
@@ -12825,10 +12800,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "inqmjxhmsy",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">26 Builder Elements</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy comes with 26 free builder elements that you can use to create your website. </span></p>'
@@ -12873,10 +12845,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "cfzuvchftz",
                                             name: "p-check",
                                             type: "outline",
@@ -12894,10 +12863,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "ifotdcaysj",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Responsive Control</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">You have 100% control on how your website will look on mobiles and tablets.</span></p>'
@@ -12981,10 +12947,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "orgoedvawd",
                                             name: "email-85",
                                             type: "outline",
@@ -13002,10 +12965,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "svjguhqptm",
                                             text:
                                               '<h5 class="brz-ls-xs-im-1 brz-ls-sm-im-NaN brz-ls-lg-0 brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></h5><h5 class="brz-tp-unbroxaxnj brz-mt-lg-10 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Contact Forms</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use the free Contact Form element to create as many contact forms as you like.</span></p>'
@@ -13051,10 +13011,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "oidzsxqdjd",
                                             name: "slider",
                                             type: "outline",
@@ -13072,10 +13029,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "czltkejcvw",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Sliders</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Any block in Brizy can be transformed into a slider at a press of a button. </span></p>'
@@ -13118,10 +13072,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "shzbnkfihx",
                                             name: "world-2",
                                             type: "outline",
@@ -13139,10 +13090,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "eqkgrdzjov",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Global Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Modify global blocks on more pages at the same time. Great for repeating content.</span></p>'
@@ -13184,10 +13132,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "vxsmzigckr",
                                             name: "disk-2",
                                             type: "outline",
@@ -13205,10 +13150,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "bpafezjhay",
                                             text:
                                               '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Saved Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Save any block for later use on a different page. Great for repeating content.</span></p>'
@@ -13293,10 +13235,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "lmsahxrfak",
                                             name: "layers-3",
                                             type: "outline",
@@ -13314,10 +13253,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "sunvpdwkpb",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Reorder Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Drag-and-drop between live representations of your blocks to reorder your content.</span></p>'
@@ -13359,10 +13295,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "jbdcaebhek",
                                             name: "undo-29",
                                             type: "outline",
@@ -13380,10 +13313,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "hbfrqqkccb",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Undo / Redo</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Go back to a previous state with our Undo functionality. Or, redo steps to work faster.</span></p>'
@@ -13425,10 +13355,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "waktmpyjxi",
                                             name: "cloud-upload-96",
                                             type: "outline",
@@ -13446,10 +13373,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "jxiauohubd",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Autosave</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Never lose your draft work again! The Autosave option allows for cloud versioning.</span></p>'
@@ -13491,10 +13415,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "fttouqmxey",
                                             name: "cursor-menu",
                                             type: "outline",
@@ -13512,10 +13433,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "dkmnxtzuvv",
                                             text:
                                               '<h5 class="brz-tp-unbroxaxnj brz-ls-lg-0 brz-ls-sm-im-NaN brz-ls-xs-im-1"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></h5><h5 class="brz-mb-lg-5 brz-mt-lg-10 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Right-Click Menu</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Quickly access shortcuts and selection tools with just a right click on your mouse button.</span></p>'
@@ -13603,10 +13521,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "etstuzdxwq",
                                             name: "distribute-vertical",
                                             type: "outline",
@@ -13624,10 +13539,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "kpuotrblkl",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Padding &amp; Margin</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Have full control over your layout with the built in padding &amp; margin options. </span></p>'
@@ -13666,10 +13578,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "ixjuzccyeb",
                                             name: "layout-11",
                                             type: "outline",
@@ -13687,10 +13596,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "jvjgqjlirb",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Resize Columns</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Drag the handle to resize any column on the page to your liking. The content will adjust.</span></p>'
@@ -13733,10 +13639,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "eipgakmxto",
                                             name: "window-paragraph",
                                             type: "outline",
@@ -13754,10 +13657,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "iehigwgccq",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Header &amp; Footer</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">A bunch of headers and footers that have unique options like sticky or hamburger menu.</span></p>'
@@ -13800,10 +13700,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "rzidyzorug",
                                             name: "window-add",
                                             type: "outline",
@@ -13821,10 +13718,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "lyupmxpgey",
                                             text:
                                               '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up Builder</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Build any popup you can imagine using the same tools you already know and love.</span></p>'
@@ -13909,10 +13803,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "hrvjvewubr",
                                             name: "menu-square",
                                             type: "outline",
@@ -13930,10 +13821,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "xuhntmkxdi",
                                             text:
                                               '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Mega Menu </strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Super useful for header menus that are complex and multi-columned.</span></p>'
@@ -13976,10 +13864,7 @@ export const pageData = {
                                         {
                                           type: "Icon",
                                           value: {
-                                            _styles: [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
+                                            _styles: ["icon", "iconText--icon"],
                                             _id: "tyvvjggqli",
                                             name: "a-delete",
                                             type: "outline",
@@ -13997,10 +13882,7 @@ export const pageData = {
                                         {
                                           type: "RichText",
                                           value: {
-                                            _styles: [
-                                              "text",
-                                              "iconText--text"
-                                            ],
+                                            _styles: ["text", "iconText--text"],
                                             _id: "wlwotvppbf",
                                             text:
                                               '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Role Manager</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Allow or restrict the levels of access users can have when editing content.</span></p>'
@@ -14102,7021 +13984,6310 @@ export const pageData = {
       }
     },
     {
-      "type": "Section",
-      "blockId": "Blank000Light",
-      "value": {
-        "_styles": [
-          "section"
-        ],
-        "items": [
+      type: "Section",
+      blockId: "Blank000Light",
+      value: {
+        _styles: ["section"],
+        items: [
           {
-            "type": "SectionItem",
-            "value": {
-              "_styles": [
-                "section-item"
-              ],
-              "items": [
+            type: "SectionItem",
+            value: {
+              _styles: ["section-item"],
+              items: [
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--richText"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--richText"],
+                    items: [
                       {
-                        "type": "RichText",
-                        "value": {
-                          "_styles": [
-                            "richText"
-                          ],
-                          "_id": "yxqyugnaax",
-                          "text": "<h6 class=\"brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center\"><span style=\"color: rgb(128, 131, 147);\">LEARN MORE ABOUT</span></h6>"
+                        type: "RichText",
+                        value: {
+                          _styles: ["richText"],
+                          _id: "yxqyugnaax",
+                          text:
+                            '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
                         }
                       }
                     ],
-                    "_id": "pzpldrvyjw"
+                    _id: "pzpldrvyjw"
                   }
                 },
                 {
-                  "type": "Cloneable",
-                  "value": {
-                    "_styles": [
-                      "wrapper-clone",
-                      "wrapper-clone--button"
-                    ],
-                    "items": [
+                  type: "Cloneable",
+                  value: {
+                    _styles: ["wrapper-clone", "wrapper-clone--button"],
+                    items: [
                       {
-                        "type": "Button",
-                        "value": {
-                          "_styles": [
-                            "button"
-                          ],
-                          "_id": "gncnhhxedq",
-                          "text": "Design Features",
-                          "fillType": "default",
-                          "tempFillType": "filled",
-                          "paddingRL": 0,
-                          "paddingRight": 0,
-                          "paddingLeft": 0,
-                          "paddingTB": 0,
-                          "paddingTop": 0,
-                          "paddingBottom": 0,
-                          "borderRadiusType": "",
-                          "borderRadius": 2,
-                          "borderWidth": 0,
-                          "borderColorOpacity": 0,
-                          "borderColorPalette": "",
-                          "bgColorOpacity": 0,
-                          "bgColorPalette": "",
-                          "hoverBgColorOpacity": 0,
-                          "hoverBorderColorOpacity": 0,
-                          "colorPalette": "color1",
-                          "colorOpacity": 1,
-                          "hoverBgColorHex": "#05b3e6",
-                          "tempHoverBgColorOpacity": 0.8,
-                          "hoverBgColorPalette": "color3",
-                          "tempHoverBgColorPalette": "color3",
-                          "hoverBorderColorHex": "#239ddb",
-                          "hoverBorderColorPalette": "color3",
-                          "tempHoverBorderColorPalette": "color3",
-                          "hoverColorPalette": "color3",
-                          "hoverColorOpacity": 1,
-                          "fontStyle": "",
-                          "iconName": "link-2",
-                          "iconType": "glyph",
-                          "fontSize": 29,
-                          "fontFamily": "montserrat",
-                          "lineHeight": 1.5,
-                          "letterSpacing": -0.5,
-                          "fontWeight": 500,
-                          "linkType": "anchor",
-                          "linkAnchor": "apjbfqdjlp",
-                          "size": "custom",
-                          "tempPaddingTB": 0,
-                          "tempPaddingTop": 0,
-                          "tempPaddingBottom": 0,
-                          "tempPaddingRL": 42,
-                          "tempPaddingRight": 42,
-                          "tempPaddingLeft": 42,
-                          "tabletSize": "custom",
-                          "tabletFontSize": 29,
-                          "tabletPaddingTB": 6,
-                          "tabletPaddingTop": 6,
-                          "tabletPaddingBottom": 6,
-                          "tempTabletPaddingTB": 11,
-                          "tempTabletPaddingTop": 6,
-                          "tempTabletPaddingBottom": 6,
-                          "tabletPaddingRL": 0,
-                          "tabletPaddingRight": 0,
-                          "tabletPaddingLeft": 0,
-                          "tempTabletPaddingRL": 26,
-                          "tempTabletPaddingRight": 26,
-                          "tempTabletPaddingLeft": 26,
-                          "tabletBorderRadius": 2,
-                          "tabletLineHeight": 1,
-                          "tabletLetterSpacing": 0,
-                          "tabletFontWeight": 500,
-                          "tabletFontStyle": "",
-                          "mobileFontSize": 27,
-                          "mobileLineHeight": 1.8,
-                          "mobileLetterSpacing": 0,
-                          "mobileFontWeight": 600,
-                          "mobileFontStyle": "",
-                          "mobileSize": "custom",
-                          "mobilePaddingTB": 0,
-                          "mobilePaddingTop": 0,
-                          "mobilePaddingBottom": 0,
-                          "tempMobilePaddingTB": 11,
-                          "tempMobilePaddingTop": 0,
-                          "tempMobilePaddingBottom": 0,
-                          "mobilePaddingRL": 26,
-                          "mobilePaddingRight": 26,
-                          "mobilePaddingLeft": 26,
-                          "tempMobilePaddingRL": 26,
-                          "tempMobilePaddingRight": 26,
-                          "tempMobilePaddingLeft": 26,
-                          "mobileBorderRadius": 2
+                        type: "Button",
+                        value: {
+                          _styles: ["button"],
+                          _id: "gncnhhxedq",
+                          text: "Design Features",
+                          fillType: "default",
+                          tempFillType: "filled",
+                          paddingRL: 0,
+                          paddingRight: 0,
+                          paddingLeft: 0,
+                          paddingTB: 0,
+                          paddingTop: 0,
+                          paddingBottom: 0,
+                          borderRadiusType: "",
+                          borderRadius: 2,
+                          borderWidth: 0,
+                          borderColorOpacity: 0,
+                          borderColorPalette: "",
+                          bgColorOpacity: 0,
+                          bgColorPalette: "",
+                          hoverBgColorOpacity: 0,
+                          hoverBorderColorOpacity: 0,
+                          colorPalette: "color1",
+                          colorOpacity: 1,
+                          hoverBgColorHex: "#05b3e6",
+                          tempHoverBgColorOpacity: 0.8,
+                          hoverBgColorPalette: "color3",
+                          tempHoverBgColorPalette: "color3",
+                          hoverBorderColorHex: "#239ddb",
+                          hoverBorderColorPalette: "color3",
+                          tempHoverBorderColorPalette: "color3",
+                          hoverColorPalette: "color3",
+                          hoverColorOpacity: 1,
+                          fontStyle: "",
+                          iconName: "link-2",
+                          iconType: "glyph",
+                          fontSize: 29,
+                          fontFamily: "montserrat",
+                          lineHeight: 1.5,
+                          letterSpacing: -0.5,
+                          fontWeight: 500,
+                          linkType: "anchor",
+                          linkAnchor: "apjbfqdjlp",
+                          size: "custom",
+                          tempPaddingTB: 0,
+                          tempPaddingTop: 0,
+                          tempPaddingBottom: 0,
+                          tempPaddingRL: 42,
+                          tempPaddingRight: 42,
+                          tempPaddingLeft: 42,
+                          tabletSize: "custom",
+                          tabletFontSize: 29,
+                          tabletPaddingTB: 6,
+                          tabletPaddingTop: 6,
+                          tabletPaddingBottom: 6,
+                          tempTabletPaddingTB: 11,
+                          tempTabletPaddingTop: 6,
+                          tempTabletPaddingBottom: 6,
+                          tabletPaddingRL: 0,
+                          tabletPaddingRight: 0,
+                          tabletPaddingLeft: 0,
+                          tempTabletPaddingRL: 26,
+                          tempTabletPaddingRight: 26,
+                          tempTabletPaddingLeft: 26,
+                          tabletBorderRadius: 2,
+                          tabletLineHeight: 1,
+                          tabletLetterSpacing: 0,
+                          tabletFontWeight: 500,
+                          tabletFontStyle: "",
+                          mobileFontSize: 27,
+                          mobileLineHeight: 1.8,
+                          mobileLetterSpacing: 0,
+                          mobileFontWeight: 600,
+                          mobileFontStyle: "",
+                          mobileSize: "custom",
+                          mobilePaddingTB: 0,
+                          mobilePaddingTop: 0,
+                          mobilePaddingBottom: 0,
+                          tempMobilePaddingTB: 11,
+                          tempMobilePaddingTop: 0,
+                          tempMobilePaddingBottom: 0,
+                          mobilePaddingRL: 26,
+                          mobilePaddingRight: 26,
+                          mobilePaddingLeft: 26,
+                          tempMobilePaddingRL: 26,
+                          tempMobilePaddingRight: 26,
+                          tempMobilePaddingLeft: 26,
+                          mobileBorderRadius: 2
                         }
                       }
                     ],
-                    "_id": "fmnmmtuqkw",
-                    "horizontalAlign": "left",
-                    "marginTopSuffix": "px",
-                    "marginTop": 0,
-                    "margin": 0,
-                    "marginSuffix": "px",
-                    "tabletHorizontalAlign": "center",
-                    "mobileHorizontalAlign": "center"
+                    _id: "fmnmmtuqkw",
+                    horizontalAlign: "left",
+                    marginTopSuffix: "px",
+                    marginTop: 0,
+                    margin: 0,
+                    marginSuffix: "px",
+                    tabletHorizontalAlign: "center",
+                    mobileHorizontalAlign: "center"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "jyqtnwmvom",
-                          "height": 20,
-                          "tabletHeight": 35,
-                          "mobileHeight": 35
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "jyqtnwmvom",
+                          height: 20,
+                          tabletHeight: 35,
+                          mobileHeight: 35
                         }
                       }
                     ],
-                    "_id": "pxgyatvvhi"
+                    _id: "pxgyatvvhi"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "qoldiahfdn",
-                                            "name": "paint-37",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "qoldiahfdn",
+                                            name: "paint-37",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "fipqcptjvx",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(144, 147, 161); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Global Styling</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Change fonts and colors across your website in seconds. A great time saver feature.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "fipqcptjvx",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Global Styling</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Change fonts and colors across your website in seconds. A great time saver feature.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "pmdagrgnic",
-                                      "iconSpacing": 5
+                                      _id: "pmdagrgnic",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "bmiooygvup",
-                                "customClassName": ""
+                                _id: "bmiooygvup",
+                                customClassName: ""
                               }
                             }
                           ],
-                          "_id": "qrpnjsqhgn",
-                          "width": 25,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "qrpnjsqhgn",
+                          width: 25,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "vwuatzsmjv",
-                                            "name": "divider",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "vwuatzsmjv",
+                                            name: "divider",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "zdjsaxcuzv",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(144, 147, 161); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Pre-made Blocks</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Use over 200 pre-made blocks to create a website in a matter of minutes.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "zdjsaxcuzv",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Pre-made Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use over 200 pre-made blocks to create a website in a matter of minutes.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "cblnhkqrzm",
-                                      "iconSpacing": 5
+                                      _id: "cblnhkqrzm",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "rersqnotkn"
+                                _id: "rersqnotkn"
                               }
                             }
                           ],
-                          "_id": "ldyxsokptp",
-                          "width": 25,
-                          "tabletWidth": 49.4
+                          _id: "ldyxsokptp",
+                          width: 25,
+                          tabletWidth: 49.4
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "qccokkkqnq",
-                                            "name": "player-19",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "qccokkkqnq",
+                                            name: "player-19",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "poemcpsxoc",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(144, 147, 161);\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Video Backgrounds</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 1;\">Use any YouTube or Vimeo videos as a loopable background to any block.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "poemcpsxoc",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Video Backgrounds</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use any YouTube or Vimeo videos as a loopable background to any block.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "sqrnqaanlz",
-                                      "iconSpacing": 5
+                                      _id: "sqrnqaanlz",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "wamgxgrqah"
+                                _id: "wamgxgrqah"
                               }
                             }
                           ],
-                          "_id": "atdishfvvx",
-                          "width": 25,
-                          "tabletWidth": 48.7
+                          _id: "atdishfvvx",
+                          width: 25,
+                          tabletWidth: 48.7
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "aaxqitdpdy",
-                                            "name": "contrast-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "aaxqitdpdy",
+                                            name: "contrast-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "hjxeuwggfc",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Shadows</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Add box-shadows to any element, including columns and rows.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "hjxeuwggfc",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Shadows</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Add box-shadows to any element, including columns and rows.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "gkkbivebzw",
-                                      "iconSpacing": 5
+                                      _id: "gkkbivebzw",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "skdldqnyei"
+                                _id: "skdldqnyei"
                               }
                             }
                           ],
-                          "_id": "hhxrzdkezb",
-                          "width": 25,
-                          "tabletWidth": 49.4
+                          _id: "hhxrzdkezb",
+                          width: 25,
+                          tabletWidth: 49.4
                         }
                       }
                     ],
-                    "_id": "amlxfworlk",
-                    "padding": 0,
-                    "paddingSuffix": "px",
-                    "paddingTop": 0,
-                    "paddingRight": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "amlxfworlk",
+                    padding: 0,
+                    paddingSuffix: "px",
+                    paddingTop: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "mweqehoblb",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "mweqehoblb",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "tfgpocjtrw",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "tfgpocjtrw",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "lpivorcqfi",
-                                            "name": "border-radius",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "lpivorcqfi",
+                                            name: "border-radius",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "jxyvsnufpv",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 0.7; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Borders &amp; Corners</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 1;\">Further stylize your content by rounding corners or adding borders.&nbsp;</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "jxyvsnufpv",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.7; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Borders &amp; Corners</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Further stylize your content by rounding corners or adding borders.&nbsp;</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "qldntqehrq",
-                                      "iconSpacing": 5
+                                      _id: "qldntqehrq",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "vogfzpyaja"
+                                _id: "vogfzpyaja"
                               }
                             }
                           ],
-                          "_id": "fupymsfuwt",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "tabletWidth": 50.2
+                          _id: "fupymsfuwt",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          tabletWidth: 50.2
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "urgohqqxmc",
-                                            "name": "flash-24",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "urgohqqxmc",
+                                            name: "flash-24",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "vrvanpwyyg",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.8;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Animations</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Entry animations that bring pizzaz and interaction are always a good idea to have.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "vrvanpwyyg",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Animations</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Entry animations that bring pizzaz and interaction are always a good idea to have.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "rudgpkrfxa",
-                                      "iconSpacing": 5
+                                      _id: "rudgpkrfxa",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "bzfkzdpfty"
+                                _id: "bzfkzdpfty"
                               }
                             }
                           ],
-                          "_id": "lakpqtnlau",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "lakpqtnlau",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "hkqfvfngcg",
-                                            "name": "focus-40",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "hkqfvfngcg",
+                                            name: "focus-40",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "atysvrmofa",
-                                            "text": "<h5 class=\"brz-tp-unbroxaxnj brz-ls-lg-0 brz-ls-sm-im-NaN brz-ls-xs-im-1\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.8;\">&nbsp;</strong></h5><h5 class=\"brz-mb-lg-5 brz-mt-lg-10 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Image Focus &amp; Zoom</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Zoom in a photo and pan it around with our unique Focus point functionality.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "atysvrmofa",
+                                            text:
+                                              '<h5 class="brz-tp-unbroxaxnj brz-ls-lg-0 brz-ls-sm-im-NaN brz-ls-xs-im-1"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></h5><h5 class="brz-mb-lg-5 brz-mt-lg-10 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Image Focus &amp; Zoom</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Zoom in a photo and pan it around with our unique Focus point functionality.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "phtfwpzaiy",
-                                      "iconSpacing": 5
+                                      _id: "phtfwpzaiy",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "xmzcfoqfdh"
+                                _id: "xmzcfoqfdh"
                               }
                             }
                           ],
-                          "_id": "hzbpjmnxyy",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "hzbpjmnxyy",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "qkmjszecdy",
-                                            "name": "shape-star",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "qkmjszecdy",
+                                            name: "shape-star",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "fdyvdbmyvz",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><span style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</span></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">4k+ Vector Icons</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Use over 4000+ vector icons in 27 categories. There is nothing you can't find. </span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "fdyvdbmyvz",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">4k+ Vector Icons</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use over 4000+ vector icons in 27 categories. There is nothing you can\'t find. </span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "acujmlgmpg",
-                                      "iconSpacing": 5
+                                      _id: "acujmlgmpg",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "qaylktfltq"
+                                _id: "qaylktfltq"
                               }
                             }
                           ],
-                          "_id": "xduhrriozl",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "xduhrriozl",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       }
                     ],
-                    "_id": "wugjdcucxa",
-                    "padding": 0,
-                    "paddingSuffix": "px",
-                    "paddingTop": 0,
-                    "paddingRight": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "wugjdcucxa",
+                    padding: 0,
+                    paddingSuffix: "px",
+                    paddingTop: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "xcfzmgkeor",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "xcfzmgkeor",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "nfmullczrt",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "nfmullczrt",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "fudhrqmpfw",
-                                            "name": "palette",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "fudhrqmpfw",
+                                            name: "palette",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "bxtjakwktx",
-                                            "text": "<h5 class=\"brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0\"><strong style=\"color: rgb(24, 28, 37);\">Premium Layouts</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 1;\">We've added over 150+ premium layouts and blocks. Upgrade to PRO to use all today.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "bxtjakwktx",
+                                            text:
+                                              '<h5 class="brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0"><strong style="color: rgb(24, 28, 37);">Premium Layouts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">We\'ve added over 150+ premium layouts and blocks. Upgrade to PRO to use all today.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "dqnobfkdmt",
-                                      "iconSpacing": 5
+                                      _id: "dqnobfkdmt",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "sywvfypieo",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "sywvfypieo",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "llisvzhwiu",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "tabletWidth": 50
+                          _id: "llisvzhwiu",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          tabletWidth: 50
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "mryvqidxtn",
-                                            "name": "puzzle-09",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "mryvqidxtn",
+                                            name: "puzzle-09",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "hcbhpkvwoz",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.7;\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">PRO Elements</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Brizy PRO comes with a bunch of exclusive design elements.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "hcbhpkvwoz",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">PRO Elements</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Brizy PRO comes with a bunch of exclusive design elements.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "ztpaqrbhsj",
-                                      "iconSpacing": 5
+                                      _id: "ztpaqrbhsj",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "snxvcjcevn",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "snxvcjcevn",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "duayucyixx",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "duayucyixx",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "ubzsfdakek",
-                                            "name": "sound-wave",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "ubzsfdakek",
+                                            name: "sound-wave",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "ztfwajnqbd",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.8;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Shape Dividers</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 1;\">The shape dividers option will let you create interesting and creative client websites. </span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "ztfwajnqbd",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Shape Dividers</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">The shape dividers option will let you create interesting and creative client websites. </span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "izzjtutiuk",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "izzjtutiuk",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "osxrnlehow",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "customClassName": "pro-tag-icon-box",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "osxrnlehow",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                customClassName: "pro-tag-icon-box",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "igzrjjccps",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.2
+                          _id: "igzrjjccps",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.2
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "xabqhnzkvu",
-                                            "name": "preferences",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "xabqhnzkvu",
+                                            name: "preferences",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "ibwshbmszg",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><span style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</span></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Filters</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Improve the way your media looks with our non-destructive filters.</span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "ibwshbmszg",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Filters</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Improve the way your media looks with our non-destructive filters.</span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "qqxejirfla",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "qqxejirfla",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "tjhwijczew",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "customClassName": "pro-tag-icon-box",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "tjhwijczew",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                customClassName: "pro-tag-icon-box",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "jfwrpgiwaw",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "jfwrpgiwaw",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       }
                     ],
-                    "_id": "ikadygfmog",
-                    "padding": 0,
-                    "paddingSuffix": "px",
-                    "paddingTop": 0,
-                    "paddingRight": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "ikadygfmog",
+                    padding: 0,
+                    paddingSuffix: "px",
+                    paddingTop: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "pjtaqnexjw",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "pjtaqnexjw",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "bllcpinmqj",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "bllcpinmqj",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "jtokyrcihb",
-                                            "name": "text",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "jtokyrcihb",
+                                            name: "text",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "hmrrnhnhua",
-                                            "text": "<h5 class=\"brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0\"><strong style=\"color: rgb(24, 28, 37);\">Custom Fonts</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 1;\">Upload and use your own custom fonts inside Brizy. A great option for client corporate fonts.</span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "hmrrnhnhua",
+                                            text:
+                                              '<h5 class="brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0"><strong style="color: rgb(24, 28, 37);">Custom Fonts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Upload and use your own custom fonts inside Brizy. A great option for client corporate fonts.</span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "xuzgmtdzjz",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "xuzgmtdzjz",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "rqbgbgxmdx",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "rqbgbgxmdx",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "edlnplfmyk",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "tabletWidth": 50
+                          _id: "edlnplfmyk",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          tabletWidth: 50
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "fqckooakhr",
-                                            "name": "refresh-69",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "fqckooakhr",
+                                            name: "refresh-69",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "uqosibigtn",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.7;\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Typekit Fonts</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Sync your Typekit premium fonts directly in Brizy in an instant.</span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "uqosibigtn",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Typekit Fonts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Sync your Typekit premium fonts directly in Brizy in an instant.</span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "rwggegermm",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "rwggegermm",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "ivxgzilzzd",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "ivxgzilzzd",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "nkjmxreeax",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "nkjmxreeax",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "yxfoygwyqv",
-                                            "name": "star",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "yxfoygwyqv",
+                                            name: "star",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "eacoacorof",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.8;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Premium Icons</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 1;\">Use one of the multiple premium icon sets included in Brizy PRO.</span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "eacoacorof",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Premium Icons</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use one of the multiple premium icon sets included in Brizy PRO.</span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "xixyhezrgx",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "xixyhezrgx",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "aftsmphvyb",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "aftsmphvyb",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                customClassName: "pro-tag-icon-box-soon",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "sbldobikfl",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.2
+                          _id: "sbldobikfl",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.2
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "tzxxmdndax",
-                                            "name": "pin-3",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "tzxxmdndax",
+                                            name: "pin-3",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "irkshxkkvc",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><span style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</span></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Map Styling</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Give your Google map a new style &amp; make it your own with our built-in styling options </span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "irkshxkkvc",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Map Styling</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Give your Google map a new style &amp; make it your own with our built-in styling options </span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "mraxjqyqtj",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "mraxjqyqtj",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "jsqxjwsmfv",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "jsqxjwsmfv",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                customClassName: "pro-tag-icon-box-soon",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "xwixuuizbt",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "xwixuuizbt",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       }
                     ],
-                    "_id": "vezkfuzpco",
-                    "padding": 0,
-                    "paddingSuffix": "px",
-                    "paddingTop": 0,
-                    "paddingRight": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "vezkfuzpco",
+                    padding: 0,
+                    paddingSuffix: "px",
+                    paddingTop: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "uhhfsaewhn",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "uhhfsaewhn",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "ngyjltqlww",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "ngyjltqlww",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "tddmulhpdz",
-                                            "name": "player-48",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "tddmulhpdz",
+                                            name: "player-48",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "ffuoiehvtr",
-                                            "text": "<h5 class=\"brz-ls-xs-0 brz-fs-xs-20 brz-lh-xs-2 brz-mt-lg-48 brz-ls-lg-0 brz-ls-sm-im-NaN brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Upload Videos</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 1; color: rgb(144, 147, 161);\">Use your own videos in Brizy without the need to upload them on Vimeo or Youtube.</span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "ffuoiehvtr",
+                                            text:
+                                              '<h5 class="brz-ls-xs-0 brz-fs-xs-20 brz-lh-xs-2 brz-mt-lg-48 brz-ls-lg-0 brz-ls-sm-im-NaN brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Upload Videos</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use your own videos in Brizy without the need to upload them on Vimeo or Youtube.</span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "jyrpwyrnxg",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "jyrpwyrnxg",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "ymlqqfxcii",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "ymlqqfxcii",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "qmjrflowaj",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "tabletWidth": 50
+                          _id: "qmjrflowaj",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          tabletWidth: 50
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "ihyvqjvipx",
-                                            "name": "picture",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "ihyvqjvipx",
+                                            name: "picture",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "mvdxvnzjmd",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 0.7; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Unsplash </strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 1;\">Use Unsplash images directly in Brizy. A great time saver for any freelancer or designer.</span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "mvdxvnzjmd",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.7; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Unsplash </strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use Unsplash images directly in Brizy. A great time saver for any freelancer or designer.</span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "tnskpmkpuc",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "tnskpmkpuc",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "rshewhfakh",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "rshewhfakh",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "zgkzaiijsv",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "zgkzaiijsv",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [],
-                          "_id": "prwdvhodqk",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.2,
-                          "showOnTablet": "off",
-                          "tabsState": "tabNormal",
-                          "tabsCurrentElement": "tabCurrentElement",
-                          "tabsColor": "tabOverlay",
-                          "showOnMobile": "off"
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [],
+                          _id: "prwdvhodqk",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.2,
+                          showOnTablet: "off",
+                          tabsState: "tabNormal",
+                          tabsCurrentElement: "tabCurrentElement",
+                          tabsColor: "tabOverlay",
+                          showOnMobile: "off"
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [],
-                          "_id": "mngamqsctm",
-                          "width": 25,
-                          "tabletWidth": 49.3,
-                          "showOnTablet": "off",
-                          "tabsState": "tabNormal",
-                          "tabsCurrentElement": "tabCurrentElement",
-                          "tabsColor": "tabOverlay",
-                          "showOnMobile": "off"
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [],
+                          _id: "mngamqsctm",
+                          width: 25,
+                          tabletWidth: 49.3,
+                          showOnTablet: "off",
+                          tabsState: "tabNormal",
+                          tabsCurrentElement: "tabCurrentElement",
+                          tabsColor: "tabOverlay",
+                          showOnMobile: "off"
                         }
                       }
                     ],
-                    "_id": "yyrjmblrjb",
-                    "padding": 0,
-                    "paddingSuffix": "px",
-                    "paddingTop": 0,
-                    "paddingRight": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "yyrjmblrjb",
+                    padding: 0,
+                    paddingSuffix: "px",
+                    paddingTop: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 }
               ],
-              "_id": "ltxmssxqhe",
-              "paddingType": "ungrouped",
-              "paddingTop": 15,
-              "paddingBottom": 120,
-              "padding": 75,
-              "tabletPaddingType": "ungrouped",
-              "tabletPaddingTop": 24,
-              "tabletPaddingBottom": 15,
-              "tabletPadding": 50,
-              "mobilePaddingType": "ungrouped",
-              "mobilePaddingTop": 27,
-              "mobilePaddingBottom": 15,
-              "mobilePadding": 25
+              _id: "ltxmssxqhe",
+              paddingType: "ungrouped",
+              paddingTop: 15,
+              paddingBottom: 120,
+              padding: 75,
+              tabletPaddingType: "ungrouped",
+              tabletPaddingTop: 24,
+              tabletPaddingBottom: 15,
+              tabletPadding: 50,
+              mobilePaddingType: "ungrouped",
+              mobilePaddingTop: 27,
+              mobilePaddingBottom: 15,
+              mobilePadding: 25
             }
           }
         ],
-        "_id": "ryztweynyk",
-        "_thumbnailSrc": "ryztweynyk",
-        "_thumbnailWidth": 600,
-        "_thumbnailHeight": 356,
-        "_thumbnailTime": 1554993684499,
-        "anchorName": "design"
+        _id: "ryztweynyk",
+        _thumbnailSrc: "ryztweynyk",
+        _thumbnailWidth: 600,
+        _thumbnailHeight: 356,
+        _thumbnailTime: 1554993684499,
+        anchorName: "design"
       }
     },
     {
-      "type": "Section",
-      "blockId": "Blank000Light",
-      "value": {
-        "_styles": [
-          "section"
-        ],
-        "items": [
+      type: "Section",
+      blockId: "Blank000Light",
+      value: {
+        _styles: ["section"],
+        items: [
           {
-            "type": "SectionItem",
-            "value": {
-              "_styles": [
-                "section-item"
-              ],
-              "items": [
+            type: "SectionItem",
+            value: {
+              _styles: ["section-item"],
+              items: [
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--richText"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--richText"],
+                    items: [
                       {
-                        "type": "RichText",
-                        "value": {
-                          "_styles": [
-                            "richText"
-                          ],
-                          "_id": "ksmcmkslkg",
-                          "text": "<h6 class=\"brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center\"><span style=\"color: rgb(128, 131, 147);\">LEARN MORE ABOUT</span></h6>"
+                        type: "RichText",
+                        value: {
+                          _styles: ["richText"],
+                          _id: "ksmcmkslkg",
+                          text:
+                            '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
                         }
                       }
                     ],
-                    "_id": "liydjddhby"
+                    _id: "liydjddhby"
                   }
                 },
                 {
-                  "type": "Cloneable",
-                  "value": {
-                    "_styles": [
-                      "wrapper-clone",
-                      "wrapper-clone--button"
-                    ],
-                    "items": [
+                  type: "Cloneable",
+                  value: {
+                    _styles: ["wrapper-clone", "wrapper-clone--button"],
+                    items: [
                       {
-                        "type": "Button",
-                        "value": {
-                          "_styles": [
-                            "button"
-                          ],
-                          "_id": "fzfsvryaxr",
-                          "text": "Dynamic Content",
-                          "fillType": "default",
-                          "tempFillType": "filled",
-                          "paddingRL": 0,
-                          "paddingRight": 0,
-                          "paddingLeft": 0,
-                          "paddingTB": 0,
-                          "paddingTop": 0,
-                          "paddingBottom": 0,
-                          "borderRadiusType": "",
-                          "borderRadius": 2,
-                          "borderWidth": 0,
-                          "borderColorOpacity": 0,
-                          "borderColorPalette": "",
-                          "bgColorOpacity": 0,
-                          "bgColorPalette": "",
-                          "hoverBgColorOpacity": 0,
-                          "hoverBorderColorOpacity": 0,
-                          "colorPalette": "color1",
-                          "colorOpacity": 1,
-                          "hoverBgColorHex": "#05b3e6",
-                          "tempHoverBgColorOpacity": 0.8,
-                          "hoverBgColorPalette": "color3",
-                          "tempHoverBgColorPalette": "color3",
-                          "hoverBorderColorHex": "#239ddb",
-                          "hoverBorderColorPalette": "color3",
-                          "tempHoverBorderColorPalette": "color3",
-                          "hoverColorPalette": "color3",
-                          "hoverColorOpacity": 1,
-                          "fontStyle": "",
-                          "iconName": "link-2",
-                          "iconType": "glyph",
-                          "fontSize": 29,
-                          "fontFamily": "montserrat",
-                          "lineHeight": 1.5,
-                          "letterSpacing": -0.5,
-                          "fontWeight": 500,
-                          "linkType": "anchor",
-                          "linkAnchor": "apjbfqdjlp",
-                          "size": "custom",
-                          "tempPaddingTB": 0,
-                          "tempPaddingTop": 0,
-                          "tempPaddingBottom": 0,
-                          "tempPaddingRL": 42,
-                          "tempPaddingRight": 42,
-                          "tempPaddingLeft": 42,
-                          "tabletSize": "custom",
-                          "tabletFontSize": 29,
-                          "tabletPaddingTB": 6,
-                          "tabletPaddingTop": 6,
-                          "tabletPaddingBottom": 6,
-                          "tempTabletPaddingTB": 11,
-                          "tempTabletPaddingTop": 6,
-                          "tempTabletPaddingBottom": 6,
-                          "tabletPaddingRL": 0,
-                          "tabletPaddingRight": 0,
-                          "tabletPaddingLeft": 0,
-                          "tempTabletPaddingRL": 26,
-                          "tempTabletPaddingRight": 26,
-                          "tempTabletPaddingLeft": 26,
-                          "tabletBorderRadius": 2,
-                          "tabletLineHeight": 1,
-                          "tabletLetterSpacing": 0,
-                          "tabletFontWeight": 500,
-                          "tabletFontStyle": "",
-                          "mobileFontSize": 27,
-                          "mobileLineHeight": 1.8,
-                          "mobileLetterSpacing": 0,
-                          "mobileFontWeight": 600,
-                          "mobileFontStyle": "",
-                          "mobileSize": "custom",
-                          "mobilePaddingTB": 0,
-                          "mobilePaddingTop": 0,
-                          "mobilePaddingBottom": 0,
-                          "tempMobilePaddingTB": 11,
-                          "tempMobilePaddingTop": 0,
-                          "tempMobilePaddingBottom": 0,
-                          "mobilePaddingRL": 26,
-                          "mobilePaddingRight": 26,
-                          "mobilePaddingLeft": 26,
-                          "tempMobilePaddingRL": 26,
-                          "tempMobilePaddingRight": 26,
-                          "tempMobilePaddingLeft": 26,
-                          "mobileBorderRadius": 2
+                        type: "Button",
+                        value: {
+                          _styles: ["button"],
+                          _id: "fzfsvryaxr",
+                          text: "Dynamic Content",
+                          fillType: "default",
+                          tempFillType: "filled",
+                          paddingRL: 0,
+                          paddingRight: 0,
+                          paddingLeft: 0,
+                          paddingTB: 0,
+                          paddingTop: 0,
+                          paddingBottom: 0,
+                          borderRadiusType: "",
+                          borderRadius: 2,
+                          borderWidth: 0,
+                          borderColorOpacity: 0,
+                          borderColorPalette: "",
+                          bgColorOpacity: 0,
+                          bgColorPalette: "",
+                          hoverBgColorOpacity: 0,
+                          hoverBorderColorOpacity: 0,
+                          colorPalette: "color1",
+                          colorOpacity: 1,
+                          hoverBgColorHex: "#05b3e6",
+                          tempHoverBgColorOpacity: 0.8,
+                          hoverBgColorPalette: "color3",
+                          tempHoverBgColorPalette: "color3",
+                          hoverBorderColorHex: "#239ddb",
+                          hoverBorderColorPalette: "color3",
+                          tempHoverBorderColorPalette: "color3",
+                          hoverColorPalette: "color3",
+                          hoverColorOpacity: 1,
+                          fontStyle: "",
+                          iconName: "link-2",
+                          iconType: "glyph",
+                          fontSize: 29,
+                          fontFamily: "montserrat",
+                          lineHeight: 1.5,
+                          letterSpacing: -0.5,
+                          fontWeight: 500,
+                          linkType: "anchor",
+                          linkAnchor: "apjbfqdjlp",
+                          size: "custom",
+                          tempPaddingTB: 0,
+                          tempPaddingTop: 0,
+                          tempPaddingBottom: 0,
+                          tempPaddingRL: 42,
+                          tempPaddingRight: 42,
+                          tempPaddingLeft: 42,
+                          tabletSize: "custom",
+                          tabletFontSize: 29,
+                          tabletPaddingTB: 6,
+                          tabletPaddingTop: 6,
+                          tabletPaddingBottom: 6,
+                          tempTabletPaddingTB: 11,
+                          tempTabletPaddingTop: 6,
+                          tempTabletPaddingBottom: 6,
+                          tabletPaddingRL: 0,
+                          tabletPaddingRight: 0,
+                          tabletPaddingLeft: 0,
+                          tempTabletPaddingRL: 26,
+                          tempTabletPaddingRight: 26,
+                          tempTabletPaddingLeft: 26,
+                          tabletBorderRadius: 2,
+                          tabletLineHeight: 1,
+                          tabletLetterSpacing: 0,
+                          tabletFontWeight: 500,
+                          tabletFontStyle: "",
+                          mobileFontSize: 27,
+                          mobileLineHeight: 1.8,
+                          mobileLetterSpacing: 0,
+                          mobileFontWeight: 600,
+                          mobileFontStyle: "",
+                          mobileSize: "custom",
+                          mobilePaddingTB: 0,
+                          mobilePaddingTop: 0,
+                          mobilePaddingBottom: 0,
+                          tempMobilePaddingTB: 11,
+                          tempMobilePaddingTop: 0,
+                          tempMobilePaddingBottom: 0,
+                          mobilePaddingRL: 26,
+                          mobilePaddingRight: 26,
+                          mobilePaddingLeft: 26,
+                          tempMobilePaddingRL: 26,
+                          tempMobilePaddingRight: 26,
+                          tempMobilePaddingLeft: 26,
+                          mobileBorderRadius: 2
                         }
                       }
                     ],
-                    "_id": "cxnqepnily",
-                    "horizontalAlign": "left",
-                    "marginTopSuffix": "px",
-                    "marginTop": 0,
-                    "margin": 0,
-                    "marginSuffix": "px",
-                    "tabletHorizontalAlign": "center",
-                    "mobileHorizontalAlign": "center"
+                    _id: "cxnqepnily",
+                    horizontalAlign: "left",
+                    marginTopSuffix: "px",
+                    marginTop: 0,
+                    margin: 0,
+                    marginSuffix: "px",
+                    tabletHorizontalAlign: "center",
+                    mobileHorizontalAlign: "center"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "qhckfiawuc",
-                          "height": 30,
-                          "tabletHeight": 34,
-                          "mobileHeight": 35
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "qhckfiawuc",
+                          height: 30,
+                          tabletHeight: 34,
+                          mobileHeight: 35
                         }
                       }
                     ],
-                    "_id": "bwevpykusm",
-                    "showOnTablet": "on",
-                    "showOnMobile": "on"
+                    _id: "bwevpykusm",
+                    showOnTablet: "on",
+                    showOnMobile: "on"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "cgrephpkra",
-                                            "name": "single-paragraph",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "cgrephpkra",
+                                            name: "single-paragraph",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "ljsmqwpklr",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(144, 147, 161);\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">WP Templates</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Create custom page templates that can be applied dynamically. </span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "ljsmqwpklr",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">WP Templates</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create custom page templates that can be applied dynamically. </span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "zcrvuwbpyd",
-                                      "iconSpacing": 5
+                                      _id: "zcrvuwbpyd",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "fmpzpxoavu",
-                                "customClassName": ""
+                                _id: "fmpzpxoavu",
+                                customClassName: ""
                               }
                             }
                           ],
-                          "_id": "dstaskeqyc",
-                          "width": 25,
-                          "tabletWidth": 50.2
+                          _id: "dstaskeqyc",
+                          width: 25,
+                          tabletWidth: 50.2
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "angyqcxtjd",
-                                            "name": "align-left-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 44,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "angyqcxtjd",
+                                            name: "align-left-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 44,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "dgnmehxrji",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>WP Content</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Use the power of dynamic content to populate your pages with WP dynamic content.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "dgnmehxrji",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>WP Content</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use the power of dynamic content to populate your pages with WP dynamic content.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "metxbqbddw",
-                                      "iconSpacing": 5
+                                      _id: "metxbqbddw",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "rpbciueopb",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "rpbciueopb",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "jwamyufgyv",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "tabletWidth": 49.3
+                          _id: "jwamyufgyv",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "foiebbguhd",
-                                            "name": "edit-75",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "foiebbguhd",
+                                            name: "edit-75",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "nwusicxzns",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.8;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>Dynamic Text</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">The text element can now be populated with dynamic content. Just type </span><span style=\"color: rgb(144, 147, 161);\" class=\"brz-pre-population-visible\">#.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "nwusicxzns",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Text</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The text element can now be populated with dynamic content. Just type </span><span style="color: rgb(144, 147, 161);" class="brz-pre-population-visible">#.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "trozrdghij",
-                                      "iconSpacing": 5
+                                      _id: "trozrdghij",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "fmtifmgwzt",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "fmtifmgwzt",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "qoiivlhqew",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.2
+                          _id: "qoiivlhqew",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.2
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "xgjplnneik",
-                                            "name": "image-02",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "xgjplnneik",
+                                            name: "image-02",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "nnpgecwoud",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>Dynamic Images</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">The image element can be populated dynamically based on your needs.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "nnpgecwoud",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Images</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The image element can be populated dynamically based on your needs.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "nslsdqrdqf",
-                                      "iconSpacing": 5
+                                      _id: "nslsdqrdqf",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "mzcdejemkl",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "mzcdejemkl",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "jodtxoqicc",
-                          "width": 25,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 49.5
+                          _id: "jodtxoqicc",
+                          width: 25,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 49.5
                         }
                       }
                     ],
-                    "_id": "zstqiezyuu",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "zstqiezyuu",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "uxogyofayv",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "uxogyofayv",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "qxnuqmeyqd",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "qxnuqmeyqd",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "okwyfmdmnw",
-                                            "name": "player-48",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "okwyfmdmnw",
+                                            name: "player-48",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "glzbxmtvjg",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><span style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</span></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>Dynamic Video</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">The video element can be populated dynamically based on your specifications</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "glzbxmtvjg",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Video</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The video element can be populated dynamically based on your specifications</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "jzkhwzukbo",
-                                      "iconSpacing": 5
+                                      _id: "jzkhwzukbo",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "jjbvqkuieg",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "jjbvqkuieg",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "iclmyrrwcd",
-                          "width": 25,
-                          "tabletWidth": 50.3
+                          _id: "iclmyrrwcd",
+                          width: 25,
+                          tabletWidth: 50.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "ghlyvzedxt",
-                                            "name": "pin-3",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "ghlyvzedxt",
+                                            name: "pin-3",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "dksbxepqye",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Dynamic Maps</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">The map element can be populated dynamically based on your specifications </span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "dksbxepqye",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Dynamic Maps</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The map element can be populated dynamically based on your specifications </span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "kqtlfpmpos",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "kqtlfpmpos",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "rqsnrrfcsx",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "rqsnrrfcsx",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "vymafnlzoi",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "vymafnlzoi",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "swnkbgrzii",
-                                            "name": "world-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "swnkbgrzii",
+                                            name: "world-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "elsvznixkw",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 0.8; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">ACF</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Brizy PRO plays nice with one of the most popular custom fields plugin in the market.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "elsvznixkw",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">ACF</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy PRO plays nice with one of the most popular custom fields plugin in the market.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "vxqjlvveqo",
-                                      "iconSpacing": 5
+                                      _id: "vxqjlvveqo",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "rjqlchpaop",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "rjqlchpaop",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "dwygfshpfg",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "dwygfshpfg",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "cithsyoypb",
-                                            "name": "world-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "cithsyoypb",
+                                            name: "world-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "dsslwemxwc",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Toolset</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Toolset lets you build your own listing sites, directories, membership sites.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "dsslwemxwc",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Toolset</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Toolset lets you build your own listing sites, directories, membership sites.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "tqlglmaglb",
-                                      "iconSpacing": 5
+                                      _id: "tqlglmaglb",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "izojttjpif",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "izojttjpif",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "rtxskomskm",
-                          "width": 25,
-                          "tabletWidth": 49.4
+                          _id: "rtxskomskm",
+                          width: 25,
+                          tabletWidth: 49.4
                         }
                       }
                     ],
-                    "_id": "ggzuzumjyy",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "ggzuzumjyy",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "vobgdtamkx",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "vobgdtamkx",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "uukkupmxzg",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "uukkupmxzg",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "qdyhmexlbf",
-                                            "name": "world-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "qdyhmexlbf",
+                                            name: "world-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "uijoqputzg",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><span style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</span></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong>Pods</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Allows you to manage all your custom content needs in one location.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "uijoqputzg",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Pods</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Allows you to manage all your custom content needs in one location.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "pkxojceizc",
-                                      "iconSpacing": 5
+                                      _id: "pkxojceizc",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "hzuvjxqcjt",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "hzuvjxqcjt",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "odslusoemc",
-                          "width": 25,
-                          "tabletWidth": 50.3
+                          _id: "odslusoemc",
+                          width: 25,
+                          tabletWidth: 50.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "hfgsmvdhaq",
-                                            "name": "world-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "hfgsmvdhaq",
+                                            name: "world-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "evarnqdnfb",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Metabox</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Instantly generate expert meta boxes and custom fields in WordPress. </span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "evarnqdnfb",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Metabox</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Instantly generate expert meta boxes and custom fields in WordPress. </span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "egkaaapgto",
-                                      "iconSpacing": 5
+                                      _id: "egkaaapgto",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "ozhuvzqdbx",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "ozhuvzqdbx",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "kmcxcfsxxj",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "kmcxcfsxxj",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "dhnjbmclem",
-                                            "name": "paper-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "dhnjbmclem",
+                                            name: "paper-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "quhgalhrmt",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.8;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Posts Element</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Lets you dynamically design custom WordPress post listings. Sky is the limit.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "quhgalhrmt",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Posts Element</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Lets you dynamically design custom WordPress post listings. Sky is the limit.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "kzmnzwoaax",
-                                      "iconSpacing": 5
+                                      _id: "kzmnzwoaax",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "xvjunanaim",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "xvjunanaim",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "cjumtgsbly",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "cjumtgsbly",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "ptbsahzzvp",
-                                            "name": "menu-34",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "ptbsahzzvp",
+                                            name: "menu-34",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "glltdygrjm",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Menu Element</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Build beautiful dynamic WordPress menus for your headers and footers.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "glltdygrjm",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Menu Element</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Build beautiful dynamic WordPress menus for your headers and footers.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "qvakzwzvhp",
-                                      "iconSpacing": 5
+                                      _id: "qvakzwzvhp",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "jvepntrlom",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "jvepntrlom",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "zkqufgwouv",
-                          "width": 25,
-                          "tabletWidth": 49.4
+                          _id: "zkqufgwouv",
+                          width: 25,
+                          tabletWidth: 49.4
                         }
                       }
                     ],
-                    "_id": "vmxgknohlp",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "vmxgknohlp",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "zxxbanqnhd",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "zxxbanqnhd",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "eoulbxakpp",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "eoulbxakpp",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "aqhbfuprxe",
-                                            "name": "open-in-browser",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "aqhbfuprxe",
+                                            name: "open-in-browser",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "ruucjennca",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><span style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</span></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>Sticky Header</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Create sticky or animated headers to make your website stand out. </span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "ruucjennca",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Sticky Header</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create sticky or animated headers to make your website stand out. </span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "pqqfiayrhe",
-                                      "iconSpacing": 5
+                                      _id: "pqqfiayrhe",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "qzsxahykzu",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "qzsxahykzu",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "qmfrhixlqn",
-                          "width": 25,
-                          "tabletWidth": 50.3
+                          _id: "qmfrhixlqn",
+                          width: 25,
+                          tabletWidth: 50.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "svdyngfvug",
-                                            "name": "settings-gear-65",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "svdyngfvug",
+                                            name: "settings-gear-65",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "uejivwgzdt",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">Conditions</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Use Block conditions to display blocks on multiple pages dynamically. </span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "uejivwgzdt",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Conditions</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use Block conditions to display blocks on multiple pages dynamically. </span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "ntrcqhtwpn",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "ntrcqhtwpn",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "dymfvrtcot",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "dymfvrtcot",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "cbgcdnxupf",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "cbgcdnxupf",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [],
-                          "_id": "nqoiquwpwj",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1,
-                          "showOnTablet": "off",
-                          "tabsState": "tabNormal",
-                          "tabsCurrentElement": "tabCurrentElement",
-                          "tabsColor": "tabOverlay",
-                          "showOnMobile": "off"
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [],
+                          _id: "nqoiquwpwj",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1,
+                          showOnTablet: "off",
+                          tabsState: "tabNormal",
+                          tabsCurrentElement: "tabCurrentElement",
+                          tabsColor: "tabOverlay",
+                          showOnMobile: "off"
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [],
-                          "_id": "spfwvwgsbm",
-                          "width": 25,
-                          "tabletWidth": 49.4,
-                          "showOnTablet": "off",
-                          "tabsState": "tabNormal",
-                          "tabsCurrentElement": "tabCurrentElement",
-                          "tabsColor": "tabOverlay",
-                          "showOnMobile": "off"
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [],
+                          _id: "spfwvwgsbm",
+                          width: 25,
+                          tabletWidth: 49.4,
+                          showOnTablet: "off",
+                          tabsState: "tabNormal",
+                          tabsCurrentElement: "tabCurrentElement",
+                          tabsColor: "tabOverlay",
+                          showOnMobile: "off"
                         }
                       }
                     ],
-                    "_id": "lknuwtenia",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "lknuwtenia",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 }
               ],
-              "_id": "pruvrfxjcl",
-              "bgImageWidth": 0,
-              "bgImageHeight": 0,
-              "bgImageSrc": "",
-              "bgPositionX": 50,
-              "bgPositionY": 50,
-              "bgPopulation": "",
-              "bgColorOpacity": 0,
-              "tempBgColorOpacity": 1,
-              "paddingType": "ungrouped",
-              "paddingTop": 15,
-              "paddingBottom": 100,
-              "padding": 75,
-              "containerType": "boxed",
-              "bgColorPalette": "color8",
-              "bgColorHex": "#ffffff",
-              "tabletPaddingType": "ungrouped",
-              "tabletPaddingTop": 15,
-              "tabletPadding": 50,
-              "tabletPaddingBottom": 15,
-              "mobilePadding": 25,
-              "mobilePaddingTop": 15,
-              "mobilePaddingBottom": 15,
-              "mobilePaddingType": "ungrouped",
-              "tabsState": "tabNormal",
-              "tabsCurrentElement": "tabCurrentElement",
-              "tabsColor": "tabOverlay"
+              _id: "pruvrfxjcl",
+              bgImageWidth: 0,
+              bgImageHeight: 0,
+              bgImageSrc: "",
+              bgPositionX: 50,
+              bgPositionY: 50,
+              bgPopulation: "",
+              bgColorOpacity: 0,
+              tempBgColorOpacity: 1,
+              paddingType: "ungrouped",
+              paddingTop: 15,
+              paddingBottom: 100,
+              padding: 75,
+              containerType: "boxed",
+              bgColorPalette: "color8",
+              bgColorHex: "#ffffff",
+              tabletPaddingType: "ungrouped",
+              tabletPaddingTop: 15,
+              tabletPadding: 50,
+              tabletPaddingBottom: 15,
+              mobilePadding: 25,
+              mobilePaddingTop: 15,
+              mobilePaddingBottom: 15,
+              mobilePaddingType: "ungrouped",
+              tabsState: "tabNormal",
+              tabsCurrentElement: "tabCurrentElement",
+              tabsColor: "tabOverlay"
             }
           }
         ],
-        "_id": "ntxnpyixmt",
-        "_thumbnailSrc": "ntxnpyixmt",
-        "_thumbnailWidth": 600,
-        "_thumbnailHeight": 310,
-        "_thumbnailTime": 1554993657986,
-        "anchorName": "dynamic"
+        _id: "ntxnpyixmt",
+        _thumbnailSrc: "ntxnpyixmt",
+        _thumbnailWidth: 600,
+        _thumbnailHeight: 310,
+        _thumbnailTime: 1554993657986,
+        anchorName: "dynamic"
       }
     },
     {
-      "type": "Section",
-      "blockId": "Blank000Light",
-      "value": {
-        "_styles": [
-          "section"
-        ],
-        "items": [
+      type: "Section",
+      blockId: "Blank000Light",
+      value: {
+        _styles: ["section"],
+        items: [
           {
-            "type": "SectionItem",
-            "value": {
-              "_styles": [
-                "section-item"
-              ],
-              "items": [
+            type: "SectionItem",
+            value: {
+              _styles: ["section-item"],
+              items: [
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--richText"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--richText"],
+                    items: [
                       {
-                        "type": "RichText",
-                        "value": {
-                          "_styles": [
-                            "richText"
-                          ],
-                          "_id": "fepmejvyjn",
-                          "text": "<h6 class=\"brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center\"><span style=\"color: rgb(128, 131, 147);\">LEARN MORE ABOUT</span></h6>"
+                        type: "RichText",
+                        value: {
+                          _styles: ["richText"],
+                          _id: "fepmejvyjn",
+                          text:
+                            '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
                         }
                       }
                     ],
-                    "_id": "znnehvukna"
+                    _id: "znnehvukna"
                   }
                 },
                 {
-                  "type": "Cloneable",
-                  "value": {
-                    "_styles": [
-                      "wrapper-clone",
-                      "wrapper-clone--button"
-                    ],
-                    "items": [
+                  type: "Cloneable",
+                  value: {
+                    _styles: ["wrapper-clone", "wrapper-clone--button"],
+                    items: [
                       {
-                        "type": "Button",
-                        "value": {
-                          "_styles": [
-                            "button"
-                          ],
-                          "_id": "dxwajjdizo",
-                          "text": "Marketing Features",
-                          "fillType": "default",
-                          "tempFillType": "filled",
-                          "paddingRL": 0,
-                          "paddingRight": 0,
-                          "paddingLeft": 0,
-                          "paddingTB": 0,
-                          "paddingTop": 0,
-                          "paddingBottom": 0,
-                          "borderRadiusType": "",
-                          "borderRadius": 2,
-                          "borderWidth": 0,
-                          "borderColorOpacity": 0,
-                          "borderColorPalette": "",
-                          "bgColorOpacity": 0,
-                          "bgColorPalette": "",
-                          "hoverBgColorOpacity": 0,
-                          "hoverBorderColorOpacity": 0,
-                          "colorPalette": "color1",
-                          "colorOpacity": 1,
-                          "hoverBgColorHex": "#05b3e6",
-                          "tempHoverBgColorOpacity": 0.8,
-                          "hoverBgColorPalette": "color3",
-                          "tempHoverBgColorPalette": "color3",
-                          "hoverBorderColorHex": "#239ddb",
-                          "hoverBorderColorPalette": "color3",
-                          "tempHoverBorderColorPalette": "color3",
-                          "hoverColorPalette": "color3",
-                          "hoverColorOpacity": 1,
-                          "fontStyle": "",
-                          "iconName": "link-2",
-                          "iconType": "glyph",
-                          "fontSize": 29,
-                          "fontFamily": "montserrat",
-                          "lineHeight": 1.5,
-                          "letterSpacing": -0.5,
-                          "fontWeight": 500,
-                          "linkType": "anchor",
-                          "linkAnchor": "apjbfqdjlp",
-                          "size": "custom",
-                          "tempPaddingTB": 0,
-                          "tempPaddingTop": 0,
-                          "tempPaddingBottom": 0,
-                          "tempPaddingRL": 42,
-                          "tempPaddingRight": 42,
-                          "tempPaddingLeft": 42,
-                          "tabletSize": "custom",
-                          "tabletFontSize": 29,
-                          "tabletPaddingTB": 6,
-                          "tabletPaddingTop": 6,
-                          "tabletPaddingBottom": 6,
-                          "tempTabletPaddingTB": 11,
-                          "tempTabletPaddingTop": 6,
-                          "tempTabletPaddingBottom": 6,
-                          "tabletPaddingRL": 0,
-                          "tabletPaddingRight": 0,
-                          "tabletPaddingLeft": 0,
-                          "tempTabletPaddingRL": 26,
-                          "tempTabletPaddingRight": 26,
-                          "tempTabletPaddingLeft": 26,
-                          "tabletBorderRadius": 2,
-                          "tabletLineHeight": 1,
-                          "tabletLetterSpacing": 0,
-                          "tabletFontWeight": 500,
-                          "tabletFontStyle": "",
-                          "mobileFontSize": 27,
-                          "mobileLineHeight": 1.8,
-                          "mobileLetterSpacing": 0,
-                          "mobileFontWeight": 600,
-                          "mobileFontStyle": "",
-                          "mobileSize": "custom",
-                          "mobilePaddingTB": 0,
-                          "mobilePaddingTop": 0,
-                          "mobilePaddingBottom": 0,
-                          "tempMobilePaddingTB": 11,
-                          "tempMobilePaddingTop": 0,
-                          "tempMobilePaddingBottom": 0,
-                          "mobilePaddingRL": 26,
-                          "mobilePaddingRight": 26,
-                          "mobilePaddingLeft": 26,
-                          "tempMobilePaddingRL": 26,
-                          "tempMobilePaddingRight": 26,
-                          "tempMobilePaddingLeft": 26,
-                          "mobileBorderRadius": 2
+                        type: "Button",
+                        value: {
+                          _styles: ["button"],
+                          _id: "dxwajjdizo",
+                          text: "Marketing Features",
+                          fillType: "default",
+                          tempFillType: "filled",
+                          paddingRL: 0,
+                          paddingRight: 0,
+                          paddingLeft: 0,
+                          paddingTB: 0,
+                          paddingTop: 0,
+                          paddingBottom: 0,
+                          borderRadiusType: "",
+                          borderRadius: 2,
+                          borderWidth: 0,
+                          borderColorOpacity: 0,
+                          borderColorPalette: "",
+                          bgColorOpacity: 0,
+                          bgColorPalette: "",
+                          hoverBgColorOpacity: 0,
+                          hoverBorderColorOpacity: 0,
+                          colorPalette: "color1",
+                          colorOpacity: 1,
+                          hoverBgColorHex: "#05b3e6",
+                          tempHoverBgColorOpacity: 0.8,
+                          hoverBgColorPalette: "color3",
+                          tempHoverBgColorPalette: "color3",
+                          hoverBorderColorHex: "#239ddb",
+                          hoverBorderColorPalette: "color3",
+                          tempHoverBorderColorPalette: "color3",
+                          hoverColorPalette: "color3",
+                          hoverColorOpacity: 1,
+                          fontStyle: "",
+                          iconName: "link-2",
+                          iconType: "glyph",
+                          fontSize: 29,
+                          fontFamily: "montserrat",
+                          lineHeight: 1.5,
+                          letterSpacing: -0.5,
+                          fontWeight: 500,
+                          linkType: "anchor",
+                          linkAnchor: "apjbfqdjlp",
+                          size: "custom",
+                          tempPaddingTB: 0,
+                          tempPaddingTop: 0,
+                          tempPaddingBottom: 0,
+                          tempPaddingRL: 42,
+                          tempPaddingRight: 42,
+                          tempPaddingLeft: 42,
+                          tabletSize: "custom",
+                          tabletFontSize: 29,
+                          tabletPaddingTB: 6,
+                          tabletPaddingTop: 6,
+                          tabletPaddingBottom: 6,
+                          tempTabletPaddingTB: 11,
+                          tempTabletPaddingTop: 6,
+                          tempTabletPaddingBottom: 6,
+                          tabletPaddingRL: 0,
+                          tabletPaddingRight: 0,
+                          tabletPaddingLeft: 0,
+                          tempTabletPaddingRL: 26,
+                          tempTabletPaddingRight: 26,
+                          tempTabletPaddingLeft: 26,
+                          tabletBorderRadius: 2,
+                          tabletLineHeight: 1,
+                          tabletLetterSpacing: 0,
+                          tabletFontWeight: 500,
+                          tabletFontStyle: "",
+                          mobileFontSize: 27,
+                          mobileLineHeight: 1.8,
+                          mobileLetterSpacing: 0,
+                          mobileFontWeight: 600,
+                          mobileFontStyle: "",
+                          mobileSize: "custom",
+                          mobilePaddingTB: 0,
+                          mobilePaddingTop: 0,
+                          mobilePaddingBottom: 0,
+                          tempMobilePaddingTB: 11,
+                          tempMobilePaddingTop: 0,
+                          tempMobilePaddingBottom: 0,
+                          mobilePaddingRL: 26,
+                          mobilePaddingRight: 26,
+                          mobilePaddingLeft: 26,
+                          tempMobilePaddingRL: 26,
+                          tempMobilePaddingRight: 26,
+                          tempMobilePaddingLeft: 26,
+                          mobileBorderRadius: 2
                         }
                       }
                     ],
-                    "_id": "zuxgjfnenl",
-                    "horizontalAlign": "left",
-                    "marginTopSuffix": "px",
-                    "marginTop": 0,
-                    "margin": 0,
-                    "marginSuffix": "px",
-                    "tabletHorizontalAlign": "center",
-                    "mobileHorizontalAlign": "center"
+                    _id: "zuxgjfnenl",
+                    horizontalAlign: "left",
+                    marginTopSuffix: "px",
+                    marginTop: 0,
+                    margin: 0,
+                    marginSuffix: "px",
+                    tabletHorizontalAlign: "center",
+                    mobileHorizontalAlign: "center"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "ixwobjdlep",
-                          "height": 30,
-                          "tabletHeight": 34,
-                          "mobileHeight": 35
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "ixwobjdlep",
+                          height: 30,
+                          tabletHeight: 34,
+                          mobileHeight: 35
                         }
                       }
                     ],
-                    "_id": "agugxzztqy",
-                    "showOnTablet": "on",
-                    "showOnMobile": "on"
+                    _id: "agugxzztqy",
+                    showOnTablet: "on",
+                    showOnMobile: "on"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "pcmgmlcehz",
-                                            "name": "email-85",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "pcmgmlcehz",
+                                            name: "email-85",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "nvcicyevud",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(144, 147, 161);\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">WP Email</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Connect your contact form with WordPress to receive the leads on your email.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "nvcicyevud",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">WP Email</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Connect your contact form with WordPress to receive the leads on your email.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "xumprnsbwn",
-                                      "iconSpacing": 5
+                                      _id: "xumprnsbwn",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "vkgnqpxdix",
-                                "customClassName": ""
+                                _id: "vkgnqpxdix",
+                                customClassName: ""
                               }
                             }
                           ],
-                          "_id": "mjnuodylsz",
-                          "width": 25,
-                          "tabletWidth": 50.2
+                          _id: "mjnuodylsz",
+                          width: 25,
+                          tabletWidth: 50.2
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "svfhbxyvxm",
-                                            "name": "flower-07",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "svfhbxyvxm",
+                                            name: "flower-07",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "grhoefbucm",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>WP Leads</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Besides sending them on your email, Brizy saves your leads in WP admin for later access.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "grhoefbucm",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>WP Leads</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Besides sending them on your email, Brizy saves your leads in WP admin for later access.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "nckvsqqqws",
-                                      "iconSpacing": 5
+                                      _id: "nckvsqqqws",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "eehmzdgkwb",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "eehmzdgkwb",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "mwgjzzvvpb",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "tabletWidth": 49.3
+                          _id: "mwgjzzvvpb",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "yfckmsjhlk",
-                                            "name": "window-zoom-in",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "yfckmsjhlk",
+                                            name: "window-zoom-in",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "lulewavguf",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 0.8;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>Pop-up Builder</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Create pop-ups right in the page, with the same tools you know and love.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "lulewavguf",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up Builder</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create pop-ups right in the page, with the same tools you know and love.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "uhnlcpccdi",
-                                      "iconSpacing": 5
+                                      _id: "uhnlcpccdi",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "xbolfofljg",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "xbolfofljg",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "uwiddwvqcl",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.2
+                          _id: "uwiddwvqcl",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.2
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "mqixwlruvp",
-                                            "name": "shape-polygon-2",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "mqixwlruvp",
+                                            name: "shape-polygon-2",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "kfdstmwplz",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong>Pop-up designs</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Brizy PRO comes with a bunch of ready made premium popups to use. </span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "kfdstmwplz",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up designs</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy PRO comes with a bunch of ready made premium popups to use. </span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "sjtafgsftj",
-                                      "iconSpacing": 5
+                                      _id: "sjtafgsftj",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "mxziombmdr",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "mxziombmdr",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "wocsnhslaf",
-                          "width": 25,
-                          "paddingLeft": 0,
-                          "paddingLeftSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 49.5
+                          _id: "wocsnhslaf",
+                          width: 25,
+                          paddingLeft: 0,
+                          paddingLeftSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 49.5
                         }
                       }
                     ],
-                    "_id": "zgzscfwiwl",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "zgzscfwiwl",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "hjefjwbape",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "hjefjwbape",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "vljmmdgcoa",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "vljmmdgcoa",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "efxuvwlkwy",
-                                            "name": "archive-3d-content",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "efxuvwlkwy",
+                                            name: "archive-3d-content",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "rfxrmlmdwh",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><span style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</span></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong>Advanced Form</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">The ultimate contact form element. It comes with toggles, file uploads, more. </span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "rfxrmlmdwh",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Advanced Form</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The ultimate contact form element. It comes with toggles, file uploads, more. </span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "dqxlsxxluc",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "dqxlsxxluc",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "qzxafodcyo",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "qzxafodcyo",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "zakalknbss",
-                          "width": 25,
-                          "tabletWidth": 50.3
+                          _id: "zakalknbss",
+                          width: 25,
+                          tabletWidth: 50.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "aowzsjwguw",
-                                            "name": "tag-cut",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "aowzsjwguw",
+                                            name: "tag-cut",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "ofzxrnyhma",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">White Label</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Brand Brizy as your own for all your clients. Great for web agencies.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "ofzxrnyhma",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">White Label</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brand Brizy as your own for all your clients. Great for web agencies.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "xndeeqjifm",
-                                      "iconSpacing": 5
+                                      _id: "xndeeqjifm",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "mkjkfiqaec",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "mkjkfiqaec",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "xqyinmhaxi",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "xqyinmhaxi",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "ioxfgyecal",
-                                            "name": "intestine",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 49,
-                                            "borderRadius": 0,
-                                            "className": "",
-                                            "smallSize": 32,
-                                            "mediumSize": 48,
-                                            "largeSize": 64,
-                                            "padding": 0,
-                                            "tempPadding": 20,
-                                            "tempColorOpacity": 1,
-                                            "tempColorPalette": "color3",
-                                            "tempHoverColorOpacity": 1,
-                                            "tempHoverColorPalette": "color3",
-                                            "bgColorType": "solid",
-                                            "gradientActivePointer": "startPointer",
-                                            "gradientStartPointer": 0,
-                                            "gradientFinishPointer": 100,
-                                            "gradientType": "linear",
-                                            "gradientLinearDegree": 90,
-                                            "gradientRadialDegree": 90,
-                                            "hoverBgColorType": "solid",
-                                            "hoverGradientActivePointer": "startPointer",
-                                            "hoverGradientStartPointer": 0,
-                                            "hoverGradientFinishPointer": 100,
-                                            "hoverGradientType": "linear",
-                                            "hoverGradientLinearDegree": 90,
-                                            "hoverGradientRadialDegree": 90,
-                                            "bgColorHex": "#bde1f4",
-                                            "bgColorOpacity": 0,
-                                            "bgColorPalette": "",
-                                            "tempBgColorOpacity": 1,
-                                            "tempBgColorPalette": "color5",
-                                            "hoverBgColorHex": "#bde1f4",
-                                            "hoverBgColorOpacity": 0,
-                                            "hoverBgColorPalette": "",
-                                            "tempHoverBgColorOpacity": 1,
-                                            "tempHoverBgColorPalette": "color5",
-                                            "gradientColorHex": "#009900",
-                                            "gradientColorOpacity": 1,
-                                            "gradientColorPalette": "",
-                                            "tempGradientColorOpacity": 1,
-                                            "tempGradientColorPalette": "",
-                                            "hoverGradientColorHex": "#009900",
-                                            "hoverGradientColorOpacity": 0,
-                                            "hoverGradientColorPalette": "",
-                                            "tempHoverGradientColorOpacity": 1,
-                                            "tempHoverGradientColorPalette": "",
-                                            "borderColorHex": "#239ddb",
-                                            "borderColorOpacity": 0,
-                                            "borderColorPalette": "",
-                                            "tempBorderColorOpacity": 1,
-                                            "tempBorderColorPalette": "color3",
-                                            "hoverBorderColorHex": "#239ddb",
-                                            "hoverBorderColorOpacity": 0,
-                                            "hoverBorderColorPalette": "",
-                                            "tempHoverBorderColorOpacity": 1,
-                                            "tempHoverBorderColorPalette": "color3",
-                                            "//1": "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
-                                            "borderRadiusType": "",
-                                            "tempBorderRadiusType": "rounded",
-                                            "borderTopLeftRadius": 0,
-                                            "borderTopRightRadius": 0,
-                                            "borderBottomRightRadius": 0,
-                                            "borderBottomLeftRadius": 0,
-                                            "tempBorderRadius": 4,
-                                            "tempBorderTopLeftRadius": 4,
-                                            "tempBorderTopRightRadius": 4,
-                                            "tempBorderBottomRightRadius": 4,
-                                            "tempBorderBottomLeftRadius": 4,
-                                            "hoverBorderRadius": 0,
-                                            "hoverBorderTopLeftRadius": 0,
-                                            "hoverBorderTopRightRadius": 0,
-                                            "hoverBorderBottomRightRadius": 0,
-                                            "hoverBorderBottomLeftRadius": 0,
-                                            "tempHoverBorderRadius": 4,
-                                            "tempHoverBorderTopLeftRadius": 4,
-                                            "tempHoverBorderTopRightRadius": 4,
-                                            "tempHoverBorderBottomRightRadius": 4,
-                                            "tempHoverBorderBottomLeftRadius": 4,
-                                            "fillType": "default",
-                                            "tempFillType": "filled",
-                                            "borderWidth": 0,
-                                            "tempBorderWidth": 3,
-                                            "borderStyle": "solid",
-                                            "boxShadow": "off",
-                                            "boxShadowColorHex": "#000000",
-                                            "boxShadowColorOpacity": 1,
-                                            "boxShadowColorPalette": "",
-                                            "boxShadowBlur": 4,
-                                            "boxShadowSpread": 0,
-                                            "boxShadowVertical": 2,
-                                            "boxShadowHorizontal": 1,
-                                            "tempBoxShadowColorPalette": "",
-                                            "tempBoxShadowColorOpacity": 1,
-                                            "strokeWidth": 1,
-                                            "customCSS": "",
-                                            "mobileSize": null,
-                                            "mobileCustomSize": null,
-                                            "mobilePadding": null,
-                                            "tempMobilePadding": 20,
-                                            "mobileBorderRadius": null,
-                                            "tempMobileBorderRadius": 4,
-                                            "tabletSize": null,
-                                            "tabletCustomSize": null,
-                                            "tabletPadding": null
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "ioxfgyecal",
+                                            name: "intestine",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 49,
+                                            borderRadius: 0,
+                                            className: "",
+                                            smallSize: 32,
+                                            mediumSize: 48,
+                                            largeSize: 64,
+                                            padding: 0,
+                                            tempPadding: 20,
+                                            tempColorOpacity: 1,
+                                            tempColorPalette: "color3",
+                                            tempHoverColorOpacity: 1,
+                                            tempHoverColorPalette: "color3",
+                                            bgColorType: "solid",
+                                            gradientActivePointer:
+                                              "startPointer",
+                                            gradientStartPointer: 0,
+                                            gradientFinishPointer: 100,
+                                            gradientType: "linear",
+                                            gradientLinearDegree: 90,
+                                            gradientRadialDegree: 90,
+                                            hoverBgColorType: "solid",
+                                            hoverGradientActivePointer:
+                                              "startPointer",
+                                            hoverGradientStartPointer: 0,
+                                            hoverGradientFinishPointer: 100,
+                                            hoverGradientType: "linear",
+                                            hoverGradientLinearDegree: 90,
+                                            hoverGradientRadialDegree: 90,
+                                            bgColorHex: "#bde1f4",
+                                            bgColorOpacity: 0,
+                                            bgColorPalette: "",
+                                            tempBgColorOpacity: 1,
+                                            tempBgColorPalette: "color5",
+                                            hoverBgColorHex: "#bde1f4",
+                                            hoverBgColorOpacity: 0,
+                                            hoverBgColorPalette: "",
+                                            tempHoverBgColorOpacity: 1,
+                                            tempHoverBgColorPalette: "color5",
+                                            gradientColorHex: "#009900",
+                                            gradientColorOpacity: 1,
+                                            gradientColorPalette: "",
+                                            tempGradientColorOpacity: 1,
+                                            tempGradientColorPalette: "",
+                                            hoverGradientColorHex: "#009900",
+                                            hoverGradientColorOpacity: 0,
+                                            hoverGradientColorPalette: "",
+                                            tempHoverGradientColorOpacity: 1,
+                                            tempHoverGradientColorPalette: "",
+                                            borderColorHex: "#239ddb",
+                                            borderColorOpacity: 0,
+                                            borderColorPalette: "",
+                                            tempBorderColorOpacity: 1,
+                                            tempBorderColorPalette: "color3",
+                                            hoverBorderColorHex: "#239ddb",
+                                            hoverBorderColorOpacity: 0,
+                                            hoverBorderColorPalette: "",
+                                            tempHoverBorderColorOpacity: 1,
+                                            tempHoverBorderColorPalette:
+                                              "color3",
+                                            "//1":
+                                              "Astea 2 key de jos au fost folosite in trecut si sunt foarte importante. Trebuei atent sa vem ce afcem cu ele",
+                                            borderRadiusType: "",
+                                            tempBorderRadiusType: "rounded",
+                                            borderTopLeftRadius: 0,
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            tempBorderRadius: 4,
+                                            tempBorderTopLeftRadius: 4,
+                                            tempBorderTopRightRadius: 4,
+                                            tempBorderBottomRightRadius: 4,
+                                            tempBorderBottomLeftRadius: 4,
+                                            hoverBorderRadius: 0,
+                                            hoverBorderTopLeftRadius: 0,
+                                            hoverBorderTopRightRadius: 0,
+                                            hoverBorderBottomRightRadius: 0,
+                                            hoverBorderBottomLeftRadius: 0,
+                                            tempHoverBorderRadius: 4,
+                                            tempHoverBorderTopLeftRadius: 4,
+                                            tempHoverBorderTopRightRadius: 4,
+                                            tempHoverBorderBottomRightRadius: 4,
+                                            tempHoverBorderBottomLeftRadius: 4,
+                                            fillType: "default",
+                                            tempFillType: "filled",
+                                            borderWidth: 0,
+                                            tempBorderWidth: 3,
+                                            borderStyle: "solid",
+                                            boxShadow: "off",
+                                            boxShadowColorHex: "#000000",
+                                            boxShadowColorOpacity: 1,
+                                            boxShadowColorPalette: "",
+                                            boxShadowBlur: 4,
+                                            boxShadowSpread: 0,
+                                            boxShadowVertical: 2,
+                                            boxShadowHorizontal: 1,
+                                            tempBoxShadowColorPalette: "",
+                                            tempBoxShadowColorOpacity: 1,
+                                            strokeWidth: 1,
+                                            customCSS: "",
+                                            mobileSize: null,
+                                            mobileCustomSize: null,
+                                            mobilePadding: null,
+                                            tempMobilePadding: 20,
+                                            mobileBorderRadius: null,
+                                            tempMobileBorderRadius: 4,
+                                            tabletSize: null,
+                                            tabletCustomSize: null,
+                                            tabletPadding: null
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "rrucjiefnt",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 0.8; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">A/B Testing</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161);\">Test with multiple variations of a page to find out what works best. Great for marketers. </span></p>",
-                                            "customCSS": ""
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "rrucjiefnt",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">A/B Testing</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Test with multiple variations of a page to find out what works best. Great for marketers. </span></p>',
+                                            customCSS: ""
                                           }
                                         }
                                       ],
-                                      "_id": "wwxztamplb",
-                                      "iconSpacing": 5,
-                                      "iconPosition": "left",
-                                      "customCSS": ""
+                                      _id: "wwxztamplb",
+                                      iconSpacing: 5,
+                                      iconPosition: "left",
+                                      customCSS: ""
                                     }
                                   }
                                 ],
-                                "_id": "padityieru",
-                                "customClassName": "pro-tag-icon-box-soon",
-                                "className": "",
-                                "horizontalAlign": "center",
-                                "paddingType": "grouped",
-                                "padding": 0,
-                                "paddingTop": 0,
-                                "paddingRight": 0,
-                                "paddingBottom": 0,
-                                "paddingLeft": 0,
-                                "paddingSuffix": "px",
-                                "paddingTopSuffix": "px",
-                                "paddingRightSuffix": "px",
-                                "paddingBottomSuffix": "px",
-                                "paddingLeftSuffix": "px",
-                                "marginType": "ungrouped",
-                                "margin": 0,
-                                "marginTop": 10,
-                                "marginRight": 0,
-                                "marginBottom": 10,
-                                "marginLeft": 0,
-                                "marginSuffix": "px",
-                                "marginTopSuffix": "px",
-                                "marginRightSuffix": "px",
-                                "marginBottomSuffix": "px",
-                                "marginLeftSuffix": "px",
-                                "tabletHorizontalAlign": null,
-                                "tabletPaddingType": "grouped",
-                                "tabletPadding": 0,
-                                "tabletPaddingTop": 0,
-                                "tabletPaddingRight": 0,
-                                "tabletPaddingBottom": 0,
-                                "tabletPaddingLeft": 0,
-                                "tabletPaddingSuffix": "px",
-                                "tabletPaddingTopSuffix": "px",
-                                "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingBottomSuffix": "px",
-                                "tabletPaddingLeftSuffix": "px",
-                                "tabletMarginType": "ungrouped",
-                                "tabletMargin": 0,
-                                "tabletMarginTop": 10,
-                                "tabletMarginRight": 0,
-                                "tabletMarginBottom": 10,
-                                "tabletMarginLeft": 0,
-                                "tabletMarginSuffix": "px",
-                                "tabletMarginTopSuffix": "px",
-                                "tabletMarginRightSuffix": "px",
-                                "tabletMarginBottomSuffix": "px",
-                                "tabletMarginLeftSuffix": "px",
-                                "mobileHorizontalAlign": null,
-                                "mobilePaddingType": "grouped",
-                                "mobilePadding": 0,
-                                "mobilePaddingTop": 0,
-                                "mobilePaddingRight": 0,
-                                "mobilePaddingBottom": 0,
-                                "mobilePaddingLeft": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingTopSuffix": "px",
-                                "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingBottomSuffix": "px",
-                                "mobilePaddingLeftSuffix": "px",
-                                "mobileMarginType": "ungrouped",
-                                "mobileMargin": 0,
-                                "mobileMarginTop": 10,
-                                "mobileMarginRight": 0,
-                                "mobileMarginBottom": 10,
-                                "mobileMarginLeft": 0,
-                                "mobileMarginSuffix": "px",
-                                "mobileMarginTopSuffix": "px",
-                                "mobileMarginRightSuffix": "px",
-                                "mobileMarginBottomSuffix": "px",
-                                "mobileMarginLeftSuffix": "px"
+                                _id: "padityieru",
+                                customClassName: "pro-tag-icon-box-soon",
+                                className: "",
+                                horizontalAlign: "center",
+                                paddingType: "grouped",
+                                padding: 0,
+                                paddingTop: 0,
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingSuffix: "px",
+                                paddingTopSuffix: "px",
+                                paddingRightSuffix: "px",
+                                paddingBottomSuffix: "px",
+                                paddingLeftSuffix: "px",
+                                marginType: "ungrouped",
+                                margin: 0,
+                                marginTop: 10,
+                                marginRight: 0,
+                                marginBottom: 10,
+                                marginLeft: 0,
+                                marginSuffix: "px",
+                                marginTopSuffix: "px",
+                                marginRightSuffix: "px",
+                                marginBottomSuffix: "px",
+                                marginLeftSuffix: "px",
+                                tabletHorizontalAlign: null,
+                                tabletPaddingType: "grouped",
+                                tabletPadding: 0,
+                                tabletPaddingTop: 0,
+                                tabletPaddingRight: 0,
+                                tabletPaddingBottom: 0,
+                                tabletPaddingLeft: 0,
+                                tabletPaddingSuffix: "px",
+                                tabletPaddingTopSuffix: "px",
+                                tabletPaddingRightSuffix: "px",
+                                tabletPaddingBottomSuffix: "px",
+                                tabletPaddingLeftSuffix: "px",
+                                tabletMarginType: "ungrouped",
+                                tabletMargin: 0,
+                                tabletMarginTop: 10,
+                                tabletMarginRight: 0,
+                                tabletMarginBottom: 10,
+                                tabletMarginLeft: 0,
+                                tabletMarginSuffix: "px",
+                                tabletMarginTopSuffix: "px",
+                                tabletMarginRightSuffix: "px",
+                                tabletMarginBottomSuffix: "px",
+                                tabletMarginLeftSuffix: "px",
+                                mobileHorizontalAlign: null,
+                                mobilePaddingType: "grouped",
+                                mobilePadding: 0,
+                                mobilePaddingTop: 0,
+                                mobilePaddingRight: 0,
+                                mobilePaddingBottom: 0,
+                                mobilePaddingLeft: 0,
+                                mobilePaddingSuffix: "px",
+                                mobilePaddingTopSuffix: "px",
+                                mobilePaddingRightSuffix: "px",
+                                mobilePaddingBottomSuffix: "px",
+                                mobilePaddingLeftSuffix: "px",
+                                mobileMarginType: "ungrouped",
+                                mobileMargin: 0,
+                                mobileMarginTop: 10,
+                                mobileMarginRight: 0,
+                                mobileMarginBottom: 10,
+                                mobileMarginLeft: 0,
+                                mobileMarginSuffix: "px",
+                                mobileMarginTopSuffix: "px",
+                                mobileMarginRightSuffix: "px",
+                                mobileMarginBottomSuffix: "px",
+                                mobileMarginLeftSuffix: "px"
                               }
                             }
                           ],
-                          "_id": "rhraifavsu",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "rhraifavsu",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "gizjgxkqxj",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "gizjgxkqxj",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "gbilltsvth",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"opacity: 1; color: rgb(24, 28, 37);\">&nbsp;</strong></p><h5 class=\"brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5\"><strong style=\"color: rgb(24, 28, 37);\">ConvertKit</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"opacity: 0.8; color: rgb(144, 147, 161);\">Connect your Brizy contact form with your ConvertKit account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "gbilltsvth",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">ConvertKit</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 0.8; color: rgb(144, 147, 161);">Connect your Brizy contact form with your ConvertKit account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "opimmpbsga",
-                                      "iconSpacing": 5
+                                      _id: "opimmpbsga",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "cfgslmctzz",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "cfgslmctzz",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "vlcepeyhey",
-                          "width": 25,
-                          "tabletWidth": 49.4
+                          _id: "vlcepeyhey",
+                          width: 25,
+                          tabletWidth: 49.4
                         }
                       }
                     ],
-                    "_id": "ccbvxicvqj",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "ccbvxicvqj",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "qyypwdpimz",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "qyypwdpimz",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "mcqnsistpp",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "mcqnsistpp",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "aqydyasyrh",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "aqydyasyrh",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "hcrgtapdel",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Drip</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your Drip account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "hcrgtapdel",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Drip</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Drip account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "ospyhzcysd",
-                                      "iconSpacing": 5
+                                      _id: "ospyhzcysd",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "slikvvihdo",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "slikvvihdo",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "yyszflplaj",
-                          "width": 25,
-                          "tabletWidth": 50.3
+                          _id: "yyszflplaj",
+                          width: 25,
+                          tabletWidth: 50.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "igxygxcwts",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "igxygxcwts",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "aagguzrcal",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Mailchimp</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your Mailchimp account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "aagguzrcal",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Mailchimp</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Mailchimp account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "vkiovbifyu",
-                                      "iconSpacing": 5
+                                      _id: "vkiovbifyu",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "odqzesorau",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "odqzesorau",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "psvnlxnkqa",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "psvnlxnkqa",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "iprlkkvqvi",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "iprlkkvqvi",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "moftgzsawu",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Sendinblue</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your Sendinblue account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "moftgzsawu",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Sendinblue</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Sendinblue account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "rmjtqbwqyh",
-                                      "iconSpacing": 5
+                                      _id: "rmjtqbwqyh",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "khxipfkwkj",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "khxipfkwkj",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "ewddicvrez",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "ewddicvrez",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "mbokcqcdkn",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "mbokcqcdkn",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "tsleasyzbp",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Zapier</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your Zapier account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "tsleasyzbp",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Zapier</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Zapier account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "cyfhimiihy",
-                                      "iconSpacing": 5
+                                      _id: "cyfhimiihy",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "lepkgxsecg",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "lepkgxsecg",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "dbrrsskymv",
-                          "width": 25,
-                          "tabletWidth": 49.4
+                          _id: "dbrrsskymv",
+                          width: 25,
+                          tabletWidth: 49.4
                         }
                       }
                     ],
-                    "_id": "ybhrzsfhva",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "ybhrzsfhva",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "zqizaizaey",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "zqizaizaey",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "vwbiytngoh",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "vwbiytngoh",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "lownibaesv",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "lownibaesv",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "wozjhkerkg",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Campaign M.</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your Campaign Monitor account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "wozjhkerkg",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Campaign M.</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Campaign Monitor account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "oqqkbuybxc",
-                                      "iconSpacing": 5
+                                      _id: "oqqkbuybxc",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "scocblvsnl",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "scocblvsnl",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "iutuwgzuuh",
-                          "width": 25,
-                          "tabletWidth": 50.3
+                          _id: "iutuwgzuuh",
+                          width: 25,
+                          tabletWidth: 50.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "riskapiwnw",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "riskapiwnw",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "tosyflyqxd",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">A. Campaign</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your A. Campaign account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "tosyflyqxd",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">A. Campaign</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your A. Campaign account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "skqisdathr",
-                                      "iconSpacing": 5
+                                      _id: "skqisdathr",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "ntimvurpwp",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "ntimvurpwp",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "ihxrqxyvlb",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "ihxrqxyvlb",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "xlehqgxhdg",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "xlehqgxhdg",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "luzxjgxybo",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Get Response</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your Get Response account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "luzxjgxybo",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Get Response</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Get Response account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "nqahoyjmjo",
-                                      "iconSpacing": 5
+                                      _id: "nqahoyjmjo",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "jhrsvyvqct",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "jhrsvyvqct",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "hvadsrotxm",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "hvadsrotxm",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "bywcyjdtvo",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "bywcyjdtvo",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "eixtoobton",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">MailJet</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your MailJet account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "eixtoobton",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">MailJet</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your MailJet account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "fpqqtizrln",
-                                      "iconSpacing": 5
+                                      _id: "fpqqtizrln",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "klejydmiqu",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "klejydmiqu",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "ttjuqvxnrj",
-                          "width": 25,
-                          "tabletWidth": 49.4
+                          _id: "ttjuqvxnrj",
+                          width: 25,
+                          tabletWidth: 49.4
                         }
                       }
                     ],
-                    "_id": "gpwctmmiyi",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "gpwctmmiyi",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 },
                 {
-                  "type": "Wrapper",
-                  "value": {
-                    "_styles": [
-                      "wrapper",
-                      "wrapper--spacer"
-                    ],
-                    "items": [
+                  type: "Wrapper",
+                  value: {
+                    _styles: ["wrapper", "wrapper--spacer"],
+                    items: [
                       {
-                        "type": "Spacer",
-                        "value": {
-                          "_styles": [
-                            "spacer"
-                          ],
-                          "_id": "lamnvxocms",
-                          "height": 40
+                        type: "Spacer",
+                        value: {
+                          _styles: ["spacer"],
+                          _id: "lamnvxocms",
+                          height: 40
                         }
                       }
                     ],
-                    "_id": "xqpkqbywbr",
-                    "showOnTablet": "off",
-                    "showOnMobile": "off"
+                    _id: "xqpkqbywbr",
+                    showOnTablet: "off",
+                    showOnMobile: "off"
                   }
                 },
                 {
-                  "type": "Row",
-                  "value": {
-                    "_styles": [
-                      "row"
-                    ],
-                    "items": [
+                  type: "Row",
+                  value: {
+                    _styles: ["row"],
+                    items: [
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "kszrcbhkjb",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "kszrcbhkjb",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "gprjysnhlb",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">e-goi</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your e-goi account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "gprjysnhlb",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">e-goi</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your e-goi account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "hmvdlalqsu",
-                                      "iconSpacing": 5
+                                      _id: "hmvdlalqsu",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "tlgtvcafvj",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "tlgtvcafvj",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "qufszlsdpt",
-                          "width": 25,
-                          "tabletWidth": 50.3
+                          _id: "qufszlsdpt",
+                          width: 25,
+                          tabletWidth: 50.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "zgisjkrmlt",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "zgisjkrmlt",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "trmptwsprc",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">Hubspot</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your Hubspot account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "trmptwsprc",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Hubspot</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Hubspot account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "enkxilgqdh",
-                                      "iconSpacing": 5
+                                      _id: "enkxilgqdh",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "izggeyrlpu",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "izggeyrlpu",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "buveafwfzk",
-                          "width": 25,
-                          "tabletWidth": 49.3
+                          _id: "buveafwfzk",
+                          width: 25,
+                          tabletWidth: 49.3
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [
                             {
-                              "type": "Wrapper",
-                              "value": {
-                                "_styles": [
-                                  "wrapper",
-                                  "wrapper--iconText"
-                                ],
-                                "items": [
+                              type: "Wrapper",
+                              value: {
+                                _styles: ["wrapper", "wrapper--iconText"],
+                                items: [
                                   {
-                                    "type": "IconText",
-                                    "value": {
-                                      "_styles": [
-                                        "iconText"
-                                      ],
-                                      "items": [
+                                    type: "IconText",
+                                    value: {
+                                      _styles: ["iconText"],
+                                      items: [
                                         {
-                                          "type": "Icon",
-                                          "value": {
-                                            "_styles": [
-                                              "icon",
-                                              "iconText--icon"
-                                            ],
-                                            "_id": "jutrpiohsa",
-                                            "name": "plug",
-                                            "type": "outline",
-                                            "colorPalette": "",
-                                            "colorHex": "#05b2e6",
-                                            "colorOpacity": 1,
-                                            "hoverColorPalette": "",
-                                            "hoverColorHex": "#05b2e6",
-                                            "hoverColorOpacity": 1,
-                                            "size": "custom",
-                                            "customSize": 50,
-                                            "borderRadius": 0
+                                          type: "Icon",
+                                          value: {
+                                            _styles: ["icon", "iconText--icon"],
+                                            _id: "jutrpiohsa",
+                                            name: "plug",
+                                            type: "outline",
+                                            colorPalette: "",
+                                            colorHex: "#05b2e6",
+                                            colorOpacity: 1,
+                                            hoverColorPalette: "",
+                                            hoverColorHex: "#05b2e6",
+                                            hoverColorOpacity: 1,
+                                            size: "custom",
+                                            customSize: 50,
+                                            borderRadius: 0
                                           }
                                         },
                                         {
-                                          "type": "RichText",
-                                          "value": {
-                                            "_styles": [
-                                              "text",
-                                              "iconText--text"
-                                            ],
-                                            "_id": "nzwdzhxzze",
-                                            "text": "<p class=\"brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37); opacity: 1;\">&nbsp;</strong></p><h5 class=\"brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj\"><strong style=\"color: rgb(24, 28, 37);\">MailerLite</strong></h5><p class=\"brz-tp-yfzzsitrfm\"><span style=\"color: rgb(144, 147, 161); opacity: 0.8;\">Connect your Brizy contact form with your MailerLite account in seconds.</span></p>"
+                                          type: "RichText",
+                                          value: {
+                                            _styles: ["text", "iconText--text"],
+                                            _id: "nzwdzhxzze",
+                                            text:
+                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">MailerLite</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your MailerLite account in seconds.</span></p>'
                                           }
                                         }
                                       ],
-                                      "_id": "ypzrkolodb",
-                                      "iconSpacing": 5
+                                      _id: "ypzrkolodb",
+                                      iconSpacing: 5
                                     }
                                   }
                                 ],
-                                "_id": "lpleptfbzm",
-                                "customClassName": "pro-tag-icon-box"
+                                _id: "lpleptfbzm",
+                                customClassName: "pro-tag-icon-box"
                               }
                             }
                           ],
-                          "_id": "bnychzknpf",
-                          "width": 25,
-                          "paddingRight": 0,
-                          "paddingRightSuffix": "px",
-                          "padding": 15,
-                          "tabletWidth": 50.1
+                          _id: "bnychzknpf",
+                          width: 25,
+                          paddingRight: 0,
+                          paddingRightSuffix: "px",
+                          padding: 15,
+                          tabletWidth: 50.1
                         }
                       },
                       {
-                        "type": "Column",
-                        "value": {
-                          "_styles": [
-                            "column"
-                          ],
-                          "items": [],
-                          "_id": "fiibcifezt",
-                          "width": 25,
-                          "tabletWidth": 49.4,
-                          "showOnTablet": "on",
-                          "tabsState": "tabNormal",
-                          "tabsCurrentElement": "tabCurrentElement",
-                          "tabsColor": "tabOverlay",
-                          "showOnMobile": "off"
+                        type: "Column",
+                        value: {
+                          _styles: ["column"],
+                          items: [],
+                          _id: "fiibcifezt",
+                          width: 25,
+                          tabletWidth: 49.4,
+                          showOnTablet: "on",
+                          tabsState: "tabNormal",
+                          tabsCurrentElement: "tabCurrentElement",
+                          tabsColor: "tabOverlay",
+                          showOnMobile: "off"
                         }
                       }
                     ],
-                    "_id": "dvxjsojuas",
-                    "size": 100,
-                    "mobilePaddingRight": 25,
-                    "mobilePaddingRightSuffix": "px",
-                    "mobilePadding": 0,
-                    "mobilePaddingLeft": 25,
-                    "mobilePaddingLeftSuffix": "px",
-                    "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
-                    "tabsColor": "tabOverlay"
+                    _id: "dvxjsojuas",
+                    size: 100,
+                    mobilePaddingRight: 25,
+                    mobilePaddingRightSuffix: "px",
+                    mobilePadding: 0,
+                    mobilePaddingLeft: 25,
+                    mobilePaddingLeftSuffix: "px",
+                    tabsState: "tabNormal",
+                    tabsCurrentElement: "tabCurrentElement",
+                    tabsColor: "tabOverlay"
                   }
                 }
               ],
-              "_id": "yphkyyuszc",
-              "bgImageWidth": 0,
-              "bgImageHeight": 0,
-              "bgImageSrc": "",
-              "bgPositionX": 50,
-              "bgPositionY": 50,
-              "bgPopulation": "",
-              "bgColorOpacity": 0,
-              "tempBgColorOpacity": 1,
-              "paddingType": "ungrouped",
-              "paddingTop": 15,
-              "paddingBottom": 100,
-              "padding": 75,
-              "containerType": "boxed",
-              "bgColorPalette": "color8",
-              "bgColorHex": "#ffffff",
-              "tabletPaddingType": "ungrouped",
-              "tabletPaddingTop": 15,
-              "tabletPadding": 50,
-              "tabletPaddingBottom": 15,
-              "mobilePadding": 25,
-              "mobilePaddingTop": 15,
-              "mobilePaddingBottom": 15,
-              "mobilePaddingType": "ungrouped"
+              _id: "yphkyyuszc",
+              bgImageWidth: 0,
+              bgImageHeight: 0,
+              bgImageSrc: "",
+              bgPositionX: 50,
+              bgPositionY: 50,
+              bgPopulation: "",
+              bgColorOpacity: 0,
+              tempBgColorOpacity: 1,
+              paddingType: "ungrouped",
+              paddingTop: 15,
+              paddingBottom: 100,
+              padding: 75,
+              containerType: "boxed",
+              bgColorPalette: "color8",
+              bgColorHex: "#ffffff",
+              tabletPaddingType: "ungrouped",
+              tabletPaddingTop: 15,
+              tabletPadding: 50,
+              tabletPaddingBottom: 15,
+              mobilePadding: 25,
+              mobilePaddingTop: 15,
+              mobilePaddingBottom: 15,
+              mobilePaddingType: "ungrouped"
             }
           }
         ],
-        "_id": "mkqjgdevby",
-        "_thumbnailSrc": "mkqjgdevby",
-        "_thumbnailWidth": 600,
-        "_thumbnailHeight": 376,
-        "_thumbnailTime": 1554993664152,
-        "anchorName": "marketing"
+        _id: "mkqjgdevby",
+        _thumbnailSrc: "mkqjgdevby",
+        _thumbnailWidth: 600,
+        _thumbnailHeight: 376,
+        _thumbnailTime: 1554993664152,
+        anchorName: "marketing"
       }
     }
   ]
@@ -22183,3 +21354,4 @@ export const pageDataLarge = {
     ]
   }
 };
+/* eslint-enabled */

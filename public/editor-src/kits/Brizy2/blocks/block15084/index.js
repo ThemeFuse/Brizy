@@ -457,7 +457,7 @@ module.exports = {
                                                                     "mobileSubMenuFontStyle": "button",
                                                                     "mobileMMenuIconColorPalette": "color2",
                                                                     "mobileMMenuIconColorHex": "",
-                                                                    "mobileMMenuIconColorOpacity": null
+                                                                    
                                                                 }
                                                             }
                                                         ],

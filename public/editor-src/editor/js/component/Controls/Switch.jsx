@@ -3,7 +3,7 @@ import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 
-export default class extends React.Component {
+export default class Switch extends React.Component {
   static defaultProps = {
     className: "",
     arrowCheck: "nc-check-small",
@@ -30,7 +30,7 @@ export default class extends React.Component {
       arrowUnCheck
     } = this.props;
     const defaultChecked = _.isObject(valueMap)
-      ? _.findKey(valueMap, item => item === defaultValue) == "true"
+      ? _.findKey(valueMap, item => item === defaultValue) === "true"
       : defaultValue;
     const className = classnames("brz-ed-control__switch", _className);
 

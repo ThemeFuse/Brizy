@@ -1,6 +1,7 @@
 import Config from "visual/global/Config";
+import { translate } from "./translate";
 
 const WP = Config.get("wp") || {};
-const translations = WP.l10n || {};
+const dictionary = WP.l10n || {};
 
-export const t = key => translations[key] || key;
+export const t = key => translate(dictionary, key);

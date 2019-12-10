@@ -519,8 +519,8 @@ module.exports = {
                                             "tempFillType": "filled",
                                             "borderStyle": "solid",
                                             "tempBorderStyle": "solid",
-                                            "hoverBorderStyle": null,
-                                            "tempHoverBorderStyle": null,
+                                            
+                                            
                                             "borderWidthType": "grouped",
                                             "borderTopWidth": 2,
                                             "borderRightWidth": 2,
@@ -545,21 +545,21 @@ module.exports = {
                                             "tempBoxShadowSpread": 0,
                                             "tempBoxShadowVertical": 2,
                                             "tempBoxShadowHorizontal": 1,
-                                            "hoverBoxShadow": null,
-                                            "tempHoverBoxShadow": null,
-                                            "hoverBoxShadowColorHex": null,
-                                            "hoverBoxShadowColorOpacity": null,
-                                            "hoverBoxShadowColorPalette": null,
-                                            "tempHoverBoxShadowColorPalette": null,
-                                            "tempHoverBoxShadowColorOpacity": null,
-                                            "hoverBoxShadowBlur": null,
-                                            "hoverBoxShadowSpread": null,
-                                            "hoverBoxShadowVertical": null,
-                                            "hoverBoxShadowHorizontal": null,
-                                            "tempHoverBoxShadowBlur": null,
-                                            "tempHoverBoxShadowSpread": null,
-                                            "tempHoverBoxShadowVertical": null,
-                                            "tempHoverBoxShadowHorizontal": null,
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             "hoverTransition": 30,
                                             "customCSS": "",
                                             "tabletPadding": 11,
@@ -574,20 +574,20 @@ module.exports = {
                                             "tabletLineHeight": 1.8,
                                             "tabletLetterSpacing": 1,
                                             "tempTabletBorderRadius": 2,
-                                            "tabletBoxShadow": null,
-                                            "tabletBoxShadowColorHex": null,
-                                            "tabletBoxShadowColorOpacity": null,
-                                            "tabletBoxShadowColorPalette": null,
-                                            "tempTabletBoxShadowColorPalette": null,
-                                            "tempTabletBoxShadowColorOpacity": null,
-                                            "tabletBoxShadowBlur": null,
-                                            "tabletBoxShadowSpread": null,
-                                            "tabletBoxShadowVertical": null,
-                                            "tabletBoxShadowHorizontal": null,
-                                            "tempTabletBoxShadowBlur": null,
-                                            "tempTabletBoxShadowSpread": null,
-                                            "tempTabletBoxShadowVertical": null,
-                                            "tempTabletBoxShadowHorizontal": null,
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             "mobileSize": "small",
                                             "mobilePaddingTB": 11,
                                             "mobilePaddingRL": 26,
@@ -613,22 +613,22 @@ module.exports = {
                                             "mobileFontWeight": 700,
                                             "mobileLineHeight": 1.8,
                                             "mobileLetterSpacing": 1,
-                                            "mobileBorderRadius": null,
+                                            
                                             "tempMobileBorderRadius": 2,
-                                            "mobileBoxShadow": null,
-                                            "mobileBoxShadowColorHex": null,
-                                            "mobileBoxShadowColorOpacity": null,
-                                            "mobileBoxShadowColorPalette": null,
-                                            "tempMobileBoxShadowColorPalette": null,
-                                            "tempMobileBoxShadowColorOpacity": null,
-                                            "mobileBoxShadowBlur": null,
-                                            "mobileBoxShadowSpread": null,
-                                            "mobileBoxShadowVertical": null,
-                                            "mobileBoxShadowHorizontal": null,
-                                            "tempMobileBoxShadowBlur": null,
-                                            "tempMobileBoxShadowSpread": null,
-                                            "tempMobileBoxShadowVertical": null,
-                                            "tempMobileBoxShadowHorizontal": null
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                         }
                                     }
                                 ],
@@ -926,8 +926,8 @@ module.exports = {
                                             "tempFillType": "filled",
                                             "borderStyle": "solid",
                                             "tempBorderStyle": "solid",
-                                            "hoverBorderStyle": null,
-                                            "tempHoverBorderStyle": null,
+                                            
+                                            
                                             "borderWidthType": "grouped",
                                             "borderTopWidth": 2,
                                             "borderRightWidth": 2,
@@ -952,21 +952,21 @@ module.exports = {
                                             "tempBoxShadowSpread": 0,
                                             "tempBoxShadowVertical": 2,
                                             "tempBoxShadowHorizontal": 1,
-                                            "hoverBoxShadow": null,
-                                            "tempHoverBoxShadow": null,
-                                            "hoverBoxShadowColorHex": null,
-                                            "hoverBoxShadowColorOpacity": null,
-                                            "hoverBoxShadowColorPalette": null,
-                                            "tempHoverBoxShadowColorPalette": null,
-                                            "tempHoverBoxShadowColorOpacity": null,
-                                            "hoverBoxShadowBlur": null,
-                                            "hoverBoxShadowSpread": null,
-                                            "hoverBoxShadowVertical": null,
-                                            "hoverBoxShadowHorizontal": null,
-                                            "tempHoverBoxShadowBlur": null,
-                                            "tempHoverBoxShadowSpread": null,
-                                            "tempHoverBoxShadowVertical": null,
-                                            "tempHoverBoxShadowHorizontal": null,
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             "hoverTransition": 30,
                                             "customCSS": "",
                                             "tabletPadding": 11,
@@ -981,20 +981,20 @@ module.exports = {
                                             "tabletLineHeight": 1.8,
                                             "tabletLetterSpacing": 1,
                                             "tempTabletBorderRadius": 2,
-                                            "tabletBoxShadow": null,
-                                            "tabletBoxShadowColorHex": null,
-                                            "tabletBoxShadowColorOpacity": null,
-                                            "tabletBoxShadowColorPalette": null,
-                                            "tempTabletBoxShadowColorPalette": null,
-                                            "tempTabletBoxShadowColorOpacity": null,
-                                            "tabletBoxShadowBlur": null,
-                                            "tabletBoxShadowSpread": null,
-                                            "tabletBoxShadowVertical": null,
-                                            "tabletBoxShadowHorizontal": null,
-                                            "tempTabletBoxShadowBlur": null,
-                                            "tempTabletBoxShadowSpread": null,
-                                            "tempTabletBoxShadowVertical": null,
-                                            "tempTabletBoxShadowHorizontal": null,
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             "mobileSize": "small",
                                             "mobilePaddingTB": 11,
                                             "mobilePaddingRL": 26,
@@ -1020,22 +1020,22 @@ module.exports = {
                                             "mobileFontWeight": 700,
                                             "mobileLineHeight": 1.8,
                                             "mobileLetterSpacing": 1,
-                                            "mobileBorderRadius": null,
+                                            
                                             "tempMobileBorderRadius": 2,
-                                            "mobileBoxShadow": null,
-                                            "mobileBoxShadowColorHex": null,
-                                            "mobileBoxShadowColorOpacity": null,
-                                            "mobileBoxShadowColorPalette": null,
-                                            "tempMobileBoxShadowColorPalette": null,
-                                            "tempMobileBoxShadowColorOpacity": null,
-                                            "mobileBoxShadowBlur": null,
-                                            "mobileBoxShadowSpread": null,
-                                            "mobileBoxShadowVertical": null,
-                                            "mobileBoxShadowHorizontal": null,
-                                            "tempMobileBoxShadowBlur": null,
-                                            "tempMobileBoxShadowSpread": null,
-                                            "tempMobileBoxShadowVertical": null,
-                                            "tempMobileBoxShadowHorizontal": null
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                         }
                                     }
                                 ],

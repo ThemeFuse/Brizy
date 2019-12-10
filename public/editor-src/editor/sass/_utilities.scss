@@ -32,3 +32,10 @@
 
 // Typography
 @import "utilities/typography";
+
+// Others Utilities
+// Required
+.brz--required {
+  color: $required;
+  padding-left: 5px;
+}
