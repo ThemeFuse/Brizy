@@ -55,13 +55,71 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <th>
+                    <label for="brizy-maintenance-template"><?php _e( 'Whitelisted IP Addresses', 'brizy' ); ?></label>
+                </th>
+                <td>
+                    <textarea name="brizy_maintenance_ips" id="brizy-maintenance-ips" cols="25" rows="3" placeholder="122.45.23.22&#10;122.45.25.211"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for=""><?php _e( 'Direct Access Links', 'brizy' ); ?></label>
+                </th>
+                <td>
+	                <?php
+                        $links = [
+                            [
+	                            'name'   => 'First Link Name',
+	                            'link'   => 'http://brizy.local/?ucp-access=85abd217',
+	                            'expire' => 'expires after December 31, 2019 @ 11:13 am'
+                            ]
+                        ]
+                    ?>
+                    <?php if ( empty( $links ) ) : ?>
+	                    <?php _e( 'There are no links', 'brizy' ); ?>
+                    <?php else : ?>
+                        <table class="wp-list-table widefat fixed brz-maintenance-table-access-links">
+                            <tr class="">
+                                <th class="brz-maintenance-delete-links">
+                                    <a data-tooltip="<?php _e( 'Delete all direct access links', 'brizy' ); ?>" class="js-action delete-action delete-all-access-links" href="#">
+                                        <span class="dashicons dashicons-trash"></span>
+                                    </a>
+                                </th>
+                                <th><?php _e( 'Name / Description', 'brizy' ); ?></th>
+                                <th><?php _e( 'Link', 'brizy' ); ?></th>
+                                <th><?php _e( 'Expire Rule', 'brizy' ); ?></th>
+                            </tr>
+
+                            <?php foreach ( $links as $link ) : ?>
+                                <tr data-link-id="1" data-link-name="Test link" data-link-expire-type="date" data-link-expire-value="2019-12-31 11:13">
+                                    <td class="">
+                                        <a data-tooltip="Edit direct access link" class="js-action edit-action edit-access-link" href="#">
+                                            <span class="dashicons dashicons-edit"></span>
+                                        </a>
+                                        <a data-tooltip="Delete direct access link" class="js-action delete-action delete-access-link" href="#">
+                                            <span class="dashicons dashicons-trash"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+	                                    <?php echo $link['name']; ?>
+                                    </td>
+                                    <td>
+                                        <code class="clipboard-copy tooltipped" title="Click to copy link to clipboard" data-tooltip="Click to copy link to clipboard" data-clipboard-text="http://brizy.local/?ucp-access=85abd217"><?php echo $link['link']; ?></code>
+                                    </td>
+                                    <td><?php echo $link['expire']; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php endif; ?>
+                </td>
+            </tr>
 		</tbody>
 	</table>
-
 	<p class="submit">
-		<button type="submit"
-		        id="submit"
-		        class="button button-primary"
-		><?php echo __( 'Save Changes', 'brizy' ); ?></button>
+		<button type="submit" id="submit" class="button button-primary">
+            <?php echo __( 'Save Changes', 'brizy' ); ?>
+        </button>
 	</p>
 </form>

@@ -306,6 +306,26 @@
     fill: #00a0d2;
 }
 
+/* Maintenance Mode */
+.brz-maintenance-table-access-links {
+    max-width: 1024px;
+    /*text-align: left;*/
+}
+.brz-maintenance-table-access-links th,
+.brz-maintenance-table-access-links td {
+    border: 1px solid #ccd0d4;
+}
+.brz-maintenance-table-access-links th:first-child,
+.brz-maintenance-table-access-links td:first-child {
+    width: 35px;
+    text-align: center;
+}
+.brz-maintenance-table-access-links th:not(:first-child) {
+    padding-left: 10px;
+}
+.brz-maintenance-delete-links {
+    padding-left: 10px !important;
+}
 /* Admin notice give us a rating */
 .brz-review-notice-container {
     display: flex;
