@@ -326,6 +326,9 @@
 .brz-maintenance-delete-links {
     padding-left: 10px !important;
 }
+.brz-maintenance-add-link {
+    margin-top: 15px !important;
+}
 /* Admin notice give us a rating */
 .brz-review-notice-container {
     display: flex;

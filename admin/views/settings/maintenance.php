@@ -57,7 +57,7 @@
             </tr>
             <tr>
                 <th>
-                    <label for="brizy-maintenance-template"><?php _e( 'Whitelisted IP Addresses', 'brizy' ); ?></label>
+                    <label for="brizy-maintenance-ips"><?php _e( 'Whitelisted IP Addresses', 'brizy' ); ?></label>
                 </th>
                 <td>
                     <textarea name="brizy_maintenance_ips" id="brizy-maintenance-ips" cols="25" rows="3" placeholder="122.45.23.22&#10;122.45.25.211"></textarea>
@@ -112,6 +112,9 @@
                                 </tr>
                             <?php endforeach; ?>
                         </table>
+                        <button type="submit" class="button button-primary brz-maintenance-add-link">
+		                    <?php echo __( 'Add New Link', 'brizy' ); ?>
+                        </button>
                     <?php endif; ?>
                 </td>
             </tr>
