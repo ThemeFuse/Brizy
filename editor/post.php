@@ -424,24 +424,27 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		if ( ! $post_type_object ) {
 			Brizy_Logger::instance()->critical( 'Invalid post type provided on save_wp_post', [ 'post_type' => $post_type ] );
+
 			return;
 		}
 
 		$can_publish = current_user_can( $post_type_object->cap->publish_posts );
 		$post_status = $can_publish ? 'publish' : 'pending';
 
-		$brizy_compiled_page = $this->get_compiled_page();
-
 		$this->deleteOldAutoSaves( $this->get_parent_id() );
 
-		$body = $brizy_compiled_page->get_body();
+		$brizy_compiled_page = $this->get_compiled_page();
 
-
-		wp_update_post( array(
+		$params = array(
 			'ID'           => $this->get_parent_id(),
-			'post_status'  => $post_status,
-			'post_content' => $body
-		) );
+			'post_content' => $brizy_compiled_page->get_body()
+		);
+
+		if ( $can_publish ) {
+			$params['post_status'] = $post_status;
+		}
+
+		wp_update_post( $params );
 	}
 
 
