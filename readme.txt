@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 1.0.105
+Stable tag: 1.0.106
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,18 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.106 - 2019-12-11 =
+* Improved: Page save
+* New: Extended REST api response for brizy posts
+* Fixed: Sections shape color in responsive
+* Fixed: wp_check_filetype_and_ext argument count
+* Fixed: Set DefaultFont for root brizy not body
+* Fixed: IconText pre-wrap only buttons
+* Fixed: Dnd between columns
+* Fixed: Styles, resolve conflicts with twenty twenty theme
+* Fixed: Header animation slideUp, slideDown when close/open
+* Fixed: Menu align option
 
 = 1.0.105 - 2019-11-21 =
 * Fixed: mkdir warning for folders that already exists
