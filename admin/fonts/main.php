@@ -30,7 +30,7 @@ class Brizy_Admin_Fonts_Main {
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_filter( 'upload_mimes', array( $this, 'addFOntTypes' ) );
-		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 5 );
+		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );
@@ -54,7 +54,7 @@ class Brizy_Admin_Fonts_Main {
 		return $mime_types;
 	}
 
-	public function wp_check_filetype_and_ext( $data, $file, $filename, $mimes, $real_mime ) {
+	public function wp_check_filetype_and_ext( $data, $file, $filename, $mimes ) {
 
 		if ( is_null( $data['ext'] ) ) {
 

@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.2.3<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.105<br>
+Stable tag: 1.0.106<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.106 - 2019-12-11 ###
+* Improved: Page save
+* New: Extended REST api response for brizy posts
+* Fixed: Sections shape color in responsive
+* Fixed: wp_check_filetype_and_ext argument count
+* Fixed: Set DefaultFont for root brizy not body
+* Fixed: IconText pre-wrap only buttons
+* Fixed: Dnd between columns
+* Fixed: Styles, resolve conflicts with twenty twenty theme
+* Fixed: Header animation slideUp, slideDown when close/open
+* Fixed: Menu align option
 
 ### 1.0.105 - 2019-11-21 ###
 * Fixed: mkdir warning for folders that already exists

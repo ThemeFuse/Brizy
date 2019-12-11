@@ -230,6 +230,7 @@ class Brizy_Public_EditorBuild_Texts {
 			"Get Brizy PRO" => __("Get Brizy PRO", "brizy"),
 			"Global Blocks" => __("Global Blocks", "brizy"),
 			"Global Popups" => __("Global Popups", "brizy"),
+			"Go Back" => __("Go Back", "brizy"),
 			"Go to" => __("Go to", "brizy"),
 			"Gradient" => __("Gradient", "brizy"),
 			"Group" => __("Group", "brizy"),

@@ -326,6 +326,9 @@
 
     "customCSS": "",
 
+    "tabletContainerType": null,
+    "tabletContainerSize": null,
+
     "tabletBorderStyle": null,
 
     "tempTabletBorderStyle": null,
@@ -437,11 +440,28 @@
     "tabletShapeTopType": null,
     "tabletShapeBottomType": null,
 
+    "tabletShapeTopColorHex": null,
+    "tabletShapeTopColorOpacity": null,
+    "tabletShapeTopColorPalette": null,
+
+    "tempTabletShapeTopColorOpacity": null,
+    "tempTabletShapeTopColorPalette": null,
+
+    "tabletShapeBottomColorHex": null,
+    "tabletShapeBottomColorOpacity": null,
+    "tabletShapeBottomColorPalette": null,
+
+    "tempTabletShapeBottomColorOpacity": null,
+    "tempTabletShapeBottomColorPalette": null,
+
     "tabletShape": null,
     "tabletShapeTopHeight": null,
     "tabletShapeTopHeightSuffix": null,
     "tabletShapeBottomHeight": null,
     "tabletShapeBottomHeightSuffix": null,
+
+    "mobileContainerType": null,
+    "mobileContainerSize": null,
 
     "mobileBgColorType": null,
 
@@ -553,6 +573,20 @@
 
     "mobileShapeTopType": null,
     "mobileShapeBottomType": null,
+
+    "mobileShapeTopColorHex": null,
+    "mobileShapeTopColorOpacity": null,
+    "mobileShapeTopColorPalette": null,
+
+    "tempMobileShapeTopColorOpacity": null,
+    "tempMobileShapeTopColorPalette": null,
+
+    "mobileShapeBottomColorHex": null,
+    "mobileShapeBottomColorOpacity": null,
+    "mobileShapeBottomColorPalette": null,
+
+    "tempMobileShapeBottomColorOpacity": null,
+    "tempMobileShapeBottomColorPalette": null,
 
     "mobileShape": null,
     "mobileShapeTopHeight": null,

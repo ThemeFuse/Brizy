@@ -10,6 +10,7 @@ export default function() {
         .get(0);
     },
     onStickyChange: function(isSticky) {
+      $(this).toggleClass("brz-section__header--animated-closed", !isSticky);
       $(this).toggleClass("brz-section__header--animated-opened", isSticky);
     }
   });

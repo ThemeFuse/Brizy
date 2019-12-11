@@ -176,6 +176,7 @@ class SectionHeader extends EditorComponent {
   renderAnimatedSticky({ v, vs, vd, isSticky }) {
     const className = classnames(
       "brz-section__header--animated",
+      { "brz-section__header--animated-closed": IS_EDITOR && !isSticky },
       { "brz-section__header--animated-opened": isSticky },
       css(
         `${this.constructor.componentId}`,
@@ -250,7 +251,7 @@ class SectionHeader extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { className, customClassName } = v;
     const classNameSection = classnames(
-      "brz-section__header",
+      "brz-section brz-section__header",
       className,
       customClassName,
       css(
@@ -275,7 +276,7 @@ class SectionHeader extends EditorComponent {
   renderForView(v, vs, vd) {
     const { className, customClassName } = v;
     const classNameSection = classnames(
-      "brz-section__header",
+      "brz-section brz-section__header",
       className,
       customClassName,
       css(

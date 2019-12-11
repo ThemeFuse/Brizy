@@ -4,7 +4,6 @@ $btn-default-color: #fff;
 
 // --
 .brz-btn {
-  //display: inline-block;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -20,8 +19,8 @@ $btn-default-color: #fff;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
   white-space: nowrap;
   font-weight: 400;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  text-decoration: none;
 
   &:hover,
   &:focus,

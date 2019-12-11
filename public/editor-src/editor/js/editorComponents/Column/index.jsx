@@ -18,13 +18,12 @@ import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import ColumnResizer from "./components/ColumnResizer";
 import Link from "visual/component/Link";
-import { percentageToPixels } from "visual/utils/meta";
-import { minWinColumn } from "visual/config/columns";
+import { getContainerW } from "visual/utils/meta";
 import Items from "./Items";
 import { styleBg, styleColumn } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
-import { tabletSyncOnChange } from "visual/utils/onChange";
+import { styleSizeWidth } from "visual/utils/style2";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -76,174 +75,33 @@ class Column extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      width: columnWidth,
-      mobileWidth: mobileColumnWidth,
-
-      // Margin
-      marginType,
-      margin,
-      marginSuffix,
-      marginLeft,
-      marginLeftSuffix,
-      marginRight,
-      marginRightSuffix,
-
-      // Padding
-      paddingType,
-      padding,
-      paddingSuffix,
-      paddingLeft,
-      paddingLeftSuffix,
-      paddingRight,
-      paddingRightSuffix,
-
-      // Border
-      borderWidthType,
-      borderWidth,
-      borderLeftWidth,
-      borderRightWidth,
-
-      // Tablet Padding
-      tabletPadding,
-      tabletPaddingType,
-      tabletPaddingSuffix,
-      tabletPaddingLeft,
-      tabletPaddingLeftSuffix,
-      tabletPaddingRight,
-      tabletPaddingRightSuffix,
-
-      // Tablet margin
-      tabletMargin,
-      tabletMarginType,
-      tabletMarginSuffix,
-      tabletMarginLeft,
-      tabletMarginLeftSuffix,
-      tabletMarginRight,
-      tabletMarginRightSuffix,
-
-      // Mobile Padding
-      mobilePadding,
-      mobilePaddingType,
-      mobilePaddingSuffix,
-      mobilePaddingLeft,
-      mobilePaddingLeftSuffix,
-      mobilePaddingRight,
-      mobilePaddingRightSuffix,
-
-      // Mobile margin
-      mobileMargin,
-      mobileMarginType,
-      mobileMarginSuffix,
-      mobileMarginLeft,
-      mobileMarginLeftSuffix,
-      mobileMarginRight,
-      mobileMarginRightSuffix
-    } = v;
-
-    const tabletColumnWidth = tabletSyncOnChange(v, "width");
-
-    const wInMobileCol = meta.mobileW * (mobileColumnWidth / 100);
-    const wInTabletCol = meta.tabletW * (tabletColumnWidth / 100);
-    const wInDesktopCol = meta.desktopW * (columnWidth / 100);
-
-    const marginW =
-      marginType === "grouped"
-        ? percentageToPixels(margin * 2, marginSuffix, wInDesktopCol)
-        : percentageToPixels(marginLeft, marginLeftSuffix, wInDesktopCol) +
-          percentageToPixels(marginRight, marginRightSuffix, wInDesktopCol);
-    const paddingW =
-      paddingType === "grouped"
-        ? percentageToPixels(padding * 2, paddingSuffix, wInDesktopCol)
-        : percentageToPixels(paddingLeft, paddingLeftSuffix, wInDesktopCol) +
-          percentageToPixels(paddingRight, paddingRightSuffix, wInDesktopCol);
-    const borderWidthW =
-      borderWidthType === "grouped"
-        ? Number(borderWidth) * 2
-        : Number(borderLeftWidth) + Number(borderRightWidth);
-
-    // Tablet
-    const tabletPaddingW =
-      tabletPaddingType === "grouped"
-        ? percentageToPixels(
-            tabletPadding * 2,
-            tabletPaddingSuffix,
-            wInTabletCol
-          )
-        : percentageToPixels(
-            tabletPaddingLeft,
-            tabletPaddingLeftSuffix,
-            wInTabletCol
-          ) +
-          percentageToPixels(
-            tabletPaddingRight,
-            tabletPaddingRightSuffix,
-            wInTabletCol
-          );
-    const tabletMarginW =
-      tabletMarginType === "grouped"
-        ? percentageToPixels(tabletMargin * 2, tabletMarginSuffix, wInTabletCol)
-        : percentageToPixels(
-            tabletMarginLeft,
-            tabletMarginLeftSuffix,
-            wInTabletCol
-          ) +
-          percentageToPixels(
-            tabletMarginRight,
-            tabletMarginRightSuffix,
-            wInTabletCol
-          );
-
-    // Mobile
-    const mobilePaddingW =
-      mobilePaddingType === "grouped"
-        ? percentageToPixels(
-            mobilePadding * 2,
-            mobilePaddingSuffix,
-            wInMobileCol
-          )
-        : percentageToPixels(
-            mobilePaddingLeft,
-            mobilePaddingLeftSuffix,
-            wInMobileCol
-          ) +
-          percentageToPixels(
-            mobilePaddingRight,
-            mobilePaddingRightSuffix,
-            wInMobileCol
-          );
-    const mobileMarginW =
-      mobileMarginType === "grouped"
-        ? percentageToPixels(mobileMargin * 2, mobileMarginSuffix, wInMobileCol)
-        : percentageToPixels(
-            mobileMarginLeft,
-            mobileMarginLeftSuffix,
-            wInMobileCol
-          ) +
-          percentageToPixels(
-            mobileMarginRight,
-            mobileMarginRightSuffix,
-            wInMobileCol
-          );
-
-    const externalSpacing = marginW + paddingW + borderWidthW;
-    const externalTabletSpacing = tabletMarginW + tabletPaddingW + borderWidthW;
-    const externalMobileSpacing = mobileMarginW + mobilePaddingW + borderWidthW;
-
-    let mobileW = Math.round((wInMobileCol - externalMobileSpacing) * 10) / 10;
-    const tabletW =
-      Math.round((wInTabletCol - externalTabletSpacing) * 10) / 10;
-    const desktopW = Math.round((wInDesktopCol - externalSpacing) * 10) / 10;
-
-    if (IS_PREVIEW && desktopW >= minWinColumn) {
-      mobileW = Math.round((minWinColumn - externalMobileSpacing) * 10) / 10;
-    }
+    const width = styleSizeWidth({ v, device: "desktop" });
+    const tabletWidth = styleSizeWidth({ v, device: "tablet" });
+    const mobileWidth = styleSizeWidth({ v, device: "mobile" });
+    const desktopW = getContainerW({
+      v,
+      width,
+      w: meta.desktopW,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: meta.tabletW,
+      width: tabletWidth,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: meta.mobileW,
+      width: mobileWidth,
+      device: "mobile"
+    });
 
     return _.extend({}, meta, {
       column: {
-        width: columnWidth,
-        tabletWidth: tabletColumnWidth,
-        mobileWidth: mobileColumnWidth
+        width,
+        tabletWidth,
+        mobileWidth
       },
       mobileW,
       tabletW,

@@ -4,6 +4,9 @@
 
 class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
+
+	use Brizy_Editor_AutoSaveAware;
+
 	const BRIZY_POST = 'brizy-post';
 	const BRIZY_POST_NEEDS_COMPILE_KEY = 'brizy-need-compile';
 	const BRIZY_POST_SIGNATURE_KEY = 'brizy-post-signature';
@@ -270,32 +273,32 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		$wpdb->update( $wpdb->postmeta, array( 'meta_value' => 1 ), array( 'meta_key' => self::BRIZY_POST_NEEDS_COMPILE_KEY ) );
 	}
 
-	/**
-	 * @return Brizy_Editor_Post[]
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
-	 * @todo: We need to move this method from here
-	 */
-	public static function foreach_brizy_post( $callback ) {
-		global $wpdb;
-		$posts = $wpdb->get_results(
-			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision' and p.post_type<>'attachment'
-									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
-		);
-
-		$result = array();
-		foreach ( $posts as $p ) {
-			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
-
-				if ( is_callable( $callback ) ) {
-					$callback( $p );
-				}
-			}
-		}
-
-		return $result;
-	}
+//	/**
+//	 * @return Brizy_Editor_Post[]
+//	 * @throws Brizy_Editor_Exceptions_NotFound
+//	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+//	 * @todo: We need to move this method from here
+//	 */
+//	public static function foreach_brizy_post( $callback ) {
+//		global $wpdb;
+//		$posts = $wpdb->get_results(
+//			$wpdb->prepare( "SELECT p.post_type, p.ID as post_id FROM {$wpdb->postmeta} pm
+//									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision' and p.post_type<>'attachment'
+//									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
+//		);
+//
+//		$result = array();
+//		foreach ( $posts as $p ) {
+//			if ( in_array( $p->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
+//
+//				if ( is_callable( $callback ) ) {
+//					$callback( $p );
+//				}
+//			}
+//		}
+//
+//		return $result;
+//	}
 
 	/**
 	 * @return Brizy_Editor_Post[]
@@ -337,81 +340,111 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		return $post;
 	}
 
-	public function auto_save_post() {
-		try {
-			$user_id                   = get_current_user_id();
-			$post                      = $this->get_wp_post();
-			$postParentId              = $this->get_parent_id();
-			$old_autosave              = wp_get_post_autosave( $postParentId, $user_id );
-			$post_data                 = get_object_vars( $post );
-			$post_data['post_content'] .= "\n<!-- " . time() . "-->";
-			$autosavePost              = null;
+	private function get_last_autosave( $postParentId, $user_id ) {
+		global $wpdb;
 
-			if ( $old_autosave ) {
-				$autosavePost = self::get( $old_autosave );
-			}
+		$postParentId = (int) $postParentId;
+		$user_id      = (int) $user_id;
 
-			if ( $old_autosave ) {
-				$new_autosave                = _wp_post_revision_data( $post_data, true );
-				$new_autosave['ID']          = $old_autosave->ID;
-				$new_autosave['post_author'] = $user_id;
+		$query = sprintf( "SELECT ID FROM {$wpdb->posts} WHERE  post_parent = %d AND post_type= 'revision' AND post_status= 'inherit'AND post_name LIKE '%d-autosave%%'", $postParentId, $postParentId );
 
-				// If the new autosave has the same content as the post, delete the autosave.
-				$autosave_is_different = false;
-
-				foreach ( array_intersect( array_keys( $new_autosave ), array_keys( _wp_post_revision_fields( $post ) ) ) as $field ) {
-					if ( normalize_whitespace( $new_autosave[ $field ] ) != normalize_whitespace( $post->$field ) ) {
-						$autosave_is_different = true;
-						break;
-					}
-				}
-
-				if ( ! $autosave_is_different ) {
-					wp_delete_post_revision( $old_autosave->ID );
-
-					return new WP_Error( 'rest_autosave_no_changes', __( 'There is nothing to save. The autosave and the post content are the same.' ), array( 'status' => 400 ) );
-				}
-
-				/**
-				 * This filter is documented in wp-admin/post.php.
-				 */
-				do_action( 'wp_creating_autosave', $new_autosave );
-
-				// wp_update_post expects escaped array.
-				wp_update_post( wp_slash( $new_autosave ) );
-
-			} else {
-				// Create the new autosave as a special post revision.
-				$revId        = _wp_put_post_revision( $post_data, true );
-				$autosavePost = self::get( $revId );
-			}
-
-			$autosavePost = $this->populateAutoSavedData( $autosavePost );
-			$autosavePost->save();
-
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-
-			return false;
+		if ( is_integer( $user_id ) ) {
+			$query .= " AND post_author={$user_id}";
 		}
+
+		$query .= " ORDER BY post_date DESC";
+
+		return (int) $wpdb->get_var( $query );
+
 	}
+
+//	public function auto_save_post_deperecated() {
+//		try {
+//			$user_id                   = get_current_user_id();
+//			$post                      = $this->get_wp_post();
+//			$postParentId              = $this->get_parent_id();
+//			$old_autosave              = $this->get_last_autosave( $postParentId, $user_id );
+//			$post_data                 = get_object_vars( $post );
+//			$post_data['post_content'] .= "\n<!-- " . time() . "-->";
+//			$autosavePost              = null;
+//
+//			if ( $old_autosave ) {
+//				$autosavePost = self::get( $old_autosave );
+//			}
+//
+//			if ( $old_autosave ) {
+//				$new_autosave                = _wp_post_revision_data( $post_data, true );
+//				$new_autosave['ID']          = $old_autosave;
+//				$new_autosave['post_author'] = $user_id;
+//
+//				// If the new autosave has the same content as the post, delete the autosave.
+//				$autosave_is_different = false;
+//
+//				foreach ( array_intersect( array_keys( $new_autosave ), array_keys( _wp_post_revision_fields( $post ) ) ) as $field ) {
+//					if ( normalize_whitespace( $new_autosave[ $field ] ) != normalize_whitespace( $post->$field ) ) {
+//						$autosave_is_different = true;
+//						break;
+//					}
+//				}
+//
+//				if ( ! $autosave_is_different ) {
+//					wp_delete_post_revision( $old_autosave );
+//
+//					return new WP_Error( 'rest_autosave_no_changes', __( 'There is nothing to save. The autosave and the post content are the same.' ), array( 'status' => 400 ) );
+//				}
+//
+//				/**
+//				 * This filter is documented in wp-admin/post.php.
+//				 */
+//				do_action( 'wp_creating_autosave', $new_autosave );
+//
+//				// wp_update_post expects escaped array.
+//				wp_update_post( wp_slash( $new_autosave ) );
+//
+//			} else {
+//				// Create the new autosave as a special post revision.
+//				$revId        = _wp_put_post_revision( $post_data, true );
+//				$autosavePost = self::get( $revId );
+//			}
+//
+//			$autosavePost = $this->populateAutoSavedData( $autosavePost );
+//			$autosavePost->save();
+//
+//		} catch ( Exception $exception ) {
+//			Brizy_Logger::instance()->exception( $exception );
+//
+//			return false;
+//		}
+//	}
 
 	public function save_wp_post() {
 
 		$post_type        = $this->get_wp_post()->post_type;
 		$post_type_object = get_post_type_object( $post_type );
-		$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
-		$post_status      = $can_publish ? 'publish' : 'pending';
+
+		if ( ! $post_type_object ) {
+			Brizy_Logger::instance()->critical( 'Invalid post type provided on save_wp_post', [ 'post_type' => $post_type ] );
+
+			return;
+		}
+
+		$can_publish = current_user_can( $post_type_object->cap->publish_posts );
+		$post_status = $can_publish ? 'publish' : 'pending';
+
+		$this->deleteOldAutoSaves( $this->get_parent_id() );
 
 		$brizy_compiled_page = $this->get_compiled_page();
 
-		$this->deleteOldAutosaves();
-
-		wp_update_post( array(
+		$params = array(
 			'ID'           => $this->get_parent_id(),
-			'post_status'  => $post_status,
 			'post_content' => $brizy_compiled_page->get_body()
-		) );
+		);
+
+		if ( $can_publish ) {
+			$params['post_status'] = $post_status;
+		}
+
+		wp_update_post( $params );
 	}
 
 
@@ -421,11 +454,19 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 *
 	 * @return bool
 	 */
-	public function save() {
+	public function save( $autosave = 0 ) {
 
 		try {
-			$value = $this->convertToOptionValue();
-			$this->storage()->set( self::BRIZY_POST, $value );
+
+			if ( $autosave == 0 ) {
+				$value = $this->convertToOptionValue();
+				$this->storage()->set( self::BRIZY_POST, $value );
+			} else {
+				$this->auto_save_post( $this->get_wp_post(), function ( $autosaveObject ) {
+					$autosavePost = $this->populateAutoSavedData( $autosaveObject );
+					$autosavePost->save();
+				} );
+			}
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -434,22 +475,6 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 		}
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	private function deleteOldAutosaves() {
-		global $wpdb;
-		$user_id      = get_current_user_id();
-		$postParentId = $this->get_parent_id();
-
-		$wpdb->query( $wpdb->prepare( "
-										DELETE FROM {$wpdb->posts} 
-										WHERE post_author = %d and 
-											  post_parent = %d and 
-											  post_type = 'revision' and 
-											  post_name LIKE %s", $user_id, $postParentId, "{$postParentId}-autosave%" ) );
-	}
 
 	/**
 	 * @return bool
@@ -487,7 +512,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	}
 
 	public function isCompiledWithCurrentVersion() {
-		return $this->get_compiler_version() == BRIZY_EDITOR_VERSION;
+		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION;
 	}
 
 	/**
@@ -542,10 +567,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function get_editor_data() {
 
-		if ( base64_encode( base64_decode( $this->editor_data, true ) ) === $this->editor_data ) {
-			$base_64_decode = base64_decode( $this->editor_data, true );
-
-			return $base_64_decode;
+		if ( ( $decodedData = base64_decode( $this->editor_data, true ) ) !== false ) {
+			return $decodedData;
 		}
 
 		return $this->editor_data;
@@ -558,7 +581,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_editor_data( $content ) {
 
-		if ( base64_encode( base64_decode( $content, true ) ) === $content ) {
+		if ( base64_decode( $content, true ) !== false ) {
 			$this->editor_data = $content;
 		} else {
 			$this->editor_data = base64_encode( $content );
@@ -610,8 +633,8 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 	 */
 	public function set_encoded_compiled_html( $compiled_html ) {
 
-		if ( base64_encode( base64_decode( $compiled_html, true ) ) === $compiled_html ) {
-			$this->set_compiled_html( base64_decode( $compiled_html, true ) );
+		if ( ( $decodedData = base64_decode( $compiled_html, true ) ) !== false ) {
+			$this->set_compiled_html( $decodedData );
 		} else {
 			$this->set_compiled_html( $compiled_html );
 		}
