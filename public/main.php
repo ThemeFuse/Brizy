@@ -415,6 +415,9 @@ class Brizy_Public_Main {
 			if ( $autosaveId ) {
 				$this->post    = Brizy_Editor_Post::get( $autosaveId );
 				$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
+			} else {
+				// we make this false becasue the page was saved.
+				$is_preview = false;
 			}
 		}
 
@@ -425,6 +428,7 @@ class Brizy_Public_Main {
 
 			if ( ! $is_preview && $needs_compile ) {
 				$this->post->save();
+				$this->post->save_wp_post();
 			}
 
 		} catch ( Exception $e ) {

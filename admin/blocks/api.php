@@ -195,9 +195,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->ruleManager->setRules( $block->get_wp_post()->ID, $rules );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
-				$block->auto_save_post();
+				$block->save(1);
 			} else {
-				$block->save();
+				$block->save(0);
 				do_action( 'brizy_global_data_updated' );
 			}
 
@@ -224,7 +224,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
-				$block->auto_save_post();
+				$block->save(1);
 			} else {
 				$block->save();
 				do_action( 'brizy_global_data_updated' );

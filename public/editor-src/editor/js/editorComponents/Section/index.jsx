@@ -1,16 +1,23 @@
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import SectionItems from "./Items";
+import {
+  wInBoxedPage,
+  wInTabletPage,
+  wInMobilePage,
+  wInFullPage
+} from "visual/config/columns";
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { uuid } from "visual/utils/uuid";
 import { stripIds } from "visual/utils/models";
+import { css } from "visual/utils/cssStyle";
+import { getContainerW } from "visual/utils/meta";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import { styleSection } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import SectionItems from "./Items";
 import defaultValue from "./defaultValue.json";
 
 class Section extends EditorComponent {
@@ -23,6 +30,44 @@ class Section extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  getMeta(v) {
+    const { meta } = this.props;
+    const { showOnDesktop, showOnMobile, showOnTablet, slider } = v;
+    const desktopFullW = getContainerW({
+      v,
+      w: wInFullPage,
+      device: "desktop"
+    });
+    const desktopBoxedW = getContainerW({
+      v,
+      w: wInBoxedPage,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: wInTabletPage,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: wInMobilePage,
+      device: "mobile"
+    });
+
+    return Object.assign({}, meta, {
+      desktopFullW,
+      desktopBoxedW,
+      tabletW,
+      mobileW,
+      section: {
+        isSlider: slider === "on",
+        showOnDesktop: showOnDesktop === "on",
+        showOnMobile: showOnMobile === "on",
+        showOnTablet: showOnTablet === "on"
+      }
+    });
+  }
 
   shouldComponentUpdate(nextProps) {
     return this.optionalSCU(nextProps);
@@ -50,33 +95,22 @@ class Section extends EditorComponent {
 
   renderItems(v) {
     const {
-      showOnDesktop,
-      showOnMobile,
-      showOnTablet,
-      slider,
       sliderDots,
       sliderArrows,
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderAnimation
     } = v;
-    const meta = Object.assign({}, this.props.meta, {
-      section: {
-        isSlider: slider === "on",
-        showOnDesktop: showOnDesktop === "on",
-        showOnMobile: showOnMobile === "on",
-        showOnTablet: showOnTablet === "on"
-      }
-    });
+
     const itemsProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
-      className: "brz-section__items",
       sliderDots,
       sliderArrows,
       sliderAnimation,
-      sliderAutoPlay: sliderAutoPlay === "on",
       sliderAutoPlaySpeed,
-      meta,
+      bindWithKey: "items",
+      meta: this.getMeta(v),
+      className: "brz-section__items",
+      sliderAutoPlay: sliderAutoPlay === "on",
       toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig)
     });
 

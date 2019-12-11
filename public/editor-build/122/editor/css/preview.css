@@ -6544,14 +6544,17 @@ body.modal-open .mm-slideout {
     -webkit-transform: translate3d(0, -100%, 0);
             transform: translate3d(0, -100%, 0);
     opacity: 0;
-    -webkit-transition: opacity 0.2s linear, -webkit-transform 0.2s linear;
-    transition: opacity 0.2s linear, -webkit-transform 0.2s linear;
-    transition: transform 0.2s linear, opacity 0.2s linear;
-    transition: transform 0.2s linear, opacity 0.2s linear, -webkit-transform 0.2s linear; }
+    -webkit-transition: none;
+    transition: none; }
     .brz .brz-section__header--animated-opened {
       -webkit-transform: translate3d(0, 0, 0);
               transform: translate3d(0, 0, 0);
       opacity: 1;
+      -webkit-transition: opacity 0.2s linear, -webkit-transform 0.2s linear;
+      transition: opacity 0.2s linear, -webkit-transform 0.2s linear;
+      transition: transform 0.2s linear, opacity 0.2s linear;
+      transition: transform 0.2s linear, opacity 0.2s linear, -webkit-transform 0.2s linear; }
+    .brz .brz-section__header--animated-closed {
       -webkit-transition: opacity 0.2s linear, -webkit-transform 0.2s linear;
       transition: opacity 0.2s linear, -webkit-transform 0.2s linear;
       transition: transform 0.2s linear, opacity 0.2s linear;
@@ -6752,7 +6755,8 @@ body.modal-open .mm-slideout {
     white-space: nowrap;
     font-weight: 400;
     -webkit-backface-visibility: hidden;
-    backface-visibility: hidden; }
+            backface-visibility: hidden;
+    text-decoration: none; }
     .brz .brz-btn:hover, .brz .brz-btn:focus, .brz .brz-btn.focus {
       text-decoration: none; }
     .brz .brz-btn:focus {
@@ -6827,7 +6831,8 @@ body.modal-open .mm-slideout {
         flex-wrap: nowrap; }
     .brz .brz-icon-text .brz-text__editor,
     .brz .brz-icon-text .brz-text-btn {
-      width: 100%;
+      width: 100%; }
+    .brz .brz-icon-text .brz-text__editor {
       white-space: pre-wrap; }
     .brz .brz-icon-text .brz-wrapper-clone {
       overflow-wrap: break-word;
@@ -7737,7 +7742,7 @@ body.modal-open .mm-slideout {
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 1070; }
+    z-index: 1060; }
     .brz .brz-popup2__close {
       position: absolute;
       z-index: 2;
@@ -7746,8 +7751,6 @@ body.modal-open .mm-slideout {
       cursor: pointer; }
       .brz .brz-popup2__close .brz-icon-svg {
         font-size: 26px; }
-    .brz .brz-popup2 > .brz-ed-border {
-      height: 100%; }
     .brz .brz-popup2 .brz-container__wrap {
       position: relative; }
     .brz .brz-popup2__inner {
@@ -7764,29 +7767,6 @@ body.modal-open .mm-slideout {
     .brz .brz-popup2__vertical-align {
       -webkit-transform: rotate(270deg);
               transform: rotate(270deg); }
-    .brz .brz-popup2__button-go-to-editor {
-      font-family: "pn", "Open Sans", Arial, sans-serif;
-      display: inline-block;
-      position: absolute;
-      left: 40px;
-      top: 34px;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 13px 23px 13px 18px;
-      color: #fff;
-      background-color: rgba(3, 8, 15, 0.92);
-      border: none;
-      border-radius: 100px;
-      -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-              box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-      cursor: pointer;
-      z-index: 9999;
-      outline: none; }
-      .brz .brz-popup2__button-go-to-editor:hover {
-        color: #3dbfe8; }
-    .brz .brz-popup2__icon-go-to-editor {
-      vertical-align: text-top;
-      margin-right: 16px; }
   .brz .brz-popup2__preview {
     z-index: -1;
     visibility: hidden;

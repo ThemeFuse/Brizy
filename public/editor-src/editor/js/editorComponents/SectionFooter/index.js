@@ -28,6 +28,11 @@ import {
 } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
+import { getContainerW } from "visual/utils/meta";
+import {
+  styleElementSectionContainerType,
+  styleSizeContainerSize
+} from "visual/utils/style2";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -70,29 +75,28 @@ class SectionFooter extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      containerSize,
-      containerType,
-      borderWidthType,
-      borderWidth,
-      borderLeftWidth,
-      borderRightWidth
-    } = v;
-
-    const borderWidthW =
-      borderWidthType === "grouped"
-        ? Number(borderWidth) * 2
-        : Number(borderLeftWidth) + Number(borderRightWidth);
-
-    const desktopW =
-      containerType === "fullWidth"
-        ? wInFullPage - borderWidthW
-        : Math.round(
-            (wInBoxedPage - borderWidthW) * (containerSize / 100) * 10
-          ) / 10;
-
-    const tabletW = wInTabletPage - borderWidthW;
-    const mobileW = wInMobilePage - borderWidthW;
+    const containerType = styleElementSectionContainerType({ v });
+    const size = styleSizeContainerSize({ v, device: "desktop" });
+    const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
+    const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
+    const desktopW = getContainerW({
+      v,
+      w: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
+      width: size,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: wInTabletPage,
+      width: tabletSize,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: wInMobilePage,
+      width: mobileSize,
+      device: "mobile"
+    });
 
     return {
       ...meta,

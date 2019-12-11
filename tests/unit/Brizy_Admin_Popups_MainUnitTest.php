@@ -8,10 +8,9 @@ class Brizy_Admin_Popups_MainUnitTest extends \Codeception\Test\Unit {
 	protected $tester;
 
 	public function testPopulateSupportedPosts() {
-		$main  = new Brizy_Admin_Popups_Main();
-		$posts = $main->populateSupportedPosts( [] );
+		$main = new Brizy_Admin_Popups_Main();
 
-		$this->assertEquals( [ Brizy_Admin_Popups_Main::CP_POPUP ], $posts, 'It should insert the supported popup post type' );
+		$this->assertTrue( in_array( Brizy_Admin_Popups_Main::CP_POPUP, Brizy_Editor::get()->supported_post_types() ), 'It should insert the supported popup post type' );
 	}
 
 

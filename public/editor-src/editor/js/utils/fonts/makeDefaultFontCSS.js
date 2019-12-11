@@ -4,5 +4,5 @@ export function makeDefaultFontCSS({ group, font }) {
   const getFont = fontTransform[group];
   const { family } = getFont(font);
 
-  return `.brz{font-family:${family}!important;}`;
+  return `.brz .brz-root__container,.brz .brz-popup2,.brz .brz-popup {font-family:${family}!important;}`;
 }
