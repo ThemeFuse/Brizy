@@ -18,11 +18,12 @@ import * as toolbarExtendConfig from "./extendToolbar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import Link from "visual/component/Link";
-import { percentageToPixels } from "visual/utils/meta";
+import { getContainerW } from "visual/utils/meta";
 import Items from "./Items";
 import { css } from "visual/utils/cssStyle";
 import { styleRow, styleBg, styleContainer } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { styleSizeSize } from "visual/utils/style2";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
@@ -68,108 +69,32 @@ class Row extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      size,
-
-      // Padding
-      paddingType,
-      padding,
-      paddingSuffix,
-      paddingLeft,
-      paddingLeftSuffix,
-      paddingRight,
-      paddingRightSuffix,
-
-      // Border
-      borderWidthType,
-      borderWidth,
-      borderLeftWidth,
-      borderRightWidth,
-
-      // Tablet Padding
-      tabletPadding,
-      tabletPaddingType,
-      tabletPaddingSuffix,
-      tabletPaddingLeft,
-      tabletPaddingLeftSuffix,
-      tabletPaddingRight,
-      tabletPaddingRightSuffix,
-
-      // Mobile Padding
-      mobilePadding,
-      mobilePaddingType,
-      mobilePaddingSuffix,
-      mobilePaddingLeft,
-      mobilePaddingLeftSuffix,
-      mobilePaddingRight,
-      mobilePaddingRightSuffix,
-
-      items
-    } = v;
-
-    const containerWidth = meta.desktopW * (size / 100);
-    const paddingW =
-      paddingType === "grouped"
-        ? percentageToPixels(padding * 2, paddingSuffix, containerWidth)
-        : percentageToPixels(paddingLeft, paddingLeftSuffix, containerWidth) +
-          percentageToPixels(paddingRight, paddingRightSuffix, containerWidth);
-    const borderWidthW =
-      borderWidthType === "grouped"
-        ? Number(borderWidth) * 2
-        : Number(borderLeftWidth) + Number(borderRightWidth);
-
-    // Tablet Padding
-    const tabletPaddingW =
-      tabletPaddingType === "grouped"
-        ? percentageToPixels(
-            tabletPadding * 2,
-            tabletPaddingSuffix,
-            meta.tabletW
-          )
-        : percentageToPixels(
-            tabletPaddingLeft,
-            tabletPaddingLeftSuffix,
-            meta.tabletW
-          ) +
-          percentageToPixels(
-            tabletPaddingRight,
-            tabletPaddingRightSuffix,
-            meta.tabletW
-          );
-
-    // Mobile Padding
-    const mobilePaddingW =
-      mobilePaddingType === "grouped"
-        ? percentageToPixels(
-            mobilePadding * 2,
-            mobilePaddingSuffix,
-            meta.mobileW
-          )
-        : percentageToPixels(
-            mobilePaddingLeft,
-            mobilePaddingLeftSuffix,
-            meta.mobileW
-          ) +
-          percentageToPixels(
-            mobilePaddingRight,
-            mobilePaddingRightSuffix,
-            meta.mobileW
-          );
-
-    const externalSpacing = paddingW + borderWidthW;
-    const externalTabletSpacing = tabletPaddingW + borderWidthW;
-    const externalMobileSpacing = mobilePaddingW + borderWidthW;
-
-    const desktopW = Math.round((containerWidth - externalSpacing) * 10) / 10;
-    const tabletW =
-      Math.round((meta.tabletW - externalTabletSpacing) * 10) / 10;
-    const mobileW =
-      Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
+    const size = styleSizeSize({ v, device: "desktop" });
+    const tabletSize = styleSizeSize({ v, device: "tablet" });
+    const mobileSize = styleSizeSize({ v, device: "mobile" });
+    const desktopW = getContainerW({
+      v,
+      w: meta.desktopW,
+      width: size,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: meta.tabletW,
+      width: tabletSize,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: meta.mobileW,
+      width: mobileSize,
+      device: "mobile"
+    });
 
     return Object.assign({}, meta, {
       row: {
         isInner: this.isInnerRow(),
-        itemsLength: items.length
+        itemsLength: v.items.length
       },
       inGrid: true,
       mobileW,

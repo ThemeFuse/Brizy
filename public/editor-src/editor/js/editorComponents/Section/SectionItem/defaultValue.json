@@ -308,8 +308,8 @@
 
     "customCSS": "",
 
-    "tabletСontainerType": null,
-    "tabletСontainerSize": null,
+    "tabletContainerType": null,
+    "tabletContainerSize": null,
 
     "tabletBorderStyle": null,
 
@@ -427,8 +427,8 @@
     "tabletShapeTopHorizontal": null,
     "tabletShapeBottomHorizontal": null,
 
-    "mobileСontainerType": null,
-    "mobileСontainerSize": null,
+    "mobileContainerType": null,
+    "mobileContainerSize": null,
 
     "mobileBgColorType": null,
 

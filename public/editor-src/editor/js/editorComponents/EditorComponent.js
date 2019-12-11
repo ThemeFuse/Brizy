@@ -270,9 +270,7 @@ export class EditorComponent extends React.Component {
       if (process.env.NODE_ENV === "development") {
         if (!config[getItemsFnName]) {
           console.warn(
-            `${
-              this.constructor.componentId
-            }. ${getItemsFnName} not found in toolbarConfig`
+            `${this.constructor.componentId}. ${getItemsFnName} not found in toolbarConfig`
           );
         }
       }
@@ -382,9 +380,7 @@ export class EditorComponent extends React.Component {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
           console.warn(
-            `${
-              this.constructor.componentId
-            }. getItems not found in toolbarConfig`
+            `${this.constructor.componentId}. getItems not found in toolbarConfig`
           );
         }
       }
@@ -423,7 +419,7 @@ export class EditorComponent extends React.Component {
         const { getItems } = this.childToolbarExtend;
         const extendItems = getItems(deviceMode);
 
-        items = mergeOptions(items, extendItems);
+        items = mergeOptions(extendItems, items);
       }
 
       // allow extend from filter

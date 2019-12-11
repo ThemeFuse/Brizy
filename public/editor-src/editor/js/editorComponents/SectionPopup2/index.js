@@ -22,14 +22,20 @@ import {
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
-import { globalBlocksSelector, triggersSelector } from "visual/redux/selectors";
+import { triggersSelector } from "visual/redux/selectors";
 import Config from "visual/global/Config";
 import * as toolbarConfig from "./toolbar";
 import { style } from "./styles";
 import * as toolbarExtendConfig from "./extendToolbar";
 import * as toolbarConfigClose from "./toolbarClose";
 import { css } from "visual/utils/cssStyle";
+import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
+import {
+  styleContainerPopup2ContainerWidth,
+  styleContainerPopup2ContainerWidthSuffix
+} from "visual/utils/style2";
+import { getContainerW } from "visual/utils/meta";
 
 export let SectionPopup2Instances = new Map();
 
@@ -108,20 +114,54 @@ class SectionPopup2 extends EditorComponent {
   handleDropClick = () => {
     this.close();
   };
+
   getMeta(v) {
     const { meta } = this.props;
-    const { widthSuffix, width } = v;
-
-    const desktopW =
-      widthSuffix === "px" ? width : Math.round((wInFullPage / 100) * width);
-    const tabletW = wInTabletPage;
-    const mobileW = wInMobilePage;
+    const width = styleContainerPopup2ContainerWidth({ v, device: "desktop" });
+    const widthSuffix = styleContainerPopup2ContainerWidthSuffix({
+      v,
+      device: "desktop"
+    });
+    const tabletWidth = styleContainerPopup2ContainerWidth({
+      v,
+      device: "tablet"
+    });
+    const tabletWidthSuffix = styleContainerPopup2ContainerWidthSuffix({
+      v,
+      device: "tablet"
+    });
+    const mobileWidth = styleContainerPopup2ContainerWidth({
+      v,
+      device: "mobile"
+    });
+    const mobileWidthSuffix = styleContainerPopup2ContainerWidthSuffix({
+      v,
+      device: "mobile"
+    });
+    const desktopW = getContainerW({
+      v,
+      w: widthSuffix === "px" ? width : wInFullPage,
+      width: widthSuffix === "px" ? 100 : width,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: tabletWidthSuffix === "px" ? tabletWidth : wInTabletPage,
+      width: tabletWidthSuffix === "px" ? 100 : tabletWidth,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: mobileWidthSuffix === "px" ? mobileWidth : wInMobilePage,
+      width: mobileWidthSuffix === "px" ? 100 : mobileWidth,
+      device: "mobile"
+    });
 
     return {
       ...meta,
+      desktopW,
       tabletW,
       mobileW,
-      desktopW,
       sectionPopup2: true
     };
   }
@@ -221,14 +261,14 @@ class SectionPopup2 extends EditorComponent {
         >
           {!IS_GLOBAL_POPUP && (
             <button
-              className="brz-popup2__button-go-to-editor"
+              className="brz-button brz-popup2__button-go-to-editor"
               onClick={this.handleDropClick}
             >
               <EditorIcon
                 icon="nc-arrow-left"
                 className="brz-popup2__icon-go-to-editor"
               />
-              Go Back
+              {t("Go Back")}
             </button>
           )}
           <Roles

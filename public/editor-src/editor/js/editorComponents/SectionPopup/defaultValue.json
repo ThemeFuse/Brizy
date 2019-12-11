@@ -182,6 +182,9 @@
     "tempHoverColorOpacity": 1,
     "tempHoverColorPalette": "color3",
 
+    "tabletContainerType": null,
+    "tabletContainerSize": null,
+
     "tabletBorderRadius": null,
     "tabletBorderTopLeftRadius": null,
     "tabletBorderTopRightRadius": null,
@@ -217,6 +220,9 @@
 
     "tempTabletGradientColorOpacity": null,
     "tempTabletGradientColorPalette": null,
+
+    "mobileContainerType": null,
+    "mobileContainerSize": null,
 
     "mobileBgColorType": null,
 

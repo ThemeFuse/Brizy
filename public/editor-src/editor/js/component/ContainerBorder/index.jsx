@@ -194,9 +194,9 @@ class ContainerBorder extends React.Component {
         onClickOutside={this.handleClickOutside}
       >
         <div ref={this.containerRef} className={className}>
+          {children}
           {button}
           {border}
-          {children}
         </div>
       </ClickOutside>
     );
