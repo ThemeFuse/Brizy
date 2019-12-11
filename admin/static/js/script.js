@@ -139,62 +139,6 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    var BrizyMaintenanceDialogAccessLink = {
-
-        init: function () {
-
-            if ( ! $( '#brz-maintenance-access-link-dialog' ).length && typeof dialog !== "function" ) {
-                return;
-            }
-
-            this.initDialog();
-
-            $( 'tr[data-slug="brizy"] .deactivate' ).click( function ( e ) {
-                $( '#brz-maintenance-access-link-dialog' ).dialog( 'open' );
-            } );
-        },
-        submitFeedback: function () {
-
-            $( '.brz-feedback-submit .ui-button-text' ).addClass( 'brz-loading' ).text( '' );
-
-            $.ajax( {
-                url: Brizy_Admin_Data.url,
-                type: 'POST',
-                data: {
-                    'action': 'brizy-send-feedback',
-                    'nonce': Brizy_Admin_Data.nonce,
-                    'form': $( 'form.brz-deactivate-feedback-dialog-form' ).serialize()
-                }
-            } );
-        },
-        initDialog: function () {
-
-            $( '#brz-maintenance-access-link-dialog' ).dialog( {
-                dialogClass: 'brz-maintenance-modal',
-                autoOpen: false,
-                draggable: false,
-                width: 'auto',
-                modal: true,
-                resizable: false,
-                closeOnEscape: true,
-                open: function () {
-                    var overlay = $('.ui-widget-overlay');
-
-                    overlay.addClass( 'brz-deactivate-overlay' );
-
-                    // close dialog by clicking the overlay behind it
-                    overlay.bind( 'click', function () {
-                        $( '#brz-deactivate-feedback-dialog' ).dialog( 'close' );
-                    } );
-                },
-                create: function () {
-                    // style fix for WordPress admin
-                    $( '.ui-dialog-titlebar-close' ).addClass( 'ui-button' );
-                },
-            } );
-        }
-    };
-
     $('.enable-brizy-editor').on('click', function (event) {
         event.preventDefault();
 
@@ -228,6 +172,34 @@ jQuery(document).ready(function ($) {
             }, 1);
         }
     };
+
+    var BrizyMaintenance = {
+        getSelectAccessRole: function() {
+            return $( '#brizy-maintenance-access-role' );
+        },
+        handleEvents: function () {
+            this.getSelectAccessRole().change( function ( e ) {
+                var display = 'custom' === $( this ).val() ? 'table-row' : 'none';
+                $( '.brizy-maintenance-roles' ).css( 'display', display );
+            } );
+
+            this.getSelectAccessRole().trigger( 'change' );
+        },
+
+        init: function () {
+            if ( ! this.getSelectAccessRole().length ) {
+                return;
+            }
+
+            this.handleEvents();
+        }
+    };
+
+    $( function () {
+        BrizyGutenberg.init();
+        BrizyFeedbackDialog.init();
+        BrizyMaintenance.init();
+    } );
 
     $(function () {
         BrizyGutenberg.init();

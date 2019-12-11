@@ -195,25 +195,12 @@ class Brizy_Admin_Settings {
 
 	private function get_maintenance_tab() {
 
-		return Brizy_Admin_View::render(
-			'settings/maintenance',
-			[
-			    'mode'   => 'coming_soon',
-                'access' => 'logged',
-                'roles'  => $this->list_wp_roles(),
-                'access_roles' => [
-                        'editor'
-                ],
-                'template' => ''
-            ]
-		);
-	}
+		$args = (array) Brizy_Editor_Storage_Common::instance()->get( 'maintenance', false );
 
-	/**
-	 * @return bool
-	 */
-	public function is_settings_page() {
-		return get_current_screen()->base === "settings_page_" . Brizy_Editor::get()->get_slug() . "-settings";
+		$args['pages']           = wp_list_pluck( get_pages(), 'post_title', 'ID' );
+		$args['available_roles'] = $this->list_wp_roles();
+
+		return Brizy_Admin_View::render( 'settings/maintenance', $args );
 	}
 
 	public function settings_submit() {
@@ -231,9 +218,11 @@ class Brizy_Admin_Settings {
 			case 'roles':
 				$this->roles_settings_submit();
 				break;
+			case 'maintenance':
+				$this->maintenance_settings_submit();
+				break;
 		}
 	}
-
 
 	public function general_settings_submit() {
 		$error_count        = 0;
@@ -256,6 +245,10 @@ class Brizy_Admin_Settings {
 			Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
 		}
 
+	}
+
+	public function maintenance_settings_submit() {
+		Brizy_Editor_Storage_Common::instance()->set( 'maintenance', $_POST['brizy-maintenance'] );
 	}
 
 	/**
