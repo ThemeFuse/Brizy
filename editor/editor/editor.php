@@ -143,7 +143,7 @@ class Brizy_Editor_Editor_Editor {
 					'createGlobalBlock'    => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
 					'updateGlobalBlock'    => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 					'deleteGlobalBlock'    => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
-					'getRuleGroupList'     => Brizy_Admin_Templates::RULE_GROUP_LIST,
+					'getRuleGroupList'     => Brizy_Editor_API::RULE_GROUP_LIST,
 					'createRule'           => Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
 					'createRules'          => Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
 					'updateRules'          => Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,

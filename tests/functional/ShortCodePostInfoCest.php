@@ -13,7 +13,7 @@ class ShortCodePostInfoCest {
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',
 			'post_excerpt'   => 'field_post_excerpt',
-			'post_status'    => 'field_post_status',
+			'post_status'    => 'publish',
 			'comment_status' => 'field_comment_status',
 			'ping_status'    => 'field_ping_status',
 			'post_password'  => 'field_post_password',
@@ -69,10 +69,11 @@ class ShortCodePostInfoCest {
 	 */
 	public function checkPostInfoFromMainQueryTest( FunctionalTester $I ) {
 
-		$post            = get_post( $this->postId );
+		$posts = get_posts();
+		$post  = $posts[0];
+		setup_postdata( $post );
 		$GLOBALS['post'] = $post;
-
-		$output = do_shortcode( '[brizy_post_info]' );
+		$output          = do_shortcode( '[brizy_post_info]' );
 
 		$postDate = new \DateTime( $post->post_date );
 

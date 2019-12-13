@@ -20,15 +20,15 @@ var state = {
     rule: defaultRule,
     rules: Brizy_Admin_Rules.rules,
     errors: "",
-    groups: []
+    groups: [],
 };
 
 
 var apiCache = {
     groupList: null,
+    postGroupListPromise: [],
     postList: [],
     termList: []
-
 };
 
 var api = {
@@ -37,14 +37,26 @@ var api = {
         if (apiCache.groupList)
             return apiCache.groupList;
 
-        return jQuery.getJSON(Brizy_Admin_Rules.url, {
+        return apiCache.groupList = jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_group_list",
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
             context: 'template-rules'
-        }).done(function (data) {
-            apiCache.groupList = jQuery.Deferred().resolve(data);
-        });
+        })
+    },
+
+    getPostsGroupList: function (postType) {
+
+        if (apiCache.postGroupListPromise[postType])
+            return apiCache.postGroupListPromise[postType];
+
+        return apiCache.postGroupListPromise[postType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
+            action: "brizy_rule_posts_group_list",
+            postType: postType,
+            hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion,
+            context: 'template-rules'
+        })
     },
 
     getPosts: function (postType, filter, exclude) {
@@ -68,6 +80,7 @@ var api = {
     getTerms: function (taxonomy) {
         if (apiCache.termList[taxonomy])
             return apiCache.termList[taxonomy];
+
         return jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_get_terms",
             hash: Brizy_Admin_Rules.hash,
@@ -206,21 +219,34 @@ var RuleTypeField = function (params) {
 BrzSelect2 = function (params) {
 
     var oncreate = function (element) {
+
         var el = jQuery(element);
         if (!params.disabled) {
             el.select2();
             el.on("change", params.onChange);
         }
         if (typeof params.optionRequest === 'function') {
-            params.optionRequest().done(function (response) {
-                var options = params.convertResponseToOptions(response);
-                options.forEach(function (option) {
-                    el.append(option).trigger("change");
+            const optionRequest = params.optionRequest();
+
+            if (typeof params.optionRequest === 'function') {
+                optionRequest.done(function (response) {
+                    var options = params.convertResponseToOptions(response);
+                    options.forEach(function (option) {
+                        el.append(option);
+                    });
                 });
-            });
+            } else {
+                var options = params.convertResponseToOptions(optionRequest);
+                options.forEach(function (option) {
+                    el.append(option);
+                });
+            }
+        }
+
+        if (!params.disabled) {
+            el.trigger("change");
         }
     };
-
 
     var onremove = function (element, done) {
         if (!params.disabled) {
@@ -244,46 +270,30 @@ BrzSelect2 = function (params) {
     );
 };
 
-var PostSelect2Field = function (params) {
-    var convertResponseToOptions = function (response) {
-        var options = [new Option("All", null, false, false)];
-        response.data.posts.forEach(function (post) {
-            var selected = params.value.includes(post.ID + "") || params.value.includes(post.ID);
-            options.push(new Option(post.title, post.ID, false, selected));
-        });
-        return options;
-    };
-
-    return h(
-        BrzSelect2,
-        {
-            id: params.id,
-            value: params.value,
-            disabled: params.disabled,
-            style: params.style ? params.style : {width: "200px"},
-            optionRequest: params.optionRequest,
-            convertResponseToOptions: convertResponseToOptions,
-            onChange: params.onChange
-        },
-        []
-    );
-};
-
-var RuleCustomPostSearchField = function (params) {
-    return h(
-        PostSelect2Field,
-        {
-            id: params.id,
-            disabled: params.disabled,
-            value: params.rule.entityValues,
-            optionRequest: function () {
-                return api.getPosts(params.postType);
-            },
-            onChange: params.onChange
-        },
-        []
-    );
-};
+// var PostSelect2Field = function (params) {
+//     var convertResponseToOptions = function (response) {
+//         var options = [new Option("All", null, false, false)];
+//         response.data.posts.forEach(function (post) {
+//             var selected = params.value.includes(post.ID + "") || params.value.includes(post.ID);
+//             options.push(new Option(post.title, post.ID, false, selected));
+//         });
+//         return options;
+//     };
+//
+//     return h(
+//         BrzSelect2,
+//         {
+//             id: params.id,
+//             value: params.value,
+//             disabled: params.disabled,
+//             style: params.style ? params.style : {width: "200px"},
+//             optionRequest: params.optionRequest,
+//             convertResponseToOptions: convertResponseToOptions,
+//             onChange: params.onChange
+//         },
+//         []
+//     );
+// };
 
 var RuleTaxonomySearchField = function (params) {
     var convertResponseToOptions = function (response) {
@@ -302,6 +312,55 @@ var RuleTaxonomySearchField = function (params) {
             style: params.style ? params.style : {width: "200px"},
             optionRequest: function () {
                 return api.getTerms(params.taxonomy);
+            },
+            convertResponseToOptions: convertResponseToOptions,
+            onChange: params.onChange,
+            disabled: params.disabled
+        },
+        []
+    );
+};
+
+var RulePostsGroupSelectField = function (params) {
+
+    var appliedFor = params.rule.appliedFor;
+    var entityType = params.rule.entityType;
+    var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
+
+    var convertResponseToOptions = function (response) {
+        var groups = [];
+        groups.push(new Option("All", '', false, value === ''));
+        response.data.forEach(function (group) {
+
+            if (group.title === "") {
+                group.items.forEach(function (option) {
+                    var optionValue = String(option.value);
+                    groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
+                });
+            } else {
+                var groupElement = document.createElement("OPTGROUP");
+                groupElement.label = group.title;
+
+                if (group.items.length > 0) {
+                    group.items.forEach(function (option) {
+                        var optionValue = String(option.value);
+                        groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
+                    });
+                    groups.push(groupElement);
+                }
+            }
+        });
+
+        return groups;
+    };
+
+    return h(
+        BrzSelect2,
+        {
+            id: "post-groups-" + entityType,
+            style: params.style ? params.style : {width: "200px"},
+            optionRequest: function () {
+                return api.getPostsGroupList(entityType);
             },
             convertResponseToOptions: convertResponseToOptions,
             onChange: params.onChange,
@@ -356,22 +415,24 @@ var RuleApplyGroupField = function (params) {
             h("span", {class: "brizy-rule-select"}, h("select", attributes, groups))
         ];
 
+
         switch (appliedFor) {
             case RULE_POSTS:
                 elements.push(
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
-                        h(RuleCustomPostSearchField, {
+                        h(RulePostsGroupSelectField, {
                             id: appliedFor + value,
-                            postType: entityType,
                             rule: params.rule,
                             disabled: params.disabled,
                             onChange: function (e) {
-                                if (!params.disabled)
-                                    actions.rule.setEntityValues(
-                                        e.target.value && e.target.value != "null"
-                                            ? [e.target.value]
-                                            : []
-                                    );
+                                if (!params.disabled) {
+                                    var values = e.target.value.split("|");
+                                    if (values.length === 1) {
+                                        actions.rule.setEntityValues(values);
+                                    } else {
+                                        actions.rule.setEntityValues([e.target.value]);
+                                    }
+                                }
                             }
                         })
                     ]));
