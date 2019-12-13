@@ -9,7 +9,7 @@ class ShortCodePostFieldCest {
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 
-		$I->dontHavePostInDatabase([]);
+		$I->dontHavePostInDatabase( [] );
 		$this->postId = $I->havePostInDatabase( [
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',
@@ -97,7 +97,7 @@ class ShortCodePostFieldCest {
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="comment_count"]',
 				'output' => '10'
-			],
+			]
 		];
 	}
 
@@ -167,7 +167,7 @@ class ShortCodePostFieldCest {
 			[
 				'input'  => '[brizy_post_field property="comment_count"]',
 				'output' => '10'
-			],
+			]
 		];
 	}
 
@@ -176,6 +176,17 @@ class ShortCodePostFieldCest {
 	 */
 	public function checkIfShortCodeRegisteredTest( FunctionalTester $I ) {
 		$I->assertTrue( shortcode_exists( 'brizy_post_field' ), 'The shortcode brizy_post should be registered' );
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 * @param \Codeception\Example $example
+	 */
+	public function checkReturnWhenAjaxRequest( FunctionalTester $I ) {
+
+		define( 'DOING_AJAX', true );
+		$output = do_shortcode( '[brizy_post_field property="post_content"]' );
+		$I->assertEquals( "<p>field_post_content</p>\n", $output, 'The short code should return the correct field value' );
 	}
 
 	/**
@@ -196,7 +207,7 @@ class ShortCodePostFieldCest {
 	 */
 	public function checkReturnTheCorrectDataFromMainQueryTest( FunctionalTester $I ) {
 
-		$post = get_post( $this->postId );
+		$post            = get_post( $this->postId );
 		$GLOBALS['post'] = $post;
 
 		foreach ( $this->checkReturnTheCorrectDataParametersWithoutPost() as $example ) {

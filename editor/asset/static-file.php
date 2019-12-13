@@ -122,7 +122,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 		}
 		$bpost = Brizy_Editor_Post::get( $post_id );
 
-		update_post_meta( $attachmentId, 'brizy_post_uid', $bpost->get_uid() );
+		update_post_meta( $attachmentId, 'brizy_post_uid', $bpost->getUid() );
 
 		return $attachmentId;
 	}

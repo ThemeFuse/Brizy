@@ -122,11 +122,14 @@ class BlockApiCest {
 		}
 	}
 
-
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function createGlobalBlockTest( FunctionalTester $I ) {
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
-				'version' => BRIZY_EDITOR_VERSION
+				'version' => BRIZY_EDITOR_VERSION,
+				'dataVersion' => 1,
 			] ), [
 			'uid'      => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
 			'data'     => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
@@ -147,6 +150,9 @@ class BlockApiCest {
 		$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function updateGlobalBlockTest( FunctionalTester $I ) {
 
 		$uid          = 'sffbf00297';
@@ -188,7 +194,8 @@ class BlockApiCest {
 			'data'        => $newBlockData,
 			'position'    => json_encode( $newPosition ),
 			'is_autosave' => 1,
-			'version'     => BRIZY_EDITOR_VERSION
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1,
 		] );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -208,12 +215,15 @@ class BlockApiCest {
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_parent' => $blockId ] );
 	}
 
-
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function createSavedBlockTest( FunctionalTester $I ) {
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION ] ), [
 			'uid'     => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
 			'data'    => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
-			'version' => BRIZY_EDITOR_VERSION
+			'version' => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1,
 
 		] );
 
@@ -226,6 +236,9 @@ class BlockApiCest {
 		$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 	}
 
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function updateSavedBlockTest( FunctionalTester $I ) {
 
 		$uid          = 'adaferersdfw';
@@ -262,7 +275,8 @@ class BlockApiCest {
 			'uid'         => $uid,
 			'data'        => $newBlockData,
 			'is_autosave' => 1,
-			'version'     => BRIZY_EDITOR_VERSION
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1,
 		] );
 
 		$I->seeResponseCodeIsSuccessful();

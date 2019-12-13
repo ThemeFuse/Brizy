@@ -19,6 +19,7 @@ class Brizy_Editor_Editor_EditorTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	protected function _before() {
 
+
 		$postId = $this->tester->havePostInDatabase( [
 			'post_type'   => 'post',
 			'post_status' => 'publish',
@@ -42,4 +43,29 @@ class Brizy_Editor_Editor_EditorTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->tester->assertEquals( $roles, $config['wp']['availableRoles'], 'It should contain the available roles' );
 	}
+
+	public function testProjectStatus() {
+
+		wp_set_current_user( 1 );
+		$project = Brizy_Editor_Project::get();
+
+		Brizy_Editor::get()->lockProject();
+
+
+		wp_set_current_user( 2 );
+		$config = $this->editor->config();
+
+		$this->tester->assertArrayHasKey('status',$config['project'],'The project should contain a key status');
+		$this->tester->assertArrayHasKey('heartBeatInterval',$config['project'],'The project should contain a key heartBeatInterval');
+		$this->tester->assertIsArray($config['project']['status'],'The project status should b an array');
+		$this->tester->assertIsInt($config['project']['heartBeatInterval'],'The project heartBeatInterval should be an int');
+
+		$this->tester->assertArrayHasKey('locked',$config['project']['status'],'The project status should contain a key locked');
+		$this->tester->assertArrayHasKey('lockedBy',$config['project']['status'],'The project status should contain a key lockedBy');
+
+		$this->tester->assertTrue($config['project']['status']['locked'], 'The project should be locked' );
+	}
+
+
+
 }

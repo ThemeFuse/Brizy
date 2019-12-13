@@ -119,7 +119,7 @@ class Brizy_Admin_Main {
 
 			$bpost = Brizy_Editor_Post::get( $post );
 
-			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->get_parent_id() );
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->getWpPostParentId() );
 
 			$pageUploadPath = $urlBuilder->page_upload_path( "assets/images" );
 
@@ -465,8 +465,7 @@ class Brizy_Admin_Main {
 		try {
 			$post = Brizy_Editor_Post::get( $p->ID );
 		} catch ( Exception $exception ) {
-			$project = Brizy_Editor_Project::get();
-			$post    = Brizy_Editor_Post::create( $project, $p );
+
 		}
 
 		if ( ! $post ) {
@@ -501,6 +500,7 @@ class Brizy_Admin_Main {
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->set_plugin_version( BRIZY_VERSION );
+			$post->setDataVersion(1);
 			$post->save();
 			do_action( 'brizy_after_enabled_for_post', $p );
 			// redirect

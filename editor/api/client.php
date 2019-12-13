@@ -199,7 +199,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 					'is_index' => true
 				)
 			) ),
-			'project_json'       => json_encode( $project->create_post_data() ),
+			'project_json'       => json_encode( $project->createResponse() ),
 			'global_blocks_json' => json_encode( Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL ) )
 		) );
 

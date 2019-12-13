@@ -31,7 +31,7 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 		$brizyPost = Brizy_Editor_Post::get( (int) $vars[ self::ENDPOINT_POST ] );
 
 		if ( $brizyPost->uses_editor() ) {
-			$this->urlBuilder->set_post_id( $brizyPost->get_parent_id() );
+			$this->urlBuilder->set_post_id( $brizyPost->getWpPostParentId() );
 		}
 
 		$endpoint_value = $wp_query->query_vars[ self::ENDPOINT ];

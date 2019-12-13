@@ -44,7 +44,6 @@ class ProjectApiCest {
 		return [
 			[ 'data' => '{}' ],
 			[ 'data' => '{}', 'is_autosave' => 0 ],
-
 		];
 	}
 
@@ -58,15 +57,16 @@ class ProjectApiCest {
 	 */
 	public function postProjectWithoutAutosaveTest( FunctionalTester $I, \Codeception\Example $example ) {
 		$query = build_query( [
-			'action'  => Brizy_Editor_API::AJAX_SET_PROJECT,
-			'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'version' => BRIZY_EDITOR_VERSION
+			'action'      => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'hash'        => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1
+
 		] );
 		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, $example->getIterator()->getArrayCopy() );
-		$jsonResponse = $I->grabResponse();
-
 		$I->seeResponseCodeIsSuccessful();
 
+		$jsonResponse  = $I->grabResponse();
 		$projectObject = json_decode( $jsonResponse )->data;
 
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_title' => 'Brizy Project' ] );
@@ -80,14 +80,14 @@ class ProjectApiCest {
 		Brizy_Editor_Project::cleanClassCache();
 		$project = Brizy_Editor_Project::get();
 
-		$I->assertEquals( '{}', $project->getDataAsJson(), 'It should not return submitted project data becausr is an autosave' );
-
+		$I->assertEquals( '{}', $project->getDataAsJson(), 'It should not return submitted project data because is an autosave' );
+		$I->assertEquals( 1, $project->getCurrentDataVersion(), 'The dataVersion should be 1' );
 
 		// also make sure the get project data request is returning the correct values
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Editor_API::AJAX_GET_PROJECT,
-				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
-				'version' => BRIZY_EDITOR_VERSION
+				'action'      => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'hash'        => wp_create_nonce( Brizy_Editor_API::nonce ),
+				'version'     => BRIZY_EDITOR_VERSION
 			] ) );
 		$jsonResponse = $I->grabResponse();
 
@@ -96,17 +96,21 @@ class ProjectApiCest {
 		$projectObject = json_decode( $jsonResponse )->data;
 
 		$I->assertEquals( '{}', $projectObject->data, 'It should return submitted project data' );
+		$I->assertEquals( 1, $project->getCurrentDataVersion(), 'The dataVersion should be 2' );
 	}
 
 
 	/**
 	 * @param FunctionalTester $I
+	 *
+	 * @throws Exception
 	 */
 	public function postProjectWithAutosaveTest( FunctionalTester $I ) {
 		$query = build_query( [
 			'action'  => Brizy_Editor_API::AJAX_SET_PROJECT,
 			'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'version' => BRIZY_EDITOR_VERSION
+			'version' => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1
 		] );
 		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [
 			'data'        => '{}',
@@ -153,9 +157,10 @@ class ProjectApiCest {
 	 */
 	public function postProjectFailsTest( FunctionalTester $I ) {
 		$query = build_query( [
-			'action'  => Brizy_Editor_API::AJAX_SET_PROJECT,
-			'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'version' => BRIZY_EDITOR_VERSION
+			'action'      => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'hash'        => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1,
 		] );
 		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [] );
 
@@ -163,9 +168,10 @@ class ProjectApiCest {
 
 
 		$I->sendAjaxRequest( 'POST', 'wp-admin/admin-ajax.php?' . $query, [
-			'fonts'   => '{}',
-			'styles'  => '{}',
-			'version' => BRIZY_EDITOR_VERSION
+			'fonts'       => '{}',
+			'styles'      => '{}',
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1,
 		] );
 
 		$I->seeResponseCodeIs( 400 );
@@ -180,6 +186,7 @@ class ProjectApiCest {
 		$projectData = (array) $projectObject;
 		$I->assertArrayHasKey( 'id', $projectData, 'Project data should contain property: id' );
 		$I->assertArrayHasKey( 'data', $projectData, 'Project data should contain property: data  ' );
+		$I->assertArrayHasKey( 'dataVersion', $projectData, 'Project data should contain property: dataVersion  ' );
 		$I->assertNotEmpty( $projectData['data'], 'Project data should not be empty' );
 	}
 }
