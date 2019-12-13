@@ -55,7 +55,8 @@ class Brizy_Compatibilities_Init {
 
 	private function is_plugin_active( $plugin_file ) {
 
-		if ( in_array( $plugin_file, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		$apply_filters = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
+		if (  is_array($apply_filters) &&  in_array( $plugin_file, $apply_filters ) ) {
 			return true;
 		}
 

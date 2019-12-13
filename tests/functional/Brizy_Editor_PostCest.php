@@ -156,7 +156,6 @@ class Brizy_Editor_PostCest {
 		$I->canSeePostInDatabase( [
 			'ID'           => $postId,
 			'post_content' => $htmlBody,
-			'post_status'  => 'pending',
 		] );
 
 		$I->canSeePostMetaInDatabase( [
