@@ -445,7 +445,7 @@ class Brizy_Admin_Templates {
 				}
 
 				$is_preview    = is_preview() || isset( $_GET['preview'] );
-				$needs_compile = ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
+				$needs_compile = $is_preview || ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
 
 				if ( $needs_compile ) {
 					try {
