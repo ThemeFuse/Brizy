@@ -201,7 +201,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$this->deleteOldAutosaves( $this->getWpPostParentId() );
 
 		$params = array(
-			'ID'           => $this->get_parent_id(),
+			'ID'           => $this->getWpPostParentId(),
 			'post_content' => $brizy_compiled_page->get_body() ?: '<div class="brz-root__container"></div>'
 		);
 
