@@ -50,7 +50,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			$dir_path = dirname( $asset_path );
 
 			if ( ! file_exists( $dir_path ) ) {
-				if ( ! mkdir( $dir_path, 0755, true ) && ! is_dir( $dir_path ) ) {
+				if ( !file_exists( $dir_path ) && ! mkdir( $dir_path, 0755, true ) && ! is_dir( $dir_path ) ) {
 					throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $dir_path ) );
 				}
 			}
@@ -122,7 +122,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 		}
 		$bpost = Brizy_Editor_Post::get( $post_id );
 
-		update_post_meta( $attachmentId, 'brizy_post_uid', $bpost->get_uid() );
+		update_post_meta( $attachmentId, 'brizy_post_uid', $bpost->getUid() );
 
 		return $attachmentId;
 	}

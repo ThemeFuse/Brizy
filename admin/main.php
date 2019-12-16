@@ -119,7 +119,7 @@ class Brizy_Admin_Main {
 
 			$bpost = Brizy_Editor_Post::get( $post );
 
-			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->get_parent_id() );
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->getWpPostParentId() );
 
 			$pageUploadPath = $urlBuilder->page_upload_path( "assets/images" );
 
@@ -255,7 +255,7 @@ class Brizy_Admin_Main {
 			Brizy_Editor::get()->get_slug() . '-admin-css',
 			Brizy_Editor::get()->get_url( 'admin/static/css/style.css' ),
 			array(),
-			true
+			Brizy_Editor::get()->get_version()
 		);
 		wp_enqueue_style(
 			Brizy_Editor::get()->get_slug() . '-select2',
@@ -286,7 +286,7 @@ class Brizy_Admin_Main {
 			Brizy_Editor::get()->get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
 			array(
-				'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+				'url'           => admin_url( 'admin-ajax.php' ),
 				'pluginUrl'     => BRIZY_PLUGIN_URL,
 				'ruleApiHash'   => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
 				'id'            => get_the_ID(),
@@ -299,6 +299,11 @@ class Brizy_Admin_Main {
 				),
 				'editorVersion' => BRIZY_EDITOR_VERSION,
 				'pluginVersion' => BRIZY_VERSION,
+				'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
+				'l10n'          => [
+					'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
+					'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
+				]
 			)
 		);
 	}
@@ -460,8 +465,7 @@ class Brizy_Admin_Main {
 		try {
 			$post = Brizy_Editor_Post::get( $p->ID );
 		} catch ( Exception $exception ) {
-			$project = Brizy_Editor_Project::get();
-			$post    = Brizy_Editor_Post::create( $project, $p );
+
 		}
 
 		if ( ! $post ) {
@@ -496,6 +500,7 @@ class Brizy_Admin_Main {
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->set_plugin_version( BRIZY_VERSION );
+			$post->setDataVersion(1);
 			$post->save();
 			do_action( 'brizy_after_enabled_for_post', $p );
 			// redirect

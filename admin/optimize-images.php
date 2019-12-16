@@ -119,7 +119,7 @@ class Brizy_Admin_OptimizeImages {
 
 				$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
 
-				$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $brizyPost->get_wp_post(), 'document' );
+				$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $brizyPost->getWpPost(), 'document' );
 
 				$urls = array_merge( $urls, $this->extract_media_urls( $content, $filesystem ) );
 			} catch ( Exception $e ) {
@@ -129,12 +129,12 @@ class Brizy_Admin_OptimizeImages {
 
 		$urls = array_unique( $urls );
 
-		$context['urls']      = $urls;
-		$context['count']     = count( $urls );
-		$context['svgObject'] = file_get_contents( str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/spinner.svg" ) );
-		$context['svg']       = str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_URL . "/admin/static/img/spinner.svg#circle" );
-		$context['enabled']   = ( isset( $settings['shortpixel']['API_KEY'] ) && $settings['shortpixel']['API_KEY'] != '' ) ? 1 : 0;
-
+		$context['urls']         = $urls;
+		$context['count']        = count( $urls );
+		$context['svgObject']    = file_get_contents( str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/spinner.svg" ) );
+		$context['svg']          = str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_URL . "/admin/static/img/spinner.svg#circle" );
+		$context['enabled']      = ( isset( $settings['shortpixel']['API_KEY'] ) && $settings['shortpixel']['API_KEY'] != '' ) ? 1 : 0;
+		$context['submit_label'] = __( 'Optimize', 'brizy' );
 
 		return $this->twig->render( 'optimizer-general.html.twig', $context );
 	}

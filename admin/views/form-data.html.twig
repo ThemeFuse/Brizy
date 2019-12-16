@@ -2,19 +2,24 @@
     {% for field in data.formData %}
         <li>
             <label for="{{ field.name }}">{{ field.label }}</label>:
-            <span id="{{ field.name }}">{{ field.value }}</span>
+            {% if field.type == "FileUpload" %}
+                <span id="{{ field.name }}"><a href="{{ field.value }}" target="_blank">{{ field.value }}</a></span>
+            {% else %}
+                <span id="{{ field.name }}">{{ field.value }}</span>
+            {% endif %}
         </li>
     {% endfor %}
 </ul>
 <style>
-    .formData{
+    .formData {
         margin: 0;
     }
-    .formData label{
+
+    .formData label {
         font-weight: bold;
     }
 
-    .formData span{
+    .formData span {
         vertical-align: middle;
     }
 </style>

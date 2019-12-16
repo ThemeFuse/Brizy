@@ -17,7 +17,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 	$_SERVER['HTTPS'] = 'on';
 }
 
-define( 'BRIZY_DEVELOPMENT', false );
+define( 'BRIZY_DEVELOPMENT', true );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '1.0.107' );
 define( 'BRIZY_EDITOR_VERSION', '125' );
@@ -63,7 +63,7 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
 		foreach ( $options['plugins'] as $plugin ) {
 			if ( $plugin == BRIZY_PLUGIN_BASE ) {
-				flush_rewrite_rules( );
+				add_option('brizy-regenerate-permalinks',1 );
 			}
 		}
 	}
@@ -72,11 +72,12 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 function brizy_install() {
 	Brizy_Logger::install();
 	Brizy_Editor::get()->registerCustomPostTemplates();
-	flush_rewrite_rules( );
+	add_option('brizy-regenerate-permalinks',1 );
 }
 
 function brizy_clean() {
 	Brizy_Logger::clean();
+	flush_rewrite_rules();
 }
 
 new Brizy_Compatibilities_Init();

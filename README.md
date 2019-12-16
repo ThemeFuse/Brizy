@@ -101,10 +101,10 @@ $html = new Brizy_Editor_CompiledHtml( $post->get_compiled_html() );
 
 // the <head> content
 // the $headHtml contains all the assets the page needs
-$headHtml = apply_filters( 'brizy_content', $html->get_head(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+$headHtml = apply_filters( 'brizy_content', $html->get_head(), Brizy_Editor_Project::get(), $post->getWpPost() );
 
 // the <body> content
-$bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+$bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Project::get(), $post->getWpPost() );
 ```
 
 

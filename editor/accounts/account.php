@@ -44,7 +44,7 @@ class Brizy_Editor_Accounts_Account extends Brizy_Editor_Accounts_AbstractAccoun
 		}
 
 		if ( is_object( $json_obj ) ) {
-			return Brizy_Editor_Accounts_AbstractAccount::createFromJson( get_object_vars( $json_obj ) );
+			return Brizy_Editor_Accounts_AbstractAccount::createFromSerializedData( get_object_vars( $json_obj ) );
 		}
 
 		throw new Exception( 'Invalid json provided.' );

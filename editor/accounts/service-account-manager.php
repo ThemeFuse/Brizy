@@ -32,21 +32,31 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 		return $this->accounts;
 	}
 
+	public function getFilteredAccounts( $filter ) {
+		$accounts = array();
+		foreach ( $this->getAllAccounts() as $account ) {
+
+			if ( isset( $filter['service'] ) && $filter['service'] != $account->getService() ) {
+				continue;
+			}
+
+			if ( isset( $filter['group'] ) && $filter['group'] != $account->getGroup() ) {
+				continue;
+			}
+
+			$accounts[] = $account;
+		}
+
+		return $accounts;
+	}
+
 	/**
-	 * @param $service
+	 * @param $group
 	 *
 	 * @return array
 	 */
 	public function getAccountsByGroup( $group ) {
-
-		$accounts = array();
-		foreach ( $this->accounts as $account ) {
-			if ( $account->getGroup() == $group ) {
-				$accounts[] = $account;
-			}
-		}
-
-		return $accounts;
+		return $this->getFilteredAccounts( array( 'group' => $group ) );
 	}
 
 	/**
@@ -55,15 +65,7 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 	 * @return array
 	 */
 	public function getAccountsByService( $service ) {
-
-		$accounts = array();
-		foreach ( $this->getAllAccounts() as $account ) {
-			if ( $account->getService() == $service ) {
-				$accounts[] = $account;
-			}
-		}
-
-		return $accounts;
+		return $this->getFilteredAccounts( array( 'service' => $service ) );
 	}
 
 	/**
@@ -102,14 +104,30 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 		if ( $this->hasAccount( $account ) ) {
 			return;
 		}
+
 		$this->accounts[] = $account;
 		$this->updateStorage();
 	}
 
 	/**
-	 * @param Brizy_Editor_Accounts_Account $account
+	 * @param Brizy_Editor_Accounts_AbstractAccount $anAccount
 	 */
-	public function deleteAccount( Brizy_Editor_Accounts_Account $account ) {
+	public function updateAccount( Brizy_Editor_Accounts_AbstractAccount $anAccount ) {
+
+		foreach ( $this->getAllAccounts() as $index => $account ) {
+			if ( $account->getId() == $anAccount->getId() ) {
+				$this->accounts[ $index ] = $anAccount;
+				break;
+			}
+		}
+
+		$this->updateStorage();
+	}
+
+	/**
+	 * @param Brizy_Editor_Accounts_AbstractAccount $account
+	 */
+	public function deleteAccount( Brizy_Editor_Accounts_AbstractAccount $account ) {
 
 		$this->deleteAccountById( $account->getId() );
 	}
@@ -122,6 +140,7 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 		foreach ( $this->getAllAccounts() as $key => $account ) {
 			if ( $account->getId() == $accountId ) {
 				unset( $this->accounts[ $key ] );
+				break;
 			}
 		}
 
@@ -142,7 +161,7 @@ class Brizy_Editor_Accounts_ServiceAccountManager {
 		}
 
 		$this->project->setAccounts( $data );
-		$this->project->save();
+		$this->project->saveStorage();
 	}
 
 	/**

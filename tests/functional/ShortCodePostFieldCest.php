@@ -9,21 +9,22 @@ class ShortCodePostFieldCest {
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 
+		$I->dontHavePostInDatabase( [] );
 		$this->postId = $I->havePostInDatabase( [
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',
 			'post_excerpt'   => 'field_post_excerpt',
-			'post_status'    => 'field_post_status',
+			'post_status'    => 'publish',
 			'comment_status' => 'field_comment_status',
 			'ping_status'    => 'field_ping_status',
-			'post_password'  => 'field_post_password',
+			'post_password'  => '',
 			'post_name'      => 'field_post_name',
 			'to_ping'        => 'field_to_ping',
 			'pinged'         => 'field_pinged',
 			'post_parent'    => '0',
 			'guid'           => 'field_guid',
 			'menu_order'     => '0',
-			'post_type'      => 'field_post_type',
+			'post_type'      => 'post',
 			'post_mime_type' => 'field_post_mime_type',
 			'comment_count'  => '10',
 		] );
@@ -35,7 +36,7 @@ class ShortCodePostFieldCest {
 		return [
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_content"]',
-				'output' => 'field_post_content'
+				'output' => "<p>field_post_content</p>\n"
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_title"]',
@@ -47,7 +48,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_status"]',
-				'output' => 'field_post_status'
+				'output' => 'publish'
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="comment_status"]',
@@ -59,7 +60,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_password"]',
-				'output' => 'field_post_password'
+				'output' => ''
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_name"]',
@@ -87,7 +88,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_type"]',
-				'output' => 'field_post_type'
+				'output' => 'post'
 			],
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="post_mime_type"]',
@@ -96,7 +97,7 @@ class ShortCodePostFieldCest {
 			[
 				'input'  => '[brizy_post_field post="' . $this->postId . '" property="comment_count"]',
 				'output' => '10'
-			],
+			]
 		];
 	}
 
@@ -105,7 +106,7 @@ class ShortCodePostFieldCest {
 		return [
 			[
 				'input'  => '[brizy_post_field property="post_content"]',
-				'output' => 'field_post_content'
+				'output' => "<p>field_post_content</p>\n"
 			],
 			[
 				'input'  => '[brizy_post_field property="post_title"]',
@@ -117,7 +118,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field property="post_status"]',
-				'output' => 'field_post_status'
+				'output' => 'publish'
 			],
 			[
 				'input'  => '[brizy_post_field property="comment_status"]',
@@ -129,7 +130,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field property="post_password"]',
-				'output' => 'field_post_password'
+				'output' => ''
 			],
 			[
 				'input'  => '[brizy_post_field property="post_name"]',
@@ -157,7 +158,7 @@ class ShortCodePostFieldCest {
 			],
 			[
 				'input'  => '[brizy_post_field property="post_type"]',
-				'output' => 'field_post_type'
+				'output' => 'post'
 			],
 			[
 				'input'  => '[brizy_post_field property="post_mime_type"]',
@@ -166,7 +167,7 @@ class ShortCodePostFieldCest {
 			[
 				'input'  => '[brizy_post_field property="comment_count"]',
 				'output' => '10'
-			],
+			]
 		];
 	}
 
@@ -175,6 +176,17 @@ class ShortCodePostFieldCest {
 	 */
 	public function checkIfShortCodeRegisteredTest( FunctionalTester $I ) {
 		$I->assertTrue( shortcode_exists( 'brizy_post_field' ), 'The shortcode brizy_post should be registered' );
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 * @param \Codeception\Example $example
+	 */
+	public function checkReturnWhenAjaxRequest( FunctionalTester $I ) {
+
+		define( 'DOING_AJAX', true );
+		$output = do_shortcode( '[brizy_post_field property="post_content"]' );
+		$I->assertEquals( "<p>field_post_content</p>\n", $output, 'The short code should return the correct field value' );
 	}
 
 	/**
@@ -195,7 +207,7 @@ class ShortCodePostFieldCest {
 	 */
 	public function checkReturnTheCorrectDataFromMainQueryTest( FunctionalTester $I ) {
 
-		$post = get_post( $this->postId );
+		$post            = get_post( $this->postId );
 		$GLOBALS['post'] = $post;
 
 		foreach ( $this->checkReturnTheCorrectDataParametersWithoutPost() as $example ) {

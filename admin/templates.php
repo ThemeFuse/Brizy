@@ -345,7 +345,7 @@ class Brizy_Admin_Templates {
 		} ) );
 	}
 
-	public function geTemplateList( $context ) {
+	public function geTemplateList( $context) {
 
 		$list = array(
 			array( 'title' => 'Author page', 'value' => 'author', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),
@@ -420,7 +420,6 @@ class Brizy_Admin_Templates {
 			return Brizy_Editor::get()->get_path( '/public/views/templates/' . $templateName );
 		}
 
-
 		return $template;
 	}
 
@@ -446,7 +445,7 @@ class Brizy_Admin_Templates {
 				}
 
 				$is_preview    = is_preview() || isset( $_GET['preview'] );
-				$needs_compile = ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
+				$needs_compile = $is_preview || ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
 
 				if ( $needs_compile ) {
 					try {
@@ -524,7 +523,7 @@ class Brizy_Admin_Templates {
 		}
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = $this->template->get_wp_post();
+		$post = $this->template->getWpPost();
 
 		if ( $pid ) {
 			$post = get_post( $pid );
@@ -556,7 +555,7 @@ class Brizy_Admin_Templates {
 
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = $this->template->get_wp_post();
+		$post = $this->template->getWpPost();
 
 		if ( $pid ) {
 			$post = get_post( $pid );

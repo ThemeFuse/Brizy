@@ -7,11 +7,20 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 */
 	protected $id;
 
-
 	/**
 	 * @var Brizy_Editor_Forms_AbstractIntegration[]
 	 */
 	protected $integrations = array();
+
+	/**
+	 * @var bool
+	 */
+	protected $hasEmailTemplate = false;
+
+	/**
+	 * @var string
+	 */
+	protected $emailTemplate;
 
 	/**
 	 * @return string
@@ -28,18 +37,30 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 		return self::createFromSerializedData( $vars );
 	}
 
+	/**
+	 * @return array|mixed
+	 */
 	public function jsonSerialize() {
 		$get_object_vars = array(
-			'id'           => $this->id,
-			'integrations' => $this->integrations
+			'id'               => $this->id,
+			'hasEmailTemplate' => $this->hasEmailTemplate(),
+			'emailTemplate'    => $this->getEmailTemplate(),
+			'integrations'     => array()
 		);
+
+		foreach ( $this->integrations as $integration ) {
+			$get_object_vars['integrations'][] = $integration->convertToOptionValue();
+		}
 
 		return $get_object_vars;
 	}
 
 	public function convertToOptionValue() {
 		$get_object_vars = array(
-			'id' => $this->id,
+			'id'               => $this->id,
+			'hasEmailTemplate' => $this->hasEmailTemplate(),
+			'emailTemplate'    => $this->getEmailTemplate(),
+			'integrations'     => array()
 		);
 
 		foreach ( $this->integrations as $integration ) {
@@ -52,6 +73,9 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	static public function createFromSerializedData( $data ) {
 		$instance     = new self();
 		$instance->id = $data['id'];
+
+		$instance->hasEmailTemplate = $data['hasEmailTemplate'];
+		$instance->emailTemplate    = $data['emailTemplate'];
 
 		foreach ( $data['integrations'] as $integration ) {
 			$brizy_editor_forms_wordpress_integration = Brizy_Editor_Forms_AbstractIntegration::createFromSerializedData( $integration );
@@ -90,7 +114,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 * @throws Exception
 	 */
 	public static function createFromJson( $json_obj ) {
-		$instance = new self();
+		$formInstance = new self();
 
 		if ( ! isset( $json_obj ) ) {
 			throw new Exception( 'Bad Request', 400 );
@@ -98,19 +122,45 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		if ( is_object( $json_obj ) ) {
 
-			$instance->setId( $json_obj->id );
+			$formInstance->setId( $json_obj->id );
 
 			// add uncompleted wordpress integration
 			$current_user   = wp_get_current_user();
 			$an_integration = new Brizy_Editor_Forms_WordpressIntegration();
 			$an_integration->setEmailTo( $current_user->user_email );
 
-			$instance->addIntegration( $an_integration );
+			$formInstance->addIntegration( $an_integration );
 
 			foreach ( (array) $json_obj->integrations as $integration ) {
 				if ( is_object( $integration ) ) {
-					$instance->addIntegration( Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( $integration ) );
+					$formInstance->addIntegration( Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( $integration ) );
 				}
+			}
+		}
+
+		return $formInstance;
+	}
+
+	/**
+	 * @param Brizy_Editor_Forms_Form $instance
+	 * @param $json_obj
+	 *
+	 * @return Brizy_Editor_Forms_Form
+	 * @throws Exception
+	 */
+	public static function updateFromJson( Brizy_Editor_Forms_Form $instance, $json_obj ) {
+
+		if ( ! isset( $json_obj ) ) {
+			throw new Exception( 'Bad Request', 400 );
+		}
+
+		if ( is_object( $json_obj ) ) {
+			$instance->setHasEmailTemplate( $json_obj->hasEmailTemplate );
+
+			if ( $json_obj->hasEmailTemplate ) {
+				$instance->setEmailTemplate( $json_obj->emailTemplate );
+			} else {
+				$instance->setEmailTemplate( '' );
 			}
 		}
 
@@ -130,6 +180,10 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		if ( ! $this->getId() ) {
 			$errors['id'] = 'Invalid form id';
+		}
+
+		if ( $this->hasEmailTemplate && $this->getEmailTemplate() == '' ) {
+			$errors['emailTemplate'] = 'Invalid email template content';
 		}
 
 		if ( count( $errors ) ) {
@@ -216,4 +270,56 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 		return false;
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function hasEmailTemplate() {
+		return $this->hasEmailTemplate;
+	}
+
+	/**
+	 * @param bool $hasEmailTemplate
+	 *
+	 * @return Brizy_Editor_Forms_Form
+	 */
+	public function setHasEmailTemplate( $hasEmailTemplate ) {
+		$this->hasEmailTemplate = $hasEmailTemplate;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEmailTemplate() {
+		return $this->emailTemplate;
+	}
+
+	/**
+	 * @param string $emailTemplate
+	 *
+	 * @return Brizy_Editor_Forms_Form
+	 */
+	public function setEmailTemplate( $emailTemplate ) {
+		$this->emailTemplate = $emailTemplate;
+
+		return $this;
+	}
+
+	/**
+	 * @param $fields
+	 *
+	 * @return string
+	 */
+	public function getEmailTemplateContent( $fields ) {
+
+		$field_string = array();
+		foreach ( $fields as $field ) {
+			$field_string[] = "{$field->label}: " . esc_html( $field->value );
+		}
+
+		$content = implode( '<br>', $field_string );
+
+		return $content;
+	}
 }

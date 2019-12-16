@@ -20,6 +20,20 @@
                 </fieldset>
             </td>
         </tr>
+        <tr>
+            <th scope="row"><?php echo __( 'Enable SVG uploads' ); ?></th>
+            <td>
+                <label>
+                    <input type="checkbox"
+                           id="svg-upload-enabled"
+                           name="svg-upload-enabled"
+                           value="1"
+			            <?php echo $svgUploadEnabled ? 'checked' : ''; ?>
+                    >
+
+                </label>
+            </td>
+        </tr>
         </tbody>
     </table>
 
