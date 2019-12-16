@@ -35,11 +35,11 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 
-		if ( self::$insance ) {
-			return self::$insance;
+		if ( isset(self::$insance[$post->get_id()]) ) {
+			return self::$insance[$post->get_id()];
 		}
 
-		return self::$insance = new self( $project, $post );
+		return self::$insance[$post->get_id()] = new self( $project, $post );
 	}
 
 	/**
@@ -59,8 +59,8 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		if ( self::$config ) {
-			return self::$config;
+		if ( self::$config[$this->post->get_id()] ) {
+			return self::$config[$this->post->get_id()];
 		}
 
 		global $wp_registered_sidebars;
@@ -220,7 +220,7 @@ class Brizy_Editor_Editor_Editor {
 
 		$config = $this->addSocialAccounts( $manager, $config );
 
-		return self::$config = apply_filters( 'brizy_editor_config', $config );
+		return self::$config[$this->post->get_id()] = apply_filters( 'brizy_editor_config', $config );
 	}
 
 	/**
