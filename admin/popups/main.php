@@ -26,7 +26,7 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
-		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), -999999, 4 );
+		add_filter( 'brizy_content', array( $this, 'insertPopupsHtml' ), - 999999, 4 );
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
 
 		if ( is_admin() ) {
@@ -74,7 +74,7 @@ class Brizy_Admin_Popups_Main {
 				'has_archive'         => false,
 				'description'         => __( 'Popups', 'brizy' ),
 				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
-				'show_ui'             => defined('BRIZY_PRO_VERSION'),
+				'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => 'brizy-popup' ),
@@ -119,6 +119,16 @@ class Brizy_Admin_Popups_Main {
 		$popups = $this->getMatchingBrizyPopups();
 
 		foreach ( $popups as $brizyPopup ) {
+			/**
+			 * @var Brizy_Editor_Post $brizyPopup ;
+			 */
+
+			if ( $brizyPopup->get_needs_compile() ) {
+				$brizyPopup->compile_page();
+				$brizyPopup->save();
+				$brizyPopup->save_wp_post();
+			}
+
 			$compiledPage = $brizyPopup->get_compiled_page();
 
 			if ( $context == 'document' ) {
@@ -167,7 +177,7 @@ class Brizy_Admin_Popups_Main {
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	public function getMatchingBrizyPopups() {
-		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
+		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndTypeForPopoup();
 
 		return $this->findMatchingPopups( $applyFor, $entityType, $entityValues );
 	}
