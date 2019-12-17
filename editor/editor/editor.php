@@ -59,7 +59,7 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		if ( self::$config[$this->post->get_id()] ) {
+		if ( isset(self::$config[$this->post->get_id()]) ) {
 			return self::$config[$this->post->get_id()];
 		}
 
@@ -78,7 +78,6 @@ class Brizy_Editor_Editor_Editor {
 		$templates           = $this->post->get_templates();
 		$isTemplate          = $parent_post_type === Brizy_Admin_Templates::CP_TEMPLATE;
 		$isPopup             = $parent_post_type === Brizy_Admin_Popups_Main::CP_POPUP;
-
 
 		$config = array(
 			'user'            => array( 'role' => 'admin' ),
