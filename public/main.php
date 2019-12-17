@@ -344,7 +344,7 @@ class Brizy_Public_Main {
 
 			$params['content'] = $compiled_html_head;
 		} else {
-			$compiled_page = $this->post->get_compiled_page();
+			$compiled_page     = $this->post->get_compiled_page();
 			$head              = $compiled_page->get_head();
 			$params['content'] = $head;
 		}
@@ -367,7 +367,8 @@ class Brizy_Public_Main {
 
 		global $post;
 
-		if ( false === strpos( $content, 'brz-root__container' ) || ( $post && $post->ID !== $this->post->getWpPostParentId() ) ) {
+		if ( false === strpos( $content, 'brz-root__container' ) ||
+		     ( $post && $post->ID !== $this->post->getWpPostParentId() ) ) {
 			return $content;
 		}
 
