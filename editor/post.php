@@ -437,7 +437,7 @@ class Brizy_Editor_Post extends Brizy_Admin_Serializable {
 
 		$params = array(
 			'ID'           => $this->get_parent_id(),
-			'post_content' => $brizy_compiled_page->get_body()
+			'post_content' => $brizy_compiled_page->get_body() . '<div class="brz-root__container"></div>'
 		);
 
 		if ( $can_publish ) {
