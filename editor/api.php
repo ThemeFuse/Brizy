@@ -327,12 +327,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$this->post->set_editor_data( $data );
 				$this->post->set_editor_version( BRIZY_EDITOR_VERSION );
 				$this->post->set_needs_compile( true );
-				$this->post->setDataVersion( $dataVersion );
 			}
 
 			if ( (int) $this->param( 'is_autosave' ) == 1 ) {
 				$this->post->save( 1 );
 			} else {
+				$this->post->setDataVersion( $dataVersion );
 				$this->post->save( 0 );
 				$this->post->savePost();
 			}
