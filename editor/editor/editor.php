@@ -35,7 +35,7 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 
-		$postId = $post && $post->get_id() ?: 0;
+		$postId = $post && $post->get_id() ? $post->get_id() : 0;
 		if ( isset( self::$insance[ $postId ] ) ) {
 			return self::$insance[ $postId ];
 		}
@@ -60,7 +60,7 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		$cachePostId = $this->post && $this->post->get_id() ?: 0;
+		$cachePostId = $this->post ? $this->post->get_id() : 0;
 		if ( isset( self::$config[ $cachePostId ] ) ) {
 			return self::$config[ $cachePostId ];
 		}
