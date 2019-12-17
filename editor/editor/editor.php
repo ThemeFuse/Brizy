@@ -35,11 +35,12 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 
-		if ( isset(self::$insance[$post->get_id()]) ) {
-			return self::$insance[$post->get_id()];
+		$postId = $post && $post->get_id() ?: 0;
+		if ( isset( self::$insance[ $postId ] ) ) {
+			return self::$insance[ $postId ];
 		}
 
-		return self::$insance[$post->get_id()] = new self( $project, $post );
+		return self::$insance[ $postId ] = new self( $project, $post );
 	}
 
 	/**
@@ -59,8 +60,9 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		if ( self::$config[$this->post->get_id()] ) {
-			return self::$config[$this->post->get_id()];
+		$cachePostId = $this->post && $this->post->get_id() ?: 0;
+		if ( isset( self::$config[ $cachePostId ] ) ) {
+			return self::$config[ $cachePostId ];
 		}
 
 		global $wp_registered_sidebars;
@@ -78,7 +80,6 @@ class Brizy_Editor_Editor_Editor {
 		$templates           = $this->post->get_templates();
 		$isTemplate          = $parent_post_type === Brizy_Admin_Templates::CP_TEMPLATE;
 		$isPopup             = $parent_post_type === Brizy_Admin_Popups_Main::CP_POPUP;
-
 
 		$config = array(
 			'user'            => array( 'role' => 'admin' ),
@@ -220,7 +221,7 @@ class Brizy_Editor_Editor_Editor {
 
 		$config = $this->addSocialAccounts( $manager, $config );
 
-		return self::$config[$this->post->get_id()] = apply_filters( 'brizy_editor_config', $config );
+		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
 	}
 
 	/**
@@ -300,8 +301,7 @@ class Brizy_Editor_Editor_Editor {
 			$rule        = null;
 
 
-			if(!function_exists('addQueryStringToUrl'))
-			{
+			if ( ! function_exists( 'addQueryStringToUrl' ) ) {
 				function addQueryStringToUrl( $link, $query ) {
 					$parsedUrl = parse_url( $link );
 					$separator = ( ! isset( $parsedUrl['query'] ) || $parsedUrl['query'] == null ) ? '?' : '&';

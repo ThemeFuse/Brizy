@@ -1,6 +1,5 @@
 <?php
 
-
 class ApiCest {
 
 	public function _before( FunctionalTester $I ) {
