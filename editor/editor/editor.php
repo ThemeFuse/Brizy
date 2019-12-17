@@ -35,11 +35,12 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 
-		if ( isset(self::$insance[$post->get_id()]) ) {
-			return self::$insance[$post->get_id()];
+		$postId = $post && $post->getWpPostId() ?: 0;
+		if ( isset( self::$insance[ $postId ] ) ) {
+			return self::$insance[ $postId ];
 		}
 
-		return self::$insance[$post->get_id()] = new self( $project, $post );
+		return self::$insance[ $postId ] = new self( $project, $post );
 	}
 
 	/**
@@ -59,8 +60,9 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		if ( self::$config[$this->post->get_id()] ) {
-			return self::$config[$this->post->get_id()];
+		$cachePostId = $this->post && $this->post->getWpPostId() ?: 0;
+		if ( isset( self::$config[ $cachePostId ] ) ) {
+			return self::$config[ $cachePostId ];
 		}
 
 		global $wp_registered_sidebars;
@@ -220,13 +222,13 @@ class Brizy_Editor_Editor_Editor {
 			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
 
-    $manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
+		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
 		$config = $this->addRecaptchaAccounts( $manager, $config );
 
 		$config = $this->addSocialAccounts( $manager, $config );
 
-		return self::$config[$this->post->get_id()] = apply_filters( 'brizy_editor_config', $config );
+		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
 	}
 
 	/**
