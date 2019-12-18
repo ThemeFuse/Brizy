@@ -64,7 +64,7 @@ class Brizy_EditorCest {
 		);
 
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
-		$I->assertFalse( $check, 'It should be return false as the project is not locked' );
+		$I->assertFalse( $check==$this->userId1, 'It should be return false as the project is not locked' );
 	}
 
 	public function testProjectLocked( FunctionalTester $I ) {
