@@ -345,7 +345,7 @@ class Brizy_Admin_Templates {
 		} ) );
 	}
 
-	public function geTemplateList( $context ) {
+	public function geTemplateList( $context) {
 
 		$list = array(
 			array( 'title' => 'Author page', 'value' => 'author', 'groupValue' => Brizy_Admin_Rule::TEMPLATE ),

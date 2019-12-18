@@ -95,7 +95,6 @@ class BlockApiCest {
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
-
 	}
 
 	/**
@@ -121,7 +120,6 @@ class BlockApiCest {
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 		}
 	}
-
 
 	public function createGlobalBlockTest( FunctionalTester $I ) {
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
