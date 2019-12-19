@@ -95,7 +95,6 @@ class BlockApiCest {
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
-
 	}
 
 	/**

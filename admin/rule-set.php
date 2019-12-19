@@ -28,7 +28,7 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 	 * @return float|int
 	 */
 	public function getRuleWeight( $context ) {
-		return array_sum( array_map( function ( Brizy_Admin_RuleInterface $v ) use ( $context ) {
+		return max( array_map( function ( Brizy_Admin_RuleInterface $v ) use ( $context ) {
 			return $v->getRuleWeight( $context );
 		}, $this->rules ) );
 	}
