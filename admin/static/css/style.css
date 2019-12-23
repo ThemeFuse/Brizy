@@ -198,7 +198,7 @@
     position: relative;
 }
 
-.select2-selection__arrow {
+.brizy-template-rules .select2-selection__arrow {
     color: #32373c;
     border-color: #7e8993;
     box-shadow: none;
@@ -211,7 +211,7 @@
     vertical-align: middle;
 }
 
-.select2-selection__arrow b {
+.brizy-template-rules .select2-selection__arrow b {
    display: none;
 }
 
