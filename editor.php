@@ -208,19 +208,6 @@ class Brizy_Editor {
 		Brizy_Admin_Popups_Main::registerSupportedPostType();
 	}
 
-	public function reorderDashboardWidgets() {
-		$meta   = get_user_meta( get_current_user_id(), 'meta-box-order_dashboard', true );
-		$normal = explode( ',', $meta['normal'] );
-		// If you enable Brizy the second time we already have the id, so we need to remove it.
-		$normal = array_diff( $normal, array( 'brizy_dashboard' ) );
-
-		array_unshift( $normal, 'brizy_dashboard' );
-
-		$meta['normal'] = implode( ',', $normal );
-
-		update_user_meta( get_current_user_id(), 'meta-box-order_dashboard', $meta );
-	}
-
 	/**
 	 * @param Brizy_Editor_Post $post
 	 */
