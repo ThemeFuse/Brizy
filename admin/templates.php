@@ -12,7 +12,7 @@ class Brizy_Admin_Templates {
 	/**
 	 * @var Brizy_Editor_Post
 	 */
-	private $template;
+	private static $template;
 
 	/**
 	 * @var Brizy_Admin_Rules_Manager
@@ -27,6 +27,13 @@ class Brizy_Admin_Templates {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 
 		$this->ruleManager = new Brizy_Admin_Rules_Manager();
+	}
+
+	/**
+	 * @return Brizy_Editor_Post
+	 */
+	public static function getTemplate() {
+		return self::$template;
 	}
 
 	public function initializeActions() {
@@ -406,11 +413,11 @@ class Brizy_Admin_Templates {
 	 */
 	public function templateInclude( $template ) {
 
-		if ( ! $this->template ) {
+		if ( ! self::getTemplate() ) {
 			return $template;
 		}
 
-		$templateName = $this->template->get_template();
+		$templateName = self::getTemplate()->get_template();
 
 		if ( ! $templateName ) {
 			return path_join( BRIZY_PLUGIN_PATH, 'public/views/templates/' . Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
@@ -441,20 +448,20 @@ class Brizy_Admin_Templates {
 		try {
 
 			if ( is_null( $pid ) || ! $is_using_brizy ) {
-				$this->template = $this->getTemplateForCurrentPage();
+				self::$template = $this->getTemplateForCurrentPage();
 
-				if ( ! $this->template ) {
+				if ( ! self::getTemplate() ) {
 					return;
 				}
 
 				$is_preview    = is_preview() || isset( $_GET['preview'] );
-				$needs_compile = $is_preview || ! $this->template->isCompiledWithCurrentVersion() || $this->template->get_needs_compile();
+				$needs_compile = $is_preview || ! self::getTemplate()->isCompiledWithCurrentVersion() || self::getTemplate()->get_needs_compile();
 
 				if ( $needs_compile ) {
 					try {
-						$this->template->compile_page();
+						self::getTemplate()->compile_page();
 						if ( ! $is_preview && $needs_compile ) {
-							$this->template->save();
+							self::getTemplate()->save();
 						}
 					} catch ( Exception $e ) {
 						//ignore
@@ -521,19 +528,19 @@ class Brizy_Admin_Templates {
 	 */
 	public function insertPageHead() {
 
-		if ( ! $this->template ) {
+		if ( ! self::getTemplate() ) {
 			return;
 		}
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = $this->template->getWpPost();
+		$post = self::getTemplate()->getWpPost();
 
 		if ( $pid ) {
 			$post = get_post( $pid );
 		}
 
 
-		$compiled_page = $this->template->get_compiled_page();
+		$compiled_page = self::getTemplate()->get_compiled_page();
 
 		$head = apply_filters( 'brizy_content', $compiled_page->get_head(), Brizy_Editor_Project::get(), $post, 'head' );
 		?>
@@ -552,19 +559,19 @@ class Brizy_Admin_Templates {
 	 */
 	public function insertPageContent() {
 
-		if ( ! $this->template ) {
+		if ( ! self::getTemplate() ) {
 			return;
 		}
 
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = $this->template->getWpPost();
+		$post = self::getTemplate()->getWpPost();
 
 		if ( $pid ) {
 			$post = get_post( $pid );
 		}
 
-		$compiled_page = $this->template->get_compiled_page();
+		$compiled_page = self::getTemplate()->get_compiled_page();
 
 		$content = apply_filters( 'brizy_content', $compiled_page->get_body(), Brizy_Editor_Project::get(), $post, 'body' );
 
@@ -579,12 +586,12 @@ class Brizy_Admin_Templates {
 	 */
 	public function filterPageContent( $content ) {
 
-		if ( ! $this->template ) {
+		if ( ! self::getTemplate() ) {
 			return $content;
 		}
 		$pid           = Brizy_Editor::get()->currentPostId();
 		$brizyPost     = get_post( $pid );
-		$compiled_page = $this->template->get_compiled_page();
+		$compiled_page = self::getTemplate()->get_compiled_page();
 
 		return apply_filters( 'brizy_content', $compiled_page->get_body(), Brizy_Editor_Project::get(), $brizyPost, 'body' );
 	}
