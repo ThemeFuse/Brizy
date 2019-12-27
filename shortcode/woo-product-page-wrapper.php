@@ -37,7 +37,7 @@ class Brizy_Shortcode_WooProductPageWrapper extends Brizy_Shortcode_AbstractShor
 	protected function getProductId( $atts ) {
 		global $wpdb;
 
-		if ( isset( $atts['id'] ) ) {
+		if ( isset( $atts['id'] ) && (int)$atts['id'] > 0 ) {
 			return (int) $atts['id'];
 		} elseif ( $product = get_post() ) {
 			return $product->ID;
