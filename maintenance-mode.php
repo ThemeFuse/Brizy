@@ -58,7 +58,7 @@ class Brizy_MaintenanceMode {
 			}
 		}
 
-		if ( is_user_logged_in() && is_admin() ) {
+		if ( is_user_logged_in() && ( is_admin() || ! empty( $_GET ) ) ) {
 			wp_redirect( home_url() );
 			exit;
 		}
