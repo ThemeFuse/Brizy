@@ -44,7 +44,7 @@ class Brizy_MaintenanceMode {
 			return;
 		}
 
-		if ( false !== strpos( $args['ips'], $this->get_user_ip() )/*in_array( $this->get_user_ip(), $args['ips'] )*/ ) {
+		if ( false !== strpos( $args['ips'], $this->get_user_ip() ) ) {
 			return;
 		}
 
