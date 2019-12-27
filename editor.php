@@ -256,6 +256,7 @@ class Brizy_Editor {
 		new Brizy_Shortcode_Navigation();
 		new Brizy_Shortcode_PostField();
 		new Brizy_Shortcode_PostInfo();
+		new Brizy_Shortcode_WooProductPageWrapper();
 	}
 
 	private function loadEditorAdminSettings() {
@@ -299,34 +300,34 @@ class Brizy_Editor {
 	}
 
 
-	public function brizy_settings_header() {
-		$params = array();
-
-		$context = array(
-			'site_settings'  => array(
-				'title'       => html_entity_decode( get_bloginfo( 'name' ) ),
-				'description' => html_entity_decode( get_bloginfo( 'description' ) ),
-				'favicon'     => get_option( 'brizy-settings-favicon' ),
-				'favicon_url' => site_url( get_option( 'brizy-settings-favicon' ) )
-			),
-			'social_sharing' => array(
-				'title'         => html_entity_decode( get_option( 'brizy-social-title' ) ),
-				'description'   => html_entity_decode( get_option( 'brizy-social-description' ) ),
-				'thumbnail'     => get_option( 'brizy-social-thumbnail' ),
-				'thumbnail_url' => site_url( get_option( 'brizy-social-thumbnail' ) )
-			),
-			'custom_css'     => html_entity_decode( get_option( 'brizy-custom-css' ) ),
-			'code_injection' => array(
-				'header_code' => html_entity_decode( get_option( 'brizy-header-injection' ) ),
-				'footer_code' => html_entity_decode( get_option( 'brizy-footer-injection' ) )
-			),
-			'site_url'       => site_url(),
-			'language'       => get_locale(),
-		);
-
-		echo Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/public/views' )
-		                     ->render( 'head-site-settings.html.twig', $context );
-	}
+//	public function brizy_settings_header() {
+//		$params = array();
+//
+//		$context = array(
+//			'site_settings'  => array(
+//				'title'       => html_entity_decode( get_bloginfo( 'name' ) ),
+//				'description' => html_entity_decode( get_bloginfo( 'description' ) ),
+//				'favicon'     => get_option( 'brizy-settings-favicon' ),
+//				'favicon_url' => site_url( get_option( 'brizy-settings-favicon' ) )
+//			),
+//			'social_sharing' => array(
+//				'title'         => html_entity_decode( get_option( 'brizy-social-title' ) ),
+//				'description'   => html_entity_decode( get_option( 'brizy-social-description' ) ),
+//				'thumbnail'     => get_option( 'brizy-social-thumbnail' ),
+//				'thumbnail_url' => site_url( get_option( 'brizy-social-thumbnail' ) )
+//			),
+//			'custom_css'     => html_entity_decode( get_option( 'brizy-custom-css' ) ),
+//			'code_injection' => array(
+//				'header_code' => html_entity_decode( get_option( 'brizy-header-injection' ) ),
+//				'footer_code' => html_entity_decode( get_option( 'brizy-footer-injection' ) )
+//			),
+//			'site_url'       => site_url(),
+//			'language'       => get_locale(),
+//		);
+//
+//		echo Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/public/views' )
+//		                     ->render( 'head-site-settings.html.twig', $context );
+//	}
 
 	public function brizy_settings_footer() {
 		$params                     = array();
