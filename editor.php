@@ -37,6 +37,8 @@ class Brizy_Editor {
 
 			return;
 		}
+
+		add_action( 'init', array( 'Brizy_MaintenanceMode', 'init' ), - 4000 );
 		add_action( 'init', array( $this, 'resetPermalinks' ), - 2000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
@@ -44,7 +46,6 @@ class Brizy_Editor {
 	public function initialize() {
 
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
-		add_action( 'init', array( 'Brizy_MaintenanceMode', 'init' ), 1001 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
 

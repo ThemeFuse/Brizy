@@ -5,7 +5,7 @@
 	<?php wp_nonce_field() ?>
 	<table class="form-table">
 		<tbody>
-            <tr>
+            <tr id="brizy-maintenance-js-mode">
                 <th>
                     <label for="brizy-maintenance-mode"><?php _e( 'Choose Mode', 'brizy' ); ?></label>
                 </th>
@@ -17,7 +17,7 @@
                     </select>
                 </td>
             </tr>
-            <tr>
+            <tr class="hidden">
                 <th>
                     <label for="brizy-maintenance-access-role"><?php _e( 'Who Can Access', 'brizy' ); ?></label>
                 </th>
@@ -28,7 +28,7 @@
                     </select>
                 </td>
             </tr>
-            <tr class="brizy-maintenance-roles">
+            <tr class="brizy-maintenance-roles hidden">
                 <th>
 	                <?php _e( 'Roles', 'brizy' ); ?>
                 </th>
@@ -44,7 +44,7 @@
                     </fieldset>
                 </td>
             </tr>
-            <tr>
+            <tr class="hidden">
                 <th>
                     <label for="brizy-maintenance-page"><?php _e( 'Choose a Page', 'brizy' ); ?></label>
                 </th>
@@ -60,7 +60,7 @@
 	                <?php endif; ?>
                 </td>
             </tr>
-            <tr>
+            <tr class="hidden">
                 <th>
                     <label for="brizy-maintenance-ips"><?php _e( 'Whitelisted IP Addresses', 'brizy' ); ?></label>
                 </th>
