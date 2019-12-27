@@ -23,6 +23,6 @@
         <button type="submit"
                 id="submit"
                 class="button button-primary"
-        ><?php echo __( 'Save Changes' ); ?></button>
+        ><?php echo __( 'Save Changes', 'brizy' ); ?></button>
     </p>
 </form>

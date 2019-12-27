@@ -173,6 +173,49 @@ jQuery(document).ready(function ($) {
         }
     };
 
+    var BrizyMaintenance = {
+        getSelectAccessRole: function() {
+            return $( '#brizy-maintenance-access-role' );
+        },
+        getSelectMode: function() {
+            return $( 'select[name="brizy-maintenance[mode]"]' );
+        },
+        handleEvents: function () {
+            this.getSelectAccessRole().change( function ( e ) {
+                var display = 'custom' === $( this ).val() ? 'table-cell' : 'none';
+                $( '.brizy-maintenance-roles th, .brizy-maintenance-roles td' ).css( 'display', display );
+            } );
+
+            this.getSelectMode().change( function ( e ) {
+                var self = $( this ),
+                    trs  = self.closest( 'table' ).find( 'tr:not(#brizy-maintenance-js-mode)' );
+
+                if ( self.val() ) {
+                    trs.removeClass( 'hidden' );
+                } else {
+                    trs.addClass( 'hidden' );
+                }
+            } );
+
+            this.getSelectMode().trigger( 'change' );
+            this.getSelectAccessRole().trigger( 'change' );
+        },
+
+        init: function () {
+            if ( ! this.getSelectAccessRole().length ) {
+                return;
+            }
+
+            this.handleEvents();
+        }
+    };
+
+    $( function () {
+        BrizyGutenberg.init();
+        BrizyFeedbackDialog.init();
+        BrizyMaintenance.init();
+    } );
+
     $(function () {
         BrizyGutenberg.init();
         BrizyFeedbackDialog.init();

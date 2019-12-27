@@ -37,6 +37,8 @@ class Brizy_Editor {
 
 			return;
 		}
+
+		add_action( 'init', array( 'Brizy_MaintenanceMode', 'init' ), - 4000 );
 		add_action( 'init', array( $this, 'resetPermalinks' ), - 2000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 	}
