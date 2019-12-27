@@ -113,9 +113,9 @@ class Brizy_MaintenanceMode {
 		$files = get_included_files();
 
 		return
-			( ( in_array( ABSPATH . 'wp-login.php', $files ) || in_array( ABSPATH . 'wp-register.php', $files ) )
-		    ||
-		    ( isset( $_GLOBALS['pagenow'] ) && $GLOBALS['pagenow'] === 'wp-login.php' ) || $_SERVER['PHP_SELF'] == '/wp-login.php' );
-
+			in_array( ABSPATH . 'wp-login.php', $files ) ||
+			in_array( ABSPATH . 'wp-register.php', $files ) ||
+			$_SERVER['PHP_SELF'] == '/wp-login.php' ||
+			( isset( $_GLOBALS['pagenow'] ) && $GLOBALS['pagenow'] === 'wp-login.php' );
 	}
 }
