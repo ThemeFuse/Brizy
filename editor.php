@@ -173,6 +173,14 @@ class Brizy_Editor {
 	 * Reset permalinks after plugin upgrade or enable
 	 */
 	public function resetPermalinks() {
+
+		$this->registerCustomPostTemplates();
+
+		if(defined('BRIZY_PRO_VERSION')) {
+			$mainInstance = new BrizyPro_Main();
+			$mainInstance->registerCustomPosts();
+		}
+
 		if ( get_option( 'brizy-regenerate-permalinks', false ) ) {
 			flush_rewrite_rules();
 			delete_option( 'brizy-regenerate-permalinks' );
