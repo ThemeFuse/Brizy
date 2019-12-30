@@ -161,8 +161,7 @@ class Brizy_Editor {
 				$num = BRIZY_MAX_REVISIONS_TO_KEEP;
 			}
 		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->critical( $e->getMessage(), array( $e ) );
-
+			Brizy_Logger::instance()->debug( $e->getMessage(), array( $e ) );
 		}
 
 		return $num;
