@@ -65,7 +65,7 @@ class Brizy_Public_Main {
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
-			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 10000 );
+			add_filter( 'the_content', array( $this, 'insert_page_content' ), 999 );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			$this->plugin_live_composer_fixes();
@@ -367,8 +367,7 @@ class Brizy_Public_Main {
 
 		global $post;
 
-		if ( false === strpos( $content, 'brz-root__container' ) ||
-		     ( $post && $post->ID !== $this->post->getWpPostParentId() ) ) {
+		if ( !$this->post->uses_editor() || ( $post && $post->ID !== $this->post->getWpPostId() ) ) {
 			return $content;
 		}
 
