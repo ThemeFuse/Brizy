@@ -1,12 +1,18 @@
 <?php
 
 
-class Brizy_Admin_Rules_ValidationExceptionTest extends \Codeception\Test\Unit {
+class Brizy_Admin_Rules_ValidationExceptionTest extends \Codeception\TestCase\WPTestCase{
 
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
+
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+	}
 
 	public function testExceptionRuleId() {
 		$exception = new Brizy_Admin_Rules_ValidationException( 1, "test", 100 );

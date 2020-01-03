@@ -1,11 +1,16 @@
 <?php
 
-class BrizyAdminRuleTest extends \Codeception\TestCase\Test {
+class BrizyAdminRuleTest extends \Codeception\TestCase\WPTestCase  {
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
 
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+	}
 
 	public function validMatches() {
 		$incl   = Brizy_Admin_Rule::TYPE_INCLUDE;
@@ -93,12 +98,12 @@ class BrizyAdminRuleTest extends \Codeception\TestCase\Test {
 			[
 				new \Brizy_Admin_Rule( 1, $incl, Brizy_Admin_Rule::POSTS, 'post', [ "category|2" ] ),
 				[ 'applyFor' => Brizy_Admin_Rule::POSTS, 'entityType' => 'post', 'entityValues' => [ 1 ] ],
-				true
+				false
 			],
 			[
 				new \Brizy_Admin_Rule( 1, $incl, Brizy_Admin_Rule::POSTS, 'post', [ "post_tag|2" ] ),
 				[ 'applyFor' => Brizy_Admin_Rule::POSTS, 'entityType' => 'post', 'entityValues' => [ 1 ] ],
-				true
+				false
 			],
 			[
 				new \Brizy_Admin_Rule( 1, $incl, Brizy_Admin_Rule::POSTS, 'post', [ "post_tag|2" ] ),
@@ -126,7 +131,7 @@ class BrizyAdminRuleTest extends \Codeception\TestCase\Test {
 
 		$validated = $rule->isMatching( $applyFor, $entityType, $entityValues );
 
-		$this->tester->assertEquals( $validated, $valid, 'The context should match. ' . json_encode( $context ) );
+		$this->tester->assertEquals( $validated, $valid, 'The context should match. ' . json_encode( $context ).json_encode($rule) );
 
 	}
 }

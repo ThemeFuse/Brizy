@@ -1,10 +1,16 @@
 <?php
 
-class BrizyAdminFontsHandlerTest extends \Codeception\TestCase\Test {
+class BrizyAdminFontsHandlerTest extends\Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
+
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+	}
 
 	public function testQueryVars() {
 		$urlBuilder = $this->createMock( 'Brizy_Editor_UrlBuilder' );

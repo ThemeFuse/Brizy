@@ -10,6 +10,8 @@ class ShortCodeWooProducPageWrapperCest {
 		wp_cache_flush();
 
 		$I->dontHavePostInDatabase( [] );
+		$I->dontHavePostMetaInDatabase( [] );
+
 		$this->postId = $I->havePostInDatabase( [
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',
@@ -44,7 +46,6 @@ class ShortCodeWooProducPageWrapperCest {
 	 * @param \Codeception\Example $example
 	 */
 	public function checkReturnWithoutIdRequest( FunctionalTester $I ) {
-
 		$output = do_shortcode( '[brizy_product_page]' );
 		$I->assertEquals( '[product_page id="' . $this->postId . '"]', $output, 'The short code should return the page for the first product found.' );
 	}

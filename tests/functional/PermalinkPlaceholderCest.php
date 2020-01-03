@@ -7,7 +7,7 @@ class PermalinkPlaceholderCest {
 
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
-
+		$I->havePostInDatabase([]);
 		$this->postId = $I->havePostInDatabase( [
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',

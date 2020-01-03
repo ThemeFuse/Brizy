@@ -1,11 +1,18 @@
 <?php
 
 
-class Brizy_Editor_EntityTest extends \Codeception\Test\Unit {
+class Brizy_Editor_EntityTest extends  \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
+
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+	}
+
 
 	/**
 	 * @throws ReflectionException

@@ -18,6 +18,8 @@ class Brizy_EditorCest {
 	 */
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
+		$I->dontHavePostMetaInDatabase([]);
+		$I->dontHavePostInDatabase([]);
 		$this->userId1 = $I->haveUserInDatabase( 'test-user1', 'administrator' );
 		$this->userId2 = $I->haveUserInDatabase( 'test-user1', 'administrator' );
 		$I->haveUserInDatabase( 'test-user2', 'administrator' );

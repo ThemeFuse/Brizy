@@ -1,17 +1,22 @@
 <?php
 
 
-class Brizy_Admin_Popups_MainUnitTest extends \Codeception\Test\Unit {
+class Brizy_Admin_Popups_MainUnitTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
 
-	public function testPopulateSupportedPosts() {
-		Brizy_Admin_Popups_Main::registerSupportedPostType();
-		$posts = apply_filters('brizy_supported_post_types',[]);
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+	}
 
-		$this->assertEquals( [ Brizy_Admin_Popups_Main::CP_POPUP ], $posts, 'It should insert the supported popup post type' );
+	public function testPopulateSupportedPosts() {
+		$posts = apply_filters( 'brizy_supported_post_types', [] );
+
+		$this->assertTrue( in_array( Brizy_Admin_Popups_Main::CP_POPUP, $posts ), 'It should insert the supported popup post type' );
 	}
 
 	public function testInsertPopupsHtml() {

@@ -1,19 +1,14 @@
 <?php
 
 
-class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit {
+class BrizyAdminRulesTemplateRuleValidatorCest {
 
-	/**
-	 * @var \IntegrationTester
-	 */
-	protected $tester;
-
-	protected function _before() {
+	protected function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 		global $wpdb;
 		$wpdb->db_connect();
-
-		$rules = [];
+		$I->havePostInDatabase([]);
+		$rules   = [];
 		$rules[] = new Brizy_Admin_Rule( 1, 1, 1, 'post', [ 1, 2 ] );
 		$rules[] = new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 3, 4 ] );
 
@@ -23,7 +18,7 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 			$rulesData[] = $rule->convertToOptionValue();
 		}
 
-		$this->tester->havePostInDatabase( [
+		$I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Templates::CP_TEMPLATE,
 			'post_status' => 'publish',
 			'meta_input'  => [
@@ -32,7 +27,7 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 		] );
 
 
-		$rules = [];
+		$rules   = [];
 		$rules[] = new Brizy_Admin_Rule( 1, 1, 1, 'post', [ 5, 6 ] );
 		$rules[] = new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 7, 8 ] );
 
@@ -42,7 +37,7 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 			$rulesData[] = $rule->convertToOptionValue();
 		}
 
-		$this->tester->havePostInDatabase( [
+		$I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Templates::CP_TEMPLATE,
 			'post_status' => 'publish',
 			'meta_input'  => [
@@ -52,9 +47,9 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 
 	}
 
-	public function testValidateRuleForPostId() {
+	public function testValidateRuleForPostId( FunctionalTester $I ) {
 
-		$templateId = $this->tester->havePostInDatabase( [
+		$templateId = $I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Templates::CP_TEMPLATE,
 			'post_status' => 'publish',
 		] );
@@ -62,12 +57,13 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $templateId );
 		$validator->validateRuleForPostId( new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 10, 12 ] ), $templateId );
 
-		$this->expectException( Brizy_Admin_Rules_ValidationException::class );
-		$validator->validateRuleForPostId( new Brizy_Admin_Rule( 3, 1, 1, 'post', [ 1, 2 ] ), $templateId );
+		$I->expectThrowable( Brizy_Admin_Rules_ValidationException::class, function () use ( $validator, $templateId ) {
+			$validator->validateRuleForPostId( new Brizy_Admin_Rule( 3, 1, 1, 'post', [ 1, 2 ] ), $templateId );
+		} );
 	}
 
 
-	public function testValidateRulesForPostId() {
+	public function testValidateRulesForPostId( FunctionalTester $I ) {
 		$rules   = array();
 		$rules[] = new Brizy_Admin_Rule( 1, 1, 1, 'post', [ 11, 12 ] );
 		$rules[] = new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 13, 14 ] );
@@ -78,7 +74,7 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 			$rulesData[] = $rule->convertToOptionValue();
 		}
 
-		$templateId = $this->tester->havePostInDatabase( [
+		$templateId = $I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Templates::CP_TEMPLATE,
 			'post_status' => 'publish',
 		] );
@@ -87,10 +83,10 @@ class Brizy_Admin_Rules_TemplateRuleValidatorTest extends \Codeception\Test\Unit
 
 		$validator->validateRulesForPostId( $rules, $templateId );
 
-		$this->expectException( Brizy_Admin_Rules_ValidationException::class );
-
-		$validator->validateRulesForPostId( [
-			new Brizy_Admin_Rule( 2, 1, 1, 'post', [ 1, 2 ] ),
-		], $templateId );
+		$I->expectThrowable( Brizy_Admin_Rules_ValidationException::class, function () use ( $validator, $templateId ) {
+			$validator->validateRulesForPostId( [
+				new Brizy_Admin_Rule( 2, 1, 1, 'post', [ 1, 2 ] ),
+			], $templateId );
+		} );
 	}
 }
