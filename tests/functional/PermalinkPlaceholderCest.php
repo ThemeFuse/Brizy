@@ -34,7 +34,7 @@ class PermalinkPlaceholderCest {
 		return [
 			[
 				'input'  => '{{brizy_dc_permalink post_id=\'' . $this->postId . '\'}}',
-				'output' => 'http://brizy.local/?p='.$this->postId
+				'output' => 'http://brizy-test.local/?p='.$this->postId
 			],
 			[
 				'input'  => '{{brizy_dc_permalink post_id=\'\'}}',
