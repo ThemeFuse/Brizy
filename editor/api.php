@@ -8,6 +8,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_UPDATE = 'brizy_update_item';
 	const AJAX_GET_PROJECT = 'brizy_get_project';
 	const AJAX_SET_PROJECT = 'brizy_set_project';
+	const AJAX_LOCK_PROJECT = 'brizy_lock_project';
 	const AJAX_MEDIA = 'brizy_media';
 	const AJAX_SIDEBARS = 'brizy_sidebars';
 	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
@@ -72,6 +73,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SET_PROJECT, array( $this, 'set_project' ) );
+			add_action( 'wp_ajax_' . self::AJAX_LOCK_PROJECT, array( $this, 'lock_project' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
@@ -99,6 +101,17 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	protected function getRequestNonce() {
 		return self::nonce;
+	}
+
+	public function lock_project() {
+		$this->verifyNonce( self::nonce );
+
+		if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
+			Brizy_Editor::get()->lockProject();
+		}
+
+		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
+		$this->success( $editor->getProjectStatus() );
 	}
 
 	public function removeProjectLock() {
@@ -247,10 +260,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 			$data = Brizy_Editor_Project::get()->createResponse();
-
-			if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
-				Brizy_Editor::get()->lockProject();
-			}
 
 			$this->success( $data );
 		} catch ( Exception $exception ) {

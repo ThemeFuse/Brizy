@@ -128,9 +128,10 @@ class Brizy_Editor_Editor_Editor {
 					'hash' => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 
-					'heartBeat'  => Brizy_Editor_API::AJAX_HEARTBEAT,
-					'takeOver'   => Brizy_Editor_API::AJAX_TAKE_OVER,
-					'removeLock' => Brizy_Editor_API::AJAX_REMOVE_LOCK,
+					'heartBeat'   => Brizy_Editor_API::AJAX_HEARTBEAT,
+					'takeOver'    => Brizy_Editor_API::AJAX_TAKE_OVER,
+					'lockProject' => Brizy_Editor_API::AJAX_LOCK_PROJECT,
+					'removeLock'  => Brizy_Editor_API::AJAX_REMOVE_LOCK,
 					'getPage'     => Brizy_Editor_API::AJAX_GET,
 					'getPostInfo' => Brizy_Editor_API::AJAX_GET_POST_INFO,
 					'updatePage'  => Brizy_Editor_API::AJAX_UPDATE,

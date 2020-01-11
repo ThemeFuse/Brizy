@@ -3,11 +3,10 @@
 
 class BrizyAdminRulesTemplateRuleValidatorCest {
 
-	protected function _before( FunctionalTester $I ) {
-		wp_cache_flush();
+	public function _before( FunctionalTester $I ) {
 		global $wpdb;
 		$wpdb->db_connect();
-		$I->havePostInDatabase([]);
+		$I->dontHavePostInDatabase( [] );
 		$rules   = [];
 		$rules[] = new Brizy_Admin_Rule( 1, 1, 1, 'post', [ 1, 2 ] );
 		$rules[] = new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 3, 4 ] );
@@ -44,7 +43,7 @@ class BrizyAdminRulesTemplateRuleValidatorCest {
 				'brizy-rules' => serialize( $rulesData ),
 			]
 		] );
-
+		wp_cache_flush();
 	}
 
 	public function testValidateRuleForPostId( FunctionalTester $I ) {
@@ -55,9 +54,11 @@ class BrizyAdminRulesTemplateRuleValidatorCest {
 		] );
 
 		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $templateId );
-		$validator->validateRuleForPostId( new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 10, 12 ] ), $templateId );
 
-		$I->expectThrowable( Brizy_Admin_Rules_ValidationException::class, function () use ( $validator, $templateId ) {
+		$I->assertInstanceOf( Brizy_Admin_Rules_AbstractValidator::class, $validator, 'It should return a validator instance' );
+
+		$validator->validateRuleForPostId( new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 10, 12 ] ), $templateId );
+		$I->expectThrowable( \Brizy_Admin_Rules_ValidationException::class, function () use ( $validator, $templateId ) {
 			$validator->validateRuleForPostId( new Brizy_Admin_Rule( 3, 1, 1, 'post', [ 1, 2 ] ), $templateId );
 		} );
 	}
@@ -68,22 +69,16 @@ class BrizyAdminRulesTemplateRuleValidatorCest {
 		$rules[] = new Brizy_Admin_Rule( 1, 1, 1, 'post', [ 11, 12 ] );
 		$rules[] = new Brizy_Admin_Rule( 2, 1, 1, 'page', [ 13, 14 ] );
 
-		$rulesData = [];
-
-		foreach ( $rules as $rule ) {
-			$rulesData[] = $rule->convertToOptionValue();
-		}
-
 		$templateId = $I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Templates::CP_TEMPLATE,
 			'post_status' => 'publish',
 		] );
 
 		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $templateId );
-
+		$I->assertInstanceOf( Brizy_Admin_Rules_AbstractValidator::class, $validator, 'It should return a validator instance' );
 		$validator->validateRulesForPostId( $rules, $templateId );
 
-		$I->expectThrowable( Brizy_Admin_Rules_ValidationException::class, function () use ( $validator, $templateId ) {
+		$I->expectThrowable( \Brizy_Admin_Rules_ValidationException::class, function () use ( $validator, $templateId ) {
 			$validator->validateRulesForPostId( [
 				new Brizy_Admin_Rule( 2, 1, 1, 'post', [ 1, 2 ] ),
 			], $templateId );

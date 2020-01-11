@@ -29,7 +29,9 @@ class Brizy_EditorCest {
 	public function testSetProjectLock( FunctionalTester $I ) {
 
 		$project = Brizy_Editor_Project::get();
+		wp_cache_flush();
 		Brizy_Editor::get()->lockProject();
+		wp_cache_flush();
 		$I->seePostMetaInDatabase( [
 			'post_id'  => $project->getWpPostId(),
 			'meta_key' => '_edit_lock',
@@ -44,8 +46,9 @@ class Brizy_EditorCest {
 			'_edit_lock',
 			time() . ':' . $this->userId1
 		);
-
+		wp_cache_flush();
 		Brizy_Editor::get()->removeProjectLock();
+		wp_cache_flush();
 		$I->dontSeePostMetaInDatabase( [
 			'post_id'  => $project->getWpPostId(),
 			'meta_key' => '_edit_lock',
@@ -64,7 +67,7 @@ class Brizy_EditorCest {
 			'_edit_lock',
 			time() . ':' . $this->userId1
 		);
-
+		wp_cache_flush();
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
 		$I->assertFalse( $check==$this->userId1, 'It should be return false as the project is not locked' );
 	}
@@ -77,6 +80,7 @@ class Brizy_EditorCest {
 			time() . ':' . $this->userId1
 		);
 		wp_set_current_user( $this->userId2 );
+		wp_cache_flush();
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
 		$I->assertTrue( $check !== false, 'It should be return true as the project is locked' );
 	}

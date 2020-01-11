@@ -128,6 +128,9 @@ class ApiCest {
 		$I->assertArrayHasKey( 'id', $project, 'It should return the project id' );
 		$I->assertArrayHasKey( 'data', $project, 'It should return the project data' );
 		$I->assertArrayHasKey( 'dataVersion', $project, 'It should return the project dataVersion' );
+
+		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
+		$I->assertFalse( $check, 'It should be return false as the project is not locked' );
 	}
 
 	/**
@@ -266,6 +269,19 @@ class ApiCest {
 
 		$I->assertFalse( $data->locked, 'Locked should be false' );
 		$I->assertFalse( $data->lockedBy, 'LockedBy should be false' );
+	}
+
+	public function lockProjectTest( FunctionalTester $I ) {
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => Brizy_Editor_API::AJAX_LOCK_PROJECT,
+				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
+				'version' => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs( 200 );
+
+		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
+		$I->assertTrue( $check!==false, 'It should be return true as the project is locked' );
 	}
 
 	public function removeLockTest( FunctionalTester $I ) {
