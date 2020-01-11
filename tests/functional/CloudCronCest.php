@@ -69,7 +69,7 @@ class CloudCronCest {
 		// When
 		$client = $this->getCloudClientObserver( $I );
 		$cron   = new Brizy_Admin_Cloud_Cron( $client->reveal() );
-		$cron->syncBlocks();
+		$cron->syncBlocksAction();
 
 		// Then
 		$I->seePostMetaInDatabase( [ 'meta_key' => 'brizy-cloud-update-required', 'meta_value' => 0 ] );
@@ -111,7 +111,7 @@ class CloudCronCest {
 		$client = $this->getCloudClientObserver( $I );
 		$client->createOrUpdateBlock()->shouldNotBeCalled();
 		$cron = new Brizy_Admin_Cloud_Cron( $client->reveal() );
-		$cron->syncBlocks();
+		$cron->syncBlocksAction();
 
 		// Then
 		$I->dontSeePostMetaInDatabase( [ 'meta_key' => 'brizy-cloud-update-required' ] );

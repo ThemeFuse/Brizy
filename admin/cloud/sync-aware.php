@@ -104,7 +104,7 @@ trait Brizy_Admin_Cloud_SyncAware {
 	protected function getLayoutsForSync() {
 		global $wpdb;
 
-		$meta_key       = Brizy_Editor_Layout::BRIZY_CLOUD_UPDATE_META;
+		$meta_key       = Brizy_Editor_Layout::BRIZY_CLOUD_UPDATE_REQUIRED;
 		$savedBlockType = Brizy_Admin_Layouts_Main::CP_LAYOUT;
 
 		$postIds = $wpdb->get_results(

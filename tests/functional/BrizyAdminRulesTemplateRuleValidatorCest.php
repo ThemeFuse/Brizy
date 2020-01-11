@@ -43,6 +43,7 @@ class BrizyAdminRulesTemplateRuleValidatorCest {
 				'brizy-rules' => serialize( $rulesData ),
 			]
 		] );
+
 		wp_cache_flush();
 	}
 
@@ -74,7 +75,10 @@ class BrizyAdminRulesTemplateRuleValidatorCest {
 			'post_status' => 'publish',
 		] );
 
+		wp_cache_flush();
+
 		$validator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $templateId );
+
 		$I->assertInstanceOf( Brizy_Admin_Rules_AbstractValidator::class, $validator, 'It should return a validator instance' );
 		$validator->validateRulesForPostId( $rules, $templateId );
 

@@ -139,9 +139,10 @@ class Brizy_Editor_Editor_Editor {
 					'getPostInfo' => Brizy_Editor_API::AJAX_GET_POST_INFO,
 					'updatePage'  => Brizy_Editor_API::AJAX_UPDATE,
 
-					'getProject'     => Brizy_Editor_API::AJAX_GET_PROJECT,
-					'setProject'     => Brizy_Editor_API::AJAX_SET_PROJECT,
-					'setProjectMeta' => Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
+					'getProject'        => Brizy_Editor_API::AJAX_GET_PROJECT,
+					'setProject'        => Brizy_Editor_API::AJAX_SET_PROJECT,
+					'lockProject'       => Brizy_Editor_API::AJAX_LOCK_PROJECT,
+					'setProjectMeta'    => Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 
 					'getLayoutByUid' => Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
 					'getLayoutList'  => Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,

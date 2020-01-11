@@ -65,6 +65,7 @@ class CloudApiCest {
 		$I->assertIsInt( $response->data->synchronized, 'It should be an integer value' );
 	}
 
+
 	public function syncTriggerUnauthorizedTest( FunctionalTester $I ) {
 
 		$project = Brizy_Editor_Project::get();

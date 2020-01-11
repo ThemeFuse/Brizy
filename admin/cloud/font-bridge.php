@@ -32,7 +32,7 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$fontData = $this->fontManager->getFontForExport( $fontUid );
 
 		if ( ! $fontData ) {
-			throw new \Exception( "Unable to find font {$fontUid}" );
+			throw new Exception( "Unable to find font {$fontUid}" );
 		}
 
 		try {
