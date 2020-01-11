@@ -252,7 +252,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 			$data = Brizy_Editor_Project::get()->createResponse();
-
 			$this->success( $data );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );

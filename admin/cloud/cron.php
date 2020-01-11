@@ -50,7 +50,7 @@ class Brizy_Admin_Cloud_Cron {
 	public function addBrizyCloudCronSchedules( $schedules ) {
 		// Adds once weekly to the existing schedules.
 		$schedules['5minute'] = array(
-			'interval' => 10,
+			'interval' => 300,
 			'display'  => __( 'Once in 5 minutes' )
 		);
 
