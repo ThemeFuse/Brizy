@@ -216,10 +216,6 @@ jQuery(document).ready(function ($) {
         BrizyMaintenance.init();
     } );
 
-    $(function () {
-        BrizyGutenberg.init();
-        BrizyFeedbackDialog.init();
-    });
 });
 
 
