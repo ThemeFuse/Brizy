@@ -87,7 +87,7 @@ trait Brizy_Editor_AutoSaveAware {
 
 		$wpdb->query( $wpdb->prepare( "
 										DELETE p, pm FROM {$wpdb->posts} p  
-										JOIN {$wpdb->postmeta} pm
+										INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.id
 										WHERE p.post_author = %d and 
 											  p.post_parent = %d and 
 											  p.post_type = 'revision' and 
