@@ -128,7 +128,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( Brizy_Editor_Block::postData( $block ->createResponse()) );
+			$this->success( $block ->createResponse()  );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -156,7 +156,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			do_action( 'brizy_global_data_updated' );
 
-			$this->success( Brizy_Editor_Block::postData( $block ->createResponse()) );
+			$this->success(  $block ->createResponse() );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -206,7 +206,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success(  $block ->createResponse() );
+			$this->success(  $block->createResponse() );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
@@ -286,15 +286,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		$this->verifyNonce( self::nonce );
 
-		if ( $this->param( 'dataVersion' ) === null ) {
-			$this->error( '400', 'Invalid data version' );
-		}
-
 		$data = file_get_contents( "php://input" );
 
 		$dataObject = json_decode( $data );
 
-		if ( ! $dataObject || !$dataObject->blocks ) {
+		if ( ! $dataObject  ) {
 			$this->error( 400, 'Invalid position data provided' );
 		}
 
@@ -302,7 +298,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 
-			foreach ( get_object_vars( $dataObject->blocks ) as $uid => $position ) {
+			foreach ( get_object_vars( $dataObject ) as $uid => $position ) {
 
 				if ( ! ( isset( $position->top ) && isset( $position->bottom ) && isset( $position->align ) ) ) {
 					throw  new Exception();
@@ -317,10 +313,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				}
 
 				$block->setPosition( $positionObj );
-				if ( isset( $dataObject->is_autosave ) && $dataObject->is_autosave == 1 ) {
+				if ( $this->param('is_autosave') == 1 ) {
 					$block->auto_save_post();
 				} else {
-					$block->save();
+					$block->saveStorage();
 				}
 			}
 
@@ -330,7 +326,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-			echo $e->getMessage();
 			$this->error( '400', 'Unable to save block positions' );
 		}
 
