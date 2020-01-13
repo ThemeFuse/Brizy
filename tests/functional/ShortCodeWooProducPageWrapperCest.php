@@ -7,7 +7,7 @@ class ShortCodeWooProducPageWrapperCest {
 
 
 	public function _before( FunctionalTester $I ) {
-		wp_cache_flush();
+
 
 		$I->dontHavePostInDatabase( [] );
 		$I->dontHavePostMetaInDatabase( [] );
@@ -30,7 +30,7 @@ class ShortCodeWooProducPageWrapperCest {
 			'post_mime_type' => 'field_post_mime_type',
 			'comment_count'  => '10',
 		] );
-
+		wp_cache_flush();
 	}
 
 

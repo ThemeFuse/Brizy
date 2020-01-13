@@ -130,7 +130,7 @@ class ApiCest {
 		$I->assertArrayHasKey( 'dataVersion', $project, 'It should return the project dataVersion' );
 
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
-		$I->assertFalse( $check, 'It should be return false as the project is not locked' );
+		$I->assertFalse( $check!==false, 'It should be return false as the project is not locked' );
 	}
 
 	/**
