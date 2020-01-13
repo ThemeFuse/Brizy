@@ -30,7 +30,7 @@ class LayoutCest {
 
 		$this->layoutId = $I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Blocks_Main::CP_SAVED,
-			'post_name'   => 'Saved Brizy Block',
+			'post_name'   => 'Layout',
 			'post_status' => 'publish',
 		] );
 
@@ -60,29 +60,26 @@ class LayoutCest {
 		] );
 	}
 
-	/**
-	 * @param FunctionalTester $I
-	 */
 	public function isCloudUpdateRequiredTest( FunctionalTester $I ) {
-		$this->layoutObject->setCloudUpdateRequired( true );
+		$this->layoutObject->setSynchronized( 1, 2 );
 		$I->seePostMetaInDatabase( [
-			'post_id'    => $this->layoutId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
-			'meta_value' => 1,
-		] );
-
-		$expectedFlag = $this->layoutObject->isCloudUpdateRequired();
-		$I->assertTrue( $expectedFlag, 'It should return the correct flag value for cloud update required field' );
-
-		$this->layoutObject->setCloudUpdateRequired( false );
-		$I->seePostMetaInDatabase( [
-			'post_id'    => $this->layoutId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
+			'post_id'    => $this->layoutObject->getWpPostId(),
+			'meta_key'   => 'brizy-cloud-update-required',
 			'meta_value' => 0,
 		] );
 
 		$expectedFlag = $this->layoutObject->isCloudUpdateRequired();
 		$I->assertFalse( $expectedFlag, 'It should return the correct flag value for cloud update required field' );
+
+		$this->layoutObject->setCloudUpdateRequired( true );
+		$I->seePostMetaInDatabase( [
+			'post_id'    => $this->layoutObject->getWpPostId(),
+			'meta_key'   => 'brizy-cloud-update-required',
+			'meta_value' => 1,
+		] );
+
+		$expectedFlag = $this->layoutObject->isCloudUpdateRequired();
+		$I->assertTrue( $expectedFlag, 'It should return the correct flag value for cloud update required field' );
 	}
 
 	/**

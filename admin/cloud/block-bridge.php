@@ -49,7 +49,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function import( $blockId ) {
-		$blocks = $this->client->getBlocks( [ 'filter'=>['uid' => $blockId]] );
+		$blocks = $this->client->getBlocks( [ 'filter' => [ 'uid' => $blockId ] ] );
 
 		if ( ! isset( $blocks[0] ) ) {
 			return;
@@ -68,11 +68,11 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		if ( $post ) {
 			$brizyPost = Brizy_Editor_Block::get( $post, $block['uid'] );
 			$brizyPost->setMeta( $block['meta'] );
-			$brizyPost->setCloudId( $block['id'] );
 			$brizyPost->set_editor_data( $block['data'] );
 			$brizyPost->set_uses_editor( true );
 			$brizyPost->set_needs_compile( true );
-			$brizyPost->setDataVersion(1);
+			$brizyPost->setDataVersion( 1 );
+			$brizyPost->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $block['id'] );
 			$brizyPost->save();
 		}
 	}
