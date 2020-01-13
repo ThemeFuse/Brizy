@@ -61,6 +61,23 @@ class BlockCest {
 		$I->assertArrayHasKey( 'position', $data, "It should contain key 'position'  " );
 		$I->assertArrayHasKey( 'rules', $data, "It should contain key 'rules'  " );
 		$I->assertArrayHasKey( 'dataVersion', $data, "It should contain key 'dataVersion'  " );
+		$I->assertArrayNotHasKey( 'synchronized', $data, "It should not contain key 'synchronized'  " );
+		$I->assertArrayNotHasKey( 'synchronizable', $data, "It should not contain key 'synchronizable'  " );
+	}
+
+	public function testCreateResponseSavedBlock( FunctionalTester $I ) {
+		$id    = wp_insert_post( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_SAVED, 'post_title' => 'Test' ] );
+		$block = Brizy_Editor_Block::get( $id );
+		$data  = $block->createResponse();
+
+		$I->assertArrayHasKey( 'uid', $data, "It should contain key 'uid'    " );
+		$I->assertArrayHasKey( 'status', $data, "It should contain key 'status'    " );
+		$I->assertArrayHasKey( 'data', $data, "It should contain key 'data'  " );
+		$I->assertArrayNotHasKey( 'position', $data, "It should contain key 'position'  " );
+		$I->assertArrayNotHasKey( 'rules', $data, "It should contain key 'rules'  " );
+		$I->assertArrayHasKey( 'dataVersion', $data, "It should contain key 'dataVersion'  " );
+		$I->assertArrayHasKey( 'synchronized', $data, "It should contain key 'synchronized'  " );
+		$I->assertArrayHasKey( 'synchronizable', $data, "It should contain key 'synchronizable'  " );
 	}
 
 	/**
@@ -118,9 +135,9 @@ class BlockCest {
 		$block->set_editor_version( '2' );
 		$block->setDataVersion( 4 );
 
-		$I->expectThrowable( Brizy_Editor_Exceptions_DataVersionMismatch::class ,function() use($block) {
+		$I->expectThrowable( Brizy_Editor_Exceptions_DataVersionMismatch::class, function () use ( $block ) {
 			$block->save();
-		});
+		} );
 	}
 
 
@@ -199,7 +216,7 @@ class BlockCest {
 
 		$this->savedBlockObject->set_uses_editor( true );
 		$this->savedBlockObject->set_needs_compile( true );
-		$this->savedBlockObject->setDataVersion(1);
+		$this->savedBlockObject->setDataVersion( 1 );
 		$this->savedBlockObject->save();
 
 		$I->seeInDatabase( $wpdb->postmeta, [
@@ -214,10 +231,10 @@ class BlockCest {
 	}
 
 	public function isCloudUpdateRequiredForGlobalBlockTest( FunctionalTester $I ) {
-		$this->globalBlockObject->setCloudUpdateRequired( true );
+		$this->globalBlockObject->setSynchronized( 1, 2 );
 		$I->dontSeePostMetaInDatabase( [
-			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
+			'post_id'  => $this->savedBlockId,
+			'meta_key' => 'brizy-cloud-update-required',
 		] );
 
 		$expectedFlag = $this->globalBlockObject->isCloudUpdateRequired();
@@ -225,25 +242,25 @@ class BlockCest {
 	}
 
 	public function isCloudUpdateRequiredTest( FunctionalTester $I ) {
-		$this->savedBlockObject->setCloudUpdateRequired( true );
+		$this->savedBlockObject->setSynchronized( 1, 2 );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
-			'meta_value' => 1,
-		] );
-
-		$expectedFlag = $this->savedBlockObject->isCloudUpdateRequired();
-		$I->assertTrue( $expectedFlag, 'It should return the correct flag value for cloud update required field' );
-
-		$this->savedBlockObject->setCloudUpdateRequired( false );
-		$I->seePostMetaInDatabase( [
-			'post_id'    => $this->savedBlockId,
-			'meta_key'   => Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED,
+			'meta_key'   => 'brizy-cloud-update-required',
 			'meta_value' => 0,
 		] );
 
 		$expectedFlag = $this->savedBlockObject->isCloudUpdateRequired();
 		$I->assertFalse( $expectedFlag, 'It should return the correct flag value for cloud update required field' );
+
+		$this->savedBlockObject->setCloudUpdateRequired( true );
+		$I->seePostMetaInDatabase( [
+			'post_id'    => $this->savedBlockId,
+			'meta_key'   => 'brizy-cloud-update-required',
+			'meta_value' => 1,
+		] );
+
+		$expectedFlag = $this->savedBlockObject->isCloudUpdateRequired();
+		$I->assertTrue( $expectedFlag, 'It should return the correct flag value for cloud update required field' );
 	}
 
 	public function metaTest( FunctionalTester $I ) {

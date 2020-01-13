@@ -56,17 +56,19 @@ class LayoutApiCest {
 		$jsonResponse = $I->grabResponse();
 		$I->seeResponseCodeIsSuccessful();
 
-		$popup = json_decode( $jsonResponse );
+		$layout = json_decode( $jsonResponse );
 
-		$I->assertNotNull( $popup->data, 'Response sould contain property data' );
+		$I->assertNotNull( $layout->data, 'Response should contain property data' );
 
-		$popup = $popup->data;
+		$layout = $layout->data;
 
-		$I->assertNotNull( $popup->uid, 'Layout should contain property: uid' );
-		$I->assertNotNull( $popup->status, 'Layout should contain property:  status' );
-		$I->assertNotNull( $popup->data, 'Layout should contain property:  data' );
-		$I->assertFalse( isset( $popup->media ), 'Layout should not contain property:  media' );
-		$I->assertEquals( $popup->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Layout should contain correct meta value' );
+		$I->assertNotNull( $layout->uid, 'Layout should contain property: uid' );
+		$I->assertNotNull( $layout->status, 'Layout should contain property:  status' );
+		$I->assertNotNull( $layout->data, 'Layout should contain property:  data' );
+		$I->assertNotNull( $layout->synchronized, 'Layout should contain property:  synchronized' );
+		$I->assertNotNull( $layout->synchronizable, 'Layout should contain property:  synchronizable' );
+		$I->assertFalse( isset( $layout->media ), 'Layout should not contain property:  media' );
+		$I->assertEquals( $layout->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Layout should contain correct meta value' );
 
 	}
 
@@ -87,12 +89,14 @@ class LayoutApiCest {
 
 		$I->assertCount( 2, $array->data, 'Response should contain two blocks' );
 
-		foreach ( $array->data as $popup ) {
-			$I->assertNotNull( $popup->uid, 'Layout should contain property: uid' );
-			$I->assertNotNull( $popup->status, 'Layout should contain property:  status' );
-			$I->assertNotNull( $popup->data, 'Layout should contain property:  data' );
-			$I->assertFalse( isset( $popup->media ), 'Layout should not contain property:  media' );
-			$I->assertEquals( $popup->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Layout should contain correct meta value' );
+		foreach ( $array->data as $layout ) {
+			$I->assertNotNull( $layout->uid, 'Layout should contain property: uid' );
+			$I->assertNotNull( $layout->status, 'Layout should contain property:  status' );
+			$I->assertNotNull( $layout->data, 'Layout should contain property:  data' );
+			$I->assertNotNull( $layout->synchronized, 'Layout should contain property:  synchronized' );
+			$I->assertNotNull( $layout->synchronizable, 'Layout should contain property:  synchronizable' );
+			$I->assertFalse( isset( $layout->media ), 'Layout should not contain property:  media' );
+			$I->assertEquals( $layout->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Layout should contain correct meta value' );
 		}
 
 	}
@@ -105,7 +109,7 @@ class LayoutApiCest {
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
 				'version' => BRIZY_EDITOR_VERSION,
-				'fields'  => [ 'uid', 'meta' ]
+				'fields'  => [ 'uid', 'meta','synchronized' ]
 			] ) );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -117,9 +121,11 @@ class LayoutApiCest {
 
 		foreach ( $array->data as $popup ) {
 			$I->assertTrue( isset($popup->uid), 'Layout should contain property: uid' );
+			$I->assertTrue( isset($popup->synchronized), 'Layout should contain property: synchronized' );
 			$I->assertFalse( isset($popup->status), 'Layout should contain property:  status' );
 			$I->assertFalse(isset( $popup->data), 'Layout should contain property:  data' );
 			$I->assertFalse( isset( $popup->media ), 'Layout should not contain property:  media' );
+			$I->assertFalse( isset( $popup->synchronizable ), 'Layout should not contain property:  synchronizable' );
 			$I->assertEquals( $popup->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Layout should contain correct meta value' );
 		}
 
@@ -142,14 +148,16 @@ class LayoutApiCest {
 
 		$I->seeResponseCodeIsSuccessful();
 		$jsonResponse = $I->grabResponse();
-		$popup        = json_decode( $jsonResponse );
-		$popup        = $popup->data;
+		$layout        = json_decode( $jsonResponse );
+		$layout        = $layout->data;
 
-		$I->assertNotNull( $popup->uid, 'Layout should contain property: uid' );
-		$I->assertNotNull( $popup->status, 'Layout should contain property:  status' );
-		$I->assertNotNull( $popup->data, 'Layout should contain property:  data' );
-		$I->assertFalse( isset( $popup->media ), 'Layout should not contain property:  media' );
-		$I->assertEquals( $popup->meta, $meta, 'Layout should contain the meta property and the correct value' );
+		$I->assertNotNull( $layout->uid, 'Layout should contain property: uid' );
+		$I->assertNotNull( $layout->status, 'Layout should contain property:  status' );
+		$I->assertNotNull( $layout->data, 'Layout should contain property:  data' );
+		$I->assertFalse( isset( $layout->media ), 'Layout should not contain property:  media' );
+		$I->assertNotNull( $layout->synchronized, 'Layout should contain property:  synchronized' );
+		$I->assertNotNull( $layout->synchronizable, 'Layout should contain property:  synchronizable' );
+		$I->assertEquals( $layout->meta, $meta, 'Layout should contain the meta property and the correct value' );
 	}
 
 	public function createLayoutWithInvalidDataTest( FunctionalTester $I ) {
