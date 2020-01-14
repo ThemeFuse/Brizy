@@ -261,11 +261,12 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 
 		$code = wp_remote_retrieve_response_code( $response );
 
+
 		if ( $code >= 400 ) {
 			throw new Exception( 'Invalid code return by cloud api' );
 		}
 
-		return $code == 200;
+		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
 
 	/**
@@ -331,7 +332,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			throw new Exception( 'Invalid code return by cloud api' );
 		}
 
-		return $code == 200;
+		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
 
 	/**
@@ -397,7 +398,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			throw new Exception( 'Invalid code return by cloud api' );
 		}
 
-		return $code == 200;
+		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
 
 	/**
@@ -454,7 +455,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			throw new Exception( 'Invalid code return by cloud api' );
 		}
 
-		return $code == 200;
+		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
 
 
@@ -507,7 +508,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			throw new Exception( 'Invalid code return by cloud api' );
 		}
 
-		return $code == 200;
+		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
 
 	public function getFont( $uid ) {

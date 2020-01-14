@@ -38,7 +38,11 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			$bridge->export( $fontUid );
 		}
 
-		$this->client->createOrUpdateLayout( $layout );
+		$layoutObject = $this->client->createOrUpdateLayout( $layout );
+
+		$layout->setSynchronized( Brizy_Editor_Project::get()->getCloudAccountId(), $layoutObject->uid );
+
+		$layout->saveStorage();
 	}
 
 	/**

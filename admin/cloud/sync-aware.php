@@ -79,9 +79,6 @@ trait Brizy_Admin_Cloud_SyncAware {
 		if ( $brizyBlock && $brizyBlock->isSavedBlock() ) {
 			$updater = new Brizy_Admin_Cloud_BlockBridge( $this->client );
 			$updater->export( $brizyBlock );
-
-			$brizyBlock->setCloudUpdateRequired( false );
-
 			return true;
 		}
 
@@ -94,9 +91,6 @@ trait Brizy_Admin_Cloud_SyncAware {
 		if ( $brizyLayout ) {
 			$updater = new Brizy_Admin_Cloud_LayoutBridge( $this->client );
 			$updater->export( $brizyLayout );
-
-			$brizyLayout->setCloudUpdateRequired( false );
-
 			return true;
 		}
 	}
