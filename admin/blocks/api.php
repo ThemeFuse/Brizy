@@ -391,7 +391,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 				$block->setPosition( $positionObj );
 				if ( $this->param('is_autosave') == 1 ) {
-					$block->auto_save_post();
+					$block->save( 1 );
 				} else {
 					$block->saveStorage();
 				}
