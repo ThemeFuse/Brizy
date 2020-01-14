@@ -93,11 +93,11 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$global = array();
 
 		if ( in_array( 'uid', $fields ) ) {
-			$global['uid'] = $this->getUid();
+			$global['uid'        ] = $this->getUid();
 		}
 
 		if ( in_array( 'status', $fields ) ) {
-			$global['status'] = get_post_status( $this->getWpPostId() );
+			$global['status'     ] = get_post_status( $this->getWpPostId() );
 		}
 
 		if ( in_array( 'dataVersion', $fields ) ) {
@@ -275,7 +275,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$storage_post = $storage->get( self::BRIZY_POST, false );
 
 		if ( isset( $storage_post['position'] ) ) {
-			$this->position = $storage_post['position'];
+			$this->position = Brizy_Editor_BlockPosition::createFromSerializedData( $storage_post['position'] );
 		}
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
@@ -287,16 +287,11 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		if ( isset( $storage_post['cloudAccountId'] ) ) {
 			$this->setCloudAccountId( $storage_post['cloudAccountId'] );
 		}
-
-		if ( isset( $storage_post['position'] ) ) {
-			$this->position = $storage_post['position'];
-		}
-
 	}
 
 	public function convertToOptionValue() {
 
-		$ruleManager   = new Brizy_Admin_Rules_Manager();
+		$ruleManager = new Brizy_Admin_Rules_Manager();
 
 		$data = parent::convertToOptionValue();
 
@@ -306,7 +301,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$data['cloudId']        = $this->getCloudId();
 		$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['media']          = $this->getMedia();
-		$data['rules']          = $ruleManager->getRules( $this->getWpPostId() );
+		$data['rules']    = $ruleManager->getRules( $this->getWpPostId() );
 
 		if ( $this->isSavedBlock() ) {
 			$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
@@ -326,6 +321,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		 * @var Brizy_Editor_Block $autosave ;
 		 */
 		$autosave = parent::populateAutoSavedData( $autosave );
+
 		$autosave->setPosition( $this->getPosition() );
 		$autosave->setRules( $this->getRules() );
 

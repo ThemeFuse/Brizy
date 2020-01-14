@@ -456,21 +456,20 @@ class BlockApiCest {
 	 */
 	public function updateGlobalBlockPositionsTest( FunctionalTester $I ) {
 
+		$blocks = [
+			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 0, 'bottom' => 1, 'align' => "left" ],
+			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]
+		];
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
 				'action'      => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 				'version'     => BRIZY_EDITOR_VERSION,
 				'is_autosave' => 0
 			] ),
-			json_encode( (object) [
-				'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 0, 'bottom' => 1, 'align' => "left" ],
-				'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]
-			] )
+			json_encode( (object) $blocks )
 		);
 		$I->seeResponseCodeIsSuccessful();
 		$I->dontSeePostInDatabase( [ 'post_type' => 'revision' ] );
 
-
-		//
 		$I->sendAjaxGetRequest( '/wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
 				'version' => BRIZY_EDITOR_VERSION,
@@ -480,11 +479,14 @@ class BlockApiCest {
 		$jsonResponse = $I->grabResponse();
 		$array        = json_decode( $jsonResponse );
 
-		foreach ( $array->data as $block ) {
+		foreach ( $array->data as  $block ) {
 			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
+			$I->assertEquals( $block->position->align, $blocks[$block->uid]['align'], 'Block position should contain updated align property' );
+			$I->assertEquals( $block->position->top, $blocks[$block->uid]['top'], 'Block position should contain updated top property' );
+			$I->assertEquals( $block->position->bottom, $blocks[$block->uid]['bottom'], 'Block position should contain updated bottom property' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
 	}
@@ -492,15 +494,16 @@ class BlockApiCest {
 
 	public function updateGlobalBlockPositionsWithAutosaveTest( FunctionalTester $I ) {
 
+		$blocks = [
+			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
+			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
+		];
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
 				'action'      => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 				'version'     => BRIZY_EDITOR_VERSION,
 				'is_autosave' => 1
 			] ),
-			json_encode( (object) [
-				'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
-				'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
-			] )
+			json_encode( (object) $blocks )
 		);
 		$I->seeResponseCodeIsSuccessful();
 		$I->seePostInDatabase( [ 'post_type' => 'revision' ] );
@@ -520,6 +523,9 @@ class BlockApiCest {
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
+			$I->assertNotEquals( $block->position->align, $blocks[$block->uid]['align'], 'Block position should contain updated align property' );
+			$I->assertNotEquals( $block->position->top, $blocks[$block->uid]['top'], 'Block position should contain updated top property' );
+			$I->assertNotEquals( $block->position->bottom, $blocks[$block->uid]['bottom'], 'Block position should contain updated bottom property' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
 	}
@@ -528,8 +534,7 @@ class BlockApiCest {
 	 * @param FunctionalTester $I
 	 */
 	public function updateGlobalBlockPositionsFailsTest( FunctionalTester $I ) {
-//------------------------------------------------------------------
-
+		//------------------------------------------------------------------
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
 				'version' => BRIZY_EDITOR_VERSION
