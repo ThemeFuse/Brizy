@@ -39,7 +39,11 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			$bridge->export( $fontUid );
 		}
 
-		$this->client->createOrUpdateBlock( $block );
+		$cloudBlockObject = $this->client->createOrUpdateBlock( $block );
+
+		$block->setSynchronized( Brizy_Editor_Project::get()->getCloudAccountId(), $cloudBlockObject->uid );
+
+		$block->saveStorage();
 	}
 
 	/**
