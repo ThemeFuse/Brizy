@@ -297,6 +297,20 @@
     border-top: 1px solid #eee;
 }
 
+.brizy-dashboard-widget-footer a {
+    margin: 0 10px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.brizy-dashboard-widget-footer a:first-child {
+    margin-left: 0;
+}
+
+.brizy-dashboard-widget-footer a .dashicons {
+    font-size: 17px;
+}
+
 .brizy-dashboard-widget-footer__go-pro {
     display:inline-flex;
     fill: #0073aa;
@@ -304,6 +318,10 @@
 
 .brizy-dashboard-widget-footer__go-pro:hover {
     fill: #00a0d2;
+}
+
+.brizy-dashboard-widget-footer__go-pro svg {
+    vertical-align: bottom;
 }
 
 /* Maintenance Mode */
