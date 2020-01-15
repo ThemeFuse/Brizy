@@ -113,7 +113,9 @@ class Brizy_Editor {
 
 		function brizy_add_dashboard_widgets() {
 			try {
-				Brizy_Admin_DashboardWidget::_init();
+				if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+					Brizy_Admin_DashboardWidget::_init();
+				}
 			} catch ( Exception $e ) {
 				// ignore this exceptions for now.
 			}
