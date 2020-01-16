@@ -31,12 +31,9 @@ const autoprefixer = require("autoprefixer");
 
 // build utils
 const argvVars = require("./build-utils/argvVars");
-const {
-  wpTranslations,
-  wpTranslationsDev
-} = require("./build-utils/wpTranslations");
+const { wpTranslations } = require("./build-utils/wpTranslations");
 
-const { Readable, Transform } = require("stream");
+const { Readable } = require("stream");
 const Vinyl = require("vinyl");
 
 // flags
@@ -51,7 +48,6 @@ const {
   NO_WATCH,
   paths
 } = argvVars(process.argv);
-let ABORTED = false;
 
 const postsCssProcessors = [
   sass({
@@ -63,8 +59,17 @@ const postsCssProcessors = [
   })
 ];
 
-gulp.task("build", () => {
+let ABORTED = false;
+const ABORT_MESSAGES = [];
+
+gulp.task("build", ["verifications"], () => {
   if (ABORTED) {
+    console.log("");
+    console.error(
+      ABORT_MESSAGES.map(m => chalk.red.bold("* " + m)).join("\n\n")
+    );
+    console.log("");
+
     return;
   }
 
@@ -92,6 +97,30 @@ gulp.task("build", () => {
   ];
 
   runSequence(...tasks);
+});
+
+gulp.task("verifications", () => {
+  if (TARGET === "WP" && !IS_PRODUCTION) {
+    const filePath = path.resolve(paths.build, "../../../brizy.php");
+    const fileContents = fs.readFileSync(filePath, "utf-8");
+    const r = /define\s*\(\s*("|')BRIZY_DEVELOPMENT\1,\s*false\s*\)/gm;
+
+    if (r.test(fileContents)) {
+      ABORTED = true;
+      ABORT_MESSAGES.push("set BRIZY_DEVELOPMENT to true in " + filePath);
+    }
+  }
+
+  if (TARGET === "WP" && !IS_PRODUCTION && IS_PRO) {
+    const filePath = path.resolve(paths.buildPro, "../../../brizy-pro.php");
+    const fileContents = fs.readFileSync(filePath, "utf-8");
+    const r = /define\s*\(\s*("|')BRIZY_PRO_DEVELOPMENT\1,\s*false\s*\)/gm;
+
+    if (r.test(fileContents)) {
+      ABORTED = true;
+      ABORT_MESSAGES.push("set BRIZY_PRO_DEVELOPMENT to true in " + filePath);
+    }
+  }
 });
 
 gulp.task("clean", [
@@ -200,10 +229,16 @@ gulp.task("editor.kit.icons", done => {
 
     return encrypt(base64);
   };
+  const svgRename = path => {
+    if (path.extname) {
+      path.extname = ".txt";
+    }
+  };
 
   gulp
     .src(src)
     .pipe(gulpPlugins.change(svgEncrypt))
+    .pipe(gulpPlugins.rename(svgRename))
     .pipe(gulp.dest(dest))
     .on("end", done);
 });
@@ -574,13 +609,10 @@ gulp.task("pro.js", done => {
 });
 
 gulp.task("wp.translations", async () => {
-  const sourceCodePath = paths.editor + "/js";
-  const phpSourceCode =
-    IS_PRODUCTION && IS_EXPORT
-      ? await wpTranslations(sourceCodePath)
-      : await wpTranslationsDev();
+  let dest = path.resolve(paths.build, "texts.php");
+  let phpSourceCode = await wpTranslations({ paths, IS_PRODUCTION, VERSION });
 
-  fs.writeFileSync(paths.build + "/texts.php", phpSourceCode, "utf8");
+  fs.writeFileSync(dest, phpSourceCode, "utf8");
 });
 gulp.task("wp.open-source", done => {
   const src = [

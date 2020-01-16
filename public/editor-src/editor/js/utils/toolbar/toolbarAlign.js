@@ -5,16 +5,18 @@ import { capByPrefix } from "visual/utils/string";
 export function toolbarHorizontalAlign({
   v,
   device,
+  state,
+  prefix = "",
   devices = "all",
   disabled = false,
-  state,
   position = 100
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const key = capByPrefix(prefix, "horizontalAlign");
 
   return {
-    id: dvk("horizontalAlign"),
+    id: dvk(key),
     type: "toggle",
     devices,
     disabled,
@@ -36,10 +38,8 @@ export function toolbarHorizontalAlign({
         value: "right"
       }
     ],
-    value: dvv("horizontalAlign"),
-    onChange: value => ({
-      [dvk("horizontalAlign")]: value
-    })
+    value: dvv(key),
+    onChange: value => ({ [dvk(key)]: value })
   };
 }
 

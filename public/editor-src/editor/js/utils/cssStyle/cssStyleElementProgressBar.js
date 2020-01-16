@@ -30,5 +30,5 @@ export function cssStyleSizeProgressBarMaxWidthPercent({ v, device }) {
 }
 
 export function cssStyleElementProgressBarPropertyHoverTransition() {
-  return `transition-property: color, box-shadow, background, border;`;
+  return "transition-property: color, box-shadow, background, border;";
 }

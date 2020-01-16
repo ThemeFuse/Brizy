@@ -154,7 +154,7 @@ module.exports = {
                                                                     "tabletItemPaddingLeft": 15,
                                                                     "mobileMMenuIconColorPalette": "color8",
                                                                     "mobileMMenuIconColorHex": "",
-                                                                    "mobileMMenuIconColorOpacity": null
+                                                                    
                                                                 }
                                                             }
                                                         ],
@@ -412,21 +412,21 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    "hoverBoxShadow": null,
-                                                                    "tempHoverBoxShadow": null,
-                                                                    "hoverBoxShadowColorHex": null,
-                                                                    "hoverBoxShadowColorOpacity": null,
-                                                                    "hoverBoxShadowColorPalette": null,
-                                                                    "tempHoverBoxShadowColorPalette": null,
-                                                                    "tempHoverBoxShadowColorOpacity": null,
-                                                                    "hoverBoxShadowBlur": null,
-                                                                    "hoverBoxShadowVertical": null,
-                                                                    "hoverBoxShadowSpread": null,
-                                                                    "hoverBoxShadowHorizontal": null,
-                                                                    "tempHoverBoxShadowBlur": null,
-                                                                    "tempHoverBoxShadowVertical": null,
-                                                                    "tempHoverBoxShadowSpread": null,
-                                                                    "tempHoverBoxShadowHorizontal": null,
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
                                                                     "tabletSubMenuFontStyle": "button",
                                                                     "tabletSubMenuFontSize": 11,
                                                                     "tabletSubMenuFontWeight": 700,
@@ -443,20 +443,20 @@ module.exports = {
                                                                     "mMenuIconSize": 12,
                                                                     "mMenuIconSpacing": 15,
                                                                     "mMenuTempIconColorOpacity": 1,
-                                                                    "tabletMMenuPosition": null,
+                                                                    
                                                                     "tabletMMenuIconSize": 12,
                                                                     "tabletMMenuIconSpacing": 15,
-                                                                    "mobileMMenuPosition": null,
+                                                                    
                                                                     "mobileMMenuIconSize": 12,
                                                                     "mobileMMenuIconSpacing": 15,
                                                                     "mobileMMenuIconColorHex": "",
-                                                                    "mobileMMenuIconColorOpacity": null,
+                                                                    
                                                                     "mobileMMenuIconColorPalette": "color8"
                                                                 }
                                                             }
                                                         ],
                                                         "showOnTablet": "on",
-                                                        "tabletHorizontalAlign": null,
+                                                        
                                                         "className": "",
                                                         "horizontalAlign": "center",
                                                         "paddingType": "grouped",
@@ -504,7 +504,7 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        "mobileHorizontalAlign": null,
+                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
                                                         "mobilePaddingTop": 0,
@@ -735,7 +735,7 @@ module.exports = {
                                                                     "tabletItemPaddingLeft": 15,
                                                                     "mobileMMenuIconColorPalette": "color8",
                                                                     "mobileMMenuIconColorHex": "",
-                                                                    "mobileMMenuIconColorOpacity": null
+                                                                    
                                                                 }
                                                             }
                                                         ],
@@ -930,7 +930,7 @@ module.exports = {
                                                                     "tabletItemPaddingLeft": 15,
                                                                     "mobileMMenuIconColorPalette": "color8",
                                                                     "mobileMMenuIconColorHex": "",
-                                                                    "mobileMMenuIconColorOpacity": null
+                                                                    
                                                                 }
                                                             }
                                                         ],

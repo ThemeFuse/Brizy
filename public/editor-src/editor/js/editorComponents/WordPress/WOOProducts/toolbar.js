@@ -1,9 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import {
-  toolbarDisabledAdvancedSettings,
-  toolbarCustomCSS
-} from "visual/utils/toolbar";
+import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
 export default taxonomies => {
   const categoriesList = taxonomies.map(item => ({

@@ -232,56 +232,56 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    "hoverBoxShadow": null,
-                                                                    "hoverBoxShadowColorHex": null,
-                                                                    "hoverBoxShadowColorOpacity": null,
-                                                                    "hoverBoxShadowColorPalette": null,
-                                                                    "tempHoverBoxShadowColorPalette": null,
-                                                                    "tempHoverBoxShadowColorOpacity": null,
-                                                                    "hoverBoxShadowBlur": null,
-                                                                    "hoverBoxShadowSpread": null,
-                                                                    "hoverBoxShadowVertical": null,
-                                                                    "hoverBoxShadowHorizontal": null,
-                                                                    "tempHoverBoxShadowBlur": null,
-                                                                    "tempHoverBoxShadowSpread": null,
-                                                                    "tempHoverBoxShadowVertical": null,
-                                                                    "tempHoverBoxShadowHorizontal": null,
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
                                                                     "hoverTransition": 50,
-                                                                    "tabletResize": null,
-                                                                    "tabletZoom": null,
-                                                                    "tabletWidth": null,
-                                                                    "tabletHeight": null,
-                                                                    "tabletBoxShadow": null,
-                                                                    "tabletBoxShadowColorHex": null,
-                                                                    "tabletBoxShadowColorOpacity": null,
-                                                                    "tabletBoxShadowColorPalette": null,
-                                                                    "tempTabletBoxShadowColorPalette": null,
-                                                                    "tempTabletBoxShadowColorOpacity": null,
-                                                                    "tabletBoxShadowBlur": null,
-                                                                    "tabletBoxShadowSpread": null,
-                                                                    "tabletBoxShadowVertical": null,
-                                                                    "tabletBoxShadowHorizontal": null,
-                                                                    "tempTabletBoxShadowBlur": null,
-                                                                    "tempTabletBoxShadowSpread": null,
-                                                                    "tempTabletBoxShadowVertical": null,
-                                                                    "tempTabletBoxShadowHorizontal": null,
-                                                                    "mobileZoom": null,
-                                                                    "mobileWidth": null,
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
                                                                     "mobileHeight": 80,
-                                                                    "mobileBoxShadow": null,
-                                                                    "mobileBoxShadowColorHex": null,
-                                                                    "mobileBoxShadowColorOpacity": null,
-                                                                    "mobileBoxShadowColorPalette": null,
-                                                                    "tempMobileBoxShadowColorPalette": null,
-                                                                    "tempMobileBoxShadowColorOpacity": null,
-                                                                    "mobileBoxShadowBlur": null,
-                                                                    "mobileBoxShadowSpread": null,
-                                                                    "mobileBoxShadowVertical": null,
-                                                                    "mobileBoxShadowHorizontal": null,
-                                                                    "tempMobileBoxShadowBlur": null,
-                                                                    "tempMobileBoxShadowSpread": null,
-                                                                    "tempMobileBoxShadowVertical": null,
-                                                                    "tempMobileBoxShadowHorizontal": null
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
                                                                 }
                                                             }
                                                         ],
@@ -310,7 +310,7 @@ module.exports = {
                                                         "marginBottomSuffix": "px",
                                                         "marginLeftSuffix": "px",
                                                         "customClassName": "",
-                                                        "tabletHorizontalAlign": null,
+                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
                                                         "tabletPaddingTop": 0,
@@ -333,7 +333,7 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        "mobileHorizontalAlign": null,
+                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
                                                         "mobilePaddingTop": 0,

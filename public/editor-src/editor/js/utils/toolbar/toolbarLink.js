@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarLinkAnchor({ v, device, state, devices = "all" }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -25,12 +26,13 @@ export function toolbarLinkUpload({ v, device, state, devices = "all" }) {
   };
 }
 
-export function toolbarLinkExternal({ v }) {
+export function toolbarLinkExternal({ v, devices = "all" }) {
   const linkDynamicContentChoices = getDynamicContentChoices("link");
 
   return {
     id: "linkExternal",
     type: "input",
+    devices,
     label: t("Link to"),
     placeholder: "http://",
     population: {
@@ -39,6 +41,7 @@ export function toolbarLinkExternal({ v }) {
     },
     value: {
       value: v.linkExternal,
+
       population: v.linkPopulation
     },
     onChange: (
@@ -145,7 +148,7 @@ export function toolbarLinkHref({ v, device, devices = "all", state }) {
     label: t("Link"),
     devices,
     type: "input",
-    disabled: v.targetUrl === "current" ? true : false,
+    disabled: v.targetUrl === "current",
     placeholder: "http://",
     value: {
       value: defaultValueValue({ v, key: "href", device, state })
@@ -173,5 +176,77 @@ export function toolbarActionClosePopup({
     devices,
     disabled,
     value: dvv("actionClosePopup")
+  };
+}
+
+export function toolbarLinkMessageSuccess({
+  v,
+  device,
+  state,
+  prefix = "",
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const message = dvk(capByPrefix(prefix, "messageSuccess"));
+
+  return {
+    devices,
+    id: message,
+    type: "input",
+    label: t("Success"),
+    placeholder: t("Message sent"),
+    value: {
+      value: dvv(message)
+    },
+    onChange: ({ value }) => ({ [message]: value })
+  };
+}
+
+export function toolbarLinkMessageError({
+  v,
+  device,
+  state,
+  prefix = "",
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const message = dvk(capByPrefix(prefix, "messageError"));
+
+  return {
+    devices,
+    id: message,
+    type: "input",
+    label: t("Error"),
+    placeholder: t("Message not sent"),
+    value: {
+      value: dvv(message)
+    },
+    onChange: ({ value }) => ({ [message]: value })
+  };
+}
+
+export function toolbarLinkMessageRedirect({
+  v,
+  device,
+  state,
+  prefix = "",
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const message = dvk(capByPrefix(prefix, "messageRedirect"));
+
+  return {
+    devices,
+    id: message,
+    type: "input",
+    label: t("Go to"),
+    placeholder: "http://",
+    value: {
+      value: dvv(message)
+    },
+    onChange: ({ value }) => ({ [message]: value })
   };
 }

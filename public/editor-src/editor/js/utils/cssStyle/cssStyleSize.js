@@ -3,6 +3,7 @@ import {
   styleSizeHeight,
   styleSizeSize,
   styleSizeContainerSize,
+  styleSizeSpacing,
   styleSizeTextSpacing
 } from "visual/utils/style2";
 
@@ -41,6 +42,14 @@ export function cssStyleSizeMaxWidthContainer({ v, device, state }) {
   const maxWidth = styleSizeContainerSize({ v, device, state });
 
   return device === "desktop" ? `max-width: ${maxWidth}%;` : "";
+}
+
+export function cssStyleSizeSpacing({ v, device, state }) {
+  return `margin-right: ${styleSizeSpacing({
+    v,
+    device,
+    state
+  })}px;`;
 }
 
 export function cssStyleSizeTextSpacing({ v, device, state }) {

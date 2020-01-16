@@ -21,7 +21,8 @@ export class WPShortcode extends Component {
     tabletToggleMenu: false,
     className: "",
     style: {},
-    blocked: true
+    blocked: true,
+    render: null
   };
 
   id = uuid(3);
@@ -87,7 +88,8 @@ class Inner extends Component {
     attributes: {},
     raw: null,
     placeholderIcon: "wp-shortcode",
-    renderHTMLInEditor: true
+    renderHTMLInEditor: true,
+    render: null
   };
 
   state = {
@@ -136,7 +138,6 @@ class Inner extends Component {
 
   updateShortCodeHTML() {
     const shortcodeString = this.getShortcodeString();
-
     if (shortcodeString === "") {
       return;
     }
@@ -162,33 +163,39 @@ class Inner extends Component {
     return `[${name} ${attributesStr || ""}]`;
   }
 
+  renderMarkup(html) {
+    return { __html: html };
+  }
+
   renderForEdit() {
-    const {
-      className: _className,
-      style,
-      placeholderIcon,
-      blocked
-    } = this.props;
+    const { placeholderIcon, blocked, render } = this.props;
     const { shortcodeHTML } = this.state;
 
-    return shortcodeHTML ? (
-      blocked ? (
+    if (!shortcodeHTML) {
+      return <Placeholder icon={placeholderIcon} />;
+    }
+
+    if (typeof render === "function") {
+      return render(shortcodeHTML);
+    } else {
+      return (
         <div
-          className="brz-blocked"
-          dangerouslySetInnerHTML={{ __html: shortcodeHTML }}
+          className={blocked && "brz-blocked"}
+          dangerouslySetInnerHTML={this.renderMarkup(shortcodeHTML)}
         />
-      ) : (
-        <div dangerouslySetInnerHTML={{ __html: shortcodeHTML }} />
-      )
-    ) : (
-      <Placeholder icon={placeholderIcon} />
-    );
+      );
+    }
   }
 
   renderForView() {
-    return (
-      <div dangerouslySetInnerHTML={{ __html: this.getShortcodeString() }} />
-    );
+    const { render } = this.props;
+    const html = this.getShortcodeString();
+
+    if (typeof render === "function") {
+      return render(html);
+    } else {
+      return <div dangerouslySetInnerHTML={this.renderMarkup(html)} />;
+    }
   }
 
   render() {

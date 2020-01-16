@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 import classnames from "classnames";
 import _ from "underscore";
 import Config from "visual/global/Config";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import AppList from "../common/GlobalApps/StepsView/AppsList";
-import Switch from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
+import Switch from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
@@ -14,11 +14,10 @@ import {
   getForm,
   createForm,
   updateForm,
-  getIntegration,
-  createIntegration
+  getSmtpIntegration,
+  createSmtpIntegration
 } from "./api";
 import { copyTextToClipboard } from "../common/utils";
-
 const IS_PRO = Config.get("pro");
 
 class Email extends BaseIntegration {
@@ -41,15 +40,11 @@ class Email extends BaseIntegration {
       onLoading
     } = this.props;
 
-    const { status, data } = await getForm(formId);
+    const { status, data } = await getForm({ formId });
 
     if (status !== 200) {
       if (status === 404) {
-        const { status, data } = await createForm({
-          body: {
-            id: formId
-          }
-        });
+        const { status, data } = await createForm({ formId });
 
         if (status >= 400) {
           this.setState({
@@ -81,10 +76,8 @@ class Email extends BaseIntegration {
   updateForm = _.debounce(() => {
     updateForm({
       formId: this.props.value.formId,
-      body: {
-        hasEmailTemplate: this.state.hasEmailTemplate,
-        emailTemplate: this.state.emailTemplate
-      }
+      hasEmailTemplate: this.state.hasEmailTemplate,
+      emailTemplate: this.state.emailTemplate
     });
   }, 1000);
 
@@ -93,18 +86,16 @@ class Email extends BaseIntegration {
     const { formId } = this.props.value;
     const { stages } = this.appsData.find(app => app.id === connectedApp);
 
-    let { status, data: integrationData } = await getIntegration({
-      appId: connectedApp,
-      formId
+    let { status, data: integrationData } = await getSmtpIntegration({
+      formId,
+      id: connectedApp
     });
 
     if (status !== 200) {
       if (status === 404) {
-        const { status, data } = await createIntegration({
+        const { status, data } = await createSmtpIntegration({
           formId,
-          body: {
-            id: connectedApp
-          }
+          id: connectedApp
         });
 
         if (status !== 200) {
@@ -191,43 +182,47 @@ class Email extends BaseIntegration {
     });
 
     return (
-      <Fragment>
+      <>
         {error && super.renderError()}
         <AppList apps={this.appsData} proExceptions={this.proExceptions} />
-        {/*<div className={className}>*/}
-        {/*  <div className="brz-ed-popup-integration-email__template-head">*/}
-        {/*    <p className="brz-p">*/}
-        {/*      <strong className="brz-strong">{t("USE CUSTOM TEMPLATE")}</strong>*/}
-        {/*    </p>*/}
-        {/*    <Switch*/}
-        {/*      className="brz-ed-control__switch--light"*/}
-        {/*      defaultValue={hasEmailTemplate}*/}
-        {/*      onChange={this.handleEnableHtml}*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*<div className="brzs-ed-popup-integration-email__template-body">*/}
-        {/*  <textarea*/}
-        {/*    className="brz-textarea"*/}
-        {/*    value={emailTemplate}*/}
-        {/*    onChange={this.handleHtmlChange}*/}
-        {/*  />*/}
-        {/*  <div className="brz-d-xs-flex brz-align-items-xs-center">*/}
-        {/*    <p className="brz-p">*/}
-        {/*      {t("Tip: Use these shortcodes to populate your template")}*/}
-        {/*    </p>*/}
-        {/*    <Tooltip*/}
-        {/*      className="brz-ed-popup-integration-email__tooltip"*/}
-        {/*      size="small"*/}
-        {/*      openOnClick={false}*/}
-        {/*      closeDelay={600}*/}
-        {/*      overlay={this.renderFormInfo()}*/}
-        {/*    >*/}
-        {/*      <EditorIcon icon="nc-alert-circle-que" />*/}
-        {/*    </Tooltip>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-      </Fragment>
+        {!this.proExceptions && (
+          <div className={className}>
+            <div className="brz-ed-popup-integration-email__template-head">
+              <p className="brz-p">
+                <strong className="brz-strong">
+                  {t("USE CUSTOM TEMPLATE")}
+                </strong>
+              </p>
+              <Switch
+                className="brz-ed-control__switch--light"
+                defaultValue={hasEmailTemplate}
+                onChange={this.handleEnableHtml}
+              />
+            </div>
+            <div className="brz-ed-popup-integration-email__template-body">
+              <textarea
+                className="brz-textarea"
+                value={emailTemplate}
+                onChange={this.handleHtmlChange}
+              />
+              <div className="brz-d-xs-flex brz-align-items-xs-center">
+                <p className="brz-p">
+                  {t("Tip: Use these shortcodes to populate your template")}
+                </p>
+                <Tooltip
+                  className="brz-ed-popup-integration-email__tooltip"
+                  size="small"
+                  openOnClick={false}
+                  closeDelay={600}
+                  overlay={this.renderFormInfo()}
+                >
+                  <EditorIcon icon="nc-alert-circle-que" />
+                </Tooltip>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     );
   }
 }

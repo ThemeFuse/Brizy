@@ -1,9 +1,11 @@
 import Quill from "quill";
-import { imageUrl, imagePopulationUrl } from "visual/utils/image";
+import { imageUrl, svgUrl } from "visual/utils/image";
 let Inline = Quill.import("blots/inline");
 
+const isSVG = extension => extension === "svg";
+
 class BackgroundImage extends Inline {
-  static className = "text-mask";
+  // static className = "text-mask";
   static create(value) {
     const node = super.create(value);
     this.setValue(value, node);
@@ -17,33 +19,36 @@ class BackgroundImage extends Inline {
     const y = parseInt(node.style.backgroundPositionY) || null;
     const width = parseInt(node.getAttribute("data-image_width")) || null;
     const height = parseInt(node.getAttribute("data-image_height")) || null;
+    const extension = node.getAttribute("data-image_extension");
 
     if (!node.classList.contains("brz-population-mask")) {
       population = null;
     }
 
-    return { src, population, x, y, width, height };
+    return { src, population, x, y, extension, width, height };
   }
 
   static setValue(value, node) {
-    const { src, population, x, y, width, height } = value;
+    const { src, population, x, y, extension, width, height } = value;
 
     if (population) {
       node.style.backgroundImage = null;
       // ! should be 50% 50% or should we set image position?
-      node.style.backgroundPosition = `50% 50%`;
+      node.style.backgroundPosition = "50% 50%";
       node.classList.add("brz-population-mask");
       node.classList.remove("brz-text-mask");
       node.setAttribute("data-image_population", population);
     } else if (src) {
+      const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
       node.classList.add("brz-text-mask");
       node.classList.remove("brz-population-mask");
-      node.style.backgroundImage = `url('${imageUrl(src)}')`;
+      node.style.backgroundImage = `url('${imgUrl}')`;
       node.style.backgroundPosition = `${x}% ${y}%`;
       node.removeAttribute("data-image_population");
       node.setAttribute("data-image_src", src);
       node.setAttribute("data-image_width", width);
       node.setAttribute("data-image_height", height);
+      node.setAttribute("data-image_extension", extension);
     } else {
       this.removeValue(node);
     }
@@ -58,6 +63,7 @@ class BackgroundImage extends Inline {
     node.removeAttribute("data-image_src");
     node.removeAttribute("data-image_width");
     node.removeAttribute("data-image_height");
+    node.removeAttribute("data-image_extension");
   }
 
   format(name, value) {

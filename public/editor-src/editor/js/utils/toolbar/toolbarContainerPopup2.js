@@ -1,7 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { capitalize } from "visual/utils/string";
-import { toolbarVerticalAlign } from "visual/utils/toolbar";
 
 export function toolbarContainerPopup2ContainerWidth({
   v,
@@ -61,18 +60,33 @@ export function toolbarContainerPopup2ContainerTypeAndHeight({
   position = 100,
   disabled = false
 }) {
+  const picker =
+    v.columnsHeightStyle === "custom"
+      ? toolbarContainerPopup2ContainerType2({
+          v,
+          device,
+          state
+        })
+      : toolbarContainerPopup2ContainerType({
+          v,
+          device,
+          state
+        });
   return {
     type: "multiPicker",
     devices,
     position,
     disabled,
-    picker: toolbarContainerPopup2ContainerType({
-      v,
-      device,
-      state
-    }),
+    picker: picker,
     choices: {
       custom: [
+        toolbarContainerPopup2ContainerHeight({
+          v,
+          device,
+          state
+        })
+      ],
+      custom2: [
         toolbarContainerPopup2ContainerHeight({
           v,
           device,
@@ -106,7 +120,45 @@ function toolbarContainerPopup2ContainerType({
       },
       {
         title: t("Custom"),
+        value: "custom2"
+      },
+      {
+        title: t("Full Height"),
+        value: "fullHeight"
+      }
+    ],
+    value: dvv("columnsHeightStyle")
+  };
+}
+
+function toolbarContainerPopup2ContainerType2({
+  v,
+  device,
+  state,
+  devices = "all",
+  disabled = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("columnsHeightStyle"),
+    label: t("Height"),
+    type: "select",
+    devices,
+    disabled,
+    choices: [
+      {
+        title: t("Auto"),
+        value: "auto"
+      },
+      {
+        title: t("Height"),
         value: "custom"
+      },
+      {
+        title: t("Custom"),
+        value: "custom2"
       },
       {
         title: t("Full Height"),

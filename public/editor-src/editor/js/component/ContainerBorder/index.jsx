@@ -83,7 +83,7 @@ class ContainerBorder extends React.Component {
     }
   };
 
-  handleClickOutside = e => {
+  handleClickOutside = () => {
     if (this.isBorderActive || this.isButtonActive) {
       this.setActive(false, false);
     }

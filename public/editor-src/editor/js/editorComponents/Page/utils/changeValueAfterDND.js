@@ -51,7 +51,7 @@ function attachGlobalBlocks(value, source) {
   return transformed;
 }
 
-function detachGlobalBlocks(value, source) {
+function detachGlobalBlocks(value) {
   const globalBlockUpdates = [];
   const ret = produce(value, draft => {
     objectTraverse2(draft, obj => {

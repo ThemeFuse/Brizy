@@ -9,7 +9,8 @@ export function toolbarCSSID({
   device,
   devices = "all",
   position = 30,
-  state
+  state,
+  population
 }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   const dvk = key => defaultValueKey({ key, device, state });
@@ -23,11 +24,17 @@ export function toolbarCSSID({
     devices,
     helper: true,
     helperContent: helperHTML,
-    value: {
-      value: dvv("customID")
+    population: {
+      show: population.length > 0,
+      choices: population
     },
-    onChange: ({ value }) => ({
-      [dvk("customID")]: value
+    value: {
+      value: dvv("customID"),
+      population: dvv("cssIDPopulation")
+    },
+    onChange: ({ value, population }) => ({
+      [dvk("customID")]: value,
+      [dvk("cssIDPopulation")]: population
     })
   };
 }

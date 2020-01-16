@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import deepMerge from "deepmerge";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
@@ -20,7 +19,7 @@ class Items extends EditorArrayComponent {
     itemProps: {}
   };
 
-  handleSortableAcceptElements = (from, to) => {
+  handleSortableAcceptElements = from => {
     const { row } = this.props.meta;
 
     if (row && row.isInner) {

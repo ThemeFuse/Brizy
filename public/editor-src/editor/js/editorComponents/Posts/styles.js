@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 import { styleColor } from "visual/utils/style";
 
@@ -70,8 +69,8 @@ export function styleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          gridTemplateRows: `repeat(1, 1fr)`,
-          gridTemplateColumns: `repeat(1, 100%)`,
+          gridTemplateRows: "repeat(1, 1fr)",
+          gridTemplateColumns: "repeat(1, 100%)",
           gridGap: `${mobilePadding}px 0`
         },
         ".brz & ul.page-numbers": {

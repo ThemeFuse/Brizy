@@ -6,10 +6,7 @@ import { FirstBlockAdder } from "visual/component/BlockAdders";
 import HotKeys from "visual/component/HotKeys";
 import UIEvents from "visual/global/UIEvents";
 import { getStore } from "visual/redux/store";
-import {
-  triggersSelector,
-  triggersAmountSelector
-} from "visual/redux/selectors";
+import { triggersAmountSelector } from "visual/redux/selectors";
 import { addFonts, updateTriggers } from "visual/redux/actions";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
@@ -54,10 +51,12 @@ class PagePopup extends EditorComponent {
   }
 
   blocksFilter(blocks) {
+    /* eslint-disable no-unused-vars */
     return blocks.filter(
       ([_, block]) =>
         block.type === "SectionPopup" || block.type === "SectionPopup2"
     );
+    /* eslint-enabled no-unused-vars */
   }
 
   getPromptData() {

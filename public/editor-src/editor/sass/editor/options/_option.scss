@@ -37,7 +37,6 @@
     min-height: 56px;
   }
 }
-
 .brz-ed-tabs__option--inline:first-child:last-child > {
   .brz-ed-tabs__options > {
     .brz-ed-popover__option {
@@ -74,7 +73,7 @@
     }
   }
 }
-.brz-ed-control__tabs__content__left .brz-ed-control__tab__content {
+.brz-ed-control__tabs__content__left {
   min-height: 89px;
 }
 .brz-ed-tabs__option--inline + .brz-ed-option__advanced {
@@ -104,9 +103,13 @@
     &.brz-ed-option__slider {
       padding-top: 15px !important;
     }
-    .brz-input {
+    .brz-input,
+    .brz-ed-option__input-container {
       width: 100%;
       max-width: 100%;
+    }
+    .brz-ed-option__input-number-wrap {
+      position: relative;
     }
   }
   &__advanced {

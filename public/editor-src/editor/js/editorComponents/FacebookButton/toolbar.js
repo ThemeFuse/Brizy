@@ -19,14 +19,12 @@ import {
   toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+import { NORMAL, HOVER } from "visual/utils/stateMode";
+
+export function getItems({ v, device, state }) {
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "boxShadowColorHex", device }),
-    defaultValueValue({ v, key: "boxShadowColorPalette", device })
-  );
-  const { hex: hoverBoxShadowColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "hoverBoxShadowColorHex", device }),
-    defaultValueValue({ v, key: "hoverBoxShadowColorPalette", device })
+    defaultValueValue({ v, key: "boxShadowColorHex", device, state }),
+    defaultValueValue({ v, key: "boxShadowColorPalette", device, state })
   );
 
   return [
@@ -119,163 +117,67 @@ export function getItems({ v, device }) {
       },
       options: [
         {
-          id: "tabsState",
-          tabsPosition: "left",
+          id: "tabsColor",
           type: "tabs",
-          value: v.tabsState,
+          hideHandlesWhenOne: false,
           tabs: [
             {
-              id: "tabNormal",
-              tabIcon: "nc-circle",
-              title: t("Normal"),
+              id: "tabBoxShadow",
+              label: t("Shadow"),
               options: [
-                {
-                  id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  hideHandlesWhenOne: false,
-                  tabs: [
-                    {
-                      id: "tabBoxShadow",
-                      label: t("Shadow"),
-                      options: [
-                        toolbarBoxShadow2({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeType: [
-                            "onChangeBoxShadowType2",
-                            "onChangeBoxShadowTypeDependencies2"
-                          ],
-                          onChangeHex: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBoxShadowPalette2",
-                            "onChangeBoxShadowPaletteOpacity2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 41,
-                              options: [
-                                toolbarBoxShadowHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeBoxShadowHexAndOpacity2",
-                                    "onChangeBoxShadowHexAndOpacityPalette2",
-                                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                                  ]
-                                })
-                              ]
-                            },
-                            {
-                              width: 59,
-                              options: [
-                                toolbarBoxShadowFields2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeBoxShadowFields2",
-                                    "onChangeBoxShadowFieldsDependencies2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
+                toolbarBoxShadow2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  onChangeType: [
+                    "onChangeBoxShadowType2",
+                    "onChangeBoxShadowTypeDependencies2"
+                  ],
+                  onChangeHex: [
+                    "onChangeBoxShadowHexAndOpacity2",
+                    "onChangeBoxShadowHexAndOpacityPalette2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBoxShadowPalette2",
+                    "onChangeBoxShadowPaletteOpacity2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
                   ]
-                }
-              ]
-            },
-            {
-              id: "tabHover",
-              tabIcon: "nc-hover",
-              title: t("Hover"),
-              options: [
+                }),
                 {
-                  id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  hideHandlesWhenOne: false,
-                  tabs: [
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: "tabBoxShadow",
-                      label: t("Shadow"),
-                      icon: {
-                        style: {
-                          backgroundColor: hexToRgba(
-                            hoverBoxShadowColorHex,
-                            v.hoverBoxShadowColorOpacity
-                          )
-                        }
-                      },
+                      width: 41,
                       options: [
-                        toolbarBoxShadow2({
+                        toolbarBoxShadowHexField2({
                           v,
                           device,
-                          state: "hover",
-                          onChangeType: [
-                            "onChangeBoxShadowType2",
-                            "onChangeBoxShadowTypeDependencies2"
-                          ],
-                          onChangeHex: [
+                          state,
+                          states: [NORMAL, HOVER],
+                          onChange: [
                             "onChangeBoxShadowHexAndOpacity2",
                             "onChangeBoxShadowHexAndOpacityPalette2",
                             "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBoxShadowPalette2",
-                            "onChangeBoxShadowPaletteOpacity2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 41,
-                              options: [
-                                toolbarBoxShadowHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: [
-                                    "onChangeBoxShadowHexAndOpacity2",
-                                    "onChangeBoxShadowHexAndOpacityPalette2",
-                                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                                  ]
-                                })
-                              ]
-                            },
-                            {
-                              width: 59,
-                              options: [
-                                toolbarBoxShadowFields2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: [
-                                    "onChangeBoxShadowFields2",
-                                    "onChangeBoxShadowFieldsDependencies2"
-                                  ]
-                                })
-                              ]
-                            }
+                        })
+                      ]
+                    },
+                    {
+                      width: 59,
+                      options: [
+                        toolbarBoxShadowFields2({
+                          v,
+                          device,
+                          state,
+                          states: [NORMAL, HOVER],
+                          onChange: [
+                            "onChangeBoxShadowFields2",
+                            "onChangeBoxShadowFieldsDependencies2"
                           ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -284,10 +186,7 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "" : v.tabsState
-      })
+      ]
     },
     {
       id: defaultValueKey({ key: "toolbarLink", device, state: "normal" }),

@@ -56,14 +56,16 @@ export function getItemsForDesktop(v) {
               value: {
                 width: v.bgImageWidth,
                 height: v.bgImageHeight,
+                extension: v.bgImageExtension,
                 src: v.bgImageSrc,
                 x: v.bgPositionX,
                 y: v.bgPositionY
               },
-              onChange: ({ width, height, src, x, y }) => ({
+              onChange: ({ width, height, src, x, y, extension }) => ({
                 bgImageWidth: width,
                 bgImageHeight: height,
                 bgImageSrc: src,
+                bgImageExtension: extension,
                 bgPositionX: x,
                 bgPositionY: y,
 
@@ -465,7 +467,7 @@ export function getItemsForDesktop(v) {
   ];
 }
 
-export function getItemsForTablet(v) {
+export function getItemsForTablet() {
   return [];
 }
 
@@ -495,15 +497,17 @@ export function getItemsForMobile(v) {
             width: v.mobileBgImageWidth,
             height: v.mobileBgImageHeight,
             src: v.mobileBgImageSrc,
+            extension: v.mobileBgImageExtension,
             x: v.mobileBgPositionX,
             y: v.mobileBgPositionY
           },
-          onChange: ({ width, height, src, x, y }) => ({
+          onChange: ({ width, height, src, x, y, extension }) => ({
             mobileBgImageWidth: width,
             mobileBgImageHeight: height,
             mobileBgImageSrc: src,
             mobileBgPositionX: x,
             mobileBgPositionY: y,
+            mobileBgImageExtension: extension,
 
             mobileBgColorOpacity:
               src !== "" && v.mobileBgColorOpacity === 1

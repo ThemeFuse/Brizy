@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import _ from "underscore";
 import jQuery from "jquery";
 import "jquery.mmenu";
@@ -9,6 +9,12 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Portal from "visual/component/Portal";
 import { setIds } from "visual/utils/models";
+import TextEditor from "visual/editorComponents/Text/Editor";
+import ClickOutside from "visual/component/ClickOutside";
+import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
+import { getStore } from "visual/redux/store";
+import { pageSelector } from "visual/redux/selectors";
+import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as parentToolbarExtendConfig from "./parentToolbarExtend";
 import {
@@ -17,11 +23,7 @@ import {
   styleMenuClassName,
   styleMenuCSSVars
 } from "./styles";
-import defaultValue from "./defaultValue.json";
-import { printf } from "visual/utils/string";
 import { t } from "visual/utils/i18n";
-import TextEditor from "visual/editorComponents/Text/Editor";
-import ClickOutside from "visual/component/ClickOutside";
 
 export default class Menu extends EditorComponent {
   static get componentId() {
@@ -29,6 +31,10 @@ export default class Menu extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static defaultProps = {
+    extendParentToolbar: _.noop
+  };
 
   mMenu = null;
 
@@ -118,7 +124,9 @@ export default class Menu extends EditorComponent {
   }
 
   handleValueChange(newValue, meta) {
+    /* eslint-disable no-unused-vars */
     const { items, ...finalValue } = newValue;
+    /* eslint-enabled no-unused-vars */
 
     if (meta.patch.items) {
       finalValue.symbols = {
@@ -219,42 +227,42 @@ export default class Menu extends EditorComponent {
   }
 
   renderErrors(v) {
-    const configMenus = Config.get("menuData");
-    const dashboardNavMenu = Config.get("urls").dashboardNavMenu;
-
+    const menusConfig = Config.get("menuData");
     let errMsg;
 
-    if (configMenus.length === 0) {
-      errMsg = (
-        <span className="brz-menu--error--not-found">
-          <a href={dashboardNavMenu} target="_blank" className="brz-a">
-            {t("Add a Menu")}
-          </a>
-          {t("in your WordPress admin")}
-        </span>
-      );
-    }
+    if (menusConfig.length === 0) {
+      const dashboardNavMenu = Config.get("urls").dashboardNavMenu;
 
-    if (!errMsg) {
-      const selectedMenu = configMenus.find(menu => menu.id === v.menuSelected);
-      if (!selectedMenu) {
-        errMsg = t("Please select a menu");
-      } else if (selectedMenu.items.length === 0) {
-        errMsg = printf(
-          t("%s does not have any menu items"),
-          selectedMenu.name
+      if (TARGET === "WP") {
+        errMsg = (
+          <>
+            <a
+              className="brz-a"
+              href={dashboardNavMenu}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t("Create a menu")}
+            </a>
+            {t("in your WordPress admin")}
+          </>
+        );
+      } else {
+        errMsg = (
+          <CloudCreateMenuButton>{t("Create a menu")}</CloudCreateMenuButton>
         );
       }
     }
 
-    return (
-      errMsg && (
-        <div className="brz-menu--error">
-          <b className="brz-b">{t("Menu error")}: </b>
-          <span className="brz-span">{errMsg}</span>
-        </div>
-      )
-    );
+    if (!errMsg) {
+      const selectedMenu = menusConfig.find(menu => menu.id === v.menuSelected);
+
+      if (!selectedMenu) {
+        errMsg = t("Select a menu from the element options");
+      }
+    }
+
+    return errMsg && <div className="brz-menu__error">{errMsg}</div>;
   }
 
   renderForEdit(_v) {
@@ -333,7 +341,7 @@ export default class Menu extends EditorComponent {
     const errors = this.renderErrors(_v);
 
     if (errors) {
-      return errors;
+      return null;
     }
 
     const v = this.applyRulesToValue(_v, [
@@ -456,4 +464,36 @@ export default class Menu extends EditorComponent {
       mMenuApi.close();
     }
   };
+}
+
+function CloudCreateMenuButton({ children }) {
+  if (IS_PREVIEW) {
+    return null;
+  }
+
+  const [opened, setOpened] = useState(false);
+  const siteUrl = Config.get("urls").site;
+  const projectId = Config.get("project").id;
+  const pageId = pageSelector(getStore().getState()).id;
+  let iframeSrc = `${siteUrl}/projects/${projectId}/settings?page_id=${pageId}`;
+
+  return (
+    <>
+      <a
+        className="brz-a"
+        href="#"
+        onClick={e => {
+          e.preventDefault();
+          setOpened(true);
+        }}
+      >
+        {children}
+      </a>
+      <PromptThirdParty
+        iframeSrc={iframeSrc}
+        opened={opened}
+        onClose={() => setOpened(false)}
+      />
+    </>
+  );
 }

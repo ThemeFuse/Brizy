@@ -134,7 +134,7 @@
   &__badge {
     position: absolute;
     z-index: 10;
-    top: -5px;
+    bottom: $options-handle-size - 9px;
     left: -16px;
     width: 22px;
     height: 22px;
@@ -166,16 +166,26 @@
 // Collapsible Toolbar Section
 .brz-ed-collapsible--section {
   position: absolute;
-  top: 36px;
+  top: 0;
   right: 40px;
   left: auto;
   z-index: z("toolbar-collapsible");
   opacity: 0;
   transition: 0.15s linear opacity;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: minmax(calc(100% - #{$options-handle-size}), 36px) $options-handle-size;
+  max-height: 100%;
 
+  &:before {
+    content: "";
+  }
   .brz-ed-collapsible__icon,
   .brz-ed-collapsible__toolbar {
+    position: absolute;
+    top: auto;
     right: 0;
+    bottom: 0;
     left: auto;
     margin: 4px 0 4px 4px;
   }

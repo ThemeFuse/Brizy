@@ -90,30 +90,44 @@ class MenuItem extends EditorComponent {
     );
   }
 
-  renderLink(v, content) {
-    const { url, target, classes, attrTitle } = v;
-    let props = {
-      type: "external",
-      href: url,
-      target: target === "_blank" ? "on" : "off",
-      className: classes,
-      attr: {
-        title: attrTitle
-      }
-    };
+renderLink(v, content) {
+  const { url, target, classes, attrTitle } = v;
 
-    if (IS_EDITOR) {
-      props.onDragStart = e => {
-        e.preventDefault();
-        return false;
-      };
-      props.draggable = "false";
-    }
+  const trimUrl = url.trim();
 
-    return <Link {...props}>{content}</Link>;
+  let type = "";
+  let href = "";
+
+  if (trimUrl.charAt(0) === "#") {
+    type = "anchor";
+    href = url.replace("#", "");
+  } else {
+    type = "external";
+    href = trimUrl;
   }
 
-  renderMegaMenu(v) {
+  let props = {
+    href,
+    type,
+    target: target === "_blank" ? "on" : "off",
+    className: classes,
+    attr: {
+      title: attrTitle
+    }
+  };
+
+  if (IS_EDITOR) {
+    props.onDragStart = e => {
+      e.preventDefault();
+      return false;
+    };
+    props.draggable = "false";
+  }
+
+  return <Link {...props}>{content}</Link>;
+}
+
+  renderMegaMenu() {
     const itemProps = this.makeSubcomponentProps({
       bindWithKey: "megaMenuItems",
       level: this.props.level,
@@ -123,7 +137,7 @@ class MenuItem extends EditorComponent {
     return <MenuItemItems {...itemProps} />;
   }
 
-  renderDropDown(v) {
+  renderDropDown() {
     const { level, toolbarExtend, mMenu } = this.props;
 
     const itemProps = this.makeSubcomponentProps({

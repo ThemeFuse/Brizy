@@ -2,15 +2,24 @@
 
 import { onChangeDependeciesGrouped } from "./onChange";
 import { defaultValueValue, defaultValueKey } from "./device";
+import { capByPrefix } from "visual/utils/string";
 
-export function onChangeBoxShadowType2({ v, device, state, boxShadowType }) {
+export function onChangeBoxShadowType2({
+  v,
+  device,
+  state,
+  boxShadowType,
+  prefix = ""
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const tempBoxShadow = capByPrefix("temp", boxShadow);
 
   return {
-    [dvk("boxShadow")]: boxShadowType,
-    [dvk("tempBoxShadow")]:
-      boxShadowType !== "" ? boxShadowType : dvv("tempBoxShadow")
+    [dvk(boxShadow)]: boxShadowType,
+    [dvk(tempBoxShadow)]:
+      boxShadowType !== "" ? boxShadowType : dvv(tempBoxShadow)
   };
 }
 
@@ -18,35 +27,43 @@ export function onChangeBoxShadowTypeDependencies2({
   v,
   device,
   state,
-  boxShadowType
+  boxShadowType,
+  prefix = ""
 }) {
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
+  const colorPalette = capByPrefix(boxShadow, "colorPalette");
+  const blur = capByPrefix(boxShadow, "blur");
+  const spread = capByPrefix(boxShadow, "spread");
+  const vertical = capByPrefix(boxShadow, "vertical");
+  const horizontal = capByPrefix(boxShadow, "horizontal");
   const dependencies = {
-    boxShadowColorOpacity: {
+    [colorOpacity]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowColorPalette: {
+    [colorPalette]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowBlur: {
+    [blur]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowSpread: {
+    [spread]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowVertical: {
+    [vertical]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowHorizontal: {
+    [horizontal]: {
       childs: [],
       nullValue: [],
       tempValue: []
@@ -68,27 +85,33 @@ export function onChangeBoxShadowHexAndOpacity2({
   state,
   hex,
   opacity,
+  prefix = "",
   isChanged = "hex",
   opacityDragEnd = false
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorHex = capByPrefix(boxShadow, "colorHex");
+  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
+  const tempColorOpacity = capByPrefix("temp", colorOpacity);
 
   opacity = onChangeBoxShadowOpacity2({
     v,
     device,
     state,
     opacity,
+    prefix,
     isChanged
   });
 
   const tempOpacity =
-    opacity > 0 && opacityDragEnd ? opacity : dvv("tempBoxShadowColorOpacity");
+    opacity > 0 && opacityDragEnd ? opacity : dvv(tempColorOpacity);
 
   return {
-    [dvk("boxShadowColorHex")]: hex,
-    [dvk("boxShadowColorOpacity")]: opacity,
-    [dvk("tempBoxShadowColorOpacity")]: tempOpacity
+    [dvk(colorHex)]: hex,
+    [dvk(colorOpacity)]: opacity,
+    [dvk(tempColorOpacity)]: tempOpacity
   };
 }
 
@@ -97,10 +120,14 @@ export function onChangeBoxShadowHexAndOpacityPalette2({
   device,
   state,
   opacity,
+  prefix = "",
   isChanged = "hex"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorPalette = capByPrefix(boxShadow, "colorPalette");
+  const tempColorPalette = capByPrefix("temp", colorPalette);
 
   opacity = onChangeBoxShadowOpacity2({
     v,
@@ -114,15 +141,14 @@ export function onChangeBoxShadowHexAndOpacityPalette2({
     isChanged === "hex" || opacity === 0
       ? ""
       : opacity > 0
-      ? dvv("tempBoxShadowColorPalette")
-      : dvv("boxShadowColorPalette");
+      ? dvv(tempColorPalette)
+      : dvv(colorPalette);
 
-  const tempPalette =
-    isChanged === "hex" ? "" : dvv("tempBoxShadowColorPalette");
+  const tempPalette = isChanged === "hex" ? "" : dvv(tempColorPalette);
 
   return {
-    [dvk("boxShadowColorPalette")]: palette,
-    [dvk("tempBoxShadowColorPalette")]: tempPalette
+    [dvk(colorPalette)]: palette,
+    [dvk(tempColorPalette)]: tempPalette
   };
 }
 
@@ -131,30 +157,36 @@ export function onChangeBoxShadowHexAndOpacityDependencies2({
   device,
   state,
   opacity,
-  isChanged
+  isChanged,
+  prefix = ""
 }) {
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const blur = capByPrefix(boxShadow, "blur");
+  const spread = capByPrefix(boxShadow, "spread");
+  const vertical = capByPrefix(boxShadow, "vertical");
+  const horizontal = capByPrefix(boxShadow, "horizontal");
   const dependencies = {
-    boxShadow: {
+    [boxShadow]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowBlur: {
+    [blur]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowSpread: {
+    [spread]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowVertical: {
+    [vertical]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowHorizontal: {
+    [horizontal]: {
       childs: [],
       nullValue: [],
       tempValue: []
@@ -166,6 +198,7 @@ export function onChangeBoxShadowHexAndOpacityDependencies2({
     device,
     state,
     opacity,
+    prefix,
     isChanged
   });
 
@@ -178,12 +211,20 @@ export function onChangeBoxShadowHexAndOpacityDependencies2({
   });
 }
 
-export function onChangeBoxShadowPalette2({ v, device, state, palette }) {
+export function onChangeBoxShadowPalette2({
+  device,
+  state,
+  palette,
+  prefix = ""
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorPalette = capByPrefix(boxShadow, "colorPalette");
+  const tempColorPalette = capByPrefix("temp", colorPalette);
 
   return {
-    [dvk("boxShadowColorPalette")]: palette,
-    [dvk("tempBoxShadowColorPalette")]: palette
+    [dvk(colorPalette)]: palette,
+    [dvk(tempColorPalette)]: palette
   };
 }
 
@@ -192,46 +233,59 @@ export function onChangeBoxShadowPaletteOpacity2({
   device,
   state,
   opacity,
-  isChanged
+  isChanged,
+  prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
 
   opacity = onChangeBoxShadowOpacity2({
     v,
     device,
     state,
     opacity,
+    prefix,
     isChanged
   });
 
   return {
-    [dvk("boxShadowColorOpacity")]: opacity
+    [dvk(colorOpacity)]: opacity
   };
 }
 
 export function onChangeBoxShadowFields2({
-  v,
   device,
   state,
   boxShadowBlur = 0,
   boxShadowSpread = 0,
   boxShadowVertical = 0,
-  boxShadowHorizontal = 0
+  boxShadowHorizontal = 0,
+  prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const blur = capByPrefix(boxShadow, "blur");
+  const spread = capByPrefix(boxShadow, "spread");
+  const vertical = capByPrefix(boxShadow, "vertical");
+  const horizontal = capByPrefix(boxShadow, "horizontal");
+  const tempBlur = capByPrefix("temp", blur);
+  const tempSpread = capByPrefix("temp", spread);
+  const tempVertical = capByPrefix("temp", vertical);
+  const tempHorizontal = capByPrefix("temp", horizontal);
 
   return {
-    [dvk("boxShadowBlur")]: boxShadowBlur,
-    [dvk("tempBoxShadowBlur")]: boxShadowBlur,
+    [dvk(blur)]: boxShadowBlur,
+    [dvk(tempBlur)]: boxShadowBlur,
 
-    [dvk("boxShadowSpread")]: boxShadowSpread,
-    [dvk("tempBoxShadowSpread")]: boxShadowSpread,
+    [dvk(spread)]: boxShadowSpread,
+    [dvk(tempSpread)]: boxShadowSpread,
 
-    [dvk("boxShadowVertical")]: boxShadowVertical,
-    [dvk("tempBoxShadowVertical")]: boxShadowVertical,
+    [dvk(vertical)]: boxShadowVertical,
+    [dvk(tempVertical)]: boxShadowVertical,
 
-    [dvk("boxShadowHorizontal")]: boxShadowHorizontal,
-    [dvk("tempBoxShadowHorizontal")]: boxShadowHorizontal
+    [dvk(horizontal)]: boxShadowHorizontal,
+    [dvk(tempHorizontal)]: boxShadowHorizontal
   };
 }
 
@@ -242,7 +296,8 @@ export function onChangeBoxShadowFieldsDependencies2({
   boxShadowBlur = 0,
   boxShadowSpread = 0,
   boxShadowVertical = 0,
-  boxShadowHorizontal = 0
+  boxShadowHorizontal = 0,
+  prefix = ""
 }) {
   const value = Math.max(
     boxShadowBlur,
@@ -250,19 +305,22 @@ export function onChangeBoxShadowFieldsDependencies2({
     boxShadowVertical,
     boxShadowHorizontal
   );
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
+  const colorPalette = capByPrefix(boxShadow, "colorPalette");
 
   const dependencies = {
-    boxShadow: {
+    [boxShadow]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowColorOpacity: {
+    [colorOpacity]: {
       childs: [],
       nullValue: [],
       tempValue: []
     },
-    boxShadowColorPalette: {
+    [colorPalette]: {
       childs: [],
       nullValue: [],
       tempValue: []
@@ -278,19 +336,23 @@ export function onChangeBoxShadowFieldsDependencies2({
   });
 }
 
-function onChangeBoxShadowOpacity2({
+export function onChangeBoxShadowOpacity2({
   v,
   device,
   state,
+  prefix = "",
   opacity = undefined,
   isChanged = "hex"
 }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
+  const tempColorOpacity = capByPrefix("temp", colorOpacity);
 
   return (isChanged === "hex" || isChanged === "palette") &&
-    dvv("boxShadowColorOpacity") === 0
-    ? dvv("tempBoxShadowColorOpacity")
+    dvv(colorOpacity) === 0
+    ? dvv(tempColorOpacity)
     : opacity === undefined
-    ? dvv("boxShadowColorOpacity")
+    ? dvv(colorOpacity)
     : opacity;
 }

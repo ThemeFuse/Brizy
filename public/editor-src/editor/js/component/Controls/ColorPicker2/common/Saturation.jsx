@@ -19,7 +19,7 @@ export class Saturation extends Component {
     this.unbindEventListeners();
   }
 
-  handleChange = (e, skip) => {
+  handleChange = e => {
     const contentWindow = this.props.contentWindow();
 
     this.props.onChange &&

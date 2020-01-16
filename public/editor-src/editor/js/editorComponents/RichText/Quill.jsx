@@ -1,10 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import _ from "underscore";
 import jQuery from "jquery";
 import { getDynamicContentByPlaceholder } from "visual/utils/options";
 import { getStore } from "visual/redux/store";
-import Quill, { Delta, Keyboard } from "./utils/quill";
+import Quill, { Delta } from "./utils/quill";
 import bindings from "./utils/bindings";
 import { getFormats } from "./utils";
 
@@ -83,8 +82,13 @@ const DEFAULT = {
 
 let instances = [];
 
+const classToDisableDnd = ["brz-ed-content-editable-focus", "brz-ed-dd-cancel"];
+
 export default class QuillComponent extends React.Component {
   isUnmounted = false;
+
+  content = React.createRef();
+  contentEditable = React.createRef();
 
   componentDidMount() {
     const { initDelay } = this.props;
@@ -107,7 +111,7 @@ export default class QuillComponent extends React.Component {
 
     if (reInitPlugin) {
       this.destroyPlugin();
-      this.contentEditable.innerHTML = value;
+      this.contentEditable.current.innerHTML = value;
       this.initPlugin();
     }
   }
@@ -122,7 +126,7 @@ export default class QuillComponent extends React.Component {
   }
 
   getCoords(range) {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.content.current;
     const { top, left } = node.getBoundingClientRect();
     const bounds = this.quill.getBounds(range);
 
@@ -133,12 +137,8 @@ export default class QuillComponent extends React.Component {
     };
   }
 
-  handleContentEditableRef = el => {
-    this.contentEditable = el;
-  };
-
   initPlugin = () => {
-    this.quill = new Quill(this.contentEditable, {
+    this.quill = new Quill(this.contentEditable.current, {
       placeholder: "Enter text here...",
       modules: {
         toolbar: false,
@@ -164,7 +164,7 @@ export default class QuillComponent extends React.Component {
       this.save(this.quill.root.innerHTML);
     });
 
-    this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+    this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, node => {
       const { color, colorPalette } = this.quill.getFormat();
       const attributers =
         color || colorPalette ? { color, colorPalette } : null;
@@ -228,9 +228,9 @@ export default class QuillComponent extends React.Component {
   }, 1000);
 
   handleClick = () => {
-    jQuery(ReactDOM.findDOMNode(this)).addClass(
-      "brz-ed-content-editable-focus brz-ed-dd-cancel"
-    );
+    const node = this.content.current;
+
+    node && node.classList.add(...classToDisableDnd);
   };
 
   handleKeyPress = event => {
@@ -241,14 +241,10 @@ export default class QuillComponent extends React.Component {
 
   onBlurAll = event => {
     instances.forEach(instance => {
-      const node = ReactDOM.findDOMNode(instance);
-      const clickedOutsideTextEditor = !node.contains(event.target);
+      const node = instance.content.current;
 
-      if (clickedOutsideTextEditor) {
-        node.classList.remove(
-          "brz-ed-content-editable-focus",
-          "brz-ed-dd-cancel"
-        );
+      if (node && !node.contains(event.target)) {
+        node.classList.remove(...classToDisableDnd);
       }
     });
   };
@@ -257,10 +253,10 @@ export default class QuillComponent extends React.Component {
     const { value } = this.props;
 
     return (
-      <div className="brz-ed-content-editable-wrap">
+      <div ref={this.content} className="brz-ed-content-editable-wrap">
         <div className="brz-ed-content-editable-child" />
         <div
-          ref={this.handleContentEditableRef}
+          ref={this.contentEditable}
           dangerouslySetInnerHTML={{ __html: value }}
           onClick={this.handleClick}
           onKeyPress={this.handleKeyPress}

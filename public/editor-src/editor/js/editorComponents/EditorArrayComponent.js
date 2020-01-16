@@ -16,7 +16,8 @@ import {
   setStyles,
   getElementOfArrayLoop,
   getClosestParent,
-  getParentWhichContainsStyleProperty
+  getParentWhichContainsStyleProperty,
+  insertItem
 } from "visual/utils/models";
 
 const emptyTarget = value => (Array.isArray(value) ? [] : {});
@@ -45,13 +46,10 @@ export default class EditorArrayComponent extends EditorComponent {
     sliceEndIndex: Infinity
   };
 
-  static insertItem(items, itemIndex, itemData) {
-    const itemDataStripped = stripSystemKeys(itemData);
-    const itemDataWithIds = setIds(itemDataStripped);
-    const updatedValue = insert(items, itemIndex, itemDataWithIds);
-
-    return updatedValue;
-  }
+  /**
+   * @deprecated
+   */
+  static insertItem = insertItem;
 
   static insertItemsBatch(items, itemIndex, itemsData) {
     const updatedValue = itemsData.reduce((acc, itemData, index) => {
@@ -293,9 +291,11 @@ export default class EditorArrayComponent extends EditorComponent {
     }
   }
 
+  /* eslint-disable no-unused-vars */
   renderItemWrapper(item, itemKey, itemIndex, itemData, items) {
     return item;
   }
+  /* eslint-enabled no-unused-vars */
 
   renderItem = (itemData, itemIndex, items) => {
     const {

@@ -18,7 +18,7 @@ export default function() {
         .children()
         .removeClass("active");
       $(this).addClass("active");
-      $this.find("input[type=hidden]").val($(this).text());
+      $this.find("input[type=hidden]").val($(this).data("value"));
       $currentOption.html($(this).html());
       $options.hide();
     });
@@ -27,7 +27,7 @@ export default function() {
     $this.find("input[type=hidden]").on("change", function() {
       var defaultValue = $option.html();
       $currentOption.html(defaultValue);
-      $(this).val(defaultValue);
+      $(this).val("");
     });
 
     $(window).on("click", function(e) {

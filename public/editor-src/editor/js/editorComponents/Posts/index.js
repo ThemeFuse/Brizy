@@ -1,4 +1,5 @@
 import React from "react";
+import { noop } from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
@@ -7,7 +8,7 @@ import Items from "./items";
 import { styleClassName, styleCSSVars } from "./styles";
 import * as parentToolbarExtend from "./parentToolbarExtend";
 import defaultValue from "./defaultValue.json";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { tabletSyncOnChange } from "visual/utils/onChange";
 
 class Posts extends EditorComponent {
   static get componentId() {
@@ -15,6 +16,10 @@ class Posts extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static defaultProps = {
+    extendParentToolbar: noop
+  };
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {

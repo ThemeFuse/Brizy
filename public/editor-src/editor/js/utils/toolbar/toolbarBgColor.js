@@ -11,6 +11,7 @@ export function toolbarBgColor2({
   v,
   device,
   state,
+  states,
   devices = "all",
   disabled = false,
   prefix = "bg",
@@ -44,6 +45,7 @@ export function toolbarBgColor2({
     type: "colorPicker2",
     disabled,
     devices,
+    states,
     select: {
       show: showSelect,
       choices: [
@@ -159,6 +161,7 @@ export function toolbarBgColorHexField2({
   v,
   device,
   state,
+  states,
   devices = "all",
   prefix = "bg",
   className = "",
@@ -177,6 +180,7 @@ export function toolbarBgColorHexField2({
     id: dvk(capByPrefix(prefix, "colorField")),
     type: "colorFields",
     devices,
+    states,
     disabled,
     className,
     value: {

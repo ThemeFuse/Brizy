@@ -1,0 +1,5 @@
+/build/**
+/kits/**
+/popups/**
+/templates/**
+*.test.js

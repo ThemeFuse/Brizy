@@ -73,6 +73,7 @@ export default class ClickOutside extends React.Component {
       }
 
       if (exceptionsCount === 0) {
+        // eslint-disable-next-line react/no-find-dom-node
         const node = ReactDOM.findDOMNode(instance);
 
         if (node && !node.contains(e.target)) {

@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import _ from "underscore";
 import Fixed from "../Fixed2";
 import EditorIcon from "visual/component/EditorIcon";
 
@@ -9,6 +11,18 @@ export function PromptThirdParty({ iframeSrc, opened, onClose }) {
     </Fixed>
   );
 }
+
+PromptThirdParty.defaultProps = {
+  iframeSrc: "",
+  opened: false,
+  onClose: _.noop
+};
+
+PromptThirdParty.propTypes = {
+  iframeSrc: PropTypes.string.isRequired,
+  opened: PropTypes.bool,
+  onClose: PropTypes.func
+};
 
 function ThirdPartyIframe({ src, onRequestClose }) {
   const [loaded, setLoaded] = useState(false);
@@ -36,6 +50,26 @@ function ThirdPartyIframe({ src, onRequestClose }) {
         case "CLOSE":
           onRequestClose();
           break;
+        case "NAVIGATE":
+          if (e.data.url) {
+            if (process.env.NODE_ENV === "development" && TARGET === "none") {
+              const url = new URL(window.parent.location.href);
+              const match = /\/(\d+)$/.exec(e.data.url);
+
+              if (match) {
+                const [, pageId] = match;
+
+                url.pathname = `editor/${pageId}`;
+              } else {
+                url.pathname = "editor";
+              }
+
+              window.parent.location.href = url.toString();
+            } else {
+              window.parent.location.href = e.data.url;
+            }
+          }
+          break;
       }
     };
 
@@ -50,6 +84,7 @@ function ThirdPartyIframe({ src, onRequestClose }) {
     <>
       <iframe
         ref={iframeEl}
+        title="ThirdParty"
         src={src}
         style={{
           position: "relative",
@@ -73,3 +108,12 @@ function ThirdPartyIframe({ src, onRequestClose }) {
     </>
   );
 }
+
+ThirdPartyIframe.defaultProps = {
+  src: "",
+  onRequestClose: _.noop
+};
+ThirdPartyIframe.propTypes = {
+  src: PropTypes.string.isRequired,
+  onRequestClose: PropTypes.func
+};

@@ -1,77 +1,96 @@
 import _ from "underscore";
 import React from "react";
+import T from "prop-types";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 
 export default class Tabs extends React.Component {
+  static propTypes = {
+    align: T.string,
+    className: T.string,
+    tabsClassName: T.string,
+    tabsPosition: T.string,
+    value: T.string,
+    hideHandlesWhenOne: T.bool,
+    onChange: T.func
+  };
+
   static defaultProps = {
     align: "",
     className: "",
     tabsClassName: "",
     tabsPosition: "top",
-    value: 0,
+    value: "",
     hideHandlesWhenOne: true,
     onChange: _.noop,
     helper: null
   };
 
-  renderTabIcon = icon => {
-    return <EditorIcon icon={icon} />;
-  };
-
   renderTabs = () => {
-    // React.Children.toArray automatically filters out falsy children
-    const childrenArr = React.Children.toArray(this.props.children);
+    const {
+      value,
+      hideHandlesWhenOne,
+      align,
+      tabsPosition,
+      tabsClassName,
+      children,
+      onChange
+    } = this.props;
 
-    if (childrenArr.length === 1 && this.props.hideHandlesWhenOne) {
+    // React.Children.toArray automatically filters out falsy children
+    const childrenArr = React.Children.toArray(children);
+    if (
+      childrenArr.length === 0 ||
+      (childrenArr.length === 1 && hideHandlesWhenOne)
+    ) {
       return null;
     }
 
+    const className = classnames(
+      "brz-ul brz-ed-control__tabs",
+      `brz-justify-content-xs-${align}`,
+      `brz-ed-control__tabs__${tabsPosition}`,
+      tabsClassName
+    );
     const items = childrenArr.map((child, index) => {
+      const { icon, value: childValue, title, label } = child.props;
+      const className = classnames("brz-li brz-ed-control__tab", {
+        "brz-ed-control__tab__icon": icon,
+        active: value === childValue
+      });
+
       return (
         <li
           key={index}
-          title={child.props.title}
-          className={classnames(
-            "brz-li brz-ed-control__tab",
-            child.props.icon ? "brz-ed-control__tab__icon" : null,
-            { active: this.props.value === child.props.value }
-          )}
-          onClick={this.props.onChange.bind(null, child.props.value)}
+          title={title}
+          className={className}
+          onClick={() => onChange(childValue)}
         >
-          {child.props.icon ? this.renderTabIcon(child.props.icon) : null}
-          <span className="brz-span">{child.props.label}</span>
+          {icon && <EditorIcon icon={icon} />}
+          <span className="brz-span">{label}</span>
         </li>
       );
     });
 
-    const tabsClassName = classnames(
-      "brz-ul brz-ed-control__tabs",
-      `brz-justify-content-xs-${this.props.align}`,
-      `brz-ed-control__tabs__${this.props.tabsPosition}`,
-      this.props.tabsClassName
-    );
-
-    return items.length ? <ul className={tabsClassName}>{items}</ul> : null;
+    return <ul className={className}>{items}</ul>;
   };
 
   renderTabContent = () => {
-    // React.Children.toArray automatically filters out falsy children
-    const childrenArr = React.Children.toArray(this.props.children);
-    const tabsContentClassName = classnames(
-      "brz-ed-control__tab__content",
-      `brz-ed-control__tabs__content__${this.props.tabsPosition}`
-    );
+    const { value, tabsPosition, children } = this.props;
 
-    return childrenArr.map((child, index) => {
-      if (this.props.value === child.props.value) {
-        return (
-          <div key={index} className={tabsContentClassName}>
-            {child.props.children}
-          </div>
-        );
-      }
-    });
+    // React.Children.toArray automatically filters out falsy children
+    const childrenArr = React.Children.toArray(children);
+    const className = classnames(
+      "brz-ed-control__tab__content",
+      `brz-ed-control__tabs__content__${tabsPosition}`
+    );
+    const activeChild = childrenArr.find(child => value === child.props.value);
+
+    return (
+      activeChild && (
+        <div className={className}>{activeChild.props.children}</div>
+      )
+    );
   };
 
   render() {

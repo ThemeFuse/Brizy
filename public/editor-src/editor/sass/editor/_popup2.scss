@@ -36,3 +36,8 @@
     margin-right: 16px;
   }
 }
+.brz-container__wrap > .brz-container > .brz-row__container > .brz-ed-border,
+.brz-container__wrap > .brz-container > .brz-row__container > .brz-ed-border > .brz-row__bg {
+  max-height: 100%;
+  height: 100%;
+}

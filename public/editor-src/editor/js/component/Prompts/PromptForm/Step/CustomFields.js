@@ -31,11 +31,11 @@ class CustomFields extends Component {
 
   static async onBeforeLoad(context) {
     const {
-      app: { data },
+      app: { id, data },
       onChange
     } = context;
 
-    onChange(data.id, { ...data, fields: [] });
+    onChange(id, { ...data, fields: [] });
   }
 
   handleActive = (id, target) => {
@@ -61,7 +61,7 @@ class CustomFields extends Component {
 
   handleNext = async () => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange,
       onChangeNext
@@ -83,12 +83,10 @@ class CustomFields extends Component {
       });
     } else {
       const { status, data } = await updateIntegration({
+        ...appData,
         formId,
-        body: {
-          ...appData,
-          fieldsMap: formFields,
-          completed: true
-        }
+        fieldsMap: JSON.stringify(formFields),
+        completed: true
       });
 
       if (status !== 200) {
@@ -97,14 +95,16 @@ class CustomFields extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(appData.id, { ...appData, ...data });
+        onChange(id, { ...appData, ...data });
         onChangeNext();
       }
     }
   };
 
   render() {
-    const { app } = this.context;
+    const {
+      app: { title }
+    } = this.context;
     const { formFields, error, nextLoading, prevLoading } = this.state;
     const data = formFields.map(({ sourceTitle, sourceId, target }) => ({
       title: sourceTitle,
@@ -114,7 +114,8 @@ class CustomFields extends Component {
 
     return (
       <InputFields
-        {...app}
+        headTitle={t("FORM FIELDS")}
+        headDescription={`${title} ${t("FIELDS")}`}
         data={data}
         error={error}
         nextLoading={nextLoading}

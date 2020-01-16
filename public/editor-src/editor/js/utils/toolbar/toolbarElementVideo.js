@@ -57,6 +57,10 @@ export function toolbarElementVideoRatio({
         value: "16:9"
       },
       {
+        title: "9:16",
+        value: "9:16"
+      },
+      {
         title: "4:3",
         value: "4:3"
       }
@@ -81,6 +85,29 @@ export function toolbarElementVideoControls({
   };
 }
 
+export function toolbarElementVideoStart({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
+  return {
+    id: defaultValueKey({ key: "start", device, state }),
+    devices,
+    label: t("Start"),
+    type: "input",
+    inputType: "number",
+    placeholder: "seconds",
+    roles: ["admin"],
+    value: {
+      value: v.start
+    },
+    onChange: ({ value }) => ({
+      [defaultValueKey({ key: "start", device, state })]: Number(value)
+    })
+  };
+}
+
 export function toolbarElementVideoCover({
   v,
   device,
@@ -97,9 +124,15 @@ export function toolbarElementVideoCover({
       height: defaultValueValue({ v, key: "coverImageHeight", device, state }),
       src: defaultValueValue({ v, key: "coverImageSrc", device, state }),
       x: defaultValueValue({ v, key: "coverPositionX", device, state }),
-      y: defaultValueValue({ v, key: "coverPositionY", device, state })
+      y: defaultValueValue({ v, key: "coverPositionY", device, state }),
+      extension: defaultValueValue({
+        v,
+        key: "coverImageExtension",
+        device,
+        state
+      })
     },
-    onChange: ({ width, height, src, x, y }) => {
+    onChange: ({ width, height, src, x, y, extension }) => {
       return {
         [defaultValueKey({ v, key: "coverImageWidth", device, state })]: width,
         [defaultValueKey({
@@ -110,7 +143,13 @@ export function toolbarElementVideoCover({
         })]: height,
         [defaultValueKey({ v, key: "coverImageSrc", device, state })]: src,
         [defaultValueKey({ v, key: "coverPositionX", device, state })]: x,
-        [defaultValueKey({ v, key: "coverPositionY", device, state })]: y
+        [defaultValueKey({ v, key: "coverPositionY", device, state })]: y,
+        [defaultValueKey({
+          v,
+          key: "coverImageExtension",
+          device,
+          state
+        })]: extension
       };
     }
   };

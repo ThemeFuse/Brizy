@@ -136,22 +136,22 @@ module.exports = {
                                                     "value": {
                                                         "_styles": [
                                                             "wrapper",
-                                                            "wrapper--iconText"
+                                                            "wrapper--form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "Form",
+                                                                "type": "Form2",
                                                                 "value": {
                                                                     "_styles": [
-                                                                        "form"
+                                                                        "form2"
                                                                     ],
                                                                     "items": [
                                                                         {
-                                                                            "type": "FormFields",
+                                                                            "type": "Form2Fields",
                                                                             "value": {
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "FormField",
+                                                                                        "type": "Form2Field",
                                                                                         "value": {
                                                                                             "type": "Email",
                                                                                             "label": "Enter Email Address",
@@ -159,23 +159,26 @@ module.exports = {
                                                                                             "options": [
                                                                                                 "Option 1",
                                                                                                 "Option 2"
-                                                                                            ]
+                                                                                            ],
+                                                                                            "placeholder": "Enter Email Address",
+                                                                                            "width": 100
                                                                                         }
                                                                                     }
                                                                                 ],
-                                                                                "padding": 20,
-                                                                                "paddingRight": 20,
-                                                                                "paddingBottom": 20,
-                                                                                "paddingLeft": 20,
                                                                                 "fontStyle": "paragraph",
+                                                                                "size": "small",
+                                                                                "paddingTop": 10,
+                                                                                "paddingRight": 20,
+                                                                                "paddingBottom": 10,
+                                                                                "paddingLeft": 20,
+                                                                                "tabsState": "",
+                                                                                "tabsColor": "",
                                                                                 "colorPalette": "color2",
                                                                                 "tempColorPalette": "color2",
-                                                                                "colorOpacity": 0.55,
-                                                                                "borderColorHex": "#666666",
-                                                                                "borderColorOpacity": 0.3,
-                                                                                "tempBorderColorOpacity": 0.3,
-                                                                                "borderColorPalette": "color7",
-                                                                                "tempBorderColorPalette": "color7",
+                                                                                "colorOpacity": 0.4,
+                                                                                "borderColorPalette": "color2",
+                                                                                "tempBorderColorPalette": "color2",
+                                                                                "borderColorOpacity": 0.2,
                                                                                 "borderStyle": "solid",
                                                                                 "borderWidth": 1,
                                                                                 "borderTopWidth": 1,
@@ -186,11 +189,25 @@ module.exports = {
                                                                                 "tempBorderRightWidth": 1,
                                                                                 "tempBorderBottomWidth": 1,
                                                                                 "tempBorderLeftWidth": 1,
+                                                                                "borderColorHex": "#1c1c1c",
+                                                                                "tempBorderColorOpacity": 0.2,
+                                                                                "borderRadius": 5,
+                                                                                "borderTopLeftRadius": 5,
+                                                                                "borderTopRightRadius": 5,
+                                                                                "borderBottomLeftRadius": 5,
+                                                                                "borderBottomRightRadius": 5,
+                                                                                "tempBorderRadius": 5,
+                                                                                "tempBorderTopLeftRadius": 5,
+                                                                                "tempBorderTopRightRadius": 5,
+                                                                                "tempBorderBottomLeftRadius": 5,
+                                                                                "tempBorderBottomRightRadius": 5,
                                                                                 "colorHex": "#1c1c1c",
-                                                                                "tempColorOpacity": 0.55,
+                                                                                "tempColorOpacity": 0.4,
+                                                                                "bgColorHex": "#ffffff",
+                                                                                "bgColorOpacity": 1,
+                                                                                "tempBgColorOpacity": 1,
                                                                                 "bgColorPalette": "color8",
-                                                                                "tempBgColorPalette": "color8",
-                                                                                "bgColorOpacity": 1
+                                                                                "tempBgColorPalette": "color8"
                                                                             }
                                                                         },
                                                                         {
@@ -203,59 +220,65 @@ module.exports = {
                                                                                 "text": "Get The Discount Voucher",
                                                                                 "iconName": "",
                                                                                 "iconType": "",
-                                                                                "tabsState": "",
-                                                                                "tabsColor": "",
-                                                                                "colorPalette": "color2",
-                                                                                "colorOpacity": 1,
+                                                                                "size": "custom",
+                                                                                "fontSize": 15,
+                                                                                "paddingTB": 14,
+                                                                                "paddingTop": 14,
+                                                                                "paddingBottom": 14,
+                                                                                "tempPaddingTB": 14,
+                                                                                "tempPaddingTop": 14,
+                                                                                "tempPaddingBottom": 14,
+                                                                                "paddingRL": 44,
+                                                                                "paddingRight": 44,
+                                                                                "paddingLeft": 44,
+                                                                                "tempPaddingRL": 44,
+                                                                                "tempPaddingRight": 44,
+                                                                                "tempPaddingLeft": 44,
+                                                                                "borderRadius": 5,
                                                                                 "borderWidth": 0,
-                                                                                "tempBorderWidth": 2,
-                                                                                "paddingRight": 42,
-                                                                                "paddingLeft": 42,
                                                                                 "borderRadiusType": "custom",
+                                                                                "tempBorderRadiusType": "custom",
                                                                                 "fillType": "filled",
-                                                                                "borderRadius": 4,
                                                                                 "borderColorOpacity": 0,
                                                                                 "borderColorPalette": 0,
                                                                                 "bgColorOpacity": 1,
                                                                                 "bgColorPalette": "color3",
                                                                                 "hoverBgColorOpacity": 1,
-                                                                                "tempBorderRadiusType": "custom",
                                                                                 "hoverBorderColorOpacity": 0.8,
-                                                                                "tempBorderRadius": 4,
+                                                                                "tempBorderRadius": 5,
+                                                                                "tempBorderWidth": 2,
+                                                                                "tabsState": "",
+                                                                                "tabsColor": "",
                                                                                 "hoverBgColorPalette": "color2",
                                                                                 "hoverBorderColorPalette": "",
                                                                                 "tempHoverBorderColorPalette": "",
-                                                                                "hoverBgColorHex": "#ffffff",
+                                                                                "hoverBgColorHex": "#1c1c1c",
                                                                                 "tempHoverBgColorOpacity": 1,
                                                                                 "tempHoverBgColorPalette": "color3",
-                                                                                "hoverBorderColorHex": "#ffffff",
+                                                                                "hoverBorderColorHex": "#1c1c1c",
+                                                                                "tempBgColorPalette": "color3",
+                                                                                "tempBorderColorPalette": 0,
                                                                                 "hoverColorPalette": "color8",
                                                                                 "hoverColorOpacity": 1,
-                                                                                "hoverTransition": 30
+                                                                                "colorPalette": "color2",
+                                                                                "colorOpacity": 1
                                                                             }
                                                                         }
                                                                     ],
-                                                                    "horizontalAlign": "left"
+                                                                    "submitWidth": 57,
+                                                                    "tabletSubmitWidth": 100,
+                                                                    "mobileSubmitWidth": 100
                                                                 }
                                                             }
                                                         ],
                                                         "paddingType": "ungrouped",
-                                                        "paddingRightSuffix": "px",
                                                         "paddingRight": 0,
-                                                        "padding": 0,
+                                                        "paddingRightSuffix": "px",
+                                                        "tempPaddingRightSuffix": "px",
                                                         "paddingSuffix": "px",
-                                                        "paddingLeftSuffix": "px",
-                                                        "paddingLeft": 0,
-                                                        "tabletPaddingType": "ungrouped",
-                                                        "tabletPaddingRight": 0,
-                                                        "tabletPadding": 0,
-                                                        "tabletPaddingSuffix": "px",
-                                                        "tabletPaddingLeft": 0,
-                                                        "mobilePaddingType": "ungrouped",
-                                                        "mobilePaddingRight": 0,
-                                                        "mobilePadding": 0,
-                                                        "mobilePaddingSuffix": "px",
-                                                        "mobilePaddingLeft": 0
+                                                        "tempPaddingSuffix": "px",
+                                                        "tempPaddingRight": 200,
+                                                        "padding": 0
                                                     }
                                                 }
                                             ],
@@ -268,7 +291,13 @@ module.exports = {
                                             "mobilePadding": 0,
                                             "mobilePaddingSuffix": "px",
                                             "mobilePaddingLeftSuffix": "px",
-                                            "mobilePaddingLeft": 20
+                                            "mobilePaddingLeft": 20,
+                                            "mobileMarginRightSuffix": "px",
+                                            "mobileMarginRight": 15,
+                                            "mobileMargin": 10,
+                                            "mobileMarginSuffix": "px",
+                                            "mobileMarginLeftSuffix": "px",
+                                            "mobileMarginLeft": 15
                                         }
                                     }
                                 ]

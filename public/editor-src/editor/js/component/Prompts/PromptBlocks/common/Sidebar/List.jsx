@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
+import { t } from "visual/utils/i18n";
 
 export function List(props) {
   const { lists = [], counters = {}, value = "", onChange = () => {} } = props;
@@ -10,7 +11,10 @@ export function List(props) {
       counters[id] > 0 && (
         <div
           key={id}
-          title={title}
+          // usually t is called with a string literal.
+          // this works only because the build
+          // was customized specifically for this component
+          title={t(title)}
           className={classnames("brz-ed-popup-two-sidebar-list", {
             "brz-ed-popup-two-sidebar-list-active": id === value
           })}

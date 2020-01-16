@@ -32,3 +32,9 @@ export function styleAlignFlexHorizontalAlign({ v, device, state }) {
     ? horizontalAlign
     : aligns[horizontalAlign];
 }
+
+export function styleAlignHorizontal({ v, device, state, prefix = "" }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "horizontalAlign"));
+}

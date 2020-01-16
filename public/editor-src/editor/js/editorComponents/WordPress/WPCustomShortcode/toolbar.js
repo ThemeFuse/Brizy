@@ -3,8 +3,7 @@ import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementWPCustomShortCode,
   toolbarSizeWidthWidthPercent,
-  toolbarDisabledAdvancedSettings,
-  toolbarCustomCSS
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {

@@ -35,21 +35,19 @@ export {
 export { styleColor } from "./styleColor";
 
 // BG Color
-export { styleBgColor } from "./styleBgColor";
+export { styleBgColor, styleBgColorHex } from "./styleBgColor";
 
 // BG Gradient
 export { styleBgGradient } from "./styleBgGradient";
 
 // Hover Transition
-export {
-  styleHoverTransition,
-  styleHoverTransitionProperty
-} from "./styleHoverTransition";
+export { styleHoverTransition } from "./styleHoverTransition";
 
 // Align
 export {
   styleAlignFlexVerticalAlign,
-  styleAlignFlexHorizontalAlign
+  styleAlignFlexHorizontalAlign,
+  styleAlignHorizontal
 } from "./styleAlign";
 
 // ReverseColumns
@@ -65,6 +63,7 @@ export {
   styleSizeHeight,
   styleSizeSize,
   styleSizeContainerSize,
+  styleSizeSpacing,
   styleSizeTextSpacing
 } from "./styleSize";
 
@@ -164,6 +163,9 @@ export {
   styleFilterContrast
 } from "./styleFilter";
 
+// Icon
+export { styleIconSpacing, styleIconSize } from "./styleIcon";
+
 // Element Column
 export {
   styleElementColumnMinHeightType,
@@ -171,7 +173,7 @@ export {
   styleElementColumnMinHeightSuffix
 } from "./styleElementColumn";
 
-//Element ProgressBar
+// Element ProgressBar
 export { styleElementProgressBarPercentage } from "./styleElementProgressBar";
 
 // Element Countdown
@@ -192,7 +194,7 @@ export {
   styleElementImageGallerySpacing
 } from "./styleElementImageGallery";
 
-//Element Video
+// Element Video
 export {
   styleElementVideoPaddingRatio,
   styleElementVideoPointerEvents,
@@ -206,7 +208,10 @@ export {
   styleElementVideoIconSizeHeight
 } from "./styleElementVideo";
 
-//Element Button
+// Element Audio
+export { styleElementMediaIconCustomSize } from "./styleElementMedia";
+
+// Element Button
 export {
   styleElementButtonBorderRadius,
   styleElementButtonIconPosition,
@@ -229,5 +234,11 @@ export {
   styleContainerPopup2CloseVerticalPositionSuffix,
   styleContainerPopup2CloseCustomSize,
   styleContainerPopup2CloseBgSize,
-  styleContainerPopup2CloseBorderRadius
+  styleContainerPopup2CloseBorderRadius,
+  styleContainerPopup2CustomHeightStyle,
+  styleContainerPopup2ColumnsHeight,
+  styleContainerPopup2ColumnsHeightSuffix
 } from "./styleContainerPopup2";
+
+// Element Form2
+export { styleElementForm2FieldColumns } from "./styleElementForm2";

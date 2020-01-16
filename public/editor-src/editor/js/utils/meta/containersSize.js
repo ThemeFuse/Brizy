@@ -113,18 +113,8 @@ const getBorder = ({ v, device, state, type }) => {
     }
     case "ungrouped": {
       return (
-        styleBorderWidthUngrouped({
-          v,
-          device,
-          state,
-          current: "borderLeftWidth"
-        }) +
-        styleBorderWidthUngrouped({
-          v,
-          device,
-          state,
-          current: "borderRightWidth"
-        })
+        styleBorderWidthUngrouped({ v, device, state, current: "left" }) +
+        styleBorderWidthUngrouped({ v, device, state, current: "right" })
       );
     }
     default: {

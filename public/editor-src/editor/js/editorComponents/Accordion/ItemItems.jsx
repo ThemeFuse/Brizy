@@ -1,9 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import Sortable from "visual/component/Sortable";
-import Editor from "visual/global/Editor";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
@@ -19,7 +17,7 @@ class AccordionItemItems extends EditorArrayComponent {
     meta: {}
   };
 
-  handleSortableAcceptElements = (from, to) => {
+  handleSortableAcceptElements = from => {
     const meta = this.props.meta;
 
     if (meta.row && meta.row.isInner) {

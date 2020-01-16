@@ -291,7 +291,7 @@ module.exports = {
                                                                     "mMenuColorOpacity": 1,
                                                                     "tabletMMenuIconColorPalette": "color8",
                                                                     "tabletMMenuIconColorHex": "",
-                                                                    "tabletMMenuIconColorOpacity": null
+                                                                    
                                                                 }
                                                             }
                                                         ],
@@ -636,7 +636,7 @@ module.exports = {
                                                                     "mMenuColorOpacity": 1,
                                                                     "tabletMMenuIconColorPalette": "color8",
                                                                     "tabletMMenuIconColorHex": "",
-                                                                    "tabletMMenuIconColorOpacity": null
+                                                                    
                                                                 }
                                                             }
                                                         ]

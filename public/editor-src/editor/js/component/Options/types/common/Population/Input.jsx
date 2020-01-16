@@ -6,7 +6,7 @@ export default class PopulationInput extends React.Component {
 
   render() {
     return (
-      <div className="brz-ed-option__input-container">
+      <div className="brz-ed-option__input-container brz-ed-option__input-container--dynamic">
         <input
           className="brz-input brz-ed-control__input"
           value={this.props.value}

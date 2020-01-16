@@ -76,7 +76,12 @@ export default class Thumbnail extends Component {
           {t("You’ll need Brizy PRO to use this block")}
         </p>
         <p className="brz-p brz-ed-tooltip-content__pro-body">
-          <a className="brz-a" href={ConfigUrl.upgradeToPro} target="_blank">
+          <a
+            className="brz-a"
+            href={ConfigUrl.upgradeToPro}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <EditorIcon icon="nc-lock" />
             {t("Get Brizy PRO")}
           </a>

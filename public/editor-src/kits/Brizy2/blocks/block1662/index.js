@@ -223,7 +223,7 @@ module.exports = {
                                                         "marginBottomSuffix": "px",
                                                         "marginLeftSuffix": "px",
                                                         "customClassName": "",
-                                                        "tabletHorizontalAlign": null,
+                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
                                                         "tabletPaddingTop": 0,
@@ -246,7 +246,7 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        "mobileHorizontalAlign": null,
+                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
                                                         "mobilePaddingTop": 0,
@@ -361,7 +361,7 @@ module.exports = {
                                                         "marginBottomSuffix": "px",
                                                         "marginLeftSuffix": "px",
                                                         "customClassName": "",
-                                                        "tabletHorizontalAlign": null,
+                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
                                                         "tabletPaddingTop": 0,
@@ -384,7 +384,7 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        "mobileHorizontalAlign": null,
+                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
                                                         "mobilePaddingTop": 0,

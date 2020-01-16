@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 export default class PointerEvents extends Component {
   componentDidMount() {
+    // eslint-disable-next-line react/no-find-dom-node
     ReactDOM.findDOMNode(this).addEventListener("mousedown", this.onMouseDown);
   }
 

@@ -12,9 +12,11 @@ import {
   toolbarEntranceAnimation,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
+import { getDynamicContentChoices } from "visual/utils/options";
 
 export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
+  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   return [
     toolbarHorizontalAlign({
@@ -121,14 +123,16 @@ export function getItems({ v, device }) {
                 toolbarCSSID({
                   v,
                   device,
+                  devices: "desktop",
                   state: "normal",
-                  devices: "desktop"
+                  population: cssIDDynamicContentChoices
                 }),
                 toolbarCustomCSSClass({
                   v,
                   device,
+                  devices: "desktop",
                   state: "normal",
-                  devices: "desktop"
+                  population: cssIDDynamicContentChoices
                 }),
                 toolbarEntranceAnimation({
                   v,

@@ -3,7 +3,11 @@
     "items": [],
 
     "anchorName": "",
+
+    "cssIDPopulation": "",
+
     "fullHeight": "off",
+    "tagName": "section",
 
     "slider": "off",
     "hoverSlider": null,
@@ -12,6 +16,8 @@
 
     "zIndex": 0,
 
+    "hoverZIndex": null,
+
     "tabletAnchorName": null,
     "tabletFullHeight": null,
 
@@ -19,12 +25,16 @@
 
     "showOnTablet": "on",
 
+    "tabletZIndex": null,
+
     "mobileAnchorName": null,
     "mobileFullHeight": null,
 
     "mobileSlider": null,
 
-    "showOnMobile": "on"
+    "showOnMobile": "on",
+
+    "mobileZIndex": null
   },
 
   "animation": {
@@ -47,6 +57,10 @@
     "className": "",
 
     "customClassName": "",
+
+    "cssClassPopulation": "",
+
+    "customAttributes": "",
 
     "sliderDots": "circle",
 
@@ -80,6 +94,19 @@
     "tempHoverSliderArrowsColorOpacity": 1,
     "tempHoverSliderArrowsColorPalette": "",
 
+    "marginType": "grouped",
+    "margin": 0,
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+
+    "marginSuffix": "px",
+    "marginTopSuffix": "px",
+    "marginRightSuffix": "px",
+    "marginBottomSuffix": "px",
+    "marginLeftSuffix": "px",
+
     "tabletSliderDots": null,
     "tabletSliderArrows": null,
 
@@ -90,6 +117,19 @@
     "tempTabletSliderDotsColorOpacity": null,
     "tempTabletSliderDotsColorPalette": null,
 
+    "tabletMarginType": "ungrouped",
+    "tabletMargin": 0,
+    "tabletMarginTop": 0,
+    "tabletMarginRight": 0,
+    "tabletMarginBottom": 0,
+    "tabletMarginLeft": 0,
+
+    "tabletMarginSuffix": "px",
+    "tabletMarginTopSuffix": "px",
+    "tabletMarginRightSuffix": "px",
+    "tabletMarginBottomSuffix": "px",
+    "tabletMarginLeftSuffix": "px",
+
     "mobileSliderDots": null,
     "mobileSliderArrows": null,
 
@@ -98,6 +138,19 @@
     "mobileSliderDotsColorPalette": null,
 
     "tempMobileSliderDotsColorOpacity": null,
-    "tempMobileSliderDotsColorPalette": null
+    "tempMobileSliderDotsColorPalette": null,
+
+    "mobileMarginType": "ungrouped",
+    "mobileMargin": 0,
+    "mobileMarginTop": 0,
+    "mobileMarginRight": 0,
+    "mobileMarginBottom": 0,
+    "mobileMarginLeft": 0,
+
+    "mobileMarginSuffix": "px",
+    "mobileMarginTopSuffix": "px",
+    "mobileMarginRightSuffix": "px",
+    "mobileMarginBottomSuffix": "px",
+    "mobileMarginLeftSuffix": "px"
   }
 }

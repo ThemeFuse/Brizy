@@ -18,7 +18,7 @@ class ItemsWp extends Items {
 
     if (dynamic === "on") {
       content = (
-        <React.Fragment>
+        <>
           {`{{
             brizy_dc_post_loop
             count='${columns}'
@@ -28,8 +28,8 @@ class ItemsWp extends Items {
             orderby='${orderBy}'
           }}`}
           {content}
-          {`{{end_brizy_dc_post_loop}}`}
-        </React.Fragment>
+          {"{{end_brizy_dc_post_loop}}"}
+        </>
       );
     }
 

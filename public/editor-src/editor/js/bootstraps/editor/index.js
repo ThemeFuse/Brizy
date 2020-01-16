@@ -80,14 +80,19 @@ const pageCurtain = window.parent.document.querySelector(
       }
     }
 
+    /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {
       console.log("Project loaded", project);
       console.log("Pages loaded", pages);
       console.log("Global blocks loaded", globalBlocks);
       console.log("Saved blocks loaded", savedBlocks);
     }
+    /* eslint-enabled no-console */
 
-    const indexPage = pages.find(page => page.is_index);
+    const configPageId = Config.get("page") && Config.get("page").id;
+    const currentPage = configPageId
+      ? pages.find(page => page.id === configPageId)
+      : pages.find(page => page.is_index);
 
     // NEW FONTS FOUND
     // some fonts are found in models
@@ -96,7 +101,7 @@ const pageCurtain = window.parent.document.querySelector(
     // and add them to the project
     const { styles, extraFontStyles = [], fonts } = project.data;
     const pageFonts = getUsedModelsFonts({
-      models: indexPage.data,
+      models: currentPage.data,
       globalBlocks
     });
     const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
@@ -117,7 +122,7 @@ const pageCurtain = window.parent.document.querySelector(
       hydrate({
         project,
         fonts: deepMerge(fonts, newFonts),
-        page: indexPage,
+        page: currentPage,
         globalBlocks,
         savedBlocks,
         blocksThumbnailSizes
@@ -142,6 +147,8 @@ const pageCurtain = window.parent.document.querySelector(
       }
     );
   } catch (e) {
+    /* eslint-disable no-console */
     console.error("editor bootstrap error", e);
+    /* eslint-enabled no-console */
   }
 })();

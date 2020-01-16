@@ -9,15 +9,10 @@ export function cssStyleElementLineBorder({ v, device, state }) {
     v,
     device,
     state,
-    current: "borderTopWidth"
+    current: "top"
   });
   const borderStyle = styleBorderStyle({ v, device, state });
-
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state
-  });
+  const borderColor = styleBorderColor({ v, device, state });
 
   return borderWidth === undefined
     ? ""

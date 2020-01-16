@@ -2,8 +2,6 @@
 // 8. De adaugat height din interfata
 
 import React from "react";
-//import Config from "visual/global/Config";
-import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import { style } from "./styles";

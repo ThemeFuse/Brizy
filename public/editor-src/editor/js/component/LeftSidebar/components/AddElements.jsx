@@ -79,6 +79,7 @@ class DrawerComponent extends Component {
   handleDisabledElementsChange = id => {
     const { disabledElements } = this.state;
     if (disabledElements[id]) {
+      // eslint-disable-next-line no-unused-vars
       const { [id]: currentShortcode, ...rest } = disabledElements;
 
       this.setState({
@@ -185,10 +186,11 @@ class DrawerComponent extends Component {
         </div>
         {Object.entries(shortcodes)
           .filter(
+            // eslint-disable-next-line no-unused-vars
             ([category, categoryShortcodes]) =>
               this.getFilteredShortcodes(categoryShortcodes).length > 0
           )
-          .map(([category, categoryShortcodes], index, arr) => {
+          .map(([category, categoryShortcodes], index) => {
             const shortcodes = this.getFilteredShortcodes(categoryShortcodes);
             // we use _.sortBy instead of native sort
             // because native can be unstable and change

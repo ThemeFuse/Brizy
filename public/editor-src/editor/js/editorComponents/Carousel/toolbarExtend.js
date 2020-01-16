@@ -38,10 +38,10 @@ export function getItemsForDesktop(v) {
   ];
 }
 
-export function getItemsForTablet(v) {
+export function getItemsForTablet() {
   return [];
 }
 
-export function getItemsForMobile(v) {
+export function getItemsForMobile() {
   return [];
 }

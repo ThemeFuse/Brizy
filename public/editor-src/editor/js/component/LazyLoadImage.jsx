@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { preloadImage } from "visual/utils/image";
@@ -25,10 +24,11 @@ export default class LazyLoadImage extends Component {
     showSpinner: false
   };
 
-  componentDidMount() {
-    this.mounted = true;
+  content = React.createRef();
 
-    this.node = ReactDOM.findDOMNode(this);
+  componentDidMount() {
+    const node = this.content.current;
+    this.mounted = true;
 
     if (observer === null) {
       const {
@@ -36,7 +36,7 @@ export default class LazyLoadImage extends Component {
         observerRootMargin,
         observerThreshold
       } = this.props;
-      const observerRoot = this.node.ownerDocument.querySelector(
+      const observerRoot = node.ownerDocument.querySelector(
         observerRootSelector
       );
       const options = {
@@ -44,7 +44,7 @@ export default class LazyLoadImage extends Component {
         rootMargin: observerRootMargin,
         threshold: observerThreshold
       };
-      observer = new this.node.ownerDocument.defaultView.IntersectionObserver(
+      observer = new node.ownerDocument.defaultView.IntersectionObserver(
         this.handleIntersection,
         options
       );
@@ -53,8 +53,8 @@ export default class LazyLoadImage extends Component {
       observer.POLL_INTERVAL = 200;
     }
 
-    observer.observe(this.node);
-    observerInstances.set(this.node, this);
+    observer.observe(node);
+    observerInstances.set(node, this);
 
     setTimeout(() => {
       if (this.mounted && !this.state.imageFetched) {
@@ -64,10 +64,11 @@ export default class LazyLoadImage extends Component {
   }
 
   componentWillUnmount() {
+    const node = this.content.current;
     this.mounted = false;
 
-    observer.unobserve(this.node);
-    observerInstances.delete(this.node);
+    observer.unobserve(node);
+    observerInstances.delete(node);
 
     if (observerInstances.size === 0) {
       observer.disconnect();
@@ -104,7 +105,11 @@ export default class LazyLoadImage extends Component {
     const ratio = Math.round((height / width) * 100 * 10) / 10;
 
     return (
-      <div className="brz-observer__image" style={{ paddingTop: `${ratio}%` }}>
+      <div
+        ref={this.content}
+        className="brz-observer__image"
+        style={{ paddingTop: `${ratio}%` }}
+      >
         {showSpinner && (
           <div className="brz-ed-option__block-thumbnail-loading">
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />

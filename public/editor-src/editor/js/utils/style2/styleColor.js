@@ -4,6 +4,9 @@ import { hexToRgba } from "visual/utils/color";
 import { styleState } from "visual/utils/style";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
+const getState = (v, state) =>
+  styleState({ v, state }) === "hover" ? "hover" : state;
+
 export function styleColor({ v, device, state, prefix = "color" }) {
   state = getState(v, state);
 
@@ -13,9 +16,5 @@ export function styleColor({ v, device, state, prefix = "color" }) {
     dvv(capByPrefix(prefix, "hex")),
     dvv(capByPrefix(prefix, "palette"))
   );
-
   return hexToRgba(hex, dvv(capByPrefix(prefix, "opacity")));
 }
-
-const getState = (v, state) =>
-  styleState({ v, state }) === "hover" ? "hover" : state;

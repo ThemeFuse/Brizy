@@ -11,17 +11,21 @@ import { mergeItems, concatItems, filterItems } from "./utils";
 // because that breaks our layout
 class TmpContextMenuWrapper extends Component {
   componentDidMount() {
+    /* eslint-disable react/no-find-dom-node */
     ReactDOM.findDOMNode(this).addEventListener(
       "contextmenu",
       this.handleContextMenu
     );
+    /* eslint-enabled react/no-find-dom-node */
   }
 
   componentWillUnmount() {
+    /* eslint-disable react/no-find-dom-node */
     ReactDOM.findDOMNode(this).removeEventListener(
       "contextmenu",
       this.handleContextMenu
     );
+    /* eslint-enabled react/no-find-dom-node */
   }
 
   handleContextMenu = e => {
@@ -94,7 +98,11 @@ class ContextMenuComponent extends Component {
   }
 
   renderProvider = props => {
-    return <TmpContextMenuWrapper {...props} children={this.props.children} />;
+    return (
+      <TmpContextMenuWrapper {...props}>
+        {this.props.children}
+      </TmpContextMenuWrapper>
+    );
   };
 
   render() {

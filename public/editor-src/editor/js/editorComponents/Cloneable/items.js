@@ -1,6 +1,4 @@
-import _ from "underscore";
 import React from "react";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import HotKeys from "visual/component/HotKeys";

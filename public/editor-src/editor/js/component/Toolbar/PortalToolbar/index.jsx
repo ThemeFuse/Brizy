@@ -18,6 +18,7 @@ class PortalToolbar extends React.Component {
     onBeforeClose: () => {},
     onOpen: () => {},
     onClose: () => {},
+    onClick: () => {},
     onMouseEnter: () => {},
     onMouseLeave: () => {},
     onChange: () => console.log("ToolbarPortal default onChange")
@@ -30,6 +31,7 @@ class PortalToolbar extends React.Component {
   };
 
   componentDidMount() {
+    // eslint-disable-next-line react/no-find-dom-node
     this.node = ReactDOM.findDOMNode(this);
 
     if (!portalNodesByDocument.get(this.node.ownerDocument)) {
@@ -61,19 +63,29 @@ class PortalToolbar extends React.Component {
     this.node = null;
   }
 
-  handleMouseEnter = () => {
-    const e = new CustomEvent("brz.toolbar.mouseenter", {
+  handleClick = e => {
+    e.stopPropagation();
+
+    this.props.onClick();
+  };
+
+  handleMouseEnter = e => {
+    e.stopPropagation();
+
+    const customEvent = new CustomEvent("brz.toolbar.mouseenter", {
       bubbles: true
     });
-    this.node.dispatchEvent(e);
+    this.node.dispatchEvent(customEvent);
     this.props.onMouseEnter();
   };
 
-  handleMouseLeave = () => {
-    const e = new CustomEvent("brz.toolbar.mouseleave", {
+  handleMouseLeave = e => {
+    e.stopPropagation();
+
+    const customEvent = new CustomEvent("brz.toolbar.mouseleave", {
       bubbles: true
     });
-    this.node.dispatchEvent(e);
+    this.node.dispatchEvent(customEvent);
     this.props.onMouseLeave();
   };
 
@@ -118,6 +130,7 @@ class PortalToolbar extends React.Component {
 
   clickOutsideException = clickTarget => {
     try {
+      // eslint-disable-next-line react/no-find-dom-node
       const node = ReactDOM.findDOMNode(this);
       return node.contains(clickTarget);
     } catch (e) {
@@ -154,6 +167,7 @@ class PortalToolbar extends React.Component {
           window={ownerDocument.defaultView}
           items={items}
           node={this.node}
+          onClick={this.handleClick}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         />

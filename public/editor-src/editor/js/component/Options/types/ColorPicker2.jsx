@@ -105,6 +105,7 @@ class ColorPicker2OptionType extends React.Component {
 
   renderGradient() {
     const {
+      // eslint-disable-next-line no-unused-vars
       gradient: { show, ...config },
       value: {
         startPointer,

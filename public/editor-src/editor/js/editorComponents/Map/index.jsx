@@ -114,10 +114,7 @@ class Map extends EditorComponent {
       );
 
     return (
-      <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
-        onClose={this.handleToolbarClose}
-      >
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <BoxResizer

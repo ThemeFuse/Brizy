@@ -10,9 +10,8 @@ import {
   styleItemPaddingLeft
 } from "visual/utils/style2";
 
-export function cssStylePaddingFourFields({ v, device, state }) {
-  let r = "";
-  const p = cssStylePadding({ v, device, state });
+export function cssStylePaddingFourFields({ v, device, state, prefix = "" }) {
+  const p = cssStylePadding({ v, device, state, prefix });
 
   const noEmptyGrouped =
     p.paddingTop === p.paddingRight &&
@@ -26,12 +25,13 @@ export function cssStylePaddingFourFields({ v, device, state }) {
     p.paddingBottom === 0 &&
     p.paddingLeft === 0;
 
-  if (empty) r = "padding:0;";
-  else if (noEmptyGrouped) r = `padding:${p.paddingTop}${p.paddingTopSuffix};`;
-  else
-    r = `padding:${p.paddingTop}${p.paddingTopSuffix} ${p.paddingRight}${p.paddingRightSuffix} ${p.paddingBottom}${p.paddingBottomSuffix} ${p.paddingLeft}${p.paddingLeftSuffix};`;
-
-  return r;
+  if (empty) {
+    return "padding:0;";
+  } else if (noEmptyGrouped) {
+    return `padding:${p.paddingTop}${p.paddingTopSuffix};`;
+  } else {
+    return `padding:${p.paddingTop}${p.paddingTopSuffix} ${p.paddingRight}${p.paddingRightSuffix} ${p.paddingBottom}${p.paddingBottomSuffix} ${p.paddingLeft}${p.paddingLeftSuffix};`;
+  }
 }
 
 export function cssStylePaddingPreview({ v, device, state }) {
@@ -71,9 +71,7 @@ export function cssStylePaddingRightLeftForEditor({ v, device, state }) {
   }
 }
 
-function cssStylePadding({ v, device, state }) {
-  let r = "";
-  let paddingType = "grouped";
+export function cssStylePadding({ v, device, state, prefix = "" }) {
   let paddingTop = 0;
   let paddingRight = 0;
   let paddingBottom = 0;
@@ -82,44 +80,48 @@ function cssStylePadding({ v, device, state }) {
   let paddingRightSuffix = "px";
   let paddingBottomSuffix = "px";
   let paddingLeftSuffix = "px";
-
-  paddingType = stylePaddingType({ v, device, state });
+  let paddingType = stylePaddingType({ v, device, state, prefix });
 
   if (paddingType === "grouped") {
-    paddingTop = paddingRight = paddingBottom = paddingLeft = stylePaddingGrouped(
-      {
-        v,
-        device,
-        state
-      }
-    );
+    const padding = stylePaddingGrouped({ v, device, state, prefix });
+    const suffix = stylePaddingGroupedSuffix({ v, device, state, prefix });
 
-    paddingTopSuffix = paddingRightSuffix = paddingBottomSuffix = paddingLeftSuffix = stylePaddingGroupedSuffix(
-      { v, device, state }
-    );
+    paddingTop = padding;
+    paddingRight = padding;
+    paddingBottom = padding;
+    paddingLeft = padding;
+
+    paddingTopSuffix = suffix;
+    paddingRightSuffix = suffix;
+    paddingBottomSuffix = suffix;
+    paddingLeftSuffix = suffix;
   } else {
     paddingTop = stylePaddingUngrouped({
       v,
       device,
       state,
+      prefix,
       current: "paddingTop"
     });
     paddingRight = stylePaddingUngrouped({
       v,
       device,
       state,
+      prefix,
       current: "paddingRight"
     });
     paddingBottom = stylePaddingUngrouped({
       v,
       device,
       state,
+      prefix,
       current: "paddingBottom"
     });
     paddingLeft = stylePaddingUngrouped({
       v,
       device,
       state,
+      prefix,
       current: "paddingLeft"
     });
 
@@ -127,24 +129,28 @@ function cssStylePadding({ v, device, state }) {
       v,
       device,
       state,
+      prefix,
       current: "paddingTopSuffix"
     });
     paddingRightSuffix = stylePaddingUngroupedSuffix({
       v,
       device,
       state,
+      prefix,
       current: "paddingRightSuffix"
     });
     paddingBottomSuffix = stylePaddingUngroupedSuffix({
       v,
       device,
       state,
+      prefix,
       current: "paddingBottomSuffix"
     });
     paddingLeftSuffix = stylePaddingUngroupedSuffix({
       v,
       device,
       state,
+      prefix,
       current: "paddingLeftSuffix"
     });
   }
@@ -163,26 +169,10 @@ function cssStylePadding({ v, device, state }) {
 
 // #####
 export function cssStyleItemPadding({ v, device, state }) {
-  const paddingTop = styleItemPaddingTop({
-    v,
-    device,
-    state
-  });
-  const paddingRight = styleItemPaddingRight({
-    v,
-    device,
-    state
-  });
-  const paddingBottom = styleItemPaddingBottom({
-    v,
-    device,
-    state
-  });
-  const paddingLeft = styleItemPaddingLeft({
-    v,
-    device,
-    state
-  });
+  const paddingTop = styleItemPaddingTop({ v, device, state });
+  const paddingRight = styleItemPaddingRight({ v, device, state });
+  const paddingBottom = styleItemPaddingBottom({ v, device, state });
+  const paddingLeft = styleItemPaddingLeft({ v, device, state });
 
   return `padding:${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft};`;
 }

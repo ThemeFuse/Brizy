@@ -96,7 +96,7 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 			/** This filter is documented in wp-includes/post-template.php */
 			//$text = apply_filters( 'the_content', $text );
 			$text = str_replace( ']]>', ']]&gt;', $text );
-
+			$text = Brizy_Content_PlaceholderExtractor::stripPlaceholders( $text );
 			/**
 			 * Filters the number of words in an excerpt.
 			 *

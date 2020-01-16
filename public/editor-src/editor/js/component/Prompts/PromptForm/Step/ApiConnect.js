@@ -44,17 +44,17 @@ class ApiConnect extends Component {
   static async onBeforeLoad(context, props) {
     const {
       formId,
-      app: { data: appData },
+      app: { id, data: appData },
       onChange,
       onChangeProgress
     } = context;
 
     const { data } = await getIntegrationAccountApiKey({
-      appId: appData.id,
+      id,
       formId
     });
 
-    onChange(appData.id, { ...appData, accountApiKeys: data });
+    onChange(id, { ...appData, accountApiKeys: data });
 
     if (appData.usedAccount || (appData.accounts && appData.accounts.length)) {
       props.onChangeNext();
@@ -74,7 +74,7 @@ class ApiConnect extends Component {
 
   handleConnect = async () => {
     const {
-      app,
+      app: { id, data: appData },
       formId,
       onChange,
       onChangeProgress,
@@ -90,21 +90,20 @@ class ApiConnect extends Component {
 
     if (!keysValue.some(key => !key)) {
       const { status, data } = await createIntegrationAccount({
-        appId: app.id,
+        ...appData,
         formId,
-        body: apiKeyValue
+        data: apiKeyValue
       });
 
       if (status !== 200) {
         this.setState({
           nextLoading: false,
-          error: getMessage(data, app.data.accountApiKeys)
+          error: getMessage(data, appData.accountApiKeys)
         });
       } else {
-        const appData = app.data;
         const accounts = appData.accounts || [];
 
-        onChange(appData.id, { ...appData, accounts: [...accounts, data] });
+        onChange(id, { ...appData, accounts: [...accounts, data] });
         onChangeProgress({ showProgress: true });
         onChangeNext();
       }

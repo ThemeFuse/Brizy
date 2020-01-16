@@ -31,7 +31,7 @@ const getMenu = ({ menuSelected }) => {
     {
       id: "menuSelected",
       type: "select",
-      label: t("WP Menu"),
+      label: t("Menu"),
       position: 10,
       choices: hasMenu
         ? menuChoices
@@ -62,7 +62,7 @@ export function getItemsForDesktop(v) {
       type: "popover",
       icon: "nc-menu-3",
       roles: ["admin"],
-      title: t("WP Menu"),
+      title: t("Menu"),
       position: 10,
       options: [
         ...getMenu(v),
@@ -272,7 +272,7 @@ export function getItemsForTablet(v) {
       type: "popover",
       icon: "nc-menu-3",
       roles: ["admin"],
-      title: t("WP Menu"),
+      title: t("Menu"),
       position: 10,
       options: [
         ...getMenu(v),
@@ -453,7 +453,7 @@ export function getItemsForMobile(v) {
       type: "popover",
       icon: "nc-menu-3",
       roles: ["admin"],
-      title: t("WP Menu"),
+      title: t("Menu"),
       position: 10,
       options: [
         ...getMenu(v),

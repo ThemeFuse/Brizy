@@ -1,5 +1,7 @@
+import { isOption } from "visual/component/Options/utils/index";
+
 export default function optionTraverse(option, cb) {
-  if (option.hasOwnProperty("id") && option.hasOwnProperty("type")) {
+  if (isOption(option)) {
     cb(option);
   }
 

@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { css } from "glamor";
+import { roundTo } from "visual/utils/math";
 import {
   styleHoverTransition,
   styleHoverTransitionProperty
@@ -66,34 +67,16 @@ export function imageStylesClassName(v, sizes, props) {
         maxWidth: `${Math.round(Math.abs((dW * 100) / desktopW))}%`,
         height: !imageSrc && !imagePopulation ? `${dH}px` : "auto",
         borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`,
-
-        ...(shadowDesktopNormal !== ""
-          ? { boxShadow: shadowDesktopNormal }
-          : {}),
-
-        ...(filterNormal !== "" ? { filter: filterNormal } : {})
+        boxShadow: shadowDesktopNormal !== "" ? shadowDesktopNormal : null,
+        filter: filterNormal !== "" ? filterNormal : null
       },
 
-      ".brz &:before": {
-        // boxShadow: cssStyleBoxShadowSuffixForGlamour({ v, device: "desktop", state: "normal" })
-        // borderRadius: `${Math.min(borderRadius, maxBorderRadius)}px`
-      },
-
-      "@media (min-width: 991px)": {
+      "@media (min-width: 992px)": {
         transition: styleHoverTransition({ v }),
         transitionProperty: styleHoverTransitionProperty(),
 
-        ".brz &:before": {
-          // transition: styleHoverTransition({ v }),
-          // transitionProperty: styleHoverTransitionProperty()
-        },
         ".brz &:hover": {
-          ...(shadowDesktopHover !== ""
-            ? { boxShadow: shadowDesktopHover }
-            : {})
-        },
-        ".brz &:hover:before": {
-          // boxShadow: cssStyleBoxShadowSuffixForGlamour({ v, device: "desktop", state: "hover" })
+          boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
         }
       },
 
@@ -102,9 +85,7 @@ export function imageStylesClassName(v, sizes, props) {
           maxWidth: `${Math.round(Math.abs((tW * 100) / tabletW))}%`,
           height: !imageSrc && !imagePopulation ? `${tH}px` : "auto",
           borderRadius: `${Math.min(borderRadius, maxTabletBorderRadius)}px`,
-          ...(shadowDesktopTablet !== ""
-            ? { boxShadow: shadowDesktopTablet }
-            : {})
+          boxShadow: shadowDesktopTablet !== "" ? shadowDesktopTablet : null
         }
       },
 
@@ -113,9 +94,7 @@ export function imageStylesClassName(v, sizes, props) {
           maxWidth: `${Math.round(Math.abs((mW * 100) / mobileW))}%`,
           height: !imageSrc && !imagePopulation ? `${mH}px` : "auto",
           borderRadius: `${Math.min(borderRadius, maxMobileBorderRadius)}px`,
-          ...(shadowDesktopMobile !== ""
-            ? { boxShadow: shadowDesktopMobile }
-            : {})
+          boxShadow: shadowDesktopMobile !== "" ? shadowDesktopMobile : null
         }
       }
     };
@@ -143,7 +122,7 @@ export function imageStylesCSSVars(v) {
   });
 
   return {
-    ...(filterNormal !== "" ? { "--imageFilter": filterNormal } : {})
+    "--imageFilter": filterNormal !== "" ? filterNormal : null
   };
 }
 
@@ -285,16 +264,12 @@ export function wrapperStyleCSSVars(v, sizes) {
 
     "--width": `${dW}px`,
     "--height": `${dH}px`,
-    ...(shadowDesktopNormal !== ""
-      ? { "--boxShadow": shadowDesktopNormal }
-      : {}),
+    "--boxShadow": shadowDesktopNormal !== "" ? shadowDesktopNormal : null,
 
     //####--- Hover ---####//
 
     // Box Shadow
-    ...(shadowDesktopHover !== ""
-      ? { "--hoverBoxShadow": shadowDesktopHover }
-      : {}),
+    "--hoverBoxShadow": shadowDesktopHover !== "" ? shadowDesktopHover : null,
 
     // Hover Transition
     "--hoverTransition": styleHoverTransition({ v }),
@@ -304,18 +279,45 @@ export function wrapperStyleCSSVars(v, sizes) {
 
     "--tabletWidth": `${tW}px`,
     "--tabletHeight": `${tH}px`,
-    ...(shadowDesktopTablet !== ""
-      ? { "--tabletBoxShadow": shadowDesktopTablet }
-      : {}),
+    "--tabletBoxShadow":
+      shadowDesktopTablet !== "" ? shadowDesktopTablet : null,
 
     //####--- Mobile ---####//
 
     "--mobileWidth": `${mW}px`,
     "--mobileHeight": `${mH}px`,
-    ...(shadowDesktopMobile !== ""
-      ? { "--mobileBoxShadow": shadowDesktopMobile }
-      : {})
+    "--mobileBoxShadow": shadowDesktopMobile !== "" ? shadowDesktopMobile : null
   };
+}
+
+export function pictureStyleClassName(sizes) {
+  const {
+    desktop: { width: dW, height: dH },
+    tablet: { width: tW, height: tH },
+    mobile: { width: mW, height: mH }
+  } = sizes;
+
+  const glamorObj = {
+    "@media (min-width: 992px)": {
+      ".brz &": {
+        paddingTop: `${roundTo((dH / dW) * 100, 4)}%`
+      }
+    },
+    "@media (max-width: 991px)": {
+      ".brz &": {
+        paddingTop: `${roundTo((tH / tW) * 100, 4)}%`
+      }
+    },
+    "@media (max-width: 767px)": {
+      ".brz &": {
+        paddingTop: `${roundTo((mH / mW) * 100, 4)}%`
+      }
+    }
+  };
+
+  const glamorClassName = String(css(glamorObj));
+
+  return classnames("brz-picture brz-d-block brz-p-relative", glamorClassName);
 }
 
 export function imgStyleClassName(v) {
@@ -329,7 +331,7 @@ export function imgStyleClassName(v) {
   });
 
   const glamorObj = {
-    ...(filterNormal !== "" ? { filter: "var(--imageFilter)" } : {}),
+    filter: filterNormal !== "" ? "var(--imageFilter)" : null,
 
     ".brz-ed--desktop &": {
       width: "var(--width)",

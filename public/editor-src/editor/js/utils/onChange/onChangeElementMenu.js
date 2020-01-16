@@ -53,25 +53,17 @@ export function onChangeMenuColorFields2({ v, hex, opacity, isChanged }) {
 }
 
 //menu Color Hover
-export function onChangeMenuHoverColorHex2({
-  v,
-  hex,
-  opacity,
-  isChanged,
-  opacityDragEnd
-}) {
+export function onChangeMenuHoverColorHex2({ v, hex, opacity, isChanged }) {
   opacity =
     hex !== v.colorHex && v.colorOpacity === 0 ? v.tempColorOpacity : opacity;
 
   return {
     hoverColorHex: hex,
     hoverColorOpacity:
-      hex !== v.hoverColorHex &&
-      v.hoverColorOpacity === 0
+      hex !== v.hoverColorHex && v.hoverColorOpacity === 0
         ? v.tempHoverColorOpacity
         : opacity,
-    hoverColorPalette:
-      isChanged === "hex" ? "" : v.hoverColorPalette
+    hoverColorPalette: isChanged === "hex" ? "" : v.hoverColorPalette
   };
 }
 
@@ -79,20 +71,15 @@ export function onChangeMenuHoverColorPalette2({ v, palette }) {
   return {
     hoverColorPalette: palette,
     hoverColorOpacity:
-      v.hoverColorOpacity === 0
-        ? v.tempHoverColorOpacity
-        : v.hoverColorOpacity
+      v.hoverColorOpacity === 0 ? v.tempHoverColorOpacity : v.hoverColorOpacity
   };
 }
 
 export function onChangeMenuHoverColorFields2({ v, hex, opacity, isChanged }) {
   return {
-    hoverColorPalette:
-    isChanged === "hex"
-      ? ""
-      : v.hoverColorPalette,
-  hoverColorHex: hex,
-  hoverColorOpacity: opacity
+    hoverColorPalette: isChanged === "hex" ? "" : v.hoverColorPalette,
+    hoverColorHex: hex,
+    hoverColorOpacity: opacity
   };
 }
 

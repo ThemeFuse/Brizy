@@ -11,9 +11,13 @@ import {
   toolbarCustomCSSClass,
   toolbarEntranceAnimation
 } from "visual/utils/toolbar";
+
+import { getDynamicContentChoices } from "visual/utils/options";
 import { defaultValueKey } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
+  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
+
   return [
     toolbarShowOnResponsive({
       v,
@@ -67,8 +71,20 @@ export function getItems({ v, device }) {
                   options: [
                     toolbarShowOnDesktop({ v, device }),
                     toolbarZIndex({ v, device }),
-                    toolbarCSSID({ v, device }),
-                    toolbarCustomCSSClass({ v, device }),
+                    toolbarCSSID({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
+                    }),
+                    toolbarCustomCSSClass({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
+                    }),
                     toolbarEntranceAnimation({ v, device })
                   ]
                 }
@@ -132,7 +148,20 @@ export function getItems({ v, device }) {
               options: [
                 toolbarShowOnDesktop({ v, device }),
                 toolbarZIndex({ v, device }),
-                toolbarCustomCSSClass({ v, device }),
+                toolbarCSSID({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal",
+                  population: cssIDDynamicContentChoices
+                }),
+                toolbarCustomCSSClass({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal",
+                  population: cssIDDynamicContentChoices
+                }),
                 toolbarEntranceAnimation({ v, device })
               ]
             }

@@ -34,7 +34,6 @@
       padding-right: 0.5em;
     }
   }
-
   ol {
     counter-reset: number;
 
@@ -48,11 +47,9 @@
       }
     }
   }
-
   .ql-editor {
     white-space: pre-wrap;
   }
-
   .brz-text-mask,
   .brz-image-gradient {
     color: transparent !important;
@@ -127,6 +124,9 @@
       }
     }
   }
+  strong {
+    font-weight: bold;
+  }
   .link--anchor,
   .link--external,
   .link--popup {
@@ -156,7 +156,5 @@
   .brz-population-mask {
     background-clip: text;
     color: transparent !important;
-    -webkit-background-clip: text;
-    background-clip: text;
   }
 }

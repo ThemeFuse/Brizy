@@ -24,28 +24,6 @@ class Video extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  mounted = false;
-
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-  handleToolbarClose = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    this.patchValue({
-      tabsState: "tabNormal",
-      tabsCurrentElement: "tabCurrentElement",
-      tabsColor: "tabOverlay"
-    });
-  };
-
   handleResizerChange = patch => this.patchValue(patch);
 
   handleCoverIconClick(e) {
@@ -53,7 +31,7 @@ class Video extends EditorComponent {
   }
 
   getVideoSrc(v) {
-    const { videoPopulation, video, coverImageSrc, controls } = v;
+    const { videoPopulation, video, coverImageSrc, controls, start } = v;
 
     if (videoPopulation) {
       return videoPopulation;
@@ -65,7 +43,8 @@ class Video extends EditorComponent {
       ? getVideoUrl(videoSrc, {
           autoplay: Boolean(coverImageSrc),
           controls: controls === "on",
-          suggestedVideo: false
+          suggestedVideo: false,
+          start
         })
       : "";
   }
@@ -119,10 +98,7 @@ class Video extends EditorComponent {
     }
 
     return (
-      <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
-        onClose={this.handleToolbarClose}
-      >
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={classNameContent}>
             <BoxResizer
@@ -169,6 +145,7 @@ class Video extends EditorComponent {
       <iframe
         allowFullScreen={true}
         className="brz-iframe"
+        loading="lazy"
         src={videoPopulation ? "" : videoSrc}
       />
     );

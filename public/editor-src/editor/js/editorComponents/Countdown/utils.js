@@ -1,4 +1,3 @@
-import _ from "underscore";
 import * as languages from "./languages";
 
 export const formatDate = (date, template = "d/m/Y") => {
@@ -22,7 +21,9 @@ export const formatDate = (date, template = "d/m/Y") => {
 };
 
 function isValidDate(date) {
+  /* eslint-disable no-useless-escape */
   const matches = /^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/.exec(date);
+  /* eslint-enabled no-useless-escape */
   if (matches === null) return false;
 
   const d = matches[2];

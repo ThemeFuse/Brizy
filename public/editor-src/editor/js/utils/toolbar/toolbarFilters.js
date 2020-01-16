@@ -6,7 +6,8 @@ export function toolbarFilterHue({
   device,
   prefix = "",
   devices = "all",
-  state
+  state,
+  states
 }) {
   return {
     id: defaultValueKey({
@@ -18,6 +19,7 @@ export function toolbarFilterHue({
     className: "brz-ed-option__slider--hue",
     type: "slider",
     devices,
+    states,
     slider: {
       min: 0,
       max: 360
@@ -60,7 +62,8 @@ export function toolbarFilterSaturation({
   device,
   prefix = "",
   devices = "all",
-  state
+  state,
+  states
 }) {
   return {
     id: defaultValueKey({
@@ -72,6 +75,7 @@ export function toolbarFilterSaturation({
     className: "brz-ed-option__slider--saturation",
     type: "slider",
     devices,
+    states,
     slider: {
       min: 0,
       max: 200
@@ -113,7 +117,8 @@ export function toolbarFilterBrightness({
   device,
   prefix = "",
   devices = "all",
-  state
+  state,
+  states
 }) {
   return {
     id: defaultValueKey({
@@ -125,6 +130,7 @@ export function toolbarFilterBrightness({
     className: "brz-ed-option__slider--brightness",
     type: "slider",
     devices,
+    states,
     slider: {
       min: 10,
       max: 200
@@ -166,7 +172,8 @@ export function toolbarFilterContrast({
   device,
   prefix = "",
   devices = "all",
-  state
+  state,
+  states
 }) {
   return {
     id: defaultValueKey({
@@ -178,6 +185,7 @@ export function toolbarFilterContrast({
     className: "brz-ed-option__slider--contrast",
     type: "slider",
     devices,
+    states,
     slider: {
       min: 0,
       max: 200

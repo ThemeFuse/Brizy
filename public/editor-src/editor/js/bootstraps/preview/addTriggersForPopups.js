@@ -264,21 +264,6 @@ export default function() {
         listeners.push({ type, handler });
         $(document).on(type, handler);
       }
-
-      function detachEvent(detachType, detachHandler) {
-        for (var i = 0; i < listeners.length; i++) {
-          var listener = listeners[i];
-
-          if (
-            listener.type == detachType &&
-            listener.handler == detachHandler
-          ) {
-            listeners.splice(listeners.indexOf(listener), 1);
-            $(document).off(detachType, detachHandler);
-          }
-        }
-      }
-
       function detachAll() {
         for (var i = 0; i < listeners.length; i++) {
           var listener = listeners[i];

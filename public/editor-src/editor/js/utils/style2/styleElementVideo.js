@@ -1,5 +1,7 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { imageUrl } from "visual/utils/image";
+import { imageUrl, svgUrl } from "visual/utils/image";
+
+const isSVG = extension => extension === "svg";
 
 export function styleElementVideoPaddingRatio({ v, device, state }) {
   const ratio = defaultValueValue({ v, key: "ratio", device, state });
@@ -31,7 +33,7 @@ export function styleElementVideoBgColorRatio({ v, device, state }) {
 }
 
 export function styleElementVideoPointerEvents() {
-  return IS_EDITOR ? `pointer-events: none` : "";
+  return IS_EDITOR ? "pointer-events: none" : "";
 }
 
 export function styleElementVideoCoverSrc({ v, device, state }) {
@@ -42,11 +44,22 @@ export function styleElementVideoCoverSrc({ v, device, state }) {
     state
   });
 
+  const coverImageExtension = defaultValueValue({
+    v,
+    key: "coverImageExtension",
+    device,
+    state
+  });
+
   return coverImageSrc === undefined
     ? coverImageSrc
     : coverImageSrc === ""
     ? "none"
-    : `url(${imageUrl(coverImageSrc)})`;
+    : `url(${
+        isSVG(coverImageExtension)
+          ? svgUrl(coverImageSrc)
+          : imageUrl(coverImageSrc)
+      })`;
 }
 
 export function styleElementVideoCoverPositionX({ v, device, state }) {

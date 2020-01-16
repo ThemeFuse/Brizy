@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "underscore";
 import classnames from "classnames";
-import ThemeIcon from "visual/component/ThemeIcon";
 import { uuid } from "visual/utils/uuid";
 
 export default class CheckGroupItem extends Component {
@@ -56,6 +55,7 @@ export default class CheckGroupItem extends Component {
       name,
       value,
       required,
+      renderIcons,
       children
     } = this.props;
     const className = classnames("brz-control__check-group-option", _className);
@@ -76,12 +76,7 @@ export default class CheckGroupItem extends Component {
           data-label={this.props["data-label"]}
         />
         <label className="brz-label" htmlFor={id}>
-          <div className="brz-control__check-group-icon brz-control__check-group--check">
-            <ThemeIcon name="check-alt" type="editor" />
-          </div>
-          <div className="brz-control__check-group-icon brz-control__check-group--uncheck">
-            <ThemeIcon name="uncheck-alt" type="editor" />
-          </div>
+          {typeof renderIcons === "function" && renderIcons()}
           {children}
         </label>
       </div>

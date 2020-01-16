@@ -39,8 +39,15 @@ import Range from "./Range";
 import Range2 from "./Range2";
 import IntegrationsApps from "./IntegrationsApps";
 import FileUpload from "./FileUpload";
+import StateMode from "./common/StateMode";
 
-export default {
+// Option types that are in development
+import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
+import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
+
+const defaultModel = () => ({});
+
+export const types = {
   advancedSettings: AdvancedSettings,
   blockThumbnail: BlockThumbnail,
   button: Button,
@@ -51,6 +58,8 @@ export default {
   colorPalette: ColorPalette,
   colorPalette2: ColorPalette2,
   colorPicker: ColorPicker,
+  "colorPicker-dev": ColorPickerDev,
+  "boxShadow-dev": BoxShadow,
   colorPicker2: ColorPicker2,
   fontFamily: FontFamily,
   fontStyle: FontStyle,
@@ -80,5 +89,16 @@ export default {
   range: Range,
   range2: Range2,
   integrationsApps: IntegrationsApps,
-  fileUpload: FileUpload
+  fileUpload: FileUpload,
+  stateMode: StateMode
 };
+
+/**
+ * Returns a function that creates the option model object from element model
+ *
+ * @param {string} type
+ * @returns {function(get: function(key:string):*):object}
+ */
+export const getModel = type => (types[type] || {}).getModel || defaultModel;
+
+export default types;

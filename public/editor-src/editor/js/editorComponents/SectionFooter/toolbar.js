@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementSectionGlobal,
@@ -25,6 +28,7 @@ import {
   toolbarShowOnResponsive,
   toolbarAnchorName,
   toolbarCustomCSSClass,
+  toolbarAttributes,
   toolbarShape,
   toolbarShapeTopType,
   toolbarShapeTopColor,
@@ -35,13 +39,15 @@ import {
   toolbarShapeBottomColor,
   toolbarShapeBottomHeight,
   toolbarShapeBottomFlip,
-  toolbarShapeBottomIndex
+  toolbarShapeBottomIndex,
+  toolbarTags
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = key => defaultValueValue({ v, key, device, state: "hover" });
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
+  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -805,13 +811,32 @@ export function getItems({ v, device, component }) {
                       v,
                       device,
                       devices: "desktop",
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
+                    }),
+                    toolbarCustomCSSClass({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
+                    }),
+
+                    toolbarAttributes({
+                      v,
+                      device,
+                      devices: "desktop",
                       state: "normal"
                     }),
-                    toolbarCustomCSSClass({ v, devices: "desktop" }),
                     toolbarHoverTransition({
                       v,
                       position: 60,
                       devices: "desktop"
+                    }),
+                    toolbarTags({
+                      v,
+                      device,
+                      state: "normal"
                     })
                   ]
                 }

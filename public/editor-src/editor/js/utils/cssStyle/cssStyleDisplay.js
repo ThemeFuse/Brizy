@@ -1,11 +1,11 @@
 export function cssStyleDisplayFlex() {
-  return `display:flex;`;
+  return "display:flex;";
 }
 
 export function cssStyleDisplayInlineFlex() {
-  return `display:inline-flex;`;
+  return "display:inline-flex;";
 }
 
 export function cssStyleDisplayBlock() {
-  return `display:block;`;
+  return "display:block;";
 }

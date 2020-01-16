@@ -103,14 +103,12 @@ function handlePublish({ action, state }) {
     ])
       .then(onSuccess)
       .catch(onError);
-
-    debouncedApiUpdateProject(project);
   }
 }
 
 function handleProject({ action, state, oldState }) {
   switch (action.type) {
-    case UPDATE_DISABLED_ELEMENTS:
+    case UPDATE_DISABLED_ELEMENTS: {
       const meta = {
         is_autosave: 0
       };
@@ -118,6 +116,7 @@ function handleProject({ action, state, oldState }) {
 
       apiUpdateProject(project, meta);
       break;
+    }
     case UPDATE_CURRENT_STYLE_ID:
     case UPDATE_CURRENT_STYLE:
     case UPDATE_EXTRA_FONT_STYLES: {

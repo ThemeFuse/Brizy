@@ -52,21 +52,25 @@ class Link extends Component {
           href = `#${anchorName}`;
         }
         break;
-      case "popup":
+      case "popup": {
         href = `#${_href}`;
         break;
-      case "upload":
+      }
+      case "upload": {
         const { customFile } = Config.get("urls");
         const [name] = _href.split("|||", 1);
         href = isWP ? `${customFile}${name}` : `${customFile}/${name}`;
         break;
+      }
       case "lightBox":
-      case "external":
+      case "external": {
         href = _href;
         break;
-      case "action":
+      }
+      case "action": {
         href = "#";
         break;
+      }
       default:
         throw new Error(`unknown link type ${type}`);
     }

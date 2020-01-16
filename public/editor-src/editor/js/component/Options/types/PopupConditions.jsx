@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "underscore";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 import { t } from "visual/utils/i18n";
 import UIState from "visual/global/UIState";
@@ -15,8 +14,6 @@ class PopupConditionsOptionType extends React.Component {
   };
 
   handleMouseDown = () => {
-    const { value, onChange } = this.props;
-
     UIState.set("prompt", {
       prompt: "conditions",
       options: [

@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import { t } from "visual/utils/i18n";
-import {
-  getIntegrationLists,
-  getIntegrationListApiKeys,
-  updateIntegration,
-  createIntegrationList
-} from "../../api";
+import { updateIntegration, createIntegrationList } from "../../api";
 import { Context } from "../../../common/GlobalApps/Context";
 import { RadioFields } from "../../../common/GlobalApps/StepsView";
 import { fakeRequest } from "../../../common/utils";
@@ -49,35 +44,11 @@ class List extends Component {
 
   static async onBeforeLoad(context) {
     const {
-      app: { data: appData },
-      formId,
+      app: { id, data: appData },
       onChange
     } = context;
-    let { status, data } = await getIntegrationLists({
-      appId: appData.id,
-      formId
-    });
-    let accountPro = false;
-    let listApiKeys = [];
 
-    if (status !== 200) {
-      if (status === 403) {
-        accountPro = true;
-      }
-
-      data = [];
-    } else {
-      const { status, data } = await getIntegrationListApiKeys({
-        appId: appData.id,
-        formId
-      });
-
-      if (status === 200) {
-        listApiKeys = data;
-      }
-    }
-
-    onChange(appData.id, { ...appData, lists: data, listApiKeys, accountPro });
+    onChange(id, { ...appData, accountPro: !Array.isArray(appData.lists) });
   }
 
   getActiveList(app) {
@@ -87,11 +58,13 @@ class List extends Component {
     return usedList.id || list;
   }
 
-  getApiKeyValue(data) {
-    return data.listApiKeys.reduce(
-      (acc, { name }) => ({ ...acc, [`${name}`]: "" }),
-      {}
-    );
+  getApiKeyValue({ listProperties }) {
+    return Array.isArray(listProperties)
+      ? listProperties.reduce(
+          (acc, { name }) => ({ ...acc, [`${name}`]: "" }),
+          {}
+        )
+      : [];
   }
 
   handleActive = active => {
@@ -111,18 +84,15 @@ class List extends Component {
 
   handleConfirm = async confirmed => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange
     } = this.context;
 
     const { status, data } = await updateIntegration({
-      appId: appData.id,
+      ...appData,
       formId,
-      body: {
-        ...appData,
-        confirmationNeeded: confirmed
-      }
+      confirmationNeeded: confirmed
     });
 
     if (status !== 200) {
@@ -130,7 +100,7 @@ class List extends Component {
         error: t("Something went wrong")
       });
     } else {
-      onChange(appData.id, { ...appData, ...data });
+      onChange(id, { ...appData, ...data });
     }
   };
 
@@ -166,7 +136,7 @@ class List extends Component {
 
   handleCreateList = async () => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange
     } = this.context;
@@ -180,9 +150,9 @@ class List extends Component {
 
     if (!keysValue.some(key => !key)) {
       const { status, data } = await createIntegrationList({
-        appId: appData.id,
+        ...appData,
         formId,
-        body: apiKeyValue
+        data: apiKeyValue
       });
 
       if (status !== 200) {
@@ -191,7 +161,7 @@ class List extends Component {
           error: getError("server")
         });
       } else {
-        onChange(appData.id, { ...appData, lists: [...appData.lists, data] });
+        onChange(id, { ...appData, lists: [...appData.lists, data] });
 
         this.setState({
           active: data.id,
@@ -214,7 +184,7 @@ class List extends Component {
 
   handleNext = async () => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange,
       onChangeNext
@@ -228,12 +198,9 @@ class List extends Component {
 
     if (active !== appData.usedList) {
       const { status, data } = await updateIntegration({
-        appId: appData.id,
+        ...appData,
         formId,
-        body: {
-          ...appData,
-          usedList: active
-        }
+        usedList: active
       });
 
       if (status !== 200) {
@@ -242,7 +209,7 @@ class List extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(appData.id, { ...appData, ...data });
+        onChange(id, { ...appData, ...data });
         onChangeNext();
       }
     } else {
@@ -269,7 +236,7 @@ class List extends Component {
     const { app } = this.context;
     const {
       lists,
-      listApiKeys,
+      listProperties,
       hasConfirmation,
       accountPro,
       confirmationNeeded
@@ -279,7 +246,7 @@ class List extends Component {
       <RadioFields
         {...this.state}
         lists={lists}
-        listsCreate={listApiKeys}
+        listsCreate={listProperties}
         listPro={accountPro}
         hasConfirmation={hasConfirmation}
         confirmationNeeded={confirmationNeeded}
@@ -292,7 +259,7 @@ class List extends Component {
     ) : (
       <CreateList
         {...this.state}
-        listsCreate={listApiKeys}
+        listsCreate={listProperties}
         onChange={this.handleKeysChange}
         onPrev={this.handleViewMode}
         onNext={this.handleCreateList}

@@ -8,6 +8,7 @@
 
   "content": {
     "width": 50,
+    "tagName": "div",
 
     "media": "image",
 
@@ -22,6 +23,7 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgImageExtension": "",
 
     "bgVideo": "",
     "bgVideoQuality": 1080,
@@ -43,6 +45,7 @@
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
+    "hoverBgImageExtension": null,
 
     "tabletWidth": null,
 
@@ -54,6 +57,7 @@
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
+    "tabletBgImageExtension": null,
 
     "tabletBrightness": null,
     "tabletHue": null,
@@ -72,6 +76,7 @@
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
+    "mobileBgImageExtension": null,
 
     "mobileBrightness": null,
     "mobileHue": null,
@@ -84,14 +89,22 @@
 
     "zIndex": 0,
 
+    "hoverZIndex": null,
+
     "items": [],
 
     "popups": [],
 
     "showOnTablet": "on",
+
+    "tabletZIndex": null,
+
     "tabletPopups": [],
 
     "showOnMobile": "on",
+
+    "mobileZIndex": null,
+
     "mobilePopups": []
   },
 
@@ -371,6 +384,10 @@
 
     "customID": "",
 
+    "cssIDPopulation": "",
+
+    "cssClassPopulation": "",
+
     "tabletBorderStyle": null,
 
     "tempTabletBorderStyle": null,
@@ -581,8 +598,8 @@
 
     "mobileVerticalAlign": null,
 
-    "mobilePaddingType": "grouped",
-    "tempMobilePaddingType": "grouped",
+    "mobilePaddingType": "ungrouped",
+    "tempMobilePaddingType": "ungrouped",
 
     "mobilePadding": 0,
     "mobilePaddingTop": 0,

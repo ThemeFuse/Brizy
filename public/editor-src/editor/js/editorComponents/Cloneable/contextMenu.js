@@ -10,7 +10,7 @@ export default {
   getItems
 };
 
-function getItems(v, component) {
+function getItems(v) {
   const { base } = Editor.getShortcodes();
 
   const { icon = "" } =

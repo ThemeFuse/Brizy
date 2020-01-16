@@ -31,7 +31,7 @@ export default function addFontStylesCSS($) {
 function parseFontStyles($) {
   const fontStyles = new Set();
 
-  $(`[class*="brz-tp-"]`).each(function() {
+  $("[class*='brz-tp-']").each(function() {
     const className = $(this).attr("class");
     const match = className.match(/brz-tp-([^\s]+)/);
 
@@ -44,7 +44,7 @@ function parseFontStyles($) {
 function parseDynamicFontStyles($) {
   const fontStyles = new Set();
 
-  if ($(`[class*="brz-tp__dc-block"]`).length) {
+  if ($("[class*='brz-tp__dc-block']").length) {
     Object.keys(dynamicStyleIds).forEach(key => {
       fontStyles.add(key);
     });

@@ -9,7 +9,8 @@ export function toolbarCustomCSSClass({
   position = 40,
   device,
   state,
-  devices = "all"
+  devices = "all",
+  population
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -23,11 +24,17 @@ export function toolbarCustomCSSClass({
     devices,
     helper: true,
     helperContent: helperHTML,
-    value: {
-      value: dvv("customClassName")
+    population: {
+      show: population.length > 0,
+      choices: population
     },
-    onChange: ({ value }) => ({
-      [dvk("customClassName")]: value
+    value: {
+      value: dvv("customClassName"),
+      population: dvv("cssClassPopulation")
+    },
+    onChange: ({ value, population }) => ({
+      [dvk("customClassName")]: value,
+      [dvk("cssClassPopulation")]: population
     })
   };
 }
